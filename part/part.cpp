@@ -2178,7 +2178,7 @@ void Part::updateBookmarksActions()
         m_addBookmark->setEnabled(true);
         if (m_document->bookmarkManager()->isBookmarked(m_document->viewport())) {
             m_addBookmark->setText(i18n("Remove Bookmark"));
-            m_addBookmark->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete-bookmark")));
+            m_addBookmark->setIcon(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))));
             m_renameBookmark->setEnabled(true);
         } else {
             m_addBookmark->setText(m_addBookmarkText);
@@ -2418,7 +2418,7 @@ bool Part::aboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *cont
         QAction *renameAction = contextMenu->addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename this Bookmark"), this, &Part::slotRenameBookmarkFromMenu);
         renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
-        QAction *deleteAction = contextMenu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove this Bookmark"), this, &Part::slotRemoveBookmarkFromMenu);
+        QAction *deleteAction = contextMenu->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove this Bookmark"), this, &Part::slotRemoveBookmarkFromMenu);
         deleteAction->setData(ba->property("htmlRef").toString());
         deleteAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
     }
@@ -2989,7 +2989,7 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     if (page) {
         popup->addAction(new OKMenuTitle(popup, i18n("Page %1", page->number() + 1)));
         if ((!currentPage && m_document->bookmarkManager()->isBookmarked(page->number())) || (currentPage && m_document->bookmarkManager()->isBookmarked(m_document->viewport())))
-            removeBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("edit-delete-bookmark")), i18n("Remove Bookmark"));
+            removeBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove Bookmark"));
         else
             addBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Bookmark"));
         if (m_pageView->canFitPageWidth())

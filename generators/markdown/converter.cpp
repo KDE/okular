@@ -194,10 +194,10 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
                 QTextCursor cursor(textDocument);
                 cursor.setPosition(textFragment.position(), QTextCursor::MoveAnchor);
                 cursor.setPosition(textFragment.position() + textFragment.length(), QTextCursor::KeepAnchor);
-                cursor.removeSelectedText();
 
                 const QString imageFilePath = QDir::cleanPath(dir.absoluteFilePath(textCharFormat.toImageFormat().name()));
                 if (QFile::exists(imageFilePath)) {
+                    cursor.removeSelectedText();
                     format.setName(imageFilePath);
                     const QImage img = QImage(format.name());
 
@@ -206,6 +206,7 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
                     cursor.insertImage(format);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
                 } else if ((!textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString().isEmpty())) {
+                    cursor.removeSelectedText();
                     cursor.insertText(textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString());
 #endif
                 }

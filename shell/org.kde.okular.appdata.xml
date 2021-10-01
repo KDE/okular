@@ -40,6 +40,7 @@
   <name xml:lang="sr-ijekavian">Окулар</name>
   <name xml:lang="sr-ijekavianlatin">Okular</name>
   <name xml:lang="sv">Okular</name>
+  <name xml:lang="ta">ஆக்குலர்</name>
   <name xml:lang="tr">Okular</name>
   <name xml:lang="uk">Okular</name>
   <name xml:lang="vi">Okular</name>
@@ -82,6 +83,7 @@
   <summary xml:lang="sr-ijekavian">Приказивач докумената</summary>
   <summary xml:lang="sr-ijekavianlatin">Prikazivač dokumenata</summary>
   <summary xml:lang="sv">Dokumentvisare</summary>
+  <summary xml:lang="ta">ஆவணங் காட்டி</summary>
   <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
   <summary xml:lang="uk">Програма для перегляду документів</summary>
   <summary xml:lang="vi">Trình xem tài liệu</summary>
@@ -126,6 +128,7 @@
     <p xml:lang="sr-ijekavian">Окулар је универзални приказивач докумената, који развија КДЕ. Ради на већем броју платформи, укључујући Линукс, Виндоуз, МекОС X, БСД‑ове, итд.</p>
     <p xml:lang="sr-ijekavianlatin">Okular je univerzalni prikazivač dokumenata, koji razvija KDE. Radi na većem broju platformi, uključujući Linux, Windows, MacOS X, BSD‑ove, itd.</p>
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
+    <p xml:lang="ta">ஆக்குலர், கே.டீ.யீ. வழங்கும் ஆவணங்காட்டி ஆகும். லினக்ஸ், விண்டோஸ், Mac OS X, *BSD போன்ற இயக்குதளங்களில் ஆக்குலர் இயங்கும்.</p>
     <p xml:lang="tr">Okular, KDE tarafından geliştirilmiş evrensel bir belge görüntüleyicidir. Okular, Linux, Windows, Mac OS X, *BSD, vb. dahil ancak bunlarla sınırlı olmayan birden çok platformda çalışır.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="vi">Okular là một trình xem tài liệu vạn năng do KDE phát triển. Okular hoạt động trên nhiều nền tảng, bao gồm Linux, Windows, Mac OS X, *BSD, v.v.</p>
@@ -168,6 +171,7 @@
     <p xml:lang="sr-ijekavian">Могућности:</p>
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="vi">Tính năng:</p>
@@ -195,6 +199,7 @@
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ta">ஆதரிக்கப்படும் கோப்பு வகைகள்: PDF, PS, Tiff, CHM, DjVu, படங்கள், DVI, XPS, Fiction Book, வரைகதை புத்தகம், Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="vi">Hỗ trợ các dạng thức: PDF, PS, Tiff, CHM, DjVu, ảnh, DVI, XPS, FictionBook, truyện tranh, Plucker, EPub, Fax</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
@@ -234,6 +239,7 @@
       <li xml:lang="sr-ijekavian">Бочна трака са садржајем, сличицама, рецензијама и обележивачима.</li>
       <li xml:lang="sr-ijekavianlatin">Bočna traka sa sadržajem, sličicama, recenzijama i obeleživačima.</li>
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
+      <li xml:lang="ta">பொருளடக்கம், சிறுபடங்கள், குறிப்புகள், மற்றும் நினைவுக்குறிகளை காட்டும் ஓரப்பட்டை</li>
       <li xml:lang="tr">İçindekiler, küçük resimler, incelemeler ve yer imleri bulunan kenar çubuğu</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="vi">Thanh bên với mục lục, hình nhỏ, nhận xét và dấu nhớ</li>
@@ -276,6 +282,7 @@
       <li xml:lang="sr-ijekavian">Подршка за тумачења.</li>
       <li xml:lang="sr-ijekavianlatin">Podrška za tumačenja.</li>
       <li xml:lang="sv">Stöd för kommentarer</li>
+      <li xml:lang="ta">குறிப்புகளை ஆதரிக்கும்</li>
       <li xml:lang="tr">Ek açıklamalar desteği</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="vi">Hỗ trợ chú dẫn</li>
@@ -318,6 +325,7 @@
       <caption xml:lang="sk">Čítanie návodu v Okular</caption>
       <caption xml:lang="sl">Branje priročnikov v Okularju</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
+      <caption xml:lang="ta">ஆக்குலரில் ஓர் கையேடை படித்தல்</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
       <caption xml:lang="x-test">xxReading manual in Okularxx</caption>

@@ -27,6 +27,8 @@ class AnnotationPrivate
 public:
     AnnotationPrivate();
 
+    OKULARCORE_EXPORT static AnnotationPrivate *get(Annotation *a);
+
     virtual ~AnnotationPrivate();
 
     AnnotationPrivate(const AnnotationPrivate &) = delete;

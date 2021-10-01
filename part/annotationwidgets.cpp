@@ -30,7 +30,11 @@
 #include <QSpinBox>
 #include <QVariant>
 
+#include "core/annotations.h"
+#include "core/annotations_p.h"
 #include "core/document.h"
+#include "core/document_p.h"
+#include "core/page_p.h"
 #include "guiutils.h"
 #include "pagepainter.h"
 
@@ -136,7 +140,7 @@ void PixmapPreviewSelector::iconComboChanged(const QString &icon)
         m_icon = icon;
     }
 
-    QPixmap pixmap = GuiUtils::loadStamp(m_icon, m_previewSize);
+    QPixmap pixmap = Okular::AnnotationUtils::loadStamp(m_icon, m_previewSize);
     const QRect cr = m_iconLabel->contentsRect();
     if (pixmap.width() > cr.width() || pixmap.height() > cr.height())
         pixmap = pixmap.scaled(cr.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -149,7 +153,7 @@ void PixmapPreviewSelector::selectCustomStamp()
 {
     const QString customStampFile = QFileDialog::getOpenFileName(this, i18nc("@title:window file chooser", "Select custom stamp symbol"), QString(), i18n("*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"));
     if (!customStampFile.isEmpty()) {
-        QPixmap pixmap = GuiUtils::loadStamp(customStampFile, m_previewSize);
+        QPixmap pixmap = Okular::AnnotationUtils::loadStamp(customStampFile, m_previewSize);
         if (pixmap.isNull()) {
             KMessageBox::sorry(this, xi18nc("@info", "Could not load the file <filename>%1</filename>", customStampFile), i18nc("@title:window", "Invalid file"));
         } else {
@@ -435,14 +439,17 @@ void StampAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
 {
     QWidget *widget = qobject_cast<QWidget *>(formlayout->parent());
 
-    KMessageWidget *brokenStampSupportWarning = new KMessageWidget(widget);
-    brokenStampSupportWarning->setText(xi18nc("@info",
-                                              "<warning>experimental feature.<nl/>"
-                                              "Stamps inserted in PDF documents are not visible in PDF readers other than Okular.</warning>"));
-    brokenStampSupportWarning->setMessageType(KMessageWidget::Warning);
-    brokenStampSupportWarning->setWordWrap(true);
-    brokenStampSupportWarning->setCloseButtonVisible(false);
-    formlayout->insertRow(0, brokenStampSupportWarning);
+    Okular::Document *doc = Okular::AnnotationPrivate::get(m_stampAnn)->m_page->m_doc->m_parent;
+    if (doc->metaData(QStringLiteral("ShowStampsWarning")).toString() == QLatin1String("yes")) {
+        KMessageWidget *brokenStampSupportWarning = new KMessageWidget(widget);
+        brokenStampSupportWarning->setText(xi18nc("@info",
+                                                  "<warning>experimental feature.<nl/>"
+                                                  "Stamps inserted in PDF documents are not visible in PDF readers other than Okular.</warning>"));
+        brokenStampSupportWarning->setMessageType(KMessageWidget::Warning);
+        brokenStampSupportWarning->setWordWrap(true);
+        brokenStampSupportWarning->setCloseButtonVisible(false);
+        formlayout->insertRow(0, brokenStampSupportWarning);
+    }
 
     addOpacitySpinBox(widget, formlayout);
     addVerticalSpacer(formlayout);

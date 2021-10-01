@@ -70,7 +70,7 @@ public:
 
         // create engine objects
         if (!hoverIconName.simplified().isEmpty())
-            pixmap = GuiUtils::loadStamp(hoverIconName, size);
+            pixmap = Okular::AnnotationUtils::loadStamp(hoverIconName, size);
     }
 
     QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
@@ -1450,7 +1450,7 @@ QPixmap PageViewAnnotator::makeToolPixmap(const QDomElement &toolElement)
         p.drawLine(0, 20, 19, 20);
         p.drawLine(1, 21, 18, 21);
     } else if (annotType == QLatin1String("stamp")) {
-        QPixmap stamp = GuiUtils::loadStamp(icon, 16, false /* keepAspectRatio */);
+        QPixmap stamp = Okular::AnnotationUtils::loadStamp(icon, 16, false /* keepAspectRatio */);
         p.setRenderHint(QPainter::Antialiasing);
         p.drawPixmap(16, 14, stamp);
     } else if (annotType == QLatin1String("straight-line")) {

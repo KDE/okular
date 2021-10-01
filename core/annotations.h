@@ -74,6 +74,15 @@ public:
      * @p scaleX and @p scaleY.
      */
     static QRect annotationGeometry(const Annotation *annotation, double scaleX, double scaleY);
+
+    /**
+     * Returns a pixmap for a stamp symbol
+     *
+     * @p name Name of a Okular stamp symbol, icon or path to an image
+     * @p size Size of the pixmap (ignore aspect ratio). Takes precedence over @p iconSize
+     * @p iconSize Maximum size of the pixmap (keep aspect ratio)
+     */
+    static QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio = true);
 };
 
 /**

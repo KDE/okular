@@ -27,6 +27,7 @@
 // local includes
 #include "actionbar.h"
 #include "annotationwidgets.h"
+#include "core/annotations.h"
 #include "guiutils.h"
 #include "pageview.h"
 #include "pageviewannotator.h"
@@ -453,7 +454,7 @@ const QIcon AnnotationActionHandlerPrivate::widthIcon(double width)
 
 const QIcon AnnotationActionHandlerPrivate::stampIcon(const QString &stampIconName)
 {
-    QPixmap stampPix = GuiUtils::loadStamp(stampIconName, 32);
+    QPixmap stampPix = Okular::AnnotationUtils::loadStamp(stampIconName, 32);
     if (stampPix.width() == stampPix.height())
         return QIcon(stampPix);
     else

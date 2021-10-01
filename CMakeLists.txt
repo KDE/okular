@@ -313,6 +313,7 @@ PRIVATE
     KF5::ThreadWeaver
     KF5::Bookmarks
     Phonon::phonon4qt5
+    Qt5::Svg
     ${MATH_LIB}
     ZLIB::ZLIB
 PUBLIC  # these are included from the installed headers
@@ -503,6 +504,10 @@ install(FILES
 )
 
 install(EXPORT Okular5Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okular5Targets.cmake NAMESPACE Okular::)
+
+install(FILES
+   core/stamps.svg
+   DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)
 
 ########### summary #################
 

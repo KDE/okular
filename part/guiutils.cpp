@@ -13,7 +13,6 @@
 #include <QFileDialog>
 #include <QPainter>
 #include <QStandardPaths>
-#include <QSvgRenderer>
 #include <QTextDocument>
 
 // local includes
@@ -22,32 +21,6 @@
 #include "core/document.h"
 
 #include <memory>
-
-struct GuiUtilsHelper {
-    GuiUtilsHelper()
-    {
-    }
-
-    QSvgRenderer *svgStamps();
-
-    std::unique_ptr<QSvgRenderer> svgStampFile;
-};
-
-QSvgRenderer *GuiUtilsHelper::svgStamps()
-{
-    if (!svgStampFile.get()) {
-        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg"));
-        if (!stampFile.isEmpty()) {
-            svgStampFile = std::make_unique<QSvgRenderer>(stampFile);
-            if (!svgStampFile->isValid()) {
-                svgStampFile.reset();
-            }
-        }
-    }
-    return svgStampFile.get();
-}
-
-Q_GLOBAL_STATIC(GuiUtilsHelper, s_data)
 
 namespace GuiUtils
 {
@@ -155,35 +128,6 @@ QString prettyToolTip(const Okular::Annotation *ann)
     tooltip += QLatin1String("</qt>");
 
     return tooltip;
-}
-
-QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio)
-{
-    const QString name = nameOrPath.toLower();
-
-    // _name is the name of an Okular stamp symbols ( multiple symbols in a single *.svg file)
-    QSvgRenderer *r = nullptr;
-    if ((r = s_data->svgStamps()) && r->elementExists(name)) {
-        const QSize stampSize = r->boundsOnElement(name).size().toSize();
-        const QSize pixmapSize = stampSize.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
-        QPixmap pixmap(pixmapSize);
-        pixmap.fill(Qt::transparent);
-        QPainter p(&pixmap);
-        r->render(&p, name);
-        p.end();
-        return pixmap;
-    }
-
-    // _name is a path (do this before loading as icon name to avoid some rare weirdness )
-    QPixmap pixmap;
-    pixmap.load(nameOrPath);
-    if (!pixmap.isNull()) {
-        pixmap = pixmap.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        return pixmap;
-    }
-
-    // _name is an icon name
-    return QIcon::fromTheme(name).pixmap(size);
 }
 
 void saveEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent)

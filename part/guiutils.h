@@ -37,15 +37,6 @@ QString contentsHtml(const Okular::Annotation *annotation);
 
 QString prettyToolTip(const Okular::Annotation *annotation);
 
-/**
- * Returns a pixmap for a stamp symbol
- *
- * @p name Name of a Okular stamp symbol, icon or path to an image
- * @p size Size of the pixmap (ignore aspect ratio). Takes precedence over @p iconSize
- * @p iconSize Maximum size of the pixmap (keep aspect ratio)
- */
-QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio = true);
-
 void saveEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent);
 void writeEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent, QFile &targetFile);
 

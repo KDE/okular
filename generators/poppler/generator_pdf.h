@@ -19,12 +19,15 @@
 #include <QBitArray>
 #include <QPointer>
 
+#include <core/annotations.h>
 #include <core/document.h>
 #include <core/generator.h>
 #include <core/printoptionswidget.h>
 #include <interfaces/configinterface.h>
 #include <interfaces/printinterface.h>
 #include <interfaces/saveinterface.h>
+
+#include <unordered_map>
 
 class PDFOptionsPage;
 class PopplerAnnotationProxy;

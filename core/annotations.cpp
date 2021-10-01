@@ -165,19 +165,27 @@ QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool kee
 {
     const QString name = nameOrPath.toLower();
 
-    const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg"));
-    if (!stampFile.isEmpty()) {
-        QSvgRenderer r(stampFile);
-        if (r.isValid() && r.elementExists(name)) {
-            const QSize stampSize = r.boundsOnElement(name).size().toSize();
-            const QSize pixmapSize = stampSize.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
-            QPixmap pixmap(pixmapSize);
-            pixmap.fill(Qt::transparent);
-            QPainter p(&pixmap);
-            r.render(&p, name);
-            p.end();
-            return pixmap;
+    static std::unique_ptr<QSvgRenderer> svgStampFile;
+    if (!svgStampFile.get()) {
+        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg"));
+        if (!stampFile.isEmpty()) {
+            svgStampFile = std::make_unique<QSvgRenderer>(stampFile);
+            if (!svgStampFile->isValid()) {
+                svgStampFile.reset();
+            }
         }
+    }
+
+    QSvgRenderer *r = svgStampFile.get();
+    if (r && r->isValid() && r->elementExists(name)) {
+        const QSize stampSize = r->boundsOnElement(name).size().toSize();
+        const QSize pixmapSize = stampSize.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
+        QPixmap pixmap(pixmapSize);
+        pixmap.fill(Qt::transparent);
+        QPainter p(&pixmap);
+        r->render(&p, name);
+        p.end();
+        return pixmap;
     }
 
     // _name is a path (do this before loading as icon name to avoid some rare weirdness )

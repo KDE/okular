@@ -79,8 +79,10 @@ public:
      * Returns a pixmap for a stamp symbol
      *
      * @p name Name of a Okular stamp symbol, icon or path to an image
-     * @p size Size of the pixmap (ignore aspect ratio). Takes precedence over @p iconSize
-     * @p iconSize Maximum size of the pixmap (keep aspect ratio)
+     * @p size Size of the pixmap side
+     * @p keepAspectRatio Whether to keep aspect ratio of the stamp or not
+     *
+     * @since 21.12
      */
     static QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio = true);
 };

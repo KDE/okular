@@ -91,6 +91,12 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
 
     QLocale locale(QStringLiteral("en_US"));
     const QStringList str = arguments.at(1).toString(context).split(QRegularExpression(QStringLiteral("\\W")));
+
+    if (str.count() < 7) {
+        qWarning() << "Unexpected printd oDate argument" << arguments.at(1).toString(context);
+        return context->throwException(QStringLiteral("Invalid arguments"));
+    }
+
     QString myStr = QStringLiteral("%1/%2/%3 %4:%5:%6").arg(str[1], str[2], str[3], str[4], str[5], str[6]);
     QDateTime date = locale.toDateTime(myStr, QStringLiteral("MMM/d/yyyy H:m:s"));
 

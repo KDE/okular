@@ -551,7 +551,7 @@ void PageView::setupBaseActions(KActionCollection *ac)
         Okular::SettingsCore::self()->save();
     });
     d->aNightMode->setChecked(nightModeEnabledCheck());
-    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, [&]() { d->aNightMode->setChecked(nightModeEnabledCheck()); });
+    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, this, [&]() { d->aNightMode->setChecked(nightModeEnabledCheck()); });
 
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction(QIcon::fromTheme(QStringLiteral("page-zoom")), i18n("Zoom"), this);

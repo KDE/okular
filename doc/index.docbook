@@ -514,9 +514,9 @@ Context menu actions like Rename Bookmarks etc.)
 			</mediaobject>
 			</screenshot>
 			<para>&okular; has two different kind of annotations:</para>
-			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
+			<para>Text annotations like <guilabel>Highlight in Yellow</guilabel> and <guilabel>Underline</guilabel>
 			for files with text like &eg; &PDF;.</para>
-		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel> for all formats supported by &okular;.</para>
+		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlight</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Insert Text</guilabel> for all formats supported by &okular;.</para>
 			<para>Using the context menu either in the <guilabel>Annotations</guilabel> view of the sidebar or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
@@ -579,7 +579,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Highlighter
+					    Highlight
 					  </para>
 					</entry>
 					<entry>
@@ -687,18 +687,18 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Typewriter
+					    Insert Text
 					  </para>
 					</entry>
 					<entry>
 					  <para>
-					    Typewriter features opaque letters on transparent background, so that it is useful to fill noninteractive forms.
+					    Insert Text features opaque letters on transparent background, which is useful to fill noninteractive forms.
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
 					  </para>
 					  <para>
-                          It is possible to define the <guilabel>Font</guilabel> and <guilabel>Text color</guilabel> for the text. Just right-click on the typewriter text created and select the <guimenuitem>Properties</guimenuitem> menu item.
+                          It is possible to define the <guilabel>Font</guilabel> and <guilabel>Text color</guilabel> for the text. Just right-click on the text inserted and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -714,7 +714,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Inline Note
+					    Insert Inline Note
 					  </para>
 					</entry>
 					<entry>
@@ -741,7 +741,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Pop-up Note
+					    Insert Pop-up Note
 					  </para>
 					</entry>
 					<entry>
@@ -768,7 +768,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Freehand Line
+					    Draw Freehand Line
 					  </para>
 					</entry>
 					<entry>
@@ -795,7 +795,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Arrow (drop-down list)
+					    Draw Arrow (drop-down list)
 					  </para>
 					</entry>
 					<entry>
@@ -822,7 +822,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Straight line (drop-down list)
+					    Draw Straight line (drop-down list)
 					  </para>
 					</entry>
 					<entry>
@@ -849,7 +849,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Rectangle (drop-down list)
+					    Draw Rectangle (drop-down list)
 					  </para>
 					</entry>
 					<entry>
@@ -876,7 +876,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Ellipse (drop-down list)
+					    Draw Ellipse (drop-down list)
 					  </para>
 					</entry>
 					<entry>
@@ -903,7 +903,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Polygon (drop-down list)
+					    Draw Polygon (drop-down list)
 					  </para>
 					</entry>
 					<entry>
@@ -1257,7 +1257,7 @@ Context menu actions like Rename Bookmarks etc.)
 					else on the annotation to move it.
 					Pressing &Esc; or clicking an area outside the annotation cancels a selection.
 				</para>
-				<para>Resizing is only applicable for annotation types Inline Note, Typewriter, Stamp and Ellipse.</para>
+				<para>Resizing is only applicable for annotation types Inline Note, Insert Text, Stamp and Ellipse.</para>
 
 				<note>
 					<para>
@@ -1682,7 +1682,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para><action>Copy</action> the currently selected text in
-						<guibutton>Text Selection</guibutton> mode to the clipboard.</para>
+						<guibutton>Select Text</guibutton> mode to the clipboard.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -1698,7 +1698,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para><action>Selects</action> all the text (if the document provides it). This works only in
-						<guibutton>Text Selection</guibutton> mode.</para>
+						<guibutton>Select Text</guibutton> mode.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

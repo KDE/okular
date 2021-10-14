@@ -1907,6 +1907,7 @@ void Part::guiActivateEvent(KParts::GUIActivateEvent *event)
 
     if (event->activated()) {
         m_pageView->setupActionsPostGUIActivated();
+        rebuildBookmarkMenu();
     }
 }
 

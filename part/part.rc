@@ -106,7 +106,7 @@
   <Spacer/>
   <Action name="page_number"/>
   <Spacer/>
-  <Action name="dark_mode"/>
+  <Action name="night_mode"/>
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>

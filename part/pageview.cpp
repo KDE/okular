@@ -235,7 +235,7 @@ public:
     QAction *aMouseMagnifier;
     KToggleAction *aTrimToSelection;
     QAction *aSignature;
-    KToggleAction *aDarkMode;
+    KToggleAction *aNightMode;
     KSelectAction *aZoom;
     QAction *aZoomIn;
     QAction *aZoomOut;
@@ -535,21 +535,23 @@ void PageView::setupBaseActions(KActionCollection *ac)
 {
     d->actionCollection = ac;
 
-    // Dark mode action
-    d->aDarkMode = new KToggleAction(QIcon::fromTheme(QStringLiteral("color-mode-invert-image")), i18n("Dark Mode"), this);
-    ac->addAction(QStringLiteral("dark_mode"), d->aDarkMode);
-    auto darkModeEnabledCheck = [&]() { return Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Recolor); };
-    connect(d->aDarkMode, &QAction::toggled, [&](bool darkMode) {
-        if (darkMode) {
+    // Night mode action
+    d->aNightMode = new KToggleAction(QIcon::fromTheme(QStringLiteral("color-mode-invert-image")), i18n("Night Mode"), this);
+    ac->addAction(QStringLiteral("night_mode"), d->aNightMode);
+    auto nightModeEnabledCheck = [&]() { return Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Recolor); };
+    connect(d->aNightMode, &QAction::toggled, [&](bool nightMode) {
+        if (nightMode) {
             Okular::SettingsCore::setRenderMode(Okular::SettingsCore::EnumRenderMode::Recolor);
             Okular::SettingsCore::setChangeColors(true);
         } else {
-            Okular::SettingsCore::setChangeColors(false);
+            if (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Recolor) {
+                Okular::SettingsCore::setChangeColors(false);
+            }
         }
         Okular::SettingsCore::self()->save();
     });
-    d->aDarkMode->setChecked(darkModeEnabledCheck());
-    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, d, [&]() { d->aDarkMode->setChecked(darkModeEnabledCheck()); });
+    d->aNightMode->setChecked(nightModeEnabledCheck());
+    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, [&]() { d->aNightMode->setChecked(nightModeEnabledCheck()); });
 
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction(QIcon::fromTheme(QStringLiteral("page-zoom")), i18n("Zoom"), this);

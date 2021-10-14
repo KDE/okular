@@ -538,10 +538,8 @@ void PageView::setupBaseActions(KActionCollection *ac)
     // Dark mode action
     d->aDarkMode = new KToggleAction(QIcon::fromTheme(QStringLiteral("color-mode-invert-image")), i18n("Dark Mode"), this);
     ac->addAction(QStringLiteral("dark_mode"), d->aDarkMode);
-    auto darkModeEnabledCheck = [&] () {
-        return Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Recolor);
-    };
-    connect(d->aDarkMode, &QAction::toggled, [&] (bool darkMode) {
+    auto darkModeEnabledCheck = [&]() { return Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Recolor); };
+    connect(d->aDarkMode, &QAction::toggled, [&](bool darkMode) {
         if (darkMode) {
             Okular::SettingsCore::setRenderMode(Okular::SettingsCore::EnumRenderMode::Recolor);
             Okular::SettingsCore::setChangeColors(true);
@@ -551,9 +549,7 @@ void PageView::setupBaseActions(KActionCollection *ac)
         Okular::SettingsCore::self()->save();
     });
     d->aDarkMode->setChecked(darkModeEnabledCheck());
-    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, [&] () {
-        d->aDarkMode->setChecked(darkModeEnabledCheck());
-    });
+    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, d, [&]() { d->aDarkMode->setChecked(darkModeEnabledCheck()); });
 
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction(QIcon::fromTheme(QStringLiteral("page-zoom")), i18n("Zoom"), this);

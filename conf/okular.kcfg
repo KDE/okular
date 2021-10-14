@@ -387,11 +387,11 @@
    <default>false</default>
   </entry>
   <entry key="RecolorForeground" type="Color" >
-   <default code="true" >0x600000</default>
+   <default code="true" >0xF0F0F0</default>
    <emit signal="colorModesChanged2" />
   </entry>
   <entry key="RecolorBackground" type="Color" >
-   <default code="true" >0xF0F0F0</default>
+   <default code="true" >0x191B1D</default>
    <emit signal="colorModesChanged2" />
   </entry>
   <entry key="BWThreshold" type="UInt" >

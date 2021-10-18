@@ -403,10 +403,15 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
     // set the default action
     if (quickTools.isEmpty()) {
-        aQuickTools->setDefaultAction(aQuickTools);
+        aShowToolBar->setVisible(false);
+        aQuickTools->addAction(aToolBarVisibility);
+        aQuickTools->setDefaultAction(aToolBarVisibility);
         Okular::Settings::setQuickAnnotationDefaultAction(0);
         Okular::Settings::self()->save();
     } else {
+        aShowToolBar->setVisible(true);
+        aQuickTools->removeAction(aToolBarVisibility);
+        aQuickTools->setDefaultAction(aQuickTools);
         int defaultAction = Okular::Settings::quickAnnotationDefaultAction();
         if (isFirstTimePopulated && defaultAction < quickTools.count()) {
             // we can reach here also if no quick tools were defined before, in that case defaultAction is correctly equal to zero

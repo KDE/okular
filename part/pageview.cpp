@@ -683,28 +683,28 @@ void PageView::setupActions(KActionCollection *ac)
     ac->setDefaultShortcuts(d->aZoomOut, KStandardShortcut::zoomOut());
 
     // Mouse-Mode actions
-    d->aMouseSelect = new QAction(QIcon::fromTheme(QStringLiteral("select-rectangular")), i18nc("verb", "&Select Area"), this);
+    d->aMouseSelect = new QAction(QIcon::fromTheme(QStringLiteral("select-rectangular")), i18n("Area &Selection"), this);
     ac->addAction(QStringLiteral("mouse_select"), d->aMouseSelect);
     connect(d->aMouseSelect, &QAction::triggered, this, &PageView::slotSetMouseSelect);
     d->aMouseSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL | Qt::Key_3);
     d->aMouseSelect->setActionGroup(d->mouseModeActionGroup);
 
-    d->aMouseTextSelect = new QAction(QIcon::fromTheme(QStringLiteral("edit-select-text")), i18nc("verb", "Select &Text"), this);
+    d->aMouseTextSelect = new QAction(QIcon::fromTheme(QStringLiteral("edit-select-text")), i18n("&Text Selection"), this);
     ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect);
     connect(d->aMouseTextSelect, &QAction::triggered, this, &PageView::slotSetMouseTextSelect);
     d->aMouseTextSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL | Qt::Key_4);
     d->aMouseTextSelect->setActionGroup(d->mouseModeActionGroup);
 
-    d->aMouseTableSelect = new QAction(QIcon::fromTheme(QStringLiteral("table")), i18nc("verb", "Select T&able"), this);
+    d->aMouseTableSelect = new QAction(QIcon::fromTheme(QStringLiteral("table")), i18n("T&able Selection"), this);
     ac->addAction(QStringLiteral("mouse_tableselect"), d->aMouseTableSelect);
     connect(d->aMouseTableSelect, &QAction::triggered, this, &PageView::slotSetMouseTableSelect);
     d->aMouseTableSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL | Qt::Key_5);
     d->aMouseTableSelect->setActionGroup(d->mouseModeActionGroup);
 
-    d->aMouseMagnifier = new QAction(QIcon::fromTheme(QStringLiteral("document-preview")), i18nc("verb", "&Magnify"), this);
+    d->aMouseMagnifier = new QAction(QIcon::fromTheme(QStringLiteral("document-preview")), i18n("&Magnifier"), this);
     ac->addAction(QStringLiteral("mouse_magnifier"), d->aMouseMagnifier);
     connect(d->aMouseMagnifier, &QAction::triggered, this, &PageView::slotSetMouseMagnifier);
     d->aMouseMagnifier->setCheckable(true);

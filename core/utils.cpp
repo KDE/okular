@@ -51,7 +51,7 @@ QSizeF Utils::realDpi(QWidget *widgetOnScreen)
     if (screen) {
         const QSizeF res(screen->physicalDotsPerInchX(), screen->physicalDotsPerInchY());
         if (res.width() > 0 && res.height() > 0) {
-            if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+            if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.15) {
                 return res;
             } else {
                 qCDebug(OkularCoreDebug) << "QScreen calculation returned a non square dpi." << res << ". Falling back";

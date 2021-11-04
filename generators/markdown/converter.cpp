@@ -206,7 +206,6 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
                     cursor.insertImage(format);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
                 } else if ((!textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString().isEmpty())) {
-                    cursor.removeSelectedText();
                     cursor.insertText(textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString());
 #endif
                 }

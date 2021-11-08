@@ -156,7 +156,6 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     , m_goToPreviousPageOnRelease(false)
     , m_goToNextPageOnRelease(false)
 {
-    Q_UNUSED(parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setObjectName(QStringLiteral("presentationWidget"));

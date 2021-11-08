@@ -75,6 +75,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e) override;
     void paintEvent(QPaintEvent *e) override;
     void resizeEvent(QResizeEvent *e) override;
+    void enterEvent(QEvent *e) override;
     void leaveEvent(QEvent *e) override;
     bool gestureEvent(QGestureEvent *e);
 

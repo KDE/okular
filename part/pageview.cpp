@@ -1313,23 +1313,7 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
     if (d->aViewContinuous)
         d->aViewContinuous->setEnabled(haspages);
 
-    if (d->aZoomFitWidth)
-        d->aZoomFitWidth->setEnabled(haspages);
-    if (d->aZoomFitPage)
-        d->aZoomFitPage->setEnabled(haspages);
-    if (d->aZoomAutoFit)
-        d->aZoomAutoFit->setEnabled(haspages);
-
-    if (d->aZoom) {
-        d->aZoom->selectableActionGroup()->setEnabled(haspages);
-        d->aZoom->setEnabled(haspages);
-    }
-    if (d->aZoomIn)
-        d->aZoomIn->setEnabled(haspages);
-    if (d->aZoomOut)
-        d->aZoomOut->setEnabled(haspages);
-    if (d->aZoomActual)
-        d->aZoomActual->setEnabled(haspages && d->zoomFactor != 1.0);
+    updateZoomActionsEnabledStatus();
 
     if (d->aColorModeMenu)
         d->aColorModeMenu->setEnabled(haspages);
@@ -3864,8 +3848,8 @@ void PageView::updateZoom(ZoomMode newZoomMode)
     const float upperZoomLimit = d->document->supportsTiles() ? 100.0 : 4.0;
     if (newFactor > upperZoomLimit)
         newFactor = upperZoomLimit;
-    if (newFactor < 0.1)
-        newFactor = 0.1;
+    if (newFactor < kZoomValues[0])
+        newFactor = kZoomValues[0];
 
     if (newZoomMode != d->zoomMode || (newZoomMode == ZoomFixed && newFactor != d->zoomFactor)) {
         // rebuild layout and update the whole viewport
@@ -3889,9 +3873,36 @@ void PageView::updateZoom(ZoomMode newZoomMode)
     } else if (newZoomMode == ZoomFixed && newFactor == d->zoomFactor)
         updateZoomText();
 
-    d->aZoomIn->setEnabled(d->zoomFactor < upperZoomLimit - 0.001);
-    d->aZoomOut->setEnabled(d->zoomFactor > 0.101);
-    d->aZoomActual->setEnabled(d->zoomFactor != 1.0);
+    updateZoomActionsEnabledStatus();
+}
+
+void PageView::updateZoomActionsEnabledStatus()
+{
+    const float upperZoomLimit = d->document->supportsTiles() ? kZoomValues.back() : 4.0;
+    const bool hasPages = d->document && d->document->pages() > 0;
+
+    if (d->aZoomFitWidth) {
+        d->aZoomFitWidth->setEnabled(hasPages);
+    }
+    if (d->aZoomFitPage) {
+        d->aZoomFitPage->setEnabled(hasPages);
+    }
+    if (d->aZoomAutoFit) {
+        d->aZoomAutoFit->setEnabled(hasPages);
+    }
+    if (d->aZoom) {
+        d->aZoom->selectableActionGroup()->setEnabled(hasPages);
+        d->aZoom->setEnabled(hasPages);
+    }
+    if (d->aZoomIn) {
+        d->aZoomIn->setEnabled(hasPages && d->zoomFactor < upperZoomLimit - 0.001);
+    }
+    if (d->aZoomOut) {
+        d->aZoomOut->setEnabled(hasPages && d->zoomFactor > (kZoomValues[0] + 0.001));
+    }
+    if (d->aZoomActual) {
+        d->aZoomActual->setEnabled(hasPages && d->zoomFactor != 1.0);
+    }
 }
 
 void PageView::updateZoomText()

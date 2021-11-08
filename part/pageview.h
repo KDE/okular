@@ -182,6 +182,8 @@ private:
     void updateZoom(ZoomMode newZoomMode);
     // update the text on the label using global zoom value or current page's one
     void updateZoomText();
+    // update the text enabled status of the zoom actions
+    void updateZoomActionsEnabledStatus();
     // update view mode (single, facing...)
     void updateViewMode(const int nr);
     void textSelectionClear();

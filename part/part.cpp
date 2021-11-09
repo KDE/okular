@@ -33,6 +33,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QMenu>
+#include <QMenuBar>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -44,14 +45,19 @@
 #include <QTimer>
 #include <QWidgetAction>
 
+#include "kconfigwidgets_version.h" // TODO KF 5.81 Remove this include, because the relevant section below will also be removed.
 #include <KAboutPluginDialog>
 #include <KActionCollection>
 #include <KBookmarkAction>
 #include <KDirWatch>
 #include <KFilterBase>
 #include <KFilterDev>
+#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
+#include <KHamburgerMenu>
+#endif
 #include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
+#include <KMainWindow>
 #include <KMessageBox>
 #include <KParts/GUIActivateEvent>
 #include <KPasswordDialog>
@@ -60,6 +66,7 @@
 #include <KStandardShortcut>
 #include <KToggleAction>
 #include <KToggleFullScreenAction>
+#include <KToolBar>
 #include <Kdelibs4ConfigMigrator>
 #include <Kdelibs4Migration>
 #ifdef WITH_KWALLET
@@ -110,7 +117,9 @@
 #include "thumbnaillist.h"
 #include "toc.h"
 #include "xmlgui_helper.h"
+
 #include <memory>
+#include <type_traits>
 
 #ifdef OKULAR_KEEP_FILE_OPEN
 class FileKeeper
@@ -288,7 +297,6 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     , m_fileWasRemoved(false)
     , m_showMenuBarAction(nullptr)
     , m_showFullScreenAction(nullptr)
-    , m_actionsSearched(false)
     , m_cliPresentation(false)
     , m_cliPrint(false)
     , m_cliPrintAndExit(false)
@@ -743,6 +751,8 @@ void Part::setupViewerActions()
     m_saveAs = nullptr;
     m_openContainingFolder = nullptr;
 
+    m_hamburgerMenuAction = nullptr;
+
     QAction *prefs = KStandardAction::preferences(this, SLOT(slotPreferences()), ac);
     if (m_embedMode == NativeShellMode) {
         prefs->setText(i18n("Configure Okular..."));
@@ -922,6 +932,16 @@ void Part::setupActions()
     m_openContainingFolder->setIcon(QIcon::fromTheme(QStringLiteral("document-open-folder")));
     connect(m_openContainingFolder, &QAction::triggered, this, &Part::slotOpenContainingFolder);
     m_openContainingFolder->setEnabled(false);
+
+#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
+    if (m_embedMode == Okular::NativeShellMode) { // This hamburger menu is designed to be quite Okular-specific.
+        m_hamburgerMenuAction = KStandardAction::hamburgerMenu(nullptr, nullptr, ac);
+        if (auto *mainWindow = findMainWindow()) {
+            m_hamburgerMenuAction->setMenuBar(mainWindow->menuBar());
+        }
+        connect(m_hamburgerMenuAction, &KHamburgerMenu::aboutToShowMenu, this, &Part::slotUpdateHamburgerMenu);
+    }
+#endif
 
     QAction *importPS = ac->addAction(QStringLiteral("import_ps"));
     importPS->setText(i18n("&Import PostScript as PDF..."));
@@ -2934,26 +2954,11 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     bool reallyShow = false;
     const bool currentPage = page && page->number() == m_document->viewport().pageNumber;
 
-    if (!m_actionsSearched) {
-        // the quest for options_show_menubar
-        KActionCollection *ac;
-        QAction *act;
-
-        if (factory()) {
-            const QList<KXMLGUIClient *> clients(factory()->clients());
-            for (int i = 0; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i) {
-                ac = clients.at(i)->actionCollection();
-                // show_menubar
-                act = ac->action(QStringLiteral("options_show_menubar"));
-                if (act && qobject_cast<KToggleAction *>(act))
-                    m_showMenuBarAction = qobject_cast<KToggleAction *>(act);
-                // fullscreen
-                act = ac->action(QStringLiteral("fullscreen"));
-                if (act && qobject_cast<KToggleFullScreenAction *>(act))
-                    m_showFullScreenAction = qobject_cast<KToggleFullScreenAction *>(act);
-            }
-        }
-        m_actionsSearched = true;
+    if (!m_showMenuBarAction) {
+        m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
+    }
+    if (!m_showFullScreenAction) {
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
     }
 
     QMenu *popup = new QMenu(widget());
@@ -2981,12 +2986,20 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
         reallyShow = true;
     }
 
-    if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked())) {
-        popup->addAction(new OKMenuTitle(popup, i18n("Tools")));
-        if (m_showMenuBarAction && !m_showMenuBarAction->isChecked())
+    const int amountOfActions = popup->actions().count();
+    if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) {
+        if (m_hamburgerMenuAction) {
+#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
+            m_hamburgerMenuAction->addToMenu(popup);
+#endif
+        } else if (m_showMenuBarAction) {
             popup->addAction(m_showMenuBarAction);
-        if (m_showFullScreenAction && m_showFullScreenAction->isChecked())
-            popup->addAction(m_showFullScreenAction);
+        }
+    }
+    if (m_showFullScreenAction && m_showFullScreenAction->isChecked())
+        popup->addAction(m_showFullScreenAction);
+    if (popup->actions().count() > amountOfActions && popup->actions().constLast()->isVisible()) {
+        popup->insertAction(popup->actions().at(amountOfActions), new OKMenuTitle(popup, i18n("Tools")));
         reallyShow = true;
     }
 
@@ -3011,6 +3024,34 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
         }
     }
     delete popup;
+}
+
+template<class Action> Action *Part::findActionInKPartHierarchy(const QString &actionName)
+{
+    static_assert(std::is_base_of<QAction, Action>::value, "Calling this method to find something other than an Action makes no sense.");
+    if (factory()) {
+        const QList<KXMLGUIClient *> clients(factory()->clients());
+        for (auto client : clients) {
+            if (QAction *act = client->actionCollection()->action(actionName)) {
+                if (Action *castedAction = qobject_cast<Action *>(act)) {
+                    return castedAction;
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+
+KMainWindow *Part::findMainWindow()
+{
+    auto *potentialMainWindow = parent();
+    while (potentialMainWindow) {
+        if (auto *mainWindow = qobject_cast<KMainWindow *>(potentialMainWindow)) {
+            return mainWindow;
+        }
+        potentialMainWindow = potentialMainWindow->parent();
+    }
+    return nullptr;
 }
 
 void Part::slotShowProperties()
@@ -3038,6 +3079,116 @@ void Part::slotHidePresentation()
 {
     if (m_presentationWidget)
         delete (PresentationWidget *)m_presentationWidget;
+}
+
+void Part::slotUpdateHamburgerMenu()
+{
+#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
+    auto ac = actionCollection();
+
+    auto menu = m_hamburgerMenuAction->menu();
+    if (!menu) {
+        menu = new QMenu(widget());
+        m_hamburgerMenuAction->setMenu(menu);
+        if (!m_showMenuBarAction) {
+            m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
+        }
+        m_hamburgerMenuAction->setShowMenuBarAction(m_showMenuBarAction);
+    } else {
+        menu->clear();
+    }
+
+    QToolBar *visibleMainToolbar = nullptr;
+    if (auto *mainWindow = findMainWindow()) {
+        visibleMainToolbar = mainWindow->toolBar();
+        if (!visibleMainToolbar->isVisible()) {
+            visibleMainToolbar = nullptr;
+        }
+        const auto toolbars = mainWindow->toolBars();
+        for (const auto &toolbar : toolbars) {
+            m_hamburgerMenuAction->hideActionsOf(toolbar);
+        }
+
+        bool menuAvailable = false; // We already know the menu bar is hidden when this menu is opened.
+        // If no menu is available, we want to add actions to the hamburger menu to show them again.
+        // The hamburger menu serves as the fallback that is available through the right-click context menu.
+        if (visibleMainToolbar && visibleMainToolbar->actions().contains(m_hamburgerMenuAction)) {
+            menuAvailable = true;
+        }
+        if (!menuAvailable) {
+            menu->addAction(m_showMenuBarAction);
+            if (!visibleMainToolbar) {
+                menu->addAction(findActionInKPartHierarchy(QStringLiteral("mainToolBar")));
+            }
+            menu->addSeparator();
+        }
+    }
+
+    // When changing actions, keep "Simple by default, powerful when needed" in mind.
+    // To retrieve an action, it is fastest to use a direct pointer if available (m_action), otherwise use
+    // ac->action(actionName) and if the action isn't in the actionCollection() of this part,
+    // use findActionInKPartHierarchy(actionName).
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Open)));
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::OpenRecent)));
+    menu->addAction(m_save);
+    menu->addAction(m_saveAs);
+    menu->addSeparator();
+    menu->addAction(ac->action(QStringLiteral("mouse_drag")));
+    if (!visibleMainToolbar || (visibleMainToolbar && !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("mouse_selecttools"))))) {
+        menu->addAction(ac->action(QStringLiteral("mouse_select")));
+    }
+    menu->addAction(m_copy);
+    menu->addAction(m_find);
+    menu->addAction(m_showLeftPanel);
+    if (!visibleMainToolbar || (visibleMainToolbar && !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites"))))) {
+        menu->addAction(ac->action(QStringLiteral("mouse_toggle_annotate")));
+    }
+    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Undo)));
+    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Redo)));
+    menu->addSeparator();
+
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Print)));
+    menu->addAction(m_printPreview);
+    menu->addAction(m_showProperties);
+    menu->addAction(m_openContainingFolder);
+    menu->addAction(m_share);
+    menu->addSeparator();
+
+    menu->addAction(ac->action(QStringLiteral("zoom_to")));
+    const QMenuBar *menuBar = m_hamburgerMenuAction->menuBar();
+    if (menuBar && menuBar->actions().count() < 3) { // 3 to make sure none of the code below can crash.
+        menuBar = nullptr;
+    }
+    auto curatedViewMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("page-2sides")), menuBar ? menuBar->actions().at(1)->text() : QStringLiteral("View"));
+    if (!m_showFullScreenAction) {
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
+    }
+    curatedViewMenu->addAction(m_showFullScreenAction);
+    curatedViewMenu->addAction(m_showPresentation);
+    curatedViewMenu->addSeparator();
+    curatedViewMenu->addAction(findActionInKPartHierarchy(QStringLiteral("view_render_mode")));
+    if (auto *viewOrientationMenu = qobject_cast<QMenu *>(factory()->container(QStringLiteral("view_orientation"), this))) {
+        curatedViewMenu->addAction(viewOrientationMenu->menuAction());
+    }
+    curatedViewMenu->addAction(findActionInKPartHierarchy(QStringLiteral("view_trim_mode")));
+    curatedViewMenu->addSeparator();
+    curatedViewMenu->addAction(ac->action(QStringLiteral("view_toggle_forms")));
+    m_hamburgerMenuAction->hideActionsOf(curatedViewMenu);
+
+#ifdef HAVE_SPEECH
+    auto speakMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("text-speak")), i18nc("@action:inmenu menu that contains actions to control text to speach", "Speak"));
+    speakMenu->addAction(ac->action(QStringLiteral("speak_document")));
+    speakMenu->addAction(ac->action(QStringLiteral("speak_current_page")));
+    speakMenu->addAction(ac->action(QStringLiteral("speak_stop_all")));
+    speakMenu->addAction(ac->action(QStringLiteral("speak_pause_resume")));
+    m_hamburgerMenuAction->hideActionsOf(speakMenu);
+#endif
+
+    // Add the "Settings" menu from the menu bar.
+    if (menuBar) {
+        menu->addAction(menuBar->actions().at(menuBar->actions().count() - 3));
+    }
+#endif
 }
 
 void Part::slotTogglePresentation()

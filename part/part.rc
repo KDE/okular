@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="50">
+<gui name="okular_part" version="51">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -109,6 +109,8 @@
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
+  <Separator/>
+  <Action name="hamburger_menu"/>
 </ToolBar>
 <ActionProperties scheme="Default">
   <Action priority="0" name="show_leftpanel"/>

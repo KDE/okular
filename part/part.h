@@ -44,6 +44,8 @@ class QMenu;
 
 class KConfigDialog;
 class KDirWatch;
+class KHamburgerMenu;
+class KMainWindow;
 class KToggleAction;
 class KToggleFullScreenAction;
 class QTemporaryFile;
@@ -219,6 +221,14 @@ protected Q_SLOTS:
     void slotShowBottomBar();
     void slotShowPresentation();
     void slotHidePresentation();
+
+    /**
+     * Updates the menu that is by default at the right end of the toolbar.
+     * In true "simple by default" fashion, the menu only contains the most important actions
+     * which are needed to use all essential Okular features. More advanced actions can be
+     * discovered through a sub-menu (@see KConfigWidgets::KHamburgerMenu::setMenuBarAdvertised()).
+     */
+    void slotUpdateHamburgerMenu();
     void slotExportAs(QAction *);
     bool slotImportPSFile();
     void slotAboutBackend();
@@ -257,6 +267,14 @@ public Q_SLOTS:
 private:
     bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
     void showMenu(const Okular::Page *page, const QPoint point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport(), bool showTOCActions = false);
+    /**
+     * Searches the actionCollections of all KXMLGUIClients that were created by the same factory()
+     * as this Part for a QAction that has both the specified name and the specified class.
+     * @return an action with class @p Action and name @p actionName. nullptr if no such action is found.
+     */
+    template<class Action = QAction> Action *findActionInKPartHierarchy(const QString &actionName);
+    /** @return the first KMainWindow among the ancestors of this part. nullptr if no KMainWindow is found. */
+    KMainWindow *findMainWindow();
     bool eventFilter(QObject *watched, QEvent *event) override;
     Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
     bool openUrl(const QUrl &url, bool swapInsteadOfOpening);
@@ -387,6 +405,7 @@ private:
 #endif
     QAction *m_showPresentation;
     QAction *m_openContainingFolder;
+    KHamburgerMenu *m_hamburgerMenuAction;
     KToggleAction *m_showMenuBarAction;
     KToggleAction *m_showLeftPanel;
     KToggleAction *m_showBottomBar;
@@ -401,7 +420,6 @@ private:
     QAction *m_closeFindBar;
     DrawingToolActions *m_presentationDrawingActions;
 
-    bool m_actionsSearched;
     BrowserExtension *m_bExtension;
 
     QList<Okular::ExportFormat> m_exportFormats;

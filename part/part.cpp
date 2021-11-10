@@ -3151,7 +3151,9 @@ void Part::slotUpdateHamburgerMenu()
     menu->addAction(m_printPreview);
     menu->addAction(m_showProperties);
     menu->addAction(m_openContainingFolder);
+#if PURPOSE_FOUND
     menu->addAction(m_share);
+#endif
     menu->addSeparator();
 
     menu->addAction(ac->action(QStringLiteral("zoom_to")));

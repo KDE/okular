@@ -440,7 +440,6 @@ generate_export_header(okularpart BASE_NAME okularpart)
 target_link_libraries(okularpart okularcore
     ${MATH_LIB}
     Qt5::Svg
-    Qt5::DBus
     Phonon::phonon4qt5
     KF5::Archive
     KF5::Bookmarks

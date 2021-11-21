@@ -12,6 +12,7 @@ Dependencies:
     'frameworks/khtml': '@stable'
     'frameworks/kjs': '@stable'
     'frameworks/kactivities': '@stable'
+    'frameworks/kpty': '@stable'
     'libraries/phonon': '@stable'
     'graphics/libkexiv2': '@same'
     'graphics/kdegraphics-mobipocket': '@same'

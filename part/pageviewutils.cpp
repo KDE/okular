@@ -225,24 +225,23 @@ void PageViewMessage::display(const QString &message, const QString &details, Ic
     m_lineSpacing = 0;
 
     // load icon (if set)
-    m_symbol = QPixmap();
-    const auto symbolSize = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    m_symbol = QIcon();
     if (icon != None) {
         switch (icon) {
         case Annotation:
-            m_symbol = QIcon::fromTheme(QStringLiteral("draw-freehand")).pixmap(symbolSize);
+            m_symbol = QIcon::fromTheme(QStringLiteral("draw-freehand"));
             break;
         case Find:
-            m_symbol = QIcon::fromTheme(QStringLiteral("zoom-original")).pixmap(symbolSize);
+            m_symbol = QIcon::fromTheme(QStringLiteral("zoom-original"));
             break;
         case Error:
-            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-error")).pixmap(symbolSize);
+            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-error"));
             break;
         case Warning:
-            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-warning")).pixmap(symbolSize);
+            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-warning"));
             break;
         default:
-            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-information")).pixmap(symbolSize);
+            m_symbol = QIcon::fromTheme(QStringLiteral("dialog-information"));
             break;
         }
     }
@@ -285,13 +284,15 @@ QRect PageViewMessage::computeTextRect(const QString &message, int extra_width) 
 
 void PageViewMessage::computeSizeAndResize()
 {
+    const auto symbolSize = !m_symbol.isNull() ? style()->pixelMetric(QStyle::PM_SmallIconSize) : 0;
+
     // determine text rectangle
-    const QRect textRect = computeTextRect(m_message, m_symbol.width());
+    const QRect textRect = computeTextRect(m_message, symbolSize);
     int width = textRect.width(), height = textRect.height();
 
     if (!m_details.isEmpty()) {
         // determine details text rectangle
-        const QRect detailsRect = computeTextRect(m_details, m_symbol.width());
+        const QRect detailsRect = computeTextRect(m_details, symbolSize);
         width = qMax(width, detailsRect.width());
         height += detailsRect.height();
 
@@ -302,8 +303,8 @@ void PageViewMessage::computeSizeAndResize()
 
     // update geometry with icon information
     if (!m_symbol.isNull()) {
-        width += 2 + m_symbol.width();
-        height = qMax(height, m_symbol.height());
+        width += 2 + symbolSize;
+        height = qMax(height, symbolSize);
     }
 
     // resize widget
@@ -331,21 +332,22 @@ bool PageViewMessage::eventFilter(QObject *obj, QEvent *event)
 
 void PageViewMessage::paintEvent(QPaintEvent * /* e */)
 {
-    const QRect textRect = computeTextRect(m_message, m_symbol.width());
+    const auto symbolSize = !m_symbol.isNull() ? style()->pixelMetric(QStyle::PM_SmallIconSize) : 0;
+    const QRect textRect = computeTextRect(m_message, symbolSize);
 
     QRect detailsRect;
     if (!m_details.isEmpty()) {
-        detailsRect = computeTextRect(m_details, m_symbol.width());
+        detailsRect = computeTextRect(m_details, symbolSize);
     }
 
     int textXOffset = 0,
         // add 2 to account for the reduced drawRoundedRect later
-        textYOffset = (geometry().height() - textRect.height() - detailsRect.height() - m_lineSpacing + 2) / 2, iconXOffset = 0, iconYOffset = !m_symbol.isNull() ? (geometry().height() - m_symbol.height()) / 2 : 0, shadowOffset = 1;
+        textYOffset = (geometry().height() - textRect.height() - detailsRect.height() - m_lineSpacing + 2) / 2, iconXOffset = 0, iconYOffset = !m_symbol.isNull() ? (geometry().height() - symbolSize) / 2 : 0, shadowOffset = 1;
 
     if (layoutDirection() == Qt::RightToLeft)
         iconXOffset = 2 + textRect.width();
     else
-        textXOffset = 2 + m_symbol.width();
+        textXOffset = 2 + symbolSize;
 
     // draw background
     QPainter painter(this);
@@ -357,7 +359,7 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
 
     // draw icon if present
     if (!m_symbol.isNull())
-        painter.drawPixmap(5 + iconXOffset, iconYOffset, m_symbol, 0, 0, m_symbol.width(), m_symbol.height());
+        painter.drawPixmap(5 + iconXOffset, iconYOffset, m_symbol.pixmap(symbolSize));
 
     const int xStartPoint = 5 + textXOffset;
     const int yStartPoint = textYOffset;

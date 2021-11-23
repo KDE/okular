@@ -11,7 +11,7 @@
 #define _PAGEVIEW_UTILS_H_
 
 #include <QHash>
-#include <QPixmap>
+#include <QIcon>
 #include <QRect>
 #include <qwidget.h>
 
@@ -118,7 +118,7 @@ private:
     void computeSizeAndResize();
     QString m_message;
     QString m_details;
-    QPixmap m_symbol;
+    QIcon m_symbol;
     QTimer *m_timer;
     int m_lineSpacing;
 };

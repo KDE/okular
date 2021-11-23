@@ -501,9 +501,6 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
 
     connect(document, &Okular::Document::processMovieAction, this, &PageView::slotProcessMovieAction);
     connect(document, &Okular::Document::processRenditionAction, this, &PageView::slotProcessRenditionAction);
-
-    // schedule the welcome message
-    QMetaObject::invokeMethod(this, "slotShowWelcome", Qt::QueuedConnection);
 }
 
 PageView::~PageView()
@@ -4696,12 +4693,6 @@ void PageView::slotDragScroll()
     scrollTo(horizontalScrollBar()->value() + d->dragScrollVector.x(), verticalScrollBar()->value() + d->dragScrollVector.y());
     QPoint p = contentAreaPosition() + viewport()->mapFromGlobal(QCursor::pos());
     updateSelection(p);
-}
-
-void PageView::slotShowWelcome()
-{
-    // show initial welcome text
-    d->messageWindow->display(i18n("Welcome"), QString(), PageViewMessage::Info, 2000);
 }
 
 void PageView::slotShowSizeAllCursor()

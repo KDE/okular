@@ -10,6 +10,10 @@ if (ANDROID)
     find_package(Qt5 COMPONENTS AndroidExtras)
     target_sources(okularkirigami PRIVATE android.cpp)
     target_link_libraries(okularkirigami Qt5::AndroidExtras)
+    # androiddeployqt is not super smart and sometimes fails packaging
+    # some of the libraries we only use in plugins, here we help it by linking to those "extra" libs
+    # that are not really needed
+    target_link_libraries(okularkirigami Poppler::Qt5)
 endif()
 
 install(TARGETS okularkirigami ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

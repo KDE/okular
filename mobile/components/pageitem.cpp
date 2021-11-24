@@ -27,7 +27,6 @@ PageItem::PageItem(QQuickItem *parent)
     : QQuickItem(parent)
     , Okular::View(QStringLiteral("PageView"))
     , m_page(nullptr)
-    , m_smooth(false)
     , m_bookmarked(false)
     , m_isThumbnail(false)
 {
@@ -70,8 +69,9 @@ void PageItem::setFlickable(QQuickItem *flickable)
     m_flickable = flickable;
 
     if (flickable) {
-        connect(flickable, SIGNAL(contentXChanged()), this, SLOT(contentXChanged()));
-        connect(flickable, SIGNAL(contentYChanged()), this, SLOT(contentYChanged()));
+        // QQuickFlickable is not exported so we need the old-style connects here
+        connect(flickable, SIGNAL(contentXChanged()), this, SLOT(contentXChanged())); // clazy:exclude=old-style-connect
+        connect(flickable, SIGNAL(contentYChanged()), this, SLOT(contentYChanged())); // clazy:exclude=old-style-connect
     }
 
     emit flickableChanged();
@@ -151,20 +151,6 @@ int PageItem::implicitHeight() const
         return m_page->height();
     }
     return 0;
-}
-
-void PageItem::setSmooth(const bool smooth)
-{
-    if (smooth == m_smooth) {
-        return;
-    }
-    m_smooth = smooth;
-    update();
-}
-
-bool PageItem::smooth() const
-{
-    return m_smooth;
 }
 
 bool PageItem::isBookmarked()
@@ -344,7 +330,7 @@ void PageItem::paint()
     QPixmap pix(limits.size());
     pix.setDevicePixelRatio(dpr);
     QPainter p(&pix);
-    p.setRenderHint(QPainter::Antialiasing, m_smooth);
+    p.setRenderHint(QPainter::Antialiasing, false);
     PagePainter::paintPageOnPainter(&p, m_page, observer, flags, width(), height(), limits);
     p.end();
 
@@ -410,10 +396,6 @@ void PageItem::setIsThumbnail(bool thumbnail)
     }
 
     m_isThumbnail = thumbnail;
-
-    if (thumbnail) {
-        m_smooth = false;
-    }
 
     /*
     m_redrawTimer->setInterval(thumbnail ? 0 : REDRAW_TIMEOUT);

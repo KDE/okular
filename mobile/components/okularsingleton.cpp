@@ -28,8 +28,10 @@ QStringList OkularSingleton::nameFilters() const
         const QStringList mimeTypes = service->mimeTypes();
 
         for (const auto &mimeName : mimeTypes) {
-            for (const auto &suffix : md.mimeTypeForName(mimeName).suffixes())
+            const QStringList suffixes = md.mimeTypeForName(mimeName).suffixes();
+            for (const QString &suffix : suffixes) {
                 supportedPatterns += QStringLiteral("*.") + suffix;
+            }
         }
     }
 

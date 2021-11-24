@@ -37,7 +37,9 @@ QQC2.ScrollView {
         }
         Connections {
             target: root.document
-            onUrlChanged: resizeTimer.restart()
+            function onUrlChanged() {
+                resizeTimer.restart()
+            }
         }
         Timer {
             id: resizeTimer

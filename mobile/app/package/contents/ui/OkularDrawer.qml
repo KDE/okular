@@ -36,7 +36,9 @@ Kirigami.OverlayDrawer {
 
         Connections {
             target: documentItem
-            onUrlChanged: thumbnailsButton.checked = true;
+            function onUrlChanged() {
+                thumbnailsButton.checked = true;
+            }
         }
 
         QQC2.ToolBar {

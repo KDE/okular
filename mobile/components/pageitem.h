@@ -44,11 +44,6 @@ class PageItem : public QQuickItem, public Okular::View
     Q_PROPERTY(int pageNumber READ pageNumber WRITE setPageNumber NOTIFY pageNumberChanged)
 
     /**
-     * If true, the page will be rendered with antialias
-     */
-    Q_PROPERTY(bool smooth READ smooth WRITE setSmooth)
-
-    /**
      * "Natural" width of the page
      */
     Q_PROPERTY(int implicitWidth READ implicitWidth NOTIFY implicitWidthChanged)
@@ -85,9 +80,6 @@ public:
 
     int pageNumber() const;
     void setPageNumber(int number);
-
-    bool smooth() const;
-    void setSmooth(bool smooth);
 
     bool isBookmarked();
     void setBookmarked(bool bookmarked);
@@ -130,8 +122,6 @@ public:
 
 Q_SIGNALS:
     void flickableChanged();
-    void implicitWidthChanged();
-    void implicitHeightChanged();
     void documentChanged();
     void pageNumberChanged();
     void bookmarkedChanged();
@@ -151,7 +141,6 @@ private:
     void refreshPage();
 
     const Okular::Page *m_page;
-    bool m_smooth;
     bool m_bookmarked;
     bool m_isThumbnail;
     QPointer<DocumentItem> m_documentItem;

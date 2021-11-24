@@ -32,8 +32,8 @@ else()
     set(BUILD_MOBILE OFF)
 endif()
 
-if (ANDROID)
-    set(QT_REQUIRED_VERSION "5.13.0")
+if (BUILD_MOBILE)
+    set(QT_REQUIRED_VERSION "5.15.2")
 endif()
 
 find_package(ECM ${KF5_REQUIRED_VERSION} CONFIG REQUIRED)

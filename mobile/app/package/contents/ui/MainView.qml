@@ -39,15 +39,15 @@ Kirigami.Page {
     Connections {
         target: root.document
 
-        onError: (text, duration) => {
+        function onError(text, duration) {
             inlineMessage.showMessage(Kirigami.MessageType.Error, text,  duration);
         }
 
-        onWarning: (text, duration) => {
+        function onWarning(text, duration) {
             inlineMessage.showMessage(Kirigami.MessageType.Warning, text,  duration);
         }
 
-        onNotice: (text, duration) => {
+        function onNotice(text, duration) {
             inlineMessage.showMessage(Kirigami.MessageType.Information, text,  duration);
         }
     }
@@ -89,7 +89,9 @@ Kirigami.Page {
     Connections {
         id: bookmarkConnection
         target: pageArea.page
-        onBookmarkedChanged: actions.main.checked = pageArea.page.bookmarked
+        function onBookmarkedChanged() {
+            actions.main.checked = pageArea.page.bookmarked
+        }
     }
     QQC2.ProgressBar {
         id: bar

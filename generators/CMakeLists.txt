@@ -109,9 +109,7 @@ if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)
 endif(LIBSPECTRE_FOUND)
 
-if(KF5KExiv2_FOUND)
-  add_subdirectory( kimgio )
-endif()
+add_subdirectory( kimgio )
 
 if(CHM_FOUND AND KF5KHtml_FOUND AND LIBZIP_FOUND)
   add_subdirectory( chm )

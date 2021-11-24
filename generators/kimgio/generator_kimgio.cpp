@@ -25,7 +25,9 @@
 #include <QAction>
 #include <QIcon>
 
+#ifdef WITH_KEXIV
 #include <kexiv2/kexiv2.h>
+#endif
 
 #include <core/page.h>
 
@@ -81,11 +83,13 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QSt
     auto mime = db.mimeTypeForFileNameAndData(fileName, fileData);
     docInfo.set(Okular::DocumentInfo::MimeType, mime.name());
 
+#ifdef WITH_KEXIV
     // Apply transformations dictated by Exif metadata
     KExiv2Iface::KExiv2 exifMetadata;
     if (exifMetadata.loadFromData(fileData)) {
         exifMetadata.rotateExifQImage(m_img, exifMetadata.getImageOrientation());
     }
+#endif
 
     pagesVector.resize(1);
 

@@ -906,11 +906,43 @@ void PresentationWidget::resizeEvent(QResizeEvent *re)
     // END Content area
 }
 
+void PresentationWidget::enterEvent(QEvent *e)
+{
+    if (!m_topBar->isHidden()) {
+        QEnterEvent *ee = static_cast<QEnterEvent *>(e);
+        // This can happen when we exited the widget via a "tooltip" and the tooltip disappears
+        if (ee->y() > (m_topBar->height() + 1)) {
+            showTopBar(false);
+        }
+    }
+    QWidget::enterEvent(e);
+}
+
 void PresentationWidget::leaveEvent(QEvent *e)
 {
     Q_UNUSED(e)
 
     if (!m_topBar->isHidden()) {
+        if (QToolTip::isVisible()) {
+            // make sure we're not hovering over the tooltip
+            // because the world is sad, this works differently on Wayland and X11
+            // on X11 the widget under the cursor is the tooltip window
+            // on wayland it's the button generating the tooltip (why? no idea)
+            const QWidget *widgetUnderCursor = qApp->widgetAt(QCursor::pos());
+            if (widgetUnderCursor) {
+                const QWidget *widgetUnderCursorWindow = widgetUnderCursor->window();
+                if (widgetUnderCursorWindow == this) {
+                    qDebug() << "Wayland";
+                    return;
+                } else {
+                    const QWidget *widgetUnderCursorParentWindow = widgetUnderCursorWindow->parentWidget() ? widgetUnderCursorWindow->parentWidget()->window() : nullptr;
+                    if (widgetUnderCursorParentWindow == this) {
+                        qDebug() << "X11";
+                        return;
+                    }
+                }
+            }
+        }
         showTopBar(false);
     }
 }

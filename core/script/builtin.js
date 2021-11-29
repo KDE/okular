@@ -67,10 +67,11 @@ function AFSimple_Calculate( cFunction, cFields )
  *
  * nDec is the number of places after the decimal point.
  *
- * sepStyle is an integer denoting whether to use a separator
- *          If it is 1 comma should be used.
- *          If it is 2 a dot should be used.
- *          The decimal seperator is changed accordingly.
+ * sepStyle is an integer denoting separator style
+ *          0 => . as decimal separator   , as thousand separators => 1,234.56
+ *          1 => . as decimal separator     no thousand separators => 1234.56
+ *          2 => , as decimal separator   . as thousand separators => 1.234,56
+ *          3 => , as decimal separator     no thousand separators => 1234,56
  *
  * nexStyle is the formatting used for negative numbers: - not implemented.
  * 0 = MinusBlack
@@ -95,21 +96,27 @@ function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCur
     var ret;
     var localized = util.stringToNumber( event.value );
 
-    if ( sepStyle === 2 )
+    if ( sepStyle === 2 || sepStyle === 3 )
     {
-        // Use de_DE as the locale for the dot seperator format
+        // Use de_DE as the locale for the dot separator format
         ret = util.numberToString( localized, "f", nDec, 'de_DE' );
+
+        if ( sepStyle === 3 )
+        {
+            // No thousands separators. Remove all dots from the DE format.
+            ret = ret.replace( /\./g, '' );
+        }
     }
     else
     {
         // Otherwise US
         ret = util.numberToString( localized, "f", nDec, 'en_US' );
-    }
 
-    if ( sepStyle === 0 )
-    {
-        // No seperators. Remove all commas from the US format.
-        ret.replace( /,/g, '' );
+        if ( sepStyle === 1 )
+        {
+            // No thousands separators. Remove all commas from the US format.
+            ret = ret.replace( /,/g, '' );
+        }
     }
 
     if ( strCurrency )

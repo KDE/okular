@@ -11,7 +11,15 @@ project(okular VERSION ${RELEASE_SERVICE_VERSION})
 set(QT_REQUIRED_VERSION "5.12.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
 set(KF5_REQUIRED_VERSION "5.68.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
-set(OKULAR_UI "desktop" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop")
+set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
+
+if(OKULAR_UI STREQUAL "")
+    if(ANDROID)
+        set(OKULAR_UI "mobile")
+    else()
+        set(OKULAR_UI "desktop")
+    endif()
+endif()
 
 if(OKULAR_UI STREQUAL "desktop" OR OKULAR_UI STREQUAL "both")
     set(BUILD_DESKTOP ON)
@@ -94,7 +102,6 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     I18n
     IconThemes
     KIO
-    Parts
     TextWidgets
     ThreadWeaver
     WindowSystem
@@ -103,6 +110,10 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     JS
     Wallet
 )
+
+if (BUILD_DESKTOP)
+    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts)
+endif()
 
 if(KF5Wallet_FOUND)
     add_definitions(-DWITH_KWALLET=1)

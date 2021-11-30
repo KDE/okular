@@ -9,13 +9,17 @@ Dependencies:
     'frameworks/ki18n': '@stable'
     'frameworks/kio': '@stable'
     'frameworks/karchive': '@stable'
-    'frameworks/khtml': '@stable'
-    'frameworks/kjs': '@stable'
     'libraries/phonon': '@stable'
-    'graphics/libkexiv2': '@same'
     'graphics/kdegraphics-mobipocket': '@same'
 
-- 'on': ['Linux', 'FreeBSD', 'macOS']
+- 'on': ['Linux', 'FreeBSD']
   'require':
     'frameworks/kactivities': '@stable'
+    'frameworks/khtml': '@stable'
+    'frameworks/kjs': '@stable'
     'frameworks/kpty': '@stable'
+    'graphics/libkexiv2': '@same'
+
+- 'on': ['Android']
+  'require':
+    'frameworks/kirigami': '@stable'

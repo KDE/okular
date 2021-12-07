@@ -175,3 +175,20 @@ QList<CertificateInfo *> CertificateStore::signingCertificates(bool *userCancell
     *userCancelled = false;
     return QList<CertificateInfo *>();
 }
+
+QList<CertificateInfo *> CertificateStore::signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const
+{
+    const QDateTime now = QDateTime::currentDateTime();
+    QList<Okular::CertificateInfo *> certs = signingCertificates(userCancelled);
+    auto it = certs.begin();
+    *nonDateValidCerts = false;
+    while (it != certs.end()) {
+        if ((*it)->validityStart() > now || now > (*it)->validityEnd()) {
+            it = certs.erase(it);
+            *nonDateValidCerts = true;
+        } else {
+            ++it;
+        }
+    }
+    return certs;
+}

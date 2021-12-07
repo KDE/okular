@@ -355,37 +355,25 @@ public:
         }
 
         const Okular::CertificateStore *certStore = m_document->certificateStore();
-        bool userCancelled;
-        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates(&userCancelled);
+        bool userCancelled, nonDateValidCerts;
+        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
         if (userCancelled) {
             m_aborted = true;
             return {};
         }
 
-        QStringList items;
-        QHash<QString, Okular::CertificateInfo *> nickToCert;
-        const QDateTime now = QDateTime::currentDateTime();
-        for (auto cert : certs) {
-            if (cert->validityStart() <= now && now <= cert->validityEnd()) {
-                items.append(cert->nickName());
-                nickToCert[cert->nickName()] = cert;
-            }
-        }
-
-        if (items.isEmpty()) {
+        if (certs.isEmpty()) {
             m_creationCompleted = false;
             clicked = false;
-            if (certs.isEmpty()) {
-                KMessageBox::information(m_pageView,
-                                         i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
-                                              QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
-                                         QString(),
-                                         QString(),
-                                         KMessageBox::Notify | KMessageBox::AllowLink);
-            } else {
-                KMessageBox::information(m_pageView, i18n("All your signing certificates are either not valid yet or are past their validity date."));
-            }
+            m_pageView->showNoSigningCertificatesDialog(nonDateValidCerts);
             return {};
+        }
+
+        QStringList items;
+        QHash<QString, Okular::CertificateInfo *> nickToCert;
+        for (auto cert : certs) {
+            items.append(cert->nickName());
+            nickToCert[cert->nickName()] = cert;
         }
 
         bool resok = false;

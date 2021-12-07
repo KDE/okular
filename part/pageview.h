@@ -115,6 +115,8 @@ public:
 
     void highlightSignatureFormWidget(const Okular::FormFieldSignature *form);
 
+    void showNoSigningCertificatesDialog(bool nonDateValidCerts);
+
 public Q_SLOTS:
     void copyTextSelection() const;
     void selectAll();

@@ -4880,10 +4880,36 @@ void PageView::slotSetMouseTableSelect()
     d->annotator->detachAnnotation();
 }
 
+void PageView::showNoSigningCertificatesDialog(bool nonDateValidCerts)
+{
+    if (nonDateValidCerts) {
+        KMessageBox::information(this, i18n("All your signing certificates are either not valid yet or are past their validity date."));
+    } else {
+        KMessageBox::information(this,
+                                 i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
+                                      QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
+                                 QString(),
+                                 QString(),
+                                 KMessageBox::Notify | KMessageBox::AllowLink);
+    }
+}
+
 void PageView::slotSignature()
 {
     if (!d->document->isHistoryClean()) {
         KMessageBox::information(this, i18n("You have unsaved changes. Please save the document before signing it."));
+        return;
+    }
+
+    const Okular::CertificateStore *certStore = d->document->certificateStore();
+    bool userCancelled, nonDateValidCerts;
+    const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+    if (userCancelled) {
+        return;
+    }
+
+    if (certs.isEmpty()) {
+        showNoSigningCertificatesDialog(nonDateValidCerts);
         return;
     }
 

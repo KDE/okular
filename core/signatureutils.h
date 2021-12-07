@@ -266,6 +266,15 @@ public:
      */
     virtual QList<CertificateInfo *> signingCertificates(bool *userCancelled) const;
 
+    /**
+     * Returns list of valid, usable signing certificates for current date and time.
+     *
+     * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
+     *
+     * nonDateValidCerts is true if the user has signing certificates but their validity start date is in the future or past their validity end date.
+     */
+    QList<CertificateInfo *> signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const;
+
 protected:
     CertificateStore();
 

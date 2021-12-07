@@ -257,7 +257,8 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
         if ((record->type == PLKR_DRTYPE_TEXT_COMPRESSED) || (record->type == PLKR_DRTYPE_IMAGE_COMPRESSED) || (record->type == PLKR_DRTYPE_TABLE_COMPRESSED) || (record->type == PLKR_DRTYPE_GLYPHPAGE) ||
             (record->type == PLKR_DRTYPE_LINKS_COMPRESSED)) {
             unsigned char *start_of_data, *output_ptr;
-            int len_of_data, buffer_remaining, buf_to_use;
+            int len_of_data, buf_to_use;
+            // int buffer_remaining;
             unsigned char *buf = (unsigned char *)malloc(record->size);
 
             if (!handle->seek(handle, record->offset) || (handle->read(handle, buf, record->size, record->size) != record->size)) {
@@ -270,7 +271,7 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
 
             memcpy(tbuffer, buf, 8);
             output_ptr = tbuffer + 8;
-            buffer_remaining = blen - 8;
+            // buffer_remaining = blen - 8;
             start_of_data = buf + 8;
             len_of_data = record->size - 8;
             if (record->type == PLKR_DRTYPE_TEXT_COMPRESSED) {
@@ -279,7 +280,7 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
                 start_of_data += (4 * record->nparagraphs);
                 len_of_data -= (4 * record->nparagraphs);
                 output_ptr += (4 * record->nparagraphs);
-                buffer_remaining -= (4 * record->nparagraphs);
+                // buffer_remaining -= (4 * record->nparagraphs);
             }
 
             buf_to_use = size_needed - (start_of_data - buf);

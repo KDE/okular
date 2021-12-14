@@ -15,7 +15,7 @@
 #include <QPrinter>
 #include <QString>
 
-#include "generator.h"
+#include "document.h"
 #include "okularcore_export.h"
 
 class QSize;
@@ -82,23 +82,13 @@ public:
      *
      * @since 1.8
      */
-    // TODO make file const QString & when a BIC change happens somehwere else
-    static int printFile(QPrinter &printer, const QString file, QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, ScaleMode scaleMode);
-
-    /** Print a file using the settings in QPrinter
-     *
-     *  Same as 'printFile()' with 7 parameters, but always using a 'scaleMode' of
-     * 'FitToPrintArea'.
-     *
-     * @since 0.14 (KDE 4.8)
-     */
-    // TODO merge with function above when a BIC change happens somehwere else
-    static int printFile(QPrinter &printer,
-                         const QString file,
-                         QPrinter::Orientation documentOrientation,
-                         FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
-                         PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
-                         const QString &pageRange = QString());
+    static Document::PrintError printFile(QPrinter &printer,
+                                          const QString &file,
+                                          QPrinter::Orientation documentOrientation,
+                                          FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
+                                          PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
+                                          const QString &pageRange = QString(),
+                                          ScaleMode scaleMode = ScaleMode::FitToPrintArea);
 
     /** Return the list of pages selected by the user in the Print Dialog
      *
@@ -159,24 +149,13 @@ public:
      */
     static QSize psPaperSize(QPrinter &printer);
 
-    /**
-     * Convert the code returned by printFile* to PrintError
-     * @since 0.11 (KDE 4.5)
-     */
-    static Generator::PrintError printError(int c);
-
 protected:
     bool detectCupsService();
     bool detectCupsConfig();
 
-    // TODO make fileList const QStringList & when a BIC change happens somehwere else
-    int doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation);
-    // TODO merge with function above when a BIC change happens somehwere else
-    /// @since 1.8
-    int doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation, ScaleMode scaleMode);
+    Document::PrintError
+    doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation, ScaleMode scaleMode);
 
-    QStringList printArguments(QPrinter &printer, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, bool useCupsOptions, const QString &pageRange, const QString &version, QPrinter::Orientation documentOrientation);
-    // TODO merge with function above when a BIC change happens somehwere else
     /// @since 1.8
     QStringList printArguments(QPrinter &printer,
                                FileDeletePolicy fileDeletePolicy,
@@ -193,8 +172,6 @@ protected:
     QStringList deleteFile(QPrinter &printer, FileDeletePolicy fileDeletePolicy, const QString &version);
     QStringList pages(QPrinter &printer, PageSelectPolicy pageSelectPolicy, const QString &pageRange, bool useCupsOptions, const QString &version);
 
-    QStringList cupsOptions(QPrinter &printer, QPrinter::Orientation documentOrientation);
-    // TODO merge with function above when a BIC change happens somehwere else
     /// @since 1.8
     QStringList cupsOptions(QPrinter &printer, QPrinter::Orientation documentOrientation, ScaleMode scaleMode);
     QStringList optionMedia(QPrinter &printer);
@@ -204,8 +181,6 @@ protected:
     QStringList optionDoubleSidedPrinting(QPrinter &printer);
     QStringList optionPageOrder(QPrinter &printer);
     QStringList optionCollateCopies(QPrinter &printer);
-    QStringList optionPageMargins(QPrinter &printer);
-    // TODO merge with function above when a BIC change happens somehwere else
     /// @since 1.8
     QStringList optionPageMargins(QPrinter &printer, ScaleMode scaleMode);
     QStringList optionCupsProperties(QPrinter &printer);

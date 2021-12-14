@@ -41,7 +41,7 @@ public:
     QVariant metaData(const QString &key, const QVariant &option) const override;
 
     // print document using already configured kprinter
-    bool print(QPrinter & /*printer*/) override;
+    Okular::Document::PrintError print(QPrinter & /*printer*/) override;
     QString fileName() const;
 
     bool reparseConfig() override;

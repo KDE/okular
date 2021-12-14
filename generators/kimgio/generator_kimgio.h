@@ -30,7 +30,7 @@ public:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
 
     // [INHERITED] print document using already configured kprinter
-    bool print(QPrinter &printer) override;
+    Okular::Document::PrintError print(QPrinter &printer) override;
 
     // [INHERITED] document information
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;

@@ -81,10 +81,8 @@ void GSGenerator::addPages(KConfigDialog *dlg)
     dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), QStringLiteral("okular-gv"), i18n("Ghostscript Backend Configuration"));
 }
 
-bool GSGenerator::print(QPrinter &printer)
+Okular::Document::PrintError GSGenerator::print(QPrinter &printer)
 {
-    bool result = false;
-
     // Create tempfile to write to
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
 
@@ -99,7 +97,7 @@ bool GSGenerator::print(QPrinter &printer)
     }
 
     if (!tf.open())
-        return false;
+        return Okular::Document::TemporaryFileOpenPrintError;
 
     SpectreExporter *exporter = spectre_exporter_new(m_internalDocument, exportFormat);
     SpectreStatus exportStatus = spectre_exporter_begin(exporter, tf.fileName().toLatin1().constData());
@@ -121,12 +119,10 @@ bool GSGenerator::print(QPrinter &printer)
 
     if (exportStatus == SPECTRE_STATUS_SUCCESS && endStatus == SPECTRE_STATUS_SUCCESS) {
         tf.setAutoRemove(false);
-        int ret = Okular::FilePrinter::printFile(printer, fileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
-        if (ret >= 0)
-            result = true;
+        return Okular::FilePrinter::printFile(printer, fileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
     }
 
-    return result;
+    return Okular::Document::UnknownPrintError;
 }
 
 bool GSGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)

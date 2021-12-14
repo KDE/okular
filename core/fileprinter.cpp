@@ -27,57 +27,46 @@
 
 using namespace Okular;
 
-int FilePrinter::printFile(QPrinter &printer,
-                           const QString file, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
-                           QPrinter::Orientation documentOrientation,
-                           FileDeletePolicy fileDeletePolicy,
-                           PageSelectPolicy pageSelectPolicy,
-                           const QString &pageRange)
-{
-    return printFile(printer, file, documentOrientation, fileDeletePolicy, pageSelectPolicy, pageRange, ScaleMode::FitToPrintArea);
-}
-
-int FilePrinter::printFile(QPrinter &printer,
-                           const QString file, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
-                           QPrinter::Orientation documentOrientation,
-                           FileDeletePolicy fileDeletePolicy,
-                           PageSelectPolicy pageSelectPolicy,
-                           const QString &pageRange,
-                           ScaleMode scaleMode)
+Document::PrintError
+FilePrinter::printFile(QPrinter &printer, const QString &file, QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, ScaleMode scaleMode)
 {
     FilePrinter fp;
     return fp.doPrintFiles(printer, QStringList(file), fileDeletePolicy, pageSelectPolicy, pageRange, documentOrientation, scaleMode);
 }
 
-int FilePrinter::doPrintFiles(QPrinter &printer,
-                              const QStringList fileList, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
-                              FileDeletePolicy fileDeletePolicy,
-                              PageSelectPolicy pageSelectPolicy,
-                              const QString &pageRange,
-                              QPrinter::Orientation documentOrientation)
+static Document::PrintError doKProcessExecute(const QString &exe, const QStringList &argList)
 {
-    return doPrintFiles(printer, fileList, fileDeletePolicy, pageSelectPolicy, pageRange, documentOrientation, ScaleMode::FitToPrintArea);
+    const int ret = KProcess::execute(exe, argList);
+    if (ret == -1)
+        return Document::PrintingProcessCrashPrintError;
+    if (ret == -2)
+        return Document::PrintingProcessStartPrintError;
+    if (ret < 0)
+        return Document::UnknownPrintError;
+
+    return Document::NoPrintError;
 }
 
-int FilePrinter::doPrintFiles(QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation, ScaleMode scaleMode)
+Document::PrintError
+FilePrinter::doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation, ScaleMode scaleMode)
 {
     if (fileList.size() < 1) {
-        return -8;
+        return Document::NoFileToPrintError;
     }
 
     for (QStringList::ConstIterator it = fileList.constBegin(); it != fileList.constEnd(); ++it) {
         if (!QFile::exists(*it)) {
-            return -7;
+            return Document::UnableToFindFilePrintError;
         }
     }
 
     if (printer.printerState() == QPrinter::Aborted || printer.printerState() == QPrinter::Error) {
-        return -6;
+        return Document::InvalidPrinterStatePrintError;
     }
 
     QString exe;
     QStringList argList;
-    int ret;
+    Document::PrintError ret;
 
     // Print to File if a filename set, assumes there must be only 1 file
     if (!printer.outputFileName().isEmpty()) {
@@ -94,30 +83,30 @@ int FilePrinter::doPrintFiles(QPrinter &printer, QStringList fileList, FileDelet
                 bool res = QFile::rename(fileList[0], printer.outputFileName());
                 if (res) {
                     doDeleteFile = false;
-                    ret = 0;
+                    ret = Document::NoPrintError;
                 } else {
-                    ret = -5;
+                    ret = Document::PrintToFilePrintError;
                 }
             } else {
                 bool res = QFile::copy(fileList[0], printer.outputFileName());
                 if (res) {
-                    ret = 0;
+                    ret = Document::NoPrintError;
                 } else {
-                    ret = -5;
+                    ret = Document::PrintToFilePrintError;
                 }
             }
         } else if (inputFileInfo.suffix() == QLatin1String("ps") && printer.outputFormat() == QPrinter::PdfFormat && ps2pdfAvailable()) {
             exe = QStringLiteral("ps2pdf");
             argList << fileList[0] << printer.outputFileName();
             qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
-            ret = KProcess::execute(exe, argList);
+            ret = doKProcessExecute(exe, argList);
         } else if (inputFileInfo.suffix() == QLatin1String("pdf") && printer.outputFormat() == QPrinter::NativeFormat && pdf2psAvailable()) {
             exe = QStringLiteral("pdf2ps");
             argList << fileList[0] << printer.outputFileName();
             qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
-            ret = KProcess::execute(exe, argList);
+            ret = doKProcessExecute(exe, argList);
         } else {
-            ret = -5;
+            ret = Document::PrintToFilePrintError;
         }
 
         if (doDeleteFile) {
@@ -139,14 +128,14 @@ int FilePrinter::doPrintFiles(QPrinter &printer, QStringList fileList, FileDelet
         } else if (!QStandardPaths::findExecutable(QStringLiteral("lp")).isEmpty()) {
             exe = QStringLiteral("lp");
         } else {
-            return -9;
+            return Document::NoBinaryToPrintError;
         }
 
         bool useCupsOptions = cupsAvailable();
         argList = printArguments(printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, exe, documentOrientation, scaleMode) << fileList;
         qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
 
-        ret = KProcess::execute(exe, argList);
+        ret = doKProcessExecute(exe, argList);
     }
 
     return ret;
@@ -293,47 +282,6 @@ QSize FilePrinter::psPaperSize(QPrinter &printer)
     return size;
 }
 
-Generator::PrintError FilePrinter::printError(int c)
-{
-    Generator::PrintError pe;
-    if (c >= 0) {
-        pe = Generator::NoPrintError;
-    } else {
-        switch (c) {
-        case -1:
-            pe = Generator::PrintingProcessCrashPrintError;
-            break;
-        case -2:
-            pe = Generator::PrintingProcessStartPrintError;
-            break;
-        case -5:
-            pe = Generator::PrintToFilePrintError;
-            break;
-        case -6:
-            pe = Generator::InvalidPrinterStatePrintError;
-            break;
-        case -7:
-            pe = Generator::UnableToFindFilePrintError;
-            break;
-        case -8:
-            pe = Generator::NoFileToPrintError;
-            break;
-        case -9:
-            pe = Generator::NoBinaryToPrintError;
-            break;
-        default:
-            pe = Generator::UnknownPrintError;
-        }
-    }
-    return pe;
-}
-
-QStringList
-FilePrinter::printArguments(QPrinter &printer, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, bool useCupsOptions, const QString &pageRange, const QString &version, QPrinter::Orientation documentOrientation)
-{
-    return printArguments(printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, version, documentOrientation, ScaleMode::FitToPrintArea);
-}
-
 QStringList FilePrinter::printArguments(QPrinter &printer,
                                         FileDeletePolicy fileDeletePolicy,
                                         PageSelectPolicy pageSelectPolicy,
@@ -454,11 +402,6 @@ QStringList FilePrinter::pages(QPrinter &printer, PageSelectPolicy pageSelectPol
     }
 
     return QStringList(); // AllPages
-}
-
-QStringList FilePrinter::cupsOptions(QPrinter &printer, QPrinter::Orientation documentOrientation)
-{
-    return cupsOptions(printer, documentOrientation, ScaleMode::FitToPrintArea);
 }
 
 QStringList FilePrinter::cupsOptions(QPrinter &printer, QPrinter::Orientation documentOrientation, ScaleMode scaleMode)
@@ -666,11 +609,6 @@ QStringList FilePrinter::optionCollateCopies(QPrinter &printer)
         return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=True");
     }
     return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=False");
-}
-
-QStringList FilePrinter::optionPageMargins(QPrinter &printer)
-{
-    return optionPageMargins(printer, ScaleMode::FitToPrintArea);
 }
 
 QStringList FilePrinter::optionPageMargins(QPrinter &printer, ScaleMode scaleMode)

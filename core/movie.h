@@ -58,7 +58,7 @@ public:
     /**
      * Sets the size for the movie.
      */
-    void setSize(const QSize &aspect); // TODO remove the & when we do a BIC change elsewhere
+    void setSize(const QSize aspect);
 
     /**
      * Returns the size of the movie.

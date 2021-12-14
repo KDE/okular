@@ -78,16 +78,10 @@ Q_SIGNALS:
 
     /**
      * Adds a set of meta data to the generator.
-     */
-    void addMetaData(const QString &key, const QString &value, const QString &title); // clazy:exclude=overloaded-signal
-
-    // TODO When we can do a BIC change rename one of the two addMetaData functions (or see if we can kill one)
-    /**
-     * Adds a set of meta data to the generator.
      *
      * @since 0.7 (KDE 4.1)
      */
-    void addMetaData(DocumentInfo::Key key, const QString &value); // clazy:exclude=overloaded-signal
+    void addMetaData(DocumentInfo::Key key, const QString &value);
 
     /**
      * This signal should be emitted whenever an error occurred in the converter.
@@ -182,7 +176,7 @@ public:
     void generatePixmap(Okular::PixmapRequest *request) override;
 
     // [INHERITED] print document using already configured QPrinter
-    bool print(QPrinter &printer) override;
+    Document::PrintError print(QPrinter &printer) override;
 
     // [INHERITED] text exporting
     Okular::ExportFormat::List exportFormats() const override;

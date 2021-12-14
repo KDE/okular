@@ -627,12 +627,10 @@ public:
     /**
      * Describes how search ended
      */
-    // TODO remove EndOfDocumentReached when we break API
     enum SearchStatus {
-        MatchFound,          ///< Any match was found
-        NoMatchFound,        ///< No match was found
-        SearchCancelled,     ///< The search was cancelled
-        EndOfDocumentReached ///< This is not ever emitted since 1.3. The end of document was reached without any match @since 0.20 (KDE 4.14)
+        MatchFound,     ///< Any match was found
+        NoMatchFound,   ///< No match was found
+        SearchCancelled ///< The search was cancelled
     };
 
     /**
@@ -744,16 +742,29 @@ public:
      */
     bool supportsPrintToFile() const;
 
+    /// @since 22.04
+    enum PrintError {
+        NoPrintError, ///< Printing succeeded
+        UnknownPrintError,
+        TemporaryFileOpenPrintError,
+        FileConversionPrintError,
+        PrintingProcessCrashPrintError,
+        PrintingProcessStartPrintError,
+        PrintToFilePrintError,
+        InvalidPrinterStatePrintError,
+        UnableToFindFilePrintError,
+        NoFileToPrintError,
+        NoBinaryToPrintError,
+        InvalidPageSizePrintError
+    };
+
     /**
      * Prints the document to the given @p printer.
      */
-    bool print(QPrinter &printer);
+    Document::PrintError print(QPrinter &printer);
 
-    /**
-     * Returns the last print error in case print() failed
-     * @since 0.11 (KDE 4.5)
-     */
-    QString printError() const;
+    /// @since 22.04
+    static QString printErrorString(PrintError error);
 
     /**
      * Returns a custom printer configuration page or 0 if no

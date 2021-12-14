@@ -28,7 +28,7 @@ public:
      * Rotate the rect \p source in the area \p width x \p height with the
      * specified \p orientation .
      */
-    static QRect rotateRect(const QRect &source, int width, int height, int orientation); // TODO remove the & when we do a BIC change elsewhere
+    static QRect rotateRect(const QRect source, int width, int height, int orientation);
 
     /**
      * Return the real DPI of the display containing given widget

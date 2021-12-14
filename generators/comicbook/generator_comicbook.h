@@ -24,7 +24,7 @@ public:
     bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
 
     // [INHERITED] print document using already configured kprinter
-    bool print(QPrinter &printer) override;
+    Okular::Document::PrintError print(QPrinter &printer) override;
 
 protected:
     bool doCloseDocument() override;

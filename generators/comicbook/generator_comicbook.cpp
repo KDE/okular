@@ -62,7 +62,7 @@ QImage ComicBookGenerator::image(Okular::PixmapRequest *request)
     return image.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
-bool ComicBookGenerator::print(QPrinter &printer)
+Okular::Document::PrintError ComicBookGenerator::print(QPrinter &printer)
 {
     QPainter p(&printer);
 
@@ -81,7 +81,7 @@ bool ComicBookGenerator::print(QPrinter &printer)
         p.drawImage(0, 0, image);
     }
 
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 #include "generator_comicbook.moc"

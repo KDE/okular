@@ -155,14 +155,12 @@ const Okular::DocumentSynopsis *DjVuGenerator::generateDocumentSynopsis()
     return m_docSyn;
 }
 
-bool DjVuGenerator::print(QPrinter &printer)
+Okular::Document::PrintError DjVuGenerator::print(QPrinter &printer)
 {
-    bool result = false;
-
     // Create tempfile to write to
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if (!tf.open())
-        return false;
+        return Okular::Document::TemporaryFileOpenPrintError;
     const QString fileName = tf.fileName();
 
     QMutexLocker locker(userMutex());
@@ -171,11 +169,10 @@ bool DjVuGenerator::print(QPrinter &printer)
     if (m_djvu->exportAsPostScript(&tf, pageList)) {
         tf.setAutoRemove(false);
         tf.close();
-        int ret = Okular::FilePrinter::printFile(printer, fileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
-        result = (ret >= 0);
+        return Okular::FilePrinter::printFile(printer, fileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
     }
 
-    return result;
+    return Okular::Document::UnknownPrintError;
 }
 
 QVariant DjVuGenerator::metaData(const QString &key, const QVariant &option) const

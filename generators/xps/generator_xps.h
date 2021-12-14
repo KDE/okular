@@ -312,7 +312,7 @@ public:
     Okular::ExportFormat::List exportFormats() const override;
     bool exportTo(const QString &fileName, const Okular::ExportFormat &format) override;
 
-    bool print(QPrinter &printer) override;
+    Okular::Document::PrintError print(QPrinter &printer) override;
 
 protected:
     bool doCloseDocument() override;

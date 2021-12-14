@@ -38,9 +38,6 @@ public:
     Okular::ExportFormat::List exportFormats() const override;
     bool exportTo(const QString &fileName, const Okular::ExportFormat &format) override;
 
-    // [INHERITED] print document using already configured kprinter
-    bool print(QPrinter &printer) override;
-
 protected:
     bool doCloseDocument() override;
 

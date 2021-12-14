@@ -399,26 +399,7 @@ public:
     /**
      * This method is called to print the document to the given @p printer.
      */
-    virtual bool print(QPrinter &printer);
-
-    /**
-     * Possible print errors
-     * @since 0.11 (KDE 4.5)
-     */
-    enum PrintError {
-        NoPrintError, ///< There was no print error
-        UnknownPrintError,
-        TemporaryFileOpenPrintError,
-        FileConversionPrintError,
-        PrintingProcessCrashPrintError,
-        PrintingProcessStartPrintError,
-        PrintToFilePrintError,
-        InvalidPrinterStatePrintError,
-        UnableToFindFilePrintError,
-        NoFileToPrintError,
-        NoBinaryToPrintError,
-        InvalidPageSizePrintError ///< @since 0.18.2 (KDE 4.12.2)
-    };
+    virtual Document::PrintError print(QPrinter &printer);
 
     /**
      * This method returns the meta data of the given @p key with the given @p option
@@ -452,9 +433,10 @@ public:
     /**
      * Update DPI of the generator
      *
-     * @since 0.19 (KDE 4.13)
+     * @since 0.19 (old signature)
+     * @since 22.04 (new signature)
      */
-    void setDPI(const QSizeF &dpi); // TODO remove the & when we do a BIC change elsewhere
+    void setDPI(const QSizeF dpi);
 
     /**
      * Returns the 'layers model' object of the document or NULL if
@@ -591,15 +573,15 @@ protected:
      */
     QSizeF dpi() const;
 
-protected Q_SLOTS:
     /**
      * Gets the font data for the given font
      *
-     * @since 0.8 (KDE 4.1)
+     * @since 0.8 (old signature)
+     * @since 22.04 (new signature)
      */
-    // TODO Make it return a QByteArray and be virtual when a BIC change happens somewhere else
-    void requestFontData(const Okular::FontInfo &font, QByteArray *data);
+    virtual QByteArray requestFontData(const Okular::FontInfo &font);
 
+protected Q_SLOTS:
     /**
      * This method can be called to trigger a partial pixmap update for the given request
      * Make sure you call it in a way it's executed in the main thread.
@@ -608,13 +590,6 @@ protected Q_SLOTS:
     void signalPartialPixmapRequest(Okular::PixmapRequest *request, const QImage &image);
 
 protected:
-    /**
-     * Returns the last print error in case print() failed
-     * @since 0.11 (KDE 4.5)
-     */
-    // TODO Make print() return a PrintError instead of bool and remove this function when a BIC change happens somewhere else
-    Q_INVOKABLE Okular::Generator::PrintError printError() const;
-
     /// @cond PRIVATE
     Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args);
     Q_DECLARE_PRIVATE(Generator)
@@ -813,7 +788,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Okular::Generator::PrintError)
 Q_DECLARE_METATYPE(Okular::PixmapRequest *)
 
 #define OkularGeneratorInterface_iid "org.kde.okular.Generator"

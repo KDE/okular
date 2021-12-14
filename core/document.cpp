@@ -4256,42 +4256,37 @@ bool Document::supportsPrintToFile() const
     return d->m_generator ? d->m_generator->hasFeature(Generator::PrintToFile) : false;
 }
 
-bool Document::print(QPrinter &printer)
+Document::PrintError Document::print(QPrinter &printer)
 {
-    return d->m_generator ? d->m_generator->print(printer) : false;
+    return d->m_generator ? d->m_generator->print(printer) : Document::UnknownPrintError;
 }
 
-QString Document::printError() const
+QString Document::printErrorString(PrintError error)
 {
-    Okular::Generator::PrintError err = Generator::UnknownPrintError;
-    if (d->m_generator) {
-        QMetaObject::invokeMethod(d->m_generator, "printError", Qt::DirectConnection, Q_RETURN_ARG(Okular::Generator::PrintError, err));
-    }
-    Q_ASSERT(err != Generator::NoPrintError);
-    switch (err) {
-    case Generator::TemporaryFileOpenPrintError:
+    switch (error) {
+    case TemporaryFileOpenPrintError:
         return i18n("Could not open a temporary file");
-    case Generator::FileConversionPrintError:
+    case FileConversionPrintError:
         return i18n("Print conversion failed");
-    case Generator::PrintingProcessCrashPrintError:
+    case PrintingProcessCrashPrintError:
         return i18n("Printing process crashed");
-    case Generator::PrintingProcessStartPrintError:
+    case PrintingProcessStartPrintError:
         return i18n("Printing process could not start");
-    case Generator::PrintToFilePrintError:
+    case PrintToFilePrintError:
         return i18n("Printing to file failed");
-    case Generator::InvalidPrinterStatePrintError:
+    case InvalidPrinterStatePrintError:
         return i18n("Printer was in invalid state");
-    case Generator::UnableToFindFilePrintError:
+    case UnableToFindFilePrintError:
         return i18n("Unable to find file to print");
-    case Generator::NoFileToPrintError:
+    case NoFileToPrintError:
         return i18n("There was no file to print");
-    case Generator::NoBinaryToPrintError:
+    case NoBinaryToPrintError:
         return i18n("Could not find a suitable binary for printing. Make sure CUPS lpr binary is available");
-    case Generator::InvalidPageSizePrintError:
+    case InvalidPageSizePrintError:
         return i18n("The page print size is invalid");
-    case Generator::NoPrintError:
+    case NoPrintError:
         return QString();
-    case Generator::UnknownPrintError:
+    case UnknownPrintError:
         return QString();
     }
 
@@ -4633,16 +4628,11 @@ void Document::unregisterView(View *view)
 
 QByteArray Document::fontData(const FontInfo &font) const
 {
-    QByteArray result;
-
     if (d->m_generator) {
-        // clang-format off
-        // Otherwise the Q_ARG(QByteArray* gets broken
-        QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray*, &result));
-        // clang-format on
+        return d->m_generator->requestFontData(font);
     }
 
-    return result;
+    return {};
 }
 
 ArchiveData *DocumentPrivate::unpackDocumentArchive(const QString &archivePath)

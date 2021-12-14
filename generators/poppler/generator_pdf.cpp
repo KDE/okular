@@ -1259,14 +1259,14 @@ Okular::TextPage *PDFGenerator::textPage(Okular::TextRequest *request)
     return tp;
 }
 
-void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *data)
+QByteArray PDFGenerator::requestFontData(const Okular::FontInfo &font)
 {
     Poppler::FontInfo fi = font.nativeId().value<Poppler::FontInfo>();
-    *data = pdfdoc->fontData(fi);
+    return pdfdoc->fontData(fi);
 }
 
 #define DUMMY_QPRINTER_COPY
-bool PDFGenerator::print(QPrinter &printer)
+Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
 {
     bool printAnnots = true;
     bool forceRasterize = false;
@@ -1332,7 +1332,7 @@ bool PDFGenerator::print(QPrinter &printer)
             userMutex()->unlock();
         }
         painter.end();
-        return true;
+        return Okular::Document::NoPrintError;
     }
 
 #ifdef DUMMY_QPRINTER_COPY
@@ -1350,15 +1350,13 @@ bool PDFGenerator::print(QPrinter &printer)
 #endif
 
     if (width <= 0 || height <= 0) {
-        lastPrintError = InvalidPageSizePrintError;
-        return false;
+        return Okular::Document::InvalidPageSizePrintError;
     }
 
     // Create the tempfile to send to FilePrinter, which will manage the deletion
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if (!tf.open()) {
-        lastPrintError = TemporaryFileOpenPrintError;
-        return false;
+        return Okular::Document::TemporaryFileOpenPrintError;
     }
     QString tempfilename = tf.fileName();
 
@@ -1400,21 +1398,15 @@ bool PDFGenerator::print(QPrinter &printer)
 
         const Okular::FilePrinter::ScaleMode filePrinterScaleMode = (scaleMode == PDFOptionsPage::None) ? Okular::FilePrinter::ScaleMode::NoScaling : Okular::FilePrinter::ScaleMode::FitToPrintArea;
 
-        int ret =
-            Okular::FilePrinter::printFile(printer, tempfilename, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange(), filePrinterScaleMode);
-
-        lastPrintError = Okular::FilePrinter::printError(ret);
-
-        return (lastPrintError == NoPrintError);
+        return Okular::FilePrinter::printFile(printer, tempfilename, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange(), filePrinterScaleMode);
     } else {
-        lastPrintError = FileConversionPrintError;
         delete psConverter;
         userMutex()->unlock();
+
+        tf.close();
+
+        return Okular::Document::FileConversionPrintError;
     }
-
-    tf.close();
-
-    return false;
 }
 
 QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) const
@@ -1818,11 +1810,6 @@ QLinkedList<Okular::FormField *> PDFGenerator::getFormFields(Poppler::Page *popp
     }
 
     return okularFormFields;
-}
-
-PDFGenerator::PrintError PDFGenerator::printError() const
-{
-    return lastPrintError;
 }
 
 Okular::PrintOptionsWidget *PDFGenerator::printConfigurationWidget() const

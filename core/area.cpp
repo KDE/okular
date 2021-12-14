@@ -38,7 +38,6 @@ NormalizedPoint::NormalizedPoint(int iX, int iY, int xScale, int yScale)
 
 NormalizedPoint &NormalizedPoint::operator=(const NormalizedPoint &p) = default;
 NormalizedPoint::NormalizedPoint(const NormalizedPoint &) = default;
-NormalizedPoint::~NormalizedPoint() = default;
 
 void NormalizedPoint::transform(const QTransform &matrix)
 {
@@ -132,7 +131,7 @@ NormalizedRect::NormalizedRect(double l, double t, double r, double b)
 {
 }
 
-NormalizedRect::NormalizedRect(const QRect &r, double xScale, double yScale) // clazy:exclude=function-args-by-value TODO when BIC changes are allowed
+NormalizedRect::NormalizedRect(const QRect r, double xScale, double yScale)
     : left((double)r.left() / xScale)
     , top((double)r.top() / yScale)
     , right((double)r.right() / xScale)
@@ -211,8 +210,6 @@ NormalizedRect NormalizedRect::operator&(const NormalizedRect &r) const
 }
 
 NormalizedRect &NormalizedRect::operator=(const NormalizedRect &r) = default;
-
-NormalizedRect::~NormalizedRect() = default;
 
 bool NormalizedRect::operator==(const NormalizedRect &r) const
 {

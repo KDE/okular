@@ -345,7 +345,7 @@ void TIFFGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
     pagesVector.resize(realdirs);
 }
 
-bool TIFFGenerator::print(QPrinter &printer)
+Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
 {
     uint32_t width = 0;
     uint32_t height = 0;
@@ -389,7 +389,7 @@ bool TIFFGenerator::print(QPrinter &printer)
         }
     }
 
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 int TIFFGenerator::mapPage(int page) const

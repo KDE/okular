@@ -175,13 +175,4 @@ bool PluckerGenerator::exportTo(const QString &fileName, const Okular::ExportFor
     return false;
 }
 
-bool PluckerGenerator::print(QPrinter &)
-{
-    /*
-        for ( int i = 0; i < mPages.count(); ++i )
-          mPages[ i ]->print( &printer );
-    */
-    return true;
-}
-
 #include "generator_plucker.moc"

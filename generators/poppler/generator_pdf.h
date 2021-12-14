@@ -79,7 +79,7 @@ public:
     QImage image(Okular::PixmapRequest *request) override;
 
     // [INHERITED] print page using an already configured kprinter
-    bool print(QPrinter &printer) override;
+    Okular::Document::PrintError print(QPrinter &printer) override;
 
     // [INHERITED] reply to some metadata requests
     QVariant metaData(const QString &key, const QVariant &option) const override;
@@ -105,14 +105,12 @@ public:
 
     Okular::CertificateStore *certificateStore() const override;
 
+    QByteArray requestFontData(const Okular::FontInfo &font) override;
+
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
     bool doCloseDocument() override;
     Okular::TextPage *textPage(Okular::TextRequest *request) override;
-    Q_INVOKABLE Okular::Generator::PrintError printError() const;
-
-protected Q_SLOTS:
-    void requestFontData(const Okular::FontInfo &font, QByteArray *data);
 
 private:
     Okular::Document::OpenResult init(QVector<Okular::Page *> &pagesVector, const QString &password);
@@ -154,8 +152,6 @@ private:
     QBitArray rectsGenerated;
 
     QPointer<PDFOptionsPage> pdfOptionsPage;
-
-    PrintError lastPrintError;
 };
 
 #endif

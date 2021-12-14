@@ -2095,7 +2095,7 @@ bool XpsGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
     return false;
 }
 
-bool XpsGenerator::print(QPrinter &printer)
+Okular::Document::PrintError XpsGenerator::print(QPrinter &printer)
 {
     QList<int> pageList = Okular::FilePrinter::pageList(printer, document()->pages(), document()->currentPage() + 1, document()->bookmarkedPageList());
 
@@ -2110,7 +2110,7 @@ bool XpsGenerator::print(QPrinter &printer)
         pageToRender->renderToPainter(&painter);
     }
 
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 const XpsRenderNode *XpsRenderNode::findChild(const QString &name) const

@@ -455,12 +455,12 @@ void DviGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
             pagesVector[i]->setSourceReferences(refRects.at(i));
 }
 
-bool DviGenerator::print(QPrinter &printer)
+Okular::Document::PrintError DviGenerator::print(QPrinter &printer)
 {
     // Create tempfile to write to
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if (!tf.open())
-        return false;
+        return Okular::Document::TemporaryFileOpenPrintError;
 
     const QList<int> pageList = Okular::FilePrinter::pageList(printer, static_cast<quint16>(m_dviRenderer->totalPages()), document()->currentPage() + 1, document()->bookmarkedPageList());
     QString pages;
@@ -479,7 +479,7 @@ bool DviGenerator::print(QPrinter &printer)
     tf.close();
 
     // Error messages are handled by the generator - ugly, but it works.
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 QVariant DviGenerator::metaData(const QString &key, const QVariant &option) const

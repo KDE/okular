@@ -154,11 +154,6 @@ void TextDocumentGeneratorPrivate::addTitle(int level, const QString &title, con
     mTitlePositions.append(position);
 }
 
-void TextDocumentGeneratorPrivate::addMetaData(const QString &key, const QString &value, const QString &title)
-{
-    mDocumentInfo.set(key, value, title);
-}
-
 void TextDocumentGeneratorPrivate::addMetaData(DocumentInfo::Key key, const QString &value)
 {
     mDocumentInfo.set(key, value);
@@ -263,8 +258,7 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
     QObject::connect(mConverter, &TextDocumentConverter::addAction, q, [this](Action *a, int cb, int ce) { addAction(a, cb, ce); });
     QObject::connect(mConverter, &TextDocumentConverter::addAnnotation, q, [this](Annotation *a, int cb, int ce) { addAnnotation(a, cb, ce); });
     QObject::connect(mConverter, &TextDocumentConverter::addTitle, q, [this](int l, const QString &t, const QTextBlock &b) { addTitle(l, t, b); });
-    QObject::connect(mConverter, QOverload<const QString &, const QString &, const QString &>::of(&TextDocumentConverter::addMetaData), q, [this](const QString &k, const QString &v, const QString &t) { addMetaData(k, v, t); });
-    QObject::connect(mConverter, QOverload<DocumentInfo::Key, const QString &>::of(&TextDocumentConverter::addMetaData), q, [this](DocumentInfo::Key k, const QString &v) { addMetaData(k, v); });
+    QObject::connect(mConverter, &TextDocumentConverter::addMetaData, q, [this](DocumentInfo::Key k, const QString &v) { addMetaData(k, v); });
 
     QObject::connect(mConverter, &TextDocumentConverter::error, q, &Generator::error);
     QObject::connect(mConverter, &TextDocumentConverter::warning, q, &Generator::warning);
@@ -428,15 +422,15 @@ Okular::TextPage *TextDocumentGenerator::textPage(Okular::TextRequest *request)
     return d->createTextPage(request->page()->number());
 }
 
-bool TextDocumentGenerator::print(QPrinter &printer)
+Document::PrintError TextDocumentGenerator::print(QPrinter &printer)
 {
     Q_D(TextDocumentGenerator);
     if (!d->mDocument)
-        return false;
+        return Document::UnknownPrintError;
 
     d->mDocument->print(&printer);
 
-    return true;
+    return Document::NoPrintError;
 }
 
 Okular::DocumentInfo TextDocumentGenerator::generateDocumentInfo(const QSet<DocumentInfo::Key> & /*keys*/) const

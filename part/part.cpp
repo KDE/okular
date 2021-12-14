@@ -3400,8 +3400,9 @@ bool Part::doPrint(QPrinter &printer)
         return false;
     }
 
-    if (!m_document->print(printer)) {
-        const QString error = m_document->printError();
+    const Document::PrintError printError = m_document->print(printer);
+    if (printError != Document::NoPrintError) {
+        const QString error = Okular::Document::printErrorString(printError);
         if (error.isEmpty()) {
             KMessageBox::error(widget(), i18n("Could not print the document. Unknown error. Please report to bugs.kde.org"));
         } else {

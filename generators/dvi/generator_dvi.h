@@ -38,7 +38,7 @@ public:
     // list of fonts
     Okular::FontInfo::List fontsForPage(int page) override;
 
-    bool print(QPrinter &printer) override;
+    Okular::Document::PrintError print(QPrinter &printer) override;
 
     QVariant metaData(const QString &key, const QVariant &option) const override;
 

@@ -82,7 +82,7 @@ Okular::DocumentInfo FaxGenerator::generateDocumentInfo(const QSet<Okular::Docum
     return docInfo;
 }
 
-bool FaxGenerator::print(QPrinter &printer)
+Okular::Document::PrintError FaxGenerator::print(QPrinter &printer)
 {
     QPainter p(&printer);
 
@@ -94,7 +94,7 @@ bool FaxGenerator::print(QPrinter &printer)
 
     p.drawImage(0, 0, image);
 
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 #include "generator_fax.moc"

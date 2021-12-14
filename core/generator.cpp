@@ -377,14 +377,9 @@ void Generator::pageSizeChanged(const PageSize &, const PageSize &)
 {
 }
 
-bool Generator::print(QPrinter &)
+Document::PrintError Generator::print(QPrinter &)
 {
-    return false;
-}
-
-Generator::PrintError Generator::printError() const
-{
-    return UnknownPrintError;
+    return Document::UnknownPrintError;
 }
 
 void Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
@@ -511,11 +506,12 @@ void Generator::updatePageBoundingBox(int page, const NormalizedRect &boundingBo
         d->m_document->setPageBoundingBox(page, boundingBox);
 }
 
-void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * /*data*/)
+QByteArray Generator::requestFontData(const Okular::FontInfo & /*font*/)
 {
+    return {};
 }
 
-void Generator::setDPI(const QSizeF &dpi) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
+void Generator::setDPI(const QSizeF dpi)
 {
     Q_D(Generator);
     d->m_dpi = dpi;

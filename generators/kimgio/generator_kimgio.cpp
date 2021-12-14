@@ -138,7 +138,7 @@ QImage KIMGIOGenerator::image(Okular::PixmapRequest *request)
     }
 }
 
-bool KIMGIOGenerator::print(QPrinter &printer)
+Okular::Document::PrintError KIMGIOGenerator::print(QPrinter &printer)
 {
     QPainter p(&printer);
 
@@ -150,7 +150,7 @@ bool KIMGIOGenerator::print(QPrinter &printer)
 
     p.drawImage(0, 0, image);
 
-    return true;
+    return Okular::Document::NoPrintError;
 }
 
 Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const

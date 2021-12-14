@@ -73,7 +73,7 @@ function AFSimple_Calculate( cFunction, cFields )
  *          2 => , as decimal separator   . as thousand separators => 1.234,56
  *          3 => , as decimal separator     no thousand separators => 1234,56
  *
- * nexStyle is the formatting used for negative numbers: - not implemented.
+ * negStyle is the formatting used for negative numbers: - not implemented.
  * 0 = MinusBlack
  * 1 = Red
  * 2 = ParensBlack

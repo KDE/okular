@@ -146,6 +146,7 @@ DlgPresentation::DlgPresentation(QWidget *parent)
 
 PreferredScreenSelector::PreferredScreenSelector(QWidget *parent)
     : QComboBox(parent)
+    , m_disconnectedScreenIndex(-1)
     , m_disconnectedScreenNumber(k_noDisconnectedScreenNumber)
 {
     repopulateList();

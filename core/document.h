@@ -1520,6 +1520,12 @@ public:
     NormalizedRect boundingRectangle() const;
     void setBoundingRectangle(const NormalizedRect &rect);
 
+    /// @since 22.04
+    QString documentPassword() const;
+
+    /// @since 22.04
+    void setDocumentPassword(const QString &password);
+
 private:
     NewSignatureDataPrivate *const d;
 };

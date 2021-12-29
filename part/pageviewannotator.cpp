@@ -409,6 +409,15 @@ public:
             m_aborted = true;
         }
 
+        if (m_document->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes")) {
+            bool ok;
+            documentPassword = QInputDialog::getText(m_pageView, i18n("Enter document password"), i18n("Enter document password"), QLineEdit::Password, QString(), &ok);
+            if (!ok) {
+                passToUse.clear();
+                m_aborted = true;
+            }
+        }
+
         m_creationCompleted = false;
         clicked = false;
 
@@ -438,9 +447,11 @@ public:
         data.setCertNickname(certNicknameToUse);
         data.setCertSubjectCommonName(certCommonName);
         data.setPassword(passToUse);
+        data.setDocumentPassword(documentPassword);
         data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
         passToUse.clear();
+        documentPassword.clear();
         return m_document->sign(data, newFilePath);
     }
 
@@ -448,6 +459,7 @@ private:
     QString certNicknameToUse;
     QString certCommonName;
     QString passToUse;
+    QString documentPassword;
 
     Okular::Document *m_document;
     const Okular::Page *m_page;

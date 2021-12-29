@@ -13,3 +13,5 @@
 /* Defined if we have the 21.10 version of the Poppler library or later */
 #cmakedefine HAVE_POPPLER_21_10 1
 
+/* Defined if we have the 22.02 version of the Poppler library or later */
+#cmakedefine HAVE_POPPLER_22_02 1

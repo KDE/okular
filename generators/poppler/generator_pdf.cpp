@@ -1470,6 +1470,14 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
 #else
         return QStringLiteral("yes");
 #endif
+    } else if (key == QLatin1String("DocumentHasPassword")) {
+        return pdfdoc->isEncrypted() ? QStringLiteral("yes") : QStringLiteral("no");
+    } else if (key == QLatin1String("CanSignDocumentWithPassword")) {
+#ifdef HAVE_POPPLER_22_02
+        return QStringLiteral("yes");
+#else
+        return QStringLiteral("no");
+#endif
     }
     return QVariant();
 }
@@ -1920,6 +1928,10 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData.setFontColor(Qt::black);
     pData.setBorderColor(Qt::black);
+#if HAVE_POPPLER_22_02
+    pData.setDocumentOwnerPassword(oData.documentPassword().toLatin1());
+    pData.setDocumentUserPassword(oData.documentPassword().toLatin1());
+#endif
     if (!converter->sign(pData))
         return false;
 

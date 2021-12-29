@@ -4901,6 +4901,17 @@ void PageView::slotSignature()
         return;
     }
 
+    const bool documentHasPassword = d->document->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes");
+    if (documentHasPassword) {
+        if (d->document->metaData(QStringLiteral("CanSignDocumentWithPassword")).toString() == QLatin1String("no")) {
+            KMessageBox::information(nullptr,
+                                     i18nc("@info", "The version of the Poppler library this Okular was compiled with does not support signing documents with passwords. Please ask your provider to update it to 22.02 or later."),
+                                     i18nc("@title:window", "Poppler library is too old"),
+                                     QStringLiteral("popplerOldSignVersion"));
+            return;
+        }
+    }
+
     const Okular::CertificateStore *certStore = d->document->certificateStore();
     bool userCancelled, nonDateValidCerts;
     const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);

@@ -548,12 +548,6 @@ protected:
     QVariant documentMetaData(const DocumentMetaDataKey key, const QVariant &option = QVariant()) const;
 
     /**
-     * Request a meta data of the Document, if available, like an internal
-     * setting.
-     */
-    OKULARCORE_DEPRECATED QVariant documentMetaData(const QString &key, const QVariant &option = QVariant()) const;
-
-    /**
      * Return the pointer to a mutex the generator can use freely.
      */
     QMutex *userMutex() const;

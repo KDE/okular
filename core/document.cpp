@@ -2513,6 +2513,37 @@ void Document::closeDocument()
     // close the current document and save document info if a document is still opened
     if (d->m_generator && d->m_pagesVector.size() > 0) {
         d->saveDocumentInfo();
+
+        // free the content of the opaque backend actions (if any)
+        // this is a bit awkward since backends can store "random stuff" in the
+        // BackendOpaqueAction nativeId qvariant so we need to tell them to free it
+        // ideally we would just do that in the BackendOpaqueAction destructor
+        // but that's too late in the cleanup process, i.e. the generator has already closed its document
+        // and the document generator is nullptr
+        for (Page *p : qAsConst(d->m_pagesVector)) {
+            const QLinkedList<ObjectRect *> &oRects = p->objectRects();
+            for (ObjectRect *oRect : oRects) {
+                if (oRect->objectType() == ObjectRect::Action) {
+                    const Action *a = static_cast<const Action *>(oRect->object());
+                    const BackendOpaqueAction *backendAction = dynamic_cast<const BackendOpaqueAction *>(a);
+                    if (backendAction) {
+                        d->m_generator->freeOpaqueActionContents(*backendAction);
+                    }
+                }
+            }
+
+            const QLinkedList<FormField *> forms = p->formFields();
+            for (const FormField *form : forms) {
+                const QList<Action *> additionalActions = form->additionalActions();
+                for (const Action *a : additionalActions) {
+                    const BackendOpaqueAction *backendAction = dynamic_cast<const BackendOpaqueAction *>(a);
+                    if (backendAction) {
+                        d->m_generator->freeOpaqueActionContents(*backendAction);
+                    }
+                }
+            }
+        }
+
         d->m_generator->closeDocument();
     }
 

@@ -115,6 +115,13 @@ void FormField::setAdditionalAction(Annotation::AdditionalActionType type, Actio
     d->m_additionalAnnotActions[type] = action;
 }
 
+QList<Action *> FormField::additionalActions() const
+{
+    Q_D(const FormField);
+    // yes, calling values() is not great but it's a list of ~10 elements, we can live with that
+    return d->m_additionalAnnotActions.values() + d->m_additionalActions.values(); // clazy:exclude=container-anti-pattern
+}
+
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 {
 public:

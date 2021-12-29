@@ -386,6 +386,10 @@ void Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
 {
 }
 
+void Generator::freeOpaqueActionContents(const BackendOpaqueAction & /*action*/)
+{
+}
+
 QVariant Generator::metaData(const QString &key, const QVariant &option) const
 {
     Q_D(const Generator);

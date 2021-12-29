@@ -284,6 +284,13 @@ public:
     void setObjectRects(const QLinkedList<ObjectRect *> &rects);
 
     /**
+     * Gets the list of object rects of the page.
+     *
+     * @since 22.04
+     */
+    const QLinkedList<ObjectRect *> &objectRects() const;
+
+    /**
      * Sets the list of source reference objects @p rects.
      */
     void setSourceReferences(const QLinkedList<SourceRefObjectRect *> &rects);

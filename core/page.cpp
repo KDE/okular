@@ -582,6 +582,11 @@ void Page::setObjectRects(const QLinkedList<ObjectRect *> &rects)
     m_rects << rects;
 }
 
+const QLinkedList<ObjectRect *> &Page::objectRects() const
+{
+    return m_rects;
+}
+
 void PagePrivate::setHighlight(int s_id, RegularAreaRect *rect, const QColor &color)
 {
     HighlightAreaRect *hr = new HighlightAreaRect(rect);

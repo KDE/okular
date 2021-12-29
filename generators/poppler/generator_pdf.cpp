@@ -1008,6 +1008,11 @@ void PDFGenerator::opaqueAction(const Okular::BackendOpaqueAction *action)
     pdfdoc->optionalContentModel()->applyLink(const_cast<Poppler::LinkOCGState *>(popplerLink));
 }
 
+void PDFGenerator::freeOpaqueActionContents(const Okular::BackendOpaqueAction &action)
+{
+    delete action.nativeId().value<const Poppler::LinkOCGState *>();
+}
+
 bool PDFGenerator::isAllowed(Okular::Permission permission) const
 {
     bool b = true;

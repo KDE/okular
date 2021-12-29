@@ -157,6 +157,12 @@ public:
      */
     Action *additionalAction(Annotation::AdditionalActionType type) const;
 
+    /* Returns all the additional actions for this form
+     *
+     * @since 22.04
+     */
+    QList<Action *> additionalActions() const;
+
 protected:
     /// @cond PRIVATE
     explicit FormField(FormFieldPrivate &dd);

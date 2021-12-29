@@ -451,6 +451,13 @@ public:
      */
     virtual void opaqueAction(const BackendOpaqueAction *action);
 
+    /**
+     * Frees the contents of the opaque action (if any);
+     *
+     * @since 22.04
+     */
+    virtual void freeOpaqueActionContents(const BackendOpaqueAction &action);
+
 Q_SIGNALS:
     /**
      * This signal should be emitted whenever an error occurred in the generator.

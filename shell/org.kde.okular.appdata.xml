@@ -28,6 +28,7 @@
   <name xml:lang="lt">Okular</name>
   <name xml:lang="nl">Okular</name>
   <name xml:lang="nn">Okular</name>
+  <name xml:lang="pa">ਓਕੁਲਾਰ</name>
   <name xml:lang="pl">Okular</name>
   <name xml:lang="pt">Okular</name>
   <name xml:lang="pt-BR">Okular</name>
@@ -71,6 +72,7 @@
   <summary xml:lang="lt">Dokumentų žiūryklė</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="nn">Dokumentvisar</summary>
+  <summary xml:lang="pa">ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ</summary>
   <summary xml:lang="pl">Przeglądarka dokumentów</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
   <summary xml:lang="pt-BR">Visualizador de documentos</summary>
@@ -116,6 +118,7 @@
     <p xml:lang="lt">Okular yra universali, KDE plėtojama dokumentų žiūryklė. Okular veikia keliose platformose, įskaitant, tačiau neapsiribojant Linux, Windows, Mac OS X, *BSD ir t.t.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
+    <p xml:lang="pa">ਓਕੁਲਾਰ ਕੇਡੀਈ ਵਲੋਂ ਬਣਾਇਆ ਯੂਨੀਵਰਸਲ ਦਸਤਾਵੇਜ਼ ਦਰਸ਼ਕ ਹੈ। ਓਕੁਲਾਰ ਕਈ ਪਲੇਟਫਾਰਮਾਂ ਉੱਤੇ ਕੰਮ ਕਰਦਾ ਹੈ, ਜਿਸ ਵਿੱਚ ਲੀਨਕਸ, ਵਿੰਡੋਜ਼, ਮੈਕ ਓਐਸ ਐਕਸ, *BSD ਆਦਿ ਸ਼ਾਮਲ ਹਨ, ਉਹਨਾਂ ਤੱਕ ਸੀਮਿਤ ਨਹੀਂ ਹੈ।</p>
     <p xml:lang="pl">Okular jest wszechstronną przeglądarką dokumentów opracowaną przez KDE. Okular działa na wielu platformach takich jak Linux, Windows, Mac OS X, *BSD, itp.</p>
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="pt-BR">O Okular é um visualizador de documentos universal desenvolvido pelo KDE. Ele funciona em várias plataformas, incluindo, mas não se limitando, o Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -159,6 +162,7 @@
     <p xml:lang="lt">Ypatybės:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="nn">Funksjonar:</p>
+    <p xml:lang="pa">ਫੀਚਰ:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
@@ -197,6 +201,7 @@
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 사진, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
+      <li xml:lang="pa">ਸਹਾਇਕ ਫਾਰਮੈਟ: PDF, PS, Tiff, CHM, DjVu, ਚਿੱਤਰ, DVI, XPS, ਫਿਕਸ਼ਨ ਕਿਤਾਬਾਂ, ਕੌਮਿਕ ਕਿਤਾਬਾਂ, Plucker, EPub, ਫੈਕਸ</li>
       <li xml:lang="pl">Obsługiwane formaty: PDF, PS, TIFF, CHM, DjVu, DVI, XPS, FB2, Plucker, ePub,  a także różne formaty komisów, obrazów i faks.</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -230,6 +235,7 @@
       <li xml:lang="lt">Šoninė juosta su turiniu, miniatiūromis, atsiliepimais ir žymelėmis</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
+      <li xml:lang="pa">ਸਮੱਗਰੀ, ਥੰਮਨੇਲ, ਪੜਤਾਲਾਂ ਤੇ ਬੁੱਕਮਾਰਕਾਂ ਨਾਲ ਬਾਹੀ</li>
       <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzjami i zakładkami</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
@@ -273,6 +279,7 @@
       <li xml:lang="lt">Anotacijų palaikymas</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
       <li xml:lang="nn">Støtte for merknadar</li>
+      <li xml:lang="pa">ਟਿੱਪਣੀਆਂ ਲਈ ਸਹਿਯੋਗ</li>
       <li xml:lang="pl">Obsługa przypisów</li>
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="pt-BR">Suporte a anotações</li>
@@ -320,6 +327,7 @@
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
       <caption xml:lang="nn">Lesing av brukarhandbok i Okular</caption>
+      <caption xml:lang="pa">ਓਕੁਲਾਰ ਵਿੱਚ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹੋ</caption>
       <caption xml:lang="pl">Instrukcja czytania w Okularze</caption>
       <caption xml:lang="pt">Leitura de manual no Okular</caption>
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>

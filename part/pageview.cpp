@@ -1252,7 +1252,7 @@ void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlag
 #endif
         const QLinkedList<Okular::FormField *> pageFields = page->formFields();
         for (Okular::FormField *ff : pageFields) {
-            FormWidgetIface *w = FormWidgetFactory::createWidget(ff, viewport());
+            FormWidgetIface *w = FormWidgetFactory::createWidget(ff, this);
             if (w) {
                 w->setPageItem(item);
                 w->setFormWidgetsController(d->formWidgetsController());
@@ -4892,6 +4892,11 @@ void PageView::showNoSigningCertificatesDialog(bool nonDateValidCerts)
                                  QString(),
                                  KMessageBox::Notify | KMessageBox::AllowLink);
     }
+}
+
+Okular::Document *PageView::document() const
+{
+    return d->document;
 }
 
 void PageView::slotSignature()

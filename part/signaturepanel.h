@@ -40,6 +40,7 @@ private Q_SLOTS:
     void activated(const QModelIndex &);
     void slotShowContextMenu();
     void slotViewProperties();
+    void signUnsignedSignature();
 
 private:
     Q_DECLARE_PRIVATE(SignaturePanel)

@@ -47,6 +47,11 @@ if(Poppler_Qt5_FOUND)
         TEST_NAME "formattest"
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
     )
+
+    ecm_add_test(signunsignedfieldtest
+        TEST_NAME "signunsignedfieldtest"
+        LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
+    )
 endif()
 
 ecm_add_test(documenttest.cpp

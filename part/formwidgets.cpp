@@ -9,8 +9,10 @@
 */
 
 #include "formwidgets.h"
+#include "pageview.h"
 #include "pageviewutils.h"
 #include "revisionviewer.h"
+#include "signatureguiutils.h"
 #include "signaturepropertiesdialog.h"
 
 #include <KLineEdit>
@@ -222,7 +224,7 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
     emit changed(pageNumber);
 }
 
-FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, QWidget *parent)
+FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, PageView *pageView)
 {
     FormWidgetIface *widget = nullptr;
 
@@ -231,13 +233,13 @@ FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, QWidget 
         Okular::FormFieldButton *ffb = static_cast<Okular::FormFieldButton *>(ff);
         switch (ffb->buttonType()) {
         case Okular::FormFieldButton::Push:
-            widget = new PushButtonEdit(ffb, parent);
+            widget = new PushButtonEdit(ffb, pageView);
             break;
         case Okular::FormFieldButton::CheckBox:
-            widget = new CheckBoxEdit(ffb, parent);
+            widget = new CheckBoxEdit(ffb, pageView);
             break;
         case Okular::FormFieldButton::Radio:
-            widget = new RadioButtonEdit(ffb, parent);
+            widget = new RadioButtonEdit(ffb, pageView);
             break;
         default:;
         }
@@ -247,13 +249,13 @@ FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, QWidget 
         Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
         switch (fft->textType()) {
         case Okular::FormFieldText::Multiline:
-            widget = new TextAreaEdit(fft, parent);
+            widget = new TextAreaEdit(fft, pageView);
             break;
         case Okular::FormFieldText::Normal:
-            widget = new FormLineEdit(fft, parent);
+            widget = new FormLineEdit(fft, pageView);
             break;
         case Okular::FormFieldText::FileSelect:
-            widget = new FileEdit(fft, parent);
+            widget = new FileEdit(fft, pageView);
             break;
         }
         break;
@@ -262,10 +264,10 @@ FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, QWidget 
         Okular::FormFieldChoice *ffc = static_cast<Okular::FormFieldChoice *>(ff);
         switch (ffc->choiceType()) {
         case Okular::FormFieldChoice::ListBox:
-            widget = new ListEdit(ffc, parent);
+            widget = new ListEdit(ffc, pageView);
             break;
         case Okular::FormFieldChoice::ComboBox:
-            widget = new ComboEdit(ffc, parent);
+            widget = new ComboEdit(ffc, pageView);
             break;
         }
         break;
@@ -273,7 +275,7 @@ FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, QWidget 
     case Okular::FormField::FormSignature: {
         Okular::FormFieldSignature *ffs = static_cast<Okular::FormFieldSignature *>(ff);
         if (ffs->isVisible() && ffs->signatureType() != Okular::FormFieldSignature::UnknownType)
-            widget = new SignatureEdit(ffs, parent);
+            widget = new SignatureEdit(ffs, pageView);
         break;
     }
     default:;
@@ -363,8 +365,8 @@ void FormWidgetIface::slotRefresh(Okular::FormField *form)
     m_widget->setEnabled(!form->isReadOnly());
 }
 
-PushButtonEdit::PushButtonEdit(Okular::FormFieldButton *button, QWidget *parent)
-    : QPushButton(parent)
+PushButtonEdit::PushButtonEdit(Okular::FormFieldButton *button, PageView *pageView)
+    : QPushButton(pageView->viewport())
     , FormWidgetIface(this, button)
 {
     setText(button->caption());
@@ -377,8 +379,8 @@ PushButtonEdit::PushButtonEdit(Okular::FormFieldButton *button, QWidget *parent)
     setCursor(Qt::ArrowCursor);
 }
 
-CheckBoxEdit::CheckBoxEdit(Okular::FormFieldButton *button, QWidget *parent)
-    : QCheckBox(parent)
+CheckBoxEdit::CheckBoxEdit(Okular::FormFieldButton *button, PageView *pageView)
+    : QCheckBox(pageView->viewport())
     , FormWidgetIface(this, button)
 {
     setText(button->caption());
@@ -418,8 +420,8 @@ void CheckBoxEdit::slotRefresh(Okular::FormField *form)
     }
 }
 
-RadioButtonEdit::RadioButtonEdit(Okular::FormFieldButton *button, QWidget *parent)
-    : QRadioButton(parent)
+RadioButtonEdit::RadioButtonEdit(Okular::FormFieldButton *button, PageView *pageView)
+    : QRadioButton(pageView->viewport())
     , FormWidgetIface(this, button)
 {
     setText(button->caption());
@@ -436,8 +438,8 @@ void RadioButtonEdit::setFormWidgetsController(FormWidgetsController *controller
     setChecked(form->state());
 }
 
-FormLineEdit::FormLineEdit(Okular::FormFieldText *text, QWidget *parent)
-    : QLineEdit(parent)
+FormLineEdit::FormLineEdit(Okular::FormFieldText *text, PageView *pageView)
+    : QLineEdit(pageView->viewport())
     , FormWidgetIface(this, text)
 {
     int maxlen = text->maximumLength();
@@ -594,8 +596,8 @@ void FormLineEdit::slotRefresh(Okular::FormField *form)
     setText(text->text());
 }
 
-TextAreaEdit::TextAreaEdit(Okular::FormFieldText *text, QWidget *parent)
-    : KTextEdit(parent)
+TextAreaEdit::TextAreaEdit(Okular::FormFieldText *text, PageView *pageView)
+    : KTextEdit(pageView->viewport())
     , FormWidgetIface(this, text)
 {
     setAcceptRichText(text->isRichText());
@@ -730,8 +732,8 @@ void TextAreaEdit::slotRefresh(Okular::FormField *form)
     setPlainText(text->text());
 }
 
-FileEdit::FileEdit(Okular::FormFieldText *text, QWidget *parent)
-    : KUrlRequester(parent)
+FileEdit::FileEdit(Okular::FormFieldText *text, PageView *pageView)
+    : KUrlRequester(pageView->viewport())
     , FormWidgetIface(this, text)
 {
     setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
@@ -839,8 +841,8 @@ void FileEdit::slotHandleFileChangedByUndoRedo(int pageNumber, Okular::FormField
     setFocus();
 }
 
-ListEdit::ListEdit(Okular::FormFieldChoice *choice, QWidget *parent)
-    : QListWidget(parent)
+ListEdit::ListEdit(Okular::FormFieldChoice *choice, PageView *pageView)
+    : QListWidget(pageView->viewport())
     , FormWidgetIface(this, choice)
 {
     addItems(choice->choices());
@@ -900,8 +902,8 @@ void ListEdit::slotHandleFormListChangedByUndoRedo(int pageNumber, Okular::FormF
     setFocus();
 }
 
-ComboEdit::ComboEdit(Okular::FormFieldChoice *choice, QWidget *parent)
-    : QComboBox(parent)
+ComboEdit::ComboEdit(Okular::FormFieldChoice *choice, PageView *pageView)
+    : QComboBox(pageView->viewport())
     , FormWidgetIface(this, choice)
 {
     addItems(choice->choices());
@@ -1035,15 +1037,20 @@ bool ComboEdit::event(QEvent *e)
     return QComboBox::event(e);
 }
 
-SignatureEdit::SignatureEdit(Okular::FormFieldSignature *signature, QWidget *parent)
-    : QAbstractButton(parent)
+SignatureEdit::SignatureEdit(Okular::FormFieldSignature *signature, PageView *pageView)
+    : QAbstractButton(pageView->viewport())
     , FormWidgetIface(this, signature)
     , m_widgetPressed(false)
     , m_dummyMode(false)
     , m_wasVisible(false)
 {
     setCursor(Qt::PointingHandCursor);
-    connect(this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties);
+    if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
+        setToolTip(i18n("Unsigned Signature Field (Click to Sign)"));
+        connect(this, &SignatureEdit::clicked, this, &SignatureEdit::signUnsignedSignature);
+    } else {
+        connect(this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties);
+    }
 }
 
 void SignatureEdit::setDummyMode(bool set)
@@ -1102,9 +1109,16 @@ bool SignatureEdit::event(QEvent *e)
 void SignatureEdit::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu *menu = new QMenu(this);
-    QAction *signatureProperties = new QAction(i18n("Signature Properties"), menu);
-    connect(signatureProperties, &QAction::triggered, this, &SignatureEdit::slotViewProperties);
-    menu->addAction(signatureProperties);
+    Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
+    if (formSignature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
+        QAction *signAction = new QAction(i18n("&Sign..."), menu);
+        connect(signAction, &QAction::triggered, this, &SignatureEdit::signUnsignedSignature);
+        menu->addAction(signAction);
+    } else {
+        QAction *signatureProperties = new QAction(i18n("Signature Properties"), menu);
+        connect(signatureProperties, &QAction::triggered, this, &SignatureEdit::slotViewProperties);
+        menu->addAction(signatureProperties);
+    }
     menu->exec(event->globalPos());
     delete menu;
 }
@@ -1137,6 +1151,16 @@ void SignatureEdit::slotViewProperties()
     Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
     SignaturePropertiesDialog propDlg(m_controller->m_doc, formSignature, this);
     propDlg.exec();
+}
+
+void SignatureEdit::signUnsignedSignature()
+{
+    if (m_dummyMode)
+        return;
+
+    Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
+    PageView *pageView = static_cast<PageView *>(parent()->parent());
+    SignatureGuiUtils::signUnsignedSignature(formSignature, pageView, pageView->document());
 }
 
 // Code for additional action handling.

@@ -10,6 +10,7 @@
 
 #include "core/action.h"
 
+#include "generator_pdf.h"
 #include "pdfsettings.h"
 #include "pdfsignatureutils.h"
 
@@ -453,6 +454,10 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         return Okular::FormFieldSignature::AdbePkcs7detached;
     case Poppler::FormFieldSignature::EtsiCAdESdetached:
         return Okular::FormFieldSignature::EtsiCAdESdetached;
+#ifdef HAVE_POPPLER_22_02
+    case Poppler::FormFieldSignature::UnsignedSignature:
+        return Okular::FormFieldSignature::UnsignedSignature;
+#endif
     default:
         return Okular::FormFieldSignature::UnknownType;
     }
@@ -461,4 +466,17 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
 const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
 {
     return *m_info;
+}
+
+bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
+{
+#ifdef HAVE_POPPLER_22_02
+    Poppler::PDFConverter::NewSignatureData pData;
+    PDFGenerator::okularToPoppler(oData, &pData);
+    return m_field->sign(newPath, pData) == Poppler::FormFieldSignature::SigningSuccess;
+#else
+    Q_UNUSED(oData)
+    Q_UNUSED(newPath)
+    return false;
+#endif
 }

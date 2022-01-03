@@ -117,6 +117,8 @@ public:
 
     void showNoSigningCertificatesDialog(bool nonDateValidCerts);
 
+    Okular::Document *document() const;
+
 public Q_SLOTS:
     void copyTextSelection() const;
     void selectAll();

@@ -11,6 +11,10 @@
 
 #include "core/signatureutils.h"
 
+#include <memory>
+
+class PageView;
+
 namespace Okular
 {
 class Document;
@@ -30,6 +34,9 @@ QString getReadablePublicKeyType(Okular::CertificateInfo::PublicKeyType type);
 QString getReadableKeyUsageCommaSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
 QString getReadableKeyUsageNewLineSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
 
+std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, QString *password, QString *documentPassword);
+QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc);
+void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
 }
 
 #endif

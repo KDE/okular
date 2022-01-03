@@ -17,7 +17,6 @@
 #include <QInputDialog>
 #include <QList>
 #include <QLoggingCategory>
-#include <QMimeDatabase>
 #include <QPainter>
 #include <QSet>
 #include <QVariant>
@@ -45,6 +44,7 @@
 #include "guiutils.h"
 #include "pageview.h"
 #include "settings.h"
+#include "signatureguiutils.h"
 
 /** @short PickPointEngine */
 class PickPointEngine : public AnnotatorEngine
@@ -354,74 +354,18 @@ public:
             }
         }
 
-        const Okular::CertificateStore *certStore = m_document->certificateStore();
-        bool userCancelled, nonDateValidCerts;
-        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
-        if (userCancelled) {
+        const std::unique_ptr<Okular::CertificateInfo> cert = SignatureGuiUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, &passToUse, &documentPassword);
+        if (!cert) {
             m_aborted = true;
-            return {};
-        }
-
-        if (certs.isEmpty()) {
-            m_creationCompleted = false;
-            clicked = false;
-            m_pageView->showNoSigningCertificatesDialog(nonDateValidCerts);
-            return {};
-        }
-
-        QStringList items;
-        QHash<QString, Okular::CertificateInfo *> nickToCert;
-        for (auto cert : certs) {
-            items.append(cert->nickName());
-            nickToCert[cert->nickName()] = cert;
-        }
-
-        bool resok = false;
-        certNicknameToUse = QInputDialog::getItem(m_pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
-
-        if (resok) {
-            // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
-            // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
-            // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
-            Okular::CertificateInfo *cert = nickToCert.value(certNicknameToUse);
-            bool passok = cert->checkPassword(QString());
-            while (!passok) {
-                const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
-                bool ok;
-                passToUse = QInputDialog::getText(m_pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
-                if (ok) {
-                    passok = cert->checkPassword(passToUse);
-                } else {
-                    passok = false;
-                    break;
-                }
-            }
-
-            if (passok) {
-                certCommonName = cert->subjectInfo(Okular::CertificateInfo::CommonName);
-            } else {
-                certNicknameToUse.clear();
-                m_aborted = true;
-            }
+            passToUse.clear();
+            documentPassword.clear();
         } else {
-            // The Cancel button has been clicked in the certificate dialog.
-            certNicknameToUse.clear();
-            m_aborted = true;
-        }
-
-        if (m_document->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes")) {
-            bool ok;
-            documentPassword = QInputDialog::getText(m_pageView, i18n("Enter document password"), i18n("Enter document password"), QLineEdit::Password, QString(), &ok);
-            if (!ok) {
-                passToUse.clear();
-                m_aborted = true;
-            }
+            certNicknameToUse = cert->nickName();
+            certCommonName = cert->subjectInfo(Okular::CertificateInfo::CommonName);
         }
 
         m_creationCompleted = false;
         clicked = false;
-
-        qDeleteAll(certs);
 
         return {};
     }
@@ -1041,18 +985,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         if (signatureMode()) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
             if (signEngine->isAccepted()) {
-                QMimeDatabase db;
-                const QString typeName = m_document->documentInfo().get(Okular::DocumentInfo::MimeType);
-                const QMimeType mimeType = db.mimeTypeForName(typeName);
-                const QString mimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
-
-                const QUrl currentFileUrl = m_document->currentDocument();
-                const QFileInfo currentFileInfo(currentFileUrl.fileName());
-                const QString localFilePathIfAny = currentFileUrl.isLocalFile() ? QFileInfo(currentFileUrl.path()).canonicalPath() + QLatin1Char('/') : QString();
-                const QString newFileName =
-                    localFilePathIfAny + i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", currentFileInfo.baseName(), currentFileInfo.completeSuffix());
-
-                const QString newFilePath = QFileDialog::getSaveFileName(m_pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
+                const QString newFilePath = SignatureGuiUtils::getFileNameForNewSignedFile(m_pageView, m_document);
 
                 if (!newFilePath.isEmpty()) {
                     const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);

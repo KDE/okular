@@ -1312,6 +1312,28 @@ QByteArray PDFGenerator::requestFontData(const Okular::FontInfo &font)
     return pdfdoc->fontData(fi);
 }
 
+#ifdef HAVE_POPPLER_SIGNING
+void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData)
+{
+    pData->setCertNickname(oData.certNickname());
+    pData->setPassword(oData.password());
+    pData->setPage(oData.page());
+    const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
+    pData->setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
+#ifdef HAVE_POPPLER_FANCY_SIGNATURE
+    pData->setSignatureLeftText(oData.certSubjectCommonName());
+#endif
+    const Okular::NormalizedRect bRect = oData.boundingRectangle();
+    pData->setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
+    pData->setFontColor(Qt::black);
+    pData->setBorderColor(Qt::black);
+#ifdef HAVE_POPPLER_22_02
+    pData->setDocumentOwnerPassword(oData.documentPassword().toLatin1());
+    pData->setDocumentUserPassword(oData.documentPassword().toLatin1());
+#endif
+}
+#endif
+
 #define DUMMY_QPRINTER_COPY
 Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
 {
@@ -1954,22 +1976,7 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
 
     Poppler::PDFConverter::NewSignatureData pData;
-    pData.setCertNickname(oData.certNickname());
-    pData.setPassword(oData.password());
-    pData.setPage(oData.page());
-    const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
-    pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
-#ifdef HAVE_POPPLER_FANCY_SIGNATURE
-    pData.setSignatureLeftText(oData.certSubjectCommonName());
-#endif
-    const Okular::NormalizedRect bRect = oData.boundingRectangle();
-    pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
-    pData.setFontColor(Qt::black);
-    pData.setBorderColor(Qt::black);
-#ifdef HAVE_POPPLER_22_02
-    pData.setDocumentOwnerPassword(oData.documentPassword().toLatin1());
-    pData.setDocumentUserPassword(oData.documentPassword().toLatin1());
-#endif
+    okularToPoppler(oData, &pData);
     if (!converter->sign(pData))
         return false;
 

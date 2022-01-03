@@ -108,6 +108,10 @@ public:
 
     QByteArray requestFontData(const Okular::FontInfo &font) override;
 
+#ifdef HAVE_POPPLER_SIGNING
+    static void okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData);
+#endif
+
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
     bool doCloseDocument() override;

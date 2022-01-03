@@ -9,6 +9,7 @@
 
 #include "annotations.h"
 #include "area.h"
+#include "document.h"
 #include "okularcore_export.h"
 #include "signatureutils.h"
 
@@ -456,7 +457,13 @@ public:
     /**
      * The types of signature.
      */
-    enum SignatureType { AdbePkcs7sha1, AdbePkcs7detached, EtsiCAdESdetached, UnknownType };
+    enum SignatureType {
+        AdbePkcs7sha1,
+        AdbePkcs7detached,
+        EtsiCAdESdetached,
+        UnknownType,
+        UnsignedSignature ///< The signature field has not been signed yet. @since 22.04
+    };
 
     ~FormFieldSignature() override;
 
@@ -469,6 +476,13 @@ public:
      * The signature info
      */
     virtual const SignatureInfo &signatureInfo() const = 0;
+
+    /**
+      Signs a field of UnsignedSignature type.
+
+      @since 22.04
+     */
+    virtual bool sign(const NewSignatureData &data, const QString &newPath) const = 0;
 
 protected:
     FormFieldSignature();

@@ -60,6 +60,7 @@ check_cxx_source_compiles("
 #include <poppler-form.h>
 int main()
 {
+    auto us = Poppler::FormFieldSignature::UnsignedSignature;
     Poppler::PDFConverter::NewSignatureData pData;
     pData.setDocumentOwnerPassword(QByteArray());
 }

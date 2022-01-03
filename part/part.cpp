@@ -1589,14 +1589,22 @@ bool Part::openFile()
             } else {
                 const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_document);
                 bool allSignaturesValid = true;
+                bool anySignatureUnsigned = false;
                 for (const Okular::FormFieldSignature *signature : signatureFormFields) {
-                    const Okular::SignatureInfo &info = signature->signatureInfo();
-                    if (info.signatureStatus() != SignatureInfo::SignatureValid) {
-                        allSignaturesValid = false;
+                    if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
+                        anySignatureUnsigned = true;
+                    } else {
+                        const Okular::SignatureInfo &info = signature->signatureInfo();
+                        if (info.signatureStatus() != SignatureInfo::SignatureValid) {
+                            allSignaturesValid = false;
+                        }
                     }
                 }
 
-                if (allSignaturesValid) {
+                if (anySignatureUnsigned) {
+                    m_signatureMessage->setMessageType(KMessageWidget::Information);
+                    m_signatureMessage->setText(i18n("This document has unsigned signature fields."));
+                } else if (allSignaturesValid) {
                     if (signatureFormFields.last()->signatureInfo().signsTotalDocument()) {
                         m_signatureMessage->setMessageType(KMessageWidget::Information);
                         m_signatureMessage->setText(i18n("This document is digitally signed."));

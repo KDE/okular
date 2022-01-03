@@ -1586,7 +1586,7 @@ bool Part::openFile()
             if (m_embedMode == PrintPreviewMode) {
                 m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
             } else {
-                const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_document, true, 0);
+                const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_document);
                 bool allSignaturesValid = true;
                 for (const Okular::FormFieldSignature *signature : signatureFormFields) {
                     const Okular::SignatureInfo &info = signature->signatureInfo();

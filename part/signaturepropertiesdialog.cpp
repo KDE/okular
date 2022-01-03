@@ -88,7 +88,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     if (signatureStatus != Okular::SignatureInfo::SignatureStatusUnknown && !signatureInfo.signsTotalDocument()) {
         revisionBox = new QGroupBox(i18n("Document Version"));
         auto revisionLayout = new QHBoxLayout(revisionBox);
-        const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_doc, true, -1);
+        const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_doc);
         revisionLayout->addWidget(new QLabel(i18nc("Document Revision <current> of <total>", "Document Revision %1 of %2", signatureFormFields.indexOf(m_signatureForm) + 1, signatureFormFields.size())));
         revisionLayout->addStretch();
         auto revisionBtn = new QPushButton(i18n("View Signed Version..."));

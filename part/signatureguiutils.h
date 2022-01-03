@@ -20,10 +20,9 @@ class FormFieldSignature;
 namespace SignatureGuiUtils
 {
 /**
- * Returns a vector containing signature form fields. If @p allPages is true then all signature form fields in the
- * document are returned otherwise the fields in page number @p pageNum are returned.
+ * Returns a vector containing signature form fields sorted by date (last is newer).
  */
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc, bool allPages, int pageNum);
+QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc);
 QString getReadableSignatureStatus(Okular::SignatureInfo::SignatureStatus sigStatus);
 QString getReadableCertStatus(Okular::SignatureInfo::CertificateStatus certStatus);
 QString getReadableHashAlgorithm(Okular::SignatureInfo::HashAlgorithm hashAlg);

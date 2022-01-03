@@ -115,6 +115,12 @@ void FormField::setAdditionalAction(Annotation::AdditionalActionType type, Actio
     d->m_additionalAnnotActions[type] = action;
 }
 
+Page *FormField::page() const
+{
+    Q_D(const FormField);
+    return d->m_page;
+}
+
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 {
 public:

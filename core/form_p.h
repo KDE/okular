@@ -35,6 +35,7 @@ public:
     Action *m_activateAction;
     QHash<int, Action *> m_additionalActions;
     QHash<int, Action *> m_additionalAnnotActions;
+    Page *m_page = nullptr;
 
     Q_DECLARE_PUBLIC(FormField)
     FormField *q_ptr;

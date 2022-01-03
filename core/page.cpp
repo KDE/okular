@@ -712,6 +712,7 @@ void Page::setFormFields(const QLinkedList<FormField *> &fields)
     d->formfields = fields;
     for (FormField *ff : qAsConst(d->formfields)) {
         ff->d_ptr->setDefault();
+        ff->d_ptr->m_page = this;
     }
 }
 

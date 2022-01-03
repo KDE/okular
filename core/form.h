@@ -157,6 +157,13 @@ public:
      */
     Action *additionalAction(Annotation::AdditionalActionType type) const;
 
+    /**
+     * Returns the page of this form field
+     *
+     * @since 21.12.2
+     */
+    Page *page() const;
+
 protected:
     /// @cond PRIVATE
     explicit FormField(FormFieldPrivate &dd);

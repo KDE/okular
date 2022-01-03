@@ -623,9 +623,13 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
         pdfdoc->unlock(password.toLatin1(), password.toLatin1());
 
         if (pdfdoc->isLocked()) {
-            delete pdfdoc;
-            pdfdoc = nullptr;
-            return Okular::Document::OpenNeedsPassword;
+            pdfdoc->unlock(password.toUtf8(), password.toUtf8());
+
+            if (pdfdoc->isLocked()) {
+                delete pdfdoc;
+                pdfdoc = nullptr;
+                return Okular::Document::OpenNeedsPassword;
+            }
         }
     }
 

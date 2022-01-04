@@ -554,7 +554,7 @@ bool Converter::convertParagraph(const QDomElement &element)
             }
         } else if (child.isText()) {
             const QDomText childText = child.toText();
-            mCursor->insertText(childText.data());
+            mCursor->insertText(childText.data().simplified());
         }
 
         child = child.nextSibling();

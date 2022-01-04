@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <QTimeZone>
 #include <QTimer>
+#include <QtSvg/QSvgRenderer>
 
 #include <KAboutData>
 #include <KConfigDialog>
@@ -1991,6 +1992,46 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
 bool PDFGenerator::canSign() const
 {
     return Poppler::hasNSSSupport();
+}
+
+bool PDFGenerator::renderSignatureBackgroundImage(QString &filePath, double width, double height, QString tmpFilePath)
+{
+    width = width * 10;
+    height = height * 10;
+    QImage backgroundImage((int)width, (int)height, QImage::Format_ARGB32);
+    QPainter painter(&backgroundImage);
+    QSvgRenderer svg(filePath);
+    QSizeF size = svg.defaultSize();
+
+    // scale svg to height
+    size = size.scaled(width, height, Qt::KeepAspectRatio);
+    // calculate offset to center the image
+    QPointF top_left((width - size.width()) / 2, 0.0);
+
+    // do actual painting
+    backgroundImage.fill(qRgba(0, 0, 0, 0));
+    svg.render(&painter, QRectF(top_left, size));
+
+    painter.end();
+    return backgroundImage.save(tmpFilePath);
+}
+
+const QString PDFGenerator::buildSignatureText(QString &signee, QString &reason, QString &location, QString &moreText)
+{
+    // not using location at the moment
+    Q_UNUSED(location);
+
+    QStringList signatureTextList;
+    signatureTextList << i18n("Digitally signed by %1", signee);
+    if (!moreText.isEmpty())
+        signatureTextList << moreText;
+    if (reason.isEmpty())
+        signatureTextList << QString();
+    else
+        signatureTextList << i18n("Reason: %1", reason);
+    signatureTextList << i18n("Date: %1", QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t")));
+
+    return signatureTextList.join(QLatin1Char('\n'));
 }
 
 bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)

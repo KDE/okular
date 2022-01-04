@@ -299,7 +299,7 @@ void SignatureDialog::accept()
 void SignatureDialog::pickImage()
 {
     QFileInfo oldInfo(m_imagePath);
-    QString filePath = QFileDialog::getOpenFileName(this, i18n("Pick SVG ..."), oldInfo.absolutePath(), QString("Scalable Vector Graphics (*.svg)"));
+    QString filePath = QFileDialog::getOpenFileName(this, i18n("Pick SVG ..."), oldInfo.absolutePath(), QStringLiteral("Scalable Vector Graphics (*.svg)"));
     QFileInfo newInfo(filePath);
     if (newInfo.exists()) {
         m_imagePath = newInfo.absoluteFilePath();
@@ -335,7 +335,7 @@ SignatureDialog::SignatureDialog(QWidget *parent)
     dataLayout->addWidget(label, 2, 0);
     dataLayout->addWidget(m_someText_field, 2, 1);
 
-    QString defaultImgFilename("howtoholdapen1.svg");
+    QString defaultImgFilename = QStringLiteral("howtoholdapen1.svg");
     QFile *defaultImg = new QFile(defaultImgFilename); // look in curdir first
     if (!defaultImg->exists()) {
         QString foundPath = QStandardPaths::locate(QStandardPaths::DataLocation, defaultImgFilename);

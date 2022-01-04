@@ -3,7 +3,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_poppler")
 
 add_subdirectory( conf )
 
-set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
+set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui Qt5::Svg)
 
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
@@ -27,7 +27,7 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/pdfse
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt5 Qt5::Xml)
+target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt5 Qt5::Xml Qt5::Svg)
 
 ########### install files ###############
 install( FILES okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

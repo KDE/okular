@@ -11,7 +11,7 @@
 #ifndef _OKULAR_GENERATOR_PDF_H_
 #define _OKULAR_GENERATOR_PDF_H_
 
-//#include "synctex/synctex_parser.h"
+// #include "synctex/synctex_parser.h"
 
 #include <poppler-qt5.h>
 #include <poppler-version.h>
@@ -109,6 +109,7 @@ public:
     Okular::CertificateStore *certificateStore() const override;
 
     QByteArray requestFontData(const Okular::FontInfo &font) override;
+    bool renderSignatureBackgroundImage(QString &filePath, double width, double height, QString tmpFilePath);
 
     static void okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData);
 
@@ -116,6 +117,7 @@ protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
     bool doCloseDocument() override;
     Okular::TextPage *textPage(Okular::TextRequest *request) override;
+    const QString buildSignatureText(QString &signee, QString &reason, QString &location, QString &moreText);
 
 private:
     Okular::Document::OpenResult init(QVector<Okular::Page *> &pagesVector, const QString &password);

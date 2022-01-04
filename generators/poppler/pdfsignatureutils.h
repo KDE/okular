@@ -11,6 +11,10 @@
 #include <poppler-version.h>
 #define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
 
+#include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+
 #include "core/signatureutils.h"
 
 class PopplerCertificateInfo : public Okular::CertificateInfo
@@ -69,6 +73,34 @@ public:
     ~PopplerCertificateStore() override;
 
     QList<Okular::CertificateInfo *> signingCertificates(bool *userCancelled) const override;
+};
+
+class SignatureDialog : public QDialog
+{
+    Q_OBJECT
+
+protected:
+    QString m_reason;
+    QString m_location;
+    QString m_someText;
+    QString m_imagePath;
+
+    QLineEdit *m_reason_field;
+    QLineEdit *m_location_field;
+    QLineEdit *m_someText_field;
+    QLabel *m_backgroundPreview;
+
+public Q_SLOTS:
+    void accept() override;
+    void pickImage();
+
+public:
+    SignatureDialog(QWidget *parent);
+
+    QString reason();
+    QString location();
+    QString someText();
+    QString imagePath();
 };
 
 #endif

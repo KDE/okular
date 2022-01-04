@@ -8,7 +8,16 @@
 
 #include <KLocalizedString>
 #include <QDebug>
+#include <QFile>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QHBoxLayout>
 #include <QInputDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QStandardPaths>
 
 PopplerCertificateInfo::PopplerCertificateInfo(const Poppler::CertificateInfo &info)
     : m_info(info)
@@ -277,4 +286,113 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
     Poppler::setNSSPasswordCallback(nullptr);
 
     return vReturnCerts;
+}
+
+void SignatureDialog::accept()
+{
+    m_reason = m_reason_field->text();
+    m_location = m_location_field->text();
+    m_someText = m_someText_field->text();
+    QDialog::accept();
+}
+
+void SignatureDialog::pickImage()
+{
+    QFileInfo oldInfo(m_imagePath);
+    QString filePath = QFileDialog::getOpenFileName(this, i18n("Pick SVG ..."), oldInfo.absolutePath(), QString("Scalable Vector Graphics (*.svg)"));
+    QFileInfo newInfo(filePath);
+    if (newInfo.exists()) {
+        m_imagePath = newInfo.absoluteFilePath();
+    }
+    m_backgroundPreview->setPixmap(QIcon(m_imagePath).pixmap(QSize(72, 72)));
+}
+
+SignatureDialog::SignatureDialog(QWidget *parent)
+    : QDialog(parent)
+{
+    QVBoxLayout *stack = new QVBoxLayout();
+
+    QHBoxLayout *line;
+    QLabel *label;
+
+    label = new QLabel(i18n("You may provide the following optional information for your digital signature:"));
+    stack->addWidget(label);
+
+    QGridLayout *dataLayout = new QGridLayout();
+
+    label = new QLabel(i18n("Reason"));
+    m_reason_field = new QLineEdit(m_reason);
+    dataLayout->addWidget(label, 0, 0);
+    dataLayout->addWidget(m_reason_field, 0, 1);
+
+    label = new QLabel(i18n("Location"));
+    m_location_field = new QLineEdit(m_location);
+    dataLayout->addWidget(label, 1, 0);
+    dataLayout->addWidget(m_location_field, 1, 1);
+
+    label = new QLabel(i18n("More text"));
+    m_someText_field = new QLineEdit(m_someText);
+    dataLayout->addWidget(label, 2, 0);
+    dataLayout->addWidget(m_someText_field, 2, 1);
+
+    QString defaultImgFilename("howtoholdapen1.svg");
+    QFile *defaultImg = new QFile(defaultImgFilename); // look in curdir first
+    if (!defaultImg->exists()) {
+        QString foundPath = QStandardPaths::locate(QStandardPaths::DataLocation, defaultImgFilename);
+        if (!foundPath.isEmpty())
+            defaultImg = new QFile(foundPath);
+    }
+
+    if (defaultImg->exists()) {
+        QFileInfo defaultImgInfo(defaultImg->fileName());
+        m_imagePath = defaultImgInfo.absoluteFilePath();
+    }
+
+    label = new QLabel();
+    label->setFrameShape(QFrame::Box);
+    label->setFrameShadow(QFrame::Raised);
+    label->setLineWidth(2);
+    if (!m_imagePath.isEmpty())
+        label->setPixmap(QIcon(m_imagePath).pixmap(QSize(72, 72)));
+    else
+        label->setText(i18n("(none)"));
+    QPushButton *imgDlg = new QPushButton(i18n("Pick background SVG"));
+    dataLayout->addWidget(label, 3, 0);
+    dataLayout->addWidget(imgDlg, 3, 1);
+    m_backgroundPreview = label;
+
+    stack->addLayout(dataLayout);
+
+    line = new QHBoxLayout();
+    QPushButton *sign = new QPushButton(i18n("Sign"));
+    QPushButton *abort = new QPushButton(i18n("Abort"));
+    line->addWidget(sign);
+    line->addWidget(abort);
+    stack->addLayout(line);
+
+    setLayout(stack);
+    setModal(true);
+    connect(sign, &QPushButton::clicked, this, &SignatureDialog::accept);
+    connect(abort, &QPushButton::clicked, this, &QDialog::reject);
+    connect(imgDlg, &QPushButton::clicked, this, &SignatureDialog::pickImage);
+}
+
+QString SignatureDialog::reason()
+{
+    return m_reason;
+}
+
+QString SignatureDialog::location()
+{
+    return m_location;
+}
+
+QString SignatureDialog::someText()
+{
+    return m_someText;
+}
+
+QString SignatureDialog::imagePath()
+{
+    return m_imagePath;
 }

@@ -116,7 +116,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     }
 
     /**
-     * Read the rest...
+     * Read the rest: description (could be only one) and bodies (one or more)
      */
     element = documentElement.firstChildElement();
     while (!element.isNull()) {
@@ -125,7 +125,7 @@ QTextDocument *Converter::convert(const QString &fileName)
                 delete mCursor;
                 return nullptr;
             }
-        } else if (element.tagName() == QLatin1String("body")) {
+
             if (mTitleInfo && !mTitleInfo->mCoverPage.isNull()) {
                 convertCover(mTitleInfo->mCoverPage);
                 mCursor->insertBlock();
@@ -173,7 +173,7 @@ QTextDocument *Converter::convert(const QString &fileName)
                 mCursor->setPosition(topFrame->lastPosition());
                 mCursor->insertBlock();
             }
-
+        } else if (element.tagName() == QLatin1String("body")) {
             mCursor->insertBlock();
 
             if (!convertBody(element)) {

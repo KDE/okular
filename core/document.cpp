@@ -5895,6 +5895,7 @@ struct Okular::NewSignatureDataPrivate {
     QString documentPassword;
     int page;
     NormalizedRect boundingRectangle;
+    const Page *wholePage;
 };
 
 NewSignatureData::NewSignatureData()
@@ -5965,6 +5966,16 @@ QString NewSignatureData::documentPassword() const
 void NewSignatureData::setDocumentPassword(const QString &password)
 {
     d->documentPassword = password;
+}
+
+void NewSignatureData::setWholePage(const Page *page)
+{
+    d->wholePage = page;
+}
+
+const Page *NewSignatureData::getWholePage() const
+{
+    return d->wholePage;
 }
 
 #undef foreachObserver

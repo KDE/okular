@@ -1565,6 +1565,12 @@ public:
     /// @since 22.04
     void setDocumentPassword(const QString &password);
 
+    /// @since 23.04
+    const Page *getWholePage() const;
+
+    /// @since 23.04
+    void setWholePage(const Page *page);
+
 private:
     NewSignatureDataPrivate *const d;
 };

@@ -409,6 +409,7 @@ public:
         data.setPassword(passToUse);
         data.setDocumentPassword(documentPassword);
         data.setPage(m_page->number());
+        data.setWholePage(m_page);
         data.setBoundingRectangle(rect);
         passToUse.clear();
         documentPassword.clear();

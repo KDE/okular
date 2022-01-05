@@ -2036,20 +2036,68 @@ const QString PDFGenerator::buildSignatureText(QString &signee, QString &reason,
 
 bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
+    // tmp-store signature specific copy of the background image using this file name
+    QTemporaryFile timg(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.png"));
+    timg.setAutoRemove(true);
+    if (!timg.open()) {
+        return false;
+    }
+
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
     if (!tf.open()) {
         return false;
     }
+
+    SignatureDialog *sigDlg = new SignatureDialog(nullptr);
+    if (sigDlg->exec() == QDialog::Rejected) {
+        return false;
+    }
+
+    QString reason = sigDlg->reason();
+    QString location = sigDlg->location();
+    QString someText = sigDlg->someText();
+    QString imagePath = sigDlg->imagePath();
+
+    QString signee = oData.certSubjectCommonName();
+    const Okular::NormalizedRect bRect = oData.boundingRectangle();
+    const QString signatureText = buildSignatureText(signee, reason, location, someText);
+
+    // width and height in points
+    double width = (oData.getWholePage()->width() / dpi().width()) * 72.0 * bRect.width();
+    double height = (oData.getWholePage()->height() / dpi().height()) * 72.0 * bRect.height();
+
+    int lines = signatureText.count(QStringLiteral("\n")) + 1;
+    int fontSize = static_cast<int>(height / (2 * lines));
+    int leftFontSize = static_cast<int>(fontSize * 2.3); // twice and a bit
+
+    // tell poppler about how we want the signature to appear in the PDF
+    Poppler::PDFConverter::NewSignatureData pData;
+
+    pData.setCertNickname(oData.certNickname());
+    pData.setPassword(oData.password());
+    pData.setPage(oData.page());
+    pData.setSignatureText(signatureText);
+    pData.setFontSize(static_cast<double>(fontSize));
+    pData.setSignatureLeftText(oData.certSubjectCommonName());
+    pData.setLeftFontSize(static_cast<double>(leftFontSize));
+    pData.setBoundingRectangle(QRectF(bRect.left, bRect.top, bRect.width(), bRect.height()));
+    pData.setFontColor(Qt::black);
+    pData.setBorderColor(Qt::black);
+    pData.setBorderWidth(0.0);
+    pData.setBackgroundColor(Qt::white);
+    if (!sigDlg->reason().isEmpty())
+        pData.setReason(sigDlg->reason());
+    if (!sigDlg->reason().isEmpty())
+        pData.setReason(sigDlg->reason());
+    if (renderSignatureBackgroundImage(imagePath, width, height, timg.fileName()))
+        pData.setImagePath(timg.fileName());
+
     std::unique_ptr<Poppler::PDFConverter> converter(pdfdoc->pdfConverter());
     converter->setOutputFileName(tf.fileName());
     converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
-
-    Poppler::PDFConverter::NewSignatureData pData;
-    okularToPoppler(oData, &pData);
-    if (!converter->sign(pData)) {
-        tf.remove();
+    if (!converter->sign(pData)) { // everything leads up to this line
         return false;
     }
 

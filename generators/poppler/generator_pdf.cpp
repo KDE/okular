@@ -1921,14 +1921,14 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     pData.setPage(oData.page());
     const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
     pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
-#if HAVE_POPPLER_FANCY_SIGNATURE
+#ifdef HAVE_POPPLER_FANCY_SIGNATURE
     pData.setSignatureLeftText(oData.certSubjectCommonName());
 #endif
     const Okular::NormalizedRect bRect = oData.boundingRectangle();
     pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData.setFontColor(Qt::black);
     pData.setBorderColor(Qt::black);
-#if HAVE_POPPLER_22_02
+#ifdef HAVE_POPPLER_22_02
     pData.setDocumentOwnerPassword(oData.documentPassword().toLatin1());
     pData.setDocumentUserPassword(oData.documentPassword().toLatin1());
 #endif

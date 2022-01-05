@@ -320,17 +320,20 @@ SignatureDialog::SignatureDialog(QWidget *parent)
 
     QGridLayout *dataLayout = new QGridLayout();
 
-    label = new QLabel(i18n("Reason"));
+    label = new QLabel(i18n("Reason:"));
+    label->setAlignment(Qt::AlignRight);
     m_reason_field = new QLineEdit(m_reason);
     dataLayout->addWidget(label, 0, 0);
     dataLayout->addWidget(m_reason_field, 0, 1);
 
-    label = new QLabel(i18n("Location"));
+    label = new QLabel(i18n("Location:"));
+    label->setAlignment(Qt::AlignRight);
     m_location_field = new QLineEdit(m_location);
     dataLayout->addWidget(label, 1, 0);
     dataLayout->addWidget(m_location_field, 1, 1);
 
-    label = new QLabel(i18n("More text"));
+    label = new QLabel(i18n("Other information:"));
+    label->setAlignment(Qt::AlignRight);
     m_someText_field = new QLineEdit(m_someText);
     dataLayout->addWidget(label, 2, 0);
     dataLayout->addWidget(m_someText_field, 2, 1);
@@ -352,6 +355,7 @@ SignatureDialog::SignatureDialog(QWidget *parent)
     label->setFrameShape(QFrame::Box);
     label->setFrameShadow(QFrame::Raised);
     label->setLineWidth(2);
+    label->setAlignment(Qt::AlignCenter);
     if (!m_imagePath.isEmpty())
         label->setPixmap(QIcon(m_imagePath).pixmap(QSize(72, 72)));
     else
@@ -365,15 +369,19 @@ SignatureDialog::SignatureDialog(QWidget *parent)
 
     line = new QHBoxLayout();
     QPushButton *sign = new QPushButton(i18n("Sign"));
-    QPushButton *abort = new QPushButton(i18n("Abort"));
+    QPushButton *cancel = new QPushButton(i18n("Cancel"));
+    QIcon cancel_ico = QIcon::fromTheme(QStringLiteral("dialog-cancel"));
+    QIcon sign_ico = QIcon::fromTheme(QStringLiteral("document-edit-sign"));
+    sign->setIcon(sign_ico);
+    cancel->setIcon(cancel_ico);
     line->addWidget(sign);
-    line->addWidget(abort);
+    line->addWidget(cancel);
     stack->addLayout(line);
 
     setLayout(stack);
     setModal(true);
     connect(sign, &QPushButton::clicked, this, &SignatureDialog::accept);
-    connect(abort, &QPushButton::clicked, this, &QDialog::reject);
+    connect(cancel, &QPushButton::clicked, this, &QDialog::reject);
     connect(imgDlg, &QPushButton::clicked, this, &SignatureDialog::pickImage);
 }
 

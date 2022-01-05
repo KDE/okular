@@ -32,7 +32,7 @@ public:
     QString mAuthor;
     QString mTitle;
     QString mAnnotation;
-    QStringList mKeywords;
+    QString mKeywords;
     QDate mDate;
     QDomElement mCoverPage;
     QString mLanguage;
@@ -194,6 +194,9 @@ QTextDocument *Converter::convert(const QString &fileName)
 
         if (!mTitleInfo->mAuthor.isEmpty())
             emit addMetaData(Okular::DocumentInfo::Author, mTitleInfo->mAuthor);
+
+        if (!mTitleInfo->mKeywords.isEmpty())
+            emit addMetaData(Okular::DocumentInfo::Keywords, mTitleInfo->mKeywords);
     }
 
     if (mDocumentInfo) {
@@ -300,7 +303,7 @@ bool Converter::convertTitleInfo(const QDomElement &element)
             if (!convertTextNode(child, keywords))
                 return false;
 
-            mTitleInfo->mKeywords = keywords.split(QLatin1Char(' '), QString::SkipEmptyParts);
+            mTitleInfo->mKeywords = keywords;
         } else if (child.tagName() == QLatin1String("annotation")) {
             if (!convertAnnotation(child, mTitleInfo->mAnnotation))
                 return false;

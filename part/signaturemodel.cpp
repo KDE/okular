@@ -117,36 +117,39 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
     q->beginResetModel();
     qDeleteAll(root->children);
     root->children.clear();
-    for (const Okular::Page *page : pages) {
-        const int currentPage = page->number();
-        // get form fields page by page so that page number and index of the form can be determined.
-        const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(document, false, currentPage);
-        if (signatureFormFields.isEmpty())
-            continue;
 
-        for (int i = 0; i < signatureFormFields.count(); i++) {
-            const Okular::FormFieldSignature *sf = signatureFormFields[i];
-            const Okular::SignatureInfo &info = sf->signatureInfo();
+    if (pages.isEmpty()) {
+        q->endResetModel();
+        return;
+    }
 
-            // based on whether or not signature form is a nullptr it is decided if clicking on an item should change the viewport.
-            auto *parentItem = new SignatureItem(root, sf, SignatureItem::RevisionInfo, currentPage);
-            parentItem->displayString = i18n("Rev. %1: Signed By %2", i + 1, info.signerName());
+    int revNumber = 1;
+    const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(document);
+    for (const Okular::FormFieldSignature *sf : signatureFormFields) {
+        const Okular::SignatureInfo &info = sf->signatureInfo();
 
-            auto childItem1 = new SignatureItem(parentItem, nullptr, SignatureItem::ValidityStatus, currentPage);
-            childItem1->displayString = SignatureGuiUtils::getReadableSignatureStatus(info.signatureStatus());
+        const int pageNumber = sf->page()->number();
 
-            auto childItem2 = new SignatureItem(parentItem, nullptr, SignatureItem::SigningTime, currentPage);
-            childItem2->displayString = i18n("Signing Time: %1", info.signingTime().toString(Qt::DefaultLocaleLongDate));
+        // based on whether or not signature form is a nullptr it is decided if clicking on an item should change the viewport.
+        auto *parentItem = new SignatureItem(root, sf, SignatureItem::RevisionInfo, pageNumber);
+        parentItem->displayString = i18n("Rev. %1: Signed By %2", revNumber, info.signerName());
 
-            const QString reason = info.reason();
-            if (!reason.isEmpty()) {
-                auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Reason, currentPage);
-                childItem3->displayString = i18n("Reason: %1", reason);
-            }
+        auto childItem1 = new SignatureItem(parentItem, nullptr, SignatureItem::ValidityStatus, pageNumber);
+        childItem1->displayString = SignatureGuiUtils::getReadableSignatureStatus(info.signatureStatus());
 
-            auto childItem4 = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, currentPage);
-            childItem4->displayString = i18n("Field: %1 on page %2", sf->name(), currentPage + 1);
+        auto childItem2 = new SignatureItem(parentItem, nullptr, SignatureItem::SigningTime, pageNumber);
+        childItem2->displayString = i18n("Signing Time: %1", info.signingTime().toString(Qt::DefaultLocaleLongDate));
+
+        const QString reason = info.reason();
+        if (!reason.isEmpty()) {
+            auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Reason, pageNumber);
+            childItem3->displayString = i18n("Reason: %1", reason);
         }
+
+        auto childItem4 = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, pageNumber);
+        childItem4->displayString = i18n("Field: %1 on page %2", sf->name(), pageNumber + 1);
+
+        ++revNumber;
     }
     q->endResetModel();
 }

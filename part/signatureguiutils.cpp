@@ -14,10 +14,10 @@
 
 namespace SignatureGuiUtils
 {
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc, bool allPages, int pageNum)
+QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc)
 {
-    uint curPage = allPages ? 0 : pageNum;
-    const uint endPage = allPages ? doc->pages() - 1 : pageNum;
+    uint curPage = 0;
+    const uint endPage = doc->pages() - 1;
     QVector<const Okular::FormFieldSignature *> signatureFormFields;
     while (curPage <= endPage) {
         const QLinkedList<Okular::FormField *> formFields = doc->page(curPage++)->formFields();
@@ -27,6 +27,11 @@ QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Docum
             }
         }
     }
+    std::sort(signatureFormFields.begin(), signatureFormFields.end(), [](const Okular::FormFieldSignature *a, const Okular::FormFieldSignature *b) {
+        const Okular::SignatureInfo &infoA = a->signatureInfo();
+        const Okular::SignatureInfo &infoB = b->signatureInfo();
+        return infoA.signingTime() < infoB.signingTime();
+    });
     return signatureFormFields;
 }
 

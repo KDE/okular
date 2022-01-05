@@ -122,6 +122,12 @@ QList<Action *> FormField::additionalActions() const
     return d->m_additionalAnnotActions.values() + d->m_additionalActions.values(); // clazy:exclude=container-anti-pattern
 }
 
+Page *FormField::page() const
+{
+    Q_D(const FormField);
+    return d->m_page;
+}
+
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 {
 public:

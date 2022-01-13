@@ -382,6 +382,12 @@ Document::PrintError Generator::print(QPrinter &)
     return Document::UnknownPrintError;
 }
 
+PrintJob *Generator::printAsync(QPrinter &printer)
+{
+    Q_UNUSED(printer);
+    return nullptr;
+}
+
 void Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
 {
 }

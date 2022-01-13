@@ -60,6 +60,7 @@ class SourceReference;
 class View;
 class VisiblePageRect;
 class SignatureInfo;
+class PrintJob;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -761,7 +762,7 @@ public:
     /**
      * Prints the document to the given @p printer.
      */
-    Document::PrintError print(QPrinter &printer);
+    PrintJob *print(QPrinter &printer);
 
     /// @since 22.04
     static QString printErrorString(PrintError error);

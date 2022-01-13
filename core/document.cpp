@@ -4298,9 +4298,41 @@ bool Document::supportsPrintToFile() const
     return d->m_generator ? d->m_generator->hasFeature(Generator::PrintToFile) : false;
 }
 
-Document::PrintError Document::print(QPrinter &printer)
+class SyncPrintJob : public PrintJob
 {
-    return d->m_generator ? d->m_generator->print(printer) : Document::UnknownPrintError;
+    Q_OBJECT
+public:
+    explicit SyncPrintJob(Generator *generator, QPrinter &printer)
+        : PrintJob()
+        , m_generator(generator)
+        , m_printer(printer)
+
+    {
+    }
+
+    void start() override
+    {
+        QTimer::singleShot(0, this, &SyncPrintJob::doWork);
+    }
+
+    void doWork()
+    {
+        Document::PrintError error = m_generator->print(m_printer);
+        setError(error);
+        emitResult();
+    }
+
+    Generator *m_generator;
+    QPrinter &m_printer;
+};
+
+PrintJob *Document::print(QPrinter &printer)
+{
+    if (d->m_generator->hasFeature(Generator::PrintAsync)) {
+        return d->m_generator->printAsync(printer);
+    }
+
+    return new SyncPrintJob(d->m_generator, printer);
 }
 
 QString Document::printErrorString(PrintError error)

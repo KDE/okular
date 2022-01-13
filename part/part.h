@@ -284,7 +284,6 @@ private:
     void setupActions();
 
     void setupPrint(QPrinter &printer);
-    bool doPrint(QPrinter &printer);
     bool handleCompressed(QString &destpath, const QString &path, KCompressionDevice::CompressionType compressionType);
     void rebuildBookmarkMenu(bool unplugActions = true);
     void updateAboutBackendAction();

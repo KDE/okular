@@ -27,6 +27,7 @@
 #include <QVariant>
 #include <QVector>
 
+#include <KJob>
 #include <KPluginFactory>
 #include <QMimeType>
 
@@ -53,6 +54,7 @@ class GeneratorPrivate;
 class Page;
 class PixmapRequest;
 class PixmapRequestPrivate;
+class PrintJob;
 class TextPage;
 class TextRequest;
 class TextRequestPrivate;
@@ -199,17 +201,18 @@ public:
      * provide.
      */
     enum GeneratorFeature {
-        Threaded,          ///< Whether the Generator supports asynchronous generation of pictures or text pages
-        TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
-        ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
-        FontInfo,          ///< Whether the Generator can provide information about the fonts used in the document
-        PageSizes,         ///< Whether the Generator can change the size of the document pages.
-        PrintNative,       ///< Whether the Generator supports native cross-platform printing (QPainter-based).
-        PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
-        PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
-        TiledRendering,    ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
-        SwapBackingFile,   ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
-        SupportsCancelling ///< Whether the Generator can cancel requests @since 1.4
+        Threaded,           ///< Whether the Generator supports asynchronous generation of pictures or text pages
+        TextExtraction,     ///< Whether the Generator can extract text from the document in the form of TextPage's
+        ReadRawData,        ///< Whether the Generator can read a document directly from its raw data.
+        FontInfo,           ///< Whether the Generator can provide information about the fonts used in the document
+        PageSizes,          ///< Whether the Generator can change the size of the document pages.
+        PrintNative,        ///< Whether the Generator supports native cross-platform printing (QPainter-based).
+        PrintPostscript,    ///< Whether the Generator supports postscript-based file printing.
+        PrintToFile,        ///< Whether the Generator supports export to PDF & PS through the Print Dialog
+        TiledRendering,     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
+        SwapBackingFile,    ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
+        SupportsCancelling, ///< Whether the Generator can cancel requests @since 1.4
+        PrintAsync,         ///< Whether the Generator supports printAsync @since 22.04
     };
 
     /**
@@ -400,6 +403,8 @@ public:
      * This method is called to print the document to the given @p printer.
      */
     virtual Document::PrintError print(QPrinter &printer);
+
+    virtual PrintJob *printAsync(QPrinter &printer);
 
     /**
      * This method returns the meta data of the given @p key with the given @p option
@@ -787,6 +792,10 @@ private:
     TextRequestPrivate *const d;
 };
 
+class OKULARCORE_EXPORT PrintJob : public KJob
+{
+    Q_OBJECT
+};
 }
 
 Q_DECLARE_METATYPE(Okular::PixmapRequest *)

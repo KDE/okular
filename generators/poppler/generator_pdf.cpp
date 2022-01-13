@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <QTimeZone>
 #include <QTimer>
+#include <QtConcurrent>
 
 #include <KAboutData>
 #include <KConfigDialog>
@@ -608,6 +609,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     setFeature(TiledRendering);
     setFeature(SwapBackingFile);
     setFeature(SupportsCancelling);
+    setFeature(PrintAsync);
 
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -1337,145 +1339,200 @@ void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Popple
 #define DUMMY_QPRINTER_COPY
 Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
 {
-    bool printAnnots = true;
-    bool forceRasterize = false;
-    PDFOptionsPage::ScaleMode scaleMode = PDFOptionsPage::FitToPrintableArea;
+    Q_UNUSED(printer)
+    Q_ASSERT(0);
+    return Okular::Document::InvalidPrinterStatePrintError;
+}
 
-    if (pdfOptionsPage) {
-        printAnnots = pdfOptionsPage->printAnnots();
-        forceRasterize = pdfOptionsPage->printForceRaster();
-        scaleMode = pdfOptionsPage->scaleMode();
+class PdfPrintJob : public Okular::PrintJob
+{
+    Q_OBJECT
+public:
+    explicit PdfPrintJob(QPrinter &_printer, const Okular::Document *_document, Poppler::Document *_pdfdoc, PDFOptionsPage *_pdfOptionsPage, const QString &_title, QMutex *_mutex)
+        : Okular::PrintJob()
+        , document(_document)
+        , pdfdoc(_pdfdoc)
+        , printer(_printer)
+        , pdfOptionsPage(_pdfOptionsPage)
+        , title(_title)
+        , userMutex(_mutex)
+    {
     }
 
-#ifdef Q_OS_WIN
-    // Windows can only print by rasterization, because that is
-    // currently the only way Okular implements printing without using UNIX-specific
-    // tools like 'lpr'.
-    forceRasterize = true;
-#endif
+    const Okular::Document *document;
+    Poppler::Document *pdfdoc;
+    QPrinter &printer;
+    QPointer<PDFOptionsPage> pdfOptionsPage;
+    QString title;
+    QMutex *userMutex;
 
-    if (forceRasterize) {
-        pdfdoc->setRenderHint(Poppler::Document::HideAnnotations, !printAnnots);
+    void doWork()
+    {
+        bool printAnnots = true;
+        bool forceRasterize = false;
+        PDFOptionsPage::ScaleMode scaleMode = PDFOptionsPage::FitToPrintableArea;
 
         if (pdfOptionsPage) {
-            // If requested, scale to full page instead of the printable area
-            printer.setFullPage(pdfOptionsPage->ignorePrintMargins());
+            printAnnots = pdfOptionsPage->printAnnots();
+            forceRasterize = pdfOptionsPage->printForceRaster();
+            scaleMode = pdfOptionsPage->scaleMode();
         }
-
-        QPainter painter;
-        painter.begin(&printer);
-
-        QList<int> pageList = Okular::FilePrinter::pageList(printer, pdfdoc->numPages(), document()->currentPage() + 1, document()->bookmarkedPageList());
-        for (int i = 0; i < pageList.count(); ++i) {
-            if (i != 0)
-                printer.newPage();
-
-            const int page = pageList.at(i) - 1;
-            userMutex()->lock();
-            std::unique_ptr<Poppler::Page> pp(pdfdoc->page(page));
-            if (pp) {
-                QSizeF pageSize = pp->pageSizeF();      // Unit is 'points' (i.e., 1/72th of an inch)
-                QRect painterWindow = painter.window(); // Unit is 'QPrinter::DevicePixel'
-
-                // Default: no scaling at all, but we need to go from DevicePixel units to 'points'
-                // Warning: We compute the horizontal scaling, and later assume that the vertical scaling will be the same.
-                double scaling = printer.paperRect(QPrinter::DevicePixel).width() / printer.paperRect(QPrinter::Point).width();
-
-                if (scaleMode != PDFOptionsPage::None) {
-                    // Get the two scaling factors needed to fit the page onto paper horizontally or vertically
-                    auto horizontalScaling = painterWindow.width() / pageSize.width();
-                    auto verticalScaling = painterWindow.height() / pageSize.height();
-
-                    // We use the smaller of the two for both directions, to keep the aspect ratio
-                    scaling = std::min(horizontalScaling, verticalScaling);
-                }
 
 #ifdef Q_OS_WIN
-                QImage img = pp->renderToImage(printer.physicalDpiX(), printer.physicalDpiY());
-#else
-                // UNIX: Same resolution as the postscript rasterizer; see discussion at https://git.reviewboard.kde.org/r/130218/
-                QImage img = pp->renderToImage(300, 300);
+        // Windows can only print by rasterization, because that is
+        // currently the only way Okular implements printing without using UNIX-specific
+        // tools like 'lpr'.
+        forceRasterize = true;
 #endif
-                painter.drawImage(QRectF(QPointF(0, 0), scaling * pp->pageSizeF()), img);
+
+        if (forceRasterize) {
+            pdfdoc->setRenderHint(Poppler::Document::HideAnnotations, !printAnnots);
+
+            if (pdfOptionsPage) {
+                // If requested, scale to full page instead of the printable area
+                printer.setFullPage(pdfOptionsPage->ignorePrintMargins());
             }
-            userMutex()->unlock();
+
+            QPainter painter;
+            painter.begin(&printer);
+
+            QList<int> pageList = Okular::FilePrinter::pageList(printer, pdfdoc->numPages(), document->currentPage() + 1, document->bookmarkedPageList());
+            for (int i = 0; i < pageList.count(); ++i) {
+                if (i != 0)
+                    printer.newPage();
+
+                const int page = pageList.at(i) - 1;
+                //                 userMutex()->lock();
+                std::unique_ptr<Poppler::Page> pp(pdfdoc->page(page));
+                if (pp) {
+                    QSizeF pageSize = pp->pageSizeF();      // Unit is 'points' (i.e., 1/72th of an inch)
+                    QRect painterWindow = painter.window(); // Unit is 'QPrinter::DevicePixel'
+
+                    // Default: no scaling at all, but we need to go from DevicePixel units to 'points'
+                    // Warning: We compute the horizontal scaling, and later assume that the vertical scaling will be the same.
+                    double scaling = printer.paperRect(QPrinter::DevicePixel).width() / printer.paperRect(QPrinter::Point).width();
+
+                    if (scaleMode != PDFOptionsPage::None) {
+                        // Get the two scaling factors needed to fit the page onto paper horizontally or vertically
+                        auto horizontalScaling = painterWindow.width() / pageSize.width();
+                        auto verticalScaling = painterWindow.height() / pageSize.height();
+
+                        // We use the smaller of the two for both directions, to keep the aspect ratio
+                        scaling = std::min(horizontalScaling, verticalScaling);
+                    }
+
+#ifdef Q_OS_WIN
+                    QImage img = pp->renderToImage(printer.physicalDpiX(), printer.physicalDpiY());
+#else
+                    // UNIX: Same resolution as the postscript rasterizer; see discussion at https://git.reviewboard.kde.org/r/130218/
+                    QImage img = pp->renderToImage(300, 300);
+#endif
+                    painter.drawImage(QRectF(QPointF(0, 0), scaling * pp->pageSizeF()), img);
+                }
+                //                 userMutex()->unlock();
+            }
+            painter.end();
+            emitResult();
+            return;
         }
-        painter.end();
-        return Okular::Document::NoPrintError;
-    }
 
 #ifdef DUMMY_QPRINTER_COPY
-    // Get the real page size to pass to the ps generator
-    QPrinter dummy(QPrinter::PrinterResolution);
-    dummy.setFullPage(true);
-    dummy.setOrientation(printer.orientation());
-    dummy.setPageSize(printer.pageSize());
-    dummy.setPaperSize(printer.paperSize(QPrinter::Millimeter), QPrinter::Millimeter);
-    int width = dummy.width();
-    int height = dummy.height();
+        // Get the real page size to pass to the ps generator
+        QPrinter dummy(QPrinter::PrinterResolution);
+        dummy.setFullPage(true);
+        dummy.setOrientation(printer.orientation());
+        dummy.setPageSize(printer.pageSize());
+        dummy.setPaperSize(printer.paperSize(QPrinter::Millimeter), QPrinter::Millimeter);
+        int width = dummy.width();
+        int height = dummy.height();
 #else
-    int width = printer.width();
-    int height = printer.height();
+        int width = printer.width();
+        int height = printer.height();
 #endif
 
-    if (width <= 0 || height <= 0) {
-        return Okular::Document::InvalidPageSizePrintError;
+        if (width <= 0 || height <= 0) {
+            setError(Okular::Document::InvalidPageSizePrintError);
+            emitResult();
+            return;
+        }
+
+        // Generate the list of pages to be printed as selected in the print dialog
+        QList<int> pageList = Okular::FilePrinter::pageList(printer, pdfdoc->numPages(), document->currentPage() + 1, document->bookmarkedPageList());
+
+        // TODO rotation
+
+        if (title.trimmed().isEmpty()) {
+            title = document->currentDocument().fileName();
+        }
+
+        Poppler::PSConverter *psConverter = pdfdoc->psConverter();
+
+        psConverter->setPageList(pageList);
+        psConverter->setPaperWidth(width);
+        psConverter->setPaperHeight(height);
+        psConverter->setRightMargin(0);
+        psConverter->setBottomMargin(0);
+        psConverter->setLeftMargin(0);
+        psConverter->setTopMargin(0);
+        psConverter->setStrictMargins(false);
+        psConverter->setForceRasterize(forceRasterize);
+        psConverter->setTitle(title);
+
+        if (!printAnnots)
+            psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations);
+
+        QFuture<Okular::Document::PrintError> future = QtConcurrent::run(QThreadPool::globalInstance(), [psConverter, scaleMode, this]() -> Okular::Document::PrintError {
+            // Create the tempfile to send to FilePrinter, which will manage the deletion
+            QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
+            tf.setAutoRemove(false);
+            if (!tf.open()) {
+                return Okular::Document::TemporaryFileOpenPrintError;
+            }
+
+            QString tempfilename = tf.fileName();
+
+            psConverter->setOutputDevice(&tf);
+
+            userMutex->lock();
+            if (psConverter->convert()) {
+                userMutex->unlock();
+                delete psConverter;
+                tf.close();
+
+                const Okular::FilePrinter::ScaleMode filePrinterScaleMode = (scaleMode == PDFOptionsPage::None) ? Okular::FilePrinter::ScaleMode::NoScaling : Okular::FilePrinter::ScaleMode::FitToPrintArea;
+
+                return Okular::FilePrinter::printFile(
+                    printer, tempfilename, document->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document->bookmarkedPageRange(), filePrinterScaleMode);
+            } else {
+                delete psConverter;
+                userMutex->unlock();
+
+                tf.close();
+
+                return Okular::Document::FileConversionPrintError;
+            }
+        });
+
+        QFutureWatcher<Okular::Document::PrintError> *watcher = new QFutureWatcher<Okular::Document::PrintError>;
+
+        watcher->setFuture(future);
+
+        connect(watcher, &QFutureWatcher<bool>::finished, this, [this, watcher] {
+            watcher->deleteLater();
+            setError(watcher->result());
+            emitResult();
+        });
     }
 
-    // Create the tempfile to send to FilePrinter, which will manage the deletion
-    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
-    if (!tf.open()) {
-        return Okular::Document::TemporaryFileOpenPrintError;
+    void start() override
+    {
+        QTimer::singleShot(0, this, &PdfPrintJob::doWork);
     }
-    QString tempfilename = tf.fileName();
+};
 
-    // Generate the list of pages to be printed as selected in the print dialog
-    QList<int> pageList = Okular::FilePrinter::pageList(printer, pdfdoc->numPages(), document()->currentPage() + 1, document()->bookmarkedPageList());
-
-    // TODO rotation
-
-    tf.setAutoRemove(false);
-
-    QString pstitle = metaData(QStringLiteral("Title"), QVariant()).toString();
-    if (pstitle.trimmed().isEmpty()) {
-        pstitle = document()->currentDocument().fileName();
-    }
-
-    Poppler::PSConverter *psConverter = pdfdoc->psConverter();
-
-    psConverter->setOutputDevice(&tf);
-
-    psConverter->setPageList(pageList);
-    psConverter->setPaperWidth(width);
-    psConverter->setPaperHeight(height);
-    psConverter->setRightMargin(0);
-    psConverter->setBottomMargin(0);
-    psConverter->setLeftMargin(0);
-    psConverter->setTopMargin(0);
-    psConverter->setStrictMargins(false);
-    psConverter->setForceRasterize(forceRasterize);
-    psConverter->setTitle(pstitle);
-
-    if (!printAnnots)
-        psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations);
-
-    userMutex()->lock();
-    if (psConverter->convert()) {
-        userMutex()->unlock();
-        delete psConverter;
-        tf.close();
-
-        const Okular::FilePrinter::ScaleMode filePrinterScaleMode = (scaleMode == PDFOptionsPage::None) ? Okular::FilePrinter::ScaleMode::NoScaling : Okular::FilePrinter::ScaleMode::FitToPrintArea;
-
-        return Okular::FilePrinter::printFile(printer, tempfilename, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange(), filePrinterScaleMode);
-    } else {
-        delete psConverter;
-        userMutex()->unlock();
-
-        tf.close();
-
-        return Okular::Document::FileConversionPrintError;
-    }
+Okular::PrintJob *PDFGenerator::printAsync(QPrinter &printer)
+{
+    return new PdfPrintJob(printer, document(), pdfdoc, pdfOptionsPage, metaData(QStringLiteral("Title"), QVariant()).toString(), userMutex());
 }
 
 QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) const

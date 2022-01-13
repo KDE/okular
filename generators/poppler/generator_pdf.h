@@ -82,6 +82,8 @@ public:
     // [INHERITED] print page using an already configured kprinter
     Okular::Document::PrintError print(QPrinter &printer) override;
 
+    Okular::PrintJob *printAsync(QPrinter &printer) override;
+
     // [INHERITED] reply to some metadata requests
     QVariant metaData(const QString &key, const QVariant &option) const override;
 

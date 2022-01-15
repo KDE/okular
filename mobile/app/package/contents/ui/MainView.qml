@@ -4,7 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.1
+import QtQuick 2.15
 import QtQuick.Controls 2.3 as QQC2
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.10 as Kirigami
@@ -19,21 +19,43 @@ Kirigami.Page {
     bottomPadding: 0
 
     actions.main: Kirigami.Action {
-        icon.name: pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize"
+        visible: pageArea.page
+        icon.name: pageArea.page ? (pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize") : ''
         checkable: true
         onCheckedChanged: pageArea.page.bookmarked = checked
-        text: pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")
+        text: pageArea.page ? (pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")) : ''
     }
 
     Okular.DocumentView {
         id: pageArea
         anchors.fill: parent
 
-        onPageChanged: {
+        onPageChanged: if (page) {
             bookmarkConnection.target = page
             actions.main.checked = page.bookmarked
         }
         onClicked: fileBrowserRoot.controlsVisible = !fileBrowserRoot.controlsVisible
+
+        MouseArea {
+            cursorShape: undefined
+            anchors.fill: parent
+            acceptedButtons: Qt.BackButton | Qt.ForwardButton
+            onClicked: if (mouse.button === Qt.BackButton) {
+                pageArea.decrementCurrentIndex();
+            } else {
+                pageArea.incrementCurrentIndex();
+            }
+        }
+    }
+
+    Shortcut {
+        sequence: 'Left'
+        onActivated: pageArea.decrementCurrentIndex()
+    }
+
+    Shortcut {
+        sequence: 'Right'
+        onActivated: pageArea.incrementCurrentIndex()
     }
 
     Connections {
@@ -88,7 +110,7 @@ Kirigami.Page {
 
     Connections {
         id: bookmarkConnection
-        target: pageArea.page
+        target: pageArea.page ?? null
         function onBookmarkedChanged() {
             actions.main.checked = pageArea.page.bookmarked
         }

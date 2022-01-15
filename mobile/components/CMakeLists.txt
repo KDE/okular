@@ -34,6 +34,6 @@ endif()
 install(TARGETS okularplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
 install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
 install(FILES DocumentView.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
-install(FILES private/PageView.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular/private)
+install(FILES private/ZoomArea.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular/private)
 
 #add_subdirectory(test)

@@ -25,18 +25,14 @@ class RevisionPreview : public Okular::FilePrinterPreview
     Q_OBJECT
 
 public:
-    explicit RevisionPreview(const QString &revisionFile, QWidget *parent = nullptr);
+    explicit RevisionPreview(QWidget *parent = nullptr);
 
 private Q_SLOTS:
     void doSave();
-
-private:
-    QString m_filename;
 };
 
-RevisionPreview::RevisionPreview(const QString &revisionFile, QWidget *parent)
-    : FilePrinterPreview(revisionFile, parent)
-    , m_filename(revisionFile)
+RevisionPreview::RevisionPreview(QWidget *parent)
+    : FilePrinterPreview(parent)
 {
     setWindowTitle(i18n("Revision Preview"));
 
@@ -49,10 +45,10 @@ RevisionPreview::RevisionPreview(const QString &revisionFile, QWidget *parent)
 void RevisionPreview::doSave()
 {
     QMimeDatabase db;
-    const QMimeType mime = db.mimeTypeForFile(m_filename);
+    const QMimeType mime = db.mimeTypeForFile(fileName());
     const QString caption = i18n("Where do you want to save this revision?");
     const QString path = QFileDialog::getSaveFileName(this, caption, QStringLiteral("Revision"), mime.filterString());
-    if (!path.isEmpty() && !QFile::copy(m_filename, path)) {
+    if (!path.isEmpty() && !QFile::copy(fileName(), path)) {
         KMessageBox::error(this, i18n("Could not save file %1.", path));
         return;
     }
@@ -76,7 +72,8 @@ void RevisionViewer::viewRevision()
         return;
     }
     tf.write(m_revisionData);
-    RevisionPreview previewdlg(tf.fileName(), m_parent);
+    RevisionPreview previewdlg(m_parent);
+    previewdlg.showFile(tf.fileName());
     previewdlg.exec();
 }
 

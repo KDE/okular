@@ -17,6 +17,7 @@
 #include <QSize>
 #include <QVBoxLayout>
 
+#include <KBusyIndicatorWidget>
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginLoader>
@@ -34,7 +35,7 @@ using namespace Okular;
 class Okular::FilePrinterPreviewPrivate
 {
 public:
-    FilePrinterPreviewPrivate(FilePrinterPreview *host, const QString &_filename)
+    explicit FilePrinterPreviewPrivate(FilePrinterPreview *host)
         : q(host)
         , mainWidget(new QWidget(host))
         , previewPart(nullptr)
@@ -45,7 +46,9 @@ public:
         mainlayout = new QVBoxLayout(q);
         buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, q);
         mainlayout->addWidget(buttonBox);
-        filename = _filename;
+
+        busyIndicator = new KBusyIndicatorWidget(q);
+        mainlayout->insertWidget(0, busyIndicator, 0, Qt::AlignHCenter | Qt::AlignVCenter);
     }
 
     void getPart();
@@ -64,6 +67,7 @@ public:
 
     KParts::ReadOnlyPart *previewPart;
     QWidget *failMessage;
+    KBusyIndicatorWidget *busyIndicator;
 
     KSharedConfig::Ptr config;
 };
@@ -92,6 +96,7 @@ void FilePrinterPreviewPrivate::getPart()
 
 bool FilePrinterPreviewPrivate::doPreview()
 {
+    mainlayout->removeWidget(busyIndicator);
     if (!QFile::exists(filename)) {
         qCWarning(OkularUiDebug) << "Nothing was produced to be previewed";
         return false;
@@ -117,9 +122,9 @@ void FilePrinterPreviewPrivate::fail()
     mainlayout->insertWidget(0, failMessage);
 }
 
-FilePrinterPreview::FilePrinterPreview(const QString &filename, QWidget *parent)
+FilePrinterPreview::FilePrinterPreview(QWidget *parent)
     : QDialog(parent)
-    , d(new FilePrinterPreviewPrivate(this, filename))
+    , d(new FilePrinterPreviewPrivate(this))
 {
     qCDebug(OkularUiDebug) << "kdeprint: creating preview dialog";
 
@@ -145,16 +150,15 @@ QSize FilePrinterPreview::sizeHint() const
     return QSize(600, 500);
 }
 
-void FilePrinterPreview::showEvent(QShowEvent *event)
+void FilePrinterPreview::showFile(const QString &_filename)
 {
-    if (!event->spontaneous()) {
-        // being shown for the first time
-        if (!d->doPreview()) {
-            event->accept();
-            return;
-        }
-    }
-    QDialog::showEvent(event);
+    d->filename = _filename;
+    d->doPreview();
+}
+
+QString FilePrinterPreview::fileName() const
+{
+    return d->filename;
 }
 
 #include "moc_fileprinterpreview.cpp"

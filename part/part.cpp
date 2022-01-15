@@ -2944,12 +2944,14 @@ void Part::slotPrintPreview()
     setupPrint(*printer);
 
     PrintJob *job = m_document->print(*printer);
+    Okular::FilePrinterPreview *previewdlg = new Okular::FilePrinterPreview(widget());
+    previewdlg->setAttribute(Qt::WA_DeleteOnClose, true);
+    previewdlg->show();
 
-    connect(job, &KJob::finished, this, [this, job, printer] {
+    connect(job, &KJob::finished, this, [this, job, printer, previewdlg] {
         if (job->error() == Document::NoPrintError) {
             if (QFile::exists(printer->outputFileName())) {
-                Okular::FilePrinterPreview previewdlg(printer->outputFileName(), widget());
-                previewdlg.exec();
+                previewdlg->showFile(printer->outputFileName());
             }
         } else {
             const QString error = Okular::Document::printErrorString(static_cast<Okular::Document::PrintError>(job->error()));

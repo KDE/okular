@@ -178,7 +178,7 @@ void EmbeddedFilesDialog::viewFile(Okular::EmbeddedFile *ef)
     m_openedFiles.push_back(QSharedPointer<QTemporaryFile>(tmpFile));
 
     // view the temporary file with the default application
-    new KRun(QUrl("file://" + tmpFile->fileName()), this);
+    new KRun(QUrl::fromLocalFile(tmpFile->fileName()), this);
 }
 
 void EmbeddedFilesDialog::saveFile(Okular::EmbeddedFile *ef)

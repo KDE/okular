@@ -4004,6 +4004,9 @@ void Document::processAction(const Action *action)
         case DocumentAction::Close:
             emit close();
             break;
+        case DocumentAction::Print:
+            emit requestPrint();
+            break;
         }
     } break;
 

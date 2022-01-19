@@ -1112,6 +1112,13 @@ Q_SIGNALS:
     void close();
 
     /**
+     * This signal is emitted whenever an action requests a
+     * document print operation.
+     * @since 22.04
+     */
+    void requestPrint();
+
+    /**
      * This signal is emitted whenever an action requests an
      * application quit operation.
      */

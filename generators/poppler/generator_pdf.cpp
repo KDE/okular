@@ -338,6 +338,44 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
     return qMakePair(movie, pdfEmbeddedFile);
 }
 
+static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkAction::ActionType pat)
+{
+    switch (pat) {
+    case Poppler::LinkAction::PageFirst:
+        return Okular::DocumentAction::PageFirst;
+    case Poppler::LinkAction::PagePrev:
+        return Okular::DocumentAction::PagePrev;
+    case Poppler::LinkAction::PageNext:
+        return Okular::DocumentAction::PageNext;
+    case Poppler::LinkAction::PageLast:
+        return Okular::DocumentAction::PageLast;
+    case Poppler::LinkAction::HistoryBack:
+        return Okular::DocumentAction::HistoryBack;
+    case Poppler::LinkAction::HistoryForward:
+        return Okular::DocumentAction::HistoryForward;
+    case Poppler::LinkAction::Quit:
+        return Okular::DocumentAction::Quit;
+    case Poppler::LinkAction::Presentation:
+        return Okular::DocumentAction::Presentation;
+    case Poppler::LinkAction::EndPresentation:
+        return Okular::DocumentAction::EndPresentation;
+    case Poppler::LinkAction::Find:
+        return Okular::DocumentAction::Find;
+    case Poppler::LinkAction::GoToPage:
+        return Okular::DocumentAction::GoToPage;
+    case Poppler::LinkAction::Close:
+        return Okular::DocumentAction::Close;
+    case Poppler::LinkAction::Print:
+        return Okular::DocumentAction::Print;
+    }
+
+    qWarning() << "Unsupported Poppler::LinkAction::ActionType" << pat;
+    // TODO When we can use C++17 make this function return an optional
+    //      for now it's not super important since at the time of writing
+    //      okular DocumentAction supports all that poppler ActionType supports
+    return Okular::DocumentAction::PageFirst;
+}
+
 /**
  * Note: the function will take ownership of the popplerLink object.
  */
@@ -385,7 +423,7 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
 
     case Poppler::Link::Action:
         popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-        link = new Okular::DocumentAction((Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType());
+        link = new Okular::DocumentAction(popplerToOkular(popplerLinkAction->actionType()));
         break;
 
     case Poppler::Link::Sound: {

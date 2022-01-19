@@ -6,8 +6,9 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 2.5 as QQC2
-import org.kde.kirigami 2.0 as Kirigami
+import org.kde.kirigami 2.15 as Kirigami
 import org.kde.okular 2.0 as Okular
+import QtQuick.Layouts 1.15
 
 
 Kirigami.OverlayDrawer {
@@ -17,20 +18,14 @@ Kirigami.OverlayDrawer {
     rightPadding: 0
 
     edge: Qt.application.layoutDirection == Qt.RightToLeft ? Qt.LeftEdge : Qt.RightEdge
-    contentItem: Item {
+    contentItem: ColumnLayout {
         id: browserFrame
-        implicitWidth: Kirigami.Units.gridUnit * 45
-        implicitHeight: implicitWidth
-        state: "Hidden"
+        spacing: 0
 
         QQC2.StackView {
             id: pageStack
-            anchors {
-                left: parent.left
-                top: parent.top
-                right: parent.right
-                bottom: tabsToolbar.top
-            }
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             clip: true
         }
 
@@ -43,14 +38,8 @@ Kirigami.OverlayDrawer {
 
         QQC2.ToolBar {
             id: tabsToolbar
-            height: mainTabBar.height
             position: QQC2.ToolBar.Footer
-            anchors {
-                top: undefined
-                bottom: browserFrame.bottom
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
             Component.onCompleted: thumbnailsButton.checked = true;
             Item {
                 width: parent.width

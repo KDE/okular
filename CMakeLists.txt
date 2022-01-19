@@ -169,6 +169,11 @@ add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x054400)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 
+if(BUILD_MOBILE AND KF5Kirigami2_VERSION VERSION_LESS "5.85")
+    message(FATAL_ERROR "Disable mobile build. This requires Kirigami 5.85 or greater.")
+    set(BUILD_MOBILE OFF)
+endif()
+
 if(BUILD_MOBILE)
     add_subdirectory( mobile )
 endif()

@@ -51,9 +51,11 @@ Kirigami.ApplicationWindow {
         ]
     }
     contextDrawer: OkularDrawer {
+        width: columnWidth
         contentItem.implicitWidth: columnWidth
         modal: !fileBrowserRoot.wideScreen
         onModalChanged: drawerOpen = !modal
+        onEnabledChanged: drawerOpen = enabled && !modal
         enabled: documentItem.opened && pageStack.layers.depth < 2
         handleVisible: enabled && pageStack.layers.depth < 2
     }

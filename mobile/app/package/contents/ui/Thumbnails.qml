@@ -5,20 +5,24 @@
 */
 
 import QtQuick 2.1
+import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.8 as Kirigami
 
 ThumbnailsBase {
     id: root
     model: documentItem.matchingPages
-    padding: 0
 
-    header: QQC2.ToolBar {
-        id: toolBarContent
-        padding: 0
-        contentItem: Kirigami.SearchField {
+    header: Kirigami.AbstractApplicationHeader {
+        topPadding: Kirigami.Units.smallSpacing / 2;
+        bottomPadding: Kirigami.Units.smallSpacing / 2;
+        rightPadding: Kirigami.Units.smallSpacing
+        leftPadding: Kirigami.Units.smallSpacing
+
+        width: root.width
+        Kirigami.SearchField {
             id: searchField
-            placeholderText: i18n("Search...")
+            width: parent.width
             enabled: documentItem ? documentItem.supportsSearching : false
             onTextChanged: {
                 if (text.length > 2) {

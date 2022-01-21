@@ -2515,6 +2515,20 @@ bool Part::slotSaveFileAs(bool showOkularArchiveAsDefaultFormat)
     // Has the user chosen to save in .okular archive format?
     const bool saveAsOkularArchive = (selectedFilter == okularArchiveMimeTypeFilter);
 
+    if (saveAsOkularArchive) {
+        // Non Plasma file dialogs are terrible and it's very easy to select saving a file as okular archive and call it hello.md
+        // and that's bad because it is *not* an .md file so tell the user to fix it
+        Q_ASSERT(okularArchiveMimeType.suffixes().count() == 1);
+        Q_ASSERT(okularArchiveMimeType.suffixes().at(0) == okularArchiveMimeType.preferredSuffix());
+        const QString wantedExtension = '.' + okularArchiveMimeType.preferredSuffix();
+        if (!saveUrl.path().endsWith(wantedExtension)) {
+            const auto button = KMessageBox::questionYesNo(
+                widget(), i18n("You have chosen to save an Okular Archive without the file name ending with the '%1' extension. That is not allowed, do you want to choose a new name?", wantedExtension), i18n("Unsupported extension"));
+
+            return button == KMessageBox::Yes ? slotSaveFileAs(showOkularArchiveAsDefaultFormat) : false;
+        }
+    }
+
     return saveAs(saveUrl, saveAsOkularArchive ? SaveAsOkularArchive : NoSaveAsFlags);
 }
 

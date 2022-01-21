@@ -2554,14 +2554,18 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
 
     bool setModifiedAfterSave = false;
 
-    QTemporaryFile tf;
     QString fileName;
-    if (!tf.open()) {
-        KMessageBox::information(widget(), i18n("Could not open the temporary file for saving."));
-        return false;
+    {
+        // Own scope for the QTemporaryFile since we only care about the random name
+        // we need to destroy it so the file gets deleted otherwise windows will complain
+        // when trying to save over it because the file is still open
+        QTemporaryFile tf;
+        if (!tf.open()) {
+            KMessageBox::information(widget(), i18n("Could not open the temporary file for saving."));
+            return false;
+        }
+        fileName = tf.fileName();
     }
-    fileName = tf.fileName();
-    tf.close();
 
     // Figure out the real save url, for symlinks we don't want to copy over the symlink but over the target file
     const QUrl realSaveUrl = resolveSymlinksIfFileExists(saveUrl);

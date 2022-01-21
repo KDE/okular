@@ -115,10 +115,10 @@ static void eventSetReturnCode(KJSContext *ctx, void *object, KJSObject value)
 }
 
 // Event.willCommit (getter)
-static KJSObject eventGetWillCommit(KJSContext *, void * /*object*/)
+static KJSObject eventGetWillCommit(KJSContext *, void *object)
 {
-    // TODO Someone try to understand the defintion of willCommit better from js_api_reference.pdf
-    return KJSBoolean(true);
+    const Event *event = reinterpret_cast<Event *>(object);
+    return KJSBoolean(event->willCommit());
 }
 
 void JSEvent::initType(KJSContext *ctx)

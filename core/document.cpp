@@ -4162,6 +4162,35 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     }
 }
 
+void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFieldText *fft)
+{
+    if (action->actionType() != Action::Script) {
+        qCDebug(OkularCoreDebug) << "Unsupported action type" << action->actionType() << "for keystroke.";
+        return;
+    }
+    // Lookup the page of the FormFieldText
+    int foundPage = d->findFieldPageNumber(fft);
+
+    if (foundPage == -1) {
+        qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
+        return;
+    }
+
+    std::shared_ptr<Event> event = Event::createKeystrokeEvent(fft, d->m_pagesVector[foundPage]);
+    event->setWillCommit(true);
+
+    const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
+
+    d->executeScriptEvent(event, linkscript);
+
+    if (event->returnCode()) {
+        fft->setText(event->value().toString());
+        // TODO commit value
+    } else {
+        // TODO reset to committed value
+    }
+}
+
 void Document::processFocusAction(const Action *action, Okular::FormField *field)
 {
     if (!action || action->actionType() != Action::Script)

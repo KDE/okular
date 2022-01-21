@@ -22,6 +22,7 @@ public:
         , m_eventType(eventType)
         , m_returnCode(false)
         , m_shiftModifier(false)
+        , m_willCommit(false)
     {
     }
 
@@ -34,6 +35,7 @@ public:
     QVariant m_value;
     bool m_returnCode;
     bool m_shiftModifier;
+    bool m_willCommit;
 };
 
 Event::Event()
@@ -167,6 +169,16 @@ bool Event::shiftModifier() const
 void Event::setShiftModifier(bool shiftModifier)
 {
     d->m_shiftModifier = shiftModifier;
+}
+
+bool Event::willCommit() const
+{
+    return d->m_willCommit;
+}
+
+void Event::setWillCommit(bool willCommit)
+{
+    d->m_willCommit = willCommit;
 }
 
 // static

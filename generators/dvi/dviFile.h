@@ -131,6 +131,8 @@ public:
     QString convertPDFtoPS(const QString &PDFFilename, QString *converrorms = nullptr);
 
 private:
+    void pdf2psNotFound(const QString &PDFFilename, QString *converrorms);
+
     /** process_preamble reads the information in the preamble and
         stores it into global variables for later use. */
     void process_preamble();

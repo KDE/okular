@@ -16,6 +16,7 @@
 #include <QFile>
 #include <QLoggingCategory>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QTextStream>
 
 //#define DEBUG_FONTENC
@@ -31,7 +32,14 @@ fontEncoding::fontEncoding(const QString &encName)
     QProcess kpsewhich;
     kpsewhich.setProcessChannelMode(QProcess::MergedChannels);
 
-    kpsewhich.start(QStringLiteral("kpsewhich"), QStringList() << encName, QIODevice::ReadOnly | QIODevice::Text);
+    // Make sure kpsewhich is in PATH and not just in the CWD
+    static const QString fullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
+    if (fullPath.isEmpty()) {
+        qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich is not in path." << endl;
+        return;
+    }
+
+    kpsewhich.start(fullPath, QStringList() << encName, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
         qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;

@@ -24,6 +24,7 @@
 #include <QLoggingCategory>
 #include <QPainter>
 #include <QPixmap>
+#include <QStandardPaths>
 #include <QTextStream>
 #include <QTimer>
 
@@ -157,6 +158,13 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
         return;
     }
 
+    // Make sure gs is in PATH and not just in the CWD
+    static const QString gsFullPath = QStandardPaths::findExecutable(QStringLiteral("gs"));
+    if (gsFullPath.isEmpty()) {
+        qCCritical(OkularDviDebug) << "gs is not in path" << endl;
+        return;
+    }
+
     pageInfo *info = pageList.value(page);
 
     // Generate a PNG-file
@@ -216,7 +224,7 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
     KProcess proc;
     proc.setOutputChannelMode(KProcess::SeparateChannels);
     QStringList argus;
-    argus << QStringLiteral("gs");
+    argus << gsFullPath;
     argus << QStringLiteral("-dSAFER") << QStringLiteral("-dPARANOIDSAFER") << QStringLiteral("-dDELAYSAFER") << QStringLiteral("-dNOPAUSE") << QStringLiteral("-dBATCH");
     argus << QStringLiteral("-sDEVICE=%1").arg(*gsDevice);
     argus << QStringLiteral("-sOutputFile=%1").arg(filename);
@@ -328,8 +336,14 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const QUrl
     }
 
     // Otherwise, use kpsewhich to find the eps file.
+    // Make sure kpsewhich is in PATH and not just in the CWD
+    static const QString fullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
+    if (fullPath.isEmpty()) {
+        return {};
+    }
+
     KProcess proc;
-    proc << QStringLiteral("kpsewhich") << filename;
+    proc << fullPath << filename;
     proc.execute();
     return QString::fromLocal8Bit(proc.readLine().trimmed());
 }

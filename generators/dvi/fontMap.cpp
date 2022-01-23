@@ -15,12 +15,16 @@
 #include <QFile>
 #include <QLoggingCategory>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QTextStream>
 
 //#define DEBUG_FONTMAP
 
 fontMap::fontMap()
 {
+    // Make sure kpsewhich is in PATH and not just in the CWD
+    static const QString kpsewhichFullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
+
     // Read the map file of ps2pk which will provide us with a
     // dictionary "TeX Font names" <-> "Name of font files, Font Names
     // and Encodings" (example: the font "Times-Roman" is called
@@ -35,7 +39,7 @@ fontMap::fontMap()
     // other way than to try both options one after another. We use the
     // teTeX 3.0 format first.
     QProcess kpsewhich;
-    kpsewhich.start(QStringLiteral("kpsewhich"), QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
+    kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
         qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
@@ -49,7 +53,7 @@ fontMap::fontMap()
     if (map_fileName.isEmpty()) {
         // Map file not found? Then we try the teTeX < 3.0 way of finding
         // the file.
-        kpsewhich.start(QStringLiteral("kpsewhich"), QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
+        kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
         if (!kpsewhich.waitForStarted()) {
             qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
             return;

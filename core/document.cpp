@@ -4202,11 +4202,18 @@ void Document::processSourceReference(const SourceReference *ref)
     const QString cmd = KMacroExpander::expandMacrosShellQuote(p, map);
     if (cmd.isEmpty())
         return;
-    const QStringList args = KShell::splitArgs(cmd);
+    QStringList args = KShell::splitArgs(cmd);
     if (args.isEmpty())
         return;
 
-    KProcess::startDetached(args);
+    const QString prog = args.takeFirst();
+    // Make sure prog is in PATH and not just in the CWD
+    const QString progFullPath = QStandardPaths::findExecutable(prog);
+    if (progFullPath.isEmpty()) {
+        return;
+    }
+
+    KProcess::startDetached(progFullPath, args);
 }
 
 const SourceReference *Document::dynamicSourceReference(int pageNr, double absX, double absY)

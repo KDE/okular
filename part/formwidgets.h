@@ -68,6 +68,8 @@ public:
     bool canUndo();
     bool canRedo();
 
+    Okular::Document *document() const;
+
     static bool shouldFormWidgetBeShown(Okular::FormField *form);
 
 Q_SIGNALS:
@@ -91,14 +93,6 @@ Q_SIGNALS:
     void formButtonsChangedByWidget(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates);
 
     void action(Okular::Action *action);
-
-    void focusAction(const Okular::Action *action, Okular::FormFieldText *ff);
-
-    void formatAction(const Okular::Action *action, Okular::FormFieldText *ff);
-
-    void keystrokeAction(const Okular::Action *action, Okular::FormFieldText *ff, bool &ok);
-
-    void validateAction(const Okular::Action *action, Okular::FormFieldText *ff, bool &ok);
 
     void refreshFormWidget(Okular::FormField *form);
 

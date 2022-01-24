@@ -224,6 +224,11 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
     emit changed(pageNumber);
 }
 
+Okular::Document *FormWidgetsController::document() const
+{
+    return m_doc;
+}
+
 FormWidgetIface *FormWidgetFactory::createWidget(Okular::FormField *ff, PageView *pageView)
 {
     FormWidgetIface *widget = nullptr;
@@ -486,7 +491,7 @@ bool FormLineEdit::event(QEvent *e)
         QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
         if (focusEvent->reason() != Qt::ActiveWindowFocusReason) {
             if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusIn))
-                emit m_controller->focusAction(action, fft);
+                m_controller->document()->processFocusAction(action, fft);
         }
         setFocus();
     } else if (e->type() == QEvent::FocusOut) {
@@ -499,10 +504,10 @@ bool FormLineEdit::event(QEvent *e)
 
         if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
             bool ok = false;
-            emit m_controller->validateAction(action, static_cast<Okular::FormFieldText *>(m_ff), ok);
+            m_controller->document()->processValidateAction(action, static_cast<Okular::FormFieldText *>(m_ff), ok);
         }
         if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::FormatField)) {
-            emit m_controller->formatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
+            m_controller->document()->processFormatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
         }
     }
     return QLineEdit::event(e);
@@ -546,7 +551,7 @@ void FormLineEdit::slotChanged()
         bool ok = false;
         QString oldInputText = form->text();
         form->setText(text());
-        emit m_controller->keystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
+        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
         form->setText(oldInputText);
         if (!ok) {
             setText(oldInputText);
@@ -642,7 +647,7 @@ bool TextAreaEdit::event(QEvent *e)
     } else if (e->type() == QEvent::FocusOut) {
         m_editing = false;
         if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::FormatField)) {
-            emit m_controller->formatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
+            m_controller->document()->processFormatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
         }
     }
     return KTextEdit::event(e);
@@ -706,7 +711,7 @@ void TextAreaEdit::slotChanged()
         bool ok = false;
         QString oldInputText = form->text();
         form->setText(toPlainText());
-        emit m_controller->keystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
+        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
         form->setText(oldInputText);
         if (!ok) {
             setText(oldInputText);

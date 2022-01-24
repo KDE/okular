@@ -282,10 +282,6 @@ FormWidgetsController *PageViewPrivate::formWidgetsController()
         formsWidgetController = new FormWidgetsController(document);
         QObject::connect(formsWidgetController, &FormWidgetsController::changed, q, &PageView::slotFormChanged);
         QObject::connect(formsWidgetController, &FormWidgetsController::action, q, &PageView::slotAction);
-        QObject::connect(formsWidgetController, &FormWidgetsController::formatAction, q, [this](const Okular::Action *action, Okular::FormFieldText *fft) { document->processFormatAction(action, fft); });
-        QObject::connect(formsWidgetController, &FormWidgetsController::keystrokeAction, q, [this](const Okular::Action *action, Okular::FormFieldText *fft, bool &ok) { document->processKeystrokeAction(action, fft, ok); });
-        QObject::connect(formsWidgetController, &FormWidgetsController::focusAction, q, [this](const Okular::Action *action, Okular::FormFieldText *fft) { document->processFocusAction(action, fft); });
-        QObject::connect(formsWidgetController, &FormWidgetsController::validateAction, q, [this](const Okular::Action *action, Okular::FormFieldText *fft, bool &ok) { document->processValidateAction(action, fft, ok); });
     }
 
     return formsWidgetController;

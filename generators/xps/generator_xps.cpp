@@ -520,12 +520,6 @@ static const KArchiveEntry *loadEntry(KZip *archive, const QString &fileName, Qt
     return nullptr;
 }
 
-static const KZipFileEntry *loadFile(KZip *archive, const QString &fileName, Qt::CaseSensitivity cs)
-{
-    const KArchiveEntry *entry = loadEntry(archive, fileName, cs);
-    return entry->isFile() ? static_cast<const KZipFileEntry *>(entry) : nullptr;
-}
-
 /**
    \return The name of a resource from the \p fileName
 */
@@ -1491,7 +1485,7 @@ QImage XpsPage::loadImageFromFile(const QString &fileName)
     }
 
     QString absoluteFileName = absolutePath(entryPath(m_fileName), fileName);
-    const KZipFileEntry *imageFile = loadFile(m_file->xpsArchive(), absoluteFileName, Qt::CaseInsensitive);
+    const KArchiveEntry *imageFile = loadEntry(m_file->xpsArchive(), absoluteFileName, Qt::CaseInsensitive);
     if (!imageFile) {
         // image not found
         return QImage();
@@ -1509,7 +1503,7 @@ QImage XpsPage::loadImageFromFile(const QString &fileName)
     */
 
     QImage image;
-    QByteArray data = imageFile->data();
+    QByteArray data = readFileOrDirectoryParts(imageFile);
 
     QBuffer buffer(&data);
     buffer.open(QBuffer::ReadOnly);

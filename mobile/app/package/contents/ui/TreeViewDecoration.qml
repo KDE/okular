@@ -4,12 +4,12 @@
  *  SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.2 as QQC2
-import QtQuick.Templates 2.2 as T
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15 as QQC2
+import QtQuick.Templates 2.15 as T
 import org.kde.kitemmodels 1.0
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.17 as Kirigami
 
 /**
  * The tree expander decorator for item views.

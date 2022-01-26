@@ -4,12 +4,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.3 as QQC2
-import QtGraphicalEffects 1.0
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15 as QQC2
+import QtGraphicalEffects 1.15
 import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 2.15 as Kirigami
+import org.kde.kirigami 2.17 as Kirigami
 
 ColumnLayout {
     id: root

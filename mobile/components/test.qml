@@ -4,8 +4,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick 2.15
+import QtQuick.Controls 1.6
 import org.kde.okular 2.0 as Okular
 
 Item {

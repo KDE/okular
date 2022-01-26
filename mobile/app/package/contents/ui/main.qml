@@ -4,10 +4,10 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.7
+import QtQuick 2.15
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 2.10 as Kirigami
+import org.kde.kirigami 2.17 as Kirigami
 import org.kde.okular.app 2.0
 
 Kirigami.ApplicationWindow {

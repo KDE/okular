@@ -4,10 +4,10 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.2
-import QtGraphicalEffects 1.0
+import QtQuick 2.15
+import QtGraphicalEffects 1.15
 import org.kde.okular 2.0
-import org.kde.kirigami 2.2 as Kirigami
+import org.kde.kirigami 2.17 as Kirigami
 
 Item {
     width: parent.width

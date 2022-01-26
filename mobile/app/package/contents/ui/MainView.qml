@@ -77,8 +77,7 @@ Kirigami.Page {
         }
     }
 
-    // TODO KF 5.64 replace usage by upstream PlaceholderMessage
-    PlaceholderMessage {
+    Kirigami.PlaceholderMessage {
         visible: !document.opened
         text: i18n("No document open")
         helpfulAction: openDocumentAction

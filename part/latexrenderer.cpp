@@ -22,7 +22,7 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include "debug_ui.h"
+#include "gui/debug_ui.h"
 
 namespace GuiUtils
 {

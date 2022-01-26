@@ -20,6 +20,7 @@ class Document;
 }
 
 class Observer;
+class SignatureModel;
 class TOCModel;
 
 class DocumentItem : public QObject
@@ -72,6 +73,11 @@ class DocumentItem : public QObject
     Q_PROPERTY(TOCModel *tableOfContents READ tableOfContents CONSTANT)
 
     /**
+     * Signatures model, if available
+     */
+    Q_PROPERTY(SignatureModel *signaturesModel READ signaturesModel CONSTANT)
+
+    /**
      * List of pages that contain a bookmark
      */
     Q_PROPERTY(QVariantList bookmarkedPages READ bookmarkedPages NOTIFY bookmarkedPagesChanged)
@@ -104,6 +110,8 @@ public:
     QVariantList matchingPages() const;
 
     TOCModel *tableOfContents() const;
+
+    SignatureModel *signaturesModel() const;
 
     QVariantList bookmarkedPages() const;
 
@@ -169,6 +177,7 @@ private Q_SLOTS:
 private:
     Okular::Document *m_document;
     TOCModel *m_tocModel;
+    SignatureModel *m_signaturesModel;
     Observer *m_thumbnailObserver;
     Observer *m_pageviewObserver;
     QVariantList m_matchingPages;

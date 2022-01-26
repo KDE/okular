@@ -20,8 +20,22 @@ class SignatureModel : public QAbstractItemModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+
 public:
-    enum { FormRole = Qt::UserRole + 1000, PageRole };
+    enum {
+        FormRole = Qt::UserRole + 1000,
+        PageRole,
+        ReadableStatusRole,
+        ReadableModificationSummary,
+        SignerNameRole,
+        SigningTimeRole,
+        SigningLocationRole,
+        SigningReasonRole,
+        CertificateModelRole,
+        SignatureRevisionIndexRole,
+        IsUnsignedSignatureRole
+    };
 
     explicit SignatureModel(Okular::Document *doc, QObject *parent = nullptr);
     ~SignatureModel() override;
@@ -32,6 +46,18 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    int count() const
+    {
+        return rowCount();
+    }
+
+    QHash<int, QByteArray> roleNames() const override;
+
+    Q_INVOKABLE bool saveSignedVersion(int signatureRevisionIndex, const QUrl &filePath) const;
+
+Q_SIGNALS:
+    void countChanged();
 
 private:
     Q_DECLARE_PRIVATE(SignatureModel)

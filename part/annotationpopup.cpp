@@ -14,7 +14,7 @@
 
 #include "core/annotations.h"
 #include "core/document.h"
-#include "guiutils.h"
+#include "gui/guiutils.h"
 #include "okmenutitle.h"
 
 Q_DECLARE_METATYPE(AnnotationPopup::AnnotPagePair)

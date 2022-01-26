@@ -7,7 +7,7 @@
 
 #include "drawingtoolactions.h"
 
-#include "debug_ui.h"
+#include "gui/debug_ui.h"
 #include "settings.h"
 
 #include <KActionCollection>

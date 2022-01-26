@@ -11,9 +11,7 @@
 
 #include "core/signatureutils.h"
 
-#include <memory>
-
-class PageView;
+#include <KMessageWidget>
 
 namespace Okular
 {
@@ -26,17 +24,16 @@ namespace SignatureGuiUtils
 /**
  * Returns a vector containing signature form fields sorted by date (last is newer).
  */
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc);
+QVector<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc);
 QString getReadableSignatureStatus(Okular::SignatureInfo::SignatureStatus sigStatus);
 QString getReadableCertStatus(Okular::SignatureInfo::CertificateStatus certStatus);
 QString getReadableHashAlgorithm(Okular::SignatureInfo::HashAlgorithm hashAlg);
 QString getReadablePublicKeyType(Okular::CertificateInfo::PublicKeyType type);
 QString getReadableKeyUsageCommaSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
 QString getReadableKeyUsageNewLineSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
+QString getReadableModificationSummary(const Okular::SignatureInfo &signatureInfo);
 
-std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, QString *password, QString *documentPassword);
-QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc);
-void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
+std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetText(const Okular::Document *doc);
 }
 
 #endif

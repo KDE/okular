@@ -27,6 +27,7 @@
 #include "core/action.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
+#include "gui/tocmodel.h"
 #include "pageitemdelegate.h"
 
 static const int BookmarkItemType = QTreeWidgetItem::UserType + 1;
@@ -46,7 +47,7 @@ public:
         m_url.setFragment(QString());
         setText(0, m_bookmark.fullText());
         if (m_viewport.isValid())
-            setData(0, PageItemDelegate::PageRole, QString::number(m_viewport.pageNumber + 1));
+            setData(0, TOCModel::PageRole, QString::number(m_viewport.pageNumber + 1));
     }
 
     BookmarkItem(const BookmarkItem &) = delete;

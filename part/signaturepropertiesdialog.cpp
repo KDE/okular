@@ -21,8 +21,8 @@
 #include "core/form.h"
 
 #include "certificateviewer.h"
+#include "gui/signatureguiutils.h"
 #include "revisionviewer.h"
-#include "signatureguiutils.h"
 
 static QString getValidDisplayString(const QString &str)
 {
@@ -40,26 +40,11 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     const Okular::SignatureInfo &signatureInfo = form->signatureInfo();
     const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
     const QString readableSignatureStatus = SignatureGuiUtils::getReadableSignatureStatus(signatureStatus);
+    const QString modificationSummary = SignatureGuiUtils::getReadableModificationSummary(signatureInfo);
     const QString signerName = getValidDisplayString(signatureInfo.signerName());
     const QString signingTime = getValidDisplayString(signatureInfo.signingTime().toString(Qt::DefaultLocaleLongDate));
     const QString signingLocation = getValidDisplayString(signatureInfo.location());
     const QString signingReason = signatureInfo.reason();
-
-    // signature validation status
-    QString modificationSummary;
-    if (signatureStatus == Okular::SignatureInfo::SignatureValid) {
-        if (signatureInfo.signsTotalDocument()) {
-            modificationSummary = i18n("The document has not been modified since it was signed.");
-        } else {
-            modificationSummary = i18n(
-                "The revision of the document that was covered by this signature has not been modified;\n"
-                "however there have been subsequent changes to the document.");
-        }
-    } else if (signatureStatus == Okular::SignatureInfo::SignatureDigestMismatch) {
-        modificationSummary = i18n("The document has been modified in a way not permitted by a previous signer.");
-    } else {
-        modificationSummary = i18n("The document integrity verification could not be completed.");
-    }
 
     auto signatureStatusBox = new QGroupBox(i18n("Validity Status"));
     auto signatureStatusFormLayout = new QFormLayout(signatureStatusBox);

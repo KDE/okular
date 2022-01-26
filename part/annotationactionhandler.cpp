@@ -28,7 +28,7 @@
 #include "actionbar.h"
 #include "annotationwidgets.h"
 #include "core/annotations.h"
-#include "guiutils.h"
+#include "gui/guiutils.h"
 #include "pageview.h"
 #include "pageviewannotator.h"
 #include "settings.h"

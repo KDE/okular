@@ -374,6 +374,13 @@ install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYP
 if(BUILD_DESKTOP)
   # okularpart
   set(okularpart_SRCS
+    gui/certificatemodel.cpp
+    gui/debug_ui.cpp
+    gui/guiutils.cpp
+    gui/pagepainter.cpp
+    gui/signatureguiutils.cpp
+    gui/signaturemodel.cpp
+    gui/tocmodel.cpp
     part/preferencesdialog.cpp
     part/dlgaccessibility.cpp
     part/dlgdebug.cpp
@@ -404,18 +411,15 @@ if(BUILD_DESKTOP)
     part/certificateviewer.cpp
     part/colormodemenu.cpp
     part/cursorwraphelper.cpp
-    part/debug_ui.cpp
     part/drawingtoolactions.cpp
     part/fileprinterpreview.cpp
     part/findbar.cpp
     part/formwidgets.cpp
-    part/guiutils.cpp
     part/ktreeviewsearchline.cpp
     part/latexrenderer.cpp
     part/minibar.cpp
     part/okmenutitle.cpp
     part/pageitemdelegate.cpp
-    part/pagepainter.cpp
     part/pagesizelabel.cpp
     part/pageviewannotator.cpp
     part/pageviewmouseannotation.cpp
@@ -433,13 +437,11 @@ if(BUILD_DESKTOP)
     part/snapshottaker.cpp
     part/thumbnaillist.cpp
     part/toc.cpp
-    part/tocmodel.cpp
     part/toggleactionmenu.cpp
     part/videowidget.cpp
     part/layers.cpp
-    part/signatureguiutils.cpp
+    part/signaturepartutils.cpp
     part/signaturepropertiesdialog.cpp
-    part/signaturemodel.cpp
     part/signaturepanel.cpp
   )
 

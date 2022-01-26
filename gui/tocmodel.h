@@ -7,7 +7,6 @@
 #ifndef TOCMODEL_H
 #define TOCMODEL_H
 
-#include "pageitemdelegate.h"
 #include <QAbstractItemModel>
 #include <QVector>
 
@@ -29,7 +28,7 @@ class TOCModel : public QAbstractItemModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
 public:
-    enum Roles { HighlightRole = PageItemDelegate::PageLabelRole + 1, HighlightedParentRole };
+    enum Roles { PageRole = 0x000f0001, PageLabelRole, HighlightRole, HighlightedParentRole };
 
     explicit TOCModel(Okular::Document *document, QObject *parent = nullptr);
     ~TOCModel() override;

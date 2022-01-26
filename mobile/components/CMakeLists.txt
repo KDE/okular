@@ -1,9 +1,12 @@
 set(okular_SRCS
     okularplugin.cpp
-    ${CMAKE_SOURCE_DIR}/part/guiutils.cpp
-    ${CMAKE_SOURCE_DIR}/part/tocmodel.cpp
-    ${CMAKE_SOURCE_DIR}/part/pagepainter.cpp
-    ${CMAKE_SOURCE_DIR}/part/debug_ui.cpp
+    ${CMAKE_SOURCE_DIR}/gui/guiutils.cpp
+    ${CMAKE_SOURCE_DIR}/gui/tocmodel.cpp
+    ${CMAKE_SOURCE_DIR}/gui/signaturemodel.cpp
+    ${CMAKE_SOURCE_DIR}/gui/signatureguiutils.cpp
+    ${CMAKE_SOURCE_DIR}/gui/certificatemodel.cpp
+    ${CMAKE_SOURCE_DIR}/gui/pagepainter.cpp
+    ${CMAKE_SOURCE_DIR}/gui/debug_ui.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp

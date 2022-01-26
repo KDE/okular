@@ -9,7 +9,7 @@
 
 #include <core/observer.h>
 #include <core/page.h>
-#include <part/pagepainter.h>
+#include <gui/pagepainter.h>
 
 #include <QTest>
 

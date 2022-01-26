@@ -93,13 +93,14 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/printoptionswidget.h"
-#include "debug_ui.h"
 #include "drawingtoolactions.h"
 #include "embeddedfilesdialog.h"
 #include "extensions.h"
 #include "fileprinterpreview.h"
 #include "findbar.h"
-#include "guiutils.h"
+#include "gui/debug_ui.h"
+#include "gui/guiutils.h"
+#include "gui/signatureguiutils.h"
 #include "layers.h"
 #include "minibar.h"
 #include "okmenutitle.h"
@@ -112,7 +113,6 @@
 #include "settings.h"
 #include "side_reviews.h"
 #include "sidebar.h"
-#include "signatureguiutils.h"
 #include "signaturepanel.h"
 #include "thumbnaillist.h"
 #include "toc.h"
@@ -1573,51 +1573,24 @@ bool Part::openFile()
     }
 
     if (ok) {
-        const uint numPages = m_document->pages();
-        bool isDigitallySigned = false;
-        for (uint i = 0; i < numPages; i++) {
-            const QLinkedList<Okular::FormField *> formFields = m_document->page(i)->formFields();
-            for (const Okular::FormField *f : formFields) {
-                if (f->type() == Okular::FormField::FormSignature)
-                    isDigitallySigned = true;
-            }
-        }
+        KMessageWidget::MessageType messageType;
+        QString message;
 
-        if (isDigitallySigned && Okular::Settings::showEmbeddedContentMessages()) {
+        std::tie(messageType, message) = SignatureGuiUtils::documentSignatureMessageWidgetText(m_document);
+
+        if (!message.isEmpty()) {
             if (m_embedMode == PrintPreviewMode) {
-                m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
-            } else {
-                const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_document);
-                bool allSignaturesValid = true;
-                bool anySignatureUnsigned = false;
-                for (const Okular::FormFieldSignature *signature : signatureFormFields) {
-                    if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
-                        anySignatureUnsigned = true;
-                    } else {
-                        const Okular::SignatureInfo &info = signature->signatureInfo();
-                        if (info.signatureStatus() != SignatureInfo::SignatureValid) {
-                            allSignaturesValid = false;
-                        }
-                    }
+                if (Okular::Settings::showEmbeddedContentMessages()) {
+                    m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
+                    m_signatureMessage->setVisible(true);
                 }
-
-                if (anySignatureUnsigned) {
-                    m_signatureMessage->setMessageType(KMessageWidget::Information);
-                    m_signatureMessage->setText(i18n("This document has unsigned signature fields."));
-                } else if (allSignaturesValid) {
-                    if (signatureFormFields.last()->signatureInfo().signsTotalDocument()) {
-                        m_signatureMessage->setMessageType(KMessageWidget::Information);
-                        m_signatureMessage->setText(i18n("This document is digitally signed."));
-                    } else {
-                        m_signatureMessage->setMessageType(KMessageWidget::Warning);
-                        m_signatureMessage->setText(i18n("This document is digitally signed. There have been changes since last signed."));
-                    }
-                } else {
-                    m_signatureMessage->setMessageType(KMessageWidget::Warning);
-                    m_signatureMessage->setText(i18n("This document is digitally signed. Some of the signatures could not be validated properly."));
+            } else {
+                if (Okular::Settings::showEmbeddedContentMessages() || messageType > KMessageWidget::Information) {
+                    m_signatureMessage->setMessageType(messageType);
+                    m_signatureMessage->setText(message);
+                    m_signatureMessage->setVisible(true);
                 }
             }
-            m_signatureMessage->setVisible(true);
         }
     }
 

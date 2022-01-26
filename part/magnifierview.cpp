@@ -9,8 +9,8 @@
 
 #include "core/document.h"
 #include "core/generator.h"
-#include "pagepainter.h"
-#include "priorities.h"
+#include "gui/pagepainter.h"
+#include "gui/priorities.h"
 
 static const int SCALE = 10;
 

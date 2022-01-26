@@ -31,8 +31,8 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "cursorwraphelper.h"
-#include "pagepainter.h"
-#include "priorities.h"
+#include "gui/pagepainter.h"
+#include "gui/priorities.h"
 #include "settings.h"
 
 class ThumbnailWidget;

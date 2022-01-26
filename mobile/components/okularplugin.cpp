@@ -7,6 +7,7 @@
 #include "okularplugin.h"
 
 #include "documentitem.h"
+#include "gui/certificatemodel.h"
 #include "okularsingleton.h"
 #include "pageitem.h"
 #include "thumbnailitem.h"
@@ -28,4 +29,5 @@ void OkularPlugin::registerTypes(const char *uri)
     qmlRegisterType<DocumentItem>(uri, 2, 0, "DocumentItem");
     qmlRegisterType<PageItem>(uri, 2, 0, "PageItem");
     qmlRegisterType<ThumbnailItem>(uri, 2, 0, "ThumbnailItem");
+    qmlRegisterUncreatableType<CertificateModel>(uri, 2, 0, "CertificateModel", QStringLiteral("Do not create objects of this type."));
 }

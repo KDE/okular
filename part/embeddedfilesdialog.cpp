@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 
 #include "core/document.h"
-#include "guiutils.h"
+#include "gui/guiutils.h"
 
 Q_DECLARE_METATYPE(Okular::EmbeddedFile *)
 

@@ -5,10 +5,13 @@
 */
 
 #include "signaturemodel.h"
+
+#include "certificatemodel.h"
 #include "signatureguiutils.h"
 
 #include <KLocalizedString>
 
+#include <QFile>
 #include <QIcon>
 #include <QPointer>
 #include <QVector>
@@ -73,6 +76,7 @@ public:
     SignatureModel *q;
     SignatureItem *root;
     QPointer<Okular::Document> document;
+    mutable QHash<const Okular::FormFieldSignature *, CertificateModel *> certificateForForm;
 };
 
 SignatureModelPrivate::SignatureModelPrivate(SignatureModel *qq)
@@ -83,6 +87,7 @@ SignatureModelPrivate::SignatureModelPrivate(SignatureModel *qq)
 
 SignatureModelPrivate::~SignatureModelPrivate()
 {
+    qDeleteAll(certificateForForm);
     delete root;
 }
 
@@ -120,6 +125,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
     if (pages.isEmpty()) {
         q->endResetModel();
+        emit q->countChanged();
         return;
     }
 
@@ -163,6 +169,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
         }
     }
     q->endResetModel();
+    emit q->countChanged();
 }
 
 QModelIndex SignatureModelPrivate::indexForItem(SignatureItem *item) const
@@ -206,13 +213,15 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
     if (item == d->root)
         return QVariant();
 
+    const Okular::FormFieldSignature *form = item->form ? item->form : item->parent->form;
+
     switch (role) {
     case Qt::DisplayRole:
     case Qt::ToolTipRole:
         return item->displayString;
     case Qt::DecorationRole:
         if (item->type == SignatureItem::RevisionInfo) {
-            const Okular::SignatureInfo::SignatureStatus signatureStatus = item->form->signatureInfo().signatureStatus();
+            const Okular::SignatureInfo::SignatureStatus signatureStatus = form->signatureInfo().signatureStatus();
             switch (signatureStatus) {
             case Okular::SignatureInfo::SignatureValid:
                 return QIcon::fromTheme(QStringLiteral("dialog-ok"));
@@ -226,9 +235,42 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
         }
         return QIcon();
     case FormRole:
-        return QVariant::fromValue<const Okular::FormFieldSignature *>(item->form);
+        return QVariant::fromValue<const Okular::FormFieldSignature *>(form);
     case PageRole:
         return item->page;
+    case ReadableStatusRole:
+        return SignatureGuiUtils::getReadableSignatureStatus(form->signatureInfo().signatureStatus());
+    case ReadableModificationSummary:
+        return SignatureGuiUtils::getReadableModificationSummary(form->signatureInfo());
+    case SignerNameRole:
+        return form->signatureInfo().signerName();
+    case SigningTimeRole:
+        return form->signatureInfo().signingTime().toString(Qt::DefaultLocaleLongDate);
+    case SigningLocationRole:
+        return form->signatureInfo().location();
+    case SigningReasonRole:
+        return form->signatureInfo().reason();
+    case CertificateModelRole: {
+        auto it = d->certificateForForm.constFind(form);
+        if (it != d->certificateForForm.constEnd()) {
+            return QVariant::fromValue(it.value());
+        }
+        CertificateModel *cm = new CertificateModel(form->signatureInfo().certificateInfo());
+        d->certificateForForm.insert(form, cm);
+        return QVariant::fromValue(cm);
+    }
+    case SignatureRevisionIndexRole: {
+        const Okular::SignatureInfo &signatureInfo = form->signatureInfo();
+        const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
+        if (signatureStatus != Okular::SignatureInfo::SignatureStatusUnknown && !signatureInfo.signsTotalDocument()) {
+            const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
+            return signatureFormFields.indexOf(form);
+        }
+        return -1;
+    }
+    case IsUnsignedSignatureRole: {
+        return form->signatureType() == Okular::FormFieldSignature::UnsignedSignature;
+    }
     }
 
     return QVariant();
@@ -274,6 +316,54 @@ int SignatureModel::rowCount(const QModelIndex &parent) const
 
     const SignatureItem *item = parent.isValid() ? static_cast<SignatureItem *>(parent.internalPointer()) : d->root;
     return item->children.count();
+}
+
+QHash<int, QByteArray> SignatureModel::roleNames() const
+{
+    static QHash<int, QByteArray> res;
+    if (res.isEmpty()) {
+        res = QAbstractItemModel::roleNames();
+        res.insert(FormRole, "signatureFormField");
+        res.insert(PageRole, "page");
+        res.insert(ReadableStatusRole, "readableStatus");
+        res.insert(ReadableModificationSummary, "readableModificationSummary");
+        res.insert(SignerNameRole, "signerName");
+        res.insert(SigningTimeRole, "signingTime");
+        res.insert(SigningLocationRole, "signingLocation");
+        res.insert(SigningReasonRole, "signingReason");
+        res.insert(CertificateModelRole, "certificateModel");
+        res.insert(SignatureRevisionIndexRole, "signatureRevisionIndex");
+        res.insert(IsUnsignedSignatureRole, "isUnsignedSignature");
+    }
+
+    return res;
+}
+
+bool SignatureModel::saveSignedVersion(int signatureRevisionIndex, const QUrl &filePath) const
+{
+    Q_D(const SignatureModel);
+    const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
+    if (signatureRevisionIndex < 0 || signatureRevisionIndex >= signatureFormFields.count()) {
+        qWarning() << "Invalid signatureRevisionIndex given to saveSignedVersion";
+        return false;
+    }
+    const Okular::FormFieldSignature *signature = signatureFormFields[signatureRevisionIndex];
+    const QByteArray data = d->document->requestSignedRevisionData(signature->signatureInfo());
+
+    if (!filePath.isLocalFile()) {
+        qWarning() << "Unexpected non local path given to saveSignedVersion" << filePath;
+        return false;
+    }
+    QFile f(filePath.toLocalFile());
+    if (!f.open(QIODevice::WriteOnly)) {
+        qWarning() << "Failed to open path for writing in saveSignedVersion" << filePath;
+        return false;
+    }
+    if (f.write(data) != data.size()) {
+        qWarning() << "Failed to write all data in saveSignedVersion" << filePath;
+        return false;
+    }
+    return true;
 }
 
 #include "moc_signaturemodel.cpp"

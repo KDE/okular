@@ -35,8 +35,8 @@
 #include "core/document.h"
 #include "core/document_p.h"
 #include "core/page_p.h"
-#include "guiutils.h"
-#include "pagepainter.h"
+#include "gui/guiutils.h"
+#include "gui/pagepainter.h"
 
 #define FILEATTACH_ICONSIZE 48
 

@@ -12,7 +12,7 @@
 #include <QIcon>
 
 #include "annotationmodel.h"
-#include "debug_ui.h"
+#include "gui/debug_ui.h"
 
 static quint32 mixIndex(int row, int column)
 {

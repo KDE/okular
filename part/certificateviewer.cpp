@@ -6,6 +6,8 @@
 
 #include "certificateviewer.h"
 
+#include "gui/certificatemodel.h"
+
 #include <KColumnResizer>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -22,7 +24,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-#include "signatureguiutils.h"
+#include "gui/signatureguiutils.h"
 
 // DN (DistinguishedName) attributes can be
 //     C Country
@@ -92,113 +94,6 @@ static QString splitDNAttributes(const QStringList &text)
 static QString splitDNAttributes(const QString &text)
 {
     return splitDNAttributes(QStringList {text});
-}
-
-CertificateModel::CertificateModel(const Okular::CertificateInfo &certInfo, QObject *parent)
-    : QAbstractTableModel(parent)
-    , m_certificateInfo(certInfo)
-{
-    m_certificateProperties = {Version, SerialNumber, Issuer, IssuedOn, ExpiresOn, Subject, PublicKey, KeyUsage};
-}
-
-int CertificateModel::columnCount(const QModelIndex &) const
-{
-    return 2;
-}
-
-int CertificateModel::rowCount(const QModelIndex &) const
-{
-    return m_certificateProperties.size();
-}
-
-static QString propertyVisibleName(CertificateModel::Property p)
-{
-    switch (p) {
-    case CertificateModel::Version:
-        return i18n("Version");
-    case CertificateModel::SerialNumber:
-        return i18n("Serial Number");
-    case CertificateModel::Issuer:
-        return i18n("Issuer");
-    case CertificateModel::IssuedOn:
-        return i18n("Issued On");
-    case CertificateModel::ExpiresOn:
-        return i18n("Expires On");
-    case CertificateModel::Subject:
-        return i18nc("The person/company that made the signature", "Subject");
-    case CertificateModel::PublicKey:
-        return i18n("Public Key");
-    case CertificateModel::KeyUsage:
-        return i18n("Key Usage");
-    }
-    return QString();
-}
-
-static QString propertyVisibleValue(CertificateModel::Property p, const Okular::CertificateInfo &certInfo)
-{
-    switch (p) {
-    case CertificateModel::Version:
-        return i18n("V%1", QString::number(certInfo.version()));
-    case CertificateModel::SerialNumber:
-        return certInfo.serialNumber().toHex(' ');
-    case CertificateModel::Issuer:
-        return certInfo.issuerInfo(Okular::CertificateInfo::DistinguishedName);
-    case CertificateModel::IssuedOn:
-        return certInfo.validityStart().toString(Qt::DefaultLocaleLongDate);
-    case CertificateModel::ExpiresOn:
-        return certInfo.validityEnd().toString(Qt::DefaultLocaleLongDate);
-    case CertificateModel::Subject:
-        return certInfo.subjectInfo(Okular::CertificateInfo::DistinguishedName);
-    case CertificateModel::PublicKey:
-        return i18n("%1 (%2 bits)", SignatureGuiUtils::getReadablePublicKeyType(certInfo.publicKeyType()), certInfo.publicKeyStrength());
-    case CertificateModel::KeyUsage:
-        return SignatureGuiUtils::getReadableKeyUsageCommaSeparated(certInfo.keyUsageExtensions());
-    }
-    return QString();
-}
-
-QVariant CertificateModel::data(const QModelIndex &index, int role) const
-{
-    const int row = index.row();
-    if (!index.isValid() || row < 0 || row >= m_certificateProperties.count())
-        return QVariant();
-
-    switch (role) {
-    case Qt::DisplayRole:
-    case Qt::ToolTipRole:
-        switch (index.column()) {
-        case 0:
-            return propertyVisibleName(m_certificateProperties[row]);
-        case 1:
-            return propertyVisibleValue(m_certificateProperties[row], m_certificateInfo);
-        default:
-            return QString();
-        }
-    case PropertyKeyRole:
-        return m_certificateProperties[row];
-    case PropertyVisibleValueRole:
-        return propertyVisibleValue(m_certificateProperties[row], m_certificateInfo);
-    }
-
-    return QVariant();
-}
-
-QVariant CertificateModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if (role == Qt::TextAlignmentRole)
-        return QVariant(Qt::AlignLeft);
-
-    if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
-        return QVariant();
-
-    switch (section) {
-    case 0:
-        return i18n("Property");
-    case 1:
-        return i18n("Value");
-    default:
-        return QVariant();
-    }
 }
 
 CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QWidget *parent)
@@ -303,6 +198,16 @@ void CertificateViewer::updateText(const QModelIndex &index)
     case CertificateModel::KeyUsage:
         text = SignatureGuiUtils::getReadableKeyUsageNewLineSeparated(m_certificateInfo.keyUsageExtensions());
         break;
+    case CertificateModel::IssuerName:
+    case CertificateModel::IssuerEmail:
+    case CertificateModel::IssuerOrganization:
+    case CertificateModel::SubjectName:
+    case CertificateModel::SubjectEmail:
+    case CertificateModel::SubjectOrganization:
+    case CertificateModel::Sha1:
+    case CertificateModel::Sha256:
+        Q_ASSERT(false);
+        qWarning() << "Unused";
     }
     m_propertyText->setText(text);
 }
@@ -312,11 +217,8 @@ void CertificateViewer::exportCertificate()
     const QString caption = i18n("Where do you want to save this certificate?");
     const QString path = QFileDialog::getSaveFileName(this, caption, QStringLiteral("Certificate.cer"), i18n("Certificate File (*.cer)"));
     if (!path.isEmpty()) {
-        QFile targetFile(path);
-        targetFile.open(QIODevice::WriteOnly);
-        if (targetFile.write(m_certificateInfo.certificateData()) == -1) {
+        if (!m_certificateModel->exportCertificateTo(path)) {
             KMessageBox::error(this, i18n("Could not export the certificate"));
         }
-        targetFile.close();
     }
 }

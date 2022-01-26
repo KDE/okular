@@ -12,7 +12,7 @@
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "revisionviewer.h"
-#include "signatureguiutils.h"
+#include "signaturepartutils.h"
 #include "signaturepropertiesdialog.h"
 
 #include <KLineEdit>
@@ -29,7 +29,7 @@
 // local includes
 #include "core/action.h"
 #include "core/document.h"
-#include "debug_ui.h"
+#include "gui/debug_ui.h"
 
 FormWidgetsController::FormWidgetsController(Okular::Document *doc)
     : QObject(doc)
@@ -1165,7 +1165,7 @@ void SignatureEdit::signUnsignedSignature()
 
     Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
     PageView *pageView = static_cast<PageView *>(parent()->parent());
-    SignatureGuiUtils::signUnsignedSignature(formSignature, pageView, pageView->document());
+    SignaturePartUtils::signUnsignedSignature(formSignature, pageView, pageView->document());
 }
 
 // Code for additional action handling.

@@ -25,7 +25,7 @@
 
 #include "core/document.h"
 #include "core/page.h"
-#include "guiutils.h"
+#include "gui/guiutils.h"
 #include "pageview.h"
 #include "videowidget.h"
 

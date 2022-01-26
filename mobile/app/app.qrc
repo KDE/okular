@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
+<file>package/contents/ui/CertificateViewerDialog.qml</file>
 <file>package/contents/ui/Bookmarks.qml</file>
 <file>package/contents/ui/main.qml</file>
 <file>package/contents/ui/MainView.qml</file>
@@ -9,5 +10,7 @@
 <file>package/contents/ui/ThumbnailsBase.qml</file>
 <file>package/contents/ui/TreeItem.qml</file>
 <file>package/contents/ui/TreeViewDecoration.qml</file>
+<file>package/contents/ui/Signatures.qml</file>
+<file>package/contents/ui/SignaturePropertiesDialog.qml</file>
 </qresource>
 </RCC>

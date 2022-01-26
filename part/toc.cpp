@@ -21,10 +21,10 @@
 
 // local includes
 #include "core/action.h"
+#include "gui/tocmodel.h"
 #include "ktreeviewsearchline.h"
 #include "pageitemdelegate.h"
 #include "settings.h"
-#include "tocmodel.h"
 
 TOC::TOC(QWidget *parent, Okular::Document *document)
     : QWidget(parent)

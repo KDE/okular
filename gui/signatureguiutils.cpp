@@ -6,22 +6,15 @@
 
 #include "signatureguiutils.h"
 
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QInputDialog>
-#include <QMimeDatabase>
-
 #include <KLocalizedString>
-#include <KMessageBox>
 
 #include "core/document.h"
 #include "core/form.h"
 #include "core/page.h"
-#include "pageview.h"
 
 namespace SignatureGuiUtils
 {
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc)
+QVector<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc)
 {
     uint curPage = 0;
     const uint endPage = doc->pages() - 1;
@@ -152,106 +145,65 @@ QString getReadableKeyUsageNewLineSeparated(Okular::CertificateInfo::KeyUsageExt
     return getReadableKeyUsage(kuExtensions, QStringLiteral("\n"));
 }
 
-std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, QString *password, QString *documentPassword)
+QString getReadableModificationSummary(const Okular::SignatureInfo &signatureInfo)
 {
-    const Okular::CertificateStore *certStore = doc->certificateStore();
-    bool userCancelled, nonDateValidCerts;
-    QList<Okular::CertificateInfo *> certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
-    if (userCancelled) {
-        return nullptr;
-    }
-
-    if (certs.isEmpty()) {
-        pageView->showNoSigningCertificatesDialog(nonDateValidCerts);
-        return nullptr;
-    }
-
-    QStringList items;
-    QHash<QString, Okular::CertificateInfo *> nickToCert;
-    for (auto cert : qAsConst(certs)) {
-        items.append(cert->nickName());
-        nickToCert[cert->nickName()] = cert;
-    }
-
-    bool resok = false;
-    const QString certNicknameToUse = QInputDialog::getItem(pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
-
-    if (!resok) {
-        qDeleteAll(certs);
-        return nullptr;
-    }
-
-    // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
-    // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
-    // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
-    Okular::CertificateInfo *cert = nickToCert.value(certNicknameToUse);
-    bool passok = cert->checkPassword(*password);
-    while (!passok) {
-        const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
-        bool ok;
-        *password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
-        if (ok) {
-            passok = cert->checkPassword(*password);
+    const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
+    // signature validation status
+    if (signatureStatus == Okular::SignatureInfo::SignatureValid) {
+        if (signatureInfo.signsTotalDocument()) {
+            return i18n("The document has not been modified since it was signed.");
         } else {
-            passok = false;
-            break;
+            return i18n(
+                "The revision of the document that was covered by this signature has not been modified;\n"
+                "however there have been subsequent changes to the document.");
+        }
+    } else if (signatureStatus == Okular::SignatureInfo::SignatureDigestMismatch) {
+        return i18n("The document has been modified in a way not permitted by a previous signer.");
+    } else {
+        return i18n("The document integrity verification could not be completed.");
+    }
+}
+
+std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetText(const Okular::Document *doc)
+{
+    const uint numPages = doc->pages();
+    bool isDigitallySigned = false;
+    for (uint i = 0; i < numPages; i++) {
+        const QLinkedList<Okular::FormField *> formFields = doc->page(i)->formFields();
+        for (const Okular::FormField *f : formFields) {
+            if (f->type() == Okular::FormField::FormSignature)
+                isDigitallySigned = true;
         }
     }
 
-    if (doc->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes")) {
-        *documentPassword = QInputDialog::getText(pageView, i18n("Enter document password"), i18n("Enter document password"), QLineEdit::Password, QString(), &passok);
-    }
+    if (isDigitallySigned) {
+        const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(doc);
+        bool allSignaturesValid = true;
+        bool anySignatureUnsigned = false;
+        for (const Okular::FormFieldSignature *signature : signatureFormFields) {
+            if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
+                anySignatureUnsigned = true;
+            } else {
+                const Okular::SignatureInfo &info = signature->signatureInfo();
+                if (info.signatureStatus() != Okular::SignatureInfo::SignatureValid) {
+                    allSignaturesValid = false;
+                }
+            }
+        }
 
-    if (passok) {
-        certs.removeOne(cert);
-    }
-    qDeleteAll(certs);
-
-    return passok ? std::unique_ptr<Okular::CertificateInfo>(cert) : std::unique_ptr<Okular::CertificateInfo>();
-}
-
-QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc)
-{
-    QMimeDatabase db;
-    const QString typeName = doc->documentInfo().get(Okular::DocumentInfo::MimeType);
-    const QMimeType mimeType = db.mimeTypeForName(typeName);
-    const QString mimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
-
-    const QUrl currentFileUrl = doc->currentDocument();
-    const QFileInfo currentFileInfo(currentFileUrl.fileName());
-    const QString localFilePathIfAny = currentFileUrl.isLocalFile() ? QFileInfo(currentFileUrl.path()).canonicalPath() + QLatin1Char('/') : QString();
-    const QString newFileName =
-        localFilePathIfAny + i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", currentFileInfo.baseName(), currentFileInfo.completeSuffix());
-
-    return QFileDialog::getSaveFileName(pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
-}
-
-void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc)
-{
-    Q_ASSERT(form && form->signatureType() == Okular::FormFieldSignature::UnsignedSignature);
-    QString password, documentPassword;
-    const std::unique_ptr<Okular::CertificateInfo> cert = SignatureGuiUtils::getCertificateAndPasswordForSigning(pageView, doc, &password, &documentPassword);
-    if (!cert) {
-        return;
-    }
-
-    Okular::NewSignatureData data;
-    data.setCertNickname(cert->nickName());
-    data.setCertSubjectCommonName(cert->subjectInfo(Okular::CertificateInfo::CommonName));
-    data.setPassword(password);
-    data.setDocumentPassword(documentPassword);
-    password.clear();
-    documentPassword.clear();
-
-    const QString newFilePath = SignatureGuiUtils::getFileNameForNewSignedFile(pageView, doc);
-
-    if (!newFilePath.isEmpty()) {
-        const bool success = form->sign(data, newFilePath);
-        if (success) {
-            emit pageView->requestOpenFile(newFilePath, form->page()->number() + 1);
+        if (anySignatureUnsigned) {
+            return {KMessageWidget::Information, i18n("This document has unsigned signature fields.")};
+        } else if (allSignaturesValid) {
+            if (signatureFormFields.last()->signatureInfo().signsTotalDocument()) {
+                return {KMessageWidget::Information, i18n("This document is digitally signed.")};
+            } else {
+                return {KMessageWidget::Warning, i18n("This document is digitally signed. There have been changes since last signed.")};
+            }
         } else {
-            KMessageBox::error(pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
+            return {KMessageWidget::Warning, i18n("This document is digitally signed. Some of the signatures could not be validated properly.")};
         }
     }
+
+    return {KMessageWidget::Information, QString()};
 }
 }

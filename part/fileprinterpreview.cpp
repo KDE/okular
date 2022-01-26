@@ -25,7 +25,7 @@
 #include <QLoggingCategory>
 #include <kparts/readonlypart.h>
 
-#include "debug_ui.h"
+#include "gui/debug_ui.h"
 
 using namespace Okular;
 

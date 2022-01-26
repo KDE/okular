@@ -6,10 +6,10 @@
 
 #include "signaturepanel.h"
 
+#include "gui/signaturemodel.h"
 #include "pageview.h"
 #include "revisionviewer.h"
-#include "signatureguiutils.h"
-#include "signaturemodel.h"
+#include "signaturepartutils.h"
 #include "signaturepropertiesdialog.h"
 
 #include <kwidgetsaddons_version.h>
@@ -114,7 +114,7 @@ void SignaturePanel::slotViewProperties()
 void SignaturePanel::signUnsignedSignature()
 {
     Q_D(SignaturePanel);
-    SignatureGuiUtils::signUnsignedSignature(d->m_currentForm, d->m_pageView, d->m_document);
+    SignaturePartUtils::signUnsignedSignature(d->m_currentForm, d->m_pageView, d->m_document);
 }
 
 void SignaturePanel::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)

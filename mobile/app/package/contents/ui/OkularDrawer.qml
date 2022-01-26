@@ -12,6 +12,8 @@ import QtQuick.Layouts 1.15
 
 
 Kirigami.OverlayDrawer {
+    id: root
+
     bottomPadding: 0
     topPadding: 0
     leftPadding: 0
@@ -91,6 +93,32 @@ Kirigami.OverlayDrawer {
                         }
                         QQC2.ButtonGroup.group: tabPositionGroup
                     }
+                    QQC2.ToolButton {
+                        id: signatyresButton
+                        enabled: documentItem.signaturesModel.count > 0
+                        text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Signatures") : ""
+                        icon.name: "application-pkcs7-signature"
+                        checkable: true
+                        flat: false
+                        onCheckedChanged: {
+                            if (checked) {
+                                pageStack.replace(signaturesComponent)
+                            }
+                        }
+                        QQC2.ButtonGroup.group: tabPositionGroup
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: signaturesComponent
+        Signatures {
+            onDialogOpened: {
+                // We don't want to have two modal things open at the same time
+                if (root.modal) {
+                    root.close();
                 }
             }
         }

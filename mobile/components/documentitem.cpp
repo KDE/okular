@@ -18,7 +18,9 @@
 #include <core/document_p.h>
 #include <core/page.h>
 
-#include "part/tocmodel.h"
+#include "gui/signatureguiutils.h"
+#include "gui/signaturemodel.h"
+#include "gui/tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent)
@@ -27,9 +29,11 @@ DocumentItem::DocumentItem(QObject *parent)
     , m_searchInProgress(false)
 {
     qmlRegisterUncreatableType<TOCModel>("org.kde.okular.private", 1, 0, "TOCModel", QStringLiteral("Do not create objects of this type."));
+    qmlRegisterUncreatableType<SignatureModel>("org.kde.okular.private", 1, 0, "SignatureModel", QStringLiteral("Do not create objects of this type."));
     Okular::Settings::instance(QStringLiteral("okularproviderrc"));
     m_document = new Okular::Document(nullptr);
     m_tocModel = new TOCModel(m_document, this);
+    m_signaturesModel = new SignatureModel(m_document, this);
 
     connect(m_document, &Okular::Document::searchFinished, this, &DocumentItem::searchFinished);
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &DocumentItem::bookmarkedPagesChanged);
@@ -41,6 +45,7 @@ DocumentItem::DocumentItem(QObject *parent)
 
 DocumentItem::~DocumentItem()
 {
+    delete m_signaturesModel;
     delete m_document;
 }
 
@@ -75,6 +80,19 @@ void DocumentItem::setUrl(const QUrl &url)
     emit supportsSearchingChanged();
     emit windowTitleForDocumentChanged();
     emit bookmarkedPagesChanged();
+
+    KMessageWidget::MessageType messageType;
+    QString message;
+    std::tie(messageType, message) = SignatureGuiUtils::documentSignatureMessageWidgetText(m_document);
+    if (!message.isEmpty()) {
+        if (messageType == KMessageWidget::Information) {
+            emit notice(message, -1);
+        } else if (messageType == KMessageWidget::Warning) {
+            emit warning(message, -1);
+        } else {
+            qWarning() << "Unexpected message type" << messageType;
+        }
+    }
 }
 
 QString DocumentItem::windowTitleForDocument() const
@@ -129,6 +147,11 @@ QVariantList DocumentItem::matchingPages() const
 TOCModel *DocumentItem::tableOfContents() const
 {
     return m_tocModel;
+}
+
+SignatureModel *DocumentItem::signaturesModel() const
+{
+    return m_signaturesModel;
 }
 
 QVariantList DocumentItem::bookmarkedPages() const

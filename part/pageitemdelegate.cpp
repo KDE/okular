@@ -13,6 +13,7 @@
 #include <QVariant>
 
 // local includes
+#include "gui/tocmodel.h"
 #include "settings.h"
 
 #define PAGEITEMDELEGATE_INTERNALMARGIN 3
@@ -46,8 +47,8 @@ void PageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 void PageItemDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
 {
-    QVariant pageVariant = d->index.data(PageRole);
-    QVariant labelVariant = d->index.data(PageLabelRole);
+    QVariant pageVariant = d->index.data(TOCModel::PageRole);
+    QVariant labelVariant = d->index.data(TOCModel::PageLabelRole);
     if ((labelVariant.type() != QVariant::String && !pageVariant.canConvert(QVariant::String)) || !Okular::Settings::tocPageColumn()) {
         QItemDelegate::drawDisplay(painter, option, rect, text);
         return;

@@ -39,12 +39,12 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "core/signatureutils.h"
-#include "debug_ui.h"
 #include "editannottooldialog.h"
-#include "guiutils.h"
+#include "gui/debug_ui.h"
+#include "gui/guiutils.h"
 #include "pageview.h"
 #include "settings.h"
-#include "signatureguiutils.h"
+#include "signaturepartutils.h"
 
 /** @short PickPointEngine */
 class PickPointEngine : public AnnotatorEngine
@@ -354,7 +354,7 @@ public:
             }
         }
 
-        const std::unique_ptr<Okular::CertificateInfo> cert = SignatureGuiUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, &passToUse, &documentPassword);
+        const std::unique_ptr<Okular::CertificateInfo> cert = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, &passToUse, &documentPassword);
         if (!cert) {
             m_aborted = true;
             passToUse.clear();
@@ -985,7 +985,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         if (signatureMode()) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
             if (signEngine->isAccepted()) {
-                const QString newFilePath = SignatureGuiUtils::getFileNameForNewSignedFile(m_pageView, m_document);
+                const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(m_pageView, m_document);
 
                 if (!newFilePath.isEmpty()) {
                     const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);

@@ -880,7 +880,8 @@ Document::OpenResult DocumentPrivate::openDocumentInternal(const KPluginMetaData
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    const QSizeF dpi = Utils::realDpi(m_widget);
+    const QWindow *window = m_widget && m_widget->window() ? m_widget->window()->windowHandle() : nullptr;
+    const QSizeF dpi = Utils::realDpi(window);
     qCDebug(OkularCoreDebug) << "Output DPI:" << dpi;
     m_generator->setDPI(dpi);
 

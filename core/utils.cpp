@@ -44,9 +44,9 @@ QRect Utils::rotateRect(const QRect source, int width, int height, int orientati
     return ret;
 }
 
-QSizeF Utils::realDpi(QWidget *widgetOnScreen)
+QSizeF Utils::realDpi(const QWindow *windowOnScreen)
 {
-    const QScreen *screen = widgetOnScreen && widgetOnScreen->window() && widgetOnScreen->window()->windowHandle() ? widgetOnScreen->window()->windowHandle()->screen() : qGuiApp->primaryScreen();
+    const QScreen *screen = windowOnScreen ? windowOnScreen->screen() : qGuiApp->primaryScreen();
 
     if (screen) {
         const QSizeF res(screen->physicalDotsPerInchX(), screen->physicalDotsPerInchY());

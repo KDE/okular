@@ -15,6 +15,7 @@
 
 #include <QApplication>
 #include <QPainter>
+#include <QStandardPaths>
 
 #include <cmath>
 #include <math.h>
@@ -213,6 +214,12 @@ void fontPool::locateFonts()
 
 void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound)
 {
+    // Make sure kpsewhich is in PATH and not just in the CWD
+    static const QString kpsewhichFullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
+    if (kpsewhichFullPath.isEmpty()) {
+        return;
+    }
+
     // Set up the kpsewhich process. If pass == 0, look for vf-fonts and
     // disable automatic font generation as vf-fonts can't be
     // generated. If pass == 0, enable font generation, if it was
@@ -264,7 +271,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     const QString kpsewhich_exe = QStringLiteral("kpsewhich");
     kpsewhichOutput += QStringLiteral("<b>") + kpsewhich_exe + QLatin1Char(' ') + kpsewhich_args.join(QStringLiteral(" ")) + QStringLiteral("</b>");
 
-    kpsewhich_->start(kpsewhich_exe, kpsewhich_args, QIODevice::ReadOnly | QIODevice::Text);
+    kpsewhich_->start(kpsewhichFullPath, kpsewhich_args, QIODevice::ReadOnly | QIODevice::Text);
     if (!kpsewhich_->waitForStarted()) {
         QApplication::restoreOverrideCursor();
         emit error(i18n("<qt><p>There were problems running <em>kpsewhich</em>. As a result, "

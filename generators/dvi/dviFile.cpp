@@ -43,6 +43,7 @@
 
 #include <QLoggingCategory>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QSysInfo>
 #include <QTemporaryFile>
 
@@ -332,6 +333,28 @@ void dvifile::renumber()
     }
 }
 
+void dvifile::pdf2psNotFound(const QString &PDFFilename, QString *converrorms)
+{
+    // Indicates that conversion failed, won't try again.
+    convertedFiles[PDFFilename].clear();
+    if (converrorms != nullptr && !have_complainedAboutMissingPDF2PS) {
+        *converrorms = i18n(
+            "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
+            "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
+            "document will therefore not be displayed.</p>"
+            "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> may not be installed "
+            "on your system, or cannot be found in the current search path.</p>"
+            "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> is normally "
+            "contained in distributions of the ghostscript PostScript interpreter system. If "
+            "ghostscript is not installed on your system, you could install it now. "
+            "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
+            "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>",
+            PDFFilename,
+            QString::fromLocal8Bit(qgetenv("PATH")));
+        have_complainedAboutMissingPDF2PS = true;
+    }
+}
+
 QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms)
 {
     // Check if the PDFFile is known
@@ -339,6 +362,13 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     if (it != convertedFiles.end()) {
         // PDF-File is known. Good.
         return it.value();
+    }
+
+    // Make sure pdf2ps is in PATH and not just in the CWD
+    static const QString fullPath = QStandardPaths::findExecutable(QStringLiteral("pdf2ps"));
+    if (!fullPath.isEmpty()) {
+        pdf2psNotFound(PDFFilename, converrorms);
+        return QString();
     }
 
     // Get the name of a temporary file.
@@ -351,27 +381,10 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     // Use pdf2ps to do the conversion
     QProcess pdf2ps;
     pdf2ps.setProcessChannelMode(QProcess::MergedChannels);
-    pdf2ps.start(QStringLiteral("pdf2ps"), QStringList() << PDFFilename << convertedFileName, QIODevice::ReadOnly | QIODevice::Text);
+    pdf2ps.start(fullPath, QStringList() << PDFFilename << convertedFileName, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!pdf2ps.waitForStarted()) {
-        // Indicates that conversion failed, won't try again.
-        convertedFiles[PDFFilename].clear();
-        if (converrorms != nullptr && !have_complainedAboutMissingPDF2PS) {
-            *converrorms = i18n(
-                "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
-                "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
-                "document will therefore not be displayed.</p>"
-                "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> may not be installed "
-                "on your system, or cannot be found in the current search path.</p>"
-                "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> is normally "
-                "contained in distributions of the ghostscript PostScript interpreter system. If "
-                "ghostscript is not installed on your system, you could install it now. "
-                "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
-                "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>",
-                PDFFilename,
-                QString::fromLocal8Bit(qgetenv("PATH")));
-            have_complainedAboutMissingPDF2PS = true;
-        }
+        pdf2psNotFound(PDFFilename, converrorms);
         return QString();
     }
 

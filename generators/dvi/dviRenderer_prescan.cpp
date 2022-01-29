@@ -28,6 +28,7 @@
 #include <QImage>
 #include <QPaintDevice>
 #include <QProgressBar>
+#include <QStandardPaths>
 #include <QTextStream>
 
 extern QPainter foreGroundPaint;
@@ -278,11 +279,15 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString &cp)
     // to find it.
     if (!QFile::exists(_file)) {
         // Otherwise, use kpsewhich to find the eps file.
-        KProcess proc;
-        proc << QStringLiteral("kpsewhich") << cp;
-        proc.setOutputChannelMode(KProcess::SeparateChannels);
-        proc.execute();
-        _file = QString::fromLocal8Bit(proc.readLine().trimmed());
+        // Make sure kpsewhich is in PATH and not just in the CWD
+        static const QString fullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
+        if (!fullPath.isEmpty()) {
+            KProcess proc;
+            proc << fullPath << cp;
+            proc.setOutputChannelMode(KProcess::SeparateChannels);
+            proc.execute();
+            _file = QString::fromLocal8Bit(proc.readLine().trimmed());
+        }
     }
 
     if (QFile::exists(_file))

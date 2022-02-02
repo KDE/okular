@@ -117,7 +117,7 @@ public:
     }
 };
 
-BookmarkList::BookmarkList(Okular::Document *document, QAction *addBookmarkAction, QWidget *parent)
+BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     : QWidget(parent)
     , m_document(document)
     , m_currentDocumentItem(nullptr)
@@ -161,11 +161,10 @@ BookmarkList::BookmarkList(Okular::Document *document, QAction *addBookmarkActio
 
     rebuildTree(m_showForAllDocumentsCheckbox->isChecked());
 
-    QToolButton *showAllToolButton = new QToolButton(this);
-    showAllToolButton->setDefaultAction(addBookmarkAction);
-    showAllToolButton->setAutoRaise(true);
-    showAllToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    mainlay->addWidget(showAllToolButton);
+    m_showAllToolButton = new QToolButton(this);
+    m_showAllToolButton->setAutoRaise(true);
+    m_showAllToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    mainlay->addWidget(m_showAllToolButton);
 }
 
 BookmarkList::~BookmarkList()
@@ -196,6 +195,11 @@ void BookmarkList::notifySetup(const QVector<Okular::Page *> &pages, int setupFl
         }
         connect(m_tree, &QTreeWidget::itemChanged, this, &BookmarkList::slotChanged);
     }
+}
+
+void BookmarkList::setAddBookmarkAction(QAction *addBookmarkAction)
+{
+    m_showAllToolButton->setDefaultAction(addBookmarkAction);
 }
 
 void BookmarkList::slotShowAllBookmarks(bool showAll)

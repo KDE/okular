@@ -13,6 +13,7 @@
 
 class QAction;
 class QCheckBox;
+class QToolButton;
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
@@ -30,11 +31,13 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
 
 public:
-    explicit BookmarkList(Okular::Document *document, QAction *addBookmarkAction, QWidget *parent = nullptr);
+    explicit BookmarkList(Okular::Document *document, QWidget *parent = nullptr);
     ~BookmarkList() override;
 
     // inherited from DocumentObserver
     void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+
+    void setAddBookmarkAction(QAction *addBookmarkAction);
 
 private Q_SLOTS:
     void slotShowAllBookmarks(bool);
@@ -56,6 +59,7 @@ private:
     KTreeWidgetSearchLine *m_searchLine;
     QCheckBox *m_showForAllDocumentsCheckbox;
     QTreeWidgetItem *m_currentDocumentItem;
+    QToolButton *m_showAllToolButton;
 };
 
 #endif

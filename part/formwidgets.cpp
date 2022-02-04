@@ -544,23 +544,14 @@ void FormLineEdit::contextMenuEvent(QContextMenuEvent *event)
 void FormLineEdit::slotChanged()
 {
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
-    QString contents = text();
     int cursorPos = cursorPosition();
 
     if (form->additionalAction(Okular::FormField::FieldModified) && m_editing && !form->isReadOnly()) {
-        bool ok = false;
-        QString oldInputText = form->text();
-        form->setText(text());
-        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
-        form->setText(oldInputText);
-        if (!ok) {
-            setText(oldInputText);
-            return;
-        }
+        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, text());
     }
 
-    if (contents != form->text()) {
-        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
+    if (text() != form->text()) {
+        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, text(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
 
     m_prevCursorPos = cursorPos;
@@ -704,23 +695,14 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo(int pageNumber, Okular::FormF
 void TextAreaEdit::slotChanged()
 {
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
-    QString contents = toPlainText();
     int cursorPos = textCursor().position();
 
     if (form->additionalAction(Okular::FormField::FieldModified) && m_editing && !form->isReadOnly()) {
-        bool ok = false;
-        QString oldInputText = form->text();
-        form->setText(toPlainText());
-        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, ok);
-        form->setText(oldInputText);
-        if (!ok) {
-            setText(oldInputText);
-            return;
-        }
+        m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, toPlainText());
     }
 
-    if (contents != form->text()) {
-        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
+    if (toPlainText() != form->text()) {
+        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, toPlainText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = textCursor().anchor();

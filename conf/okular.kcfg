@@ -207,6 +207,9 @@
   <entry key="ttsEngine" type="String">
     <default>speechd</default>
   </entry>
+  <entry key="ttsVoice" type="String">
+    <default></default>
+  </entry>
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>

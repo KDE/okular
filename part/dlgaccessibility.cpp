@@ -147,18 +147,41 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     layout->addRow(new QLabel(this));
 
     // BEGIN Text-to-speech section
-    QComboBox *ttsEngine = new QComboBox(this);
+    m_ttsEngineBox = new QComboBox(this);
     // Populate tts engines and use their names directly as key and item text:
     const QStringList engines = QTextToSpeech::availableEngines();
     for (const QString &engine : engines) {
-        ttsEngine->addItem(engine);
+        m_ttsEngineBox->addItem(engine);
     }
-    ttsEngine->setProperty("kcfg_property", QByteArray("currentText"));
-    ttsEngine->setObjectName(QStringLiteral("kcfg_ttsEngine"));
-    layout->addRow(i18nc("@label:listbox Config dialog, accessibility page", "Text-to-speech engine:"), ttsEngine);
+    m_ttsEngineBox->setProperty("kcfg_property", QByteArray("currentText"));
+    m_ttsEngineBox->setObjectName(QStringLiteral("kcfg_ttsEngine"));
+    layout->addRow(i18nc("@label:listbox Config dialog, accessibility page", "Text-to-speech engine:"), m_ttsEngineBox);
+
+    connect(m_ttsEngineBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &DlgAccessibility::slotTTSEngineChanged);
+
+    m_ttsVoiceBox = new QComboBox(this);
+    m_ttsVoiceBox->setProperty("kcfg_property", QByteArray("currentText"));
+    m_ttsVoiceBox->setObjectName(QStringLiteral("kcfg_ttsVoice"));
+    layout->addRow(i18nc("&label:listbox Config dialog, accessibility page", "Text-to-speech voice:"), m_ttsVoiceBox);
+
+    slotTTSEngineChanged();
     // END Text-to-speech section
 #endif
 }
+
+#ifdef HAVE_SPEECH
+void DlgAccessibility::slotTTSEngineChanged()
+{
+    QString engine = m_ttsEngineBox->currentText();
+    QTextToSpeech *ttsEngine = new QTextToSpeech(engine);
+    const QVector<QVoice> voices = ttsEngine->availableVoices();
+    m_ttsVoiceBox->clear();
+    for (const QVoice &voice : voices) {
+        m_ttsVoiceBox->addItem(voice.name());
+    }
+    delete ttsEngine;
+}
+#endif
 
 void DlgAccessibility::slotColorModeSelected(int mode)
 {

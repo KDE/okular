@@ -9,6 +9,7 @@
 
 #include <QWidget>
 
+class QComboBox;
 class QStackedWidget;
 
 class DlgAccessibility : public QWidget
@@ -20,9 +21,16 @@ public:
 
 protected Q_SLOTS:
     void slotColorModeSelected(int mode);
+#ifdef HAVE_SPEECH
+    void slotTTSEngineChanged();
+#endif
 
 protected:
     QStackedWidget *m_colorModeConfigStack;
+#ifdef HAVE_SPEECH
+    QComboBox *m_ttsEngineBox;
+    QComboBox *m_ttsVoiceBox;
+#endif
 };
 
 #endif

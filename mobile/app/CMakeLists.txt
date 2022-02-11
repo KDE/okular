@@ -10,10 +10,21 @@ if (ANDROID)
     find_package(Qt5 COMPONENTS AndroidExtras)
     target_sources(okularkirigami PRIVATE android.cpp)
     target_link_libraries(okularkirigami Qt5::AndroidExtras)
-    # androiddeployqt is not super smart and sometimes fails packaging
-    # some of the libraries we only use in plugins, here we help it by linking to those "extra" libs
-    # that are not really needed
-    target_link_libraries(okularkirigami Poppler::Qt5)
+
+    # Unfortunately gitlab CI for now doesn't use Craft so we need
+    # to differentiate between gitlab CI and the binary factory
+    if (DEFINED ENV{craftRoot})
+        message("Linking in extra libraies to help androiddeployqt")
+        # androiddeployqt is not super smart and sometimes fails packaging
+        # some of the libraries we only use in plugins, here we help it by linking to those "extra" libs
+        # that are not really needed
+        # The Okular PDF plugin needs poppler
+        target_link_libraries(okularkirigami Poppler::Qt5)
+        # Poppler in turn needs NSS which needs this plugins
+        pkg_check_modules(NSS "nss")
+        target_link_directories(okularkirigami PRIVATE ${NSS_LIBRARY_DIRS})
+        target_link_libraries(okularkirigami -lsoftokn3 -lnssckbi -lfreebl3)
+    endif()
 endif()
 
 install(TARGETS okularkirigami ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -202,6 +202,7 @@
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ta">ஆதரிக்கப்படும் கோப்பு வகைகள்: PDF, PS, Tiff, CHM, DjVu, படங்கள், DVI, XPS, Fiction Book, வரைகதை புத்தகம், Plucker, EPub, Fax</li>
+      <li xml:lang="tr">Desteklenen Biçimler: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="vi">Hỗ trợ các dạng thức: PDF, PS, Tiff, CHM, DjVu, ảnh, DVI, XPS, FictionBook, truyện tranh, Plucker, EPub, Fax</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
@@ -328,6 +329,7 @@
       <caption xml:lang="sl">Branje priročnikov v Okularju</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
       <caption xml:lang="ta">ஆக்குலரில் ஓர் கையேடை படித்தல்</caption>
+      <caption xml:lang="tr">Belgelendirmeyi Okular ile oku</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
       <caption xml:lang="x-test">xxReading manual in Okularxx</caption>

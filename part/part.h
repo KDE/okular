@@ -149,6 +149,8 @@ public:
     bool openNewFilesInTabs() const override;
     Q_INVOKABLE bool activateTabIfAlreadyOpenFile() const;
 
+    void setModified(bool modified) override;
+
 public Q_SLOTS: // dbus
     Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;
     Q_SCRIPTABLE Q_NOREPLY void openDocument(const QString &doc);
@@ -332,6 +334,7 @@ private:
     bool isDocumentArchive;
     bool m_documentOpenWithPassword;
     bool m_swapInsteadOfOpening; // if set, the next open operation will replace the backing file (used when reloading just saved files)
+    bool m_warnedAboutModifyingUnsaveableDocument = false;
 
     // main widgets
     Sidebar *m_sidebar;

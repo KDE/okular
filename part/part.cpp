@@ -1109,6 +1109,21 @@ bool Part::activateTabIfAlreadyOpenFile() const
     return Okular::Settings::self()->switchToTabIfOpen();
 }
 
+void Part::setModified(bool modified)
+{
+    KParts::ReadWritePart::setModified(modified);
+
+    if (modified && !m_save->isEnabled()) {
+        if (!m_warnedAboutModifyingUnsaveableDocument) {
+            m_warnedAboutModifyingUnsaveableDocument = true;
+            KMessageBox::information(widget(),
+                                     i18n("You have just modified the open document, but this kind of document can not be saved.\nAny modification will be lost once Okular is closed."),
+                                     i18n("Document can't be saved"),
+                                     QStringLiteral("warnAboutUnsaveableDocuments"));
+        }
+    }
+}
+
 void Part::slotHandleActivatedSourceReference(const QString &absFileName, int line, int col, bool *handled)
 {
     emit openSourceReference(absFileName, line, col);
@@ -1486,6 +1501,7 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
 
     if (openResult == Document::OpenSuccess) {
         m_fileLastModified = QFileInfo(localFilePath()).lastModified();
+        m_warnedAboutModifyingUnsaveableDocument = false;
     }
     return openResult;
 }
@@ -1798,16 +1814,21 @@ bool Part::queryClose()
         return res == KMessageBox::Yes;
     }
 
-    const int res = KMessageBox::warningYesNoCancel(widget(), i18n("Do you want to save your changes to \"%1\" or discard them?", url().fileName()), i18n("Close Document"), KStandardGuiItem::save(), KStandardGuiItem::discard());
+    // Not all things are saveable (e.g. files opened from stdin, folders)
+    if (m_save->isEnabled()) {
+        const int res = KMessageBox::warningYesNoCancel(widget(), i18n("Do you want to save your changes to \"%1\" or discard them?", url().fileName()), i18n("Close Document"), KStandardGuiItem::save(), KStandardGuiItem::discard());
 
-    switch (res) {
-    case KMessageBox::Yes: // Save
-        saveFile();
-        return !isModified(); // Only allow closing if file was really saved
-    case KMessageBox::No:     // Discard
+        switch (res) {
+        case KMessageBox::Yes: // Save
+            saveFile();
+            return !isModified(); // Only allow closing if file was really saved
+        case KMessageBox::No:     // Discard
+            return true;
+        default: // Cancel
+            return false;
+        }
+    } else {
         return true;
-    default: // Cancel
-        return false;
     }
 }
 

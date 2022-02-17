@@ -4286,7 +4286,7 @@ QMenu *PageView::createProcessLinkMenu(PageViewItem *item, const QPoint eventPos
 void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchText)
 {
     const QString squeezedText = KStringHandler::rsqueeze(searchText, searchTextPreviewLength);
-    QAction *action = new QAction(i18n("Search for '%1' in this document", squeezedText), menu);
+    QAction *action = new QAction(i18n("Search for '%1' in this document", squeezedText.simplified()), menu);
     action->setIcon(QIcon::fromTheme(QStringLiteral("document-preview")));
     connect(action, &QAction::triggered, this, [this, searchText] { Q_EMIT triggerSearch(searchText); });
     menu->addAction(action);

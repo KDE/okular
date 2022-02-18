@@ -47,6 +47,9 @@ public:
     // redraw visible widgets (useful for refreshing contents...)
     void updateWidgets();
 
+    // show current page in Thumbnails view
+    void syncThumbnail();
+
 public Q_SLOTS:
     // these are connected to ThumbnailController buttons
     void slotFilterBookmarks(bool filterOn);

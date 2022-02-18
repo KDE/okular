@@ -2975,6 +2975,8 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     QAction *fitPageWidth = nullptr;
     if (page) {
         popup->addAction(new OKMenuTitle(popup, i18n("Page %1", page->number() + 1)));
+        if (m_thumbnailList->isVisible() && !Okular::Settings::syncThumbnailsViewport())
+            popup->addAction(QIcon::fromTheme(QStringLiteral("action-synchronize")), i18n("Sync Thumbnail with Page"), m_thumbnailList.data(), &ThumbnailList::syncThumbnail);
         if ((!currentPage && m_document->bookmarkManager()->isBookmarked(page->number())) || (currentPage && m_document->bookmarkManager()->isBookmarked(m_document->viewport())))
             removeBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove Bookmark"));
         else

@@ -372,13 +372,18 @@ void ThumbnailList::notifyCurrentPageChanged(int previousPage, int currentPage)
             d->m_selected = *tIt;
             d->m_selected->setSelected(true);
             if (Okular::Settings::syncThumbnailsViewport()) {
-                int yOffset = qMax(viewport()->height() / 4, d->m_selected->height() / 2);
-                ensureVisible(0, d->m_selected->pos().y() + d->m_selected->height() / 2, 0, yOffset);
+                syncThumbnail();
             }
             break;
         }
         d->m_vectorIndex++;
     }
+}
+
+void ThumbnailList::syncThumbnail()
+{
+    int yOffset = qMax(viewport()->height() / 4, d->m_selected->height() / 2);
+    ensureVisible(0, d->m_selected->pos().y() + d->m_selected->height() / 2, 0, yOffset);
 }
 
 void ThumbnailList::notifyPageChanged(int pageNumber, int changedFlags)

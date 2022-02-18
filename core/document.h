@@ -1016,6 +1016,21 @@ public:
      */
     CertificateStore *certificateStore() const;
 
+    /** sets the editor command to the command  \p editCmd, as
+     * given at the commandline.
+     *
+     * @since 22.04
+     */
+    void setEditorCommandOverride(const QString &editCmd);
+
+    /** returns the overriding editor command.
+     *
+     * If the editor command was not overriden, the string is empty.
+     *
+     * @since 22.04
+     */
+    QString editorCommandOverride() const;
+
 public Q_SLOTS:
     /**
      * This slot is called whenever the user changes the @p rotation of

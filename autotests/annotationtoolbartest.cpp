@@ -129,7 +129,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     Okular::Settings::self()->setShellOpenFileInTabs(true);
 
     const QStringList paths = {QStringLiteral(KDESRCDIR "data/file1.pdf"), QStringLiteral(KDESRCDIR "data/file2.pdf")};
-    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
+    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
 
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Success);
@@ -255,7 +255,7 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QFETCH(QString, document);
 
     const QStringList paths = {document};
-    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
+    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
 
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Success);
@@ -345,7 +345,7 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState_data()
 void AnnotationToolBarTest::testAnnotationToolBarConfigActionsEnabledState()
 {
     const QStringList paths = {QStringLiteral(KDESRCDIR "data/file1.pdf")};
-    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
+    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
 
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Success);

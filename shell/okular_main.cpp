@@ -19,6 +19,8 @@
 #include <QDBusInterface>
 #include <QTextStream>
 
+#include <iostream>
+
 static bool attachUniqueInstance(const QStringList &paths, const QString &serializedOptions)
 {
     if (!ShellUtils::unique(serializedOptions) || paths.count() != 1)
@@ -27,6 +29,13 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
     QDBusInterface iface(QStringLiteral("org.kde.okular"), QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular"));
     if (!iface.isValid())
         return false;
+
+    if (!ShellUtils::editorCmd(serializedOptions).isEmpty()) {
+        QString message =
+            i18n("You cannot set the editor command in an already running okular instance. Please disable the tabs and try again. Please note, that unique is also not supported when setting the editor command at the commandline.\n");
+        std::cerr << message.toStdString();
+        exit(1);
+    }
 
     const QString page = ShellUtils::page(serializedOptions);
     iface.call(QStringLiteral("openDocument"), ShellUtils::urlFromArg(paths[0], ShellUtils::qfileExistFunc(), page).url(), serializedOptions);
@@ -111,6 +120,13 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
             return false;
     }
 
+    if (!ShellUtils::editorCmd(serializedOptions).isEmpty()) {
+        QString message(
+            i18n("You cannot set the editor command in an already running okular instance. Please disable the tabs and try again. Please note, that unique is also not supported when setting the editor command at the commandline.\n"));
+        std::cerr << message.toStdString();
+        exit(1);
+    }
+
     bestService->call(QStringLiteral("tryRaise"));
 
     return true;
@@ -149,6 +165,7 @@ Status main(const QStringList &paths, const QString &serializedOptions)
         stream << i18n("Error: Can't open more than one document with the --find switch") << endl;
         return Error;
     }
+
     // try to attach to existing session, unique or not
     if (attachUniqueInstance(paths, serializedOptions) || attachExistingInstance(paths, serializedOptions)) {
         return AttachedOtherProcess;

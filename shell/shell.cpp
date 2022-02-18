@@ -138,6 +138,13 @@ Shell::Shell(const QString &serializedOptions)
             setAttribute(Qt::WA_ShowWithoutActivating);
         }
 
+        {
+            const QString editorCmd = ShellUtils::editorCmd(serializedOptions);
+            if (!editorCmd.isEmpty()) {
+                QMetaObject::invokeMethod(firstPart, "setEditorCmd", Q_ARG(QString, editorCmd));
+            }
+        }
+
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/okularshell"), this, QDBusConnection::ExportScriptableSlots);
     } else {
         m_isValid = false;

@@ -170,6 +170,7 @@ public Q_SLOTS: // dbus
     Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
     Q_SCRIPTABLE Q_NOREPLY void enableExitAfterPrint();
     Q_SCRIPTABLE Q_NOREPLY void enableStartWithFind(const QString &text);
+    Q_SCRIPTABLE Q_NOREPLY void setEditorCmd(const QString &editorCmd);
     Q_SCRIPTABLE void slotOpenContainingFolder();
 
 Q_SIGNALS:

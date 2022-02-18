@@ -18,7 +18,9 @@
 #include "dlgperformance.h"
 #include "dlgpresentation.h"
 
-PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton, Okular::EmbedMode embedMode)
+#include <QLabel>
+
+PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton, Okular::EmbedMode embedMode, const QString &editCmd)
     : KConfigDialog(parent, QStringLiteral("preferences"), skeleton)
 {
     setWindowModality(Qt::ApplicationModal);
@@ -44,10 +46,18 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton,
     } else {
         m_presentation = new DlgPresentation(this);
         m_annotations = new DlgAnnotations(this);
-        m_editor = new DlgEditor(this);
         addPage(m_presentation, i18n("Presentation"), QStringLiteral("view-presentation"), i18n("Options for Presentation Mode"));
         m_annotationsPage = addPage(m_annotations, i18n("Annotations"), QStringLiteral("draw-freehand"), i18n("Annotation Options"));
-        addPage(m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
+        if (editCmd.isEmpty()) {
+            m_editor = new DlgEditor(this);
+            addPage(m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
+        } else {
+            QString editStr = i18nc("Give the user a hint, that it enabled the option --editor-cmd together with the current value of the option.",
+                                    "The editor was set by the command line to \n %1 \nIf you want to use the setting, start okular without the option --editor-cmd",
+                                    editCmd);
+            auto m_editor = new QLabel(editStr, this);
+            addPage(m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
+        }
     }
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage(m_debug, "Debug", "system-run", "Debug options");

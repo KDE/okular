@@ -345,6 +345,9 @@ public:
     static QVector<KPluginMetaData> availableGenerators();
     static QVector<KPluginMetaData> configurableGenerators();
     static KPluginMetaData generatorForMimeType(const QMimeType &type, QWidget *widget, const QVector<KPluginMetaData> &triedOffers = QVector<KPluginMetaData>());
+
+    // overrides the editor command (for example with a command from the command line)
+    QString editorCommandOverride;
 };
 
 class DocumentInfoPrivate

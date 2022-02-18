@@ -2831,7 +2831,7 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
 void Part::slotPreferences()
 {
     // Create dialog
-    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode);
+    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it
@@ -2852,7 +2852,7 @@ void Part::slotSetChangeColors(bool active)
 void Part::slotAccessibilityPreferences()
 {
     // Create dialog
-    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode);
+    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it
@@ -2863,7 +2863,7 @@ void Part::slotAccessibilityPreferences()
 void Part::slotAnnotationPreferences()
 {
     // Create dialog
-    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode);
+    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it
@@ -3670,6 +3670,11 @@ void Part::setReadWrite(bool readwrite)
 void Part::enableStartWithFind(const QString &text)
 {
     m_textToFindOnOpen = QString(text);
+}
+
+void Part::setEditorCmd(const QString &editorCmd)
+{
+    m_document->setEditorCommandOverride(editorCmd);
 }
 
 void Part::slotOpenContainingFolder()

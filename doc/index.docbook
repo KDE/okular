@@ -32,7 +32,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2022-02-02</date>
+		<date>2022-02-19</date>
 		<releaseinfo>22.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1370,6 +1370,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<term><userinput><command>okular</command>
 				<option>--find <replaceable>string</replaceable></option></userinput></term>
 				<listitem><para>Tries to find and highlight a given string in the document. Only works if just one document is given as an argument of the <userinput><command>okular</command></userinput> command.</para></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--editor-cmd <replaceable>string</replaceable></option></userinput></term>
+				<listitem><para>Sets the external editor command. You cannot set the editor command in an already running &okular; instance. Please note that <option>--unique</option> is not supported when setting the editor command at the commandline.</para></listitem>
 				</varlistentry>
 			</variablelist>
 		    </sect2>

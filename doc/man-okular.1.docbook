@@ -10,9 +10,9 @@
 <author><firstname>Yuri</firstname><surname>Chornoivan</surname>
 <contrib>Okular man page.</contrib>
 <email>yurchor@ukr.net</email></author>
-<date>2019-02-14</date>
-<releaseinfo>Okular 1.7</releaseinfo>
-<productname>KDE Applications</productname>
+<date>2022-02-19</date>
+<releaseinfo>Okular 22.04</releaseinfo>
+<productname>KDE Gear</productname>
 </refentryinfo>
 
 <refmeta>
@@ -89,6 +89,13 @@ is aimed to show documents in different formats.</para>
 <term><option>--find <replaceable>string</replaceable></option></term>
 <listitem>
 <para>Find a string on the text.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--editor-cmd <replaceable>string</replaceable></option></term>
+<listitem>
+<para>Sets the external editor command. You cannot set the editor command in an already running Okular instance. Please note that <option>--unique</option> is not supported when setting the editor command at the commandline.</para>
 </listitem>
 </varlistentry>
 </variablelist>

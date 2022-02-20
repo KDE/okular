@@ -2771,8 +2771,14 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Text-to-speech engine</guilabel></term>
 					<listitem>
 						<para><action>Allows you to choose</action> the text-to-speech (<abbrev>TTS</abbrev>) engine to be used by &okular;.
-							The default is <application>speechd</application> <abbrev>TTS</abbrev>, but you can use all
-							languages and voices depending on the available synthesizers on your platform. On &Linux;,
+							The default is <application>speechd</application> <abbrev>TTS</abbrev>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Text-to-speech voice</guilabel></term>
+					<listitem>
+						<para><action>Allows you to choose</action> a voice for the text-to-speech engine to be used by &okular;.
+							You can use all	languages and voices depending on the available synthesizers on your platform. On &Linux;,
 							speech-dispatcher is used by default to determine available voices.</para>
 					</listitem>
 				</varlistentry>

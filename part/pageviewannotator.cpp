@@ -156,7 +156,12 @@ public:
         // set font
         if (m_annotElement.hasAttribute(QStringLiteral("font"))) {
             QFont f;
-            f.fromString(m_annotElement.attribute(QStringLiteral("font")));
+            // Workaround broken old code that saved fonts incorrectly with extra backslashes
+            QString fontString = m_annotElement.attribute(QStringLiteral("font"));
+            if (fontString.count(QStringLiteral("\\\\,")) > 9) {
+                fontString.replace(QStringLiteral("\\\\,"), QStringLiteral(","));
+            }
+            f.fromString(fontString);
             ta->setTextFont(f);
         }
         // set font color

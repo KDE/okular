@@ -13,8 +13,8 @@ if (ANDROID)
 
     # Unfortunately gitlab CI for now doesn't use Craft so we need
     # to differentiate between gitlab CI and the binary factory
-    if (DEFINED ENV{craftRoot})
-        message("Linking in extra libraies to help androiddeployqt")
+    if (ANDROID_LINK_EXTRA_LIBRARIES)
+        message("Linking in extra libraries to help androiddeployqt")
         # androiddeployqt is not super smart and sometimes fails packaging
         # some of the libraries we only use in plugins, here we help it by linking to those "extra" libs
         # that are not really needed

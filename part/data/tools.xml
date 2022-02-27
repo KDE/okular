@@ -81,13 +81,13 @@ Annotation
     <tool id="5" type="typewriter">
         <engine type="PickPoint" block="true">
             <annotation type="Typewriter" color="#00ffffff" textColor="#000000" width="0"
-                        font="Noto Sans\\,10\\,-1\\,5\\,50\\,0\\,0\\,0\\,0\\,0\\,Regular"/>
+                        font="Noto Sans,10,-1,5,50,0,0,0,0,0,Regular"/>
         </engine>
     </tool>
     <tool id="6" type="note-inline">
         <engine type="PickPoint" color="#ffff00" hoverIcon="tool-note-inline" block="true">
             <annotation type="FreeText" color="#ffffff00"
-                        font="Noto Sans\\,10\\,-1\\,5\\,50\\,0\\,0\\,0\\,0\\,0\\,Regular"/>
+                        font="Noto Sans,10,-1,5,50,0,0,0,0,0,Regular"/>
         </engine>
     </tool>
     <tool id="7" type="note-linked">

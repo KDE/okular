@@ -293,7 +293,8 @@ public:
         Find = 10,           ///< Open find dialog
         GoToPage = 11,       ///< Goto page
         Close = 12,          ///< Close document
-        Print = 13           ///< Print the document @since 22.04
+        Print = 13,          ///< Print the document @since 22.04
+        SaveAs = 14          ///< SaveAs the document @since 22.04
     };
 
     /**

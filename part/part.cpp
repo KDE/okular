@@ -360,6 +360,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     connect(m_document->bookmarkManager(), &BookmarkManager::openUrl, this, &Part::openUrlFromBookmarks);
     connect(m_document, &Document::close, this, &Part::close);
     connect(m_document, &Document::requestPrint, this, &Part::slotPrint);
+    connect(m_document, &Document::requestSaveAs, this, [this] { slotSaveFileAs(); });
     connect(m_document, &Document::undoHistoryCleanChanged, this, [this](bool clean) {
         setModified(!clean);
         setWindowTitleFromDocument();

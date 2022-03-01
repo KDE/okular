@@ -1134,6 +1134,13 @@ Q_SIGNALS:
     void requestPrint();
 
     /**
+     * This signal is emitted whenever an action requests a
+     * document save as operation.
+     * @since 22.04
+     */
+    void requestSaveAs();
+
+    /**
      * This signal is emitted whenever an action requests an
      * application quit operation.
      */

@@ -4018,6 +4018,9 @@ void Document::processAction(const Action *action)
         case DocumentAction::Print:
             emit requestPrint();
             break;
+        case DocumentAction::SaveAs:
+            emit requestSaveAs();
+            break;
         }
     } break;
 

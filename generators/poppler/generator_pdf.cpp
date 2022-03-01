@@ -367,6 +367,10 @@ static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkA
         return Okular::DocumentAction::Close;
     case Poppler::LinkAction::Print:
         return Okular::DocumentAction::Print;
+#ifdef HAVE_POPPLER_22_04
+    case Poppler::LinkAction::SaveAs:
+        return Okular::DocumentAction::SaveAs;
+#endif
     }
 
     qWarning() << "Unsupported Poppler::LinkAction::ActionType" << pat;

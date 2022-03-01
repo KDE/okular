@@ -363,7 +363,7 @@ if (KF5JS_FOUND)
     target_link_libraries(okularcore PRIVATE KF5::JS KF5::JSApi)
 endif()
 
-set_target_properties(okularcore PROPERTIES VERSION 9.0.0 SOVERSION 9 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 10.0.0 SOVERSION 10 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
 install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

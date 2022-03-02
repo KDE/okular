@@ -4134,8 +4134,6 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
 
 void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue)
 {
-    Q_UNUSED(newValue)
-
     if (action->actionType() != Action::Script) {
         qCDebug(OkularCoreDebug) << "Unsupported action type" << action->actionType() << "for keystroke.";
         return;
@@ -4155,7 +4153,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     d->executeScriptEvent(event, linkscript);
 
     if (event->returnCode()) {
-        fft->setText(event->value().toString());
+        fft->setText(newValue.toString());
     } else {
         emit refreshFormWidget(fft);
     }

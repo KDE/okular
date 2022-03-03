@@ -53,12 +53,17 @@
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
-#include <KToolInvocation>
 #include <KUriFilter>
 #include <QAction>
 #include <QDebug>
 #include <QIcon>
+#include <kio_version.h>
 #include <kwidgetsaddons_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 69, 0)
+#include <KIO/CommandLauncherJob>
+#else
+#include <KToolInvocation>
+#endif
 
 // system includes
 #include <array>
@@ -4731,7 +4736,12 @@ void PageView::slotHandleWebShortcutAction()
 
 void PageView::slotConfigureWebShortcuts()
 {
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 69, 0)
+    auto *job = new KIO::CommandLauncherJob(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
+    job->start();
+#else
     KToolInvocation::kdeinitExec(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
+#endif
 }
 
 void PageView::slotZoom()

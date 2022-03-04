@@ -1313,7 +1313,7 @@ void TextAnnotationPrivate::translate(const NormalizedPoint &coord)
 
 bool TextAnnotationPrivate::openDialogAfterCreation() const
 {
-    return (m_textType == Okular::TextAnnotation::Linked);
+    return (m_textType == Okular::TextAnnotation::Linked) || (m_inplaceIntent == TextAnnotation::InplaceIntent::Unknown);
 }
 
 void TextAnnotationPrivate::setAnnotationProperties(const QDomNode &node)

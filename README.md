@@ -58,13 +58,17 @@ make
 make install
 ```
 
+Okular also builds tests in the build tree. To run them, you have to run `make install` first.
+
 If you install Okular in a different path than your system install directory it is possible that you need to run
 
 ```bash
-source build/prefix.sh; okular
+source prefix.sh
 ```
 
 so that the correct Okular instance and libraries are picked up.
+Afterwards one can run `okular` inside the shell instance.
+The source command is also required to run the tests manually.
 
 As stated above, Okular has various build targets.
 Two of them are executables.

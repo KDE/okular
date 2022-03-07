@@ -53,6 +53,13 @@ include(ECMAddAppIcon)
 include(CMakePackageConfigHelpers)
 include(ECMSetupQtPluginMacroNames)
 
+# append the plugins from the install tree folder to the QT_PLUGIN_PATH
+if(UNIX)
+    set(ENV{QT_PLUGIN_PATH} "$ENV{QT_PLUGIN_PATH}:${KDE_INSTALL_FULL_QTPLUGINDIR}")
+elseif(WIN32)
+    set(ENV{QT_PLUGIN_PATH} "$ENV{QT_PLUGIN_PATH};${KDE_INSTALL_FULL_QTPLUGINDIR}")
+endif()
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)

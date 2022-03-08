@@ -77,22 +77,26 @@ QTextDocument *Converter::convert(const QString &fileName)
     QMap<QString, QTextBlock> targets;
 
     // go over whole document and add all <a> tags to links or targets map
-    for (QTextBlock it = newDocument->begin(); it != newDocument->end(); it = it.next())
+    for (QTextBlock it = newDocument->begin(); it != newDocument->end(); it = it.next()) {
         for (QTextBlock::iterator fit = it.begin(); !fit.atEnd(); ++fit) {
             QTextFragment frag = fit.fragment();
             QTextCharFormat format = frag.charFormat();
-            if (!format.isAnchor())
+            if (!format.isAnchor()) {
                 continue;
+            }
             // link
-            if (!format.anchorHref().isEmpty())
+            if (!format.anchorHref().isEmpty()) {
                 links[format.anchorHref()] = QPair<int, int>(frag.position(), frag.position() + frag.length());
+            }
             const QStringList anchors = format.anchorNames();
             if (!anchors.isEmpty()) {
                 // link targets
-                for (const QString &name : anchors)
+                for (const QString &name : anchors) {
                     targets[QLatin1Char('#') + name] = it;
+                }
             }
         }
+    }
 
     // create link actions
     QMapIterator<QString, QPair<int, int>> it(links);
@@ -100,12 +104,13 @@ QTextDocument *Converter::convert(const QString &fileName)
         it.next();
         QUrl u(it.key());
         // external or internal link
-        if (!u.isRelative())
+        if (!u.isRelative()) {
             emit addAction(new Okular::BrowseAction(QUrl(it.key())), it.value().first, it.value().second);
-        else {
+        } else {
             // is there valid target?
-            if (!targets.contains(it.key()) || !targets[it.key()].isValid())
+            if (!targets.contains(it.key()) || !targets[it.key()].isValid()) {
                 continue;
+            }
             emit addAction(new Okular::GotoAction(QString(), calculateViewport(newDocument, targets[it.key()])), it.value().first, it.value().second);
         }
     }

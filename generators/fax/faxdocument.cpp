@@ -74,8 +74,9 @@ static unsigned char *getstrip(pagenode *pn, int strip)
     so.s = 1; /* XXX */
 
     QFile file(pn->filename);
-    if (!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly)) {
         return nullptr;
+    }
 
     if (pn->strips == nullptr) {
         offset = 0;
@@ -83,8 +84,9 @@ static unsigned char *getstrip(pagenode *pn, int strip)
     } else if (strip < pn->nstrips) {
         offset = pn->strips[strip].offset;
         pn->length = pn->strips[strip].size;
-    } else
+    } else {
         return nullptr;
+    }
 
     /* round size to full boundary plus t32bits */
     roundup = (pn->length + 7) & ~3;
@@ -113,8 +115,9 @@ static unsigned char *getstrip(pagenode *pn, int strip)
     }
 
     normalize(pn, !pn->lsbfirst, ShortOrder, roundup);
-    if (pn->size.height() == 0)
+    if (pn->size.height() == 0) {
         pn->size.setHeight(G3count(pn, pn->expander == g32expand));
+    }
 
     if (pn->size.height() == 0) {
         delete[] data;
@@ -122,8 +125,9 @@ static unsigned char *getstrip(pagenode *pn, int strip)
         return nullptr;
     }
 
-    if (pn->strips == nullptr)
+    if (pn->strips == nullptr) {
         pn->rowsperstrip = pn->size.height();
+    }
 
     pn->dataOrig = reinterpret_cast<t16bits *>(data);
 
@@ -141,8 +145,9 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
     int n;
 
     lineNum += pn->stripnum * pn->rowsperstrip;
-    if (lineNum >= pn->size.height())
+    if (lineNum >= pn->size.height()) {
         return;
+    }
 
     p = reinterpret_cast<t32bits *>(pn->imageData + lineNum * (2 - pn->vres) * pn->bytes_per_line);
     p1 = reinterpret_cast<t32bits *>(pn->vres ? nullptr : p + pn->bytes_per_line / sizeof(*p));
@@ -156,28 +161,32 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
         n = *r++;
         tot += n;
         /* Watch out for buffer overruns, e.g. when n == 65535.  */
-        if (tot > pn->size.width())
+        if (tot > pn->size.width()) {
             break;
-        if (pix)
+        }
+        if (pix) {
             acc |= (~(t32bits)0 >> nacc);
-        else if (nacc)
+        } else if (nacc) {
             acc &= (~(t32bits)0 << (32 - nacc));
-        else
+        } else {
             acc = 0;
+        }
         if (nacc + n < 32) {
             nacc += n;
             pix = ~pix;
             continue;
         }
         *p++ = acc;
-        if (p1)
+        if (p1) {
             *p1++ = acc;
+        }
         n -= 32 - nacc;
         while (n >= 32) {
             n -= 32;
             *p++ = pix;
-            if (p1)
+            if (p1) {
                 *p1++ = pix;
+            }
         }
         acc = pix;
         nacc = n;
@@ -185,19 +194,22 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
     }
     if (nacc) {
         *p++ = acc;
-        if (p1)
+        if (p1) {
             *p1++ = acc;
+        }
     }
 }
 
 static bool get_image(pagenode *pn)
 {
     unsigned char *data = getstrip(pn, 0);
-    if (!data)
+    if (!data) {
         return false;
+    }
 
-    if (!new_image(pn, pn->size.width(), (pn->vres ? 1 : 2) * pn->size.height()))
+    if (!new_image(pn, pn->size.width(), (pn->vres ? 1 : 2) * pn->size.height())) {
         return false;
+    }
 
     (*pn->expander)(pn, draw_line);
 
@@ -232,10 +244,11 @@ FaxDocument::FaxDocument(const QString &fileName, DocumentType type)
     d->mPageNode.imageData = nullptr;
     d->mType = type;
 
-    if (d->mType == G3)
+    if (d->mType == G3) {
         d->mPageNode.expander = g31expand; // or g32expand?!?
-    else if (d->mType == G4)
+    } else if (d->mType == G4) {
         d->mPageNode.expander = g4expand;
+    }
 }
 
 FaxDocument::~FaxDocument()
@@ -250,8 +263,9 @@ bool FaxDocument::load()
     fax_init_tables();
 
     bool ok = get_image(&(d->mPageNode));
-    if (!ok)
+    if (!ok) {
         return false;
+    }
 
     // byte-swapping the image
     int height = d->mPageNode.size.height();

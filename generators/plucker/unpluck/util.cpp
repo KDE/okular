@@ -128,12 +128,15 @@ void *_plkr_FindInTable(HashTable *ht, const char *key)
     HashTableSlot *slot;
     int count;
 
-    if (ht == nullptr)
+    if (ht == nullptr) {
         return (nullptr);
+    }
     slot = hashtable_slot(ht, hashtable_hash_index(ht, key));
-    for (count = slot->hs_count; count > 0; count -= 1)
-        if (hashtable_compare_keys(ht, key, slot->hs_entries[count - 1].he_key))
+    for (count = slot->hs_count; count > 0; count -= 1) {
+        if (hashtable_compare_keys(ht, key, slot->hs_entries[count - 1].he_key)) {
             return (slot->hs_entries[count - 1].he_data);
+        }
+    }
     return (nullptr);
 }
 
@@ -142,16 +145,18 @@ void *_plkr_RemoveFromTable(HashTable *ht, const char *key)
     HashTableSlot *slot;
     int count;
 
-    if (ht == nullptr)
+    if (ht == nullptr) {
         return (nullptr);
+    }
 
     slot = hashtable_slot(ht, hashtable_hash_index(ht, key));
-    for (count = 0; count < slot->hs_count; count += 1)
+    for (count = 0; count < slot->hs_count; count += 1) {
         if (hashtable_compare_keys(ht, slot->hs_entries[count].he_key, key)) {
             void *data = slot->hs_entries[count].he_data;
             free(slot->hs_entries[count].he_key);
-            if ((1 + (unsigned)count) < (unsigned)slot->hs_count)
+            if ((1 + (unsigned)count) < (unsigned)slot->hs_count) {
                 slot->hs_entries[count] = slot->hs_entries[slot->hs_count - 1];
+            }
             --ht->ht_nPairs;
             if (--slot->hs_count <= 0) {
                 free(slot->hs_entries);
@@ -161,6 +166,7 @@ void *_plkr_RemoveFromTable(HashTable *ht, const char *key)
             }
             return (data);
         }
+    }
     return (nullptr);
 }
 
@@ -169,21 +175,25 @@ int _plkr_AddToTable(HashTable *ht, const char *key, void *obj)
     HashTableSlot *slot;
     int count;
 
-    if (ht == nullptr)
+    if (ht == nullptr) {
         return (0);
+    }
 
     slot = hashtable_slot(ht, hashtable_hash_index(ht, key));
 
-    for (count = slot->hs_count; count > 0; count -= 1)
-        if (hashtable_compare_keys(ht, key, slot->hs_entries[count - 1].he_key))
+    for (count = slot->hs_count; count > 0; count -= 1) {
+        if (hashtable_compare_keys(ht, key, slot->hs_entries[count - 1].he_key)) {
             return (0);
+        }
+    }
 
     if (slot->hs_allocated == 0) {
         slot->hs_allocated = HASH_INCREMENT_SIZE;
         slot->hs_entries = (HashEntry *)malloc(sizeof(HashEntry) * slot->hs_allocated);
         slot->hs_count = 0;
-    } else if (slot->hs_count >= slot->hs_allocated)
+    } else if (slot->hs_count >= slot->hs_allocated) {
         slot->hs_entries = (HashEntry *)realloc(slot->hs_entries, (slot->hs_allocated += HASH_INCREMENT_SIZE) * sizeof(HashEntry));
+    }
     slot->hs_entries[slot->hs_count].he_key = _plkr_strndup(key, strlen(key));
     slot->hs_entries[slot->hs_count].he_data = obj;
     slot->hs_count += 1;

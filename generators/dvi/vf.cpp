@@ -64,8 +64,9 @@ void TeXFontDefinition::read_VF_index()
     fseek(VF_file, (long)one(VF_file), 1); /* skip comment */
     quint32 const file_checksum = four(VF_file);
 
-    if (file_checksum && checksum && file_checksum != checksum)
+    if (file_checksum && checksum && file_checksum != checksum) {
         qCCritical(OkularDviDebug) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum << "u) in font file" << filename << endl;
+    }
     (void)four(VF_file); /* skip design size */
 
     // Read the fonts.
@@ -97,14 +98,16 @@ void TeXFontDefinition::read_VF_index()
 
         // Insert font in dictionary and make sure the dictionary is big
         // enough.
-        if (vf_table.capacity() - 2 <= vf_table.count())
+        if (vf_table.capacity() - 2 <= vf_table.count()) {
             // Not quite optimal. The size of the dictionary should be a
             // prime. I don't care.
             vf_table.reserve(vf_table.capacity() * 2);
+        }
         vf_table.insert(TeXnumber, newfontp);
 
-        if (first_font == nullptr)
+        if (first_font == nullptr) {
             first_font = newfontp;
+        }
     }
 
     // Prepare macro array.
@@ -149,15 +152,17 @@ void TeXFontDefinition::read_VF_index()
                     m->pos = avail = new unsigned char[VF_PARM_2];
                     availend = avail + VF_PARM_2;
                     avail += len;
-                } else
+                } else {
                     m->pos = new unsigned char[len];
+                }
             }
             fread((char *)m->pos, 1, len, VF_file);
             m->end = m->pos + len;
         }
     }
-    if (cmnd != POST)
+    if (cmnd != POST) {
         oops(i18n("Wrong command byte found in VF macro list: %1", cmnd));
+    }
 
     fclose(VF_file);
     file = nullptr;

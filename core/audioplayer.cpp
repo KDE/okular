@@ -177,8 +177,9 @@ void AudioPlayerPrivate::stopPlayings()
 void AudioPlayerPrivate::finished(int id)
 {
     QHash<int, PlayData *>::iterator it = m_playing.find(id);
-    if (it == m_playing.end())
+    if (it == m_playing.end()) {
         return;
+    }
 
     SoundInfo si = it.value()->m_info;
     // if the sound must be repeated indefinitely, then start the playback
@@ -213,20 +214,23 @@ AudioPlayer *AudioPlayer::instance()
 void AudioPlayer::playSound(const Sound *sound, const SoundAction *linksound)
 {
     // we can't play null pointers ;)
-    if (!sound)
+    if (!sound) {
         return;
+    }
 
     // we don't play external sounds for remote documents
-    if (sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile())
+    if (sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile()) {
         return;
+    }
 
     qCDebug(OkularCoreDebug);
     SoundInfo si(sound, linksound);
 
     // if the mix flag of the new sound is false, then the currently playing
     // sounds must be stopped.
-    if (!si.mix)
+    if (!si.mix) {
         d->stopPlayings();
+    }
 
     d->play(si);
 }

@@ -53,8 +53,9 @@ static double distanceSqr(double x, double y, double xScale, double yScale, cons
     for (++i; i != path.constEnd(); ++i) {
         thisDistance = NormalizedPoint::distanceSqr(x, y, xScale, yScale, lastPoint, (*i));
 
-        if (thisDistance < distance)
+        if (thisDistance < distance) {
             distance = thisDistance;
+        }
 
         lastPoint = *i;
     }
@@ -91,8 +92,9 @@ static double strokeDistance(double distance, double penWidth)
 Annotation *AnnotationUtils::createAnnotation(const QDomElement &annElement)
 {
     // safety check on annotation element
-    if (!annElement.hasAttribute(QStringLiteral("type")))
+    if (!annElement.hasAttribute(QStringLiteral("type"))) {
         return nullptr;
+    }
 
     // build annotation of given type
     Annotation *annotation = nullptr;
@@ -140,8 +142,9 @@ QDomElement AnnotationUtils::findChildElement(const QDomNode &parentNode, const 
     QDomNode subNode = parentNode.firstChild();
     while (subNode.isElement()) {
         QDomElement element = subNode.toElement();
-        if (element.tagName() == name)
+        if (element.tagName() == name) {
             return element;
+        }
         subNode = subNode.nextSibling();
     }
     // if the name can't be found, return a dummy null element
@@ -257,8 +260,9 @@ Annotation::Style::Style(const Style &other)
 
 Annotation::Style &Annotation::Style::operator=(const Style &other)
 {
-    if (this != &other)
+    if (this != &other) {
         *d = *other.d;
+    }
 
     return *this;
 }
@@ -399,8 +403,9 @@ Annotation::Window::Window(const Window &other)
 
 Annotation::Window &Annotation::Window::operator=(const Window &other)
 {
-    if (this != &other)
+    if (this != &other) {
         *d = *other.d;
+    }
 
     return *this;
 }
@@ -498,8 +503,9 @@ Annotation::Revision::Revision(const Revision &other)
 
 Annotation::Revision &Annotation::Revision::operator=(const Revision &other)
 {
-    if (this != &other)
+    if (this != &other) {
         *d = *other.d;
+    }
 
     return *this;
 }
@@ -544,12 +550,14 @@ AnnotationPrivate::AnnotationPrivate()
 AnnotationPrivate::~AnnotationPrivate()
 {
     // delete all children revisions
-    if (m_revisions.isEmpty())
+    if (m_revisions.isEmpty()) {
         return;
+    }
 
     QLinkedList<Annotation::Revision>::iterator it = m_revisions.begin(), end = m_revisions.end();
-    for (; it != end; ++it)
+    for (; it != end; ++it) {
         delete (*it).annotation();
+    }
 }
 
 AnnotationPrivate *AnnotationPrivate::get(Annotation *a)
@@ -570,8 +578,9 @@ Annotation::Annotation(AnnotationPrivate &dd, const QDomNode &description)
 
 Annotation::~Annotation()
 {
-    if (d_ptr->m_disposeFunc)
+    if (d_ptr->m_disposeFunc) {
         d_ptr->m_disposeFunc(this);
+    }
 
     delete d_ptr;
 }
@@ -755,12 +764,14 @@ bool Annotation::canBeMoved() const
     Q_D(const Annotation);
 
     // Don't move annotations if they cannot be modified
-    if (!d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this))
+    if (!d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this)) {
         return false;
+    }
 
     // highlight "requires" to be "bounded" to text, and that's tricky for now
-    if (subType() == AHighlight)
+    if (subType() == AHighlight) {
         return false;
+    }
 
     return true;
 }
@@ -770,8 +781,9 @@ bool Annotation::canBeResized() const
     Q_D(const Annotation);
 
     // Don't resize annotations if they cannot be modified
-    if (!d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this))
+    if (!d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this)) {
         return false;
+    }
 
     return d->canBeResized();
 }
@@ -784,24 +796,32 @@ void Annotation::store(QDomNode &annNode, QDomDocument &document) const
     annNode.appendChild(e);
 
     // store -contents- attributes
-    if (!d->m_author.isEmpty())
+    if (!d->m_author.isEmpty()) {
         e.setAttribute(QStringLiteral("author"), d->m_author);
-    if (!d->m_contents.isEmpty())
+    }
+    if (!d->m_contents.isEmpty()) {
         e.setAttribute(QStringLiteral("contents"), d->m_contents);
-    if (!d->m_uniqueName.isEmpty())
+    }
+    if (!d->m_uniqueName.isEmpty()) {
         e.setAttribute(QStringLiteral("uniqueName"), d->m_uniqueName);
-    if (d->m_modifyDate.isValid())
+    }
+    if (d->m_modifyDate.isValid()) {
         e.setAttribute(QStringLiteral("modifyDate"), d->m_modifyDate.toString(Qt::ISODate));
-    if (d->m_creationDate.isValid())
+    }
+    if (d->m_creationDate.isValid()) {
         e.setAttribute(QStringLiteral("creationDate"), d->m_creationDate.toString(Qt::ISODate));
+    }
 
     // store -other- attributes
-    if (d->m_flags) // Strip internal flags
+    if (d->m_flags) { // Strip internal flags
         e.setAttribute(QStringLiteral("flags"), d->m_flags & ~(External | ExternallyDrawn | BeingMoved | BeingResized));
-    if (d->m_style.color().isValid())
+    }
+    if (d->m_style.color().isValid()) {
         e.setAttribute(QStringLiteral("color"), d->m_style.color().name(QColor::HexArgb));
-    if (d->m_style.opacity() != 1.0)
+    }
+    if (d->m_style.opacity() != 1.0) {
         e.setAttribute(QStringLiteral("opacity"), QString::number(d->m_style.opacity()));
+    }
 
     // Sub-Node-1 - boundary
     QDomElement bE = document.createElement(QStringLiteral("boundary"));
@@ -845,8 +865,9 @@ void Annotation::store(QDomNode &annNode, QDomDocument &document) const
     }
 
     // create [revision] element of the annotation node (if any)
-    if (d->m_revisions.isEmpty())
+    if (d->m_revisions.isEmpty()) {
         return;
+    }
 
     // add all revisions as children of revisions element
     QLinkedList<Revision>::const_iterator it = d->m_revisions.begin(), end = d->m_revisions.end();
@@ -950,28 +971,37 @@ void AnnotationPrivate::setAnnotationProperties(const QDomNode &node)
 {
     // get the [base] element of the annotation node
     QDomElement e = AnnotationUtils::findChildElement(node, QStringLiteral("base"));
-    if (e.isNull())
+    if (e.isNull()) {
         return;
+    }
 
     // parse -contents- attributes
-    if (e.hasAttribute(QStringLiteral("author")))
+    if (e.hasAttribute(QStringLiteral("author"))) {
         m_author = e.attribute(QStringLiteral("author"));
-    if (e.hasAttribute(QStringLiteral("contents")))
+    }
+    if (e.hasAttribute(QStringLiteral("contents"))) {
         m_contents = e.attribute(QStringLiteral("contents"));
-    if (e.hasAttribute(QStringLiteral("uniqueName")))
+    }
+    if (e.hasAttribute(QStringLiteral("uniqueName"))) {
         m_uniqueName = e.attribute(QStringLiteral("uniqueName"));
-    if (e.hasAttribute(QStringLiteral("modifyDate")))
+    }
+    if (e.hasAttribute(QStringLiteral("modifyDate"))) {
         m_modifyDate = QDateTime::fromString(e.attribute(QStringLiteral("modifyDate")), Qt::ISODate);
-    if (e.hasAttribute(QStringLiteral("creationDate")))
+    }
+    if (e.hasAttribute(QStringLiteral("creationDate"))) {
         m_creationDate = QDateTime::fromString(e.attribute(QStringLiteral("creationDate")), Qt::ISODate);
+    }
 
     // parse -other- attributes
-    if (e.hasAttribute(QStringLiteral("flags")))
+    if (e.hasAttribute(QStringLiteral("flags"))) {
         m_flags = e.attribute(QStringLiteral("flags")).toInt();
-    if (e.hasAttribute(QStringLiteral("color")))
+    }
+    if (e.hasAttribute(QStringLiteral("color"))) {
         m_style.setColor(QColor(e.attribute(QStringLiteral("color"))));
-    if (e.hasAttribute(QStringLiteral("opacity")))
+    }
+    if (e.hasAttribute(QStringLiteral("opacity"))) {
         m_style.setOpacity(e.attribute(QStringLiteral("opacity")).toDouble());
+    }
 
     // parse -the-subnodes- (describing Style, Window, Revision(s) structures)
     // Note: all subnodes if present must be 'attributes complete'
@@ -1013,8 +1043,9 @@ void AnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     QDomNode revNode = node.firstChild();
     for (; revNode.isElement(); revNode = revNode.nextSibling()) {
         QDomElement revElement = revNode.toElement();
-        if (revElement.tagName() != QLatin1String("revision"))
+        if (revElement.tagName() != QLatin1String("revision")) {
             continue;
+        }
 
         // compile the Revision structure crating annotation
         Annotation::Revision revision;
@@ -1023,8 +1054,9 @@ void AnnotationPrivate::setAnnotationProperties(const QDomNode &node)
         revision.setAnnotation(AnnotationUtils::createAnnotation(revElement));
 
         // if annotation is valid, add revision to internal list
-        if (revision.annotation())
+        if (revision.annotation()) {
             m_revisions.append(revision);
+        }
     }
 
     m_transformedBoundary = m_boundary;
@@ -1149,8 +1181,9 @@ int TextAnnotation::inplaceAlignment() const
 
 void TextAnnotation::setInplaceCallout(const NormalizedPoint &point, int index)
 {
-    if (index < 0 || index > 2)
+    if (index < 0 || index > 2) {
         return;
+    }
 
     Q_D(TextAnnotation);
     d->m_inplaceCallout[index] = point;
@@ -1158,8 +1191,9 @@ void TextAnnotation::setInplaceCallout(const NormalizedPoint &point, int index)
 
 NormalizedPoint TextAnnotation::inplaceCallout(int index) const
 {
-    if (index < 0 || index > 2)
+    if (index < 0 || index > 2) {
         return NormalizedPoint();
+    }
 
     Q_D(const TextAnnotation);
     return d->m_inplaceCallout[index];
@@ -1167,8 +1201,9 @@ NormalizedPoint TextAnnotation::inplaceCallout(int index) const
 
 NormalizedPoint TextAnnotation::transformedInplaceCallout(int index) const
 {
-    if (index < 0 || index > 2)
+    if (index < 0 || index > 2) {
         return NormalizedPoint();
+    }
 
     Q_D(const TextAnnotation);
     return d->m_transformedInplaceCallout[index];
@@ -1202,18 +1237,24 @@ void TextAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(textElement);
 
     // store the optional attributes
-    if (d->m_textType != Linked)
+    if (d->m_textType != Linked) {
         textElement.setAttribute(QStringLiteral("type"), (int)d->m_textType);
-    if (!d->m_textIcon.isEmpty())
+    }
+    if (!d->m_textIcon.isEmpty()) {
         textElement.setAttribute(QStringLiteral("icon"), d->m_textIcon);
-    if (d->m_textFont != QApplication::font())
+    }
+    if (d->m_textFont != QApplication::font()) {
         textElement.setAttribute(QStringLiteral("font"), d->m_textFont.toString());
-    if (d->m_textColor.isValid())
+    }
+    if (d->m_textColor.isValid()) {
         textElement.setAttribute(QStringLiteral("fontColor"), d->m_textColor.name());
-    if (d->m_inplaceAlign)
+    }
+    if (d->m_inplaceAlign) {
         textElement.setAttribute(QStringLiteral("align"), d->m_inplaceAlign);
-    if (d->m_inplaceIntent != Unknown)
+    }
+    if (d->m_inplaceIntent != Unknown) {
         textElement.setAttribute(QStringLiteral("intent"), (int)d->m_inplaceIntent);
+    }
 
     // Sub-Node - callout
     if (d->m_inplaceCallout[0].x != 0.0) {
@@ -1284,22 +1325,29 @@ void TextAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("text"))
+        if (e.tagName() != QLatin1String("text")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("type")))
+        if (e.hasAttribute(QStringLiteral("type"))) {
             m_textType = (TextAnnotation::TextType)e.attribute(QStringLiteral("type")).toInt();
-        if (e.hasAttribute(QStringLiteral("icon")))
+        }
+        if (e.hasAttribute(QStringLiteral("icon"))) {
             m_textIcon = e.attribute(QStringLiteral("icon"));
-        if (e.hasAttribute(QStringLiteral("font")))
+        }
+        if (e.hasAttribute(QStringLiteral("font"))) {
             m_textFont.fromString(e.attribute(QStringLiteral("font")));
-        if (e.hasAttribute(QStringLiteral("fontColor")))
+        }
+        if (e.hasAttribute(QStringLiteral("fontColor"))) {
             m_textColor = QColor(e.attribute(QStringLiteral("fontColor")));
-        if (e.hasAttribute(QStringLiteral("align")))
+        }
+        if (e.hasAttribute(QStringLiteral("align"))) {
             m_inplaceAlign = e.attribute(QStringLiteral("align")).toInt();
-        if (e.hasAttribute(QStringLiteral("intent")))
+        }
+        if (e.hasAttribute(QStringLiteral("intent"))) {
             m_inplaceIntent = (TextAnnotation::InplaceIntent)e.attribute(QStringLiteral("intent")).toInt();
+        }
 
         // parse the subnodes
         QDomNode eSubNode = e.firstChild();
@@ -1323,8 +1371,9 @@ void TextAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
         break;
     }
 
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 3; ++i) {
         m_transformedInplaceCallout[i] = m_inplaceCallout[i];
+    }
 }
 
 bool TextAnnotationPrivate::canBeResized() const
@@ -1521,22 +1570,30 @@ void LineAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(lineElement);
 
     // store the attributes
-    if (d->m_lineStartStyle != None)
+    if (d->m_lineStartStyle != None) {
         lineElement.setAttribute(QStringLiteral("startStyle"), (int)d->m_lineStartStyle);
-    if (d->m_lineEndStyle != None)
+    }
+    if (d->m_lineEndStyle != None) {
         lineElement.setAttribute(QStringLiteral("endStyle"), (int)d->m_lineEndStyle);
-    if (d->m_lineClosed)
+    }
+    if (d->m_lineClosed) {
         lineElement.setAttribute(QStringLiteral("closed"), d->m_lineClosed);
-    if (d->m_lineInnerColor.isValid())
+    }
+    if (d->m_lineInnerColor.isValid()) {
         lineElement.setAttribute(QStringLiteral("innerColor"), d->m_lineInnerColor.name());
-    if (d->m_lineLeadingFwdPt != 0.0)
+    }
+    if (d->m_lineLeadingFwdPt != 0.0) {
         lineElement.setAttribute(QStringLiteral("leadFwd"), QString::number(d->m_lineLeadingFwdPt));
-    if (d->m_lineLeadingBackPt != 0.0)
+    }
+    if (d->m_lineLeadingBackPt != 0.0) {
         lineElement.setAttribute(QStringLiteral("leadBack"), QString::number(d->m_lineLeadingBackPt));
-    if (d->m_lineShowCaption)
+    }
+    if (d->m_lineShowCaption) {
         lineElement.setAttribute(QStringLiteral("showCaption"), d->m_lineShowCaption);
-    if (d->m_lineIntent != Unknown)
+    }
+    if (d->m_lineIntent != Unknown) {
         lineElement.setAttribute(QStringLiteral("intent"), d->m_lineIntent);
+    }
 
     // append the list of points
     int points = d->m_linePoints.count();
@@ -1558,8 +1615,9 @@ void LineAnnotationPrivate::transform(const QTransform &matrix)
     AnnotationPrivate::transform(matrix);
 
     QMutableLinkedListIterator<NormalizedPoint> it(m_transformedLinePoints);
-    while (it.hasNext())
+    while (it.hasNext()) {
         it.next().transform(matrix);
+    }
 }
 
 void LineAnnotationPrivate::baseTransform(const QTransform &matrix)
@@ -1567,8 +1625,9 @@ void LineAnnotationPrivate::baseTransform(const QTransform &matrix)
     AnnotationPrivate::baseTransform(matrix);
 
     QMutableLinkedListIterator<NormalizedPoint> it(m_linePoints);
-    while (it.hasNext())
+    while (it.hasNext()) {
         it.next().transform(matrix);
+    }
 }
 
 void LineAnnotationPrivate::resetTransformation()
@@ -1599,26 +1658,35 @@ void LineAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("line"))
+        if (e.tagName() != QLatin1String("line")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("startStyle")))
+        if (e.hasAttribute(QStringLiteral("startStyle"))) {
             m_lineStartStyle = (LineAnnotation::TermStyle)e.attribute(QStringLiteral("startStyle")).toInt();
-        if (e.hasAttribute(QStringLiteral("endStyle")))
+        }
+        if (e.hasAttribute(QStringLiteral("endStyle"))) {
             m_lineEndStyle = (LineAnnotation::TermStyle)e.attribute(QStringLiteral("endStyle")).toInt();
-        if (e.hasAttribute(QStringLiteral("closed")))
+        }
+        if (e.hasAttribute(QStringLiteral("closed"))) {
             m_lineClosed = e.attribute(QStringLiteral("closed")).toInt();
-        if (e.hasAttribute(QStringLiteral("innerColor")))
+        }
+        if (e.hasAttribute(QStringLiteral("innerColor"))) {
             m_lineInnerColor = QColor(e.attribute(QStringLiteral("innerColor")));
-        if (e.hasAttribute(QStringLiteral("leadFwd")))
+        }
+        if (e.hasAttribute(QStringLiteral("leadFwd"))) {
             m_lineLeadingFwdPt = e.attribute(QStringLiteral("leadFwd")).toDouble();
-        if (e.hasAttribute(QStringLiteral("leadBack")))
+        }
+        if (e.hasAttribute(QStringLiteral("leadBack"))) {
             m_lineLeadingBackPt = e.attribute(QStringLiteral("leadBack")).toDouble();
-        if (e.hasAttribute(QStringLiteral("showCaption")))
+        }
+        if (e.hasAttribute(QStringLiteral("showCaption"))) {
             m_lineShowCaption = e.attribute(QStringLiteral("showCaption")).toInt();
-        if (e.hasAttribute(QStringLiteral("intent")))
+        }
+        if (e.hasAttribute(QStringLiteral("intent"))) {
             m_lineIntent = (LineAnnotation::LineIntent)e.attribute(QStringLiteral("intent")).toInt();
+        }
 
         // parse all 'point' subnodes
         QDomNode pointNode = e.firstChild();
@@ -1626,8 +1694,9 @@ void LineAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
             QDomElement pe = pointNode.toElement();
             pointNode = pointNode.nextSibling();
 
-            if (pe.tagName() != QLatin1String("point"))
+            if (pe.tagName() != QLatin1String("point")) {
                 continue;
+            }
 
             NormalizedPoint p;
             p.x = pe.attribute(QStringLiteral("x"), QStringLiteral("0.0")).toDouble();
@@ -1651,16 +1720,19 @@ double LineAnnotationPrivate::distanceSqr(double x, double y, double xScale, dou
 {
     QLinkedList<NormalizedPoint> transformedLinePoints = m_transformedLinePoints;
 
-    if (m_lineClosed) // Close the path
+    if (m_lineClosed) { // Close the path
         transformedLinePoints.append(transformedLinePoints.first());
+    }
 
     if (m_lineInnerColor.isValid()) {
         QPolygonF polygon;
-        for (const NormalizedPoint &p : qAsConst(transformedLinePoints))
+        for (const NormalizedPoint &p : qAsConst(transformedLinePoints)) {
             polygon.append(QPointF(p.x, p.y));
+        }
 
-        if (polygon.containsPoint(QPointF(x, y), Qt::WindingFill))
+        if (polygon.containsPoint(QPointF(x, y), Qt::WindingFill)) {
             return 0;
+        }
     }
 
     return strokeDistance(::distanceSqr(x, y, xScale, yScale, transformedLinePoints), m_style.width() * xScale / (m_page->m_width * 2));
@@ -1739,10 +1811,12 @@ void GeomAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(geomElement);
 
     // append the optional attributes
-    if (d->m_geomType != InscribedSquare)
+    if (d->m_geomType != InscribedSquare) {
         geomElement.setAttribute(QStringLiteral("type"), (int)d->m_geomType);
-    if (d->m_geomInnerColor.isValid())
+    }
+    if (d->m_geomInnerColor.isValid()) {
         geomElement.setAttribute(QStringLiteral("color"), d->m_geomInnerColor.name());
+    }
 }
 
 void GeomAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
@@ -1753,17 +1827,21 @@ void GeomAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("geom"))
+        if (e.tagName() != QLatin1String("geom")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("type")))
+        if (e.hasAttribute(QStringLiteral("type"))) {
             m_geomType = (GeomAnnotation::GeomType)e.attribute(QStringLiteral("type")).toInt();
-        if (e.hasAttribute(QStringLiteral("color")))
+        }
+        if (e.hasAttribute(QStringLiteral("color"))) {
             m_geomInnerColor = QColor(e.attribute(QStringLiteral("color")));
+        }
         // compatibility
-        if (e.hasAttribute(QStringLiteral("width")))
+        if (e.hasAttribute(QStringLiteral("width"))) {
             m_style.setWidth(e.attribute(QStringLiteral("width")).toInt());
+        }
 
         // loading complete
         break;
@@ -1807,10 +1885,11 @@ double GeomAnnotationPrivate::distanceSqr(double x, double y, double xScale, dou
 
         // if the ellipse is filled, we treat all points within as "on" it
         if (lambda > 1) {
-            if (m_geomInnerColor.isValid())
+            if (m_geomInnerColor.isValid()) {
                 return 0;
-            else
+            } else {
                 withinShape = true;
+            }
         }
 
         // otherwise we calculate the squared distance from the projected point on the ellipse
@@ -1824,8 +1903,9 @@ double GeomAnnotationPrivate::distanceSqr(double x, double y, double xScale, dou
 
     case GeomAnnotation::InscribedSquare:
         // if the square is filled, only check the bounding box
-        if (m_geomInnerColor.isValid())
+        if (m_geomInnerColor.isValid()) {
             return AnnotationPrivate::distanceSqr(x, y, xScale, yScale);
+        }
 
         QLinkedList<NormalizedPoint> edges;
         edges << NormalizedPoint(m_transformedBoundary.left, m_transformedBoundary.top);
@@ -1835,13 +1915,15 @@ double GeomAnnotationPrivate::distanceSqr(double x, double y, double xScale, dou
         edges << NormalizedPoint(m_transformedBoundary.left, m_transformedBoundary.top);
         distance = ::distanceSqr(x, y, xScale, yScale, edges);
 
-        if (m_transformedBoundary.contains(x, y))
+        if (m_transformedBoundary.contains(x, y)) {
             withinShape = true;
+        }
 
         break;
     }
-    if (withinShape)
+    if (withinShape) {
         distance = strokeDistance(distance, m_style.width() * xScale / m_page->m_width);
+    }
 
     return distance;
 }
@@ -1880,32 +1962,36 @@ HighlightAnnotation::Quad::Quad(const Quad &other)
 
 HighlightAnnotation::Quad &HighlightAnnotation::Quad::operator=(const Quad &other)
 {
-    if (this != &other)
+    if (this != &other) {
         *d = *other.d;
+    }
 
     return *this;
 }
 
 void HighlightAnnotation::Quad::setPoint(const NormalizedPoint &point, int index)
 {
-    if (index < 0 || index > 3)
+    if (index < 0 || index > 3) {
         return;
+    }
 
     d->m_points[index] = point;
 }
 
 NormalizedPoint HighlightAnnotation::Quad::point(int index) const
 {
-    if (index < 0 || index > 3)
+    if (index < 0 || index > 3) {
         return NormalizedPoint();
+    }
 
     return d->m_points[index];
 }
 
 NormalizedPoint HighlightAnnotation::Quad::transformedPoint(int index) const
 {
-    if (index < 0 || index > 3)
+    if (index < 0 || index > 3) {
         return NormalizedPoint();
+    }
 
     return d->m_transformedPoints[index];
 }
@@ -2016,10 +2102,12 @@ void HighlightAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(hlElement);
 
     // append the optional attributes
-    if (d->m_highlightType != Highlight)
+    if (d->m_highlightType != Highlight) {
         hlElement.setAttribute(QStringLiteral("type"), (int)d->m_highlightType);
-    if (d->m_highlightQuads.count() < 1)
+    }
+    if (d->m_highlightQuads.count() < 1) {
         return;
+    }
     // append highlight quads, all children describe quads
     QList<Quad>::const_iterator it = d->m_highlightQuads.begin(), end = d->m_highlightQuads.end();
     for (; it != end; ++it) {
@@ -2034,10 +2122,12 @@ void HighlightAnnotation::store(QDomNode &node, QDomDocument &document) const
         quadElement.setAttribute(QStringLiteral("cy"), QString::number(q.point(2).y));
         quadElement.setAttribute(QStringLiteral("dx"), QString::number(q.point(3).x));
         quadElement.setAttribute(QStringLiteral("dy"), QString::number(q.point(3).y));
-        if (q.capStart())
+        if (q.capStart()) {
             quadElement.setAttribute(QStringLiteral("start"), 1);
-        if (q.capEnd())
+        }
+        if (q.capEnd()) {
             quadElement.setAttribute(QStringLiteral("end"), 1);
+        }
         quadElement.setAttribute(QStringLiteral("feather"), QString::number(q.feather()));
     }
 }
@@ -2052,8 +2142,9 @@ void HighlightAnnotationPrivate::transform(const QTransform &matrix)
     AnnotationPrivate::transform(matrix);
 
     QMutableListIterator<HighlightAnnotation::Quad> it(m_highlightQuads);
-    while (it.hasNext())
+    while (it.hasNext()) {
         it.next().transform(matrix);
+    }
 }
 
 void HighlightAnnotationPrivate::baseTransform(const QTransform &matrix)
@@ -2061,8 +2152,9 @@ void HighlightAnnotationPrivate::baseTransform(const QTransform &matrix)
     AnnotationPrivate::baseTransform(matrix);
 
     QMutableListIterator<HighlightAnnotation::Quad> it(m_highlightQuads);
-    while (it.hasNext())
+    while (it.hasNext()) {
         it.next().transform(matrix);
+    }
 }
 
 void HighlightAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
@@ -2075,19 +2167,22 @@ void HighlightAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("hl"))
+        if (e.tagName() != QLatin1String("hl")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("type")))
+        if (e.hasAttribute(QStringLiteral("type"))) {
             m_highlightType = (HighlightAnnotation::HighlightType)e.attribute(QStringLiteral("type")).toInt();
+        }
 
         // parse all 'quad' subnodes
         QDomNode quadNode = e.firstChild();
         for (; quadNode.isElement(); quadNode = quadNode.nextSibling()) {
             QDomElement qe = quadNode.toElement();
-            if (qe.tagName() != QLatin1String("quad"))
+            if (qe.tagName() != QLatin1String("quad")) {
                 continue;
+            }
 
             HighlightAnnotation::Quad q;
             q.setPoint(NormalizedPoint(qe.attribute(QStringLiteral("ax"), QStringLiteral("0.0")).toDouble(), qe.attribute(QStringLiteral("ay"), QStringLiteral("0.0")).toDouble()), 0);
@@ -2129,14 +2224,16 @@ double HighlightAnnotationPrivate::distanceSqr(double x, double y, double xScale
             directionVote += (isLeftOfVector(pathPoints.back(), thisPoint, point)) ? 1 : -1;
             pathPoints << thisPoint;
         }
-        if (abs(directionVote) == 4)
+        if (abs(directionVote) == 4) {
             return 0;
+        }
 
         // if that's not the case, we treat the outline as path and simply determine
         // the distance from the path to the point
         const double thisOutsideDistance = ::distanceSqr(x, y, xScale, yScale, pathPoints);
-        if (thisOutsideDistance < outsideDistance)
+        if (thisOutsideDistance < outsideDistance) {
             outsideDistance = thisOutsideDistance;
+        }
     }
 
     return outsideDistance;
@@ -2201,8 +2298,9 @@ void StampAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(stampElement);
 
     // append the optional attributes
-    if (d->m_stampIconName != QLatin1String("Draft"))
+    if (d->m_stampIconName != QLatin1String("Draft")) {
         stampElement.setAttribute(QStringLiteral("icon"), d->m_stampIconName);
+    }
 }
 
 void StampAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
@@ -2214,12 +2312,14 @@ void StampAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("stamp"))
+        if (e.tagName() != QLatin1String("stamp")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("icon")))
+        if (e.hasAttribute(QStringLiteral("icon"))) {
             m_stampIconName = e.attribute(QStringLiteral("icon"));
+        }
 
         // loading complete
         break;
@@ -2306,8 +2406,9 @@ void InkAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(inkElement);
 
     // append the optional attributes
-    if (d->m_inkPaths.count() < 1)
+    if (d->m_inkPaths.count() < 1) {
         return;
+    }
 
     QList<QLinkedList<NormalizedPoint>>::const_iterator pIt = d->m_inkPaths.begin(), pEnd = d->m_inkPaths.end();
     for (; pIt != pEnd; ++pIt) {
@@ -2330,8 +2431,9 @@ double InkAnnotationPrivate::distanceSqr(double x, double y, double xScale, doub
     double distance = DBL_MAX;
     for (const QLinkedList<NormalizedPoint> &path : m_transformedInkPaths) {
         const double thisDistance = ::distanceSqr(x, y, xScale, yScale, path);
-        if (thisDistance < distance)
+        if (thisDistance < distance) {
             distance = thisDistance;
+        }
     }
     return strokeDistance(distance, m_style.width() * xScale / (m_page->m_width * 2));
 }
@@ -2342,8 +2444,9 @@ void InkAnnotationPrivate::transform(const QTransform &matrix)
 
     for (int i = 0; i < m_transformedInkPaths.count(); ++i) {
         QMutableLinkedListIterator<NormalizedPoint> it(m_transformedInkPaths[i]);
-        while (it.hasNext())
+        while (it.hasNext()) {
             it.next().transform(matrix);
+        }
     }
 }
 
@@ -2353,8 +2456,9 @@ void InkAnnotationPrivate::baseTransform(const QTransform &matrix)
 
     for (int i = 0; i < m_inkPaths.count(); ++i) {
         QMutableLinkedListIterator<NormalizedPoint> it(m_inkPaths[i]);
-        while (it.hasNext())
+        while (it.hasNext()) {
             it.next().transform(matrix);
+        }
     }
 }
 
@@ -2389,8 +2493,9 @@ void InkAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("ink"))
+        if (e.tagName() != QLatin1String("ink")) {
             continue;
+        }
 
         // parse the 'path' subnodes
         QDomNode pathNode = e.firstChild();
@@ -2398,8 +2503,9 @@ void InkAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
             QDomElement pathElement = pathNode.toElement();
             pathNode = pathNode.nextSibling();
 
-            if (pathElement.tagName() != QLatin1String("path"))
+            if (pathElement.tagName() != QLatin1String("path")) {
                 continue;
+            }
 
             // build each path parsing 'point' subnodes
             QLinkedList<NormalizedPoint> path;
@@ -2408,8 +2514,9 @@ void InkAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
                 QDomElement pointElement = pointNode.toElement();
                 pointNode = pointNode.nextSibling();
 
-                if (pointElement.tagName() != QLatin1String("point"))
+                if (pointElement.tagName() != QLatin1String("point")) {
                     continue;
+                }
 
                 NormalizedPoint p;
                 p.x = pointElement.attribute(QStringLiteral("x"), QStringLiteral("0.0")).toDouble();
@@ -2418,8 +2525,9 @@ void InkAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
             }
 
             // add the path to the path list if it contains at least 2 nodes
-            if (path.count() >= 2)
+            if (path.count() >= 2) {
                 m_inkPaths.append(path);
+            }
         }
 
         // loading complete
@@ -2464,10 +2572,11 @@ static QString caretSymbolToString(CaretAnnotation::CaretSymbol symbol)
 
 static CaretAnnotation::CaretSymbol caretSymbolFromString(const QString &symbol)
 {
-    if (symbol == QLatin1String("None"))
+    if (symbol == QLatin1String("None")) {
         return CaretAnnotation::None;
-    else if (symbol == QLatin1String("P"))
+    } else if (symbol == QLatin1String("P")) {
         return CaretAnnotation::P;
+    }
     return CaretAnnotation::None;
 }
 
@@ -2480,12 +2589,14 @@ void CaretAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("caret"))
+        if (e.tagName() != QLatin1String("caret")) {
             continue;
+        }
 
         // parse the attributes
-        if (e.hasAttribute(QStringLiteral("symbol")))
+        if (e.hasAttribute(QStringLiteral("symbol"))) {
             m_symbol = caretSymbolFromString(e.attribute(QStringLiteral("symbol")));
+        }
 
         // loading complete
         break;
@@ -2539,8 +2650,9 @@ void CaretAnnotation::store(QDomNode &node, QDomDocument &document) const
     node.appendChild(caretElement);
 
     // append the optional attributes
-    if (d->m_symbol != None)
+    if (d->m_symbol != None) {
         caretElement.setAttribute(QStringLiteral("symbol"), caretSymbolToString(d->m_symbol));
+    }
 }
 
 /** FileAttachmentAnnotation [Annotation] */
@@ -2576,8 +2688,9 @@ void FileAttachmentAnnotationPrivate::setAnnotationProperties(const QDomNode &no
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("fileattachment"))
+        if (e.tagName() != QLatin1String("fileattachment")) {
             continue;
+        }
 
         // loading complete
         break;
@@ -2675,8 +2788,9 @@ void SoundAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("sound"))
+        if (e.tagName() != QLatin1String("sound")) {
             continue;
+        }
 
         // loading complete
         break;
@@ -2772,8 +2886,9 @@ void MovieAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("movie"))
+        if (e.tagName() != QLatin1String("movie")) {
             continue;
+        }
 
         // loading complete
         break;
@@ -2861,8 +2976,9 @@ void ScreenAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("screen"))
+        if (e.tagName() != QLatin1String("screen")) {
             continue;
+        }
 
         // loading complete
         break;
@@ -2906,8 +3022,9 @@ Annotation::SubType ScreenAnnotation::subType() const
 void ScreenAnnotation::setAdditionalAction(AdditionalActionType type, Action *action)
 {
     Q_D(ScreenAnnotation);
-    if (d->m_additionalActions.contains(type))
+    if (d->m_additionalActions.contains(type)) {
         delete d->m_additionalActions.value(type);
+    }
 
     d->m_additionalActions.insert(type, action);
 }
@@ -2915,10 +3032,11 @@ void ScreenAnnotation::setAdditionalAction(AdditionalActionType type, Action *ac
 Action *ScreenAnnotation::additionalAction(AdditionalActionType type) const
 {
     Q_D(const ScreenAnnotation);
-    if (!d->m_additionalActions.contains(type))
+    if (!d->m_additionalActions.contains(type)) {
         return nullptr;
-    else
+    } else {
         return d->m_additionalActions.value(type);
+    }
 }
 
 void ScreenAnnotation::setAction(Action *action)
@@ -2961,8 +3079,9 @@ void WidgetAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("widget"))
+        if (e.tagName() != QLatin1String("widget")) {
             continue;
+        }
 
         // loading complete
         break;
@@ -3006,8 +3125,9 @@ Annotation::SubType WidgetAnnotation::subType() const
 void WidgetAnnotation::setAdditionalAction(AdditionalActionType type, Action *action)
 {
     Q_D(WidgetAnnotation);
-    if (d->m_additionalActions.contains(type))
+    if (d->m_additionalActions.contains(type)) {
         delete d->m_additionalActions.value(type);
+    }
 
     d->m_additionalActions.insert(type, action);
 }
@@ -3015,10 +3135,11 @@ void WidgetAnnotation::setAdditionalAction(AdditionalActionType type, Action *ac
 Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
 {
     Q_D(const WidgetAnnotation);
-    if (!d->m_additionalActions.contains(type))
+    if (!d->m_additionalActions.contains(type)) {
         return nullptr;
-    else
+    } else {
         return d->m_additionalActions.value(type);
+    }
 }
 
 /** RichMediaAnnotation [Annotation] */
@@ -3057,8 +3178,9 @@ void RichMediaAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
     while (subNode.isElement()) {
         QDomElement e = subNode.toElement();
         subNode = subNode.nextSibling();
-        if (e.tagName() != QLatin1String("richMedia"))
+        if (e.tagName() != QLatin1String("richMedia")) {
             continue;
+        }
 
         // loading complete
         break;

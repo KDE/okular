@@ -55,16 +55,18 @@ float Length::convertToMM(const QString &distance, bool *ok)
     // the value. Store the number of mm per unit in 'MMperUnit'.
     for (int i = 0; MMperUnit == 0.0 && distanceUnitTable[i].name != nullptr; i++) {
         unitPos = distance.lastIndexOf(QString::fromLocal8Bit(distanceUnitTable[i].name));
-        if (unitPos != -1)
+        if (unitPos != -1) {
             MMperUnit = distanceUnitTable[i].mmPerUnit;
+        }
     }
 
     // If no unit has been found -> error message, set *ok to false and
     // return 0.0.
     if (MMperUnit == 0.0) {
         qCCritical(OkularDviShellDebug) << "distance::convertToMM: no known unit found in the string '" << distance << "'." << endl;
-        if (ok)
+        if (ok) {
             *ok = false;
+        }
         return 0.0;
     }
 

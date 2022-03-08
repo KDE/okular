@@ -59,8 +59,9 @@ static KJSObject eventGetSource(KJSContext *ctx, void *object)
     const Event *event = reinterpret_cast<Event *>(object);
     if (event->eventType() == Event::FieldCalculate) {
         FormField *src = event->source();
-        if (src)
+        if (src) {
             return JSField::wrapField(ctx, src, event->sourcePage());
+        }
     }
     return KJSUndefined();
 }
@@ -76,8 +77,9 @@ static KJSObject eventGetTarget(KJSContext *ctx, void *object)
     case Event::FieldFocus:
     case Event::FieldValidate: {
         FormField *target = static_cast<FormField *>(event->target());
-        if (target)
+        if (target) {
             return JSField::wrapField(ctx, target, event->targetPage());
+        }
         break;
     }
     default: {
@@ -124,12 +126,14 @@ static KJSObject eventGetWillCommit(KJSContext *, void *object)
 void JSEvent::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
-    if (!g_eventProto)
+    if (!g_eventProto) {
         g_eventProto = new KJSPrototype();
+    }
 
     g_eventProto->defineProperty(ctx, QStringLiteral("name"), eventGetName);
     g_eventProto->defineProperty(ctx, QStringLiteral("type"), eventGetType);

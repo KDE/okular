@@ -127,8 +127,9 @@ void pageSize::setPageSize(double width, double height)
 
     rectifySizes();
     reconstructCurrentSize();
-    if (!isNearlyEqual(oldPage))
+    if (!isNearlyEqual(oldPage)) {
         emit sizeChanged(*this);
+    }
 }
 
 void pageSize::setPageSize(const QString &width, const QString &_widthUnits, const QString &height, const QString &_heightUnits)
@@ -144,10 +145,12 @@ void pageSize::setPageSize(const QString &width, const QString &_widthUnits, con
         widthUnits = QStringLiteral("mm");
     }
     pageWidth.setLength_in_mm(w);
-    if (widthUnits == QLatin1String("cm"))
+    if (widthUnits == QLatin1String("cm")) {
         pageWidth.setLength_in_cm(w);
-    if (widthUnits == QLatin1String("in"))
+    }
+    if (widthUnits == QLatin1String("in")) {
         pageWidth.setLength_in_inch(w);
+    }
 
     QString heightUnits = _heightUnits;
     if ((heightUnits != QLatin1String("cm")) && (heightUnits != QLatin1String("mm")) && (heightUnits != QLatin1String("in"))) {
@@ -155,54 +158,66 @@ void pageSize::setPageSize(const QString &width, const QString &_widthUnits, con
         heightUnits = QStringLiteral("mm");
     }
     pageHeight.setLength_in_mm(h);
-    if (heightUnits == QLatin1String("cm"))
+    if (heightUnits == QLatin1String("cm")) {
         pageHeight.setLength_in_cm(h);
-    if (heightUnits == QLatin1String("in"))
+    }
+    if (heightUnits == QLatin1String("in")) {
         pageHeight.setLength_in_inch(h);
+    }
 
     rectifySizes();
     reconstructCurrentSize();
-    if (!isNearlyEqual(oldPage))
+    if (!isNearlyEqual(oldPage)) {
         emit sizeChanged(*this);
+    }
 }
 
 void pageSize::rectifySizes()
 {
     // Now do some sanity checks to make sure that values are not
     // outrageous. We allow values between 5cm and 50cm.
-    if (pageWidth.getLength_in_mm() < 50)
+    if (pageWidth.getLength_in_mm() < 50) {
         pageWidth.setLength_in_mm(50.0);
-    if (pageWidth.getLength_in_mm() > 1200)
+    }
+    if (pageWidth.getLength_in_mm() > 1200) {
         pageWidth.setLength_in_mm(1200);
-    if (pageHeight.getLength_in_mm() < 50)
+    }
+    if (pageHeight.getLength_in_mm() < 50) {
         pageHeight.setLength_in_mm(50);
-    if (pageHeight.getLength_in_mm() > 1200)
+    }
+    if (pageHeight.getLength_in_mm() > 1200) {
         pageHeight.setLength_in_mm(1200);
+    }
     return;
 }
 
 QString pageSize::preferredUnit() const
 {
-    if (currentSize >= 0)
+    if (currentSize >= 0) {
         return QString::fromLocal8Bit(staticList[currentSize].preferredUnit);
+    }
 
     // User-defined size. Give a preferred unit depending on the locale.
-    if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
+    if (QLocale::system().measurementSystem() == QLocale::MetricSystem) {
         return QStringLiteral("mm");
-    else
+    } else {
         return QStringLiteral("in");
+    }
 }
 
 QString pageSize::widthString(const QString &unit) const
 {
     QString answer = QStringLiteral("--");
 
-    if (unit == QLatin1String("cm"))
+    if (unit == QLatin1String("cm")) {
         answer.setNum(pageWidth.getLength_in_cm());
-    if (unit == QLatin1String("mm"))
+    }
+    if (unit == QLatin1String("mm")) {
         answer.setNum(pageWidth.getLength_in_mm());
-    if (unit == QLatin1String("in"))
+    }
+    if (unit == QLatin1String("in")) {
         answer.setNum(pageWidth.getLength_in_inch());
+    }
 
     return answer;
 }
@@ -211,12 +226,15 @@ QString pageSize::heightString(const QString &unit) const
 {
     QString answer = QStringLiteral("--");
 
-    if (unit == QLatin1String("cm"))
+    if (unit == QLatin1String("cm")) {
         answer.setNum(pageHeight.getLength_in_cm());
-    if (unit == QLatin1String("mm"))
+    }
+    if (unit == QLatin1String("mm")) {
         answer.setNum(pageHeight.getLength_in_mm());
-    if (unit == QLatin1String("in"))
+    }
+    if (unit == QLatin1String("in")) {
         answer.setNum(pageHeight.getLength_in_inch());
+    }
 
     return answer;
 }
@@ -225,18 +243,20 @@ QStringList pageSize::pageSizeNames()
 {
     QStringList names;
 
-    for (int i = 0; staticList[i].name != nullptr; i++)
+    for (int i = 0; staticList[i].name != nullptr; i++) {
         names << QString::fromLocal8Bit(staticList[i].name);
+    }
 
     return names;
 }
 
 QString pageSize::formatName() const
 {
-    if (currentSize >= 0)
+    if (currentSize >= 0) {
         return QString::fromLocal8Bit(staticList[currentSize].name);
-    else
+    } else {
         return QString();
+    }
 }
 
 int pageSize::getOrientation() const
@@ -246,10 +266,11 @@ int pageSize::getOrientation() const
         return 0;
     }
 
-    if (pageWidth.getLength_in_mm() == staticList[currentSize].width)
+    if (pageWidth.getLength_in_mm() == staticList[currentSize].width) {
         return 0;
-    else
+    } else {
         return 1;
+    }
 }
 
 void pageSize::setOrientation(int orient)
@@ -271,29 +292,33 @@ void pageSize::setOrientation(int orient)
 
 QString pageSize::serialize() const
 {
-    if ((currentSize >= 0) && (fabs(staticList[currentSize].height - pageHeight.getLength_in_mm()) <= 0.5))
+    if ((currentSize >= 0) && (fabs(staticList[currentSize].height - pageHeight.getLength_in_mm()) <= 0.5)) {
         return QString::fromLocal8Bit(staticList[currentSize].name);
-    else
+    } else {
         return QStringLiteral("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
+    }
 }
 
 QString pageSize::description() const
 {
-    if (!isValid())
+    if (!isValid()) {
         return QString();
+    }
 
     QString size = QStringLiteral(" ");
     if (formatNumber() == -1) {
-        if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
+        if (QLocale::system().measurementSystem() == QLocale::MetricSystem) {
             size += QStringLiteral("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
-        else
+        } else {
             size += QStringLiteral("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
+        }
     } else {
         size += formatName() + QLatin1Char('/');
-        if (getOrientation() == 0)
+        if (getOrientation() == 0) {
             size += i18n("portrait");
-        else
+        } else {
             size += i18n("landscape");
+        }
     }
     return size + QLatin1Char(' ');
 }
@@ -323,8 +348,9 @@ int pageSize::defaultPageSize()
     // FIXME: static_cast<QPrinter::PageSize>(KLocale::global()->pageSize())
     //        is the proper solution here.  Then you can determine the values
     //        without using your hardcoded table too!
-    if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
+    if (QLocale::system().measurementSystem() == QLocale::MetricSystem) {
         return defaultMetricPaperSize;
-    else
+    } else {
         return defaultImperialPaperSize;
+    }
 }

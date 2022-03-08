@@ -58,8 +58,9 @@ void PixmapGenerationThread::run()
     if (mRequest) {
         PixmapRequestPrivate::get(mRequest)->mResultImage = mGenerator->image(mRequest);
 
-        if (mCalcBoundingBox)
+        if (mCalcBoundingBox) {
             mBoundingBox = Utils::imageBoundingBox(&PixmapRequestPrivate::get(mRequest)->mResultImage);
+        }
     }
 }
 

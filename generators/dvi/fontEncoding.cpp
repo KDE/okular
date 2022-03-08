@@ -65,8 +65,9 @@ fontEncoding::fontEncoding(const QString &encName)
         // 'fileContent'
         QTextStream stream(&file);
         QString fileContent;
-        while (!stream.atEnd())
+        while (!stream.atEnd()) {
             fileContent += stream.readLine().section(QLatin1Char('%'), 0, 0); // line of text excluding '\n' until first '%'-sign
+        }
         file.close();
 
         fileContent = fileContent.trimmed();
@@ -88,8 +89,9 @@ fontEncoding::fontEncoding(const QString &encName)
 #endif
             i++;
         }
-        for (; i < 256; i++)
+        for (; i < 256; i++) {
             glyphNameVector[i] = QStringLiteral(".notdef");
+        }
     } else {
         qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
         return;

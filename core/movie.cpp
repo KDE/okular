@@ -65,8 +65,9 @@ Movie::Movie(const QString &fileName, const QByteArray &data)
     if (d->m_tmp->open()) {
         d->m_tmp->write(data);
         d->m_tmp->flush();
-    } else
+    } else {
         qCDebug(OkularCoreDebug) << "Failed to create temporary file for video data.";
+    }
 }
 
 Movie::~Movie()
@@ -77,10 +78,11 @@ Movie::~Movie()
 
 QString Movie::url() const
 {
-    if (d->m_tmp)
+    if (d->m_tmp) {
         return d->m_tmp->fileName();
-    else
+    } else {
         return d->m_url;
+    }
 }
 
 void Movie::setSize(const QSize aspect)

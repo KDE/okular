@@ -14,8 +14,9 @@
 static const QUrl makeUrlFromCwd(const QString &u, const QString &ref = QString())
 {
     QUrl url = QUrl::fromLocalFile(QDir::currentPath() + QLatin1Char('/') + u);
-    if (!ref.isEmpty())
+    if (!ref.isEmpty()) {
         url.setFragment(ref);
+    }
     url.setPath(QDir::cleanPath(url.path()));
     return url;
 }

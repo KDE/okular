@@ -41,8 +41,9 @@ pageInfo::pageInfo(const QString &_PostScriptString)
 
 pageInfo::~pageInfo()
 {
-    if (PostScriptString != nullptr)
+    if (PostScriptString != nullptr) {
         delete PostScriptString;
+    }
 }
 
 // ======================================================
@@ -60,8 +61,9 @@ ghostscript_interface::ghostscript_interface()
 
 ghostscript_interface::~ghostscript_interface()
 {
-    if (PostScriptHeaderString != nullptr)
+    if (PostScriptHeaderString != nullptr) {
         delete PostScriptHeaderString;
+    }
     qDeleteAll(pageList);
 }
 
@@ -74,19 +76,22 @@ void ghostscript_interface::setPostScript(const quint16 page, const QString &Pos
     if (pageList.value(page) == nullptr) {
         pageInfo *info = new pageInfo(PostScript);
         // Check if dict is big enough
-        if (pageList.count() > pageList.capacity() - 2)
+        if (pageList.count() > pageList.capacity() - 2) {
             pageList.reserve(pageList.capacity() * 2);
+        }
         pageList.insert(page, info);
-    } else
+    } else {
         *(pageList.value(page)->PostScriptString) = PostScript;
+    }
 }
 
 void ghostscript_interface::setIncludePath(const QString &_includePath)
 {
-    if (_includePath.isEmpty())
+    if (_includePath.isEmpty()) {
         includePath = QLatin1Char('*'); // Allow all files
-    else
+    } else {
         includePath = _includePath + QStringLiteral("/*");
+    }
 }
 
 void ghostscript_interface::setBackgroundColor(const quint16 page, const QColor &background_color, bool permanent)
@@ -98,16 +103,19 @@ void ghostscript_interface::setBackgroundColor(const quint16 page, const QColor 
     if (pageList.value(page) == nullptr) {
         pageInfo *info = new pageInfo(QString());
         info->background = background_color;
-        if (permanent)
+        if (permanent) {
             info->permanentBackground = background_color;
+        }
         // Check if dict is big enough
-        if (pageList.count() > pageList.capacity() - 2)
+        if (pageList.count() > pageList.capacity() - 2) {
             pageList.reserve(pageList.capacity() * 2);
+        }
         pageList.insert(page, info);
     } else {
         pageList.value(page)->background = background_color;
-        if (permanent)
+        if (permanent) {
             pageList.value(page)->permanentBackground = background_color;
+        }
     }
 }
 
@@ -116,8 +124,9 @@ void ghostscript_interface::restoreBackgroundColor(const quint16 page)
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::restoreBackgroundColor( " << page << " )";
 #endif
-    if (pageList.value(page) == nullptr)
+    if (pageList.value(page) == nullptr) {
         return;
+    }
 
     pageInfo *info = pageList.value(page);
     info->background = info->permanentBackground;
@@ -132,10 +141,11 @@ QColor ghostscript_interface::getBackgroundColor(const quint16 page) const
     qCDebug(OkularDviDebug) << "ghostscript_interface::getBackgroundColor( " << page << " )";
 #endif
 
-    if (pageList.value(page) == nullptr)
+    if (pageList.value(page) == nullptr) {
         return Qt::white;
-    else
+    } else {
         return pageList.value(page)->background;
+    }
 }
 
 void ghostscript_interface::clear()
@@ -203,16 +213,18 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
        // Start page
        << "1 0 bop 0 0 a \n";
 
-    if (!PostScriptHeaderString->toLatin1().isNull())
+    if (!PostScriptHeaderString->toLatin1().isNull()) {
         os << PostScriptHeaderString->toLatin1();
+    }
 
     if (info->background != Qt::white) {
         QString colorCommand = QStringLiteral("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").arg(info->background.red() / 255.0).arg(info->background.green() / 255.0).arg(info->background.blue() / 255.0);
         os << colorCommand.toLatin1();
     }
 
-    if (!info->PostScriptString->isNull())
+    if (!info->PostScriptString->isNull()) {
         os << *(info->PostScriptString);
+    }
 
     os << "end\n"
        << "showpage \n";
@@ -268,13 +280,13 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
                                         << endl;
                 knownDevices.erase(gsDevice);
                 gsDevice = knownDevices.begin();
-                if (knownDevices.isEmpty())
+                if (knownDevices.isEmpty()) {
                     // TODO: show a requestor of some sort.
                     emit error(i18n("The version of Ghostview that is installed on this computer does not contain "
                                     "any of the Ghostview device drivers that are known to Okular. PostScript "
                                     "support has therefore been turned off in Okular."),
                                -1);
-                else {
+                } else {
                     qCDebug(OkularDviDebug) << QStringLiteral("Okular will now try to use the '%1' device driver.").arg(*gsDevice);
                     gs_generate_graphics_file(page, filename, magnification);
                 }
@@ -331,8 +343,9 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const QUrl
         QString path = base.path(); // -> "/bar/foo.dvi"
         QFileInfo fi1(path);
         QFileInfo fi2(fi1.dir(), filename);
-        if (fi2.exists())
+        if (fi2.exists()) {
             return fi2.absoluteFilePath();
+        }
     }
 
     // Otherwise, use kpsewhich to find the eps file.

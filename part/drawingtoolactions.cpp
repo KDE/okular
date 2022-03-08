@@ -137,10 +137,11 @@ void DrawingToolActions::loadTools()
     QDomElement drawingDefinition = doc.createElement(QStringLiteral("drawingTools"));
     for (const QString &drawingXml : drawingTools) {
         QDomDocument entryParser;
-        if (entryParser.setContent(drawingXml))
+        if (entryParser.setContent(drawingXml)) {
             drawingDefinition.appendChild(doc.importNode(entryParser.documentElement(), true));
-        else
+        } else {
             qCWarning(OkularUiDebug) << "Skipping malformed quick selection XML in QuickSelectionTools setting";
+        }
     }
 
     // Create the AnnotationToolItems from the XML dom tree

@@ -126,8 +126,9 @@ static KJSObject consoleShow(KJSContext *, void *, const KJSArguments &)
 void JSConsole::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_consoleProto = new KJSPrototype();

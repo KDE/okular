@@ -43,8 +43,9 @@ static KJSObject displayGetNoPrint(KJSContext *, void *)
 void JSDisplay::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_displayProto = new KJSPrototype();

@@ -85,8 +85,9 @@ PixmapPreviewSelector::~PixmapPreviewSelector()
 void PixmapPreviewSelector::setIcon(const QString &icon)
 {
     int id = m_comboItems->findData(QVariant(icon), Qt::UserRole, Qt::MatchFixedString);
-    if (id == -1)
+    if (id == -1) {
         id = m_comboItems->findText(icon, Qt::MatchFixedString);
+    }
     if (id > -1) {
         m_comboItems->setCurrentIndex(id);
     } else if (m_comboItems->isEditable()) {
@@ -142,8 +143,9 @@ void PixmapPreviewSelector::iconComboChanged(const QString &icon)
 
     QPixmap pixmap = Okular::AnnotationUtils::loadStamp(m_icon, m_previewSize);
     const QRect cr = m_iconLabel->contentsRect();
-    if (pixmap.width() > cr.width() || pixmap.height() > cr.height())
+    if (pixmap.width() > cr.width() || pixmap.height() > cr.height()) {
         pixmap = pixmap.scaled(cr.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
     m_iconLabel->setPixmap(pixmap);
 
     emit iconChanged(m_icon);
@@ -213,8 +215,9 @@ Okular::Annotation::SubType AnnotationWidget::annotationType() const
 
 QWidget *AnnotationWidget::appearanceWidget()
 {
-    if (m_appearanceWidget)
+    if (m_appearanceWidget) {
         return m_appearanceWidget;
+    }
 
     m_appearanceWidget = createAppearanceWidget();
     return m_appearanceWidget;
@@ -222,8 +225,9 @@ QWidget *AnnotationWidget::appearanceWidget()
 
 QWidget *AnnotationWidget::extraWidget()
 {
-    if (m_extraWidget)
+    if (m_extraWidget) {
         return m_extraWidget;
+    }
 
     m_extraWidget = createExtraWidget();
     return m_extraWidget;
@@ -231,10 +235,12 @@ QWidget *AnnotationWidget::extraWidget()
 
 void AnnotationWidget::applyChanges()
 {
-    if (m_colorBn)
+    if (m_colorBn) {
         m_ann->style().setColor(m_colorBn->color());
-    if (m_opacity)
+    }
+    if (m_opacity) {
         m_ann->style().setOpacity((double)m_opacity->value() / 100.0);
+    }
 }
 
 QWidget *AnnotationWidget::createAppearanceWidget()
@@ -295,10 +301,11 @@ void TextAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     if (m_textAnn->textType() == Okular::TextAnnotation::Linked) {
         createPopupNoteStyleUi(widget, formlayout);
     } else if (m_textAnn->textType() == Okular::TextAnnotation::InPlace) {
-        if (isTypewriter())
+        if (isTypewriter()) {
             createTypewriterStyleUi(widget, formlayout);
-        else
+        } else {
             createInlineNoteStyleUi(widget, formlayout);
+        }
     }
 }
 
@@ -483,12 +490,13 @@ LineAnnotationWidget::LineAnnotationWidget(Okular::Annotation *ann)
     : AnnotationWidget(ann)
 {
     m_lineAnn = static_cast<Okular::LineAnnotation *>(ann);
-    if (m_lineAnn->linePoints().count() == 2)
+    if (m_lineAnn->linePoints().count() == 2) {
         m_lineType = 0; // line
-    else if (m_lineAnn->lineClosed())
+    } else if (m_lineAnn->lineClosed()) {
         m_lineType = 1; // polygon
-    else
+    } else {
         m_lineType = 2; // polyline
+    }
 }
 
 void LineAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
@@ -828,10 +836,11 @@ static QString caretSymbolToIcon(Okular::CaretAnnotation::CaretSymbol symbol)
 
 static Okular::CaretAnnotation::CaretSymbol caretSymbolFromIcon(const QString &icon)
 {
-    if (icon == QLatin1String("caret-none"))
+    if (icon == QLatin1String("caret-none")) {
         return Okular::CaretAnnotation::None;
-    else if (icon == QLatin1String("caret-p"))
+    } else if (icon == QLatin1String("caret-p")) {
         return Okular::CaretAnnotation::P;
+    }
     return Okular::CaretAnnotation::None;
 }
 

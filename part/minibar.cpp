@@ -70,8 +70,9 @@ int MiniBarLogic::currentPage() const
 void MiniBarLogic::notifySetup(const QVector<Okular::Page *> &pageVector, int setupFlags)
 {
     // only process data when document changes
-    if (!(setupFlags & Okular::DocumentObserver::DocumentChanged))
+    if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         return;
+    }
 
     // if document is closed or has no pages, hide widget
     const int pages = pageVector.count();
@@ -350,28 +351,32 @@ void ProgressWidget::slotGotoNormalizedPage(float index)
 {
     // figure out page number and go to that page
     int number = (int)(index * (float)m_document->pages());
-    if (number >= 0 && number < (int)m_document->pages() && number != (int)m_document->currentPage())
+    if (number >= 0 && number < (int)m_document->pages() && number != (int)m_document->currentPage()) {
         m_document->setViewportPage(number);
+    }
 }
 
 void ProgressWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    if ((QApplication::mouseButtons() & Qt::LeftButton) && width() > 0)
+    if ((QApplication::mouseButtons() & Qt::LeftButton) && width() > 0) {
         slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->x() : e->x()) / (float)width());
+    }
 }
 
 void ProgressWidget::mousePressEvent(QMouseEvent *e)
 {
-    if (e->button() == Qt::LeftButton && width() > 0)
+    if (e->button() == Qt::LeftButton && width() > 0) {
         slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->x() : e->x()) / (float)width());
+    }
 }
 
 void ProgressWidget::wheelEvent(QWheelEvent *e)
 {
-    if (e->angleDelta().y() > 0)
+    if (e->angleDelta().y() > 0) {
         emit nextPage();
-    else
+    } else {
         emit prevPage();
+    }
 }
 
 void ProgressWidget::paintEvent(QPaintEvent *e)
@@ -390,14 +395,16 @@ void ProgressWidget::paintEvent(QPaintEvent *e)
 
     QPalette pal = palette();
     // paint clear rect
-    if (cRect.isValid())
+    if (cRect.isValid()) {
         p.fillRect(cRect, pal.color(QPalette::Active, QPalette::HighlightedText));
+    }
     // draw a frame-like outline
     // p.setPen( palette().active().mid() );
     // p.drawRect( 0,0, w, h );
     // paint fill rect
-    if (fRect.isValid())
+    if (fRect.isValid()) {
         p.fillRect(fRect, pal.color(QPalette::Active, QPalette::Highlight));
+    }
     if (l && l != w) {
         p.setPen(pal.color(QPalette::Active, QPalette::Highlight).darker(120));
         int delta = QApplication::isRightToLeft() ? w - l : l;
@@ -512,10 +519,11 @@ void PagesEdit::updatePalette()
 {
     QPalette pal;
 
-    if (hasFocus())
+    if (hasFocus()) {
         pal.setColor(QPalette::Active, QPalette::Base, QApplication::palette().color(QPalette::Active, QPalette::Base));
-    else
+    } else {
         pal.setColor(QPalette::Base, QApplication::palette().color(QPalette::Base).darker(102));
+    }
 
     setPalette(pal);
 }
@@ -524,8 +532,9 @@ void PagesEdit::focusInEvent(QFocusEvent *e)
 {
     // select all text
     selectAll();
-    if (e->reason() == Qt::MouseFocusReason)
+    if (e->reason() == Qt::MouseFocusReason) {
         m_eatClick = true;
+    }
     // change background color to the default 'edit' color
     updatePalette();
     // call default handler
@@ -543,17 +552,19 @@ void PagesEdit::focusOutEvent(QFocusEvent *e)
 void PagesEdit::mousePressEvent(QMouseEvent *e)
 {
     // if this click got the focus in, don't process the event
-    if (!m_eatClick)
+    if (!m_eatClick) {
         KLineEdit::mousePressEvent(e);
+    }
     m_eatClick = false;
 }
 
 void PagesEdit::wheelEvent(QWheelEvent *e)
 {
-    if (e->angleDelta().y() > 0)
+    if (e->angleDelta().y() > 0) {
         m_miniBar->slotEmitNextPage();
-    else
+    } else {
         m_miniBar->slotEmitPrevPage();
+    }
 }
 
 /** HoverButton **/

@@ -68,8 +68,9 @@ inline static bool isPaperColor(QRgb argb, QRgb paperColor)
 
 NormalizedRect Utils::imageBoundingBox(const QImage *image)
 {
-    if (!image)
+    if (!image) {
         return NormalizedRect();
+    }
 
     const int width = image->width();
     const int height = image->height();
@@ -82,34 +83,46 @@ NormalizedRect Utils::imageBoundingBox(const QImage *image)
 #endif
 
     // Scan pixels for top non-white
-    for (top = 0; top < height; ++top)
-        for (x = 0; x < width; ++x)
-            if (!isPaperColor(image->pixel(x, top), paperColor))
+    for (top = 0; top < height; ++top) {
+        for (x = 0; x < width; ++x) {
+            if (!isPaperColor(image->pixel(x, top), paperColor)) {
                 goto got_top;
+            }
+        }
+    }
     return NormalizedRect(0, 0, 0, 0); // the image is blank
 got_top:
     left = right = x;
 
     // Scan pixels for bottom non-white
-    for (bottom = height - 1; bottom >= top; --bottom)
-        for (x = width - 1; x >= 0; --x)
-            if (!isPaperColor(image->pixel(x, bottom), paperColor))
+    for (bottom = height - 1; bottom >= top; --bottom) {
+        for (x = width - 1; x >= 0; --x) {
+            if (!isPaperColor(image->pixel(x, bottom), paperColor)) {
                 goto got_bottom;
+            }
+        }
+    }
     Q_ASSERT(0); // image changed?!
 got_bottom:
-    if (x < left)
+    if (x < left) {
         left = x;
-    if (x > right)
+    }
+    if (x > right) {
         right = x;
+    }
 
     // Scan for leftmost and rightmost (we already found some bounds on these):
     for (y = top; y <= bottom && (left > 0 || right < width - 1); ++y) {
-        for (x = 0; x < left; ++x)
-            if (!isPaperColor(image->pixel(x, y), paperColor))
+        for (x = 0; x < left; ++x) {
+            if (!isPaperColor(image->pixel(x, y), paperColor)) {
                 left = x;
-        for (x = width - 1; x > right + 1; --x)
-            if (!isPaperColor(image->pixel(x, y), paperColor))
+            }
+        }
+        for (x = width - 1; x > right + 1; --x) {
+            if (!isPaperColor(image->pixel(x, y), paperColor)) {
                 right = x;
+            }
+        }
     }
 
     NormalizedRect bbox(QRect(left, top, (right - left + 1), (bottom - top + 1)), image->width(), image->height());
@@ -128,8 +141,9 @@ void Okular::copyQIODevice(QIODevice *from, QIODevice *to)
     qint64 written = 0;
     while ((read = from->read(buffer.data(), buffer.size())) > 0) {
         written = to->write(buffer.constData(), read);
-        if (read != written)
+        if (read != written) {
             break;
+        }
     }
 }
 

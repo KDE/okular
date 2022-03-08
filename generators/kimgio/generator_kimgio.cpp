@@ -131,8 +131,9 @@ QImage KIMGIOGenerator::image(Okular::PixmapRequest *request)
     } else {
         int width = request->width();
         int height = request->height();
-        if (request->page()->rotation() % 2 == 1)
+        if (request->page()->rotation() % 2 == 1) {
             qSwap(width, height);
+        }
 
         return m_img.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
@@ -144,9 +145,9 @@ Okular::Document::PrintError KIMGIOGenerator::print(QPrinter &printer)
 
     QImage image(m_img);
 
-    if ((image.width() > printer.width()) || (image.height() > printer.height()))
-
+    if ((image.width() > printer.width()) || (image.height() > printer.height())) {
         image = image.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
 
     p.drawImage(0, 0, image);
 

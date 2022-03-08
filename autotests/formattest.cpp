@@ -55,8 +55,9 @@ void FormatTest::initTestCase()
 
     connect(m_document, &Okular::Document::refreshFormWidget, this, [this](Okular::FormField *form) {
         Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(form);
-        if (fft)
+        if (fft) {
             m_formattedText = fft->text();
+        }
     });
 
     const Okular::Page *page = m_document->page(0);

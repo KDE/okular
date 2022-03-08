@@ -12,8 +12,9 @@ bool HelperXmlHandler_EpubContainer::startElement(const QString &, const QString
     if (qName == QLatin1String("rootfile")) {
         int idx = atts.index(QLatin1String("full-path"));
 
-        if (idx == -1)
+        if (idx == -1) {
             return false;
+        }
 
         contentPath = atts.value(idx);
     }

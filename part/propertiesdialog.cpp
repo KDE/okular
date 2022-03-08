@@ -78,8 +78,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     for (const QString &key : qAsConst(orderedProperties)) {
         const QString titleString = info.getKeyTitle(key);
         const QString valueString = info.get(key);
-        if (titleString.isNull() || valueString.isNull())
+        if (titleString.isNull() || valueString.isNull()) {
             continue;
+        }
 
         // create labels and layout them
         QWidget *value = nullptr;
@@ -227,8 +228,9 @@ void PropertiesDialog::showFontsMenu(const QPoint pos)
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n("Where do you want to save %1?", fi.name());
             const QString path = QFileDialog::getSaveFileName(this, caption, fi.name());
-            if (path.isEmpty())
+            if (path.isEmpty()) {
                 return;
+            }
 
             QFile f(path);
             if (f.open(QIODevice::WriteOnly)) {
@@ -353,8 +355,9 @@ static QString descriptionForEmbedType(Okular::FontInfo::EmbedType type)
 
 QVariant FontsListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= m_fonts.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= m_fonts.count()) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole:
@@ -379,11 +382,13 @@ QVariant FontsListModel::data(const QModelIndex &index, int role) const
         break;
     case Qt::ToolTipRole: {
         QString fontname = m_fonts.at(index.row()).name();
-        if (fontname.isEmpty())
+        if (fontname.isEmpty()) {
             fontname = i18n("Unknown font");
+        }
         QString tooltip = QLatin1String("<html><b>") + fontname + QLatin1String("</b>");
-        if (m_fonts.at(index.row()).embedType() == Okular::FontInfo::NotEmbedded)
+        if (m_fonts.at(index.row()).embedType() == Okular::FontInfo::NotEmbedded) {
             tooltip += QStringLiteral(" (<span style=\"font-family: '%1'\">%2</span>)").arg(fontname, fontname);
+        }
         tooltip += QLatin1String("<br />") + i18n("Embedded: %1", descriptionForEmbedType(m_fonts.at(index.row()).embedType()));
         tooltip += QLatin1String("</html>");
         return tooltip;
@@ -404,14 +409,17 @@ QVariant FontsListModel::data(const QModelIndex &index, int role) const
 
 QVariant FontsListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
-    if (role == Qt::TextAlignmentRole)
+    if (role == Qt::TextAlignmentRole) {
         return QVariant(Qt::AlignLeft);
+    }
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:
@@ -450,20 +458,23 @@ int PageSizesModel::columnCount(const QModelIndex &parent) const
 
 QVariant PageSizesModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= (int)m_document->pages())
+    if (!index.isValid() || index.row() < 0 || index.row() >= (int)m_document->pages()) {
         return QVariant();
+    }
 
     switch (index.column()) {
     case 0: {
-        if (role == Qt::DisplayRole)
+        if (role == Qt::DisplayRole) {
             return index.row() + 1; // Page zero doesn't make sense to the user
-        else if (role == Qt::TextAlignmentRole)
+        } else if (role == Qt::TextAlignmentRole) {
             return Qt::AlignCenter;
+        }
         break;
     }
     case 1:
-        if (role == Qt::DisplayRole)
+        if (role == Qt::DisplayRole) {
             return m_document->pageSizeString(index.row());
+        }
         break;
     }
 
@@ -472,14 +483,17 @@ QVariant PageSizesModel::data(const QModelIndex &index, int role) const
 
 QVariant PageSizesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
-    if (role == Qt::TextAlignmentRole)
+    if (role == Qt::TextAlignmentRole) {
         return QVariant(Qt::AlignLeft);
+    }
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:

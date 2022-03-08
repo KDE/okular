@@ -53,8 +53,9 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
     // Width table
     fix_word widthTable_in_units_of_design_size[TeXFontDefinition::max_num_of_chars_in_font];
-    for (fix_word &fw : widthTable_in_units_of_design_size)
+    for (fix_word &fw : widthTable_in_units_of_design_size) {
         fw.value = 0;
+    }
 
     file.seek(24 + 4 * lh + 4 * (ec - bc));
     for (unsigned int i = 0; i < nw; i++) {
@@ -64,14 +65,16 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
         // depends on the preceding character. We cannot calculate the
         // real width here and take 0.4 times the design size as an
         // approximation.
-        if (widthTable_in_units_of_design_size[i].value == 0)
+        if (widthTable_in_units_of_design_size[i].value == 0) {
             widthTable_in_units_of_design_size[i].fromDouble(0.4);
+        }
     }
 
     // Height table
     fix_word heightTable_in_units_of_design_size[16];
-    for (fix_word &fw : heightTable_in_units_of_design_size)
+    for (fix_word &fw : heightTable_in_units_of_design_size) {
         fw.value = 0;
+    }
     for (unsigned int i = 0; i < nh; i++) {
         stream >> heightTable_in_units_of_design_size[i].value;
     }
@@ -83,19 +86,20 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
         quint8 byte;
         stream >> byte;
-        if (byte >= nw)
+        if (byte >= nw) {
             qCCritical(OkularDviDebug) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
-        else {
+        } else {
             characterWidth_in_units_of_design_size[characterCode] = widthTable_in_units_of_design_size[byte];
             g->dvi_advance_in_units_of_design_size_by_2e20 = widthTable_in_units_of_design_size[byte].value;
         }
 
         stream >> byte;
         byte = byte >> 4;
-        if (byte >= nh)
+        if (byte >= nh) {
             qCCritical(OkularDviDebug) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid Char-Info table." << endl;
-        else
+        } else {
             characterHeight_in_units_of_design_size[characterCode] = heightTable_in_units_of_design_size[byte];
+        }
 
         stream >> byte;
         stream >> byte;
@@ -129,10 +133,12 @@ glyph *TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap
 
         // Just make sure that weird TFM files never lead to giant
         // pixmaps that eat all system memory...
-        if (pixelWidth > 50)
+        if (pixelWidth > 50) {
             pixelWidth = 50;
-        if (pixelHeight > 50)
+        }
+        if (pixelHeight > 50) {
             pixelHeight = 50;
+        }
 
         g->shrunkenCharacter = QImage(pixelWidth, pixelHeight, QImage::Format_RGB32);
         g->shrunkenCharacter.fill(color.rgba());

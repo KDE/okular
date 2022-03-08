@@ -84,8 +84,9 @@ public:
 
 static Okular::DocumentViewport calculateViewport(QTextDocument *document, const QTextBlock &block)
 {
-    if (!block.isValid())
+    if (!block.isValid()) {
         return Okular::DocumentViewport();
+    }
 
     const QRectF rect = document->documentLayout()->blockBoundingRect(block);
     const QSizeF size = document->size();
@@ -141,8 +142,9 @@ bool QUnpluck::open(const QString &fileName)
     }
 
     // Iterate over all records again to add those which aren't linked directly
-    for (int i = 1; i < plkr_GetRecordCount(mDocument); ++i)
+    for (int i = 1; i < plkr_GetRecordCount(mDocument); ++i) {
         AddRecord(plkr_GetUidForIndex(mDocument, i));
+    }
 
     number = GetNextRecordNumber();
     while (number > 0) {
@@ -150,8 +152,9 @@ bool QUnpluck::open(const QString &fileName)
         number = GetNextRecordNumber();
     }
 
-    for (int i = 0; i < mRecords.count(); ++i)
+    for (int i = 0; i < mRecords.count(); ++i) {
         delete mRecords[i];
+    }
 
     mRecords.clear();
 
@@ -161,8 +164,9 @@ bool QUnpluck::open(const QString &fileName)
      * Calculate hash map
      */
     QHash<int, int> pageHash;
-    for (int i = 0; i < mContext.count(); ++i)
+    for (int i = 0; i < mContext.count(); ++i) {
         pageHash.insert(mContext[i]->recordId, i);
+    }
 
     /**
      * Convert ids
@@ -283,20 +287,25 @@ QString QUnpluck::MailtoURLFromBytes(unsigned char *record_data)
     int body_offset = (bytes[6] << 8) + bytes[7];
 
     QString url(QStringLiteral("mailto:"));
-    if (to_offset != 0)
+    if (to_offset != 0) {
         url += QString::fromLatin1((char *)(bytes + to_offset));
+    }
 
-    if ((cc_offset != 0) || (subject_offset != 0) || (body_offset != 0))
+    if ((cc_offset != 0) || (subject_offset != 0) || (body_offset != 0)) {
         url += QLatin1String("?");
+    }
 
-    if (cc_offset != 0)
+    if (cc_offset != 0) {
         url += QLatin1String("cc=") + QString::fromLatin1((char *)(bytes + cc_offset));
+    }
 
-    if (subject_offset != 0)
+    if (subject_offset != 0) {
         url += QLatin1String("subject=") + QString::fromLatin1((char *)(bytes + subject_offset));
+    }
 
-    if (body_offset != 0)
+    if (body_offset != 0) {
         url += QLatin1String("body=") + QString::fromLatin1((char *)(bytes + body_offset));
+    }
 
     return url;
 }
@@ -351,8 +360,9 @@ void QUnpluck::DoStyle(Context *context, int style, bool start)
         format.setFontPointSize(qMax(pointSize, 1));
         context->cursor->setCharFormat(format);
     } else {
-        if (!context->stack.isEmpty())
+        if (!context->stack.isEmpty()) {
             context->cursor->setCharFormat(context->stack.pop());
+        }
     }
 }
 
@@ -427,8 +437,9 @@ void QUnpluck::ParseText(plkr_Document *doc, unsigned char *ptr, int text_len, i
             case PLKR_TFC_COLOR:
                 if (*font) {
                     (*font)--;
-                    if (!context->stack.isEmpty())
+                    if (!context->stack.isEmpty()) {
                         context->cursor->setCharFormat(context->stack.pop());
+                    }
                 }
 
                 {
@@ -716,8 +727,9 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
 
                     if (fclen == 0) {
                         if (current_link) {
-                            if (!context->stack.isEmpty())
+                            if (!context->stack.isEmpty()) {
                                 context->cursor->setCharFormat(context->stack.pop());
+                            }
 
                             if (!context->linkUrl.isEmpty()) {
                                 Link link;
@@ -790,8 +802,9 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
 
                 } else if (fctype == PLKR_TFC_FONT) {
                     if (current_font != *ptr) {
-                        if (!context->stack.isEmpty())
+                        if (!context->stack.isEmpty()) {
                             context->cursor->setCharFormat(context->stack.pop());
+                        }
 
                         QTextCharFormat format(context->cursor->charFormat());
                         context->stack.push(format);
@@ -885,14 +898,15 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
 
                     if (*ptr < 4) {
                         QTextBlockFormat format(context->cursor->blockFormat());
-                        if (*ptr == 0)
+                        if (*ptr == 0) {
                             format.setAlignment(Qt::AlignLeft);
-                        else if (*ptr == 1)
+                        } else if (*ptr == 1) {
                             format.setAlignment(Qt::AlignRight);
-                        else if (*ptr == 2)
+                        } else if (*ptr == 2) {
                             format.setAlignment(Qt::AlignCenter);
-                        else if (*ptr == 3)
+                        } else if (*ptr == 3) {
                             format.setAlignment(Qt::AlignJustify);
+                        }
 
                         QTextCharFormat charFormat(context->cursor->charFormat());
                         context->cursor->insertBlock(format);
@@ -927,10 +941,11 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
                     TranscribeTableRecord(doc, context, bytes);
 
                 } else if (fctype == PLKR_TFC_UCHAR) {
-                    if (fclen == 3)
+                    if (fclen == 3) {
                         context->cursor->insertText(QChar((ptr[1] << 8) + ptr[2]));
-                    else if (fclen == 5)
+                    } else if (fclen == 5) {
                         context->cursor->insertText(QChar((ptr[3] << 8) + ptr[4]));
+                    }
                     /* skip over alternate text */
                     ptr += ptr[0];
                 }
@@ -952,8 +967,9 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
         /* clear the graphics state again */
 
         if (current_font > 0 && current_font < 9) {
-            if (!context->stack.isEmpty())
+            if (!context->stack.isEmpty()) {
                 context->cursor->setCharFormat(context->stack.pop());
+            }
         }
 
         if (current_italic) {
@@ -1015,8 +1031,9 @@ bool QUnpluck::TranscribeRecord(int index)
         mImages.insert(index, image);
     } else if (type == PLKR_DRTYPE_MULTIIMAGE) {
         QImage image;
-        if (TranscribeMultiImageRecord(mDocument, image, data))
+        if (TranscribeMultiImageRecord(mDocument, image, data)) {
             mImages.insert(index, image);
+        }
     } else {
         status = false;
     }

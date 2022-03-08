@@ -87,8 +87,9 @@ int main(int argc, char **argv)
     } else {
         // no session.. just start up normally
         QStringList paths;
-        for (int i = 0; i < parser.positionalArguments().count(); ++i)
+        for (int i = 0; i < parser.positionalArguments().count(); ++i) {
             paths << parser.positionalArguments().at(i);
+        }
         Okular::Status status = Okular::main(paths, ShellUtils::serializeOptions(parser));
         switch (status) {
         case Okular::Error:

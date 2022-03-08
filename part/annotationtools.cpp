@@ -21,29 +21,33 @@ AnnotatorEngine::AnnotatorEngine(const QDomElement &engineElement)
     , m_item(nullptr)
 {
     // parse common engine attributes
-    if (engineElement.hasAttribute(QStringLiteral("color")))
+    if (engineElement.hasAttribute(QStringLiteral("color"))) {
         m_engineColor = QColor(engineElement.attribute(QStringLiteral("color")));
+    }
 
     // get the annotation element
     QDomElement annElement = m_engineElement.firstChild().toElement();
-    if (!annElement.isNull() && annElement.tagName() == QLatin1String("annotation"))
+    if (!annElement.isNull() && annElement.tagName() == QLatin1String("annotation")) {
         m_annotElement = annElement;
+    }
 }
 
 void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button)
 {
     *eventType = AnnotatorEngine::Press;
-    if (mouseEvent->type() == QEvent::MouseMove)
+    if (mouseEvent->type() == QEvent::MouseMove) {
         *eventType = AnnotatorEngine::Move;
-    else if (mouseEvent->type() == QEvent::MouseButtonRelease)
+    } else if (mouseEvent->type() == QEvent::MouseButtonRelease) {
         *eventType = AnnotatorEngine::Release;
+    }
 
     *button = AnnotatorEngine::None;
     const Qt::MouseButtons buttonState = (*eventType == AnnotatorEngine::Move) ? mouseEvent->buttons() : mouseEvent->button();
-    if (buttonState == Qt::LeftButton)
+    if (buttonState == Qt::LeftButton) {
         *button = AnnotatorEngine::Left;
-    else if (buttonState == Qt::RightButton)
+    } else if (buttonState == Qt::RightButton) {
         *button = AnnotatorEngine::Right;
+    }
 }
 
 void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button)
@@ -94,15 +98,17 @@ SmoothPathEngine::SmoothPathEngine(const QDomElement &engineElement)
     , compositionMode(QPainter::CompositionMode_SourceOver)
 {
     // parse engine specific attributes
-    if (engineElement.attribute(QStringLiteral("compositionMode"), QStringLiteral("sourceOver")) == QLatin1String("clear"))
+    if (engineElement.attribute(QStringLiteral("compositionMode"), QStringLiteral("sourceOver")) == QLatin1String("clear")) {
         compositionMode = QPainter::CompositionMode_Clear;
+    }
 }
 
 QRect SmoothPathEngine::event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/)
 {
     // only proceed if pressing left button
-    if (button != Left)
+    if (button != Left) {
         return QRect();
+    }
 
     // start operation
     if (type == Press && points.isEmpty()) {
@@ -139,10 +145,11 @@ QRect SmoothPathEngine::event(EventType type, Button button, Modifiers /*modifie
     }
     // terminate process
     else if (type == Release && points.count() > 0) {
-        if (points.count() < 2)
+        if (points.count() < 2) {
             points.clear();
-        else
+        } else {
             m_creationCompleted = true;
+        }
         return totalRect.geometry((int)xScale, (int)yScale);
     }
     return QRect();
@@ -184,8 +191,9 @@ QList<Okular::Annotation *> SmoothPathEngine::end()
     m_creationCompleted = false;
 
     // find out annotation's description node
-    if (m_annotElement.isNull())
+    if (m_annotElement.isNull()) {
         return QList<Okular::Annotation *>();
+    }
 
     // find out annotation's type
     Okular::Annotation *ann = nullptr;
@@ -195,8 +203,9 @@ QList<Okular::Annotation *> SmoothPathEngine::end()
     if (typeString == QLatin1String("Ink")) {
         Okular::InkAnnotation *ia = new Okular::InkAnnotation();
         ann = ia;
-        if (m_annotElement.hasAttribute(QStringLiteral("width")))
+        if (m_annotElement.hasAttribute(QStringLiteral("width"))) {
             ann->style().setWidth(m_annotElement.attribute(QStringLiteral("width")).toDouble());
+        }
         // fill points
         QList<QLinkedList<Okular::NormalizedPoint>> list = ia->inkPaths();
         list.append(points);
@@ -206,13 +215,15 @@ QList<Okular::Annotation *> SmoothPathEngine::end()
     }
 
     // safety check
-    if (!ann)
+    if (!ann) {
         return QList<Okular::Annotation *>();
+    }
 
     // set common attributes
     ann->style().setColor(m_annotElement.hasAttribute(QStringLiteral("color")) ? m_annotElement.attribute(QStringLiteral("color")) : m_engineColor);
-    if (m_annotElement.hasAttribute(QStringLiteral("opacity")))
+    if (m_annotElement.hasAttribute(QStringLiteral("opacity"))) {
         ann->style().setOpacity(m_annotElement.attribute(QStringLiteral("opacity"), QStringLiteral("1.0")).toDouble());
+    }
 
     // return annotation
     return QList<Okular::Annotation *>() << ann;

@@ -79,8 +79,9 @@ TOCItem::TOCItem(TOCItem *_parent, const QDomElement &e)
         // if the node references a viewport, get the reference and set it
         const QString &page = e.attribute(QStringLiteral("ViewportName"));
         QString viewport_string = model->document->metaData(QStringLiteral("NamedViewport"), page).toString();
-        if (!viewport_string.isEmpty())
+        if (!viewport_string.isEmpty()) {
             viewport = Okular::DocumentViewport(viewport_string);
+        }
     }
 
     extFileName = e.attribute(QStringLiteral("ExternalFileName"));
@@ -119,15 +120,18 @@ void TOCModelPrivate::addChildren(const QDomNode &parentNode, TOCItem *parentIte
         currentItem = new TOCItem(parentItem, e);
 
         // descend recursively and advance to the next node
-        if (e.hasChildNodes())
+        if (e.hasChildNodes()) {
             addChildren(n, currentItem);
+        }
 
         // open/keep close the item
         bool isOpen = false;
-        if (e.hasAttribute(QStringLiteral("Open")))
+        if (e.hasAttribute(QStringLiteral("Open"))) {
             isOpen = QVariant(e.attribute(QStringLiteral("Open"))).toBool();
-        if (isOpen)
+        }
+        if (isOpen) {
             itemsToOpen.append(currentItem);
+        }
 
         n = n.nextSibling();
         emit q->countChanged();
@@ -138,8 +142,9 @@ QModelIndex TOCModelPrivate::indexForItem(TOCItem *item) const
 {
     if (item->parent) {
         int id = item->parent->children.indexOf(item);
-        if (id >= 0 && id < item->parent->children.count())
+        if (id >= 0 && id < item->parent->children.count()) {
             return q->createIndex(id, 0, item);
+        }
     }
     return QModelIndex();
 }
@@ -204,8 +209,9 @@ int TOCModel::columnCount(const QModelIndex &parent) const
 
 QVariant TOCModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     switch (role) {
@@ -224,15 +230,17 @@ QVariant TOCModel::data(const QModelIndex &index, int role) const
             // TODO misusing parent() here, fix
             QTreeView *view = dynamic_cast<QTreeView *>(QObject::parent());
             if (!view) {
-                if (item == lastHighlighted)
+                if (item == lastHighlighted) {
                     return font;
+                }
                 return QVariant();
             }
 
             if (view->isExpanded(index)) {
                 // if this is the last highlighted node, its child is on a page below, thus it gets emboldened
-                if (item == lastHighlighted)
+                if (item == lastHighlighted) {
                     return font;
+                }
             } else {
                 return font;
             }
@@ -241,12 +249,14 @@ QVariant TOCModel::data(const QModelIndex &index, int role) const
     case HighlightRole:
         return item->highlight;
     case PageRole:
-        if (item->viewport.isValid())
+        if (item->viewport.isValid()) {
             return item->viewport.pageNumber + 1;
+        }
         break;
     case PageLabelRole:
-        if (item->viewport.isValid() && item->viewport.pageNumber < int(d->document->pages()))
+        if (item->viewport.isValid() && item->viewport.pageNumber < int(d->document->pages())) {
             return d->document->page(item->viewport.pageNumber)->label();
+        }
         break;
     }
     return QVariant();
@@ -254,8 +264,9 @@ QVariant TOCModel::data(const QModelIndex &index, int role) const
 
 bool TOCModel::hasChildren(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return true;
+    }
 
     TOCItem *item = static_cast<TOCItem *>(parent.internalPointer());
     return !item->children.isEmpty();
@@ -263,31 +274,36 @@ bool TOCModel::hasChildren(const QModelIndex &parent) const
 
 QVariant TOCModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation != Qt::Horizontal)
+    if (orientation != Qt::Horizontal) {
         return QVariant();
+    }
 
-    if (section == 0 && role == Qt::DisplayRole)
+    if (section == 0 && role == Qt::DisplayRole) {
         return QStringLiteral("Topics");
+    }
 
     return QVariant();
 }
 
 QModelIndex TOCModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (row < 0 || column != 0)
+    if (row < 0 || column != 0) {
         return QModelIndex();
+    }
 
     TOCItem *item = parent.isValid() ? static_cast<TOCItem *>(parent.internalPointer()) : d->root;
-    if (row < item->children.count())
+    if (row < item->children.count()) {
         return createIndex(row, column, item->children.at(row));
+    }
 
     return QModelIndex();
 }
 
 QModelIndex TOCModel::parent(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QModelIndex();
+    }
 
     TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return d->indexForItem(item->parent);
@@ -312,8 +328,9 @@ static QModelIndex indexForIndex(const QModelIndex &oldModelIndex, QAbstractItem
 
 void TOCModel::fill(const Okular::DocumentSynopsis *toc)
 {
-    if (!toc)
+    if (!toc) {
         return;
+    }
 
     clear();
     emit layoutAboutToBeChanged();
@@ -323,8 +340,9 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
     if (equals(d->m_oldModel)) {
         for (const QModelIndex &oldIndex : qAsConst(d->m_oldTocExpandedIndexes)) {
             const QModelIndex index = indexForIndex(oldIndex, this);
-            if (!index.isValid())
+            if (!index.isValid()) {
                 continue;
+            }
 
             // TODO misusing parent() here, fix
             QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, index));
@@ -332,8 +350,9 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
     } else {
         for (TOCItem *item : qAsConst(d->itemsToOpen)) {
             const QModelIndex index = d->indexForItem(item);
-            if (!index.isValid())
+            if (!index.isValid()) {
                 continue;
+            }
 
             // TODO misusing parent() here, fix
             QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, index));
@@ -347,8 +366,9 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
 
 void TOCModel::clear()
 {
-    if (!d->dirty)
+    if (!d->dirty) {
         return;
+    }
 
     beginResetModel();
     qDeleteAll(d->root->children);
@@ -362,8 +382,9 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
 {
     for (TOCItem *item : qAsConst(d->currentPage)) {
         QModelIndex index = d->indexForItem(item);
-        if (!index.isValid())
+        if (!index.isValid()) {
             continue;
+        }
 
         item->highlight = false;
         emit dataChanged(index, index);
@@ -377,8 +398,9 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
 
     for (TOCItem *item : qAsConst(d->currentPage)) {
         QModelIndex index = d->indexForItem(item);
-        if (!index.isValid())
+        if (!index.isValid()) {
             continue;
+        }
 
         item->highlight = true;
         emit dataChanged(index, index);
@@ -392,10 +414,11 @@ bool TOCModel::isEmpty() const
 
 bool TOCModel::equals(const TOCModel *model) const
 {
-    if (model)
+    if (model) {
         return checkequality(model);
-    else
+    } else {
         return false;
+    }
 }
 
 void TOCModel::setOldModelData(TOCModel *model, const QVector<QModelIndex> &list)
@@ -420,8 +443,9 @@ TOCModel *TOCModel::clearOldModelData() const
 
 QString TOCModel::externalFileNameForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QString();
+    }
 
     TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->extFileName;
@@ -429,8 +453,9 @@ QString TOCModel::externalFileNameForIndex(const QModelIndex &index) const
 
 Okular::DocumentViewport TOCModel::viewportForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return Okular::DocumentViewport();
+    }
 
     TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->viewport;
@@ -438,8 +463,9 @@ Okular::DocumentViewport TOCModel::viewportForIndex(const QModelIndex &index) co
 
 QString TOCModel::urlForIndex(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QString();
+    }
 
     TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->url;
@@ -447,8 +473,9 @@ QString TOCModel::urlForIndex(const QModelIndex &index) const
 
 bool TOCModel::checkequality(const TOCModel *model, const QModelIndex &parentA, const QModelIndex &parentB) const
 {
-    if (rowCount(parentA) != model->rowCount(parentB))
+    if (rowCount(parentA) != model->rowCount(parentB)) {
         return false;
+    }
     for (int i = 0; i < rowCount(parentA); i++) {
         QModelIndex indxA = index(i, 0, parentA);
         QModelIndex indxB = model->index(i, 0, parentB);

@@ -59,29 +59,33 @@ OkularTTS::~OkularTTS()
 
 void OkularTTS::say(const QString &text)
 {
-    if (text.isEmpty())
+    if (text.isEmpty()) {
         return;
+    }
 
     d->speech->say(text);
 }
 
 void OkularTTS::stopAllSpeechs()
 {
-    if (!d->speech)
+    if (!d->speech) {
         return;
+    }
 
     d->speech->stop();
 }
 
 void OkularTTS::pauseResumeSpeech()
 {
-    if (!d->speech)
+    if (!d->speech) {
         return;
+    }
 
-    if (d->speech->state() == QTextToSpeech::Speaking)
+    if (d->speech->state() == QTextToSpeech::Speaking) {
         d->speech->pause();
-    else
+    } else {
         d->speech->resume();
+    }
 }
 
 void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
@@ -91,10 +95,11 @@ void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
         emit canPauseOrResume(true);
     } else {
         emit isSpeaking(false);
-        if (state == QTextToSpeech::Paused)
+        if (state == QTextToSpeech::Paused) {
             emit canPauseOrResume(true);
-        else
+        } else {
             emit canPauseOrResume(false);
+        }
     }
 }
 

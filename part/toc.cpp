@@ -67,8 +67,9 @@ TOC::~TOC()
 
 void TOC::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
 {
-    if (!(setupFlags & Okular::DocumentObserver::DocumentChanged))
+    if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         return;
+    }
 
     // clear contents
     m_model->clear();
@@ -95,8 +96,9 @@ void TOC::notifyCurrentPageChanged(int, int)
 
 void TOC::prepareForReload()
 {
-    if (m_model->isEmpty())
+    if (m_model->isEmpty()) {
         return;
+    }
 
     const QVector<QModelIndex> list = expandedNodes();
     TOCModel *m = m_model;
@@ -107,8 +109,9 @@ void TOC::prepareForReload()
 
 void TOC::rollbackReload()
 {
-    if (!m_model->hasOldModelData())
+    if (!m_model->hasOldModelData()) {
         return;
+    }
 
     TOCModel *m = m_model;
     m_model = m->clearOldModelData();
@@ -146,8 +149,9 @@ void TOC::reparseConfig()
 
 void TOC::slotExecuted(const QModelIndex &index)
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return;
+    }
 
     QString url = m_model->urlForIndex(index);
     if (!url.isEmpty()) {
@@ -176,8 +180,9 @@ void TOC::saveSearchOptions()
 void TOC::contextMenuEvent(QContextMenuEvent *e)
 {
     QModelIndex index = m_treeView->currentIndex();
-    if (!index.isValid())
+    if (!index.isValid()) {
         return;
+    }
 
     Okular::DocumentViewport viewport = m_model->viewportForIndex(index);
 

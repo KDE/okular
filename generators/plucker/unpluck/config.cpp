@@ -43,8 +43,9 @@ static HashTable *GetOrCreateSegment(const char *name)
 {
     HashTable *target;
 
-    if (SectionsTable == nullptr)
+    if (SectionsTable == nullptr) {
         SectionsTable = _plkr_NewHashTable(23);
+    }
 
     if ((target = (HashTable *)_plkr_FindInTable(SectionsTable, name)) == nullptr) {
         target = _plkr_NewHashTable(53);
@@ -84,28 +85,34 @@ static int ReadConfigFile(const char *filename)
 
     while (true) {
         ptr = fgets(linebuf, sizeof(linebuf) - 1, fp);
-        if (ptr == nullptr)
+        if (ptr == nullptr) {
             break;
+        }
 
         line_number += 1;
         linebuf[strlen(linebuf) - 1] = 0; /* strip newline */
-        if (linebuf[strlen(linebuf) - 1] == '\r')
+        if (linebuf[strlen(linebuf) - 1] == '\r') {
             linebuf[strlen(linebuf) - 1] = 0; /* strip carriage return */
+        }
 
         /* fprintf (stderr, "%s:%d:  line is '%s'\n", filename, line_number, linebuf); */
 
         linelen = strlen(linebuf);
-        for (buf_index = 0; linebuf[buf_index] != 0; buf_index++)
-            if (!isspace(linebuf[buf_index]))
+        for (buf_index = 0; linebuf[buf_index] != 0; buf_index++) {
+            if (!isspace(linebuf[buf_index])) {
                 break;
+            }
+        }
 
-        if (linebuf[buf_index] == 0)
+        if (linebuf[buf_index] == 0) {
             /* blank line */
             continue;
+        }
 
-        if ((strchr(COMMENT_CHARS, linebuf[0]) != nullptr) || (strncmp(linebuf, "rem", 3) == 0) || (strncmp(linebuf, "REM", 3) == 0))
+        if ((strchr(COMMENT_CHARS, linebuf[0]) != nullptr) || (strncmp(linebuf, "rem", 3) == 0) || (strncmp(linebuf, "REM", 3) == 0)) {
             /* comment */
             continue;
+        }
 
         /* At this point we have a valid thing */
 
@@ -116,20 +123,23 @@ static int ReadConfigFile(const char *filename)
                 goto error_exit;
             }
             str_begin = linebuf + buf_index + 1;
-            for (charptr = str_begin; charptr < str_end; charptr++)
+            for (charptr = str_begin; charptr < str_end; charptr++) {
                 *charptr = tolower(*charptr);
+            }
             *str_end = 0;
             current_segment = GetOrCreateSegment(str_begin);
             /* fprintf (stderr, "Current segment is now %p (%s)\n", current_segment, str_begin); */
-            if (current_option)
+            if (current_option) {
                 free(current_option);
+            }
             current_option = nullptr;
 
         } else if ((linebuf[0] == ' ' || linebuf[0] == '\t') && current_option != nullptr) {
             /* continuation line */
             str_begin = (char *)_plkr_RemoveFromTable(current_segment, current_option);
-            for (str_end = linebuf + strlen(linebuf) - 1; str_end > linebuf && isspace(*str_end); str_end--)
+            for (str_end = linebuf + strlen(linebuf) - 1; str_end > linebuf && isspace(*str_end); str_end--) {
                 ;
+            }
             charptr = (char *)malloc(strlen(str_begin) + (str_end - (linebuf + buf_index)) + 2);
             strcpy(charptr, str_begin);
             len2 = strlen(charptr);
@@ -142,44 +152,50 @@ static int ReadConfigFile(const char *filename)
         } else if ((int)strcspn(linebuf, OPTION_SEPARATOR_CHARS) < linelen) {
             /* possible option line */
 
-            for (str_begin = linebuf + buf_index, ptr = str_begin; isalnum(*ptr) || (*ptr == '.') || (*ptr == '_') || (*ptr == '-'); ptr++)
+            for (str_begin = linebuf + buf_index, ptr = str_begin; isalnum(*ptr) || (*ptr == '.') || (*ptr == '_') || (*ptr == '-'); ptr++) {
                 ;
+            }
             if (ptr == str_begin) {
                 _plkr_message("%s:%d:  Invalid option line '%s'", filename, line_number, linebuf);
                 goto error_exit;
             }
 
-            for (charptr = str_begin; charptr < ptr; charptr++)
+            for (charptr = str_begin; charptr < ptr; charptr++) {
                 *charptr = tolower(*charptr);
+            }
             str_end = ptr;
 
-            while (isspace(*ptr) && (*ptr != '\0'))
+            while (isspace(*ptr) && (*ptr != '\0')) {
                 ptr++;
+            }
 
-            if (strchr(OPTION_SEPARATOR_CHARS, *ptr) != nullptr)
+            if (strchr(OPTION_SEPARATOR_CHARS, *ptr) != nullptr) {
                 ptr++;
-            else {
+            } else {
                 _plkr_message("%s:%d:  Invalid option line '%s'", filename, line_number, linebuf);
                 goto error_exit;
             }
 
-            while (isspace(*ptr) && (*ptr != '\0'))
+            while (isspace(*ptr) && (*ptr != '\0')) {
                 ptr++;
+            }
 
             if (*ptr == 0) {
                 _plkr_message("%s:%d:  Invalid option line '%s'", filename, line_number, linebuf);
                 goto error_exit;
             }
 
-            if (current_option)
+            if (current_option) {
                 free(current_option);
+            }
             current_option = _plkr_strndup(str_begin, str_end - str_begin);
 
             option_value = _plkr_strndup(ptr, strlen(ptr));
 
             ptr = (char *)_plkr_RemoveFromTable(current_segment, current_option);
-            if (ptr)
+            if (ptr) {
                 free(ptr);
+            }
             _plkr_AddToTable(current_segment, current_option, option_value);
             /* fprintf (stderr, "Added value '%s' for option '%p:%s'\n", option_value, current_segment, current_option); */
 
@@ -191,8 +207,9 @@ static int ReadConfigFile(const char *filename)
 
 good_exit:
 
-    if (current_option)
+    if (current_option) {
         free(current_option);
+    }
     fclose(fp);
     return status;
 
@@ -205,15 +222,17 @@ static void TryReadConfigFile(const char *dir, const char *name)
 {
     char *filename;
 
-    if (dir == nullptr || name == nullptr)
+    if (dir == nullptr || name == nullptr) {
         return;
+    }
 
     filename = (char *)malloc(strlen(dir) + strlen(name) + 2);
     strcpy(filename, dir);
     strcpy(filename + strlen(filename), STRINGIFY(FILE_SEPARATOR_CHAR_S));
     strcpy(filename + strlen(filename), name);
-    if (!ReadConfigFile(filename))
+    if (!ReadConfigFile(filename)) {
         _plkr_message("Error reading config file %s", filename);
+    }
     free(filename);
 }
 
@@ -225,8 +244,9 @@ static void InitializeConfigInfo()
     char *home = getenv("HOME"); // clazy:exclude=raw-environment-function
 
     TryReadConfigFile(config_dir, system_config_file_name);
-    if (home != nullptr)
+    if (home != nullptr) {
         TryReadConfigFile(home, user_config_filename);
+    }
 }
 
 char *plkr_GetConfigString(const char *section_name, const char *option_name, char *default_value)
@@ -234,23 +254,28 @@ char *plkr_GetConfigString(const char *section_name, const char *option_name, ch
     char *value = nullptr;
     HashTable *section;
 
-    if (SectionsTable == nullptr)
+    if (SectionsTable == nullptr) {
         InitializeConfigInfo();
+    }
 
-    if (SectionsTable == nullptr)
+    if (SectionsTable == nullptr) {
         return default_value;
+    }
 
     if (section_name != nullptr) {
-        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, section_name)) != nullptr)
+        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, section_name)) != nullptr) {
             value = (char *)_plkr_FindInTable(section, option_name);
+        }
     }
     if (value == nullptr && ((section_name == nullptr) || (strcmp(section_name, "default") != 0))) {
-        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, STRINGIFY(OS_SECTION_NAME))) != nullptr)
+        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, STRINGIFY(OS_SECTION_NAME))) != nullptr) {
             value = (char *)_plkr_FindInTable(section, option_name);
+        }
     }
     if (value == nullptr && ((section_name == nullptr) || (strcmp(section_name, "default") != 0))) {
-        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, "default")) != nullptr)
+        if ((section = (HashTable *)_plkr_FindInTable(SectionsTable, "default")) != nullptr) {
             value = (char *)_plkr_FindInTable(section, option_name);
+        }
     }
 
     return ((value == nullptr) ? default_value : value);
@@ -262,8 +287,9 @@ long int plkr_GetConfigInt(const char *section_name, const char *option_name, lo
     char *endptr;
     long int value;
 
-    if (svalue == nullptr)
+    if (svalue == nullptr) {
         return default_value;
+    }
 
     value = strtol(svalue, &endptr, 0);
     if (*endptr != 0) {
@@ -280,8 +306,9 @@ double plkr_GetConfigFloat(const char *section_name, const char *option_name, do
     char *endptr;
     double value;
 
-    if (svalue == nullptr)
+    if (svalue == nullptr) {
         return default_value;
+    }
 
     value = strtod(svalue, &endptr);
     if (*endptr != 0) {
@@ -296,18 +323,19 @@ int plkr_GetConfigBoolean(const char *section_name, const char *option_name, int
 {
     char *svalue = plkr_GetConfigString(section_name, option_name, nullptr);
 
-    if (svalue == nullptr)
+    if (svalue == nullptr) {
         return default_value;
+    }
 
     if ((strcmp(svalue, "1") == 0) || (strcmp(svalue, "true") == 0) || (strcmp(svalue, "TRUE") == 0) || (strcmp(svalue, "on") == 0) || (strcmp(svalue, "ON") == 0) || (strcmp(svalue, "t") == 0) || (strcmp(svalue, "T") == 0) ||
-        (strcmp(svalue, "True") == 0))
+        (strcmp(svalue, "True") == 0)) {
         return 1;
 
-    else if ((strcmp(svalue, "0") == 0) || (strcmp(svalue, "false") == 0) || (strcmp(svalue, "FALSE") == 0) || (strcmp(svalue, "off") == 0) || (strcmp(svalue, "OFF") == 0) || (strcmp(svalue, "F") == 0) || (strcmp(svalue, "f") == 0) ||
-             (strcmp(svalue, "False") == 0))
+    } else if ((strcmp(svalue, "0") == 0) || (strcmp(svalue, "false") == 0) || (strcmp(svalue, "FALSE") == 0) || (strcmp(svalue, "off") == 0) || (strcmp(svalue, "OFF") == 0) || (strcmp(svalue, "F") == 0) || (strcmp(svalue, "f") == 0) ||
+               (strcmp(svalue, "False") == 0)) {
         return 0;
 
-    else {
+    } else {
         _plkr_message("Bad boolean value string '%s' for option %s:%s", svalue, (section_name ? section_name : "default"), option_name);
         return default_value;
     }

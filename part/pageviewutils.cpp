@@ -168,8 +168,9 @@ bool PageViewItem::setFormWidgetsVisible(bool visible)
 {
     m_formsVisible = visible;
 
-    if (!m_visible)
+    if (!m_visible) {
         return false;
+    }
 
     bool somehadfocus = false;
     QSet<FormWidgetIface *>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
@@ -202,8 +203,9 @@ PageViewMessage::PageViewMessage(QWidget *parent)
     pal.setColor(QPalette::Active, QPalette::Window, QApplication::palette().color(QPalette::Active, QPalette::Window));
     setPalette(pal);
     // if the layout is LtR, we can safely place it in the right position
-    if (layoutDirection() == Qt::LeftToRight)
+    if (layoutDirection() == Qt::LeftToRight) {
         move(10, 10);
+    }
     resize(0, 0);
     hide();
 }
@@ -259,8 +261,9 @@ void PageViewMessage::display(const QString &message, const QString &details, Ic
             connect(m_timer, &QTimer::timeout, this, &PageViewMessage::hide);
         }
         m_timer->start(durationMs);
-    } else if (m_timer)
+    } else if (m_timer) {
         m_timer->stop();
+    }
 
     qobject_cast<QAbstractScrollArea *>(parentWidget())->viewport()->installEventFilter(this);
 }
@@ -312,8 +315,9 @@ void PageViewMessage::computeSizeAndResize()
 
     // if the layout is RtL, we can move it to the right place only after we
     // know how much size it will take
-    if (layoutDirection() == Qt::RightToLeft)
+    if (layoutDirection() == Qt::RightToLeft) {
         move(parentWidget()->width() - geometry().width() - 10 - 1, 10);
+    }
 }
 
 bool PageViewMessage::eventFilter(QObject *obj, QEvent *event)
@@ -344,10 +348,11 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
         // add 2 to account for the reduced drawRoundedRect later
         textYOffset = (geometry().height() - textRect.height() - detailsRect.height() - m_lineSpacing + 2) / 2, iconXOffset = 0, iconYOffset = !m_symbol.isNull() ? (geometry().height() - symbolSize) / 2 : 0, shadowOffset = 1;
 
-    if (layoutDirection() == Qt::RightToLeft)
+    if (layoutDirection() == Qt::RightToLeft) {
         iconXOffset = 2 + textRect.width();
-    else
+    } else {
         textXOffset = 2 + symbolSize;
+    }
 
     // draw background
     QPainter painter(this);
@@ -358,8 +363,9 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     painter.drawRoundedRect(1, 1, width() - 2, height() - 2, 1600.0 / width(), 1600.0 / height());
 
     // draw icon if present
-    if (!m_symbol.isNull())
+    if (!m_symbol.isNull()) {
         painter.drawPixmap(5 + iconXOffset, iconYOffset, m_symbol.pixmap(symbolSize));
+    }
 
     const int xStartPoint = 5 + textXOffset;
     const int yStartPoint = textYOffset;
@@ -368,17 +374,20 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     // draw shadow and text
     painter.setPen(palette().color(QPalette::Window).darker(115));
     painter.drawText(xStartPoint + shadowOffset, yStartPoint + shadowOffset, textRect.width(), textRect.height(), textDrawingFlags, m_message);
-    if (!m_details.isEmpty())
+    if (!m_details.isEmpty()) {
         painter.drawText(xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing + shadowOffset, textRect.width(), detailsRect.height(), textDrawingFlags, m_details);
+    }
     painter.setPen(palette().color(QPalette::WindowText));
     painter.drawText(xStartPoint, yStartPoint, textRect.width(), textRect.height(), textDrawingFlags, m_message);
-    if (!m_details.isEmpty())
+    if (!m_details.isEmpty()) {
         painter.drawText(xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing, textRect.width(), detailsRect.height(), textDrawingFlags, m_details);
+    }
 }
 
 void PageViewMessage::mousePressEvent(QMouseEvent * /*e*/)
 {
-    if (m_timer)
+    if (m_timer) {
         m_timer->stop();
+    }
     hide();
 }

@@ -58,34 +58,35 @@ static KJSObject appGetLanguage(KJSContext *, void *)
     QString lang = QLocale::languageToString(locale.language());
     QString country = QLocale::countryToString(locale.country());
     QString acroLang = QStringLiteral("ENU");
-    if (lang == QLatin1String("da"))
+    if (lang == QLatin1String("da")) {
         acroLang = QStringLiteral("DAN"); // Danish
-    else if (lang == QLatin1String("de"))
+    } else if (lang == QLatin1String("de")) {
         acroLang = QStringLiteral("DEU"); // German
-    else if (lang == QLatin1String("en"))
+    } else if (lang == QLatin1String("en")) {
         acroLang = QStringLiteral("ENU"); // English
-    else if (lang == QLatin1String("es"))
+    } else if (lang == QLatin1String("es")) {
         acroLang = QStringLiteral("ESP"); // Spanish
-    else if (lang == QLatin1String("fr"))
+    } else if (lang == QLatin1String("fr")) {
         acroLang = QStringLiteral("FRA"); // French
-    else if (lang == QLatin1String("it"))
+    } else if (lang == QLatin1String("it")) {
         acroLang = QStringLiteral("ITA"); // Italian
-    else if (lang == QLatin1String("ko"))
+    } else if (lang == QLatin1String("ko")) {
         acroLang = QStringLiteral("KOR"); // Korean
-    else if (lang == QLatin1String("ja"))
+    } else if (lang == QLatin1String("ja")) {
         acroLang = QStringLiteral("JPN"); // Japanese
-    else if (lang == QLatin1String("nl"))
+    } else if (lang == QLatin1String("nl")) {
         acroLang = QStringLiteral("NLD"); // Dutch
-    else if (lang == QLatin1String("pt") && country == QLatin1String("BR"))
+    } else if (lang == QLatin1String("pt") && country == QLatin1String("BR")) {
         acroLang = QStringLiteral("PTB"); // Brazilian Portuguese
-    else if (lang == QLatin1String("fi"))
+    } else if (lang == QLatin1String("fi")) {
         acroLang = QStringLiteral("SUO"); // Finnish
-    else if (lang == QLatin1String("sv"))
+    } else if (lang == QLatin1String("sv")) {
         acroLang = QStringLiteral("SVE"); // Swedish
-    else if (lang == QLatin1String("zh") && country == QLatin1String("CN"))
+    } else if (lang == QLatin1String("zh") && country == QLatin1String("CN")) {
         acroLang = QStringLiteral("CHS"); // Chinese Simplified
-    else if (lang == QLatin1String("zh") && country == QLatin1String("TW"))
+    } else if (lang == QLatin1String("zh") && country == QLatin1String("TW")) {
         acroLang = QStringLiteral("CHT"); // Chinese Traditional
+    }
     return KJSString(acroLang);
 }
 
@@ -220,13 +221,15 @@ static KJSObject appAlert(KJSContext *context, void *, const KJSArguments &argum
         KJSObject oMsg = oCheckbox.property(context, QStringLiteral("cMsg"));
         QString msg = i18n("Do not show this message again");
 
-        if (oMsg.isString())
+        if (oMsg.isString()) {
             msg = oMsg.toString(context);
+        }
 
         bool bInitialValue = false;
         KJSObject value = oCheckbox.property(context, QStringLiteral("bInitialValue"));
-        if (value.isBoolean())
+        if (value.isBoolean()) {
             bInitialValue = value.toBoolean(context);
+        }
         checkBox = new QCheckBox(msg);
         checkBox->setChecked(bInitialValue);
         box.setCheckBox(checkBox);
@@ -261,8 +264,9 @@ static KJSObject appAlert(KJSContext *context, void *, const KJSArguments &argum
         break;
     }
 
-    if (checkBox)
+    if (checkBox) {
         oCheckbox.setProperty(context, QStringLiteral("bAfterValue"), checkBox->isChecked());
+    }
 
     delete checkBox;
 
@@ -285,8 +289,9 @@ static KJSObject appGetNthPlugInName(KJSContext *context, void *, const KJSArgum
     }
     const int nIndex = arguments.at(0).toInt32(context);
 
-    if (nIndex < 0 || nIndex >= s_num_fake_plugins)
+    if (nIndex < 0 || nIndex >= s_num_fake_plugins) {
         return context->throwException(QStringLiteral("PlugIn index out of bounds"));
+    }
 
     const FakePluginInfo &info = s_fake_plugins[nIndex];
     return KJSString(info.name);
@@ -295,8 +300,9 @@ static KJSObject appGetNthPlugInName(KJSContext *context, void *, const KJSArgum
 static KJSObject appGoBack(KJSContext *, void *object, const KJSArguments &)
 {
     const DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    if (doc->m_parent->historyAtBegin())
+    if (doc->m_parent->historyAtBegin()) {
         return KJSUndefined();
+    }
 
     doc->m_parent->setPrevViewport();
     return KJSUndefined();
@@ -305,8 +311,9 @@ static KJSObject appGoBack(KJSContext *, void *object, const KJSArguments &)
 static KJSObject appGoForward(KJSContext *, void *object, const KJSArguments &)
 {
     const DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    if (doc->m_parent->historyAtEnd())
+    if (doc->m_parent->historyAtEnd()) {
         return KJSUndefined();
+    }
 
     doc->m_parent->setNextViewport();
     return KJSUndefined();
@@ -379,8 +386,9 @@ static KJSObject appClearTimeOut(KJSContext *ctx, void *, const KJSArguments &ar
 void JSApp::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_appProto = new KJSPrototype();

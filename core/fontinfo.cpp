@@ -131,8 +131,9 @@ bool FontInfo::operator!=(const FontInfo &fi) const
 
 FontInfo &FontInfo::operator=(const FontInfo &fi)
 {
-    if (this == &fi)
+    if (this == &fi) {
         return *this;
+    }
 
     d = fi.d;
     return *this;

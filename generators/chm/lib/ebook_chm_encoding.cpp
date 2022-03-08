@@ -121,9 +121,11 @@ static const EbookChmTextEncodingEntry text_encoding_table[] = {{"CP1256", lcid_
 QString Ebook_CHM_Encoding::guessByLCID(unsigned short lcid)
 {
     for (const EbookChmTextEncodingEntry *t = text_encoding_table; t->qtcodec; ++t) {
-        for (const short *lcids = t->lcids; *lcids; lcids++)
-            if (*lcids == lcid)
+        for (const short *lcids = t->lcids; *lcids; lcids++) {
+            if (*lcids == lcid) {
                 return t->qtcodec;
+            }
+        }
     }
 
     return QStringLiteral("UTF-8");

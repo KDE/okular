@@ -57,8 +57,9 @@ bool PluckerGenerator::loadDocument(const QString &fileName, QVector<Okular::Pag
 {
     QUnpluck unpluck;
 
-    if (!unpluck.open(fileName))
+    if (!unpluck.open(fileName)) {
         return false;
+    }
 
     mPages = unpluck.pages();
     mLinks = unpluck.links();
@@ -68,14 +69,15 @@ bool PluckerGenerator::loadDocument(const QString &fileName, QVector<Okular::Pag
     while (it.hasNext()) {
         it.next();
         if (!it.value().isEmpty()) {
-            if (it.key() == QLatin1String("name"))
+            if (it.key() == QLatin1String("name")) {
                 mDocumentInfo.set(QStringLiteral("name"), it.value(), i18n("Name"));
-            else if (it.key() == QLatin1String("title"))
+            } else if (it.key() == QLatin1String("title")) {
                 mDocumentInfo.set(Okular::DocumentInfo::Title, it.value());
-            else if (it.key() == QLatin1String("author"))
+            } else if (it.key() == QLatin1String("author")) {
                 mDocumentInfo.set(Okular::DocumentInfo::Author, it.value());
-            else if (it.key() == QLatin1String("time"))
+            } else if (it.key() == QLatin1String("time")) {
                 mDocumentInfo.set(Okular::DocumentInfo::CreationDate, it.value());
+            }
         }
     }
 
@@ -139,8 +141,9 @@ QImage PluckerGenerator::image(Okular::PixmapRequest *request)
             }
         }
 
-        if (!objects.isEmpty())
+        if (!objects.isEmpty()) {
             request->page()->setObjectRects(objects);
+        }
 
         mLinkAdded.insert(request->pageNumber());
     }
@@ -151,8 +154,9 @@ QImage PluckerGenerator::image(Okular::PixmapRequest *request)
 Okular::ExportFormat::List PluckerGenerator::exportFormats() const
 {
     static Okular::ExportFormat::List formats;
-    if (formats.isEmpty())
+    if (formats.isEmpty()) {
         formats.append(Okular::ExportFormat::standardFormat(Okular::ExportFormat::PlainText));
+    }
 
     return formats;
 }
@@ -161,8 +165,9 @@ bool PluckerGenerator::exportTo(const QString &fileName, const Okular::ExportFor
 {
     if (format.mimeType().name() == QLatin1String("text/plain")) {
         QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly))
+        if (!file.open(QIODevice::WriteOnly)) {
             return false;
+        }
 
         QTextStream out(&file);
         for (int i = 0; i < mPages.count(); ++i) {

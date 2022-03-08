@@ -76,8 +76,9 @@ TeXFontDefinition::~TeXFontDefinition()
             fclose(file);
             file = nullptr;
         }
-        if (flags & FONT_VIRTUAL)
+        if (flags & FONT_VIRTUAL) {
             vf_table.clear();
+        }
     }
 }
 
@@ -104,32 +105,36 @@ void TeXFontDefinition::fontNameReceiver(const QString &fname)
         if (file == nullptr) {
             qCCritical(OkularDviDebug) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
             return;
-        } else
+        } else {
             filename = filename_test;
+        }
     }
 
     set_char_p = &dviRenderer::set_char;
     int magic = two(file);
 
-    if (fname.endsWith(QLatin1String("pk")))
+    if (fname.endsWith(QLatin1String("pk"))) {
         if (magic == PK_MAGIC) {
             fclose(file);
             file = nullptr;
             font = new TeXFont_PK(this);
             set_char_p = &dviRenderer::set_char;
-            if ((checksum != 0) && (checksum != font->checksum))
+            if ((checksum != 0) && (checksum != font->checksum)) {
                 qCWarning(OkularDviDebug) << i18n("Checksum mismatch for font file %1", filename);
+            }
             fontType = TEX_PK;
             return;
         }
+    }
 
-    if (fname.endsWith(QLatin1String(".vf")))
+    if (fname.endsWith(QLatin1String(".vf"))) {
         if (magic == VF_MAGIC) {
             read_VF_index();
             set_char_p = &dviRenderer::set_vf_char;
             fontType = TEX_VIRTUAL;
             return;
         }
+    }
 
     if (fname.endsWith(QLatin1String(".tfm"))) {
         fclose(file);
@@ -187,8 +192,9 @@ void TeXFontDefinition::reset()
             fclose(file);
             file = nullptr;
         }
-        if (flags & FONT_VIRTUAL)
+        if (flags & FONT_VIRTUAL) {
             vf_table.clear();
+        }
     }
 
     filename.clear();
@@ -199,8 +205,9 @@ void TeXFontDefinition::reset()
 void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 {
     displayResolution_in_dpi = _displayResolution_in_dpi;
-    if (font != nullptr)
+    if (font != nullptr) {
         font->setDisplayResolution();
+    }
 }
 
 /** mark_as_used marks the font, and all the fonts it refers to, as
@@ -212,8 +219,9 @@ void TeXFontDefinition::mark_as_used()
     qCDebug(OkularDviDebug) << "TeXFontDefinition::mark_as_used()";
 #endif
 
-    if (flags & TeXFontDefinition::FONT_IN_USE)
+    if (flags & TeXFontDefinition::FONT_IN_USE) {
         return;
+    }
 
     flags |= TeXFontDefinition::FONT_IN_USE;
 
@@ -237,6 +245,7 @@ macro::macro()
 
 macro::~macro()
 {
-    if ((pos != nullptr) && (free_me == true))
+    if ((pos != nullptr) && (free_me == true)) {
         delete[] pos;
+    }
 }

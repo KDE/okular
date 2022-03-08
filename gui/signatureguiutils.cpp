@@ -114,24 +114,33 @@ QString getReadablePublicKeyType(Okular::CertificateInfo::PublicKeyType type)
 QString getReadableKeyUsage(Okular::CertificateInfo::KeyUsageExtensions kuExtensions, const QString &separator)
 {
     QStringList ku;
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuDigitalSignature))
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuDigitalSignature)) {
         ku << i18n("Digital Signature");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuNonRepudiation))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuNonRepudiation)) {
         ku << i18n("Non-Repudiation");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyEncipherment))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyEncipherment)) {
         ku << i18n("Encrypt Keys");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuDataEncipherment))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuDataEncipherment)) {
         ku << i18n("Decrypt Keys");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyAgreement))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyAgreement)) {
         ku << i18n("Key Agreement");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyCertSign))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuKeyCertSign)) {
         ku << i18n("Sign Certificate");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuClrSign))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuClrSign)) {
         ku << i18n("Sign CRL");
-    if (kuExtensions.testFlag(Okular::CertificateInfo::KuEncipherOnly))
+    }
+    if (kuExtensions.testFlag(Okular::CertificateInfo::KuEncipherOnly)) {
         ku << i18n("Encrypt Only");
-    if (ku.isEmpty())
+    }
+    if (ku.isEmpty()) {
         ku << i18n("No Usage Specified");
+    }
     return ku.join(separator);
 }
 
@@ -171,8 +180,9 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
     for (uint i = 0; i < numPages; i++) {
         const QLinkedList<Okular::FormField *> formFields = doc->page(i)->formFields();
         for (const Okular::FormField *f : formFields) {
-            if (f->type() == Okular::FormField::FormSignature)
+            if (f->type() == Okular::FormField::FormSignature) {
                 isDigitallySigned = true;
+            }
         }
     }
 

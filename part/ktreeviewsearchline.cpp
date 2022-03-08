@@ -62,16 +62,18 @@ public:
 void KTreeViewSearchLine::Private::rowsInserted(const QModelIndex &parentIndex, int start, int end) const
 {
     QAbstractItemModel *model = qobject_cast<QAbstractItemModel *>(parent->sender());
-    if (!model)
+    if (!model) {
         return;
+    }
 
     QTreeView *widget = nullptr;
     if (treeView->model() == model) {
         widget = treeView;
     }
 
-    if (!widget)
+    if (!widget) {
         return;
+    }
 
     for (int i = start; i <= end; ++i) {
         widget->setRowHidden(i, parentIndex, !parent->itemMatches(parentIndex, i, parent->text()));
@@ -88,20 +90,22 @@ void KTreeViewSearchLine::Private::treeViewDeleted(QObject *object)
 
 void KTreeViewSearchLine::Private::slotCaseSensitive()
 {
-    if (caseSensitive == Qt::CaseSensitive)
+    if (caseSensitive == Qt::CaseSensitive) {
         parent->setCaseSensitivity(Qt::CaseInsensitive);
-    else
+    } else {
         parent->setCaseSensitivity(Qt::CaseSensitive);
+    }
 
     parent->updateSearch();
 }
 
 void KTreeViewSearchLine::Private::slotRegularExpression()
 {
-    if (regularExpression)
+    if (regularExpression) {
         parent->setRegularExpression(false);
-    else
+    } else {
         parent->setRegularExpression(true);
+    }
 
     parent->updateSearch();
 }
@@ -121,8 +125,9 @@ bool KTreeViewSearchLine::Private::filterItems(QTreeView *treeView, const QModel
 {
     bool childMatch = false;
     const int rowcount = treeView->model()->rowCount(index);
-    for (int i = 0; i < rowcount; ++i)
+    for (int i = 0; i < rowcount; ++i) {
         childMatch |= filterItems(treeView, treeView->model()->index(i, 0, index));
+    }
 
     // Should this item be shown? It should if any children should be, or if it matches.
     const QModelIndex parentindex = index.parent();
@@ -187,8 +192,9 @@ void KTreeViewSearchLine::updateSearch(const QString &pattern)
 
 void KTreeViewSearchLine::updateSearch(QTreeView *treeView)
 {
-    if (!treeView || !treeView->model()->rowCount())
+    if (!treeView || !treeView->model()->rowCount()) {
         return;
+    }
 
     // If there's a selected item that is visible, make sure that it's visible
     // when the search changes too (assuming that it still matches).
@@ -200,8 +206,9 @@ void KTreeViewSearchLine::updateSearch(QTreeView *treeView)
     d->filterItems(treeView, treeView->rootIndex());
     treeView->setUpdatesEnabled(wasUpdateEnabled);
 
-    if (currentIndex.isValid())
+    if (currentIndex.isValid()) {
         treeView->scrollTo(currentIndex);
+    }
 }
 
 void KTreeViewSearchLine::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
@@ -237,11 +244,13 @@ void KTreeViewSearchLine::setTreeView(QTreeView *treeView)
 
 bool KTreeViewSearchLine::itemMatches(const QModelIndex &parentIndex, int row, const QString &pattern) const
 {
-    if (pattern.isEmpty())
+    if (pattern.isEmpty()) {
         return true;
+    }
 
-    if (!parentIndex.isValid() && parentIndex != d->treeView->rootIndex())
+    if (!parentIndex.isValid() && parentIndex != d->treeView->rootIndex()) {
         return false;
+    }
 
     // Construct a regular expression object with the right options.
     QRegularExpression re;
@@ -317,8 +326,9 @@ void KTreeViewSearchLine::activateSearch()
 {
     --(d->queuedSearches);
 
-    if (d->queuedSearches == 0)
+    if (d->queuedSearches == 0) {
         updateSearch(d->search);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -390,8 +400,9 @@ void KTreeViewSearchLineWidget::createWidgets()
 
 KTreeViewSearchLine *KTreeViewSearchLineWidget::searchLine() const
 {
-    if (!d->searchLine)
+    if (!d->searchLine) {
         d->searchLine = createSearchLine(d->treeView);
+    }
 
     return d->searchLine;
 }

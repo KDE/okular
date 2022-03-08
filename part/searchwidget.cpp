@@ -89,8 +89,9 @@ void SearchWidget::slotMenuChaged(QAction *act)
         m_lineEdit->setSearchType(Okular::Document::GoogleAll);
     } else if (act == m_marchAnyWordsAction) {
         m_lineEdit->setSearchType(Okular::Document::GoogleAny);
-    } else
+    } else {
         return;
+    }
 
     // update search
     m_lineEdit->restartSearch();

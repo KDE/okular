@@ -27,9 +27,9 @@ fontEncoding *fontEncodingPool::findByName(const QString &name)
 
     if (ptr == nullptr) {
         ptr = new fontEncoding(name);
-        if (ptr->isValid())
+        if (ptr->isValid()) {
             dictionary.insert(name, ptr);
-        else {
+        } else {
             delete ptr;
             ptr = nullptr;
         }

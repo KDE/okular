@@ -104,20 +104,22 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
     QString captiontext;
     switch (type) {
     case Okular::Annotation::AText:
-        if (((Okular::TextAnnotation *)m_annot)->textType() == Okular::TextAnnotation::Linked)
+        if (((Okular::TextAnnotation *)m_annot)->textType() == Okular::TextAnnotation::Linked) {
             captiontext = i18n("Pop-up Note Properties");
-        else {
-            if (((Okular::TextAnnotation *)m_annot)->inplaceIntent() == Okular::TextAnnotation::TypeWriter)
+        } else {
+            if (((Okular::TextAnnotation *)m_annot)->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
                 captiontext = i18n("Typewriter Properties");
-            else
+            } else {
                 captiontext = i18n("Inline Note Properties");
+            }
         }
         break;
     case Okular::Annotation::ALine:
-        if (((Okular::LineAnnotation *)m_annot)->linePoints().count() == 2)
+        if (((Okular::LineAnnotation *)m_annot)->linePoints().count() == 2) {
             captiontext = i18n("Straight Line Properties");
-        else
+        } else {
             captiontext = i18n("Polygon Properties");
+        }
         break;
     case Okular::Annotation::AGeom:
         captiontext = i18n("Geometry Properties");
@@ -158,8 +160,9 @@ void AnnotsPropertiesDialog::setModified()
 
 void AnnotsPropertiesDialog::slotapply()
 {
-    if (!modified)
+    if (!modified) {
         return;
+    }
 
     m_document->prepareToModifyAnnotationProperties(m_annot);
     m_annot->setAuthor(AuthorEdit->text());

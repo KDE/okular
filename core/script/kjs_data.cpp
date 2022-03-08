@@ -65,12 +65,14 @@ static KJSObject dataGetSize(KJSContext *, void *object)
 void JSData::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
-    if (!g_dataProto)
+    if (!g_dataProto) {
         g_dataProto = new KJSPrototype();
+    }
 
     g_dataProto->defineProperty(ctx, QStringLiteral("creationDate"), dataGetCreationDate);
     g_dataProto->defineProperty(ctx, QStringLiteral("description"), dataGetDescription);

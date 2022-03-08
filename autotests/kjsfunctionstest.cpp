@@ -170,8 +170,9 @@ void KJSFunctionsTest::testDisplay()
 void delay()
 {
     QTime dieTime = QTime::currentTime().addSecs(2);
-    while (QTime::currentTime() < dieTime)
+    while (QTime::currentTime() < dieTime) {
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
 }
 
 void KJSFunctionsTest::testSetClearInterval()

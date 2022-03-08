@@ -34,14 +34,15 @@ static int hex2int(char hex)
 {
     QChar hexchar = QLatin1Char(hex);
     int v;
-    if (hexchar.isDigit())
+    if (hexchar.isDigit()) {
         v = hexchar.digitValue();
-    else if (hexchar >= QLatin1Char('A') && hexchar <= QLatin1Char('F'))
+    } else if (hexchar >= QLatin1Char('A') && hexchar <= QLatin1Char('F')) {
         v = hexchar.cell() - 'A' + 10;
-    else if (hexchar >= QLatin1Char('a') && hexchar <= QLatin1Char('f'))
+    } else if (hexchar >= QLatin1Char('a') && hexchar <= QLatin1Char('f')) {
         v = hexchar.cell() - 'a' + 10;
-    else
+    } else {
         v = -1;
+    }
     return v;
 }
 
@@ -49,8 +50,9 @@ static int hex2int(char hex)
 static QColor hexToRgba(const QByteArray &name)
 {
     const int len = name.length();
-    if (len == 0 || name[0] != '#')
+    if (len == 0 || name[0] != '#') {
         return QColor();
+    }
     int r, g, b;
     int a = 255;
     if (len == 7) {
@@ -169,20 +171,23 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
 static QPointF getPointFromString(const QString &string)
 {
     const int commaPos = string.indexOf(QLatin1Char(QLatin1Char(',')));
-    if (commaPos == -1 || string.indexOf(QLatin1Char(QLatin1Char(',')), commaPos + 1) != -1)
+    if (commaPos == -1 || string.indexOf(QLatin1Char(QLatin1Char(',')), commaPos + 1) != -1) {
         return QPointF();
+    }
 
     QPointF result;
     bool ok = false;
     QStringRef ref = string.midRef(0, commaPos);
     result.setX(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
-    if (!ok)
+    if (!ok) {
         return QPointF();
+    }
 
     ref = string.midRef(commaPos + 1);
     result.setY(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
-    if (!ok)
+    if (!ok) {
         return QPointF();
+    }
 
     return result;
 }
@@ -258,8 +263,9 @@ static QPainterPath parseAbbreviatedPathData(const QString &data)
         case 'h': // Horizontal line
             while (token.type == abtNumber) {
                 double x = token.number;
-                if (isRelative)
+                if (isRelative) {
                     x += path.currentPosition().x();
+                }
                 path.lineTo(x, path.currentPosition().y());
                 nextAbbPathToken(&token);
             }
@@ -267,8 +273,9 @@ static QPainterPath parseAbbreviatedPathData(const QString &data)
         case 'v': // Vertical line
             while (token.type == abtNumber) {
                 double y = token.number;
-                if (isRelative)
+                if (isRelative) {
                     y += path.currentPosition().y();
+                }
                 path.lineTo(path.currentPosition().x(), y);
                 nextAbbPathToken(&token);
             }
@@ -411,8 +418,9 @@ static QString entryPath(const QString &entry)
     if (index > 0) {
         ret.append(slash);
     }
-    if (!ret.startsWith(slash))
+    if (!ret.startsWith(slash)) {
         ret.prepend(slash);
+    }
     return ret;
 }
 
@@ -468,8 +476,9 @@ static QByteArray readFileOrDirectoryParts(const KArchiveEntry *entry, QString *
         std::sort(entries.begin(), entries.end());
         for (const QString &entry : qAsConst(entries)) {
             const KArchiveEntry *relSubEntry = relDir->entry(entry);
-            if (!relSubEntry->isFile())
+            if (!relSubEntry->isFile()) {
                 continue;
+            }
 
             const KZipFileEntry *relSubFile = static_cast<const KZipFileEntry *>(relSubEntry);
             data.append(relSubFile->data());
@@ -572,8 +581,9 @@ static int xpsGradientWithOffset(const QList<XpsGradient> &gradients, double off
 */
 static void preprocessXpsGradients(QList<XpsGradient> &gradients)
 {
-    if (gradients.isEmpty())
+    if (gradients.isEmpty()) {
         return;
+    }
 
     // sort the gradients (case 1.)
     std::stable_sort(gradients.begin(), gradients.end(), xpsGradientLessThan);
@@ -581,8 +591,9 @@ static void preprocessXpsGradients(QList<XpsGradient> &gradients)
     // no gradient with stop 0.0 (case 2.)
     if (xpsGradientWithOffset(gradients, 0.0) == -1) {
         int firstGreaterThanZero = 0;
-        while (firstGreaterThanZero < gradients.count() && gradients.at(firstGreaterThanZero).offset < 0.0)
+        while (firstGreaterThanZero < gradients.count() && gradients.at(firstGreaterThanZero).offset < 0.0) {
             ++firstGreaterThanZero;
+        }
         // case 2.a: no gradients with stop less than 0.0
         if (firstGreaterThanZero == 0) {
             gradients.prepend(XpsGradient(0.0, gradients.first().color));
@@ -604,14 +615,16 @@ static void preprocessXpsGradients(QList<XpsGradient> &gradients)
         }
     }
 
-    if (gradients.isEmpty())
+    if (gradients.isEmpty()) {
         return;
+    }
 
     // no gradient with stop 1.0 (case 3.)
     if (xpsGradientWithOffset(gradients, 1.0) == -1) {
         int firstLessThanOne = gradients.count() - 1;
-        while (firstLessThanOne >= 0 && gradients.at(firstLessThanOne).offset > 1.0)
+        while (firstLessThanOne >= 0 && gradients.at(firstLessThanOne).offset > 1.0) {
             --firstLessThanOne;
+        }
         // case 2.a: no gradients with stop greater than 1.0
         if (firstLessThanOne == gradients.count() - 1) {
             gradients.append(XpsGradient(1.0, gradients.last().color));
@@ -643,8 +656,9 @@ static void addXpsGradientsToQGradient(const QList<XpsGradient> &gradients, QGra
 
 static void applySpreadStyleToQGradient(const QString &style, QGradient *qgrad)
 {
-    if (style.isEmpty())
+    if (style.isEmpty()) {
         return;
+    }
 
     if (style == QLatin1String("Pad")) {
         qgrad->setSpread(QGradient::PadSpread);
@@ -983,8 +997,9 @@ void XpsHandler::processPath(XpsRenderNode &node)
     if (!att.isEmpty()) {
         bool ok = false;
         int thickness = att.toInt(&ok);
-        if (ok)
+        if (ok) {
             pen.setWidth(thickness);
+        }
     }
     att = node.attributes.value(QStringLiteral("StrokeDashArray"));
     if (!att.isEmpty()) {
@@ -1007,8 +1022,9 @@ void XpsHandler::processPath(XpsRenderNode &node)
     if (!att.isEmpty()) {
         bool ok = false;
         int offset = att.toInt(&ok);
-        if (ok)
+        if (ok) {
             pen.setDashOffset(offset);
+        }
     }
     att = node.attributes.value(QStringLiteral("StrokeDashCap"));
     if (!att.isEmpty()) {
@@ -1776,8 +1792,9 @@ XpsDocument::~XpsDocument()
     qDeleteAll(m_pages);
     m_pages.clear();
 
-    if (m_docStructure)
+    if (m_docStructure) {
         delete m_docStructure;
+    }
 }
 
 int XpsDocument::numPages() const
@@ -1904,8 +1921,9 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
         xml.addData(corepropsFile->data());
         while (!xml.atEnd()) {
             xml.readNext();
-            if (xml.isEndElement())
+            if (xml.isEndElement()) {
                 break;
+            }
             if (xml.isStartElement()) {
                 if (xml.name() == QStringLiteral("title")) {
                     docInfo.set(Okular::DocumentInfo::Title, xml.readElementText());
@@ -2048,11 +2066,13 @@ const Okular::DocumentSynopsis *XpsGenerator::generateDocumentSynopsis()
     qCWarning(OkularXpsDebug) << "generating document synopsis";
 
     // we only generate the synopsis for the first file.
-    if (!m_xpsFile || !m_xpsFile->document(0))
+    if (!m_xpsFile || !m_xpsFile->document(0)) {
         return nullptr;
+    }
 
-    if (m_xpsFile->document(0)->hasDocumentStructure())
+    if (m_xpsFile->document(0)->hasDocumentStructure()) {
         return m_xpsFile->document(0)->documentStructure();
+    }
 
     return nullptr;
 }
@@ -2070,8 +2090,9 @@ bool XpsGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
 {
     if (format.mimeType().inherits(QStringLiteral("text/plain"))) {
         QFile f(fileName);
-        if (!f.open(QIODevice::WriteOnly))
+        if (!f.open(QIODevice::WriteOnly)) {
             return false;
+        }
 
         QTextStream ts(&f);
         for (int i = 0; i < m_xpsFile->numPages(); ++i) {
@@ -2096,8 +2117,9 @@ Okular::Document::PrintError XpsGenerator::print(QPrinter &printer)
     QPainter painter(&printer);
 
     for (int i = 0; i < pageList.count(); ++i) {
-        if (i != 0)
+        if (i != 0) {
             printer.newPage();
+        }
 
         const int page = pageList.at(i) - 1;
         XpsPage *pageToRender = m_xpsFile->page(page);

@@ -138,8 +138,9 @@ void Document::close()
 {
     mLastErrorString.clear();
 
-    if (!(mArchive || mUnrar || mDirectory))
+    if (!(mArchive || mUnrar || mDirectory)) {
         return;
+    }
 
     delete mArchive;
     mArchive = nullptr;
@@ -206,8 +207,9 @@ void Document::pages(QVector<Okular::Page *> *pagesVector)
                 }
                 if (!pageSize.isValid()) {
                     const QImage i = reader.read();
-                    if (!i.isNull())
+                    if (!i.isNull()) {
                         pageSize = i.size();
+                    }
                 }
                 if (pageSize.isValid()) {
                     pagesVector->replace(count, new Okular::Page(count, pageSize.width(), pageSize.height(), Okular::Rotation0));

@@ -25,8 +25,9 @@ static KJSObject spellGetAvailable(KJSContext *, void *)
 void JSSpell::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_spellProto = new KJSPrototype();

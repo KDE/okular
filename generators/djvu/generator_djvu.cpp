@@ -66,8 +66,9 @@ DjVuGenerator::DjVuGenerator(QObject *parent, const QVariantList &args)
     setFeature(TextExtraction);
     setFeature(Threaded);
     setFeature(PrintPostscript);
-    if (Okular::FilePrinter::ps2pdfAvailable())
+    if (Okular::FilePrinter::ps2pdfAvailable()) {
         setFeature(PrintToFile);
+    }
 
     m_djvu = new KDjVu();
     m_djvu->setCacheEnabled(false);
@@ -81,8 +82,9 @@ DjVuGenerator::~DjVuGenerator()
 bool DjVuGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
 {
     QMutexLocker locker(userMutex());
-    if (!m_djvu->openFile(fileName))
+    if (!m_djvu->openFile(fileName)) {
         return false;
+    }
 
     locker.unlock();
 
@@ -115,17 +117,21 @@ Okular::DocumentInfo DjVuGenerator::generateDocumentInfo(const QSet<Okular::Docu
 {
     Okular::DocumentInfo docInfo;
 
-    if (keys.contains(Okular::DocumentInfo::MimeType))
+    if (keys.contains(Okular::DocumentInfo::MimeType)) {
         docInfo.set(Okular::DocumentInfo::MimeType, QStringLiteral("image/vnd.djvu"));
+    }
 
     if (m_djvu) {
         // compile internal structure reading properties from KDjVu
-        if (keys.contains(Okular::DocumentInfo::Author))
+        if (keys.contains(Okular::DocumentInfo::Author)) {
             docInfo.set(Okular::DocumentInfo::Title, m_djvu->metaData(QStringLiteral("title")).toString());
-        if (keys.contains(Okular::DocumentInfo::Author))
+        }
+        if (keys.contains(Okular::DocumentInfo::Author)) {
             docInfo.set(Okular::DocumentInfo::Author, m_djvu->metaData(QStringLiteral("author")).toString());
-        if (keys.contains(Okular::DocumentInfo::CreationDate))
+        }
+        if (keys.contains(Okular::DocumentInfo::CreationDate)) {
             docInfo.set(Okular::DocumentInfo::CreationDate, m_djvu->metaData(QStringLiteral("year")).toString());
+        }
         if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
             docInfo.set(QStringLiteral("editor"), m_djvu->metaData(QStringLiteral("editor")).toString(), i18n("Editor"));
             docInfo.set(QStringLiteral("publisher"), m_djvu->metaData(QStringLiteral("publisher")).toString(), i18n("Publisher"));
@@ -142,8 +148,9 @@ Okular::DocumentInfo DjVuGenerator::generateDocumentInfo(const QSet<Okular::Docu
 const Okular::DocumentSynopsis *DjVuGenerator::generateDocumentSynopsis()
 {
     QMutexLocker locker(userMutex());
-    if (m_docSyn)
+    if (m_docSyn) {
         return m_docSyn;
+    }
 
     const QDomDocument *doc = m_djvu->documentBookmarks();
     if (doc) {
@@ -159,8 +166,9 @@ Okular::Document::PrintError DjVuGenerator::print(QPrinter &printer)
 {
     // Create tempfile to write to
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
-    if (!tf.open())
+    if (!tf.open()) {
         return Okular::Document::TemporaryFileOpenPrintError;
+    }
     const QString fileName = tf.fileName();
 
     QMutexLocker locker(userMutex());
@@ -189,10 +197,12 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
     userMutex()->lock();
     const Okular::Page *page = request->page();
     QList<KDjVu::TextEntity> te;
-    if (te.isEmpty())
+    if (te.isEmpty()) {
         te = m_djvu->textEntities(page->number(), QStringLiteral("word"));
-    if (te.isEmpty())
+    }
+    if (te.isEmpty()) {
         te = m_djvu->textEntities(page->number(), QStringLiteral("line"));
+    }
     userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
@@ -214,12 +224,14 @@ void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation
 
     for (int i = 0; i < numofpages; ++i) {
         const KDjVu::Page *p = djvu_pages.at(i);
-        if (pagesVector[i])
+        if (pagesVector[i]) {
             delete pagesVector[i];
+        }
         int w = p->width();
         int h = p->height();
-        if (rotation % 2 == 1)
+        if (rotation % 2 == 1) {
             qSwap(w, h);
+        }
         Okular::Page *page = new Okular::Page(i, w, h, (Okular::Rotation)(p->orientation() + rotation));
         pagesVector[i] = page;
 
@@ -235,13 +247,15 @@ void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation
             for (; it != itEnd; ++it) {
                 KDjVu::Link *curlink = (*it);
                 Okular::ObjectRect *newrect = convertKDjVuLink(i, curlink);
-                if (newrect)
+                if (newrect) {
                     rects.append(newrect);
+                }
                 // delete the links as soon as we process them
                 delete curlink;
             }
-            if (rects.count() > 0)
+            if (rects.count() > 0) {
                 page->setObjectRects(rects);
+            }
         }
         if (!annots.isEmpty()) {
             QList<KDjVu::Annotation *>::ConstIterator it = annots.constBegin();
@@ -249,8 +263,9 @@ void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation
             for (; it != itEnd; ++it) {
                 KDjVu::Annotation *ann = (*it);
                 Okular::Annotation *newann = convertKDjVuAnnotation(w, h, ann);
-                if (newann)
+                if (newann) {
                     page->addAnnotation(newann);
+                }
                 // delete the annotations as soon as we process them
                 delete ann;
             }
@@ -267,13 +282,15 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         KDjVu::PageLink *l = static_cast<KDjVu::PageLink *>(link);
         bool ok = true;
         QString target = l->page();
-        if ((target.length() > 0) && target.at(0) == QLatin1Char('#'))
+        if ((target.length() > 0) && target.at(0) == QLatin1Char('#')) {
             target.remove(0, 1);
+        }
         int tmppage = target.toInt(&ok);
         if (ok || target.isEmpty()) {
             Okular::DocumentViewport vp;
-            if (!target.isEmpty())
+            if (!target.isEmpty()) {
                 vp.pageNumber = (target.at(0) == QLatin1Char('+') || target.at(0) == QLatin1Char('-')) ? page + tmppage : tmppage - 1;
+            }
             newlink = new Okular::GotoAction(QString(), vp);
         }
         break;
@@ -290,8 +307,9 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         int width = p->width();
         int height = p->height();
         bool scape_orientation = false; // hack by tokoe, should always create default page
-        if (scape_orientation)
+        if (scape_orientation) {
             qSwap(width, height);
+        }
         switch (link->areaType()) {
         case KDjVu::Link::RectArea:
         case KDjVu::Link::EllipseArea: {
@@ -306,9 +324,9 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
             for (int i = 0; i < poly.count(); ++i) {
                 int x = poly.at(i).x();
                 int y = poly.at(i).y();
-                if (scape_orientation)
+                if (scape_orientation) {
                     qSwap(x, y);
-                else {
+                } else {
                     y = height - y;
                 }
                 newpoly << QPointF((double)(x) / width, (double)(y) / height);
@@ -360,8 +378,9 @@ Okular::Annotation *DjVuGenerator::convertKDjVuAnnotation(int w, int h, KDjVu::A
         points.append(Okular::NormalizedPoint(b.x(), b.y(), w, h));
         newlineann->setLinePoints(points);
         // arrow?
-        if (lineann->isArrow())
+        if (lineann->isArrow()) {
             newlineann->setLineEndStyle(Okular::LineAnnotation::OpenArrow);
+        }
         // width
         newlineann->style().setWidth(lineann->width());
         newann = newlineann;

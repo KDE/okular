@@ -86,8 +86,9 @@ Sidebar::~Sidebar()
 
 int Sidebar::addItem(QWidget *widget, const QIcon &icon, const QString &text)
 {
-    if (!widget)
+    if (!widget) {
         return -1;
+    }
 
     widget->setParent(d->viewChooserTabs);
     d->viewChooserTabs->addTab(widget, icon, text);
@@ -139,8 +140,9 @@ void Sidebar::setCurrentItem(QWidget *widget)
 
 QWidget *Sidebar::currentItem() const
 {
-    if (d->viewChooserTabs->currentIndex() == -1)
+    if (d->viewChooserTabs->currentIndex() == -1) {
         return nullptr;
+    }
 
     return d->viewChooserTabs->currentWidget();
 }
@@ -167,8 +169,9 @@ void Sidebar::moveSplitter(int sideWidgetSize)
 void Sidebar::splitterMoved(int /*pos*/, int index)
 {
     // if the side panel has been resized, save splitter sizes
-    if (index == 1)
+    if (index == 1) {
         saveSplitterSize();
+    }
 }
 
 void Sidebar::saveSplitterSize() const

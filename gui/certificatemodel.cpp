@@ -107,8 +107,9 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
 QVariant CertificateModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
-    if (!index.isValid() || row < 0 || row >= m_certificateProperties.count())
+    if (!index.isValid() || row < 0 || row >= m_certificateProperties.count()) {
         return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole:
@@ -132,11 +133,13 @@ QVariant CertificateModel::data(const QModelIndex &index, int role) const
 
 QVariant CertificateModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::TextAlignmentRole)
+    if (role == Qt::TextAlignmentRole) {
         return QVariant(Qt::AlignLeft);
+    }
 
-    if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
+    if (orientation != Qt::Horizontal || role != Qt::DisplayRole) {
         return QVariant();
+    }
 
     switch (section) {
     case 0:

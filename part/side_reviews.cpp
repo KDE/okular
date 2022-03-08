@@ -49,11 +49,12 @@ protected:
     void paintEvent(QPaintEvent *event) override
     {
         bool hasAnnotations = false;
-        for (uint i = 0; i < m_document->pages(); ++i)
+        for (uint i = 0; i < m_document->pages(); ++i) {
             if (m_document->page(i)->hasAnnotations()) {
                 hasAnnotations = true;
                 break;
             }
+        }
         if (!hasAnnotations) {
             QPainter p(viewport());
             p.setRenderHint(QPainter::Antialiasing, true);
@@ -234,8 +235,9 @@ void Reviews::activated(const QModelIndex &index)
     const QModelIndex annotIndex = m_filterProxy->mapToSource(filterIndex);
 
     Okular::Annotation *annotation = m_model->annotationForIndex(annotIndex);
-    if (!annotation)
+    if (!annotation) {
         return;
+    }
 
     int pageNumber = m_model->data(annotIndex, AnnotationModel::PageRole).toInt();
     const Okular::Page *page = m_document->page(pageNumber);

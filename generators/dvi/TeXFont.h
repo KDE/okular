@@ -28,8 +28,9 @@ public:
 
     void setDisplayResolution()
     {
-        for (glyph &g : glyphtable)
+        for (glyph &g : glyphtable) {
             g.shrunkenCharacter = QImage();
+        }
     }
 
     virtual glyph *getGlyph(quint16 character, bool generateCharacterPixmap = false, const QColor &color = Qt::black) = 0;

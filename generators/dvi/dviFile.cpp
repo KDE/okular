@@ -127,8 +127,9 @@ void dvifile::find_postamble()
 {
     // Move backwards through the TRAILER bytes
     command_pointer = dvi_Data() + size_of_file - 1;
-    while ((*command_pointer == TRAILER) && (command_pointer > dvi_Data()))
+    while ((*command_pointer == TRAILER) && (command_pointer > dvi_Data())) {
         command_pointer--;
+    }
     if (command_pointer == dvi_Data()) {
         errorMsg = i18n("The DVI file is badly corrupted. Okular was not able to find the postamble.");
         return;
@@ -185,10 +186,11 @@ void dvifile::read_postamble()
 
             // Insert font in dictionary and make sure the dictionary is big
             // enough.
-            if (tn_table.capacity() - 2 <= tn_table.count())
+            if (tn_table.capacity() - 2 <= tn_table.count()) {
                 // Not quite optimal. The size of the dictionary should be a
                 // prime for optimal performance. I don't care.
                 tn_table.reserve(tn_table.capacity() * 2);
+            }
             tn_table.insert(TeXnumber, fontp);
         }
 
@@ -203,8 +205,9 @@ void dvifile::read_postamble()
 
     // Now we remove all those fonts from the memory which are no longer
     // in use.
-    if (font_pool != nullptr)
+    if (font_pool != nullptr) {
         font_pool->release_fonts();
+    }
 }
 
 void dvifile::prepare_pages()
@@ -212,16 +215,18 @@ void dvifile::prepare_pages()
 #ifdef DEBUG_DVIFILE
     qCDebug(OkularDviDebug) << "prepare_pages";
 #endif
-    if (total_pages == 0)
+    if (total_pages == 0) {
         return;
+    }
 
     page_offset.resize(total_pages + 1);
     if (page_offset.size() < (total_pages + 1)) {
         qCCritical(OkularDviDebug) << "No memory for page list!";
         return;
     }
-    for (int i = 0; i <= total_pages; i++)
+    for (int i = 0; i <= total_pages; i++) {
         page_offset[i] = 0;
+    }
 
     page_offset[int(total_pages)] = beginning_of_postamble;
     int j = total_pages - 1;
@@ -237,8 +242,9 @@ void dvifile::prepare_pages()
         }
         command_pointer += 10 * 4;
         page_offset[j] = readUINT32();
-        if ((dvi_Data() + page_offset[j] < dvi_Data()) || (dvi_Data() + page_offset[j] > dvi_Data() + size_of_file))
+        if ((dvi_Data() + page_offset[j] < dvi_Data()) || (dvi_Data() + page_offset[j] > dvi_Data() + size_of_file)) {
             break;
+        }
     }
 }
 
@@ -301,10 +307,12 @@ dvifile::~dvifile()
         QFile::remove(i.value());
     }
 
-    if (suggestedPageSize != nullptr)
+    if (suggestedPageSize != nullptr) {
         delete suggestedPageSize;
-    if (font_pool != nullptr)
+    }
+    if (font_pool != nullptr) {
         font_pool->mark_fonts_as_unused();
+    }
 }
 
 void dvifile::renumber()
@@ -318,7 +326,7 @@ void dvifile::renumber()
     for (int i = 1; i <= total_pages; i++) {
         quint8 *ptr = dviData.data() + page_offset[i - 1] + 1;
         quint8 *num = (quint8 *)&i;
-        for (quint8 j = 0; j < 4; j++)
+        for (quint8 j = 0; j < 4; j++) {
             if (bigEndian) {
                 *(ptr++) = num[0];
                 *(ptr++) = num[1];
@@ -330,6 +338,7 @@ void dvifile::renumber()
                 *(ptr++) = num[1];
                 *(ptr++) = num[0];
             }
+        }
     }
 }
 
@@ -419,14 +428,17 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
 
 bool dvifile::saveAs(const QString &filename)
 {
-    if (dvi_Data() == nullptr)
+    if (dvi_Data() == nullptr) {
         return false;
+    }
 
     QFile out(filename);
-    if (out.open(QIODevice::WriteOnly) == false)
+    if (out.open(QIODevice::WriteOnly) == false) {
         return false;
-    if (out.write((char *)(dvi_Data()), size_of_file) == -1)
+    }
+    if (out.write((char *)(dvi_Data()), size_of_file) == -1) {
         return false;
+    }
     out.close();
     return true;
 }

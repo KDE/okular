@@ -90,8 +90,9 @@ void AnnotationTest::testDistance_data()
         Okular::GeomAnnotation *square = new Okular::GeomAnnotation;
         square->setGeometricalType(Okular::GeomAnnotation::InscribedSquare);
         square->setBoundingRectangle(Okular::NormalizedRect(0.1, 0.1, 0.9, 0.9));
-        if (i != 0)
+        if (i != 0) {
             square->setGeometricalInnerColor(QColor(0, 0, 0));
+        }
         m_document->addPageAnnotation(0, square);
         QTest::newRow("Square: Base point 1") << (Okular::Annotation *)square << 0.1 << 0.1 << 0;
         QTest::newRow("Square: On edge 1") << (Okular::Annotation *)square << 0.1 << 0.2 << 0;
@@ -105,8 +106,9 @@ void AnnotationTest::testDistance_data()
         Okular::GeomAnnotation *ellipse = new Okular::GeomAnnotation;
         ellipse->setGeometricalType(Okular::GeomAnnotation::InscribedCircle);
         ellipse->setBoundingRectangle(Okular::NormalizedRect(0.1, 0.1, 0.9, 0.5));
-        if (i != 0)
+        if (i != 0) {
             ellipse->setGeometricalInnerColor(QColor(0, 0, 0));
+        }
         m_document->addPageAnnotation(0, ellipse);
         QTest::newRow("Ellipse: Base point 1") << (Okular::Annotation *)ellipse << 0.1 << 0.3 << 0;
         QTest::newRow("Ellipse: Inside") << (Okular::Annotation *)ellipse << 0.2 << 0.3 << qRound((i == 0) ? pow(documentX * 0.1, 2) - 1 /* pen */ : 0);

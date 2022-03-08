@@ -56,8 +56,9 @@ QStringList WidgetAnnotTools::tools() const
 
         // Remove old shortcut, if any
         QDomNode oldShortcut = toolElement.elementsByTagName(QStringLiteral("shortcut")).item(0);
-        if (oldShortcut.isElement())
+        if (oldShortcut.isElement()) {
             toolElement.removeChild(oldShortcut);
+        }
 
         // Create new shortcut element (only the first 9 tools are assigned a shortcut key)
         if (i < 9) {
@@ -89,8 +90,9 @@ void WidgetAnnotTools::setTools(const QStringList &items)
         if (toolElement.tagName() == QLatin1String("tool")) {
             // Create list item and attach the source XML string as data
             QString itemText = toolElement.attribute(QStringLiteral("name"));
-            if (itemText.isEmpty())
+            if (itemText.isEmpty()) {
                 itemText = PageViewAnnotator::defaultToolName(toolElement);
+            }
             QListWidgetItem *listEntry = new QListWidgetItem(itemText, m_list);
             listEntry->setData(ToolXmlRole, QVariant::fromValue(toolXml));
             listEntry->setIcon(PageViewAnnotator::makeToolPixmap(toolElement));
@@ -110,8 +112,9 @@ void WidgetAnnotTools::slotEdit()
 
     EditAnnotToolDialog t(this, toolElement);
 
-    if (t.exec() != QDialog::Accepted)
+    if (t.exec() != QDialog::Accepted) {
         return;
+    }
 
     doc = t.toolXml();
     toolElement = doc.documentElement();
@@ -119,10 +122,11 @@ void WidgetAnnotTools::slotEdit()
     QString itemText = t.name();
 
     // Store name attribute only if the user specified a customized name
-    if (!itemText.isEmpty())
+    if (!itemText.isEmpty()) {
         toolElement.setAttribute(QStringLiteral("name"), itemText);
-    else
+    } else {
         itemText = PageViewAnnotator::defaultToolName(toolElement);
+    }
 
     // Edit list entry and attach XML string as data
     listEntry->setText(itemText);
@@ -140,8 +144,9 @@ void WidgetAnnotTools::slotAdd()
 {
     EditAnnotToolDialog t(this);
 
-    if (t.exec() != QDialog::Accepted)
+    if (t.exec() != QDialog::Accepted) {
         return;
+    }
 
     QDomDocument rootDoc = t.toolXml();
     QDomElement toolElement = rootDoc.documentElement();
@@ -149,10 +154,11 @@ void WidgetAnnotTools::slotAdd()
     QString itemText = t.name();
 
     // Store name attribute only if the user specified a customized name
-    if (!itemText.isEmpty())
+    if (!itemText.isEmpty()) {
         toolElement.setAttribute(QStringLiteral("name"), itemText);
-    else
+    } else {
         itemText = PageViewAnnotator::defaultToolName(toolElement);
+    }
 
     // Create list entry and attach XML string as data
     QListWidgetItem *listEntry = new QListWidgetItem(itemText, m_list);

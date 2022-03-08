@@ -233,8 +233,9 @@ void MouseAnnotation::routePaint(QPainter *painter, const QRect paintRect)
     static const QColor borderColor = QColor::fromHsvF(0, 0, 1.0);
     static const QColor fillColor = QColor::fromHsvF(0, 0, 0.75, 0.66);
 
-    if (!isFocused())
+    if (!isFocused()) {
         return;
+    }
     /*
      * Get annotation bounding rectangle in uncropped page coordinates.
      * Distinction between AnnotationUtils::annotationGeometry() and AnnotationObjectRect::boundingRect() is,
@@ -514,14 +515,18 @@ MouseAnnotation::ResizeHandle MouseAnnotation::getHandleAt(const QPoint eventPos
          * and therefore maybe more than two flags are set.
          * Favor one handle in that case.
          */
-        if ((selected & RH_BottomRight) == RH_BottomRight)
+        if ((selected & RH_BottomRight) == RH_BottomRight) {
             return RH_BottomRight;
-        if ((selected & RH_TopRight) == RH_TopRight)
+        }
+        if ((selected & RH_TopRight) == RH_TopRight) {
             return RH_TopRight;
-        if ((selected & RH_TopLeft) == RH_TopLeft)
+        }
+        if ((selected & RH_TopLeft) == RH_TopLeft) {
             return RH_TopLeft;
-        if ((selected & RH_BottomLeft) == RH_BottomLeft)
+        }
+        if ((selected & RH_BottomLeft) == RH_BottomLeft) {
             return RH_BottomLeft;
+        }
     }
 
     if (selected == RH_None && ad.annotation->canBeMoved()) {

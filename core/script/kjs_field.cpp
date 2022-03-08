@@ -278,12 +278,14 @@ static KJSObject fieldButtonSetIcon(KJSContext *ctx, void *object, const KJSArgu
 void JSField::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
-    if (!g_fieldProto)
+    if (!g_fieldProto) {
         g_fieldProto = new KJSPrototype();
+    }
 
     g_fieldProto->defineProperty(ctx, QStringLiteral("doc"), fieldGetDoc);
     g_fieldProto->defineProperty(ctx, QStringLiteral("name"), fieldGetName);
@@ -308,9 +310,11 @@ KJSObject JSField::wrapField(KJSContext *ctx, FormField *field, Page *page)
 
 void JSField::clearCachedFields()
 {
-    if (g_fieldCache.exists())
+    if (g_fieldCache.exists()) {
         g_fieldCache->clear();
+    }
 
-    if (g_buttonCache.exists())
+    if (g_buttonCache.exists()) {
         g_buttonCache->clear();
+    }
 }

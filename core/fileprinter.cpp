@@ -37,12 +37,15 @@ FilePrinter::printFile(QPrinter &printer, const QString &file, QPrinter::Orienta
 static Document::PrintError doKProcessExecute(const QString &exe, const QStringList &argList)
 {
     const int ret = KProcess::execute(exe, argList);
-    if (ret == -1)
+    if (ret == -1) {
         return Document::PrintingProcessCrashPrintError;
-    if (ret == -2)
+    }
+    if (ret == -2) {
         return Document::PrintingProcessStartPrintError;
-    if (ret < 0)
+    }
+    if (ret < 0) {
         return Document::UnknownPrintError;
+    }
 
     return Document::NoPrintError;
 }
@@ -254,16 +257,21 @@ bool FilePrinter::detectCupsService()
 
 bool FilePrinter::detectCupsConfig()
 {
-    if (QFile::exists(QStringLiteral("/etc/cups/cupsd.conf")))
+    if (QFile::exists(QStringLiteral("/etc/cups/cupsd.conf"))) {
         return true;
-    if (QFile::exists(QStringLiteral("/usr/etc/cups/cupsd.conf")))
+    }
+    if (QFile::exists(QStringLiteral("/usr/etc/cups/cupsd.conf"))) {
         return true;
-    if (QFile::exists(QStringLiteral("/usr/local/etc/cups/cupsd.conf")))
+    }
+    if (QFile::exists(QStringLiteral("/usr/local/etc/cups/cupsd.conf"))) {
         return true;
-    if (QFile::exists(QStringLiteral("/opt/etc/cups/cupsd.conf")))
+    }
+    if (QFile::exists(QStringLiteral("/opt/etc/cups/cupsd.conf"))) {
         return true;
-    if (QFile::exists(QStringLiteral("/opt/local/etc/cups/cupsd.conf")))
+    }
+    if (QFile::exists(QStringLiteral("/opt/local/etc/cups/cupsd.conf"))) {
         return true;
+    }
     return false;
 }
 

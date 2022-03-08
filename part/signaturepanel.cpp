@@ -71,8 +71,9 @@ void SignaturePanel::activated(const QModelIndex &index)
 {
     Q_D(SignaturePanel);
     d->m_currentForm = d->m_model->data(index, SignatureModel::FormRole).value<const Okular::FormFieldSignature *>();
-    if (!d->m_currentForm)
+    if (!d->m_currentForm) {
         return;
+    }
     const Okular::NormalizedRect nr = d->m_currentForm->rect();
     Okular::DocumentViewport vp;
     vp.pageNumber = d->m_model->data(index, SignatureModel::PageRole).toInt();
@@ -87,8 +88,9 @@ void SignaturePanel::activated(const QModelIndex &index)
 void SignaturePanel::slotShowContextMenu()
 {
     Q_D(SignaturePanel);
-    if (!d->m_currentForm)
+    if (!d->m_currentForm) {
         return;
+    }
 
     QMenu *menu = new QMenu(this);
     if (d->m_currentForm->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
@@ -119,8 +121,9 @@ void SignaturePanel::signUnsignedSignature()
 
 void SignaturePanel::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
 {
-    if (!(setupFlags & Okular::DocumentObserver::UrlChanged))
+    if (!(setupFlags & Okular::DocumentObserver::UrlChanged)) {
         return;
+    }
 
     Q_D(SignaturePanel);
     const QVector<const Okular::FormFieldSignature *> signatureForms = SignatureGuiUtils::getSignatureFormFields(d->m_document);

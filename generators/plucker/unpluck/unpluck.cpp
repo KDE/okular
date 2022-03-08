@@ -115,8 +115,9 @@ static unsigned int UncompressZLib(unsigned char *src,     /* in:  compressed do
     memset(&z, 0, sizeof z);
 
     if (owner_id != nullptr) {
-        for (i = 0; i < keylen; i++)
+        for (i = 0; i < keylen; i++) {
             keybuf[i] = src[i] ^ owner_id[i];
+        }
         z.next_in = keybuf;
         z.avail_in = keylen;
 
@@ -143,8 +144,9 @@ static unsigned int UncompressZLib(unsigned char *src,     /* in:  compressed do
 
     } while (err == Z_OK);
 
-    if (err != Z_STREAM_END)
+    if (err != Z_STREAM_END) {
         return err;
+    }
 
     assert(z.total_out == dest_len);
 
@@ -162,24 +164,30 @@ static unsigned int UncompressZLib(unsigned char *src,     /* in:  compressed do
 
 static void FreePluckerDoc(plkr_Document *doc)
 {
-    if (doc->name != nullptr)
+    if (doc->name != nullptr) {
         free(doc->name);
-    if (doc->title != nullptr)
+    }
+    if (doc->title != nullptr) {
         free(doc->title);
-    if (doc->author != nullptr)
+    }
+    if (doc->author != nullptr) {
         free(doc->author);
+    }
     if (doc->records != nullptr) {
         int i;
         for (i = 0; i < doc->nrecords; i++) {
-            if (doc->records[i].cache != nullptr)
+            if (doc->records[i].cache != nullptr) {
                 free(doc->records[i].cache);
+            }
         }
         free(doc->records);
     }
-    if (doc->urls != nullptr)
+    if (doc->urls != nullptr) {
         free(doc->urls);
-    if (doc->handle != nullptr)
+    }
+    if (doc->handle != nullptr) {
         doc->handle->free(doc->handle);
+    }
     free(doc);
 }
 
@@ -193,12 +201,13 @@ static plkr_DataRecord *FindRecordByIndex(plkr_Document *doc, int record_index)
         itest = imin + (imax - imin) / 2;
         /* _plkr_message("imin = %2d, imax = %2d, itest = %2d (%2d), record_index = %2d",
            imin, imax, itest, doc->records[itest].uid, record_index); */
-        if (doc->records[itest].uid == record_index)
+        if (doc->records[itest].uid == record_index) {
             return &doc->records[itest];
-        else if (record_index > doc->records[itest].uid)
+        } else if (record_index > doc->records[itest].uid) {
             imin = itest + 1;
-        else if (record_index < doc->records[itest].uid)
+        } else if (record_index < doc->records[itest].uid) {
             imax = itest;
+        }
     }
     return nullptr;
 }
@@ -228,8 +237,9 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
 
     /* figure size needed */
     size_needed = record->uncompressed_size + 8;
-    if ((record->type == PLKR_DRTYPE_TEXT_COMPRESSED) || (record->type == PLKR_DRTYPE_TEXT))
+    if ((record->type == PLKR_DRTYPE_TEXT_COMPRESSED) || (record->type == PLKR_DRTYPE_TEXT)) {
         size_needed += 4 * record->nparagraphs;
+    }
 
     if (!buffer) {
         if (buffer_out == nullptr) {
@@ -264,8 +274,9 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
             if (!handle->seek(handle, record->offset) || (handle->read(handle, buf, record->size, record->size) != record->size)) {
                 _plkr_message("Bad read from DBHandle while reading record %d", record->uid);
                 free(buf);
-                if (tbuffer != buffer)
+                if (tbuffer != buffer) {
                     free(tbuffer);
+                }
                 return FALSE;
             }
 
@@ -288,16 +299,18 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
                 if (UncompressZLib(start_of_data, len_of_data, output_ptr, buf_to_use, (doc->owner_id_required ? doc->owner_id_key : nullptr)) != Z_OK) {
                     _plkr_message("Bad Zlib uncompress of record %d", record_index);
                     free(buf);
-                    if (tbuffer != buffer)
+                    if (tbuffer != buffer) {
                         free(tbuffer);
+                    }
                     return FALSE;
                 };
             } else if (doc->compression == PLKR_COMPRESSION_DOC) {
                 if (UncompressDOC(start_of_data, len_of_data, output_ptr, buf_to_use) != 1) {
                     _plkr_message("Bad DOC uncompress of record %d", record_index);
                     free(buf);
-                    if (tbuffer != buffer)
+                    if (tbuffer != buffer) {
                         free(tbuffer);
+                    }
                     return FALSE;
                 };
             }
@@ -306,19 +319,23 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
             /* all the record types which don't use compression */
             if (!handle->seek(handle, record->offset) || (handle->read(handle, tbuffer, blen, size_needed) != size_needed)) {
                 _plkr_message("Bad read from DBHandle while reading record %d", record->uid);
-                if (tbuffer != buffer)
+                if (tbuffer != buffer) {
                     free(tbuffer);
+                }
                 return FALSE;
             }
         }
     }
 
-    if (record_out)
+    if (record_out) {
         *record_out = record;
-    if (buffer_out)
+    }
+    if (buffer_out) {
         *buffer_out = tbuffer;
-    if (buffer_size_out)
+    }
+    if (buffer_size_out) {
         *buffer_size_out = size_needed;
+    }
     return TRUE;
 }
 
@@ -486,8 +503,9 @@ static int ParseURLs(plkr_Document *newdoc, plkr_DBHandle handle)
     return TRUE;
 
 errout4:
-    if (buf != nullptr)
+    if (buf != nullptr) {
         free(buf);
+    }
     free(urls);
     free(records);
     return FALSE;
@@ -557,11 +575,11 @@ plkr_Document *plkr_OpenDoc(plkr_DBHandle handle)
     }
     newdoc->records[0].uid = 1;
     compression = (utilbuf[2] << 8) + utilbuf[3];
-    if (compression == PLKR_COMPRESSION_DOC)
+    if (compression == PLKR_COMPRESSION_DOC) {
         newdoc->compression = PLKR_COMPRESSION_DOC;
-    else if (compression == PLKR_COMPRESSION_ZLIB)
+    } else if (compression == PLKR_COMPRESSION_ZLIB) {
         newdoc->compression = PLKR_COMPRESSION_ZLIB;
-    else {
+    } else {
         _plkr_message("Unknown compression type %d", compression);
         FreePluckerDoc(newdoc);
         return nullptr;
@@ -668,9 +686,9 @@ plkr_Document *plkr_OpenDoc(plkr_DBHandle handle)
     /* now do the rest of the reserved records */
 
     for (i = 0; i < nreserved; i++) {
-        if (reserved[i].name == PLKR_HOME_NAME)
+        if (reserved[i].name == PLKR_HOME_NAME) {
             newdoc->home_record_uid = reserved[i].uid;
-        else if (reserved[i].name == PLKR_DEFAULT_CATEGORY_NAME) {
+        } else if (reserved[i].name == PLKR_DEFAULT_CATEGORY_NAME) {
             newdoc->default_category_record_uid = reserved[i].uid;
             if (!ParseCategories(newdoc, handle)) {
                 _plkr_message("Error parsing default-categories record");
@@ -754,8 +772,9 @@ static void FpFree(plkr_DBHandle handle)
 {
     int fp = handle->dbprivate;
 
-    if (fp > 0)
+    if (fp > 0) {
         close(fp);
+    }
 }
 
 static long FpSize(plkr_DBHandle handle)
@@ -793,8 +812,9 @@ plkr_Document *plkr_OpenDBFile(const char *filename)
     handle->free = FpFree;
     handle->size = FpSize;
     doc = plkr_OpenDoc(handle);
-    if (doc == nullptr)
+    if (doc == nullptr) {
         close(fp);
+    }
     return doc;
 }
 
@@ -811,12 +831,13 @@ int plkr_CopyRecordBytes(plkr_Document *doc, int record_index, unsigned char *ou
     plkr_DataRecord *record;
     int output_size;
 
-    if (!FindRecordByIndex(doc, record_index))
+    if (!FindRecordByIndex(doc, record_index)) {
         return 0;
+    }
 
-    if (!GetUncompressedRecord(doc, doc->handle, record_index, output_buffer, output_buffer_size, PLKR_DRTYPE_NONE, nullptr, &output_size, &record))
+    if (!GetUncompressedRecord(doc, doc->handle, record_index, output_buffer, output_buffer_size, PLKR_DRTYPE_NONE, nullptr, &output_size, &record)) {
         return 0;
-    else {
+    } else {
         *type = record->type;
         return output_size;
     }
@@ -827,12 +848,13 @@ unsigned char *plkr_GetRecordBytes(plkr_Document *doc, int record_index, int *si
     plkr_DataRecord *record;
     unsigned char *buf;
 
-    if (!FindRecordByIndex(doc, record_index))
+    if (!FindRecordByIndex(doc, record_index)) {
         return nullptr;
+    }
 
-    if (!GetUncompressedRecord(doc, doc->handle, record_index, nullptr, 0, PLKR_DRTYPE_NONE, &buf, size, &record))
+    if (!GetUncompressedRecord(doc, doc->handle, record_index, nullptr, 0, PLKR_DRTYPE_NONE, &buf, size, &record)) {
         return nullptr;
-    else {
+    } else {
         if (!record->cache) {
             record->cache = buf;
             record->cached_size = *size;
@@ -869,10 +891,11 @@ int plkr_GetDefaultCharset(plkr_Document *doc)
 
 unsigned long plkr_GetPublicationTime(plkr_Document *doc)
 {
-    if (doc->publication_time)
+    if (doc->publication_time) {
         return (unsigned long)doc->publication_time;
-    else
+    } else {
         return (unsigned long)doc->creation_time;
+    }
 }
 
 plkr_CategoryList plkr_GetDefaultCategories(plkr_Document *doc)
@@ -892,10 +915,11 @@ int plkr_GetMaxRecordSize(plkr_Document *doc)
 
 char *plkr_GetRecordURL(plkr_Document *doc, int record_index)
 {
-    if (record_index < 1 || record_index > doc->nurls)
+    if (record_index < 1 || record_index > doc->nurls) {
         return nullptr;
-    else
+    } else {
         return (doc->urls[record_index - 1]);
+    }
 }
 
 int plkr_HasRecordWithID(plkr_Document *doc, int record_index)
@@ -908,10 +932,11 @@ int plkr_GetRecordType(plkr_Document *doc, int record_index)
     plkr_DataRecord *r;
 
     r = FindRecordByIndex(doc, record_index);
-    if (r)
+    if (r) {
         return r->type;
-    else
+    } else {
         return PLKR_DRTYPE_NONE;
+    }
 }
 
 int plkr_GetRecordCharset(plkr_Document *doc, int record_index)
@@ -920,10 +945,12 @@ int plkr_GetRecordCharset(plkr_Document *doc, int record_index)
 
     r = FindRecordByIndex(doc, record_index);
     if (r && ((r->type == PLKR_DRTYPE_TEXT_COMPRESSED) || (r->type == PLKR_DRTYPE_TEXT))) {
-        if (r->charset_mibenum == 0)
+        if (r->charset_mibenum == 0) {
             return doc->default_charset_mibenum;
-        else
+        } else {
             return r->charset_mibenum;
-    } else
+        }
+    } else {
         return 0;
+    }
 }

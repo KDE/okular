@@ -51,8 +51,9 @@ static void OCGSetState(KJSContext *ctx, void *object, KJSObject value)
 void JSOCG::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_OCGProto = new KJSPrototype();

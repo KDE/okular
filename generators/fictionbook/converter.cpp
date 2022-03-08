@@ -189,22 +189,27 @@ QTextDocument *Converter::convert(const QString &fileName)
      * Add document info.
      */
     if (mTitleInfo) {
-        if (!mTitleInfo->mTitle.isEmpty())
+        if (!mTitleInfo->mTitle.isEmpty()) {
             emit addMetaData(Okular::DocumentInfo::Title, mTitleInfo->mTitle);
+        }
 
-        if (!mTitleInfo->mAuthor.isEmpty())
+        if (!mTitleInfo->mAuthor.isEmpty()) {
             emit addMetaData(Okular::DocumentInfo::Author, mTitleInfo->mAuthor);
+        }
 
-        if (!mTitleInfo->mKeywords.isEmpty())
+        if (!mTitleInfo->mKeywords.isEmpty()) {
             emit addMetaData(Okular::DocumentInfo::Keywords, mTitleInfo->mKeywords);
+        }
     }
 
     if (mDocumentInfo) {
-        if (!mDocumentInfo->mProducer.isEmpty())
+        if (!mDocumentInfo->mProducer.isEmpty()) {
             emit addMetaData(Okular::DocumentInfo::Producer, mDocumentInfo->mProducer);
+        }
 
-        if (mDocumentInfo->mDate.isValid())
+        if (mDocumentInfo->mDate.isValid()) {
             emit addMetaData(Okular::DocumentInfo::CreationDate, QLocale().toString(mDocumentInfo->mDate, QLocale::ShortFormat));
+        }
     }
 
     QMapIterator<QString, QPair<int, int>> it(mLocalLinks);
@@ -212,8 +217,9 @@ QTextDocument *Converter::convert(const QString &fileName)
         it.next();
 
         const QTextBlock block = mSectionMap[it.key()];
-        if (!block.isValid()) // local link without existing target
+        if (!block.isValid()) { // local link without existing target
             continue;
+        }
 
         Okular::DocumentViewport viewport = calculateViewport(mTextDocument, block);
 
@@ -233,17 +239,21 @@ bool Converter::convertBody(const QDomElement &element)
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("section")) {
             mCursor->insertBlock();
-            if (!convertSection(child))
+            if (!convertSection(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child))
+            if (!convertImage(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("title")) {
-            if (!convertTitle(child))
+            if (!convertTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("epigraph")) {
-            if (!convertEpigraph(child))
+            if (!convertEpigraph(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -257,12 +267,14 @@ bool Converter::convertDescription(const QDomElement &element)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("title-info")) {
-            if (!convertTitleInfo(child))
+            if (!convertTitleInfo(child)) {
                 return false;
+            }
         }
         if (child.tagName() == QLatin1String("document-info")) {
-            if (!convertDocumentInfo(child))
+            if (!convertDocumentInfo(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -280,41 +292,50 @@ bool Converter::convertTitleInfo(const QDomElement &element)
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("genre")) {
             QString genre;
-            if (!convertTextNode(child, genre))
+            if (!convertTextNode(child, genre)) {
                 return false;
+            }
 
-            if (!genre.isEmpty())
+            if (!genre.isEmpty()) {
                 mTitleInfo->mGenres.append(genre);
+            }
         } else if (child.tagName() == QLatin1String("author")) {
             QString firstName, middleName, lastName, dummy;
 
-            if (!convertAuthor(child, firstName, middleName, lastName, dummy, dummy))
+            if (!convertAuthor(child, firstName, middleName, lastName, dummy, dummy)) {
                 return false;
+            }
 
-            if (mTitleInfo->mAuthor.isEmpty())
+            if (mTitleInfo->mAuthor.isEmpty()) {
                 mTitleInfo->mAuthor = QStringLiteral("%1 %2 %3").arg(firstName, middleName, lastName).simplified();
-            else
+            } else {
                 mTitleInfo->mAuthor += QStringLiteral(", %1 %2 %3").arg(firstName, middleName, lastName).simplified();
+            }
         } else if (child.tagName() == QLatin1String("book-title")) {
-            if (!convertTextNode(child, mTitleInfo->mTitle))
+            if (!convertTextNode(child, mTitleInfo->mTitle)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("keywords")) {
             QString keywords;
-            if (!convertTextNode(child, keywords))
+            if (!convertTextNode(child, keywords)) {
                 return false;
+            }
 
             mTitleInfo->mKeywords = keywords;
         } else if (child.tagName() == QLatin1String("annotation")) {
-            if (!convertAnnotation(child, mTitleInfo->mAnnotation))
+            if (!convertAnnotation(child, mTitleInfo->mAnnotation)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("date")) {
-            if (!convertDate(child, mTitleInfo->mDate))
+            if (!convertDate(child, mTitleInfo->mDate)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("coverpage")) {
             mTitleInfo->mCoverPage = child;
         } else if (child.tagName() == QLatin1String("lang")) {
-            if (!convertTextNode(child, mTitleInfo->mLanguage))
+            if (!convertTextNode(child, mTitleInfo->mLanguage)) {
                 return false;
+            }
         }
         child = child.nextSiblingElement();
     }
@@ -332,22 +353,27 @@ bool Converter::convertDocumentInfo(const QDomElement &element)
         if (child.tagName() == QLatin1String("author")) {
             QString firstName, middleName, lastName, email, nickname;
 
-            if (!convertAuthor(child, firstName, middleName, lastName, email, nickname))
+            if (!convertAuthor(child, firstName, middleName, lastName, email, nickname)) {
                 return false;
+            }
 
             mDocumentInfo->mAuthor = QStringLiteral("%1 %2 %3 <%4> (%5)").arg(firstName, middleName, lastName, email, nickname);
         } else if (child.tagName() == QLatin1String("program-used")) {
-            if (!convertTextNode(child, mDocumentInfo->mProducer))
+            if (!convertTextNode(child, mDocumentInfo->mProducer)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("date")) {
-            if (!convertDate(child, mDocumentInfo->mDate))
+            if (!convertDate(child, mDocumentInfo->mDate)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("id")) {
-            if (!convertTextNode(child, mDocumentInfo->mId))
+            if (!convertTextNode(child, mDocumentInfo->mId)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("version")) {
-            if (!convertTextNode(child, mDocumentInfo->mVersion))
+            if (!convertTextNode(child, mDocumentInfo->mVersion)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -360,20 +386,25 @@ bool Converter::convertAuthor(const QDomElement &element, QString &firstName, QS
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("first-name")) {
-            if (!convertTextNode(child, firstName))
+            if (!convertTextNode(child, firstName)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("middle-name")) {
-            if (!convertTextNode(child, middleName))
+            if (!convertTextNode(child, middleName)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("last-name")) {
-            if (!convertTextNode(child, lastName))
+            if (!convertTextNode(child, lastName)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("email")) {
-            if (!convertTextNode(child, email))
+            if (!convertTextNode(child, email)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("nickname")) {
-            if (!convertTextNode(child, nickname))
+            if (!convertTextNode(child, nickname)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -387,8 +418,9 @@ bool Converter::convertTextNode(const QDomElement &element, QString &data)
     QDomNode child = element.firstChild();
     while (!child.isNull()) {
         QDomText text = child.toText();
-        if (!text.isNull())
+        if (!text.isNull()) {
             data = text.data();
+        }
 
         child = child.nextSibling();
     }
@@ -398,8 +430,9 @@ bool Converter::convertTextNode(const QDomElement &element, QString &data)
 
 bool Converter::convertDate(const QDomElement &element, QDate &date)
 {
-    if (element.hasAttribute(QStringLiteral("value")))
+    if (element.hasAttribute(QStringLiteral("value"))) {
         date = QDate::fromString(element.attribute(QStringLiteral("value")), Qt::ISODate);
+    }
 
     return true;
 }
@@ -409,8 +442,9 @@ bool Converter::convertAnnotation(const QDomElement &element, QString &data)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         QString text = child.text();
-        if (!text.isNull())
+        if (!text.isNull()) {
             data = child.text();
+        }
 
         child = child.nextSiblingElement();
     }
@@ -420,49 +454,61 @@ bool Converter::convertAnnotation(const QDomElement &element, QString &data)
 
 bool Converter::convertSection(const QDomElement &element)
 {
-    if (element.hasAttribute(QStringLiteral("id")))
+    if (element.hasAttribute(QStringLiteral("id"))) {
         mSectionMap.insert(element.attribute(QStringLiteral("id")), mCursor->block());
+    }
 
     mSectionCounter++;
 
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("title")) {
-            if (!convertTitle(child))
+            if (!convertTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("epigraph")) {
-            if (!convertEpigraph(child))
+            if (!convertEpigraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child))
+            if (!convertImage(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("section")) {
-            if (!convertSection(child))
+            if (!convertSection(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("p")) {
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("poem")) {
-            if (!convertPoem(child))
+            if (!convertPoem(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("subtitle")) {
-            if (!convertSubTitle(child))
+            if (!convertSubTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("cite")) {
-            if (!convertCite(child))
+            if (!convertCite(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child))
+            if (!convertEmptyLine(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("code")) {
-            if (!convertCode(child))
+            if (!convertCode(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("table")) {
-            if (!convertTable(child))
+            if (!convertTable(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -489,10 +535,11 @@ bool Converter::convertTitle(const QDomElement &element)
     bool firstParagraph = true;
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("p")) {
-            if (firstParagraph)
+            if (firstParagraph) {
                 firstParagraph = false;
-            else
+            } else {
                 mCursor->insertBlock();
+            }
 
             QTextCharFormat origFormat = mCursor->charFormat();
 
@@ -501,16 +548,18 @@ bool Converter::convertTitle(const QDomElement &element)
             titleFormat.setFontWeight(QFont::Bold);
             mCursor->setCharFormat(titleFormat);
 
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
 
             mCursor->setCharFormat(origFormat);
 
             emit addTitle(mSectionCounter, child.text(), mCursor->block());
 
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child))
+            if (!convertEmptyLine(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -528,32 +577,41 @@ bool Converter::convertParagraph(const QDomElement &element)
         if (child.isElement()) {
             const QDomElement childElement = child.toElement();
             if (childElement.tagName() == QLatin1String("emphasis")) {
-                if (!convertEmphasis(childElement))
+                if (!convertEmphasis(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("strong")) {
-                if (!convertStrong(childElement))
+                if (!convertStrong(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("style")) {
-                if (!convertStyle(childElement))
+                if (!convertStyle(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("a")) {
-                if (!convertLink(childElement))
+                if (!convertLink(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("image")) {
-                if (!convertImage(childElement))
+                if (!convertImage(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("strikethrough")) {
-                if (!convertStrikethrough(childElement))
+                if (!convertStrikethrough(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("code")) {
-                if (!convertCode(childElement))
+                if (!convertCode(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("sup")) {
-                if (!convertSuperScript(childElement))
+                if (!convertSuperScript(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("sub")) {
-                if (!convertSubScript(childElement))
+                if (!convertSubScript(childElement)) {
                     return false;
+                }
             }
         } else if (child.isText()) {
             const QDomText childText = child.toText();
@@ -574,8 +632,9 @@ bool Converter::convertEmphasis(const QDomElement &element)
     italicFormat.setFontItalic(true);
     mCursor->setCharFormat(italicFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -590,8 +649,9 @@ bool Converter::convertStrikethrough(const QDomElement &element)
     strikeoutFormat.setFontStrikeOut(true);
     mCursor->setCharFormat(strikeoutFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -606,8 +666,9 @@ bool Converter::convertStrong(const QDomElement &element)
     boldFormat.setFontWeight(QFont::Bold);
     mCursor->setCharFormat(boldFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -616,8 +677,9 @@ bool Converter::convertStrong(const QDomElement &element)
 
 bool Converter::convertStyle(const QDomElement &element)
 {
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     return true;
 }
@@ -640,8 +702,9 @@ bool Converter::convertCover(const QDomElement &element)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child))
+            if (!convertImage(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -654,16 +717,18 @@ bool Converter::convertImage(const QDomElement &element)
 {
     QString href = element.attributeNS(QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("href"));
 
-    if (href.startsWith(QLatin1Char('#')))
+    if (href.startsWith(QLatin1Char('#'))) {
         href = href.mid(1);
+    }
 
     const QImage img = qvariant_cast<QImage>(mTextDocument->resource(QTextDocument::ImageResource, QUrl(href)));
 
     QTextImageFormat format;
     format.setName(href);
 
-    if (img.width() > 560)
+    if (img.width() > 560) {
         format.setWidth(560);
+    }
 
     format.setHeight(img.height());
 
@@ -680,23 +745,28 @@ bool Converter::convertEpigraph(const QDomElement &element)
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("poem")) {
-            if (!convertPoem(child))
+            if (!convertPoem(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("cite")) {
-            if (!convertCite(child))
+            if (!convertCite(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child))
+            if (!convertEmptyLine(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("text-author")) {
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -710,23 +780,28 @@ bool Converter::convertPoem(const QDomElement &element)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("title")) {
-            if (!convertTitle(child))
+            if (!convertTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("epigraph")) {
-            if (!convertEpigraph(child))
+            if (!convertEpigraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child))
+            if (!convertEmptyLine(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("stanza")) {
-            if (!convertStanza(child))
+            if (!convertStanza(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("text-author")) {
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -764,26 +839,32 @@ bool Converter::convertCite(const QDomElement &element)
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("poem")) {
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("text-author")) {
             QTextBlockFormat format;
             format.setTextIndent(10);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child))
+            if (!convertEmptyLine(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("subtitle")) {
-            if (!convertSubTitle(child))
+            if (!convertSubTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("table")) {
-            if (!convertTable(child))
+            if (!convertTable(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -803,8 +884,9 @@ bool Converter::convertLink(const QDomElement &element)
     QString href = element.attributeNS(QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("href"));
     QString type = element.attributeNS(QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("type"));
 
-    if (type == QLatin1String("note"))
+    if (type == QLatin1String("note")) {
         mCursor->insertText(QStringLiteral("["));
+    }
 
     int startPosition = mCursor->position();
 
@@ -820,14 +902,17 @@ bool Converter::convertLink(const QDomElement &element)
         if (child.isElement()) {
             const QDomElement childElement = child.toElement();
             if (childElement.tagName() == QLatin1String("emphasis")) {
-                if (!convertEmphasis(childElement))
+                if (!convertEmphasis(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("strong")) {
-                if (!convertStrong(childElement))
+                if (!convertStrong(childElement)) {
                     return false;
+                }
             } else if (childElement.tagName() == QLatin1String("style")) {
-                if (!convertStyle(childElement))
+                if (!convertStyle(childElement)) {
                     return false;
+                }
             }
         } else if (child.isText()) {
             const QDomText text = child.toText();
@@ -842,8 +927,9 @@ bool Converter::convertLink(const QDomElement &element)
 
     int endPosition = mCursor->position();
 
-    if (type == QLatin1String("note"))
+    if (type == QLatin1String("note")) {
         mCursor->insertText(QStringLiteral("]"));
+    }
 
     if (href.startsWith(QLatin1Char('#'))) { // local link
         mLocalLinks.insert(href.mid(1), QPair<int, int>(startPosition, endPosition));
@@ -861,17 +947,20 @@ bool Converter::convertStanza(const QDomElement &element)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("title")) {
-            if (!convertTitle(child))
+            if (!convertTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("subtitle")) {
-            if (!convertSubTitle(child))
+            if (!convertSubTitle(child)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("v")) {
             QTextBlockFormat format;
             format.setTextIndent(50);
             mCursor->insertBlock(format);
-            if (!convertParagraph(child))
+            if (!convertParagraph(child)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -888,8 +977,9 @@ bool Converter::convertCode(const QDomElement &element)
     codeFormat.setFontFamily(QStringLiteral("monospace"));
     mCursor->setCharFormat(codeFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -904,8 +994,9 @@ bool Converter::convertSuperScript(const QDomElement &element)
     superScriptFormat.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
     mCursor->setCharFormat(superScriptFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -920,8 +1011,9 @@ bool Converter::convertSubScript(const QDomElement &element)
     subScriptFormat.setVerticalAlignment(QTextCharFormat::AlignSubScript);
     mCursor->setCharFormat(subScriptFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     mCursor->setCharFormat(origFormat);
 
@@ -945,8 +1037,9 @@ bool Converter::convertTable(const QDomElement &element)
                 table = mCursor->insertTable(1, 1, tableFormat);
             }
 
-            if (!convertTableRow(child, *table))
+            if (!convertTableRow(child, *table)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -963,11 +1056,13 @@ bool Converter::convertTableRow(const QDomElement &element, QTextTable &table)
     int column = 0;
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("th")) {
-            if (!convertTableHeaderCell(child, table, column))
+            if (!convertTableHeaderCell(child, table, column)) {
                 return false;
+            }
         } else if (child.tagName() == QLatin1String("td")) {
-            if (!convertTableCell(child, table, column))
+            if (!convertTableCell(child, table, column)) {
                 return false;
+            }
         }
 
         child = child.nextSiblingElement();
@@ -1031,8 +1126,9 @@ bool Converter::convertTableCellHelper(const QDomElement &element, QTextTable &t
     format.setAlignment(alignment);
     mCursor->insertBlock(format, charFormat);
 
-    if (!convertParagraph(element))
+    if (!convertParagraph(element)) {
         return false;
+    }
 
     column += colspan;
     return true;

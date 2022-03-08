@@ -39,16 +39,19 @@ static KJSObject crackURL(KJSContext *context, void *, const KJSArguments &argum
 
     KJSObject obj;
     obj.setProperty(context, QStringLiteral("cScheme"), url.scheme());
-    if (!url.userName().isEmpty())
+    if (!url.userName().isEmpty()) {
         obj.setProperty(context, QStringLiteral("cUser"), url.userName());
-    if (!url.password().isEmpty())
+    }
+    if (!url.password().isEmpty()) {
         obj.setProperty(context, QStringLiteral("cPassword"), url.password());
+    }
     obj.setProperty(context, QStringLiteral("cHost"), url.host());
     obj.setProperty(context, QStringLiteral("nPort"), url.port(80));
     // TODO cPath       (Optional) The path portion of the URL.
     // TODO cParameters (Optional) The parameter string portion of the URL.
-    if (url.hasFragment())
+    if (url.hasFragment()) {
         obj.setProperty(context, QStringLiteral("cFragments"), url.fragment(QUrl::FullyDecoded));
+    }
 
     return obj;
 }
@@ -74,18 +77,20 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
             break;
         case 2:
             format = defaultLocale.dateTimeFormat(QLocale::ShortFormat);
-            if (!format.contains(QStringLiteral("ss")))
+            if (!format.contains(QStringLiteral("ss"))) {
                 format.insert(format.indexOf(QStringLiteral("mm")) + 2, QStringLiteral(":ss"));
+            }
             break;
         }
     } else {
         format = arguments.at(0).toString(context).replace(QLatin1String("tt"), QLatin1String("ap"));
         format.replace('t', 'a');
         for (QChar &formatChar : format) {
-            if (formatChar == 'M')
+            if (formatChar == 'M') {
                 formatChar = 'm';
-            else if (formatChar == 'm')
+            } else if (formatChar == 'm') {
                 formatChar = 'M';
+            }
         }
     }
 
@@ -173,8 +178,9 @@ static KJSObject stringToNumber(KJSContext *context, void *, const KJSArguments 
 void JSUtil::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_utilProto = new KJSPrototype();

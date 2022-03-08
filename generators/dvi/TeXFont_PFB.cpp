@@ -63,8 +63,9 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
         FT_Set_Transform(face, &transformationMatrix, nullptr);
     }
 
-    if (face->family_name != nullptr)
+    if (face->family_name != nullptr) {
         parent->fullFontName = QString::fromLocal8Bit(face->family_name);
+    }
 
     // Finally, we need to set up the charMap array, which maps TeX
     // character codes to glyph indices in the font. (Remark: the
@@ -107,22 +108,25 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 #ifdef DEBUG_PFB
             qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font.";
 #endif
-            for (int i = 0; i < 256; i++)
+            for (int i = 0; i < 256; i++) {
                 charMap[i] = FT_Get_Char_Index(face, i);
+            }
         } else {
             if ((found == nullptr) && (face->charmap != nullptr)) {
 #ifdef DEBUG_PFB
                 qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=" << face->charmap->platform_id << ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
 #endif
-                for (int i = 0; i < 256; i++)
+                for (int i = 0; i < 256; i++) {
                     charMap[i] = FT_Get_Char_Index(face, i);
+                }
             } else {
                 // As a last resort, we use the identity map.
 #ifdef DEBUG_PFB
                 qCDebug(OkularDviDebug) << "No encoding given, no suitable charmaps found in the font: using identity charmap.";
 #endif
-                for (int i = 0; i < 256; i++)
+                for (int i = 0; i < 256; i++) {
                     charMap[i] = i;
+                }
             }
         }
     }
@@ -148,8 +152,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
     // This is the address of the glyph that will be returned.
     glyph *g = glyphtable + ch;
 
-    if (fatalErrorInFontLoading == true)
+    if (fatalErrorInFontLoading == true) {
         return g;
+    }
 
     if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color))) {
         int error;
@@ -163,8 +168,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         error = FT_Set_Char_Size(face, 0, characterSize_in_printers_points_by_64, res, res);
         if (error) {
             QString msg = i18n("FreeType reported an error when setting the character size for font file %1.", parent->filename);
-            if (errorMessage.isEmpty())
+            if (errorMessage.isEmpty()) {
                 errorMessage = msg;
+            }
             qCCritical(OkularDviDebug) << msg << endl;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
@@ -172,15 +178,17 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         }
 
         // load glyph image into the slot and erase the previous one
-        if (parent->font_pool->getUseFontHints() == true)
+        if (parent->font_pool->getUseFontHints() == true) {
             error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_DEFAULT);
-        else
+        } else {
             error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_HINTING);
+        }
 
         if (error) {
             QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.", ch, parent->filename);
-            if (errorMessage.isEmpty())
+            if (errorMessage.isEmpty()) {
                 errorMessage = msg;
+            }
             qCCritical(OkularDviDebug) << msg << endl;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
@@ -191,8 +199,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         error = FT_Render_Glyph(face->glyph, ft_render_mode_normal);
         if (error) {
             QString msg = i18n("FreeType is unable to render glyph #%1 from font file %2.", ch, parent->filename);
-            if (errorMessage.isEmpty())
+            if (errorMessage.isEmpty()) {
                 errorMessage = msg;
+            }
             qCCritical(OkularDviDebug) << msg << endl;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
@@ -202,8 +211,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         FT_GlyphSlot slot = face->glyph;
 
         if ((slot->bitmap.width == 0) || (slot->bitmap.rows == 0)) {
-            if (errorMessage.isEmpty())
+            if (errorMessage.isEmpty()) {
                 errorMessage = i18n("Glyph #%1 is empty.", ch);
+            }
             qCCritical(OkularDviDebug) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename) << endl;
             g->shrunkenCharacter = QImage(15, 15, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 0, 0));
@@ -270,8 +280,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         int error = FT_Load_Glyph(face, charMap[ch], FT_LOAD_NO_SCALE);
         if (error) {
             QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.", ch, parent->filename);
-            if (errorMessage.isEmpty())
+            if (errorMessage.isEmpty()) {
                 errorMessage = msg;
+            }
             qCCritical(OkularDviDebug) << msg << endl;
             g->dvi_advance_in_units_of_design_size_by_2e20 = 1;
         }

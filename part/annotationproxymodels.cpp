@@ -29,8 +29,9 @@ PageFilterProxyModel::PageFilterProxyModel(QObject *parent)
 
 void PageFilterProxyModel::groupByCurrentPage(bool value)
 {
-    if (mGroupByCurrentPage == value)
+    if (mGroupByCurrentPage == value) {
         return;
+    }
 
     mGroupByCurrentPage = value;
 
@@ -39,22 +40,25 @@ void PageFilterProxyModel::groupByCurrentPage(bool value)
 
 void PageFilterProxyModel::setCurrentPage(int page)
 {
-    if (mCurrentPage == page)
+    if (mCurrentPage == page) {
         return;
+    }
 
     mCurrentPage = page;
 
     // no need to invalidate when we're not showing the current page only
-    if (!mGroupByCurrentPage)
+    if (!mGroupByCurrentPage) {
         return;
+    }
 
     invalidateFilter();
 }
 
 bool PageFilterProxyModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
 {
-    if (!mGroupByCurrentPage)
+    if (!mGroupByCurrentPage) {
         return true;
+    }
 
     const QModelIndex pageIndex = sourceModel()->index(row, 0, sourceParent);
     int page = sourceModel()->data(pageIndex, AnnotationModel::PageRole).toInt();
@@ -73,19 +77,20 @@ int PageGroupProxyModel::columnCount(const QModelIndex &parentIndex) const
     // For top-level and second level we have always only one column
     if (mGroupByPage) {
         if (parentIndex.isValid()) {
-            if (parentIndex.parent().isValid())
+            if (parentIndex.parent().isValid()) {
                 return 0;
-            else {
+            } else {
                 return 1; // second-level
             }
         } else {
             return 1; // top-level
         }
     } else {
-        if (!parentIndex.isValid()) // top-level
+        if (!parentIndex.isValid()) { // top-level
             return 1;
-        else
+        } else {
             return 0;
+        }
     }
     return 1;
 }
@@ -94,54 +99,60 @@ int PageGroupProxyModel::rowCount(const QModelIndex &parentIndex) const
 {
     if (mGroupByPage) {
         if (parentIndex.isValid()) {
-            if (parentIndex.parent().isValid())
+            if (parentIndex.parent().isValid()) {
                 return 0;
-            else {
+            } else {
                 return mTreeIndexes[parentIndex.row()].second.count(); // second-level
             }
         } else {
             return mTreeIndexes.count(); // top-level
         }
     } else {
-        if (!parentIndex.isValid()) // top-level
+        if (!parentIndex.isValid()) { // top-level
             return mIndexes.count();
-        else
+        } else {
             return 0;
+        }
     }
 }
 
 QModelIndex PageGroupProxyModel::index(int row, int column, const QModelIndex &parentIndex) const
 {
-    if (row < 0 || column != 0)
+    if (row < 0 || column != 0) {
         return QModelIndex();
+    }
 
     if (mGroupByPage) {
         if (parentIndex.isValid()) {
-            if (parentIndex.row() >= 0 && parentIndex.row() < mTreeIndexes.count() && row < mTreeIndexes[parentIndex.row()].second.count())
+            if (parentIndex.row() >= 0 && parentIndex.row() < mTreeIndexes.count() && row < mTreeIndexes[parentIndex.row()].second.count()) {
                 return createIndex(row, column, qint32(parentIndex.row() + 1));
-            else
+            } else {
                 return QModelIndex();
+            }
         } else {
-            if (row < mTreeIndexes.count())
+            if (row < mTreeIndexes.count()) {
                 return createIndex(row, column);
-            else
+            } else {
                 return QModelIndex();
+            }
         }
     } else {
-        if (row < mIndexes.count())
+        if (row < mIndexes.count()) {
             return createIndex(row, column, mixIndex(parentIndex.row(), parentIndex.column()));
-        else
+        } else {
             return QModelIndex();
+        }
     }
 }
 
 QModelIndex PageGroupProxyModel::parent(const QModelIndex &idx) const
 {
     if (mGroupByPage) {
-        if (idx.internalId() == 0) // top-level
+        if (idx.internalId() == 0) { // top-level
             return QModelIndex();
-        else
+        } else {
             return index(idx.internalId() - 1, idx.column());
+        }
     } else {
         // We have only top-level items
         return QModelIndex();
@@ -158,8 +169,9 @@ QModelIndex PageGroupProxyModel::mapFromSource(const QModelIndex &sourceIndex) c
         }
     } else {
         for (int i = 0; i < mIndexes.count(); ++i) {
-            if (mIndexes[i] == sourceIndex)
+            if (mIndexes[i] == sourceIndex) {
                 return index(i, 0);
+            }
         }
 
         return QModelIndex();
@@ -168,25 +180,28 @@ QModelIndex PageGroupProxyModel::mapFromSource(const QModelIndex &sourceIndex) c
 
 QModelIndex PageGroupProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    if (!proxyIndex.isValid())
+    if (!proxyIndex.isValid()) {
         return QModelIndex();
+    }
 
     if (mGroupByPage) {
         if (proxyIndex.internalId() == 0) {
-            if (proxyIndex.row() >= mTreeIndexes.count() || proxyIndex.row() < 0)
+            if (proxyIndex.row() >= mTreeIndexes.count() || proxyIndex.row() < 0) {
                 return QModelIndex();
+            }
 
             return mTreeIndexes[proxyIndex.row()].first;
         } else {
-            if (qint32(proxyIndex.internalId()) - 1 >= mTreeIndexes.count() || proxyIndex.row() >= mTreeIndexes[proxyIndex.internalId() - 1].second.count())
+            if (qint32(proxyIndex.internalId()) - 1 >= mTreeIndexes.count() || proxyIndex.row() >= mTreeIndexes[proxyIndex.internalId() - 1].second.count()) {
                 return QModelIndex();
+            }
 
             return mTreeIndexes[proxyIndex.internalId() - 1].second[proxyIndex.row()];
         }
     } else {
-        if (proxyIndex.column() > 0 || proxyIndex.row() >= mIndexes.count())
+        if (proxyIndex.column() > 0 || proxyIndex.row() >= mIndexes.count()) {
             return QModelIndex();
-        else {
+        } else {
             return mIndexes[proxyIndex.row()];
         }
     }
@@ -251,8 +266,9 @@ void PageGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QM
 
 void PageGroupProxyModel::groupByPage(bool value)
 {
-    if (mGroupByPage == value)
+    if (mGroupByPage == value) {
         return;
+    }
 
     mGroupByPage = value;
 
@@ -299,24 +315,28 @@ public:
     void dump(int level = 0)
     {
         QString prefix;
-        for (int i = 0; i < level; ++i)
+        for (int i = 0; i < level; ++i) {
             prefix += QLatin1Char(' ');
+        }
 
         qCDebug(OkularUiDebug, "%s%s", qPrintable(prefix), (mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation")));
 
-        for (int i = 0; i < mChilds.count(); ++i)
+        for (int i = 0; i < mChilds.count(); ++i) {
             mChilds[i]->dump(level + 2);
+        }
     }
 
     const AuthorGroupItem *findIndex(const QModelIndex &index) const
     {
-        if (index == mIndex)
+        if (index == mIndex) {
             return this;
+        }
 
         for (int i = 0; i < mChilds.count(); ++i) {
             const AuthorGroupItem *item = mChilds[i]->findIndex(index);
-            if (item)
+            if (item) {
                 return item;
+            }
         }
 
         return nullptr;
@@ -391,62 +411,71 @@ int AuthorGroupProxyModel::columnCount(const QModelIndex &) const
 int AuthorGroupProxyModel::rowCount(const QModelIndex &parentIndex) const
 {
     AuthorGroupItem *item = nullptr;
-    if (!parentIndex.isValid())
+    if (!parentIndex.isValid()) {
         item = d->mRoot;
-    else
+    } else {
         item = static_cast<AuthorGroupItem *>(parentIndex.internalPointer());
+    }
 
     return item ? item->childCount() : 0;
 }
 
 QModelIndex AuthorGroupProxyModel::index(int row, int column, const QModelIndex &parentIndex) const
 {
-    if (!hasIndex(row, column, parentIndex))
+    if (!hasIndex(row, column, parentIndex)) {
         return QModelIndex();
+    }
 
     AuthorGroupItem *parentItem = nullptr;
-    if (!parentIndex.isValid())
+    if (!parentIndex.isValid()) {
         parentItem = d->mRoot;
-    else
+    } else {
         parentItem = static_cast<AuthorGroupItem *>(parentIndex.internalPointer());
+    }
 
     AuthorGroupItem *child = parentItem->child(row);
-    if (child)
+    if (child) {
         return createIndex(row, column, child);
-    else
+    } else {
         return QModelIndex();
+    }
 }
 
 QModelIndex AuthorGroupProxyModel::parent(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QModelIndex();
+    }
 
     AuthorGroupItem *childItem = static_cast<AuthorGroupItem *>(index.internalPointer());
     AuthorGroupItem *parentItem = childItem->parent();
 
-    if (parentItem == d->mRoot)
+    if (parentItem == d->mRoot) {
         return QModelIndex();
-    else
+    } else {
         return createIndex(parentItem->row(), 0, parentItem);
+    }
 }
 
 QModelIndex AuthorGroupProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
 {
-    if (!sourceIndex.isValid())
+    if (!sourceIndex.isValid()) {
         return QModelIndex();
+    }
 
     const AuthorGroupItem *item = d->mRoot->findIndex(sourceIndex);
-    if (!item)
+    if (!item) {
         return QModelIndex();
+    }
 
     return createIndex(item->row(), 0, const_cast<AuthorGroupItem *>(item));
 }
 
 QModelIndex AuthorGroupProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    if (!proxyIndex.isValid())
+    if (!proxyIndex.isValid()) {
         return QModelIndex();
+    }
 
     AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
 
@@ -506,12 +535,13 @@ QVariant AuthorGroupProxyModel::data(const QModelIndex &proxyIndex, int role) co
 {
     if (isAuthorItem(proxyIndex)) {
         AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
-        if (role == Qt::DisplayRole)
+        if (role == Qt::DisplayRole) {
             return item->author();
-        else if (role == Qt::DecorationRole)
+        } else if (role == Qt::DecorationRole) {
             return QIcon::fromTheme(item->author().isEmpty() ? QStringLiteral("user-away") : QStringLiteral("user-identity"));
-        else
+        } else {
             return QVariant();
+        }
     } else {
         return QAbstractProxyModel::data(proxyIndex, role);
     }
@@ -537,8 +567,9 @@ Qt::ItemFlags AuthorGroupProxyModel::flags(const QModelIndex &index) const
 
 void AuthorGroupProxyModel::groupByAuthor(bool value)
 {
-    if (d->mGroupByAuthor == value)
+    if (d->mGroupByAuthor == value) {
         return;
+    }
 
     d->mGroupByAuthor = value;
 

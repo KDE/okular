@@ -46,8 +46,9 @@ PageTransition::PageTransition(const PageTransition &other)
 
 PageTransition &PageTransition::operator=(const PageTransition &other)
 {
-    if (this == &other)
+    if (this == &other) {
         return *this;
+    }
 
     *d = *other.d;
 

@@ -148,33 +148,38 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                nYMax = ((double)limits.bottom() / scaledHeight) + crop.top;
         // append all highlights inside limits to their list
         if (canDrawHighlights) {
-            if (!bufferedHighlights)
+            if (!bufferedHighlights) {
                 bufferedHighlights = new QList<QPair<QColor, Okular::NormalizedRect>>();
+            }
             /*            else
                         {*/
 
             Okular::NormalizedRect *limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax);
             QLinkedList<Okular::HighlightAreaRect *>::const_iterator h2It = page->m_highlights.constBegin(), hEnd = page->m_highlights.constEnd();
             Okular::HighlightAreaRect::const_iterator hIt;
-            for (; h2It != hEnd; ++h2It)
+            for (; h2It != hEnd; ++h2It) {
                 for (hIt = (*h2It)->constBegin(); hIt != (*h2It)->constEnd(); ++hIt) {
-                    if ((*hIt).intersects(limitRect))
+                    if ((*hIt).intersects(limitRect)) {
                         bufferedHighlights->append(qMakePair((*h2It)->color, *hIt));
+                    }
                 }
+            }
             delete limitRect;
             //}
         }
         if (canDrawTextSelection) {
-            if (!bufferedHighlights)
+            if (!bufferedHighlights) {
                 bufferedHighlights = new QList<QPair<QColor, Okular::NormalizedRect>>();
+            }
             /*            else
                         {*/
             Okular::NormalizedRect *limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax);
             const Okular::RegularAreaRect *textSelection = page->textSelection();
             Okular::HighlightAreaRect::const_iterator hIt = textSelection->constBegin(), hEnd = textSelection->constEnd();
             for (; hIt != hEnd; ++hIt) {
-                if ((*hIt).intersects(limitRect))
+                if ((*hIt).intersects(limitRect)) {
                     bufferedHighlights->append(qMakePair(page->textSelectionColor(), *hIt));
+                }
             }
             delete limitRect;
             //}
@@ -186,8 +191,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 Okular::Annotation *ann = *aIt;
                 int flags = ann->flags();
 
-                if (flags & Okular::Annotation::Hidden)
+                if (flags & Okular::Annotation::Hidden) {
                     continue;
+                }
 
                 if (flags & Okular::Annotation::ExternallyDrawn) {
                     // ExternallyDrawn annots are never rendered by PagePainter.
@@ -212,12 +218,14 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 if (intersects) {
                     Okular::Annotation::SubType type = ann->subType();
                     if (type == Okular::Annotation::ALine || type == Okular::Annotation::AHighlight || type == Okular::Annotation::AInk /*|| (type == Annotation::AGeom && ann->style().opacity() < 0.99)*/) {
-                        if (!bufferedAnnotations)
+                        if (!bufferedAnnotations) {
                             bufferedAnnotations = new QList<Okular::Annotation *>();
+                        }
                         bufferedAnnotations->append(ann);
                     } else {
-                        if (!unbufferedAnnotations)
+                        if (!unbufferedAnnotations) {
                             unbufferedAnnotations = new QList<Okular::Annotation *>();
+                        }
                         unbufferedAnnotations->append(ann);
                     }
                 }
@@ -384,8 +392,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 Okular::Annotation *a = *aIt;
                 Okular::Annotation::SubType type = a->subType();
                 QColor acolor = a->style().color();
-                if (!acolor.isValid())
+                if (!acolor.isValid()) {
                     acolor = Qt::yellow;
+                }
                 acolor.setAlphaF(a->style().opacity());
 
                 // draw LineAnnotation MISSING: caption, dash pattern, endings for multipoint lines
@@ -524,12 +533,14 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             unsigned int opacity = (unsigned int)(a->style().color().alpha() * a->style().opacity());
             // skip the annotation drawing if all the annotation is fully
             // transparent, but not with text annotations
-            if (opacity <= 0 && a->subType() != Okular::Annotation::AText)
+            if (opacity <= 0 && a->subType() != Okular::Annotation::AText) {
                 continue;
+            }
 
             QColor acolor = a->style().color();
-            if (!acolor.isValid())
+            if (!acolor.isValid()) {
                 acolor = Qt::yellow;
+            }
             acolor.setAlpha(opacity);
 
             // Annotation boundary in destPainter coordinates:
@@ -579,8 +590,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     // if the annotation color is valid (ie it was set), then
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
-                    if (a->style().color().isValid())
+                    if (a->style().color().isValid()) {
                         GuiUtils::colorizeImage(scaledCroppedImage, a->style().color(), opacity);
+                    }
                     pixmap = QPixmap::fromImage(scaledCroppedImage);
 
                     // draw the mangled image to painter
@@ -621,20 +633,22 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                         const QColor color = geom->geometricalInnerColor();
                         mixedPainter->setPen(Qt::NoPen);
                         mixedPainter->setBrush(QColor(color.red(), color.green(), color.blue(), opacity));
-                        if (geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare)
+                        if (geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare) {
                             mixedPainter->drawRect(r);
-                        else
+                        } else {
                             mixedPainter->drawEllipse(r);
+                        }
                         r.adjust(-width, -width, width, width);
                     }
                     if (geom->style().width()) // need to check the original size here..
                     {
                         mixedPainter->setPen(buildPen(a, width * 2, acolor));
                         mixedPainter->setBrush(Qt::NoBrush);
-                        if (geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare)
+                        if (geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare) {
                             mixedPainter->drawRect(r);
-                        else
+                        } else {
                             mixedPainter->drawEllipse(r);
+                        }
                     }
                     mixedPainter->restore();
                 }
@@ -732,10 +746,11 @@ void PagePainter::blackWhite(QImage *image, int contrast, int threshold)
     for (int i = 0; i < pixels; ++i) {
         // Piecewise linear function of val, through (0, 0), (thr, 128), (255, 255)
         int val = qGray(data[i]);
-        if (val > thr)
+        if (val > thr) {
             val = 128 + (127 * (val - thr)) / (255 - thr);
-        else if (val < thr)
+        } else if (val < thr) {
             val = (128 * val) / thr;
+        }
 
         // Linear contrast stretching through (thr, thr)
         if (con > 2) {
@@ -952,8 +967,9 @@ void PagePainter::drawShapeOnImage(QImage &image, const NormalizedPath &normPath
 {
     // safety checks
     int pointsNumber = normPath.size();
-    if (pointsNumber < 2)
+    if (pointsNumber < 2) {
         return;
+    }
 
     const double dpr = image.devicePixelRatio();
     const double fImageWidth = image.width() / dpr;
@@ -978,8 +994,9 @@ void PagePainter::drawShapeOnImage(QImage &image, const NormalizedPath &normPath
         for (int i = 0; i < pointsNumber; ++i) {
             poly[i] = QPointF(normPath[i].x * fImageWidth, normPath[i].y * fImageHeight);
         }
-        if (closeShape)
+        if (closeShape) {
             poly[pointsNumber] = poly[0];
+        }
 
         painter.drawPolyline(poly);
     } else {
@@ -991,8 +1008,9 @@ void PagePainter::drawShapeOnImage(QImage &image, const NormalizedPath &normPath
         for (int i = 1; i < pointsNumber; i++) {
             path.lineTo(normPath[i].x * fImageWidth, normPath[i].y * fImageHeight);
         }
-        if (closeShape)
+        if (closeShape) {
             path.closeSubpath();
+        }
 
         painter.drawPath(path);
     }

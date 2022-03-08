@@ -23,10 +23,11 @@ public:
 TextSelection::TextSelection(const NormalizedPoint &start, const NormalizedPoint &end)
     : d(new Private)
 {
-    if (end.y - start.y < 0 || (end.y - start.y == 0 && end.x - start.x < 0))
+    if (end.y - start.y < 0 || (end.y - start.y == 0 && end.x - start.x < 0)) {
         d->direction = 1;
-    else
+    } else {
         d->direction = 0;
+    }
 
     d->cur[0] = start;
     d->cur[1] = end;
@@ -44,8 +45,9 @@ void TextSelection::end(const NormalizedPoint &p)
     // changing direction as in 2b , assuming the bool->int conversion is correct
     int dir1 = d->direction;
     d->direction = (p.y - d->cur[0].y < 0 || (p.y - d->cur[0].y == 0 && p.x - d->cur[0].x < 0));
-    if (d->direction != dir1)
+    if (d->direction != dir1) {
         qCDebug(OkularCoreDebug) << "changing direction in selection";
+    }
 
     d->cur[1] = p;
 }

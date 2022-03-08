@@ -65,8 +65,9 @@ static inline QString makeURLabsoluteIfNeeded(const QString &url)
         newurl = QDir::cleanPath(url);
 
         // Normalize url, so it becomes absolute
-        if (newurl[0] != QLatin1Char('/'))
+        if (newurl[0] != QLatin1Char('/')) {
             newurl = QLatin1Char('/') + newurl;
+        }
     }
 
     // qDebug ("makeURLabsolute (%s) -> (%s)", url.ascii(), newurl.ascii());
@@ -84,8 +85,9 @@ static inline bool handleFileType(const QString &link, QString &generated)
 {
     QString intext = getInternalUriExtension();
 
-    if (!link.endsWith(intext))
+    if (!link.endsWith(intext)) {
         return false;
+    }
 
     QString filelink = link.left(link.length() - intext.length());
     generated = QStringLiteral("<html><body><img src=\"") + filelink + QStringLiteral("\"></body></html>");

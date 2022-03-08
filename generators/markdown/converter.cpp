@@ -96,8 +96,9 @@ QTextDocument *Converter::convertOpenFile()
     MMIOT *markdownHandle = mkd_in(m_markdownFile, 0);
 
     int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR;
-    if (!m_isFancyPantsEnabled)
+    if (!m_isFancyPantsEnabled) {
         flags |= MKD_NOPANTS;
+    }
     if (!mkd_compile(markdownHandle, flags)) {
         emit error(i18n("Failed to compile the Markdown document."), -1);
         return nullptr;
@@ -111,8 +112,9 @@ QTextDocument *Converter::convertOpenFile()
     QTextDocument *textDocument = new QTextDocument;
     textDocument->setPageSize(QSizeF(PAGE_WIDTH, PAGE_HEIGHT));
     textDocument->setHtml(html);
-    if (generator())
+    if (generator()) {
         textDocument->setDefaultFont(generator()->generalSettings()->font());
+    }
 
     mkd_cleanup(markdownHandle);
 

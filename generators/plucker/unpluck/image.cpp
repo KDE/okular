@@ -196,8 +196,9 @@ bool TranscribePalmImageToJPEG(unsigned char *image_bytes_in, QImage &image)
     QTemporaryFile tempFile;
     tempFile.open();
     FILE *outfile = fopen(QFile::encodeName(tempFile.fileName()).constData(), "w");
-    if (!outfile)
+    if (!outfile) {
         return false;
+    }
 
     /* now create the JPEG image row buffer */
     jpeg_row = (JSAMPLE *)malloc(sizeof(JSAMPLE) * (width * 3));
@@ -250,10 +251,11 @@ bool TranscribePalmImageToJPEG(unsigned char *image_bytes_in, QImage &image)
                 incount = *palm_ptr++;
                 inval = ((bytes_per_row - j) < 8) ? (bytes_per_row - j) : 8;
                 for (inbit = 0; inbit < inval; inbit += 1) {
-                    if (incount & (1 << (7 - inbit)))
+                    if (incount & (1 << (7 - inbit))) {
                         rowbuf[j + inbit] = *palm_ptr++;
-                    else
+                    } else {
                         rowbuf[j + inbit] = lastrow[j + inbit];
+                    }
                 }
             }
             memcpy(lastrow, rowbuf, bytes_per_row);
@@ -268,8 +270,9 @@ bool TranscribePalmImageToJPEG(unsigned char *image_bytes_in, QImage &image)
             for (inbit = 8 - bits_per_pixel, inbyte = rowbuf, j = 0; j < width; ++j) {
                 inval = ((*inbyte) & (mask << inbit)) >> inbit;
                 /* correct for oddity of the 8-bit color Palm pixmap... */
-                if ((bits_per_pixel == 8) && (inval == 0xFF))
+                if ((bits_per_pixel == 8) && (inval == 0xFF)) {
                     inval = 231;
+                }
                 /* now lookup the correct color and set the pixel in the GTK bitmap */
                 jpeg_row[(j * 3) + 0] = colormap[inval].red;
                 jpeg_row[(j * 3) + 1] = colormap[inval].green;

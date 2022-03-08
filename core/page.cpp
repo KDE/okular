@@ -54,12 +54,14 @@ static const double distanceConsideredEqual = 25; // 5px
 static void deleteObjectRects(QLinkedList<ObjectRect *> &rects, const QSet<ObjectRect::ObjectType> &which)
 {
     QLinkedList<ObjectRect *>::iterator it = rects.begin(), end = rects.end();
-    for (; it != end;)
+    for (; it != end;) {
         if (which.contains((*it)->objectType())) {
             delete *it;
             it = rects.erase(it);
-        } else
+        } else {
             ++it;
+        }
+    }
 }
 
 PagePrivate::PagePrivate(Page *page, uint n, double w, double h, Rotation o)
@@ -80,11 +82,13 @@ PagePrivate::PagePrivate(Page *page, uint n, double w, double h, Rotation o)
     , m_isBoundingBoxKnown(false)
 {
     // avoid Division-By-Zero problems in the program
-    if (m_width <= 0)
+    if (m_width <= 0) {
         m_width = 1;
+    }
 
-    if (m_height <= 0)
+    if (m_height <= 0) {
         m_height = 1;
+    }
 }
 
 PagePrivate::~PagePrivate()
@@ -200,8 +204,9 @@ bool Page::isBoundingBoxKnown() const
 
 void Page::setBoundingBox(const NormalizedRect &bbox)
 {
-    if (d->m_isBoundingBoxKnown && d->m_boundingBox == bbox)
+    if (d->m_isBoundingBoxKnown && d->m_boundingBox == bbox) {
         return;
+    }
 
     // Allow tiny rounding errors (happens during rotation)
     static const double epsilon = 0.00001;
@@ -228,14 +233,17 @@ bool Page::hasPixmap(DocumentObserver *observer, int width, int height, const No
     }
 
     QMap<DocumentObserver *, PagePrivate::PixmapObject>::const_iterator it = d->m_pixmaps.constFind(observer);
-    if (it == d->m_pixmaps.constEnd())
+    if (it == d->m_pixmaps.constEnd()) {
         return false;
+    }
 
-    if (width == -1 || height == -1)
+    if (width == -1 || height == -1) {
         return true;
+    }
 
-    if (it.value().m_isPartialPixmap)
+    if (it.value().m_isPartialPixmap) {
         return false;
+    }
 
     const QPixmap *pixmap = it.value().m_pixmap;
 
@@ -249,29 +257,34 @@ bool Page::hasTextPage() const
 
 RegularAreaRect *Page::wordAt(const NormalizedPoint &p, QString *word) const
 {
-    if (d->m_text)
+    if (d->m_text) {
         return d->m_text->wordAt(p, word);
+    }
 
     return nullptr;
 }
 
 RegularAreaRect *Page::textArea(TextSelection *selection) const
 {
-    if (d->m_text)
+    if (d->m_text) {
         return d->m_text->textArea(selection);
+    }
 
     return nullptr;
 }
 
 bool Page::hasObjectRect(double x, double y, double xScale, double yScale) const
 {
-    if (m_rects.isEmpty())
+    if (m_rects.isEmpty()) {
         return false;
+    }
 
     QLinkedList<ObjectRect *>::const_iterator it = m_rects.begin(), end = m_rects.end();
-    for (; it != end; ++it)
-        if ((*it)->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual)
+    for (; it != end; ++it) {
+        if ((*it)->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
             return true;
+        }
+    }
 
     return false;
 }
@@ -279,16 +292,20 @@ bool Page::hasObjectRect(double x, double y, double xScale, double yScale) const
 bool Page::hasHighlights(int s_id) const
 {
     // simple case: have no highlights
-    if (m_highlights.isEmpty())
+    if (m_highlights.isEmpty()) {
         return false;
+    }
     // simple case: we have highlights and no id to match
-    if (s_id == -1)
+    if (s_id == -1) {
         return true;
+    }
     // iterate on the highlights list to find an entry by id
     QLinkedList<HighlightAreaRect *>::const_iterator it = m_highlights.begin(), end = m_highlights.end();
-    for (; it != end; ++it)
-        if ((*it)->s_id == s_id)
+    for (; it != end; ++it) {
+        if ((*it)->s_id == s_id) {
             return true;
+        }
+    }
     return false;
 }
 
@@ -305,8 +322,9 @@ bool Page::hasAnnotations() const
 RegularAreaRect *Page::findText(int id, const QString &text, SearchDirection direction, Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect) const
 {
     RegularAreaRect *rect = nullptr;
-    if (text.isEmpty() || !d->m_text)
+    if (text.isEmpty() || !d->m_text) {
         return rect;
+    }
 
     rect = d->m_text->findText(id, text, direction, caseSensitivity, lastRect);
     return rect;
@@ -321,16 +339,18 @@ QString Page::text(const RegularAreaRect *area, TextPage::TextAreaInclusionBehav
 {
     QString ret;
 
-    if (!d->m_text)
+    if (!d->m_text) {
         return ret;
+    }
 
     if (area) {
         RegularAreaRect rotatedArea = *area;
         rotatedArea.transform(d->rotationMatrix().inverted());
 
         ret = d->m_text->text(&rotatedArea, b);
-    } else
+    } else {
         ret = d->m_text->text(nullptr, b);
+    }
 
     return ret;
 }
@@ -339,16 +359,18 @@ TextEntity::List Page::words(const RegularAreaRect *area, TextPage::TextAreaIncl
 {
     TextEntity::List ret;
 
-    if (!d->m_text)
+    if (!d->m_text) {
         return ret;
+    }
 
     if (area) {
         RegularAreaRect rotatedArea = *area;
         rotatedArea.transform(d->rotationMatrix().inverted());
 
         ret = d->m_text->words(&rotatedArea, b);
-    } else
+    } else {
         ret = d->m_text->words(nullptr, b);
+    }
 
     for (auto &retI : ret) {
         const TextEntity *orig = retI;
@@ -361,13 +383,15 @@ TextEntity::List Page::words(const RegularAreaRect *area, TextPage::TextAreaIncl
 
 void PagePrivate::rotateAt(Rotation orientation)
 {
-    if (orientation == m_rotation)
+    if (orientation == m_rotation) {
         return;
+    }
 
     deleteTextSelections();
 
-    if (((int)m_orientation + (int)m_rotation) % 2 != ((int)m_orientation + (int)orientation) % 2)
+    if (((int)m_orientation + (int)m_rotation) % 2 != ((int)m_orientation + (int)orientation) % 2) {
         qSwap(m_width, m_height);
+    }
 
     Rotation oldRotation = m_rotation;
     m_rotation = orientation;
@@ -394,16 +418,18 @@ void PagePrivate::rotateAt(Rotation orientation)
         i.next();
 
         TilesManager *tm = i.value();
-        if (tm)
+        if (tm) {
             tm->setRotation(m_rotation);
+        }
     }
 
     /**
      * Rotate the object rects on the page.
      */
     const QTransform matrix = rotationMatrix();
-    for (ObjectRect *objRect : qAsConst(m_page->m_rects))
+    for (ObjectRect *objRect : qAsConst(m_page->m_rects)) {
         objRect->transform(matrix);
+    }
 
     const QTransform highlightRotationMatrix = Okular::buildRotationMatrix((Rotation)(((int)m_rotation - (int)oldRotation + 4) % 4));
     for (HighlightAreaRect *hlar : qAsConst(m_page->m_highlights)) {
@@ -413,8 +439,9 @@ void PagePrivate::rotateAt(Rotation orientation)
 
 void PagePrivate::changeSize(const PageSize &size)
 {
-    if (size.isNull() || (size.width() == m_width && size.height() == m_height))
+    if (size.isNull() || (size.width() == m_width && size.height() == m_height)) {
         return;
+    }
 
     m_page->deletePixmaps();
     //    deleteHighlights();
@@ -422,8 +449,9 @@ void PagePrivate::changeSize(const PageSize &size)
 
     m_width = size.width();
     m_height = size.height();
-    if (m_rotation % 2)
+    if (m_rotation % 2) {
         qSwap(m_width, m_height);
+    }
 }
 
 const ObjectRect *Page::objectRect(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const
@@ -433,8 +461,9 @@ const ObjectRect *Page::objectRect(ObjectRect::ObjectType type, double x, double
     it.toBack();
     while (it.hasPrevious()) {
         const ObjectRect *objrect = it.previous();
-        if ((objrect->objectType() == type) && objrect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual)
+        if ((objrect->objectType() == type) && objrect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
             return objrect;
+        }
     }
 
     return nullptr;
@@ -448,8 +477,9 @@ QLinkedList<const ObjectRect *> Page::objectRects(ObjectRect::ObjectType type, d
     it.toBack();
     while (it.hasPrevious()) {
         const ObjectRect *objrect = it.previous();
-        if ((objrect->objectType() == type) && objrect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual)
+        if ((objrect->objectType() == type) && objrect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
             result.append(objrect);
+        }
     }
 
     return result;
@@ -471,8 +501,9 @@ const ObjectRect *Page::nearestObjectRect(ObjectRect::ObjectType type, double x,
         }
     }
 
-    if (distance)
+    if (distance) {
         *distance = minDistance;
+    }
     return res;
 }
 
@@ -489,8 +520,9 @@ QLinkedList<Annotation *> Page::annotations() const
 Annotation *Page::annotation(const QString &uniqueName) const
 {
     for (Annotation *a : m_annotations) {
-        if (a->uniqueName() == uniqueName)
+        if (a->uniqueName() == uniqueName) {
             return a;
+        }
     }
     return nullptr;
 }
@@ -576,8 +608,9 @@ void Page::setObjectRects(const QLinkedList<ObjectRect *> &rects)
     const QTransform matrix = d->rotationMatrix();
 
     QLinkedList<ObjectRect *>::const_iterator objectIt = rects.begin(), end = rects.end();
-    for (; objectIt != end; ++objectIt)
+    for (; objectIt != end; ++objectIt) {
         (*objectIt)->transform(matrix);
+    }
 
     m_rects << rects;
 }
@@ -667,20 +700,22 @@ void Page::addAnnotation(Annotation *annotation)
 
 bool Page::removeAnnotation(Annotation *annotation)
 {
-    if (!d->m_doc->m_parent->canRemovePageAnnotation(annotation))
+    if (!d->m_doc->m_parent->canRemovePageAnnotation(annotation)) {
         return false;
+    }
 
     QLinkedList<Annotation *>::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for (; aIt != aEnd; ++aIt) {
         if ((*aIt) && (*aIt)->uniqueName() == annotation->uniqueName()) {
             int rectfound = false;
             QLinkedList<ObjectRect *>::iterator it = m_rects.begin(), end = m_rects.end();
-            for (; it != end && !rectfound; ++it)
+            for (; it != end && !rectfound; ++it) {
                 if (((*it)->objectType() == ObjectRect::OAnnotation) && ((*it)->object() == (*aIt))) {
                     delete *it;
                     it = m_rects.erase(it);
                     rectfound = true;
                 }
+            }
             qCDebug(OkularCoreDebug) << "removed annotation:" << annotation->uniqueName();
             annotation->d_ptr->m_page = nullptr;
             m_annotations.erase(aIt);
@@ -764,8 +799,9 @@ void PagePrivate::deleteHighlights(int s_id)
         if (s_id == -1 || highlight->s_id == s_id) {
             it = m_page->m_highlights.erase(it);
             delete highlight;
-        } else
+        } else {
             ++it;
+        }
     }
 }
 
@@ -824,8 +860,9 @@ bool PagePrivate::restoreLocalContents(const QDomNode &pageNode)
                     m_doc->performAddPageAnnotation(m_number, annotation);
                     qCDebug(OkularCoreDebug) << "restored annot:" << annotation->uniqueName();
                     loadedAnything = true;
-                } else
+                } else {
                     qCWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
+                }
             }
 #ifdef PAGE_PROFILE
             qCDebug(OkularCoreDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
@@ -837,8 +874,9 @@ bool PagePrivate::restoreLocalContents(const QDomNode &pageNode)
             const QDomNode clonedNode = restoredFormFieldList.importNode(childElement, true);
             restoredFormFieldList.appendChild(clonedNode);
 
-            if (formfields.isEmpty())
+            if (formfields.isEmpty()) {
                 continue;
+            }
 
             QHash<int, FormField *> hashedforms;
             for (FormField *ff : qAsConst(formfields)) {
@@ -852,17 +890,20 @@ bool PagePrivate::restoreLocalContents(const QDomNode &pageNode)
                 QDomElement formElement = formsNode.toElement();
                 formsNode = formsNode.nextSibling();
 
-                if (formElement.tagName() != QLatin1String("form"))
+                if (formElement.tagName() != QLatin1String("form")) {
                     continue;
+                }
 
                 bool ok = true;
                 int index = formElement.attribute(QStringLiteral("id")).toInt(&ok);
-                if (!ok)
+                if (!ok) {
                     continue;
+                }
 
                 QHash<int, FormField *>::const_iterator wantedIt = hashedforms.constFind(index);
-                if (wantedIt == hashedforms.constEnd())
+                if (wantedIt == hashedforms.constEnd()) {
                     continue;
+                }
 
                 QString value = formElement.attribute(QStringLiteral("value"));
                 (*wantedIt)->d_ptr->setValue(value);
@@ -908,8 +949,9 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
         }
 
         // append the annotationList element if annotations have been set
-        if (annotListElement.hasChildNodes())
+        if (annotListElement.hasChildNodes()) {
             pageElement.appendChild(annotListElement);
+        }
     }
 
     // add forms info if has got any
@@ -931,8 +973,9 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
             const FormField *f = *fIt;
 
             QString newvalue = f->d_ptr->value();
-            if (f->d_ptr->m_default == newvalue)
+            if (f->d_ptr->m_default == newvalue) {
                 continue;
+            }
 
             // append an filled-up element called 'annotation' to the list
             QDomElement formElement = document.createElement(QStringLiteral("form"));
@@ -942,13 +985,15 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
         }
 
         // append the annotationList element if annotations have been set
-        if (formListElement.hasChildNodes())
+        if (formListElement.hasChildNodes()) {
             pageElement.appendChild(formListElement);
+        }
     }
 
     // append the page element only if has children
-    if (pageElement.hasChildNodes())
+    if (pageElement.hasChildNodes()) {
         parentNode.appendChild(pageElement);
+    }
 }
 
 const QPixmap *Page::_o_nearestPixmap(DocumentObserver *observer, int w, int h) const
@@ -959,10 +1004,10 @@ const QPixmap *Page::_o_nearestPixmap(DocumentObserver *observer, int w, int h) 
 
     // if a pixmap is present for given id, use it
     QMap<DocumentObserver *, PagePrivate::PixmapObject>::const_iterator itPixmap = d->m_pixmaps.constFind(observer);
-    if (itPixmap != d->m_pixmaps.constEnd())
+    if (itPixmap != d->m_pixmaps.constEnd()) {
         pixmap = itPixmap.value().m_pixmap;
-    // else find the closest match using pixmaps of other IDs (great optim!)
-    else if (!d->m_pixmaps.isEmpty()) {
+    } else if (!d->m_pixmaps.isEmpty()) {
+        // else find the closest match using pixmaps of other IDs (great optim!)
         int minDistance = -1;
         QMap<DocumentObserver *, PagePrivate::PixmapObject>::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
         for (; it != end; ++it) {
@@ -985,10 +1030,11 @@ bool Page::hasTilesManager(const DocumentObserver *observer) const
 QList<Tile> Page::tilesAt(const DocumentObserver *observer, const NormalizedRect &rect) const
 {
     TilesManager *tm = d->m_tilesManagers.value(observer);
-    if (tm)
+    if (tm) {
         return tm->tilesAt(rect, TilesManager::PixmapTile);
-    else
+    } else {
         return QList<Tile>();
+    }
 }
 
 TilesManager *PagePrivate::tilesManager(const DocumentObserver *observer) const
@@ -1031,13 +1077,15 @@ FormField *PagePrivate::findEquivalentForm(const Page *p, FormField *oldField)
     // given how id is not very good of id (at least for pdf) we do a few passes
     // same rect, type and id
     for (FormField *f : qAsConst(p->d->formfields)) {
-        if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id())
+        if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id()) {
             return f;
+        }
     }
     // same rect and type
     for (FormField *f : qAsConst(p->d->formfields)) {
-        if (f->rect() == oldField->rect() && f->type() == oldField->type())
+        if (f->rect() == oldField->rect() && f->type() == oldField->type()) {
             return f;
+        }
     }
     // fuzzy rect, same type and id
     for (FormField *f : qAsConst(p->d->formfields)) {

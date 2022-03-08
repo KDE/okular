@@ -462,10 +462,11 @@ const QIcon AnnotationActionHandlerPrivate::widthIcon(double width)
 const QIcon AnnotationActionHandlerPrivate::stampIcon(const QString &stampIconName)
 {
     QPixmap stampPix = Okular::AnnotationUtils::loadStamp(stampIconName, 32);
-    if (stampPix.width() == stampPix.height())
+    if (stampPix.width() == stampPix.height()) {
         return QIcon(stampPix);
-    else
+    } else {
         return QIcon::fromTheme(QStringLiteral("tag"));
+    }
 }
 
 void AnnotationActionHandlerPrivate::selectTool(int toolId)
@@ -613,8 +614,9 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     for (const auto &ann : tools) {
         // action group workaround: connecting to toggled instead of triggered
         connect(ann, &QAction::toggled, this, [this, toolId](bool checked) {
-            if (checked)
+            if (checked) {
                 d->selectTool(toolId);
+            }
         });
         toolId++;
     }
@@ -634,8 +636,9 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
         // action group workaround: connecting to toggled instead of triggered
         // (because deselectAllAnnotationActions has to call triggered)
         connect(ann, &QAction::toggled, this, [this, stamp](bool checked) {
-            if (checked)
+            if (checked) {
                 d->slotStampToolSelected(stamp.second);
+            }
         });
     }
     if (!d->aStamp->menu()->actions().isEmpty()) {

@@ -115,8 +115,9 @@ QDomDocument EditDrawingToolDialog::toolXml() const
     annotationElement.setAttribute(QStringLiteral("color"), color);
     annotationElement.setAttribute(QStringLiteral("width"), QString::number(m_penWidth->value()));
 
-    if (opacity != 1.0)
+    if (opacity != 1.0) {
         annotationElement.setAttribute(QStringLiteral("opacity"), QString::number(opacity));
+    }
 
     return doc;
 }
@@ -126,14 +127,16 @@ void EditDrawingToolDialog::loadTool(const QDomElement &toolElement)
     const QDomElement engineElement = toolElement.elementsByTagName(QStringLiteral("engine")).item(0).toElement();
     const QDomElement annotationElement = engineElement.elementsByTagName(QStringLiteral("annotation")).item(0).toElement();
 
-    if (annotationElement.hasAttribute(QStringLiteral("color")))
+    if (annotationElement.hasAttribute(QStringLiteral("color"))) {
         m_colorBn->setColor(QColor(annotationElement.attribute(QStringLiteral("color"))));
+    }
 
     m_penWidth->setValue(annotationElement.attribute(QStringLiteral("width"), QStringLiteral("2")).toInt());
     m_opacity->setValue(annotationElement.attribute(QStringLiteral("opacity"), QStringLiteral("1.0")).toDouble() * 100);
 
-    if (toolElement.attribute(QStringLiteral("default"), QStringLiteral("false")) == QLatin1String("true"))
+    if (toolElement.attribute(QStringLiteral("default"), QStringLiteral("false")) == QLatin1String("true")) {
         m_name->setText(i18n(toolElement.attribute(QStringLiteral("name")).toLatin1().constData()));
-    else
+    } else {
         m_name->setText(toolElement.attribute(QStringLiteral("name")));
+    }
 }

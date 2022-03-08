@@ -142,8 +142,9 @@ Shell::Shell(const QString &serializedOptions)
         m_unique = ShellUtils::unique(serializedOptions);
         if (m_unique) {
             m_unique = QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.okular"));
-            if (!m_unique)
+            if (!m_unique) {
                 KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
+            }
         } else {
             QString serviceName = QStringLiteral("org.kde.okular-") + QString::number(qApp->applicationPid());
             QDBusConnection::sessionBus().registerService(serviceName);
@@ -237,8 +238,9 @@ Shell::~Shell()
         }
         m_tabs.clear();
     }
-    if (m_unique)
+    if (m_unique) {
         QDBusConnection::sessionBus().unregisterService(QStringLiteral("org.kde.okular"));
+    }
 
     delete m_tabWidget;
 }
@@ -247,8 +249,9 @@ Shell::~Shell()
 // This can hang if called on a unique instance and openUrl pops a messageBox
 bool Shell::openDocument(const QUrl &url, const QString &serializedOptions)
 {
-    if (m_tabs.size() <= 0)
+    if (m_tabs.size() <= 0) {
         return false;
+    }
 
     hideWelcomeScreen();
 
@@ -271,18 +274,21 @@ bool Shell::openDocument(const QString &urlString, const QString &serializedOpti
 
 bool Shell::canOpenDocs(int numDocs, int desktop)
 {
-    if (m_tabs.size() <= 0 || numDocs <= 0 || m_unique)
+    if (m_tabs.size() <= 0 || numDocs <= 0 || m_unique) {
         return false;
+    }
 
     KParts::ReadWritePart *const part = m_tabs[0].part;
     const bool allowTabs = qobject_cast<Okular::ViewerInterface *>(part)->openNewFilesInTabs();
 
-    if (!allowTabs && (numDocs > 1 || !part->url().isEmpty()))
+    if (!allowTabs && (numDocs > 1 || !part->url().isEmpty())) {
         return false;
+    }
 
     const KWindowInfo winfo(window()->effectiveWinId(), KWindowSystem::WMDesktop);
-    if (winfo.desktop() != desktop)
+    if (winfo.desktop() != desktop) {
         return false;
+    }
 
     return true;
 }
@@ -315,8 +321,9 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
             if (!isstdin) {
                 if (openOk) {
 #ifdef WITH_KACTIVITIES
-                    if (!m_activityResource)
+                    if (!m_activityResource) {
                         m_activityResource = new KActivities::ResourceInstance(window()->winId(), this);
+                    }
 
                     m_activityResource->setUri(url);
 #endif
@@ -422,8 +429,9 @@ void Shell::setupActions()
 
 void Shell::saveProperties(KConfigGroup &group)
 {
-    if (!m_isValid) // part couldn't be loaded, nothing to save
+    if (!m_isValid) { // part couldn't be loaded, nothing to save
         return;
+    }
 
     // Gather lists of settings to preserve
     QStringList urls;
@@ -466,8 +474,9 @@ void Shell::fileOpen()
 
     QUrl startDir;
     const KParts::ReadWritePart *const curPart = m_tabs[activeTab].part;
-    if (curPart->url().isLocalFile())
+    if (curPart->url().isLocalFile()) {
         startDir = KIO::upUrl(curPart->url());
+    }
 
     QPointer<QFileDialog> dlg(new QFileDialog(this));
     dlg->setDirectoryUrl(startDir);
@@ -544,10 +553,11 @@ void Shell::tryRaise()
 // only called when starting the program
 void Shell::setFullScreen(bool useFullScreen)
 {
-    if (useFullScreen)
+    if (useFullScreen) {
         setWindowState(windowState() | Qt::WindowFullScreen); // set
-    else
+    } else {
         setWindowState(windowState() & ~Qt::WindowFullScreen); // reset
+    }
 }
 
 void Shell::setCaption(const QString &caption)
@@ -573,8 +583,9 @@ void Shell::setCaption(const QString &caption)
 
 void Shell::showEvent(QShowEvent *e)
 {
-    if (!menuBar()->isNativeMenuBar() && m_showMenuBarAction)
+    if (!menuBar()->isNativeMenuBar() && m_showMenuBarAction) {
         m_showMenuBarAction->setChecked(menuBar()->isVisible());
+    }
 
     KParts::MainWindow::showEvent(e);
 }
@@ -602,10 +613,11 @@ void Shell::slotUpdateFullScreen()
 
 void Shell::slotShowMenubar()
 {
-    if (menuBar()->isHidden())
+    if (menuBar()->isHidden()) {
         menuBar()->show();
-    else
+    } else {
         menuBar()->hide();
+    }
 }
 
 QSize Shell::sizeHint() const
@@ -655,11 +667,13 @@ bool Shell::queryClose()
         KParts::ReadWritePart *const part = m_tabs[i].part;
 
         // To resolve confusion about multiple modified docs, switch to relevant tab
-        if (part->isModified())
+        if (part->isModified()) {
             setActiveTab(i);
+        }
 
-        if (!part->queryClose())
+        if (!part->queryClose()) {
             return false;
+        }
     }
     return true;
 }
@@ -682,8 +696,9 @@ void Shell::closeTab(int tab)
     QUrl url = part->url();
     bool closeSuccess = part->closeUrl();
     if (closeSuccess && m_tabs.count() > 1) {
-        if (part->factory())
+        if (part->factory()) {
             part->factory()->removeClient(part);
+        }
         part->disconnect();
         part->deleteLater();
         m_tabs.removeAt(tab);
@@ -757,14 +772,18 @@ void Shell::applyOptionsToPart(QObject *part, const QString &serializedOptions)
 {
     KDocumentViewer *const doc = qobject_cast<KDocumentViewer *>(part);
     const QString find = ShellUtils::find(serializedOptions);
-    if (ShellUtils::startInPresentation(serializedOptions))
+    if (ShellUtils::startInPresentation(serializedOptions)) {
         doc->startPresentation();
-    if (ShellUtils::showPrintDialog(serializedOptions))
+    }
+    if (ShellUtils::showPrintDialog(serializedOptions)) {
         QMetaObject::invokeMethod(part, "enableStartWithPrint");
-    if (ShellUtils::showPrintDialogAndExit(serializedOptions))
+    }
+    if (ShellUtils::showPrintDialogAndExit(serializedOptions)) {
         QMetaObject::invokeMethod(part, "enableExitAfterPrint");
-    if (!find.isEmpty())
+    }
+    if (!find.isEmpty()) {
         QMetaObject::invokeMethod(part, "enableStartWithFind", Q_ARG(QString, find));
+    }
 }
 
 void Shell::connectPart(QObject *part)
@@ -791,8 +810,9 @@ void Shell::setPrintEnabled(bool enabled)
     int i = findTabIndex(sender());
     if (i != -1) {
         m_tabs[i].printEnabled = enabled;
-        if (i == m_tabWidget->currentIndex())
+        if (i == m_tabWidget->currentIndex()) {
             m_printAction->setEnabled(enabled);
+        }
     }
 }
 
@@ -801,15 +821,17 @@ void Shell::setCloseEnabled(bool enabled)
     int i = findTabIndex(sender());
     if (i != -1) {
         m_tabs[i].closeEnabled = enabled;
-        if (i == m_tabWidget->currentIndex())
+        if (i == m_tabWidget->currentIndex()) {
             m_closeAction->setEnabled(enabled);
+        }
     }
 }
 
 void Shell::activateNextTab()
 {
-    if (m_tabs.size() < 2)
+    if (m_tabs.size() < 2) {
         return;
+    }
 
     const int activeTab = m_tabWidget->currentIndex();
     const int nextTab = (activeTab == m_tabs.size() - 1) ? 0 : activeTab + 1;
@@ -819,8 +841,9 @@ void Shell::activateNextTab()
 
 void Shell::activatePrevTab()
 {
-    if (m_tabs.size() < 2)
+    if (m_tabs.size() < 2) {
         return;
+    }
 
     const int activeTab = m_tabWidget->currentIndex();
     const int prevTab = (activeTab == 0) ? m_tabs.size() - 1 : activeTab - 1;

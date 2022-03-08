@@ -129,10 +129,11 @@ public:
 
     bool queryClose() override
     {
-        if (behavior == PassThru)
+        if (behavior == PassThru) {
             return Okular::Part::queryClose();
-        else // ReturnTrue or ReturnFalse
+        } else { // ReturnTrue or ReturnFalse
             return (behavior == ReturnTrue);
+        }
     }
 
 private:
@@ -1020,8 +1021,9 @@ void PartTest::testSaveAs()
         part.openDocument(nativeDirectSave.fileName());
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), nativelySupportsAnnotations ? 1 : 0);
-        if (nativelySupportsAnnotations)
+        if (nativelySupportsAnnotations) {
             QCOMPARE(part.m_document->page(0)->annotations().first()->uniqueName(), annotName);
+        }
 
         part.closeUrl();
     }
@@ -1033,8 +1035,9 @@ void PartTest::testSaveAs()
         part.openDocument(nativeFromArchiveFile.fileName());
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), nativelySupportsAnnotations ? 1 : 0);
-        if (nativelySupportsAnnotations)
+        if (nativelySupportsAnnotations) {
             QCOMPARE(part.m_document->page(0)->annotations().first()->uniqueName(), annotName);
+        }
 
         part.closeUrl();
     }

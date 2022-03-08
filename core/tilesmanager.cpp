@@ -19,8 +19,9 @@ using namespace Okular;
 static bool rankedTilesLessThan(TileNode *t1, TileNode *t2)
 {
     // Order tiles by its dirty state and then by distance from the viewport.
-    if (t1->dirty == t2->dirty)
+    if (t1->dirty == t2->dirty) {
         return t1->distance < t2->distance;
+    }
 
     return !t1->dirty;
 }
@@ -106,8 +107,9 @@ TilesManager::TilesManager(int pageNumber, int width, int height, Rotation rotat
 
 TilesManager::~TilesManager()
 {
-    for (const TileNode &tile : d->tiles)
+    for (const TileNode &tile : d->tiles) {
         d->deleteTiles(tile);
+    }
 
     delete d;
 }
@@ -120,8 +122,9 @@ void TilesManager::Private::deleteTiles(const TileNode &tile)
     }
 
     if (tile.nTiles > 0) {
-        for (int i = 0; i < tile.nTiles; ++i)
+        for (int i = 0; i < tile.nTiles; ++i) {
             deleteTiles(tile.tiles[i]);
+        }
 
         delete[] tile.tiles;
     }
@@ -129,8 +132,9 @@ void TilesManager::Private::deleteTiles(const TileNode &tile)
 
 void TilesManager::setSize(int width, int height)
 {
-    if (width == d->width && height == d->height)
+    if (width == d->width && height == d->height) {
         return;
+    }
 
     d->width = width;
     d->height = height;
@@ -150,8 +154,9 @@ int TilesManager::height() const
 
 void TilesManager::setRotation(Rotation rotation)
 {
-    if (rotation == d->rotation)
+    if (rotation == d->rotation) {
         return;
+    }
 
     d->rotation = rotation;
 }
@@ -181,8 +186,9 @@ void TilesManager::setPixmap(const QPixmap *pixmap, const NormalizedRect &rect, 
 {
     const NormalizedRect rotatedRect = TilesManager::fromRotatedRect(rect, d->rotation);
     if (!d->requestRect.isNull()) {
-        if (!(d->requestRect == rect))
+        if (!(d->requestRect == rect)) {
             return;
+        }
 
         if (pixmap) {
             // Check whether the pixmap has the same absolute size of the expected
@@ -199,8 +205,9 @@ void TilesManager::setPixmap(const QPixmap *pixmap, const NormalizedRect &rect, 
                 pixmapSize.transpose();
             }
 
-            if (rotatedRect.geometry(w, h).size() != pixmapSize)
+            if (rotatedRect.geometry(w, h).size() != pixmapSize) {
                 return;
+            }
         }
 
         d->requestRect = NormalizedRect();
@@ -216,16 +223,18 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
     QRect pixmapRect = TilesManager::toRotatedRect(rect, rotation).geometry(width, height);
 
     // Exclude tiles outside the viewport
-    if (!tile.rect.intersects(rect))
+    if (!tile.rect.intersects(rect)) {
         return;
+    }
 
     // if the tile is not entirely within the viewport (the tile intersects an
     // edged of the viewport), attempt to set the pixmap in the children tiles
     if (!((tile.rect & rect) == tile.rect)) {
         // paint children tiles
         if (tile.nTiles > 0) {
-            for (int i = 0; i < tile.nTiles; ++i)
+            for (int i = 0; i < tile.nTiles; ++i) {
                 setPixmap(pixmap, rect, tile.tiles[i], isPartialPixmap);
+            }
 
             delete tile.pixmap;
             tile.pixmap = nullptr;
@@ -259,8 +268,9 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
                 tile.pixmap = nullptr;
             }
 
-            for (int i = 0; i < tile.nTiles; ++i)
+            for (int i = 0; i < tile.nTiles; ++i) {
                 setPixmap(pixmap, rect, tile.tiles[i], isPartialPixmap);
+            }
         }
     } else {
         QRect tileRect = tile.rect.geometry(width, height);
@@ -274,8 +284,9 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
                 tile.pixmap = nullptr;
             }
 
-            for (int i = 0; i < tile.nTiles; ++i)
+            for (int i = 0; i < tile.nTiles; ++i) {
                 setPixmap(pixmap, rect, tile.tiles[i], isPartialPixmap);
+            }
         } else {
             // remove children tiles
             for (int i = 0; i < tile.nTiles; ++i) {
@@ -309,8 +320,9 @@ bool TilesManager::hasPixmap(const NormalizedRect &rect)
 {
     NormalizedRect rotatedRect = fromRotatedRect(rect, d->rotation);
     for (const TileNode &tile : qAsConst(d->tiles)) {
-        if (!d->hasPixmap(rotatedRect, tile))
+        if (!d->hasPixmap(rotatedRect, tile)) {
             return false;
+        }
     }
 
     return true;
@@ -319,19 +331,23 @@ bool TilesManager::hasPixmap(const NormalizedRect &rect)
 bool TilesManager::Private::hasPixmap(const NormalizedRect &rect, const TileNode &tile) const
 {
     const NormalizedRect rectIntersection = tile.rect & rect;
-    if (rectIntersection.width() <= 0 || rectIntersection.height() <= 0)
+    if (rectIntersection.width() <= 0 || rectIntersection.height() <= 0) {
         return true;
+    }
 
-    if (tile.nTiles == 0)
+    if (tile.nTiles == 0) {
         return tile.isValid();
+    }
 
     // all children tiles are clean. doesn't need to go deeper
-    if (!tile.dirty)
+    if (!tile.dirty) {
         return true;
+    }
 
     for (int i = 0; i < tile.nTiles; ++i) {
-        if (!hasPixmap(rect, tile.tiles[i]))
+        if (!hasPixmap(rect, tile.tiles[i])) {
             return false;
+        }
     }
 
     return true;
@@ -351,8 +367,9 @@ QList<Tile> TilesManager::tilesAt(const NormalizedRect &rect, TileLeaf tileLeaf)
 
 void TilesManager::Private::tilesAt(const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, TileLeaf tileLeaf)
 {
-    if (!tile.rect.intersects(rect))
+    if (!tile.rect.intersects(rect)) {
         return;
+    }
 
     // split big tiles before the requests are made, otherwise we would end up
     // requesting huge areas unnecessarily
@@ -360,10 +377,11 @@ void TilesManager::Private::tilesAt(const NormalizedRect &rect, TileNode &tile, 
 
     if ((tileLeaf == TerminalTile && tile.nTiles == 0) || (tileLeaf == PixmapTile && tile.pixmap)) {
         NormalizedRect rotatedRect;
-        if (rotation != Rotation0)
+        if (rotation != Rotation0) {
             rotatedRect = TilesManager::toRotatedRect(tile.rect, rotation);
-        else
+        } else {
             rotatedRect = tile.rect;
+        }
 
         if (tile.pixmap && tileLeaf == PixmapTile && tile.rotation != rotation) {
             // Lazy tiles rotation
@@ -412,8 +430,9 @@ void TilesManager::Private::tilesAt(const NormalizedRect &rect, TileNode &tile, 
         }
         result.append(Tile(rotatedRect, tile.pixmap, tile.isValid()));
     } else {
-        for (int i = 0; i < tile.nTiles; ++i)
+        for (int i = 0; i < tile.nTiles; ++i) {
             tilesAt(rect, tile.tiles[i], result, tileLeaf);
+        }
     }
 }
 
@@ -432,19 +451,22 @@ void TilesManager::cleanupPixmapMemory(qulonglong numberOfBytes, const Normalize
 
     while (numberOfBytes > 0 && !rankedTiles.isEmpty()) {
         TileNode *tile = rankedTiles.takeLast();
-        if (!tile->pixmap)
+        if (!tile->pixmap) {
             continue;
+        }
 
         // do not evict visible pixmaps
-        if (tile->rect.intersects(visibleRect))
+        if (tile->rect.intersects(visibleRect)) {
             continue;
+        }
 
         qulonglong pixels = tile->pixmap->width() * tile->pixmap->height();
         d->totalPixels -= pixels;
-        if (numberOfBytes < 4 * pixels)
+        if (numberOfBytes < 4 * pixels) {
             numberOfBytes = 0;
-        else
+        } else {
             numberOfBytes -= 4 * pixels;
+        }
 
         delete tile->pixmap;
         tile->pixmap = nullptr;
@@ -455,8 +477,9 @@ void TilesManager::cleanupPixmapMemory(qulonglong numberOfBytes, const Normalize
 
 void TilesManager::Private::markParentDirty(const TileNode &tile)
 {
-    if (!tile.parent)
+    if (!tile.parent) {
         return;
+    }
 
     if (!tile.parent->dirty) {
         tile.parent->dirty = true;
@@ -472,8 +495,9 @@ void TilesManager::Private::rankTiles(TileNode &tile, QList<TileNode *> &rankedT
     // Note that the current page may be visible and yet its pageNumber is
     // different from visiblePageNumber. Since we only use this value on hidden
     // pages, any visible page number will fit.
-    if (visibleRect.isNull() && visiblePageNumber < 0)
+    if (visibleRect.isNull() && visiblePageNumber < 0) {
         return;
+    }
 
     if (tile.pixmap) {
         // Update distance
@@ -484,10 +508,11 @@ void TilesManager::Private::rankTiles(TileNode &tile, QList<TileNode *> &rankedT
             tile.distance = qAbs(viewportCenter.x - tileCenter.x) + qAbs(viewportCenter.y - tileCenter.y);
         } else {
             // For non visible pages only the vertical distance is used
-            if (pageNumber < visiblePageNumber)
+            if (pageNumber < visiblePageNumber) {
                 tile.distance = 1 - tile.rect.bottom;
-            else
+            } else {
                 tile.distance = tile.rect.top;
+            }
         }
         rankedTiles.append(&tile);
     } else {
@@ -512,8 +537,9 @@ void TilesManager::setRequest(const NormalizedRect &rect, int pageWidth, int pag
 bool TilesManager::Private::splitBigTiles(TileNode &tile, const NormalizedRect &rect)
 {
     QRect tileRect = tile.rect.geometry(width, height);
-    if (tileRect.width() * tileRect.height() < TILES_MAXSIZE)
+    if (tileRect.width() * tileRect.height() < TILES_MAXSIZE) {
         return false;
+    }
 
     split(tile, rect);
     return true;
@@ -521,11 +547,13 @@ bool TilesManager::Private::splitBigTiles(TileNode &tile, const NormalizedRect &
 
 void TilesManager::Private::split(TileNode &tile, const NormalizedRect &rect)
 {
-    if (tile.nTiles != 0)
+    if (tile.nTiles != 0) {
         return;
+    }
 
-    if (rect.isNull() || !tile.rect.intersects(rect))
+    if (rect.isNull() || !tile.rect.intersects(rect)) {
         return;
+    }
 
     tile.nTiles = 4;
     tile.tiles = new TileNode[4];
@@ -545,8 +573,9 @@ void TilesManager::Private::split(TileNode &tile, const NormalizedRect &rect)
 
 NormalizedRect TilesManager::fromRotatedRect(const NormalizedRect &rect, Rotation rotation)
 {
-    if (rotation == Rotation0)
+    if (rotation == Rotation0) {
         return rect;
+    }
 
     NormalizedRect newRect;
     switch (rotation) {
@@ -569,8 +598,9 @@ NormalizedRect TilesManager::fromRotatedRect(const NormalizedRect &rect, Rotatio
 
 NormalizedRect TilesManager::toRotatedRect(const NormalizedRect &rect, Rotation rotation)
 {
-    if (rotation == Rotation0)
+    if (rotation == Rotation0) {
         return rect;
+    }
 
     NormalizedRect newRect;
     switch (rotation) {
@@ -641,8 +671,9 @@ Tile::Tile(const Tile &t)
 
 Tile &Tile::operator=(const Tile &other)
 {
-    if (this == &other)
+    if (this == &other) {
         return *this;
+    }
 
     d->rect = other.d->rect;
     d->pixmap = other.d->pixmap;

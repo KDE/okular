@@ -56,8 +56,9 @@ ProtocolMSITS::ProtocolMSITS(const QByteArray &pool_socket, const QByteArray &ap
 
 ProtocolMSITS::~ProtocolMSITS()
 {
-    if (!m_chmFile)
+    if (!m_chmFile) {
         return;
+    }
 
     chm_close(m_chmFile);
     m_chmFile = nullptr;
@@ -77,8 +78,9 @@ void ProtocolMSITS::get(const QUrl &url)
 
     qCDebug(KIO_MITS_LOG) << "kio_msits::get() " << url.path();
 
-    if (!parseLoadAndLookup(url, fileName))
+    if (!parseLoadAndLookup(url, fileName)) {
         return; // error() has been called by parseLoadAndLookup
+    }
 
     qCDebug(KIO_MITS_LOG) << "kio_msits::get: parseLoadAndLookup returned " << fileName;
 
@@ -135,8 +137,9 @@ bool ProtocolMSITS::parseLoadAndLookup(const QUrl &url, QString &abspath)
     abspath = url.path().mid(pos + 2); // skip ::
 
     // Some buggy apps add ms-its:/ to the path as well
-    if (abspath.startsWith(QLatin1String("ms-its:")))
+    if (abspath.startsWith(QLatin1String("ms-its:"))) {
         abspath = abspath.mid(7);
+    }
 
     qCDebug(KIO_MITS_LOG) << "ProtocolMSITS::parseLoadAndLookup: filename " << filename << ", path " << abspath;
 
@@ -146,8 +149,9 @@ bool ProtocolMSITS::parseLoadAndLookup(const QUrl &url, QString &abspath)
     }
 
     // If the file has been already loaded, nothing to do.
-    if (m_chmFile && filename == m_openedFile)
+    if (m_chmFile && filename == m_openedFile) {
         return true;
+    }
 
     qCDebug(KIO_MITS_LOG) << "Opening a new CHM file " << QFile::encodeName(QDir::toNativeSeparators(filename));
 
@@ -160,8 +164,9 @@ bool ProtocolMSITS::parseLoadAndLookup(const QUrl &url, QString &abspath)
     }
 
     // Replace an existing file by a new one
-    if (m_chmFile)
+    if (m_chmFile) {
         chm_close(m_chmFile);
+    }
 
     m_chmFile = tmpchm;
     m_openedFile = filename;
@@ -211,8 +216,9 @@ void ProtocolMSITS::stat(const QUrl &url)
 
     qCDebug(KIO_MITS_LOG) << "kio_msits::stat (const KUrl& url) " << url.path();
 
-    if (!parseLoadAndLookup(url, fileName))
+    if (!parseLoadAndLookup(url, fileName)) {
         return; // error() has been called by parseLoadAndLookup
+    }
 
     if (!ResolveObject(fileName, &ui)) {
         error(KIO::ERR_DOES_NOT_EXIST, url.toString());
@@ -222,10 +228,11 @@ void ProtocolMSITS::stat(const QUrl &url)
     qCDebug(KIO_MITS_LOG) << "kio_msits::stat: adding an entry for " << fileName;
     UDSEntry entry;
 
-    if (isDirectory(fileName))
+    if (isDirectory(fileName)) {
         app_dir(entry, fileName);
-    else
+    } else {
         app_file(entry, fileName, ui.length);
+    }
 
     statEntry(entry);
 
@@ -245,8 +252,9 @@ void ProtocolMSITS::listDir(const QUrl &url)
 
     qCDebug(KIO_MITS_LOG) << "kio_msits::listDir (const KUrl& url) " << url.path();
 
-    if (!parseLoadAndLookup(url, filepath))
+    if (!parseLoadAndLookup(url, filepath)) {
         return; // error() has been called by parseLoadAndLookup
+    }
 
     filepath += QLatin1Char('/');
 
@@ -271,10 +279,11 @@ void ProtocolMSITS::listDir(const QUrl &url)
         // Strip the directory name
         const QString ename = iListing.mid(striplength);
 
-        if (isDirectory(ename))
+        if (isDirectory(ename)) {
             app_dir(entry, ename);
-        else
+        } else {
             app_file(entry, ename, 0);
+        }
     }
 
     finished();

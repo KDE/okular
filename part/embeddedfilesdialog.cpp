@@ -139,19 +139,22 @@ void EmbeddedFilesDialog::viewFileItem(QTreeWidgetItem *item, int /*column*/)
 void EmbeddedFilesDialog::attachViewContextMenu()
 {
     QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
-    if (selected.isEmpty())
+    if (selected.isEmpty()) {
         return;
+    }
 
-    if (selected.size() > 1)
+    if (selected.size() > 1) {
         return;
+    }
 
     QMenu menu(this);
     QAction *saveAsAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18nc("@action:inmenu", "&Save As..."));
     QAction *viewAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@action:inmenu", "&View..."));
 
     QAction *act = menu.exec(QCursor::pos());
-    if (!act)
+    if (!act) {
         return;
+    }
 
     Okular::EmbeddedFile *ef = qvariant_cast<Okular::EmbeddedFile *>(selected.at(0)->data(0, EmbeddedFileRole));
     if (act == saveAsAct) {

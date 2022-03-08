@@ -34,8 +34,9 @@ bool EpubDocument::isValid()
 
 EpubDocument::~EpubDocument()
 {
-    if (mEpub)
+    if (mEpub) {
         epub_close(mEpub);
+    }
 
     epub_cleanup();
 }
@@ -110,10 +111,12 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
             QImage img = QImage::fromData((unsigned char *)data, size);
             const int maxHeight = maxContentHeight();
             const int maxWidth = maxContentWidth();
-            if (img.height() > maxHeight)
+            if (img.height() > maxHeight) {
                 img = img.scaledToHeight(maxHeight, Qt::SmoothTransformation);
-            if (img.width() > maxWidth)
+            }
+            if (img.width() > maxWidth) {
                 img = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
+            }
             resource.setValue(img);
             break;
         }
@@ -124,10 +127,12 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
         }
         case EpubDocument::MovieResource: {
             QTemporaryFile *tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()), this);
-            if (!tmp->open())
+            if (!tmp->open()) {
                 qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
-            if (tmp->write(data, size) == -1)
+            }
+            if (tmp->write(data, size) == -1) {
                 qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
+            }
             tmp->flush();
             resource.setValue(tmp->fileName());
             break;

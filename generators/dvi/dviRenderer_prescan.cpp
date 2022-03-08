@@ -43,8 +43,9 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 #endif
 
     // Encapsulated Postscript File
-    if (qstrnicmp(cp, "PSfile=", 7) != 0)
+    if (qstrnicmp(cp, "PSfile=", 7) != 0) {
         return;
+    }
 
     QString command = QString::fromLocal8Bit(cp + 7);
 
@@ -62,8 +63,9 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     // macro packages (but not by others). This probably means that
     // graphic files are no longer found if the filename really does
     // contain quotes, but we don't really care that much.
-    if ((EPSfilename.at(0) == QLatin1Char('"')) && (EPSfilename.at(EPSfilename.length() - 1) == QLatin1Char('"')))
+    if ((EPSfilename.at(0) == QLatin1Char('"')) && (EPSfilename.at(EPSfilename.length() - 1) == QLatin1Char('"'))) {
         EPSfilename = EPSfilename.mid(1, EPSfilename.length() - 2);
+    }
 
     // Now locate the Gfx file on the hard disk...
     EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
@@ -76,8 +78,9 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
     bool const is_ps_file = (mime_type_name == QLatin1String("application/postscript") || mime_type_name == QLatin1String("image/x-eps"));
     bool const is_pdf_file = (!is_ps_file && mime_type_name == QLatin1String("application/pdf"));
-    if (!(is_ps_file || is_pdf_file))
+    if (!(is_ps_file || is_pdf_file)) {
         return;
+    }
 
     QString originalFName = EPSfilename;
 
@@ -85,20 +88,24 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     qApp->processEvents();
 
     // If the EPSfilename really points to a PDF file, convert that file now.
-    if (is_pdf_file)
+    if (is_pdf_file) {
         EPSfilename = dviFile->convertPDFtoPS(EPSfilename);
+    }
 
     if (!QFile::exists(EPSfilename)) {
         // Find the number of the page
         quint32 currentOffset = beginningOfSpecialCommand - dviFile->dvi_Data();
         int page = 0;
-        for (; page < dviFile->total_pages; page++)
-            if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page + 1]))
+        for (; page < dviFile->total_pages; page++) {
+            if ((dviFile->page_offset[page] <= currentOffset) && (currentOffset <= dviFile->page_offset[page + 1])) {
                 break;
-        if (is_pdf_file)
+            }
+        }
+        if (is_pdf_file) {
             errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>", page + 1, originalFName);
-        else
+        } else {
             errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>", page + 1, originalFName);
+        }
         embedPS_progress->setValue(embedPS_progress->value() + 1);
         qApp->processEvents();
         return;
@@ -128,14 +135,18 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
     // Generate the PostScript commands to be included
     QString PS = QStringLiteral("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
-    if (rwi != 0)
+    if (rwi != 0) {
         PS.append(QStringLiteral(" %1 @rwi").arg(rwi));
-    if (rhi != 0)
+    }
+    if (rhi != 0) {
         PS.append(QStringLiteral(" %1 @rhi").arg(rhi));
-    if (angle != 0)
+    }
+    if (angle != 0) {
         PS.append(QStringLiteral(" %1 @angle").arg(angle));
-    if (clip != -1)
+    }
+    if (clip != -1) {
         PS.append(QStringLiteral(" @clip"));
+    }
     PS.append(QStringLiteral(" @setspecial\n"));
 
     QFile file(EPSfilename);
@@ -197,8 +208,9 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     }
 
     command_pointer = newDVI.data() + dviFile->size_of_file - 1;
-    while ((*command_pointer == TRAILER) && (command_pointer > newDVI.data()))
+    while ((*command_pointer == TRAILER) && (command_pointer > newDVI.data())) {
         command_pointer--;
+    }
     command_pointer -= 4;
     writeUINT32(dviFile->beginning_of_postamble);
     command_pointer -= 4;
@@ -224,11 +236,13 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, quint8 *beginningOfSpecia
 #endif
 
     // Encapsulated Postscript File
-    if (qstrnicmp(cp, "papersize=", 10) != 0)
+    if (qstrnicmp(cp, "papersize=", 10) != 0) {
         return;
+    }
 
-    for (quint8 *ptr = beginningOfSpecialCommand; ptr < command_pointer; ptr++)
+    for (quint8 *ptr = beginningOfSpecialCommand; ptr < command_pointer; ptr++) {
         *ptr = NOP;
+    }
 }
 
 void dviRenderer::prescan_ParsePapersizeSpecial(const QString &_cp)
@@ -243,8 +257,9 @@ void dviRenderer::prescan_ParsePapersizeSpecial(const QString &_cp)
         cp = cp.mid(1);
         dviFile->suggestedPageSize = new pageSize;
         dviFile->suggestedPageSize->setPageSize(cp);
-    } else
+    } else {
         printErrorMsgForSpecials(i18n("The papersize data '%1' could not be parsed.", cp));
+    }
 
     return;
 }
@@ -252,9 +267,11 @@ void dviRenderer::prescan_ParsePapersizeSpecial(const QString &_cp)
 void dviRenderer::prescan_ParseBackgroundSpecial(const QString &cp)
 {
     QColor col = parseColorSpecification(cp.trimmed());
-    if (col.isValid())
-        for (quint16 page = current_page; page < dviFile->total_pages; page++)
+    if (col.isValid()) {
+        for (quint16 page = current_page; page < dviFile->total_pages; page++) {
             PS_interface->setBackgroundColor(page, col);
+        }
+    }
     return;
 }
 
@@ -290,8 +307,9 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString &cp)
         }
     }
 
-    if (QFile::exists(_file))
+    if (QFile::exists(_file)) {
         PS_interface->PostScriptHeaderString->append(QStringLiteral(" (%1) run\n").arg(_file));
+    }
 }
 
 void dviRenderer::prescan_ParsePSBangSpecial(const QString &cp)
@@ -335,16 +353,21 @@ void dviRenderer::prescan_ParsePSSpecial(const QString &cp)
     if (cp.startsWith(QLatin1String("ps:SDict begin"))) {
         // We suspect this may be hyperref generated nonsense. Let's check
         // for some known code that hyperref generates.
-        if (cp == QLatin1String("ps:SDict begin H.S end"))
+        if (cp == QLatin1String("ps:SDict begin H.S end")) {
             return; // start of hyperref rectangle
-        if (cp == QLatin1String("ps:SDict begin H.R end"))
+        }
+        if (cp == QLatin1String("ps:SDict begin H.R end")) {
             return; // end of hyperref rectangle
-        if (cp.endsWith(QLatin1String("H.A end")))
+        }
+        if (cp.endsWith(QLatin1String("H.A end"))) {
             return; // end of hyperref anchor
-        if (cp.endsWith(QLatin1String("H.L end")))
+        }
+        if (cp.endsWith(QLatin1String("H.L end"))) {
             return; // end of hyperref link
-        if (cp.startsWith(QLatin1String("ps:SDict begin /product where{pop product(Distiller)")))
-            return;                                                                                           // hyperref tries to work around Distiller bug
+        }
+        if (cp.startsWith(QLatin1String("ps:SDict begin /product where{pop product(Distiller)"))) {
+            return; // hyperref tries to work around Distiller bug
+        }
         if (cp.startsWith(QLatin1String("ps:SDict begin [")) && cp.endsWith(QLatin1String(" pdfmark end"))) { // hyperref definition of link/anchor/bookmark/etc
             if (cp.contains(QStringLiteral("/DEST"))) {                                                       // The PostScript code defines an anchor
                 QString anchorName = cp.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0);
@@ -357,10 +380,11 @@ void dviRenderer::prescan_ParsePSSpecial(const QString &cp)
                 const QString childrenNumberAndMoreStuff = cp.section(QLatin1Char('-'), 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
                 int indexOfFirstNonDigit = 0;
                 for (const QChar &c : childrenNumberAndMoreStuff) {
-                    if (c.isDigit())
+                    if (c.isDigit()) {
                         ++indexOfFirstNonDigit;
-                    else
+                    } else {
                         break;
+                    }
                 }
                 prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section(QLatin1Char('('), 2, 2).section(QLatin1Char(')'), 0, 0)),
                                                 cp.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0),
@@ -469,14 +493,18 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString &cp)
         PostScriptOutPutString->append(QStringLiteral(" %1 @lly").arg(lly));
         PostScriptOutPutString->append(QStringLiteral(" %1 @urx").arg(urx));
         PostScriptOutPutString->append(QStringLiteral(" %1 @ury").arg(ury));
-        if (rwi != 0)
+        if (rwi != 0) {
             PostScriptOutPutString->append(QStringLiteral(" %1 @rwi").arg(rwi));
-        if (rhi != 0)
+        }
+        if (rhi != 0) {
             PostScriptOutPutString->append(QStringLiteral(" %1 @rhi").arg(rhi));
-        if (angle != 0)
+        }
+        if (angle != 0) {
             PostScriptOutPutString->append(QStringLiteral(" %1 @angle").arg(angle));
-        if (clip != -1)
+        }
+        if (clip != -1) {
             PostScriptOutPutString->append(QStringLiteral(" @clip"));
+        }
         PostScriptOutPutString->append(QStringLiteral(" @setspecial \n"));
         PostScriptOutPutString->append(QStringLiteral(" (%1) run\n").arg(EPSfilename));
         PostScriptOutPutString->append(QStringLiteral("@endspecial \n"));
@@ -494,9 +522,11 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString &cp)
 
     // extract the file name and the numeral part from the string
     qint32 j;
-    for (j = 0; j < cp.length(); j++)
-        if (!cp.at(j).isNumber())
+    for (j = 0; j < cp.length(); j++) {
+        if (!cp.at(j).isNumber()) {
             break;
+        }
+    }
     quint32 sourceLineNumber = cp.leftRef(j).toUInt();
     QFileInfo fi1(dviFile->filename);
     QString sourceFileName = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absoluteFilePath();
@@ -582,21 +612,24 @@ void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
 void dviRenderer::prescan_setChar(unsigned int ch)
 {
     TeXFontDefinition *fontp = currinf.fontp;
-    if (fontp == nullptr)
+    if (fontp == nullptr) {
         return;
+    }
 
     if (currinf.set_char_p == &dviRenderer::set_char) {
         glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
-        if (g == nullptr)
+        if (g == nullptr) {
             return;
+        }
         currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (1200.0 / 2.54) / 16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
         return;
     }
 
     if (currinf.set_char_p == &dviRenderer::set_vf_char) {
         macro *m = &currinf.fontp->macrotable[ch];
-        if (m->pos == nullptr)
+        if (m->pos == nullptr) {
             return;
+        }
         currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (1200.0 / 2.54) / 16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
         return;
     }
@@ -608,8 +641,9 @@ void dviRenderer::prescan(parseSpecials specialParser)
     qCDebug(OkularDviDebug) << "dviRenderer::prescan( ... )";
 #endif
 
-    if (resolutionInDPI == 0.0)
+    if (resolutionInDPI == 0.0) {
         setResolution(100);
+    }
 
     qint32 RRtmp = 0, WWtmp = 0, XXtmp = 0, YYtmp = 0, ZZtmp = 0;
     quint8 ch;
@@ -676,10 +710,11 @@ void dviRenderer::prescan(parseSpecials specialParser)
             break;
 
         case POP:
-            if (stack.isEmpty())
+            if (stack.isEmpty()) {
                 return;
-            else
+            } else {
                 currinf.data = stack.pop();
+            }
             break;
 
         case RIGHT1:
@@ -750,8 +785,9 @@ void dviRenderer::prescan(parseSpecials specialParser)
         case FNT3:
         case FNT4:
             currinf.fontp = currinf.fonttable->value(readUINT(ch - FNT1 + 1));
-            if (currinf.fontp == nullptr)
+            if (currinf.fontp == nullptr) {
                 return;
+            }
             currinf.set_char_p = currinf.fontp->set_char_p;
             break;
 

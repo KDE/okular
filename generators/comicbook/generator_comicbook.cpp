@@ -36,8 +36,9 @@ bool ComicBookGenerator::loadDocument(const QString &fileName, QVector<Okular::P
 {
     if (!mDocument.open(fileName)) {
         const QString errString = mDocument.lastErrorString();
-        if (!errString.isEmpty())
+        if (!errString.isEmpty()) {
             emit error(errString, -1);
+        }
         return false;
     }
 
@@ -71,12 +72,13 @@ Okular::Document::PrintError ComicBookGenerator::print(QPrinter &printer)
     for (int i = 0; i < pageList.count(); ++i) {
         QImage image = mDocument.pageImage(pageList[i] - 1);
 
-        if ((image.width() > printer.width()) || (image.height() > printer.height()))
-
+        if ((image.width() > printer.width()) || (image.height() > printer.height())) {
             image = image.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
 
-        if (i != 0)
+        if (i != 0) {
             printer.newPage();
+        }
 
         p.drawImage(0, 0, image);
     }

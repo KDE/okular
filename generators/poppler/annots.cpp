@@ -288,8 +288,9 @@ static void setPopplerStampAnnotationCustomImage(const Poppler::Page *page, Popp
 
     QImage image = Okular::AnnotationUtils::loadStamp(oStampAnnotation->stampIconName(), qMax(rect.width(), rect.height())).toImage();
 
-    if (!image.isNull())
+    if (!image.isNull()) {
         pStampAnnotation->setStampCustomImage(image);
+    }
 }
 #endif
 
@@ -486,16 +487,18 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
     {
         bool wasDenyWriteEnabled = okl_ann->flags() & Okular::Annotation::DenyWrite;
 
-        if (wasDenyWriteEnabled)
+        if (wasDenyWriteEnabled) {
             okl_ann->setFlags(okl_ann->flags() & ~Okular::Annotation::DenyWrite);
+        }
 
         ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::StampAnnotation *>(okl_ann), ppl_page);
         if (deletedStampsAnnotationAppearance.find(static_cast<Okular::StampAnnotation *>(okl_ann)) != deletedStampsAnnotationAppearance.end()) {
             ppl_ann->setAnnotationAppearance(*deletedStampsAnnotationAppearance[static_cast<Okular::StampAnnotation *>(okl_ann)].get());
             deletedStampsAnnotationAppearance.erase(static_cast<Okular::StampAnnotation *>(okl_ann));
 
-            if (wasDenyWriteEnabled)
+            if (wasDenyWriteEnabled) {
                 okl_ann->setFlags(okl_ann->flags() | Okular::Annotation::DenyWrite);
+            }
         }
     }
 #else
@@ -517,8 +520,9 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
     okl_ann->setFlags(okl_ann->flags() | Okular::Annotation::ExternallyDrawn);
 #else
     // Poppler doesn't render StampAnnotations yet
-    if (ppl_ann->subType() != Poppler::Annotation::AStamp)
+    if (ppl_ann->subType() != Poppler::Annotation::AStamp) {
         okl_ann->setFlags(okl_ann->flags() | Okular::Annotation::ExternallyDrawn);
+    }
 #endif
 
     // Bind poppler object to page
@@ -539,8 +543,9 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
 
     Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation *>(okl_ann->nativeId());
 
-    if (!ppl_ann) // Ignore non-native annotations
+    if (!ppl_ann) { // Ignore non-native annotations
         return;
+    }
 
     QMutexLocker ml(mutex);
 
@@ -617,16 +622,18 @@ void PopplerAnnotationProxy::notifyRemoval(Okular::Annotation *okl_ann, int page
 {
     Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation *>(okl_ann->nativeId());
 
-    if (!ppl_ann) // Ignore non-native annotations
+    if (!ppl_ann) { // Ignore non-native annotations
         return;
+    }
 
     QMutexLocker ml(mutex);
 
     Poppler::Page *ppl_page = ppl_doc->page(page);
     annotationsOnOpenHash->remove(okl_ann);
 #ifdef HAVE_POPPLER_21_10
-    if (okl_ann->subType() == Okular::Annotation::AStamp)
+    if (okl_ann->subType() == Okular::Annotation::AStamp) {
         deletedStampsAnnotationAppearance[static_cast<Okular::StampAnnotation *>(okl_ann)] = std::move(ppl_ann->annotationAppearance());
+    }
 #endif
     ppl_page->removeAnnotation(ppl_ann); // Also destroys ppl_ann
     delete ppl_page;
@@ -1087,8 +1094,9 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularAnnotation->setFlags(popplerAnnotation->flags() | Okular::Annotation::External);
         okularAnnotation->setBoundingRectangle(Okular::NormalizedRect::fromQRectF(popplerAnnotation->boundary()));
 
-        if (externallyDrawn)
+        if (externallyDrawn) {
             okularAnnotation->setFlags(okularAnnotation->flags() | Okular::Annotation::ExternallyDrawn);
+        }
 #ifdef HAVE_POPPLER_21_10
         if (okularAnnotation->subType() == Okular::Annotation::SubType::AStamp) {
             Okular::StampAnnotation *oStampAnn = static_cast<Okular::StampAnnotation *>(okularAnnotation);
@@ -1112,10 +1120,12 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularStyle.setXCorners(popplerStyle.xCorners());
         okularStyle.setYCorners(popplerStyle.yCorners());
         const QVector<double> &dashArray = popplerStyle.dashArray();
-        if (dashArray.size() > 0)
+        if (dashArray.size() > 0) {
             okularStyle.setMarks(dashArray[0]);
-        if (dashArray.size() > 1)
+        }
+        if (dashArray.size() > 1) {
             okularStyle.setSpaces(dashArray[1]);
+        }
         okularStyle.setLineEffect(popplerToOkular(popplerStyle.lineEffect()));
         okularStyle.setEffectIntensity(popplerStyle.effectIntensity());
 

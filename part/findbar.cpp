@@ -155,8 +155,9 @@ void FindBar::resetSearch()
 void FindBar::caseSensitivityChanged()
 {
     m_search->lineEdit()->setSearchCaseSensitivity(m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
-    if (!m_active)
+    if (!m_active) {
         return;
+    }
     Okular::Settings::setSearchCaseSensitive(m_caseSensitiveAct->isChecked());
     Okular::Settings::self()->save();
     m_search->lineEdit()->restartSearch();
@@ -165,8 +166,9 @@ void FindBar::caseSensitivityChanged()
 void FindBar::fromCurrentPageChanged()
 {
     m_search->lineEdit()->setSearchFromStart(!m_fromCurrentPageAct->isChecked());
-    if (!m_active)
+    if (!m_active) {
         return;
+    }
     Okular::Settings::setSearchFromCurrentPage(m_fromCurrentPageAct->isChecked());
     Okular::Settings::self()->save();
 }
@@ -174,8 +176,9 @@ void FindBar::fromCurrentPageChanged()
 void FindBar::findAsYouTypeChanged()
 {
     m_search->lineEdit()->setFindAsYouType(m_findAsYouTypeAct->isChecked());
-    if (!m_active)
+    if (!m_active) {
         return;
+    }
     Okular::Settings::setFindAsYouType(m_findAsYouTypeAct->isChecked());
     Okular::Settings::self()->save();
 }

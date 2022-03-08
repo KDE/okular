@@ -66,8 +66,9 @@ public:
 
     ~Private()
     {
-        if (player)
+        if (player) {
             player->stop();
+        }
     }
 
     enum PlayPauseMode { PlayMode, PauseMode };
@@ -118,8 +119,9 @@ static QUrl urlFromUrlString(const QString &url, Okular::Document *document)
 void VideoWidget::Private::load()
 {
     repetitionsLeft = movie->playRepetitions();
-    if (loaded)
+    if (loaded) {
         return;
+    }
 
     loaded = true;
 
@@ -151,10 +153,11 @@ void VideoWidget::Private::takeSnapshot()
 
 void VideoWidget::Private::videoStopped()
 {
-    if (movie->showPosterImage())
+    if (movie->showPosterImage()) {
         pageLayout->setCurrentIndex(1);
-    else
+    } else {
         q->hide();
+    }
 }
 
 void VideoWidget::Private::finished()
@@ -167,13 +170,15 @@ void VideoWidget::Private::finished()
             // playback has ended
             stopAction->setEnabled(false);
             setupPlayPauseAction(PlayMode);
-            if (movie->playMode() == Okular::Movie::PlayLimited)
+            if (movie->playMode() == Okular::Movie::PlayLimited) {
                 controlBar->setVisible(false);
+            }
             videoStopped();
-        } else
+        } else {
             // not done yet, repeat
             // if repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
             player->play();
+        }
         break;
     case Okular::Movie::PlayRepeat:
         // repeat the playback
@@ -208,8 +213,9 @@ void VideoWidget::Private::setPosterImage(const QImage &image)
 
 void VideoWidget::Private::stateChanged(Phonon::State newState)
 {
-    if (newState == Phonon::PlayingState)
+    if (newState == Phonon::PlayingState) {
         pageLayout->setCurrentIndex(0);
+    }
 }
 
 VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *movie, Okular::Document *document, QWidget *parent)

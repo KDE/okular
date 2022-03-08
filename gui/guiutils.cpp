@@ -33,20 +33,22 @@ QString captionForAnnotation(const Okular::Annotation *ann)
     QString ret;
     switch (ann->subType()) {
     case Okular::Annotation::AText:
-        if (((Okular::TextAnnotation *)ann)->textType() == Okular::TextAnnotation::Linked)
+        if (((Okular::TextAnnotation *)ann)->textType() == Okular::TextAnnotation::Linked) {
             ret = i18n("Pop-up Note");
-        else {
-            if (((Okular::TextAnnotation *)ann)->inplaceIntent() == Okular::TextAnnotation::TypeWriter)
+        } else {
+            if (((Okular::TextAnnotation *)ann)->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
                 ret = i18n("Typewriter");
-            else
+            } else {
                 ret = i18n("Inline Note");
+            }
         }
         break;
     case Okular::Annotation::ALine:
-        if (((Okular::LineAnnotation *)ann)->linePoints().count() == 2)
+        if (((Okular::LineAnnotation *)ann)->linePoints().count() == 2) {
             ret = hasComment ? i18n("Straight Line with Comment") : i18n("Straight Line");
-        else
+        } else {
             ret = hasComment ? i18n("Polygon with Comment") : i18n("Polygon");
+        }
         break;
     case Okular::Annotation::AGeom:
         ret = hasComment ? i18n("Geometry with Comment") : i18n("Geometry");
@@ -122,8 +124,9 @@ QString prettyToolTip(const Okular::Annotation *ann)
     QString contents = contentsHtml(ann);
 
     QString tooltip = QStringLiteral("<qt><b>") + i18n("Author: %1", author) + QStringLiteral("</b>");
-    if (!contents.isEmpty())
+    if (!contents.isEmpty()) {
         tooltip += QStringLiteral("<div style=\"font-size: 4px;\"><hr /></div>") + contents;
+    }
 
     tooltip += QLatin1String("</qt>");
 
@@ -134,8 +137,9 @@ void saveEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent)
 {
     const QString caption = i18n("Where do you want to save %1?", ef->name());
     const QString path = QFileDialog::getSaveFileName(parent, caption, ef->name());
-    if (path.isEmpty())
+    if (path.isEmpty()) {
         return;
+    }
     QFile targetFile(path);
     writeEmbeddedFile(ef, parent, targetFile);
 }
@@ -152,8 +156,9 @@ void writeEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent, QFile &target)
 
 Okular::Movie *renditionMovieFromScreenAnnotation(const Okular::ScreenAnnotation *annotation)
 {
-    if (!annotation)
+    if (!annotation) {
         return nullptr;
+    }
 
     if (annotation->action() && annotation->action()->actionType() == Okular::Action::Rendition) {
         Okular::RenditionAction *renditionAction = static_cast<Okular::RenditionAction *>(annotation->action());
@@ -172,8 +177,9 @@ static inline int qt_div_255(int x)
 void colorizeImage(QImage &grayImage, const QColor &color, unsigned int destAlpha)
 {
     // Make sure that the image is Format_ARGB32_Premultiplied
-    if (grayImage.format() != QImage::Format_ARGB32_Premultiplied)
+    if (grayImage.format() != QImage::Format_ARGB32_Premultiplied) {
         grayImage = grayImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
 
     // iterate over all pixels changing the alpha component value
     unsigned int *data = reinterpret_cast<unsigned int *>(grayImage.bits());
@@ -190,8 +196,9 @@ void colorizeImage(QImage &grayImage, const QColor &color, unsigned int destAlph
             data[i] = qRgba(newR, newG, newB, destAlpha);
         } else {
             // use destAlpha * sourceAlpha product
-            if (destAlpha < 255)
+            if (destAlpha < 255) {
                 sourceAlpha = qt_div_255(destAlpha * sourceAlpha);
+            }
             data[i] = qRgba(newR, newG, newB, sourceAlpha);
         }
     }

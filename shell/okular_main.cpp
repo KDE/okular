@@ -23,12 +23,14 @@
 
 static bool attachUniqueInstance(const QStringList &paths, const QString &serializedOptions)
 {
-    if (!ShellUtils::unique(serializedOptions) || paths.count() != 1)
+    if (!ShellUtils::unique(serializedOptions) || paths.count() != 1) {
         return false;
+    }
 
     QDBusInterface iface(QStringLiteral("org.kde.okular"), QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular"));
-    if (!iface.isValid())
+    if (!iface.isValid()) {
         return false;
+    }
 
     if (!ShellUtils::editorCmd(serializedOptions).isEmpty()) {
         QString message =
@@ -49,18 +51,21 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
 // Ask an existing non-unique instance to open new tabs
 static bool attachExistingInstance(const QStringList &paths, const QString &serializedOptions)
 {
-    if (paths.count() < 1)
+    if (paths.count() < 1) {
         return false;
+    }
 
     // Don't try to attach to an existing instance with --print-and-exit because that would mean
     // we're going to exit that other instance and that's just rude
-    if (ShellUtils::showPrintDialogAndExit(serializedOptions))
+    if (ShellUtils::showPrintDialogAndExit(serializedOptions)) {
         return false;
+    }
 
     // If DBus isn't running, we can't attach to an existing instance.
     auto *sessionInterface = QDBusConnection::sessionBus().interface();
-    if (!sessionInterface)
+    if (!sessionInterface) {
         return false;
+    }
 
     const QStringList services = sessionInterface->registeredServiceNames().value();
 
@@ -77,15 +82,17 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 
             // Find a window that can handle our documents
             const QDBusReply<bool> reply = bestService->call(QStringLiteral("canOpenDocs"), paths.count(), desktop);
-            if (reply.isValid() && reply.value())
+            if (reply.isValid() && reply.value()) {
                 break;
+            }
 
             bestService.reset();
         }
     }
 
-    if (!bestService)
+    if (!bestService) {
         return false;
+    }
 
     for (const QString &arg : paths) {
         // Copy stdin to temporary file which can be opened by the existing
@@ -96,8 +103,9 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         if (arg == QLatin1String("-")) {
             tempFile.reset(new QTemporaryFile);
             QFile stdinFile;
-            if (!tempFile->open() || !stdinFile.open(stdin, QIODevice::ReadOnly))
+            if (!tempFile->open() || !stdinFile.open(stdin, QIODevice::ReadOnly)) {
                 return false;
+            }
 
             const size_t bufSize = 1024 * 1024;
             QScopedPointer<char, QScopedPointerArrayDeleter<char>> buf(new char[bufSize]);
@@ -116,8 +124,9 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 
         // Returns false if it can't fit another document
         const QDBusReply<bool> reply = bestService->call(QStringLiteral("openDocument"), path, serializedOptions);
-        if (!reply.isValid() || !reply.value())
+        if (!reply.isValid() || !reply.value()) {
             return false;
+        }
     }
 
     if (!ShellUtils::editorCmd(serializedOptions).isEmpty()) {

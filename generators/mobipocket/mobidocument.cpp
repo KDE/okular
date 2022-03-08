@@ -51,12 +51,14 @@ MobiDocument::~MobiDocument()
 
 QVariant MobiDocument::loadResource(int type, const QUrl &name)
 {
-    if (type != QTextDocument::ImageResource || name.scheme() != QString(QStringLiteral("pdbrec")))
+    if (type != QTextDocument::ImageResource || name.scheme() != QString(QStringLiteral("pdbrec"))) {
         return QVariant();
+    }
     bool ok;
     quint16 recnum = name.path().midRef(1).toUShort(&ok);
-    if (!ok || recnum >= doc->imageCount())
+    if (!ok || recnum >= doc->imageCount()) {
         return QVariant();
+    }
 
     QVariant resource;
     resource.setValue(doc->getImage(recnum - 1));
@@ -69,10 +71,12 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
 int outsideTag(const QString &data, int pos)
 {
     for (int i = pos - 1; i >= 0; i--) {
-        if (data[i] == QLatin1Char('>'))
+        if (data[i] == QLatin1Char('>')) {
             return pos;
-        if (data[i] == QLatin1Char('<'))
+        }
+        if (data[i] == QLatin1Char('<')) {
             return i;
+        }
     }
     return pos;
 }
@@ -87,8 +91,9 @@ QString MobiDocument::fixMobiMarkup(const QString &data)
     // find all link destinations
     while ((pos = anchors.indexIn(data, pos)) != -1) {
         int filepos = anchors.cap(1).toUInt();
-        if (filepos)
+        if (filepos) {
             anchorPositions[filepos] = anchors.cap(1);
+        }
         pos += anchors.matchedLength();
     }
 
@@ -98,8 +103,9 @@ QString MobiDocument::fixMobiMarkup(const QString &data)
     while (it.hasNext()) {
         it.next();
         // link pointing outside the document, ignore
-        if ((it.key() + offset) >= ret.size())
+        if ((it.key() + offset) >= ret.size()) {
             continue;
+        }
         int fixedpos = outsideTag(ret, it.key() + offset);
         ret.insert(fixedpos, QStringLiteral("<a name=\"") + it.value() + QStringLiteral("\">&nbsp;</a>"));
         // inserting anchor shifts all offsets after the anchor

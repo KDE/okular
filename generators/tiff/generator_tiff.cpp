@@ -96,8 +96,9 @@ public:
 
 static QDateTime convertTIFFDateTime(const char *tiffdate)
 {
-    if (!tiffdate)
+    if (!tiffdate) {
         return QDateTime();
+    }
 
     return QDateTime::fromString(QString::fromLatin1(tiffdate), QStringLiteral("yyyy:MM:dd HH:mm:ss"));
 }
@@ -106,8 +107,9 @@ static void adaptSizeToResolution(TIFF *tiff, ttag_t whichres, double dpi, uint3
 {
     float resvalue = 1.0;
     uint16_t resunit = 0;
-    if (!TIFFGetField(tiff, whichres, &resvalue) || !TIFFGetFieldDefaulted(tiff, TIFFTAG_RESOLUTIONUNIT, &resunit))
+    if (!TIFFGetField(tiff, whichres, &resvalue) || !TIFFGetFieldDefaulted(tiff, TIFFTAG_RESOLUTIONUNIT, &resunit)) {
         return;
+    }
 
     float newsize = *size / resvalue;
     switch (resunit) {
@@ -126,8 +128,9 @@ static Okular::Rotation readTiffRotation(TIFF *tiff)
 {
     uint32_t tiffOrientation = 0;
 
-    if (!TIFFGetField(tiff, TIFFTAG_ORIENTATION, &tiffOrientation))
+    if (!TIFFGetField(tiff, TIFFTAG_ORIENTATION, &tiffOrientation)) {
         return Okular::Rotation0;
+    }
 
     Okular::Rotation ret = Okular::Rotation0;
     switch (tiffOrientation) {
@@ -235,8 +238,9 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
         TIFFGetField(d->tiff, TIFFTAG_IMAGEWIDTH, &width);
         TIFFGetField(d->tiff, TIFFTAG_IMAGELENGTH, &height);
 
-        if (!TIFFGetField(d->tiff, TIFFTAG_ORIENTATION, &orientation))
+        if (!TIFFGetField(d->tiff, TIFFTAG_ORIENTATION, &orientation)) {
             orientation = ORIENTATION_TOPLEFT;
+        }
 
         QImage image(width, height, QImage::Format_RGB32);
         uint32_t *data = reinterpret_cast<uint32_t *>(image.bits());
@@ -253,8 +257,9 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
 
             int reqwidth = request->width();
             int reqheight = request->height();
-            if (rotation % 2 == 1)
+            if (rotation % 2 == 1) {
                 qSwap(reqwidth, reqheight);
+            }
             img = image.scaled(reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
             generated = true;
@@ -273,8 +278,9 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo(const QSet<Okular::Docu
 {
     Okular::DocumentInfo docInfo;
     if (d->tiff) {
-        if (keys.contains(Okular::DocumentInfo::MimeType))
+        if (keys.contains(Okular::DocumentInfo::MimeType)) {
             docInfo.set(Okular::DocumentInfo::MimeType, QStringLiteral("image/tiff"));
+        }
 
         if (keys.contains(Okular::DocumentInfo::Description)) {
             char *buffer = nullptr;
@@ -313,8 +319,9 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo(const QSet<Okular::Docu
 
 void TIFFGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
 {
-    if (!d->tiff)
+    if (!d->tiff) {
         return;
+    }
 
     tdir_t dirs = TIFFNumberOfDirectories(d->tiff);
     pagesVector.resize(dirs);
@@ -325,11 +332,13 @@ void TIFFGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
 
     const QSizeF dpi = Okular::Utils::realDpi(nullptr);
     for (tdir_t i = 0; i < dirs; ++i) {
-        if (!TIFFSetDirectory(d->tiff, i))
+        if (!TIFFSetDirectory(d->tiff, i)) {
             continue;
+        }
 
-        if (TIFFGetField(d->tiff, TIFFTAG_IMAGEWIDTH, &width) != 1 || TIFFGetField(d->tiff, TIFFTAG_IMAGELENGTH, &height) != 1)
+        if (TIFFGetField(d->tiff, TIFFTAG_IMAGEWIDTH, &width) != 1 || TIFFGetField(d->tiff, TIFFTAG_IMAGELENGTH, &height) != 1) {
             continue;
+        }
 
         adaptSizeToResolution(d->tiff, TIFFTAG_XRESOLUTION, dpi.width(), &width);
         adaptSizeToResolution(d->tiff, TIFFTAG_YRESOLUTION, dpi.height(), &height);
@@ -355,11 +364,13 @@ Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
     QList<int> pageList = Okular::FilePrinter::pageList(printer, document()->pages(), document()->currentPage() + 1, document()->bookmarkedPageList());
 
     for (int i = 0; i < pageList.count(); ++i) {
-        if (!TIFFSetDirectory(d->tiff, mapPage(pageList[i] - 1)))
+        if (!TIFFSetDirectory(d->tiff, mapPage(pageList[i] - 1))) {
             continue;
+        }
 
-        if (TIFFGetField(d->tiff, TIFFTAG_IMAGEWIDTH, &width) != 1 || TIFFGetField(d->tiff, TIFFTAG_IMAGELENGTH, &height) != 1)
+        if (TIFFGetField(d->tiff, TIFFTAG_IMAGEWIDTH, &width) != 1 || TIFFGetField(d->tiff, TIFFTAG_IMAGELENGTH, &height) != 1) {
             continue;
+        }
 
         QImage image(width, height, QImage::Format_RGB32);
         uint32_t *data = reinterpret_cast<uint32_t *>(image.bits());
@@ -375,8 +386,9 @@ Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
             }
         }
 
-        if (i != 0)
+        if (i != 0) {
             printer.newPage();
+        }
 
         QSize targetSize = printer.pageRect().size();
 

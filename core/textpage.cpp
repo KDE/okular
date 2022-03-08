@@ -76,11 +76,13 @@ static bool segmentsOverlap(double left1, double right1, double left2, double ri
 {
     // check if one consumes another fully (speed optimization)
 
-    if (left1 <= left2 && right1 >= right2)
+    if (left1 <= left2 && right1 >= right2) {
         return true;
+    }
 
-    if (left1 >= left2 && right1 <= right2)
+    if (left1 >= left2 && right1 <= right2) {
         return true;
+    }
 
     // check if there is overlap above threshold
     if (right2 >= left1 && right1 >= left2) {
@@ -229,8 +231,9 @@ TextPage::TextPage(const TextEntity::List &words)
     TextEntity::List::ConstIterator it = words.constBegin(), itEnd = words.constEnd();
     for (; it != itEnd; ++it) {
         TextEntity *e = *it;
-        if (!e->text().isEmpty())
+        if (!e->text().isEmpty()) {
             d->m_words.append(new TinyTextEntity(e->text(), *e->area()));
+        }
         delete e;
     }
 }
@@ -336,8 +339,9 @@ private:
 
 RegularAreaRect *TextPage::textArea(TextSelection *sel) const
 {
-    if (d->m_words.isEmpty())
+    if (d->m_words.isEmpty()) {
         return new RegularAreaRect();
+    }
 
     /**
         It works like this:
@@ -414,33 +418,38 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
     const NormalizedRect start_end = (startC.y < endC.y) ? NormalizedRect(startC.x, startC.y, endC.x, endC.y) : NormalizedRect(startC.x, endC.y, endC.x, startC.y);
 
     // Case 1(a)
-    if (!boundingRect.intersects(start_end))
+    if (!boundingRect.intersects(start_end)) {
         return ret;
-
-    // case 1(b)
-    /**
-        note that, after swapping of start and end, we know that,
-        start is always left to end. but, we cannot say start is
-        positioned upper than end.
-    **/
-    else {
+    } else {
+        // case 1(b)
+        /**
+            note that, after swapping of start and end, we know that,
+            start is always left to end. but, we cannot say start is
+            positioned upper than end.
+        **/
         // if start is left to content rect take it to content rect boundary
-        if (startC.x * scaleX < minX)
+        if (startC.x * scaleX < minX) {
             startC.x = minX / scaleX;
-        if (endC.x * scaleX > maxX)
+        }
+        if (endC.x * scaleX > maxX) {
             endC.x = maxX / scaleX;
+        }
 
         // if start is top to end (selection type 01)
-        if (startC.y * scaleY < minY)
+        if (startC.y * scaleY < minY) {
             startC.y = minY / scaleY;
-        if (endC.y * scaleY > maxY)
+        }
+        if (endC.y * scaleY > maxY) {
             endC.y = maxY / scaleY;
+        }
 
         // if start is bottom to end (selection type 02)
-        if (startC.y * scaleY > maxY)
+        if (startC.y * scaleY > maxY) {
             startC.y = maxY / scaleY;
-        if (endC.y * scaleY < minY)
+        }
+        if (endC.y * scaleY < minY) {
             endC.y = minY / scaleY;
+        }
     }
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
@@ -465,8 +474,9 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         for (; it != itEnd; ++it) {
             // is there any text rectangle within the start_end rect
             tmp = (*it)->area;
-            if (start_end.intersects(tmp))
+            if (start_end.intersects(tmp)) {
                 break;
+            }
         }
 
         // we have searched every text entities, but none is within the rectangle created by start and end
@@ -513,10 +523,12 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
                     ydist = entRect.center().y() - startC.y * scaleY;
 
                     // make them positive
-                    if (xdist < 0)
+                    if (xdist < 0) {
                         xdist = -xdist;
-                    if (ydist < 0)
+                    }
+                    if (ydist < 0) {
                         ydist = -ydist;
+                    }
 
                     if ((xdist + ydist) < distance) {
                         distance = xdist + ydist;
@@ -559,10 +571,12 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
                     ydist = entRect.center().y() - endC.y * scaleY;
 
                     // make them positive
-                    if (xdist < 0)
+                    if (xdist < 0) {
                         xdist = -xdist;
-                    if (ydist < 0)
+                    }
+                    if (ydist < 0) {
                         ydist = -ydist;
+                    }
 
                     if ((xdist + ydist) < distance) {
                         distance = xdist + ydist;
@@ -591,8 +605,9 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
     }
 
     // removes the possibility of crash, in case none of 1 to 3 is true
-    if (end == d->m_words.constEnd())
+    if (end == d->m_words.constEnd()) {
         end--;
+    }
 
     for (; start <= end; start++) {
         ret->appendShape((*start)->transformedArea(matrix), side);
@@ -605,8 +620,9 @@ RegularAreaRect *TextPage::findText(int searchID, const QString &query, SearchDi
 {
     SearchDirection dir = direct;
     // invalid search request
-    if (d->m_words.isEmpty() || query.isEmpty() || (area && area->isNull()))
+    if (d->m_words.isEmpty() || query.isEmpty() || (area && area->isNull())) {
         return nullptr;
+    }
     TextList::ConstIterator start;
     int start_offset = 0;
     TextList::ConstIterator end;
@@ -614,10 +630,11 @@ RegularAreaRect *TextPage::findText(int searchID, const QString &query, SearchDi
     if (sIt == d->m_searchPoints.constEnd()) {
         // if no previous run of this search is found, then set it to start
         // from the beginning (respecting the search direction)
-        if (dir == NextResult)
+        if (dir == NextResult) {
             dir = FromTop;
-        else if (dir == PreviousResult)
+        } else if (dir == PreviousResult) {
             dir = FromBottom;
+        }
     }
     bool forward = true;
     switch (dir) {
@@ -926,8 +943,9 @@ QString TextPage::text(const RegularAreaRect *area) const
 
 QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const
 {
-    if (area && area->isNull())
+    if (area && area->isNull()) {
         return QString();
+    }
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     QString ret;
@@ -945,8 +963,9 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
             }
         }
     } else {
-        for (; it != itEnd; ++it)
+        for (; it != itEnd; ++it) {
             ret += (*it)->text();
+        }
     }
     return ret;
 }
@@ -1048,8 +1067,9 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
              we must have to put this line before the if condition of it==itEnd
              otherwise the last character can be missed
              */
-            if (it == itEnd)
+            if (it == itEnd) {
                 break;
+            }
             elementArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
             if (!doesConsumeY(elementArea, lineArea, 60)) {
                 --it;
@@ -1088,8 +1108,9 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
             index++;
         }
 
-        if (it == itEnd)
+        if (it == itEnd) {
             break;
+        }
     }
 
     return wordsWithCharacters;
@@ -1156,8 +1177,9 @@ QList<QPair<WordsWithCharacters, QRect>> makeAndSortLines(const WordsWithCharact
                 found = true;
             }
 
-            if (found)
+            if (found) {
                 break;
+            }
         }
 
         /* when we have found a new line create a new TextList containing
@@ -1203,18 +1225,21 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
     for (int i = 0; i < sortedLines.length(); i++) {
         const QRect rectUpper = sortedLines.at(i).second;
 
-        if (i + 1 == sortedLines.length())
+        if (i + 1 == sortedLines.length()) {
             break;
+        }
         const QRect rectLower = sortedLines.at(i + 1).second;
 
         int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
-        if (linespace < 0)
+        if (linespace < 0) {
             linespace = -linespace;
+        }
 
-        if (line_space_stat.contains(linespace))
+        if (line_space_stat.contains(linespace)) {
             line_space_stat[linespace]++;
-        else
+        } else {
             line_space_stat[linespace] = 1;
+        }
     }
 
     *line_spacing = 0;
@@ -1226,8 +1251,9 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
         *line_spacing += iterate_linespace.value() * iterate_linespace.key();
         weighted_count += iterate_linespace.value();
     }
-    if (*line_spacing != 0)
+    if (*line_spacing != 0) {
         *line_spacing = (int)((double)*line_spacing / (double)weighted_count + 0.5);
+    }
 
     /**
      * Step 2
@@ -1252,8 +1278,9 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
         // for every line
         for (; it != itEnd; it++) {
             const QRect area1 = (*it).area().roundedGeometry(pageWidth, pageHeight);
-            if (it + 1 == itEnd)
+            if (it + 1 == itEnd) {
                 break;
+            }
 
             const QRect area2 = (*(it + 1)).area().roundedGeometry(pageWidth, pageHeight);
             int space = area2.left() - area1.right();
@@ -1266,16 +1293,18 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
                 after_max = (*(it + 1)).text();
             }
 
-            if (space < minSpace && space != 0)
+            if (space < minSpace && space != 0) {
                 minSpace = space;
+            }
 
             // if we found a real space, whose length is not zero and also less than the pageWidth
             if (space != 0 && space != pageWidth) {
                 // increase the count of the space amount
-                if (hor_space_stat.contains(space))
+                if (hor_space_stat.contains(space)) {
                     hor_space_stat[space]++;
-                else
+                } else {
                     hor_space_stat[space] = 1;
+                }
 
                 int left, right, top, bottom;
 
@@ -1293,17 +1322,19 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
         space_rects.append(line_space_rects);
 
         if (hor_space_stat.contains(maxSpace)) {
-            if (hor_space_stat[maxSpace] != 1)
+            if (hor_space_stat[maxSpace] != 1) {
                 hor_space_stat[maxSpace]--;
-            else
+            } else {
                 hor_space_stat.remove(maxSpace);
+            }
         }
 
         if (maxSpace != 0) {
-            if (col_space_stat.contains(maxSpace))
+            if (col_space_stat.contains(maxSpace)) {
                 col_space_stat[maxSpace]++;
-            else
+            } else {
                 col_space_stat[maxSpace] = 1;
+            }
 
             // store the max rect of each line
             const int left = max_area1.right();
@@ -1313,8 +1344,9 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
 
             const QRect rect(left, top, right - left, bottom - top);
             max_hor_space_rects.append(rect);
-        } else
+        } else {
             max_hor_space_rects.append(QRect(0, 0, 0, 0));
+        }
     }
 
     // All the between word space counts are in hor_space_stat
@@ -1330,22 +1362,25 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
             weighted_count += iterate.value();
         }
     }
-    if (weighted_count)
+    if (weighted_count) {
         *word_spacing = (int)((double)*word_spacing / (double)weighted_count + 0.5);
+    }
 
     *col_spacing = 0;
     QMapIterator<int, int> iterate_col(col_space_stat);
 
     while (iterate_col.hasNext()) {
         iterate_col.next();
-        if (iterate_col.value() > *col_spacing)
+        if (iterate_col.value() > *col_spacing) {
             *col_spacing = iterate_col.value();
+        }
     }
     *col_spacing = col_space_stat.key(*col_spacing);
 
     // if there is just one line in a region, there is no point in dividing it
-    if (sortedLines.length() == 1)
+    if (sortedLines.length() == 1) {
         *word_spacing = *col_spacing;
+    }
 }
 
 /**
@@ -1379,10 +1414,12 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         QVarLengthArray<int> proj_on_xaxis(size_proj_x);
         QVarLengthArray<int> proj_on_yaxis(size_proj_y);
 
-        for (int j = 0; j < size_proj_y; ++j)
+        for (int j = 0; j < size_proj_y; ++j) {
             proj_on_yaxis[j] = 0;
-        for (int j = 0; j < size_proj_x; ++j)
+        }
+        for (int j = 0; j < size_proj_x; ++j) {
             proj_on_xaxis[j] = 0;
+        }
 
         const QList<WordWithCharacters> list = node.text();
 
@@ -1404,47 +1441,56 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
 
             // calculate vertical projection profile proj_on_xaxis1
             for (int k = entRect.left(); k <= entRect.left() + entRect.width(); ++k) {
-                if ((k - regionRect.left()) < size_proj_x && (k - regionRect.left()) >= 0)
+                if ((k - regionRect.left()) < size_proj_x && (k - regionRect.left()) >= 0) {
                     proj_on_xaxis[k - regionRect.left()] += entRect.height();
+                }
             }
 
             // calculate horizontal projection profile in the same way
             for (int k = entRect.top(); k <= entRect.top() + entRect.height(); ++k) {
-                if ((k - regionRect.top()) < size_proj_y && (k - regionRect.top()) >= 0)
+                if ((k - regionRect.top()) < size_proj_y && (k - regionRect.top()) >= 0) {
                     proj_on_yaxis[k - regionRect.top()] += entRect.width();
+                }
             }
         }
 
         for (int j = 0; j < size_proj_y; ++j) {
-            if (proj_on_yaxis[j] > maxY)
+            if (proj_on_yaxis[j] > maxY) {
                 maxY = proj_on_yaxis[j];
+            }
         }
 
         avgX = count = 0;
         for (int j = 0; j < size_proj_x; ++j) {
-            if (proj_on_xaxis[j] > maxX)
+            if (proj_on_xaxis[j] > maxX) {
                 maxX = proj_on_xaxis[j];
+            }
             if (proj_on_xaxis[j]) {
                 count++;
                 avgX += proj_on_xaxis[j];
             }
         }
-        if (count)
+        if (count) {
             avgX /= count;
+        }
 
         /**
          * 2. Cleanup Boundary White Spaces and removal of noise
          */
         int xbegin = 0, xend = size_proj_x - 1;
         int ybegin = 0, yend = size_proj_y - 1;
-        while (xbegin < size_proj_x && proj_on_xaxis[xbegin] <= 0)
+        while (xbegin < size_proj_x && proj_on_xaxis[xbegin] <= 0) {
             xbegin++;
-        while (xend >= 0 && proj_on_xaxis[xend] <= 0)
+        }
+        while (xend >= 0 && proj_on_xaxis[xend] <= 0) {
             xend--;
-        while (ybegin < size_proj_y && proj_on_yaxis[ybegin] <= 0)
+        }
+        while (ybegin < size_proj_y && proj_on_yaxis[ybegin] <= 0) {
             ybegin++;
-        while (yend >= 0 && proj_on_yaxis[yend] <= 0)
+        }
+        while (yend >= 0 && proj_on_yaxis[yend] <= 0) {
             yend--;
+        }
 
         // update the regionRect
         int old_left = regionRect.left(), old_top = regionRect.top();
@@ -1454,10 +1500,12 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         regionRect.setBottom(old_top + yend);
 
         int tnx = (int)((double)avgX * 10.0 / 100.0 + 0.5), tny = 0;
-        for (int j = 0; j < size_proj_x; ++j)
+        for (int j = 0; j < size_proj_x; ++j) {
             proj_on_xaxis[j] -= tnx;
-        for (int j = 0; j < size_proj_y; ++j)
+        }
+        for (int j = 0; j < size_proj_y; ++j) {
             proj_on_yaxis[j] -= tny;
+        }
 
         /**
          * 3. Find the Widest gap
@@ -1468,12 +1516,14 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         // find all hor_gaps and find the maximum between them
         for (int j = 1; j < size_proj_y; ++j) {
             // transition from white to black
-            if (begin >= 0 && proj_on_yaxis[j - 1] <= 0 && proj_on_yaxis[j] > 0)
+            if (begin >= 0 && proj_on_yaxis[j - 1] <= 0 && proj_on_yaxis[j] > 0) {
                 end = j;
+            }
 
             // transition from black to white
-            if (proj_on_yaxis[j - 1] > 0 && proj_on_yaxis[j] <= 0)
+            if (proj_on_yaxis[j - 1] > 0 && proj_on_yaxis[j] <= 0) {
                 begin = j;
+            }
 
             if (begin > 0 && end > 0 && end - begin > gap_hor) {
                 gap_hor = end - begin;
@@ -1494,8 +1544,9 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
             }
 
             // transition from black to white
-            if (proj_on_xaxis[j - 1] > 0 && proj_on_xaxis[j] <= 0)
+            if (proj_on_xaxis[j - 1] > 0 && proj_on_xaxis[j] <= 0) {
                 begin = j;
+            }
 
             if (begin > 0 && end > 0 && end - begin > gap_ver) {
                 gap_ver = end - begin;
@@ -1523,16 +1574,16 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         const QRect leftRect(regionRect.left(), regionRect.top(), leftWidth, regionRect.height());
         const QRect rightRect(regionRect.left() + leftWidth, regionRect.top(), regionRect.width() - leftWidth, regionRect.height());
 
-        if (gap_y >= gap_x && gap_y >= tcy)
+        if (gap_y >= gap_x && gap_y >= tcy) {
             cut_hor = true;
-        else if (gap_y >= gap_x && gap_y <= tcy && gap_x >= tcx)
+        } else if (gap_y >= gap_x && gap_y <= tcy && gap_x >= tcx) {
             cut_ver = true;
-        else if (gap_x >= gap_y && gap_x >= tcx)
+        } else if (gap_x >= gap_y && gap_x >= tcx) {
             cut_ver = true;
-        else if (gap_x >= gap_y && gap_x <= tcx && gap_y >= tcy)
+        } else if (gap_x >= gap_y && gap_x <= tcx && gap_y >= tcy) {
             cut_hor = true;
-        // no cut possible
-        else {
+        } else {
+            // no cut possible
             // we can now update the node rectangle with the shrinked rectangle
             RegionText tmpNode = tree.at(i);
             tmpNode.setArea(regionRect);
@@ -1548,10 +1599,11 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
             for (const WordWithCharacters &word : list) {
                 const QRect wordRect = word.area().geometry(pageWidth, pageHeight);
 
-                if (topRect.intersects(wordRect))
+                if (topRect.intersects(wordRect)) {
                     list1.append(word);
-                else
+                } else {
                     list2.append(word);
+                }
             }
 
             RegionText node1(list1, topRect);
@@ -1566,10 +1618,11 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
             for (const WordWithCharacters &word : list) {
                 const QRect wordRect = word.area().geometry(pageWidth, pageHeight);
 
-                if (leftRect.intersects(wordRect))
+                if (leftRect.intersects(wordRect)) {
                     list1.append(word);
-                else
+                } else {
                     list2.append(word);
+                }
             }
 
             RegionText node1(list1, leftRect);
@@ -1604,8 +1657,9 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
             WordsWithCharacters &list = sortedLine.first;
             for (int k = 0; k < list.length(); k++) {
                 const QRect area1 = list.at(k).area().roundedGeometry(pageWidth, pageHeight);
-                if (k + 1 >= list.length())
+                if (k + 1 >= list.length()) {
                     break;
+                }
 
                 const QRect area2 = list.at(k + 1).area().roundedGeometry(pageWidth, pageHeight);
                 const int space = area2.left() - area1.right();
@@ -1695,8 +1749,9 @@ void TextPagePrivate::correctTextOrder()
 
 TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const
 {
-    if (area && area->isNull())
+    if (area && area->isNull()) {
         return TextEntity::List();
+    }
 
     TextEntity::List ret;
     if (area) {

@@ -231,8 +231,9 @@ Okular::Document *DocumentItem::document()
 
 Observer *DocumentItem::thumbnailObserver()
 {
-    if (!m_thumbnailObserver)
+    if (!m_thumbnailObserver) {
         m_thumbnailObserver = new Observer(this);
+    }
 
     return m_thumbnailObserver;
 }

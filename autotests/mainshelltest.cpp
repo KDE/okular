@@ -123,8 +123,9 @@ Shell *findShell(Shell *ignore = nullptr)
     const QWidgetList wList = QApplication::topLevelWidgets();
     for (QWidget *widget : wList) {
         Shell *s = qobject_cast<Shell *>(widget);
-        if (s && s != ignore)
+        if (s && s != ignore) {
             return s;
+        }
     }
     return nullptr;
 }
@@ -311,14 +312,18 @@ void MainShellTest::testShell()
         QProcess p;
         QStringList args;
         args << externalProcessPath;
-        if (unique)
+        if (unique) {
             args << QStringLiteral("-unique");
-        if (externalProcessExpectedPage != 0)
+        }
+        if (externalProcessExpectedPage != 0) {
             args << QStringLiteral("-page") << QString::number(externalProcessExpectedPage + 1);
-        if (externalProcessExpectPresentation)
+        }
+        if (externalProcessExpectPresentation) {
             args << QStringLiteral("-presentation");
-        if (externalProcessExpectPrintDialog)
+        }
+        if (externalProcessExpectPrintDialog) {
             args << QStringLiteral("-print");
+        }
         p.start(QStringLiteral(OKULAR_BINARY), args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
@@ -409,10 +414,11 @@ void MainShellTest::testFileRemembersPagePosition()
 
     const QStringList paths = QStringList(QStringLiteral(KDESRCDIR "data/contents.epub"));
     QString serializedOptions;
-    if (mode == 1 || mode == 3)
+    if (mode == 1 || mode == 3) {
         serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
-    else
+    } else {
         serializedOptions = ShellUtils::serializeOptions(false, false, false, true, false, QString(), QString(), QString());
+    }
 
     Okular::Settings::self()->setShellOpenFileInTabs(mode == 3);
 
@@ -437,8 +443,9 @@ void MainShellTest::testFileRemembersPagePosition()
         QProcess p;
         QStringList args;
         args << paths[0];
-        if (mode == 2)
+        if (mode == 2) {
             args << QStringLiteral("-unique");
+        }
         p.start(QStringLiteral(OKULAR_BINARY), args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);

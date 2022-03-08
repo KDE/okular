@@ -60,12 +60,14 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 #endif
 
     glyph *g;
-    if (colorStack.isEmpty())
+    if (colorStack.isEmpty()) {
         g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
-    else
+    } else {
         g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, colorStack.top());
-    if (g == nullptr)
+    }
+    if (g == nullptr) {
         return;
+    }
 
     long dvi_h_sav = currinf.data.dvi_h;
 
@@ -107,10 +109,11 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
             Hyperlink dhl;
             dhl.baseline = currinf.data.pxl_v;
             dhl.box.setRect(x, y, pix.width(), pix.height());
-            if (source_href != nullptr)
+            if (source_href != nullptr) {
                 dhl.linkText = *source_href;
-            else
+            } else {
                 dhl.linkText = QLatin1String("");
+            }
             currentDVIPage->sourceHyperLinkList.push_back(dhl);
         } else {
             QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size() - 1].box.united(QRect(x, y, pix.width(), pix.height()));
@@ -159,17 +162,19 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
         break;
 
     default:
-        if ((ch >= 0x21) && (ch <= 0x7a))
+        if ((ch >= 0x21) && (ch <= 0x7a)) {
             currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size() - 1].text += QChar(ch);
-        else
+        } else {
             currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size() - 1].text += QLatin1Char('?');
+        }
         break;
     }
 
-    if (cmd == PUT1)
+    if (cmd == PUT1) {
         currinf.data.dvi_h = dvi_h_sav;
-    else
+    } else {
         currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (1200.0 / 2.54) / 16.0 * g->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    }
 
     word_boundary_encountered = false;
     line_boundary_encountered = false;
@@ -213,10 +218,11 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
     end_pointer = end_ptr_sav;
     currinf = oldinfo;
 
-    if (cmd == PUT1)
+    if (cmd == PUT1) {
         currinf.data.dvi_h = dvi_h_sav;
-    else
+    } else {
         currinf.data.dvi_h += (int)(currinf.fontp->scaled_size_in_DVI_units * dviFile->getCmPerDVIunit() * (1200.0 / 2.54) / 16.0 * m->dvi_advance_in_units_of_design_size_by_2e20 + 0.5);
+    }
 }
 
 void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
@@ -288,10 +294,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                     int h = ((int)ROUNDUP(((long)(a * current_dimconv)), shrinkfactor * 65536));
                     int w = ((int)ROUNDUP(b, shrinkfactor * 65536));
 
-                    if (colorStack.isEmpty())
+                    if (colorStack.isEmpty()) {
                         foreGroundPainter->fillRect(((int)((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - h + 1, w ? w : 1, h ? h : 1, globalColor);
-                    else
+                    } else {
                         foreGroundPainter->fillRect(((int)((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - h + 1, w ? w : 1, h ? h : 1, colorStack.top());
+                    }
                 }
                 currinf.data.dvi_h += b;
                 break;
@@ -308,10 +315,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                 if (a > 0 && b > 0) {
                     int h = ((int)ROUNDUP(a, shrinkfactor * 65536));
                     int w = ((int)ROUNDUP(b, shrinkfactor * 65536));
-                    if (colorStack.isEmpty())
+                    if (colorStack.isEmpty()) {
                         foreGroundPainter->fillRect(((int)((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - h + 1, w ? w : 1, h ? h : 1, globalColor);
-                    else
+                    } else {
                         foreGroundPainter->fillRect(((int)((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - h + 1, w ? w : 1, h ? h : 1, colorStack.top());
+                    }
                 }
                 break;
 
@@ -356,8 +364,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                 if (stack.isEmpty()) {
                     errorMsg = i18n("The stack was empty when a POP command was encountered.");
                     return;
-                } else
+                } else {
                     currinf.data = stack.pop();
+                }
                 word_boundary_encountered = true;
                 line_boundary_encountered = true;
                 break;
@@ -424,8 +433,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                     word_boundary_encountered = true;
                     line_boundary_encountered = true;
                     space_encountered = true;
-                    if (abs(DDtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6))
+                    if (abs(DDtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6)) {
                         currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size() - 1].text += QLatin1Char('\n');
+                    }
                 }
                 currinf.data.dvi_v += ((long)(DDtmp * current_dimconv)) / 65536;
                 currinf.data.pxl_v = int(currinf.data.dvi_v / shrinkfactor);
@@ -443,8 +453,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                     word_boundary_encountered = true;
                     line_boundary_encountered = true;
                     space_encountered = true;
-                    if (abs(YYtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6))
+                    if (abs(YYtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6)) {
                         currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size() - 1].text += QLatin1Char('\n');
+                    }
                 }
                 currinf.data.dvi_v += currinf.data.y / 65536;
                 currinf.data.pxl_v = int(currinf.data.dvi_v / shrinkfactor);
@@ -462,8 +473,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                     word_boundary_encountered = true;
                     line_boundary_encountered = true;
                     space_encountered = true;
-                    if (abs(ZZtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6))
+                    if (abs(ZZtmp) >= 10 * (currinf.fontp->scaled_size_in_DVI_units / 6)) {
                         currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size() - 1].text += QLatin1Char('\n');
+                    }
                 }
                 currinf.data.dvi_v += currinf.data.z / 65536;
                 currinf.data.pxl_v = int(currinf.data.dvi_v / shrinkfactor);
@@ -542,8 +554,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
         /* heuristic to properly detect newlines; a space is needed */
         if (after_space && line_boundary_encountered && word_boundary_encountered) {
-            if (currentlyDrawnPage->textBoxList.last().text.endsWith(QLatin1Char('\n')))
+            if (currentlyDrawnPage->textBoxList.last().text.endsWith(QLatin1Char('\n'))) {
                 currentlyDrawnPage->textBoxList.last().text.chop(1);
+            }
             currentlyDrawnPage->textBoxList.last().text += QLatin1String(" \n");
             after_space = false;
         }
@@ -608,13 +621,15 @@ void dviRenderer::draw_page()
     }
 
     // Now really write the text
-    if (dviFile->page_offset.isEmpty() == true)
+    if (dviFile->page_offset.isEmpty() == true) {
         return;
+    }
     if (current_page < dviFile->total_pages) {
         command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
         end_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page + 1)];
-    } else
+    } else {
         command_pointer = end_pointer = nullptr;
+    }
 
     memset((char *)&currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);

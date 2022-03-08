@@ -50,8 +50,9 @@ static void docSetPageNum(KJSContext *ctx, void *object, KJSObject value)
 
     int page = value.toInt32(ctx);
 
-    if (page == (int)doc->m_parent->currentPage())
+    if (page == (int)doc->m_parent->currentPage()) {
         return;
+    }
 
     doc->m_parent->setViewportPage(page);
 }
@@ -226,8 +227,9 @@ static KJSObject docGotoNamedDest(KJSContext *ctx, void *object, const KJSArgume
     QString dest = arguments.at(0).toString(ctx);
 
     DocumentViewport viewport(doc->m_generator->metaData(QStringLiteral("NamedViewport"), dest).toString());
-    if (!viewport.isValid())
+    if (!viewport.isValid()) {
         return KJSUndefined();
+    }
 
     doc->m_parent->setViewport(viewport);
 
@@ -290,8 +292,9 @@ void JSDocument::initType(KJSContext *ctx)
     assert(g_docProto);
 
     static bool initialized = false;
-    if (initialized)
+    if (initialized) {
         return;
+    }
     initialized = true;
 
     g_docProto->defineProperty(ctx, QStringLiteral("numPages"), docGetNumPages);
@@ -325,7 +328,8 @@ void JSDocument::initType(KJSContext *ctx)
 
 KJSGlobalObject JSDocument::wrapDocument(DocumentPrivate *doc)
 {
-    if (!g_docProto)
+    if (!g_docProto) {
         g_docProto = new KJSPrototype();
+    }
     return g_docProto->constructGlobalObject(doc);
 }

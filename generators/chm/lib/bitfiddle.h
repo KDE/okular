@@ -56,9 +56,9 @@ inline int ffus(unsigned char *byte, int *bit, size_t &length)
     length = 0;
 
     while (*byte & (1 << *bit)) {
-        if (*bit)
+        if (*bit) {
             --(*bit);
-        else {
+        } else {
             ++byte;
             ++length;
             *bit = 7;
@@ -66,9 +66,9 @@ inline int ffus(unsigned char *byte, int *bit, size_t &length)
         ++bits;
     }
 
-    if (*bit)
+    if (*bit) {
         --(*bit);
-    else {
+    } else {
         ++length;
         *bit = 7;
     }
@@ -84,8 +84,9 @@ inline quint64 sr_int(unsigned char *byte, int *bit, unsigned char s, unsigned c
     length = 0;
     size_t fflen;
 
-    if (!bit || *bit > 7 || s != 2)
+    if (!bit || *bit > 7 || s != 2) {
         return ~(quint64)0;
+    }
     ret = 0;
 
     count = ffus(byte, bit, fflen);
@@ -142,8 +143,9 @@ inline quint64 sr_int(unsigned char *byte, int *bit, unsigned char s, unsigned c
         }
     }
 
-    if (count)
+    if (count) {
         ret |= (quint64)1 << n_bits;
+    }
 
     return ret;
 }

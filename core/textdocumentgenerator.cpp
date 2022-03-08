@@ -102,8 +102,9 @@ Okular::TextPage *TextDocumentGeneratorPrivate::createTextPage(int pageNumber) c
             if (text.length() == 1) {
                 QRectF rect;
                 TextDocumentUtils::calculateBoundingRect(mDocument, i, i + 1, rect, pageNumber);
-                if (pageNumber == -1)
+                if (pageNumber == -1) {
                     text = QStringLiteral("\n");
+                }
 
                 textPage->append(text, new Okular::NormalizedRect(rect.left(), rect.top(), rect.right(), rect.bottom()));
             }
@@ -118,8 +119,9 @@ Okular::TextPage *TextDocumentGeneratorPrivate::createTextPage(int pageNumber) c
 
 void TextDocumentGeneratorPrivate::addAction(Action *action, int cursorBegin, int cursorEnd)
 {
-    if (!action)
+    if (!action) {
         return;
+    }
 
     LinkPosition position;
     position.link = action;
@@ -131,8 +133,9 @@ void TextDocumentGeneratorPrivate::addAction(Action *action, int cursorBegin, in
 
 void TextDocumentGeneratorPrivate::addAnnotation(Annotation *annotation, int cursorBegin, int cursorEnd)
 {
-    if (!annotation)
+    if (!annotation) {
         return;
+    }
 
     annotation->setFlags(annotation->flags() | Okular::Annotation::External);
 
@@ -195,8 +198,9 @@ QList<TextDocumentGeneratorPrivate::AnnotationInfo> TextDocumentGeneratorPrivate
 
         TextDocumentUtils::calculateBoundingRect(mDocument, annotationPosition.startPosition, annotationPosition.endPosition, info.boundingRect, info.page);
 
-        if (info.page >= 0)
+        if (info.page >= 0) {
             result.append(info);
+        }
     }
 
     return result;
@@ -312,8 +316,9 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QStri
     QVector<QLinkedList<Okular::ObjectRect *>> objects(d->mDocument->pageCount());
     for (const TextDocumentGeneratorPrivate::LinkInfo &info : linkInfos) {
         // in case that the converter report bogus link info data, do not assert here
-        if (info.page < 0 || info.page >= objects.count())
+        if (info.page < 0 || info.page >= objects.count()) {
             continue;
+        }
 
         const QRectF rect = info.boundingRect;
         if (info.ownsLink) {
@@ -372,8 +377,9 @@ void TextDocumentGenerator::generatePixmap(Okular::PixmapRequest *request)
 
 QImage TextDocumentGeneratorPrivate::image(PixmapRequest *request)
 {
-    if (!mDocument)
+    if (!mDocument) {
         return QImage();
+    }
 
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     Q_Q(TextDocumentGenerator);
@@ -425,8 +431,9 @@ Okular::TextPage *TextDocumentGenerator::textPage(Okular::TextRequest *request)
 Document::PrintError TextDocumentGenerator::print(QPrinter &printer)
 {
     Q_D(TextDocumentGenerator);
-    if (!d->mDocument)
+    if (!d->mDocument) {
         return Document::UnknownPrintError;
+    }
 
     d->mDocument->print(&printer);
 
@@ -442,10 +449,11 @@ Okular::DocumentInfo TextDocumentGenerator::generateDocumentInfo(const QSet<Docu
 const Okular::DocumentSynopsis *TextDocumentGenerator::generateDocumentSynopsis()
 {
     Q_D(TextDocumentGenerator);
-    if (!d->mDocumentSynopsis.hasChildNodes())
+    if (!d->mDocumentSynopsis.hasChildNodes()) {
         return nullptr;
-    else
+    } else {
         return &d->mDocumentSynopsis;
+    }
 }
 
 QVariant TextDocumentGeneratorPrivate::metaData(const QString &key, const QVariant &option) const
@@ -477,13 +485,15 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats() const
 bool TextDocumentGenerator::exportTo(const QString &fileName, const Okular::ExportFormat &format)
 {
     Q_D(TextDocumentGenerator);
-    if (!d->mDocument)
+    if (!d->mDocument) {
         return false;
+    }
 
     if (format.mimeType().name() == QLatin1String("application/pdf")) {
         QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly))
+        if (!file.open(QIODevice::WriteOnly)) {
             return false;
+        }
 
         QPrinter printer(QPrinter::HighResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
@@ -493,8 +503,9 @@ bool TextDocumentGenerator::exportTo(const QString &fileName, const Okular::Expo
         return true;
     } else if (format.mimeType().name() == QLatin1String("text/plain")) {
         QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly))
+        if (!file.open(QIODevice::WriteOnly)) {
             return false;
+        }
 
         QTextStream out(&file);
         out << d->mDocument->toPlainText();

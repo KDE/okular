@@ -198,8 +198,9 @@ NormalizedRect &NormalizedRect::operator|=(const NormalizedRect &r)
 
 NormalizedRect NormalizedRect::operator&(const NormalizedRect &r) const
 {
-    if (isNull() || r.isNull())
+    if (isNull() || r.isNull()) {
         return NormalizedRect();
+    }
 
     NormalizedRect ret;
     ret.left = qMax(left, r.left);
@@ -309,10 +310,11 @@ ObjectRect::ObjectRect(double l, double t, double r, double b, bool ellipse, Obj
 {
     // assign coordinates swapping them if negative width or height
     QRectF rect(r > l ? l : r, b > t ? t : b, fabs(r - l), fabs(b - t));
-    if (ellipse)
+    if (ellipse) {
         m_path.addEllipse(rect);
-    else
+    } else {
         m_path.addRect(rect);
+    }
 
     m_transformedPath = m_path;
 }
@@ -322,10 +324,11 @@ ObjectRect::ObjectRect(const NormalizedRect &r, bool ellipse, ObjectType type, v
     , m_object(object)
 {
     QRectF rect(r.left, r.top, fabs(r.right - r.left), fabs(r.bottom - r.top));
-    if (ellipse)
+    if (ellipse) {
         m_path.addEllipse(rect);
-    else
+    } else {
         m_path.addRect(rect);
+    }
 
     m_transformedPath = m_path;
 }
@@ -399,15 +402,17 @@ double ObjectRect::distanceSqr(double x, double y, double xScale, double yScale)
 
 ObjectRect::~ObjectRect()
 {
-    if (!m_object)
+    if (!m_object) {
         return;
+    }
 
-    if (m_objectType == Action)
+    if (m_objectType == Action) {
         delete static_cast<Okular::Action *>(m_object);
-    else if (m_objectType == SourceRef)
+    } else if (m_objectType == SourceRef) {
         delete static_cast<Okular::SourceReference *>(m_object);
-    else
+    } else {
         qCDebug(OkularCoreDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
+    }
 }
 
 /** class AnnotationObjectRect **/

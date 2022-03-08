@@ -211,8 +211,9 @@ ThumbnailWidget *ThumbnailListPrivate::getPageByNumber(int page) const
 {
     QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
-        if ((*tIt)->pageNumber() == page)
+        if ((*tIt)->pageNumber() == page) {
             return (*tIt);
+        }
     }
     return nullptr;
 }
@@ -225,8 +226,9 @@ ThumbnailWidget *ThumbnailListPrivate::itemFor(const QPoint p) const
 {
     QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
-        if ((*tIt)->rect().contains(p))
+        if ((*tIt)->rect().contains(p)) {
             return (*tIt);
+        }
     }
     return nullptr;
 }
@@ -286,13 +288,15 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
     int prevPage = -1;
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged) && d->m_selected) {
         prevPage = d->m_selected->page()->number();
-    } else
+    } else {
         prevPage = d->m_document->viewport().pageNumber;
+    }
 
     // delete all the Thumbnails
     QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
-    for (; tIt != tEnd; ++tIt)
+    for (; tIt != tEnd; ++tIt) {
         delete *tIt;
+    }
     d->m_thumbnails.clear();
     d->m_visibleThumbnails.clear();
     d->m_selected = nullptr;
@@ -309,16 +313,18 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
     // if no page matches filter rule, then display all pages
     QVector<Okular::Page *>::const_iterator pIt = pages.constBegin(), pEnd = pages.constEnd();
     bool skipCheck = true;
-    for (; pIt != pEnd; ++pIt)
+    for (; pIt != pEnd; ++pIt) {
         // if ( (*pIt)->attributes() & flags )
-        if ((*pIt)->hasHighlights(SW_SEARCH_ID))
+        if ((*pIt)->hasHighlights(SW_SEARCH_ID)) {
             skipCheck = false;
+        }
+    }
 
     // generate Thumbnails for the given set of pages
     const int width = viewport()->width();
     int height = 0;
     int centerHeight = 0;
-    for (pIt = pages.constBegin(); pIt != pEnd; ++pIt)
+    for (pIt = pages.constBegin(); pIt != pEnd; ++pIt) {
         // if ( skipCheck || (*pIt)->attributes() & flags )
         if (skipCheck || (*pIt)->hasHighlights(SW_SEARCH_ID)) {
             ThumbnailWidget *t = new ThumbnailWidget(d, *pIt);
@@ -338,6 +344,7 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
             }
             height += t->height() + this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
         }
+    }
 
     // update scrollview's contents size (sets scrollbars limits)
     height -= this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
@@ -356,12 +363,14 @@ void ThumbnailList::notifyCurrentPageChanged(int previousPage, int currentPage)
     Q_UNUSED(previousPage)
 
     // skip notifies for the current page (already selected)
-    if (d->m_selected && d->m_selected->pageNumber() == currentPage)
+    if (d->m_selected && d->m_selected->pageNumber() == currentPage) {
         return;
+    }
 
     // deselect previous thumbnail
-    if (d->m_selected)
+    if (d->m_selected) {
         d->m_selected->setSelected(false);
+    }
     d->m_selected = nullptr;
 
     // select the page with viewport and ensure it's centered in the view
@@ -390,23 +399,26 @@ void ThumbnailList::notifyPageChanged(int pageNumber, int changedFlags)
 {
     static const int interestingFlags = DocumentObserver::Pixmap | DocumentObserver::Bookmark | DocumentObserver::Highlights | DocumentObserver::Annotations;
     // only handle change notifications we are interested in
-    if (!(changedFlags & interestingFlags))
+    if (!(changedFlags & interestingFlags)) {
         return;
+    }
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
-    for (; vIt != vEnd; ++vIt)
+    for (; vIt != vEnd; ++vIt) {
         if ((*vIt)->pageNumber() == pageNumber) {
             (*vIt)->update();
             break;
         }
+    }
 }
 
 void ThumbnailList::notifyContentsCleared(int changedFlags)
 {
     // if pixmaps were cleared, re-ask them
-    if (changedFlags & DocumentObserver::Pixmap)
+    if (changedFlags & DocumentObserver::Pixmap) {
         d->slotRequestVisiblePixmaps();
+    }
 }
 
 void ThumbnailList::notifyVisibleRectsChanged()
@@ -434,9 +446,11 @@ bool ThumbnailList::canUnloadPixmap(int pageNumber) const
 {
     // if the thumbnail 'pageNumber' is one of the visible ones, forbid unloading
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
-    for (; vIt != vEnd; ++vIt)
-        if ((*vIt)->pageNumber() == pageNumber)
+    for (; vIt != vEnd; ++vIt) {
+        if ((*vIt)->pageNumber() == pageNumber) {
             return false;
+        }
+    }
     // if hidden permit unloading
     return true;
 }
@@ -456,24 +470,29 @@ int ThumbnailListPrivate::getNewPageOffset(int n, ThumbnailListPrivate::ChangePa
 {
     int reason = 1;
     int facingFirst = 0; // facingFirstCentered cornercase
-    if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing)
+    if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing) {
         reason = 2;
-    else if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered) {
+    } else if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered) {
         facingFirst = 1;
         reason = 2;
-    } else if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Summary)
+    } else if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Summary) {
         reason = 3;
+    }
     if (dir == ThumbnailListPrivate::Up) {
-        if (facingFirst && n == 1)
+        if (facingFirst && n == 1) {
             return -1;
+        }
         return -reason;
     }
-    if (dir == ThumbnailListPrivate::Down)
+    if (dir == ThumbnailListPrivate::Down) {
         return reason;
-    if (dir == ThumbnailListPrivate::Left && reason > 1 && (n + facingFirst) % reason)
+    }
+    if (dir == ThumbnailListPrivate::Left && reason > 1 && (n + facingFirst) % reason) {
         return -1;
-    if (dir == ThumbnailListPrivate::Right && reason > 1 && (n + 1 + facingFirst) % reason)
+    }
+    if (dir == ThumbnailListPrivate::Right && reason > 1 && (n + 1 + facingFirst) % reason) {
         return 1;
+    }
     return 0;
 }
 
@@ -483,16 +502,19 @@ ThumbnailWidget *ThumbnailListPrivate::getThumbnailbyOffset(int current, int off
     QVector<ThumbnailWidget *>::const_iterator itE = m_thumbnails.end();
     int idx = 0;
     while (it != itE) {
-        if ((*it)->pageNumber() == current)
+        if ((*it)->pageNumber() == current) {
             break;
+        }
         ++idx;
         ++it;
     }
-    if (it == itE)
+    if (it == itE) {
         return nullptr;
+    }
     idx += offset;
-    if (idx < 0 || idx >= m_thumbnails.size())
+    if (idx < 0 || idx >= m_thumbnails.size()) {
         return nullptr;
+    }
     return m_thumbnails[idx];
 }
 
@@ -502,14 +524,18 @@ ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(con
     const double deltaX = (double)point.x() / r.width(), deltaY = (double)point.y() / r.height();
     vp.rePos.normalizedX -= deltaX;
     vp.rePos.normalizedY -= deltaY;
-    if (vp.rePos.normalizedY > 1.0)
+    if (vp.rePos.normalizedY > 1.0) {
         return ThumbnailListPrivate::Down;
-    if (vp.rePos.normalizedY < 0.0)
+    }
+    if (vp.rePos.normalizedY < 0.0) {
         return ThumbnailListPrivate::Up;
-    if (vp.rePos.normalizedX > 1.0)
+    }
+    if (vp.rePos.normalizedX > 1.0) {
         return ThumbnailListPrivate::Right;
-    if (vp.rePos.normalizedX < 0.0)
+    }
+    if (vp.rePos.normalizedX < 0.0) {
         return ThumbnailListPrivate::Left;
+    }
     vp.rePos.enabled = true;
     m_document->setViewport(vp);
     return ThumbnailListPrivate::Null;
@@ -541,23 +567,26 @@ void ThumbnailList::keyPressEvent(QKeyEvent *keyEvent)
 
     int nextPage = -1;
     if (keyEvent->key() == Qt::Key_Up) {
-        if (!d->m_selected)
+        if (!d->m_selected) {
             nextPage = 0;
-        else if (d->m_vectorIndex > 0)
+        } else if (d->m_vectorIndex > 0) {
             nextPage = d->m_thumbnails[d->m_vectorIndex - 1]->pageNumber();
+        }
     } else if (keyEvent->key() == Qt::Key_Down) {
-        if (!d->m_selected)
+        if (!d->m_selected) {
             nextPage = 0;
-        else if (d->m_vectorIndex < (int)d->m_thumbnails.count() - 1)
+        } else if (d->m_vectorIndex < (int)d->m_thumbnails.count() - 1) {
             nextPage = d->m_thumbnails[d->m_vectorIndex + 1]->pageNumber();
-    } else if (keyEvent->key() == Qt::Key_PageUp)
+        }
+    } else if (keyEvent->key() == Qt::Key_PageUp) {
         verticalScrollBar()->triggerAction(QScrollBar::SliderPageStepSub);
-    else if (keyEvent->key() == Qt::Key_PageDown)
+    } else if (keyEvent->key() == Qt::Key_PageDown) {
         verticalScrollBar()->triggerAction(QScrollBar::SliderPageStepAdd);
-    else if (keyEvent->key() == Qt::Key_Home)
+    } else if (keyEvent->key() == Qt::Key_Home) {
         nextPage = d->m_thumbnails[0]->pageNumber();
-    else if (keyEvent->key() == Qt::Key_End)
+    } else if (keyEvent->key() == Qt::Key_End) {
         nextPage = d->m_thumbnails[d->m_thumbnails.count() - 1]->pageNumber();
+    }
 
     if (nextPage == -1) {
         keyEvent->ignore();
@@ -565,8 +594,9 @@ void ThumbnailList::keyPressEvent(QKeyEvent *keyEvent)
     }
 
     keyEvent->accept();
-    if (d->m_selected)
+    if (d->m_selected) {
         d->m_selected->setSelected(false);
+    }
     d->m_selected = nullptr;
     d->m_document->setViewportPage(nextPage);
 }
@@ -585,8 +615,9 @@ bool ThumbnailList::viewportEvent(QEvent *e)
 
 void ThumbnailListPrivate::viewportResizeEvent(QResizeEvent *e)
 {
-    if (m_thumbnails.count() < 1 || width() < 1)
+    if (m_thumbnails.count() < 1 || width() < 1) {
         return;
+    }
 
     // if width changed resize all the Thumbnails, reposition them to the
     // right place and recalculate the contents area
@@ -616,8 +647,9 @@ void ThumbnailListPrivate::viewportResizeEvent(QResizeEvent *e)
 
         // ensure that what was visible before remains visible now
         q->ensureVisible(0, int((qreal)oldYCenter * q->widget()->height() / oldHeight), 0, q->viewport()->height() / 2);
-    } else if (e->size().height() <= e->oldSize().height())
+    } else if (e->size().height() <= e->oldSize().height()) {
         return;
+    }
 
     // invalidate the bookmark overlay
     if (m_bookmarkOverlay) {
@@ -634,8 +666,9 @@ void ThumbnailListPrivate::viewportResizeEvent(QResizeEvent *e)
 void ThumbnailListPrivate::slotRequestVisiblePixmaps()
 {
     // if an update is already scheduled or the widget is hidden, don't proceed
-    if ((m_delayTimer && m_delayTimer->isActive()) || q->isHidden())
+    if ((m_delayTimer && m_delayTimer->isActive()) || q->isHidden()) {
         return;
+    }
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
@@ -645,8 +678,9 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
     for (; tIt != tEnd; ++tIt) {
         ThumbnailWidget *t = *tIt;
         const QRect thumbRect = t->rect();
-        if (!thumbRect.intersects(viewportRect))
+        if (!thumbRect.intersects(viewportRect)) {
             continue;
+        }
         // add ThumbnailWidget to visible list
         m_visibleThumbnails.push_back(t);
         // if pixmap not present add it to requests
@@ -657,8 +691,9 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
     }
 
     // actually request pixmaps
-    if (!requestedPixmaps.isEmpty())
+    if (!requestedPixmaps.isEmpty()) {
         m_document->requestPixmaps(requestedPixmaps);
+    }
 }
 
 void ThumbnailListPrivate::slotDelayTimeout()
@@ -666,10 +701,11 @@ void ThumbnailListPrivate::slotDelayTimeout()
     // resize the bookmark overlay
     delete m_bookmarkOverlay;
     const int expectedWidth = q->viewport()->width() / 4;
-    if (expectedWidth > 10)
+    if (expectedWidth > 10) {
         m_bookmarkOverlay = new QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(expectedWidth));
-    else
+    } else {
         m_bookmarkOverlay = nullptr;
+    }
 
     // request pixmaps
     slotRequestVisiblePixmaps();
@@ -717,8 +753,9 @@ void ThumbnailWidget::setSelected(bool selected)
 
 void ThumbnailWidget::setVisibleRect(const Okular::NormalizedRect &rect)
 {
-    if (rect == m_visibleRect)
+    if (rect == m_visibleRect) {
         return;
+    }
 
     m_visibleRect = rect;
     update();
@@ -815,8 +852,9 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
             // Changing the selected page
             const int offset = getNewPageOffset(m_pageCurrentlyGrabbed, direction);
             const ThumbnailWidget *newThumb = getThumbnailbyOffset(m_pageCurrentlyGrabbed, offset);
-            if (!newThumb)
+            if (!newThumb) {
                 return;
+            }
             int newPageOn = newThumb->pageNumber();
             if (newPageOn == m_pageCurrentlyGrabbed || newPageOn < 0 || newPageOn >= (int)m_document->pages()) {
                 return;
@@ -830,14 +868,16 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
             if (direction == ThumbnailListPrivate::Up) {
                 vp.rePos.normalizedY = 1.0;
                 if (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered && !newPageOn) {
-                    if (m_pageCurrentlyGrabbed == 1)
+                    if (m_pageCurrentlyGrabbed == 1) {
                         vp.rePos.normalizedX = origNormalX - 0.5;
-                    else
+                    } else {
                         vp.rePos.normalizedX = origNormalX + 0.5;
-                    if (vp.rePos.normalizedX < 0.0)
+                    }
+                    if (vp.rePos.normalizedX < 0.0) {
                         vp.rePos.normalizedX = 0.0;
-                    else if (vp.rePos.normalizedX > 1.0)
+                    } else if (vp.rePos.normalizedX > 1.0) {
                         vp.rePos.normalizedX = 1.0;
+                    }
                 }
             } else if (direction == ThumbnailListPrivate::Down) {
                 vp.rePos.normalizedY = 0.0;
@@ -845,18 +885,21 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
                     if (origNormalX < 0.5) {
                         vp = Okular::DocumentViewport(--newPageOn);
                         vp.rePos.normalizedX = origNormalX + 0.5;
-                    } else
+                    } else {
                         vp.rePos.normalizedX = origNormalX - 0.5;
-                    if (vp.rePos.normalizedX < 0.0)
+                    }
+                    if (vp.rePos.normalizedX < 0.0) {
                         vp.rePos.normalizedX = 0.0;
-                    else if (vp.rePos.normalizedX > 1.0)
+                    } else if (vp.rePos.normalizedX > 1.0) {
                         vp.rePos.normalizedX = 1.0;
+                    }
                 }
             } else if (Okular::Settings::viewMode() != Okular::Settings::EnumViewMode::Single) {
-                if (direction == ThumbnailListPrivate::Left)
+                if (direction == ThumbnailListPrivate::Left) {
                     vp.rePos.normalizedX = 1.0;
-                else
+                } else {
                     vp.rePos.normalizedX = 0.0;
+                }
             }
             vp.rePos.pos = Okular::DocumentViewport::Center;
             vp.rePos.enabled = true;
@@ -959,8 +1002,9 @@ void ThumbnailWidget::paint(QPainter &p, const QRect _clipRect)
         if (isBookmarked && bookmarkPixmap) {
             int pixW = bookmarkPixmap->width(), pixH = bookmarkPixmap->height();
             clipRect = clipRect.intersected(QRect(m_pixmapWidth - pixW, 0, pixW, pixH));
-            if (clipRect.isValid())
+            if (clipRect.isValid()) {
                 p.drawPixmap(m_pixmapWidth - pixW, -pixH / 8, *bookmarkPixmap);
+            }
         }
     }
 }

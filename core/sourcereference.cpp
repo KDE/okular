@@ -60,8 +60,9 @@ bool Okular::extractLilyPondSourceReference(const QUrl &url, QString *file, int 
     // Example URL is: textedit:///home/foo/bar.ly:42:42:42
     // The three numbers are apparently: line:beginning of column:end of column
 
-    if (url.scheme() != QStringLiteral("textedit"))
+    if (url.scheme() != QStringLiteral("textedit")) {
         return false;
+    }
 
     // There can be more, in case the filename contains :
     if (url.fileName().count(':') < 3) {

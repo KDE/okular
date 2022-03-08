@@ -75,8 +75,9 @@ Shell *findShell(Shell *ignore = nullptr)
     const QWidgetList wList = QApplication::topLevelWidgets();
     for (QWidget *widget : wList) {
         Shell *s = qobject_cast<Shell *>(widget);
-        if (s && s != ignore)
+        if (s && s != ignore) {
             return s;
+        }
     }
     return nullptr;
 }

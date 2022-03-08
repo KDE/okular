@@ -101,8 +101,9 @@ static void updateFormFieldSignaturePointer(SignatureItem *item, const QVector<O
                 break;
             }
         }
-        if (!item->form)
+        if (!item->form) {
             qWarning() << "Lost signature form field, something went wrong";
+        }
     }
 
     for (SignatureItem *child : qAsConst(item->children)) {
@@ -176,8 +177,9 @@ QModelIndex SignatureModelPrivate::indexForItem(SignatureItem *item) const
 {
     if (item->parent) {
         const int index = item->parent->children.indexOf(item);
-        if (index >= 0 && index < item->parent->children.count())
+        if (index >= 0 && index < item->parent->children.count()) {
             return q->createIndex(index, 0, item);
+        }
     }
     return QModelIndex();
 }
@@ -206,12 +208,14 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
 {
     Q_D(const SignatureModel);
 
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     const SignatureItem *item = static_cast<SignatureItem *>(index.internalPointer());
-    if (item == d->root)
+    if (item == d->root) {
         return QVariant();
+    }
 
     const Okular::FormFieldSignature *form = item->form ? item->form : item->parent->form;
 
@@ -278,8 +282,9 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
 
 bool SignatureModel::hasChildren(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         return true;
+    }
 
     const SignatureItem *item = static_cast<SignatureItem *>(parent.internalPointer());
     return !item->children.isEmpty();
@@ -289,12 +294,14 @@ QModelIndex SignatureModel::index(int row, int column, const QModelIndex &parent
 {
     Q_D(const SignatureModel);
 
-    if (row < 0 || column != 0)
+    if (row < 0 || column != 0) {
         return QModelIndex();
+    }
 
     const SignatureItem *item = parent.isValid() ? static_cast<SignatureItem *>(parent.internalPointer()) : d->root;
-    if (row < item->children.count())
+    if (row < item->children.count()) {
         return createIndex(row, column, item->children.at(row));
+    }
 
     return QModelIndex();
 }
@@ -303,8 +310,9 @@ QModelIndex SignatureModel::parent(const QModelIndex &index) const
 {
     Q_D(const SignatureModel);
 
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QModelIndex();
+    }
 
     const SignatureItem *item = static_cast<SignatureItem *>(index.internalPointer());
     return d->indexForItem(item->parent);

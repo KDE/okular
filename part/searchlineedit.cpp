@@ -62,8 +62,9 @@ void SearchLineEdit::setSearchMinimumLength(int length)
 
 void SearchLineEdit::setSearchType(Okular::Document::SearchType type)
 {
-    if (type == m_searchType)
+    if (type == m_searchType) {
         return;
+    }
 
     disconnect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
 
@@ -75,8 +76,9 @@ void SearchLineEdit::setSearchType(Okular::Document::SearchType type)
         connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
     }
 
-    if (!m_changed)
+    if (!m_changed) {
         m_changed = (m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch);
+    }
 }
 
 void SearchLineEdit::setSearchId(int id)
@@ -112,8 +114,9 @@ void SearchLineEdit::resetSearch()
     stopSearch();
 
     // Clear highlights
-    if (m_id != -1)
+    if (m_id != -1) {
         m_document->resetSearch(m_id);
+    }
 
     // Make sure that the search will be reset at the next one
     m_changed = true;
@@ -136,8 +139,9 @@ void SearchLineEdit::restartSearch()
 
 void SearchLineEdit::stopSearch()
 {
-    if (m_id == -1 || !m_searchRunning)
+    if (m_id == -1 || !m_searchRunning) {
         return;
+    }
 
     m_inputDelayTimer->stop();
     // ### this should just cancel the search with id m_id, not all of them
@@ -148,28 +152,32 @@ void SearchLineEdit::stopSearch()
 
 void SearchLineEdit::findNext()
 {
-    if (m_id == -1 || m_searchType != Okular::Document::NextMatch)
+    if (m_id == -1 || m_searchType != Okular::Document::NextMatch) {
         return;
+    }
 
     if (!m_changed) {
         emit searchStarted();
         m_searchRunning = true;
         m_document->continueSearch(m_id, m_searchType);
-    } else
+    } else {
         startSearch();
+    }
 }
 
 void SearchLineEdit::findPrev()
 {
-    if (m_id == -1 || m_searchType != Okular::Document::PreviousMatch)
+    if (m_id == -1 || m_searchType != Okular::Document::PreviousMatch) {
         return;
+    }
 
     if (!m_changed) {
         emit searchStarted();
         m_searchRunning = true;
         m_document->continueSearch(m_id, m_searchType);
-    } else
+    } else {
         startSearch();
+    }
 }
 
 void SearchLineEdit::slotTextChanged(const QString &text)
@@ -178,10 +186,11 @@ void SearchLineEdit::slotTextChanged(const QString &text)
 
     prepareLineEditForSearch();
 
-    if (m_findAsYouType)
+    if (m_findAsYouType) {
         restartSearch();
-    else
+    } else {
         m_changed = true;
+    }
 }
 
 void SearchLineEdit::prepareLineEditForSearch()
@@ -217,8 +226,9 @@ void SearchLineEdit::slotReturnPressed(const QString &text)
 
 void SearchLineEdit::startSearch()
 {
-    if (m_id == -1 || !m_color.isValid())
+    if (m_id == -1 || !m_color.isValid()) {
         return;
+    }
 
     if (m_changed && (m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch)) {
         m_document->resetSearch(m_id);
@@ -230,15 +240,17 @@ void SearchLineEdit::startSearch()
         emit searchStarted();
         m_searchRunning = true;
         m_document->searchText(m_id, thistext, m_fromStart, m_caseSensitivity, m_searchType, m_moveViewport, m_color);
-    } else
+    } else {
         m_document->resetSearch(m_id);
+    }
 }
 
 void SearchLineEdit::searchFinished(int id, Okular::Document::SearchStatus endStatus)
 {
     // ignore the searches not started by this search edit
-    if (id != m_id)
+    if (id != m_id) {
         return;
+    }
 
     // if not found, use warning colors
     if (endStatus == Okular::Document::NoMatchFound) {

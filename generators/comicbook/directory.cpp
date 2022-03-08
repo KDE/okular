@@ -56,8 +56,9 @@ QStringList Directory::list() const
 QIODevice *Directory::createDevice(const QString &path) const
 {
     std::unique_ptr<QFile> file(new QFile(path));
-    if (!file->open(QIODevice::ReadOnly))
+    if (!file->open(QIODevice::ReadOnly)) {
         return nullptr;
+    }
 
     return file.release();
 }

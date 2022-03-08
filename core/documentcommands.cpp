@@ -91,8 +91,9 @@ bool AddAnnotationCommand::refreshInternalPageReferences(const QVector<Okular::P
         // and thus doesn't need updating because it didn't change
         // because of the document reload
         auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-        if (a)
+        if (a) {
             m_annotation = a;
+        }
     }
 
     return true;
@@ -136,8 +137,9 @@ bool RemoveAnnotationCommand::refreshInternalPageReferences(const QVector<Okular
         // a previous AddAnnotationCommand and thus doesn't need updating because it didn't change
         // because of the document reload
         auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-        if (a)
+        if (a) {
             m_annotation = a;
+        }
     }
 
     return true;
@@ -171,8 +173,9 @@ bool ModifyAnnotationPropertiesCommand::refreshInternalPageReferences(const QVec
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-    if (a)
+    if (a) {
         m_annotation = a;
+    }
 
     return true;
 }
@@ -210,8 +213,9 @@ bool TranslateAnnotationCommand::mergeWith(const QUndoCommand *uc)
 {
     TranslateAnnotationCommand *tuc = (TranslateAnnotationCommand *)uc;
 
-    if (tuc->m_annotation != m_annotation)
+    if (tuc->m_annotation != m_annotation) {
         return false;
+    }
 
     if (m_completeDrag) {
         return false;
@@ -241,8 +245,9 @@ bool TranslateAnnotationCommand::refreshInternalPageReferences(const QVector<Pag
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-    if (a)
+    if (a) {
         m_annotation = a;
+    }
 
     return true;
 }
@@ -283,8 +288,9 @@ bool AdjustAnnotationCommand::mergeWith(const QUndoCommand *uc)
 {
     AdjustAnnotationCommand *tuc = (AdjustAnnotationCommand *)uc;
 
-    if (tuc->m_annotation != m_annotation)
+    if (tuc->m_annotation != m_annotation) {
         return false;
+    }
 
     if (m_completeDrag) {
         return false;
@@ -309,8 +315,9 @@ bool AdjustAnnotationCommand::refreshInternalPageReferences(const QVector<Page *
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-    if (a)
+    if (a) {
         m_annotation = a;
+    }
 
     return true;
 }
@@ -420,8 +427,9 @@ bool EditAnnotationContentsCommand::mergeWith(const QUndoCommand *uc)
 bool EditAnnotationContentsCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
 {
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
-    if (a)
+    if (a) {
         m_annotation = a;
+    }
 
     return true;
 }
@@ -598,8 +606,9 @@ void EditFormButtonsCommand::undo()
     clearFormButtonStates();
     for (int i = 0; i < m_formButtons.size(); i++) {
         bool checked = m_prevButtonStates.at(i);
-        if (checked)
+        if (checked) {
             m_formButtons.at(i)->setState(checked);
+        }
     }
 
     Okular::NormalizedRect boundingRect = buildBoundingRectangleForButtons(m_formButtons);
@@ -613,8 +622,9 @@ void EditFormButtonsCommand::redo()
     clearFormButtonStates();
     for (int i = 0; i < m_formButtons.size(); i++) {
         bool checked = m_newButtonStates.at(i);
-        if (checked)
+        if (checked) {
             m_formButtons.at(i)->setState(checked);
+        }
     }
 
     Okular::NormalizedRect boundingRect = buildBoundingRectangleForButtons(m_formButtons);
@@ -629,8 +639,9 @@ bool EditFormButtonsCommand::refreshInternalPageReferences(const QVector<Okular:
     m_formButtons.clear();
     for (FormFieldButton *oldFormButton : oldFormButtons) {
         FormFieldButton *button = dynamic_cast<FormFieldButton *>(Okular::PagePrivate::findEquivalentForm(newPagesVector[m_pageNumber], oldFormButton));
-        if (!button)
+        if (!button) {
             return false;
+        }
         m_formButtons << button;
     }
 

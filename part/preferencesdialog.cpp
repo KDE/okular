@@ -67,12 +67,14 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton,
 
 void PreferencesDialog::switchToAccessibilityPage()
 {
-    if (m_accessibilityPage)
+    if (m_accessibilityPage) {
         setCurrentPage(m_accessibilityPage);
+    }
 }
 
 void PreferencesDialog::switchToAnnotationsPage()
 {
-    if (m_annotationsPage)
+    if (m_annotationsPage) {
         setCurrentPage(m_annotationsPage);
+    }
 }

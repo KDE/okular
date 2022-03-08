@@ -125,8 +125,9 @@ public:
 
     bool eventFilter(QObject *obj, QEvent *e) override
     {
-        if (obj != titleLabel && obj != authorLabel && obj != dateLabel)
+        if (obj != titleLabel && obj != authorLabel && obj != dateLabel) {
             return false;
+        }
 
         QMouseEvent *me = nullptr;
         switch (e->type()) {
@@ -210,8 +211,9 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
     connect(textEdit, &KTextEdit::aboutToShowContextMenu, this, &AnnotWindow::slotUpdateUndoAndRedoInContextMenu);
     connect(m_document, &Okular::Document::annotationContentsChangedByUndoRedo, this, &AnnotWindow::slotHandleContentsChangedByUndoRedo);
 
-    if (!canEditAnnotation)
+    if (!canEditAnnotation) {
         textEdit->setReadOnly(true);
+    }
 
     QVBoxLayout *mainlay = new QVBoxLayout(this);
     mainlay->setContentsMargins(2, 2, 2, 2);
@@ -258,11 +260,13 @@ void AnnotWindow::reloadInfo()
     QColor newcolor;
     if (m_annot->subType() == Okular::Annotation::AText) {
         Okular::TextAnnotation *textAnn = static_cast<Okular::TextAnnotation *>(m_annot);
-        if (textAnn->textType() == Okular::TextAnnotation::InPlace && textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter)
+        if (textAnn->textType() == Okular::TextAnnotation::InPlace && textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
             newcolor = QColor(0xfd, 0xfd, 0x96);
+        }
     }
-    if (!newcolor.isValid())
+    if (!newcolor.isValid()) {
         newcolor = m_annot->style().color().isValid() ? QColor(m_annot->style().color().red(), m_annot->style().color().green(), m_annot->style().color().blue(), 255) : Qt::yellow;
+    }
     if (newcolor != m_color) {
         m_color = newcolor;
         setPalette(QPalette(m_color));
@@ -315,8 +319,9 @@ bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
 
 void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu *menu)
 {
-    if (!menu)
+    if (!menu) {
         return;
+    }
 
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };

@@ -247,11 +247,13 @@ public:
         for (const QString &str : choices) {
             bool ok = true;
             int val = str.toInt(&ok);
-            if (ok)
+            if (ok) {
                 newchoices.append(val);
+            }
         }
-        if (!newchoices.isEmpty())
+        if (!newchoices.isEmpty()) {
             q->setCurrentChoices(newchoices);
+        }
     }
 
     QString value() const override

@@ -61,11 +61,13 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
     qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")";
 #endif
 
-    for (auto &characterBitmap : characterBitmaps)
+    for (auto &characterBitmap : characterBitmaps) {
         characterBitmap = nullptr;
+    }
     file = fopen(QFile::encodeName(parent->filename).constData(), "r");
-    if (file == nullptr)
+    if (file == nullptr) {
         qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename) << endl;
+    }
 #ifdef DEBUG_PK
     else
         qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK(): file opened successfully";
@@ -118,8 +120,9 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
         // If the character has already been marked as missing, just
         // return a pointer to the glyph (which will then be empty)
-        if (g->addr == -1)
+        if (g->addr == -1) {
             return g;
+        }
 
         // Otherwise, try to load the character
         fseek(file, g->addr, 0);
@@ -183,13 +186,14 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
         // Turn the image into 8 bit
         QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h, '\0');
         quint8 *data = (quint8 *)translated.data();
-        for (int x = 0; x < characterBitmaps[ch]->w; x++)
+        for (int x = 0; x < characterBitmaps[ch]->w; x++) {
             for (int y = 0; y < characterBitmaps[ch]->h; y++) {
                 quint8 bit = *(characterBitmaps[ch]->bits + characterBitmaps[ch]->bytes_wide * y + (x >> 3));
                 bit = bit >> (x & 7);
                 bit = bit & 1;
                 data[characterBitmaps[ch]->w * y + x] = bit;
             }
+        }
 
         // Now shrink the image. We shrink the X-direction first
         QByteArray xshrunk(shrunk_width * characterBitmaps[ch]->h, '\0');
@@ -202,42 +206,52 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
         //
         // The trouble is, these numbers are in general no integers.
 
-        for (int y = 0; y < characterBitmaps[ch]->h; y++)
+        for (int y = 0; y < characterBitmaps[ch]->h; y++) {
             for (int x = 0; x < shrunk_width; x++) {
                 quint32 value = 0;
                 double destStartX = shrinkFactor * x + srcXTrans;
                 double destEndX = shrinkFactor * (x + 1) + srcXTrans;
-                for (int srcX = (int)ceil(destStartX); srcX < floor(destEndX); srcX++)
-                    if ((srcX >= 0) && (srcX < characterBitmaps[ch]->w))
+                for (int srcX = (int)ceil(destStartX); srcX < floor(destEndX); srcX++) {
+                    if ((srcX >= 0) && (srcX < characterBitmaps[ch]->w)) {
                         value += data[characterBitmaps[ch]->w * y + srcX] * 255;
+                    }
+                }
 
-                if (destStartX >= 0.0)
+                if (destStartX >= 0.0) {
                     value += (quint32)(255.0 * (ceil(destStartX) - destStartX) * data[characterBitmaps[ch]->w * y + (int)floor(destStartX)]);
-                if (floor(destEndX) < characterBitmaps[ch]->w)
+                }
+                if (floor(destEndX) < characterBitmaps[ch]->w) {
                     value += (quint32)(255.0 * (destEndX - floor(destEndX)) * data[characterBitmaps[ch]->w * y + (int)floor(destEndX)]);
+                }
 
                 xdata[shrunk_width * y + x] = (int)(value / shrinkFactor + 0.5);
             }
+        }
 
         // Now shrink the Y-direction
         QByteArray xyshrunk(shrunk_width * shrunk_height, '\0');
         quint8 *xydata = (quint8 *)xyshrunk.data();
-        for (int x = 0; x < shrunk_width; x++)
+        for (int x = 0; x < shrunk_width; x++) {
             for (int y = 0; y < shrunk_height; y++) {
                 quint32 value = 0;
                 double destStartY = shrinkFactor * y + srcYTrans;
                 double destEndY = shrinkFactor * (y + 1) + srcYTrans;
-                for (int srcY = (int)ceil(destStartY); srcY < floor(destEndY); srcY++)
-                    if ((srcY >= 0) && (srcY < characterBitmaps[ch]->h))
+                for (int srcY = (int)ceil(destStartY); srcY < floor(destEndY); srcY++) {
+                    if ((srcY >= 0) && (srcY < characterBitmaps[ch]->h)) {
                         value += xdata[shrunk_width * srcY + x];
+                    }
+                }
 
-                if (destStartY >= 0.0)
+                if (destStartY >= 0.0) {
                     value += (quint32)((ceil(destStartY) - destStartY) * xdata[shrunk_width * (int)floor(destStartY) + x]);
-                if (floor(destEndY) < characterBitmaps[ch]->h)
+                }
+                if (floor(destEndY) < characterBitmaps[ch]->h) {
                     value += (quint32)((destEndY - floor(destEndY)) * xdata[shrunk_width * (int)floor(destEndY) + x]);
+                }
 
                 xydata[shrunk_width * y + x] = (int)(value / shrinkFactor);
             }
+        }
 
         QImage im32(shrunk_width, shrunk_height, QImage::Format_ARGB32);
         // Do QPixmaps fully support the alpha channel? If yes, we use
@@ -250,8 +264,9 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
             im32.fill(qRgb(color.red(), color.green(), color.blue()));
             for (int y = 0; y < shrunk_height; y++) {
                 quint8 *destScanLine = (quint8 *)im32.scanLine(y);
-                for (int col = 0; col < shrunk_width; col++)
+                for (int col = 0; col < shrunk_width; col++) {
                     destScanLine[4 * col + 3] = xydata[shrunk_width * y + col];
+                }
             }
         } else {
             // If the alpha channel is not supported... QT seems to turn the
@@ -349,14 +364,17 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
         }
         return (j - 15 + ((13 - PK_dyn_f) << 4) + PK_dyn_f);
     } else {
-        if (i <= PK_dyn_f)
+        if (i <= PK_dyn_f) {
             return i;
-        if (i < 14)
+        }
+        if (i < 14) {
             return (((i - PK_dyn_f - 1) << 4) + PK_get_nyb(fp) + PK_dyn_f + 1);
-        if (i == 14)
+        }
+        if (i == 14) {
             PK_repeat_count = PK_packed_num(fp);
-        else
+        } else {
             PK_repeat_count = 1;
+        }
         return PK_packed_num(fp);
     }
 }
@@ -384,10 +402,12 @@ void TeXFont_PK::PK_skip_specials()
             case PK_X3:
             case PK_X4:
                 i = 0;
-                for (j = PK_CMD_START; j <= PK_flag_byte; ++j)
+                for (j = PK_CMD_START; j <= PK_flag_byte; ++j) {
                     i = (i << 8) | one(fp);
-                while (i--)
+                }
+                while (i--) {
                     (void)one(fp);
+                }
                 break;
             case PK_Y:
                 (void)four(fp);
@@ -429,26 +449,28 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     PK_dyn_f = PK_flag_byte >> 4;
     paint_switch = ((PK_flag_byte & 8) != 0);
     PK_flag_byte &= 0x7;
-    if (PK_flag_byte == 7)
+    if (PK_flag_byte == 7) {
         n = 4;
-    else if (PK_flag_byte > 3)
+    } else if (PK_flag_byte > 3) {
         n = 2;
-    else
+    } else {
         n = 1;
+    }
 
 #ifdef DEBUG_PK
     qCDebug(OkularDviDebug) << "loading pk char " << ch << ", char type " << n;
 #endif
 
-    if (characterBitmaps[ch] == nullptr)
+    if (characterBitmaps[ch] == nullptr) {
         characterBitmaps[ch] = new bitmap();
+    }
 
     /*
      * now read rest of character preamble
      */
-    if (n != 4)
+    if (n != 4) {
         fpwidth = num(fp, 3);
-    else {
+    } else {
         fpwidth = sfour(fp);
         (void)four(fp); /* horizontal escapement */
     }
@@ -458,8 +480,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 
         w = num(fp, n);
         h = num(fp, n);
-        if (w > 0x7fff || h > 0x7fff)
+        if (w > 0x7fff || h > 0x7fff) {
             oops(i18n("The character %1 is too large in file %2", ch, parent->filename));
+        }
         characterBitmaps[ch]->w = w;
         characterBitmaps[ch]->h = h;
     }
@@ -512,8 +535,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                         cp++;
                         row_bit_pos = 32 - 1;
                     }
-                    if (word & (1 << PK_bitpos))
+                    if (word & (1 << PK_bitpos)) {
                         *cp |= 1 << row_bit_pos;
+                    }
                 }
             }
         } else { /* get packed raster */
@@ -528,12 +552,14 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                     if (count < word_weight && count < h_bit) {
                         h_bit -= count;
                         word_weight -= count;
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[count] << word_weight;
+                        }
                         count = 0;
                     } else if (count >= h_bit && h_bit <= word_weight) {
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[h_bit] << (word_weight - h_bit);
+                        }
                         *cp++ = word;
                         /* "output" row(s) */
                         for (i = PK_repeat_count * bytes_wide / 4; i > 0; --i) {
@@ -547,8 +573,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                         count -= h_bit;
                         h_bit = characterBitmaps[ch]->w;
                     } else {
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[word_weight];
+                        }
                         *cp++ = word;
                         word = 0;
                         count -= word_weight;
@@ -558,10 +585,12 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                 }
                 paint_switch = 1 - paint_switch;
             }
-            if (cp != (reinterpret_cast<quint32 *>(characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+            if (cp != (reinterpret_cast<quint32 *>(characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h))) {
                 oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
-            if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
+            }
+            if (rows_left != 0 || h_bit != characterBitmaps[ch]->w) {
                 oops(i18n("Bad pk file (%1), too many bits", parent->filename));
+            }
         }
 
         // The data in the bitmap is now in the processor's bit order,
@@ -596,8 +625,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                         cp++;
                         row_bit_pos = 0;
                     }
-                    if (word & (1 << PK_bitpos))
+                    if (word & (1 << PK_bitpos)) {
                         *cp |= 1 << row_bit_pos;
+                    }
                 }
             }
         } else { /* get packed raster */
@@ -610,14 +640,16 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                 count = PK_packed_num(fp);
                 while (count > 0) {
                     if (count < word_weight && count < h_bit) {
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[count] << (32 - word_weight);
+                        }
                         h_bit -= count;
                         word_weight -= count;
                         count = 0;
                     } else if (count >= h_bit && h_bit <= word_weight) {
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[h_bit] << (32 - word_weight);
+                        }
                         *cp++ = word;
                         /* "output" row(s) */
                         for (i = PK_repeat_count * bytes_wide / 4; i > 0; --i) {
@@ -631,8 +663,9 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                         count -= h_bit;
                         h_bit = characterBitmaps[ch]->w;
                     } else {
-                        if (paint_switch)
+                        if (paint_switch) {
                             word |= bit_masks[word_weight] << (32 - word_weight);
+                        }
                         *cp++ = word;
                         word = 0;
                         count -= word_weight;
@@ -642,10 +675,12 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
                 }
                 paint_switch = 1 - paint_switch;
             }
-            if (cp != (reinterpret_cast<quint32 *>(characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+            if (cp != (reinterpret_cast<quint32 *>(characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h))) {
                 oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
-            if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
+            }
+            if (rows_left != 0 || h_bit != characterBitmaps[ch]->w) {
                 oops(i18n("Bad pk file (%1), too many bits", parent->filename));
+            }
         }
     } // endif: big or small Endian?
 }
@@ -674,8 +709,9 @@ void TeXFont_PK::read_PK_index()
 
     int hppp = sfour(file);
     int vppp = sfour(file);
-    if (hppp != vppp)
+    if (hppp != vppp) {
         qCWarning(OkularDviDebug) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp;
+    }
 
     // Read glyph directory (really a whole pass over the file).
     for (;;) {
@@ -683,8 +719,9 @@ void TeXFont_PK::read_PK_index()
         unsigned int ch;
 
         PK_skip_specials();
-        if (PK_flag_byte == PK_POST)
+        if (PK_flag_byte == PK_POST) {
             break;
+        }
         flag_low_bits = PK_flag_byte & 0x7;
         if (flag_low_bits == 7) {
             bytes_left = four(file);

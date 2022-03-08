@@ -51,14 +51,16 @@ AnnotationPopup::AnnotationPopup(Okular::Document *document, MenuMode mode, QWid
 void AnnotationPopup::addAnnotation(Okular::Annotation *annotation, int pageNumber)
 {
     AnnotPagePair pair(annotation, pageNumber);
-    if (!mAnnotations.contains(pair))
+    if (!mAnnotations.contains(pair)) {
         mAnnotations.append(pair);
+    }
 }
 
 void AnnotationPopup::exec(const QPoint point)
 {
-    if (mAnnotations.isEmpty())
+    if (mAnnotations.isEmpty()) {
         return;
+    }
 
     QMenu menu(mParent);
 
@@ -91,8 +93,9 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
         });
 
         for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
-            if (!mDocument->canRemovePageAnnotation(pair.annotation))
+            if (!mDocument->canRemovePageAnnotation(pair.annotation)) {
                 action->setEnabled(false);
+            }
         }
 
         action = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Properties"));

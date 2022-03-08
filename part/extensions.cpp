@@ -56,8 +56,9 @@ bool OkularLiveConnectExtension::put(const unsigned long objid, const QString &f
 {
     Q_UNUSED(objid)
     if (m_inEval) {
-        if (field == QLatin1String(OKULAR_EVAL_RES_OBJ_NAME))
+        if (field == QLatin1String(OKULAR_EVAL_RES_OBJ_NAME)) {
             m_evalRes = value;
+        }
         return true;
     }
 

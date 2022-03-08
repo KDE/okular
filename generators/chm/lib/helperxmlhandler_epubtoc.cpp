@@ -28,20 +28,24 @@ bool HelperXmlHandler_EpubTOC::startElement(const QString &, const QString &loca
         return true;
     }
 
-    if (!m_inNavMap)
+    if (!m_inNavMap) {
         return true;
+    }
 
-    if (localName == QLatin1String("navPoint"))
+    if (localName == QLatin1String("navPoint")) {
         m_indent++;
+    }
 
-    if (localName == QLatin1String("text"))
+    if (localName == QLatin1String("text")) {
         m_inText = true;
+    }
 
     if (localName == QLatin1String("content")) {
         int idx = atts.index(QLatin1String("src"));
 
-        if (idx == -1)
+        if (idx == -1) {
             return false;
+        }
 
         m_lastId = atts.value(idx);
         checkNewTocEntry();
@@ -53,8 +57,9 @@ bool HelperXmlHandler_EpubTOC::startElement(const QString &, const QString &loca
 bool HelperXmlHandler_EpubTOC::characters(const QString &ch)
 {
     //	qDebug() << "characters" << " " << ch;
-    if (m_inText)
+    if (m_inText) {
         m_lastTitle = ch;
+    }
 
     checkNewTocEntry();
     return true;
@@ -69,11 +74,13 @@ bool HelperXmlHandler_EpubTOC::endElement(const QString &, const QString &localN
         return true;
     }
 
-    if (localName == QLatin1String("navPoint"))
+    if (localName == QLatin1String("navPoint")) {
         m_indent--;
+    }
 
-    if (localName == QLatin1String("text"))
+    if (localName == QLatin1String("text")) {
         m_inText = false;
+    }
 
     return true;
 }

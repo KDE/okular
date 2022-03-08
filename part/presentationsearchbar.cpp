@@ -102,8 +102,9 @@ void PresentationSearchBar::focusOnSearchEdit()
 void PresentationSearchBar::resizeEvent(QResizeEvent *)
 {
     // if in snap mode, then force the snap and place ourselves correctly again
-    if (m_snapped)
+    if (m_snapped) {
         forceSnap();
+    }
 }
 
 bool PresentationSearchBar::eventFilter(QObject *obj, QEvent *e)
@@ -128,8 +129,9 @@ bool PresentationSearchBar::eventFilter(QObject *obj, QEvent *e)
     if (obj == m_anchor && e->type() == QEvent::Resize) {
         m_point = QPoint(m_anchor->width() / 2, m_anchor->height());
 
-        if (m_snapped)
+        if (m_snapped) {
             move(m_point.x() - width() / 2, m_point.y() - height());
+        }
     }
 
     return false;

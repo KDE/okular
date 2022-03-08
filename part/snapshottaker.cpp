@@ -33,8 +33,9 @@ void SnapshotTaker::stateChanged(Phonon::State newState, Phonon::State)
 {
     if (newState == Phonon::PlayingState) {
         const QImage image = m_player->videoWidget()->snapshot();
-        if (!image.isNull())
+        if (!image.isNull()) {
             emit finished(image);
+        }
 
         m_player->stop();
         deleteLater();

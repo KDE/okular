@@ -59,33 +59,37 @@ QTransform RotationJob::rotationMatrix(Rotation from, Rotation to)
     QTransform matrix;
 
     if (from == Rotation0) {
-        if (to == Rotation90)
+        if (to == Rotation90) {
             matrix.rotate(90);
-        else if (to == Rotation180)
+        } else if (to == Rotation180) {
             matrix.rotate(180);
-        else if (to == Rotation270)
+        } else if (to == Rotation270) {
             matrix.rotate(270);
+        }
     } else if (from == Rotation90) {
-        if (to == Rotation180)
+        if (to == Rotation180) {
             matrix.rotate(90);
-        else if (to == Rotation270)
+        } else if (to == Rotation270) {
             matrix.rotate(180);
-        else if (to == Rotation0)
+        } else if (to == Rotation0) {
             matrix.rotate(270);
+        }
     } else if (from == Rotation180) {
-        if (to == Rotation270)
+        if (to == Rotation270) {
             matrix.rotate(90);
-        else if (to == Rotation0)
+        } else if (to == Rotation0) {
             matrix.rotate(180);
-        else if (to == Rotation90)
+        } else if (to == Rotation90) {
             matrix.rotate(270);
+        }
     } else if (from == Rotation270) {
-        if (to == Rotation0)
+        if (to == Rotation0) {
             matrix.rotate(90);
-        else if (to == Rotation90)
+        } else if (to == Rotation90) {
             matrix.rotate(180);
-        else if (to == Rotation180)
+        } else if (to == Rotation180) {
             matrix.rotate(270);
+        }
     }
 
     return matrix;

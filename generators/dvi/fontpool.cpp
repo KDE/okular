@@ -51,8 +51,9 @@ fontPool::fontPool(bool useFontHinting)
     if (FT_Init_FreeType(&FreeType_library) != 0) {
         qCCritical(OkularDviDebug) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
         FreeType_could_be_loaded = false;
-    } else
+    } else {
         FreeType_could_be_loaded = true;
+    }
 #endif
 
     // Check if the QT library supports the alpha channel of
@@ -96,8 +97,9 @@ fontPool::~fontPool()
     fontList.clear();
 
 #ifdef HAVE_FREETYPE
-    if (FreeType_could_be_loaded == true)
+    if (FreeType_could_be_loaded == true) {
         FT_Done_FreeType(FreeType_library);
+    }
 #endif
 }
 
@@ -161,8 +163,9 @@ bool fontPool::areFontsLocated()
     QList<TeXFontDefinition *>::const_iterator cit_fontp = fontList.constBegin();
     for (; cit_fontp != fontList.constEnd(); ++cit_fontp) {
         TeXFontDefinition *fontp = *cit_fontp;
-        if (!fontp->isLocated())
+        if (!fontp->isLocated()) {
             return false;
+        }
     }
 
 #ifdef DEBUG_FONTPOOL
@@ -187,14 +190,16 @@ void fontPool::locateFonts()
 
     // If still not all fonts are found, look again, this time with
     // on-demand generation of PK fonts enabled.
-    if (!areFontsLocated())
+    if (!areFontsLocated()) {
         locateFonts(true, false);
+    }
 
     // If still not all fonts are found, we look for TFM files as a last
     // resort, so that we can at least draw filled rectangles for
     // characters.
-    if (!areFontsLocated())
+    if (!areFontsLocated()) {
         locateFonts(false, true);
+    }
 
     // If still not all fonts are found, we give up. We mark all fonts
     // as 'located', so that we won't look for them any more, and
@@ -241,14 +246,15 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
         if (!fontp->isLocated()) {
             numFontsInJob++;
 
-            if (locateTFMonly == true)
+            if (locateTFMonly == true) {
                 kpsewhich_args << QStringLiteral("%1.tfm").arg(fontp->fontname);
-            else {
+            } else {
 #ifdef HAVE_FREETYPE
                 if (FreeType_could_be_loaded == true) {
                     const QString &filename = fontsByTeXName.findFileName(fontp->fontname);
-                    if (!filename.isEmpty())
+                    if (!filename.isEmpty()) {
                         kpsewhich_args << QStringLiteral("%1").arg(filename);
+                    }
                 }
 #endif
                 kpsewhich_args << QStringLiteral("%1.vf").arg(fontp->fontname) << QStringLiteral("%1.1200pk").arg(fontp->fontname);
@@ -256,8 +262,9 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
         }
     }
 
-    if (numFontsInJob == 0)
+    if (numFontsInJob == 0) {
         return;
+    }
 
     // If PK fonts are generated, the kpsewhich command will re-route
     // the output of MetaFont into its stderr. Here we make sure this
@@ -302,8 +309,9 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                      -1);
 
         // This makes sure the we don't try to run kpsewhich again
-        if (makePK == false)
+        if (makePK == false) {
             markFontsAsLocated();
+        }
     }
 
     // Create a list with all filenames found by the kpsewhich program.
@@ -318,11 +326,13 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
             QStringList matchingFiles;
 #ifdef HAVE_FREETYPE
             const QString &fn = fontsByTeXName.findFileName(fontp->fontname);
-            if (!fn.isEmpty())
+            if (!fn.isEmpty()) {
                 matchingFiles = fileNameList.filter(fn);
+            }
 #endif
-            if (matchingFiles.isEmpty() == true)
+            if (matchingFiles.isEmpty() == true) {
                 matchingFiles += fileNameList.filter(QLatin1Char('/') + fontp->fontname + QLatin1Char('.'));
+            }
 
             if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
@@ -332,8 +342,9 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                 fontp->fontNameReceiver(fname);
                 fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
                 if (fname.endsWith(QLatin1String(".vf"))) {
-                    if (virtualFontsFound != nullptr)
+                    if (virtualFontsFound != nullptr) {
                         *virtualFontsFound = true;
+                    }
                     // Constructing a virtual font will most likely insert other
                     // fonts into the fontList. After that, fontList.next() will
                     // no longer work. It is therefore safer to start over.
@@ -352,8 +363,9 @@ void fontPool::setCMperDVIunit(double _CMperDVI)
     qCDebug(OkularDviDebug) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )";
 #endif
 
-    if (CMperDVIunit == _CMperDVI)
+    if (CMperDVIunit == _CMperDVI) {
         return;
+    }
 
     CMperDVIunit = _CMperDVI;
 

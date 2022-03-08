@@ -69,22 +69,30 @@ PopplerCertificateInfo::KeyUsageExtensions PopplerCertificateInfo::keyUsageExten
 {
     Poppler::CertificateInfo::KeyUsageExtensions popplerKu = m_info.keyUsageExtensions();
     KeyUsageExtensions ku = KuNone;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDigitalSignature))
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDigitalSignature)) {
         ku |= KuDigitalSignature;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuNonRepudiation))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuNonRepudiation)) {
         ku |= KuNonRepudiation;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyEncipherment))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyEncipherment)) {
         ku |= KuKeyEncipherment;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDataEncipherment))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDataEncipherment)) {
         ku |= KuDataEncipherment;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyAgreement))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyAgreement)) {
         ku |= KuKeyAgreement;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyCertSign))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyCertSign)) {
         ku |= KuKeyCertSign;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuClrSign))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuClrSign)) {
         ku |= KuClrSign;
-    if (popplerKu.testFlag(Poppler::CertificateInfo::KuEncipherOnly))
+    }
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuEncipherOnly)) {
         ku |= KuEncipherOnly;
+    }
     return ku;
 }
 
@@ -272,8 +280,9 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
 
     const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
     QList<Okular::CertificateInfo *> vReturnCerts;
-    for (auto cert : certs)
+    for (auto cert : certs) {
         vReturnCerts.append(new PopplerCertificateInfo(cert));
+    }
 
     Poppler::setNSSPasswordCallback(nullptr);
 

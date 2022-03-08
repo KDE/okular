@@ -60,8 +60,9 @@ static void which_ddjvu_message(const ddjvu_message_t *msg)
 static void handle_ddjvu_messages(ddjvu_context_t *ctx, int wait)
 {
     const ddjvu_message_t *msg;
-    if (wait)
+    if (wait) {
         ddjvu_message_wait(ctx);
+    }
     while ((msg = ddjvu_message_peek(ctx))) {
         which_ddjvu_message(msg);
         ddjvu_message_pop(ctx);
@@ -101,8 +102,9 @@ static miniexp_t find_second_in_pair(miniexp_t theexp, const char *which)
         }
 
         const QString id = QString::fromUtf8(miniexp_to_name(miniexp_car(cur)));
-        if (id == QLatin1String(which))
+        if (id == QLatin1String(which)) {
             return miniexp_cadr(cur);
+        }
         exp = miniexp_cdr(exp);
     }
     return miniexp_nil;
@@ -288,12 +290,14 @@ KDjVu::TextAnnotation::TextAnnotation(miniexp_t anno)
     const int num = miniexp_length(m_anno);
     for (int j = 4; j < num; ++j) {
         miniexp_t curelem = miniexp_nth(j, m_anno);
-        if (!miniexp_listp(curelem))
+        if (!miniexp_listp(curelem)) {
             continue;
+        }
 
         QString id = QString::fromUtf8(miniexp_to_name(miniexp_nth(0, curelem)));
-        if (id == QLatin1String("pushpin"))
+        if (id == QLatin1String("pushpin")) {
             m_inlineText = false;
+        }
     }
 }
 
@@ -313,8 +317,9 @@ int KDjVu::TextAnnotation::type() const
 QColor KDjVu::TextAnnotation::color() const
 {
     miniexp_t col = find_second_in_pair(m_anno, "backclr");
-    if (!miniexp_symbolp(col))
+    if (!miniexp_symbolp(col)) {
         return Qt::transparent;
+    }
 
     return QColor(QString::fromUtf8(miniexp_to_name(col)));
 }
@@ -340,14 +345,16 @@ KDjVu::LineAnnotation::LineAnnotation(miniexp_t anno)
     const int num = miniexp_length(m_anno);
     for (int j = 4; j < num; ++j) {
         miniexp_t curelem = miniexp_nth(j, m_anno);
-        if (!miniexp_listp(curelem))
+        if (!miniexp_listp(curelem)) {
             continue;
+        }
 
         QString id = QString::fromUtf8(miniexp_to_name(miniexp_nth(0, curelem)));
-        if (id == QLatin1String("arrow"))
+        if (id == QLatin1String("arrow")) {
             m_isArrow = true;
-        else if (id == QLatin1String("width"))
+        } else if (id == QLatin1String("width")) {
             m_width = curelem;
+        }
     }
 }
 
@@ -359,8 +366,9 @@ int KDjVu::LineAnnotation::type() const
 QColor KDjVu::LineAnnotation::color() const
 {
     miniexp_t col = find_second_in_pair(m_anno, "lineclr");
-    if (!miniexp_symbolp(col))
+    if (!miniexp_symbolp(col)) {
         return Qt::black;
+    }
 
     return QColor(QString::fromUtf8(miniexp_to_name(col)));
 }
@@ -386,8 +394,9 @@ bool KDjVu::LineAnnotation::isArrow() const
 
 int KDjVu::LineAnnotation::width() const
 {
-    if (m_width == miniexp_nil)
+    if (m_width == miniexp_nil) {
         return 1;
+    }
 
     return miniexp_to_int(miniexp_cadr(m_width));
 }
@@ -498,12 +507,14 @@ QImage KDjVu::Private::generateImageTile(ddjvu_page_t *djvupage, int &res, int w
 
 void KDjVu::Private::readBookmarks()
 {
-    if (!m_djvu_document)
+    if (!m_djvu_document) {
         return;
+    }
 
     miniexp_t outline;
-    while ((outline = ddjvu_document_get_outline(m_djvu_document)) == miniexp_dummy)
+    while ((outline = ddjvu_document_get_outline(m_djvu_document)) == miniexp_dummy) {
         handle_ddjvu_messages(m_djvu_cxt, true);
+    }
 
     if (miniexp_listp(outline) && (miniexp_length(outline) > 0) && miniexp_symbolp(miniexp_nth(0, outline)) && (QString::fromUtf8(miniexp_to_name(miniexp_nth(0, outline))) == QLatin1String("bookmarks"))) {
         m_docBookmarks = new QDomDocument(QStringLiteral("KDjVuBookmarks"));
@@ -514,8 +525,9 @@ void KDjVu::Private::readBookmarks()
 
 void KDjVu::Private::fillBookmarksRecurse(QDomDocument &maindoc, QDomNode &curnode, miniexp_t exp, int offset)
 {
-    if (!miniexp_listp(exp))
+    if (!miniexp_listp(exp)) {
         return;
+    }
 
     int l = miniexp_length(exp);
     for (int i = qMax(offset, 0); i < l; ++i) {
@@ -557,25 +569,30 @@ void KDjVu::Private::fillBookmarksRecurse(QDomDocument &maindoc, QDomNode &curno
 
 void KDjVu::Private::readMetaData(int page)
 {
-    if (!m_djvu_document)
+    if (!m_djvu_document) {
         return;
+    }
 
     miniexp_t annots;
-    while ((annots = ddjvu_document_get_pageanno(m_djvu_document, page)) == miniexp_dummy)
+    while ((annots = ddjvu_document_get_pageanno(m_djvu_document, page)) == miniexp_dummy) {
         handle_ddjvu_messages(m_djvu_cxt, true);
+    }
 
-    if (!miniexp_listp(annots) || miniexp_length(annots) == 0)
+    if (!miniexp_listp(annots) || miniexp_length(annots) == 0) {
         return;
+    }
 
     miniexp_t exp = miniexp_nth(0, annots);
     int size = miniexp_length(exp);
-    if (size <= 1 || qstrncmp(miniexp_to_name(miniexp_nth(0, exp)), "metadata", 8))
+    if (size <= 1 || qstrncmp(miniexp_to_name(miniexp_nth(0, exp)), "metadata", 8)) {
         return;
+    }
 
     for (int i = 1; i < size; ++i) {
         miniexp_t cur = miniexp_nth(i, exp);
-        if (miniexp_length(cur) != 2)
+        if (miniexp_length(cur) != 2) {
             continue;
+        }
 
         QString id = QString::fromUtf8(miniexp_to_name(miniexp_nth(0, cur)));
         QString value = QString::fromUtf8(miniexp_to_str(miniexp_nth(1, cur)));
@@ -586,17 +603,20 @@ void KDjVu::Private::readMetaData(int page)
 int KDjVu::Private::pageWithName(const QString &name)
 {
     const int pageNo = m_pageNamesCache.value(name, -1);
-    if (pageNo != -1)
+    if (pageNo != -1) {
         return pageNo;
+    }
 
     const QByteArray utfName = name.toUtf8();
     const int fileNum = ddjvu_document_get_filenum(m_djvu_document);
     ddjvu_fileinfo_t info;
     for (int i = 0; i < fileNum; ++i) {
-        if (DDJVU_JOB_OK != ddjvu_document_get_fileinfo(m_djvu_document, i, &info))
+        if (DDJVU_JOB_OK != ddjvu_document_get_fileinfo(m_djvu_document, i, &info)) {
             continue;
-        if (info.type != 'P')
+        }
+        if (info.type != 'P') {
             continue;
+        }
         if ((utfName == info.id) || (utfName == info.name) || (utfName == info.title)) {
             m_pageNamesCache.insert(name, info.pageno);
             return info.pageno;
@@ -633,13 +653,15 @@ KDjVu::~KDjVu()
 bool KDjVu::openFile(const QString &fileName)
 {
     // first, close the old file
-    if (d->m_djvu_document)
+    if (d->m_djvu_document) {
         closeFile();
+    }
 
     // load the document..., use UTF-8 variant to work on Windows, too, see bug 422500
     d->m_djvu_document = ddjvu_document_create_by_filename_utf8(d->m_djvu_cxt, fileName.toUtf8().constData(), true);
-    if (!d->m_djvu_document)
+    if (!d->m_djvu_document) {
         return false;
+    }
     // ...and wait for its loading
     wait_for_ddjvu_message(d->m_djvu_cxt, DDJVU_DOCINFO);
     if (ddjvu_document_decoding_error(d->m_djvu_document)) {
@@ -677,8 +699,9 @@ bool KDjVu::openFile(const QString &fileName)
         doctype = i18nc("Type of DjVu document", "Indexed (old)");
         break;
     }
-    if (!doctype.isEmpty())
+    if (!doctype.isEmpty()) {
         d->m_metaData[QStringLiteral("documentType")] = doctype;
+    }
     // get the number of components
     d->m_metaData[QStringLiteral("componentFile")] = ddjvu_document_get_filenum(d->m_djvu_document);
 
@@ -686,8 +709,9 @@ bool KDjVu::openFile(const QString &fileName)
     for (int i = 0; i < numofpages; ++i) {
         ddjvu_status_t sts;
         ddjvu_pageinfo_t info;
-        while ((sts = ddjvu_document_get_pageinfo(d->m_djvu_document, i, &info)) < DDJVU_JOB_OK)
+        while ((sts = ddjvu_document_get_pageinfo(d->m_djvu_document, i, &info)) < DDJVU_JOB_OK) {
             handle_ddjvu_messages(d->m_djvu_cxt, true);
+        }
         if (sts >= DDJVU_JOB_FAILED) {
             qDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
             return false;
@@ -706,8 +730,9 @@ bool KDjVu::openFile(const QString &fileName)
     }
 
     // reading the metadata from the first page only should be enough
-    if (numofpages > 0)
+    if (numofpages > 0) {
         d->readMetaData(0);
+    }
 
     return true;
 }
@@ -722,8 +747,9 @@ void KDjVu::closeFile()
     d->m_pages.clear();
     // releasing the djvu pages
     QVector<ddjvu_page_t *>::Iterator it = d->m_pages_cache.begin(), itEnd = d->m_pages_cache.end();
-    for (; it != itEnd; ++it)
+    for (; it != itEnd; ++it) {
         ddjvu_page_release(*it);
+    }
     d->m_pages_cache.clear();
     // clearing the image cache
     qDeleteAll(d->mImgCache);
@@ -733,8 +759,9 @@ void KDjVu::closeFile()
     // cleaning the page names mapping
     d->m_pageNamesCache.clear();
     // releasing the old document
-    if (d->m_djvu_document)
+    if (d->m_djvu_document) {
         ddjvu_document_release(d->m_djvu_document);
+    }
     d->m_djvu_document = nullptr;
 }
 
@@ -746,39 +773,47 @@ QVariant KDjVu::metaData(const QString &key) const
 
 const QDomDocument *KDjVu::documentBookmarks() const
 {
-    if (!d->m_docBookmarks)
+    if (!d->m_docBookmarks) {
         d->readBookmarks();
+    }
     return d->m_docBookmarks;
 }
 
 void KDjVu::linksAndAnnotationsForPage(int pageNum, QList<KDjVu::Link *> *links, QList<KDjVu::Annotation *> *annotations) const
 {
-    if ((pageNum < 0) || (pageNum >= d->m_pages.count()) || (!links && !annotations))
+    if ((pageNum < 0) || (pageNum >= d->m_pages.count()) || (!links && !annotations)) {
         return;
+    }
 
     miniexp_t annots;
-    while ((annots = ddjvu_document_get_pageanno(d->m_djvu_document, pageNum)) == miniexp_dummy)
+    while ((annots = ddjvu_document_get_pageanno(d->m_djvu_document, pageNum)) == miniexp_dummy) {
         handle_ddjvu_messages(d->m_djvu_cxt, true);
+    }
 
-    if (!miniexp_listp(annots))
+    if (!miniexp_listp(annots)) {
         return;
+    }
 
-    if (links)
+    if (links) {
         links->clear();
-    if (annotations)
+    }
+    if (annotations) {
         annotations->clear();
+    }
 
     int l = miniexp_length(annots);
     for (int i = 0; i < l; ++i) {
         miniexp_t cur = miniexp_nth(i, annots);
         int num = miniexp_length(cur);
-        if ((num < 4) || !miniexp_symbolp(miniexp_nth(0, cur)) || (qstrncmp(miniexp_to_name(miniexp_nth(0, cur)), "maparea", 7) != 0))
+        if ((num < 4) || !miniexp_symbolp(miniexp_nth(0, cur)) || (qstrncmp(miniexp_to_name(miniexp_nth(0, cur)), "maparea", 7) != 0)) {
             continue;
+        }
 
         QString target;
         QString type;
-        if (miniexp_symbolp(miniexp_nth(0, miniexp_nth(3, cur))))
+        if (miniexp_symbolp(miniexp_nth(0, miniexp_nth(3, cur)))) {
             type = QString::fromUtf8(miniexp_to_name(miniexp_nth(0, miniexp_nth(3, cur))));
+        }
         KDjVu::Link *link = nullptr;
         KDjVu::Annotation *ann = nullptr;
         miniexp_t urlexp = miniexp_nth(1, cur);
@@ -827,8 +862,9 @@ void KDjVu::linksAndAnnotationsForPage(int pageNum, QList<KDjVu::Link *> *links,
                 link->m_poly = poly;
             }
 
-            if (link->m_area != KDjVu::Link::UnknownArea)
+            if (link->m_area != KDjVu::Link::UnknownArea) {
                 links->append(link);
+            }
         } else if (ann /* safety check */ && annotations) {
             annotations->append(ann);
         }
@@ -847,8 +883,9 @@ QImage KDjVu::image(int page, int width, int height, int rotation)
         QList<ImageCacheItem *>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
         for (; (it != itEnd) && !found; ++it) {
             ImageCacheItem *cur = *it;
-            if ((cur->page == page) && (rotation % 2 == 0 ? cur->width == width && cur->height == height : cur->width == height && cur->height == width))
+            if ((cur->page == page) && (rotation % 2 == 0 ? cur->width == width && cur->height == height : cur->width == height && cur->height == width)) {
                 found = true;
+            }
         }
         if (found) {
             // taking the element and pushing to the top of the list
@@ -865,8 +902,9 @@ QImage KDjVu::image(int page, int width, int height, int rotation)
         ddjvu_page_t *newpage = ddjvu_page_create_by_pageno(d->m_djvu_document, page);
         // wait for the new page to be loaded
         ddjvu_status_t sts;
-        while ((sts = ddjvu_page_decoding_status(newpage)) < DDJVU_JOB_OK)
+        while ((sts = ddjvu_page_decoding_status(newpage)) < DDJVU_JOB_OK) {
             handle_ddjvu_messages(d->m_djvu_cxt, true);
+        }
         d->m_pages_cache[page] = newpage;
     }
     ddjvu_page_t *djvupage = d->m_pages_cache[page];
@@ -920,8 +958,9 @@ QImage KDjVu::image(int page, int width, int height, int rotation)
                 if ((cur->page == page) && (abs(cur->img.width() * cur->img.height() - imgsize) < imgsize * 0.35)) {
                     d->mImgCache.removeAt(i);
                     delete cur;
-                } else
+                } else {
                     ++i;
+                }
             }
         }
 
@@ -939,8 +978,9 @@ QImage KDjVu::image(int page, int width, int height, int rotation)
 
 bool KDjVu::exportAsPostScript(const QString &fileName, const QList<int> &pageList) const
 {
-    if (!d->m_djvu_document || fileName.trimmed().isEmpty() || pageList.isEmpty())
+    if (!d->m_djvu_document || fileName.trimmed().isEmpty() || pageList.isEmpty()) {
         return false;
+    }
 
     QFile f(fileName);
     f.open(QIODevice::ReadWrite);
@@ -953,8 +993,9 @@ bool KDjVu::exportAsPostScript(const QString &fileName, const QList<int> &pageLi
 
 bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
 {
-    if (!d->m_djvu_document || !file || pageList.isEmpty())
+    if (!d->m_djvu_document || !file || pageList.isEmpty()) {
         return false;
+    }
 
     FILE *f = fdopen(file->handle(), "w+");
     if (!f) {
@@ -964,8 +1005,9 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
 
     QString pl;
     for (const int p : pageList) {
-        if (!pl.isEmpty())
+        if (!pl.isEmpty()) {
             pl += QLatin1String(",");
+        }
         pl += QString::number(p);
     }
     pl.prepend(QStringLiteral("-page="));
@@ -977,8 +1019,9 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
     optv[0] = plb.constData();
 
     ddjvu_job_t *printjob = ddjvu_document_print(d->m_djvu_document, f, optc, optv);
-    while (!ddjvu_job_done(printjob))
+    while (!ddjvu_job_done(printjob)) {
         handle_ddjvu_messages(d->m_djvu_cxt, true);
+    }
 
     free(optv);
 
@@ -987,15 +1030,18 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
 
 QList<KDjVu::TextEntity> KDjVu::textEntities(int page, const QString &granularity) const
 {
-    if ((page < 0) || (page >= d->m_pages.count()))
+    if ((page < 0) || (page >= d->m_pages.count())) {
         return QList<KDjVu::TextEntity>();
+    }
 
     miniexp_t r;
-    while ((r = ddjvu_document_get_pagetext(d->m_djvu_document, page, nullptr)) == miniexp_dummy)
+    while ((r = ddjvu_document_get_pagetext(d->m_djvu_document, page, nullptr)) == miniexp_dummy) {
         handle_ddjvu_messages(d->m_djvu_cxt, true);
+    }
 
-    if (r == miniexp_nil)
+    if (r == miniexp_nil) {
         return QList<KDjVu::TextEntity>();
+    }
 
     QList<KDjVu::TextEntity> ret;
 
@@ -1023,8 +1069,9 @@ QList<KDjVu::TextEntity> KDjVu::textEntities(int page, const QString &granularit
                     ret.append(entity);
                 }
             } else {
-                for (int i = 5; i < size; ++i)
+                for (int i = 5; i < size; ++i) {
                     queue.enqueue(miniexp_nth(i, cur));
+                }
             }
         }
     }
@@ -1034,8 +1081,9 @@ QList<KDjVu::TextEntity> KDjVu::textEntities(int page, const QString &granularit
 
 void KDjVu::setCacheEnabled(bool enable)
 {
-    if (enable == d->m_cacheEnabled)
+    if (enable == d->m_cacheEnabled) {
         return;
+    }
 
     d->m_cacheEnabled = enable;
     if (!d->m_cacheEnabled) {
@@ -1051,8 +1099,9 @@ bool KDjVu::isCacheEnabled() const
 
 int KDjVu::pageNumber(const QString &name) const
 {
-    if (!d->m_djvu_document)
+    if (!d->m_djvu_document) {
         return -1;
+    }
 
     return d->pageWithName(name);
 }

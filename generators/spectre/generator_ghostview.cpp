@@ -45,8 +45,9 @@ GSGenerator::GSGenerator(QObject *parent, const QVariantList &args)
     setFeature(PrintToFile);
 
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
-    if (!renderer->isRunning())
+    if (!renderer->isRunning()) {
         renderer->start();
+    }
     connect(renderer, &GSRendererThread::imageDone, this, &GSGenerator::slotImageGenerated, Qt::QueuedConnection);
 }
 
@@ -96,8 +97,9 @@ Okular::Document::PrintError GSGenerator::print(QPrinter &printer)
         tf.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
     }
 
-    if (!tf.open())
+    if (!tf.open()) {
         return Okular::Document::TemporaryFileOpenPrintError;
+    }
 
     SpectreExporter *exporter = spectre_exporter_new(m_internalDocument, exportFormat);
     SpectreStatus exportStatus = spectre_exporter_begin(exporter, tf.fileName().toLatin1().constData());
@@ -109,8 +111,9 @@ Okular::Document::PrintError GSGenerator::print(QPrinter &printer)
     }
 
     SpectreStatus endStatus = SPECTRE_STATUS_EXPORTER_ERROR;
-    if (exportStatus == SPECTRE_STATUS_SUCCESS)
+    if (exportStatus == SPECTRE_STATUS_SUCCESS) {
         endStatus = spectre_exporter_end(exporter);
+    }
 
     spectre_exporter_free(exporter);
 
@@ -156,11 +159,13 @@ void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request
 {
     // This can happen as GSInterpreterCMD is a singleton and on creation signals all the slots
     // of all the generators attached to it
-    if (request != m_request)
+    if (request != m_request) {
         return;
+    }
 
-    if (!request->page()->isBoundingBoxKnown())
+    if (!request->page()->isBoundingBoxKnown()) {
         updatePageBoundingBox(request->page()->number(), Okular::Utils::imageBoundingBox(img));
+    }
 
     m_request = nullptr;
     QPixmap *pix = new QPixmap(QPixmap::fromImage(*img));
@@ -183,8 +188,9 @@ bool GSGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
             pageOrientation = spectre_page_get_orientation(page);
         }
         spectre_page_free(page);
-        if (pageOrientation % 2 == 1)
+        if (pageOrientation % 2 == 1) {
             qSwap(width, height);
+        }
         pagesVector[i] = new Okular::Page(i, width, height, orientation(pageOrientation));
     }
     return pagesVector.count() > 0;
@@ -203,10 +209,12 @@ void GSGenerator::generatePixmap(Okular::PixmapRequest *req)
     gsreq.platformFonts = GSSettings::platformFonts();
     int graphicsAA = 1;
     int textAA = 1;
-    if (cache_AAgfx)
+    if (cache_AAgfx) {
         graphicsAA = 4;
-    if (cache_AAtext)
+    }
+    if (cache_AAtext) {
         textAA = 4;
+    }
     gsreq.textAAbits = textAA;
     gsreq.graphicsAAbits = graphicsAA;
 
@@ -229,29 +237,37 @@ bool GSGenerator::canGeneratePixmap() const
 Okular::DocumentInfo GSGenerator::generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const
 {
     Okular::DocumentInfo docInfo;
-    if (keys.contains(Okular::DocumentInfo::Title))
+    if (keys.contains(Okular::DocumentInfo::Title)) {
         docInfo.set(Okular::DocumentInfo::Title, spectre_document_get_title(m_internalDocument));
-    if (keys.contains(Okular::DocumentInfo::Author))
+    }
+    if (keys.contains(Okular::DocumentInfo::Author)) {
         docInfo.set(Okular::DocumentInfo::Author, spectre_document_get_for(m_internalDocument));
-    if (keys.contains(Okular::DocumentInfo::Creator))
+    }
+    if (keys.contains(Okular::DocumentInfo::Creator)) {
         docInfo.set(Okular::DocumentInfo::Creator, spectre_document_get_creator(m_internalDocument));
-    if (keys.contains(Okular::DocumentInfo::CreationDate))
+    }
+    if (keys.contains(Okular::DocumentInfo::CreationDate)) {
         docInfo.set(Okular::DocumentInfo::CreationDate, spectre_document_get_creation_date(m_internalDocument));
-    if (keys.contains(Okular::DocumentInfo::CustomKeys))
+    }
+    if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
         docInfo.set(QStringLiteral("dscversion"), spectre_document_get_format(m_internalDocument), i18n("Document version"));
+    }
 
     if (keys.contains(Okular::DocumentInfo::MimeType)) {
         int languageLevel = spectre_document_get_language_level(m_internalDocument);
-        if (languageLevel > 0)
+        if (languageLevel > 0) {
             docInfo.set(QStringLiteral("langlevel"), QString::number(languageLevel), i18n("Language Level"));
-        if (spectre_document_is_eps(m_internalDocument))
+        }
+        if (spectre_document_is_eps(m_internalDocument)) {
             docInfo.set(Okular::DocumentInfo::MimeType, QStringLiteral("image/x-eps"));
-        else
+        } else {
             docInfo.set(Okular::DocumentInfo::MimeType, QStringLiteral("application/postscript"));
+        }
     }
 
-    if (keys.contains(Okular::DocumentInfo::Pages))
+    if (keys.contains(Okular::DocumentInfo::Pages)) {
         docInfo.set(Okular::DocumentInfo::Pages, QString::number(spectre_document_get_n_pages(m_internalDocument)));
+    }
 
     return docInfo;
 }
@@ -277,8 +293,9 @@ QVariant GSGenerator::metaData(const QString &key, const QVariant &option) const
     Q_UNUSED(option)
     if (key == QLatin1String("DocumentTitle")) {
         const char *title = spectre_document_get_title(m_internalDocument);
-        if (title)
+        if (title) {
             return QString::fromLatin1(title);
+        }
     }
     return QVariant();
 }

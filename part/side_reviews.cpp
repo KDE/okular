@@ -72,7 +72,7 @@ protected:
 
             p.setBrush(palette().window());
             p.translate(0.5, 0.5);
-            p.drawRoundedRect(15, 15, w, h, (8 * 200.0) / w, (8 * 200.0) / h, Qt::RelativeSize);
+            p.drawRoundedRect(15, 15, w, h, (3 * 200.0) / w, (3 * 200.0) / h, Qt::RelativeSize);
             p.translate(20, 20);
             document.drawContents(&p);
 

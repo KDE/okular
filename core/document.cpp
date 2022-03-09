@@ -48,13 +48,13 @@
 #include <QWindow>
 #include <QtAlgorithms>
 
+#include <KApplicationTrader>
 #include <KAuthorized>
 #include <KConfigDialog>
 #include <KFormat>
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMacroExpander>
-#include <KApplicationTrader>
 #include <KPluginMetaData>
 #include <KProcess>
 #include <KRun>

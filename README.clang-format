@@ -7,7 +7,7 @@ To get the clang-format warnings locally instead at CI time we recommend you
 to copy the hooks/pre-commit to your .git
     cp hooks/pre-commit .git/hooks/
 
-We are using clang-format 11 on CI. Unfortunately clang-format is not totally
+We are using clang-format 13 on CI. Unfortunately clang-format is not totally
 compatible with older versions of itself. If CI gives you trouble but your local
 clang-format disagrees, just apply the changes suggested by CI and then commit
 with the --no-verify flag. If you get stuck, don't hesitate to ask the reviewer

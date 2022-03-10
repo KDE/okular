@@ -383,64 +383,16 @@ public:
     {
         double distX = 0;
         if (x < left) {
-            {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    distX = left - x;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            distX = left - x;
         } else if (x > right) {
-            {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    distX = x - right;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            distX = x - right;
         }
 
         double distY = 0;
         if (top > y) {
-            {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    distY = top - y;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            distY = top - y;
         } else if (bottom < y) {
-            {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    distY = y - bottom;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            distY = y - bottom;
         }
         return pow(distX * xScale, 2) + pow(distY * yScale, 2);
     }
@@ -794,49 +746,13 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, Shape>::isNull() const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return true;
     }
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for (; it != itEnd; ++it) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                if (!givePtr(*it)->isNull()) {
-                                    {
-                                        {
-                                            {
-                                                {
-                                                    {
-                                                        {
-                                                            return false;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (!givePtr(*it)->isNull()) {
+            return false;
         }
     }
 
@@ -846,49 +762,13 @@ template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, Shape>::intersects(const NormalizedShape &shape) const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return false;
     }
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for (; it != itEnd; ++it) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                if (!givePtr(*it)->isNull() && givePtr(*it)->intersects(shape)) {
-                                    {
-                                        {
-                                            {
-                                                {
-                                                    {
-                                                        {
-                                                            return true;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (!givePtr(*it)->isNull() && givePtr(*it)->intersects(shape)) {
+            return true;
         }
     }
 
@@ -898,19 +778,7 @@ template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, Shape>::intersects(const RegularArea<NormalizedShape, Shape> *area) const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return false;
     }
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
@@ -918,19 +786,7 @@ template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, S
         typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
         for (; areaIt != areaItEnd; ++areaIt) {
             if (!(*it).isNull() && (*it).intersects(*areaIt)) {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                return true;
             }
         }
     }
@@ -942,19 +798,7 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
 {
     typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
     for (; areaIt != areaItEnd; ++areaIt) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                this->append(*areaIt);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        this->append(*areaIt);
     }
 }
 
@@ -1009,19 +853,7 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
         if (intersection) {
             deref((*this)[size - 1]) |= deref(shape);
         } else {
-            {
-                {
-                    {
-                        {
-                            {
-                                {
-                                    this->append(shape);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            this->append(shape);
         }
     }
 }
@@ -1029,49 +861,13 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, Shape>::contains(double x, double y) const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return false;
     }
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for (; it != itEnd; ++it) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                if ((*it).contains(x, y)) {
-                                    {
-                                        {
-                                            {
-                                                {
-                                                    {
-                                                        {
-                                                            return true;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if ((*it).contains(x, y)) {
+            return true;
         }
     }
 
@@ -1081,19 +877,7 @@ template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, Shape>::contains(const NormalizedShape &shape) const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return false;
     }
 
     return QList<NormalizedShape>::contains(shape);
@@ -1102,19 +886,7 @@ template<class NormalizedShape, class Shape> bool RegularArea<NormalizedShape, S
 template<class NormalizedShape, class Shape> QList<Shape> RegularArea<NormalizedShape, Shape>::geometry(int xScale, int yScale, int dx, int dy) const
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return QList<Shape>();
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return QList<Shape>();
     }
 
     QList<Shape> ret;
@@ -1132,35 +904,11 @@ template<class NormalizedShape, class Shape> QList<Shape> RegularArea<Normalized
 template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, Shape>::transform(const QTransform &matrix)
 {
     if (this->isEmpty()) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return;
     }
 
     for (int i = 0; i < this->count(); ++i) {
-        {
-            {
-                {
-                    {
-                        {
-                            {
-                                givePtr((*this)[i])->transform(matrix);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        givePtr((*this)[i])->transform(matrix);
     }
 }
 

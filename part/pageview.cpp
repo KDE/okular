@@ -3072,8 +3072,8 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                         } else if (choice == speakText) {
                             const QString text = d->selectedText();
                             d->tts()->say(text);
-                        }
 #endif
+                        }
                         else if (choice == httpLink) {
                             new KRun(QUrl(url), this);
                         }

@@ -3073,8 +3073,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                             const QString text = d->selectedText();
                             d->tts()->say(text);
 #endif
-                        }
-                        else if (choice == httpLink) {
+                        } else if (choice == httpLink) {
                             new KRun(QUrl(url), this);
                         }
                     }

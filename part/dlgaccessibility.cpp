@@ -59,7 +59,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     QComboBox *colorMode = new QComboBox(this);
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Invert colors"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Change paper color"));
-    colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Change dark & light colors"));
+    colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Change foreground & background colors"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Convert to black & white"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Invert lightness"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Invert luma (sRGB linear)"));
@@ -96,12 +96,12 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     // Color button: dark color
     KColorButton *darkColor = new KColorButton(this);
     darkColor->setObjectName(QStringLiteral("kcfg_RecolorForeground"));
-    pageLayout->addRow(i18nc("@label:chooser Config dialog, accessibility page", "Dark color:"), darkColor);
+    pageLayout->addRow(i18nc("@label:chooser Config dialog, accessibility page", "Foreground color:"), darkColor);
 
     // Color button: light color
     KColorButton *lightColor = new KColorButton(this);
     lightColor->setObjectName(QStringLiteral("kcfg_RecolorBackground"));
-    pageLayout->addRow(i18nc("@label:chooser Config dialog, accessibility page", "Light color:"), lightColor);
+    pageLayout->addRow(i18nc("@label:chooser Config dialog, accessibility page", "Background color:"), lightColor);
 
     m_colorModeConfigStack->addWidget(pageWidget);
     // END Change to dark & light colors page

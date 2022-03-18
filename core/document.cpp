@@ -1171,12 +1171,13 @@ void DocumentPrivate::recalculateForms()
 {
     const QVariant fco = m_parent->metaData(QStringLiteral("FormCalculateOrder"));
     const QVector<int> formCalculateOrder = fco.value<QVector<int>>();
-    foreach (int formId, formCalculateOrder) {
+    for (int formId : formCalculateOrder) {
         for (uint pageIdx = 0; pageIdx < m_parent->pages(); pageIdx++) {
             const Page *p = m_parent->page(pageIdx);
             if (p) {
                 bool pageNeedsRefresh = false;
-                foreach (FormField *form, p->formFields()) {
+                const QLinkedList<Okular::FormField *> forms = p->formFields();
+                for (FormField *form : forms) {
                     if (form->id() == formId) {
                         Action *action = form->additionalAction(FormField::CalculateField);
                         if (action) {
@@ -1516,8 +1517,9 @@ void DocumentPrivate::rotationFinished(int page, Okular::Page *okularPage)
         return;
     }
 
-    foreach (DocumentObserver *o, m_observers)
+    for (DocumentObserver *o : qAsConst(m_observers)) {
         o->notifyPageChanged(page, DocumentObserver::Pixmap | DocumentObserver::Annotations);
+    }
 }
 
 void DocumentPrivate::slotFontReadingProgress(int page)
@@ -1752,9 +1754,11 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
     }
 
     // notify observers about highlights changes
-    foreach (int pageNumber, *pagesToNotify)
-        foreach (DocumentObserver *observer, m_observers)
+    for (int pageNumber : qAsConst(*pagesToNotify)) {
+        for (DocumentObserver *observer : qAsConst(m_observers)) {
             observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
+        }
+    }
 
     if (foundAMatch) {
         Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
@@ -1781,8 +1785,9 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
-        foreach (const MatchesVector &mv, *pageMatches)
+        for (const MatchesVector &mv : qAsConst(*pageMatches)) {
             qDeleteAll(mv);
+        }
         delete pageMatches;
         delete pagesToNotify;
         return;
@@ -1827,7 +1832,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
-            foreach (RegularAreaRect *match, it.value()) {
+            for (RegularAreaRect *match : it.value()) {
                 it.key()->d->setHighlight(searchID, match, search->cachedColor);
                 delete match;
             }
@@ -1835,13 +1840,16 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             pagesToNotify->insert(it.key()->number());
         }
 
-        foreach (DocumentObserver *observer, m_observers)
+        for (DocumentObserver *observer : qAsConst(m_observers)) {
             observer->notifySetup(m_pagesVector, 0);
+        }
 
         // notify observers about highlights changes
-        foreach (int pageNumber, *pagesToNotify)
-            foreach (DocumentObserver *observer, m_observers)
+        for (int pageNumber : qAsConst(*pagesToNotify)) {
+            for (DocumentObserver *observer : qAsConst(m_observers)) {
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
+            }
+        }
 
         if (foundAMatch) {
             Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
@@ -1872,9 +1880,10 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
 
-        foreach (const MatchesVector &mv, *pageMatches) {
-            foreach (const MatchColor &mc, mv)
+        for (const MatchesVector &mv : qAsConst(*pageMatches)) {
+            for (const MatchColor &mc : mv) {
                 delete mc.first;
+            }
         }
         delete pageMatches;
         delete pagesToNotify;
@@ -1930,9 +1939,10 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         // if not all words are present in page, remove partial highlights
         const bool matchAll = search->cachedType == Document::GoogleAll;
         if (!allMatched && matchAll) {
-            QVector<MatchColor> &matches = (*pageMatches)[page];
-            foreach (const MatchColor &mc, matches)
+            const QVector<MatchColor> &matches = (*pageMatches)[page];
+            for (const MatchColor &mc : matches) {
                 delete mc.first;
+            }
             pageMatches->remove(page);
         }
 
@@ -1947,7 +1957,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
-            foreach (const MatchColor &mc, it.value()) {
+            for (const MatchColor &mc : it.value()) {
                 it.key()->d->setHighlight(searchID, mc.first, mc.second);
                 delete mc.first;
             }
@@ -1956,13 +1966,16 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         }
 
         // send page lists to update observers (since some filter on bookmarks)
-        foreach (DocumentObserver *observer, m_observers)
+        for (DocumentObserver *observer : qAsConst(m_observers)) {
             observer->notifySetup(m_pagesVector, 0);
+        }
 
         // notify observers about highlights changes
-        foreach (int pageNumber, *pagesToNotify)
-            foreach (DocumentObserver *observer, m_observers)
+        for (int pageNumber : qAsConst(*pagesToNotify)) {
+            for (DocumentObserver *observer : qAsConst(m_observers)) {
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
+            }
+        }
 
         if (foundAMatch) {
             Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
@@ -3008,10 +3021,11 @@ void Document::setVisiblePageRects(const QVector<VisiblePageRect *> &visiblePage
     }
     d->m_pageRects = visiblePageRects;
     // notify change to all other (different from id) observers
-    foreach (DocumentObserver *o, d->m_observers)
+    for (DocumentObserver *o : qAsConst(d->m_observers)) {
         if (o != excludeObserver) {
             o->notifyVisibleRectsChanged();
         }
+    }
 }
 
 uint Document::currentPage() const
@@ -3582,7 +3596,7 @@ void Document::removePageAnnotation(int page, Annotation *annotation)
 void Document::removePageAnnotations(int page, const QList<Annotation *> &annotations)
 {
     d->m_undoStack->beginMacro(i18nc("remove a collection of annotations from the page", "remove annotations"));
-    foreach (Annotation *annotation, annotations) {
+    for (Annotation *annotation : annotations) {
         QUndoCommand *uc = new RemoveAnnotationCommand(this->d, annotation, page);
         d->m_undoStack->push(uc);
     }

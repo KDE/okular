@@ -469,8 +469,7 @@ void StampAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     formlayout->addRow(i18n("Stamp symbol:"), m_pixmapSelector);
     m_pixmapSelector->setEditable(true);
 
-    QPair<QString, QString> pair;
-    foreach (pair, defaultStamps()) {
+    for (const QPair<QString, QString> &pair : defaultStamps()) {
         m_pixmapSelector->addItem(pair.first, pair.second);
     }
 

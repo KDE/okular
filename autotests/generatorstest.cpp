@@ -40,7 +40,7 @@ void GeneratorsTest::testLoadsCorrectly()
     }
     int failures = 0;
     int successful = 0;
-    foreach (const QString &lib, generatorLibs) {
+    for (const QString &lib : qAsConst(generatorLibs)) {
         KPluginLoader loader(lib);
         QVERIFY2(!loader.fileName().isEmpty(), qPrintable(lib));
         qDebug() << loader.fileName();

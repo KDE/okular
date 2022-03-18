@@ -478,16 +478,12 @@ void AnnotationActionHandlerPrivate::selectTool(int toolId)
 
 void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 {
-    Q_EMIT q->ephemeralStampWarning();
     selectedBuiltinTool = PageViewAnnotator::STAMP_TOOL_ID;
     annotator->selectStampTool(stamp); // triggers a reparsing thus calling parseTool
 }
 
 void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
 {
-    if (isQuickToolStamp(favToolId)) {
-        Q_EMIT q->ephemeralStampWarning();
-    }
     annotator->selectQuickTool(favToolId);
     selectedBuiltinTool = -1;
     updateConfigActions();
@@ -573,12 +569,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     KToggleAction *aPolygon = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-polyline")), i18nc("@action:intoolbar Annotation tool", "Polygon"), this);
     d->aGeomShapes = new ToggleActionMenu(i18nc("@action", "Geometrical shapes"), this);
     d->aGeomShapes->setEnabled(true); // Need to explicitly set this once, or refreshActions() in part.cpp will disable this action
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
-    d->aGeomShapes->setDelayed(false);
-    d->aGeomShapes->setStickyMenu(false);
-#else
     d->aGeomShapes->setPopupMode(QToolButton::MenuButtonPopup);
-#endif
     d->aGeomShapes->addAction(aArrow);
     d->aGeomShapes->addAction(aStraightLine);
     d->aGeomShapes->addAction(aRectangle);
@@ -623,12 +614,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 
     // Stamp action
     d->aStamp = new ToggleActionMenu(QIcon::fromTheme(QStringLiteral("tag")), i18nc("@action", "Stamp"), this);
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
-    d->aStamp->setDelayed(false);
-    d->aStamp->setStickyMenu(false);
-#else
     d->aStamp->setPopupMode(QToolButton::MenuButtonPopup);
-#endif
     for (const auto &stamp : StampAnnotationWidget::defaultStamps()) {
         KToggleAction *ann = new KToggleAction(d->stampIcon(stamp.second), stamp.first, this);
         d->aStamp->addAction(ann);
@@ -648,12 +634,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 
     // Quick annotations action
     d->aQuickTools = new ToggleActionMenu(i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
-    d->aQuickTools->setDelayed(false);
-    d->aQuickTools->setStickyMenu(false);
-#else
     d->aQuickTools->setPopupMode(QToolButton::MenuButtonPopup);
-#endif
     d->aQuickTools->setIcon(QIcon::fromTheme(QStringLiteral("draw-freehand")));
     d->aQuickTools->setToolTip(i18nc("@info:tooltip", "Choose an annotation tool from the quick annotations"));
     d->aQuickTools->setEnabled(true); // required to ensure that populateQuickAnnotations is executed the first time

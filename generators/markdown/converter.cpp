@@ -207,10 +207,8 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
                     setImageSize(format, specifiedWidth, specifiedHeight, img.width(), img.height());
 
                     cursor.insertImage(format);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
                 } else if ((!textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString().isEmpty())) {
                     cursor.insertText(textCharFormat.toImageFormat().property(QTextFormat::ImageAltText).toString());
-#endif
                 }
             }
         }

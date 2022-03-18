@@ -268,14 +268,12 @@ PopplerFormFieldChoice::PopplerFormFieldChoice(std::unique_ptr<Poppler::FormFiel
     m_id = m_field->id();
     SET_ACTIONS
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 87, 0)
     QMap<QString, QString> values;
     const auto fieldChoicesWithExportValues = m_field->choicesWithExportValues();
     for (const QPair<QString, QString> &value : fieldChoicesWithExportValues) {
         values.insert(value.first, value.second);
     }
     setExportValues(values);
-#endif
 }
 
 Okular::NormalizedRect PopplerFormFieldChoice::rect() const
@@ -396,11 +394,9 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
     m_rect = Okular::NormalizedRect::fromQRectF(m_field->rect());
     m_id = m_field->id();
     int validateOptions = Poppler::FormFieldSignature::ValidateVerifyCertificate;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     if (!PDFSettings::checkOCSPServers()) {
         validateOptions = validateOptions | Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
     }
-#endif
     m_info = new PopplerSignatureInfo(m_field->validate(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions)));
     SET_ACTIONS
 }
@@ -454,10 +450,8 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         return Okular::FormFieldSignature::AdbePkcs7detached;
     case Poppler::FormFieldSignature::EtsiCAdESdetached:
         return Okular::FormFieldSignature::EtsiCAdESdetached;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     case Poppler::FormFieldSignature::UnsignedSignature:
         return Okular::FormFieldSignature::UnsignedSignature;
-#endif
     default:
         return Okular::FormFieldSignature::UnknownType;
     }
@@ -470,13 +464,7 @@ const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
 
 bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
     return m_field->sign(newPath, pData) == Poppler::FormFieldSignature::SigningSuccess;
-#else
-    Q_UNUSED(oData)
-    Q_UNUSED(newPath)
-    return false;
-#endif
 }

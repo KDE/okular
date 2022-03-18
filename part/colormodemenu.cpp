@@ -18,12 +18,7 @@ ColorModeMenu::ColorModeMenu(KActionCollection *ac, QObject *parent)
     , m_colorModeActionGroup(new QActionGroup(this))
     , m_aChangeColors(new KToggleAction(QIcon::fromTheme(QStringLiteral("color-management")), i18nc("@action Change Colors feature toggle action", "Change Colors"), this))
 {
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
-    setDelayed(false);
-    setStickyMenu(true);
-#else
     setPopupMode(QToolButton::MenuButtonPopup);
-#endif
 
     Q_ASSERT_X(ac->action(QStringLiteral("color_mode_menu")) == nullptr, "ColorModeMenu", "ColorModeMenu constructed twice; color_mode_menu already in action collection.");
     ac->addAction(QStringLiteral("color_mode_menu"), this);

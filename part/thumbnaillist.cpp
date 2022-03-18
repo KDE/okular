@@ -311,11 +311,10 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
     // RESTORE THIS int flags = Okular::Settings::filterBookmarks() ? Okular::Page::Bookmark : Okular::Page::Highlight;
 
     // if no page matches filter rule, then display all pages
-    QVector<Okular::Page *>::const_iterator pIt = pages.constBegin(), pEnd = pages.constEnd();
     bool skipCheck = true;
-    for (; pIt != pEnd; ++pIt) {
+    for (const Okular::Page *pIt : pages) {
         // if ( (*pIt)->attributes() & flags )
-        if ((*pIt)->hasHighlights(SW_SEARCH_ID)) {
+        if (pIt->hasHighlights(SW_SEARCH_ID)) {
             skipCheck = false;
         }
     }
@@ -324,20 +323,20 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
     const int width = viewport()->width();
     int height = 0;
     int centerHeight = 0;
-    for (pIt = pages.constBegin(); pIt != pEnd; ++pIt) {
+    for (const Okular::Page *pIt : pages) {
         // if ( skipCheck || (*pIt)->attributes() & flags )
-        if (skipCheck || (*pIt)->hasHighlights(SW_SEARCH_ID)) {
-            ThumbnailWidget *t = new ThumbnailWidget(d, *pIt);
+        if (skipCheck || pIt->hasHighlights(SW_SEARCH_ID)) {
+            ThumbnailWidget *t = new ThumbnailWidget(d, pIt);
             t->move(0, height);
             // add to the internal queue
             d->m_thumbnails.push_back(t);
             // update total height (asking widget its own height)
             t->resizeFitWidth(width);
             // restoring the previous selected page, if any
-            if ((*pIt)->number() < prevPage) {
+            if (pIt->number() < prevPage) {
                 centerHeight = height + t->height() + this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical) / 2;
             }
-            if ((*pIt)->number() == prevPage) {
+            if (pIt->number() == prevPage) {
                 d->m_selected = t;
                 d->m_selected->setSelected(true);
                 centerHeight = height + t->height() / 2;

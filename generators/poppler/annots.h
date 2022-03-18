@@ -38,9 +38,7 @@ private:
     Poppler::Document *ppl_doc;
     QMutex *mutex;
     QHash<Okular::Annotation *, Poppler::Annotation *> *annotationsOnOpenHash;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     std::unordered_map<Okular::StampAnnotation *, std::unique_ptr<Poppler::AnnotationAppearance>> deletedStampsAnnotationAppearance;
-#endif
 };
 
 #endif

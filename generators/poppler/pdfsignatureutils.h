@@ -63,8 +63,6 @@ private:
     Okular::CertificateInfo *m_certfiticateInfo;
 };
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
-
 class PopplerCertificateStore : public Okular::CertificateStore
 {
 public:
@@ -72,7 +70,5 @@ public:
 
     QList<Okular::CertificateInfo *> signingCertificates(bool *userCancelled) const override;
 };
-
-#endif
 
 #endif

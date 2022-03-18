@@ -23,9 +23,6 @@
 #include <QClipboard>
 #include <QCursor>
 #include <QDesktopServices>
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-#include <QDesktopWidget>
-#endif
 #include <QElapsedTimer>
 #include <QEvent>
 #include <QGestureEvent>
@@ -46,6 +43,7 @@
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KConfigWatcher>
+#include <KIO/CommandLauncherJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KRun>
@@ -59,11 +57,6 @@
 #include <QIcon>
 #include <kio_version.h>
 #include <kwidgetsaddons_version.h>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 69, 0)
-#include <KIO/CommandLauncherJob>
-#else
-#include <KToolInvocation>
-#endif
 
 // system includes
 #include <array>
@@ -449,7 +442,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     prop.setScrollMetric(QScrollerProperties::DragStartDistance, 0.0);
     d->scroller->setScrollerProperties(prop);
 
-    connect(d->scroller, &QScroller::stateChanged, this, &PageView::slotRequestVisiblePixmaps);
+    connect(d->scroller, &QScroller::stateChanged, this, [this](QScroller::State s) { slotRequestVisiblePixmaps(s); });
 
     // the apparently "magic" value of 20 is the same used internally in QScrollArea
     verticalScrollBar()->setCursor(Qt::ArrowCursor);
@@ -717,12 +710,7 @@ void PageView::setupActions(KActionCollection *ac)
 
     // Mouse mode selection tools menu
     d->aMouseModeMenu = new ToggleActionMenu(i18nc("@action", "Selection Tools"), this);
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
-    d->aMouseModeMenu->setDelayed(false);
-    d->aMouseModeMenu->setStickyMenu(false);
-#else
     d->aMouseModeMenu->setPopupMode(QToolButton::MenuButtonPopup);
-#endif
     d->aMouseModeMenu->addAction(d->aMouseSelect);
     d->aMouseModeMenu->addAction(d->aMouseTextSelect);
     d->aMouseModeMenu->addAction(d->aMouseTableSelect);
@@ -4258,21 +4246,6 @@ void PageView::center(int cx, int cy, bool smoothMove)
 
 void PageView::scrollTo(int x, int y, bool smoothMove)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    // Workaround for QTBUG-88288, (KDE bug 425188): To avoid a crash in QScroller,
-    // we need to make sure the target widget intersects a physical screen.
-    // QScroller queries QDesktopWidget::screenNumber().
-
-    // If we are not on a physical screen, we try to make our widget big enough.
-    // The geometry will be restored to a sensible value once the Part is shown.
-
-    // It should be enough to add this workaround ony in PageView::scrollTo(),
-    // because we don’t expect other QScroller::scrollTo() calls before PageView is shown.
-    if (QApplication::desktop()->screenNumber(this) < 0) {
-        setGeometry(QRect(-1000, -1000, 5000, 5000).united(QApplication::desktop()->availableGeometry()));
-    }
-#endif
-
     bool prevState = d->blockPixmapsRequest;
 
     int newValue = -1;
@@ -4895,12 +4868,8 @@ void PageView::slotHandleWebShortcutAction()
 
 void PageView::slotConfigureWebShortcuts()
 {
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 69, 0)
     auto *job = new KIO::CommandLauncherJob(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
     job->start();
-#else
-    KToolInvocation::kdeinitExec(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
-#endif
 }
 
 void PageView::slotZoom()
@@ -5075,17 +5044,6 @@ void PageView::slotSignature()
     if (!d->document->isHistoryClean()) {
         KMessageBox::information(this, i18n("You have unsaved changes. Please save the document before signing it."));
         return;
-    }
-
-    const bool documentHasPassword = d->document->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes");
-    if (documentHasPassword) {
-        if (d->document->metaData(QStringLiteral("CanSignDocumentWithPassword")).toString() == QLatin1String("no")) {
-            KMessageBox::information(nullptr,
-                                     i18nc("@info", "The version of the Poppler library this Okular was compiled with does not support signing documents with passwords. Please ask your provider to update it to 22.02 or later."),
-                                     i18nc("@title:window", "Poppler library is too old"),
-                                     QStringLiteral("popplerOldSignVersion"));
-            return;
-        }
     }
 
     const Okular::CertificateStore *certStore = d->document->certificateStore();

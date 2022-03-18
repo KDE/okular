@@ -110,9 +110,7 @@ public:
 
     QByteArray requestFontData(const Okular::FontInfo &font) override;
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     static void okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData);
-#endif
 
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;

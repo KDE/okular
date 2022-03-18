@@ -45,7 +45,6 @@
 #include <QTimer>
 #include <QWidgetAction>
 
-#include "kconfigwidgets_version.h" // TODO KF 5.81 Remove this include, because the relevant section below will also be removed.
 #include <KAboutPluginDialog>
 #include <KActionCollection>
 #include <KActionMenu>
@@ -54,9 +53,7 @@
 #include <KDirWatch>
 #include <KFilterBase>
 #include <KFilterDev>
-#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
 #include <KHamburgerMenu>
-#endif
 #include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
 #include <KMainWindow>
@@ -119,7 +116,6 @@
 #include "signaturepanel.h"
 #include "thumbnaillist.h"
 #include "toc.h"
-#include "xmlgui_helper.h"
 
 #include <memory>
 #include <type_traits>
@@ -321,18 +317,6 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     setComponentName(QStringLiteral("okular"), QString());
 
     setupConfigSkeleton(args, componentName());
-
-#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 78, 0) // TODO KF6: Remove this section and part/xmlgui_helper.{cpp,h}.
-    // In KXMLGUI 5.78, https://invent.kde.org/frameworks/kxmlgui/-/merge_requests/5
-    // was merged, so this workaround can be removed when KF 5.78 is required.
-
-    // In part.rc 47 we introduced a new mandatory toolbar that kxmlgui doesn't know how to merge properly
-    // so unfortunately we have to remove any customized part.rc that is older than 47
-    const QStringList files = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kxmlgui5/okular/part.rc"));
-    for (const QString &file : files) {
-        removeRCFileIfVersionSmallerThan(file, 47);
-    }
-#endif
 
     numberOfParts++;
     if (numberOfParts == 1) {
@@ -961,7 +945,6 @@ void Part::setupActions()
     connect(m_openContainingFolder, &QAction::triggered, this, &Part::slotOpenContainingFolder);
     m_openContainingFolder->setEnabled(false);
 
-#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
     if (m_embedMode == Okular::NativeShellMode) { // This hamburger menu is designed to be quite Okular-specific.
         m_hamburgerMenuAction = KStandardAction::hamburgerMenu(nullptr, nullptr, ac);
         if (auto *mainWindow = findMainWindow()) {
@@ -969,7 +952,6 @@ void Part::setupActions()
         }
         connect(m_hamburgerMenuAction, &KHamburgerMenu::aboutToShowMenu, this, &Part::slotUpdateHamburgerMenu);
     }
-#endif
 
     QAction *importPS = ac->addAction(QStringLiteral("import_ps"));
     importPS->setText(i18n("&Import PostScript as PDF..."));
@@ -3162,9 +3144,7 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     const int amountOfActions = popup->actions().count();
     if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) {
         if (m_hamburgerMenuAction) {
-#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
             m_hamburgerMenuAction->addToMenu(popup);
-#endif
         } else if (m_showMenuBarAction) {
             popup->addAction(m_showMenuBarAction);
         }
@@ -3260,7 +3240,6 @@ void Part::slotHidePresentation()
 
 void Part::slotUpdateHamburgerMenu()
 {
-#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 81, 0)
     auto ac = actionCollection();
 
     auto menu = m_hamburgerMenuAction->menu();
@@ -3367,7 +3346,6 @@ void Part::slotUpdateHamburgerMenu()
     if (menuBar) {
         menu->addAction(menuBar->actions().at(menuBar->actions().count() - 3));
     }
-#endif
 }
 
 void Part::slotTogglePresentation()

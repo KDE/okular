@@ -169,9 +169,7 @@ Shell::Shell(const QString &serializedOptions)
         KMessageBox::error(this, i18n("Unable to find the Okular component."));
     }
 
-#if KXMLGUI_VERSION > QT_VERSION_CHECK(5, 78, 0)
     connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, &Shell::reloadAllXML);
-#endif
 }
 
 void Shell::reloadAllXML()
@@ -492,11 +490,7 @@ void Shell::fileOpen()
     // worse because doesn't show you pdf files named bla.blo when you say "show me the pdf files", but
     // that's solvable by choosing "All Files" and it's not that common while it's more convenient to
     // only get shown the files that the application can open by default instead of all of them
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 73, 0)
     const bool useMimeTypeFilters = qgetenv("XDG_CURRENT_DESKTOP").toLower() == "kde";
-#else
-    const bool useMimeTypeFilters = false;
-#endif
     if (useMimeTypeFilters) {
         QStringList mimetypes;
         for (const QString &mimeName : qAsConst(m_fileformats)) {
@@ -515,11 +509,7 @@ void Shell::fileOpen()
                 continue;
             }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
             globPatterns.unite(QSet<QString>(globs.begin(), globs.end()));
-#else
-            globPatterns.unite(globs.toSet());
-#endif
 
             namedGlobs[mimeType.comment()].append(globs);
         }
@@ -683,9 +673,6 @@ bool Shell::queryClose()
 void Shell::setActiveTab(int tab)
 {
     m_tabWidget->setCurrentIndex(tab);
-#if KXMLGUI_VERSION <= QT_VERSION_CHECK(5, 78, 0)
-    m_tabs[tab].part->reloadXML();
-#endif
     createGUI(m_tabs[tab].part);
 
     m_printAction->setEnabled(m_tabs[tab].printEnabled);

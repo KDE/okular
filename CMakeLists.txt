@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.22)
 
 # KDE Application Version, managed by release script
 set (RELEASE_SERVICE_VERSION_MAJOR "23")
@@ -8,8 +8,8 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 
 project(okular VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_REQUIRED_VERSION "5.12.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
-set(KF5_REQUIRED_VERSION "5.68.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
+set(QT_REQUIRED_VERSION "5.15.2") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
+set(KF5_REQUIRED_VERSION "5.92.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
@@ -192,7 +192,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "0.86.0" COMPONENTS Qt5)
+find_package(Poppler "22.02.0" COMPONENTS Qt5)
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
@@ -244,7 +244,7 @@ set_okular_optional_package_properties(LibZip PROPERTIES
         URL "https://libzip.org/"
         PURPOSE "Support CHM files in okular.")
 
-find_package(DjVuLibre "3.5.17")
+find_package(DjVuLibre "3.5.28")
 set_okular_optional_package_properties(DjVuLibre PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
         URL "https://djvulibre.djvuzone.org"
@@ -268,22 +268,11 @@ set_okular_optional_package_properties(Discount PROPERTIES
         URL "https://www.pell.portland.or.us/~orc/Code/discount/"
         PURPOSE "Support for Markdown documents in Okular.")
 
-add_definitions(-DQT_USE_QSTRINGBUILDER)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
-add_definitions(-DQT_NO_CAST_FROM_ASCII)
-add_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
-add_definitions(-DQT_NO_CAST_TO_ASCII)
-add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050C00)
-add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x054400)
-add_definitions(-DQT_NO_KEYWORDS)
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050F02)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x055C00)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
-
-if(BUILD_MOBILE AND KF5Kirigami2_VERSION VERSION_LESS "5.85")
-    message(FATAL_ERROR "Disable mobile build. This requires Kirigami 5.85 or greater.")
-    set(BUILD_MOBILE OFF)
-endif()
 
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
@@ -509,7 +498,6 @@ if(BUILD_DESKTOP)
     part/widgetconfigurationtoolsbase.cpp
     part/widgetdrawingtools.cpp
     part/part.cpp
-    part/xmlgui_helper.cpp
     part/extensions.cpp
     part/embeddedfilesdialog.cpp
     part/actionbar.cpp

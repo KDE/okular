@@ -88,35 +88,32 @@ void SignUnsignedFieldTest::testSignUnsignedField()
     QCOMPARE(forms.count(), 1);
     Okular::FormFieldSignature *ffs = dynamic_cast<Okular::FormFieldSignature *>(forms.first());
 
-    // This is a hacky way of doing ifdef HAVE_POPPLER_22_02
-    if (m_document->metaData(QStringLiteral("CanSignDocumentWithPassword")).toString() == QLatin1String("yes")) {
-        QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::UnsignedSignature);
+    QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::UnsignedSignature);
 
-        const Okular::CertificateStore *certStore = m_document->certificateStore();
-        bool userCancelled, nonDateValidCerts;
-        {
-            EnterPasswordDialogHelper helper;
-            const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
-            QCOMPARE(certs.count(), 1);
-        }
-
-        Okular::NewSignatureData data;
-        data.setCertNickname(QStringLiteral("fake-okular"));
-        QTemporaryFile f;
-        f.open();
-        QVERIFY(ffs->sign(data, f.fileName()));
-
-        m_document->closeDocument();
-        QMimeDatabase db;
-        const QMimeType mime = db.mimeTypeForFile(f.fileName());
-        QCOMPARE(m_document->openDocument(f.fileName(), QUrl(), mime), Okular::Document::OpenSuccess);
-
-        const QList<Okular::FormField *> newForms = m_document->page(0)->formFields();
-        QCOMPARE(newForms.count(), 1);
-        ffs = dynamic_cast<Okular::FormFieldSignature *>(newForms.first());
-        QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
-        QCOMPARE(ffs->signatureInfo().signerName(), QStringLiteral("FakeOkular"));
+    const Okular::CertificateStore *certStore = m_document->certificateStore();
+    bool userCancelled, nonDateValidCerts;
+    {
+        EnterPasswordDialogHelper helper;
+        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+        QCOMPARE(certs.count(), 1);
     }
+
+    Okular::NewSignatureData data;
+    data.setCertNickname(QStringLiteral("fake-okular"));
+    QTemporaryFile f;
+    f.open();
+    QVERIFY(ffs->sign(data, f.fileName()));
+
+    m_document->closeDocument();
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile(f.fileName());
+    QCOMPARE(m_document->openDocument(f.fileName(), QUrl(), mime), Okular::Document::OpenSuccess);
+
+    const QList<Okular::FormField *> newForms = m_document->page(0)->formFields();
+    QCOMPARE(newForms.count(), 1);
+    ffs = dynamic_cast<Okular::FormFieldSignature *>(newForms.first());
+    QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
+    QCOMPARE(ffs->signatureInfo().signerName(), QStringLiteral("FakeOkular"));
 }
 
 QTEST_MAIN(SignUnsignedFieldTest)

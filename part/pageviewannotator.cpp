@@ -1478,12 +1478,6 @@ void PageViewAnnotator::setupActions(KActionCollection *ac)
 {
     if (!m_actionHandler) {
         m_actionHandler = new AnnotationActionHandler(this, ac);
-        connect(m_actionHandler, &AnnotationActionHandler::ephemeralStampWarning, this, [this] {
-            if (m_document->metaData(QStringLiteral("ShowStampsWarning")).toString() == QLatin1String("yes")) {
-                KMessageBox::information(
-                    nullptr, i18nc("@info", "Stamps inserted in PDF documents are not visible in PDF readers other than Okular"), i18nc("@title:window", "Experimental feature"), QStringLiteral("stampAnnotationWarning"));
-            }
-        });
     }
 }
 

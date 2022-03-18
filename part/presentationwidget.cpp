@@ -1688,11 +1688,7 @@ void PresentationWidget::toggleBlackScreenMode(bool)
 void PresentationWidget::setScreen(const QScreen *newScreen)
 {
     // To move to a new screen, need to disable fullscreen first:
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     if (newScreen != screen()) {
-#else
-    if (true) { // TODO Qt6 (oldQt_screenOf() doesn’t help here, because it has a default value.)
-#endif
         setWindowState(windowState() & ~Qt::WindowFullScreen);
     }
     setGeometry(newScreen->geometry());

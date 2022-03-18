@@ -7,9 +7,9 @@ include:
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd.yml
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
 
-build_ubuntu_20_04:
+build_ubuntu_22_04:
   stage: build
-  image: ubuntu:focal
+  image: ubuntu:22.04
   tags:
     - Linux
   only:

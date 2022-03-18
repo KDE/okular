@@ -16,12 +16,6 @@
 #include <QStringList>
 #include <qwidget.h>
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0) // TODO Qt6: These are needed for oldQt_screenOf().
-#include <QApplication>
-#include <QScreen>
-#include <QWindow>
-#endif
-
 class QLineEdit;
 class QToolBar;
 class QTimer;
@@ -159,15 +153,7 @@ private:
     /** TODO Qt6: Just use QWidget::screen() instead of this. */
     static inline QScreen *oldQt_screenOf(const QWidget *widget)
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         return widget->screen();
-#else
-        if (widget->window() && widget->window()->windowHandle() && widget->window()->windowHandle()->screen()) {
-            return widget->window()->windowHandle()->screen();
-        } else {
-            return QApplication::primaryScreen();
-        }
-#endif
     }
 
 private Q_SLOTS:

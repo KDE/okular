@@ -630,11 +630,9 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
     Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     if (!PDFSettings::useDefaultCertDB()) {
         Poppler::setNSSDir(QUrl(PDFSettings::dBCertificatePath()).toLocalFile());
     }
-#endif
 }
 
 PDFGenerator::~PDFGenerator()
@@ -691,14 +689,12 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
     }
 
     xrefReconstructed = false;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 6, 0)
     if (pdfdoc->xrefWasReconstructed()) {
         xrefReconstructionHandler();
     } else {
         std::function<void()> cb = std::bind(&PDFGenerator::xrefReconstructionHandler, this);
         pdfdoc->setXRefReconstructedCallback(cb);
     }
-#endif
 
     // build Pages (currentPage was set -1 by deletePages)
     int pageCount = pdfdoc->numPages();
@@ -823,13 +819,9 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
             page->setLabel(p->label());
 
             QList<Okular::FormField *> okularFormFields;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
             if (i > 0) { // for page 0 we handle the form fields at the end
                 okularFormFields = getFormFields(p);
             }
-#else
-            okularFormFields = getFormFields(p);
-#endif
             if (!okularFormFields.isEmpty()) {
                 page->setFormFields(okularFormFields);
             }
@@ -853,7 +845,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
     // Once we've added the signatures to all pages except page 0, we add all the missing signatures there
     // we do that because there's signatures that don't belong to any page, but okular needs a page<->signature mapping
     if (count > 0) {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
         const QVector<Poppler::FormFieldSignature *> allSignatures = pdfdoc->signatures();
         std::unique_ptr<Poppler::Page> page0(pdfdoc->page(0));
         QList<Okular::FormField *> page0FormFields = getFormFields(page0.get());
@@ -887,7 +878,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
         if (!page0FormFields.isEmpty()) {
             pagesVector[0]->setFormFields(page0FormFields);
         }
-#endif
     }
 }
 
@@ -1360,7 +1350,6 @@ QByteArray PDFGenerator::requestFontData(const Okular::FontInfo &font)
     return pdfdoc->fontData(fi);
 }
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
 void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData)
 {
     pData->setCertNickname(oData.certNickname());
@@ -1368,19 +1357,14 @@ void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Popple
     pData->setPage(oData.page());
     const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
     pData->setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 6, 0)
     pData->setSignatureLeftText(oData.certSubjectCommonName());
-#endif
     const Okular::NormalizedRect bRect = oData.boundingRectangle();
     pData->setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData->setFontColor(Qt::black);
     pData->setBorderColor(Qt::black);
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     pData->setDocumentOwnerPassword(oData.documentPassword().toLatin1());
     pData->setDocumentUserPassword(oData.documentPassword().toLatin1());
-#endif
 }
-#endif
 
 #define DUMMY_QPRINTER_COPY
 Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
@@ -1577,20 +1561,8 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
         } else {
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), QStringLiteral(POPPLER_VERSION));
         }
-    } else if (key == QLatin1String("ShowStampsWarning")) {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
-        return QStringLiteral("no");
-#else
-        return QStringLiteral("yes");
-#endif
     } else if (key == QLatin1String("DocumentHasPassword")) {
         return pdfdoc->isEncrypted() ? QStringLiteral("yes") : QStringLiteral("no");
-    } else if (key == QLatin1String("CanSignDocumentWithPassword")) {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
-        return QStringLiteral("yes");
-#else
-        return QStringLiteral("no");
-#endif
     }
     return QVariant();
 }
@@ -2022,16 +1994,11 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
 
 bool PDFGenerator::canSign() const
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     return Poppler::hasNSSSupport();
-#else
-    return false;
-#endif
 }
 
 bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
@@ -2054,26 +2021,17 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     if (!tf.rename(rFilename)) {
         return false;
     }
-#else
-    Q_UNUSED(oData);
-    Q_UNUSED(rFilename);
-    return false;
-#endif
 
     return true;
 }
 
 Okular::CertificateStore *PDFGenerator::certificateStore() const
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     if (!certStore) {
         certStore = new PopplerCertificateStore();
     }
 
     return certStore;
-#else
-    return nullptr;
-#endif
 }
 
 void PDFGenerator::xrefReconstructionHandler()

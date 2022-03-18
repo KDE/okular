@@ -42,9 +42,6 @@ public:
     void setTextToolsEnabled(bool on);
     void deselectAllAnnotationActions();
 
-Q_SIGNALS:
-    void ephemeralStampWarning();
-
 private Q_SLOTS:
     void slotAnnotationToolBarVisibilityChanged(bool visible);
 

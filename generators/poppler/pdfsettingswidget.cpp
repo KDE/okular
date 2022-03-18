@@ -23,7 +23,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
     : QWidget(parent)
 {
     m_pdfsw.setupUi(this);
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     if (Poppler::hasNSSSupport()) {
         m_pdfsw.loadSignaturesButton->hide();
 
@@ -62,15 +61,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
         l->setWordWrap(true);
         lay->addWidget(l);
     }
-#else
-    m_pdfsw.certDBGroupBox->hide();
-    m_pdfsw.certificatesGroup->hide();
-    m_pdfsw.loadSignaturesButton->hide();
-#endif
-
-#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(21, 10, 0)
-    m_pdfsw.kcfg_CheckOCSPServers->hide();
-#endif
 }
 
 bool PDFSettingsWidget::event(QEvent *e)
@@ -78,7 +68,6 @@ bool PDFSettingsWidget::event(QEvent *e)
     if (m_tree && e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
         PopplerCertificateStore st;
         bool userCancelled;
         const QList<Okular::CertificateInfo *> certs = st.signingCertificates(&userCancelled);
@@ -95,7 +84,6 @@ bool PDFSettingsWidget::event(QEvent *e)
 
         m_tree->resizeColumnToContents(1);
         m_tree->resizeColumnToContents(0);
-#endif
     }
     return QWidget::event(e);
 }

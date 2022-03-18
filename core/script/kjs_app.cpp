@@ -235,17 +235,13 @@ static KJSObject appAlert(KJSContext *context, void *, const KJSArguments &argum
         box.setCheckBox(checkBox);
     }
 
-#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     // halt timeout until the user has responded
     context->interpreter().stopTimeoutCheck();
-#endif
 
     int button = box.exec();
 
-#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     // restart max allowed time
     context->interpreter().startTimeoutCheck();
-#endif
 
     int ret;
 

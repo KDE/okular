@@ -360,7 +360,7 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     painter.setPen(Qt::black);
     painter.setBrush(palette().color(QPalette::Window));
     painter.translate(0.5, 0.5);
-    painter.drawRoundedRect(1, 1, width() - 2, height() - 2, 1600.0 / width(), 1600.0 / height());
+    painter.drawRoundedRect(1, 1, width() - 2, height() - 2, 3, 3);
 
     // draw icon if present
     if (!m_symbol.isNull()) {

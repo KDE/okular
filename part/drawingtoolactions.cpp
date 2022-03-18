@@ -122,9 +122,9 @@ void DrawingToolActions::actionTriggered()
                 }
             }
 
-            emit changeEngine(action->property("__document").value<QDomElement>());
+            Q_EMIT changeEngine(action->property("__document").value<QDomElement>());
         } else {
-            emit changeEngine(QDomElement());
+            Q_EMIT changeEngine(QDomElement());
         }
     }
 }

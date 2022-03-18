@@ -258,7 +258,7 @@ void CHMGenerator::generatePixmap(Okular::PixmapRequest *request)
     m_chmUrl = url;
     m_syncGen->view()->resizeContents(requestWidth, requestHeight);
     m_request = request;
-    // will emit openURL without problems
+    // will Q_EMIT openURL without problems
     m_syncGen->openUrl(QUrl(pAddress));
 }
 

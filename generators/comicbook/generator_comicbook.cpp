@@ -37,7 +37,7 @@ bool ComicBookGenerator::loadDocument(const QString &fileName, QVector<Okular::P
     if (!mDocument.open(fileName)) {
         const QString errString = mDocument.lastErrorString();
         if (!errString.isEmpty()) {
-            emit error(errString, -1);
+            Q_EMIT error(errString, -1);
         }
         return false;
     }

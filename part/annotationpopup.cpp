@@ -149,7 +149,7 @@ void AnnotationPopup::doRemovePageAnnotation(AnnotPagePair pair)
 
 void AnnotationPopup::doOpenAnnotationWindow(AnnotPagePair pair)
 {
-    emit openAnnotationWindow(pair.annotation, pair.pageNumber);
+    Q_EMIT openAnnotationWindow(pair.annotation, pair.pageNumber);
 }
 
 void AnnotationPopup::doOpenPropertiesDialog(AnnotPagePair pair)

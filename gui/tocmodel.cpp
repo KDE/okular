@@ -134,7 +134,7 @@ void TOCModelPrivate::addChildren(const QDomNode &parentNode, TOCItem *parentIte
         }
 
         n = n.nextSibling();
-        emit q->countChanged();
+        Q_EMIT q->countChanged();
     }
 }
 
@@ -333,10 +333,10 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
     }
 
     clear();
-    emit layoutAboutToBeChanged();
+    Q_EMIT layoutAboutToBeChanged();
     d->addChildren(*toc, d->root);
     d->dirty = true;
-    emit layoutChanged();
+    Q_EMIT layoutChanged();
     if (equals(d->m_oldModel)) {
         for (const QModelIndex &oldIndex : qAsConst(d->m_oldTocExpandedIndexes)) {
             const QModelIndex index = indexForIndex(oldIndex, this);
@@ -387,7 +387,7 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
         }
 
         item->highlight = false;
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
     }
     d->currentPage.clear();
 
@@ -403,7 +403,7 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
         }
 
         item->highlight = true;
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
     }
 }
 

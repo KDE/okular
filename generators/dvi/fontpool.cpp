@@ -206,14 +206,14 @@ void fontPool::locateFonts()
     // present an error message to the user.
     if (!areFontsLocated()) {
         markFontsAsLocated();
-        emit error(i18n("<qt><p>Okular was not able to locate all the font files "
-                        "which are necessary to display the current DVI file. "
-                        "Your document might be unreadable.</p>"
-                        "<p><small><b>PATH:</b> %1</small></p>"
-                        "<p><small>%2</small></p></qt>",
-                        QString::fromLocal8Bit(qgetenv("PATH")),
-                        kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))),
-                   -1);
+        Q_EMIT error(i18n("<qt><p>Okular was not able to locate all the font files "
+                          "which are necessary to display the current DVI file. "
+                          "Your document might be unreadable.</p>"
+                          "<p><small><b>PATH:</b> %1</small></p>"
+                          "<p><small>%2</small></p></qt>",
+                          QString::fromLocal8Bit(qgetenv("PATH")),
+                          kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))),
+                     -1);
     }
 }
 
@@ -281,15 +281,15 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     kpsewhich_->start(kpsewhichFullPath, kpsewhich_args, QIODevice::ReadOnly | QIODevice::Text);
     if (!kpsewhich_->waitForStarted()) {
         QApplication::restoreOverrideCursor();
-        emit error(i18n("<qt><p>There were problems running <em>kpsewhich</em>. As a result, "
-                        "some font files could not be located, and your document might be unreadable.<br/>"
-                        "Possible reason: the <em>kpsewhich</em> program is perhaps not installed on your system, "
-                        "or it cannot be found in the current search path.</p>"
-                        "<p><small><b>PATH:</b> %1</small></p>"
-                        "<p><small>%2</small></p></qt>",
-                        QString::fromLocal8Bit(qgetenv("PATH")),
-                        kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))),
-                   -1);
+        Q_EMIT error(i18n("<qt><p>There were problems running <em>kpsewhich</em>. As a result, "
+                          "some font files could not be located, and your document might be unreadable.<br/>"
+                          "Possible reason: the <em>kpsewhich</em> program is perhaps not installed on your system, "
+                          "or it cannot be found in the current search path.</p>"
+                          "<p><small><b>PATH:</b> %1</small></p>"
+                          "<p><small>%2</small></p></qt>",
+                          QString::fromLocal8Bit(qgetenv("PATH")),
+                          kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))),
+                     -1);
 
         // This makes sure the we don't try to run kpsewhich again
         markFontsAsLocated();
@@ -302,11 +302,11 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     // Handle fatal errors.
     int const kpsewhich_exit_code = kpsewhich_->exitCode();
     if (kpsewhich_exit_code < 0) {
-        emit warning(i18n("<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, error %2). As a "
-                          "result, some font files could not be located, and your document might be unreadable.</qt>",
-                          kpsewhich_exit_code,
-                          kpsewhich_->errorString()),
-                     -1);
+        Q_EMIT warning(i18n("<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, error %2). As a "
+                            "result, some font files could not be located, and your document might be unreadable.</qt>",
+                            kpsewhich_exit_code,
+                            kpsewhich_->errorString()),
+                       -1);
 
         // This makes sure the we don't try to run kpsewhich again
         if (makePK == false) {
@@ -404,7 +404,7 @@ void fontPool::setDisplayResolution(double _displayResolution_in_dpi)
 
     // Do something that causes re-rendering of the dvi-window
     /*@@@@
-    emit fonts_have_been_loaded(this);
+    Q_EMIT fonts_have_been_loaded(this);
     */
 }
 
@@ -478,7 +478,7 @@ void fontPool::mf_output_receiver()
             int secondblank = startLine.lastIndexOf(QLatin1Char(' '), lastblank - 1);
             QString dpi = startLine.mid(secondblank + 1, lastblank - secondblank - 1);
 
-            emit warning(i18n("Currently generating %1 at %2 dpi...", fontName, dpi), -1);
+            Q_EMIT warning(i18n("Currently generating %1 at %2 dpi...", fontName, dpi), -1);
         }
         MetafontOutput = MetafontOutput.remove(0, numleft + 1);
     }

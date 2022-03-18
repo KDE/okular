@@ -76,7 +76,7 @@ void WidgetConfigurationToolsBase::slotRemove()
     const int row = m_list->currentRow();
     delete m_list->takeItem(row);
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }
 
 void WidgetConfigurationToolsBase::slotMoveUp()
@@ -85,7 +85,7 @@ void WidgetConfigurationToolsBase::slotMoveUp()
     m_list->insertItem(row, m_list->takeItem(row - 1));
     m_list->scrollToItem(m_list->currentItem());
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }
 
 void WidgetConfigurationToolsBase::slotMoveDown()
@@ -94,5 +94,5 @@ void WidgetConfigurationToolsBase::slotMoveDown()
     m_list->insertItem(row, m_list->takeItem(row + 1));
     m_list->scrollToItem(m_list->currentItem());
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }

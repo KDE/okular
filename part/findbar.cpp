@@ -99,7 +99,7 @@ bool FindBar::eventFilter(QObject *target, QEvent *event)
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
             if (keyEvent->key() == Qt::Key_PageUp || keyEvent->key() == Qt::Key_PageDown) {
-                emit forwardKeyPressEvent(keyEvent);
+                Q_EMIT forwardKeyPressEvent(keyEvent);
                 return true;
             }
         }
@@ -188,7 +188,7 @@ void FindBar::closeAndStopSearch()
     if (m_search->lineEdit()->isSearchRunning()) {
         m_search->lineEdit()->stopSearch();
     }
-    emit onCloseButtonPressed();
+    Q_EMIT onCloseButtonPressed();
     close();
 }
 

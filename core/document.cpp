@@ -802,7 +802,7 @@ bool DocumentPrivate::openRelativeFile(const QString &fileName)
 
     qCDebug(OkularCoreDebug).nospace() << "openRelativeFile: '" << newUrl << "'";
 
-    emit m_parent->openUrl(newUrl);
+    Q_EMIT m_parent->openUrl(newUrl);
     return m_url == newUrl;
 }
 
@@ -969,7 +969,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal(const KPluginMetaData
         delete m_tempFile;
         m_tempFile = nullptr;
 
-        // TODO: emit a message telling the document is empty
+        // TODO: Q_EMIT a message telling the document is empty
         if (openResult == Document::OpenSuccess) {
             openResult = Document::OpenError;
         }
@@ -1206,7 +1206,7 @@ void DocumentPrivate::recalculateForms()
                                         // The format action handles the refresh.
                                         m_parent->processFormatAction(action, fft);
                                     } else {
-                                        emit m_parent->refreshFormWidget(fft);
+                                        Q_EMIT m_parent->refreshFormWidget(fft);
                                         pageNeedsRefresh = true;
                                     }
                                 }
@@ -1522,10 +1522,10 @@ void DocumentPrivate::rotationFinished(int page, Okular::Page *okularPage)
 
 void DocumentPrivate::slotFontReadingProgress(int page)
 {
-    emit m_parent->fontReadingProgress(page);
+    Q_EMIT m_parent->fontReadingProgress(page);
 
     if (page >= (int)m_parent->pages() - 1) {
-        emit m_parent->fontReadingEnded();
+        Q_EMIT m_parent->fontReadingEnded();
         m_fontThread = nullptr;
         m_fontsCached = true;
     }
@@ -1537,7 +1537,7 @@ void DocumentPrivate::fontReadingGotFont(const Okular::FontInfo &font)
     if (m_fontsCache.indexOf(font) == -1) {
         m_fontsCache.append(font);
 
-        emit m_parent->gotFont(font);
+        Q_EMIT m_parent->gotFont(font);
     }
 }
 
@@ -1661,7 +1661,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             search->isCurrentlySearching = false;
         }
 
-        emit m_parent->searchFinished(searchStruct->searchID, Document::SearchCancelled);
+        Q_EMIT m_parent->searchFinished(searchStruct->searchID, Document::SearchCancelled);
         delete searchStruct->pagesToNotify;
         delete searchStruct;
         return;
@@ -1676,10 +1676,10 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             doContinue = true;
             if (searchStruct->currentPage >= pageCount) {
                 searchStruct->currentPage = 0;
-                emit m_parent->notice(i18n("Continuing search from beginning"), 3000);
+                Q_EMIT m_parent->notice(i18n("Continuing search from beginning"), 3000);
             } else if (searchStruct->currentPage < 0) {
                 searchStruct->currentPage = pageCount - 1;
-                emit m_parent->notice(i18n("Continuing search from bottom"), 3000);
+                Q_EMIT m_parent->notice(i18n("Continuing search from bottom"), 3000);
             }
         }
     }
@@ -1757,9 +1757,9 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
             observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
 
     if (foundAMatch) {
-        emit m_parent->searchFinished(searchID, Document::MatchFound);
+        Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
     } else {
-        emit m_parent->searchFinished(searchID, Document::NoMatchFound);
+        Q_EMIT m_parent->searchFinished(searchID, Document::NoMatchFound);
     }
 
     delete pagesToNotify;
@@ -1780,7 +1780,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             search->isCurrentlySearching = false;
         }
 
-        emit m_parent->searchFinished(searchID, Document::SearchCancelled);
+        Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
         foreach (const MatchesVector &mv, *pageMatches)
             qDeleteAll(mv);
         delete pageMatches;
@@ -1844,9 +1844,9 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
 
         if (foundAMatch) {
-            emit m_parent->searchFinished(searchID, Document::MatchFound);
+            Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
         } else {
-            emit m_parent->searchFinished(searchID, Document::NoMatchFound);
+            Q_EMIT m_parent->searchFinished(searchID, Document::NoMatchFound);
         }
 
         delete pageMatches;
@@ -1870,7 +1870,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             search->isCurrentlySearching = false;
         }
 
-        emit m_parent->searchFinished(searchID, Document::SearchCancelled);
+        Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
 
         foreach (const MatchesVector &mv, *pageMatches) {
             foreach (const MatchColor &mc, mv)
@@ -1965,9 +1965,9 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
 
         if (foundAMatch) {
-            emit m_parent->searchFinished(searchID, Document::MatchFound);
+            Q_EMIT m_parent->searchFinished(searchID, Document::MatchFound);
         } else {
-            emit m_parent->searchFinished(searchID, Document::NoMatchFound);
+            Q_EMIT m_parent->searchFinished(searchID, Document::NoMatchFound);
         }
 
         delete pageMatches;
@@ -2429,7 +2429,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     }
     if (!offer.isValid()) {
         d->m_openError = i18n("Can not find a plugin which is able to handle the document being passed.");
-        emit error(d->m_openError, -1);
+        Q_EMIT error(d->m_openError, -1);
         qCWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
@@ -2476,7 +2476,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
             // but we finally succeeded
             // TODO one can still see the error message animating out but since this is a very rare
             //      condition we can leave this for future work
-            emit error(QString(), -1);
+            Q_EMIT error(QString(), -1);
         }
     }
     if (openResult != OpenSuccess) {
@@ -2607,7 +2607,7 @@ void Document::closeDocument()
         return;
     }
 
-    emit aboutToClose();
+    Q_EMIT aboutToClose();
 
     delete d->m_pageController;
     d->m_pageController = nullptr;
@@ -2943,10 +2943,10 @@ void Document::startFontReading()
         // this way the API is the same, and users no need to care about the
         // internal caching
         for (int i = 0; i < d->m_fontsCache.count(); ++i) {
-            emit gotFont(d->m_fontsCache.at(i));
-            emit fontReadingProgress(i / pages());
+            Q_EMIT gotFont(d->m_fontsCache.at(i));
+            Q_EMIT fontReadingProgress(i / pages());
         }
-        emit fontReadingEnded();
+        Q_EMIT fontReadingEnded();
         return;
     }
 
@@ -3797,7 +3797,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
 
     // safety checks: don't perform searches on empty or unsearchable docs
     if (!d->m_generator || !d->m_generator->hasFeature(Generator::TextExtraction) || d->m_pagesVector.isEmpty()) {
-        emit searchFinished(searchID, NoMatchFound);
+        Q_EMIT searchFinished(searchID, NoMatchFound);
         return;
     }
 
@@ -3893,7 +3893,7 @@ void Document::continueSearch(int searchID)
     // check if searchID is present in runningSearches
     QMap<int, RunningSearch *>::const_iterator it = d->m_searches.constFind(searchID);
     if (it == d->m_searches.constEnd()) {
-        emit searchFinished(searchID, NoMatchFound);
+        Q_EMIT searchFinished(searchID, NoMatchFound);
         return;
     }
 
@@ -3909,7 +3909,7 @@ void Document::continueSearch(int searchID, SearchType type)
     // check if searchID is present in runningSearches
     QMap<int, RunningSearch *>::const_iterator it = d->m_searches.constFind(searchID);
     if (it == d->m_searches.constEnd()) {
-        emit searchFinished(searchID, NoMatchFound);
+        Q_EMIT searchFinished(searchID, NoMatchFound);
         return;
     }
 
@@ -4146,13 +4146,13 @@ void Document::processAction(const Action *action)
                 if (KRun::isExecutableFile(url, mime.name())) {
                     // this case is a link pointing to an executable with a parameter
                     // that also is an executable, possibly a hand-crafted pdf
-                    emit error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
+                    Q_EMIT error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
                     break;
                 }
             } else {
                 // this case is a link pointing to an executable with no parameters
                 // core developers find unacceptable executing it even after asking the user
-                emit error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
+                Q_EMIT error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
                 break;
             }
         }
@@ -4163,7 +4163,7 @@ void Document::processAction(const Action *action)
             lst.append(url);
             KRun::runService(*ptr, lst, nullptr);
         } else {
-            emit error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
+            Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
         }
     } break;
 
@@ -4193,28 +4193,28 @@ void Document::processAction(const Action *action)
             setNextViewport();
             break;
         case DocumentAction::Quit:
-            emit quit();
+            Q_EMIT quit();
             break;
         case DocumentAction::Presentation:
-            emit linkPresentation();
+            Q_EMIT linkPresentation();
             break;
         case DocumentAction::EndPresentation:
-            emit linkEndPresentation();
+            Q_EMIT linkEndPresentation();
             break;
         case DocumentAction::Find:
-            emit linkFind();
+            Q_EMIT linkFind();
             break;
         case DocumentAction::GoToPage:
-            emit linkGoToPage();
+            Q_EMIT linkGoToPage();
             break;
         case DocumentAction::Close:
-            emit close();
+            Q_EMIT close();
             break;
         case DocumentAction::Print:
-            emit requestPrint();
+            Q_EMIT requestPrint();
             break;
         case DocumentAction::SaveAs:
-            emit requestSaveAs();
+            Q_EMIT requestSaveAs();
             break;
         }
     } break;
@@ -4262,7 +4262,7 @@ void Document::processAction(const Action *action)
     } break;
 
     case Action::Movie:
-        emit processMovieAction(static_cast<const MovieAction *>(action));
+        Q_EMIT processMovieAction(static_cast<const MovieAction *>(action));
         break;
     case Action::Rendition: {
         const RenditionAction *linkrendition = static_cast<const RenditionAction *>(action);
@@ -4273,7 +4273,7 @@ void Document::processAction(const Action *action)
             d->m_scripter->execute(linkrendition->scriptType(), linkrendition->script());
         }
 
-        emit processRenditionAction(static_cast<const RenditionAction *>(action));
+        Q_EMIT processRenditionAction(static_cast<const RenditionAction *>(action));
     } break;
     case Action::BackendOpaque: {
         d->m_generator->opaqueAction(static_cast<const BackendOpaqueAction *>(action));
@@ -4317,7 +4317,7 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
         // It will set the QLineEdit to this formattedText
         fft->setText(formattedText);
         fft->setAppearanceText(formattedText);
-        emit refreshFormWidget(fft);
+        Q_EMIT refreshFormWidget(fft);
         d->refreshPixmaps(foundPage);
         // Then we make the form have the unformatted text, to use
         // in calculations and other things.
@@ -4327,7 +4327,7 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
         // if the format script changed nothing. e.g. on error.
         // This is because the recalculateForms function delegated
         // the responsiblity for the refresh to us.
-        emit refreshFormWidget(fft);
+        Q_EMIT refreshFormWidget(fft);
         d->refreshPixmaps(foundPage);
     }
 }
@@ -4355,7 +4355,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     if (event->returnCode()) {
         fft->setText(newValue.toString());
     } else {
-        emit refreshFormWidget(fft);
+        Q_EMIT refreshFormWidget(fft);
     }
 }
 
@@ -4450,7 +4450,7 @@ void Document::processSourceReference(const SourceReference *ref)
     }
 
     bool handled = false;
-    emit sourceReferenceActivated(absFileName, ref->row(), ref->column(), &handled);
+    Q_EMIT sourceReferenceActivated(absFileName, ref->row(), ref->column(), &handled);
     if (handled) {
         return;
     }
@@ -5245,7 +5245,7 @@ QByteArray Document::requestSignedRevisionData(const Okular::SignatureInfo &info
 {
     QFile f(d->m_docFileName);
     if (!f.open(QIODevice::ReadOnly)) {
-        emit error(i18n("Could not open '%1'. File does not exist", d->m_docFileName), -1);
+        Q_EMIT error(i18n("Could not open '%1'. File does not exist", d->m_docFileName), -1);
         return {};
     }
 

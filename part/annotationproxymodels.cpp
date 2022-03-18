@@ -261,7 +261,7 @@ void PageGroupProxyModel::rebuildIndexes()
 
 void PageGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
-    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
+    Q_EMIT dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
 
 void PageGroupProxyModel::groupByPage(bool value)
@@ -662,7 +662,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
 
 void AuthorGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
-    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
+    Q_EMIT dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
 
 #include "moc_annotationproxymodels.cpp"

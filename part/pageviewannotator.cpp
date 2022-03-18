@@ -1036,7 +1036,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                 if (!newFilePath.isEmpty()) {
                     const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
                     if (success) {
-                        emit requestOpenFile(newFilePath, m_lockedItem->pageNumber() + 1);
+                        Q_EMIT requestOpenFile(newFilePath, m_lockedItem->pageNumber() + 1);
                     } else {
                         KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
                     }
@@ -1198,7 +1198,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
     if (toolId == -1) {
         m_pageView->displayMessage(QString());
         m_pageView->updateCursor();
-        emit toolActive(false);
+        Q_EMIT toolActive(false);
         return;
     }
 
@@ -1269,7 +1269,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
         m_pageView->updateCursor();
     }
 
-    emit toolActive(true);
+    Q_EMIT toolActive(true);
 }
 
 void PageViewAnnotator::selectLastTool()

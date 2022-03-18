@@ -32,7 +32,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     QTextFrame *rootFrame = textDocument->rootFrame();
     rootFrame->setFrameFormat(frameFormat);
 
-    emit addMetaData(Okular::DocumentInfo::MimeType, QStringLiteral("text/plain"));
+    Q_EMIT addMetaData(Okular::DocumentInfo::MimeType, QStringLiteral("text/plain"));
 
     return textDocument;
 }

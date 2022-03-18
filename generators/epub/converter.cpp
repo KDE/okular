@@ -48,7 +48,7 @@ QString _strPack(char **str, int size)
     return res;
 }
 
-// emit data wrap function that map between epub metadata to okular's
+// Q_EMIT data wrap function that map between epub metadata to okular's
 void Converter::_emitData(Okular::DocumentInfo::Key key, enum epub_metadata type)
 {
     int size;
@@ -57,7 +57,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key, enum epub_metadata type
     data = epub_get_metadata(mTextDocument->getEpub(), type, &size);
 
     if (data) {
-        emit addMetaData(key, _strPack((char **)data, size));
+        Q_EMIT addMetaData(key, _strPack((char **)data, size));
         for (int i = 0; i < size; i++) {
             free(data[i]);
         }
@@ -107,7 +107,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name)
                     } else { // Outside document link
                         Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(href.toString()));
 
-                        emit addAction(action, frag.position(), frag.position() + frag.length());
+                        Q_EMIT addAction(action, frag.position(), frag.position() + frag.length());
                     }
                 }
 
@@ -160,7 +160,7 @@ QTextDocument *Converter::convert(const QString &fileName)
 {
     EpubDocument *newDocument = new EpubDocument(fileName, generator()->generalSettings()->font());
     if (!newDocument->isValid()) {
-        emit error(i18n("Error while opening the EPub document."), -1);
+        Q_EMIT error(i18n("Error while opening the EPub document."), -1);
         delete newDocument;
         return nullptr;
     }
@@ -182,7 +182,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     _emitData(Okular::DocumentInfo::CreationDate, EPUB_DATE);
     _emitData(Okular::DocumentInfo::Category, EPUB_TYPE);
     _emitData(Okular::DocumentInfo::Copyright, EPUB_RIGHTS);
-    emit addMetaData(Okular::DocumentInfo::MimeType, QStringLiteral("application/epub+zip"));
+    Q_EMIT addMetaData(Okular::DocumentInfo::MimeType, QStringLiteral("application/epub+zip"));
 
     struct eiterator *it;
 
@@ -325,7 +325,7 @@ QTextDocument *Converter::convert(const QString &fileName)
             const int posEnd = csr.position();
             const QRect videoRect(startPoint, videoSize);
             movieAnnots[index]->setBoundingRectangle(Okular::NormalizedRect(videoRect, mTextDocument->pageSize().width(), mTextDocument->pageSize().height()));
-            emit addAnnotation(movieAnnots[index++], posStart, posEnd);
+            Q_EMIT addAnnotation(movieAnnots[index++], posStart, posEnd);
             csr.movePosition(QTextCursor::NextWord);
         }
 
@@ -339,7 +339,7 @@ QTextDocument *Converter::convert(const QString &fileName)
             const int posEnd = csr.position();
             qDebug() << posStart << posEnd;
             ;
-            emit addAction(soundActions[index++], posStart, posEnd);
+            Q_EMIT addAction(soundActions[index++], posStart, posEnd);
             csr.movePosition(QTextCursor::NextWord);
         }
 
@@ -414,7 +414,7 @@ QTextDocument *Converter::convert(const QString &fileName)
                 }
 
                 if (block.isValid()) { // be sure we actually got a block
-                    emit addTitle(epub_tit_get_curr_depth(tit), QString::fromUtf8(label), block);
+                    Q_EMIT addTitle(epub_tit_get_curr_depth(tit), QString::fromUtf8(label), block);
                 } else {
                     qDebug() << "Error: no block found for" << link;
                 }
@@ -446,7 +446,7 @@ QTextDocument *Converter::convert(const QString &fileName)
 
                 Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
 
-                emit addAction(action, hit.value()[i].first, hit.value()[i].second);
+                Q_EMIT addAction(action, hit.value()[i].first, hit.value()[i].second);
             } else {
                 qDebug() << "Error: no block found for " << hit.key();
             }

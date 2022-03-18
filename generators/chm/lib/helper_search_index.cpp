@@ -108,11 +108,11 @@ bool Index::makeIndex(const QList<QUrl> &docs, EBook *chmFile)
         if (i % steps == 0) {
             prog++;
             prog = qMin(prog, 99);
-            emit indexingProgress(prog, tr("Processing document %1").arg((*it).path()));
+            Q_EMIT indexingProgress(prog, tr("Processing document %1").arg((*it).path()));
         }
     }
 
-    emit indexingProgress(100, tr("Processing completed"));
+    Q_EMIT indexingProgress(100, tr("Processing completed"));
     return true;
 }
 

@@ -117,7 +117,7 @@ void GSRendererThread::run()
                 delete image;
                 image = new QImage(aux);
             }
-            emit imageDone(image, req.request);
+            Q_EMIT imageDone(image, req.request);
 
             spectre_page_free(req.spectrePage);
         }

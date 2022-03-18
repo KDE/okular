@@ -2077,7 +2077,7 @@ void PDFGenerator::xrefReconstructionHandler()
     if (!xrefReconstructed) {
         qCDebug(OkularPdfDebug) << "XRef Table of the document has been reconstructed";
         xrefReconstructed = true;
-        emit warning(i18n("Some errors were found in the document, Okular might not be able to show the content correctly"), 5000);
+        Q_EMIT warning(i18n("Some errors were found in the document, Okular might not be able to show the content correctly"), 5000);
     }
 }
 

@@ -67,7 +67,7 @@ bool pageSize::setPageSize(const QString &name)
             // Set page width/height accordingly
             pageWidth.setLength_in_mm(staticList[currentSize].width);
             pageHeight.setLength_in_mm(staticList[currentSize].height);
-            emit sizeChanged(*this);
+            Q_EMIT sizeChanged(*this);
             return true;
         }
     }
@@ -85,7 +85,7 @@ bool pageSize::setPageSize(const QString &name)
 
             rectifySizes();
             reconstructCurrentSize();
-            emit sizeChanged(*this);
+            Q_EMIT sizeChanged(*this);
             return true;
         }
     }
@@ -103,7 +103,7 @@ bool pageSize::setPageSize(const QString &name)
 
             rectifySizes();
             reconstructCurrentSize();
-            emit sizeChanged(*this);
+            Q_EMIT sizeChanged(*this);
             return true;
         }
     }
@@ -114,7 +114,7 @@ bool pageSize::setPageSize(const QString &name)
     pageWidth.setLength_in_mm(staticList[currentSize].width);
     pageHeight.setLength_in_mm(staticList[currentSize].height);
     qCCritical(OkularDviShellDebug) << "pageSize::setPageSize: could not parse '" << name << "'. Using " << staticList[currentSize].name << " as a default." << endl;
-    emit sizeChanged(*this);
+    Q_EMIT sizeChanged(*this);
     return false;
 }
 
@@ -128,7 +128,7 @@ void pageSize::setPageSize(double width, double height)
     rectifySizes();
     reconstructCurrentSize();
     if (!isNearlyEqual(oldPage)) {
-        emit sizeChanged(*this);
+        Q_EMIT sizeChanged(*this);
     }
 }
 
@@ -168,7 +168,7 @@ void pageSize::setPageSize(const QString &width, const QString &_widthUnits, con
     rectifySizes();
     reconstructCurrentSize();
     if (!isNearlyEqual(oldPage)) {
-        emit sizeChanged(*this);
+        Q_EMIT sizeChanged(*this);
     }
 }
 
@@ -287,7 +287,7 @@ void pageSize::setOrientation(int orient)
         pageWidth.setLength_in_mm(staticList[currentSize].width);
         pageHeight.setLength_in_mm(staticList[currentSize].height);
     }
-    emit sizeChanged(*this);
+    Q_EMIT sizeChanged(*this);
 }
 
 QString pageSize::serialize() const

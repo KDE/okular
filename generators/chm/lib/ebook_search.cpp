@@ -85,7 +85,7 @@ bool EBookSearch::generateIndex(EBook *ebookFile, QDataStream &stream)
     QList<QUrl> documents;
     QList<QUrl> alldocuments;
 
-    emit progressStep(0, QStringLiteral("Generating the list of documents"));
+    Q_EMIT progressStep(0, QStringLiteral("Generating the list of documents"));
     processEvents();
 
     // Enumerate the documents
@@ -128,7 +128,7 @@ void EBookSearch::cancelIndexGeneration()
 
 void EBookSearch::updateProgress(int value, const QString &stepName)
 {
-    emit progressStep(value, stepName);
+    Q_EMIT progressStep(value, stepName);
 }
 
 void EBookSearch::processEvents()

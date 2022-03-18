@@ -1137,7 +1137,7 @@ void Part::setModified(bool modified)
 
 void Part::slotHandleActivatedSourceReference(const QString &absFileName, int line, int col, bool *handled)
 {
-    emit openSourceReference(absFileName, line, col);
+    Q_EMIT openSourceReference(absFileName, line, col);
     if (m_embedMode == Okular::ViewerWidgetMode) {
         *handled = true;
     }
@@ -1163,8 +1163,8 @@ void Part::openUrlFromDocument(const QUrl &url)
         }
     }
 
-    emit m_bExtension->openUrlNotify();
-    emit m_bExtension->setLocationBarUrl(url.toDisplayString());
+    Q_EMIT m_bExtension->openUrlNotify();
+    Q_EMIT m_bExtension->setLocationBarUrl(url.toDisplayString());
     openUrl(url);
 }
 
@@ -1196,7 +1196,7 @@ void Part::handleDroppedUrls(const QList<QUrl> &urls)
         return;
     }
 
-    emit urlsDropped(urls);
+    Q_EMIT urlsDropped(urls);
 }
 
 void Part::slotJobStarted(KIO::Job *job)
@@ -1218,7 +1218,7 @@ void Part::slotJobFinished(KJob *job)
 
 void Part::loadCancelled(const QString &reason)
 {
-    emit setWindowCaption(QString());
+    Q_EMIT setWindowCaption(QString());
     resetStartArguments();
 
     // when m_viewportDirty.pageNumber != -1 we come from slotAttemptReload
@@ -1246,7 +1246,7 @@ void Part::setWindowTitleFromDocument()
         }
     }
 
-    emit setWindowCaption(title);
+    Q_EMIT setWindowCaption(title);
 }
 
 KConfigDialog *Part::slotGeneratorPreferences()
@@ -1583,11 +1583,11 @@ bool Part::openFile()
     }
 
     bool canSearch = m_document->supportsSearching();
-    emit mimeTypeChanged(mime);
+    Q_EMIT mimeTypeChanged(mime);
 
     // update one-time actions
     const bool ok = openResult == Document::OpenSuccess;
-    emit enableCloseAction(ok);
+    Q_EMIT enableCloseAction(ok);
     m_find->setEnabled(ok && canSearch);
     m_findNext->setEnabled(ok && canSearch);
     m_findPrev->setEnabled(ok && canSearch);
@@ -1597,7 +1597,7 @@ bool Part::openFile()
     if (m_saveAs) {
         m_saveAs->setEnabled(ok && !(isstdin || mime.inherits(QStringLiteral("inode/directory"))));
     }
-    emit enablePrintAction(ok && m_document->printingSupport() != Okular::Document::NoPrinting);
+    Q_EMIT enablePrintAction(ok && m_document->printingSupport() != Okular::Document::NoPrinting);
     m_printPreview->setEnabled(ok && m_document->printingSupport() != Okular::Document::NoPrinting);
     m_showProperties->setEnabled(ok);
     if (m_openContainingFolder) {
@@ -1900,7 +1900,7 @@ bool Part::closeUrl(bool promptToSave)
     }
 
     slotHidePresentation();
-    emit enableCloseAction(false);
+    Q_EMIT enableCloseAction(false);
     m_find->setEnabled(false);
     m_findNext->setEnabled(false);
     m_findPrev->setEnabled(false);
@@ -1940,8 +1940,8 @@ bool Part::closeUrl(bool promptToSave)
     if (m_showPresentation) {
         m_showPresentation->setEnabled(false);
     }
-    emit setWindowCaption(QLatin1String(""));
-    emit enablePrintAction(false);
+    Q_EMIT setWindowCaption(QLatin1String(""));
+    Q_EMIT enablePrintAction(false);
     m_realUrl = QUrl();
     if (url().isLocalFile()) {
         unsetFileToWatch();
@@ -2134,7 +2134,7 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
         if (m_wasPresentationOpen) {
             slotShowPresentation();
         }
-        emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
+        Q_EMIT enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
 
         reloadSucceeded = true;
     } else if (!oneShot) {
@@ -2235,7 +2235,7 @@ void Part::updateViewActions()
             menu->setEnabled(opened);
         }
     }
-    emit viewerMenuStateChange(opened);
+    Q_EMIT viewerMenuStateChange(opened);
 
     updateBookmarksActions();
 }
@@ -3499,7 +3499,7 @@ void Part::slotPrint()
             printer.setFullPage(optionWidget->ignorePrintMargins());
         } else {
             // printConfigurationWidget() method should always return an object of type Okular::PrintOptionsWidget,
-            // (signature does not (yet) require it for ABI stability reasons), so emit a warning if the object is of another type
+            // (signature does not (yet) require it for ABI stability reasons), so Q_EMIT a warning if the object is of another type
             qWarning() << "printConfigurationWidget() method did not return an Okular::PrintOptionsWidget. This is strongly discouraged!";
         }
 

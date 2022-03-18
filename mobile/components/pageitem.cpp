@@ -74,7 +74,7 @@ void PageItem::setFlickable(QQuickItem *flickable)
         connect(flickable, SIGNAL(contentYChanged()), this, SLOT(contentYChanged())); // clazy:exclude=old-style-connect
     }
 
-    emit flickableChanged();
+    Q_EMIT flickableChanged();
 }
 
 QQuickItem *PageItem::flickable() const
@@ -100,7 +100,7 @@ void PageItem::setDocument(DocumentItem *doc)
     connect(observer, &Observer::pageChanged, this, &PageItem::pageHasChanged);
     connect(doc->document()->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &PageItem::checkBookmarksChanged);
     setPageNumber(0);
-    emit documentChanged();
+    Q_EMIT documentChanged();
     m_redrawTimer->start();
 
     connect(doc, &DocumentItem::urlChanged, this, &PageItem::refreshPage);
@@ -119,7 +119,7 @@ void PageItem::setPageNumber(int number)
 
     m_viewPort.pageNumber = number;
     refreshPage();
-    emit pageNumberChanged();
+    Q_EMIT pageNumberChanged();
     checkBookmarksChanged();
 }
 
@@ -131,8 +131,8 @@ void PageItem::refreshPage()
         m_page = nullptr;
     }
 
-    emit implicitWidthChanged();
-    emit implicitHeightChanged();
+    Q_EMIT implicitWidthChanged();
+    Q_EMIT implicitHeightChanged();
 
     m_redrawTimer->start();
 }
@@ -174,7 +174,7 @@ void PageItem::setBookmarked(bool bookmarked)
         m_documentItem.data()->document()->bookmarkManager()->removeBookmark(m_viewPort.pageNumber);
     }
     m_bookmarked = bookmarked;
-    emit bookmarkedChanged();
+    Q_EMIT bookmarkedChanged();
 }
 
 QStringList PageItem::bookmarks() const
@@ -222,10 +222,10 @@ void PageItem::setBookmarkAtPos(qreal x, qreal y)
 
     if (!m_bookmarked) {
         m_bookmarked = true;
-        emit bookmarkedChanged();
+        Q_EMIT bookmarkedChanged();
     }
 
-    emit bookmarksChanged();
+    Q_EMIT bookmarksChanged();
 }
 
 void PageItem::removeBookmarkAtPos(qreal x, qreal y)
@@ -239,16 +239,16 @@ void PageItem::removeBookmarkAtPos(qreal x, qreal y)
 
     if (m_bookmarked && m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber).count() == 0) {
         m_bookmarked = false;
-        emit bookmarkedChanged();
+        Q_EMIT bookmarkedChanged();
     }
 
-    emit bookmarksChanged();
+    Q_EMIT bookmarksChanged();
 }
 
 void PageItem::removeBookmark(const QString &bookmark)
 {
     m_documentItem.data()->document()->bookmarkManager()->removeBookmark(Okular::DocumentViewport(bookmark));
-    emit bookmarksChanged();
+    Q_EMIT bookmarksChanged();
 }
 
 // Reimplemented
@@ -268,8 +268,8 @@ void PageItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeome
 
     if (changed) {
         // Why aren't they automatically emitted?
-        emit widthChanged();
-        emit heightChanged();
+        Q_EMIT widthChanged();
+        Q_EMIT heightChanged();
     }
 }
 
@@ -364,11 +364,11 @@ void PageItem::checkBookmarksChanged()
     bool newBookmarked = m_documentItem.data()->document()->bookmarkManager()->isBookmarked(m_viewPort.pageNumber);
     if (m_bookmarked != newBookmarked) {
         m_bookmarked = newBookmarked;
-        emit bookmarkedChanged();
+        Q_EMIT bookmarkedChanged();
     }
 
     // TODO: check the page
-    emit bookmarksChanged();
+    Q_EMIT bookmarksChanged();
 }
 
 void PageItem::contentXChanged()

@@ -238,7 +238,7 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
     // FIXME: for now, update ALL the annotations for that page
     for (int i = 0; i < annItem->children.count(); ++i) {
         QModelIndex index = indexForItem(annItem->children.at(i));
-        emit q->dataChanged(index, index);
+        Q_EMIT q->dataChanged(index, index);
     }
 }
 
@@ -259,7 +259,7 @@ void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
         return;
     }
 
-    emit q->layoutAboutToBeChanged();
+    Q_EMIT q->layoutAboutToBeChanged();
     for (int i = 0; i < pages.count(); ++i) {
         const QLinkedList<Okular::Annotation *> annots = filterOutWidgetAnnotations(pages.at(i)->annotations());
         if (annots.isEmpty()) {
@@ -272,7 +272,7 @@ void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
             new AnnItem(annItem, *it);
         }
     }
-    emit q->layoutChanged();
+    Q_EMIT q->layoutChanged();
 }
 
 AnnItem *AnnotationModelPrivate::findItem(int page, int *index) const

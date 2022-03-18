@@ -52,7 +52,7 @@ bool KIMGIOGenerator::loadDocument(const QString &fileName, QVector<Okular::Page
 {
     QFile f(fileName);
     if (!f.open(QFile::ReadOnly)) {
-        emit error(i18n("Unable to load document: %1", f.errorString()), -1);
+        Q_EMIT error(i18n("Unable to load document: %1", f.errorString()), -1);
         return false;
     }
     return loadDocumentInternal(f.readAll(), fileName, pagesVector);
@@ -73,9 +73,9 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QSt
     reader.setAutoDetectImageFormat(true);
     if (!reader.read(&m_img)) {
         if (!m_img.isNull()) {
-            emit warning(i18n("This document appears malformed. Here is a best approximation of the document's intended appearance."), -1);
+            Q_EMIT warning(i18n("This document appears malformed. Here is a best approximation of the document's intended appearance."), -1);
         } else {
-            emit error(i18n("Unable to load document: %1", reader.errorString()), -1);
+            Q_EMIT error(i18n("Unable to load document: %1", reader.errorString()), -1);
             return false;
         }
     }

@@ -148,7 +148,7 @@ void PixmapPreviewSelector::iconComboChanged(const QString &icon)
     }
     m_iconLabel->setPixmap(pixmap);
 
-    emit iconChanged(m_icon);
+    Q_EMIT iconChanged(m_icon);
 }
 
 void PixmapPreviewSelector::selectCustomStamp()

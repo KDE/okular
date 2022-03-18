@@ -228,9 +228,9 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
     lowerlay->addWidget(sb);
 
     m_latexRenderer = new GuiUtils::LatexRenderer();
-    // The emit below is not wrong even if emitting signals from the constructor it's usually wrong
+    // The Q_EMIT below is not wrong even if emitting signals from the constructor it's usually wrong
     // in this case the signal it's connected to inside MovableTitle constructor a few lines above
-    emit containsLatex(GuiUtils::LatexRenderer::mightContainLatex(m_annot->contents())); // clazy:exclude=incorrect-emit
+    Q_EMIT containsLatex(GuiUtils::LatexRenderer::mightContainLatex(m_annot->contents())); // clazy:exclude=incorrect-emit
 
     m_title->setTitle(m_annot->window().summary());
     m_title->connectOptionButton(this, SLOT(slotOptionBtn()));
@@ -347,7 +347,7 @@ void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu *menu)
 void AnnotWindow::slotOptionBtn()
 {
     // TODO: call context menu in pageview
-    // emit sig...
+    // Q_EMIT sig...
 }
 
 void AnnotWindow::slotsaveWindowText()
@@ -356,7 +356,7 @@ void AnnotWindow::slotsaveWindowText()
     const int cursorPos = textEdit->textCursor().position();
     if (contents != m_annot->contents()) {
         m_document->editPageAnnotationContents(m_page, m_annot, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
-        emit containsLatex(GuiUtils::LatexRenderer::mightContainLatex(textEdit->toPlainText()));
+        Q_EMIT containsLatex(GuiUtils::LatexRenderer::mightContainLatex(textEdit->toPlainText()));
     }
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = textEdit->textCursor().anchor();
@@ -424,7 +424,7 @@ void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation *annot,
     m_prevAnchorPos = anchorPos;
     textEdit->setTextCursor(c);
     textEdit->setFocus();
-    emit containsLatex(GuiUtils::LatexRenderer::mightContainLatex(m_annot->contents()));
+    Q_EMIT containsLatex(GuiUtils::LatexRenderer::mightContainLatex(m_annot->contents()));
 }
 
 #include "annotwindow.moc"

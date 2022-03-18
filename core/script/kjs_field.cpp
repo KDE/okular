@@ -42,7 +42,7 @@ static void updateField(FormField *field)
         Document *doc = PagePrivate::get(page)->m_doc->m_parent;
         const int pageNumber = page->number();
         QTimer::singleShot(0, doc, [doc, pageNumber] { doc->refreshPixmaps(pageNumber); });
-        emit doc->refreshFormWidget(field);
+        Q_EMIT doc->refreshFormWidget(field);
     } else {
         qWarning() << "Could not get page of field" << field;
     }

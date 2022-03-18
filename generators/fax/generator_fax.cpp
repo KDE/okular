@@ -39,7 +39,7 @@ bool FaxGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *>
     FaxDocument faxDocument(fileName, m_type);
 
     if (!faxDocument.load()) {
-        emit error(i18n("Unable to load document"), -1);
+        Q_EMIT error(i18n("Unable to load document"), -1);
         return false;
     }
 

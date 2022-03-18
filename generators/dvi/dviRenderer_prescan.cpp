@@ -457,7 +457,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString &cp)
         QString convErrorMsg;
         EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
         if (convErrorMsg.isEmpty() != true) {
-            emit error(convErrorMsg, -1);
+            Q_EMIT error(convErrorMsg, -1);
             return;
         }
     }

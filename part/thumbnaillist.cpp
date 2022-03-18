@@ -943,7 +943,7 @@ void ThumbnailListPrivate::contextMenuEvent(QContextMenuEvent *e)
 {
     const ThumbnailWidget *item = itemFor(e->pos());
     if (item) {
-        emit q->rightClick(item->page(), e->globalPos());
+        Q_EMIT q->rightClick(item->page(), e->globalPos());
     }
 }
 

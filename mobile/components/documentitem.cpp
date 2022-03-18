@@ -73,22 +73,22 @@ void DocumentItem::setUrl(const QUrl &url)
     for (uint i = 0; i < m_document->pages(); ++i) {
         m_matchingPages << (int)i;
     }
-    emit matchingPagesChanged();
-    emit urlChanged();
-    emit pageCountChanged();
-    emit openedChanged();
-    emit supportsSearchingChanged();
-    emit windowTitleForDocumentChanged();
-    emit bookmarkedPagesChanged();
+    Q_EMIT matchingPagesChanged();
+    Q_EMIT urlChanged();
+    Q_EMIT pageCountChanged();
+    Q_EMIT openedChanged();
+    Q_EMIT supportsSearchingChanged();
+    Q_EMIT windowTitleForDocumentChanged();
+    Q_EMIT bookmarkedPagesChanged();
 
     KMessageWidget::MessageType messageType;
     QString message;
     std::tie(messageType, message) = SignatureGuiUtils::documentSignatureMessageWidgetText(m_document);
     if (!message.isEmpty()) {
         if (messageType == KMessageWidget::Information) {
-            emit notice(message, -1);
+            Q_EMIT notice(message, -1);
         } else if (messageType == KMessageWidget::Warning) {
-            emit warning(message, -1);
+            Q_EMIT warning(message, -1);
         } else {
             qWarning() << "Unexpected message type" << messageType;
         }
@@ -121,7 +121,7 @@ void DocumentItem::setCurrentPage(int page)
 {
     m_document->setViewportPage(page);
     m_tocModel->setCurrentViewport(m_document->viewport());
-    emit currentPageChanged();
+    Q_EMIT currentPageChanged();
 }
 
 int DocumentItem::currentPage() const
@@ -205,7 +205,7 @@ void DocumentItem::searchText(const QString &text)
 
     if (!m_searchInProgress) {
         m_searchInProgress = true;
-        emit searchInProgressChanged();
+        Q_EMIT searchInProgressChanged();
     }
 }
 
@@ -218,10 +218,10 @@ void DocumentItem::resetSearch()
     }
     if (m_searchInProgress) {
         m_searchInProgress = false;
-        emit searchInProgressChanged();
+        Q_EMIT searchInProgressChanged();
     }
 
-    emit matchingPagesChanged();
+    Q_EMIT matchingPagesChanged();
 }
 
 Okular::Document *DocumentItem::document()
@@ -264,9 +264,9 @@ void DocumentItem::searchFinished(int id, Okular::Document::SearchStatus endStat
 
     if (m_searchInProgress) {
         m_searchInProgress = false;
-        emit searchInProgressChanged();
+        Q_EMIT searchInProgressChanged();
     }
-    emit matchingPagesChanged();
+    Q_EMIT matchingPagesChanged();
 }
 
 // Observer
@@ -284,5 +284,5 @@ Observer::~Observer()
 
 void Observer::notifyPageChanged(int page, int flags)
 {
-    emit pageChanged(page, flags);
+    Q_EMIT pageChanged(page, flags);
 }

@@ -59,7 +59,7 @@ QTextDocument *Converter::convert(const QString &fileName)
 {
     m_markdownFile = fopen(fileName.toLocal8Bit(), "rb");
     if (!m_markdownFile) {
-        emit error(i18n("Failed to open the document"), -1);
+        Q_EMIT error(i18n("Failed to open the document"), -1);
         return nullptr;
     }
 
@@ -75,7 +75,7 @@ QTextDocument *Converter::convert(const QString &fileName)
         if (anchorIt != documentAnchors.constEnd()) {
             const Okular::DocumentViewport viewport = calculateViewport(doc, anchorIt.value());
             Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
-            emit addAction(action, linkIt.value().position(), linkIt.value().position() + linkIt.value().length());
+            Q_EMIT addAction(action, linkIt.value().position(), linkIt.value().position() + linkIt.value().length());
         } else {
             qDebug() << "Could not find destination for" << linkIt.key();
         }
@@ -100,7 +100,7 @@ QTextDocument *Converter::convertOpenFile()
         flags |= MKD_NOPANTS;
     }
     if (!mkd_compile(markdownHandle, flags)) {
-        emit error(i18n("Failed to compile the Markdown document."), -1);
+        Q_EMIT error(i18n("Failed to compile the Markdown document."), -1);
         return nullptr;
     }
 
@@ -155,7 +155,7 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
                     internalLinks.insert(href.mid(1), textFragment);
                 } else {
                     Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(textCharFormat.anchorHref()));
-                    emit addAction(action, textFragment.position(), textFragment.position() + textFragment.length());
+                    Q_EMIT addAction(action, textFragment.position(), textFragment.position() + textFragment.length());
                 }
 
                 const QStringList anchorNames = textCharFormat.anchorNames();

@@ -137,7 +137,7 @@ void WidgetAnnotTools::slotEdit()
     m_list->setCurrentItem(listEntry);
     m_list->scrollToItem(listEntry);
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }
 
 void WidgetAnnotTools::slotAdd()
@@ -169,5 +169,5 @@ void WidgetAnnotTools::slotAdd()
     m_list->setCurrentItem(listEntry);
     m_list->scrollToItem(listEntry);
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }

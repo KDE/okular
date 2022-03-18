@@ -155,7 +155,7 @@ void WidgetDrawingTools::slotAdd()
     m_list->setCurrentItem(listEntry);
     m_list->scrollToItem(listEntry);
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }
 
 void WidgetDrawingTools::slotEdit()
@@ -199,5 +199,5 @@ void WidgetDrawingTools::slotEdit()
     m_list->setCurrentItem(listEntry);
     m_list->scrollToItem(listEntry);
     updateButtons();
-    emit changed();
+    Q_EMIT changed();
 }

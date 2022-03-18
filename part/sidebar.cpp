@@ -188,5 +188,5 @@ void Sidebar::dragEnterEvent(QDragEnterEvent *event)
 void Sidebar::dropEvent(QDropEvent *event)
 {
     const QList<QUrl> list = KUrlMimeData::urlsFromMimeData(event->mimeData());
-    emit urlsDropped(list);
+    Q_EMIT urlsDropped(list);
 }

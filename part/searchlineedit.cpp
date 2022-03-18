@@ -157,7 +157,7 @@ void SearchLineEdit::findNext()
     }
 
     if (!m_changed) {
-        emit searchStarted();
+        Q_EMIT searchStarted();
         m_searchRunning = true;
         m_document->continueSearch(m_id, m_searchType);
     } else {
@@ -172,7 +172,7 @@ void SearchLineEdit::findPrev()
     }
 
     if (!m_changed) {
-        emit searchStarted();
+        Q_EMIT searchStarted();
         m_searchRunning = true;
         m_document->continueSearch(m_id, m_searchType);
     } else {
@@ -237,7 +237,7 @@ void SearchLineEdit::startSearch()
     // search text if have more than 3 chars or else clear search
     QString thistext = text();
     if (thistext.length() >= qMax(m_minLength, 1)) {
-        emit searchStarted();
+        Q_EMIT searchStarted();
         m_searchRunning = true;
         m_document->searchText(m_id, thistext, m_fromStart, m_caseSensitivity, m_searchType, m_moveViewport, m_color);
     } else {
@@ -268,7 +268,7 @@ void SearchLineEdit::searchFinished(int id, Okular::Document::SearchStatus endSt
     }
 
     m_searchRunning = false;
-    emit searchStopped();
+    Q_EMIT searchStopped();
 }
 
 SearchLineWidget::SearchLineWidget(QWidget *parent, Okular::Document *document)

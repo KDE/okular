@@ -35,7 +35,7 @@ FormWidgetsController::FormWidgetsController(Okular::Document *doc)
     : QObject(doc)
     , m_doc(doc)
 {
-    // emit changed signal when a form has changed
+    // Q_EMIT changed signal when a form has changed
     connect(this, &FormWidgetsController::formTextChangedByUndoRedo, this, &FormWidgetsController::changed);
     connect(this, &FormWidgetsController::formListChangedByUndoRedo, this, &FormWidgetsController::changed);
     connect(this, &FormWidgetsController::formComboChangedByUndoRedo, this, &FormWidgetsController::changed);
@@ -70,14 +70,14 @@ FormWidgetsController::~FormWidgetsController()
 
 void FormWidgetsController::signalAction(Okular::Action *a)
 {
-    emit action(a);
+    Q_EMIT action(a);
 }
 
 void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type)
 {
     // If it's not a Action Script or if the field is not a FormText, handle it normally
     if (a->actionType() != Okular::Action::Script || field->type() != Okular::FormField::FormText) {
-        emit action(a);
+        Q_EMIT action(a);
         return;
     }
     switch (type) {
@@ -91,7 +91,7 @@ void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormF
     case Okular::Annotation::CursorLeaving:
     case Okular::Annotation::MousePressed:
     case Okular::Annotation::MouseReleased:
-        emit action(a);
+        Q_EMIT action(a);
     }
 }
 
@@ -195,7 +195,7 @@ void FormWidgetsController::slotButtonClicked(QAbstractButton *button)
         prevChecked.append(formButton->state());
     }
     if (checked != prevChecked) {
-        emit formButtonsChangedByWidget(pageNumber, formButtons, checked);
+        Q_EMIT formButtonsChangedByWidget(pageNumber, formButtons, checked);
     }
     if (check) {
         // The formButtonsChangedByWidget signal changes the value of the underlying
@@ -212,7 +212,7 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
         QAbstractButton *button = m_buttons[id];
         CheckBoxEdit *check = qobject_cast<CheckBoxEdit *>(button);
         if (check) {
-            emit refreshFormWidget(check->formField());
+            Q_EMIT refreshFormWidget(check->formField());
         }
         // temporarily disable exclusiveness of the button group
         // since it breaks doing/redoing steps into which all the checkboxes
@@ -224,7 +224,7 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
         button->group()->setExclusive(wasExclusive);
         button->setFocus();
     }
-    emit changed(pageNumber);
+    Q_EMIT changed(pageNumber);
 }
 
 Okular::Document *FormWidgetsController::document() const
@@ -485,10 +485,10 @@ bool FormLineEdit::event(QEvent *e)
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         if (keyEvent == QKeySequence::Undo) {
-            emit m_controller->requestUndo();
+            Q_EMIT m_controller->requestUndo();
             return true;
         } else if (keyEvent == QKeySequence::Redo) {
-            emit m_controller->requestRedo();
+            Q_EMIT m_controller->requestRedo();
             return true;
         }
     } else if (e->type() == QEvent::FocusIn) {
@@ -568,7 +568,7 @@ void FormLineEdit::slotChanged()
             m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, text());
         }
 
-        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, text(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, text(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
 
     m_prevCursorPos = cursorPos;
@@ -641,10 +641,10 @@ bool TextAreaEdit::event(QEvent *e)
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         if (keyEvent == QKeySequence::Undo) {
-            emit m_controller->requestUndo();
+            Q_EMIT m_controller->requestUndo();
             return true;
         } else if (keyEvent == QKeySequence::Redo) {
-            emit m_controller->requestRedo();
+            Q_EMIT m_controller->requestRedo();
             return true;
         }
     } else if (e->type() == QEvent::FocusIn) {
@@ -726,7 +726,7 @@ void TextAreaEdit::slotChanged()
             m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, toPlainText());
         }
 
-        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, toPlainText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, toPlainText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = textCursor().anchor();
@@ -772,10 +772,10 @@ bool FileEdit::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
             if (keyEvent == QKeySequence::Undo) {
-                emit m_controller->requestUndo();
+                Q_EMIT m_controller->requestUndo();
                 return true;
             } else if (keyEvent == QKeySequence::Redo) {
-                emit m_controller->requestRedo();
+                Q_EMIT m_controller->requestRedo();
                 return true;
             }
         } else if (event->type() == QEvent::ContextMenu) {
@@ -823,7 +823,7 @@ void FileEdit::slotChanged()
     QString contents = text();
     int cursorPos = lineEdit()->cursorPosition();
     if (contents != form->text()) {
-        emit m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
 
     m_prevCursorPos = cursorPos;
@@ -895,7 +895,7 @@ void ListEdit::slotSelectionChanged()
     }
     Okular::FormFieldChoice *form = static_cast<Okular::FormFieldChoice *>(m_ff);
     if (rows != form->currentChoices()) {
-        emit m_controller->formListChangedByWidget(pageItem()->pageNumber(), form, rows);
+        Q_EMIT m_controller->formListChangedByWidget(pageItem()->pageNumber(), form, rows);
     }
 }
 
@@ -964,7 +964,7 @@ void ComboEdit::slotValueChanged()
 
     int cursorPos = lineEdit()->cursorPosition();
     if (text != prevText) {
-        emit m_controller->formComboChangedByWidget(pageItem()->pageNumber(), form, currentText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        Q_EMIT m_controller->formComboChangedByWidget(pageItem()->pageNumber(), form, currentText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
     prevText = text;
     m_prevCursorPos = cursorPos;
@@ -1043,10 +1043,10 @@ bool ComboEdit::event(QEvent *e)
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         if (keyEvent == QKeySequence::Undo) {
-            emit m_controller->requestUndo();
+            Q_EMIT m_controller->requestUndo();
             return true;
         } else if (keyEvent == QKeySequence::Redo) {
-            emit m_controller->requestRedo();
+            Q_EMIT m_controller->requestRedo();
             return true;
         }
     }

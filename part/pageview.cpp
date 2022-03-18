@@ -2117,7 +2117,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
         }
         break;
     case Qt::Key_Escape:
-        emit escPressed();
+        Q_EMIT escPressed();
         selectionClear(d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection);
         d->mousePressPos = QPoint();
         if (d->aPrevAction) {
@@ -2378,11 +2378,11 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
     // trigger history navigation for additional mouse buttons
     if (e->button() == Qt::XButton1) {
-        emit mouseBackButtonClick();
+        Q_EMIT mouseBackButtonClick();
         return;
     }
     if (e->button() == Qt::XButton2) {
-        emit mouseForwardButtonClick();
+        Q_EMIT mouseForwardButtonClick();
         return;
     }
 
@@ -2558,7 +2558,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
     if (d->items.isEmpty()) {
         // ..except for right Clicks (emitted even it viewport is empty)
         if (e->button() == Qt::RightButton) {
-            emit rightClick(nullptr, e->globalPos());
+            Q_EMIT rightClick(nullptr, e->globalPos());
         }
         return;
     }
@@ -2665,13 +2665,13 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     } else {
                         // right click (if not within 5 px of the press point, the mode
                         // had been already changed to 'Selection' instead of 'Normal')
-                        emit rightClick(pageItem->page(), e->globalPos());
+                        Q_EMIT rightClick(pageItem->page(), e->globalPos());
                     }
                 }
             } else {
                 // right click (if not within 5 px of the press point, the mode
                 // had been already changed to 'Selection' instead of 'Normal')
-                emit rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+                Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
             }
         }
     } break;
@@ -2779,7 +2779,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
             PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
-            emit rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
             break;
         }
 
@@ -2934,7 +2934,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
             PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
-            emit rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
             break;
         }
 
@@ -5454,7 +5454,7 @@ void PageView::slotFitWindowToPage()
     if (horizontalScrollBar()->isVisible()) {
         viewportSize.setHeight(viewportSize.height() + horizontalScrollBar()->height());
     }
-    emit fitWindowToPage(viewportSize, pageSize);
+    Q_EMIT fitWindowToPage(viewportSize, pageSize);
 }
 
 void PageView::slotSelectPage()

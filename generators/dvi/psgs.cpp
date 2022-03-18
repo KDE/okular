@@ -282,10 +282,10 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
                 gsDevice = knownDevices.begin();
                 if (knownDevices.isEmpty()) {
                     // TODO: show a requestor of some sort.
-                    emit error(i18n("The version of Ghostview that is installed on this computer does not contain "
-                                    "any of the Ghostview device drivers that are known to Okular. PostScript "
-                                    "support has therefore been turned off in Okular."),
-                               -1);
+                    Q_EMIT error(i18n("The version of Ghostview that is installed on this computer does not contain "
+                                      "any of the Ghostview device drivers that are known to Okular. PostScript "
+                                      "support has therefore been turned off in Okular."),
+                                 -1);
                 } else {
                     qCDebug(OkularDviDebug) << QStringLiteral("Okular will now try to use the '%1' device driver.").arg(*gsDevice);
                     gs_generate_graphics_file(page, filename, magnification);

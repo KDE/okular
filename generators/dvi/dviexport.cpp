@@ -91,7 +91,7 @@ void DVIExport::abort_process_impl()
 void DVIExport::finished_impl(int exit_code)
 {
     if (process_ && exit_code != 0) {
-        emit error(error_message_, -1);
+        Q_EMIT error(error_message_, -1);
     }
     // Remove this from the store of all export processes.
     parent_->m_eventLoop->exit(exit_code);
@@ -120,15 +120,15 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer &parent, const QString &output_name)
     }
 
     if (QStandardPaths::findExecutable(QStringLiteral("dvipdfm")).isEmpty()) {
-        emit error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
-                        "essential for the export function to work. You can, however, convert "
-                        "the DVI-file to PDF using the print function of Okular, but that will often "
-                        "produce documents which print okay, but are of inferior quality if viewed in "
-                        "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
-                        "TeX distribution which includes the <em>dvipdfm</em> program.</p>"
-                        "<p>Hint to the perplexed system administrator: Okular uses the PATH environment variable "
-                        "when looking for programs.</p></qt>"),
-                   -1);
+        Q_EMIT error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
+                          "essential for the export function to work. You can, however, convert "
+                          "the DVI-file to PDF using the print function of Okular, but that will often "
+                          "produce documents which print okay, but are of inferior quality if viewed in "
+                          "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
+                          "TeX distribution which includes the <em>dvipdfm</em> program.</p>"
+                          "<p>Hint to the perplexed system administrator: Okular uses the PATH environment variable "
+                          "when looking for programs.</p></qt>"),
+                     -1);
         return;
     }
 
@@ -165,19 +165,19 @@ DVIExportToPS::DVIExportToPS(dviRenderer &parent, const QString &output_name, co
     }
 
     if (dvi.numberOfExternalNONPSFiles != 0) {
-        emit error(i18n("<qt>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
-                        "<em>dvips</em> program that Okular uses internally to print or to export to PostScript. The functionality that "
-                        "you require is therefore unavailable in this version of Okular.</qt>"),
-                   -1);
+        Q_EMIT error(i18n("<qt>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
+                          "<em>dvips</em> program that Okular uses internally to print or to export to PostScript. The functionality that "
+                          "you require is therefore unavailable in this version of Okular.</qt>"),
+                     -1);
         return;
     }
 
     if (QStandardPaths::findExecutable(QStringLiteral("dvips")).isEmpty()) {
-        emit error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
-                        "That program is essential for the export function to work.</p>"
-                        "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "
-                        "variable when looking for programs.</p></qt>"),
-                   -1);
+        Q_EMIT error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+                          "That program is essential for the export function to work.</p>"
+                          "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "
+                          "variable when looking for programs.</p></qt>"),
+                     -1);
         return;
     }
 

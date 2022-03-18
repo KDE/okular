@@ -91,14 +91,14 @@ void OkularTTS::pauseResumeSpeech()
 void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
 {
     if (state == QTextToSpeech::Speaking) {
-        emit isSpeaking(true);
-        emit canPauseOrResume(true);
+        Q_EMIT isSpeaking(true);
+        Q_EMIT canPauseOrResume(true);
     } else {
-        emit isSpeaking(false);
+        Q_EMIT isSpeaking(false);
         if (state == QTextToSpeech::Paused) {
-            emit canPauseOrResume(true);
+            Q_EMIT canPauseOrResume(true);
         } else {
-            emit canPauseOrResume(false);
+            Q_EMIT canPauseOrResume(false);
         }
     }
 }

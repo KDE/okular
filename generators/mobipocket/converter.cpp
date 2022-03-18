@@ -34,19 +34,19 @@ void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString
         it.next();
         switch (it.key()) {
         case Mobipocket::Document::Title:
-            emit addMetaData(Okular::DocumentInfo::Title, it.value());
+            Q_EMIT addMetaData(Okular::DocumentInfo::Title, it.value());
             break;
         case Mobipocket::Document::Author:
-            emit addMetaData(Okular::DocumentInfo::Author, it.value());
+            Q_EMIT addMetaData(Okular::DocumentInfo::Author, it.value());
             break;
         case Mobipocket::Document::Description:
-            emit addMetaData(Okular::DocumentInfo::Description, it.value());
+            Q_EMIT addMetaData(Okular::DocumentInfo::Description, it.value());
             break;
         case Mobipocket::Document::Subject:
-            emit addMetaData(Okular::DocumentInfo::Subject, it.value());
+            Q_EMIT addMetaData(Okular::DocumentInfo::Subject, it.value());
             break;
         case Mobipocket::Document::Copyright:
-            emit addMetaData(Okular::DocumentInfo::Copyright, it.value());
+            Q_EMIT addMetaData(Okular::DocumentInfo::Copyright, it.value());
             break;
         }
     }
@@ -56,12 +56,12 @@ QTextDocument *Converter::convert(const QString &fileName)
 {
     MobiDocument *newDocument = new MobiDocument(fileName);
     if (!newDocument->mobi()->isValid()) {
-        emit error(i18n("Error while opening the Mobipocket document."), -1);
+        Q_EMIT error(i18n("Error while opening the Mobipocket document."), -1);
         delete newDocument;
         return nullptr;
     }
     if (newDocument->mobi()->hasDRM()) {
-        emit error(i18n("This book is protected by DRM and can be displayed only on designated device"), -1);
+        Q_EMIT error(i18n("This book is protected by DRM and can be displayed only on designated device"), -1);
         delete newDocument;
         return nullptr;
     }
@@ -105,13 +105,13 @@ QTextDocument *Converter::convert(const QString &fileName)
         QUrl u(it.key());
         // external or internal link
         if (!u.isRelative()) {
-            emit addAction(new Okular::BrowseAction(QUrl(it.key())), it.value().first, it.value().second);
+            Q_EMIT addAction(new Okular::BrowseAction(QUrl(it.key())), it.value().first, it.value().second);
         } else {
             // is there valid target?
             if (!targets.contains(it.key()) || !targets[it.key()].isValid()) {
                 continue;
             }
-            emit addAction(new Okular::GotoAction(QString(), calculateViewport(newDocument, targets[it.key()])), it.value().first, it.value().second);
+            Q_EMIT addAction(new Okular::GotoAction(QString(), calculateViewport(newDocument, targets[it.key()])), it.value().first, it.value().second);
         }
     }
 

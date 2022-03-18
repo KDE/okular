@@ -66,7 +66,7 @@ QTextDocument *Converter::convert(const QString &fileName)
 {
     Document fbDocument(fileName);
     if (!fbDocument.open()) {
-        emit error(fbDocument.lastErrorString(), -1);
+        Q_EMIT error(fbDocument.lastErrorString(), -1);
         return nullptr;
     }
 
@@ -95,7 +95,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     const QDomElement documentElement = document.documentElement();
 
     if (documentElement.tagName() != QLatin1String("FictionBook")) {
-        emit error(i18n("Document is not a valid FictionBook"), -1);
+        Q_EMIT error(i18n("Document is not a valid FictionBook"), -1);
         delete mCursor;
         return nullptr;
     }
@@ -190,25 +190,25 @@ QTextDocument *Converter::convert(const QString &fileName)
      */
     if (mTitleInfo) {
         if (!mTitleInfo->mTitle.isEmpty()) {
-            emit addMetaData(Okular::DocumentInfo::Title, mTitleInfo->mTitle);
+            Q_EMIT addMetaData(Okular::DocumentInfo::Title, mTitleInfo->mTitle);
         }
 
         if (!mTitleInfo->mAuthor.isEmpty()) {
-            emit addMetaData(Okular::DocumentInfo::Author, mTitleInfo->mAuthor);
+            Q_EMIT addMetaData(Okular::DocumentInfo::Author, mTitleInfo->mAuthor);
         }
 
         if (!mTitleInfo->mKeywords.isEmpty()) {
-            emit addMetaData(Okular::DocumentInfo::Keywords, mTitleInfo->mKeywords);
+            Q_EMIT addMetaData(Okular::DocumentInfo::Keywords, mTitleInfo->mKeywords);
         }
     }
 
     if (mDocumentInfo) {
         if (!mDocumentInfo->mProducer.isEmpty()) {
-            emit addMetaData(Okular::DocumentInfo::Producer, mDocumentInfo->mProducer);
+            Q_EMIT addMetaData(Okular::DocumentInfo::Producer, mDocumentInfo->mProducer);
         }
 
         if (mDocumentInfo->mDate.isValid()) {
-            emit addMetaData(Okular::DocumentInfo::CreationDate, QLocale().toString(mDocumentInfo->mDate, QLocale::ShortFormat));
+            Q_EMIT addMetaData(Okular::DocumentInfo::CreationDate, QLocale().toString(mDocumentInfo->mDate, QLocale::ShortFormat));
         }
     }
 
@@ -225,7 +225,7 @@ QTextDocument *Converter::convert(const QString &fileName)
 
         Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
 
-        emit addAction(action, it.value().first, it.value().second);
+        Q_EMIT addAction(action, it.value().first, it.value().second);
     }
 
     delete mCursor;
@@ -554,7 +554,7 @@ bool Converter::convertTitle(const QDomElement &element)
 
             mCursor->setCharFormat(origFormat);
 
-            emit addTitle(mSectionCounter, child.text(), mCursor->block());
+            Q_EMIT addTitle(mSectionCounter, child.text(), mCursor->block());
 
         } else if (child.tagName() == QLatin1String("empty-line")) {
             if (!convertEmptyLine(child)) {
@@ -936,7 +936,7 @@ bool Converter::convertLink(const QDomElement &element)
     } else {
         // external link
         Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(href));
-        emit addAction(action, startPosition, endPosition);
+        Q_EMIT addAction(action, startPosition, endPosition);
     }
 
     return true;

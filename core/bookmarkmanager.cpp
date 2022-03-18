@@ -199,7 +199,7 @@ bool BookmarkManager::Private::enableOption(BookmarkOption option) const
 
 void BookmarkManager::Private::openBookmark(const KBookmark &bm, Qt::MouseButtons, Qt::KeyboardModifiers)
 {
-    emit q->openUrl(bm.url());
+    Q_EMIT q->openUrl(bm.url());
 }
 // END Reimplementations from KBookmarkOwner
 
@@ -230,7 +230,7 @@ void BookmarkManager::Private::_o_changed(const QString &groupAddress, const QSt
         referurl = urlForGroup(bm);
     }
     Q_ASSERT(referurl.isValid());
-    emit q->bookmarksChanged(referurl);
+    Q_EMIT q->bookmarksChanged(referurl);
     // case for the url representing the current document
     // (this might happen if the same document is open in another place;
     // in such case, make really sure to be in sync)
@@ -251,7 +251,7 @@ void BookmarkManager::Private::_o_changed(const QString &groupAddress, const QSt
             }
         }
     }
-    emit q->saved();
+    Q_EMIT q->saved();
 }
 
 QList<QUrl> BookmarkManager::files() const
@@ -352,7 +352,7 @@ KBookmark BookmarkManager::bookmark(const DocumentViewport &viewport) const
 void BookmarkManager::save() const
 {
     d->manager->emitChanged();
-    emit const_cast<BookmarkManager *>(this)->saved();
+    Q_EMIT const_cast<BookmarkManager *>(this)->saved();
 }
 
 QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl &url, bool doCreate, KBookmarkGroup *result)

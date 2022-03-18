@@ -216,7 +216,7 @@ void KTreeViewSearchLine::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity
     if (d->caseSensitive != caseSensitivity) {
         d->caseSensitive = caseSensitivity;
         updateSearch();
-        emit searchOptionsChanged();
+        Q_EMIT searchOptionsChanged();
     }
 }
 
@@ -225,7 +225,7 @@ void KTreeViewSearchLine::setRegularExpression(bool value)
     if (d->regularExpression != value) {
         d->regularExpression = value;
         updateSearch();
-        emit searchOptionsChanged();
+        Q_EMIT searchOptionsChanged();
     }
 }
 

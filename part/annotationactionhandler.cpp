@@ -478,7 +478,7 @@ void AnnotationActionHandlerPrivate::selectTool(int toolId)
 
 void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 {
-    emit q->ephemeralStampWarning();
+    Q_EMIT q->ephemeralStampWarning();
     selectedBuiltinTool = PageViewAnnotator::STAMP_TOOL_ID;
     annotator->selectStampTool(stamp); // triggers a reparsing thus calling parseTool
 }
@@ -486,7 +486,7 @@ void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
 {
     if (isQuickToolStamp(favToolId)) {
-        emit q->ephemeralStampWarning();
+        Q_EMIT q->ephemeralStampWarning();
     }
     annotator->selectQuickTool(favToolId);
     selectedBuiltinTool = -1;

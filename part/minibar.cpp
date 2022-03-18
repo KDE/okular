@@ -247,7 +247,7 @@ bool MiniBar::eventFilter(QObject *target, QEvent *event)
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
             int key = keyEvent->key();
             if (key == Qt::Key_PageUp || key == Qt::Key_PageDown || key == Qt::Key_Up || key == Qt::Key_Down) {
-                emit forwardKeyPressEvent(keyEvent);
+                Q_EMIT forwardKeyPressEvent(keyEvent);
                 return true;
             }
         }
@@ -277,14 +277,14 @@ void MiniBar::slotChangePage(int pageNumber)
 
 void MiniBar::slotEmitNextPage()
 {
-    // emit signal
-    emit nextPage();
+    // Q_EMIT signal
+    Q_EMIT nextPage();
 }
 
 void MiniBar::slotEmitPrevPage()
 {
-    // emit signal
-    emit prevPage();
+    // Q_EMIT signal
+    Q_EMIT prevPage();
 }
 
 void MiniBar::slotToolBarIconSizeChanged()
@@ -373,9 +373,9 @@ void ProgressWidget::mousePressEvent(QMouseEvent *e)
 void ProgressWidget::wheelEvent(QWheelEvent *e)
 {
     if (e->angleDelta().y() > 0) {
-        emit nextPage();
+        Q_EMIT nextPage();
     } else {
-        emit prevPage();
+        Q_EMIT prevPage();
     }
 }
 
@@ -449,7 +449,7 @@ void PageLabelEdit::pageChosen()
     const QString newInput = text();
     const int pageNumber = m_labelPageMap.value(newInput, -1);
     if (pageNumber != -1) {
-        emit pageNumberChosen(pageNumber);
+        Q_EMIT pageNumberChosen(pageNumber);
     } else {
         setText(m_lastLabel);
     }

@@ -200,7 +200,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
     }
 
     if (errorMsg.isEmpty() != true) {
-        emit error(i18n("File corruption. %1", errorMsg), -1);
+        Q_EMIT error(i18n("File corruption. %1", errorMsg), -1);
         errorMsg.clear();
         currentlyDrawnPage = nullptr;
         return;
@@ -323,10 +323,10 @@ void dviRenderer::embedPostScript()
     embedPS_progress = nullptr;
 
     if (!errorMsg.isEmpty()) {
-        emit warning(i18n("Not all PostScript files could be embedded into your document. %1", errorMsg), -1);
+        Q_EMIT warning(i18n("Not all PostScript files could be embedded into your document. %1", errorMsg), -1);
         errorMsg.clear();
     } else {
-        emit notice(i18n("All external PostScript files were embedded into your document."), -1);
+        Q_EMIT notice(i18n("All external PostScript files were embedded into your document."), -1);
     }
 
     // Prescan phase starts here
@@ -416,7 +416,7 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
 
     // Make sure the file actually exists.
     if (!fi.exists() || fi.isDir()) {
-        emit error(i18n("The specified file '%1' does not exist.", filename), -1);
+        Q_EMIT error(i18n("The specified file '%1' does not exist.", filename), -1);
         return false;
     }
 
@@ -432,7 +432,7 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
     if ((dviFile_new->dvi_Data() == nullptr) || (dviFile_new->errorMsg.isEmpty() != true)) {
         QApplication::restoreOverrideCursor();
         if (dviFile_new->errorMsg.isEmpty() != true) {
-            emit error(i18n("File corruption. %1", dviFile_new->errorMsg), -1);
+            Q_EMIT error(i18n("File corruption. %1", dviFile_new->errorMsg), -1);
         }
         delete dviFile_new;
         return false;
@@ -562,12 +562,12 @@ Anchor dviRenderer::parseReference(const QString &reference)
         QString refFileName = splitter.filePath();
 
         if (sourceHyperLinkAnchors.isEmpty()) {
-            emit warning(i18n("You have asked Okular to locate the place in the DVI file which corresponds to "
-                              "line %1 in the TeX-file %2. It seems, however, that the DVI file "
-                              "does not contain the necessary source file information. ",
-                              refLineNumber,
-                              refFileName),
-                         -1);
+            Q_EMIT warning(i18n("You have asked Okular to locate the place in the DVI file which corresponds to "
+                                "line %1 in the TeX-file %2. It seems, however, that the DVI file "
+                                "does not contain the necessary source file information. ",
+                                refLineNumber,
+                                refFileName),
+                           -1);
             return Anchor();
         }
 
@@ -601,11 +601,11 @@ Anchor dviRenderer::parseReference(const QString &reference)
         if (bestMatch != sourceHyperLinkAnchors.end()) {
             return Anchor(bestMatch->page, bestMatch->distance_from_top);
         } else if (anchorForRefFileFound == false) {
-            emit warning(i18n("Okular was not able to locate the place in the DVI file which corresponds to "
-                              "line %1 in the TeX-file %2.",
-                              refLineNumber,
-                              refFileName),
-                         -1);
+            Q_EMIT warning(i18n("Okular was not able to locate the place in the DVI file which corresponds to "
+                                "line %1 in the TeX-file %2.",
+                                refLineNumber,
+                                refFileName),
+                           -1);
         } else {
             return Anchor();
         }

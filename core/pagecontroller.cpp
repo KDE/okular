@@ -36,6 +36,6 @@ void PageController::imageRotationDone(const ThreadWeaver::JobPointer &j)
     if (job->page()) {
         job->page()->imageRotationDone(job);
 
-        emit rotationFinished(job->page()->m_number, job->page()->m_page);
+        Q_EMIT rotationFinished(job->page()->m_number, job->page()->m_page);
     }
 }

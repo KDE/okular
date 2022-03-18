@@ -81,12 +81,12 @@ void TOC::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
             // Make sure we clear the reload old model data
             m_model->setOldModelData(nullptr, QVector<QModelIndex>());
         }
-        emit hasTOC(false);
+        Q_EMIT hasTOC(false);
         return;
     }
 
     m_model->fill(syn);
-    emit hasTOC(!m_model->isEmpty());
+    Q_EMIT hasTOC(!m_model->isEmpty());
 }
 
 void TOC::notifyCurrentPageChanged(int, int)
@@ -186,7 +186,7 @@ void TOC::contextMenuEvent(QContextMenuEvent *e)
 
     Okular::DocumentViewport viewport = m_model->viewportForIndex(index);
 
-    emit rightClick(viewport, e->globalPos(), m_model->data(index).toString());
+    Q_EMIT rightClick(viewport, e->globalPos(), m_model->data(index).toString());
 }
 
 void TOC::expandRecursively()

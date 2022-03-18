@@ -117,7 +117,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
     if (!newFilePath.isEmpty()) {
         const bool success = form->sign(data, newFilePath);
         if (success) {
-            emit pageView->requestOpenFile(newFilePath, form->page()->number() + 1);
+            Q_EMIT pageView->requestOpenFile(newFilePath, form->page()->number() + 1);
         } else {
             KMessageBox::error(pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
         }

@@ -127,7 +127,7 @@ void SignaturePanel::notifySetup(const QVector<Okular::Page *> & /*pages*/, int 
 
     Q_D(SignaturePanel);
     const QVector<const Okular::FormFieldSignature *> signatureForms = SignatureGuiUtils::getSignatureFormFields(d->m_document);
-    emit documentHasSignatures(!signatureForms.isEmpty());
+    Q_EMIT documentHasSignatures(!signatureForms.isEmpty());
 }
 
 SignaturePanel::~SignaturePanel()

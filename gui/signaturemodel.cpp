@@ -126,7 +126,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
     if (pages.isEmpty()) {
         q->endResetModel();
-        emit q->countChanged();
+        Q_EMIT q->countChanged();
         return;
     }
 
@@ -170,7 +170,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
         }
     }
     q->endResetModel();
-    emit q->countChanged();
+    Q_EMIT q->countChanged();
 }
 
 QModelIndex SignatureModelPrivate::indexForItem(SignatureItem *item) const

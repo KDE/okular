@@ -908,7 +908,7 @@ void Shell::slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize)
     const int yOffset = pageViewSize.height() - pageSize.height();
     showNormal();
     resize(width() - xOffset, height() - yOffset);
-    emit moveSplitter(pageSize.width());
+    Q_EMIT moveSplitter(pageSize.width());
 }
 
 void Shell::hideWelcomeScreen()

@@ -27,7 +27,7 @@ public:
     explicit ActionBarWidget(QToolBar *parent);
     void recreateButtons(const QList<QAction *> &actions);
 
-private slots:
+private Q_SLOTS:
     void onOrientationChanged(Qt::Orientation orientation);
 };
 

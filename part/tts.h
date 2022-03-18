@@ -21,7 +21,7 @@ public:
     void stopAllSpeechs();
     void pauseResumeSpeech();
 
-public slots:
+public Q_SLOTS:
     void slotSpeechStateChanged(QTextToSpeech::State state);
     void slotConfigChanged();
 

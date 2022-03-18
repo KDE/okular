@@ -81,7 +81,7 @@ public:
 signals:
     void indexingProgress(int, const QString &);
 
-public slots:
+public Q_SLOTS:
     void setLastWinClosed();
 
 private:

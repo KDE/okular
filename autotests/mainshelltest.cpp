@@ -66,7 +66,7 @@ public:
     }
     bool foundDialog;
 
-public slots:
+public Q_SLOTS:
     void closePrintDialog();
 
 private:
@@ -83,7 +83,7 @@ public:
         return s->m_tabWidget;
     }
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void init();

@@ -54,7 +54,7 @@ public:
         return s->m_tabWidget;
     }
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void init();
     void cleanup();

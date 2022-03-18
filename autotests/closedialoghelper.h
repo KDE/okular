@@ -25,7 +25,7 @@ public:
 
     ~CloseDialogHelper() override;
 
-private slots:
+private Q_SLOTS:
     void closeDialog();
 
 private:

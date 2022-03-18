@@ -18,7 +18,7 @@ class EditAnnotationContentsTest : public QObject
 {
     Q_OBJECT
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void init();
@@ -65,7 +65,7 @@ public:
         return m_anchorPos;
     }
 
-private slots:
+private Q_SLOTS:
     void slotAnnotationContentsChangedByUndoRedo(Okular::Annotation *annotation, const QString &contents, int cursorPos, int anchorPos);
 
 private:

@@ -57,10 +57,10 @@ public:
 signals:
     void progressStep(int value, const QString &stepName);
 
-public slots:
+public Q_SLOTS:
     void cancelIndexGeneration();
 
-private slots:
+private Q_SLOTS:
     void updateProgress(int value, const QString &stepName);
     void processEvents();
 

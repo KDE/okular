@@ -44,7 +44,7 @@ public:
         QVERIFY(m_clicked);
     }
 
-private slots:
+private Q_SLOTS:
     void closeMessageBox()
     {
         const QWidgetList allToplevelWidgets = QApplication::topLevelWidgets();
@@ -80,7 +80,7 @@ class KJSFunctionsTest : public QObject
 {
     Q_OBJECT
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void testNthFieldName();
     void testDisplay();

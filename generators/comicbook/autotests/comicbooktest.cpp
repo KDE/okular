@@ -19,7 +19,7 @@ class ComicBookGeneratorTest : public QObject
 {
     Q_OBJECT
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void testRotatedImage();
     void cleanupTestCase();

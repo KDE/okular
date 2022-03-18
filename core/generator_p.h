@@ -147,7 +147,7 @@ public:
     void abortExtraction();
     bool shouldAbortExtraction() const;
 
-public slots:
+public Q_SLOTS:
     void startGeneration();
 
 protected:

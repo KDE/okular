@@ -21,7 +21,7 @@ class SearchFinishedReceiver : public QObject
 {
     Q_OBJECT
 
-public slots:
+public Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus status)
     {
         m_id = id;
@@ -37,7 +37,7 @@ class SearchTest : public QObject
 {
     Q_OBJECT
 
-private slots:
+private Q_SLOTS:
     void initTestCase();
     void testNextAndPrevious();
     void test311232();

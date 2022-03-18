@@ -45,7 +45,7 @@ public:
 signals:
     void ephemeralStampWarning();
 
-private slots:
+private Q_SLOTS:
     void slotAnnotationToolBarVisibilityChanged(bool visible);
 
 private:

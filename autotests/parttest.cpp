@@ -55,7 +55,7 @@ class PartTest : public QObject
 signals:
     void urlHandler(const QUrl &url); // NOLINT(readability-inconsistent-declaration-parameter-name)
 
-private slots:
+private Q_SLOTS:
     void init();
 
     void testZoomWithCrop();

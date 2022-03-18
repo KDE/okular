@@ -173,6 +173,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050C00)
 add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x054400)
+add_definitions(-DQT_NO_KEYWORDS)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 

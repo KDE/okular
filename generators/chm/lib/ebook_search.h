@@ -54,7 +54,7 @@ public:
     //! Returns true if a valid search index is present, and therefore search could be executed
     bool hasIndex() const;
 
-signals:
+Q_SIGNALS:
     void progressStep(int value, const QString &stepName);
 
 public Q_SLOTS:

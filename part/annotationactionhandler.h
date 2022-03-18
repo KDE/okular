@@ -42,7 +42,7 @@ public:
     void setTextToolsEnabled(bool on);
     void deselectAllAnnotationActions();
 
-signals:
+Q_SIGNALS:
     void ephemeralStampWarning();
 
 private Q_SLOTS:

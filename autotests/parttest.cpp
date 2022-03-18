@@ -52,7 +52,7 @@ class PartTest : public QObject
 
     static bool openDocument(Okular::Part *part, const QString &filePath);
 
-signals:
+Q_SIGNALS:
     void urlHandler(const QUrl &url); // NOLINT(readability-inconsistent-declaration-parameter-name)
 
 private Q_SLOTS:

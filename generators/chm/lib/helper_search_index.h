@@ -78,7 +78,7 @@ public:
         return m_charsword;
     }
 
-signals:
+Q_SIGNALS:
     void indexingProgress(int, const QString &);
 
 public Q_SLOTS:

@@ -25,7 +25,7 @@ public Q_SLOTS:
     void slotSpeechStateChanged(QTextToSpeech::State state);
     void slotConfigChanged();
 
-signals:
+Q_SIGNALS:
     void isSpeaking(bool speaking);
     void canPauseOrResume(bool speakingOrPaused);
 

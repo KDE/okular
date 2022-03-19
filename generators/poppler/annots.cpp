@@ -307,7 +307,7 @@ static void updatePopplerAnnotationFromOkularAnnotation(const Okular::TextAnnota
 static void updatePopplerAnnotationFromOkularAnnotation(const Okular::LineAnnotation *oLineAnnotation, Poppler::LineAnnotation *pLineAnnotation)
 {
     QLinkedList<QPointF> points;
-    const QLinkedList<Okular::NormalizedPoint> annotPoints = oLineAnnotation->linePoints();
+    const QList<Okular::NormalizedPoint> annotPoints = oLineAnnotation->linePoints();
     for (const Okular::NormalizedPoint &p : annotPoints) {
         points.append(normPointToPointF(p));
     }
@@ -363,8 +363,8 @@ static void updatePopplerAnnotationFromOkularAnnotation(const Okular::StampAnnot
 static void updatePopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation, Poppler::InkAnnotation *pInkAnnotation)
 {
     QList<QLinkedList<QPointF>> paths;
-    const QList<QLinkedList<Okular::NormalizedPoint>> inkPathsList = oInkAnnotation->inkPaths();
-    for (const QLinkedList<Okular::NormalizedPoint> &path : inkPathsList) {
+    const QList<QList<Okular::NormalizedPoint>> inkPathsList = oInkAnnotation->inkPaths();
+    for (const QList<Okular::NormalizedPoint> &path : inkPathsList) {
         QLinkedList<QPointF> points;
         for (const Okular::NormalizedPoint &p : path) {
             points.append(normPointToPointF(p));
@@ -876,7 +876,7 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     oLineAnn->setShowCaption(popplerAnnotation->lineShowCaption());
     oLineAnn->setLineIntent(popplerToOkular(popplerAnnotation->lineIntent()));
 
-    QLinkedList<Okular::NormalizedPoint> points;
+    QList<Okular::NormalizedPoint> points;
     const QLinkedList<QPointF> popplerPoints = popplerAnnotation->linePoints();
     for (const QPointF &p : popplerPoints) {
         points << Okular::NormalizedPoint(p.x(), p.y());
@@ -928,9 +928,9 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     Okular::InkAnnotation *oInkAnn = new Okular::InkAnnotation();
 
     const QList<QLinkedList<QPointF>> popplerInkPaths = popplerAnnotation->inkPaths();
-    QList<QLinkedList<Okular::NormalizedPoint>> okularInkPaths;
+    QList<QList<Okular::NormalizedPoint>> okularInkPaths;
     for (const QLinkedList<QPointF> &popplerInkPath : popplerInkPaths) {
-        QLinkedList<Okular::NormalizedPoint> okularInkPath;
+        QList<Okular::NormalizedPoint> okularInkPath;
         for (const QPointF &popplerPoint : popplerInkPath) {
             okularInkPath << Okular::NormalizedPoint(popplerPoint.x(), popplerPoint.y());
         }

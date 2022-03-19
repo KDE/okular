@@ -4640,7 +4640,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap(PageView *pageView, const PageViewItem *i, const QRect expandedViewportRect, QLinkedList<Okular::PixmapRequest *> *requestedPixmaps)
+static void slotRequestPreloadPixmap(PageView *pageView, const PageViewItem *i, const QRect expandedViewportRect, QList<Okular::PixmapRequest *> *requestedPixmaps)
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersected(i->croppedGeometry());
@@ -4689,7 +4689,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
 
     // iterate over all items
     d->visibleItems.clear();
-    QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
+    QList<Okular::PixmapRequest *> requestedPixmaps;
     QVector<Okular::VisiblePageRect *> visibleRects;
     for (PageViewItem *i : qAsConst(d->items)) {
         const QSet<FormWidgetIface *> formWidgetsList = i->formWidgets();

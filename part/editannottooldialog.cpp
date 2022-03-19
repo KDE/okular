@@ -296,12 +296,12 @@ void EditAnnotToolDialog::createStubAnnotation()
         m_stubann->style().setColor(Qt::green);
     } else if (toolType == ToolStraightLine) {
         Okular::LineAnnotation *la = new Okular::LineAnnotation();
-        la->setLinePoints(QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0, 0) << Okular::NormalizedPoint(1, 0));
+        la->setLinePoints({Okular::NormalizedPoint(0, 0), Okular::NormalizedPoint(1, 0)});
         la->style().setColor(QColor(0xff, 0xe0, 0x00));
         m_stubann = la;
     } else if (toolType == ToolPolygon) {
         Okular::LineAnnotation *la = new Okular::LineAnnotation();
-        la->setLinePoints(QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0, 0) << Okular::NormalizedPoint(1, 0) << Okular::NormalizedPoint(1, 1));
+        la->setLinePoints({Okular::NormalizedPoint(0, 0), Okular::NormalizedPoint(1, 0), Okular::NormalizedPoint(1, 1)});
         la->setLineClosed(true);
         la->style().setColor(QColor(0x00, 0x7e, 0xee));
         m_stubann = la;

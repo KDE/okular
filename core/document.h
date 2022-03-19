@@ -489,8 +489,10 @@ public:
      * Sends @p requests for pixmap generation.
      *
      * The same as requestPixmaps( requests, RemoveAllPrevious );
+     *
+     * @since 22.08
      */
-    void requestPixmaps(const QLinkedList<PixmapRequest *> &requests);
+    void requestPixmaps(const QList<PixmapRequest *> &requests);
 
     /**
      * Sends @p requests for pixmap generation.
@@ -498,9 +500,9 @@ public:
      * @param requests the linked list of requests
      * @param reqOptions the options for the request
      *
-     * @since 0.7 (KDE 4.1)
+     * @since 22.08
      */
-    void requestPixmaps(const QLinkedList<PixmapRequest *> &requests, PixmapRequestFlags reqOptions);
+    void requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequestFlags reqOptions);
 
     /**
      * Sends a request for text page generation for the given page @p pageNumber.

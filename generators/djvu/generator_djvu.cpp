@@ -373,7 +373,7 @@ Okular::Annotation *DjVuGenerator::convertKDjVuAnnotation(int w, int h, KDjVu::A
         QRect rect = QRect(a, b).normalized();
         newlineann->setBoundingRectangle(Okular::NormalizedRect(Okular::Utils::rotateRect(rect, w, h, 0), w, h));
         // line points
-        QLinkedList<Okular::NormalizedPoint> points;
+        QList<Okular::NormalizedPoint> points;
         points.append(Okular::NormalizedPoint(a.x(), a.y(), w, h));
         points.append(Okular::NormalizedPoint(b.x(), b.y(), w, h));
         newlineann->setLinePoints(points);

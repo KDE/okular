@@ -7,7 +7,7 @@
 #ifndef OKULAR_TESTINGUTILS_H
 #define OKULAR_TESTINGUTILS_H
 
-template<class T> class QLinkedList;
+template<class T> class QList;
 class QString;
 
 namespace Okular
@@ -27,7 +27,7 @@ QString getAnnotationXml(const Okular::Annotation *annotation);
  * Returns true if the pairwise comparison coordinates of points in @p points1 and @p points2 are almost
  * equal (according to qFuzzyCompare)
  */
-bool pointListsAlmostEqual(const QLinkedList<Okular::NormalizedPoint> &points1, const QLinkedList<Okular::NormalizedPoint> &points2);
+bool pointListsAlmostEqual(const QList<Okular::NormalizedPoint> &points1, const QList<Okular::NormalizedPoint> &points2);
 
 /*
  * The AnnotationDisposeWatcher class provides a static disposeAnnotation function

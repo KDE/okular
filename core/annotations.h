@@ -938,19 +938,25 @@ public:
 
     /**
      * Sets the normalized line @p points of the line annotation.
+     *
+     * @since 22.08
      */
-    void setLinePoints(const QLinkedList<NormalizedPoint> &points);
+    void setLinePoints(const QList<NormalizedPoint> &points);
 
     /**
      * Returns the normalized line points of the line annotation.
+     *
+     * @since 22.08
      */
-    QLinkedList<NormalizedPoint> linePoints() const;
+    QList<NormalizedPoint> linePoints() const;
 
     /**
      * Returns the transformed (e.g. rotated) normalized line points
      * of the line annotation.
+     *
+     * @since 22.08
      */
-    QLinkedList<NormalizedPoint> transformedLinePoints() const;
+    QList<NormalizedPoint> transformedLinePoints() const;
 
     /**
      * Sets the line starting @p style of the line annotation.
@@ -1336,19 +1342,25 @@ public:
 
     /**
      * Sets the @p paths of points for the ink annotation.
+     *
+     * @since 22.08
      */
-    void setInkPaths(const QList<QLinkedList<NormalizedPoint>> &paths);
+    void setInkPaths(const QList<QList<NormalizedPoint>> &paths);
 
     /**
      * Returns the paths of points of the ink annotation.
+     *
+     * @since 22.08
      */
-    QList<QLinkedList<NormalizedPoint>> inkPaths() const;
+    QList<QList<NormalizedPoint>> inkPaths() const;
 
     /**
      * Returns the paths of transformed (e.g. rotated) points of
      * the ink annotation.
+     *
+     * @since 22.08
      */
-    QList<QLinkedList<NormalizedPoint>> transformedInkPaths() const;
+    QList<QList<NormalizedPoint>> transformedInkPaths() const;
 
     /**
      * Returns the sub type of the ink annotation.

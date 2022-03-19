@@ -78,7 +78,7 @@ void AnnotationTest::testDistance_data()
 
     // lines
     Okular::LineAnnotation *line = new Okular::LineAnnotation;
-    line->setLinePoints(QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.1, 0.1) << Okular::NormalizedPoint(0.9, 0.1));
+    line->setLinePoints({Okular::NormalizedPoint(0.1, 0.1), Okular::NormalizedPoint(0.9, 0.1)});
     m_document->addPageAnnotation(0, line);
     QTest::newRow("Line: Base point 1") << (Okular::Annotation *)line << 0.1 << 0.1 << 0;
     QTest::newRow("Line: Base point 2") << (Okular::Annotation *)line << 0.5 << 0.1 << 0;

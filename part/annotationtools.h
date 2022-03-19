@@ -86,11 +86,11 @@ private:
 class SmoothPath
 {
 public:
-    SmoothPath(const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0, QPainter::CompositionMode compositionMode = QPainter::CompositionMode_SourceOver);
+    SmoothPath(const QList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0, QPainter::CompositionMode compositionMode = QPainter::CompositionMode_SourceOver);
     void paint(QPainter *painter, double xScale, double yScale) const;
 
 private:
-    const QLinkedList<Okular::NormalizedPoint> points;
+    const QList<Okular::NormalizedPoint> points;
     const QPen pen;
     const qreal opacity;
     const QPainter::CompositionMode compositionMode;
@@ -112,7 +112,7 @@ public:
 
 private:
     // data
-    QLinkedList<Okular::NormalizedPoint> points;
+    QList<Okular::NormalizedPoint> points;
     Okular::NormalizedRect totalRect;
     Okular::NormalizedPoint lastPoint;
     QPainter::CompositionMode compositionMode;

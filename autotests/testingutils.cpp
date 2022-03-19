@@ -17,10 +17,10 @@ QString getAnnotationXml(const Okular::Annotation *annotation)
     return annotXmlString;
 }
 
-bool pointListsAlmostEqual(const QLinkedList<Okular::NormalizedPoint> &points1, const QLinkedList<Okular::NormalizedPoint> &points2)
+bool pointListsAlmostEqual(const QList<Okular::NormalizedPoint> &points1, const QList<Okular::NormalizedPoint> &points2)
 {
-    QLinkedListIterator<Okular::NormalizedPoint> it1(points1);
-    QLinkedListIterator<Okular::NormalizedPoint> it2(points2);
+    QListIterator<Okular::NormalizedPoint> it1(points1);
+    QListIterator<Okular::NormalizedPoint> it2(points2);
     while (it1.hasNext() && it2.hasNext()) {
         const Okular::NormalizedPoint &p1 = it1.next();
         const Okular::NormalizedPoint &p2 = it2.next();

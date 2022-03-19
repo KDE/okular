@@ -1451,7 +1451,7 @@ void PresentationWidget::requestPixmaps()
     // operation will take long: set busy cursor
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     // request the pixmap
-    QLinkedList<Okular::PixmapRequest *> requests;
+    QList<Okular::PixmapRequest *> requests;
     requests.push_back(new Okular::PixmapRequest(this, m_frameIndex, pixW, pixH, dpr, PRESENTATION_PRIO, Okular::PixmapRequest::NoFeature));
     // restore cursor
     QApplication::restoreOverrideCursor();

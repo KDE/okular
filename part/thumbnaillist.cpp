@@ -672,7 +672,7 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
-    QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
+    QList<Okular::PixmapRequest *> requestedPixmaps;
     QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     const QRect viewportRect = q->viewport()->rect().translated(q->horizontalScrollBar()->value(), q->verticalScrollBar()->value());
     for (; tIt != tEnd; ++tIt) {

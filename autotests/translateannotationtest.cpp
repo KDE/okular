@@ -16,7 +16,7 @@
 Okular::LineAnnotation *getNewLineAnnotation(double startX, double startY, double endX, double endY)
 {
     Okular::LineAnnotation *line = new Okular::LineAnnotation;
-    line->setLinePoints(QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(startX, startY) << Okular::NormalizedPoint(endX, endY));
+    line->setLinePoints({Okular::NormalizedPoint(startX, startY), Okular::NormalizedPoint(endX, endY)});
 
     double left = qMin(startX, endX);
     double top = qMin(startY, endY);
@@ -49,13 +49,13 @@ private:
     Okular::NormalizedPoint m_deltaA;
     Okular::NormalizedPoint m_deltaB;
 
-    QLinkedList<Okular::NormalizedPoint> m_origPoints1;
-    QLinkedList<Okular::NormalizedPoint> m_origPoints2;
+    QList<Okular::NormalizedPoint> m_origPoints1;
+    QList<Okular::NormalizedPoint> m_origPoints2;
 
-    QLinkedList<Okular::NormalizedPoint> m_points1DeltaA;
-    QLinkedList<Okular::NormalizedPoint> m_points1DeltaAB;
-    QLinkedList<Okular::NormalizedPoint> m_points2DeltaA;
-    QLinkedList<Okular::NormalizedPoint> m_points2DeltaAB;
+    QList<Okular::NormalizedPoint> m_points1DeltaA;
+    QList<Okular::NormalizedPoint> m_points1DeltaAB;
+    QList<Okular::NormalizedPoint> m_points2DeltaA;
+    QList<Okular::NormalizedPoint> m_points2DeltaAB;
 };
 
 void TranslateAnnotationTest::initTestCase()
@@ -68,17 +68,17 @@ void TranslateAnnotationTest::initTestCase()
     m_deltaB = Okular::NormalizedPoint(0.1, 0.2);
 
     // Build lists of expected points for various states
-    m_origPoints1 = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.1, 0.1) << Okular::NormalizedPoint(0.2, 0.3);
+    m_origPoints1 = {Okular::NormalizedPoint(0.1, 0.1), Okular::NormalizedPoint(0.2, 0.3)};
 
-    m_points1DeltaA = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.15, 0.2) << Okular::NormalizedPoint(0.25, 0.4);
+    m_points1DeltaA = {Okular::NormalizedPoint(0.15, 0.2), Okular::NormalizedPoint(0.25, 0.4)};
 
-    m_points1DeltaAB = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.25, 0.4) << Okular::NormalizedPoint(0.35, 0.6);
+    m_points1DeltaAB = {Okular::NormalizedPoint(0.25, 0.4), Okular::NormalizedPoint(0.35, 0.6)};
 
-    m_origPoints2 = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.1, 0.1) << Okular::NormalizedPoint(0.3, 0.4);
+    m_origPoints2 = {Okular::NormalizedPoint(0.1, 0.1), Okular::NormalizedPoint(0.3, 0.4)};
 
-    m_points2DeltaA = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.15, 0.2) << Okular::NormalizedPoint(0.35, 0.5);
+    m_points2DeltaA = {Okular::NormalizedPoint(0.15, 0.2), Okular::NormalizedPoint(0.35, 0.5)};
 
-    m_points2DeltaAB = QLinkedList<Okular::NormalizedPoint>() << Okular::NormalizedPoint(0.25, 0.4) << Okular::NormalizedPoint(0.45, 0.7);
+    m_points2DeltaAB = {Okular::NormalizedPoint(0.25, 0.4), Okular::NormalizedPoint(0.45, 0.7)};
 }
 
 void TranslateAnnotationTest::cleanupTestCase()

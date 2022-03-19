@@ -1602,13 +1602,13 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
     // Need to do this ↑↓ in two steps since requestPixmaps can end up calling cancelRenderingBecauseOf
     // which changes m_pixmaps and thus breaks the loop above
     for (PixmapRequest *pr : qAsConst(pixmapsToRequest)) {
-        QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
+        QList<Okular::PixmapRequest *> requestedPixmaps;
         requestedPixmaps.push_back(pr);
         m_parent->requestPixmaps(requestedPixmaps, Okular::Document::NoOption);
     }
 
     for (DocumentObserver *observer : qAsConst(m_observers)) {
-        QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
+        QList<Okular::PixmapRequest *> requestedPixmaps;
 
         TilesManager *tilesManager = page->d->tilesManager(observer);
         if (tilesManager) {
@@ -3319,12 +3319,12 @@ bool DocumentPrivate::cancelRenderingBecauseOf(PixmapRequest *executingRequest, 
     return true;
 }
 
-void Document::requestPixmaps(const QLinkedList<PixmapRequest *> &requests)
+void Document::requestPixmaps(const QList<PixmapRequest *> &requests)
 {
     requestPixmaps(requests, RemoveAllPrevious);
 }
 
-void Document::requestPixmaps(const QLinkedList<PixmapRequest *> &requests, PixmapRequestFlags reqOptions)
+void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequestFlags reqOptions)
 {
     if (requests.isEmpty()) {
         return;
@@ -3332,10 +3332,7 @@ void Document::requestPixmaps(const QLinkedList<PixmapRequest *> &requests, Pixm
 
     if (!d->m_pageController) {
         // delete requests..
-        QLinkedList<PixmapRequest *>::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
-        for (; rIt != rEnd; ++rIt) {
-            delete *rIt;
-        }
+        qDeleteAll(requests);
         // ..and return
         return;
     }
@@ -3346,10 +3343,9 @@ void Document::requestPixmaps(const QLinkedList<PixmapRequest *> &requests, Pixm
     DocumentObserver *requesterObserver = requests.first()->observer();
     QSet<int> requestedPages;
     {
-        QLinkedList<PixmapRequest *>::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
-        for (; rIt != rEnd; ++rIt) {
-            Q_ASSERT((*rIt)->observer() == requesterObserver);
-            requestedPages.insert((*rIt)->pageNumber());
+        for (PixmapRequest *request : requests) {
+            Q_ASSERT(request->observer() == requesterObserver);
+            requestedPages.insert(request->pageNumber());
         }
     }
     const bool removeAllPrevious = reqOptions & RemoveAllPrevious;

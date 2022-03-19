@@ -463,19 +463,14 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     Okular::InkAnnotation *ia = (Okular::InkAnnotation *)a;
 
                     // draw each ink path
-                    const QList<QLinkedList<Okular::NormalizedPoint>> transformedInkPaths = ia->transformedInkPaths();
+                    const QList<QList<Okular::NormalizedPoint>> transformedInkPaths = ia->transformedInkPaths();
 
                     const QPen inkPen = buildPen(a, a->style().width(), acolor);
 
-                    int paths = transformedInkPaths.size();
-                    for (int p = 0; p < paths; p++) {
-                        NormalizedPath path;
-                        const QLinkedList<Okular::NormalizedPoint> &inkPath = transformedInkPaths[p];
-
+                    for (const QList<Okular::NormalizedPoint> &inkPath : transformedInkPaths) {
                         // normalize page point to image
-                        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.constBegin(), pEnd = inkPath.constEnd();
-                        for (; pIt != pEnd; ++pIt) {
-                            const Okular::NormalizedPoint &inkPoint = *pIt;
+                        NormalizedPath path;
+                        for (const Okular::NormalizedPoint &inkPoint : inkPath) {
                             Okular::NormalizedPoint point;
                             point.x = (inkPoint.x - xOffset) * xScale;
                             point.y = (inkPoint.y - yOffset) * yScale;
@@ -1060,7 +1055,7 @@ LineAnnotPainter::LineAnnotPainter(const Okular::LineAnnotation *a, QSizeF pageS
 
 void LineAnnotPainter::draw(QImage &image) const
 {
-    const QLinkedList<Okular::NormalizedPoint> transformedLinePoints = la->transformedLinePoints();
+    const QList<Okular::NormalizedPoint> transformedLinePoints = la->transformedLinePoints();
     if (transformedLinePoints.count() == 2) {
         const Okular::NormalizedPoint delta {transformedLinePoints.last().x - transformedLinePoints.first().x, transformedLinePoints.first().y - transformedLinePoints.last().y};
         const double angle {atan2(delta.y * aspectRatio, delta.x)};

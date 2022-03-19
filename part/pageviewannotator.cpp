@@ -559,12 +559,8 @@ public:
             // add note
             Okular::LineAnnotation *la = new Okular::LineAnnotation();
             ann = la;
-            QLinkedList<Okular::NormalizedPoint> list;
-            for (int i = 0; i < points.count(); ++i) {
-                list.append(points[i]);
-            }
 
-            la->setLinePoints(list);
+            la->setLinePoints(points);
 
             if (numofpoints == -1) {
                 la->setLineClosed(true);

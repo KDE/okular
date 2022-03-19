@@ -84,7 +84,7 @@ QCursor AnnotatorEngine::cursor() const
     return Qt::CrossCursor;
 }
 
-SmoothPath::SmoothPath(const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity, QPainter::CompositionMode compositionMode)
+SmoothPath::SmoothPath(const QList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity, QPainter::CompositionMode compositionMode)
     : points(points)
     , pen(pen)
     , opacity(opacity)
@@ -176,7 +176,7 @@ void SmoothPath::paint(QPainter *painter, double xScale, double yScale) const
         painter->setOpacity(opacity);
 
         QPainterPath path;
-        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
+        QList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
         path.moveTo(QPointF(pIt->x * xScale, pIt->y * yScale));
         ++pIt;
         for (; pIt != pEnd; ++pIt) {
@@ -207,7 +207,7 @@ QList<Okular::Annotation *> SmoothPathEngine::end()
             ann->style().setWidth(m_annotElement.attribute(QStringLiteral("width")).toDouble());
         }
         // fill points
-        QList<QLinkedList<Okular::NormalizedPoint>> list = ia->inkPaths();
+        QList<QList<Okular::NormalizedPoint>> list = ia->inkPaths();
         list.append(points);
         ia->setInkPaths(list);
         // set boundaries

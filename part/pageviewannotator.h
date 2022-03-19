@@ -7,7 +7,6 @@
 #ifndef _OKULAR_PAGEVIEWANNOTATOR_H_
 #define _OKULAR_PAGEVIEWANNOTATOR_H_
 
-#include <QLinkedList>
 #include <QObject>
 #include <qdom.h>
 

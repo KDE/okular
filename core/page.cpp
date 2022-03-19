@@ -469,9 +469,9 @@ const ObjectRect *Page::objectRect(ObjectRect::ObjectType type, double x, double
     return nullptr;
 }
 
-QLinkedList<const ObjectRect *> Page::objectRects(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const
+QList<const ObjectRect *> Page::objectRects(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const
 {
-    QLinkedList<const ObjectRect *> result;
+    QList<const ObjectRect *> result;
 
     QLinkedListIterator<ObjectRect *> it(m_rects);
     it.toBack();

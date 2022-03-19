@@ -11,7 +11,6 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFont>
-#include <QLinkedList>
 #include <QRect>
 #include <QString>
 
@@ -604,12 +603,12 @@ public:
     /**
      * Returns a reference to the revision list of the annotation.
      */
-    QLinkedList<Revision> &revisions();
+    QList<Revision> &revisions();
 
     /**
      * Returns a reference to the revision list of the annotation.
      */
-    const QLinkedList<Revision> &revisions() const;
+    const QList<Revision> &revisions() const;
 
     /**
      * Sets the "native" @p id of the annotation.

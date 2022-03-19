@@ -152,7 +152,7 @@ public:
     PageView *q;
     Okular::Document *document;
     QVector<PageViewItem *> items;
-    QLinkedList<PageViewItem *> visibleItems;
+    QList<PageViewItem *> visibleItems;
     MagnifierView *magnifierView;
 
     // view layout (columns in Settings), zoom and mouse
@@ -2633,7 +2633,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 const double nX = pageItem->absToPageX(eventPos.x());
                 const double nY = pageItem->absToPageY(eventPos.y());
 
-                const QLinkedList<const Okular::ObjectRect *> annotRects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
+                const QList<const Okular::ObjectRect *> annotRects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
 
                 AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
                 // Do not move annotPopup inside the if, it needs to live until menu->exec()

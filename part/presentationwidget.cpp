@@ -105,7 +105,7 @@ struct PresentationFrame {
     const Okular::Page *page;
     QRect geometry;
     QHash<Okular::Movie *, VideoWidget *> videoWidgets;
-    QLinkedList<SmoothPath> drawings;
+    std::vector<SmoothPath> drawings;
 };
 
 // a custom QToolBar that basically does not propagate the event if the widget
@@ -883,7 +883,7 @@ void PresentationWidget::paintEvent(QPaintEvent *pe)
         pmPainter.setRenderHints(QPainter::Antialiasing);
 
         // Paint old paths
-        for (const SmoothPath &drawing : qAsConst(m_frames[m_frameIndex]->drawings)) {
+        for (const SmoothPath &drawing : m_frames[m_frameIndex]->drawings) {
             drawing.paint(&pmPainter, pmSize.width(), pmSize.height());
         }
 
@@ -1393,7 +1393,7 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
 
     if (m_drawingEngine->creationCompleted()) {
         // add drawing to current page
-        m_frames[m_frameIndex]->drawings << m_drawingEngine->endSmoothPath();
+        m_frames[m_frameIndex]->drawings.emplace_back(m_drawingEngine->endSmoothPath());
 
         // remove the actual drawer and create a new one just after
         // that - that gives continuous drawing

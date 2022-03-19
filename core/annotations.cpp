@@ -554,9 +554,8 @@ AnnotationPrivate::~AnnotationPrivate()
         return;
     }
 
-    QLinkedList<Annotation::Revision>::iterator it = m_revisions.begin(), end = m_revisions.end();
-    for (; it != end; ++it) {
-        delete (*it).annotation();
+    for (const Annotation::Revision &revision : qAsConst(m_revisions)) {
+        delete revision.annotation();
     }
 }
 
@@ -729,13 +728,13 @@ const Annotation::Window &Annotation::window() const
     return d->m_window;
 }
 
-QLinkedList<Annotation::Revision> &Annotation::revisions()
+QList<Annotation::Revision> &Annotation::revisions()
 {
     Q_D(Annotation);
     return d->m_revisions;
 }
 
-const QLinkedList<Annotation::Revision> &Annotation::revisions() const
+const QList<Annotation::Revision> &Annotation::revisions() const
 {
     Q_D(const Annotation);
     return d->m_revisions;
@@ -870,10 +869,8 @@ void Annotation::store(QDomNode &annNode, QDomDocument &document) const
     }
 
     // add all revisions as children of revisions element
-    QLinkedList<Revision>::const_iterator it = d->m_revisions.begin(), end = d->m_revisions.end();
-    for (; it != end; ++it) {
+    for (const Revision &revision : qAsConst(d->m_revisions)) {
         // create revision element
-        const Revision &revision = *it;
         QDomElement r = document.createElement(QStringLiteral("revision"));
         annNode.appendChild(r);
         // set element attributes

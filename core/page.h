@@ -228,7 +228,7 @@ public:
      * Returns all object rects of the given @p type which are at point (@p x, @p y) at scale (@p xScale, @p yScale).
      * @since 0.16 (KDE 4.10)
      */
-    QLinkedList<const ObjectRect *> objectRects(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const;
+    QList<const ObjectRect *> objectRects(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const;
 
     /**
      * Returns the object rect of the given @p type which is nearest to the point (@p x, @p y) at scale (@p xScale, @p yScale).

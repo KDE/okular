@@ -7,7 +7,6 @@
 #ifndef _OKULAR_ANNOTATIONTOOLS_H_
 #define _OKULAR_ANNOTATIONTOOLS_H_
 
-#include <QLinkedList>
 #include <QPainter>
 #include <QPen>
 #include <QRect>

@@ -38,9 +38,9 @@ struct AnnItem {
     int page;
 };
 
-static QLinkedList<Okular::Annotation *> filterOutWidgetAnnotations(const QLinkedList<Okular::Annotation *> &annotations)
+static QList<Okular::Annotation *> filterOutWidgetAnnotations(const QLinkedList<Okular::Annotation *> &annotations)
 {
-    QLinkedList<Okular::Annotation *> result;
+    QList<Okular::Annotation *> result;
 
     for (Okular::Annotation *annotation : annotations) {
         if (annotation->subType() == Okular::Annotation::AWidget) {
@@ -154,7 +154,7 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
         return;
     }
 
-    const QLinkedList<Okular::Annotation *> annots = filterOutWidgetAnnotations(document->page(page)->annotations());
+    const QList<Okular::Annotation *> annots = filterOutWidgetAnnotations(document->page(page)->annotations());
     int annItemIndex = -1;
     AnnItem *annItem = findItem(page, &annItemIndex);
     // case 1: the page has no more annotations
@@ -182,12 +182,12 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
         q->beginInsertRows(indexForItem(root), i, i);
         annItem->parent->children.insert(i, annItem);
         q->endInsertRows();
-        QLinkedList<Okular::Annotation *>::ConstIterator it = annots.begin(), itEnd = annots.end();
         int newid = 0;
-        for (; it != itEnd; ++it, ++newid) {
+        for (Okular::Annotation *annot : annots) {
             q->beginInsertRows(indexForItem(annItem), newid, newid);
-            new AnnItem(annItem, *it);
+            new AnnItem(annItem, annot);
             q->endInsertRows();
+            ++newid;
         }
         return;
     }
@@ -197,10 +197,10 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
         for (int i = annItem->children.count(); i > 0; --i) {
             Okular::Annotation *ref = annItem->children.at(i - 1)->annotation;
             bool found = false;
-            QLinkedList<Okular::Annotation *>::ConstIterator it = annots.begin(), itEnd = annots.end();
-            for (; !found && it != itEnd; ++it) {
-                if ((*it) == ref) {
+            for (Okular::Annotation *annot : annots) {
+                if (annot == ref) {
                     found = true;
+                    break;
                 }
             }
             if (!found) {
@@ -215,9 +215,7 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
     // case 4: existing branch, less items than annotations
     //         => lookup and add annotations if not in the branch
     if (annots.count() > annItem->children.count()) {
-        QLinkedList<Okular::Annotation *>::ConstIterator it = annots.begin(), itEnd = annots.end();
-        for (; it != itEnd; ++it) {
-            Okular::Annotation *ref = *it;
+        for (Okular::Annotation *ref : annots) {
             bool found = false;
             int count = annItem->children.count();
             for (int i = 0; !found && i < count; ++i) {
@@ -261,15 +259,14 @@ void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
 
     Q_EMIT q->layoutAboutToBeChanged();
     for (int i = 0; i < pages.count(); ++i) {
-        const QLinkedList<Okular::Annotation *> annots = filterOutWidgetAnnotations(pages.at(i)->annotations());
+        const QList<Okular::Annotation *> annots = filterOutWidgetAnnotations(pages.at(i)->annotations());
         if (annots.isEmpty()) {
             continue;
         }
 
         AnnItem *annItem = new AnnItem(root, i);
-        QLinkedList<Okular::Annotation *>::ConstIterator it = annots.begin(), itEnd = annots.end();
-        for (; it != itEnd; ++it) {
-            new AnnItem(annItem, *it);
+        for (Okular::Annotation *annot : annots) {
+            new AnnItem(annItem, annot);
         }
     }
     Q_EMIT q->layoutChanged();

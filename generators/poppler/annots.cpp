@@ -1143,7 +1143,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularWindow.setSummary(popplerPopup.summary());
 
         // Convert the poppler revisions to Okular revisions
-        QLinkedList<Okular::Annotation::Revision> &okularRevisions = okularAnnotation->revisions();
+        QList<Okular::Annotation::Revision> &okularRevisions = okularAnnotation->revisions();
         const QList<Poppler::Annotation *> popplerRevisions = popplerAnnotation->revisions();
         for (Poppler::Annotation *popplerRevision : popplerRevisions) {
             bool deletePopplerRevision;

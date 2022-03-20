@@ -183,6 +183,7 @@
       <li xml:lang="fr">Formats de fichiers pris en charge : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="hu">Támogatott formátumok: PDF, PS, Tiff, CHM, DjVu, képek, DVI, XPS, FictionBook, képregények, Plucker, EPub, Fax</li>
       <li xml:lang="ia">Formtos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Citra, DVI, XPS, Buku Fiksi, Buku Komik, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
@@ -301,7 +302,7 @@
       <caption xml:lang="hi">ओकुलर में सहाय्य पुस्तिका पढ़ना</caption>
       <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>
-      <caption xml:lang="id">Membaca manual di Okular</caption>
+      <caption xml:lang="id">Petunjuk di Okular</caption>
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>
       <caption xml:lang="ko">Okular로 설명서 읽기</caption>
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>

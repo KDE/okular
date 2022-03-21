@@ -20,7 +20,7 @@ QVector<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular:
     const uint endPage = doc->pages() - 1;
     QVector<const Okular::FormFieldSignature *> signatureFormFields;
     while (curPage <= endPage) {
-        const QLinkedList<Okular::FormField *> formFields = doc->page(curPage++)->formFields();
+        const QList<Okular::FormField *> formFields = doc->page(curPage++)->formFields();
         for (Okular::FormField *f : formFields) {
             if (f->type() == Okular::FormField::FormSignature) {
                 signatureFormFields.append(static_cast<Okular::FormFieldSignature *>(f));
@@ -178,7 +178,7 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
     const uint numPages = doc->pages();
     bool isDigitallySigned = false;
     for (uint i = 0; i < numPages; i++) {
-        const QLinkedList<Okular::FormField *> formFields = doc->page(i)->formFields();
+        const QList<Okular::FormField *> formFields = doc->page(i)->formFields();
         for (const Okular::FormField *f : formFields) {
             if (f->type() == Okular::FormField::FormSignature) {
                 isDigitallySigned = true;

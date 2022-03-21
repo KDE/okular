@@ -1262,7 +1262,7 @@ void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlag
 #ifdef PAGEVIEW_DEBUG
         qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
-        const QLinkedList<Okular::FormField *> pageFields = page->formFields();
+        const QList<Okular::FormField *> pageFields = page->formFields();
         for (Okular::FormField *ff : pageFields) {
             FormWidgetIface *w = FormWidgetFactory::createWidget(ff, this);
             if (w) {

@@ -263,7 +263,7 @@ public:
     /**
      * Returns the list of FormField of the page.
      */
-    QLinkedList<FormField *> formFields() const;
+    QList<FormField *> formFields() const;
 
     /**
      * Sets the region described by @p rect with @p pixmap for the
@@ -293,7 +293,7 @@ public:
     /**
      * Sets the list of source reference objects @p rects.
      */
-    void setSourceReferences(const QLinkedList<SourceRefObjectRect *> &rects);
+    void setSourceReferences(const QList<SourceRefObjectRect *> &rects);
 
     /**
      * Sets the duration of the page to @p seconds when displayed in presentation mode.
@@ -353,7 +353,7 @@ public:
     /**
      * Sets @p fields as list of FormField of the page.
      */
-    void setFormFields(const QLinkedList<FormField *> &fields);
+    void setFormFields(const QList<FormField *> &fields);
 
     /**
      * Deletes the pixmap for the given @p observer

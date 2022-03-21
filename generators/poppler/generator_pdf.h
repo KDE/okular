@@ -127,7 +127,7 @@ private:
     // fetch the transition information and add it to the page
     void addTransition(Poppler::Page *pdfPage, Okular::Page *page);
     // fetch the poppler page form fields
-    QLinkedList<Okular::FormField *> getFormFields(Poppler::Page *popplerPage);
+    QList<Okular::FormField *> getFormFields(Poppler::Page *popplerPage);
 
     Okular::TextPage *abstractTextPage(const QList<Poppler::TextBox *> &text, double height, double width, int rot);
 

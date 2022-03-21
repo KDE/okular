@@ -94,7 +94,7 @@ SignatureModelPrivate::~SignatureModelPrivate()
 static void updateFormFieldSignaturePointer(SignatureItem *item, const QVector<Okular::Page *> &pages)
 {
     if (item->form) {
-        const QLinkedList<Okular::FormField *> formFields = pages[item->page]->formFields();
+        const QList<Okular::FormField *> formFields = pages[item->page]->formFields();
         for (Okular::FormField *f : formFields) {
             if (item->form->id() == f->id()) {
                 item->form = static_cast<Okular::FormFieldSignature *>(f);

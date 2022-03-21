@@ -1317,7 +1317,7 @@ void PartTest::testSaveAsUndoStackForms()
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument(file);
 
-    const QLinkedList<Okular::FormField *> pageFormFields = part.m_document->page(0)->formFields();
+    const QList<Okular::FormField *> pageFormFields = part.m_document->page(0)->formFields();
     for (FormField *ff : pageFormFields) {
         if (ff->id() == 65537) {
             QCOMPARE(ff->type(), FormField::FormText);
@@ -1474,7 +1474,7 @@ void PartTest::testCheckBoxReadOnly()
     // Field names in test document are:
     // CBMakeRW, CBMakeRO, TargetDefaultRO, TargetDefaultRW
 
-    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    const QList<Okular::FormField *> pageFormFields = page->formFields();
     for (Okular::FormField *ff : pageFormFields) {
         fields.insert(ff->name(), static_cast<Okular::FormField *>(ff));
     }
@@ -1550,7 +1550,7 @@ void PartTest::testCheckBoxReadOnly()
     fields.clear();
 
     {
-        const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+        const QList<Okular::FormField *> pageFormFields = page->formFields();
         for (Okular::FormField *ff : pageFormFields) {
             fields.insert(ff->name(), static_cast<Okular::FormField *>(ff));
         }
@@ -1706,7 +1706,7 @@ void PartTest::testAdditionalActionTriggers()
     // For target fields: <trigger_name>_focus_target, <trigger_name>_cursor_target,
     // <trigger_name>_mouse_target
     const Okular::Page *page = part.m_document->page(0);
-    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    const QList<Okular::FormField *> pageFormFields = page->formFields();
     for (Okular::FormField *ff : pageFormFields) {
         fields.insert(ff->name(), static_cast<Okular::FormField *>(ff));
     }

@@ -453,7 +453,7 @@ void DviGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
 
     // filling the pages with the source references rects
     const QVector<DVI_SourceFileAnchor> &sourceAnchors = m_dviRenderer->sourceAnchors();
-    QVector<QLinkedList<Okular::SourceRefObjectRect *>> refRects(numofpages);
+    QVector<QList<Okular::SourceRefObjectRect *>> refRects(numofpages);
     for (const DVI_SourceFileAnchor &sfa : sourceAnchors) {
         if (sfa.page < 1 || (int)sfa.page > numofpages) {
             continue;

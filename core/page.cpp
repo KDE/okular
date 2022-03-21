@@ -541,7 +541,7 @@ const Action *Page::pageAction(PageAction action) const
     return nullptr;
 }
 
-QLinkedList<FormField *> Page::formFields() const
+QList<FormField *> Page::formFields() const
 {
     return d->formfields;
 }
@@ -641,7 +641,7 @@ void PagePrivate::setTextSelections(RegularAreaRect *r, const QColor &color)
     }
 }
 
-void Page::setSourceReferences(const QLinkedList<SourceRefObjectRect *> &refRects)
+void Page::setSourceReferences(const QList<SourceRefObjectRect *> &refRects)
 {
     deleteSourceReferences();
     for (SourceRefObjectRect *rect : refRects) {
@@ -746,7 +746,7 @@ void Page::setPageAction(PageAction action, Action *link)
     }
 }
 
-void Page::setFormFields(const QLinkedList<FormField *> &fields)
+void Page::setFormFields(const QList<FormField *> &fields)
 {
     qDeleteAll(d->formfields);
     d->formfields = fields;
@@ -967,11 +967,7 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
         QDomElement formListElement = document.createElement(QStringLiteral("forms"));
 
         // add every form data to the formList
-        QLinkedList<FormField *>::const_iterator fIt = formfields.constBegin(), fItEnd = formfields.constEnd();
-        for (; fIt != fItEnd; ++fIt) {
-            // get the form field
-            const FormField *f = *fIt;
-
+        for (const FormField *f : formfields) {
             QString newvalue = f->d_ptr->value();
             if (f->d_ptr->m_default == newvalue) {
                 continue;

@@ -825,7 +825,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
             page->setDuration(p->duration());
             page->setLabel(p->label());
 
-            QLinkedList<Okular::FormField *> okularFormFields;
+            QList<Okular::FormField *> okularFormFields;
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
             if (i > 0) { // for page 0 we handle the form fields at the end
                 okularFormFields = getFormFields(p);
@@ -859,7 +859,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
         const QVector<Poppler::FormFieldSignature *> allSignatures = pdfdoc->signatures();
         std::unique_ptr<Poppler::Page> page0(pdfdoc->page(0));
-        QLinkedList<Okular::FormField *> page0FormFields = getFormFields(page0.get());
+        QList<Okular::FormField *> page0FormFields = getFormFields(page0.get());
 
         for (Poppler::FormFieldSignature *s : allSignatures) {
             bool createSignature = true;
@@ -868,7 +868,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
 
             // See if the signature is in one of the already loaded page (i.e. 1 to end)
             for (Okular::Page *p : qAsConst(pagesVector)) {
-                const QLinkedList<Okular::FormField *> pageFormFields = p->formFields();
+                const QList<Okular::FormField *> pageFormFields = p->formFields();
                 if (std::find_if(pageFormFields.begin(), pageFormFields.end(), compareSignatureByFullyQualifiedName) != pageFormFields.end()) {
                     delete s;
                     createSignature = false;
@@ -1296,7 +1296,7 @@ void PDFGenerator::resolveMediaLinkReferences(Okular::Page *page)
         }
     }
 
-    const QLinkedList<Okular::FormField *> fields = page->formFields();
+    const QList<Okular::FormField *> fields = page->formFields();
     for (Okular::FormField *field : fields) {
         resolveMediaLinkReference(field->activationAction());
     }
@@ -1913,14 +1913,14 @@ void PDFGenerator::addTransition(Poppler::Page *pdfPage, Okular::Page *page)
     page->setTransition(transition);
 }
 
-QLinkedList<Okular::FormField *> PDFGenerator::getFormFields(Poppler::Page *popplerPage)
+QList<Okular::FormField *> PDFGenerator::getFormFields(Poppler::Page *popplerPage)
 {
     if (!popplerPage) {
         return {};
     }
 
     const QList<Poppler::FormField *> popplerFormFields = popplerPage->formFields();
-    QLinkedList<Okular::FormField *> okularFormFields;
+    QList<Okular::FormField *> okularFormFields;
     for (Poppler::FormField *f : popplerFormFields) {
         Okular::FormField *of = nullptr;
         switch (f->type()) {

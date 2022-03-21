@@ -108,7 +108,7 @@ void KJSFunctionsTest::initTestCase()
     QCOMPARE(m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess);
 
     const Okular::Page *page = m_document->page(0);
-    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    const QList<Okular::FormField *> pageFormFields = page->formFields();
     for (Okular::FormField *ff : pageFormFields) {
         m_fields.insert(ff->name(), ff);
     }

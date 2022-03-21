@@ -72,16 +72,14 @@ void EditFormsTest::init()
     QVERIFY(!m_document->canRedo());
 
     const Okular::Page *page = m_document->page(0);
-    QLinkedList<Okular::FormField *> pageFields = page->formFields();
+    const QList<Okular::FormField *> pageFields = page->formFields();
 
     // Clear lists
     m_checkBoxForms.clear();
     m_radioButtonForms.clear();
 
     // Collect forms of the various types
-    QLinkedList<Okular::FormField *>::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
-    for (; ffIt != ffEnd; ++ffIt) {
-        Okular::FormField *ff = *ffIt;
+    for (Okular::FormField *ff : pageFields) {
         ff->type();
 
         switch (ff->type()) {

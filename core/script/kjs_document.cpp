@@ -190,11 +190,10 @@ static KJSObject docGetField(KJSContext *context, void *object, const KJSArgumen
 
     QVector<Page *>::const_iterator pIt = doc->m_pagesVector.constBegin(), pEnd = doc->m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
-        const QLinkedList<Okular::FormField *> pageFields = (*pIt)->formFields();
-        QLinkedList<Okular::FormField *>::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
-        for (; ffIt != ffEnd; ++ffIt) {
-            if ((*ffIt)->fullyQualifiedName() == cName) {
-                return JSField::wrapField(context, *ffIt, *pIt);
+        const QList<Okular::FormField *> pageFields = (*pIt)->formFields();
+        for (FormField *form : pageFields) {
+            if (form->fullyQualifiedName() == cName) {
+                return JSField::wrapField(context, form, *pIt);
             }
         }
     }
@@ -250,12 +249,12 @@ static KJSObject docGetNthFieldName(KJSContext *ctx, void *object, const KJSArgu
     int numField = arguments.at(0).toInt32(ctx);
 
     for (const Page *pIt : qAsConst(doc->m_pagesVector)) {
-        const QLinkedList<Okular::FormField *> pageFields = pIt->formFields();
+        const QList<Okular::FormField *> pageFields = pIt->formFields();
 
         if (numField < pageFields.size()) {
-            const auto ffIt = pageFields.begin() + numField;
+            const Okular::FormField *form = pageFields[numField];
 
-            return KJSString((*ffIt)->fullyQualifiedName());
+            return KJSString(form->fullyQualifiedName());
         }
 
         numField -= pageFields.size();

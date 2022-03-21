@@ -158,7 +158,7 @@ public:
     TextPage *m_text;
     PageTransition *m_transition;
     HighlightAreaRect *m_textSelections;
-    QLinkedList<FormField *> formfields;
+    QList<FormField *> formfields;
     Action *m_openingAction;
     Action *m_closingAction;
     double m_duration;

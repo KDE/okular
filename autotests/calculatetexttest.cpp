@@ -61,7 +61,7 @@ void CalculateTextTest::testSimpleCalculate()
     // Field names in test document are:
     // field1, field2, field3, Sum, AVG, Prod, Min, Max
 
-    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    const QList<Okular::FormField *> pageFormFields = page->formFields();
     for (Okular::FormField *ff : pageFormFields) {
         fields.insert(ff->name(), static_cast<Okular::FormFieldText *>(ff));
     }

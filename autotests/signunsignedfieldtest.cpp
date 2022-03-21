@@ -84,7 +84,7 @@ void SignUnsignedFieldTest::cleanup()
 
 void SignUnsignedFieldTest::testSignUnsignedField()
 {
-    const QLinkedList<Okular::FormField *> forms = m_document->page(0)->formFields();
+    const QList<Okular::FormField *> forms = m_document->page(0)->formFields();
     QCOMPARE(forms.count(), 1);
     Okular::FormFieldSignature *ffs = dynamic_cast<Okular::FormFieldSignature *>(forms.first());
 
@@ -111,7 +111,7 @@ void SignUnsignedFieldTest::testSignUnsignedField()
         const QMimeType mime = db.mimeTypeForFile(f.fileName());
         QCOMPARE(m_document->openDocument(f.fileName(), QUrl(), mime), Okular::Document::OpenSuccess);
 
-        const QLinkedList<Okular::FormField *> newForms = m_document->page(0)->formFields();
+        const QList<Okular::FormField *> newForms = m_document->page(0)->formFields();
         QCOMPARE(newForms.count(), 1);
         ffs = dynamic_cast<Okular::FormFieldSignature *>(newForms.first());
         QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);

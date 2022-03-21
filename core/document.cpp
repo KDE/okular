@@ -1176,7 +1176,7 @@ void DocumentPrivate::recalculateForms()
             const Page *p = m_parent->page(pageIdx);
             if (p) {
                 bool pageNeedsRefresh = false;
-                const QLinkedList<Okular::FormField *> forms = p->formFields();
+                const QList<Okular::FormField *> forms = p->formFields();
                 for (FormField *form : forms) {
                     if (form->id() == formId) {
                         Action *action = form->additionalAction(FormField::CalculateField);
@@ -2145,7 +2145,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
         }
     }
 
-    QVector<QLinkedList<Okular::SourceRefObjectRect *>> refRects(m_pagesVector.size());
+    QVector<QList<Okular::SourceRefObjectRect *>> refRects(m_pagesVector.size());
     for (const pdfsyncpoint &pt : qAsConst(points)) {
         // drop pdfsync points not completely valid
         if (pt.page < 0 || pt.page >= m_pagesVector.size()) {
@@ -2663,7 +2663,7 @@ void Document::closeDocument()
                 }
             }
 
-            const QLinkedList<FormField *> forms = p->formFields();
+            const QList<FormField *> forms = p->formFields();
             for (const FormField *form : forms) {
                 const QList<Action *> additionalActions = form->additionalActions();
                 for (const Action *a : additionalActions) {

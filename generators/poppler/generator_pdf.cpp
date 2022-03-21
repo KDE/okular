@@ -2042,6 +2042,7 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     Poppler::PDFConverter::NewSignatureData pData;
     okularToPoppler(oData, &pData);
     if (!converter->sign(pData)) {
+        tf.remove();
         return false;
     }
 

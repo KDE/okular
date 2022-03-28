@@ -254,13 +254,7 @@ bool EBook_CHM::load(const QString &archiveName)
     }
 
 #if defined(WIN32)
-    // chm_open on Windows OS uses the following prototype:
-    //   struct chmFile* chm_open(BSTR filename);
-    //
-    // however internally it simply passes the filename
-    // directly to CreateFileW function without any conversion.
-    // Thus we need to pass it as WCHAR * and not BSTR.
-    m_chmFile = chm_open((BSTR)filename.toStdWString().c_str());
+    m_chmFile = chm_open((BSTR)QFile::encodeName(filename).constData());
 #else
     m_chmFile = chm_open(QFile::encodeName(filename));
 #endif

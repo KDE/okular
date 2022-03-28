@@ -24,7 +24,6 @@ target_link_libraries(okularplugin
         Qt5::Xml
         Qt5::Svg
         KF5::Bookmarks
-        KF5::IconThemes
         KF5::I18n
         KF5::Service
         okularcore

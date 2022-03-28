@@ -7,7 +7,6 @@
 #include "pagepainter.h"
 
 // qt / kde includes
-#include <KIconLoader>
 #include <QApplication>
 #include <QDebug>
 #include <QIcon>
@@ -33,7 +32,7 @@
 #include "settings.h"
 #include "settings_core.h"
 
-Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (QIcon::fromTheme(QLatin1String("okular")).pixmap(KIconLoader::SizeLarge)))
+Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (QIcon::fromTheme(QLatin1String("okular")).pixmap(48)))
 
 #define TEXTANNOTATION_ICONSIZE 24
 

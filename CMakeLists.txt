@@ -105,7 +105,6 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
-    Crash
     I18n
     IconThemes
     KIO
@@ -119,7 +118,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
 )
 
 if (BUILD_DESKTOP)
-    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts)
+    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash)
 endif()
 
 if(KF5Wallet_FOUND)

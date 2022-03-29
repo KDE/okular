@@ -117,9 +117,7 @@ WelcomeScreen::WelcomeScreen(QWidget *parent)
 
     setupUi(this);
 
-    KIconLoader loader;
-
-    appIcon->setPixmap(loader.loadIcon(QStringLiteral("okular"), KIconLoader::Group::Desktop, KIconLoader::SizeEnormous));
+    appIcon->setPixmap(QIcon::fromTheme(QStringLiteral("okular")).pixmap(KIconLoader::SizeEnormous));
 
     connect(openButton, &QPushButton::clicked, this, &WelcomeScreen::openClicked);
     connect(closeButton, &QPushButton::clicked, this, &WelcomeScreen::closeClicked);

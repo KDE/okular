@@ -207,7 +207,6 @@
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ro">Formate susținute: PDF, PS, Tiff, CHM, DjVu, imagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ta">ஆதரிக்கப்படும் கோப்பு வகைகள்: PDF, PS, Tiff, CHM, DjVu, படங்கள், DVI, XPS, Fiction Book, வரைகதை புத்தகம், Plucker, EPub, Fax</li>
@@ -311,7 +310,7 @@
       <caption xml:lang="ar">قراءة دليل في اوكلار</caption>
       <caption xml:lang="az">Okular'da oxumaq təlimatı</caption>
       <caption xml:lang="ca">Lectura de manuals a l'Okular</caption>
-      <caption xml:lang="ca-valencia">Lectura de manuals a l'Okular</caption>
+      <caption xml:lang="ca-valencia">Lectura de manuals a Okular</caption>
       <caption xml:lang="cs">Čtení manuálu v Okularu</caption>
       <caption xml:lang="de">Lesen eines Handbuchs in Okular</caption>
       <caption xml:lang="el">Ανάγνωση οδηγού χρήσης στο Okular</caption>

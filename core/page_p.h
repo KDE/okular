@@ -12,7 +12,6 @@
 #define _OKULAR_PAGE_PRIVATE_H_
 
 // qt/kde includes
-#include <QLinkedList>
 #include <QMap>
 #include <QString>
 #include <QTransform>

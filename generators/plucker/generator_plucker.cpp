@@ -129,7 +129,7 @@ QImage PluckerGenerator::image(Okular::PixmapRequest *request)
     p.end();
 
     if (!mLinkAdded.contains(request->pageNumber())) {
-        QLinkedList<Okular::ObjectRect *> objects;
+        QList<Okular::ObjectRect *> objects;
         for (int i = 0; i < mLinks.count(); ++i) {
             if (mLinks[i].page == request->pageNumber()) {
                 QTextDocument *document = mPages[request->pageNumber()];

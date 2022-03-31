@@ -51,10 +51,10 @@ using namespace Okular;
 
 static const double distanceConsideredEqual = 25; // 5px
 
-static void deleteObjectRects(QLinkedList<ObjectRect *> &rects, const QSet<ObjectRect::ObjectType> &which)
+static void deleteObjectRects(QList<ObjectRect *> &rects, const QSet<ObjectRect::ObjectType> &which)
 {
-    QLinkedList<ObjectRect *>::iterator it = rects.begin(), end = rects.end();
-    for (; it != end;) {
+    QList<ObjectRect *>::iterator it = rects.begin();
+    for (; it != rects.end();) {
         if (which.contains((*it)->objectType())) {
             delete *it;
             it = rects.erase(it);
@@ -279,9 +279,8 @@ bool Page::hasObjectRect(double x, double y, double xScale, double yScale) const
         return false;
     }
 
-    QLinkedList<ObjectRect *>::const_iterator it = m_rects.begin(), end = m_rects.end();
-    for (; it != end; ++it) {
-        if ((*it)->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
+    for (ObjectRect *rect : m_rects) {
+        if (rect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
             return true;
         }
     }
@@ -300,9 +299,8 @@ bool Page::hasHighlights(int s_id) const
         return true;
     }
     // iterate on the highlights list to find an entry by id
-    QLinkedList<HighlightAreaRect *>::const_iterator it = m_highlights.begin(), end = m_highlights.end();
-    for (; it != end; ++it) {
-        if ((*it)->s_id == s_id) {
+    for (HighlightAreaRect *highlight : m_highlights) {
+        if (highlight->s_id == s_id) {
             return true;
         }
     }
@@ -457,7 +455,7 @@ void PagePrivate::changeSize(const PageSize &size)
 const ObjectRect *Page::objectRect(ObjectRect::ObjectType type, double x, double y, double xScale, double yScale) const
 {
     // Walk list in reverse order so that annotations in the foreground are preferred
-    QLinkedListIterator<ObjectRect *> it(m_rects);
+    QListIterator<ObjectRect *> it(m_rects);
     it.toBack();
     while (it.hasPrevious()) {
         const ObjectRect *objrect = it.previous();
@@ -473,7 +471,7 @@ QList<const ObjectRect *> Page::objectRects(ObjectRect::ObjectType type, double 
 {
     QList<const ObjectRect *> result;
 
-    QLinkedListIterator<ObjectRect *> it(m_rects);
+    QListIterator<ObjectRect *> it(m_rects);
     it.toBack();
     while (it.hasPrevious()) {
         const ObjectRect *objrect = it.previous();
@@ -490,12 +488,11 @@ const ObjectRect *Page::nearestObjectRect(ObjectRect::ObjectType type, double x,
     ObjectRect *res = nullptr;
     double minDistance = std::numeric_limits<double>::max();
 
-    QLinkedList<ObjectRect *>::const_iterator it = m_rects.constBegin(), end = m_rects.constEnd();
-    for (; it != end; ++it) {
-        if ((*it)->objectType() == type) {
-            double d = (*it)->distanceSqr(x, y, xScale, yScale);
+    for (ObjectRect *rect : m_rects) {
+        if (rect->objectType() == type) {
+            double d = rect->distanceSqr(x, y, xScale, yScale);
             if (d < minDistance) {
-                res = (*it);
+                res = rect;
                 minDistance = d;
             }
         }
@@ -512,7 +509,7 @@ const PageTransition *Page::transition() const
     return d->m_transition;
 }
 
-QLinkedList<Annotation *> Page::annotations() const
+QList<Annotation *> Page::annotations() const
 {
     return m_annotations;
 }
@@ -596,7 +593,7 @@ void Page::setTextPage(TextPage *textPage)
     }
 }
 
-void Page::setObjectRects(const QLinkedList<ObjectRect *> &rects)
+void Page::setObjectRects(const QList<ObjectRect *> &rects)
 {
     QSet<ObjectRect::ObjectType> which;
     which << ObjectRect::Action << ObjectRect::Image;
@@ -607,15 +604,14 @@ void Page::setObjectRects(const QLinkedList<ObjectRect *> &rects)
      */
     const QTransform matrix = d->rotationMatrix();
 
-    QLinkedList<ObjectRect *>::const_iterator objectIt = rects.begin(), end = rects.end();
-    for (; objectIt != end; ++objectIt) {
-        (*objectIt)->transform(matrix);
+    for (ObjectRect *objectRect : rects) {
+        objectRect->transform(matrix);
     }
 
     m_rects << rects;
 }
 
-const QLinkedList<ObjectRect *> &Page::objectRects() const
+const QList<ObjectRect *> &Page::objectRects() const
 {
     return m_rects;
 }
@@ -704,12 +700,12 @@ bool Page::removeAnnotation(Annotation *annotation)
         return false;
     }
 
-    QLinkedList<Annotation *>::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
-    for (; aIt != aEnd; ++aIt) {
+    QList<Annotation *>::iterator aIt = m_annotations.begin();
+    for (; aIt != m_annotations.end(); ++aIt) {
         if ((*aIt) && (*aIt)->uniqueName() == annotation->uniqueName()) {
             int rectfound = false;
-            QLinkedList<ObjectRect *>::iterator it = m_rects.begin(), end = m_rects.end();
-            for (; it != end && !rectfound; ++it) {
+            QList<ObjectRect *>::iterator it = m_rects.begin();
+            for (; it != m_rects.end() && !rectfound; ++it) {
                 if (((*it)->objectType() == ObjectRect::OAnnotation) && ((*it)->object() == (*aIt))) {
                     delete *it;
                     it = m_rects.erase(it);
@@ -793,8 +789,8 @@ void Page::deleteRects()
 void PagePrivate::deleteHighlights(int s_id)
 {
     // delete highlights by ID
-    QLinkedList<HighlightAreaRect *>::iterator it = m_page->m_highlights.begin(), end = m_page->m_highlights.end();
-    while (it != end) {
+    QList<HighlightAreaRect *>::iterator it = m_page->m_highlights.begin();
+    while (it != m_page->m_highlights.end()) {
         HighlightAreaRect *highlight = *it;
         if (s_id == -1 || highlight->s_id == s_id) {
             it = m_page->m_highlights.erase(it);
@@ -934,10 +930,7 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
         QDomElement annotListElement = document.createElement(QStringLiteral("annotationList"));
 
         // add every annotation to the annotationList
-        QLinkedList<Annotation *>::const_iterator aIt = m_page->m_annotations.constBegin(), aEnd = m_page->m_annotations.constEnd();
-        for (; aIt != aEnd; ++aIt) {
-            // get annotation
-            const Annotation *a = *aIt;
+        for (const Annotation *a : qAsConst(m_page->m_annotations)) {
             // only save okular annotations (not the embedded in file ones)
             if (!(a->flags() & Annotation::External)) {
                 // append an filled-up element called 'annotation' to the list

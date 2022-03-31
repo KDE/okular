@@ -1140,7 +1140,7 @@ void PageView::selectAll()
     }
 }
 
-void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedList<Okular::Annotation *> &annotations)
+void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QList<Okular::Annotation *> &annotations)
 {
     qDeleteAll(item->videoWidgets());
     item->videoWidgets().clear();
@@ -1494,11 +1494,11 @@ void PageView::notifyPageChanged(int pageNumber, int changedFlags)
     }
 
     if (changedFlags & DocumentObserver::Annotations) {
-        const QLinkedList<Okular::Annotation *> annots = d->document->page(pageNumber)->annotations();
-        const QLinkedList<Okular::Annotation *>::ConstIterator annItEnd = annots.end();
+        const QList<Okular::Annotation *> annots = d->document->page(pageNumber)->annotations();
+        const QList<Okular::Annotation *>::ConstIterator annItEnd = annots.end();
         QSet<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
         for (; it != d->m_annowindows.end();) {
-            QLinkedList<Okular::Annotation *>::ConstIterator annIt = std::find(annots.begin(), annots.end(), (*it)->annotation());
+            QList<Okular::Annotation *>::ConstIterator annIt = std::find(annots.begin(), annots.end(), (*it)->annotation());
             if (annIt != annItEnd) {
                 (*it)->reloadInfo();
                 ++it;
@@ -1599,7 +1599,7 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
 
         // On close, run the widget scripts, needed for running animated PDF
         const Okular::Page *page = d->document->page(previous);
-        const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+        const QList<Okular::Annotation *> annotations = page->annotations();
         for (Okular::Annotation *annotation : annotations) {
             if (annotation->subType() == Okular::Annotation::AWidget) {
                 Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation *>(annotation);
@@ -1624,7 +1624,7 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
 
         // Opening any widget scripts, needed for running animated PDF
         const Okular::Page *page = d->document->page(current);
-        const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+        const QList<Okular::Annotation *> annotations = page->annotations();
         for (Okular::Annotation *annotation : annotations) {
             if (annotation->subType() == Okular::Annotation::AWidget) {
                 Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation *>(annotation);

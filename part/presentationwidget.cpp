@@ -331,7 +331,7 @@ void PresentationWidget::notifySetup(const QVector<Okular::Page *> &pageSet, int
     for (const Okular::Page *page : pageSet) {
         PresentationFrame *frame = new PresentationFrame();
         frame->page = page;
-        const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+        const QList<Okular::Annotation *> annotations = page->annotations();
         for (Okular::Annotation *a : annotations) {
             if (a->subType() == Okular::Annotation::AMovie) {
                 Okular::MovieAnnotation *movieAnn = static_cast<Okular::MovieAnnotation *>(a);
@@ -415,7 +415,7 @@ void PresentationWidget::notifyCurrentPageChanged(int previousPage, int currentP
         }
 
         // perform the additional actions of the page's annotations, if any
-        const QLinkedList<Okular::Annotation *> annotationsList = m_document->page(previousPage)->annotations();
+        const QList<Okular::Annotation *> annotationsList = m_document->page(previousPage)->annotations();
         for (const Okular::Annotation *annotation : annotationsList) {
             Okular::Action *action = nullptr;
 
@@ -459,7 +459,7 @@ void PresentationWidget::notifyCurrentPageChanged(int previousPage, int currentP
         }
 
         // perform the additional actions of the page's annotations, if any
-        const QLinkedList<Okular::Annotation *> annotationsList = m_document->page(m_frameIndex)->annotations();
+        const QList<Okular::Annotation *> annotationsList = m_document->page(m_frameIndex)->annotations();
         for (const Okular::Annotation *annotation : annotationsList) {
             Okular::Action *action = nullptr;
 

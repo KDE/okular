@@ -241,7 +241,7 @@ void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation
         m_djvu->linksAndAnnotationsForPage(i, &links, &annots);
         userMutex()->unlock();
         if (!links.isEmpty()) {
-            QLinkedList<Okular::ObjectRect *> rects;
+            QList<Okular::ObjectRect *> rects;
             QList<KDjVu::Link *>::ConstIterator it = links.constBegin();
             QList<KDjVu::Link *>::ConstIterator itEnd = links.constEnd();
             for (; it != itEnd; ++it) {

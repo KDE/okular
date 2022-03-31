@@ -2652,7 +2652,7 @@ void Document::closeDocument()
         // but that's too late in the cleanup process, i.e. the generator has already closed its document
         // and the document generator is nullptr
         for (Page *p : qAsConst(d->m_pagesVector)) {
-            const QLinkedList<ObjectRect *> &oRects = p->objectRects();
+            const QList<ObjectRect *> &oRects = p->objectRects();
             for (ObjectRect *oRect : oRects) {
                 if (oRect->objectType() == ObjectRect::Action) {
                     const Action *a = static_cast<const Action *>(oRect->object());
@@ -4746,8 +4746,8 @@ bool Document::swapBackingFile(const QString &newFileName, const QUrl &url)
     QVector<Page *> newPagesVector;
     Generator::SwapBackingFileResult result = d->m_generator->swapBackingFile(newFileName, newPagesVector);
     if (result != Generator::SwapBackingFileError) {
-        QLinkedList<ObjectRect *> rectsToDelete;
-        QLinkedList<Annotation *> annotationsToDelete;
+        QList<ObjectRect *> rectsToDelete;
+        QList<Annotation *> annotationsToDelete;
         QSet<PagePrivate *> pagePrivatesToDelete;
 
         if (result == Generator::SwapBackingFileReloadInternalData) {

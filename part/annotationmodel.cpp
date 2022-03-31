@@ -9,7 +9,6 @@
 
 #include "annotationmodel.h"
 
-#include <QLinkedList>
 #include <QList>
 #include <QPointer>
 
@@ -38,7 +37,7 @@ struct AnnItem {
     int page;
 };
 
-static QList<Okular::Annotation *> filterOutWidgetAnnotations(const QLinkedList<Okular::Annotation *> &annotations)
+static QList<Okular::Annotation *> filterOutWidgetAnnotations(const QList<Okular::Annotation *> &annotations)
 {
     QList<Okular::Annotation *> result;
 

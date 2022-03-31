@@ -567,9 +567,9 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
 /**
  * Note: the function will take ownership of the popplerLink objects.
  */
-static QLinkedList<Okular::ObjectRect *> generateLinks(const QList<Poppler::Link *> &popplerLinks)
+static QList<Okular::ObjectRect *> generateLinks(const QList<Poppler::Link *> &popplerLinks)
 {
-    QLinkedList<Okular::ObjectRect *> links;
+    QList<Okular::ObjectRect *> links;
     for (const Poppler::Link *popplerLink : popplerLinks) {
         QRectF linkArea = popplerLink->linkArea();
         double nl = linkArea.left(), nt = linkArea.top(), nr = linkArea.right(), nb = linkArea.bottom();
@@ -1281,7 +1281,7 @@ void PDFGenerator::resolveMediaLinkReferences(Okular::Page *page)
     resolveMediaLinkReference(const_cast<Okular::Action *>(page->pageAction(Okular::Page::Opening)));
     resolveMediaLinkReference(const_cast<Okular::Action *>(page->pageAction(Okular::Page::Closing)));
 
-    const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+    const QList<Okular::Annotation *> annotations = page->annotations();
     for (Okular::Annotation *annotation : annotations) {
         if (annotation->subType() == Okular::Annotation::AScreen) {
             Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation *>(annotation);

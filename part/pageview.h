@@ -220,7 +220,7 @@ private:
     // handle link clicked
     bool mouseReleaseOverLink(const Okular::ObjectRect *rect) const;
 
-    void createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedList<Okular::Annotation *> &annotations);
+    void createAnnotationsVideoWidgets(PageViewItem *item, const QList<Okular::Annotation *> &annotations);
 
     // Update speed of animated smooth scroll transitions
     void updateSmoothScrollAnimationSpeed();

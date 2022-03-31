@@ -154,12 +154,11 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                         {*/
 
             Okular::NormalizedRect *limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax);
-            QLinkedList<Okular::HighlightAreaRect *>::const_iterator h2It = page->m_highlights.constBegin(), hEnd = page->m_highlights.constEnd();
             Okular::HighlightAreaRect::const_iterator hIt;
-            for (; h2It != hEnd; ++h2It) {
-                for (hIt = (*h2It)->constBegin(); hIt != (*h2It)->constEnd(); ++hIt) {
+            for (const Okular::HighlightAreaRect *highlight : page->m_highlights) {
+                for (hIt = highlight->constBegin(); hIt != highlight->constEnd(); ++hIt) {
                     if ((*hIt).intersects(limitRect)) {
-                        bufferedHighlights->append(qMakePair((*h2It)->color, *hIt));
+                        bufferedHighlights->append(qMakePair(highlight->color, *hIt));
                     }
                 }
             }
@@ -185,9 +184,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         }
         // append annotations inside limits to the un/buffered list
         if (canDrawAnnotations) {
-            QLinkedList<Okular::Annotation *>::const_iterator aIt = page->m_annotations.constBegin(), aEnd = page->m_annotations.constEnd();
-            for (; aIt != aEnd; ++aIt) {
-                Okular::Annotation *ann = *aIt;
+            for (Okular::Annotation *ann : page->m_annotations) {
                 int flags = ann->flags();
 
                 if (flags & Okular::Annotation::Hidden) {
@@ -673,9 +670,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         QRect limitsEnlarged = limits;
         limitsEnlarged.adjust(-2, -2, 2, 2);
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QLinkedList<Okular::ObjectRect *>::const_iterator lIt = page->m_rects.constBegin(), lEnd = page->m_rects.constEnd();
-        for (; lIt != lEnd; ++lIt) {
-            Okular::ObjectRect *rect = *lIt;
+        for (Okular::ObjectRect *rect : page->m_rects) {
             if ((enhanceLinks && rect->objectType() == Okular::ObjectRect::Action) || (enhanceImages && rect->objectType() == Okular::ObjectRect::Image)) {
                 if (limitsEnlarged.intersects(rect->boundingRect(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()))) {
                     mixedPainter->strokePath(rect->region(), QPen(normalColor, 0));

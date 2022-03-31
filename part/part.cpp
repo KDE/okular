@@ -2926,7 +2926,7 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
         const int pagecount = m_document->pages();
 
         for (int pageno = 0; pageno < pagecount; ++pageno) {
-            const QLinkedList<Okular::Annotation *> annotations = m_document->page(pageno)->annotations();
+            const QList<Okular::Annotation *> annotations = m_document->page(pageno)->annotations();
             for (const Okular::Annotation *ann : annotations) {
                 if (!(ann->flags() & Okular::Annotation::External)) {
                     wontSaveAnnotations = true;

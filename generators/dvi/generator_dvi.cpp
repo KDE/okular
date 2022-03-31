@@ -138,9 +138,9 @@ void DviGenerator::fillViewportFromAnchor(Okular::DocumentViewport &vp, const An
     vp.rePos.pos = Okular::DocumentViewport::Center;
 }
 
-QLinkedList<Okular::ObjectRect *> DviGenerator::generateDviLinks(const dviPageInfo *pageInfo)
+QList<Okular::ObjectRect *> DviGenerator::generateDviLinks(const dviPageInfo *pageInfo)
 {
-    QLinkedList<Okular::ObjectRect *> dviLinks;
+    QList<Okular::ObjectRect *> dviLinks;
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
 

@@ -320,7 +320,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node, Okular::TextPage *tp)
             DOM::HTMLDocument domDoc = m_syncGen->htmlDocument();
             // only generate object info when generating a full page not a thumbnail
             if (genObjectRects) {
-                QLinkedList<Okular::ObjectRect *> objRects;
+                QList<Okular::ObjectRect *> objRects;
                 int xScale = m_syncGen->view()->width();
                 int yScale = m_syncGen->view()->height();
                 // getting links

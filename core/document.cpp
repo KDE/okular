@@ -346,7 +346,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
 
     // Store pages that weren't completely removed
 
-    QLinkedList<AllocatedPixmap *> pixmapsToKeep;
+    std::list<AllocatedPixmap *> pixmapsToKeep;
     while (memoryToFree > 0) {
         int clean_hits = 0;
         for (DocumentObserver *observer : qAsConst(m_observers)) {
@@ -374,12 +374,12 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
                 m_allocatedPixmapsTotalMemory -= memoryDiff;
 
                 if (p->memory > 0) {
-                    pixmapsToKeep.append(p);
+                    pixmapsToKeep.push_back(p);
                 } else {
                     delete p;
                 }
             } else {
-                pixmapsToKeep.append(p);
+                pixmapsToKeep.push_back(p);
             }
         }
 
@@ -388,7 +388,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
         }
     }
 
-    m_allocatedPixmaps += pixmapsToKeep;
+    m_allocatedPixmaps.splice(m_allocatedPixmaps.end(), pixmapsToKeep);
     // p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
 }
 
@@ -399,9 +399,9 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
  */
 AllocatedPixmap *DocumentPrivate::searchLowestPriorityPixmap(bool unloadableOnly, bool thenRemoveIt, DocumentObserver *observer)
 {
-    QLinkedList<AllocatedPixmap *>::iterator pIt = m_allocatedPixmaps.begin();
-    QLinkedList<AllocatedPixmap *>::iterator pEnd = m_allocatedPixmaps.end();
-    QLinkedList<AllocatedPixmap *>::iterator farthestPixmap = pEnd;
+    std::list<AllocatedPixmap *>::iterator pIt = m_allocatedPixmaps.begin();
+    std::list<AllocatedPixmap *>::iterator pEnd = m_allocatedPixmaps.end();
+    std::list<AllocatedPixmap *>::iterator farthestPixmap = pEnd;
     const int currentViewportPage = (*m_viewportIterator).pageNumber;
 
     /* Find the pixmap that is farthest from the current viewport */
@@ -657,7 +657,7 @@ bool DocumentPrivate::loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags lo
                         historyNode = historyNode.nextSibling();
                     }
                     // consistency check
-                    if (m_viewportHistory.isEmpty()) {
+                    if (m_viewportHistory.empty()) {
                         m_viewportIterator = m_viewportHistory.insert(m_viewportHistory.end(), DocumentViewport());
                     }
                 } else if (infoElement.tagName() == QLatin1String("rotation")) {
@@ -1274,12 +1274,12 @@ void DocumentPrivate::saveDocumentInfo() const
         rotationNode.appendChild(doc.createTextNode(QString::number((int)m_rotation)));
     }
     // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
-    const auto currentViewportIterator = QLinkedList<DocumentViewport>::const_iterator(m_viewportIterator);
-    QLinkedList<DocumentViewport>::const_iterator backIterator = currentViewportIterator;
-    if (backIterator != m_viewportHistory.constEnd()) {
+    const auto currentViewportIterator = std::list<DocumentViewport>::const_iterator(m_viewportIterator);
+    std::list<DocumentViewport>::const_iterator backIterator = currentViewportIterator;
+    if (backIterator != m_viewportHistory.end()) {
         // go back up to OKULAR_HISTORY_SAVEDSTEPS steps from the current viewportIterator
         int backSteps = OKULAR_HISTORY_SAVEDSTEPS;
-        while (backSteps-- && backIterator != m_viewportHistory.constBegin()) {
+        while (backSteps-- && backIterator != m_viewportHistory.begin()) {
             --backIterator;
         }
 
@@ -1288,7 +1288,7 @@ void DocumentPrivate::saveDocumentInfo() const
         generalInfo.appendChild(historyNode);
 
         // add old[backIterator] and present[viewportIterator] items
-        QLinkedList<DocumentViewport>::const_iterator endIt = currentViewportIterator;
+        std::list<DocumentViewport>::const_iterator endIt = currentViewportIterator;
         ++endIt;
         while (backIterator != endIt) {
             QString name = (backIterator == currentViewportIterator) ? QStringLiteral("current") : QStringLiteral("oldPage");
@@ -1343,8 +1343,8 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     // find a request
     PixmapRequest *request = nullptr;
     m_pixmapRequestsMutex.lock();
-    while (!m_pixmapRequestsStack.isEmpty() && !request) {
-        PixmapRequest *r = m_pixmapRequestsStack.last();
+    while (!m_pixmapRequestsStack.empty() && !request) {
+        PixmapRequest *r = m_pixmapRequestsStack.back();
         if (!r) {
             m_pixmapRequestsStack.pop_back();
             continue;
@@ -1478,7 +1478,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height()) : request->normalizedRect().geometry(request->width(), request->height());
         qCDebug(OkularCoreDebug).nospace() << "sending request observer=" << request->observer() << " " << requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous()
                                            << " isTile == " << request->isTile();
-        m_pixmapRequestsStack.removeAll(request);
+        m_pixmapRequestsStack.remove(request);
 
         if (tm) {
             tm->setRequest(request->normalizedRect(), request->width(), request->height());
@@ -1578,7 +1578,7 @@ void DocumentPrivate::slotGeneratorConfigChanged()
     }
 
     // free memory if in 'low' profile
-    if (SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low && !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty()) {
+    if (SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low && !m_allocatedPixmaps.empty() && !m_pagesVector.isEmpty()) {
         cleanupPixmapMemory();
     }
 }
@@ -2168,8 +2168,8 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
 void DocumentPrivate::clearAndWaitForRequests()
 {
     m_pixmapRequestsMutex.lock();
-    QLinkedList<PixmapRequest *>::const_iterator sIt = m_pixmapRequestsStack.constBegin();
-    QLinkedList<PixmapRequest *>::const_iterator sEnd = m_pixmapRequestsStack.constEnd();
+    std::list<PixmapRequest *>::const_iterator sIt = m_pixmapRequestsStack.begin();
+    std::list<PixmapRequest *>::const_iterator sEnd = m_pixmapRequestsStack.end();
     for (; sIt != sEnd; ++sIt) {
         delete *sIt;
     }
@@ -2180,7 +2180,7 @@ void DocumentPrivate::clearAndWaitForRequests()
     bool startEventLoop = false;
     do {
         m_pixmapRequestsMutex.lock();
-        startEventLoop = !m_executingPixmapRequests.isEmpty();
+        startEventLoop = !m_executingPixmapRequests.empty();
 
         if (m_generator->hasFeature(Generator::SupportsCancelling)) {
             for (PixmapRequest *executingRequest : qAsConst(m_executingPixmapRequests)) {
@@ -2753,7 +2753,7 @@ void Document::closeDocument()
     // reset internal variables
 
     d->m_viewportHistory.clear();
-    d->m_viewportHistory.append(DocumentViewport());
+    d->m_viewportHistory.emplace_back(DocumentViewport());
     d->m_viewportIterator = d->m_viewportHistory.begin();
     d->m_allocatedPixmapsTotalMemory = 0;
     d->m_allocatedTextPagesFifo.clear();
@@ -2799,8 +2799,8 @@ void Document::removeObserver(DocumentObserver *pObserver)
         }
 
         // [MEM] free observer's allocation descriptors
-        QLinkedList<AllocatedPixmap *>::iterator aIt = d->m_allocatedPixmaps.begin();
-        QLinkedList<AllocatedPixmap *>::iterator aEnd = d->m_allocatedPixmaps.end();
+        std::list<AllocatedPixmap *>::iterator aIt = d->m_allocatedPixmaps.begin();
+        std::list<AllocatedPixmap *>::iterator aEnd = d->m_allocatedPixmaps.end();
         while (aIt != aEnd) {
             AllocatedPixmap *p = *aIt;
             if (p->observer == pObserver) {
@@ -2849,7 +2849,7 @@ void Document::reparseConfig()
     }
 
     // free memory if in 'low' profile
-    if (SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low && !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty()) {
+    if (SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low && !d->m_allocatedPixmaps.empty() && !d->m_pagesVector.isEmpty()) {
         d->cleanupPixmapMemory();
     }
 }
@@ -3350,7 +3350,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
     }
     const bool removeAllPrevious = reqOptions & RemoveAllPrevious;
     d->m_pixmapRequestsMutex.lock();
-    QLinkedList<PixmapRequest *>::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
+    std::list<PixmapRequest *>::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
     while (sIt != sEnd) {
         if ((*sIt)->observer() == requesterObserver && (removeAllPrevious || requestedPages.contains((*sIt)->pageNumber()))) {
             // delete request and remove it from stack
@@ -3431,7 +3431,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
         // add request to the 'stack' at the right place
         if (!request->priority()) {
             // add priority zero requests to the top of the stack
-            d->m_pixmapRequestsStack.append(request);
+            d->m_pixmapRequestsStack.push_back(request);
         } else {
             // insert in stack sorted by priority
             sIt = d->m_pixmapRequestsStack.begin();
@@ -3704,7 +3704,7 @@ void Document::setViewportWithHistory(const DocumentViewport &viewport, Document
         d->m_viewportHistory.erase(++d->m_viewportIterator, d->m_viewportHistory.end());
 
         // keep the list to a reasonable size by removing head when needed
-        if (d->m_viewportHistory.count() >= OKULAR_HISTORY_MAXSTEPS) {
+        if (d->m_viewportHistory.size() >= OKULAR_HISTORY_MAXSTEPS) {
             d->m_viewportHistory.pop_front();
         }
 
@@ -3776,9 +3776,9 @@ void Document::setPrevViewport()
 void Document::setNextViewport()
 // restore next viewport from the history
 {
-    auto nextIterator = QLinkedList<DocumentViewport>::const_iterator(d->m_viewportIterator);
+    auto nextIterator = std::list<DocumentViewport>::const_iterator(d->m_viewportIterator);
     ++nextIterator;
-    if (nextIterator != d->m_viewportHistory.constEnd()) {
+    if (nextIterator != d->m_viewportHistory.end()) {
         const int oldViewportPage = (*d->m_viewportIterator).pageNumber;
 
         // restore next viewport and notify it to observers
@@ -5288,7 +5288,7 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
 
     if (!m_generator || m_closingLoop) {
         m_pixmapRequestsMutex.lock();
-        m_executingPixmapRequests.removeAll(req);
+        m_executingPixmapRequests.remove(req);
         m_pixmapRequestsMutex.unlock();
         delete req;
         if (m_closingLoop) {
@@ -5305,8 +5305,8 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
 
     if (!req->shouldAbortRender()) {
         // [MEM] 1.1 find and remove a previous entry for the same page and id
-        QLinkedList<AllocatedPixmap *>::iterator aIt = m_allocatedPixmaps.begin();
-        QLinkedList<AllocatedPixmap *>::iterator aEnd = m_allocatedPixmaps.end();
+        std::list<AllocatedPixmap *>::iterator aIt = m_allocatedPixmaps.begin();
+        std::list<AllocatedPixmap *>::iterator aEnd = m_allocatedPixmaps.end();
         for (; aIt != aEnd; ++aIt) {
             if ((*aIt)->page == req->pageNumber() && (*aIt)->observer == req->observer()) {
                 AllocatedPixmap *p = *aIt;
@@ -5329,7 +5329,7 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
             }
 
             AllocatedPixmap *memoryPage = new AllocatedPixmap(req->observer(), req->pageNumber(), memoryBytes);
-            m_allocatedPixmaps.append(memoryPage);
+            m_allocatedPixmaps.push_back(memoryPage);
             m_allocatedPixmapsTotalMemory += memoryBytes;
 
             // 2. notify an observer that its pixmap changed
@@ -5344,13 +5344,13 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
 
     // 3. delete request
     m_pixmapRequestsMutex.lock();
-    m_executingPixmapRequests.removeAll(req);
+    m_executingPixmapRequests.remove(req);
     m_pixmapRequestsMutex.unlock();
     delete req;
 
     // 4. start a new generation if some is pending
     m_pixmapRequestsMutex.lock();
-    bool hasPixmaps = !m_pixmapRequestsStack.isEmpty();
+    bool hasPixmaps = !m_pixmapRequestsStack.empty();
     m_pixmapRequestsMutex.unlock();
     if (hasPixmaps) {
         sendGeneratorPixmapRequest();

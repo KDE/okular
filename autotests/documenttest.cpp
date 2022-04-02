@@ -72,14 +72,14 @@ void DocumentTest::testDocdataMigration()
 {
     Okular::SettingsCore::instance(QStringLiteral("documenttest"));
 
-    const QUrl testFileUrl = QUrl::fromLocalFile(KDESRCDIR "data/file1.pdf");
+    const QUrl testFileUrl = QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf"));
     const QString testFilePath = testFileUrl.toLocalFile();
     const qint64 testFileSize = QFileInfo(testFilePath).size();
 
     // Copy XML file to the docdata/ directory
     const QString docDataPath = Okular::DocumentPrivate::docDataFileName(testFileUrl, testFileSize);
     QFile::remove(docDataPath);
-    QVERIFY(QFile::copy(KDESRCDIR "data/file1-docdata.xml", docDataPath));
+    QVERIFY(QFile::copy(QStringLiteral(KDESRCDIR "data/file1-docdata.xml"), docDataPath));
 
     // Open our document
     Okular::Document *m_document = new Okular::Document(nullptr);

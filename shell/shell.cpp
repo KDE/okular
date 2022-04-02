@@ -493,7 +493,7 @@ void Shell::fileOpen()
     // that's solvable by choosing "All Files" and it's not that common while it's more convenient to
     // only get shown the files that the application can open by default instead of all of them
 #if KIO_VERSION >= QT_VERSION_CHECK(5, 73, 0)
-    const bool useMimeTypeFilters = qgetenv("XDG_CURRENT_DESKTOP").toLower() == QStringLiteral("kde");
+    const bool useMimeTypeFilters = qgetenv("XDG_CURRENT_DESKTOP").toLower() == "kde";
 #else
     const bool useMimeTypeFilters = false;
 #endif

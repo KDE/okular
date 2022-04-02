@@ -26,7 +26,7 @@ void AndroidInstance::openFile(const QString &title, const QStringList &mimes)
                                               "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V",
                                               activity.object<jobject>(),
                                               QAndroidJniObject::fromString(title).object<jstring>(),
-                                              QAndroidJniObject::fromString(mimes.join(';')).object<jstring>());
+                                              QAndroidJniObject::fromString(mimes.join(QLatin1Char(';'))).object<jstring>());
     if (_env->ExceptionCheck()) {
         _env->ExceptionClear();
         qWarning() << "couldn't launch intent";

@@ -171,7 +171,8 @@ void EmbeddedFilesDialog::viewFile(Okular::EmbeddedFile *ef)
 
     // save in temporary directory with a unique name resembling the attachment name,
     // using QTemporaryFile's XXXXXX placeholder
-    QTemporaryFile *tmpFile = new QTemporaryFile(QDir::tempPath() + '/' + fileInfo.baseName() + ".XXXXXX" + (fileInfo.completeSuffix().isEmpty() ? QLatin1String("") : QString('.' + fileInfo.completeSuffix())));
+    QTemporaryFile *tmpFile =
+        new QTemporaryFile(QDir::tempPath() + QLatin1Char('/') + fileInfo.baseName() + QStringLiteral(".XXXXXX") + (fileInfo.completeSuffix().isEmpty() ? QLatin1String("") : QString(QLatin1Char('.') + fileInfo.completeSuffix())));
     GuiUtils::writeEmbeddedFile(ef, this, *tmpFile);
 
     // set readonly to prevent the viewer application from modifying it

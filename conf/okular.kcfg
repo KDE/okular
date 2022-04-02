@@ -52,19 +52,19 @@
     <code>
       QStringList drawingTools;
       // load the default tool list from the 'xml tools definition' file
-      QFile infoDrawingFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/drawingtools.xml") );
+      QFile infoDrawingFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/drawingtools.xml")) );
       if ( infoDrawingFile.exists() &amp;&amp; infoDrawingFile.open( QIODevice::ReadOnly ) )
       {
           QDomDocument doc;
           if ( doc.setContent( &amp;infoDrawingFile ) )
           {
-              const QDomElement toolsDefinition = doc.elementsByTagName("drawingTools").item( 0 ).toElement();
+              const QDomElement toolsDefinition = doc.elementsByTagName(QStringLiteral("drawingTools")).item( 0 ).toElement();
                // create the annotationTools list from the XML dom tree
               QDomNode toolDescription = toolsDefinition.firstChild();
               while ( toolDescription.isElement() )
               {
                   const QDomElement toolElement = toolDescription.toElement();
-                  if ( toolElement.tagName() == "tool" )
+                  if ( toolElement.tagName() == QStringLiteral("tool") )
                   {
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );
@@ -90,19 +90,19 @@
     <code>
       QStringList builtinAnnotationTools;
       // load the default tool list from the 'xml tools definition' file
-      QFile infoFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/tools.xml") );
+      QFile infoFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/tools.xml")) );
       if ( infoFile.exists() &amp;&amp; infoFile.open( QIODevice::ReadOnly ) )
       {
           QDomDocument doc;
           if ( doc.setContent( &amp;infoFile ) )
           {
-              QDomElement toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
+              QDomElement toolsDefinition = doc.elementsByTagName(QStringLiteral("annotatingTools")).item( 0 ).toElement();
                // create the builtinAnnotationTools list from the XML dom tree
               QDomNode toolDescription = toolsDefinition.firstChild();
               while ( toolDescription.isElement() )
               {
                   QDomElement toolElement = toolDescription.toElement();
-                  if ( toolElement.tagName() == "tool" )
+                  if ( toolElement.tagName() == QStringLiteral("tool") )
                   {
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );
@@ -129,19 +129,19 @@
     <code>
       QStringList quickAnnotationTools;
       // load the default tool list from the 'xml tools definition' file
-      QFile quickAnnFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/toolsQuick.xml") );
+      QFile quickAnnFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/toolsQuick.xml")) );
       if ( quickAnnFile.exists() &amp;&amp; quickAnnFile.open( QIODevice::ReadOnly ) )
       {
           QDomDocument doc;
           if ( doc.setContent( &amp;quickAnnFile ) )
           {
-              QDomElement toolsDefinition = doc.elementsByTagName("quickAnnotatingTools").item( 0 ).toElement();
+              QDomElement toolsDefinition = doc.elementsByTagName(QStringLiteral("quickAnnotatingTools")).item( 0 ).toElement();
                // create the quickAnnotationTools list from the XML dom tree
               QDomNode toolDescription = toolsDefinition.firstChild();
               while ( toolDescription.isElement() )
               {
                   QDomElement toolElement = toolDescription.toElement();
-                  if ( toolElement.tagName() == "tool" )
+                  if ( toolElement.tagName() == QStringLiteral("tool") )
                   {
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );

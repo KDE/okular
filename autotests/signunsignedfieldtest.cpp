@@ -115,7 +115,7 @@ void SignUnsignedFieldTest::testSignUnsignedField()
         QCOMPARE(newForms.count(), 1);
         ffs = dynamic_cast<Okular::FormFieldSignature *>(newForms.first());
         QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
-        QCOMPARE(ffs->signatureInfo().signerName(), "FakeOkular");
+        QCOMPARE(ffs->signatureInfo().signerName(), QStringLiteral("FakeOkular"));
     }
 }
 

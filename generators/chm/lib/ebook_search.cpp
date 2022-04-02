@@ -160,7 +160,7 @@ bool EBookSearch::searchQuery(const QString &query, QList<QUrl> *results, EBook 
         const QChar ch = iChar.toLower();
 
         // a quote either begins or ends the phrase
-        if (ch == '"') {
+        if (ch == QLatin1Char('"')) {
             keeper.addTerm(term);
 
             if (keeper.isInPhrase()) {

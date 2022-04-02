@@ -444,7 +444,7 @@ void PartTest::testClickUrlLinkWhileInSelectionMode()
     // expect that the urlHandler signal was called
     QTRY_COMPARE(openUrlSignalSpy.count(), 1);
     QList<QVariant> arguments = openUrlSignalSpy.takeFirst();
-    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl("mailto:foo@foo.bar"));
+    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl(QStringLiteral("mailto:foo@foo.bar")));
 }
 
 void PartTest::testeTextSelectionOverAndAcrossLinks_data()
@@ -541,7 +541,7 @@ void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
     // expect that the urlHandler signal was called
     QTRY_COMPARE(openUrlSignalSpy.count(), 1);
     QList<QVariant> arguments = openUrlSignalSpy.takeFirst();
-    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl("mailto:foo@foo.bar"));
+    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl(QStringLiteral("mailto:foo@foo.bar")));
 }
 
 // r-click on the selected text gives the "Go To:" content menu option
@@ -846,7 +846,7 @@ void PartTest::simulateMouseSelection(double startX, double startY, double endX,
 void PartTest::testSaveAsToNonExistingPath()
 {
     Okular::Part part(nullptr, nullptr, QVariantList());
-    part.openDocument(KDESRCDIR "data/file1.pdf");
+    part.openDocument(QStringLiteral(KDESRCDIR "data/file1.pdf"));
 
     QString saveFilePath;
     {
@@ -867,7 +867,7 @@ void PartTest::testSaveAsToSymlink()
 {
 #ifdef Q_OS_UNIX
     Okular::Part part(nullptr, nullptr, QVariantList());
-    part.openDocument(KDESRCDIR "data/file1.pdf");
+    part.openDocument(QStringLiteral(KDESRCDIR "data/file1.pdf"));
 
     QTemporaryFile newFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
     newFile.open();
@@ -905,7 +905,7 @@ void PartTest::testSaveIsSymlink()
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
     }
 
-    QFile::copy(KDESRCDIR "data/file1.pdf", newFilePath);
+    QFile::copy(QStringLiteral(KDESRCDIR "data/file1.pdf"), newFilePath);
 
     QString linkFilePath;
     {
@@ -1609,7 +1609,7 @@ void PartTest::testAnnotWindow()
     part.m_document->addPageAnnotation(0, annot2);
     QVERIFY(part.m_document->page(0)->annotations().size() == 2);
 
-    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>("delayResizeEventTimer").at(0);
+    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>(QStringLiteral("delayResizeEventTimer")).at(0);
     QVERIFY(delayResizeEventTimer->isActive());
     QTest::qWait(delayResizeEventTimer->interval() * 2);
 
@@ -1623,7 +1623,7 @@ void PartTest::testAnnotWindow()
     const NormalizedPoint annot1pt = annot1->boundingRectangle().center();
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * annot1pt.x, height * annot1pt.y));
     QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot1pt.x, height * annot1pt.y));
-    QTRY_COMPARE(part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 1);
+    QTRY_COMPARE(part.m_pageView->findChildren<QFrame *>(QStringLiteral("AnnotWindow")).size(), 1);
     // Verify that the window is visible
     QFrame *win1 = part.m_pageView->findChild<QFrame *>(QStringLiteral("AnnotWindow"));
     QVERIFY(!win1->visibleRegion().isEmpty());
@@ -1632,7 +1632,7 @@ void PartTest::testAnnotWindow()
     const NormalizedPoint annot2pt = annot2->boundingRectangle().center();
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * annot2pt.x, height * annot2pt.y));
     QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot2pt.x, height * annot2pt.y));
-    QTRY_COMPARE(part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 2);
+    QTRY_COMPARE(part.m_pageView->findChildren<QFrame *>(QStringLiteral("AnnotWindow")).size(), 2);
     // Verify that the first window is hidden covered by the second, which is visible
     QList<QFrame *> lstWin = part.m_pageView->findChildren<QFrame *>(QStringLiteral("AnnotWindow"));
     QFrame *win2;
@@ -1691,7 +1691,7 @@ void PartTest::testAdditionalActionTriggers()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>("delayResizeEventTimer").at(0);
+    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>(QStringLiteral("delayResizeEventTimer")).at(0);
     QVERIFY(delayResizeEventTimer->isActive());
     QTest::qWait(delayResizeEventTimer->interval() * 2);
 
@@ -1873,7 +1873,7 @@ void PartTest::testOpenAtPage()
     // 'page=<pagenum>' param as specified in RFC 3778
     const uint targetPageNumB = 15;
     const uint expectedPageB = targetPageNumB - 1;
-    url.setFragment("page=" + QString::number(targetPageNumB));
+    url.setFragment(QStringLiteral("page=") + QString::number(targetPageNumB));
     part.openUrl(url);
     QCOMPARE(part.m_document->currentPage(), expectedPageB);
 }
@@ -2047,7 +2047,7 @@ void PartTest::testZoomInFacingPages()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
     facingAction->trigger();
-    while (zoomSelectAction->currentText() != "12%") {
+    while (zoomSelectAction->currentText() != QStringLiteral("12%")) {
         QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomOut"));
     }
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
@@ -2091,10 +2091,25 @@ void PartTest::testZoomWithCrop()
     for (int i = 0; i < 20; i++) {
         QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomOut"));
     }
-    QCOMPARE(zoomSelectAction->currentText(), "12%");
+    QCOMPARE(zoomSelectAction->currentText(), QStringLiteral("12%"));
 
     // Zoom in and out and check that all zoom levels appear
-    QSet<QString> zooms_ref {"12%", "25%", "33%", "50%", "66%", "75%", "100%", "125%", "150%", "200%", "400%", "800%", "1,600%", "2,500%", "5,000%", "10,000%"};
+    QSet<QString> zooms_ref {QStringLiteral("12%"),
+                             QStringLiteral("25%"),
+                             QStringLiteral("33%"),
+                             QStringLiteral("50%"),
+                             QStringLiteral("66%"),
+                             QStringLiteral("75%"),
+                             QStringLiteral("100%"),
+                             QStringLiteral("125%"),
+                             QStringLiteral("150%"),
+                             QStringLiteral("200%"),
+                             QStringLiteral("400%"),
+                             QStringLiteral("800%"),
+                             QStringLiteral("1,600%"),
+                             QStringLiteral("2,500%"),
+                             QStringLiteral("5,000%"),
+                             QStringLiteral("10,000%")};
 
     for (int j = 0; j < 2; j++) {
         QSet<QString> zooms;
@@ -2161,7 +2176,7 @@ void PartTest::testLinkWithCrop()
     QTest::mouseMove(part.m_pageView->viewport(), click);
     QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, click);
 
-    QTRY_VERIFY2_WITH_TIMEOUT(qAbs(part.m_document->viewport().rePos.normalizedY - 0.167102333237) < 0.01, qPrintable(QString("We are at %1").arg(part.m_document->viewport().rePos.normalizedY)), 500);
+    QTRY_VERIFY2_WITH_TIMEOUT(qAbs(part.m_document->viewport().rePos.normalizedY - 0.167102333237) < 0.01, qPrintable(QStringLiteral("We are at %1").arg(part.m_document->viewport().rePos.normalizedY)), 500);
 
     // Deactivate "Trim Margins"
     cropAction->trigger();

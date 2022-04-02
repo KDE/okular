@@ -238,19 +238,19 @@ Okular::DocumentInfo GSGenerator::generateDocumentInfo(const QSet<Okular::Docume
 {
     Okular::DocumentInfo docInfo;
     if (keys.contains(Okular::DocumentInfo::Title)) {
-        docInfo.set(Okular::DocumentInfo::Title, spectre_document_get_title(m_internalDocument));
+        docInfo.set(Okular::DocumentInfo::Title, QString::fromUtf8(spectre_document_get_title(m_internalDocument)));
     }
     if (keys.contains(Okular::DocumentInfo::Author)) {
-        docInfo.set(Okular::DocumentInfo::Author, spectre_document_get_for(m_internalDocument));
+        docInfo.set(Okular::DocumentInfo::Author, QString::fromUtf8(spectre_document_get_for(m_internalDocument)));
     }
     if (keys.contains(Okular::DocumentInfo::Creator)) {
-        docInfo.set(Okular::DocumentInfo::Creator, spectre_document_get_creator(m_internalDocument));
+        docInfo.set(Okular::DocumentInfo::Creator, QString::fromUtf8(spectre_document_get_creator(m_internalDocument)));
     }
     if (keys.contains(Okular::DocumentInfo::CreationDate)) {
-        docInfo.set(Okular::DocumentInfo::CreationDate, spectre_document_get_creation_date(m_internalDocument));
+        docInfo.set(Okular::DocumentInfo::CreationDate, QString::fromUtf8(spectre_document_get_creation_date(m_internalDocument)));
     }
     if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
-        docInfo.set(QStringLiteral("dscversion"), spectre_document_get_format(m_internalDocument), i18n("Document version"));
+        docInfo.set(QStringLiteral("dscversion"), QString::fromUtf8(spectre_document_get_format(m_internalDocument)), i18n("Document version"));
     }
 
     if (keys.contains(Okular::DocumentInfo::MimeType)) {

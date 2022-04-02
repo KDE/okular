@@ -86,7 +86,8 @@ bool PDFSettingsWidget::event(QEvent *e)
         m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
 
         for (auto cert : certs) {
-            new QTreeWidgetItem(m_tree, {cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert->validityEnd().toString("yyyy-MM-dd")});
+            new QTreeWidgetItem(m_tree,
+                                {cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert->validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
         }
         qDeleteAll(certs);
 

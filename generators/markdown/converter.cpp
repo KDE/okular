@@ -57,13 +57,13 @@ Converter::~Converter()
 
 QTextDocument *Converter::convert(const QString &fileName)
 {
-    m_markdownFile = fopen(fileName.toLocal8Bit(), "rb");
+    m_markdownFile = fopen(fileName.toLocal8Bit().constData(), "rb");
     if (!m_markdownFile) {
         Q_EMIT error(i18n("Failed to open the document"), -1);
         return nullptr;
     }
 
-    m_fileDir = QDir(fileName.left(fileName.lastIndexOf('/')));
+    m_fileDir = QDir(fileName.left(fileName.lastIndexOf(QLatin1Char('/'))));
 
     QTextDocument *doc = convertOpenFile();
     QHash<QString, QTextFragment> internalLinks;
@@ -151,7 +151,7 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
             const QTextCharFormat textCharFormat = textFragment.charFormat();
             if (textCharFormat.isAnchor()) {
                 const QString href = textCharFormat.anchorHref();
-                if (href.startsWith('#')) { // It's an internal link, store it and we'll resolve it at the end
+                if (href.startsWith(QLatin1Char('#'))) { // It's an internal link, store it and we'll resolve it at the end
                     internalLinks.insert(href.mid(1), textFragment);
                 } else {
                     Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(textCharFormat.anchorHref()));

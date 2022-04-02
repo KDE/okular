@@ -65,11 +65,11 @@ bool Okular::extractLilyPondSourceReference(const QUrl &url, QString *file, int 
     }
 
     // There can be more, in case the filename contains :
-    if (url.fileName().count(':') < 3) {
+    if (url.fileName().count(QLatin1Char(':')) < 3) {
         return false;
     }
 
-    QStringList parts(url.path().split(':'));
+    QStringList parts(url.path().split(QLatin1Char(':')));
 
     bool ok;
     // Take out the things we need
@@ -90,7 +90,7 @@ bool Okular::extractLilyPondSourceReference(const QUrl &url, QString *file, int 
     }
 
     // In case the path itself contains :, we need to reconstruct it after removing all the numbers
-    *file = parts.join(':');
+    *file = parts.join(QLatin1Char(':'));
     return (!file->isEmpty());
 }
 

@@ -49,7 +49,7 @@ struct epub *EpubDocument::getEpub()
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
     mCurrentSubDocument.clear();
-    int index = doc.indexOf('/');
+    int index = doc.indexOf(QLatin1Char('/'));
     if (index > 0) {
         mCurrentSubDocument = QUrl::fromLocalFile(doc.left(index + 1));
     }

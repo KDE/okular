@@ -20,7 +20,7 @@
 #include "helperxmlhandler_epubcontent.h"
 #include "helperxmlhandler_epubtoc.h"
 
-static const char *URL_SCHEME_EPUB = "epub";
+#define URL_SCHEME_EPUB QStringLiteral("epub")
 
 EBook_EPUB::EBook_EPUB()
     : EBook()
@@ -203,7 +203,7 @@ bool EBook_EPUB::parseBookinfo()
 
     // All the files, including TOC, are relative to the container_parser.contentPath
     m_documentRoot.clear();
-    int sep = container_parser.contentPath.lastIndexOf('/');
+    int sep = container_parser.contentPath.lastIndexOf(QLatin1Char('/'));
 
     if (sep != -1) {
         m_documentRoot = container_parser.contentPath.left(sep + 1); // Keep the trailing slash
@@ -266,7 +266,7 @@ QUrl EBook_EPUB::pathToUrl(const QString &link) const
     url.setHost(URL_SCHEME_EPUB);
 
     // Does the link contain the fragment as well?
-    int off = link.indexOf('#');
+    int off = link.indexOf(QLatin1Char('#'));
     QString path;
 
     if (off != -1) {
@@ -276,8 +276,8 @@ QUrl EBook_EPUB::pathToUrl(const QString &link) const
         path = link;
     }
 
-    if (!path.startsWith('/')) {
-        path.prepend('/');
+    if (!path.startsWith(QLatin1Char('/'))) {
+        path.prepend(QLatin1Char('/'));
     }
 
     url.setPath(QUrl::fromPercentEncoding(path.toUtf8()));
@@ -323,7 +323,7 @@ bool EBook_EPUB::getFileAsBinary(QByteArray &data, const QString &path) const
     struct zip_stat fileinfo;
     QString completeUrl;
 
-    if (!path.isEmpty() && path[0] == '/') {
+    if (!path.isEmpty() && path[0] == QLatin1Char('/')) {
         completeUrl = m_documentRoot + path.mid(1);
     } else {
         completeUrl = m_documentRoot + path;

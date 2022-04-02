@@ -16,7 +16,7 @@ HelperEntityDecoder::HelperEntityDecoder(QTextCodec *encoder)
 
 static inline QString encodeWithCodec(QTextCodec *encoder, const QByteArray &str)
 {
-    return (encoder ? encoder->toUnicode(str.constData()) : str);
+    return (encoder ? encoder->toUnicode(str.constData()) : QString::fromUtf8(str));
 }
 
 void HelperEntityDecoder::changeEncoding(QTextCodec *encoder)
@@ -188,7 +188,7 @@ QString HelperEntityDecoder::decode(const QString &entity) const
     // If entity is an ASCII code like &#12349; - just decode it
     if (entity.isEmpty()) {
         return QLatin1String("");
-    } else if (entity[0] == '#') {
+    } else if (entity[0] == QLatin1Char('#')) {
         bool valid;
         unsigned int ascode = entity.midRef(1).toUInt(&valid);
 

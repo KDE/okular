@@ -188,6 +188,11 @@ static QAction *actionForExportFormat(const Okular::ExportFormat &format, QObjec
     return act;
 }
 
+static QString KStandardActionName(KStandardAction::StandardAction id)
+{
+    return QString::fromLatin1(KStandardAction::name(id));
+}
+
 static KFilterDev::CompressionType compressionTypeFor(const QString &mime_to_check)
 {
     // The compressedMimeMap is here in case you have a very old shared mime database
@@ -1781,7 +1786,7 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
         int page = dest.toInt(&ok);
 
         if (!ok) {
-            const QStringList parameters = dest.split(QChar('&'));
+            const QStringList parameters = dest.split(QLatin1Char('&'));
             for (const QString &parameter : parameters) {
                 if (parameter.startsWith(QStringLiteral("page="), Qt::CaseInsensitive)) {
                     page = dest.midRef(5).toInt(&ok);
@@ -2598,7 +2603,7 @@ bool Part::slotSaveFileAs(bool showOkularArchiveAsDefaultFormat)
         // and that's bad because it is *not* an .md file so tell the user to fix it
         Q_ASSERT(okularArchiveMimeType.suffixes().count() == 1);
         Q_ASSERT(okularArchiveMimeType.suffixes().at(0) == okularArchiveMimeType.preferredSuffix());
-        const QString wantedExtension = '.' + okularArchiveMimeType.preferredSuffix();
+        const QString wantedExtension = QLatin1Char('.') + okularArchiveMimeType.preferredSuffix();
         if (!saveUrl.path().endsWith(wantedExtension)) {
             const auto button = KMessageBox::questionYesNo(
                 widget(), i18n("You have chosen to save an Okular Archive without the file name ending with the '%1' extension. That is not allowed, do you want to choose a new name?", wantedExtension), i18n("Unsupported extension"));
@@ -3074,10 +3079,10 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     const bool currentPage = page && page->number() == m_document->viewport().pageNumber;
 
     if (!m_showMenuBarAction) {
-        m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
+        m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardActionName(KStandardAction::ShowMenubar));
     }
     if (!m_showFullScreenAction) {
-        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardActionName(KStandardAction::FullScreen));
     }
 
     QMenu *popup = new QMenu(widget());
@@ -3220,7 +3225,7 @@ void Part::slotUpdateHamburgerMenu()
         menu = new QMenu(widget());
         m_hamburgerMenuAction->setMenu(menu);
         if (!m_showMenuBarAction) {
-            m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
+            m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardActionName(KStandardAction::ShowMenubar));
         }
         m_hamburgerMenuAction->setShowMenuBarAction(m_showMenuBarAction);
     } else {
@@ -3257,8 +3262,8 @@ void Part::slotUpdateHamburgerMenu()
     // To retrieve an action, it is fastest to use a direct pointer if available (m_action), otherwise use
     // ac->action(actionName) and if the action isn't in the actionCollection() of this part,
     // use findActionInKPartHierarchy(actionName).
-    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Open)));
-    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::OpenRecent)));
+    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::Open)));
+    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::OpenRecent)));
     menu->addAction(m_save);
     menu->addAction(m_saveAs);
     menu->addSeparator();
@@ -3272,11 +3277,11 @@ void Part::slotUpdateHamburgerMenu()
     if (!visibleMainToolbar || (visibleMainToolbar && !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites"))))) {
         menu->addAction(ac->action(QStringLiteral("mouse_toggle_annotate")));
     }
-    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Undo)));
-    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Redo)));
+    menu->addAction(ac->action(KStandardActionName(KStandardAction::Undo)));
+    menu->addAction(ac->action(KStandardActionName(KStandardAction::Redo)));
     menu->addSeparator();
 
-    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Print)));
+    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::Print)));
     menu->addAction(m_printPreview);
     menu->addAction(m_showProperties);
     menu->addAction(m_openContainingFolder);
@@ -3292,7 +3297,7 @@ void Part::slotUpdateHamburgerMenu()
     }
     auto curatedViewMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("page-2sides")), menuBar ? menuBar->actions().at(1)->text() : QStringLiteral("View"));
     if (!m_showFullScreenAction) {
-        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardActionName(KStandardAction::FullScreen));
     }
     curatedViewMenu->addAction(m_showFullScreenAction);
     curatedViewMenu->addAction(m_showPresentation);
@@ -3350,7 +3355,7 @@ void Part::enableExitAfterPrint()
     m_cliPrintAndExit = true;
 }
 
-static const char *kKPlugin = "KPlugin";
+#define kKPlugin QStringLiteral("KPlugin")
 
 void Part::slotAboutBackend()
 {

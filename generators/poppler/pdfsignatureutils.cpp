@@ -272,7 +272,7 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
     *userCancelled = false;
     auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
         bool ok;
-        const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", element), QLineEdit::Password, QString(), &ok);
+        const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", QString::fromUtf8(element)), QLineEdit::Password, QString(), &ok);
         *userCancelled = !ok;
         return ok ? strdup(pwd.toUtf8().constData()) : nullptr;
     };

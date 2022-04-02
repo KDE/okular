@@ -323,7 +323,7 @@ static KJSObject appGoForward(KJSContext *, void *object, const KJSArguments &)
 static KJSObject appSetInterval(KJSContext *ctx, void *object, const KJSArguments &arguments)
 {
     DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    const QString function = arguments.at(0).toString(ctx) + ';';
+    const QString function = arguments.at(0).toString(ctx) + QLatin1Char(';');
     const int interval = arguments.at(1).toInt32(ctx);
 
     QTimer *timer = new QTimer();
@@ -354,7 +354,7 @@ static KJSObject appClearInterval(KJSContext *ctx, void *, const KJSArguments &a
 static KJSObject appSetTimeOut(KJSContext *ctx, void *object, const KJSArguments &arguments)
 {
     DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    const QString function = arguments.at(0).toString(ctx) + ';';
+    const QString function = arguments.at(0).toString(ctx) + QLatin1Char(';');
     const int interval = arguments.at(1).toInt32(ctx);
 
     QTimer *timer = new QTimer();

@@ -1572,7 +1572,7 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
         if (Poppler::Version::string() == QStringLiteral(POPPLER_VERSION)) {
             return i18n("Using Poppler %1", Poppler::Version::string());
         } else {
-            return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), POPPLER_VERSION);
+            return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), QStringLiteral(POPPLER_VERSION));
         }
     } else if (key == QLatin1String("ShowStampsWarning")) {
 #ifdef HAVE_POPPLER_21_10

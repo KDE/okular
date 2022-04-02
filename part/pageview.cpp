@@ -1033,7 +1033,7 @@ QString PageViewPrivate::selectedText() const
         text.append(pg->text(pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour));
     }
 
-    if (text.endsWith('\n')) {
+    if (text.endsWith(QLatin1Char('\n'))) {
         text.chop(1);
     }
     return text;
@@ -5296,7 +5296,7 @@ void PageView::slotSpeakDocument()
     for (const PageViewItem *item : qAsConst(d->items)) {
         Okular::RegularAreaRect *area = textSelectionForItem(item);
         text.append(item->page()->text(area));
-        text.append('\n');
+        text.append(QLatin1Char('\n'));
         delete area;
     }
 

@@ -24,12 +24,12 @@
 //#define DEBUGPARSER(A)	qDebug A
 #define DEBUGPARSER(A)
 
-static const char *URL_SCHEME_CHM = "ms-its";
+#define URL_SCHEME_CHM QStringLiteral("ms-its")
 
 EBook_CHM::EBook_CHM()
     : EBook()
 {
-    m_envOptions = qgetenv("KCHMVIEWEROPTS");
+    m_envOptions = QString::fromLatin1(qgetenv("KCHMVIEWEROPTS"));
     m_chmFile = nullptr;
     m_filename = m_font = QString();
 
@@ -72,7 +72,7 @@ QString EBook_CHM::title() const
 
 QUrl EBook_CHM::homeUrl() const
 {
-    return pathToUrl(m_home);
+    return pathToUrl(QString::fromUtf8(m_home));
 }
 
 bool EBook_CHM::hasFeature(EBook::Feature code) const
@@ -100,7 +100,7 @@ bool EBook_CHM::getTableOfContents(QList<EBookTocEntry> &toc) const
     // Parse the plain text TOC
     QList<ParsedEntry> parsed;
 
-    if (!parseFileAndFillArray(m_topicsFile, parsed, false)) {
+    if (!parseFileAndFillArray(QString::fromUtf8(m_topicsFile), parsed, false)) {
         return false;
     }
 
@@ -135,7 +135,7 @@ bool EBook_CHM::getIndex(QList<EBookIndexEntry> &index) const
     // Parse the plain text index
     QList<ParsedEntry> parsed;
 
-    if (!parseFileAndFillArray(m_indexFile, parsed, true)) {
+    if (!parseFileAndFillArray(QString::fromUtf8(m_indexFile), parsed, true)) {
         return false;
     }
 
@@ -219,7 +219,7 @@ bool EBook_CHM::getTextContent(QString &str, const QString &url, bool internal_e
             buf.resize(length + 1);
             buf[length] = '\0';
 
-            str = internal_encoding ? (QString)(buf.constData()) : encodeWithCurrentCodec(buf.constData());
+            str = internal_encoding ? QString::fromUtf8(buf.constData()) : encodeWithCurrentCodec(buf.constData());
             return true;
         }
     }
@@ -256,7 +256,7 @@ bool EBook_CHM::load(const QString &archiveName)
 #if defined(WIN32)
     m_chmFile = chm_open((BSTR)QFile::encodeName(filename).constData());
 #else
-    m_chmFile = chm_open(QFile::encodeName(filename));
+    m_chmFile = chm_open(QFile::encodeName(filename).constData());
 #endif
 
     if (m_chmFile == nullptr) {
@@ -312,13 +312,13 @@ bool EBook_CHM::load(const QString &archiveName)
 
 int EBook_CHM::findStringInQuotes(const QString &tag, int offset, QString &value, bool firstquote, bool decodeentities) const
 {
-    int qbegin = tag.indexOf('"', offset);
+    int qbegin = tag.indexOf(QLatin1Char('"'), offset);
 
     if (qbegin == -1) {
         qFatal("EBook_CHMImpl::findStringInQuotes: cannot find first quote in <param> tag: '%s'", qPrintable(tag));
     }
 
-    int qend = firstquote ? tag.indexOf('"', qbegin + 1) : tag.lastIndexOf('"');
+    int qend = firstquote ? tag.indexOf(QLatin1Char('"'), qbegin + 1) : tag.lastIndexOf(QLatin1Char('"'));
 
     if (qend == -1 || qend <= qbegin) {
         qFatal("EBook_CHMImpl::findStringInQuotes: cannot find last quote in <param> tag: '%s'", qPrintable(tag));
@@ -333,13 +333,13 @@ int EBook_CHM::findStringInQuotes(const QString &tag, int offset, QString &value
 
         for (int i = qbegin + 1; i < qend; i++) {
             if (!fill_entity) {
-                if (tag[i] == '&') { // HTML entity starts
+                if (tag[i] == QLatin1Char('&')) { // HTML entity starts
                     fill_entity = true;
                 } else {
                     value.append(tag[i]);
                 }
             } else {
-                if (tag[i] == ';') // HTML entity ends
+                if (tag[i] == QLatin1Char(';')) // HTML entity ends
                 {
                     // If entity is an ASCII code, just decode it
                     QString decode = m_htmlEntityDecoder.decode(htmlentity);
@@ -394,23 +394,23 @@ bool EBook_CHM::parseFileAndFillArray(const QString &file, QList<ParsedEntry> &d
     // Split the HHC file by HTML tags
     int stringlen = src.length();
 
-    while (pos < stringlen && (pos = src.indexOf('<', pos)) != -1) {
+    while (pos < stringlen && (pos = src.indexOf(QLatin1Char('<'), pos)) != -1) {
         int i, word_end = 0;
 
         for (i = ++pos; i < stringlen; i++) {
             // If a " or ' is found, skip to the next one.
-            if ((src[i] == '"' || src[i] == '\'')) {
+            if ((src[i] == QLatin1Char('"') || src[i] == QLatin1Char('\''))) {
                 // find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
                 int nextpos = src.indexOf(src[i], i + 1);
-                if (nextpos == -1 && (nextpos = src.indexOf('>', i + 1)) == -1) {
+                if (nextpos == -1 && (nextpos = src.indexOf(QLatin1Char('>'), i + 1)) == -1) {
                     qWarning("EBook_CHMImpl::ParseHhcAndFillTree: corrupted TOC: %s", qPrintable(src.mid(i)));
                     return false;
                 }
 
                 i = nextpos;
-            } else if (src[i] == '>') {
+            } else if (src[i] == QLatin1Char('>')) {
                 break;
-            } else if (!src[i].isLetterOrNumber() && src[i] != '/' && !word_end) {
+            } else if (!src[i].isLetterOrNumber() && src[i] != QLatin1Char('/') && !word_end) {
                 word_end = i;
             }
         }
@@ -721,15 +721,15 @@ bool EBook_CHM::getInfoFromSystem()
 
             if (m_topicsFile.isEmpty()) {
                 QString topicAttempt = QStringLiteral("/");
-                topicAttempt += QString((const char *)buffer + index + 2);
+                topicAttempt += QString(QString::fromUtf8((const char *)buffer + index + 2));
 
-                QString tmp = topicAttempt + ".hhc";
+                QString tmp = topicAttempt + QStringLiteral(".hhc");
 
                 if (ResolveObject(tmp, &ui)) {
                     m_topicsFile = qPrintable(tmp);
                 }
 
-                tmp = topicAttempt + ".hhk";
+                tmp = topicAttempt + QStringLiteral(".hhk");
 
                 if (ResolveObject(tmp, &ui)) {
                     m_indexFile = qPrintable(tmp);
@@ -741,7 +741,7 @@ bool EBook_CHM::getInfoFromSystem()
             index += 2;
             cursor = buffer + index;
 
-            m_font = QString((const char *)buffer + index + 2);
+            m_font = QString(QString::fromUtf8((const char *)buffer + index + 2));
             break;
 
         default:
@@ -770,7 +770,7 @@ QString EBook_CHM::getTopicByUrl(const QUrl &url)
 static int chm_enumerator_callback(struct chmFile *, struct chmUnitInfo *ui, void *context)
 {
     EBook_CHM tmp;
-    ((QList<QUrl> *)context)->push_back(tmp.pathToUrl(ui->path));
+    ((QList<QUrl> *)context)->push_back(tmp.pathToUrl(QString::fromUtf8(ui->path)));
     return CHM_ENUMERATOR_CONTINUE;
 }
 
@@ -787,8 +787,8 @@ QString EBook_CHM::currentEncoding() const
 
 bool EBook_CHM::setCurrentEncoding(const char *encoding)
 {
-    m_currentEncoding = encoding;
-    return changeFileEncoding(encoding);
+    m_currentEncoding = QString::fromUtf8(encoding);
+    return changeFileEncoding(m_currentEncoding);
 }
 
 bool EBook_CHM::isSupportedUrl(const QUrl &url)
@@ -817,7 +817,7 @@ bool EBook_CHM::changeFileEncoding(const QString &qtencoding)
 {
     // Encoding could be either simple Qt codepage, or set like CP1251/KOI8, which allows to
     // set up encodings separately for text (first) and internal files (second)
-    int p = qtencoding.indexOf('/');
+    int p = qtencoding.indexOf(QLatin1Char('/'));
 
     if (p != -1) {
         QString global = qtencoding.left(p);
@@ -868,7 +868,7 @@ void EBook_CHM::fillTopicsUrlMap()
         unsigned int off_url = get_int32_le(reinterpret_cast<unsigned int *>(topics.data() + i + 8));
         off_url = get_int32_le(reinterpret_cast<unsigned int *>(urltbl.data() + off_url + 8)) + 8;
 
-        QUrl url = pathToUrl((const char *)urlstr.data() + off_url);
+        QUrl url = pathToUrl(QString::fromUtf8((const char *)urlstr.data() + off_url));
 
         if (off_title < (unsigned int)strings.size()) {
             m_url2topics[url] = encodeWithCurrentCodec((const char *)strings.data() + off_title);
@@ -1019,7 +1019,7 @@ QUrl EBook_CHM::pathToUrl(const QString &link) const
     url.setHost(URL_SCHEME_CHM);
 
     // Does the link contain the fragment as well?
-    int off = link.indexOf('#');
+    int off = link.indexOf(QLatin1Char('#'));
     QString path;
 
     if (off != -1) {
@@ -1029,8 +1029,8 @@ QUrl EBook_CHM::pathToUrl(const QString &link) const
         path = link;
     }
 
-    if (!path.startsWith('/')) {
-        path.prepend('/');
+    if (!path.startsWith(QLatin1Char('/'))) {
+        path.prepend(QLatin1Char('/'));
     }
 
     url.setPath(QUrl::fromPercentEncoding(path.toUtf8()));
@@ -1041,7 +1041,7 @@ QString EBook_CHM::urlToPath(const QUrl &link) const
 {
     if (link.scheme() == URL_SCHEME_CHM) {
         if (link.path() == QLatin1String("/") || link.path().isEmpty()) {
-            return m_home;
+            return QString::fromUtf8(m_home);
         }
 
         return link.path();

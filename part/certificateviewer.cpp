@@ -54,7 +54,22 @@
 // This is a poor man's attempt at parsing DN, if it fails it is not a problem since it's only for display in a list
 static QString splitDNAttributes(const QStringList &text)
 {
-    const QStringList attributes = {"C", "CN", "DC", "E", "EMAIL", "EMAILADDRESS", "L", "O", "OU", "PC", "S", "SN", "SP", "ST", "STREET", "T"};
+    static const QStringList attributes = {QStringLiteral("C"),
+                                           QStringLiteral("CN"),
+                                           QStringLiteral("DC"),
+                                           QStringLiteral("E"),
+                                           QStringLiteral("EMAIL"),
+                                           QStringLiteral("EMAILADDRESS"),
+                                           QStringLiteral("L"),
+                                           QStringLiteral("O"),
+                                           QStringLiteral("OU"),
+                                           QStringLiteral("PC"),
+                                           QStringLiteral("S"),
+                                           QStringLiteral("SN"),
+                                           QStringLiteral("SP"),
+                                           QStringLiteral("ST"),
+                                           QStringLiteral("STREET"),
+                                           QStringLiteral("T")};
 
     for (const QString &t : text) {
         for (const QString &attribute : attributes) {
@@ -83,7 +98,7 @@ static QString splitDNAttributes(const QStringList &text)
             const QRegularExpression re(QStringLiteral("%1=\"(.*)\"").arg(attribute));
             const QRegularExpressionMatch match = re.match(t);
             if (match.hasMatch()) {
-                t = attribute + '=' + match.captured(1);
+                t = attribute + QLatin1Char('=') + match.captured(1);
             }
         }
     }
@@ -138,9 +153,9 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto fingerprintFormLayout = new QFormLayout(fingerprintBox);
     fingerprintFormLayout->setLabelAlignment(Qt::AlignLeft);
     QByteArray certData = m_certificateInfo.certificateData();
-    auto sha1Label = new QLabel(QString(QCryptographicHash::hash(certData, QCryptographicHash::Sha1).toHex(' ')));
+    auto sha1Label = new QLabel(QString::fromLatin1(QCryptographicHash::hash(certData, QCryptographicHash::Sha1).toHex(' ')));
     sha1Label->setWordWrap(true);
-    auto sha256Label = new QLabel(QString(QCryptographicHash::hash(certData, QCryptographicHash::Sha256).toHex(' ')));
+    auto sha256Label = new QLabel(QString::fromLatin1(QCryptographicHash::hash(certData, QCryptographicHash::Sha256).toHex(' ')));
     sha256Label->setWordWrap(true);
     fingerprintFormLayout->addRow(i18n("SHA-1 Fingerprint"), sha1Label);
     fingerprintFormLayout->addRow(i18n("SHA-256 Fingerprint"), sha256Label);
@@ -193,7 +208,7 @@ void CertificateViewer::updateText(const QModelIndex &index)
         text = splitDNAttributes(m_certificateModel->data(index, CertificateModel::PropertyVisibleValueRole).toString());
         break;
     case CertificateModel::PublicKey:
-        text = m_certificateInfo.publicKey().toHex(' ');
+        text = QString::fromLatin1(m_certificateInfo.publicKey().toHex(' '));
         break;
     case CertificateModel::KeyUsage:
         text = SignatureGuiUtils::getReadableKeyUsageNewLineSeparated(m_certificateInfo.keyUsageExtensions());

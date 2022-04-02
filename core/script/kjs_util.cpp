@@ -84,12 +84,12 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
         }
     } else {
         format = arguments.at(0).toString(context).replace(QLatin1String("tt"), QLatin1String("ap"));
-        format.replace('t', 'a');
+        format.replace(QLatin1Char('t'), QLatin1Char('a'));
         for (QChar &formatChar : format) {
-            if (formatChar == 'M') {
-                formatChar = 'm';
-            } else if (formatChar == 'm') {
-                formatChar = 'M';
+            if (formatChar == QLatin1Char('M')) {
+                formatChar = QLatin1Char('m');
+            } else if (formatChar == QLatin1Char('m')) {
+                formatChar = QLatin1Char('M');
             }
         }
     }

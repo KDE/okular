@@ -71,7 +71,7 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
     case CertificateModel::Version:
         return i18n("V%1", QString::number(m_certificateInfo.version()));
     case CertificateModel::SerialNumber:
-        return m_certificateInfo.serialNumber().toHex(' ');
+        return QString::fromLatin1(m_certificateInfo.serialNumber().toHex(' '));
     case CertificateModel::Issuer:
         return m_certificateInfo.issuerInfo(Okular::CertificateInfo::DistinguishedName);
     case CertificateModel::IssuedOn:
@@ -97,9 +97,9 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
     case CertificateModel::SubjectOrganization:
         return m_certificateInfo.subjectInfo(Okular::CertificateInfo::Organization);
     case CertificateModel::Sha1:
-        return QCryptographicHash::hash(m_certificateInfo.certificateData(), QCryptographicHash::Sha1).toHex(' ');
+        return QString::fromLatin1(QCryptographicHash::hash(m_certificateInfo.certificateData(), QCryptographicHash::Sha1).toHex(' '));
     case CertificateModel::Sha256:
-        return QCryptographicHash::hash(m_certificateInfo.certificateData(), QCryptographicHash::Sha256).toHex(' ');
+        return QString::fromLatin1(QCryptographicHash::hash(m_certificateInfo.certificateData(), QCryptographicHash::Sha256).toHex(' '));
     }
     return QString();
 }

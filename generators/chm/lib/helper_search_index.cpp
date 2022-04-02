@@ -19,10 +19,10 @@ namespace QtAs
 // Those characters are splitters (i.e. split the word), but added themselves into dictionary too.
 // This makes the dictionary MUCH larger, but ensure that for the piece of "window->print" both
 // search for "print" and "->print" will find it.
-static const char SPLIT_CHARACTERS[] = "!()*&^%#@[]{}':;,.?/|/?<>\\-+=~`";
+#define SPLIT_CHARACTERS QStringLiteral("!()*&^%#@[]{}':;,.?/|/?<>\\-+=~`")
 
 // Those characters are parts of word - for example, '_' is here, and search for _debug will find only _debug.
-static const char WORD_CHARACTERS[] = "$_";
+#define WORD_CHARACTERS QStringLiteral("$_")
 
 struct Term {
     Term()
@@ -169,10 +169,10 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl &filename, QStr
         if (state == STATE_IN_HTML_TAG) {
             // We are inside HTML tag.
             // Ignore everything until we see '>' (end of HTML tag) or quote char (quote start)
-            if (ch == '"' || ch == '\'') {
+            if (ch == QLatin1Char('"') || ch == QLatin1Char('\'')) {
                 state = STATE_IN_QUOTES;
                 QuoteChar = ch;
-            } else if (ch == '>') {
+            } else if (ch == QLatin1Char('>')) {
                 state = STATE_OUTSIDE_TAGS;
             }
 
@@ -198,7 +198,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl &filename, QStr
             state = STATE_OUTSIDE_TAGS;
 
             // Some shitty HTML does not terminate entities correctly. Screw it.
-            if (ch != ';' && ch != '<') {
+            if (ch != QLatin1Char(';') && ch != QLatin1Char('<')) {
                 if (parseentity.isEmpty()) {
                     // straight '&' symbol. Add and continue.
                     parsedbuf += QLatin1String("&");
@@ -223,7 +223,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl &filename, QStr
                 parsedbuf += entity;
                 continue;
             } else {
-                ch = ' '; // We got a space, so treat it like it, and not add it to parsebuf
+                ch = QLatin1Char(' '); // We got a space, so treat it like it, and not add it to parsebuf
             }
         }
 
@@ -232,21 +232,21 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl &filename, QStr
         //
 
         // Check for start of HTML tag, and switch to STATE_IN_HTML_TAG if it is
-        if (ch == '<') {
+        if (ch == QLatin1Char('<')) {
             state = STATE_IN_HTML_TAG;
             goto tokenize_buf;
         }
 
         // Check for start of HTML entity
-        if (ch == '&') {
+        if (ch == QLatin1Char('&')) {
             state = STATE_IN_HTML_ENTITY;
             parseentity = QString();
             continue;
         }
 
         // Replace quote by ' - quotes are used in search window to set the phrase
-        if (ch == '"') {
-            ch = '\'';
+        if (ch == QLatin1Char('"')) {
+            ch = QLatin1Char('\'');
         }
 
         // Ok, we have a valid character outside HTML tags, and probably some in buffer already.
@@ -437,7 +437,7 @@ bool Index::searchForPhrases(const QStringList &phrases, const QStringList &word
     QList<uint> first_word_positions;
 
     for (QStringList::ConstIterator phrase_it = phrases.constBegin(); phrase_it != phrases.constEnd(); phrase_it++) {
-        QStringList phrasewords = phrase_it->split(' ');
+        QStringList phrasewords = phrase_it->split(QLatin1Char(' '));
         first_word_positions = miniDict[phrasewords[0]]->positions;
 
         for (int j = 1; j < phrasewords.count(); ++j) {

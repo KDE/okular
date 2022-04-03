@@ -197,7 +197,8 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
                 cursor.setPosition(textFragment.position(), QTextCursor::MoveAnchor);
                 cursor.setPosition(textFragment.position() + textFragment.length(), QTextCursor::KeepAnchor);
 
-                const QString imageFilePath = QDir::cleanPath(dir.absoluteFilePath(textCharFormat.toImageFormat().name()));
+                const QString imageFilePath = QDir::cleanPath(dir.absoluteFilePath(QUrl::fromPercentEncoding(textCharFormat.toImageFormat().name().toUtf8())));
+
                 if (QFile::exists(imageFilePath)) {
                     cursor.removeSelectedText();
                     format.setName(imageFilePath);

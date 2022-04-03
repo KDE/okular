@@ -23,6 +23,7 @@ private slots:
     void testFancyPantsEnabled();
     void testFancyPantsDisabled();
     void testImageSizes();
+    void testSpecialCharsInImageFileName();
 
 private:
     void findImages(QTextFrame *parent, QVector<QTextImageFormat> &images);
@@ -119,6 +120,21 @@ void MarkdownTest::findImages(const QTextBlock &parent, QVector<QTextImageFormat
             }
         }
     }
+}
+
+void MarkdownTest::testSpecialCharsInImageFileName()
+{
+    Markdown::Converter converter;
+    QTextDocument *document = converter.convert(QStringLiteral(KDESRCDIR "data/imageUrlsWithSpecialChars.md"));
+
+    QTextFrame *parent = document->rootFrame();
+
+    QVector<QTextImageFormat> images;
+    findImages(parent, images);
+
+    QCOMPARE(images.size(), 1);
+    QVERIFY(images[0].name().endsWith(QStringLiteral("kartöffelchen.jpg")));
+    QVERIFY(!images[0].name().contains(QStringLiteral("kart%C3%B6ffelchen.jpg")));
 }
 
 QTEST_MAIN(MarkdownTest)

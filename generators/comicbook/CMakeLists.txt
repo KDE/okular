@@ -11,7 +11,7 @@ set( okularGenerator_comicbook_PART_SRCS
    )
 
 add_library(okular_comicbook STATIC ${okularGenerator_comicbook_PART_SRCS})
-target_link_libraries(okular_comicbook okularcore KF5::KIOCore KF5::I18n KF5::Archive)
+target_link_libraries(okular_comicbook okularcore KF5::I18n KF5::Archive)
 
 okular_add_generator(okularGenerator_comicbook generator_comicbook.cpp)
 target_link_libraries(okularGenerator_comicbook okular_comicbook)

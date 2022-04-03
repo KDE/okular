@@ -9,7 +9,7 @@ set(okularGenerator_xps_SRCS
 
 okular_add_generator(okularGenerator_xps ${okularGenerator_xps_SRCS})
 
-target_link_libraries(okularGenerator_xps okularcore KF5::Archive KF5::I18n KF5::KIOCore Qt5::PrintSupport Qt5::Xml)
+target_link_libraries(okularGenerator_xps okularcore KF5::Archive KF5::I18n Qt5::PrintSupport Qt5::Xml)
 
 ########### install files ###############
 install( FILES okularXps.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

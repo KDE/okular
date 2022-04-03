@@ -13,6 +13,39 @@ set(KF5_REQUIRED_VERSION "5.68.0") # Remember to update the KF_DEPRECATED_WARNIN
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
+option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
+
+if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;KF5JS;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
+endif()
+
+function(set_okular_optional_package_properties _name _props)
+    if(NOT "${_props}" STREQUAL "PROPERTIES")
+        message(FATAL_ERROR "PROPERTIES keyword is missing in set_okular_optional_package_properties() call.")
+    endif()
+
+    set(options) # none
+    set(oneValueArgs DESCRIPTION URL PURPOSE)
+    set(multiValueArgs) # none
+
+    CMAKE_PARSE_ARGUMENTS(_SPP "${options}" "${oneValueArgs}" "${multiValueArgs}"  ${ARGN})
+
+    if(_SPP_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "Unknown keywords given to set_okular_optional_package_properties(): \"${_SPP_UNPARSED_ARGUMENTS}\"")
+    endif()
+
+    set(DEPENDENCY_TYPE "REQUIRED")
+    if (${_name} IN_LIST FORCE_NOT_REQUIRED_DEPENDENCIES)
+        set(DEPENDENCY_TYPE "RECOMMENDED")
+    endif()
+    set_package_properties(${_name} PROPERTIES
+        TYPE ${DEPENDENCY_TYPE}
+        DESCRIPTION ${_SPP_DESCRIPTION}
+        URL ${_SPP_URL}
+        PURPOSE "${_SPP_PURPOSE} You can make the dependency optional adding ${_name} to the FORCE_NOT_REQUIRED_DEPENDENCIES cmake option"
+    )
+endfunction()
+
 if(OKULAR_UI STREQUAL "")
     if(ANDROID)
         set(OKULAR_UI "mobile")
@@ -70,15 +103,6 @@ ecm_setup_version(${PROJECT_VERSION}
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Qml Quick)
-if (BUILD_DESKTOP)
-    find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS DBus)
-endif()
-find_package(Qt5 ${QT_REQUIRED_VERSION} OPTIONAL_COMPONENTS TextToSpeech)
-if (NOT Qt5TextToSpeech_FOUND)
-    message(STATUS "Qt5TextToSpeech not found, speech features will be disabled")
-else()
-    add_definitions(-DHAVE_SPEECH)
-endif()
 
 if(ANDROID)
     find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
@@ -91,13 +115,6 @@ ecm_setup_qtplugin_macro_names(
         PACKAGE_SETUP_AUTOMOC_VARIABLES
 )
 
-set(optionalComponents)
-if (ANDROID)
-#   we want to make sure that generally all components are found
-
-    set(optionalComponents "OPTIONAL_COMPONENTS")
-endif()
-
 find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks
@@ -109,21 +126,55 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     KIO
     ThreadWeaver
     WindowSystem
-    ${optionalComponents}
-    DocTools
-    JS
-    Wallet
 )
 
-if (BUILD_DESKTOP)
-    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
-endif()
-
+find_package(KF5Wallet ${KF5_REQUIRED_VERSION})
+set_okular_optional_package_properties(KF5Wallet PROPERTIES
+    PURPOSE "Required for document storing passwords in secure wallets.")
 if(KF5Wallet_FOUND)
     add_definitions(-DWITH_KWALLET=1)
 endif()
+
+find_package(KF5DocTools ${KF5_REQUIRED_VERSION})
+set_okular_optional_package_properties(KF5DocTools PROPERTIES
+    PURPOSE "Required for compiling and installing the user documentation.")
+
+find_package(KF5JS ${KF5_REQUIRED_VERSION})
+set_okular_optional_package_properties(KF5JS PROPERTIES
+    PURPOSE "Required for supporting JavaScript in PDF documents")
 if(KF5JS_FOUND)
     add_definitions(-DWITH_KJS=1)
+endif()
+
+if (BUILD_DESKTOP)
+    find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS DBus)
+    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
+
+    find_package(KF5Purpose)
+    set_okular_optional_package_properties(KF5Purpose PROPERTIES
+        DESCRIPTION "A framework for services and actions integration"
+        PURPOSE "Required for enabling the share menu.")
+    if (KF5Purpose_FOUND)
+        set(PURPOSE_FOUND 1)
+    else()
+        set(PURPOSE_FOUND 0)
+    endif()
+
+    find_package(Qt5TextToSpeech ${QT_REQUIRED_VERSION} CONFIG)
+    set_okular_optional_package_properties(Qt5TextToSpeech PROPERTIES
+        PURPOSE "Enables speech features.")
+    if (Qt5TextToSpeech_FOUND)
+        add_definitions(-DHAVE_SPEECH)
+    endif()
+endif()
+
+if (BUILD_MOBILE)
+    find_package(KF5Kirigami2)
+    set_package_properties(KF5Kirigami2 PROPERTIES
+        DESCRIPTION "A QtQuick based components set"
+        PURPOSE "Required at runtime by the mobile app"
+        TYPE RUNTIME
+    )
 endif()
 
 if(NOT WIN32 AND NOT ANDROID)
@@ -133,126 +184,88 @@ if(NOT WIN32 AND NOT ANDROID)
     set_package_properties("KF5Activities" PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://api.kde.org/frameworks/kactivities/html/"
-        TYPE RECOMMENDED
         PURPOSE "Required for Activities integration.")
 endif()
-find_package(KF5Kirigami2)
-set_package_properties(KF5Kirigami2 PROPERTIES
-    DESCRIPTION "A QtQuick based components set"
-    PURPOSE "Required at runtime by the mobile app"
-    TYPE RUNTIME
-)
 find_package(Phonon4Qt5 CONFIG REQUIRED)
-find_package(KF5Purpose)
-set_package_properties(KF5Purpose PROPERTIES
-    DESCRIPTION "A framework for services and actions integration"
-    PURPOSE "Required for enabling the share menu in Okular"
-    TYPE OPTIONAL
-)
-if (KF5Purpose_FOUND)
-    set(PURPOSE_FOUND 1)
-else()
-    set(PURPOSE_FOUND 0)
-endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
 find_package(Poppler "0.86.0" COMPONENTS Qt5)
-set_package_properties("Poppler" PROPERTIES
-        TYPE RECOMMENDED
+set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
 find_package(Freetype)
-set_package_properties("FreeType" PROPERTIES
+set_okular_optional_package_properties(Freetype PROPERTIES
         DESCRIPTION  "A font rendering engine"
         URL "https://www.freetype.org"
-        TYPE RECOMMENDED
         PURPOSE "Provides freetype font support in the okular DVI generator.")
 
 find_package(TIFF)
-set_package_properties("libTIFF" PROPERTIES
+set_okular_optional_package_properties(TIFF PROPERTIES
         DESCRIPTION  "A library for reading and writing TIFF formatted files,"
         URL "http://www.libtiff.org"
-        TYPE RECOMMENDED
         PURPOSE "Support for TIFF files in okular.")
 
 find_package(JPEG)
-set_package_properties("JPEG" PROPERTIES
+set_okular_optional_package_properties(JPEG PROPERTIES
         DESCRIPTION  "A library for reading and writing JPEG image files."
         URL "https://www.ijg.org"
-        TYPE RECOMMENDED
         PURPOSE "Support for PalmDB documents in okular.")
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
-set_package_properties(LibSpectre PROPERTIES
+set_okular_optional_package_properties(LibSpectre PROPERTIES
         DESCRIPTION  "A PostScript rendering library"
         URL "https://libspectre.freedesktop.org"
-        TYPE RECOMMENDED
         PURPOSE "Support for PS files in okular.")
 
 find_package(KF5KExiv2 CONFIG)
-set_package_properties("LibKExiv2" PROPERTIES
+set_okular_optional_package_properties(KF5KExiv2 PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "https://commits.kde.org/libkexiv2"
-        TYPE RECOMMENDED
-        PURPOSE "Support for image files")
+        PURPOSE "Support for exif rotation in image files.")
 
 find_package(CHM)
-set_package_properties("CHM" PROPERTIES
+set_okular_optional_package_properties(CHM PROPERTIES
         DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
         URL "http://www.jedrea.com/chmlib"
-        TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
 find_package(KF5KHtml CONFIG)
-set_package_properties("KF5KHtml" PROPERTIES
+set_okular_optional_package_properties(KF5KHtml PROPERTIES
         DESCRIPTION "HTML rendering library"
-        TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
 find_package(LibZip)
-set_package_properties("LibZip" PROPERTIES
+set_okular_optional_package_properties(LibZip PROPERTIES
         DESCRIPTION  "A library for reading, creating, and modifying zip archives"
         URL "https://libzip.org/"
-        TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
 find_package(DjVuLibre "3.5.17")
-set_package_properties("DjVuLibre" PROPERTIES
+set_okular_optional_package_properties(DjVuLibre PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
         URL "https://djvulibre.djvuzone.org"
-        TYPE RECOMMENDED
         PURPOSE "Support for DjVu files in okular.")
 
-find_package(ZLIB)
-set_package_properties("ZLib" PROPERTIES
-        DESCRIPTION  "The Zlib compression library"
-        URL "https://www.zlib.net"
-        TYPE RECOMMENDED
-        PURPOSE "Support for Plucker files in Okular.")
-
 find_package(EPub)
-set_package_properties("libepub" PROPERTIES
+set_okular_optional_package_properties(EPub PROPERTIES
         DESCRIPTION  "A library for reading EPub documents"
         URL "http://sourceforge.net/projects/ebook-tools"
-        TYPE RECOMMENDED
         PURPOSE "Support for EPub documents in Okular.")
 
 find_package(QMobipocket "2" CONFIG)
-set_package_properties("libqmobipocket" PROPERTIES
+set_okular_optional_package_properties(QMobipocket PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
         URL "https://commits.kde.org/kdegraphics-mobipocket"
-        TYPE RECOMMENDED
         PURPOSE "Support for Mobipocket documents in Okular.")
 
 find_package(Discount)
-set_package_properties("Discount" PROPERTIES
+set_okular_optional_package_properties(Discount PROPERTIES
         DESCRIPTION "A library that gives you formatting functions suitable for marking down entire documents or lines of text"
         URL "https://www.pell.portland.or.us/~orc/Code/discount/"
-        TYPE RECOMMENDED
         PURPOSE "Support for Markdown documents in Okular.")
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)

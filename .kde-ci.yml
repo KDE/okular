@@ -18,6 +18,7 @@ Dependencies:
     'frameworks/khtml': '@stable'
     'frameworks/kjs': '@stable'
     'frameworks/kpty': '@stable'
+    'frameworks/purpose': '@stable'
     'graphics/libkexiv2': '@same'
 
 - 'on': ['Android']

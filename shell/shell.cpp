@@ -315,6 +315,8 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
             }
         } else {
             m_tabWidget->setTabText(activeTab, url.fileName());
+            m_tabWidget->setTabToolTip(activeTab, url.fileName());
+
             applyOptionsToPart(activePart, serializedOptions);
             bool openOk = activePart->openUrl(url);
             const bool isstdin = url.fileName() == QLatin1String("-") || url.scheme() == QLatin1String("fd");
@@ -754,6 +756,7 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
     // Update GUI
     KParts::ReadWritePart *const part = m_tabs[newIndex].part;
     m_tabWidget->addTab(part->widget(), url.fileName());
+    m_tabWidget->setTabToolTip(newIndex, url.fileName());
 
     applyOptionsToPart(part, serializedOptions);
 

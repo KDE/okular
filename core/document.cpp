@@ -5104,7 +5104,7 @@ bool Document::saveDocumentArchive(const QString &fileName)
 #ifndef Q_OS_WIN
     const KUserGroup userGroup(user.groupId());
 #else
-    const KUserGroup userGroup(QString(""));
+    const KUserGroup userGroup(QStringLiteral(""));
 #endif
 
     QDomDocument contentDoc(QStringLiteral("OkularArchive"));

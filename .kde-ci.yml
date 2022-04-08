@@ -12,14 +12,17 @@ Dependencies:
     'libraries/phonon': '@stable'
     'graphics/kdegraphics-mobipocket': '@same'
 
+- 'on': ['Linux', 'FreeBSD', 'Windows']
+  'require':
+    'frameworks/khtml': '@stable'
+    'frameworks/kjs': '@stable'
+    'frameworks/purpose': '@stable'
+    'graphics/libkexiv2': '@same'
+
 - 'on': ['Linux', 'FreeBSD']
   'require':
     'frameworks/kactivities': '@stable'
-    'frameworks/khtml': '@stable'
-    'frameworks/kjs': '@stable'
     'frameworks/kpty': '@stable'
-    'frameworks/purpose': '@stable'
-    'graphics/libkexiv2': '@same'
 
 - 'on': ['Android']
   'require':

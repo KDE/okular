@@ -110,7 +110,9 @@ void GeneratorPrivate::pixmapGenerationFinished()
     }
 
     if (!request->shouldAbortRender()) {
-        request->page()->setPixmap(request->observer(), new QPixmap(QPixmap::fromImage(img)), request->normalizedRect());
+        auto pm = new QPixmap(QPixmap::fromImage(img));
+        pm->setDevicePixelRatio(request->devicePixelRatio());
+        request->page()->setPixmap(request->observer(), pm, request->normalizedRect());
         const int pageNumber = request->page()->number();
 
         if (mPixmapGenerationThread->calcBoundingBox()) {
@@ -302,7 +304,9 @@ void Generator::generatePixmap(PixmapRequest *request)
     }
 
     const QImage &img = image(request);
-    request->page()->setPixmap(request->observer(), new QPixmap(QPixmap::fromImage(img)), request->normalizedRect());
+    QPixmap *pm = new QPixmap(QPixmap::fromImage(img));
+    pm->setDevicePixelRatio(request->devicePixelRatio());
+    request->page()->setPixmap(request->observer(), pm, request->normalizedRect());
     const int pageNumber = request->page()->number();
 
     d->mPixmapReady = true;
@@ -578,6 +582,7 @@ PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int wid
     d->mNormalizedRect = NormalizedRect();
     d->mPartialUpdatesWanted = false;
     d->mShouldAbortRender = 0;
+    d->mDpr = dpr;
 }
 
 PixmapRequest::~PixmapRequest()
@@ -662,6 +667,11 @@ bool PixmapRequest::partialUpdatesWanted() const
 bool PixmapRequest::shouldAbortRender() const
 {
     return d->mShouldAbortRender != 0;
+}
+
+qreal PixmapRequest::devicePixelRatio() const
+{
+    return d->mDpr;
 }
 
 Okular::TilesManager *PixmapRequestPrivate::tilesManager() const

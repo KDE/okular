@@ -743,6 +743,12 @@ public:
      */
     bool shouldAbortRender() const;
 
+    /**
+     * The device pixel ratio for this request
+     * @since 22.08
+     */
+    qreal devicePixelRatio() const;
+
 private:
     Q_DISABLE_COPY(PixmapRequest)
 

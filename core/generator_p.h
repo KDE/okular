@@ -92,6 +92,7 @@ public:
     NormalizedRect mNormalizedRect;
     QAtomicInt mShouldAbortRender;
     QImage mResultImage;
+    qreal mDpr;
 };
 
 class TextRequestPrivate

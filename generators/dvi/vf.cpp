@@ -65,7 +65,7 @@ void TeXFontDefinition::read_VF_index()
     quint32 const file_checksum = four(VF_file);
 
     if (file_checksum && checksum && file_checksum != checksum) {
-        qCCritical(OkularDviDebug) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum << "u) in font file" << filename << endl;
+        qCCritical(OkularDviDebug) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum << "u) in font file" << filename;
     }
     (void)four(VF_file); /* skip design size */
 

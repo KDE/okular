@@ -164,14 +164,14 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
 #endif
 
     if (knownDevices.isEmpty()) {
-        qCCritical(OkularDviDebug) << "No known devices found" << endl;
+        qCCritical(OkularDviDebug) << "No known devices found";
         return;
     }
 
     // Make sure gs is in PATH and not just in the CWD
     static const QString gsFullPath = QStandardPaths::findExecutable(QStringLiteral("gs"));
     if (gsFullPath.isEmpty()) {
-        qCCritical(OkularDviDebug) << "gs is not in path" << endl;
+        qCCritical(OkularDviDebug) << "gs is not in path";
         return;
     }
 
@@ -257,14 +257,14 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
     if (res) {
         // Starting ghostscript did not work.
         // TODO: Issue error message, switch PS support off.
-        qCCritical(OkularDviDebug) << "ghostview could not be started" << endl;
+        qCCritical(OkularDviDebug) << "ghostview could not be started";
     }
 
     PSfile.remove();
 
     // Check if gs has indeed produced a file.
     if (QFile::exists(filename) == false) {
-        qCCritical(OkularDviDebug) << "GS did not produce output." << endl;
+        qCCritical(OkularDviDebug) << "GS did not produce output.";
 
         // No. Check is the reason is that the device is not compiled into
         // ghostscript. If so, try again with another device.
@@ -276,8 +276,7 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
                 qCDebug(OkularDviDebug) << QString::fromLatin1(
                                                "The version of ghostview installed on this computer does not support "
                                                "the '%1' ghostview device driver.")
-                                               .arg(*gsDevice)
-                                        << endl;
+                                               .arg(*gsDevice);
                 knownDevices.erase(gsDevice);
                 gsDevice = knownDevices.begin();
                 if (knownDevices.isEmpty()) {
@@ -303,7 +302,7 @@ void ghostscript_interface::graphics(const quint16 page, double dpi, long magnif
 #endif
 
     if (paint == nullptr) {
-        qCCritical(OkularDviDebug) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
+        qCCritical(OkularDviDebug) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0";
         return;
     }
 

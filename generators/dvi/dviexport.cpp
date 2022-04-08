@@ -70,7 +70,7 @@ void DVIExport::start(const QString &command, const QStringList &args, const QSt
 
     process_->start();
     if (!process_->waitForStarted(-1)) {
-        qCCritical(OkularDviDebug) << command << " failed to start" << endl;
+        qCCritical(OkularDviDebug) << command << " failed to start";
     } else {
         started_ = true;
     }

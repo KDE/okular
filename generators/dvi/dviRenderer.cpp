@@ -529,7 +529,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
     QMutexLocker locker(&mutex);
 
 #ifdef DEBUG_DVIRENDERER
-    qCCritical(OkularDviDebug) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::parseReference( " << reference << " ) called";
 #endif
 
     if (dviFile == nullptr) {

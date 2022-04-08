@@ -53,7 +53,7 @@
 
 void oops(const QString &message)
 {
-    qCCritical(OkularDviDebug) << "Fatal Error:" << message << endl;
+    qCCritical(OkularDviDebug) << "Fatal Error:" << message;
 
     KMessageBox::error(nullptr, i18n("Fatal error.\n\n") + message + i18n("\n\n\
 This probably means that either you found a bug in Okular,\n\

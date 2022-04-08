@@ -35,14 +35,14 @@ fontEncoding::fontEncoding(const QString &encName)
     // Make sure kpsewhich is in PATH and not just in the CWD
     static const QString fullPath = QStandardPaths::findExecutable(QStringLiteral("kpsewhich"));
     if (fullPath.isEmpty()) {
-        qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich is not in path." << endl;
+        qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich is not in path.";
         return;
     }
 
     kpsewhich.start(fullPath, QStringList() << encName, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
-        qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
+        qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich could not be started.";
         return;
     }
 
@@ -51,7 +51,7 @@ fontEncoding::fontEncoding(const QString &encName)
 
     const QString encFileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
     if (encFileName.isEmpty()) {
-        qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+        qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName);
         return;
     }
 
@@ -93,7 +93,7 @@ fontEncoding::fontEncoding(const QString &encName)
             glyphNameVector[i] = QStringLiteral(".notdef");
         }
     } else {
-        qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+        qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName);
         return;
     }
 

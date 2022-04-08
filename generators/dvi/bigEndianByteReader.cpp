@@ -20,9 +20,9 @@ quint8 bigEndianByteReader::readUINT8()
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
 #ifdef DEBUG_ENDIANREADER
-        qCCritical(OkularDviDebug) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
-        qCCritical(OkularDviDebug) << "end_pointer     = " << end_pointer << endl;
-        qCCritical(OkularDviDebug) << "command_pointer = " << command_pointer << endl;
+        qCCritical(OkularDviDebug) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk";
+        qCCritical(OkularDviDebug) << "end_pointer     = " << end_pointer;
+        qCCritical(OkularDviDebug) << "command_pointer = " << command_pointer;
 #endif
         return EOP;
     }

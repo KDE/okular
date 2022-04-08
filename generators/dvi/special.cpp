@@ -30,10 +30,10 @@
 void dviRenderer::printErrorMsgForSpecials(const QString &msg)
 {
     if (dviFile->errorCounter < 25) {
-        qCCritical(OkularDviDebug) << msg << endl;
+        qCCritical(OkularDviDebug) << msg;
         dviFile->errorCounter++;
         if (dviFile->errorCounter == 25) {
-            qCCritical(OkularDviDebug) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+            qCCritical(OkularDviDebug) << i18n("That makes 25 errors. Further error messages will not be printed.");
         }
     }
 }
@@ -315,11 +315,10 @@ void parse_special_argument(const QString &strg, const char *argument_name, int 
         } else {
             // Maybe we should open a dialog here.
             qCCritical(OkularDviDebug) << i18n(
-                                              "Malformed parameter in the epsf special command.\n"
-                                              "Expected a float to follow %1 in %2",
-                                              QString::fromLocal8Bit(argument_name),
-                                              strg)
-                                       << endl;
+                "Malformed parameter in the epsf special command.\n"
+                "Expected a float to follow %1 in %2",
+                QString::fromLocal8Bit(argument_name),
+                strg);
         }
     }
 }

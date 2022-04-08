@@ -66,7 +66,7 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
     }
     file = fopen(QFile::encodeName(parent->filename).constData(), "r");
     if (file == nullptr) {
-        qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename) << endl;
+        qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename);
     }
 #ifdef DEBUG_PK
     else
@@ -101,7 +101,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
     // Paranoia checks
     if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-        qCCritical(OkularDviDebug) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
+        qCCritical(OkularDviDebug) << "TeXFont_PK::getGlyph(): Argument is too big.";
         return glyphtable;
     }
 
@@ -113,7 +113,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
         // If the character is not defined in the PK file, mark the
         // character as missing, and print an error message
         if (g->addr == 0) {
-            qCCritical(OkularDviDebug) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2", ch, parent->filename) << endl;
+            qCCritical(OkularDviDebug) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2", ch, parent->filename);
             g->addr = -1;
             return g;
         }
@@ -692,13 +692,13 @@ void TeXFont_PK::read_PK_index()
 #endif
 
     if (file == nullptr) {
-        qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
+        qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file == 0";
         return;
     }
 
     int magic = two(file);
     if (magic != PK_MAGIC) {
-        qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file is not a PK file" << endl;
+        qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file is not a PK file";
         return;
     }
 

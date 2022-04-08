@@ -194,7 +194,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
     static unsigned char c;
     macro *m = &currinf.fontp->macrotable[ch];
     if (m->pos == nullptr) {
-        qCCritical(OkularDviDebug) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
+        qCCritical(OkularDviDebug) << "Character " << ch << " not defined in font " << currinf.fontp->fontname;
         m->pos = m->end = &c;
         return;
     }

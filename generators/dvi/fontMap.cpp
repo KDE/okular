@@ -42,7 +42,7 @@ fontMap::fontMap()
     kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
-        qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+        qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started.";
         return;
     }
 
@@ -55,7 +55,7 @@ fontMap::fontMap()
         // the file.
         kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
         if (!kpsewhich.waitForStarted()) {
-            qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+            qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started.";
             return;
         }
 
@@ -64,7 +64,7 @@ fontMap::fontMap()
         map_fileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
         // If both versions fail, then there is nothing left to do.
         if (map_fileName.isEmpty()) {
-            qCCritical(OkularDviDebug) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
+            qCCritical(OkularDviDebug) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich.";
             return;
         }
     }
@@ -112,14 +112,14 @@ fontMap::fontMap()
         }
         file.close();
     } else {
-        qCCritical(OkularDviDebug) << QStringLiteral("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+        qCCritical(OkularDviDebug) << QStringLiteral("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName);
     }
 
 #ifdef DEBUG_FONTMAP
     qCDebug(OkularDviDebug) << "FontMap file parsed. Results:";
     QMap<QString, fontMapEntry>::Iterator it;
     for (it = fontMapEntries.begin(); it != fontMapEntries.end(); ++it)
-        qCDebug(OkularDviDebug) << "TeXName: " << it.key() << ", FontFileName=" << it.data().fontFileName << ", FullName=" << it.data().fullFontName << ", Encoding=" << it.data().fontEncoding << "." << endl;
+        qCDebug(OkularDviDebug) << "TeXName: " << it.key() << ", FontFileName=" << it.data().fontFileName << ", FullName=" << it.data().fullFontName << ", Encoding=" << it.data().fontEncoding << ".";
     ;
 #endif
 }

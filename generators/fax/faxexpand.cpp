@@ -335,7 +335,7 @@ const char *StateNames[] = {
 static void unexpected(const char *what, int LineNum)
 {
     if (verbose) {
-        qCCritical(FAX_LOG) << "Line " << LineNum << ": Unexpected state in " << what << endl;
+        qCCritical(FAX_LOG) << "Line " << LineNum << ": Unexpected state in " << what;
     }
 }
 

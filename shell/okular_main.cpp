@@ -147,31 +147,31 @@ Status main(const QStringList &paths, const QString &serializedOptions)
 {
     if (ShellUtils::unique(serializedOptions) && paths.count() > 1) {
         QTextStream stream(stderr);
-        stream << i18n("Error: Can't open more than one document with the --unique switch") << endl;
+        stream << i18n("Error: Can't open more than one document with the --unique switch") << '\n';
         return Error;
     }
 
     if (ShellUtils::startInPresentation(serializedOptions) && paths.count() > 1) {
         QTextStream stream(stderr);
-        stream << i18n("Error: Can't open more than one document with the --presentation switch") << endl;
+        stream << i18n("Error: Can't open more than one document with the --presentation switch") << '\n';
         return Error;
     }
 
     if (ShellUtils::showPrintDialog(serializedOptions) && paths.count() > 1) {
         QTextStream stream(stderr);
-        stream << i18n("Error: Can't open more than one document with the --print switch") << endl;
+        stream << i18n("Error: Can't open more than one document with the --print switch") << '\n';
         return Error;
     }
 
     if (!ShellUtils::page(serializedOptions).isEmpty() && paths.count() > 1) {
         QTextStream stream(stderr);
-        stream << i18n("Error: Can't open more than one document with the --page switch") << endl;
+        stream << i18n("Error: Can't open more than one document with the --page switch") << '\n';
         return Error;
     }
 
     if (!ShellUtils::find(serializedOptions).isEmpty() && paths.count() > 1) {
         QTextStream stream(stderr);
-        stream << i18n("Error: Can't open more than one document with the --find switch") << endl;
+        stream << i18n("Error: Can't open more than one document with the --find switch") << '\n';
         return Error;
     }
 

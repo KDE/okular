@@ -41,12 +41,12 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 
     if (error == FT_Err_Unknown_File_Format) {
         errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.", parent->filename);
-        qCCritical(OkularDviDebug) << errorMessage << endl;
+        qCCritical(OkularDviDebug) << errorMessage;
         fatalErrorInFontLoading = true;
         return;
     } else if (error) {
         errorMessage = i18n("The font file %1 is broken, or it could not be opened or read.", parent->filename);
-        qCCritical(OkularDviDebug) << errorMessage << endl;
+        qCCritical(OkularDviDebug) << errorMessage;
         fatalErrorInFontLoading = true;
         return;
     }
@@ -114,7 +114,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
         } else {
             if ((found == nullptr) && (face->charmap != nullptr)) {
 #ifdef DEBUG_PFB
-                qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=" << face->charmap->platform_id << ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
+                qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=" << face->charmap->platform_id << ", encoding=" << face->charmap->encoding_id << " that is contained in the font.";
 #endif
                 for (int i = 0; i < 256; i++) {
                     charMap[i] = FT_Get_Char_Index(face, i);
@@ -145,7 +145,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
 
     // Paranoia checks
     if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-        qCCritical(OkularDviDebug) << "TeXFont_PFB::getGlyph(): Argument is too big." << endl;
+        qCCritical(OkularDviDebug) << "TeXFont_PFB::getGlyph(): Argument is too big.";
         return glyphtable;
     }
 
@@ -171,7 +171,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             if (errorMessage.isEmpty()) {
                 errorMessage = msg;
             }
-            qCCritical(OkularDviDebug) << msg << endl;
+            qCCritical(OkularDviDebug) << msg;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
             return g;
@@ -189,7 +189,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             if (errorMessage.isEmpty()) {
                 errorMessage = msg;
             }
-            qCCritical(OkularDviDebug) << msg << endl;
+            qCCritical(OkularDviDebug) << msg;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
             return g;
@@ -202,7 +202,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             if (errorMessage.isEmpty()) {
                 errorMessage = msg;
             }
-            qCCritical(OkularDviDebug) << msg << endl;
+            qCCritical(OkularDviDebug) << msg;
             g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 255, 255));
             return g;
@@ -214,7 +214,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             if (errorMessage.isEmpty()) {
                 errorMessage = i18n("Glyph #%1 is empty.", ch);
             }
-            qCCritical(OkularDviDebug) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename) << endl;
+            qCCritical(OkularDviDebug) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename);
             g->shrunkenCharacter = QImage(15, 15, QImage::Format_RGB32);
             g->shrunkenCharacter.fill(qRgb(255, 0, 0));
             g->x2 = 0;
@@ -283,7 +283,7 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             if (errorMessage.isEmpty()) {
                 errorMessage = msg;
             }
-            qCCritical(OkularDviDebug) << msg << endl;
+            qCCritical(OkularDviDebug) << msg;
             g->dvi_advance_in_units_of_design_size_by_2e20 = 1;
         }
         g->dvi_advance_in_units_of_design_size_by_2e20 = (qint32)(((qint64)(1 << 20) * (qint64)face->glyph->metrics.horiAdvance) / (qint64)face->units_per_EM);

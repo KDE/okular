@@ -63,7 +63,7 @@ float Length::convertToMM(const QString &distance, bool *ok)
     // If no unit has been found -> error message, set *ok to false and
     // return 0.0.
     if (MMperUnit == 0.0) {
-        qCCritical(OkularDviShellDebug) << "distance::convertToMM: no known unit found in the string '" << distance << "'." << endl;
+        qCCritical(OkularDviShellDebug) << "distance::convertToMM: no known unit found in the string '" << distance << "'.";
         if (ok) {
             *ok = false;
         }

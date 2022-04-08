@@ -47,6 +47,7 @@
 #include <QUndoCommand>
 #include <QWindow>
 #include <QtAlgorithms>
+#include <private/qstringiterator_p.h>
 
 #include <KApplicationTrader>
 #include <KAuthorized>
@@ -4342,6 +4343,29 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
     }
 }
 
+QString DocumentPrivate::diff(const QString &oldVal, const QString &newVal)
+{
+    QString diff;
+
+    QStringIterator oldIt(oldVal);
+    QStringIterator newIt(newVal);
+
+    while (oldIt.hasNext() && newIt.hasNext()) {
+        QChar oldToken = oldIt.next();
+        QChar newToken = newIt.next();
+
+        if (oldToken != newToken) {
+            diff += newToken;
+            break;
+        }
+    }
+
+    while (newIt.hasNext()) {
+        diff += newIt.next();
+    }
+    return diff;
+}
+
 void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue)
 {
     if (action->actionType() != Action::Script) {
@@ -4357,6 +4381,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     }
 
     std::shared_ptr<Event> event = Event::createKeystrokeEvent(fft, d->m_pagesVector[foundPage]);
+    event->setChange(DocumentPrivate::diff(fft->text(), newValue.toString()));
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 

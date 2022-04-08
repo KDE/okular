@@ -230,6 +230,8 @@ public:
 
     void clearAndWaitForRequests();
 
+    OKULARCORE_EXPORT static QString diff(const QString &oldVal, const QString &newVal);
+
     /*
      * Executes a ScriptAction with the event passed as parameter.
      */

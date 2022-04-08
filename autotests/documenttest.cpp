@@ -29,6 +29,8 @@ class DocumentTest : public QObject
 private Q_SLOTS:
     void testCloseDuringRotationJob();
     void testDocdataMigration();
+    void testDiff_data();
+    void testDiff();
 };
 
 // Test that we don't crash if the document is closed while a RotationJob
@@ -124,6 +126,53 @@ void DocumentTest::testDocdataMigration()
     m_document->closeDocument();
 
     delete m_document;
+}
+
+void DocumentTest::testDiff_data()
+{
+    QTest::addColumn<QString>("oldVal");
+    QTest::addColumn<QString>("newVal");
+    QTest::addColumn<QString>("expectedDiff");
+
+    QTest::addRow("empty") << ""
+                           << ""
+                           << "";
+    QTest::addRow("a") << ""
+                       << "a"
+                       << "a";
+    QTest::addRow("ab") << "a"
+                        << "b"
+                        << "b";
+    QTest::addRow("ab2") << "a"
+                         << "ab"
+                         << "b";
+    QTest::addRow("kaesekuchen") << "Käse"
+                                 << "Käsekuchen"
+                                 << "kuchen";
+    QTest::addRow("replace") << "kuchen"
+                             << "wurst"
+                             << "wurst";
+    QTest::addRow("okular") << "Oku"
+                            << "Okular"
+                            << "lar";
+    QTest::addRow("removal1") << "a"
+                              << ""
+                              << "";
+    QTest::addRow("removal2") << "ab"
+                              << "a"
+                              << "";
+    QTest::addRow("unicode") << "☮🤌"
+                             << "☮🤌❤️"
+                             << "❤️";
+}
+
+void DocumentTest::testDiff()
+{
+    QFETCH(QString, oldVal);
+    QFETCH(QString, newVal);
+    QFETCH(QString, expectedDiff);
+
+    QCOMPARE(Okular::DocumentPrivate::diff(oldVal, newVal), expectedDiff);
 }
 
 QTEST_MAIN(DocumentTest)

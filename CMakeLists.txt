@@ -451,6 +451,7 @@ PUBLIC  # these are included from the installed headers
     KF5::ConfigGui
     Qt5::PrintSupport
     Qt5::Widgets
+    Qt5::CorePrivate
 )
 
 

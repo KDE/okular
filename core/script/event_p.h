@@ -108,6 +108,9 @@ public:
     bool willCommit() const;
     void setWillCommit(bool willCommit);
 
+    QString change() const;
+    void setChange(const QString &change);
+
     static std::shared_ptr<Event> createFormCalculateEvent(FormField *target, Page *targetPage, FormField *source = nullptr, Page *sourcePage = nullptr, const QString &targetName = QString());
     static std::shared_ptr<Event> createFormatEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
     static std::shared_ptr<Event> createKeystrokeEvent(FormField *target, Page *targetPage);

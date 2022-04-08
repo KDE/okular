@@ -123,6 +123,13 @@ static KJSObject eventGetWillCommit(KJSContext *, void *object)
     return KJSBoolean(event->willCommit());
 }
 
+// Event.change (getter)
+static KJSObject eventGetChange(KJSContext *, void *object)
+{
+    const Event *event = reinterpret_cast<Event *>(object);
+    return KJSString(event->change());
+}
+
 void JSEvent::initType(KJSContext *ctx)
 {
     static bool initialized = false;
@@ -144,6 +151,7 @@ void JSEvent::initType(KJSContext *ctx)
     g_eventProto->defineProperty(ctx, QStringLiteral("willCommit"), eventGetWillCommit);
     g_eventProto->defineProperty(ctx, QStringLiteral("value"), eventGetValue, eventSetValue);
     g_eventProto->defineProperty(ctx, QStringLiteral("rc"), eventGetReturnCode, eventSetReturnCode);
+    g_eventProto->defineProperty(ctx, QStringLiteral("change"), eventGetChange);
 }
 
 KJSObject JSEvent::wrapEvent(KJSContext *ctx, Event *event)

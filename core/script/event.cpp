@@ -36,6 +36,7 @@ public:
     bool m_returnCode;
     bool m_shiftModifier;
     bool m_willCommit;
+    QString m_change;
 };
 
 Event::Event()
@@ -179,6 +180,16 @@ bool Event::willCommit() const
 void Event::setWillCommit(bool willCommit)
 {
     d->m_willCommit = willCommit;
+}
+
+QString Event::change() const
+{
+    return d->m_change;
+}
+
+void Event::setChange(const QString &change)
+{
+    d->m_change = change;
 }
 
 // static

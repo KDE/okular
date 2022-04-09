@@ -837,6 +837,11 @@ void Part::setupViewerActions()
     pageno->setText(i18n("Page Number"));
     pageno->setDefaultWidget(m_pageNumberTool);
     ac->addAction(QStringLiteral("page_number"), pageno);
+
+    QAction *configureColorModes = new QAction(i18nc("@action", "Configure Color Modes..."), ac);
+    ac->addAction(QStringLiteral("options_configure_color_modes"), configureColorModes);
+    configureColorModes->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
+    connect(configureColorModes, &QAction::triggered, this, &Part::slotAccessibilityPreferences);
 }
 
 void Part::setViewerShortcuts()
@@ -974,11 +979,6 @@ void Part::setupActions()
     ac->addAction(QStringLiteral("presentation_erase_drawings"), eraseDrawingAction);
     eraseDrawingAction->setIcon(QIcon::fromTheme(QStringLiteral("draw-eraser-delete-objects")));
     eraseDrawingAction->setEnabled(false);
-
-    QAction *configureColorModes = new QAction(i18nc("@action", "Configure Color Modes..."), ac);
-    ac->addAction(QStringLiteral("options_configure_color_modes"), configureColorModes);
-    configureColorModes->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
-    connect(configureColorModes, &QAction::triggered, this, &Part::slotAccessibilityPreferences);
 
     QAction *configureAnnotations = new QAction(i18n("Configure Annotations..."), ac);
     ac->addAction(QStringLiteral("options_configure_annotations"), configureAnnotations);

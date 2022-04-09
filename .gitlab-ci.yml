@@ -10,6 +10,8 @@ include:
 build_ubuntu_20_04:
   stage: build
   image: ubuntu:focal
+  tags:
+    - Linux
   only:
     - merge_requests
   before_script:
@@ -26,6 +28,8 @@ build_ubuntu_20_04:
 build_clazy_clang_tidy:
   stage: build
   image: debian:unstable
+  tags:
+    - Linux
   only:
     - merge_requests
   before_script:

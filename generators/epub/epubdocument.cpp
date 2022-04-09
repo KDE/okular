@@ -19,7 +19,7 @@ EpubDocument::EpubDocument(const QString &fileName, const QFont &font)
     , mFont(font)
 {
 #ifdef Q_OS_WIN
-    mEpub = epub_open(fileName.toUtf8(), 2);
+    mEpub = epub_open(qUtf8Printable(fileName), 2);
 #else
     mEpub = epub_open(qPrintable(fileName), 2);
 #endif

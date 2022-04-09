@@ -68,7 +68,7 @@ ColorModeMenu::ColorModeMenu(KActionCollection *ac, QObject *parent)
     // Add Configure Color Modes action.
     addSeparator();
     QAction *aConfigure = ac->action(QStringLiteral("options_configure_color_modes"));
-    Q_ASSERT_X(aConfigure, "ColorModeMenu", "ColorModeMenu constructed before Okular::Part?!? options_configure_color_modes not in action collection.");
+    Q_ASSERT_X(aConfigure, "ColorModeMenu", "options_configure_color_modes is not in the action collection.");
     addAction(aConfigure);
 
     connect(m_colorModeActionGroup, &QActionGroup::triggered, this, &ColorModeMenu::slotColorModeActionTriggered);

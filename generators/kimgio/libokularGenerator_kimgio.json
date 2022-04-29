@@ -249,7 +249,8 @@
             "image/x-bzeps",
             "image/avif",
             "image/heif",
-            "image/webp"
+            "image/webp",
+            "image/jxl"
         ],
         "Name": "Image Backend",
         "Name[ar]": "خلفية الصور",

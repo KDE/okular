@@ -24,8 +24,6 @@
 #include "../settings.h"
 #include "closedialoghelper.h"
 
-#include "../generators/poppler/config-okular-poppler.h"
-
 #include <KActionCollection>
 #include <KConfigDialog>
 #include <KParts/OpenUrlArguments>

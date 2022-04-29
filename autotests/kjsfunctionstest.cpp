@@ -21,8 +21,6 @@
 #include <core/page.h>
 #include <core/script/event_p.h>
 
-#include "../generators/poppler/config-okular-poppler.h"
-
 class MessageBoxHelper : public QObject
 {
     Q_OBJECT

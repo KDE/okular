@@ -16,8 +16,6 @@
 #include <core/page.h>
 #include <qtestcase.h>
 
-#include "../generators/poppler/config-okular-poppler.h"
-
 class KeystrokeTest : public QObject
 {
     Q_OBJECT

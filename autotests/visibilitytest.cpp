@@ -14,8 +14,6 @@
 #include <core/form.h>
 #include <core/page.h>
 
-#include "../generators/poppler/config-okular-poppler.h"
-
 class VisibilityTest : public QObject
 {
     Q_OBJECT

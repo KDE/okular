@@ -48,7 +48,7 @@ QString PopplerCertificateInfo::subjectInfo(PopplerCertificateInfo::EntityInfoKe
 
 QString PopplerCertificateInfo::nickName() const
 {
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     return m_info.nickName();
 #else
     return i18n("Not Available");
@@ -134,7 +134,7 @@ QByteArray PopplerCertificateInfo::certificateData() const
 
 bool PopplerCertificateInfo::checkPassword(const QString &password) const
 {
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     return m_info.checkPassword(password);
 #else
     Q_UNUSED(password);
@@ -264,7 +264,7 @@ const Okular::CertificateInfo &PopplerSignatureInfo::certificateInfo() const
     return *m_certfiticateInfo;
 }
 
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
 PopplerCertificateStore::~PopplerCertificateStore() = default;
 
 QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
@@ -280,7 +280,7 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
 
     const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
     QList<Okular::CertificateInfo *> vReturnCerts;
-    for (auto cert : certs) {
+    for (const auto &cert : certs) {
         vReturnCerts.append(new PopplerCertificateInfo(cert));
     }
 

@@ -12,9 +12,11 @@
 #define _OKULAR_GENERATOR_PDF_H_
 
 //#include "synctex/synctex_parser.h"
-#include <config-okular-poppler.h>
 
 #include <poppler-qt5.h>
+#include <poppler-version.h>
+
+#define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
 
 #include <QBitArray>
 #include <QPointer>
@@ -108,7 +110,7 @@ public:
 
     QByteArray requestFontData(const Okular::FontInfo &font) override;
 
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     static void okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData);
 #endif
 

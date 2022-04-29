@@ -15,8 +15,6 @@
 #include <core/form.h>
 #include <core/page.h>
 
-#include "../generators/poppler/config-okular-poppler.h"
-
 class FormatTest : public QObject
 {
     Q_OBJECT

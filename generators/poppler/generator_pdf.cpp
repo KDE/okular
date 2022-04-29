@@ -51,8 +51,6 @@
 
 #include "pdfsettings.h"
 
-#include <config-okular-poppler.h>
-
 #include <poppler-media.h>
 #include <poppler-version.h>
 
@@ -380,7 +378,7 @@ static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkA
         return Okular::DocumentAction::Close;
     case Poppler::LinkAction::Print:
         return Okular::DocumentAction::Print;
-#ifdef HAVE_POPPLER_22_04
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 04, 0)
     case Poppler::LinkAction::SaveAs:
         return Okular::DocumentAction::SaveAs;
 #endif
@@ -633,7 +631,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
     Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     if (!PDFSettings::useDefaultCertDB()) {
         Poppler::setNSSDir(QUrl(PDFSettings::dBCertificatePath()).toLocalFile());
     }
@@ -694,7 +692,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
     }
 
     xrefReconstructed = false;
-#ifdef HAVE_POPPLER_RECONSTRUCTION_CALLBACK
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 6, 0)
     if (pdfdoc->xrefWasReconstructed()) {
         xrefReconstructionHandler();
     } else {
@@ -1357,7 +1355,7 @@ QByteArray PDFGenerator::requestFontData(const Okular::FontInfo &font)
     return pdfdoc->fontData(fi);
 }
 
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
 void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData)
 {
     pData->setCertNickname(oData.certNickname());
@@ -1365,14 +1363,14 @@ void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Popple
     pData->setPage(oData.page());
     const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
     pData->setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
-#ifdef HAVE_POPPLER_FANCY_SIGNATURE
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 6, 0)
     pData->setSignatureLeftText(oData.certSubjectCommonName());
 #endif
     const Okular::NormalizedRect bRect = oData.boundingRectangle();
     pData->setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData->setFontColor(Qt::black);
     pData->setBorderColor(Qt::black);
-#ifdef HAVE_POPPLER_22_02
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     pData->setDocumentOwnerPassword(oData.documentPassword().toLatin1());
     pData->setDocumentUserPassword(oData.documentPassword().toLatin1());
 #endif
@@ -1575,7 +1573,7 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), QStringLiteral(POPPLER_VERSION));
         }
     } else if (key == QLatin1String("ShowStampsWarning")) {
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
         return QStringLiteral("no");
 #else
         return QStringLiteral("yes");
@@ -1583,7 +1581,7 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
     } else if (key == QLatin1String("DocumentHasPassword")) {
         return pdfdoc->isEncrypted() ? QStringLiteral("yes") : QStringLiteral("no");
     } else if (key == QLatin1String("CanSignDocumentWithPassword")) {
-#ifdef HAVE_POPPLER_22_02
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
         return QStringLiteral("yes");
 #else
         return QStringLiteral("no");
@@ -2019,7 +2017,7 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
 
 bool PDFGenerator::canSign() const
 {
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     return Poppler::hasNSSSupport();
 #else
     return false;
@@ -2028,7 +2026,7 @@ bool PDFGenerator::canSign() const
 
 bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
@@ -2062,7 +2060,7 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
 
 Okular::CertificateStore *PDFGenerator::certificateStore() const
 {
-#ifdef HAVE_POPPLER_SIGNING
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 1, 0)
     if (!certStore) {
         certStore = new PopplerCertificateStore();
     }

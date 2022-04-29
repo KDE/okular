@@ -268,7 +268,7 @@ PopplerFormFieldChoice::PopplerFormFieldChoice(std::unique_ptr<Poppler::FormFiel
     m_id = m_field->id();
     SET_ACTIONS
 
-#ifdef HAVE_POPPLER_0_87
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 87, 0)
     QMap<QString, QString> values;
     const auto fieldChoicesWithExportValues = m_field->choicesWithExportValues();
     for (const QPair<QString, QString> &value : fieldChoicesWithExportValues) {
@@ -396,7 +396,7 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
     m_rect = Okular::NormalizedRect::fromQRectF(m_field->rect());
     m_id = m_field->id();
     int validateOptions = Poppler::FormFieldSignature::ValidateVerifyCertificate;
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     if (!PDFSettings::checkOCSPServers()) {
         validateOptions = validateOptions | Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
     }
@@ -454,7 +454,7 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         return Okular::FormFieldSignature::AdbePkcs7detached;
     case Poppler::FormFieldSignature::EtsiCAdESdetached:
         return Okular::FormFieldSignature::EtsiCAdESdetached;
-#ifdef HAVE_POPPLER_22_02
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     case Poppler::FormFieldSignature::UnsignedSignature:
         return Okular::FormFieldSignature::UnsignedSignature;
 #endif
@@ -470,7 +470,7 @@ const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
 
 bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
 {
-#ifdef HAVE_POPPLER_22_02
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 2, 0)
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
     return m_field->sign(newPath, pData) == Poppler::FormFieldSignature::SigningSuccess;

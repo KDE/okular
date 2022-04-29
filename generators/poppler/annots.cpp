@@ -280,7 +280,7 @@ static void setSharedAnnotationPropertiesToPopplerAnnotation(const Okular::Annot
     popplerAnnotation->setModificationDate(okularAnnotation->modificationDate());
 }
 
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
 static void setPopplerStampAnnotationCustomImage(const Poppler::Page *page, Poppler::StampAnnotation *pStampAnnotation, const Okular::StampAnnotation *oStampAnnotation)
 {
     const QSize size = page->pageSize();
@@ -348,7 +348,7 @@ static void updatePopplerAnnotationFromOkularAnnotation(const Okular::HighlightA
     pHighlightAnnotation->setHighlightQuads(pQuads);
 }
 
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
 static void updatePopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation, Poppler::StampAnnotation *pStampAnnotation, const Poppler::Page *page)
 {
     setPopplerStampAnnotationCustomImage(page, pStampAnnotation, oStampAnnotation);
@@ -420,7 +420,7 @@ static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Ok
     return pHighlightAnnotation;
 }
 
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
 static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation, Poppler::Page *page)
 {
     Poppler::StampAnnotation *pStampAnnotation = new Poppler::StampAnnotation();
@@ -483,7 +483,7 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
         ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::HighlightAnnotation *>(okl_ann));
         break;
     case Okular::Annotation::AStamp:
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     {
         bool wasDenyWriteEnabled = okl_ann->flags() & Okular::Annotation::DenyWrite;
 
@@ -516,7 +516,7 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
         return;
     }
 
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     okl_ann->setFlags(okl_ann->flags() | Okular::Annotation::ExternallyDrawn);
 #else
     // Poppler doesn't render StampAnnotations yet
@@ -595,7 +595,7 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
     case Poppler::Annotation::AStamp: {
         const Okular::StampAnnotation *okl_stampann = static_cast<const Okular::StampAnnotation *>(okl_ann);
         Poppler::StampAnnotation *ppl_stampann = static_cast<Poppler::StampAnnotation *>(ppl_ann);
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
         Poppler::Page *ppl_page = ppl_doc->page(page);
         updatePopplerAnnotationFromOkularAnnotation(okl_stampann, ppl_stampann, ppl_page);
         delete ppl_page;
@@ -630,9 +630,9 @@ void PopplerAnnotationProxy::notifyRemoval(Okular::Annotation *okl_ann, int page
 
     Poppler::Page *ppl_page = ppl_doc->page(page);
     annotationsOnOpenHash->remove(okl_ann);
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
     if (okl_ann->subType() == Okular::Annotation::AStamp) {
-        deletedStampsAnnotationAppearance[static_cast<Okular::StampAnnotation *>(okl_ann)] = std::move(ppl_ann->annotationAppearance());
+        deletedStampsAnnotationAppearance[static_cast<Okular::StampAnnotation *>(okl_ann)] = ppl_ann->annotationAppearance();
     }
 #endif
     ppl_page->removeAnnotation(ppl_ann); // Also destroys ppl_ann
@@ -1070,7 +1070,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         break;
     }
     case Poppler::Annotation::AStamp:
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
         externallyDrawn = true;
 #endif
         tieToOkularAnn = true;
@@ -1097,7 +1097,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         if (externallyDrawn) {
             okularAnnotation->setFlags(okularAnnotation->flags() | Okular::Annotation::ExternallyDrawn);
         }
-#ifdef HAVE_POPPLER_21_10
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
         if (okularAnnotation->subType() == Okular::Annotation::SubType::AStamp) {
             Okular::StampAnnotation *oStampAnn = static_cast<Okular::StampAnnotation *>(okularAnnotation);
             Poppler::StampAnnotation *pStampAnn = static_cast<Poppler::StampAnnotation *>(popplerAnnotation);

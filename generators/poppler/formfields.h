@@ -9,7 +9,6 @@
 #define _OKULAR_GENERATOR_PDF_FORMFIELDS_H_
 
 #include "core/form.h"
-#include <config-okular-poppler.h>
 #include <poppler-form.h>
 
 class PopplerFormFieldButton : public Okular::FormFieldButton

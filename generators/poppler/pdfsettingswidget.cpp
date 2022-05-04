@@ -68,7 +68,7 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
     m_pdfsw.loadSignaturesButton->hide();
 #endif
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 10, 0)
+#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(21, 10, 0)
     m_pdfsw.kcfg_CheckOCSPServers->hide();
 #endif
 }

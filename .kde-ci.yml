@@ -16,9 +16,14 @@ Dependencies:
   'require':
     'frameworks/kactivities': '@stable'
     'frameworks/khtml': '@stable'
-    'frameworks/kjs': '@stable'
     'frameworks/kpty': '@stable'
     'graphics/libkexiv2': '@same'
+
+- 'on': ['Linux', 'FreeBSD', 'Windows']
+  'require':
+    'frameworks/kjs': '@stable'
+    'frameworks/kwallet': '@stable'
+    'frameworks/kparts': '@stable'
 
 - 'on': ['Android']
   'require':

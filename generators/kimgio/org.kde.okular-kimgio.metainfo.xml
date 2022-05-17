@@ -41,7 +41,7 @@
   <name xml:lang="sr-ijekavianlatin">Slike</name>
   <name xml:lang="sv">Bilder</name>
   <name xml:lang="ta">படங்கள்</name>
-  <name xml:lang="tr">Resimler</name>
+  <name xml:lang="tr">Görseller</name>
   <name xml:lang="uk">Зображення</name>
   <name xml:lang="vi">Ảnh</name>
   <name xml:lang="x-test">xxImagesxx</name>
@@ -84,7 +84,7 @@
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje raznih formata slika</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa många bildformat</summary>
   <summary xml:lang="ta">பல படப் படிவங்களுக்கான ஆதரவை சேர்க்கும்</summary>
-  <summary xml:lang="tr">Birçok resim biçimini okuma desteği ekler</summary>
+  <summary xml:lang="tr">Birçok görsel biçimini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc nhiều định dạng ảnh</summary>
   <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>

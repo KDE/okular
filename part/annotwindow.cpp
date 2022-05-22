@@ -326,7 +326,16 @@ void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu *menu)
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
 
-    QAction *kundo = KStandardAction::create(KStandardAction::Undo, m_document, SLOT(undo()), menu);
+    QAction *kundo = KStandardAction::create(
+        KStandardAction::Undo,
+        m_document,
+        [doc = m_document] {
+            // We need a QueuedConnection because undoing may end up destroying the menu this action is on
+            // because it will undo the addition of the annotation. If it's not queued things gets unhappy
+            // because the menu is destroyed in the middle of processing the click on the menu itself
+            QMetaObject::invokeMethod(doc, &Okular::Document::undo, Qt::QueuedConnection);
+        },
+        menu);
     QAction *kredo = KStandardAction::create(KStandardAction::Redo, m_document, SLOT(redo()), menu);
     connect(m_document, &Okular::Document::canUndoChanged, kundo, &QAction::setEnabled);
     connect(m_document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);

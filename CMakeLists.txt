@@ -616,6 +616,11 @@ else()
     install(FILES okular.categories  DESTINATION ${KDE_INSTALL_CONFDIR})
 endif()
 
+ki18n_install(po)
+if(KF5DocTools_FOUND)
+    kdoctools_install(po)
+endif()
+
 ########### cmake files #################
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular5")

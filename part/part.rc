@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="51">
+<gui name="okular_part" version="52">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -88,6 +88,7 @@
     <Action name="speak_pause_resume"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
+    <Action name="colorscheme_menu" group="show_merge"/>
     <Action name="show_leftpanel" group="show_merge"/>
     <Action name="show_bottombar" group="show_merge"/>
     <Action name="options_configure_generators" group="configure_merge"/>

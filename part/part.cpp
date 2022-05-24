@@ -48,7 +48,9 @@
 #include "kconfigwidgets_version.h" // TODO KF 5.81 Remove this include, because the relevant section below will also be removed.
 #include <KAboutPluginDialog>
 #include <KActionCollection>
+#include <KActionMenu>
 #include <KBookmarkAction>
+#include <KColorSchemeManager>
 #include <KDirWatch>
 #include <KFilterBase>
 #include <KFilterDev>
@@ -72,6 +74,7 @@
 #ifdef WITH_KWALLET
 #include <KWallet>
 #endif
+#include "kconfigwidgets_version.h"
 #include "kxmlgui_version.h" // TODO KF 5.79 Remove this include, because the relevant section below will also be removed.
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
@@ -868,6 +871,12 @@ void Part::setViewerShortcuts()
 void Part::setupActions()
 {
     KActionCollection *ac = actionCollection();
+
+#if KCONFIGWIDGETS_VERSION >= QT_VERSION_CHECK(5, 89, 0)
+    auto manager = new KColorSchemeManager(this);
+    KActionMenu *schemeMenu = manager->createSchemeSelectionMenu(this);
+    ac->addAction(QStringLiteral("colorscheme_menu"), schemeMenu->menu()->menuAction());
+#endif
 
     m_copy = KStandardAction::create(KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac);
 

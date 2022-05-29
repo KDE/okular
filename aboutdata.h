@@ -28,14 +28,14 @@ inline KAboutData okularAboutData()
                      QString(),
                      QStringLiteral("https://okular.kde.org"));
 
-    about.addAuthor(QStringLiteral("Pino Toscano"), i18n("Former maintainer"), QStringLiteral("pino@kde.org"));
-    about.addAuthor(QStringLiteral("Tobias Koenig"), i18n("Lots of framework work, FictionBook backend and former ODT backend"), QStringLiteral("tokoe@kde.org"));
-    about.addAuthor(QStringLiteral("Albert Astals Cid"), i18n("Developer"), QStringLiteral("aacid@kde.org"));
-    about.addAuthor(QStringLiteral("Piotr Szymanski"), i18n("Created Okular from KPDF codebase"), QStringLiteral("djurban@pld-dc.org"));
-    about.addAuthor(QStringLiteral("Enrico Ros"), i18n("KPDF developer"), QStringLiteral("eros.kde@email.it"));
-    about.addCredit(QStringLiteral("Eugene Trounev"), i18n("Annotations artwork"), QStringLiteral("eugene.trounev@gmail.com"));
-    about.addCredit(QStringLiteral("Jiri Baum - NICTA"), i18n("Table selection tool"), QStringLiteral("jiri@baum.com.au"));
-    about.addCredit(QStringLiteral("Fabio D'Urso"), i18n("Annotation improvements"), QStringLiteral("fabiodurso@hotmail.it"));
+    about.addAuthor(i18n("Pino Toscano"), i18n("Former maintainer"), QStringLiteral("pino@kde.org"));
+    about.addAuthor(i18n("Tobias Koenig"), i18n("Lots of framework work, FictionBook backend and former ODT backend"), QStringLiteral("tokoe@kde.org"));
+    about.addAuthor(i18n("Albert Astals Cid"), i18n("Developer"), QStringLiteral("aacid@kde.org"));
+    about.addAuthor(i18n("Piotr Szymanski"), i18n("Created Okular from KPDF codebase"), QStringLiteral("djurban@pld-dc.org"));
+    about.addAuthor(i18n("Enrico Ros"), i18n("KPDF developer"), QStringLiteral("eros.kde@email.it"));
+    about.addCredit(i18n("Eugene Trounev"), i18n("Annotations artwork"), QStringLiteral("eugene.trounev@gmail.com"));
+    about.addCredit(i18n("Jiri Baum - NICTA"), i18n("Table selection tool"), QStringLiteral("jiri@baum.com.au"));
+    about.addCredit(i18n("Fabio D'Urso"), i18n("Annotation improvements"), QStringLiteral("fabiodurso@hotmail.it"));
 
     return about;
 }

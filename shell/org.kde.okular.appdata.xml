@@ -379,7 +379,7 @@
     <release version="22.04.0" date="2022-04-21"/>
     <release version="21.12.3" date="2022-03-03">
       <artifacts>
-        <artifact type="binary" platform="win64">
+        <artifact type="binary" platform="x86_64-windows-msvc">
           <location>https://download.kde.org/stable/release-service/21.12.3/windows/okular-21.12.3-946-windows-msvc2019_64-cl.exe</location>
           <checksum type="sha256">60858ce3823f1e04ce9fa2c0d8dfec2d4649c77167d21770e83d1c87203a71a7</checksum>
           <size type="download">71741616</size>

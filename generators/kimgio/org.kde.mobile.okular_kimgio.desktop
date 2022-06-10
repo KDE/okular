@@ -168,3 +168,4 @@ Type=Application
 Categories=Qt;KDE;Graphics;Office;Viewer;
 InitialPreference=2
 NoDisplay=true
+X-KDE-AliasFor=org.kde.okular.kirigami.desktop

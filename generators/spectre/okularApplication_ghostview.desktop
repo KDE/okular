@@ -228,4 +228,5 @@ X-KDE-Keywords[vi]=PS, PostScript
 X-KDE-Keywords[x-test]=xxPSxx,xx PostScriptxx
 X-KDE-Keywords[zh_CN]=PS, PostScript
 X-KDE-Keywords[zh_TW]=PS, PostScript
+X-KDE-AliasFor=org.kde.okular.desktop
 NoDisplay=true

@@ -232,3 +232,4 @@ X-KDE-Keywords[x-test]=xxXPSxx
 X-KDE-Keywords[zh_CN]=XPS
 X-KDE-Keywords[zh_TW]=XPS
 NoDisplay=true
+X-KDE-AliasFor=org.kde.okular.desktop

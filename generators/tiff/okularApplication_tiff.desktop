@@ -178,3 +178,4 @@ Type=Application
 InitialPreference=1
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
+X-KDE-AliasFor=org.kde.okular.desktop

@@ -7,6 +7,7 @@
   <name>Images</name>
   <name xml:lang="ar">الصور</name>
   <name xml:lang="az">Şəkillər</name>
+  <name xml:lang="bg">Изображения</name>
   <name xml:lang="ca">Imatges</name>
   <name xml:lang="ca-valencia">Imatges</name>
   <name xml:lang="cs">Obrázky</name>
@@ -50,6 +51,7 @@
   <summary>Adds support for reading many image formats</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة العديد من تنسيقات الصور</summary>
   <summary xml:lang="az">Şəkil formatlarının oxunması dəstəyini əlavə edir</summary>
+  <summary xml:lang="bg">Добавя поддръжка за четене на множество формати за изображения</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir molts formats d'imatge</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir molts formats d'imatge</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>

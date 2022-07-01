@@ -6,6 +6,7 @@
   <name>Okular Mobile</name>
   <name xml:lang="ar">اوكلار محمول</name>
   <name xml:lang="az">Okular Mobil</name>
+  <name xml:lang="bg">Okular за мобилни устройства</name>
   <name xml:lang="ca">Okular Mobile</name>
   <name xml:lang="ca-valencia">Okular Mobile</name>
   <name xml:lang="cs">Okular Mobile</name>
@@ -47,6 +48,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ar">عارض المستندات</summary>
   <summary xml:lang="az">Sənədə baxış vasitısi</summary>
+  <summary xml:lang="bg">Преглед на документи</summary>
   <summary xml:lang="ca">Visor de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
   <summary xml:lang="cs">Prohlížeč dokumentů</summary>
@@ -91,6 +93,7 @@
   </p>
     <p xml:lang="ar">اوكلار هو عارض مستندات عالمي تم تطويره بواسطة كدي. يعمل اوكلار على أنظمة أساسية متعددة، بما في ذلك على سبيل المثال لا الحصر Linux و Windows و Mac OS X و * BSD وما إلى ذلك.</p>
     <p xml:lang="az">Okular KDE tərəfindən yaradılan sənədlərə universal baxış vasitəsidir. Okular Linux, Windows, Mac OS X, * BSD və s. digər bir çox platformada işləyir.</p>
+    <p xml:lang="bg">Okular е универсална програма за преглед на документи, разработена от KDE. Okular работи с множество платформи, включително, но не само, Linux, Windows и Mac OS X, *BSD и др.</p>
     <p xml:lang="ca">L'Okular és un visor universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">Okular és un visor universal de documents desenvolupat per KDE. Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="de">Okular ist ein universeller Dokumentenbetrachter, der von  KDE entwickelt wird. Okular ist auf mehreren Plattformen verfügbar, darunter auch Linux, Windows, Mac OS X, *BSD usw.</p>
@@ -130,6 +133,7 @@
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="az">İmkanlar:</p>
+    <p xml:lang="bg">Функции:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -172,6 +176,7 @@
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ar">يدعم التنسيقات: PDF و PS و Tiff و CHM و DjVu و Images و DVI و XPS  و Fiction Book و Comic Book و Plucker و EPub و Fax</li>
       <li xml:lang="az">Dəstəklənən formatlar: PDF, PS, Tiff, CHM, DjVu, şəkillər, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="bg">Поддържани формати: PDF, PS, Tiff, CHM, DjVu, изображения, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="cs">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, obrázky, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -206,6 +211,7 @@
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>
+      <li xml:lang="bg">Странична лента със съдържание, миниатюри, отзиви и отметки</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="de">Seitenleiste mit Inhalt, Vorschaubildern, Rezensionen und Lesezeichen</li>
@@ -245,6 +251,7 @@
       <li>Annotations support</li>
       <li xml:lang="ar">دعم التعليقات</li>
       <li xml:lang="az">Şərh yazılmasını dəstəkləyir</li>
+      <li xml:lang="bg">Поддръжка на анотации</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
       <li xml:lang="cs">Podpora poznámek</li>
@@ -289,6 +296,7 @@
       <caption>Reading manual in Okular</caption>
       <caption xml:lang="ar">قراءة دليل في اوكلار</caption>
       <caption xml:lang="az">Okular'da oxumaq təlimatı</caption>
+      <caption xml:lang="bg">Ръководство за четене в Okular</caption>
       <caption xml:lang="ca">Lectura de manuals a l'Okular</caption>
       <caption xml:lang="ca-valencia">Lectura de manuals a Okular</caption>
       <caption xml:lang="cs">Čtení manuálu v Okularu</caption>

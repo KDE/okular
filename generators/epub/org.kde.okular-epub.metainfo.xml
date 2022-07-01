@@ -7,6 +7,7 @@
   <name>EPub</name>
   <name xml:lang="ar">EPub</name>
   <name xml:lang="az">EPub</name>
+  <name xml:lang="bg">EPub</name>
   <name xml:lang="ca">EPub</name>
   <name xml:lang="ca-valencia">EPub</name>
   <name xml:lang="cs">EPub</name>
@@ -50,6 +51,7 @@
   <summary>Adds support for reading E-Books</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة الكتب الإلكترونية</summary>
   <summary xml:lang="az">E-Books sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="bg">Добавя поддръжка за четене на електронни книги във формат EPub</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir llibres electrònics</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir llibres electrònics</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení e-booků</summary>

@@ -2655,7 +2655,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
 
     bool setModifiedAfterSave = false;
 
-    QString fileName;
+    QString tmpFileName;
     {
         // Own scope for the QTemporaryFile since we only care about the random name
         // we need to destroy it so the file gets deleted otherwise windows will complain
@@ -2665,7 +2665,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
             KMessageBox::information(widget(), i18n("Could not open the temporary file for saving."));
             return false;
         }
-        fileName = tf.fileName();
+        tmpFileName = tf.fileName();
     }
 
     // Figure out the real save url, for symlinks we don't want to copy over the symlink but over the target file
@@ -2697,12 +2697,12 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
             }
         }
 
-        if (!m_document->saveDocumentArchive(fileName)) {
-            KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName));
+        if (!m_document->saveDocumentArchive(tmpFileName)) {
+            KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", tmpFileName));
             return false;
         }
 
-        copyJob = KIO::file_copy(QUrl::fromLocalFile(fileName), realSaveUrl, -1, KIO::Overwrite);
+        copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
     } else {
         bool wontSaveForms, wontSaveAnnotations;
         checkNativeSaveDataLoss(&wontSaveForms, &wontSaveAnnotations);
@@ -2764,17 +2764,17 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
             // If the generator supports saving changes, save them
 
             QString errorText;
-            if (!m_document->saveChanges(fileName, &errorText)) {
+            if (!m_document->saveChanges(tmpFileName, &errorText)) {
                 if (errorText.isEmpty()) {
-                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName));
+                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", tmpFileName));
                 } else {
-                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. %2", fileName, errorText));
+                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. %2", tmpFileName, errorText));
                 }
 
                 return false;
             }
 
-            copyJob = KIO::file_copy(QUrl::fromLocalFile(fileName), realSaveUrl, -1, KIO::Overwrite);
+            copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
         } else {
             // If the generators doesn't support saving changes, we will
             // just copy the original file.
@@ -2785,12 +2785,12 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                 // the open file (which is a .okular). So let's ask to core to
                 // extract and give us the real file
 
-                if (!m_document->extractArchivedFile(fileName)) {
-                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName));
+                if (!m_document->extractArchivedFile(tmpFileName)) {
+                    KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", tmpFileName));
                     return false;
                 }
 
-                copyJob = KIO::file_copy(QUrl::fromLocalFile(fileName), realSaveUrl, -1, KIO::Overwrite);
+                copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
             } else {
                 // Otherwise just copy the open file.
                 // make use of the already downloaded (in case of remote URLs) file,

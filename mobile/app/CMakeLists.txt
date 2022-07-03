@@ -32,6 +32,17 @@ if (ANDROID)
         target_link_directories(okularkirigami PRIVATE ${NSS_LIBRARY_DIRS})
         target_link_libraries(okularkirigami -lsoftokn3 -lnssckbi -lfreebl3)
     endif()
+
+    kirigami_package_breeze_icons(ICONS
+        application-pkcs7-signature
+        bookmark-remove
+        bookmarks-organize
+        dialog-close
+        document-open
+        help-about-symbolic
+        view-preview
+        view-table-of-contents-ltr
+    )
 endif()
 
 install(TARGETS okularkirigami ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -2614,8 +2614,11 @@ bool Part::slotSaveFileAs(bool showOkularArchiveAsDefaultFormat)
         Q_ASSERT(okularArchiveMimeType.suffixes().at(0) == okularArchiveMimeType.preferredSuffix());
         const QString wantedExtension = QLatin1Char('.') + okularArchiveMimeType.preferredSuffix();
         if (!saveUrl.path().endsWith(wantedExtension)) {
-            const auto button = KMessageBox::questionYesNo(
-                widget(), i18n("You have chosen to save an Okular Archive without the file name ending with the '%1' extension. That is not allowed, do you want to choose a new name?", wantedExtension), i18n("Unsupported extension"));
+            const auto button = KMessageBox::questionYesNo(widget(),
+                                                           i18n("You have chosen to save an Okular Archive without the file name ending with the '%1' extension. That is not allowed, do you want to choose a new name?", wantedExtension),
+                                                           i18n("Unsupported extension"),
+                                                           KGuiItem(i18nc("@action:button", "Choose New Name"), QStringLiteral("edit-rename")),
+                                                           KStandardGuiItem::cancel());
 
             return button == KMessageBox::Yes ? slotSaveFileAs(showOkularArchiveAsDefaultFormat) : false;
         }

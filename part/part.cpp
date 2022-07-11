@@ -2658,7 +2658,9 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
         const int res = KMessageBox::warningYesNo(
             widget(),
             i18n("The current document is protected with a password.<br />In order to save, the file needs to be reloaded. You will be asked for the password again and your undo/redo history will be lost.<br />Do you want to continue?"),
-            i18n("Save - Warning"));
+            i18n("Save - Warning"),
+            KStandardGuiItem::cont(),
+            KStandardGuiItem::cancel());
 
         switch (res) {
         case KMessageBox::Yes:
@@ -2703,7 +2705,11 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // Does the user want a .okular archive?
     if (flags & SaveAsOkularArchive) {
         if (!hasUserAcceptedReload && !m_document->canSwapBackingFile()) {
-            const int res = KMessageBox::warningYesNo(widget(), i18n("After saving, the current document format requires the file to be reloaded. Your undo/redo history will be lost.<br />Do you want to continue?"), i18n("Save - Warning"));
+            const int res = KMessageBox::warningYesNo(widget(),
+                                                      i18n("After saving, the current document format requires the file to be reloaded. Your undo/redo history will be lost.<br />Do you want to continue?"),
+                                                      i18n("Save - Warning"),
+                                                      KStandardGuiItem::cont(),
+                                                      KStandardGuiItem::cancel());
 
             switch (res) {
             case KMessageBox::Yes:

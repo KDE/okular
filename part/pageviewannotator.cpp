@@ -361,8 +361,8 @@ public:
                 m_pageView,
                 xi18nc("@info", "A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press <interface>Start over</interface> and draw a bigger rectangle."),
                 QString(),
-                KGuiItem(i18n("Start over")),
-                KGuiItem(i18n("Sign")),
+                KGuiItem(i18nc("@action:button", "Start Over")),
+                KGuiItem(i18nc("@action:button", "Sign")),
                 QStringLiteral("TooSmallDigitalSignatureQuestion"));
             if (answer == KMessageBox::Yes) {
                 m_startOver = true;

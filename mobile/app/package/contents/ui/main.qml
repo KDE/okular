@@ -5,6 +5,7 @@
 */
 
 import QtQuick 2.15
+import QtQuick.Controls 2.15 as QQC2
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.17 as Kirigami
@@ -64,6 +65,12 @@ Kirigami.ApplicationWindow {
     Okular.DocumentItem {
         id: documentItem
         onUrlChanged: { currentPage = 0 }
+
+        onNeedsPasswordChanged: {
+            if (needsPassword) {
+                passwordDialog.open();
+            }
+        }
     }
 
     pageStack.initialPage: MainView {
@@ -88,5 +95,21 @@ Kirigami.ApplicationWindow {
                 documentItem.url = uri
             }
         }
+    }
+
+    QQC2.Dialog {
+        id: passwordDialog
+        focus: true
+        anchors.centerIn: parent
+        title: i18n("Password Needed")
+        contentItem: Kirigami.PasswordField {
+            id: pwdField
+            onAccepted: passwordDialog.accept();
+            focus: true
+        }
+        standardButtons: QQC2.Dialog.Ok | QQC2.Dialog.Cancel
+
+        onAccepted: documentItem.setPassword(pwdField.text);
+        onRejected: documentItem.url = "";
     }
 }

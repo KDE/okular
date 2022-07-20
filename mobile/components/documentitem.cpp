@@ -51,6 +51,11 @@ DocumentItem::~DocumentItem()
 
 void DocumentItem::setUrl(const QUrl &url)
 {
+    openUrl(url, {});
+}
+
+void DocumentItem::openUrl(const QUrl &url, const QString &password)
+{
     m_document->closeDocument();
     // TODO: password
     QMimeDatabase db;
@@ -63,7 +68,7 @@ void DocumentItem::setUrl(const QUrl &url)
 
     const QString path = realUrl.isLocalFile() ? realUrl.toLocalFile() : QStringLiteral("-");
 
-    m_document->openDocument(path, realUrl, db.mimeTypeForUrl(realUrl));
+    const Okular::Document::OpenResult res = m_document->openDocument(path, realUrl, db.mimeTypeForUrl(realUrl), password);
 
     m_tocModel->clear();
     m_tocModel->fill(m_document->documentSynopsis());
@@ -73,10 +78,12 @@ void DocumentItem::setUrl(const QUrl &url)
     for (uint i = 0; i < m_document->pages(); ++i) {
         m_matchingPages << (int)i;
     }
+    m_needsPassword = res == Okular::Document::OpenNeedsPassword;
     Q_EMIT matchingPagesChanged();
     Q_EMIT urlChanged();
     Q_EMIT pageCountChanged();
     Q_EMIT openedChanged();
+    Q_EMIT needsPasswordChanged();
     Q_EMIT supportsSearchingChanged();
     Q_EMIT windowTitleForDocumentChanged();
     Q_EMIT bookmarkedPagesChanged();
@@ -222,6 +229,11 @@ void DocumentItem::resetSearch()
     }
 
     Q_EMIT matchingPagesChanged();
+}
+
+void DocumentItem::setPassword(const QString &password)
+{
+    openUrl(m_document->currentDocument(), password);
 }
 
 Okular::Document *DocumentItem::document()

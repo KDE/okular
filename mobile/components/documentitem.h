@@ -48,6 +48,11 @@ class DocumentItem : public QObject
     Q_PROPERTY(bool opened READ isOpened NOTIFY openedChanged)
 
     /**
+     * True if this DocumentItem instance needs a password to open the document
+     */
+    Q_PROPERTY(bool needsPassword READ needsPassword NOTIFY needsPasswordChanged)
+
+    /**
      * How many pages there are in the document
      */
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
@@ -101,6 +106,11 @@ public:
 
     bool isOpened() const;
 
+    bool needsPassword() const
+    {
+        return m_needsPassword;
+    }
+
     int pageCount() const;
 
     bool supportsSearching() const;
@@ -130,6 +140,11 @@ public:
      */
     Q_INVOKABLE void resetSearch();
 
+    /**
+     * Tries to reopen the document with the given password.
+     */
+    Q_INVOKABLE void setPassword(const QString &password);
+
     // Internal, not binded to qml
     Okular::Document *document();
     Observer *pageviewObserver();
@@ -139,6 +154,7 @@ Q_SIGNALS:
     void urlChanged();
     void pageCountChanged();
     void openedChanged();
+    void needsPasswordChanged();
     void searchInProgressChanged();
     void matchingPagesChanged();
     void currentPageChanged();
@@ -175,6 +191,8 @@ private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);
 
 private:
+    void openUrl(const QUrl &url, const QString &password);
+
     Okular::Document *m_document;
     TOCModel *m_tocModel;
     SignatureModel *m_signaturesModel;
@@ -182,6 +200,7 @@ private:
     Observer *m_pageviewObserver;
     QVariantList m_matchingPages;
     bool m_searchInProgress;
+    bool m_needsPassword = false;
 };
 
 class Observer : public QObject, public Okular::DocumentObserver

@@ -157,7 +157,7 @@ void PixmapPreviewSelector::selectCustomStamp()
     if (!customStampFile.isEmpty()) {
         QPixmap pixmap = Okular::AnnotationUtils::loadStamp(customStampFile, m_previewSize);
         if (pixmap.isNull()) {
-            KMessageBox::sorry(this, xi18nc("@info", "Could not load the file <filename>%1</filename>", customStampFile), i18nc("@title:window", "Invalid file"));
+            KMessageBox::error(this, xi18nc("@info", "Could not load the file <filename>%1</filename>", customStampFile), i18nc("@title:window", "Invalid file"));
         } else {
             m_comboItems->setEditText(customStampFile);
         }

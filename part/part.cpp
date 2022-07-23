@@ -2649,7 +2649,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // as to if it can save changes even if the open file has been modified,
     // since we only have poppler as saving backend for now we're skipping that check
     if (m_fileLastModified != QFileInfo(localFilePath()).lastModified()) {
-        KMessageBox::sorry(widget(), i18n("The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName()), i18n("File Changed"));
+        KMessageBox::error(widget(), i18n("The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName()), i18n("File Changed"));
         return false;
     }
 
@@ -2829,7 +2829,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                             srcUrl = KUrl::fromPath(tempFile->fileName());
 #else
                         const QString msg = i18n("Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath());
-                        KMessageBox::sorry(widget(), msg);
+                        KMessageBox::error(widget(), msg);
                         return false;
 #endif
                     } else {

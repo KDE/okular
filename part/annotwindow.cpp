@@ -139,10 +139,36 @@ public:
         case QEvent::MouseButtonRelease:
             mousePressPos = QPoint();
             break;
-        case QEvent::MouseMove:
+        case QEvent::MouseMove: {
             me = (QMouseEvent *)e;
-            parentWidget()->move(me->pos() - mousePressPos + parentWidget()->pos());
+
+            // viewport info
+            const QPoint topLeftPoint = parentWidget()->parentWidget()->pos();
+            const int viewportHeight = parentWidget()->parentWidget()->height();
+            const int viewportWidth = parentWidget()->parentWidget()->width();
+
+            // annotation's popup window info
+            QPoint newPositionPoint = me->pos() - mousePressPos + parentWidget()->pos();
+            const int annotHeight = parentWidget()->height();
+            const int annotWidth = parentWidget()->width();
+
+            // make sure x is in range
+            if (newPositionPoint.x() < topLeftPoint.x()) {
+                newPositionPoint.setX(topLeftPoint.x());
+            } else if (newPositionPoint.x() + annotWidth > topLeftPoint.x() + viewportWidth) {
+                newPositionPoint.setX(topLeftPoint.x() + viewportWidth - annotWidth);
+            }
+
+            // make sure y is in range
+            if (newPositionPoint.y() < topLeftPoint.y()) {
+                newPositionPoint.setY(topLeftPoint.y());
+            } else if (newPositionPoint.y() + annotHeight > topLeftPoint.y() + viewportHeight) {
+                newPositionPoint.setY(topLeftPoint.y() + viewportHeight - annotHeight);
+            }
+
+            parentWidget()->move(newPositionPoint);
             break;
+        }
         default:
             return false;
         }

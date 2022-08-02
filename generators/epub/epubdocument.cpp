@@ -79,7 +79,7 @@ QString EpubDocument::checkCSS(const QString &c)
     std::size_t i = 0;
     const QRegularExpression re(QStringLiteral("(([0-9]+)(\\.[0-9]+)?)r?em(.*)"));
     while (i < cssArrayCount) {
-        auto item = cssArray[i];
+        const auto &item = cssArray[i];
         QRegularExpressionMatch match = re.match(item);
         if (match.hasMatch()) {
             double em = match.captured(1).toDouble();

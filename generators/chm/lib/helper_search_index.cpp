@@ -96,7 +96,7 @@ bool Index::makeIndex(const QList<QUrl> &docs, EBook *chmFile)
             return false;
         }
 
-        QUrl filename = *it;
+        const QUrl &filename = *it;
         QStringList terms;
 
         if (parseDocumentToStringlist(chmFile, filename, terms)) {

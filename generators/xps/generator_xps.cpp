@@ -1434,13 +1434,13 @@ QFont XpsFile::getFontByName(const QString &absoluteFileName, float size)
         qCWarning(OkularXpsDebug) << "The unexpected has happened. No font family for a known font:" << absoluteFileName << index;
         return QFont();
     }
-    const QString fontFamily = fontFamilies[0];
+    const QString &fontFamily = fontFamilies[0];
     const QStringList fontStyles = m_fontDatabase.styles(fontFamily);
     if (fontStyles.isEmpty()) {
         qCWarning(OkularXpsDebug) << "The unexpected has happened. No font style for a known font family:" << absoluteFileName << index << fontFamily;
         return QFont();
     }
-    const QString fontStyle = fontStyles[0];
+    const QString &fontStyle = fontStyles[0];
     return m_fontDatabase.font(fontFamily, fontStyle, qRound(size));
 }
 

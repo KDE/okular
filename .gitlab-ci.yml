@@ -27,7 +27,7 @@ build_ubuntu_20_04:
 
 build_clazy_clang_tidy:
   stage: build
-  image: debian:unstable
+  image: debian:bookworm
   tags:
     - Linux
   only:

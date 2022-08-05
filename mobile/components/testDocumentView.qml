@@ -5,7 +5,6 @@
 */
 
 import QtQuick 2.15
-import QtQuick.Controls 1.6
 import org.kde.okular 2.0 as Okular
 
 Item {
@@ -13,7 +12,7 @@ Item {
     height: 600
     Okular.DocumentItem {
         id: docItem
-        path: "pageitem.cpp"
+        url: "pageitem.cpp"
     }
     Okular.DocumentView {
         anchors.fill: parent

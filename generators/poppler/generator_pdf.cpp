@@ -34,7 +34,6 @@
 
 #include <KAboutData>
 #include <KConfigDialog>
-#include <KConfigDialogManager>
 #include <KLocalizedString>
 
 #include <core/action.h>

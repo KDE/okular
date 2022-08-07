@@ -460,7 +460,25 @@ void MouseAnnotation::performCommand(const QPoint newPos)
     QPointF normalizedRotatedMouseDelta(rotateInRect(QPointF(mouseDelta.x() / pageViewItemRect.width(), mouseDelta.y() / pageViewItemRect.height()), m_focusedAnnotation.pageViewItem->page()->rotation()));
 
     if (isMoved()) {
-        m_document->translatePageAnnotation(m_focusedAnnotation.pageNumber, m_focusedAnnotation.annotation, Okular::NormalizedPoint(normalizedRotatedMouseDelta.x(), normalizedRotatedMouseDelta.y()));
+        Okular::NormalizedPoint delta(normalizedRotatedMouseDelta.x(), normalizedRotatedMouseDelta.y());
+        const Okular::NormalizedRect annotRect = m_focusedAnnotation.annotation->boundingRectangle();
+
+        // if moving annot to the left && delta.x is big enough to move annot outside the page
+        if (delta.x < 0 && (annotRect.left + delta.x) < 0) {
+            delta.x = -annotRect.left; // update delta.x to move annot only to the left edge of the page
+        }
+        // similar checks for right, top and bottom
+        if (delta.x > 0 && (annotRect.right + delta.x) > 1) {
+            delta.x = 1 - annotRect.right;
+        }
+        if (delta.y < 0 && (annotRect.top + delta.y) < 0) {
+            delta.y = -annotRect.top;
+        }
+        if (delta.y > 0 && (annotRect.bottom + delta.y) > 1) {
+            delta.y = 1 - annotRect.bottom;
+        }
+        m_document->translatePageAnnotation(m_focusedAnnotation.pageNumber, m_focusedAnnotation.annotation, delta);
+
     } else if (isResized()) {
         QPointF delta1, delta2;
         handleToAdjust(normalizedRotatedMouseDelta, delta1, delta2, m_handle, m_focusedAnnotation.pageViewItem->page()->rotation());

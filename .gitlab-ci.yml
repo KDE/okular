@@ -41,13 +41,13 @@ build_clazy_clang_tidy:
 
   script:
     - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-copyable-polymorphic" ninja
+    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch" ninja
     - run-clang-tidy-14
     - rm -rf *
     - echo "Now compiling the mobile UI"
     - cd "$CI_PROJECT_DIR"
     - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_mobile.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-copyable-polymorphic" ninja
+    - CLAZY_IGNORE_DIRS="settings_mobile.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch" ninja
     - run-clang-tidy-14
 
 clang_format:

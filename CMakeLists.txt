@@ -177,7 +177,7 @@ if (BUILD_MOBILE)
     )
 endif()
 
-if(NOT WIN32 AND NOT ANDROID)
+if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities
     )

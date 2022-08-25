@@ -380,37 +380,42 @@ QTextDocument *Converter::convert(const QString &fileName)
 
                 if (mSectionMap.contains(link)) {
                     block = mSectionMap.value(link);
-                } else { // load missing resource
-                    char *data = nullptr;
-                    // epub_get_data can't handle whitespace url encodings
-                    QByteArray ba = link.replace(QLatin1String("%20"), QLatin1String(" ")).toLatin1();
-                    const char *clinkClean = ba.data();
-                    int size = epub_get_data(mTextDocument->getEpub(), clinkClean, &data);
+                } else {
+                    const QString percentDecodedLink = QUrl::fromPercentEncoding(link.toUtf8());
+                    if (mSectionMap.contains(percentDecodedLink)) {
+                        block = mSectionMap.value(percentDecodedLink);
+                    } else { // load missing resource
+                        char *data = nullptr;
+                        // epub_get_data can't handle whitespace url encodings
+                        QByteArray ba = link.replace(QLatin1String("%20"), QLatin1String(" ")).toLatin1();
+                        const char *clinkClean = ba.data();
+                        int size = epub_get_data(mTextDocument->getEpub(), clinkClean, &data);
 
-                    if (data) {
-                        _cursor->insertBlock();
+                        if (data) {
+                            _cursor->insertBlock();
 
-                        // try to load as image and if not load as html
-                        block = _cursor->block();
-                        QImage image;
-                        mSectionMap.insert(link, block);
-                        if (image.loadFromData((unsigned char *)data, size)) {
-                            mTextDocument->addResource(QTextDocument::ImageResource, QUrl(link), image);
-                            _cursor->insertImage(link);
-                        } else {
-                            _cursor->insertHtml(QString::fromUtf8(data));
-                            // Add anchors to hashes
-                            _handle_anchors(block, link);
+                            // try to load as image and if not load as html
+                            block = _cursor->block();
+                            QImage image;
+                            mSectionMap.insert(link, block);
+                            if (image.loadFromData((unsigned char *)data, size)) {
+                                mTextDocument->addResource(QTextDocument::ImageResource, QUrl(link), image);
+                                _cursor->insertImage(link);
+                            } else {
+                                _cursor->insertHtml(QString::fromUtf8(data));
+                                // Add anchors to hashes
+                                _handle_anchors(block, link);
+                            }
+
+                            // Start new file in a new page
+                            int page = mTextDocument->pageCount();
+                            while (mTextDocument->pageCount() == page) {
+                                _cursor->insertText(QStringLiteral("\n"));
+                            }
                         }
 
-                        // Start new file in a new page
-                        int page = mTextDocument->pageCount();
-                        while (mTextDocument->pageCount() == page) {
-                            _cursor->insertText(QStringLiteral("\n"));
-                        }
+                        free(data);
                     }
-
-                    free(data);
                 }
 
                 if (block.isValid()) { // be sure we actually got a block

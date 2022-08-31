@@ -1578,10 +1578,19 @@ bool Part::openFile()
             mimes << pathMime << argMime;
         }
 
+        // text is super annoying because it always succeeds when opening so try to make sure
+        // that we don't set it as first mime unless we're really sure it is that.
+        // If it could be something else based on the content we try that first but only if that content itself
+        // is not text or if it's a supported text child like markdown
         if (mimes[0].inherits(QStringLiteral("text/plain"))) {
             const QMimeType contentMime = db.mimeTypeForFile(fileNameToOpen, QMimeDatabase::MatchContent);
-            if (contentMime.name() != QLatin1String("text/plain")) {
+            if (!contentMime.inherits(QStringLiteral("text/plain"))) {
                 mimes.prepend(contentMime);
+            } else if (contentMime.name() != QLatin1String("text/plain")) {
+                const QStringList supportedMimes = m_document->supportedMimeTypes();
+                if (supportedMimes.contains(contentMime.name())) {
+                    mimes.prepend(contentMime);
+                }
             }
         }
     } else {

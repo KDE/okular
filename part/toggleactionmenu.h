@@ -88,6 +88,14 @@ protected:
     QPointer<QAction> m_defaultAction;
     QList<QPointer<QToolButton>> m_buttons;
 
+    QHash<const QToolButton *, Qt::ToolButtonStyle> m_originalToolButtonStyle;
+
+    /**
+     * Returns the aproppriate style for @p button.
+     * Respects both toolbar settings and settings for this menu action.
+     */
+    Qt::ToolButtonStyle styleFor(QToolButton *button) const;
+
     /**
      * Updates the toolbar buttons by setting the current defaultAction() on them.
      *

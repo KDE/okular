@@ -52,6 +52,7 @@ QWidget *ToggleActionMenu::createWidget(QWidget *parent)
     // END QToolButton hack
 
     m_buttons.append(button);
+    m_originalToolButtonStyle[button] = button->toolButtonStyle();
 
     // Apply other properties to the button.
     updateButtons();
@@ -74,11 +75,25 @@ void ToggleActionMenu::setDefaultAction(QAction *action)
     updateButtons();
 }
 
+Qt::ToolButtonStyle ToggleActionMenu::styleFor(QToolButton *button) const
+{
+    Qt::ToolButtonStyle style = m_originalToolButtonStyle[button];
+
+    if (style == Qt::ToolButtonTextBesideIcon && priority() < QAction::NormalPriority) {
+        style = Qt::ToolButtonIconOnly;
+    }
+
+    return style;
+}
+
 void ToggleActionMenu::updateButtons()
 {
     for (QToolButton *button : qAsConst(m_buttons)) {
         if (button) {
             button->setDefaultAction(this->defaultAction());
+            // If *this action* is low priority we need to tell the button
+            // so that it hides the text
+            button->setToolButtonStyle(styleFor(button));
 
             if (delayed()) { // TODO deprecated interface.
                 button->setPopupMode(QToolButton::DelayedPopup);

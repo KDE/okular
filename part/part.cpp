@@ -2684,6 +2684,9 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     bool setModifiedAfterSave = false;
 
     QString tmpFileName;
+    // don't turn the file_copy that use this to a file_move
+    // doesn't work on Windows
+    bool deleteTmpFileName = false;
     {
         // Own scope for the QTemporaryFile since we only care about the random name
         // we need to destroy it so the file gets deleted otherwise windows will complain
@@ -2734,7 +2737,8 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
             return false;
         }
 
-        copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+        copyJob = KIO::file_copy(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+        deleteTmpFileName = true;
     } else {
         bool wontSaveForms, wontSaveAnnotations;
         checkNativeSaveDataLoss(&wontSaveForms, &wontSaveAnnotations);
@@ -2806,7 +2810,8 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                 return false;
             }
 
-            copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+            copyJob = KIO::file_copy(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+            deleteTmpFileName = true;
         } else {
             // If the generators doesn't support saving changes, we will
             // just copy the original file.
@@ -2822,7 +2827,8 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                     return false;
                 }
 
-                copyJob = KIO::file_move(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+                copyJob = KIO::file_copy(QUrl::fromLocalFile(tmpFileName), realSaveUrl, -1, KIO::Overwrite);
+                deleteTmpFileName = true;
             } else {
                 // Otherwise just copy the open file.
                 // make use of the already downloaded (in case of remote URLs) file,
@@ -2864,6 +2870,13 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
         unsetFileToWatch();
     }
 
+    const auto deleteTmpFileFunction = [deleteTmpFileName, tmpFileName] {
+        Q_ASSERT(deleteTmpFileName == QFile::exists(tmpFileName));
+        if (deleteTmpFileName) {
+            QFile::remove(tmpFileName);
+        }
+    };
+
     KJobWidgets::setWindow(copyJob, widget());
     if (!copyJob->exec()) {
         KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Error: '%2'. Try to save it to another location.", saveUrl.toDisplayString(), copyJob->errorString()));
@@ -2873,8 +2886,11 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
             setFileToWatch(localFilePath());
         }
 
+        deleteTmpFileFunction();
+
         return false;
     }
+    deleteTmpFileFunction();
 
     m_document->setHistoryClean(true);
 

@@ -233,12 +233,12 @@ Okular::NormalizedPoint TranslateAnnotationCommand::minusDelta()
 Okular::NormalizedRect TranslateAnnotationCommand::translateBoundingRectangle(const Okular::NormalizedPoint &delta)
 {
     Okular::NormalizedRect annotBoundingRect = m_annotation->boundingRectangle();
-    double left = qMin<double>(annotBoundingRect.left, annotBoundingRect.left + delta.x);
-    double right = qMax<double>(annotBoundingRect.right, annotBoundingRect.right + delta.x);
-    double top = qMin<double>(annotBoundingRect.top, annotBoundingRect.top + delta.y);
-    double bottom = qMax<double>(annotBoundingRect.bottom, annotBoundingRect.bottom + delta.y);
-    Okular::NormalizedRect boundingRect(left, top, right, bottom);
-    return boundingRect;
+    annotBoundingRect.left = annotBoundingRect.left + delta.x;
+    annotBoundingRect.right = annotBoundingRect.right + delta.x;
+    annotBoundingRect.top = annotBoundingRect.top + delta.y;
+    annotBoundingRect.bottom = annotBoundingRect.bottom + delta.y;
+
+    return annotBoundingRect;
 }
 
 bool TranslateAnnotationCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
@@ -303,12 +303,13 @@ bool AdjustAnnotationCommand::mergeWith(const QUndoCommand *uc)
 
 Okular::NormalizedRect AdjustAnnotationCommand::adjustBoundingRectangle(const Okular::NormalizedPoint &delta1, const Okular::NormalizedPoint &delta2)
 {
-    const Okular::NormalizedRect annotBoundingRect = m_annotation->boundingRectangle();
-    const double left = qMin<double>(annotBoundingRect.left, annotBoundingRect.left + delta1.x);
-    const double right = qMax<double>(annotBoundingRect.right, annotBoundingRect.right + delta2.x);
-    const double top = qMin<double>(annotBoundingRect.top, annotBoundingRect.top + delta1.y);
-    const double bottom = qMax<double>(annotBoundingRect.bottom, annotBoundingRect.bottom + delta2.y);
-    return Okular::NormalizedRect(left, top, right, bottom);
+    Okular::NormalizedRect annotBoundingRect = m_annotation->boundingRectangle();
+    annotBoundingRect.left = annotBoundingRect.left + delta1.x;
+    annotBoundingRect.right = annotBoundingRect.right + delta2.x;
+    annotBoundingRect.top = annotBoundingRect.top + delta1.y;
+    annotBoundingRect.bottom = annotBoundingRect.bottom + delta2.y;
+
+    return annotBoundingRect;
 }
 
 bool AdjustAnnotationCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)

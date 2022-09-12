@@ -58,14 +58,13 @@ void KeystrokeTest::testCommit()
     Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[QStringLiteral("field2")]);
 
     // text that will be accepted
-    fft->setText(QStringLiteral("Lorem ipsum"));
+    fft->setPendingText(QStringLiteral("Lorem ipsum"));
     m_document->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
     QCOMPARE(fft->text(), QStringLiteral("Lorem ipsum"));
 
     // text that will be rejected
-    fft->setText(QStringLiteral("foo"));
+    fft->setPendingText(QStringLiteral("foo"));
     m_document->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
-    QEXPECT_FAIL("", "reset to commited value not implemented", Continue);
     QCOMPARE(fft->text(), QStringLiteral("Lorem ipsum"));
 }
 

@@ -77,11 +77,15 @@ public:
     int maximumLength() const override;
     Qt::Alignment textAlignment() const override;
     bool canBeSpellChecked() const override;
+    void setPendingText(const QString &text) override;
+    void commitValue() override;
+    void resetToCommittedValue() override;
 
 private:
     std::unique_ptr<Poppler::FormFieldText> m_field;
     Okular::NormalizedRect m_rect;
     int m_id;
+    QString m_pendingText;
 };
 
 class PopplerFormFieldChoice : public Okular::FormFieldChoice

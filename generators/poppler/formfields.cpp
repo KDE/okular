@@ -222,12 +222,17 @@ Okular::FormFieldText::TextType PopplerFormFieldText::textType() const
 
 QString PopplerFormFieldText::text() const
 {
+    if (!m_pendingText.isEmpty()) {
+        return m_pendingText;
+    }
+
     return m_field->text();
 }
 
 void PopplerFormFieldText::setText(const QString &text)
 {
     m_field->setText(text);
+    m_pendingText = QString();
 }
 
 void PopplerFormFieldText::setAppearanceText(const QString &text)
@@ -258,6 +263,21 @@ Qt::Alignment PopplerFormFieldText::textAlignment() const
 bool PopplerFormFieldText::canBeSpellChecked() const
 {
     return m_field->canBeSpellChecked();
+}
+
+void PopplerFormFieldText::setPendingText(const QString &text)
+{
+    m_pendingText = text;
+}
+
+void PopplerFormFieldText::commitValue()
+{
+    setText(m_pendingText);
+}
+
+void PopplerFormFieldText::resetToCommittedValue()
+{
+    m_pendingText = QString();
 }
 
 PopplerFormFieldChoice::PopplerFormFieldChoice(std::unique_ptr<Poppler::FormFieldChoice> field)

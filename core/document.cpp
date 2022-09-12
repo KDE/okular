@@ -1204,7 +1204,7 @@ void DocumentPrivate::recalculateForms()
                                 m_scripter->setEvent(nullptr);
                                 const QString newVal = event->value().toString();
                                 if (newVal != oldVal) {
-                                    fft->setText(newVal);
+                                    fft->setPendingText(newVal);
                                     fft->setAppearanceText(newVal);
                                     if (const Okular::Action *action = fft->additionalAction(Okular::FormField::FormatField)) {
                                         // The format action handles the refresh.
@@ -4341,13 +4341,13 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
     if (formattedText != unformattedText) {
         // We set the formattedText, because when we call refreshFormWidget
         // It will set the QLineEdit to this formattedText
-        fft->setText(formattedText);
+        fft->setPendingText(formattedText);
         fft->setAppearanceText(formattedText);
         Q_EMIT refreshFormWidget(fft);
         d->refreshPixmaps(foundPage);
         // Then we make the form have the unformatted text, to use
         // in calculations and other things.
-        fft->setText(unformattedText);
+        fft->setPendingText(unformattedText);
     } else if (fft->additionalAction(FormField::CalculateField)) {
         // When the field was calculated we need to refresh even
         // if the format script changed nothing. e.g. on error.
@@ -4403,7 +4403,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     d->executeScriptEvent(event, linkscript);
 
     if (event->returnCode()) {
-        fft->setText(newValue.toString());
+        fft->setPendingText(newValue.toString());
     } else {
         Q_EMIT refreshFormWidget(fft);
     }
@@ -4431,10 +4431,11 @@ void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFi
     d->executeScriptEvent(event, linkscript);
 
     if (event->returnCode()) {
-        fft->setText(event->value().toString());
-        // TODO commit value
+        fft->setPendingText(event->value().toString());
+        fft->commitValue();
     } else {
-        // TODO reset to committed value
+        fft->resetToCommittedValue();
+        Q_EMIT refreshFormWidget(fft);
     }
 }
 

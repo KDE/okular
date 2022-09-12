@@ -335,4 +335,16 @@ function AFSpecial_Keystroke( psf )
             return;
         }
     }
-} 
+}
+
+function AFPercent_Keystroke( nDec, sepStyle )
+{
+    if (event.willCommit) {
+        event.rc = true
+    } else {
+        // Allow only numbers plus possible separators
+        // TODO disallow too many separators
+        // TODO Make separator locale-dependen/use sepStyle properly
+        event.rc = !isNaN(event.change) || event.change == "." || event.change == ","
+    }
+}

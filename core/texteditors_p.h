@@ -24,6 +24,12 @@ static inline QHash<int, QString> buildEditorsMap()
     editors.insert(SettingsCore::EnumExternalEditor::Lyxclient, QStringLiteral("lyxclient -g %f %l"));
     editors.insert(SettingsCore::EnumExternalEditor::Texstudio, QStringLiteral("texstudio --line %l"));
     editors.insert(SettingsCore::EnumExternalEditor::Texifyidea, QStringLiteral("idea --line %l"));
+#ifdef Q_OS_WIN
+    editors.insert(SettingsCore::EnumExternalEditor::Notepad, QStringLiteral("notepad %l"));
+#endif
+#ifdef Q_OS_DARWIN
+    editors.insert(SettingsCore::EnumExternalEditor::TextEdit, QStringLiteral("open -a TextEdit %l"));
+#endif
     return editors;
 }
 

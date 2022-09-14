@@ -407,6 +407,17 @@ ki18n_wrap_ui(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
+if(WIN32)
+set(DEFAULT_EDITOR "Notepad")
+set(PLATFORM_TEXT_EDITOR "<choice name=\"Notepad\" />")
+elseif(APPLE)
+set(DEFAULT_EDITOR "TextEdit")
+set(PLATFORM_TEXT_EDITOR "<choice name=\"TextEdit\" />")
+else()
+set(DEFAULT_EDITOR "Kate")
+endif()
+configure_file(conf/okular_core.kcfg.in okular_core.kcfg @ONLY)
+
 kconfig_add_kcfg_files(okularcore_SRCS GENERATE_MOC conf/settings_core.kcfgc)
 
 add_library(okularcore SHARED ${okularcore_SRCS})
@@ -482,7 +493,7 @@ set_target_properties(okularcore PROPERTIES VERSION 10.0.0 SOVERSION 10 OUTPUT_N
 install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
 if(BUILD_DESKTOP)

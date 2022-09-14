@@ -34,6 +34,12 @@ DlgEditor::DlgEditor(QWidget *parent)
     m_editorChooser->addItem(i18nc("@item:inlistbox Config dialog, editor page", "Lyx client"), 5);
     m_editorChooser->addItem(i18nc("@item:inlistbox Config dialog, editor page", "TeXstudio"), 6);
     m_editorChooser->addItem(i18nc("@item:inlistbox Config dialog, editor page", "TeXiFy IDEA"), 7);
+#ifdef Q_OS_WINDOWS
+    m_editorChooser->addItem(i18nc("@item:inlistbox Config dialog, editor page", "Notepad"), 8);
+#endif
+#ifdef Q_OS_DARWIN
+    m_editorChooser->addItem(i18nc("@item:inlistbox Config dialog, editor page", "TextEdit"), 8);
+#endif
     m_layout->addRow(i18nc("@label:listbox Config dialog, editor page", "Editor:"), m_editorChooser);
     // END "Editor" row
 

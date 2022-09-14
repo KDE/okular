@@ -74,7 +74,7 @@
    <default>false</default>
   </entry>
   <entry key="ExternalEditor" type="Enum" >
-   <default>Kate</default>
+   <default>@DEFAULT_EDITOR@</default>
    <choices>
     <choice name="Custom" />
     <choice name="Kate" />
@@ -84,6 +84,7 @@
     <choice name="Lyxclient" />
     <choice name="Texstudio" />
     <choice name="Texifyidea" />
+    @PLATFORM_TEXT_EDITOR@
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

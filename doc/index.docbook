@@ -1215,7 +1215,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<sect2 id="annotations-remove">
 				<title>Removing annotations</title>
 				<para>
-					To remove an annotation, just click on it with the &RMB;, and select
+					To remove an annotation, first ensure the Browse tool is selected (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then just click on it with the &RMB;, and select
 					<guimenuitem>Delete</guimenuitem> or select an annotation using the &LMB; and press the &Del; key.
 				</para>
 				<para>
@@ -1231,7 +1231,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<sect2 id="annotations-edit">
 				<title>Editing annotations</title>
 				<para>
-					To edit an annotation, click on it with the &RMB; and select
+					To edit an annotation, first ensure the Browse tool is selected (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then click on it with the &RMB; and select
 					<guimenuitem>Properties</guimenuitem>. A dialog will appear with the general
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.

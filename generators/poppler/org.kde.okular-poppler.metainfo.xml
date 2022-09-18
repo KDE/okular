@@ -24,6 +24,7 @@
   <name xml:lang="hu">PDF</name>
   <name xml:lang="ia">PDF</name>
   <name xml:lang="it">PDF</name>
+  <name xml:lang="ka">PDF</name>
   <name xml:lang="ko">PDF</name>
   <name xml:lang="lt">PDF</name>
   <name xml:lang="ml">പി ടി എഫ്</name>
@@ -68,6 +69,7 @@
   <summary xml:lang="hu">Támogatás PDF-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos PDF</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti PDF</summary>
+  <summary xml:lang="ka">PDF დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">PDF 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą PDF dokumentų skaitymui</summary>
   <summary xml:lang="ml">പി ടി ഫ് പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>

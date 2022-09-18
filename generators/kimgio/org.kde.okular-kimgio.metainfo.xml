@@ -24,6 +24,7 @@
   <name xml:lang="hu">Képek</name>
   <name xml:lang="ia">Images</name>
   <name xml:lang="it">Immagini</name>
+  <name xml:lang="ka">გამოსახულებები</name>
   <name xml:lang="ko">그림</name>
   <name xml:lang="lt">Paveikslai</name>
   <name xml:lang="ml">ചിത്രങ്ങള്‍</name>
@@ -68,6 +69,7 @@
   <summary xml:lang="hu">Támogatás számos képformátum olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger formatos de image</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
+  <summary xml:lang="ka">ამატებს მრავალი გამოსახულების ფორმატის წაკითხვის მხარდაჭერას</summary>
   <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą daugelio paveikslų formatų skaitymui</summary>
   <summary xml:lang="ml">നിരവധി ചിത്ര ഫോർമാറ്റുകൾ വായിക്കുന്നതിനുള്ള പിന്തുണ ചേർക്കുന്നു</summary>

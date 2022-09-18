@@ -25,6 +25,7 @@
   <name xml:lang="ia">Okular</name>
   <name xml:lang="id">Okular</name>
   <name xml:lang="it">Okular</name>
+  <name xml:lang="ka">Okular</name>
   <name xml:lang="ko">Okular</name>
   <name xml:lang="lt">Okular</name>
   <name xml:lang="nl">Okular</name>
@@ -70,6 +71,7 @@
   <summary xml:lang="ia">Visor de documento</summary>
   <summary xml:lang="id">Penampil Dokumen</summary>
   <summary xml:lang="it">Visore di documenti</summary>
+  <summary xml:lang="ka">დოკუმენტების მნახველი</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="lt">Dokumentų žiūryklė</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
@@ -162,6 +164,7 @@
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Ypatybės:</p>
     <p xml:lang="nl">Kenmerken:</p>
@@ -205,6 +208,7 @@
       <li xml:lang="ia">Formtos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Citra, DVI, XPS, Buku Fiksi, Buku Komik, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, Fiction Book, fumetti, Plucker, EPub, Fax</li>
+      <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, CHM, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 사진, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
@@ -243,6 +247,7 @@
       <li xml:lang="ia">Barra lateral con  contentos, miniaturas, revisiones e marcatores de libro</li>
       <li xml:lang="id">Bilah sisi dengan konten, gambar-mini, ulasan, dan markah</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
+      <li xml:lang="ka">გვერდითი პანელი შემცველობით, მინიატურებით, გადახედვებით და სანიშნებით</li>
       <li xml:lang="ko">목차, 책갈피, 축소판, 주석이 있는 사이드바</li>
       <li xml:lang="lt">Šoninė juosta su turiniu, miniatiūromis, atsiliepimais ir žymelėmis</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
@@ -288,6 +293,7 @@
       <li xml:lang="ia">Supporto de annotationes</li>
       <li xml:lang="id">Dukungan anotasi</li>
       <li xml:lang="it">Supporto per le annotazioni</li>
+      <li xml:lang="ka">ანოტაციების მხარდაჭერა</li>
       <li xml:lang="ko">주석 지원</li>
       <li xml:lang="lt">Anotacijų palaikymas</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
@@ -337,6 +343,7 @@
       <caption xml:lang="ia">Legente manual in Okular</caption>
       <caption xml:lang="id">Petunjuk di Okular</caption>
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>
+      <caption xml:lang="ka">კითხვის სახელმძღვანელო Okular- ში</caption>
       <caption xml:lang="ko">Okular로 설명서 읽기</caption>
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>

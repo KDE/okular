@@ -79,6 +79,12 @@ include(GenerateExportHeader)
 include(FeatureSummary)
 include(ECMAddAppIcon)
 include(KDECompilerSettings NO_POLICY_SCOPE)
+
+# Yes, this really needs to be up here, KDEInstallDirs finds QtCore itself without the
+# private component and thus if we search it later with the private component the Qt cmake find code says
+# "nah you already found me, i'm not going to do the searching again"
+find_package(Qt5Core ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Private)
+
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(ECMAddTests)
@@ -102,7 +108,7 @@ ecm_setup_version(${PROJECT_VERSION}
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Qml Quick)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Test Widgets PrintSupport Svg Qml Quick)
 
 if(ANDROID)
     find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)

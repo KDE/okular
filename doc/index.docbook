@@ -2645,6 +2645,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>When using Browse Tool, wrap cursor at screen edges</guilabel></term>
+					<listitem>
+						<para>
+						  Allows endless scrolling around the entire document with the <link linkend="menutools">Browse Tool</link>. If enabled, the mouse cursor will wrap to the opposite end of the screen when it touches the borders while dragging the document. This feature is only supported on X11.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
 						<para>

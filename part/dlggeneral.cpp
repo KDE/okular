@@ -13,6 +13,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QSpinBox>
@@ -165,6 +166,14 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "Open in continuous mode by default"));
     openInContinuousModeByDefault->setObjectName(QStringLiteral("kcfg_ViewContinuous"));
     layout->addRow(programFeaturesLabel(), openInContinuousModeByDefault);
+
+    // Under Wayland the cursor wrap feature is unavailable
+    if (QGuiApplication::platformName() != QLatin1String("wayland")) {
+        QCheckBox *dragBeyondScreenEdges = new QCheckBox(this);
+        dragBeyondScreenEdges->setText(i18nc("@option:check Config dialog, general page", "When using Browse Tool, wrap cursor at screen edges"));
+        dragBeyondScreenEdges->setObjectName(QStringLiteral("kcfg_DragBeyondScreenEdges"));
+        layout->addRow(programFeaturesLabel(), dragBeyondScreenEdges);
+    }
     // END Program features section
 
     // If no Program features section, don’t add a second spacer:

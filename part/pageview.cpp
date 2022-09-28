@@ -2230,11 +2230,13 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
         const float upperZoomLimit = d->document->supportsTiles() ? 99.99 : 3.99;
 
         // Wrap mouse cursor
-        Qt::Edges wrapEdges;
-        wrapEdges.setFlag(Qt::TopEdge, d->zoomFactor < upperZoomLimit);
-        wrapEdges.setFlag(Qt::BottomEdge, d->zoomFactor > 0.101);
+        if (Okular::Settings::dragBeyondScreenEdges()) {
+            Qt::Edges wrapEdges;
+            wrapEdges.setFlag(Qt::TopEdge, d->zoomFactor < upperZoomLimit);
+            wrapEdges.setFlag(Qt::BottomEdge, d->zoomFactor > 0.101);
 
-        deltaY += CursorWrapHelper::wrapCursor(e->globalPos(), wrapEdges).y();
+            deltaY += CursorWrapHelper::wrapCursor(e->globalPos(), wrapEdges).y();
+        }
 
         // update zoom level, perform zoom and redraw
         if (deltaY) {
@@ -2279,13 +2281,15 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
                 setCursor(Qt::ClosedHandCursor);
 
                 // Wrap mouse cursor
-                Qt::Edges wrapEdges;
-                wrapEdges.setFlag(Qt::TopEdge, verticalScrollBar()->value() < verticalScrollBar()->maximum());
-                wrapEdges.setFlag(Qt::BottomEdge, verticalScrollBar()->value() > verticalScrollBar()->minimum());
-                wrapEdges.setFlag(Qt::LeftEdge, horizontalScrollBar()->value() < horizontalScrollBar()->maximum());
-                wrapEdges.setFlag(Qt::RightEdge, horizontalScrollBar()->value() > horizontalScrollBar()->minimum());
+                if (Okular::Settings::dragBeyondScreenEdges()) {
+                    Qt::Edges wrapEdges;
+                    wrapEdges.setFlag(Qt::TopEdge, verticalScrollBar()->value() < verticalScrollBar()->maximum());
+                    wrapEdges.setFlag(Qt::BottomEdge, verticalScrollBar()->value() > verticalScrollBar()->minimum());
+                    wrapEdges.setFlag(Qt::LeftEdge, horizontalScrollBar()->value() < horizontalScrollBar()->maximum());
+                    wrapEdges.setFlag(Qt::RightEdge, horizontalScrollBar()->value() > horizontalScrollBar()->minimum());
 
-                d->mouseGrabOffset -= CursorWrapHelper::wrapCursor(e->pos(), wrapEdges);
+                    d->mouseGrabOffset -= CursorWrapHelper::wrapCursor(e->pos(), wrapEdges);
+                }
 
                 d->scroller->handleInput(QScroller::InputMove, e->pos() + d->mouseGrabOffset, e->timestamp());
             }

@@ -911,7 +911,7 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
         }
 
         // Wrap mouse cursor
-        if (!CursorWrapHelper::wrapCursor(mousePos, Qt::TopEdge | Qt::BottomEdge).isNull()) {
+        if (Okular::Settings::dragBeyondScreenEdges() && !CursorWrapHelper::wrapCursor(mousePos, Qt::TopEdge | Qt::BottomEdge).isNull()) {
             m_mouseGrabPos.setX(0);
             m_mouseGrabPos.setY(0);
         }

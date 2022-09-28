@@ -325,6 +325,9 @@
    <default>true</default>
    <emit signal="viewContinuousChanged" />
   </entry>
+  <entry key="DragBeyondScreenEdges" type="Bool" >
+   <default>true</default>
+  </entry>
   <entry key="PrimaryAnnotationToolBar" type="Enum" >
    <default>FullAnnotationToolBar</default>
    <choices>

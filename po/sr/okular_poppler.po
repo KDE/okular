@@ -1,0 +1,194 @@
+# Translation of okular_poppler.po into Serbian.
+# Slobodan Simic <slsimic@gmail.com>, 2007.
+# Zoran Olujic <olujicz@ns-linux.org>, 2010.
+# Chusslove Illich <caslav.ilic@gmx.net>, 2010, 2012, 2013.
+# Dalibor Djuric <daliborddjuric@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2020-06-04 02:06+0200\n"
+"PO-Revision-Date: 2013-03-03 22:14+0100\n"
+"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+"X-Environment: kde\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Зоран Олујић"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "olujicz@gmail.com"
+
+# skip-rule: t-line
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:12
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr "Појачај танке линије:"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:23 generator_pdf.cpp:887
+#, kde-format
+msgid "No"
+msgstr "не"
+
+# >? What does this look like?
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:28
+#, kde-format
+msgid "Solid"
+msgstr "пуне"
+
+# >? What does this look like?
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:33
+#, kde-format
+msgid "Shape"
+msgstr "уобличене"
+
+#: generator_pdf.cpp:98
+#, kde-format
+msgid "PDF Options"
+msgstr "Опције ПДФ‑а"
+
+#: generator_pdf.cpp:100
+#, kde-format
+msgid "Print annotations"
+msgstr "Штампај тумачења"
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "Укључи тумачења у одштампани документ"
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"Укључује тумачења у одштампани документ. Ово можете искључити ако желите да "
+"одштампате изворни документ без тумачења."
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Force rasterization"
+msgstr "Наметни растеризацију"
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "Растеризује у слику пре штампања"
+
+#: generator_pdf.cpp:106
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"Намеће растеризацију сваке странице у слику пре него што се одштампа. Ово "
+"обично даје нешто лошије резултате, али је корисно за штампање докумената "
+"који иначе изгледају неисправно одштампани."
+
+#: generator_pdf.cpp:113
+#, kde-format
+msgid "Fit to printable area"
+msgstr ""
+
+#: generator_pdf.cpp:114
+#, kde-format
+msgid "Fit to full page"
+msgstr ""
+
+#: generator_pdf.cpp:115
+#, kde-format
+msgid "None; print original size"
+msgstr ""
+
+#: generator_pdf.cpp:116
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr ""
+
+#: generator_pdf.cpp:117
+#, kde-format
+msgid "Scale mode:"
+msgstr ""
+
+#: generator_pdf.cpp:885
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "ПДФ вер. %1.%2"
+
+#: generator_pdf.cpp:885
+#, kde-format
+msgid "Format"
+msgstr "Формат"
+
+#: generator_pdf.cpp:886
+#, kde-format
+msgid "Encrypted"
+msgstr "Шифрован"
+
+#: generator_pdf.cpp:886
+#, kde-format
+msgid "Unencrypted"
+msgstr "Нешифрован"
+
+#: generator_pdf.cpp:886
+#, kde-format
+msgid "Security"
+msgstr "Безбедност"
+
+#: generator_pdf.cpp:887
+#, kde-format
+msgid "Yes"
+msgstr "да"
+
+#: generator_pdf.cpp:887
+#, kde-format
+msgid "Optimized"
+msgstr "Оптимизација"
+
+#: generator_pdf.cpp:1609
+#, kde-format
+msgid "Using Poppler %1"
+msgstr ""
+
+#: generator_pdf.cpp:1611
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+
+#: generator_pdf.cpp:1661
+#, kde-format
+msgid "PDF"
+msgstr "ПДФ"
+
+#: generator_pdf.cpp:1661
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "Подешавање позадине за ПДФ"
+
+#: pdfsignatureutils.cpp:44 pdfsignatureutils.cpp:50
+#, kde-format
+msgid "Not Available"
+msgstr ""

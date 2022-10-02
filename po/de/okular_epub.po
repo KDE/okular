@@ -1,0 +1,52 @@
+# Burkhard Lück <lueck@hube-lueck.de>, 2008, 2013.
+# Frederik Schwarzer <schwarzer@kde.org>, 2012, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2013-08-14 17:35+0200\n"
+"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Burkhard Lück"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "lueck@hube-lueck.de"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "Fehler beim Öffnen des EPUB-Dokuments."
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr "EPUB"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "Einstellungen zum Anzeigemodul EPUB"
+
+#~ msgid "EPub Backend"
+#~ msgstr "Anzeigemodul für EPUB"
+
+#~ msgid "An EPub backend"
+#~ msgstr "Ein Anzeigemodul für EPUB"
+
+#~ msgid "© 2008 Ely Levy"
+#~ msgstr "© 2008 Ely Levy"
+
+#~ msgid "Ely Levy"
+#~ msgstr "Ely Levy"

@@ -1,0 +1,80 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Giovanni Sora <g.sora@tiscali.it>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-05-21 19:00+0200\n"
+"Last-Translator: Giovanni Sora <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-ia@kde.org>\n"
+"Language: ia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Giovanni Sora"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "g.sora@tiscali.it"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Le docuemnto non es un valide FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Incapace de aperir documento: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Documento non es un valide archivo ZIP"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Structura de documento invalide (directorio principal es mancante)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Il non trovava alcun contento in le documento"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Invalide documento XML: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "Fiction Book"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Configuration de retro administration de Fiction Book"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Retro adminisration de Fiction Book"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Un rendition pro eBooks (Libros electronic) de FictionBook"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

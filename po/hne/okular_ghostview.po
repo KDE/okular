@@ -1,0 +1,113 @@
+# translation of okular_ghostview.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+# Ravishankar Shrivastava <raviratlami@aol.in>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_ghostview\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2009-02-26 15:57+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
+"Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
+"Language: hne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविसंकर सिरीवास्तव, जी. करूनाकर"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in,"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, fuzzy, kde-format
+#| msgid "&Use platform fonts"
+msgid "Use Platform Fonts"
+msgstr "प्लेटफारम फोंट मन उपयोग मं लेव (&U)"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "सामान्य सेटिंग"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "प्लेटफारम फोंट मन उपयोग मं लेव (&U)"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "घोस्ट-स्क्रिप्ट"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "घोस्टस्क्रिप्ट बैकएन्ड कान्फिगरेसन"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "कागद संस्करन"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "भाखा स्तर"
+
+#~ msgid "PS Backend"
+#~ msgstr "पीएस बैकएन्ड"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "पोस्ट-स्क्रिप्ट फाइल रेंडरर."
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "© 2007-2008 अल्बर्ट एस्टल्स सिड"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "अलबर्ट एस्टल्स सिड"
+
+#~ msgid ""
+#~ "Anti-aliasing makes the result look better, but it makes the display take "
+#~ "longer"
+#~ msgstr "वटीएलियासिंग से परिनाम बेहतर दिखथे , फेर एखर से डिस्प्ले देखाय मं लंबा समय लेथे ."
+
+#, fuzzy
+#~| msgid "&Enable anti-aliasing of fonts and images"
+#~ msgid "&Enable anti-aliasing of fonts"
+#~ msgstr "फोंट अउ फोटू मन के एन्टीअलाएसिंग सक्छम करव (&E)"
+
+#, fuzzy
+#~| msgid "&Enable anti-aliasing of fonts and images"
+#~ msgid "&Enable anti-aliasing of graphics"
+#~ msgstr "फोंट अउ फोटू मन के एन्टीअलाएसिंग सक्छम करव (&E)"
+
+#~ msgid "&Show Ghostscript messages in a separate box"
+#~ msgstr "अलग डब्बा मं घोस्टस्क्रिप्ट संदेस देखाव (&S)"
+
+#~ msgid "Ghostscript Configuration"
+#~ msgstr "घोस्टस्क्रिप्ट कान्फिगरेसन"
+
+#~ msgid "Additional parameters to Ghostscript"
+#~ msgstr "घोस्टस्क्रिप्ट बर अतिरिक्त पैरामीटर"

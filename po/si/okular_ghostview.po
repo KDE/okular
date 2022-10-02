@@ -1,0 +1,91 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Danishka Navin <danishka@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2011-08-19 19:32+0530\n"
+"Last-Translator:  Danishka Navin <danishka@gmail.com>\n"
+"Language-Team: Sinhala <info@hanthana.org>\n"
+"Language: si\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Danishka Navin"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "danishka@gmail.com"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "වේදිකා අකුරු භාවිත කරන්න"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+"Ghostscript වෙත වේදිකා අකුරු භාවිතයට ඉඩ දිය යුතුදැයි හඳුනා ගනී. අසත්‍ය නම් ලේඛනයට තිළැලි "
+"අකුරු පමණක් භාවිතයට ඉඩදෙනු ලැබේ."
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "සාමාන්‍ය සැකසුම්"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "වේදිකා අකුරු භාවිත කරන්න (&U)"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "Ghostscript"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "Ghostscript පසුඉම් සැකසුම"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "ලේඛන සංස්කරණය"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "භාශා මට්ටම"
+
+#~ msgid "PS Backend"
+#~ msgstr "PS පසුඉම"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "පසුවිධානාවලු ගොනු ජනකය"
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "© 2007-2008 Albert Astals Cid"
+
+#~ msgid "Based on the Spectre library."
+#~ msgstr "Spectre පුස්ථකාලය මත පදනම් වේ."
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

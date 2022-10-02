@@ -1,0 +1,5768 @@
+# Translation of okular.po to Catalan (Valencian)
+# Copyright (C) 2003-2022 This_file_is_part_of_KDE
+#
+# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
+# Sebastià Pla i Sanz <sps@sastia.com>, 2005.
+# Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"PO-Revision-Date: 2022-09-28 10:21+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca@valencia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Josep M. Ferrer"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "txemaq@gmail.com"
+
+#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#, kde-format
+msgid "Okular"
+msgstr "Okular"
+
+#: aboutdata.h:21
+#, kde-format
+msgid "Okular, a universal document viewer"
+msgstr "Okular, un visor universal de documents"
+
+#: aboutdata.h:23
+#, kde-format
+msgid ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+msgstr ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Former maintainer"
+msgstr "Mantenidor anterior"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Tobias Koenig"
+msgstr "Tobias Koenig"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Lots of framework work, FictionBook backend and former ODT backend"
+msgstr ""
+"Molta faena d'infraestructura, dorsal del FictionBook i antic dorsal de l'ODT"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Albert Astals Cid"
+msgstr "Albert Astals Cid"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Developer"
+msgstr "Desenvolupador"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Piotr Szymanski"
+msgstr "Piotr Szymanski"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Created Okular from KPDF codebase"
+msgstr "Va crear Okular des del codi base del KPDF"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "Enrico Ros"
+msgstr "Enrico Ros"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "KPDF developer"
+msgstr "Desenvolupador del KPDF"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Eugene Trounev"
+msgstr "Eugene Trounev"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Annotations artwork"
+msgstr "Gràfics de les anotacions"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Jiri Baum - NICTA"
+msgstr "Jiri Baum - NICTA"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Table selection tool"
+msgstr "Eina de selecció de taules"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Fabio D'Urso"
+msgstr "Fabio D'Urso"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Annotation improvements"
+msgstr "Millores a les anotacions"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Go to page %1"
+msgstr "Ves a la pàgina %1"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Open external file"
+msgstr "Obri un fitxer extern"
+
+#: core/action.cpp:185
+#, kde-format
+msgid "Execute '%1'..."
+msgstr "Executa «%1»..."
+
+#: core/action.cpp:284
+#, kde-format
+msgid "First Page"
+msgstr "Primera pàgina"
+
+#: core/action.cpp:286 part/presentationwidget.cpp:177
+#, kde-format
+msgid "Previous Page"
+msgstr "Pàgina anterior"
+
+#: core/action.cpp:288 part/presentationwidget.cpp:194
+#, kde-format
+msgid "Next Page"
+msgstr "Pàgina següent"
+
+#: core/action.cpp:290
+#, kde-format
+msgid "Last Page"
+msgstr "Última pàgina"
+
+#: core/action.cpp:292
+#, kde-format
+msgid "Back"
+msgstr "Arrere"
+
+#: core/action.cpp:294
+#, kde-format
+msgid "Forward"
+msgstr "Avant"
+
+#: core/action.cpp:296
+#, kde-format
+msgid "Quit"
+msgstr "Ix"
+
+#: core/action.cpp:298
+#, kde-format
+msgid "Start Presentation"
+msgstr "Inicia la presentació"
+
+#: core/action.cpp:300
+#, kde-format
+msgid "End Presentation"
+msgstr "Acaba la presentació"
+
+#: core/action.cpp:302
+#, kde-format
+msgid "Find..."
+msgstr "Busca..."
+
+#: core/action.cpp:304
+#, kde-format
+msgid "Go To Page..."
+msgstr "Ves a la pàgina..."
+
+#: core/action.cpp:355
+#, kde-format
+msgid "Play sound..."
+msgstr "Reproduïx un so..."
+
+#: core/action.cpp:423 core/action.cpp:539
+#, kde-format
+msgid "JavaScript Script"
+msgstr "Script JavaScript"
+
+#: core/action.cpp:473
+#, kde-format
+msgid "Play movie..."
+msgstr "Reproduïx una pel·lícula..."
+
+#: core/action.cpp:544
+#, kde-format
+msgid "Play movie"
+msgstr "Reproduïx una pel·lícula"
+
+#: core/action.cpp:546
+#, kde-format
+msgid "Stop movie"
+msgstr "Para la pel·lícula"
+
+#: core/action.cpp:548
+#, kde-format
+msgid "Pause movie"
+msgstr "Fa pausa a la pel·lícula"
+
+#: core/action.cpp:550
+#, kde-format
+msgid "Resume movie"
+msgstr "Continua la pel·lícula"
+
+#: core/chooseenginedialog.cpp:22
+#, kde-format
+msgid "Backend Selection"
+msgstr "Seleccioneu el dorsal"
+
+#: core/chooseenginedialog.cpp:40
+#, kde-format
+msgid ""
+"<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
+"><br />Please select which one to use:</qt>"
+msgstr ""
+"<qt>S'ha trobat més d'un dorsal per al tipus MIME:<br /><b>%1</b> (%2).<br /"
+"><br />Seleccioneu quin s'ha d'utilitzar:</qt>"
+
+#: core/document.cpp:203
+#, kde-format
+msgctxt "@info %1 is a page size"
+msgid "Most pages are %1."
+msgstr "La majoria de les pàgines són %1."
+
+#: core/document.cpp:224
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Portrait %1"
+msgstr "Vertical %1"
+
+#: core/document.cpp:226
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Landscape %1"
+msgstr "Apaïsada %1"
+
+#: core/document.cpp:249
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 in (%3)"
+msgstr "%1 x %2 polzades (%3)"
+
+#: core/document.cpp:251
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 mm (%3)"
+msgstr "%1 x %2 mm (%3)"
+
+#: core/document.cpp:1682
+#, kde-format
+msgid "Continuing search from beginning"
+msgstr "La busca continua des del començament"
+
+#: core/document.cpp:1685
+#, kde-format
+msgid "Continuing search from bottom"
+msgstr "La busca continua des de baix"
+
+#: core/document.cpp:2445
+#, kde-format
+msgid ""
+"Can not find a plugin which is able to handle the document being passed."
+msgstr ""
+"No s'ha trobat cap connector que puga gestionar el document que s'està "
+"manipulant."
+
+#: core/document.cpp:3595
+#, kde-format
+msgctxt "remove a collection of annotations from the page"
+msgid "remove annotations"
+msgstr "Elimina les anotacions"
+
+#: core/document.cpp:4160 core/document.cpp:4166
+#, kde-format
+msgid ""
+"The document is trying to execute an external application and, for your "
+"safety, Okular does not allow that."
+msgstr ""
+"El document està intentant executar una aplicació externa i Okular no ho "
+"permet per a la vostra seguretat."
+
+#: core/document.cpp:4177
+#, kde-format
+msgid "No application found for opening file of mimetype %1."
+msgstr ""
+"No s'ha trobat cap aplicació per a obrir el fitxer amb el tipus MIME %1."
+
+#: core/document.cpp:4600
+#, kde-format
+msgid "Could not open a temporary file"
+msgstr "No s'ha pogut obrir un fitxer temporal"
+
+#: core/document.cpp:4602
+#, kde-format
+msgid "Print conversion failed"
+msgstr "Ha fallat la conversió d'impressió"
+
+#: core/document.cpp:4604
+#, kde-format
+msgid "Printing process crashed"
+msgstr "El procés d'impressió ha fallat"
+
+#: core/document.cpp:4606
+#, kde-format
+msgid "Printing process could not start"
+msgstr "No s'ha pogut iniciar el procés d'impressió"
+
+#: core/document.cpp:4608
+#, kde-format
+msgid "Printing to file failed"
+msgstr "No s'ha pogut imprimir a un fitxer"
+
+#: core/document.cpp:4610
+#, kde-format
+msgid "Printer was in invalid state"
+msgstr "La impressora està en un estat no vàlid"
+
+#: core/document.cpp:4612
+#, kde-format
+msgid "Unable to find file to print"
+msgstr "No s'ha pogut trobar el fitxer a imprimir"
+
+#: core/document.cpp:4614
+#, kde-format
+msgid "There was no file to print"
+msgstr "No hi ha cap fitxer a imprimir"
+
+#: core/document.cpp:4616
+#, kde-format
+msgid ""
+"Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
+"available"
+msgstr ""
+"No s'ha trobat cap binari adequat per a imprimir. Assegureu-vos que està "
+"disponible l'executable «lpr» de CUPS"
+
+#: core/document.cpp:4618
+#, kde-format
+msgid "The page print size is invalid"
+msgstr "La mida d'impressió de la pàgina no és vàlida"
+
+#: core/document.cpp:5283 part/part.cpp:1168
+#, kde-format
+msgid "Could not open '%1'. File does not exist"
+msgstr "No s'ha pogut obrir «%1». El fitxer no existix"
+
+#: core/document.cpp:5793
+#, kde-format
+msgid "Title"
+msgstr "Títol"
+
+#: core/document.cpp:5796
+#, kde-format
+msgid "Subject"
+msgstr "Assumpte"
+
+#: core/document.cpp:5799
+#, kde-format
+msgid "Description"
+msgstr "Descripció"
+
+#: core/document.cpp:5802
+#, kde-format
+msgid "Author"
+msgstr "Autoria"
+
+#: core/document.cpp:5805
+#, kde-format
+msgid "Creator"
+msgstr "Creador"
+
+#: core/document.cpp:5808
+#, kde-format
+msgid "Producer"
+msgstr "Productor"
+
+#: core/document.cpp:5811
+#, kde-format
+msgid "Copyright"
+msgstr "Copyright"
+
+#: core/document.cpp:5814
+#, kde-format
+msgid "Pages"
+msgstr "Pàgines"
+
+#: core/document.cpp:5817
+#, kde-format
+msgid "Created"
+msgstr "Creat"
+
+#: core/document.cpp:5820
+#, kde-format
+msgid "Modified"
+msgstr "Modificat"
+
+#: core/document.cpp:5823
+#, kde-format
+msgid "MIME Type"
+msgstr "Tipus MIME"
+
+#: core/document.cpp:5826
+#, kde-format
+msgid "Category"
+msgstr "Categoria"
+
+#: core/document.cpp:5829
+#, kde-format
+msgid "Keywords"
+msgstr "Paraules clau"
+
+#: core/document.cpp:5832
+#, kde-format
+msgid "File Path"
+msgstr "Camí cap al fitxer"
+
+#: core/document.cpp:5835
+#, kde-format
+msgid "File Size"
+msgstr "Mida del fitxer"
+
+#: core/document.cpp:5838
+#, kde-format
+msgid "Page Size"
+msgstr "Mida de la pàgina"
+
+#: core/documentcommands.cpp:62
+#, kde-format
+msgctxt "Add an annotation to the page"
+msgid "add annotation"
+msgstr "Afig anotació"
+
+#: core/documentcommands.cpp:108
+#, kde-format
+msgctxt "Remove an annotation from the page"
+msgid "remove annotation"
+msgstr "Elimina anotació"
+
+#: core/documentcommands.cpp:155
+#, kde-format
+msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
+msgid "modify annotation properties"
+msgstr "Modifica les propietats d'una anotació"
+
+#: core/documentcommands.cpp:190
+#, kde-format
+msgctxt "Translate an annotation's position on the page"
+msgid "translate annotation"
+msgstr "Trasllada una anotació"
+
+#: core/documentcommands.cpp:263
+#, kde-format
+msgctxt "Change an annotation's size"
+msgid "adjust annotation"
+msgstr "Ajusta l'anotació"
+
+#: core/documentcommands.cpp:333
+#, kde-format
+msgctxt "Generic text edit command"
+msgid "edit text"
+msgstr "Edita el text"
+
+#: core/documentcommands.cpp:396
+#, kde-format
+msgctxt "Edit an annotation's text contents"
+msgid "edit annotation contents"
+msgstr "Edita el contingut d'una anotació"
+
+#: core/documentcommands.cpp:445
+#, kde-format
+msgctxt "Edit an form's text contents"
+msgid "edit form contents"
+msgstr "Edita el contingut de formularis"
+
+#: core/documentcommands.cpp:494
+#, kde-format
+msgctxt "Edit a list form's choices"
+msgid "edit list form choices"
+msgstr "Edita la selecció de llista de formulari"
+
+#: core/documentcommands.cpp:528
+#, kde-format
+msgctxt "Edit a combo form's selection"
+msgid "edit combo form selection"
+msgstr "Edita la selecció de combinació de formulari"
+
+#: core/documentcommands.cpp:600
+#, kde-format
+msgctxt "Edit the state of a group of form buttons"
+msgid "edit form button states"
+msgstr "Edita els estats de botó de formulari"
+
+#: core/generator.cpp:761
+#, kde-format
+msgid "Plain &Text..."
+msgstr "&Text net..."
+
+#: core/generator.cpp:764
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: core/generator.cpp:768
+#, kde-format
+msgctxt "This is the document format"
+msgid "OpenDocument Text"
+msgstr "Text en OpenDocument"
+
+#: core/generator.cpp:771
+#, kde-format
+msgctxt "This is the document format"
+msgid "HTML"
+msgstr "HTML"
+
+#: core/printoptionswidget.cpp:19
+#, kde-format
+msgid "Print Options"
+msgstr "Opcions d'impressió"
+
+#: core/printoptionswidget.cpp:23
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Ajusta a l'àrea imprimible"
+
+#: core/printoptionswidget.cpp:24
+#, kde-format
+msgid "Fit to full page"
+msgstr "Ajusta a la pàgina completa"
+
+#: core/printoptionswidget.cpp:25
+#, kde-format
+msgid "Scale mode:"
+msgstr "Mode d'escala:"
+
+#: core/script/kjs_app.cpp:160
+#, kde-format
+msgid "Missing alert type"
+msgstr "Falta el tipus d'alerta"
+
+#: core/script/kjs_app.cpp:222
+#, kde-format
+msgid "Do not show this message again"
+msgstr "No tornes a mostrar este missatge"
+
+#: core/sourcereference.cpp:101
+#, kde-format
+msgctxt "'source' is a source file"
+msgid "Source: %1"
+msgstr "Origen: %1"
+
+#: core/textdocumentsettings.cpp:34
+#, kde-format
+msgid "&Default Font:"
+msgstr "Tipus de lletra pre&determinada:"
+
+#: gui/certificatemodel.cpp:39
+#, kde-format
+msgid "Version"
+msgstr "Versió"
+
+#: gui/certificatemodel.cpp:41
+#, kde-format
+msgid "Serial Number"
+msgstr "Número de sèrie"
+
+#: gui/certificatemodel.cpp:43
+#, kde-format
+msgid "Issuer"
+msgstr "Emissor"
+
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#, kde-format
+msgid "Issued On"
+msgstr "Emés el"
+
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#, kde-format
+msgid "Expires On"
+msgstr "Expira el"
+
+#: gui/certificatemodel.cpp:49
+#, kde-format
+msgctxt "The person/company that made the signature"
+msgid "Subject"
+msgstr "Assumpte"
+
+#: gui/certificatemodel.cpp:51
+#, kde-format
+msgid "Public Key"
+msgstr "Clau pública"
+
+#: gui/certificatemodel.cpp:53
+#, kde-format
+msgid "Key Usage"
+msgstr "Ús de la clau"
+
+#: gui/certificatemodel.cpp:72
+#, kde-format
+msgid "V%1"
+msgstr "V%1"
+
+#: gui/certificatemodel.cpp:84
+#, kde-format
+msgid "%1 (%2 bits)"
+msgstr "%1 (%2 bits)"
+
+#: gui/certificatemodel.cpp:146
+#, kde-format
+msgid "Property"
+msgstr "Propietat"
+
+#: gui/certificatemodel.cpp:148
+#, kde-format
+msgid "Value"
+msgstr "Valor"
+
+#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#, kde-format
+msgid "Pop-up Note"
+msgstr "Nota emergent"
+
+#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#, kde-format
+msgid "Typewriter"
+msgstr "Màquina d'escriure"
+
+#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#, kde-format
+msgid "Inline Note"
+msgstr "Nota inclosa"
+
+#: gui/guiutils.cpp:48
+#, kde-format
+msgid "Straight Line with Comment"
+msgstr "Línia recta amb comentari"
+
+#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: part/pageviewannotator.cpp:1326
+#, kde-format
+msgid "Straight Line"
+msgstr "Línia recta"
+
+#: gui/guiutils.cpp:50
+#, kde-format
+msgid "Polygon with Comment"
+msgstr "Polígon amb comentari"
+
+#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: part/pageviewannotator.cpp:1318
+#, kde-format
+msgid "Polygon"
+msgstr "Polígon"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry with Comment"
+msgstr "Geometria amb comentari"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry"
+msgstr "Geometria"
+
+#: gui/guiutils.cpp:59
+#, kde-format
+msgid "Highlight with Comment"
+msgstr "Ressaltat amb comentari"
+
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#, kde-format
+msgid "Highlight"
+msgstr "Ressaltat"
+
+#: gui/guiutils.cpp:62
+#, kde-format
+msgid "Squiggle with Comment"
+msgstr "Giragonses amb comentari"
+
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: part/pageviewannotator.cpp:1322
+#, kde-format
+msgid "Squiggle"
+msgstr "Giragonses"
+
+#: gui/guiutils.cpp:65
+#, kde-format
+msgid "Underline with Comment"
+msgstr "Subratllat amb comentari"
+
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: part/pageviewannotator.cpp:1330
+#, kde-format
+msgid "Underline"
+msgstr "Subratllat"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out with Comment"
+msgstr "Barrat amb comentari"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out"
+msgstr "Barrat"
+
+#: gui/guiutils.cpp:73
+#, kde-format
+msgid "Stamp with Comment"
+msgstr "Segell amb comentari"
+
+#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: part/pageviewannotator.cpp:1324
+#, kde-format
+msgid "Stamp"
+msgstr "Segell"
+
+#: gui/guiutils.cpp:76
+#, kde-format
+msgid "Freehand Line with Comment"
+msgstr "Línia a ma alçària amb comentari"
+
+#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: part/pageviewannotator.cpp:1312
+#, kde-format
+msgid "Freehand Line"
+msgstr "Línia a mà alçada"
+
+#: gui/guiutils.cpp:79
+#, kde-format
+msgid "Caret"
+msgstr "Cursor"
+
+#: gui/guiutils.cpp:82
+#, kde-format
+msgid "File Attachment"
+msgstr "Adjunció de fitxer"
+
+#: gui/guiutils.cpp:85
+#, kde-format
+msgid "Sound"
+msgstr "So"
+
+#: gui/guiutils.cpp:88
+#, kde-format
+msgid "Movie"
+msgstr "Pel·lícula"
+
+#: gui/guiutils.cpp:91
+#, kde-format
+msgctxt "Caption for a screen annotation"
+msgid "Screen"
+msgstr "Pantalla"
+
+#: gui/guiutils.cpp:94
+#, kde-format
+msgctxt "Caption for a widget annotation"
+msgid "Widget"
+msgstr "Giny"
+
+#: gui/guiutils.cpp:97
+#, kde-format
+msgctxt "Caption for a rich media annotation"
+msgid "Rich Media"
+msgstr "Contingut enriquit"
+
+#: gui/guiutils.cpp:109
+#, kde-format
+msgctxt "Unknown author"
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: gui/guiutils.cpp:126 part/presentationwidget.cpp:370
+#, kde-format
+msgid "Author: %1"
+msgstr "Autoria: %1"
+
+#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#, kde-format
+msgid "Where do you want to save %1?"
+msgstr "A on voleu guardar %1?"
+
+#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#, kde-format
+msgid "Could not open \"%1\" for writing. File was not saved."
+msgstr "No s'ha pogut obrir «%1» per a escriure-hi. El fitxer no s'ha guardat."
+
+#: gui/signatureguiutils.cpp:42
+#, kde-format
+msgid "The signature is cryptographically valid."
+msgstr "La signatura és vàlida criptogràficament."
+
+#: gui/signatureguiutils.cpp:44
+#, kde-format
+msgid "The signature is cryptographically invalid."
+msgstr "La signatura no és vàlida criptogràficament."
+
+#: gui/signatureguiutils.cpp:46
+#, kde-format
+msgid "Digest Mismatch occurred."
+msgstr "S'ha produït un error d'inconsistència del resum."
+
+#: gui/signatureguiutils.cpp:48
+#, kde-format
+msgid "The signature CMS/PKCS7 structure is malformed."
+msgstr "L'estructura CMS/PKCS7 de la signatura està mal formada."
+
+#: gui/signatureguiutils.cpp:50
+#, kde-format
+msgid "The requested signature is not present in the document."
+msgstr "La signatura requerida no està present en el document."
+
+#: gui/signatureguiutils.cpp:52
+#, kde-format
+msgid "The signature could not be verified."
+msgstr "No s'ha pogut verificar la signatura."
+
+#: gui/signatureguiutils.cpp:60
+#, kde-format
+msgid "Certificate is Trusted."
+msgstr "El certificat és de confiança."
+
+#: gui/signatureguiutils.cpp:62
+#, kde-format
+msgid "Certificate issuer isn't Trusted."
+msgstr "L'emissor del certificat no és de confiança."
+
+#: gui/signatureguiutils.cpp:64
+#, kde-format
+msgid "Certificate issuer is unknown."
+msgstr "L'emissor del certificat és desconegut."
+
+#: gui/signatureguiutils.cpp:66
+#, kde-format
+msgid "Certificate has been Revoked."
+msgstr "El certificat ha sigut revocat."
+
+#: gui/signatureguiutils.cpp:68
+#, kde-format
+msgid "Certificate has Expired."
+msgstr "El certificat ha caducat."
+
+#: gui/signatureguiutils.cpp:70
+#, kde-format
+msgid "Certificate has not yet been verified."
+msgstr "El certificat encara no s'ha verificat."
+
+#: gui/signatureguiutils.cpp:72
+#, kde-format
+msgid "Unknown issue with Certificate or corrupted data."
+msgstr "Problema desconegut amb el certificat o té les dades corrompudes."
+
+#: gui/signatureguiutils.cpp:80
+#, kde-format
+msgid "MD2"
+msgstr "MD2"
+
+#: gui/signatureguiutils.cpp:82
+#, kde-format
+msgid "MD5"
+msgstr "MD5"
+
+#: gui/signatureguiutils.cpp:84
+#, kde-format
+msgid "SHA1"
+msgstr "SHA1"
+
+#: gui/signatureguiutils.cpp:86
+#, kde-format
+msgid "SHA256"
+msgstr "SHA256"
+
+#: gui/signatureguiutils.cpp:88
+#, kde-format
+msgid "SHA384"
+msgstr "SHA384"
+
+#: gui/signatureguiutils.cpp:90
+#, kde-format
+msgid "SHA512"
+msgstr "SHA512"
+
+#: gui/signatureguiutils.cpp:92
+#, kde-format
+msgid "SHA224"
+msgstr "SHA224"
+
+#: gui/signatureguiutils.cpp:94
+#, kde-format
+msgid "Unknown Algorithm"
+msgstr "Algorisme desconegut"
+
+#: gui/signatureguiutils.cpp:102
+#, kde-format
+msgid "RSA"
+msgstr "RSA"
+
+#: gui/signatureguiutils.cpp:104
+#, kde-format
+msgid "DSA"
+msgstr "DSA"
+
+#: gui/signatureguiutils.cpp:106
+#, kde-format
+msgid "EC"
+msgstr "EC"
+
+#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#, kde-format
+msgid "Unknown Type"
+msgstr "Tipus desconegut"
+
+#: gui/signatureguiutils.cpp:118
+#, kde-format
+msgid "Digital Signature"
+msgstr "Signatura digital"
+
+#: gui/signatureguiutils.cpp:121
+#, kde-format
+msgid "Non-Repudiation"
+msgstr "Sense repudiació"
+
+#: gui/signatureguiutils.cpp:124
+#, kde-format
+msgid "Encrypt Keys"
+msgstr "Claus d'encriptació"
+
+#: gui/signatureguiutils.cpp:127
+#, kde-format
+msgid "Decrypt Keys"
+msgstr "Claus de desencriptació"
+
+#: gui/signatureguiutils.cpp:130
+#, kde-format
+msgid "Key Agreement"
+msgstr "Acord de claus"
+
+#: gui/signatureguiutils.cpp:133
+#, kde-format
+msgid "Sign Certificate"
+msgstr "Certificat de signatura"
+
+#: gui/signatureguiutils.cpp:136
+#, kde-format
+msgid "Sign CRL"
+msgstr "CRL de signatura"
+
+#: gui/signatureguiutils.cpp:139
+#, kde-format
+msgid "Encrypt Only"
+msgstr "Només encripta"
+
+#: gui/signatureguiutils.cpp:142
+#, kde-format
+msgid "No Usage Specified"
+msgstr "No s'ha especificat cap ús"
+
+#: gui/signatureguiutils.cpp:149
+#, kde-format
+msgctxt "Joins the various ways a signature key can be used in a longer string"
+msgid ", "
+msgstr ", "
+
+#: gui/signatureguiutils.cpp:163
+#, kde-format
+msgid "The document has not been modified since it was signed."
+msgstr "El document no s'ha modificat des que es va signar."
+
+#: gui/signatureguiutils.cpp:166
+#, kde-format
+msgid ""
+"The revision of the document that was covered by this signature has not been "
+"modified;\n"
+"however there have been subsequent changes to the document."
+msgstr ""
+"La revisió del document que estava coberta per esta signatura no s'ha "
+"modificat.\n"
+"Tanmateix, hi ha hagut canvis posteriors en el document."
+
+#: gui/signatureguiutils.cpp:170
+#, kde-format
+msgid ""
+"The document has been modified in a way not permitted by a previous signer."
+msgstr ""
+"S'ha modificat el document d'una manera no permesa pel signatari anterior."
+
+#: gui/signatureguiutils.cpp:172
+#, kde-format
+msgid "The document integrity verification could not be completed."
+msgstr "No s'ha pogut completar la verificació de la integritat del document."
+
+#: gui/signatureguiutils.cpp:205
+#, kde-format
+msgid "This document has unsigned signature fields."
+msgstr "Este document té camps de signatura sense signar."
+
+#: gui/signatureguiutils.cpp:208
+#, kde-format
+msgid "This document is digitally signed."
+msgstr "Este document està signat digitalment."
+
+#: gui/signatureguiutils.cpp:210
+#, kde-format
+msgid ""
+"This document is digitally signed. There have been changes since last signed."
+msgstr ""
+"Este document està signat digitalment. Hi ha hagut canvis des de l'última "
+"signatura."
+
+#: gui/signatureguiutils.cpp:213
+#, kde-format
+msgid ""
+"This document is digitally signed. Some of the signatures could not be "
+"validated properly."
+msgstr ""
+"Este document està signat digitalment. No s'ha pogut validar adequadament "
+"alguna de les signatures."
+
+#: gui/signaturemodel.cpp:141
+#, kde-format
+msgid "Unsigned Signature %1"
+msgstr "Signatura sense signar %1"
+
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#, kde-format
+msgid "Field: %1 on page %2"
+msgstr "Camp: %1 a la pàgina %2"
+
+#: gui/signaturemodel.cpp:152
+#, kde-format
+msgid "Rev. %1: Signed By %2"
+msgstr "Rev. %1: Signat per %2"
+
+#: gui/signaturemodel.cpp:158
+#, kde-format
+msgid "Signing Time: %1"
+msgstr "Data de signatura: %1"
+
+#: gui/signaturemodel.cpp:163
+#, kde-format
+msgid "Reason: %1"
+msgstr "Motiu: %1"
+
+#: part/annotationactionhandler.cpp:147
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Red"
+msgstr "Roig"
+
+#: part/annotationactionhandler.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Orange"
+msgstr "Taronja"
+
+#: part/annotationactionhandler.cpp:149
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Yellow"
+msgstr "Groc"
+
+#: part/annotationactionhandler.cpp:150
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Green"
+msgstr "Verd"
+
+#: part/annotationactionhandler.cpp:151
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Cyan"
+msgstr "Cian"
+
+#: part/annotationactionhandler.cpp:152
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Blue"
+msgstr "Blau"
+
+#: part/annotationactionhandler.cpp:153
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Magenta"
+msgstr "Magenta"
+
+#: part/annotationactionhandler.cpp:154
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "White"
+msgstr "Blanc"
+
+#: part/annotationactionhandler.cpp:155
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Gray"
+msgstr "Gris"
+
+#: part/annotationactionhandler.cpp:156
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Black"
+msgstr "Negre"
+
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Width %1"
+msgstr "Amplària %1"
+
+#: part/annotationactionhandler.cpp:251
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "%1%"
+msgstr "%1%"
+
+#: part/annotationactionhandler.cpp:295
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (No annotation selected)"
+msgstr "Amplària de la línia d'anotació (cap anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:296
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color (No annotation selected)"
+msgstr "Color de l'anotació (cap anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:297
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (No annotation selected)"
+msgstr "Color de l'emplenat de l'anotació (cap anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:298
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity (No annotation selected)"
+msgstr "Opacitat de l'anotació (cap anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:299
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (No annotation selected)"
+msgstr "Tipus de lletra de l'anotació (cap anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:300
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Add the current annotation to the quick annotations menu (No annotation "
+"selected)"
+msgstr ""
+"Afig l'anotació actual al menú d'anotacions ràpides (cap anotació "
+"seleccionada)"
+
+#: part/annotationactionhandler.cpp:301
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
+"selected)"
+msgstr ""
+"Conserva la relació de forma a 1:1 o l'angle de línia a passos de 15° (cap "
+"anotació seleccionada)"
+
+#: part/annotationactionhandler.cpp:302
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Advanced settings for the current annotation tool (No annotation selected)"
+msgstr ""
+"Configuració avançada per a l'actual eina d'anotació (cap anotació "
+"seleccionada)"
+
+#: part/annotationactionhandler.cpp:307
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width"
+msgstr "Amplària de la línia d'anotació"
+
+#: part/annotationactionhandler.cpp:309
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (Current annotation has no line width)"
+msgstr ""
+"Amplària de la línia d'anotació (l'anotació actual no té amplària de línia)"
+
+#: part/annotationactionhandler.cpp:313
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation text color"
+msgstr "Color de text d'anotació"
+
+#: part/annotationactionhandler.cpp:315
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation border color"
+msgstr "Color de vora d'anotació"
+
+#: part/annotationactionhandler.cpp:317
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color"
+msgstr "Color de l'anotació"
+
+#: part/annotationactionhandler.cpp:321
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color"
+msgstr "Color de l'emplenat de l'anotació"
+
+#: part/annotationactionhandler.cpp:323
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (Current annotation has no fill color)"
+msgstr ""
+"Color de l'emplenat de l'anotació (l'anotació actual no té color d'emplenat)"
+
+#: part/annotationactionhandler.cpp:327
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font"
+msgstr "Tipus de lletra de l'anotació"
+
+#: part/annotationactionhandler.cpp:329
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (Current annotation has no font)"
+msgstr ""
+"Tipus de lletra de l'anotació (l'anotació actual no té tipus de lletra)"
+
+#: part/annotationactionhandler.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain line angle to 15° steps"
+msgstr "Conserva l'angle de línia a passos de 15°"
+
+#: part/annotationactionhandler.cpp:335
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain shape ratio to 1:1"
+msgstr "Conserva la relació de forma a 1:1"
+
+#: part/annotationactionhandler.cpp:337
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
+"current annotation)"
+msgstr ""
+"Conserva la relació de forma a 1:1 o l'angle de línia a passos de 15° (no "
+"admés per l'anotació actual)"
+
+#: part/annotationactionhandler.cpp:340
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity"
+msgstr "Opacitat de l'anotació"
+
+#: part/annotationactionhandler.cpp:341
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the current annotation to the quick annotations menu"
+msgstr "Afig l'anotació actual al menú d'anotacions ràpides"
+
+#: part/annotationactionhandler.cpp:342
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Advanced settings for the current annotation tool"
+msgstr "Configuració avançada per a l'actual eina d'anotació"
+
+#: part/annotationactionhandler.cpp:431
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Color"
+msgstr "Color"
+
+#: part/annotationactionhandler.cpp:433
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Fill Color"
+msgstr "Color d'emplenat"
+
+#: part/annotationactionhandler.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Transparent"
+msgstr "Transparent"
+
+#: part/annotationactionhandler.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Custom Color..."
+msgstr "Color personalitzat..."
+
+#: part/annotationactionhandler.cpp:502
+#, kde-format
+msgctxt "@title:window"
+msgid "Select color"
+msgstr "Seleccioneu el color"
+
+#: part/annotationactionhandler.cpp:554
+#, kde-format
+msgid "&Annotations"
+msgstr "&Anotacions"
+
+#: part/annotationactionhandler.cpp:555
+#, kde-format
+msgctxt "@action:intoolbar Hide the toolbar"
+msgid "Hide"
+msgstr "Oculta"
+
+#: part/annotationactionhandler.cpp:556
+#, kde-format
+msgctxt "@action:intoolbar Show the builtin annotation toolbar"
+msgid "Show more annotation tools"
+msgstr "Mostra més eines d'anotació"
+
+#: part/annotationactionhandler.cpp:559
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Highlighter"
+msgstr "Marcador fluorescent"
+
+#: part/annotationactionhandler.cpp:560
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Underline"
+msgstr "Subratllat"
+
+#: part/annotationactionhandler.cpp:561
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Squiggle"
+msgstr "Giragonses"
+
+#: part/annotationactionhandler.cpp:562
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Strike Out"
+msgstr "Barrat"
+
+#: part/annotationactionhandler.cpp:564
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Typewriter"
+msgstr "Màquina d'escriure"
+
+#: part/annotationactionhandler.cpp:565
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Inline Note"
+msgstr "Nota inclosa"
+
+#: part/annotationactionhandler.cpp:566
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Popup Note"
+msgstr "Nota emergent"
+
+#: part/annotationactionhandler.cpp:567
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Freehand Line"
+msgstr "Línia a mà alçada"
+
+#: part/annotationactionhandler.cpp:569
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Straight line"
+msgstr "Línia recta"
+
+#: part/annotationactionhandler.cpp:570
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Arrow"
+msgstr "Fletxa"
+
+#: part/annotationactionhandler.cpp:571
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Rectangle"
+msgstr "Rectangle"
+
+#: part/annotationactionhandler.cpp:572
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Ellipse"
+msgstr "El·lipse"
+
+#: part/annotationactionhandler.cpp:573
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Polygon"
+msgstr "Polígon"
+
+#: part/annotationactionhandler.cpp:574
+#, kde-format
+msgctxt "@action"
+msgid "Geometrical shapes"
+msgstr "Formes geomètriques"
+
+#: part/annotationactionhandler.cpp:625
+#, kde-format
+msgctxt "@action"
+msgid "Stamp"
+msgstr "Segell"
+
+#: part/annotationactionhandler.cpp:650
+#, kde-format
+msgctxt "@action:intoolbar Show list of quick annotation tools"
+msgid "Quick Annotations"
+msgstr "Anotacions ràpides"
+
+#: part/annotationactionhandler.cpp:658
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Choose an annotation tool from the quick annotations"
+msgstr "Selecciona una eina d'anotació de les anotacions ràpides"
+
+#: part/annotationactionhandler.cpp:668
+#, kde-format
+msgid "Quick Annotation Bar"
+msgstr "Barra d'anotacions ràpides"
+
+#: part/annotationactionhandler.cpp:682
+#, kde-format
+msgctxt ""
+"@action:intoolbar Add current annotation tool to the quick annotations list"
+msgid "Add to Quick Annotations"
+msgstr "Afig a les anotacions ràpides"
+
+#: part/annotationactionhandler.cpp:685
+#, kde-format
+msgctxt ""
+"@action:intoolbar When checked keep the current annotation tool active after "
+"use"
+msgid "Keep Active"
+msgstr "Mantín activa"
+
+#: part/annotationactionhandler.cpp:686
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Keep the annotation tool active after use"
+msgstr "Mantín activa l'eina d'anotacions després de l'ús"
+
+#: part/annotationactionhandler.cpp:691
+#, kde-format
+msgctxt ""
+"@action When checked, line annotations are constrained to 15° steps, shape "
+"annotations to 1:1 ratio"
+msgid "Constrain Ratio and Angle of Annotation Tools"
+msgstr "Conserva la relació i l'angle de les eines d'anotació"
+
+#: part/annotationactionhandler.cpp:697
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Font"
+msgstr "Tipus de lletra"
+
+#: part/annotationactionhandler.cpp:698
+#, kde-format
+msgctxt "@action:intoolbar Current annotation advanced settings"
+msgid "Annotation Settings"
+msgstr "Configuració de les anotacions"
+
+#: part/annotationactionhandler.cpp:701
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Line width"
+msgstr "Amplària de la línia"
+
+#: part/annotationactionhandler.cpp:710
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Opacity"
+msgstr "Opacitat"
+
+#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#, kde-format
+msgid "Page %1"
+msgstr "Pàgina %1"
+
+#: part/annotationpopup.cpp:81
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Anotació"
+msgstr[1] "%1 anotacions"
+
+#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#, kde-format
+msgid "&Open Pop-up Note"
+msgstr "&Obri una nota emergent"
+
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#, kde-format
+msgid "&Delete"
+msgstr "Sup&rimix"
+
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/propertiesdialog.cpp:54
+#, kde-format
+msgid "&Properties"
+msgstr "&Propietats"
+
+#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#, kde-format
+msgctxt "%1 is the name of the file to save"
+msgid "&Save '%1'..."
+msgstr "Guar&da «%1»..."
+
+#: part/annotationpropertiesdialog.cpp:54
+#, kde-format
+msgid "&Appearance"
+msgstr "Aparen&ça"
+
+#: part/annotationpropertiesdialog.cpp:59
+#, kde-format
+msgid "&General"
+msgstr "&General"
+
+#: part/annotationpropertiesdialog.cpp:64
+#, kde-format
+msgid "&Author:"
+msgstr "&Autoria:"
+
+#: part/annotationpropertiesdialog.cpp:69
+#, kde-format
+msgid "Created:"
+msgstr "Creat:"
+
+#: part/annotationpropertiesdialog.cpp:74
+#, kde-format
+msgid "Modified:"
+msgstr "Modificat:"
+
+#: part/annotationpropertiesdialog.cpp:108
+#, kde-format
+msgid "Pop-up Note Properties"
+msgstr "Propietats de les notes emergents"
+
+#: part/annotationpropertiesdialog.cpp:111
+#, kde-format
+msgid "Typewriter Properties"
+msgstr "Propietats de la màquina d'escriure"
+
+#: part/annotationpropertiesdialog.cpp:113
+#, kde-format
+msgid "Inline Note Properties"
+msgstr "Propietats de les notes incloses"
+
+#: part/annotationpropertiesdialog.cpp:119
+#, kde-format
+msgid "Straight Line Properties"
+msgstr "Propietats de les línies rectes"
+
+#: part/annotationpropertiesdialog.cpp:121
+#, kde-format
+msgid "Polygon Properties"
+msgstr "Propietats dels polígons"
+
+#: part/annotationpropertiesdialog.cpp:125
+#, kde-format
+msgid "Geometry Properties"
+msgstr "Propietats geomètriques"
+
+#: part/annotationpropertiesdialog.cpp:128
+#, kde-format
+msgid "Text Markup Properties"
+msgstr "Propietats del marcador de text"
+
+#: part/annotationpropertiesdialog.cpp:131
+#, kde-format
+msgid "Stamp Properties"
+msgstr "Propietats del segell"
+
+#: part/annotationpropertiesdialog.cpp:134
+#, kde-format
+msgid "Freehand Line Properties"
+msgstr "Propietats de la línia a ma alçària"
+
+#: part/annotationpropertiesdialog.cpp:137
+#, kde-format
+msgid "Caret Properties"
+msgstr "Propietats del cursor"
+
+#: part/annotationpropertiesdialog.cpp:140
+#, kde-format
+msgid "File Attachment Properties"
+msgstr "Propietats del fitxer adjunt"
+
+#: part/annotationpropertiesdialog.cpp:143
+#, kde-format
+msgid "Sound Properties"
+msgstr "Propietats del so"
+
+#: part/annotationpropertiesdialog.cpp:146
+#, kde-format
+msgid "Movie Properties"
+msgstr "Propietats de la pel·lícula"
+
+#: part/annotationpropertiesdialog.cpp:149
+#, kde-format
+msgid "Annotation Properties"
+msgstr "Propietats de les anotacions"
+
+#: part/annotationpropertiesdialog.cpp:175
+#, kde-format
+msgid "Modified: %1"
+msgstr "Modificat: %1"
+
+#: part/annotationwidgets.cpp:56
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a custom stamp symbol from file"
+msgstr "Seleccioneu un símbol de segell personalitzat des d'un fitxer"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgctxt "@title:window file chooser"
+msgid "Select custom stamp symbol"
+msgstr "Seleccioneu un símbol de segell personalitzat"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgid ""
+"*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
+msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | Fitxers d'icona (*.ico *.png *.xpm *.svg *."
+"svgz)"
+
+#: part/annotationwidgets.cpp:160
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not load the file <filename>%1</filename>"
+msgstr "No s'ha pogut carregar el fitxer <filename>%1</filename>"
+
+#: part/annotationwidgets.cpp:160
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid file"
+msgstr "Fitxer no vàlid"
+
+#: part/annotationwidgets.cpp:267
+#, kde-format
+msgid "&Color:"
+msgstr "&Color:"
+
+#: part/annotationwidgets.cpp:276
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80%'"
+msgid "%"
+msgstr "%"
+
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#, kde-format
+msgid "&Opacity:"
+msgstr "&Opacitat:"
+
+#: part/annotationwidgets.cpp:365
+#, kde-format
+msgid "Icon:"
+msgstr "Icona:"
+
+#: part/annotationwidgets.cpp:366
+#, kde-format
+msgid "Comment"
+msgstr "Comentari"
+
+#: part/annotationwidgets.cpp:367
+#, kde-format
+msgid "Help"
+msgstr "Ajuda"
+
+#: part/annotationwidgets.cpp:368
+#, kde-format
+msgid "Insert"
+msgstr "Inserció"
+
+#: part/annotationwidgets.cpp:369
+#, kde-format
+msgid "Key"
+msgstr "Tecla"
+
+#: part/annotationwidgets.cpp:370
+#, kde-format
+msgid "New paragraph"
+msgstr "Paràgraf nou"
+
+#: part/annotationwidgets.cpp:371
+#, kde-format
+msgid "Note"
+msgstr "Nota"
+
+#: part/annotationwidgets.cpp:372
+#, kde-format
+msgid "Paragraph"
+msgstr "Paràgraf"
+
+#: part/annotationwidgets.cpp:380
+#, kde-format
+msgid "Font:"
+msgstr "Tipus de lletra:"
+
+#: part/annotationwidgets.cpp:389
+#, kde-format
+msgid "Text &color:"
+msgstr "&Color del text:"
+
+#: part/annotationwidgets.cpp:396
+#, kde-format
+msgid "&Align:"
+msgstr "&Alinea:"
+
+#: part/annotationwidgets.cpp:397
+#, kde-format
+msgid "Left"
+msgstr "Esquerra"
+
+#: part/annotationwidgets.cpp:398
+#, kde-format
+msgid "Center"
+msgstr "Centre"
+
+#: part/annotationwidgets.cpp:399
+#, kde-format
+msgid "Right"
+msgstr "Dreta"
+
+#: part/annotationwidgets.cpp:407
+#, kde-format
+msgid "Border &width:"
+msgstr "A&mplària de la vora:"
+
+#: part/annotationwidgets.cpp:416
+#, kde-format
+msgid "Approved"
+msgstr "Aprovat"
+
+#: part/annotationwidgets.cpp:417
+#, kde-format
+msgid "As Is"
+msgstr "Tal com és"
+
+#: part/annotationwidgets.cpp:418
+#, kde-format
+msgid "Confidential"
+msgstr "Confidencial"
+
+#: part/annotationwidgets.cpp:419
+#, kde-format
+msgid "Departmental"
+msgstr "Departamental"
+
+#: part/annotationwidgets.cpp:420
+#, kde-format
+msgid "Draft"
+msgstr "Esborrany"
+
+#: part/annotationwidgets.cpp:421
+#, kde-format
+msgid "Experimental"
+msgstr "Experimental"
+
+#: part/annotationwidgets.cpp:422
+#, kde-format
+msgid "Expired"
+msgstr "Caducat"
+
+#: part/annotationwidgets.cpp:423
+#, kde-format
+msgid "Final"
+msgstr "Final"
+
+#: part/annotationwidgets.cpp:424
+#, kde-format
+msgid "For Comment"
+msgstr "Per a comentaris"
+
+#: part/annotationwidgets.cpp:425
+#, kde-format
+msgid "For Public Release"
+msgstr "Per a divulgar públicament"
+
+#: part/annotationwidgets.cpp:426
+#, kde-format
+msgid "Not Approved"
+msgstr "No aprovat"
+
+#: part/annotationwidgets.cpp:427
+#, kde-format
+msgid "Not For Public Release"
+msgstr "No és per a divulgar públicament"
+
+#: part/annotationwidgets.cpp:428
+#, kde-format
+msgid "Sold"
+msgstr "Venut"
+
+#: part/annotationwidgets.cpp:429
+#, kde-format
+msgid "Top Secret"
+msgstr "Alt secret"
+
+#: part/annotationwidgets.cpp:430
+#, kde-format
+msgid "Bookmark"
+msgstr "Punt"
+
+#: part/annotationwidgets.cpp:431
+#, kde-format
+msgid "Information"
+msgstr "Informació"
+
+#: part/annotationwidgets.cpp:432
+#, kde-format
+msgid "KDE"
+msgstr "KDE"
+
+#: part/annotationwidgets.cpp:456
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
+"visible in PDF readers other than Okular.</warning>"
+msgstr ""
+"<warning>funcionalitat experimental.<nl/>Els segells inserits en els "
+"documents PDF no són visibles en lectors de PDF diferents d'Okular.</warning>"
+
+#: part/annotationwidgets.cpp:469
+#, kde-format
+msgid "Stamp symbol:"
+msgstr "Símbol de segell:"
+
+#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
+#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
+#: part/annotationwidgets.cpp:795
+#, kde-format
+msgid "&Width:"
+msgstr "&Amplària:"
+
+#: part/annotationwidgets.cpp:522
+#, kde-format
+msgid "Line start:"
+msgstr "Començament de línia:"
+
+#: part/annotationwidgets.cpp:524
+#, kde-format
+msgid "Line end:"
+msgstr "Final de línia:"
+
+#: part/annotationwidgets.cpp:527
+#, kde-format
+msgid "Square"
+msgstr "Quadrat"
+
+#: part/annotationwidgets.cpp:528
+#, kde-format
+msgid "Circle"
+msgstr "Cercle"
+
+#: part/annotationwidgets.cpp:529
+#, kde-format
+msgid "Diamond"
+msgstr "Diamant"
+
+#: part/annotationwidgets.cpp:530
+#, kde-format
+msgid "Open Arrow"
+msgstr "Fletxa oberta"
+
+#: part/annotationwidgets.cpp:531
+#, kde-format
+msgid "Closed Arrow"
+msgstr "Fletxa tancada"
+
+#: part/annotationwidgets.cpp:532
+#, kde-format
+msgid "None"
+msgstr "Cap"
+
+#: part/annotationwidgets.cpp:533
+#, kde-format
+msgid "Butt"
+msgstr "Punta"
+
+#: part/annotationwidgets.cpp:534
+#, kde-format
+msgid "Right Open Arrow"
+msgstr "Fletxa oberta dreta"
+
+#: part/annotationwidgets.cpp:535
+#, kde-format
+msgid "Right Closed Arrow"
+msgstr "Fletxa tancada dreta"
+
+#: part/annotationwidgets.cpp:536
+#, kde-format
+msgid "Slash"
+msgstr "Barra"
+
+#: part/annotationwidgets.cpp:549
+#, kde-format
+msgid "Leader line length:"
+msgstr "Llargària de la línia principal:"
+
+#: part/annotationwidgets.cpp:551
+#, kde-format
+msgid "Leader line extensions length:"
+msgstr "Llargària de les extensions de la línia principal:"
+
+#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#, kde-format
+msgid "Enabled"
+msgstr "Activat"
+
+#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#, kde-format
+msgid "Shape fill:"
+msgstr "Emplenat de forma:"
+
+#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#, kde-format
+msgid "Type:"
+msgstr "Tipus:"
+
+#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#, kde-format
+msgid "Strike out"
+msgstr "Barrat"
+
+#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#, kde-format
+msgid "Rectangle"
+msgstr "Rectangle"
+
+#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#, kde-format
+msgid "Ellipse"
+msgstr "El·lipse"
+
+#: part/annotationwidgets.cpp:763
+#, kde-format
+msgid "File attachment symbol:"
+msgstr "Símbol de fitxer adjunt:"
+
+#: part/annotationwidgets.cpp:766
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Graph"
+msgstr "Gràfic"
+
+#: part/annotationwidgets.cpp:767
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Push Pin"
+msgstr "Xinxeta"
+
+#: part/annotationwidgets.cpp:768
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Paperclip"
+msgstr "Clip de paper"
+
+#: part/annotationwidgets.cpp:769
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Tag"
+msgstr "Etiqueta"
+
+#: part/annotationwidgets.cpp:778
+#, kde-format
+msgctxt "'File' as normal file, that can be opened, saved, etc.."
+msgid "File"
+msgstr "Fitxer"
+
+#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#, kde-format
+msgctxt "Not available size"
+msgid "N/A"
+msgstr "N/D"
+
+#: part/annotationwidgets.cpp:783
+#, kde-format
+msgid "No description available."
+msgstr "No hi ha disponible cap descripció."
+
+#: part/annotationwidgets.cpp:791
+#, kde-format
+msgid "Name:"
+msgstr "Nom:"
+
+#: part/annotationwidgets.cpp:802
+#, kde-format
+msgid "Description:"
+msgstr "Descripció:"
+
+#: part/annotationwidgets.cpp:861
+#, kde-format
+msgid "Caret symbol:"
+msgstr "Símbol del cursor:"
+
+#: part/annotationwidgets.cpp:863
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "None"
+msgstr "Cap"
+
+#: part/annotationwidgets.cpp:864
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "P"
+msgstr "P"
+
+#: part/annotwindow.cpp:52
+#, kde-format
+msgid "Close this note"
+msgstr "Tanca esta nota"
+
+#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#, kde-format
+msgid "Options"
+msgstr "Opcions"
+
+#: part/annotwindow.cpp:106
+#, kde-format
+msgid ""
+"This annotation may contain LaTeX code.\n"
+"Click here to render."
+msgstr ""
+"Esta anotació pot contindre codi LaTeX.\n"
+"Cliqueu ací per a renderitzar."
+
+#: part/annotwindow.cpp:415
+#, kde-format
+msgid "Cannot find latex executable."
+msgstr "No s'ha pogut trobar l'executable «latex»."
+
+#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "LaTeX rendering failed"
+msgstr "Ha fallat la renderització LaTeX"
+
+#: part/annotwindow.cpp:420
+#, kde-format
+msgid "Cannot find dvipng executable."
+msgstr "No s'ha pogut trobar l'executable «dvipng»."
+
+#: part/annotwindow.cpp:425
+#, kde-format
+msgid "A problem occurred during the execution of the 'latex' command."
+msgstr "Ha ocorregut un problema durant l'execució de l'ordre «latex»."
+
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "A problem occurred during the execution of the 'dvipng' command."
+msgstr "Ha ocorregut un problema durant l'execució de l'ordre «dvipng»."
+
+#: part/bookmarklist.cpp:115
+#, kde-format
+msgctxt "%1 is the file name"
+msgid ""
+"%1\n"
+"\n"
+"One bookmark"
+msgid_plural ""
+"%1\n"
+"\n"
+"%2 bookmarks"
+msgstr[0] ""
+"%1\n"
+"\n"
+"un punt"
+msgstr[1] ""
+"%1\n"
+"\n"
+"%2 punts"
+
+#: part/bookmarklist.cpp:131 part/part.cpp:422
+#, kde-format
+msgid "Bookmarks"
+msgstr "Punts"
+
+#: part/bookmarklist.cpp:135
+#, kde-format
+msgid "Show for all documents"
+msgstr "Mostra per a tots els documents"
+
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
+#: part/toc.cpp:43
+#, kde-format
+msgid "Search..."
+msgstr "Busca..."
+
+#: part/bookmarklist.cpp:257
+#, kde-format
+msgid "Go to This Bookmark"
+msgstr "Ves a este punt"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
+#: part/part.cpp:2467
+#, kde-format
+msgid "Rename Bookmark"
+msgstr "Canvia el nom d'un punt"
+
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Suprimix el punt"
+
+#: part/bookmarklist.cpp:287
+#, kde-format
+msgctxt "Opens the selected document"
+msgid "Open Document"
+msgstr "Obri el document"
+
+#: part/bookmarklist.cpp:290
+#, kde-format
+msgid "Remove all Bookmarks for this Document"
+msgstr "Elimina tots els punts d'este document"
+
+#: part/certificateviewer.cpp:121
+#, kde-format
+msgid "Certificate Viewer"
+msgstr "Visor de certificats"
+
+#: part/certificateviewer.cpp:124
+#, kde-format
+msgid "Export..."
+msgstr "Exporta..."
+
+#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General"
+msgstr "General"
+
+#: part/certificateviewer.cpp:132
+#, kde-format
+msgid "Issued By"
+msgstr "Emés per"
+
+#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#, kde-format
+msgid "Common Name(CN)"
+msgstr "Nom comú (CN)"
+
+#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#, kde-format
+msgid "EMail"
+msgstr "Correu electrònic"
+
+#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#, kde-format
+msgid "Organization(O)"
+msgstr "Organització (O)"
+
+#: part/certificateviewer.cpp:139
+#, kde-format
+msgid "Issued To"
+msgstr "Emés a"
+
+#: part/certificateviewer.cpp:146
+#, kde-format
+msgid "Validity"
+msgstr "Validesa"
+
+#: part/certificateviewer.cpp:152
+#, kde-format
+msgid "Fingerprints"
+msgstr "Empremtes digitals"
+
+#: part/certificateviewer.cpp:160
+#, kde-format
+msgid "SHA-1 Fingerprint"
+msgstr "Empremta digital SHA-1"
+
+#: part/certificateviewer.cpp:161
+#, kde-format
+msgid "SHA-256 Fingerprint"
+msgstr "Empremta digital SHA-256"
+
+#: part/certificateviewer.cpp:179
+#, kde-format
+msgid "Details"
+msgstr "Detalls"
+
+#: part/certificateviewer.cpp:180
+#, kde-format
+msgid "Certificate Data:"
+msgstr "Dades del certificat:"
+
+#: part/certificateviewer.cpp:232
+#, kde-format
+msgid "Where do you want to save this certificate?"
+msgstr "A on voleu guardar este certificat?"
+
+#: part/certificateviewer.cpp:233
+#, kde-format
+msgid "Certificate File (*.cer)"
+msgstr "Fitxer de certificat (*.cer)"
+
+#: part/certificateviewer.cpp:236
+#, kde-format
+msgid "Could not export the certificate"
+msgstr "No s'ha pogut exportar el certificat"
+
+#: part/colormodemenu.cpp:17
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Color Mode"
+msgstr "Mode de &color"
+
+#: part/colormodemenu.cpp:19
+#, kde-format
+msgctxt "@action Change Colors feature toggle action"
+msgid "Change Colors"
+msgstr "Canvia els colors"
+
+#: part/colormodemenu.cpp:32
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Normal Colors"
+msgstr "Colors &normals"
+
+#: part/colormodemenu.cpp:44
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Invert Colors"
+msgstr "&Invertix els colors"
+
+#: part/colormodemenu.cpp:45
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Paper Color"
+msgstr "Canvia el color del &paper"
+
+#: part/colormodemenu.cpp:47
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Dark && Light Colors"
+msgstr "Canvia els colors &foscos i els clars"
+
+#: part/colormodemenu.cpp:49
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Convert to &Black && White"
+msgstr "Convertix a &blanc i negre"
+
+#: part/colormodemenu.cpp:52
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert &Lightness"
+msgstr "Invertix la &lluminositat"
+
+#: part/colormodemenu.cpp:55
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert L&uma (sRGB Linear)"
+msgstr "Invertix la l&uma (sRGB lineal)"
+
+#: part/colormodemenu.cpp:58
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert Luma (&Symmetric)"
+msgstr "Invertix la luma (&simètrica)"
+
+#: part/colormodemenu.cpp:61
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue P&ositive"
+msgstr "Desplaça a un to p&ositiu"
+
+#: part/colormodemenu.cpp:64
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue N&egative"
+msgstr "Desplaça a un to n&egatiu"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:11
+#, kde-format
+msgid "Red"
+msgstr "Roig"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:16
+#, kde-format
+msgid "Green"
+msgstr "Verd"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:21
+#, kde-format
+msgid "Blue"
+msgstr "Blau"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:26
+#, kde-format
+msgid "Yellow"
+msgstr "Groc"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:31
+#, kde-format
+msgid "Black"
+msgstr "Negre"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:36
+#, kde-format
+msgid "White"
+msgstr "Blanc"
+
+#. i18n: tag tool attribute name
+#: part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr "Fletxa"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:9
+#, kde-format
+msgid "Yellow Highlighter"
+msgstr "Marcador fluorescent groc"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:14
+#, kde-format
+msgid "Green Highlighter"
+msgstr "Marcador fluorescent verd"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:24
+#, kde-format
+msgid "Insert Text"
+msgstr "Inserció de text"
+
+#: part/dlgaccessibility.cpp:38
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Draw border around links"
+msgstr "Dibuixa una vora al voltant dels enllaços"
+
+#: part/dlgaccessibility.cpp:48
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Change colors"
+msgstr "Canvia els colors"
+
+#: part/dlgaccessibility.cpp:54
+#, kde-format
+msgctxt "@info Config dialog, accessibility page"
+msgid "<b>Warning:</b> these options can badly affect drawing speed."
+msgstr ""
+"<b>Avís:</b> estes opcions poden afectar negativament la velocitat del "
+"dibuixat."
+
+#: part/dlgaccessibility.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert colors"
+msgstr "Invertix els colors"
+
+#: part/dlgaccessibility.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change paper color"
+msgstr "Canvia el color del paper"
+
+#: part/dlgaccessibility.cpp:62
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change dark & light colors"
+msgstr "Canvia els colors foscos i els clars"
+
+#: part/dlgaccessibility.cpp:63
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Convert to black & white"
+msgstr "Convertix a blanc i negre"
+
+#: part/dlgaccessibility.cpp:64
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert lightness"
+msgstr "Invertix la lluminositat"
+
+#: part/dlgaccessibility.cpp:65
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (sRGB linear)"
+msgstr "Invertix la luma (sRGB lineal)"
+
+#: part/dlgaccessibility.cpp:66
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (symmetric)"
+msgstr "Invertix la luma (simètrica)"
+
+#: part/dlgaccessibility.cpp:67
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue positive"
+msgstr "Desplaça a un to positiu"
+
+#: part/dlgaccessibility.cpp:68
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue negative"
+msgstr "Desplaça a un to negatiu"
+
+#: part/dlgaccessibility.cpp:70
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Color mode:"
+msgstr "Mode de color:"
+
+#: part/dlgaccessibility.cpp:87
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Paper color:"
+msgstr "Color del paper:"
+
+#: part/dlgaccessibility.cpp:99
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Dark color:"
+msgstr "Color fosc:"
+
+#: part/dlgaccessibility.cpp:104
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Light color:"
+msgstr "Color clar:"
+
+#: part/dlgaccessibility.cpp:119
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Threshold:"
+msgstr "Llindar:"
+
+#: part/dlgaccessibility.cpp:127
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Contrast:"
+msgstr "Contrast:"
+
+#: part/dlgaccessibility.cpp:158
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech engine:"
+msgstr "Motor de text a veu:"
+
+#: part/dlgaccessibility.cpp:165
+#, kde-format
+msgctxt "&label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech voice:"
+msgstr "Veu de text a veu:"
+
+#: part/dlgannotations.cpp:25
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Full Annotation Toolbar"
+msgstr "Barra d'eines completa d'anotacions"
+
+#: part/dlgannotations.cpp:26
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Quick Annotation Toolbar"
+msgstr "Barra d'eines d'anotacions ràpides"
+
+#: part/dlgannotations.cpp:28
+#, kde-format
+msgctxt "label:listbox Config dialog, general page"
+msgid "Annotation toolbar:"
+msgstr "Barra d'eines d'anotacions:"
+
+#: part/dlgannotations.cpp:34
+#, kde-format
+msgctxt "@label:textbox Config dialog, annotations page"
+msgid "Author:"
+msgstr "Autoria:"
+
+#: part/dlgannotations.cpp:38
+#, kde-format
+msgctxt "@info Config dialog, annotations page"
+msgid ""
+"<b>Note:</b> the information here is used only for annotations. The "
+"information is saved in annotated documents, and so will be transmitted "
+"together with the document."
+msgstr ""
+"<b>Nota:</b> La informació que s'utilitza ací només és per a les anotacions. "
+"La informació es guarda en documents anotats, per tant, es transmetrà junt "
+"amb el document."
+
+#: part/dlgannotations.cpp:48
+#, kde-format
+msgctxt ""
+"@label Config dialog, annotations page, heading line for Quick Annotations "
+"tool manager"
+msgid "<h3>Quick Annotation Tools</h3>"
+msgstr "<h3>Eines d'anotacions ràpides</h3>"
+
+#: part/dlgeditor.cpp:28
+#, kde-format
+msgctxt "@info:whatsthis Config dialog, editor page"
+msgid ""
+"Choose the editor you want to launch when Okular wants to open a source file."
+msgstr ""
+"Seleccioneu l'editor que voleu executar quan Okular necessite obrir un "
+"fitxer de codi font."
+
+#: part/dlgeditor.cpp:29
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Custom Text Editor"
+msgstr "Editor de text personalitzat"
+
+#: part/dlgeditor.cpp:30
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kate"
+msgstr "Kate"
+
+#: part/dlgeditor.cpp:31
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kile"
+msgstr "Kile"
+
+#: part/dlgeditor.cpp:32
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "SciTE"
+msgstr "SciTE"
+
+#: part/dlgeditor.cpp:33
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Emacs client"
+msgstr "Client de l'Emacs"
+
+#: part/dlgeditor.cpp:34
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Lyx client"
+msgstr "Client del Lyx"
+
+#: part/dlgeditor.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXstudio"
+msgstr "TeXstudio"
+
+#: part/dlgeditor.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXiFy IDEA"
+msgstr "TeXiFy IDEA"
+
+#: part/dlgeditor.cpp:37
+#, kde-format
+msgctxt "@label:listbox Config dialog, editor page"
+msgid "Editor:"
+msgstr "Editor:"
+
+#: part/dlgeditor.cpp:52
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"<qt>Set the command of a custom text editor to be launched.<br />\n"
+"You can also put few placeholders:\n"
+"<ul>\n"
+"  <li>%f - the file name</li>\n"
+"  <li>%l - the line of the file to be reached</li>\n"
+"  <li>%c - the column of the file to be reached</li>\n"
+"</ul>\n"
+"If %f is not specified, then the file name is appended to the specified "
+"command."
+msgstr ""
+"<qt>Indiqueu l'ordre de l'editor de text personalitzat a executar.<br />\n"
+"Podeu afegir les variables següents de substitució:\n"
+"<ul>\n"
+"  <li>%f - el nom del fitxer</li>\n"
+"  <li>%l - la línia del fitxer a on anar</li>\n"
+"  <li>%c - la columna del fitxer a on anar</li>\n"
+"</ul>\n"
+"Si no s'especifica %f, llavors el nom del fitxer s'afig a l'ordre "
+"especificada."
+
+#: part/dlgeditor.cpp:63
+#, kde-format
+msgctxt "@label:textbox Config dialog, editor page"
+msgid "Command:"
+msgstr "Ordre:"
+
+#: part/dlggeneral.cpp:33
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Use smooth scrolling"
+msgstr "Utilitza un desplaçament suau"
+
+#: part/dlggeneral.cpp:35
+#, kde-format
+msgctxt "@title:group Config dialog, general page"
+msgid "Appearance:"
+msgstr "Aparença:"
+
+#: part/dlggeneral.cpp:39
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show scrollbars"
+msgstr "Mostra les barres de desplaçament"
+
+#: part/dlggeneral.cpp:46
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Link the thumbnails with the page"
+msgstr "Enllaça les miniatures a la pàgina"
+
+#: part/dlggeneral.cpp:53
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show hints and info messages"
+msgstr "Mostra els consells i els missatges d'informació"
+
+#: part/dlggeneral.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Notify about embedded files, forms, or signatures"
+msgstr "Notifica els fitxers, els formularis o les signatures incrustats"
+
+#: part/dlggeneral.cpp:66
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Display document title in titlebar if available"
+msgstr "Si està disponible, mostra el títol del document en la barra de títol"
+
+#: part/dlggeneral.cpp:72
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display file name only"
+msgstr "Només mostra el nom de fitxer"
+
+#: part/dlggeneral.cpp:73
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display full file path"
+msgstr "Mostra el camí complet del fitxer"
+
+#: part/dlggeneral.cpp:75
+#, kde-format
+msgctxt "label:listbox Config dialog, general page"
+msgid "When not displaying document title:"
+msgstr "Quan no mostrar el títol del document:"
+
+#: part/dlggeneral.cpp:90
+#, kde-format
+msgctxt "@label:listbox Config dialog, general page"
+msgid "Use custom background color:"
+msgstr "Utilitza un color de fons personalitzat:"
+
+#: part/dlggeneral.cpp:112
+#, kde-format
+msgctxt "@title:group Config dialog, general page"
+msgid "Program features:"
+msgstr "Funcionalitats del programa:"
+
+#: part/dlggeneral.cpp:119
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open new files in tabs"
+msgstr "Obri els fitxers nous en pestanyes"
+
+#: part/dlggeneral.cpp:124
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Switch to existing tab if file is already open"
+msgstr "Canvia a la pestanya existent si el fitxer ja es troba obert"
+
+#: part/dlggeneral.cpp:137
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Obey DRM limitations"
+msgstr "Obeïx les limitacions DRM"
+
+#: part/dlggeneral.cpp:146
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Reload document on file change"
+msgstr "Actualitza el document en canviar el fitxer"
+
+#: part/dlggeneral.cpp:153
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show backend selection dialog"
+msgstr "Mostra el diàleg de selecció de dorsals"
+
+#: part/dlggeneral.cpp:160
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Right to left reading direction"
+msgstr "Direcció de lectura de dreta a esquerra"
+
+#: part/dlggeneral.cpp:166
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open in continuous mode by default"
+msgstr "Obri en mode continu de manera predeterminada"
+
+#: part/dlggeneral.cpp:173
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "When using Browse Tool, wrap cursor at screen edges"
+msgstr ""
+"En utilitzar l'eina Navega, ajusta el cursor a les vores de la pantalla"
+
+#: part/dlggeneral.cpp:190
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Overview columns:"
+msgstr "Columnes de visió general:"
+
+#: part/dlggeneral.cpp:197
+#, kde-format
+msgctxt "Page Up/Down overlap, spinbox suffix"
+msgid "%"
+msgstr "%"
+
+# skip-rule: k-PageUp-1
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@info:tooltip Config dialog, general page"
+msgid ""
+"Defines how much of the current viewing area will still be visible when "
+"pressing the Page Up/Down keys."
+msgstr ""
+"Definix quina part de l'àrea de visió actual romandrà visible en prémer les "
+"tecles de retrocedir/avançar pàgina."
+
+# skip-rule: k-PageUp-1
+#: part/dlggeneral.cpp:200
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Page Up/Down overlap:"
+msgstr "Superposició Re/Av Pàg:"
+
+#: part/dlggeneral.cpp:204
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "100%"
+msgstr "100%"
+
+#: part/dlggeneral.cpp:205
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Width"
+msgstr "Ajusta a l'amplària"
+
+#: part/dlggeneral.cpp:206
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Page"
+msgstr "Ajusta a la pàgina"
+
+#: part/dlggeneral.cpp:207
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Auto Fit"
+msgstr "Encaixat automàtic"
+
+#: part/dlggeneral.cpp:208
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid ""
+"Defines the default zoom mode for files which were never opened before. For "
+"files which were opened before the previous zoom is applied."
+msgstr ""
+"Establix el mode predeterminat de zoom per als fitxers que mai s'han obert "
+"abans. Per als fitxers que s'han obert prèviament s'aplica el zoom anterior."
+
+#: part/dlggeneral.cpp:210
+#, kde-format
+msgctxt "label:listbox Config dialog, general page, default zoom"
+msgid "Default zoom:"
+msgstr "Zoom predeterminat:"
+
+#: part/dlgperformance.cpp:26
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable transparency effects"
+msgstr "Activa els efectes de transparències"
+
+#: part/dlgperformance.cpp:28
+#, kde-format
+msgctxt "@label Config dialog, performance page"
+msgid "CPU usage:"
+msgstr "Ús de la CPU:"
+
+#: part/dlgperformance.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Low"
+msgstr "Baix"
+
+#: part/dlgperformance.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Normal (default)"
+msgstr "Normal (predeterminat)"
+
+#: part/dlgperformance.cpp:37
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Aggressive"
+msgstr "Enèrgic"
+
+#: part/dlgperformance.cpp:38
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Greedy"
+msgstr "Voraç"
+
+#: part/dlgperformance.cpp:40
+#, kde-format
+msgctxt "@label:listbox Config dialog, performance page, memory usage"
+msgid "Memory usage:"
+msgstr "Ús de la memòria:"
+
+#: part/dlgperformance.cpp:54
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text antialias"
+msgstr "Activa l'antialiàsing de text"
+
+#: part/dlgperformance.cpp:56
+#, kde-format
+msgctxt "@title:group Config dialog, performance page"
+msgid "Rendering options:"
+msgstr "Opcions de renderització:"
+
+#: part/dlgperformance.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable graphics antialias"
+msgstr "Activa l'antialiàsing de gràfics"
+
+#: part/dlgperformance.cpp:64
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text hinting"
+msgstr "Activa la correcció de lletres del text"
+
+#: part/dlgperformance.cpp:77
+#, kde-format
+msgid ""
+"Keeps used memory as low as possible. Do not reuse anything. (For systems "
+"with low memory.)"
+msgstr ""
+"Mantín l'ús de la memòria tan baix com siga possible. No reutilitza res (per "
+"a sistemes amb poca memòria)."
+
+#: part/dlgperformance.cpp:80
+#, kde-format
+msgid ""
+"A good compromise between memory usage and speed gain. Preload next page and "
+"boost searches. (For systems with 2GB of memory, typically.)"
+msgstr ""
+"Un bon compromís entre l'ús de la memòria i la velocitat. Precarrega la "
+"propera pàgina i accelera les busques (normalment, per a sistemes amb 2 GB "
+"de memòria)."
+
+#: part/dlgperformance.cpp:83
+#, kde-format
+msgid ""
+"Keeps everything in memory. Preload next pages. Boost searches. (For systems "
+"with more than 4GB of memory.)"
+msgstr ""
+"Ho manté tot en memòria. Precarrega les properes pàgines. Accelera les "
+"busques (per a sistemes amb més de 4 GB de memòria)."
+
+#: part/dlgperformance.cpp:87
+#, no-c-format, kde-format
+msgid ""
+"Loads and keeps everything in memory. Preload all pages. (Will use at "
+"maximum 50% of your total memory or your free memory, whatever is bigger.)"
+msgstr ""
+"Carrega i ho manté tot en la memòria. Precarrega totes les pàgines "
+"(utilitzarà un màxim del 50% de tota la memòria o de la memòria lliure, el "
+"més gran dels dos)."
+
+#: part/dlgpresentation.cpp:37
+#, kde-format
+msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+msgid "every "
+msgstr "cada "
+
+#: part/dlgpresentation.cpp:38
+#, kde-format
+msgctxt "Advance every %1 seconds"
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " segon"
+msgstr[1] " segons"
+
+#: part/dlgpresentation.cpp:45
+#, kde-format
+msgctxt "@label:spinbox Config dialog, presentation page"
+msgid "Advance automatically:"
+msgstr "Avança automàticament:"
+
+#: part/dlgpresentation.cpp:53
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Loop after last page"
+msgstr "Repetix després de l'última pàgina"
+
+#: part/dlgpresentation.cpp:59
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap left/right side to go back/forward"
+msgstr "Toc a la banda esquerra/dreta per a anar arrere/avant"
+
+#: part/dlgpresentation.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap anywhere to go forward"
+msgstr "Toc a qualsevol lloc per a anar avant"
+
+#: part/dlgpresentation.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Disabled"
+msgstr "Desactivada"
+
+#: part/dlgpresentation.cpp:63
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
+msgid "Touch navigation:"
+msgstr "Navegació tàctil:"
+
+#: part/dlgpresentation.cpp:72
+#, kde-format
+msgctxt "@label:chooser Config dialog, presentation page"
+msgid "Background color:"
+msgstr "Color del fons:"
+
+#: part/dlgpresentation.cpp:76
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Hidden after delay"
+msgstr "Oculta després d'un retard"
+
+#: part/dlgpresentation.cpp:77
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always visible"
+msgstr "Sempre visible"
+
+#: part/dlgpresentation.cpp:78
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always hidden"
+msgstr "Sempre ocult"
+
+#: part/dlgpresentation.cpp:80
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
+msgid "Mouse cursor:"
+msgstr "Cursor del ratolí:"
+
+#: part/dlgpresentation.cpp:84
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show progress indicator"
+msgstr "Mostra l'indicador de progrés"
+
+#: part/dlgpresentation.cpp:90
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show summary page"
+msgstr "Mostra la pàgina de resum"
+
+#: part/dlgpresentation.cpp:100
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Instant (Never use animations)"
+msgstr "Instantani (No utilitza mai animacions)"
+
+#: part/dlgpresentation.cpp:101
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Replace"
+msgstr "Substituïx"
+
+#: part/dlgpresentation.cpp:102
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Random transition"
+msgstr "Transició aleatòria"
+
+#: part/dlgpresentation.cpp:103
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds vertical"
+msgstr "Apaga verticalment"
+
+#: part/dlgpresentation.cpp:104
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds horizontal"
+msgstr "Apaga horitzontalment"
+
+#: part/dlgpresentation.cpp:105
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box in"
+msgstr "Quadro cap endins"
+
+#: part/dlgpresentation.cpp:106
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box out"
+msgstr "Quadro cap enfora"
+
+#: part/dlgpresentation.cpp:107
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Dissolve"
+msgstr "Dissol"
+
+#: part/dlgpresentation.cpp:108
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Fade"
+msgstr "Esvaïment"
+
+#: part/dlgpresentation.cpp:109
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter down"
+msgstr "Lluentor cap avall"
+
+#: part/dlgpresentation.cpp:110
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right"
+msgstr "Lluentor cap a la dreta"
+
+#: part/dlgpresentation.cpp:111
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right-down"
+msgstr "Lluentor cap avall i a la dreta"
+
+#: part/dlgpresentation.cpp:112
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal in"
+msgstr "Dividix horitzontalment cap a l'interior"
+
+#: part/dlgpresentation.cpp:113
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal out"
+msgstr "Dividix horitzontalment cap a l'exterior"
+
+#: part/dlgpresentation.cpp:114
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical in"
+msgstr "Dividix verticalment cap a l'interior"
+
+#: part/dlgpresentation.cpp:115
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical out"
+msgstr "Dividix verticalment cap a l'exterior"
+
+#: part/dlgpresentation.cpp:116
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe down"
+msgstr "Esborrat cap avall"
+
+#: part/dlgpresentation.cpp:117
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe right"
+msgstr "Esborrat cap a la dreta"
+
+#: part/dlgpresentation.cpp:118
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe left"
+msgstr "Esborrat cap a l'esquerra"
+
+#: part/dlgpresentation.cpp:119
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe up"
+msgstr "Esborrat cap amunt"
+
+#: part/dlgpresentation.cpp:121
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, transitions"
+msgid "Default transition:"
+msgstr "Transició predeterminada:"
+
+#: part/dlgpresentation.cpp:130
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
+msgid "Preferred screen:"
+msgstr "Pantalla preferida:"
+
+#: part/dlgpresentation.cpp:137
+#, kde-format
+msgctxt ""
+"@label Config dialog, presentation page, heading line for drawing tool "
+"manager"
+msgid "<h3>Drawing Tools</h3>"
+msgstr "<h3>Eines de dibuix</h3>"
+
+#: part/dlgpresentation.cpp:171
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Current Screen"
+msgstr "Pantalla actual"
+
+#: part/dlgpresentation.cpp:172
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Default Screen"
+msgstr "Pantalla predeterminada"
+
+#: part/dlgpresentation.cpp:178
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
+"screen model name. %4 is the screen name like DVI-0"
+msgid "Screen %1 (%2 %3 %4)"
+msgstr "Pantalla %1 (%2 %3 %4)"
+
+#: part/dlgpresentation.cpp:190
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...), hopefully not 0."
+msgid "Screen %1 (disconnected)"
+msgstr "Pantalla %1 (desconnectada)"
+
+#: part/drawingtoolactions.cpp:192
+#, kde-format
+msgid "Drawing Tool: %1"
+msgstr "Eina de dibuix: %1"
+
+#: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
+#, kde-format
+msgid "Eraser"
+msgstr "Esborrador"
+
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#, kde-format
+msgid "&Name:"
+msgstr "&Nom:"
+
+#: part/editannottooldialog.cpp:69
+#, kde-format
+msgid "&Type:"
+msgstr "&Tipus:"
+
+#: part/editannottooldialog.cpp:82
+#, kde-format
+msgid "Appearance"
+msgstr "Aparença"
+
+#: part/editannottooldialog.cpp:93
+#, kde-format
+msgid "Text markup"
+msgstr "Marcador de text"
+
+#: part/editannottooldialog.cpp:94
+#, kde-format
+msgid "Geometrical shape"
+msgstr "Forma geomètrica"
+
+#: part/editannottooldialog.cpp:101
+#, kde-format
+msgid "Create annotation tool"
+msgstr "Eina de creació d'anotacions"
+
+#: part/editannottooldialog.cpp:103
+#, kde-format
+msgid "Edit annotation tool"
+msgstr "Eina d'edició d'anotacions"
+
+#: part/editdrawingtooldialog.cpp:50
+#, kde-format
+msgid "Color:"
+msgstr "Color:"
+
+#: part/editdrawingtooldialog.cpp:57
+#, kde-format
+msgid "&Pen Width:"
+msgstr "Amplària de la &ploma:"
+
+#: part/editdrawingtooldialog.cpp:63
+#, kde-format
+msgctxt "Suffix for the pen width, eg '10 px'"
+msgid " px"
+msgstr " px"
+
+#: part/editdrawingtooldialog.cpp:73
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80 %'"
+msgid " %"
+msgstr " %"
+
+#: part/editdrawingtooldialog.cpp:78
+#, kde-format
+msgid "Create drawing tool"
+msgstr "Eina de creació de dibuixos"
+
+#: part/editdrawingtooldialog.cpp:83
+#, kde-format
+msgid "Edit drawing tool"
+msgstr "Eina d'edició de dibuixos"
+
+#: part/embeddedfilesdialog.cpp:39
+#, kde-format
+msgctxt "Unknown date"
+msgid "Unknown"
+msgstr "Desconeguda"
+
+#: part/embeddedfilesdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Embedded Files"
+msgstr "Fitxers incrustats"
+
+#: part/embeddedfilesdialog.cpp:59
+#, kde-format
+msgctxt "@action:button"
+msgid "View"
+msgstr "Visualitza"
+
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@title:column"
+msgid "Name"
+msgstr "Nom"
+
+#: part/embeddedfilesdialog.cpp:68
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr "Descripció"
+
+#: part/embeddedfilesdialog.cpp:69
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr "Mida"
+
+#: part/embeddedfilesdialog.cpp:70
+#, kde-format
+msgctxt "@title:column"
+msgid "Created"
+msgstr "Creat"
+
+#: part/embeddedfilesdialog.cpp:71
+#, kde-format
+msgctxt "@title:column"
+msgid "Modified"
+msgstr "Modificat"
+
+#: part/embeddedfilesdialog.cpp:151
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Save As..."
+msgstr "&Anomena i guarda..."
+
+#: part/embeddedfilesdialog.cpp:152
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&View..."
+msgstr "&Visualitza..."
+
+#: part/fileprinterpreview.cpp:115
+#, kde-format
+msgid "Could not load print preview part"
+msgstr "No s'ha pogut carregar la part de la vista prèvia d'impressió"
+
+#: part/fileprinterpreview.cpp:127
+#, kde-format
+msgid "Print Preview"
+msgstr "Vista prèvia d'impressió"
+
+#: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
+#, kde-format
+msgid "Close"
+msgstr "Tanca"
+
+#: part/findbar.cpp:38
+#, kde-format
+msgctxt "Find text"
+msgid "F&ind:"
+msgstr "Bu&sca:"
+
+#: part/findbar.cpp:49
+#, kde-format
+msgid "Text to search for"
+msgstr "Text que cal buscar"
+
+#: part/findbar.cpp:54
+#, kde-format
+msgctxt "Find and go to the next search match"
+msgid "Next"
+msgstr "Següent"
+
+#: part/findbar.cpp:55
+#, kde-format
+msgid "Jump to next match"
+msgstr "Salta a la coincidència següent"
+
+#: part/findbar.cpp:58
+#, kde-format
+msgctxt "Find and go to the previous search match"
+msgid "Previous"
+msgstr "Anterior"
+
+#: part/findbar.cpp:59
+#, kde-format
+msgid "Jump to previous match"
+msgstr "Salta a la coincidència anterior"
+
+#: part/findbar.cpp:64
+#, kde-format
+msgid "Modify search behavior"
+msgstr "Modifica el comportament de la busca"
+
+#: part/findbar.cpp:66
+#, kde-format
+msgid "Case sensitive"
+msgstr "Distingix entre majúscules i minúscules"
+
+#: part/findbar.cpp:68
+#, kde-format
+msgid "From current page"
+msgstr "Des de la pàgina actual"
+
+#: part/findbar.cpp:70
+#, kde-format
+msgid "Find as you type"
+msgstr "Busca en teclejar"
+
+#: part/formwidgets.cpp:751
+#, kde-format
+msgid "*|All Files"
+msgstr "*|Tots els fitxers"
+
+#: part/formwidgets.cpp:1065
+#, kde-format
+msgid "Unsigned Signature Field (Click to Sign)"
+msgstr "Camp de signatura sense signar (clic per a signar)"
+
+#: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
+#, kde-format
+msgid "&Sign..."
+msgstr "&Signa..."
+
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#, kde-format
+msgid "Signature Properties"
+msgstr "Propietats de la signatura"
+
+#: part/ktreeviewsearchline.cpp:283
+#, kde-format
+msgid "Search Options"
+msgstr "Opcions de busca"
+
+#: part/ktreeviewsearchline.cpp:284
+#, kde-format
+msgctxt "Enable case sensitive search in the side navigation panels"
+msgid "Case Sensitive"
+msgstr "Distingix entre majúscules i minúscules"
+
+#: part/ktreeviewsearchline.cpp:287
+#, kde-format
+msgctxt "Enable regular expression search in the side navigation panels"
+msgid "Regular Expression"
+msgstr "Expressió regular"
+
+#: part/ktreeviewsearchline.cpp:386
+#, kde-format
+msgid "S&earch:"
+msgstr "Bu&sca:"
+
+#: part/layers.cpp:35 part/part.cpp:2315
+#, kde-format
+msgid "Layers"
+msgstr "Capes"
+
+#: part/minibar.cpp:190
+#, kde-format
+msgctxt "Layouted like: '5 [pages] of 10'"
+msgid "of"
+msgstr "de"
+
+#: part/pageview.cpp:541
+#, kde-format
+msgid "Zoom"
+msgstr "Zoom"
+
+#: part/pageview.cpp:553
+#, kde-format
+msgid "Zoom to 100%"
+msgstr "Zoom al 100%"
+
+#: part/pageview.cpp:564
+#, kde-format
+msgid "Rotate &Right"
+msgstr "Gira a la d&reta"
+
+#: part/pageview.cpp:565
+#, kde-format
+msgctxt "Rotate right"
+msgid "Right"
+msgstr "Dreta"
+
+#: part/pageview.cpp:569
+#, kde-format
+msgid "Rotate &Left"
+msgstr "Gira a l'es&querra"
+
+#: part/pageview.cpp:570
+#, kde-format
+msgctxt "Rotate left"
+msgid "Left"
+msgstr "Esquerra"
+
+#: part/pageview.cpp:574
+#, kde-format
+msgid "Original Orientation"
+msgstr "Orientació original"
+
+#: part/pageview.cpp:580
+#, kde-format
+msgid "&Trim View"
+msgstr "Re&talla la vista"
+
+#: part/pageview.cpp:584
+#, kde-format
+msgid "&Trim Margins"
+msgstr "Re&talla els marges"
+
+#: part/pageview.cpp:591
+#, kde-format
+msgid "Trim To &Selection"
+msgstr "Retalla a la &selecció"
+
+#: part/pageview.cpp:597
+#, kde-format
+msgid "Fit &Width"
+msgstr "Ajusta a l'a&mplària de pàgina"
+
+#: part/pageview.cpp:601
+#, kde-format
+msgid "Fit &Page"
+msgstr "Ajusta a la &pàgina"
+
+#: part/pageview.cpp:605
+#, kde-format
+msgid "&Auto Fit"
+msgstr "Encaixat &automàtic"
+
+#: part/pageview.cpp:609
+#, kde-format
+msgid "Fit Wi&ndow to Page"
+msgstr "Ajusta la fi&nestra a la pàgina"
+
+#: part/pageview.cpp:616
+#, kde-format
+msgid "&View Mode"
+msgstr "Mode de &vista"
+
+#: part/pageview.cpp:628
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Single Page"
+msgstr "Pàgina i&ndividual"
+
+#: part/pageview.cpp:629
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Facing Pages"
+msgstr "Pàgines &oposades"
+
+#: part/pageview.cpp:630
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Facing Pages (&Center First Page)"
+msgstr "Pàgines oposades (&centra la primera pàgina)"
+
+#: part/pageview.cpp:633
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Overview"
+msgstr "Vista &general"
+
+#: part/pageview.cpp:645
+#, kde-format
+msgid "&Continuous"
+msgstr "&Continu"
+
+#: part/pageview.cpp:652
+#, kde-format
+msgctxt "@action page layout"
+msgid "Use Right to Left Reading Direction"
+msgstr "Utilitza la direcció de lectura de dreta a esquerra"
+
+#: part/pageview.cpp:661
+#, kde-format
+msgid "&Browse"
+msgstr "&Navega"
+
+#: part/pageview.cpp:669
+#, kde-format
+msgid "&Zoom"
+msgstr "&Zoom"
+
+#: part/pageview.cpp:689
+#, kde-format
+msgid "Area &Selection"
+msgstr "&Selecció d'àrea"
+
+#: part/pageview.cpp:696
+#, kde-format
+msgid "&Text Selection"
+msgstr "Seleccioneu el &text"
+
+#: part/pageview.cpp:703
+#, kde-format
+msgid "T&able Selection"
+msgstr "Seleccioneu la t&aula"
+
+#: part/pageview.cpp:710
+#, kde-format
+msgid "&Magnifier"
+msgstr "A&mpliador"
+
+#: part/pageview.cpp:719
+#, kde-format
+msgctxt "@action"
+msgid "Selection Tools"
+msgstr "Eines de selecció"
+
+#: part/pageview.cpp:750
+#, kde-format
+msgid "Digitally &Sign..."
+msgstr "&Signa digitalment..."
+
+#: part/pageview.cpp:756
+#, kde-format
+msgid "Speak Whole Document"
+msgstr "Llig tot el document"
+
+#: part/pageview.cpp:761
+#, kde-format
+msgid "Speak Current Page"
+msgstr "Llig la pàgina actual"
+
+#: part/pageview.cpp:766
+#, kde-format
+msgid "Stop Speaking"
+msgstr "Para la pronunciació"
+
+#: part/pageview.cpp:771
+#, kde-format
+msgid "Pause/Resume Speaking"
+msgstr "Fa pausa/reprén la pronunciació"
+
+#: part/pageview.cpp:783
+#, kde-format
+msgid "Scroll Up"
+msgstr "Desplaçament amunt"
+
+#: part/pageview.cpp:789
+#, kde-format
+msgid "Scroll Down"
+msgstr "Desplaçament avall"
+
+# skip-rule: k-PageUp-1
+#: part/pageview.cpp:795
+#, kde-format
+msgid "Scroll Page Up"
+msgstr "Desplaça una pàgina amunt"
+
+# skip-rule: k-PageDown-1
+#: part/pageview.cpp:801
+#, kde-format
+msgid "Scroll Page Down"
+msgstr "Desplaça una pàgina avall"
+
+#: part/pageview.cpp:807
+#, kde-format
+msgid "Show Forms"
+msgstr "Mostra els formularis"
+
+#: part/pageview.cpp:1301
+#, kde-format
+msgid " Loaded a one-page document."
+msgid_plural " Loaded a %1-page document."
+msgstr[0] " S'ha carregat un document d'una pàgina."
+msgstr[1] " S'ha carregat un document de %1 pàgines."
+
+#: part/pageview.cpp:2521
+#, kde-format
+msgid "Copy Table Contents to Clipboard"
+msgstr "Copia el contingut de la taula al porta-retalls"
+
+#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
+#: part/pageview.cpp:3050
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "La còpia està prohibida pel DRM"
+
+#: part/pageview.cpp:2843
+#, kde-format
+msgid "Text (1 character)"
+msgid_plural "Text (%1 characters)"
+msgstr[0] "Text (1 caràcter)"
+msgstr[1] "Text (%1 caràcters)"
+
+#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "Copia al porta-retalls"
+
+#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#, kde-format
+msgid "Speak Text"
+msgstr "Llig el text"
+
+#: part/pageview.cpp:2861
+#, kde-format
+msgid "Image (%1 by %2 pixels)"
+msgstr "Imatge (%1 per %2 píxels)"
+
+#: part/pageview.cpp:2863
+#, kde-format
+msgid "Save to File..."
+msgstr "Guarda en el fitxer..."
+
+#: part/pageview.cpp:2883
+#, kde-format
+msgid "Image [%1x%2] copied to clipboard."
+msgstr "La imatge [%1x%2] s'ha copiat al porta-retalls."
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Save file"
+msgstr "Guarda el fitxer"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Images (*.png *.jpeg)"
+msgstr "Imatges (*.png *.jpeg)"
+
+#: part/pageview.cpp:2888
+#, kde-format
+msgid "File not saved."
+msgstr "No s'ha guardat el fitxer."
+
+#: part/pageview.cpp:2899
+#, kde-format
+msgid "Image [%1x%2] saved to %3 file."
+msgstr "La imatge [%1x%2] s'ha guardat en el fitxer %3."
+
+#: part/pageview.cpp:3041
+#, kde-format
+msgid "Copy Text"
+msgstr "Copia el text"
+
+#: part/pageview.cpp:3061
+#, kde-format
+msgid "Go to '%1'"
+msgstr "Ves a «%1»"
+
+#: part/pageview.cpp:4034 part/part.cpp:3155
+#, kde-format
+msgid "Fit Width"
+msgstr "Ajusta a l'amplària de pàgina"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Fit Page"
+msgstr "Ajusta a la pàgina"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Auto Fit"
+msgstr "Encaixat automàtic"
+
+#: part/pageview.cpp:4355
+#, kde-format
+msgid "Search for '%1' with"
+msgstr "Busca «%1» amb"
+
+#: part/pageview.cpp:4369
+#, kde-format
+msgid "Configure Web Shortcuts..."
+msgstr "Configura les dreceres web..."
+
+#: part/pageview.cpp:4395
+#, kde-format
+msgid "Follow This Link"
+msgstr "Seguix este enllaç"
+
+#: part/pageview.cpp:4398
+#, kde-format
+msgid "Play this Sound"
+msgstr "Reproduïx este so"
+
+#: part/pageview.cpp:4400
+#, kde-format
+msgid "Stop Sound"
+msgstr "Para el so"
+
+#: part/pageview.cpp:4406
+#, kde-format
+msgid "Copy Link Address"
+msgstr "Copia l'adreça de l'enllaç"
+
+#: part/pageview.cpp:4427
+#, kde-format
+msgid "Search for '%1' in this document"
+msgstr "Busca «%1» en este document"
+
+#: part/pageview.cpp:4870
+#, kde-format
+msgid "Welcome"
+msgstr "Us donem la benvinguda"
+
+#: part/pageview.cpp:4994
+#, kde-format
+msgid "Select zooming area. Right-click to zoom out."
+msgstr "Seleccioneu l'àrea de zoom. Feu clic amb el botó dret per a allunyar."
+
+#: part/pageview.cpp:5005
+#, kde-format
+msgid "Click to see the magnified view."
+msgstr "Clic per a veure la vista ampliada."
+
+#: part/pageview.cpp:5018
+#, kde-format
+msgid "Draw a rectangle around the text/graphics to copy."
+msgstr "Dibuixa un rectangle al voltant del text/gràfics a copiar."
+
+#: part/pageview.cpp:5030
+#, kde-format
+msgid "Select text"
+msgstr "Seleccioneu el text"
+
+#: part/pageview.cpp:5042
+#, kde-format
+msgid ""
+"Draw a rectangle around the table, then click near edges to divide up; press "
+"Esc to clear."
+msgstr ""
+"Dibuixeu un rectangle al voltant de la taula, després cliqueu a prop de les "
+"vores per a dividir-lo. Premeu «Esc» per a netejar-lo."
+
+#: part/pageview.cpp:5052
+#, kde-format
+msgid ""
+"All your signing certificates are either not valid yet or are past their "
+"validity date."
+msgstr ""
+"Tots els vostres certificats de signatura encara no són vàlids o ja ha "
+"passat la seua data de validesa."
+
+#: part/pageview.cpp:5055
+#, kde-format
+msgid ""
+"There are no available signing certificates.<br/>For more information, "
+"please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
+"the manual."
+msgstr ""
+"No hi ha cap certificat disponible de signatura.<br/>Per a més informació, "
+"vegeu la secció quant a <a href=\"%1\">Afegir signatures digitals</a> en el "
+"manual."
+
+#: part/pageview.cpp:5071
+#, kde-format
+msgid "You have unsaved changes. Please save the document before signing it."
+msgstr "Hi ha canvis sense guardar. Guardeu el document abans de signar-lo."
+
+#: part/pageview.cpp:5079
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The version of the Poppler library this Okular was compiled with does not "
+"support signing documents with passwords. Please ask your provider to update "
+"it to 22.02 or later."
+msgstr ""
+"La versió de la biblioteca Poppler amb què es va compilar este Okular no "
+"permet signar documents amb contrasenyes. Demaneu al vostre proveïdor que "
+"l'actualitze a la versió 22.02 o posterior."
+
+#: part/pageview.cpp:5080
+#, kde-format
+msgctxt "@title:window"
+msgid "Poppler library is too old"
+msgstr "La biblioteca Poppler és massa antiga"
+
+#: part/pageview.cpp:5098
+#, kde-format
+msgid "Draw a rectangle to insert the signature field"
+msgstr "Dibuixa un rectangle per inserir el camp de signatura"
+
+#: part/pageview.cpp:5242
+#, kde-format
+msgid "Draw a rectangle around the page area you wish to keep visible"
+msgstr ""
+"Dibuixa un rectangle al voltant de l'àrea de la pàgina que voleu mantindre "
+"visible"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "New Text Note"
+msgstr "Nota nova de text"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "Text of the new note:"
+msgstr "Text de la nota nova:"
+
+#: part/pageviewannotator.cpp:362
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"A signature of this size may be too small to read. If you would like to "
+"create a potentially more readable signature, press <interface>Start over</"
+"interface> and draw a bigger rectangle."
+msgstr ""
+"Una signatura d'esta mida pot ser massa xicoteta per a llegir. Si voleu "
+"crear una signatura potencialment més llegible, premeu <interface>Torna a "
+"començar</interface> i dibuixeu un rectangle més gran."
+
+#: part/pageviewannotator.cpp:364
+#, kde-format
+msgctxt "@action:button"
+msgid "Start Over"
+msgstr "Torna a començar"
+
+#: part/pageviewannotator.cpp:365
+#, kde-format
+msgctxt "@action:button"
+msgid "Sign"
+msgstr "Signa"
+
+#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+"No s'ha pogut signar. Contrasenya no vàlida de certificat o no s'ha pogut "
+"escriure a «%1»"
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name"
+msgstr "Nom de l'autor"
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name for the annotation:"
+msgstr "Nom de l'autor a l'anotació:"
+
+#: part/pageviewannotator.cpp:1227
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw an ellipse (drag to select a zone)"
+msgstr "Dibuixa una el·lipse (arrossegueu per a seleccionar una zona)"
+
+#: part/pageviewannotator.cpp:1229
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Highlight text"
+msgstr "Text ressaltat"
+
+#: part/pageviewannotator.cpp:1231
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a freehand line"
+msgstr "Dibuixa una línia a mà alçada"
+
+#: part/pageviewannotator.cpp:1233
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Inline Text Annotation (drag to select a zone)"
+msgstr "Anotació de text inclosa (arrossegueu per a seleccionar una zona)"
+
+#: part/pageviewannotator.cpp:1235
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a pop-up note"
+msgstr "Posa una nota emergent"
+
+#: part/pageviewannotator.cpp:1237
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a polygon (click on the first point to close it)"
+msgstr "Dibuixa un polígon (cliqueu en el primer punt per a tancar-lo)"
+
+#: part/pageviewannotator.cpp:1239
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a rectangle"
+msgstr "Dibuixa un rectangle"
+
+#: part/pageviewannotator.cpp:1241
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Squiggle text"
+msgstr "Text de giragonses"
+
+#: part/pageviewannotator.cpp:1243
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a stamp symbol"
+msgstr "Posa un símbol de segell"
+
+#: part/pageviewannotator.cpp:1245
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a straight line"
+msgstr "Dibuixa una línia recta"
+
+#: part/pageviewannotator.cpp:1247
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Strike out text"
+msgstr "Text barrat"
+
+#: part/pageviewannotator.cpp:1249
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Underline text"
+msgstr "Text subratllat"
+
+#: part/pageviewannotator.cpp:1251
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Typewriter Annotation (drag to select a zone)"
+msgstr ""
+"Anotació de màquina d'escriure (arrossegueu per a seleccionar una zona)"
+
+#: part/pageviewannotator.cpp:1310
+#, kde-format
+msgid "Highlighter"
+msgstr "Marcador fluorescent"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Stamps inserted in PDF documents are not visible in PDF readers other than "
+"Okular"
+msgstr ""
+"Els segells inserits en els documents PDF no són visibles en els lectors de "
+"PDF diferents d'Okular"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@title:window"
+msgid "Experimental feature"
+msgstr "Funcionalitat experimental"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Add favorite annotation"
+msgstr "Afig una anotació preferida"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Custom annotation name:"
+msgstr "Nom personalitzat d'anotació:"
+
+#. i18n: ectx: Menu (file)
+#: part/part-viewermode.rc:6 part/part.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Fitxer"
+
+#. i18n: ectx: Menu (settings)
+#: part/part-viewermode.rc:10 part/part.rc:90
+#, kde-format
+msgid "&Settings"
+msgstr "Con&figuració"
+
+#. i18n: ectx: Menu (help)
+#: part/part-viewermode.rc:15 part/part.rc:97
+#, kde-format
+msgid "&Help"
+msgstr "A&juda"
+
+#. i18n: ectx: Menu (view_orientation)
+#: part/part-viewermode.rc:32 part/part.rc:44
+#, kde-format
+msgid "&Orientation"
+msgstr "&Orientació"
+
+#. i18n: ectx: Menu (bookmarks)
+#. i18n: ectx: Menu (okular_bookmarks)
+#: part/part-viewermode.rc:50 part/part.rc:65
+#, kde-format
+msgid "&Bookmarks"
+msgstr "&Punts"
+
+#. i18n: ectx: ToolBar (OkularViewerToolBar)
+#: part/part-viewermode.rc:63
+#, kde-format
+msgid "Viewer Toolbar"
+msgstr "Barra d'eines del visor"
+
+#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#, kde-format
+msgid "Thumbnails"
+msgstr "Miniatures"
+
+#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#, kde-format
+msgid "Annotations"
+msgstr "Anotacions"
+
+#: part/part.cpp:460
+#, kde-format
+msgid ""
+"This document contains annotations or form data that were saved internally "
+"by a previous Okular version. Internal storage is <b>no longer supported</b>."
+"<br/>Please save to a file in order to move them if you want to continue to "
+"edit the document."
+msgstr ""
+"Este document conté anotacions o dades de formulari que s'han guardat "
+"internament amb una versió anterior d'Okular. L'emmagatzematge intern <b>ja "
+"no funciona</b>.<br/>Guardeu-ho a un fitxer per tal de moure-les si voleu "
+"continuar editant el document."
+
+#: part/part.cpp:467
+#, kde-format
+msgid ""
+"This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
+"here to see them</a> or go to File -> Embedded Files."
+msgstr ""
+"Este document té fitxers incrustats. <a href=\"okular:/embeddedfiles"
+"\">Cliqueu ací per a veure'ls</a> o aneu a «Fitxer -> Fitxers incrustats»."
+
+#: part/part.cpp:689
+#, kde-format
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Anterior"
+
+#: part/part.cpp:690
+#, kde-format
+msgid "Go back to the Previous Page"
+msgstr "Ves a la pàgina anterior"
+
+#: part/part.cpp:691
+#, kde-format
+msgid "Moves to the previous page of the document"
+msgstr "Va a la pàgina anterior del document"
+
+#: part/part.cpp:701
+#, kde-format
+msgctxt "Next page"
+msgid "Next"
+msgstr "Següent"
+
+#: part/part.cpp:702
+#, kde-format
+msgid "Advance to the Next Page"
+msgstr "Avança fins a la pàgina següent"
+
+#: part/part.cpp:703
+#, kde-format
+msgid "Moves to the next page of the document"
+msgstr "Va a la pàgina següent del document"
+
+#: part/part.cpp:714
+#, kde-format
+msgid "Beginning of the document"
+msgstr "Començament del document"
+
+#: part/part.cpp:715
+#, kde-format
+msgid "Moves to the beginning of the document"
+msgstr "Va al començament del document"
+
+#: part/part.cpp:719
+#, kde-format
+msgid "End of the document"
+msgstr "Final del document"
+
+#: part/part.cpp:720
+#, kde-format
+msgid "Moves to the end of the document"
+msgstr "Va al final del document"
+
+#: part/part.cpp:734
+#, kde-format
+msgid "Rename the current bookmark"
+msgstr "Canvia el nom el punt actual"
+
+#: part/part.cpp:738
+#, kde-format
+msgid "Previous Bookmark"
+msgstr "Punt anterior"
+
+#: part/part.cpp:740
+#, kde-format
+msgid "Go to the previous bookmark"
+msgstr "Va cap al punt anterior"
+
+#: part/part.cpp:744
+#, kde-format
+msgid "Next Bookmark"
+msgstr "Punt següent"
+
+#: part/part.cpp:746
+#, kde-format
+msgid "Go to the next bookmark"
+msgstr "Va cap al punt següent"
+
+#: part/part.cpp:775
+#, kde-format
+msgid "Configure Okular..."
+msgstr "Configura Okular..."
+
+#: part/part.cpp:778
+#, kde-format
+msgid "Configure Viewer..."
+msgstr "Configura el visor..."
+
+#: part/part.cpp:784
+#, kde-format
+msgid "Configure Viewer Backends..."
+msgstr "Configura els dorsals de visualització..."
+
+#: part/part.cpp:786
+#, kde-format
+msgid "Configure Backends..."
+msgstr "Configura els dorsals..."
+
+#: part/part.cpp:822
+#, kde-format
+msgid "About Backend"
+msgstr "Quant al dorsal"
+
+#: part/part.cpp:827
+#, kde-format
+msgid "Reloa&d"
+msgstr "Torna a ca&rregar"
+
+#: part/part.cpp:829
+#, kde-format
+msgid "Reload the current document from disk."
+msgstr "Tornant a carregar el document actual des del disc."
+
+#: part/part.cpp:835
+#, kde-format
+msgid "Close &Find Bar"
+msgstr "Tanca la barra de &busca"
+
+#: part/part.cpp:840
+#, kde-format
+msgid "Page Number"
+msgstr "Número de pàgina"
+
+#: part/part.cpp:844
+#, kde-format
+msgctxt "@action"
+msgid "Configure Color Modes..."
+msgstr "Configura els modes de color..."
+
+#: part/part.cpp:887
+#, kde-format
+msgid "Select All Text on Current Page"
+msgstr "Selecciona tot el text de la pàgina actual"
+
+#: part/part.cpp:900
+#, kde-format
+msgid "Show S&idebar"
+msgstr "Mostra la barra &lateral"
+
+#: part/part.cpp:909
+#, kde-format
+msgid "Show &Page Bar"
+msgstr "Mostra la barra de &pàgines"
+
+#: part/part.cpp:915
+#, kde-format
+msgid "Show &Signatures Panel"
+msgstr "Mostra el quadro de les &signatures"
+
+#: part/part.cpp:925
+#, kde-format
+msgid "&Embedded Files"
+msgstr "Fitxers &incrustats"
+
+#: part/part.cpp:931
+#, kde-format
+msgid "E&xport As"
+msgstr "E&xporta com a"
+
+#: part/part.cpp:943
+#, kde-format
+msgid "S&hare"
+msgstr "Com&partix"
+
+#: part/part.cpp:952
+#, kde-format
+msgid "P&resentation"
+msgstr "P&resentació"
+
+#: part/part.cpp:959
+#, kde-format
+msgid "Open Con&taining Folder"
+msgstr "Obri la carpeta con&tenidora"
+
+#: part/part.cpp:975
+#, kde-format
+msgid "&Import PostScript as PDF..."
+msgstr "&Importa un PostScript com a PDF..."
+
+#: part/part.cpp:979
+#, kde-format
+msgid "Switch Blackscreen Mode"
+msgstr "Canvia al mode de pantalla negra"
+
+#: part/part.cpp:987
+#, kde-format
+msgid "Erase Drawing"
+msgstr "Esborra el dibuix"
+
+#: part/part.cpp:992
+#, kde-format
+msgid "Configure Annotations..."
+msgstr "Configura les anotacions..."
+
+#: part/part.cpp:997
+#, kde-format
+msgid "Play/Pause Presentation"
+msgstr "Reproduïx/pausa la presentació"
+
+#: part/part.cpp:1145
+#, kde-format
+msgid ""
+"You have just modified the open document, but this kind of document can not "
+"be saved.\n"
+"Any modification will be lost once Okular is closed."
+msgstr ""
+"Heu modificat el document obert, però esta classe de document no es pot "
+"guardar.\n"
+"Qualsevol modificació es perdrà una vegada es tanque Okular."
+
+#: part/part.cpp:1146
+#, kde-format
+msgid "Document can't be saved"
+msgstr "El document no s'ha pogut guardar"
+
+#: part/part.cpp:1175
+#, kde-format
+msgid "Could not open '%1' (%2) "
+msgstr "No s'ha pogut obrir «%1» (%2) "
+
+#: part/part.cpp:1229
+#, kde-format
+msgid "The loading of %1 has been canceled."
+msgstr "S'ha cancel·lat la càrrega de %1."
+
+#: part/part.cpp:1245
+#, kde-format
+msgid "Could not open %1. Reason: %2"
+msgstr "No s'ha pogut obrir %1. Motiu: %2"
+
+#: part/part.cpp:1273
+#, kde-format
+msgid "Configure Viewer Backends"
+msgstr "Configura els dorsals de visualització"
+
+#: part/part.cpp:1275
+#, kde-format
+msgid "Configure Backends"
+msgstr "Configura els dorsals"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid ""
+"The program \"ps2pdf\" was not found, so Okular can not import PS files "
+"using it."
+msgstr ""
+"No s'ha trobat el programa «ps2pdf», per tant, Okular no pot importar "
+"fitxers PS utilitzant-lo."
+
+#: part/part.cpp:1360
+#, kde-format
+msgid "ps2pdf not found"
+msgstr "No s'ha trobat el ps2pdf"
+
+#: part/part.cpp:1365
+#, kde-format
+msgid "PostScript files (%1)"
+msgstr "Fitxers PostScript (%1)"
+
+#: part/part.cpp:1381
+#, kde-format
+msgid "Importing PS file as PDF (this may take a while)..."
+msgstr "S'està important el fitxer PS com a PDF (pot tardar una estona)..."
+
+#: part/part.cpp:1510
+#, kde-format
+msgid "Please enter the password to read the document:"
+msgstr "Introduïu la contrasenya per a llegir el document:"
+
+#: part/part.cpp:1512
+#, kde-format
+msgid "Incorrect password. Try again:"
+msgstr "Contrasenya incorrecta. Torneu-ho a provar:"
+
+#: part/part.cpp:1518
+#, kde-format
+msgid "Document Password"
+msgstr "Contrasenya del document"
+
+#: part/part.cpp:1638
+#, kde-format
+msgid "This document has XFA forms, which are currently <b>unsupported</b>."
+msgstr ""
+"Este document té formularis XFA, els quals actualment no estan <b>admesos</"
+"b>."
+
+#: part/part.cpp:1645
+#, kde-format
+msgid ""
+"This document has forms. Click on the button to interact with them, or use "
+"View -> Show Forms."
+msgstr ""
+"Este document té formularis. Cliqueu en el botó per a interactuar-hi, o "
+"utilitzeu «Visualitza -> Mostra els formularis»."
+
+#: part/part.cpp:1661
+#, kde-format
+msgid ""
+"All editing and interactive features for this document are disabled. Please "
+"save a copy and reopen to edit this document."
+msgstr ""
+"Totes les característiques d'edició i interactives d'este document estan "
+"desactivades. Guardeu una còpia i torneu-la a obrir per a editar este "
+"document."
+
+# skip-rule: ff-enter
+#: part/part.cpp:1749
+#, kde-format
+msgid ""
+"This document wants to be shown full screen.\n"
+"Leave normal mode and enter presentation mode?"
+msgstr ""
+"Este document requerix mostrar-se en pantalla completa.\n"
+"Cal deixar el mode normal i entrar en el mode de presentació?"
+
+#: part/part.cpp:1751
+#, kde-format
+msgid "Request to Change Viewing Mode"
+msgstr "Petició de canvi del mode de visualització"
+
+#: part/part.cpp:1752
+#, kde-format
+msgid "Enter Presentation Mode"
+msgstr "Entra en mode de presentació"
+
+#: part/part.cpp:1753
+#, kde-format
+msgid "Deny Request"
+msgstr "Denega la petició"
+
+#: part/part.cpp:1843
+#, kde-format
+msgid "Could not open %1. %2"
+msgstr "No s'ha pogut obrir %1. %2"
+
+#: part/part.cpp:1873
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue reloading the file?"
+msgstr ""
+"Hi ha canvis sense guardar, i el fitxer «%1» l'ha modificat un altre "
+"programa. Els vostres canvis es perdran, perquè el fitxer ja no es pot "
+"guardar.<br>Voleu continuar carregant el fitxer?"
+
+#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#, kde-format
+msgid "File Changed"
+msgstr "El fitxer ha canviat"
+
+#: part/part.cpp:1875
+#, kde-format
+msgid "Continue Reloading"
+msgstr "Continua, tornant a carregar"
+
+#: part/part.cpp:1876
+#, kde-format
+msgid "Abort Reloading"
+msgstr "Interromp la recàrrega"
+
+#: part/part.cpp:1880
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue closing the file?"
+msgstr ""
+"Hi ha canvis sense guardar, i el fitxer «%1» l'ha modificat un altre "
+"programa. Els vostres canvis es perdran, perquè el fitxer ja no es pot "
+"guardar.<br>Voleu continuar tancant el fitxer?"
+
+#: part/part.cpp:1882
+#, kde-format
+msgid "Continue Closing"
+msgstr "Continua, tancant"
+
+#: part/part.cpp:1883
+#, kde-format
+msgid "Abort Closing"
+msgstr "Interromp el tancament"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Do you want to save your changes to \"%1\" or discard them?"
+msgstr "Voleu guardar els canvis a «%1» o descartar-los?"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Close Document"
+msgstr "Tanca el document"
+
+#: part/part.cpp:2022
+#, kde-format
+msgid ""
+"This link points to a close document action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"Este enllaç apunta a una acció sobre un document tancat que no funciona quan "
+"s'està emprant el visor incrustat."
+
+#: part/part.cpp:2028
+#, kde-format
+msgid ""
+"This link points to a quit application action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"Este enllaç apunta a una acció sobre una acció d'eixida d'aplicació que no "
+"funciona quan s'està emprant el visor incrustat."
+
+#: part/part.cpp:2120 part/part.cpp:2138
+#, kde-format
+msgid "Reloading the document..."
+msgstr "S'està tornant a carregar el document..."
+
+#: part/part.cpp:2295 part/toc.cpp:38
+#, kde-format
+msgid "Contents"
+msgstr "Contingut"
+
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#, kde-format
+msgid "Signatures"
+msgstr "Signatures"
+
+#: part/part.cpp:2351
+#, kde-format
+msgid "Go to Page"
+msgstr "Ves a la pàgina"
+
+#: part/part.cpp:2374
+#, kde-format
+msgid "&Page:"
+msgstr "&Pàgina:"
+
+#: part/part.cpp:2467
+#, kde-format
+msgid "Enter the new name of the bookmark:"
+msgstr "Introduïu el nom nou del punt:"
+
+#: part/part.cpp:2513
+#, kde-format
+msgid "Rename this Bookmark"
+msgstr "Canvia el nom este punt"
+
+#: part/part.cpp:2516
+#, kde-format
+msgid "Remove this Bookmark"
+msgstr "Elimina este punt"
+
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/signaturepartutils.cpp:87
+#, kde-format
+msgctxt "File type name and pattern"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#, kde-format
+msgid "Save As"
+msgstr "Anomena i guarda"
+
+#: part/part.cpp:2627
+#, kde-format
+msgid ""
+"You have chosen to save an Okular Archive without the file name ending with "
+"the '%1' extension. That is not allowed, do you want to choose a new name?"
+msgstr ""
+"Heu triat guardar un arxiu d'Okular sense que el nom de fitxer acabe amb "
+"l'extensió «%1». Açò no és permés, voleu triar un nom nou?"
+
+#: part/part.cpp:2628
+#, kde-format
+msgid "Unsupported extension"
+msgstr "Extensió no admesa"
+
+#: part/part.cpp:2629
+#, kde-format
+msgctxt "@action:button"
+msgid "Choose New Name"
+msgstr "Trieu un nom nou"
+
+#: part/part.cpp:2661
+#, kde-format
+msgid ""
+"The file '%1' has been modified by another program, which means it can no "
+"longer be saved."
+msgstr ""
+"El fitxer «%1» l'ha modificat un altre programa, i per tant, ja no es pot "
+"guardar."
+
+#: part/part.cpp:2669
+#, kde-format
+msgid ""
+"The current document is protected with a password.<br />In order to save, "
+"the file needs to be reloaded. You will be asked for the password again and "
+"your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"El document actual està protegit amb una contrasenya.<br />Per tal de "
+"guardar-lo, cal tornar a carregar el fitxer. Es tornarà a preguntar la "
+"contrasenya i es perdrà l'historial de desfer/refer.<br />Voleu continuar?"
+
+#: part/part.cpp:2670 part/part.cpp:2722
+#, kde-format
+msgid "Save - Warning"
+msgstr "Guardar - Avís"
+
+#: part/part.cpp:2696
+#, kde-format
+msgid "Could not open the temporary file for saving."
+msgstr "No s'ha pogut obrir el fitxer temporal per a guardar."
+
+#: part/part.cpp:2709
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Could not overwrite <filename>%1</filename> because that file is read-only. "
+"Try saving to another location or changing that file's permissions."
+msgstr ""
+"No s'ha pogut sobreescriure <filename>%1</filename> perquè este fitxer només "
+"és de lectura. Intenteu guardar-lo a una altra ubicació o canvieu els seus "
+"permisos."
+
+#: part/part.cpp:2721
+#, kde-format
+msgid ""
+"After saving, the current document format requires the file to be reloaded. "
+"Your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"Després de guardar, el format actual del document requerix tornar a carregar "
+"el fitxer. Es perdrà l'historial de desfer/refer.<br />Voleu continuar?"
+
+#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#, kde-format
+msgid "File could not be saved in '%1'. Try to save it to another location."
+msgstr ""
+"El fitxer no es pot guardar a «%1». Intenteu guardar-lo a una altra ubicació."
+
+#: part/part.cpp:2749
+#, kde-format
+msgid "Filled form contents"
+msgstr "Contingut dels formularis omplits"
+
+#: part/part.cpp:2752
+#, kde-format
+msgid "User annotations"
+msgstr "Anotacions de l'usuari"
+
+#: part/part.cpp:2757
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them."
+msgstr ""
+"Esteu a punt de guardar els canvis, però el format actual del document no "
+"permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
+"document d'Okular</i> per a conservar-los."
+
+#: part/part.cpp:2761 part/part.cpp:2783
+#, kde-format
+msgid "Warning"
+msgstr "Avís"
+
+#: part/part.cpp:2762 part/part.cpp:2784
+#, kde-format
+msgid "Save as Okular document archive..."
+msgstr "Anomena i guarda arxiu de document d'Okular..."
+
+#: part/part.cpp:2774
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save the document and "
+"discard these elements."
+msgstr ""
+"Esteu a punt de guardar els canvis, però el format actual del document no "
+"permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
+"document d'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a "
+"guardar el document i descartar estos elements."
+
+#: part/part.cpp:2777
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save, but you will lose "
+"these elements as well as the undo/redo history."
+msgstr ""
+"Esteu a punt de guardar els canvis, però el format actual del document no "
+"permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
+"document d'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a "
+"guardar, però es perdran estos elements, així com l'historial de desfer/"
+"refer."
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue"
+msgstr "Continua"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue losing changes"
+msgstr "Continua, es perden els canvis"
+
+#: part/part.cpp:2807
+#, kde-format
+msgid "File could not be saved in '%1'. %2"
+msgstr "El fitxer no s'ha pogut guardar a «%1». %2"
+
+#: part/part.cpp:2846
+#, kde-format
+msgid ""
+"Okular cannot copy %1 to the specified location.\n"
+"\n"
+"The document does not exist anymore."
+msgstr ""
+"Okular no pot copiar %1 a la ubicació especificada.\n"
+"\n"
+"El document ja no existix."
+
+#: part/part.cpp:2882
+#, kde-format
+msgid ""
+"File could not be saved in '%1'. Error: '%2'. Try to save it to another "
+"location."
+msgstr ""
+"El fitxer no es pot guardar a «%1». Error: «%2». Intenteu guardar-lo a una "
+"altra ubicació."
+
+#: part/part.cpp:3133
+#, kde-format
+msgid "Expand whole section"
+msgstr "Expandix tota la secció"
+
+#: part/part.cpp:3134
+#, kde-format
+msgid "Collapse whole section"
+msgstr "Reduïx tota la secció"
+
+#: part/part.cpp:3135
+#, kde-format
+msgid "Expand all"
+msgstr "Expandix-ho tot"
+
+#: part/part.cpp:3136
+#, kde-format
+msgid "Collapse all"
+msgstr "Reduïx-ho tot"
+
+#: part/part.cpp:3147
+#, kde-format
+msgid "Sync Thumbnail with Page"
+msgstr "Sincronitza la miniatura amb la pàgina"
+
+#: part/part.cpp:3152
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Afig un punt"
+
+#: part/part.cpp:3176
+#, kde-format
+msgid "Tools"
+msgstr "Eines"
+
+#: part/part.cpp:3358
+#, kde-format
+msgctxt "@action:inmenu menu that contains actions to control text to speach"
+msgid "Speak"
+msgstr "Llig"
+
+#: part/part.cpp:3516
+#, kde-format
+msgctxt "@title:window"
+msgid "Print"
+msgstr "Imprimix"
+
+#: part/part.cpp:3579
+#, kde-format
+msgid "Printing this document is not allowed."
+msgstr "No es permet imprimir este document."
+
+#: part/part.cpp:3587
+#, kde-format
+msgid ""
+"Could not print the document. Unknown error. Please report to bugs.kde.org"
+msgstr ""
+"No s'ha pogut imprimir el document. S'ha produït un error desconegut. "
+"Informeu a bugs.kde.org"
+
+#: part/part.cpp:3589
+#, kde-format
+msgid ""
+"Could not print the document. Detailed error is \"%1\". Please report to "
+"bugs.kde.org"
+msgstr ""
+"No s'ha pogut imprimir el document. L'error detallat és: «%1». Informeu a "
+"bugs.kde.org"
+
+#: part/part.cpp:3669
+#, kde-format
+msgid "Go to the place you were before"
+msgstr "Aneu al lloc a on estàveu abans"
+
+#: part/part.cpp:3673
+#, kde-format
+msgid "Go to the place you were after"
+msgstr "Aneu al lloc a on estàveu després"
+
+#: part/part.cpp:3698
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not create temporary file "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+msgstr ""
+"<qt><strong>S'ha produït un error de fitxer!</strong> No s'ha pogut crear el "
+"fitxer temporal <nobr><strong>%1</strong></nobr>.</qt>"
+
+#: part/part.cpp:3710
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
+"strong></nobr> for uncompression. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>S'ha produït un error de fitxer!</strong> No s'ha pogut obrir el "
+"fitxer <nobr> <strong>%1</strong></nobr> per a descomprimir-lo. No es "
+"carregarà el fitxer.</qt>"
+
+#: part/part.cpp:3714
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if you do not have enough permissions to "
+"read the file. You can check ownership and permissions if you right-click on "
+"the file in the Dolphin file manager, then choose the 'Properties' option, "
+"and select 'Permissions' tab in the opened window.</qt>"
+msgstr ""
+"<qt>Este error normalment passa quan no teniu permisos suficients per a "
+"llegir el fitxer. Podeu comprovar el propietari i els permisos si feu clic "
+"dret sobre el fitxer en el gestor de fitxers Dolphin, després trieu l'opció "
+"«Propietats». i seleccioneu la pestanya «Permisos» en la finestra oberta.</"
+"qt>"
+
+#: part/part.cpp:3736
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
+"%1</strong></nobr>. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>S'ha produït un error de fitxer!</strong> No s'ha pogut "
+"descomprimir el fitxer <nobr><strong>%1</strong></nobr>. No es carregarà el "
+"fitxer.</qt>"
+
+#: part/part.cpp:3740
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if the file is corrupt. If you want to be "
+"sure, try to decompress the file manually using command-line tools.</qt>"
+msgstr ""
+"<qt>Este error normalment passa quan el fitxer està corromput. Si en voleu "
+"estar segur, proveu de descomprimir a mà el fitxer amb les eines de la línia "
+"d'ordres.</qt>"
+
+#: part/part.cpp:3766
+#, kde-format
+msgid "No Bookmarks"
+msgstr "Sense punts"
+
+#: part/part.cpp:3837
+#, kde-format
+msgid "There was a problem sharing the document: %1"
+msgstr "S'ha produït un problema en compartir el document: %1"
+
+#: part/part.cpp:3837 part/part.cpp:3843
+#, kde-format
+msgid "Share"
+msgstr "Compartix"
+
+#: part/part.cpp:3841
+#, kde-format
+msgid "Document shared successfully"
+msgstr "El document s'ha compartit correctament"
+
+#: part/part.cpp:3843
+#, kde-format
+msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
+msgstr "Es pot trobar el document compartit a: <a href=\"%1\">%1</a>"
+
+#. i18n: ectx: Menu (edit)
+#: part/part.rc:19
+#, kde-format
+msgid "&Edit"
+msgstr "E&dita"
+
+#. i18n: ectx: Menu (view)
+#: part/part.rc:32
+#, kde-format
+msgid "&View"
+msgstr "Vi&sualitza"
+
+#. i18n: ectx: Menu (go)
+#: part/part.rc:53
+#, kde-format
+msgid "&Go"
+msgstr "&Ves"
+
+#. i18n: ectx: Menu (tools)
+#: part/part.rc:73
+#, kde-format
+msgid "&Tools"
+msgstr "&Eines"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: part/part.rc:101 shell/shell.rc:24
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#. i18n: ectx: ToolBar (annotationToolBar)
+#: part/part.rc:119
+#, kde-format
+msgid "Annotation Toolbar"
+msgstr "Barra d'eines d'anotacions"
+
+#. i18n: ectx: ToolBar (quickAnnotationToolBar)
+#: part/part.rc:143
+#, kde-format
+msgid "Quick Annotation Toolbar"
+msgstr "Barra d'eines d'anotacions ràpides"
+
+#: part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General Options"
+msgstr "Opcions generals"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility"
+msgstr "Accessibilitat"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility Reading Aids"
+msgstr "Ajudes d'accessibilitat de lectura"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance"
+msgstr "Rendiment"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance Tuning"
+msgstr "Control del rendiment"
+
+#: part/preferencesdialog.cpp:45
+#, kde-format
+msgid "Configure Viewer"
+msgstr "Configura el visor"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Presentation"
+msgstr "Presentació"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Options for Presentation Mode"
+msgstr "Opcions del mode de presentació"
+
+#: part/preferencesdialog.cpp:50
+#, kde-format
+msgid "Annotation Options"
+msgstr "Opcions de les anotacions"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor"
+msgstr "Editor"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor Options"
+msgstr "Opcions de l'editor"
+
+#: part/preferencesdialog.cpp:56
+#, kde-format
+msgctxt ""
+"Give the user a hint, that it enabled the option --editor-cmd together with "
+"the current value of the option."
+msgid ""
+"The editor was set by the command line to \n"
+" %1 \n"
+"If you want to use the setting, start okular without the option --editor-cmd"
+msgstr ""
+"L'editor s'ha configurat des de la línia d'ordres per a \n"
+" %1 \n"
+"Si voleu utilitzar el paràmetre, inicieu «okular» sense l'opció --editor-cmd"
+
+#: part/presentationsearchbar.cpp:77
+#, kde-format
+msgid "Find Next"
+msgstr "Busca la següent"
+
+#: part/presentationwidget.cpp:167
+#, kde-format
+msgctxt "[document title/filename] – Presentation"
+msgid "%1 – Presentation"
+msgstr "%1 – Presentació"
+
+#: part/presentationwidget.cpp:221
+#, kde-format
+msgid "Switch Screen"
+msgstr "Canvia de pantalla"
+
+#: part/presentationwidget.cpp:226
+#, kde-format
+msgctxt "%1 is the screen number (0, 1, ...)"
+msgid "Screen %1"
+msgstr "Pantalla %1"
+
+#: part/presentationwidget.cpp:233
+#, kde-format
+msgid "Exit Presentation Mode"
+msgstr "Ix del mode de presentació"
+
+#: part/presentationwidget.cpp:367
+#, kde-format
+msgid "Title: %1"
+msgstr "Títol: %1"
+
+#: part/presentationwidget.cpp:372
+#, kde-format
+msgid "Pages: %1"
+msgstr "Pàgines: %1"
+
+#: part/presentationwidget.cpp:373
+#, kde-format
+msgid "Click to begin"
+msgstr "Feu un clic per a començar"
+
+#: part/presentationwidget.cpp:515
+#, kde-format
+msgctxt "For Presentation"
+msgid "Pause"
+msgstr "Pausa"
+
+#: part/presentationwidget.cpp:518
+#, kde-format
+msgctxt "For Presentation"
+msgid "Play"
+msgstr "Reproduïx"
+
+#: part/presentationwidget.cpp:1619
+#, kde-format
+msgid ""
+"There are two ways of exiting presentation mode, you can press either ESC "
+"key or click with the quit button that appears when placing the mouse in the "
+"top-right corner. Of course you can cycle windows (Alt+TAB by default)"
+msgstr ""
+"Hi ha dues maneres d'eixir del mode de presentació: podeu prémer tant la "
+"tecla ESC com fent clic amb el botó d'eixida que apareix quan el ratolí se "
+"situa en el cantó superior dret. També podeu rodar les finestres "
+"(predeterminat «Alt-Tab»)"
+
+#: part/presentationwidget.cpp:1705
+#, kde-format
+msgctxt ""
+"Reason for inhibiting the screensaver activation, when the presentation mode "
+"is active"
+msgid "Giving a presentation"
+msgstr "S'està efectuant una presentació"
+
+#: part/propertiesdialog.cpp:49
+#, kde-format
+msgid "Unknown File"
+msgstr "Fitxer desconegut"
+
+#: part/propertiesdialog.cpp:63
+#, kde-format
+msgid "%1 Properties"
+msgstr "Propietats de %1"
+
+#: part/propertiesdialog.cpp:104
+#, kde-format
+msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/propertiesdialog.cpp:117
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: part/propertiesdialog.cpp:124
+#, kde-format
+msgid "&Fonts"
+msgstr "&Tipus de lletra"
+
+#: part/propertiesdialog.cpp:145
+#, kde-format
+msgid "Reading font information..."
+msgstr "S'està llegint la informació del tipus de lletra..."
+
+#: part/propertiesdialog.cpp:158
+#, kde-format
+msgid "&Page Sizes"
+msgstr "Mides de les &pàgines"
+
+#: part/propertiesdialog.cpp:225
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Extract Font"
+msgstr "&Extrau el tipus de lletra"
+
+#: part/propertiesdialog.cpp:273
+#, kde-format
+msgid "Type 1"
+msgstr "Tipus 1"
+
+#: part/propertiesdialog.cpp:276
+#, kde-format
+msgid "Type 1C"
+msgstr "Tipus 1C"
+
+#: part/propertiesdialog.cpp:279
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "Type 1C (OT)"
+msgstr "Type 1C (OT)"
+
+#: part/propertiesdialog.cpp:282
+#, kde-format
+msgid "Type 3"
+msgstr "Tipus 3"
+
+#: part/propertiesdialog.cpp:285
+#, kde-format
+msgid "TrueType"
+msgstr "TrueType"
+
+#: part/propertiesdialog.cpp:288
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "TrueType (OT)"
+msgstr "TrueType (OT)"
+
+#: part/propertiesdialog.cpp:291
+#, kde-format
+msgid "CID Type 0"
+msgstr "CID tipus 0"
+
+#: part/propertiesdialog.cpp:294
+#, kde-format
+msgid "CID Type 0C"
+msgstr "CID tipus 0C"
+
+#: part/propertiesdialog.cpp:297
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID Type 0C (OT)"
+msgstr "CID Type 0C (OT)"
+
+#: part/propertiesdialog.cpp:300
+#, kde-format
+msgid "CID TrueType"
+msgstr "CID TrueType"
+
+#: part/propertiesdialog.cpp:303
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID TrueType (OT)"
+msgstr "CID TrueType (OT)"
+
+#: part/propertiesdialog.cpp:306
+#, kde-format
+msgid "TeX PK"
+msgstr "TeX PK"
+
+#: part/propertiesdialog.cpp:309
+#, kde-format
+msgid "TeX virtual"
+msgstr "TeX virtual"
+
+#: part/propertiesdialog.cpp:312
+#, kde-format
+msgid "TeX Font Metric"
+msgstr "Mètrica de tipus de lletra de TeX"
+
+#: part/propertiesdialog.cpp:315
+#, kde-format
+msgid "TeX FreeType-handled"
+msgstr "TeX gestionat per FreeType"
+
+#: part/propertiesdialog.cpp:318
+#, kde-format
+msgctxt "Unknown font type"
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: part/propertiesdialog.cpp:331
+#, kde-format
+msgid "Embedded (subset)"
+msgstr "Incrustat (subconjunt)"
+
+#: part/propertiesdialog.cpp:334
+#, kde-format
+msgid "Fully embedded"
+msgstr "Totalment incrustat"
+
+#: part/propertiesdialog.cpp:344
+#, kde-format
+msgid "No"
+msgstr "No"
+
+#: part/propertiesdialog.cpp:347
+#, kde-format
+msgid "Yes (subset)"
+msgstr "Sí (subconjunt)"
+
+#: part/propertiesdialog.cpp:350
+#, kde-format
+msgid "Yes"
+msgstr "Sí"
+
+#: part/propertiesdialog.cpp:370
+#, kde-format
+msgctxt "Replacing missing font with another one"
+msgid "%1 (substituting with %2)"
+msgstr "%1 (se substituïx per %2)"
+
+#: part/propertiesdialog.cpp:372
+#, kde-format
+msgctxt "font name not available (empty)"
+msgid "[n/a]"
+msgstr "[n/d]"
+
+#: part/propertiesdialog.cpp:386
+#, kde-format
+msgid "Unknown font"
+msgstr "Tipus de lletra desconegut"
+
+#: part/propertiesdialog.cpp:392
+#, kde-format
+msgid "Embedded: %1"
+msgstr "Incrustat: %1"
+
+#: part/propertiesdialog.cpp:426
+#, kde-format
+msgid "Name"
+msgstr "Nom"
+
+#: part/propertiesdialog.cpp:429
+#, kde-format
+msgid "Type"
+msgstr "Tipus"
+
+#: part/propertiesdialog.cpp:432
+#, kde-format
+msgid "File"
+msgstr "Fitxer"
+
+#: part/propertiesdialog.cpp:500
+#, kde-format
+msgid "Page"
+msgstr "Pàgina"
+
+#: part/propertiesdialog.cpp:503
+#, kde-format
+msgid "Size"
+msgstr "Mida"
+
+#: part/revisionviewer.cpp:41
+#, kde-format
+msgid "Revision Preview"
+msgstr "Vista prèvia de revisió"
+
+#: part/revisionviewer.cpp:53
+#, kde-format
+msgid "Where do you want to save this revision?"
+msgstr "A on voleu guardar esta revisió?"
+
+#: part/revisionviewer.cpp:56
+#, kde-format
+msgid "Could not save file %1."
+msgstr "No s'ha pogut guardar el fitxer %1."
+
+#: part/revisionviewer.cpp:75
+#, kde-format
+msgid "Could not view revision."
+msgstr "No s'ha pogut visualitzar la revisió."
+
+#: part/searchwidget.cpp:38
+#, kde-format
+msgid "Enter at least 3 letters to filter pages"
+msgstr "Introduïu un mínim de 3 lletres per a filtrar les pàgines"
+
+#: part/searchwidget.cpp:48
+#, kde-format
+msgid "Case Sensitive"
+msgstr "Distingix entre majúscules i minúscules"
+
+#: part/searchwidget.cpp:50
+#, kde-format
+msgid "Match Phrase"
+msgstr "Troba la frase"
+
+#: part/searchwidget.cpp:51
+#, kde-format
+msgid "Match All Words"
+msgstr "Troba totes les paraules"
+
+#: part/searchwidget.cpp:52
+#, kde-format
+msgid "Match Any Word"
+msgstr "Troba qualsevol paraula"
+
+#: part/searchwidget.cpp:71
+#, kde-format
+msgid "Filter Options"
+msgstr "Opcions de filtratge"
+
+#: part/side_reviews.cpp:65
+#, kde-format
+msgid ""
+"<div align=center><h3>No annotations</h3>To create new annotations press F6 "
+"or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
+msgstr ""
+"<div align=center><h3>Sense anotacions</h3>Per a crear anotacions noves "
+"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» al menú.</div>"
+
+#: part/side_reviews.cpp:137
+#, kde-format
+msgid "Group by Page"
+msgstr "Agrupa per pàgina"
+
+#: part/side_reviews.cpp:142
+#, kde-format
+msgid "Group by Author"
+msgstr "Agrupa per autor"
+
+#: part/side_reviews.cpp:150
+#, kde-format
+msgid "Show annotations for current page only"
+msgstr "Mostra només les anotacions de la pàgina actual"
+
+#: part/side_reviews.cpp:160
+#, kde-format
+msgid "Expand all elements"
+msgstr "Expandix tots els elements"
+
+#: part/side_reviews.cpp:162
+#, kde-format
+msgid "Collapse all elements"
+msgstr "Reduïx tots els elements"
+
+#: part/signaturepanel.cpp:101
+#, kde-format
+msgid "Properties"
+msgstr "Propietats"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Select certificate to sign with"
+msgstr "Seleccioneu un certificat amb el qual signar"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Certificates:"
+msgstr "Certificats:"
+
+#: part/signaturepartutils.cpp:59
+#, kde-format
+msgid "Enter password (if any) to unlock certificate: %1"
+msgstr ""
+"Introduïu la contrasenya (si n'hi ha) per a desblocar el certificat: %1"
+
+#: part/signaturepartutils.cpp:61
+#, kde-format
+msgid "Enter certificate password"
+msgstr "Introduïu la contrasenya del certificat"
+
+#: part/signaturepartutils.cpp:71
+#, kde-format
+msgid "Enter document password"
+msgstr "Introduïu la contrasenya del document"
+
+#: part/signaturepartutils.cpp:93
+#, kde-format
+msgctxt ""
+"Used when suggesting a new name for a digitally signed file. %1 is the old "
+"file name and %2 it's extension"
+msgid "%1_signed.%2"
+msgstr "%1_signat.%2"
+
+#: part/signaturepartutils.cpp:95
+#, kde-format
+msgid "Save Signed File As"
+msgstr "Guarda el fitxer signat com a"
+
+#: part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "No disponible"
+
+#: part/signaturepropertiesdialog.cpp:49
+#, kde-format
+msgid "Validity Status"
+msgstr "Estat de la validesa"
+
+#: part/signaturepropertiesdialog.cpp:52
+#, kde-format
+msgid "Signature Validity:"
+msgstr "Validesa de la signatura:"
+
+#: part/signaturepropertiesdialog.cpp:53
+#, kde-format
+msgid "Document Modifications:"
+msgstr "Modificacions del document:"
+
+#: part/signaturepropertiesdialog.cpp:56
+#, kde-format
+msgid "Additional Information"
+msgstr "Informació addicional"
+
+#: part/signaturepropertiesdialog.cpp:59
+#, kde-format
+msgid "Signed By:"
+msgstr "Signat per:"
+
+#: part/signaturepropertiesdialog.cpp:60
+#, kde-format
+msgid "Signing Time:"
+msgstr "Data de signatura:"
+
+#: part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "Motiu:"
+
+#: part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "Ubicació:"
+
+#: part/signaturepropertiesdialog.cpp:74
+#, kde-format
+msgid "Document Version"
+msgstr "Versió del document"
+
+#: part/signaturepropertiesdialog.cpp:77
+#, kde-format
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Revisió %1 de %2 del document"
+
+#: part/signaturepropertiesdialog.cpp:79
+#, kde-format
+msgid "View Signed Version..."
+msgstr "Visualitza la versió signada..."
+
+#: part/signaturepropertiesdialog.cpp:86
+#, kde-format
+msgid "View Certificate..."
+msgstr "Visualitza el certificat..."
+
+#: part/thumbnaillist.cpp:1029
+#, kde-format
+msgid "Show bookmarked pages only"
+msgstr "Mostra només les pàgines amb un punt"
+
+#: part/videowidget.cpp:139
+#, kde-format
+msgctxt "start the movie playback"
+msgid "Play"
+msgstr "Reproduïx"
+
+#: part/videowidget.cpp:142
+#, kde-format
+msgctxt "pause the movie playback"
+msgid "Pause"
+msgstr "Pausa"
+
+#: part/videowidget.cpp:248
+#, kde-format
+msgctxt "stop the movie playback"
+msgid "Stop"
+msgstr "Para"
+
+#: part/widgetconfigurationtoolsbase.cpp:28
+#, kde-format
+msgid "&Add..."
+msgstr "&Afig..."
+
+#: part/widgetconfigurationtoolsbase.cpp:31
+#, kde-format
+msgid "&Edit..."
+msgstr "&Edita..."
+
+#: part/widgetconfigurationtoolsbase.cpp:35
+#, kde-format
+msgid "&Remove"
+msgstr "&Elimina"
+
+#: part/widgetconfigurationtoolsbase.cpp:39
+#, kde-format
+msgid "Move &Up"
+msgstr "Mou am&unt"
+
+#: part/widgetconfigurationtoolsbase.cpp:43
+#, kde-format
+msgid "Move &Down"
+msgstr "Mou a&vall"
+
+#: part/widgetdrawingtools.cpp:105
+#, kde-format
+msgid "Default Drawing Tool #%1"
+msgstr "Eina de dibuix predeterminada %1"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "There's already a tool with that name. Using a default one"
+msgstr "Ja hi ha una eina amb este nom. S'utilitzarà la predeterminada"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "Duplicated Name"
+msgstr "Nom duplicat"
+
+#: shell/main.cpp:68
+#, kde-format
+msgid "Page of the document to be shown"
+msgstr "Pàgina a mostrar del document"
+
+#: shell/main.cpp:69
+#, kde-format
+msgid "Start the document in presentation mode"
+msgstr "Inicia el document en mode presentació"
+
+#: shell/main.cpp:70
+#, kde-format
+msgid "Start with print dialog"
+msgstr "Inicia amb el diàleg d'impressió"
+
+#: shell/main.cpp:71
+#, kde-format
+msgid "Start with print dialog and exit after printing"
+msgstr "Inicia amb el diàleg d'impressió i ix després d'imprimir"
+
+#: shell/main.cpp:72
+#, kde-format
+msgid "\"Unique instance\" control"
+msgstr "Control d'«Instància única»"
+
+#: shell/main.cpp:73
+#, kde-format
+msgid "Not raise window"
+msgstr "No eleves la finestra"
+
+#: shell/main.cpp:74
+#, kde-format
+msgid "Find a string on the text"
+msgstr "Busca una cadena al text"
+
+#: shell/main.cpp:75
+#, kde-format
+msgid "sets the external editor command"
+msgstr "establix l'ordre de l'editor extern"
+
+#: shell/main.cpp:76
+#, kde-format
+msgid "Documents to open. Specify '-' to read from stdin."
+msgstr ""
+"Documents que cal obrir. Indiqueu «-» per a llegir de l'entrada estàndard "
+"(stdin)."
+
+#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#, kde-format
+msgid ""
+"You cannot set the editor command in an already running okular instance. "
+"Please disable the tabs and try again. Please note, that unique is also not "
+"supported when setting the editor command at the commandline.\n"
+msgstr ""
+"No es pot establir l'ordre de l'editor en una instància en execució "
+"d'Okular. Desactiveu les pestanyes i torneu-ho a provar. Cal tindre en "
+"compte que no es permet «unique» en establir l'ordre de l'editor en la línia "
+"d'ordres.\n"
+
+#: shell/okular_main.cpp:150
+#, kde-format
+msgid "Error: Can't open more than one document with the --unique switch"
+msgstr ""
+"S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
+"unique"
+
+#: shell/okular_main.cpp:156
+#, kde-format
+msgid "Error: Can't open more than one document with the --presentation switch"
+msgstr ""
+"S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
+"presentation"
+
+#: shell/okular_main.cpp:162
+#, kde-format
+msgid "Error: Can't open more than one document with the --print switch"
+msgstr ""
+"S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
+"print"
+
+#: shell/okular_main.cpp:168
+#, kde-format
+msgid "Error: Can't open more than one document with the --page switch"
+msgstr ""
+"S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
+"page"
+
+#: shell/okular_main.cpp:174
+#, kde-format
+msgid "Error: Can't open more than one document with the --find switch"
+msgstr ""
+"S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
+"find"
+
+#: shell/shell.cpp:91
+#, kde-format
+msgid "Unable to find the Okular component: %1"
+msgstr "No s'ha pogut trobar el component d'Okular: %1"
+
+#: shell/shell.cpp:146
+#, kde-format
+msgid ""
+"There is already a unique Okular instance running. This instance won't be "
+"the unique one."
+msgstr ""
+"Ja hi ha una instància única d'Okular executant-se. Esta instància no seria "
+"l'única."
+
+#: shell/shell.cpp:169
+#, kde-format
+msgid "Unable to find the Okular component."
+msgstr "No s'ha pogut trobar el component d'Okular."
+
+#: shell/shell.cpp:399
+#, kde-format
+msgid ""
+"Click to open a file\n"
+"Click and hold to open a recent file"
+msgstr ""
+"Feu un clic per a obrir un fitxer\n"
+"Feu un clic i manteniu-lo premut per a obrir un fitxer recent"
+
+#: shell/shell.cpp:400
+#, kde-format
+msgid ""
+"<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
+msgstr ""
+"<b>Feu un clic</b> per a obrir un fitxer o <b>feu un clic i manteniu-lo "
+"premut</b> per a seleccionar un fitxer recent"
+
+#: shell/shell.cpp:413
+#, kde-format
+msgid "Next Tab"
+msgstr "Pestanya següent"
+
+#: shell/shell.cpp:419
+#, kde-format
+msgid "Previous Tab"
+msgstr "Pestanya anterior"
+
+#: shell/shell.cpp:425
+#, kde-format
+msgid "Undo close tab"
+msgstr "Desfés el tancament de la pestanya"
+
+#: shell/shell.cpp:532
+#, kde-format
+msgid "All files (*)"
+msgstr "Tots els fitxers (*)"
+
+#: shell/shell.cpp:533
+#, kde-format
+msgid "All supported files (%1)"
+msgstr "Tots els fitxers admesos (%1)"
+
+#: shell/shell.cpp:537
+#, kde-format
+msgid "Open Document"
+msgstr "Obri document"
+
+#: shell/shell.cpp:641
+#, kde-format
+msgid "Confirm Close"
+msgstr "Confirmació del tancament"
+
+#: shell/shell.cpp:645
+#, kde-format
+msgid "Close Tabs"
+msgstr "Tanca les pestanyes"
+
+#: shell/shell.cpp:652
+#, kde-format
+msgid "You are about to close %1 tabs. Are you sure you want to continue?"
+msgstr "Esteu a punt de tancar %1 pestanyes. Segur que voleu continuar?"
+
+#: shell/shell.cpp:654
+#, kde-format
+msgid "Warn me when I attempt to close multiple tabs"
+msgstr "Avisa quan s'intenten tancar múltiples pestanyes"
+
+#: shell/welcomescreen.cpp:65
+#, kde-format
+msgid "&Copy Path"
+msgstr "&Copia el camí"
+
+#: shell/welcomescreen.cpp:78
+#, kde-format
+msgid "&Open Containing Folder"
+msgstr "&Obri la carpeta contenidora"
+
+#: shell/welcomescreen.cpp:93
+#, kde-format
+msgctxt "recent items context menu"
+msgid "&Forget This Item"
+msgstr "O&blida este element"
+
+#: shell/welcomescreen.cpp:143
+#, kde-format
+msgctxt "on welcome screen"
+msgid "No recent documents"
+msgstr "No hi ha cap document recent"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: shell/welcomescreen.ui:153
+#, kde-format
+msgid "Welcome to Okular"
+msgstr " Us donem la benvinguda a Okular"
+
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: shell/welcomescreen.ui:232
+#, kde-format
+msgctxt "on welcome screen"
+msgid "Open Document..."
+msgstr "Obri un document..."
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: shell/welcomescreen.ui:377
+#, kde-format
+msgctxt "on welcome screen"
+msgid "Recent documents"
+msgstr "Documents recents"
+
+#. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
+#: shell/welcomescreen.ui:387
+#, kde-format
+msgctxt "on welcome screen (recent document list)"
+msgid "Forget All"
+msgstr "Oblida-ho tot"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
+#: shell/welcomescreen.ui:455
+#, kde-format
+msgid "Hide welcome screen"
+msgstr "Oculta la pantalla de benvinguda"

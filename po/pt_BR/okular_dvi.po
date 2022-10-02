@@ -1,0 +1,598 @@
+# Translation of okular_dvi.po to Brazilian Portuguese
+# Copyright (C) 2008-2014 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# André Marcelo Alvarenga <alvarenga@kde.org>, 2008, 2011, 2012, 2013, 2014.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2018, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_dvi\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"PO-Revision-Date: 2020-09-10 16:46-0300\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 20.04.3\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "André Marcelo Alvarenga"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alvarenga@kde.org"
+
+#: dviexport.cpp:123
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+"computer. This program is essential for the export function to work. You "
+"can, however, convert the DVI-file to PDF using the print function of "
+"Okular, but that will often produce documents which print okay, but are of "
+"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
+"more recent version of your TeX distribution which includes the <em>dvipdfm</"
+"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
+"the PATH environment variable when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>O Okular não conseguiu localizar o programa <em>dvipdfm</em> no seu "
+"computador. Este programa é essencial para o funcionamento da função "
+"exportar. Entretanto, você pode converter o arquivo DVI para PDF usando a "
+"função de impressão do Okular. Ela frequentemente produzirá arquivos que "
+"imprimem corretamente, porém, são de qualidade inferior se visualizados no "
+"Acrobat Reader. Seria melhor atualizar para uma versão mais recente da sua "
+"distribuição TeX, que contenha o <em>dvipdfm</em>.</p><p>Dica para o "
+"administrador de sistemas confuso: o Okular usa a variável de ambiente PATH "
+"quando está procurando por programas.</p></qt>"
+
+#: dviexport.cpp:142
+#, kde-format
+msgid ""
+"<qt>The external program 'dvipdfm', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>O programa externo 'dvipdfm', que foi usado para exportar o arquivo, "
+"reportou um erro. Você poderá visualizar um relatório preciso de erros no "
+"<strong>diálogo de informações do documento</strong> que você irá encontrar "
+"no Menu-Arquivo.</qt>"
+
+#: dviexport.cpp:168
+#, kde-format
+msgid ""
+"<qt>This DVI file refers to external graphic files which are not in "
+"PostScript format, and cannot be handled by the <em>dvips</em> program that "
+"Okular uses internally to print or to export to PostScript. The "
+"functionality that you require is therefore unavailable in this version of "
+"Okular.</qt>"
+msgstr ""
+"<qt>Este arquivo DVI possui referências a um arquivo gráfico externo que não "
+"está no formato PostScript e, portanto, não pode ser manuseado pelo programa "
+"<em>dvips</em>, usado pelo Okular internamente para imprimir ou exportar "
+"para PostScript. Entretanto, a funcionalidade que você solicitou não está "
+"disponível nesta versão do Okular.</qt>"
+
+#: dviexport.cpp:176
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+"That program is essential for the export function to work.</p><p>Hint to the "
+"perplexed system administrator: Okular uses the PATH environment variable "
+"when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>O Okular não conseguiu localizar o programa <em>dvips</em> em seu "
+"computador. Este programa é necessário para que a função exportar funcione.</"
+"p><p>Dica para o administrador de sistemas confuso: O Okular usa a variável "
+"de ambiente PATH quando está procurando por programas.</p></qt>"
+
+#: dviexport.cpp:270
+#, kde-format
+msgid ""
+"<qt>The external program 'dvips', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>O programa externo 'dvips', que foi utilizado para exportar o arquivo, "
+"reportou um erro. Você pode visualizar um relatório preciso de erros no "
+"<strong>diálogo de informações do documento</strong> que você irá encontrar "
+"no Menu-Arquivo.</qt>"
+
+#: dviFile.cpp:91
+#, kde-format
+msgid "The DVI file does not start with the preamble."
+msgstr "O arquivo DVI não pôde ser iniciado com o preâmbulo."
+
+#: dviFile.cpp:97
+#, kde-format
+msgid ""
+"The DVI file contains the wrong version of DVI output for this program. "
+"Hint: If you use the typesetting system Omega, you have to use a special "
+"program, such as oxdvi."
+msgstr ""
+"O arquivo DVI contém uma versão incorreta da saída DVI para este programa. "
+"Dica: Se usar o sistema de tipografia Omega, você pode usar um programa "
+"especial chamado oxdvi."
+
+#: dviFile.cpp:134
+#, kde-format
+msgid ""
+"The DVI file is badly corrupted. Okular was not able to find the postamble."
+msgstr ""
+"O arquivo DVI está corrompido. O Okular não está habilitado a encontrar o "
+"postamble."
+
+#: dviFile.cpp:148
+#, kde-format
+msgid "The postamble does not begin with the POST command."
+msgstr "O postamble não inicia com o comando POST."
+
+#: dviFile.cpp:202
+#, kde-format
+msgid "The postamble contained a command other than FNTDEF."
+msgstr "O postamble contido tem um outro comando que o FNTDEF."
+
+#: dviFile.cpp:240
+#, kde-format
+msgid "The page %1 does not start with the BOP command."
+msgstr "A página %1 não inicia com o comando BOP."
+
+#: dviFile.cpp:351
+#, kde-format
+msgid ""
+"<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
+"a result, the PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The program <strong>pdf2ps</strong> may not be installed on your "
+"system, or cannot be found in the current search path.</p><p><b>What you can "
+"do:</b> The program <strong>pdf2ps</strong> is normally contained in "
+"distributions of the ghostscript PostScript interpreter system. If "
+"ghostscript is not installed on your system, you could install it now. If "
+"you are sure that ghostscript is installed, try to use <strong>pdf2ps</"
+"strong> from the command line to check if it really works.</p><p><em>PATH:</"
+"em> %2</p></qt>"
+msgstr ""
+"<qt><p>O programa externo <strong>pdf2ps</strong> não pôde ser iniciado. "
+"Dessa forma, o arquivo PDF %1 não foi convertido para PostScript e, sendo "
+"assim, alguns elementos gráficos no seu documento não poderão ser exibidos.</"
+"p><p><b>Motivo provável:</b> O programa <strong>pdf2ps</strong> pode não "
+"estar instalado em seu sistema, ou ele não pôde ser localizado no caminho de "
+"pesquisa atual.</p><p><b>O que você pode fazer:</b> O programa "
+"<strong>pdf2ps</strong> normalmente está contido na distribuição do sistema "
+"interpretador de PostScript chamado ghostscript. Se o ghostscript não "
+"estiver instalado em seu sistema, você pode instalar ele agora. Se tiver "
+"certeza de que o ghostscript está instalado, tente usar o programa "
+"<strong>pdf2ps</strong> pela linha de comando para verificar se ele "
+"realmente está funcionando.</p><p><em>PATH:</em> %2</p></qt>"
+
+#: dviFile.cpp:410
+#, kde-format
+msgid ""
+"<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+"This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
+"p><p><strong>%2</strong></p></qt>"
+msgstr ""
+"<qt><p>O arquivo PDF %1 não pode ser convertido para PostScript. Alguns "
+"elementos gráficos em seu documento não poderão ser exibidos.</"
+"p><p><b>Motivo provável:</b> O arquivo %1 pode estar danificado ou pode não "
+"ser um arquivo PDF. Esta é a saída do programa <strong>pdf2ps</strong> que o "
+"Okular utilizou:</p><p><strong>%2</strong></p></qt>"
+
+#: dviRenderer.cpp:203 dviRenderer.cpp:435
+#, kde-format
+msgid "File corruption. %1"
+msgstr "Arquivo danificado. %1"
+
+#: dviRenderer.cpp:326
+#, kde-format
+msgid "Not all PostScript files could be embedded into your document. %1"
+msgstr ""
+"Não foi possível incorporar todos os arquivos PostScript no seu documento. %1"
+
+#: dviRenderer.cpp:329
+#, kde-format
+msgid "All external PostScript files were embedded into your document."
+msgstr ""
+"Todos os arquivos PostScript externos foram incorporados ao seu documento."
+
+#: dviRenderer.cpp:419
+#, kde-format
+msgid "The specified file '%1' does not exist."
+msgstr "O arquivo indicado '%1' não existe."
+
+#: dviRenderer.cpp:565
+#, kde-format
+msgid ""
+"You have asked Okular to locate the place in the DVI file which corresponds "
+"to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
+"contain the necessary source file information. "
+msgstr ""
+"Você solicitou ao Okular que encontrasse o local no arquivo DVI que "
+"corresponde à linha %1 no arquivo TeX %2. Contudo, parece que o arquivo DVI "
+"não contém a informação necessária sobre o código-fonte. "
+
+#: dviRenderer.cpp:604
+#, kde-format
+msgid ""
+"Okular was not able to locate the place in the DVI file which corresponds to "
+"line %1 in the TeX-file %2."
+msgstr ""
+"O Okular não conseguiu encontrar o local no arquivo DVI que corresponde à "
+"linha %1 no arquivo TeX %2."
+
+#: dviRenderer_draw.cpp:243
+#, kde-format
+msgid "The DVI code set a character of an unknown font."
+msgstr "O código DVI colocou um caractere de uma fonte desconhecida."
+
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#, kde-format
+msgid "The DVI code referred to font #%1, which was not previously defined."
+msgstr ""
+"O código DVI refere-se à fonte #%1, a qual não foi previamente definida."
+
+#: dviRenderer_draw.cpp:353
+#, kde-format
+msgid "The stack was not empty when the EOP command was encountered."
+msgstr "A pilha não estava vazia quando o comando EOP foi encontrado."
+
+#: dviRenderer_draw.cpp:365
+#, kde-format
+msgid "The stack was empty when a POP command was encountered."
+msgstr "A pilha estava vazia quando um comando POP foi encontrado."
+
+#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#, kde-format
+msgid "The DVI code referred to a font which was not previously defined."
+msgstr ""
+"O código DVI fez referência a uma fonte que não foi previamente definida."
+
+#: dviRenderer_draw.cpp:539
+#, kde-format
+msgid "An illegal command was encountered."
+msgstr "Um comando ilegal foi encontrado."
+
+#: dviRenderer_draw.cpp:544
+#, kde-format
+msgid "The unknown op-code %1 was encountered."
+msgstr "O código-op desconhecido %1 foi encontrado."
+
+#: dviRenderer_prescan.cpp:87
+#, kde-format
+msgid "Embedding %1"
+msgstr "Incorporado %1"
+
+#: dviRenderer_prescan.cpp:105
+#, kde-format
+msgid ""
+"Page %1: The PDF file <strong>%2</strong> could not be converted to "
+"PostScript.<br>"
+msgstr ""
+"Página %1: O arquivo PDF <strong>%2</strong> não pôde ser convertido para "
+"PostScript.<br>"
+
+#: dviRenderer_prescan.cpp:107
+#, kde-format
+msgid ""
+"Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
+msgstr ""
+"Página %1: O arquivo PostScript <strong>%2</strong> não pôde ser encontrado."
+"<br>"
+
+#: dviRenderer_prescan.cpp:261
+#, kde-format
+msgid "The papersize data '%1' could not be parsed."
+msgstr "Os dados do tamanho do papel '%1' não puderam ser analisados."
+
+#: fontpool.cpp:209
+#, kde-format
+msgid ""
+"<qt><p>Okular was not able to locate all the font files which are necessary "
+"to display the current DVI file. Your document might be unreadable.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>O Okular não conseguiu localizar todos os arquivos de fontes "
+"necessários para mostrar o arquivo DVI atual. Seu documento pode estar "
+"ilegível.</p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></"
+"qt>"
+
+#: fontpool.cpp:284
+#, kde-format
+msgid ""
+"<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
+"font files could not be located, and your document might be unreadable.<br/"
+">Possible reason: the <em>kpsewhich</em> program is perhaps not installed on "
+"your system, or it cannot be found in the current search path.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>Ocorreram alguns problemas durante a execução do <em>kpsewhich</em>. "
+"Como resultado, não foi possível localizar alguns dos arquivos de fonte e "
+"seu documento poderá estar ilegível.<br/>Razão possível: O programa "
+"<em>kpsewhich</em> pode não estar instalado no seu sistema ou, então, não "
+"foi encontrado nos locais de pesquisa atuais.</p><p><small><b>PATH:</b>%1</"
+"small></p><p><small>%2</small></p></qt>"
+
+#: fontpool.cpp:305
+#, kde-format
+msgid ""
+"<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
+"error %2). As a result, some font files could not be located, and your "
+"document might be unreadable.</qt>"
+msgstr ""
+"<qt>A geração da fonte pelo <em>kpsewhich</em> foi cancelada (código de "
+"saída %1, erro %2). Como resultado, alguns arquivos de fontes não puderam "
+"ser localizados e seu documento pode estar ilegível.</qt>"
+
+#: fontpool.cpp:481
+#, kde-format
+msgid "Currently generating %1 at %2 dpi..."
+msgstr "Gerando atualmente o %1 de %2 dpi..."
+
+#: generator_dvi.cpp:293
+#, kde-format
+msgid "Generator/Date"
+msgstr "Criador/Data"
+
+#: generator_dvi.cpp:382
+#, kde-format
+msgid "Font file not found"
+msgstr "Arquivo da fonte não encontrado"
+
+#: pageSize.cpp:318
+#, kde-format
+msgid "portrait"
+msgstr "retrato"
+
+#: pageSize.cpp:320
+#, kde-format
+msgid "landscape"
+msgstr "paisagem"
+
+#: psgs.cpp:284
+#, kde-format
+msgid ""
+"The version of Ghostview that is installed on this computer does not contain "
+"any of the Ghostview device drivers that are known to Okular. PostScript "
+"support has therefore been turned off in Okular."
+msgstr ""
+"A versão do Ghostview instalado neste computador não contém dispositivos do "
+"Ghostview conhecidos pelo Okular. Sendo assim, o suporte ao Postscript foi "
+"desativado no Okular."
+
+#: special.cpp:36
+#, kde-format
+msgid "That makes 25 errors. Further error messages will not be printed."
+msgstr "Ocorreram 25 erros. Outras mensagens não serão impressas."
+
+#: special.cpp:232
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Color pop command issued when the color "
+"stack is empty."
+msgstr ""
+"Erro no arquivo DVI '%1', página %2. Comando de estouro emitido quando a "
+"pilha de cores estiver vazia."
+
+#: special.cpp:318
+#, kde-format
+msgid ""
+"Malformed parameter in the epsf special command.\n"
+"Expected a float to follow %1 in %2"
+msgstr ""
+"Parâmetro malformado no comando especial epsf.\n"
+"Um flutuante esperado resultou %1 em %2"
+
+#: special.cpp:446
+#, kde-format
+msgid ""
+"File not found: \n"
+" %1"
+msgstr ""
+"Arquivo não encontrado: \n"
+" %1"
+
+#: special.cpp:695
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
+"special."
+msgstr ""
+"Erro no arquivo DVI '%1', página %2. Não foi possível interpretar o ângulo "
+"na rotação de texto."
+
+#: special.cpp:714
+#, kde-format
+msgid "The special command '%1' is not implemented."
+msgstr "O comando especial '%1' não está implementado."
+
+#: TeXFont_PFB.cpp:43
+#, kde-format
+msgid ""
+"The font file %1 could be opened and read, but its font format is "
+"unsupported."
+msgstr ""
+"O arquivo fonte %1 pôde ser aberto e lido, mas o formato das fontes não é "
+"suportado."
+
+#: TeXFont_PFB.cpp:48
+#, kde-format
+msgid "The font file %1 is broken, or it could not be opened or read."
+msgstr ""
+"O arquivo de fontes %1 está danificado, ou não pôde ser aberto ou lido."
+
+#: TeXFont_PFB.cpp:170
+#, kde-format
+msgid ""
+"FreeType reported an error when setting the character size for font file %1."
+msgstr ""
+"A FreeType reportou um erro ao definir o tamanho do caractere para o arquivo "
+"de fontes %1."
+
+#: TeXFont_PFB.cpp:188
+#, kde-format
+msgid "FreeType is unable to load glyph #%1 from font file %2."
+msgstr ""
+"A FreeType é incapaz de carregar o símbolo #%1 do arquivo de fontes %2."
+
+#: TeXFont_PFB.cpp:201
+#, kde-format
+msgid "FreeType is unable to render glyph #%1 from font file %2."
+msgstr ""
+"A FreeType é incapaz de renderizar o símbolo #%1 do arquivo de fontes %2."
+
+#: TeXFont_PFB.cpp:215
+#, kde-format
+msgid "Glyph #%1 is empty."
+msgstr "O símbolo #%1 está vazio."
+
+#: TeXFont_PFB.cpp:217
+#, kde-format
+msgid "Glyph #%1 from font file %2 is empty."
+msgstr "O símbolo #%1 do arquivo de fontes %2 está vazio."
+
+#: TeXFont_PFB.cpp:282
+#, kde-format
+msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
+msgstr ""
+"A FreeType é incapaz de carregar a métrica para o símbolo #%1 do arquivo de "
+"fontes %2."
+
+#: TeXFont_PK.cpp:69
+#, kde-format
+msgid "Cannot open font file %1."
+msgstr "Não foi possível abrir o arquivo fonte %1."
+
+#: TeXFont_PK.cpp:116
+#, kde-format
+msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
+msgstr "TexFont_PK::operator[]: Caractere %1 não definido na fonte %2"
+
+#: TeXFont_PK.cpp:418
+#, kde-format
+msgid "Unexpected %1 in PK file %2"
+msgstr "O %1 não foi esperado no arquivo PK %2"
+
+#: TeXFont_PK.cpp:484
+#, kde-format
+msgid "The character %1 is too large in file %2"
+msgstr "O caractere %1 é muito grande no arquivo %2"
+
+#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#, kde-format
+msgid "Wrong number of bits stored:  char. %1, font %2"
+msgstr "Número errado de bits armazenados:  car. %1, fonte %2"
+
+#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#, kde-format
+msgid "Bad pk file (%1), too many bits"
+msgstr "Arquivo pk inválido (%1), muitos bits"
+
+#: TeXFont_PK.cpp:713
+#, kde-format
+msgid "Font has non-square aspect ratio "
+msgstr "A fonte não tem taxa de proporção quadrada "
+
+#: TeXFontDefinition.cpp:106
+#, kde-format
+msgid "Cannot find font %1, file %2."
+msgstr "Não foi possível encontrar a fonte %1, arquivo %2."
+
+#: TeXFontDefinition.cpp:123
+#, kde-format
+msgid "Checksum mismatch for font file %1"
+msgstr "Checagem incompatível para o arquivo fonte %1"
+
+#: TeXFontDefinition.cpp:174
+#, kde-format
+msgid "Cannot recognize format for font file %1"
+msgstr "Não pode reconhecer o formato para o arquivo de fontes %1"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"Fatal error.\n"
+"\n"
+msgstr ""
+"Erro fatal.\n"
+"\n"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"\n"
+"\n"
+"This probably means that either you found a bug in Okular,\n"
+"or that the DVI file, or auxiliary files (such as font files, \n"
+"or virtual font files) were really badly broken.\n"
+"Okular will abort after this message. If you believe that you \n"
+"found a bug, or that Okular should behave better in this situation\n"
+"please report the problem."
+msgstr ""
+"\n"
+"\n"
+"Isto provavelmente significa que ou você encontrou um erro no Okular,\n"
+"ou que o arquivo DVI, ou arquivos auxiliares (como os arquivos de fontes, \n"
+"ou arquivos de fontes virtuais) estão realmente danificados.\n"
+"O Okular será finalizado após esta mensagem. Se você acredita que "
+"encontrou \n"
+"um erro, ou que o Okular deveria comportar-se melhor nestas\n"
+"situações, por favor, informe-nos sobre o problema."
+
+#: vf.cpp:164
+#, kde-format
+msgid "Wrong command byte found in VF macro list: %1"
+msgstr "Foi encontrado um byte de comando errado na lista de macros VF: %1"
+
+#~ msgid ""
+#~ "<qt><p>The Ghostview program, which Okular uses internally to display the "
+#~ "PostScript graphics that is included in this DVI file, is generally able "
+#~ "to write its output in a variety of formats. The sub-programs that "
+#~ "Ghostview uses for these tasks are called 'device drivers'; there is one "
+#~ "device driver for each format that Ghostview is able to write. Different "
+#~ "versions of Ghostview often have different sets of device drivers "
+#~ "available. It seems that the version of Ghostview that is installed on "
+#~ "this computer does not contain <strong>any</strong> of the device drivers "
+#~ "that are known to Okular.</p><p>It seems unlikely that a regular "
+#~ "installation of Ghostview would not contain these drivers. This error may "
+#~ "therefore point to a serious misconfiguration of the Ghostview "
+#~ "installation on your computer.</p><p>If you want to fix the problems with "
+#~ "Ghostview, you can use the command <strong>gs --help</strong> to display "
+#~ "the list of device drivers contained in Ghostview. Among others, Okular "
+#~ "can use the 'png256', 'jpeg' and 'pnm' drivers. Note that Okular needs to "
+#~ "be restarted to re-enable PostScript support.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>O programa Ghostview, que o Okular usa internamente para exibir os "
+#~ "gráficos do PostScript que estão incluídos neste arquivo DVI, geralmente "
+#~ "tem a capacidade de gravar sua saída nos mais variados formatos. Os "
+#~ "subprogramas que o Ghostview usa para estas tarefas são os chamados "
+#~ "'drivers de dispositivo', e existe um desses para cada formato que o "
+#~ "Ghostview é capaz de gravar. Diferentes versões do Ghostview oferecem "
+#~ "diferentes conjuntos de drivers. Parece que a versão do Ghostview "
+#~ "instalada neste computador não contém <strong>nenhum</strong> dos drivers "
+#~ "de dispositivos conhecidos pelo Okular.</p><p>Parece que, infelizmente, "
+#~ "uma instalação regular do Ghostview não contém estes drivers. Este erro "
+#~ "pode, entretanto, apontar para uma configuração mal-feita da instalação "
+#~ "do Ghostview, em seu computador.</p><p>Se deseja corrigir os problemas "
+#~ "com o Ghostview, você pode usar o comando <strong>gs --help</strong> para "
+#~ "exibir a lista de drivers de dispositivo contidos no Ghostview. O Okular "
+#~ "pode usar os drivers 'png256', 'jpeg' e 'pnm', entre outros. Note que o "
+#~ "Okular precisa ser reiniciado para reabilitar o suporte ao PostScript.</"
+#~ "p></qt>"
+
+#~ msgid "DVI Backend"
+#~ msgstr "Infraestrutura DVI"
+
+#~ msgid "A DVI file renderer"
+#~ msgstr "Um renderizador de arquivo DVI"
+
+#~ msgid "© 2006 Luigi Toscano"
+#~ msgstr "© 2006 Luigi Toscano"

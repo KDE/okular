@@ -1,0 +1,54 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Sergiu Bivol <sergiu@cip.md>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2008-12-31 21:33+0200\n"
+"Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
+"Language-Team: Romanian <kde-i18n-ro@lists.kde.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sergiu Bivol"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sergiu@cip.md"
+
+#: document.cpp:96
+#, fuzzy, kde-format
+#| msgid "Cannot open document, unrar was not found."
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr "Imposibil de deschis documentul, „unrar” nu a fost găsit."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr ""
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "Platformă pentru benzi desenate"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

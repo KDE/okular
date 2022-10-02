@@ -1,0 +1,135 @@
+# Thomas Reitelbach <tr@erdfunkstelle.de>, 2007.
+# Burkhard Lück <lueck@hube-lueck.de>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-11-03 22:16+0100\n"
+"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Thomas Reitelbach"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tr@erdfunkstelle.de"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "Bearbeiter"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "Veröffentlicher"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "Satz"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "Dokumenttyp"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr "Komponenten-Dateien"
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "Einzelne Seite"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "Gebündelt"
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "Indirekt"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "Gebündelt (alt)"
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "Indiziert (alt)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "Anzeigemodul für DjVu"
+
+#~ msgid "DjVu backend based on DjVuLibre."
+#~ msgstr "Anzeigemodul für DjVu auf der Basis von DjVuLibre."
+
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006–2008 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgid "A DjVu backend"
+#~ msgstr "Ein Anzeigemodul für DjVu"

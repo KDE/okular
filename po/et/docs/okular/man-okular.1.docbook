@@ -1,0 +1,289 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Estonian  "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>KDE kasutaja käsiraamat</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular man page.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2013-03-09</date>
+<productname
+>KDE töökeskkond</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>universaalne dokumentide näitaja</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Qt võtmed</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>KDE võtmed</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>Okulari võtmed</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Kirjeldus</title>
+<para
+><command
+>okular</command
+> on mõeldud eri vormingutes dokumentide näitamiseks.</para>
+
+</refsect1>
+
+<refsect1 id="generic_options"
+><title
+>Üldised võtmed</title>
+<variablelist>
+  <varlistentry>
+  <term
+><option
+>--help</option
+></term>
+  <listitem>
+<para
+>Abiteate näitamine võtmete kohta.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--help-qt</option
+></term>
+  <listitem>
+<para
+>Qt spetsiifiliste võtmete näitamine.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--help-kde</option
+></term>
+  <listitem>
+<para
+>KDE spetsiifiliste võtmete näitamine.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--help-all</option
+></term>
+  <listitem>
+<para
+>Kõigi võtmete näitamine.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--author</option
+></term>
+  <listitem>
+<para
+>Teabe näitamine autori kohta.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>-v, --version</option
+></term>
+  <listitem>
+<para
+>Versiooniteabe näitamine.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--license</option
+></term>
+  <listitem>
+<para
+>Litsentsiteabe näitamine.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><option
+>--</option
+></term>
+  <listitem>
+<para
+>Võtmete lõpp.</para>
+  </listitem>
+  </varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Okulari võtmed</title>
+<variablelist>
+  <varlistentry>
+    <term
+><option
+>-p, --page <replaceable
+>number</replaceable
+></option
+></term>
+  <listitem>
+<para
+>Määratud lehekülje avamine dokumendis.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><option
+>--presentation</option
+></term>
+  <listitem>
+<para
+>Dokumendi avamine esitlusrežiimis.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><option
+>--print</option
+></term>
+  <listitem>
+<para
+>Käivitamine trükkimisdialoogiga.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><option
+>--unique</option
+></term>
+  <listitem>
+<para
+>"Unikaalse isendi" kontroll.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><option
+>--noraise</option
+></term>
+  <listitem>
+<para
+>Võimaldab vältida Okulari akna esiletoomist käivitamise järel.</para>
+  </listitem>
+  </varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Argumendid</title>
+<variablelist>
+  <varlistentry>
+    <term
+><option
+>URL</option
+></term>
+  <listitem>
+    <para
+>Avatava dokumendi aadress. PDF-dokumentide puhul võib määrata kujul <replaceable
+>dokumendi_nimi</replaceable
+>#<replaceable
+>nimega_sihtkoht</replaceable
+>, kus <replaceable
+>nimega_sihtkoht</replaceable
+> on konkreetne dokumenti põimitud nimega sihtkoht.</para>
+  </listitem>
+  </varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Tagasiside</title>
+<para
+>IRC-s irc.freenode.net #okular või e-postiga okular-devel@kde.org või veebis &lt;<ulink url="http://okular.kde.org"
+>http://okular.kde.org</ulink
+>&gt;</para>
+</refsect1>
+
+<refsect1>
+<title
+>Vaata ka</title>
+<para
+>Põhjalikumat kasutaja dokumentatsiooni pakub <ulink url="help:/okular"
+>help:/okular</ulink
+> (kirjuta see &URL; &konqueror;i või käivita käsuga <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</para>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Autoriõigus</title>
+<para
+>Autoriõigus &copy; 2002: Wilco Greven, Christophe Devriese</para>
+<para
+>Autoriõigus &copy; 2004-2005: Enrico Ros</para>
+<para
+>Autoriõigus &copy; 2005: Piotr Szymanski</para>
+<para
+>Autoriõigus &copy; 2004-2012: Albert Astals Cid</para>
+<para
+>Autoriõigus &copy; 2006-2009: Pino Toscano</para>
+<para
+>Litsents: GNU Üldine Avalik Litsents, versioon 2 &lt;<ulink url="http://www.gnu.org/licenses/gpl-2.0.html"
+>http://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

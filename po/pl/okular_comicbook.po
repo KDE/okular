@@ -1,0 +1,66 @@
+# translation of okular_comicbook.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008.
+# Maciej Wikło <maciej.wiklo@wp.pl>, 2009.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2018.
+# Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2020-11-24 19:51+0100\n"
+"Last-Translator: Ignacy Kajdan <ignacy.kajdan@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.08.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marta Rybczyńska, Łukasz Wojniłowicz, Ignacy Kajdan"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"kde-i18n@rybczynska.net, lukasz.wojnilowicz@gmail.com, ignacy.kajdan@gmail."
+"com"
+
+#: document.cpp:96
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr ""
+"Nie można otworzyć dokumentu, nie znaleziono ani unrar, ani unarchiver."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"Wersja programu unrar znaleziona na tym systemie nie pozwala otwierać "
+"komiksów."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "Nieznany format komiksu."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "Moduł ComicBook"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "Wyświetlanie różnych formatów comic book."
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

@@ -1,0 +1,41 @@
+# Translation of okular_txt.po to Euskara/Basque (eu).
+# Copyright (C) 2018, Free Software Foundation.
+# This file is distributed under the same terms as the applications package.
+# KDE euskaratzeko arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_txt\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2018-08-03 09:44+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñigo Salvador Azurmendi"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xalba@euskalnet.net"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt"
+msgstr "Txt"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt Backend Configuration"
+msgstr "Txt bizkarraldekoaren konfigurazioa"

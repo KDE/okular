@@ -1,0 +1,48 @@
+# Translation of okular_comicbook into Japanese.
+# This file is distributed under the same license as the kdegraphics package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2008, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2009-01-11 00:49+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <kde-jp@kde.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"
+
+#: document.cpp:96
+#, fuzzy, kde-format
+#| msgid "Cannot open document, unrar was not found."
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr "文書を開けません。unrar が見つかりませんでした。"
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"あなたのシステムにインストールされているバージョンの unrar は Comic Book "
+"フォーマットのファイルを開けません。"
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "未知の Comic Book フォーマットです。"

@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Swedish "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Okular användarhandbok</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular manualsida.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2022-02-19</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>ett generellt dokumentvisningsprogram</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Okular-väljare</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>webbadress</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Beskrivning</title>
+<para
+><command
+>okular</command
+> har som mål att visa dokument av olika format.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Okular-väljare</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>nummer</replaceable
+></option
+></term>
+<listitem>
+<para
+>Öppna en angiven sida i dokumentet.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Öppna dokumentet i presentationsläge.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Starta med utskriftsdialogruta.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Starta med utskriftsdialogruta och avsluta efter utskrift.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Styrning av unik instans.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Tillåter eller förhindrar att Okulars fönster höjs efter start.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>sträng</replaceable
+></option
+></term>
+<listitem>
+<para
+>Sök efter en sträng i texten.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>sträng</replaceable
+></option
+></term>
+<listitem>
+<para
+>Ställer in det externa redigeringskommandot. Du kan inte ställa in redigeringskommandot för en instans av Okular som redan kör. Observera att <option
+>--unique</option
+> inte heller stöds när redigeringskommandot ställs in på kommandoraden.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Väljare</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>Webbadress</option
+></term>
+<listitem>
+<para
+>En adress till dokumentet som ska öppnas. För PDF kan namnet anges som <replaceable
+>dokumentnamn</replaceable
+>#<replaceable
+>namngivet-mål</replaceable
+> där <replaceable
+>namngivet-mål</replaceable
+> är ett visst namngivet mål inbäddat i dokumentet.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Återkoppling</title>
+<para
+>På IRC, irc.libera.chat #okular, via e-post okular-devel@kde.org, eller på webben &lt;<ulink url="https://okular.kde.org/"
+>http://okular.kde.org/</ulink
+>&gt;</para>
+</refsect1>
+
+<refsect1>
+<title
+>Se också</title>
+<simplelist>
+<member
+>Mer detaljerad användardokumentation är tillgänglig via <ulink url="help:/okular"
+>help:/okular</ulink
+> (skriv antingen in <acronym
+>webbadressen</acronym
+> i &konqueror;, eller kör <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Det finns också ytterligare information tillgänglig på <ulink url="https://okular.kde.org/"
+>http://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Copyright</title>
+<para
+>Copyright &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Copyright &copy; 2004-2005 Enrico Ros</para>
+<para
+>Copyright &copy; 2005 Piotr Szymanski</para>
+<para
+>Copyright &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Copyright &copy; 2006-2009 Pino Toscano</para>
+<para
+>Licens: GNU General Public Version 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>http://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

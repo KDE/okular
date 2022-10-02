@@ -1,0 +1,139 @@
+# translation of okular_djvu.po to Occitan (lengadocian)
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-08-05 22:27+0200\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan (lengadocian) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"Language: oc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yannig Marchegay (Kokoyaya)"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yannig@marchegay.org"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "Editor"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "Director"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "Volum"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr ""
+
+#: generator_djvu.cpp:141
+#, fuzzy, kde-format
+#| msgid "Unknown"
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr ""
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr ""
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr ""
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr ""
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr ""
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"

@@ -1,0 +1,93 @@
+# translation of okular_fictionbook.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2008, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-07-10 19:26+0200\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Martin Schlander"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mschlander@opensuse.org"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Dokumentet er ikke gyldig FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Kan ikke åbne dokumentet: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Dokumentet er ikke et gyldigt ZIP-arkiv"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Ugyldig dokumentstruktur (hovedmappen mangler)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Intet indhold fundet i dokumentet"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Ugyldigt XML-dokument: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Konfiguration af FictionBook"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Fiction Book-motor"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Rendering af FictionBook e-bøger"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid "Author"
+#~ msgstr "Forfatter"
+
+#~ msgid "Producer"
+#~ msgstr "Producent"
+
+#~ msgid "Created"
+#~ msgstr "Oprettet"

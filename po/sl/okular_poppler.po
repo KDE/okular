@@ -1,0 +1,350 @@
+# Slovenian translation of Okular-poppler
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Jure Repinc <jlp@holodeck1.com>, 2008, 2010, 2012, 2013.
+# Andrej Mernik <andrejm@ubuntu.si>, 2013.
+# Matjaž Jeran <matjaz.jeran@amis.net>, 2019, 2020, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2021-10-04 05:37+0200\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
+"X-Generator: Lokalize 20.12.2\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Jure Repinc,Andrej Mernik,Matjaž Jeran"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "jlp@holodeck1.com,andrejm@ubuntu.si,matjaz.jeran@amis.net"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr "Okrepi tanke črte:"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "Ne"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr "Neprekinjeno"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr "Oblika"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+"Omogočanje te možnosti bo dovolil Okularju, stik do strežnikov OCSP tretjih "
+"strank za preverjanje, ali so bili certifikati, ki se uporabljajo za "
+"digitalno podpisovanje preklicani po njihovi tvorbi."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr ""
+"Preveri preklic certifikatov digitalnih podpisov s pomočjo strežnikov tretje "
+"stranke"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr "Zbirka potrdil"
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr "Privzeto:"
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr "Po meri:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr "Razpoložljiva potrdila"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr "Naloži podpise"
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "Možnosti za PDF"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr "Natisni zabeležke"
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "Vključi zabeležke v natisnjen dokument"
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"Vključi zabeležke v natisnjen dokument. Izključite to možnost, če želite "
+"natisniti izvirni dokument brez zabeležk."
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "Vsili rasterizacijo"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "Pred tiskanjem rasteriziraj v sliko"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"Pred tiskanjem vsake strani se vsili rasterizacija strani v sliko. Kakovost "
+"izpisa je sicer nekoliko slabša, vendar lahko pomaga pri dokumentih, ki se "
+"ne natisnejo pravilno."
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Prilagodi prostoru za tisk"
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "Prilagodi na celotno stran"
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "Brez prilagoditve, tiskaj izvirno velikost"
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr "Način povečanja tiskanih strani"
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr "Način lestvice:"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF verzije %1.%2"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "Oblika"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "Šifriran"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "Nešifriran"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "Varnost"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "Da"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "Optimiziran"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+"Podpisal: %1\n"
+"\n"
+"Datum: %2"
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr "Uporabi Poppler %1"
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+"Uporabljamo Poppler %1\n"
+"\n"
+"prevedeno za Poppler %2"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "Nastavitve zaledja za PDF"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+"Najdeno je nekaj napak v dokumentu zaradi katerih Okular morda ne bo mogel "
+"korektno prikazati vsebine"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr "Izdan za"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr "E-pošta"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr "Datum poteka"
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+"Uporabljate knjižnico Poppler, zgrajeno brez podpore za NSS.\n"
+"Dodajanje digitalnih podpisov zaradi tega ni na voljo"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr "Potreben ponovni zagon"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr "Po spremembi nastavitev imenika NSS morate ponovno zagnati Okular"
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr "Ni na voljo"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter Password"
+msgstr "Vnesite geslo"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr "Vnesite geslo za odprtje %1:"
+
+#~ msgid "PDF Certificates"
+#~ msgstr "Potrdila PDF"
+
+#~ msgid "PDF Digital Signature Certificates"
+#~ msgstr "Potrdila digitalnih podpisov PDF"
+
+#~ msgid "PDF Backend"
+#~ msgstr "Zaledje za PDF"
+
+#~ msgid "A PDF file renderer"
+#~ msgstr "Izrisovalnik datotek PDF"
+
+#~ msgid "© 2005-2008 Albert Astals Cid"
+#~ msgstr "© 2005-2008 Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Saving files with /Encrypt is not supported."
+#~ msgstr "Shranjevanje datotek z /Encrypt ni podprto."
+
+#~ msgid "Unknown"
+#~ msgstr "Neznano"
+
+#~ msgid "Unknown Date"
+#~ msgstr "Neznan datum"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "Neznano šifriranje"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "Neznana optimizacija"
+
+#~ msgid "Please enter the password to read the document:"
+#~ msgstr "Pred branjem dokumenta je potrebno vnesti geslo:"
+
+#~ msgid "Incorrect password. Try again:"
+#~ msgstr "Napačno geslo. Poskusite znova:"

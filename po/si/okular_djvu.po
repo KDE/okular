@@ -1,0 +1,135 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Danishka Navin <danishka@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2011-08-19 19:29+0530\n"
+"Last-Translator: Danishka Navin <danishka@gmail.com>\n"
+"Language-Team: Sinhala <info@hanthana.org>\n"
+"Language: si\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Danishka Navin"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "danishka@gmail.com"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "සකසනය"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "ප්‍රකාශක"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "වෙළුම"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "ලේඛනයේ වර්ගය"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "නොදන්නා"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr "සංරචක ගොනු"
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "නොදන්නා"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "තනි පිටුව"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "බැඳි"
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "වක්‍ර"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "බැඳි (පැරණි)"
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "සූචිගත (පැරණි)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "DjVu පසුඉම"
+
+#~ msgid "DjVu backend based on DjVuLibre."
+#~ msgstr "DjVuLibre මත පදනම් වූ DjVu පසුඉම"
+
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006-2008 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"
+
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "නොදන්නා"

@@ -1,0 +1,56 @@
+# translation of okular_epub.po to galician
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# mvillarino <mvillarino@users.sourceforge.net>, 2008.
+# Marce Villarino <mvillarino@gmail.com>, 2009, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2013-08-10 11:24+0200\n"
+"Last-Translator: Marce Villarino <mvillarino@kde-espana.org>\n"
+"Language-Team: Galician <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marce Villarino"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mvillarino@users.sourceforge.net"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "Ocorreu un erro ao abrir o documento EPub."
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr "EPub"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "Configuración da infraestrutura de EPub"
+
+#~ msgid "EPub Backend"
+#~ msgstr "Infraestrutura de EPub"
+
+#~ msgid "An EPub backend"
+#~ msgstr "Unha infraestrutura para EPub"
+
+#~ msgid "© 2008 Ely Levy"
+#~ msgstr "© 2008 Ely Levy"
+
+#~ msgid "Ely Levy"
+#~ msgstr "Ely Levy"

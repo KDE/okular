@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# obsoleteman <tulliana@gmail.com>, 2008
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2014-06-08 13:55+0000\n"
+"Last-Translator: Volkan Gezer <volkangezer@gmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/kdegraphics-k-tr/"
+"language/tr/)\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Serdar Soytetir"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tulliana@gmail.com"
+
+#: generator_xps.cpp:1947
+#, kde-format
+msgid "Revision"
+msgstr "Sürüm"
+
+#~ msgid "XPS Backend"
+#~ msgstr "XPS Arka Ucu"
+
+#~ msgid "An XPS backend"
+#~ msgstr "Bir XPS arka ucu"
+
+#~ msgid ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+#~ msgstr ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+
+#~ msgid "Brad Hards"
+#~ msgstr "Brad Hards"
+
+#~ msgid "Jiri Klement"
+#~ msgstr "Jiri Klement"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"

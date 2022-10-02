@@ -1,0 +1,59 @@
+# Translation of okular_epub.po to Euskara/Basque (eu).
+# Copyright (C) 2009-2018, Free Software Foundation.
+# This file is distributed under the same license as the kdegraphics package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Enbata <urazpian@hotmail.com>, 2009.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2018-08-03 17:18+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Enbata"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "urazpian@hotmail.com"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "Errorea EPub dokumentua irekitzean."
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr "EPub"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "EPub bizkarraldekoaren konfigurazioa"
+
+#~ msgid "EPub Backend"
+#~ msgstr "EPub Motorea"
+
+#~ msgid "An EPub backend"
+#~ msgstr "EPub-eko motorea"
+
+#~ msgid "© 2008 Ely Levy"
+#~ msgstr "© 2008 Ely Levy"
+
+#~ msgid "Ely Levy"
+#~ msgstr "Ely Levy"

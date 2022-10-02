@@ -1,0 +1,80 @@
+# translation of okular_fictionbook.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2007, 2009, 2010.
+# Michal Sulek <misurel@gmail.com>, 2009.
+# Roman Paholík <wizzardsk@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-05-19 08:41+0200\n"
+"Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Richard Frič, Michal Šulek, Roman Paholík"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Richard.Fric@kdemail.net,misurel@gmail.com,wizzardsk@gmail.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Dokument nie je platný FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Nepodarilo sa otvoriť dokument: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Dokument nie je platný ZIP archív"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Neplatná štruktúra dokumentu (chýba hlavný adresár)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Nenájdený žiadny obsah v dokumente"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Neplatný XML dokument: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Nastavenie backendu FictionBook"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Fiction Book Backend"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Vykresľovanie e-kníh FictionBook"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

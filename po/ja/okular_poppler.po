@@ -1,0 +1,291 @@
+# translation of okular_poppler.po to Japanese
+# This file is distributed under the same license as the kdegraphics package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2007.
+# Fumiaki Okushi <fumiaki.okushi@gmail.com>, 2010, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2014-09-28 23:01-0700\n"
+"Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
+"Language-Team: Japanese <kde-jp@kde.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "いいえ"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr ""
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "PDF オプション"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr ""
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr ""
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "強制的にラスター画像に変換する"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "印刷する前にラスター画像に変換"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"印刷する前に各ページをラスター画像に変換 (ラスタライズ) します。これを用いる"
+"と一般的には少し品質が落ちますが、通常の方法で正しく印刷されない文書を印刷す"
+"るときに役立ちます。"
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr ""
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr ""
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr ""
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr ""
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr ""
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF v. %1.%2"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "フォーマット"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "暗号化あり"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "暗号化なし"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "セキュリティ"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "はい"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "最適化"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr ""
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "PDF バックエンドの設定"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr ""
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr ""
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr ""
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter Password"
+msgstr ""
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr ""

@@ -1,0 +1,64 @@
+# Translation of okular_chm.po to Euskara/Basque (eu).
+# Copyright (C) 2009-2020, This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# Enbata <urazpian@hotmail.com>, 2009.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2020-02-22 23:04+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.12.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marcos Goyenetxe,Iñigo Salvador Azurmendi"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "marcos@euskalgnu.org,xalba@euskalnet.net"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr "Onartzen ez den kodeketa"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+"eLiburuki honen kodeketa oraindik ez da onartzen. Sortu akats txosten bat "
+"adierazitako helbidean euskarria gehitu dakion, https://bugs.kde.org"
+
+#~ msgid "CHM Backend"
+#~ msgstr "CHM motorra"
+
+#~ msgid "A Microsoft Windows help file renderer"
+#~ msgstr "Microsoft Windows errendatzailearen laguntzako fitxategia"
+
+#~ msgid ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+#~ msgstr ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+
+#~ msgid "Piotr Szymański"
+#~ msgstr "Piotr Szymański"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

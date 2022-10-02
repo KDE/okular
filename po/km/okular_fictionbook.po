@@ -1,0 +1,85 @@
+# translation of okular_fictionbook.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2008-12-19 09:39+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ​អេង វណ្ណៈ, អោក ពិសិដ្ឋ​"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​evannak@khmeros.info,piseth_dv@khmeros.info"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "ឯកសារ​មិនមែន​ជា FictionBook ដែល​ត្រឹមត្រូវ​ទេ"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "មិនអាចបើក​ឯកសារ ៖ %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "ឯកសារ​មិនមែន​ជា​ប័ណ្ណសារ ZIP ត្រឹមត្រូវ​ទេ"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "រចនាសម្ព័ន្ធ​ឯកសារ​មិនត្រឹមត្រូវ (បាត់​ថត​មេ)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "រក​មិនឃើញ​មាតិកា​នៅ​ក្នុង​ឯកសារ​ទេ"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "ឯកសារ XML មិនត្រឹមត្រូវ ៖ %1"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook"
+msgstr "កម្មវិធី​ខាងក្រោយ​របស់ Fiction Book"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook Backend Configuration"
+msgstr "កម្មវិធី​ខាងក្រោយ​របស់ Fiction Book"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "កម្មវិធី​ខាងក្រោយ​របស់ Fiction Book"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "កម្មវិធី​បង្ហាញ​សម្រាប់ eBooks របស់ FictionBook"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៧-២០០៨ ដោយ Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

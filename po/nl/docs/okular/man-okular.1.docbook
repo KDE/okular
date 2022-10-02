@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Dutch "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Okular gebruikershandleiding</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular man page.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2022-02-19</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>een universele documentviewer</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Okular-opties</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Beschrijving</title>
+<para
+><command
+>okular</command
+> is bedoeld om documenten in verschillende formaten te tonen.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Okular-opties</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>nummer</replaceable
+></option
+></term>
+<listitem>
+<para
+>Open een gegeven pagina in het document.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Document in presentatiemodus starten.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Met afdrukdialoog beginnen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Met afdrukdialoog beginnen en na afdrukken beëindigen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Controle over "unieke sessie".</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Stelt u in staat om te voorkomen dat Okular het venster vooraan brengt na de start.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>tekenreeks</replaceable
+></option
+></term>
+<listitem>
+<para
+>Een tekenreeks zoeken in de tekst.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>tekenreeks</replaceable
+></option
+></term>
+<listitem>
+<para
+>Stelt het externe commando voor de bewerker. U kunt het niet instellen in een al actief exemplaar van Okular. Merk op dat <option
+>--unique</option
+> niet wordt ondersteund bij instellen van het commando voor de bewerker op de opdrachtregel.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Argumenten</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>URL</option
+></term>
+<listitem>
+<para
+>Een adres van het te openen document. Voor PDF, kan het worden gegeven als <replaceable
+>documentnaam</replaceable
+>#<replaceable
+>benoemde_bestemming</replaceable
+> waar <replaceable
+>benoemde_bestemming</replaceable
+> een specifieke benoemde bestemming ingebed in het document.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Terugkoppeling</title>
+<para
+>Op IRC, irc.libera.chat #okular of via e-mail, okular-devel@kde.org of op het web, &lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Zie ook</title>
+<simplelist>
+<member
+>Meer uitgebreide informatie vindt u in <ulink url="help:/kig"
+>help:/okular</ulink
+> (voer deze <acronym
+>URL</acronym
+> in in &konqueror; of voer uit <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Er is ook verdere informatie beschikbaar op <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Copyright</title>
+<para
+>Copyright &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Copyright &copy; 2004-2005 Enrico Ros</para>
+<para
+>Copyright &copy; 2005 Piotr Szymanski</para>
+<para
+>Copyright &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Copyright &copy; 2006-2009 Pino Toscano</para>
+<para
+>Licentie: GNU General Public Version 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

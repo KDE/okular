@@ -1,0 +1,51 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Eloy Cuadra <ecuadra@eloihr.net>, 2013.
+# Javier Viñal <fjvinal@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-07-24 16:42+0200\n"
+"Last-Translator: Javier Viñal <fjvinal@gmail.com>\n"
+"Language-Team: Spanish <kde-l10n-es@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Eloy Cuadra"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ecuadra@eloihr.net"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt"
+msgstr "Txt"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt Backend Configuration"
+msgstr "Configuración del motor de texto"
+
+#~ msgid "Txt Backend"
+#~ msgstr "Motor de texto"
+
+#~ msgid "Txt backend."
+#~ msgstr "Motor de texto."
+
+#~ msgid "© 2013 Azat Khuzhin"
+#~ msgstr "© 2013 Azat Khuzhin"
+
+#~ msgid "Azat Khuzhin"
+#~ msgstr "Azat Khuzhin"

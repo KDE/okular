@@ -1,0 +1,92 @@
+# Lithuanian translations for okular_ghostview package.
+# This file is distributed under the same license as the okular_ghostview package.
+#
+# Liudas Ališauskas <liudas.alisauskas@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_ghostview\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2019-12-16 20:36+0200\n"
+"Last-Translator: Liudas Ališauskas <liudas.alisauskas@gmail.com>\n"
+"Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
+"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Andrius Štikonas, Liudas Ališauskas, Moo"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "andrius@stikonas.eu, liudas@akmc.lt, <>"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "Naudoti platformos šriftus"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+"Nustato ar Ghostscript turėtų būti leista naudoti platformos šriftus, jei ne "
+"- bus leista naudoti tik dokumente įtaisytus šriftus."
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "Bendrosios nuostatos"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "&Naudoti platformos šriftus"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "Ghostscript"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "Ghostscript programinės sąsajos konfigūravimas"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "Dokumento versija"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "Kalbos lygis"
+
+#~ msgid "PS Backend"
+#~ msgstr "PS programinė sąsaja"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "PostScript failų generatorius."
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "© 2007-2008 Albert Astals Cid"
+
+#~ msgid "Based on the Spectre library."
+#~ msgstr "Paremtas Spectre biblioteka."
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

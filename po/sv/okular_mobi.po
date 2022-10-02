@@ -1,0 +1,64 @@
+# translation of okular_mobi.po to Swedish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2008, 2009, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_mobi\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-05-24 18:31+0200\n"
+"Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Asserhäll"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stefan.asserhall@bredband.net"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Fel när Mobipocket-dokument skulle öppnas."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr ""
+"Boken är skyddad av digital upphovsrättshantering och kan bara visas på "
+"avsedd enhet"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket"
+msgstr "Mobipocket"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket Backend Configuration"
+msgstr "Inställning av Mobipocket-gränssnitt"
+
+#~ msgid "Mobipocket Backend"
+#~ msgstr "Mobipocket-gränssnitt"
+
+#~ msgid "A mobipocket backend"
+#~ msgstr "Ett Mobipocket-gränssnitt"
+
+#~ msgid "© 2008-2009 Jakub Stachowski"
+#~ msgstr "© 2008-2009 Jakub Stachowski"
+
+#~ msgid "Jakub Stachowski"
+#~ msgstr "Jakub Stachowski"

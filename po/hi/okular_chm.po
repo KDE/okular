@@ -1,0 +1,60 @@
+# translation of okular_chm.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+# Raghavendra Kamath <raghu@raghukamath.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_chm\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2021-08-21 16:38+0530\n"
+"Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
+"Language-Team: kde-hindi\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 21.08.0\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविशंकर श्रीवास्तव, जी. करूणाकर, राघवेंद्र कामत"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in, karunakar@indlinux.org, raghu@raghukamath.com"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr "असमर्थित एन्कोडिंग"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+"इस ईबुक की एन्कोडिंग अभी तक समर्थित नहीं है। समर्थन जोड़ने के लिए कृपया https://bugs."
+"kde.org में एक बग खोलें"
+
+#~ msgid "CHM Backend"
+#~ msgstr "सीएचएम बैकएण्ड"
+
+#~ msgid "A Microsoft Windows help file renderer"
+#~ msgstr "माइक्रोसॉफ़्ट विंडोज मदद फ़ाइल रेंडरर"
+
+#, fuzzy
+#~| msgid "© 2005-2007 Piotr Szymański"
+#~ msgid ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+#~ msgstr "(C) 2005-2007 पियोत्र स्जाइमंस्की"
+
+#~ msgid "Piotr Szymański"
+#~ msgstr "पियोत्र स्जाइमंस्की"

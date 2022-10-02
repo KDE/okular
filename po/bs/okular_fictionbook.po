@@ -1,0 +1,83 @@
+# Bosnian translation for kdegraphics
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the kdegraphics package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-10-18 19:26+0000\n"
+"Last-Translator: Samir Ribić <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:05+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Samir Ribić"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "samir.ribic@etf.unsa.ba"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Dokument nije pravilan FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Ne mogu da otvorim dokument: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Dokument nije pravilna ZIP arhiva"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Nepravilna struktura dokumenta (nedostaje glavni imenik)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "U dokumentu nema sadržaja"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Nepravilan XML dokument: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Konfiguracija pozadine za FictionBook"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Pozadina za FictionBook"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Crtač za FictionBook elektronske knjige"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

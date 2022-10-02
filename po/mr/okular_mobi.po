@@ -1,0 +1,63 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Chetan Khona <chetan@kompkin.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-03-28 12:26+0530\n"
+"Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
+"Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "चेतन खोना"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "chetan@kompkin.com"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "मोबिपोकेट दस्तऐवज उघडताना त्रुटी."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr "हे पुस्तक डीआरएमकडून सुरक्षित आहे व ते फक्त ठरविलेल्या साधनावरच दर्शविता येईल"
+
+#: generator_mobi.cpp:25
+#, fuzzy, kde-format
+#| msgid "Mobipocket Backend"
+msgid "Mobipocket"
+msgstr "मोबिपोकेट बॅकएन्ड"
+
+#: generator_mobi.cpp:25
+#, fuzzy, kde-format
+#| msgid "Mobipocket Backend"
+msgid "Mobipocket Backend Configuration"
+msgstr "मोबिपोकेट बॅकएन्ड"
+
+#~ msgid "Mobipocket Backend"
+#~ msgstr "मोबिपोकेट बॅकएन्ड"
+
+#~ msgid "A mobipocket backend"
+#~ msgstr "मोबिपोकेट बॅकएन्ड"
+
+#~ msgid "© 2008-2009 Jakub Stachowski"
+#~ msgstr "© 2008-2009 जेकब स्टाचोव्स्की"
+
+#~ msgid "Jakub Stachowski"
+#~ msgstr "जेकब स्टाचोव्स्की"

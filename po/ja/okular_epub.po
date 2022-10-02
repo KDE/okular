@@ -1,0 +1,44 @@
+# translation of okular_epub.po to Japanese
+# This file is distributed under the same license as the kdegraphics package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2008.
+# Fumiaki Okushi <fumiaki.okushi@gmail.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2014-09-28 22:58-0700\n"
+"Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
+"Language-Team: Japanese <kde-jp@kde.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "EPub 文書を開くときにエラーが発生しました。"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr ""
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "EPub バックエンドの設定"

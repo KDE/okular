@@ -1,0 +1,59 @@
+# translation of okular_xps.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+# Ravishankar Shrivastava <raviratlami@aol.in>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_xps\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2009-02-26 17:01+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
+"Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
+"Language: hne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविसंकर सिरीवास्तव, जी. करूनाकर"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in,"
+
+#: generator_xps.cpp:1947
+#, kde-format
+msgid "Revision"
+msgstr "संसोधन"
+
+#~ msgid "XPS Backend"
+#~ msgstr "एक्सपीएस बैकएन्ड"
+
+#~ msgid "An XPS backend"
+#~ msgstr "एक एक्सपीएस बैकएन्ड"
+
+#~ msgid ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+#~ msgstr ""
+#~ "© 2006-2007 ब्रैड हेर्ड्स\n"
+#~ "© 2007 जिरि क्लीमेंट\n"
+#~ "© 2008 पिनो टोस्कानो"
+
+#~ msgid "Brad Hards"
+#~ msgstr "ब्रेड हार्ड्स"
+
+#~ msgid "Jiri Klement"
+#~ msgstr "जिरि क्लीमेंट"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "पिनो टोसकिसनो"

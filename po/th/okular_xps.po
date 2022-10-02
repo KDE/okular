@@ -1,0 +1,58 @@
+# translation of okular_xps.po to Thai
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_xps\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2010-03-27 14:59+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#: generator_xps.cpp:1947
+#, kde-format
+msgid "Revision"
+msgstr "ปรับปรุงใหม่"
+
+#~ msgid "XPS Backend"
+#~ msgstr "แบ็กเอนด์แสดงเอกสาร XPS"
+
+#~ msgid "An XPS backend"
+#~ msgstr "แบ็กเอนด์แสดงเอกสาร XPS"
+
+#~ msgid ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+#~ msgstr ""
+#~ "สงวนลิขสิทธิ์ © 2006-2007 Brad Hards\n"
+#~ "สงวนลิขสิทธิ์ © 2007 Jiri Klement\n"
+#~ "สงวนลิขสิทธิ์ © 2008 Pino Toscano"
+
+#~ msgid "Brad Hards"
+#~ msgstr "Brad Hards"
+
+#~ msgid "Jiri Klement"
+#~ msgstr "Jiri Klement"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"

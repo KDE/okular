@@ -1,0 +1,96 @@
+# Translation of okular_ghostview to Croatian
+#
+# Zarko Pintar <zarko.pintar@gmail.com>, 2009.
+# Marko Dimjasevic <marko@dimjasevic.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2010-01-30 15:52+0100\n"
+"Last-Translator: Marko Dimjasevic <marko@dimjasevic.net>\n"
+"Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marko Dimjašević"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "marko@dimjasevic.net"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "Koristi platformsko pismo"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+"Određuje smije li Ghostscript koristiti platformska pisma. Ako nije "
+"omogućeno, koristit će se samo pisma ugrađena u dokument."
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "Opće postavke"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "&Koristi platformska pisma"
+
+# pmap: =/nom=Ghostscript/gen=Ghostscripta/dat=Ghostscriptu/aku=Ghostscript/lok=Ghostscriptu/ins=Ghostscriptom/_r=m/_b=j/
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "Ghostscript"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "Konfiguracija podrške za Ghostscript"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "Inačica dokumenta"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "Razina jezika"
+
+#~ msgid "PS Backend"
+#~ msgstr "Podrška za PS"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "Preglednik za datoteke tipa PostScript"
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "© 2007–2008 Albert Astals Cid"
+
+#~ msgid "Based on the Spectre library."
+#~ msgstr "Bazirano na biblioteci Spectre."
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

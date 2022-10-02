@@ -1,0 +1,6335 @@
+# translation of okular.po to Slovak
+# Stanislav Visnovsky <visnovsky@kde.org>, 2003, 2004.
+# Jozef Říha <jose1711@gmail.com>, 2006.
+# Richard Fric <Richard.Fric@kdemail.net>, 2006, 2007.
+# Michal Sulek <misurel@gmail.com>, 2009, 2010, 2011.
+# Richard Frič <Richard.Fric@kdemail.net>, 2011, 2012.
+# Roman Paholík <wizzardsk@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017, 2020.
+# Mthw <jari_45@hotmail.com>, 2019.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020, 2021, 2022.
+# Dusan Kazik <prescott66@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"PO-Revision-Date: 2022-06-16 09:33+0200\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 22.04.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Jozef Říha, Michal Šulek, Roman Paholík, Matej Mrenica,Dušan Kazik"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"jose1711@gmail.com,misurel@gmail.com,wizzardsk@gmail.com, jari_45@hotmail."
+"com,prescott66@gmail.com"
+
+#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#, kde-format
+msgid "Okular"
+msgstr "Okular"
+
+#: aboutdata.h:21
+#, kde-format
+msgid "Okular, a universal document viewer"
+msgstr "Okular, univerzálny prehliadač dokumentov"
+
+#: aboutdata.h:23
+#, kde-format
+msgid ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+msgstr ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Former maintainer"
+msgstr "Pôvodný správca"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Tobias Koenig"
+msgstr "Tobias Koenig"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Lots of framework work, FictionBook backend and former ODT backend"
+msgstr ""
+"Množstvo práce na frameworku, FictionBook backende a bývalom ODT backende"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Albert Astals Cid"
+msgstr "Albert Astals Cid"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Developer"
+msgstr "Vývojár"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Piotr Szymanski"
+msgstr "Piotr Szymanski"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Created Okular from KPDF codebase"
+msgstr "Vytvorenie Okularu z kódu KPDF"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "Enrico Ros"
+msgstr "Enrico Ros"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "KPDF developer"
+msgstr "Vývojár KPDF"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Eugene Trounev"
+msgstr "Eugene Trounev"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Annotations artwork"
+msgstr "Grafika poznámok"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Jiri Baum - NICTA"
+msgstr "Jiri Baum - NICTA"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Table selection tool"
+msgstr "Nástroj výberu tabuľky"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Fabio D'Urso"
+msgstr "Fabio D'Urso"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Annotation improvements"
+msgstr "Zlepšenia poznámok"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Go to page %1"
+msgstr "Prejsť na stránku %1"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Open external file"
+msgstr "Otvoriť externý súbor"
+
+#: core/action.cpp:185
+#, kde-format
+msgid "Execute '%1'..."
+msgstr "Vykonať '%1'..."
+
+#: core/action.cpp:284
+#, kde-format
+msgid "First Page"
+msgstr "Prvá stránka"
+
+#: core/action.cpp:286 part/presentationwidget.cpp:177
+#, kde-format
+msgid "Previous Page"
+msgstr "Predchádzajúca stránka"
+
+#: core/action.cpp:288 part/presentationwidget.cpp:194
+#, kde-format
+msgid "Next Page"
+msgstr "Nasledujúca stránka"
+
+#: core/action.cpp:290
+#, kde-format
+msgid "Last Page"
+msgstr "Posledná stránka"
+
+#: core/action.cpp:292
+#, kde-format
+msgid "Back"
+msgstr "Späť"
+
+#: core/action.cpp:294
+#, kde-format
+msgid "Forward"
+msgstr "Dopredu"
+
+#: core/action.cpp:296
+#, kde-format
+msgid "Quit"
+msgstr "Koniec"
+
+#: core/action.cpp:298
+#, kde-format
+msgid "Start Presentation"
+msgstr "Spustiť prezentáciu"
+
+#: core/action.cpp:300
+#, kde-format
+msgid "End Presentation"
+msgstr "Ukončiť prezentáciu"
+
+#: core/action.cpp:302
+#, kde-format
+msgid "Find..."
+msgstr "Nájsť..."
+
+#: core/action.cpp:304
+#, kde-format
+msgid "Go To Page..."
+msgstr "Prejsť na stránku..."
+
+#: core/action.cpp:355
+#, kde-format
+msgid "Play sound..."
+msgstr "Prehrať zvuk..."
+
+#: core/action.cpp:423 core/action.cpp:539
+#, kde-format
+msgid "JavaScript Script"
+msgstr "Skript JavaScriptu"
+
+#: core/action.cpp:473
+#, kde-format
+msgid "Play movie..."
+msgstr "Prehrať film..."
+
+#: core/action.cpp:544
+#, kde-format
+msgid "Play movie"
+msgstr "Prehrať film"
+
+#: core/action.cpp:546
+#, kde-format
+msgid "Stop movie"
+msgstr "Zastaviť film"
+
+#: core/action.cpp:548
+#, kde-format
+msgid "Pause movie"
+msgstr "Pozastaviť film"
+
+#: core/action.cpp:550
+#, kde-format
+msgid "Resume movie"
+msgstr "Pokračovať film"
+
+#: core/chooseenginedialog.cpp:22
+#, kde-format
+msgid "Backend Selection"
+msgstr "Výber backendu"
+
+#: core/chooseenginedialog.cpp:40
+#, kde-format
+msgid ""
+"<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
+"><br />Please select which one to use:</qt>"
+msgstr ""
+"<qt>Viac ako jeden backend bol nájdený pre typ MIME:<br /><b>%1</b> (%2)."
+"<br /><br />Prosím vyberte, ktorý chcete použiť:</qt>"
+
+#: core/document.cpp:203
+#, kde-format
+msgctxt "@info %1 is a page size"
+msgid "Most pages are %1."
+msgstr "Väčšina stránok je %1."
+
+#: core/document.cpp:224
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Portrait %1"
+msgstr "Portrét %1"
+
+#: core/document.cpp:226
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Landscape %1"
+msgstr "Krajinka %1"
+
+#: core/document.cpp:249
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 in (%3)"
+msgstr "%1 x %2 in (%3)"
+
+#: core/document.cpp:251
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 mm (%3)"
+msgstr "%1 x %2 mm (%3)"
+
+#: core/document.cpp:1682
+#, kde-format
+msgid "Continuing search from beginning"
+msgstr "Pokračujem hľadanie od začiatku"
+
+#: core/document.cpp:1685
+#, kde-format
+msgid "Continuing search from bottom"
+msgstr "Pokračujem hľadanie od konca"
+
+#: core/document.cpp:2445
+#, kde-format
+msgid ""
+"Can not find a plugin which is able to handle the document being passed."
+msgstr "Nie je možné nájsť modul schopný spracovať dokument."
+
+#: core/document.cpp:3595
+#, kde-format
+msgctxt "remove a collection of annotations from the page"
+msgid "remove annotations"
+msgstr "odstrániť poznámky"
+
+#: core/document.cpp:4160 core/document.cpp:4166
+#, kde-format
+msgid ""
+"The document is trying to execute an external application and, for your "
+"safety, Okular does not allow that."
+msgstr ""
+"Dokument sa pokúsil spustiť externú aplikáciu, z dôvodu bezpečnosti to však "
+"Okular nepovolil."
+
+#: core/document.cpp:4177
+#, kde-format
+msgid "No application found for opening file of mimetype %1."
+msgstr "S MIME typom %1 nie je asociovaná žiadna aplikácia."
+
+#: core/document.cpp:4600
+#, kde-format
+msgid "Could not open a temporary file"
+msgstr "Nepodarilo sa otvoriť dočasný súbor"
+
+#: core/document.cpp:4602
+#, kde-format
+msgid "Print conversion failed"
+msgstr "Konverzia tlače zlyhala"
+
+#: core/document.cpp:4604
+#, kde-format
+msgid "Printing process crashed"
+msgstr "Proces tlače spadol"
+
+#: core/document.cpp:4606
+#, kde-format
+msgid "Printing process could not start"
+msgstr "Proces tlače sa nepodarilo spustiť"
+
+#: core/document.cpp:4608
+#, kde-format
+msgid "Printing to file failed"
+msgstr "Tlač do súboru zlyhala"
+
+#: core/document.cpp:4610
+#, kde-format
+msgid "Printer was in invalid state"
+msgstr "Tlačiareň je v neplatnom stave"
+
+#: core/document.cpp:4612
+#, kde-format
+msgid "Unable to find file to print"
+msgstr "Nepodarilo sa nájsť súbor pre tlač"
+
+#: core/document.cpp:4614
+#, kde-format
+msgid "There was no file to print"
+msgstr "Nebol nájdený žiadny súbor pre tlač"
+
+#: core/document.cpp:4616
+#, kde-format
+msgid ""
+"Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
+"available"
+msgstr ""
+"Nepodarilo sa nájsť vhodný program pre tlač. Uistite sa, že je k dispozícii "
+"CUPS príkaz lpr."
+
+#: core/document.cpp:4618
+#, kde-format
+msgid "The page print size is invalid"
+msgstr "Veľkosť tlače strany je neplatná"
+
+#: core/document.cpp:5283 part/part.cpp:1168
+#, kde-format
+msgid "Could not open '%1'. File does not exist"
+msgstr "Nepodarilo sa otvoriť \"%1\". Súbor neexisstuje."
+
+#: core/document.cpp:5793
+#, kde-format
+msgid "Title"
+msgstr "Názov"
+
+#: core/document.cpp:5796
+#, kde-format
+msgid "Subject"
+msgstr "Predmet"
+
+#: core/document.cpp:5799
+#, kde-format
+msgid "Description"
+msgstr "Popis"
+
+#: core/document.cpp:5802
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: core/document.cpp:5805
+#, kde-format
+msgid "Creator"
+msgstr "Tvorca"
+
+#: core/document.cpp:5808
+#, kde-format
+msgid "Producer"
+msgstr "Vyrobil"
+
+#: core/document.cpp:5811
+#, kde-format
+msgid "Copyright"
+msgstr "Copyright"
+
+#: core/document.cpp:5814
+#, kde-format
+msgid "Pages"
+msgstr "Stránok"
+
+#: core/document.cpp:5817
+#, kde-format
+msgid "Created"
+msgstr "Vytvorené"
+
+#: core/document.cpp:5820
+#, kde-format
+msgid "Modified"
+msgstr "Zmenené"
+
+#: core/document.cpp:5823
+#, kde-format
+msgid "MIME Type"
+msgstr "Typ MIME"
+
+#: core/document.cpp:5826
+#, kde-format
+msgid "Category"
+msgstr "Kategória"
+
+#: core/document.cpp:5829
+#, kde-format
+msgid "Keywords"
+msgstr "Kľúčové slová"
+
+#: core/document.cpp:5832
+#, kde-format
+msgid "File Path"
+msgstr "Cesta k súboru"
+
+#: core/document.cpp:5835
+#, kde-format
+msgid "File Size"
+msgstr "Veľkosť súboru"
+
+#: core/document.cpp:5838
+#, kde-format
+msgid "Page Size"
+msgstr "Veľkosť stránky"
+
+#: core/documentcommands.cpp:62
+#, kde-format
+msgctxt "Add an annotation to the page"
+msgid "add annotation"
+msgstr "pridať poznámku"
+
+#: core/documentcommands.cpp:108
+#, kde-format
+msgctxt "Remove an annotation from the page"
+msgid "remove annotation"
+msgstr "odstrániť poznámku"
+
+#: core/documentcommands.cpp:155
+#, kde-format
+msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
+msgid "modify annotation properties"
+msgstr "zmeniť vlastnosti poznámky"
+
+#: core/documentcommands.cpp:190
+#, kde-format
+msgctxt "Translate an annotation's position on the page"
+msgid "translate annotation"
+msgstr "preložiť poznámku"
+
+#: core/documentcommands.cpp:263
+#, kde-format
+msgctxt "Change an annotation's size"
+msgid "adjust annotation"
+msgstr "upraviť poznámku"
+
+#: core/documentcommands.cpp:333
+#, kde-format
+msgctxt "Generic text edit command"
+msgid "edit text"
+msgstr "editovať text"
+
+#: core/documentcommands.cpp:396
+#, kde-format
+msgctxt "Edit an annotation's text contents"
+msgid "edit annotation contents"
+msgstr "upraviť obsah poznámky"
+
+#: core/documentcommands.cpp:445
+#, kde-format
+msgctxt "Edit an form's text contents"
+msgid "edit form contents"
+msgstr "upraviť obsah formulára"
+
+#: core/documentcommands.cpp:494
+#, kde-format
+msgctxt "Edit a list form's choices"
+msgid "edit list form choices"
+msgstr "upraviť voľby zoznamu formulára"
+
+#: core/documentcommands.cpp:528
+#, kde-format
+msgctxt "Edit a combo form's selection"
+msgid "edit combo form selection"
+msgstr "upraviť výber kombo formulára"
+
+#: core/documentcommands.cpp:600
+#, kde-format
+msgctxt "Edit the state of a group of form buttons"
+msgid "edit form button states"
+msgstr "upraviť vlastné stavy tlačidiel"
+
+#: core/generator.cpp:761
+#, kde-format
+msgid "Plain &Text..."
+msgstr "Čistý &text..."
+
+#: core/generator.cpp:764
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: core/generator.cpp:768
+#, kde-format
+msgctxt "This is the document format"
+msgid "OpenDocument Text"
+msgstr "OpenDocument Text"
+
+#: core/generator.cpp:771
+#, kde-format
+msgctxt "This is the document format"
+msgid "HTML"
+msgstr "HTML"
+
+#: core/printoptionswidget.cpp:19
+#, kde-format
+msgid "Print Options"
+msgstr "Možnosti tlače"
+
+#: core/printoptionswidget.cpp:23
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Vyplniť tlačiteľnú oblasť"
+
+#: core/printoptionswidget.cpp:24
+#, kde-format
+msgid "Fit to full page"
+msgstr "Vyplniť celú stranu"
+
+#: core/printoptionswidget.cpp:25
+#, kde-format
+msgid "Scale mode:"
+msgstr "Režim škálovania:"
+
+#: core/script/kjs_app.cpp:160
+#, kde-format
+msgid "Missing alert type"
+msgstr "Chýba typ upozornenia"
+
+#: core/script/kjs_app.cpp:222
+#, kde-format
+msgid "Do not show this message again"
+msgstr "Túto správu viac nezobrazovať"
+
+#: core/sourcereference.cpp:101
+#, kde-format
+msgctxt "'source' is a source file"
+msgid "Source: %1"
+msgstr "Zdroj: %1"
+
+#: core/textdocumentsettings.cpp:34
+#, kde-format
+msgid "&Default Font:"
+msgstr "Predvolené písmo:"
+
+#: gui/certificatemodel.cpp:39
+#, kde-format
+msgid "Version"
+msgstr "Verzia"
+
+#: gui/certificatemodel.cpp:41
+#, kde-format
+msgid "Serial Number"
+msgstr "Sériové číslo"
+
+#: gui/certificatemodel.cpp:43
+#, kde-format
+msgid "Issuer"
+msgstr "Vydavateľ"
+
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#, kde-format
+msgid "Issued On"
+msgstr "Vydané (kedy)"
+
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#, kde-format
+msgid "Expires On"
+msgstr "Expiruje"
+
+#: gui/certificatemodel.cpp:49
+#, kde-format
+msgctxt "The person/company that made the signature"
+msgid "Subject"
+msgstr "Predmet"
+
+#: gui/certificatemodel.cpp:51
+#, kde-format
+msgid "Public Key"
+msgstr "Verejný kľúč"
+
+#: gui/certificatemodel.cpp:53
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox Config dialog, performance page, memory usage"
+#| msgid "Memory usage:"
+msgid "Key Usage"
+msgstr "Využitie pamäte:"
+
+#: gui/certificatemodel.cpp:72
+#, kde-format
+msgid "V%1"
+msgstr "V%1"
+
+#: gui/certificatemodel.cpp:84
+#, kde-format
+msgid "%1 (%2 bits)"
+msgstr "%1 (%2 bity)"
+
+#: gui/certificatemodel.cpp:146
+#, kde-format
+msgid "Property"
+msgstr "Vlastníctvo"
+
+#: gui/certificatemodel.cpp:148
+#, kde-format
+msgid "Value"
+msgstr "Hodnota"
+
+#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#, kde-format
+msgid "Pop-up Note"
+msgstr "Vyskakovacia poznámka"
+
+#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#, kde-format
+msgid "Typewriter"
+msgstr "Písací stroj"
+
+#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#, kde-format
+msgid "Inline Note"
+msgstr "Vložená poznámka"
+
+#: gui/guiutils.cpp:48
+#, kde-format
+msgid "Straight Line with Comment"
+msgstr "Rovná čiara s komentárom"
+
+#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: part/pageviewannotator.cpp:1326
+#, kde-format
+msgid "Straight Line"
+msgstr "Priamka"
+
+#: gui/guiutils.cpp:50
+#, kde-format
+msgid "Polygon with Comment"
+msgstr "Polygon s komentárom"
+
+#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: part/pageviewannotator.cpp:1318
+#, kde-format
+msgid "Polygon"
+msgstr "Mnohouholník"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry with Comment"
+msgstr "Geometria s komentárom"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry"
+msgstr "Geometria"
+
+#: gui/guiutils.cpp:59
+#, kde-format
+msgid "Highlight with Comment"
+msgstr "Zvýraznenie s komentárom"
+
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#, kde-format
+msgid "Highlight"
+msgstr "Zvýraznenie"
+
+#: gui/guiutils.cpp:62
+#, kde-format
+msgid "Squiggle with Comment"
+msgstr "Vlnitý s komentárom"
+
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: part/pageviewannotator.cpp:1322
+#, kde-format
+msgid "Squiggle"
+msgstr "Vlnovka"
+
+#: gui/guiutils.cpp:65
+#, kde-format
+msgid "Underline with Comment"
+msgstr "Podčiarknutý text s komentárom"
+
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: part/pageviewannotator.cpp:1330
+#, kde-format
+msgid "Underline"
+msgstr "Podčiarknuté"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out with Comment"
+msgstr "Prečiarknutý text s komentárom"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out"
+msgstr "Prečiarknuté"
+
+#: gui/guiutils.cpp:73
+#, kde-format
+msgid "Stamp with Comment"
+msgstr "Pečiatka s komentárom"
+
+#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: part/pageviewannotator.cpp:1324
+#, kde-format
+msgid "Stamp"
+msgstr "Razítko"
+
+#: gui/guiutils.cpp:76
+#, kde-format
+msgid "Freehand Line with Comment"
+msgstr "Čiara voľnou rukou s komentárom"
+
+#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: part/pageviewannotator.cpp:1312
+#, kde-format
+msgid "Freehand Line"
+msgstr "Čiara voľnou rukou"
+
+#: gui/guiutils.cpp:79
+#, kde-format
+msgid "Caret"
+msgstr "Kurzor"
+
+#: gui/guiutils.cpp:82
+#, kde-format
+msgid "File Attachment"
+msgstr "Súbor s prílohou"
+
+#: gui/guiutils.cpp:85
+#, kde-format
+msgid "Sound"
+msgstr "Zvuk"
+
+#: gui/guiutils.cpp:88
+#, kde-format
+msgid "Movie"
+msgstr "Film"
+
+#: gui/guiutils.cpp:91
+#, kde-format
+msgctxt "Caption for a screen annotation"
+msgid "Screen"
+msgstr "Obrazovka"
+
+#: gui/guiutils.cpp:94
+#, kde-format
+msgctxt "Caption for a widget annotation"
+msgid "Widget"
+msgstr "Widget"
+
+#: gui/guiutils.cpp:97
+#, kde-format
+msgctxt "Caption for a rich media annotation"
+msgid "Rich Media"
+msgstr "Rich Media"
+
+#: gui/guiutils.cpp:109
+#, kde-format
+msgctxt "Unknown author"
+msgid "Unknown"
+msgstr "Neznámy"
+
+#: gui/guiutils.cpp:126 part/presentationwidget.cpp:370
+#, kde-format
+msgid "Author: %1"
+msgstr "Autor: %1"
+
+#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#, kde-format
+msgid "Where do you want to save %1?"
+msgstr "Kde chcete uložiť %1?"
+
+#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#, kde-format
+msgid "Could not open \"%1\" for writing. File was not saved."
+msgstr "Nepodarilo sa otvoriť \"%1\" pre zápis. Súbor nebol uložený."
+
+#: gui/signatureguiutils.cpp:42
+#, kde-format
+msgid "The signature is cryptographically valid."
+msgstr "Podpis je kryptograficky platný."
+
+#: gui/signatureguiutils.cpp:44
+#, kde-format
+msgid "The signature is cryptographically invalid."
+msgstr "Podpis je kryptograficky neplatný."
+
+#: gui/signatureguiutils.cpp:46
+#, kde-format
+msgid "Digest Mismatch occurred."
+msgstr "Vyskytla sa nezhoda s prehľadom."
+
+#: gui/signatureguiutils.cpp:48
+#, kde-format
+msgid "The signature CMS/PKCS7 structure is malformed."
+msgstr "Štruktúra podpisu CMS/PKCS7 je chybná."
+
+#: gui/signatureguiutils.cpp:50
+#, kde-format
+msgid "The requested signature is not present in the document."
+msgstr "Požadovaný podpis sa v dokumente nenachádza."
+
+#: gui/signatureguiutils.cpp:52
+#, kde-format
+msgid "The signature could not be verified."
+msgstr "Podpis nebolo možné overiť."
+
+#: gui/signatureguiutils.cpp:60
+#, kde-format
+msgid "Certificate is Trusted."
+msgstr "Certifikát je dôverihodný."
+
+#: gui/signatureguiutils.cpp:62
+#, kde-format
+msgid "Certificate issuer isn't Trusted."
+msgstr "Certifikát je nie je dôverihodný."
+
+#: gui/signatureguiutils.cpp:64
+#, kde-format
+msgid "Certificate issuer is unknown."
+msgstr "Vydavateľ certifikátu je neznámy."
+
+#: gui/signatureguiutils.cpp:66
+#, kde-format
+msgid "Certificate has been Revoked."
+msgstr "Certifikát bol zrušený."
+
+#: gui/signatureguiutils.cpp:68
+#, kde-format
+msgid "Certificate has Expired."
+msgstr "Certifikátu vypršala platnosť."
+
+#: gui/signatureguiutils.cpp:70
+#, kde-format
+msgid "Certificate has not yet been verified."
+msgstr "Certifikát ešte nebol overený."
+
+#: gui/signatureguiutils.cpp:72
+#, kde-format
+msgid "Unknown issue with Certificate or corrupted data."
+msgstr "Neznámy problém s certifikátom alebo poškodené údaje."
+
+#: gui/signatureguiutils.cpp:80
+#, kde-format
+msgid "MD2"
+msgstr "MD2"
+
+#: gui/signatureguiutils.cpp:82
+#, kde-format
+msgid "MD5"
+msgstr "MD5"
+
+#: gui/signatureguiutils.cpp:84
+#, kde-format
+msgid "SHA1"
+msgstr "SHA1"
+
+#: gui/signatureguiutils.cpp:86
+#, kde-format
+msgid "SHA256"
+msgstr "SHA256"
+
+#: gui/signatureguiutils.cpp:88
+#, kde-format
+msgid "SHA384"
+msgstr "SHA384"
+
+#: gui/signatureguiutils.cpp:90
+#, kde-format
+msgid "SHA512"
+msgstr "SHA512"
+
+#: gui/signatureguiutils.cpp:92
+#, kde-format
+msgid "SHA224"
+msgstr "SHA224"
+
+#: gui/signatureguiutils.cpp:94
+#, kde-format
+msgid "Unknown Algorithm"
+msgstr "Neznámy algoritmus"
+
+#: gui/signatureguiutils.cpp:102
+#, kde-format
+msgid "RSA"
+msgstr "RSA"
+
+#: gui/signatureguiutils.cpp:104
+#, kde-format
+msgid "DSA"
+msgstr "DSA"
+
+#: gui/signatureguiutils.cpp:106
+#, kde-format
+msgid "EC"
+msgstr "EC"
+
+#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#, kde-format
+msgid "Unknown Type"
+msgstr "Neznámy typ"
+
+#: gui/signatureguiutils.cpp:118
+#, kde-format
+msgid "Digital Signature"
+msgstr "Digitálny podpis"
+
+#: gui/signatureguiutils.cpp:121
+#, kde-format
+msgid "Non-Repudiation"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:124
+#, kde-format
+msgid "Encrypt Keys"
+msgstr "Šifrovacie kľúče"
+
+#: gui/signatureguiutils.cpp:127
+#, kde-format
+msgid "Decrypt Keys"
+msgstr "Dešifrovacie kľúče"
+
+#: gui/signatureguiutils.cpp:130
+#, kde-format
+msgid "Key Agreement"
+msgstr "Zhoda kľúčov"
+
+#: gui/signatureguiutils.cpp:133
+#, kde-format
+msgid "Sign Certificate"
+msgstr "Podpísať certifikát"
+
+#: gui/signatureguiutils.cpp:136
+#, kde-format
+msgid "Sign CRL"
+msgstr "Podpísať CRL"
+
+#: gui/signatureguiutils.cpp:139
+#, kde-format
+msgid "Encrypt Only"
+msgstr "Iba na šifrovanie"
+
+#: gui/signatureguiutils.cpp:142
+#, kde-format
+msgid "No Usage Specified"
+msgstr "Nešpecifikované použitie"
+
+#: gui/signatureguiutils.cpp:149
+#, kde-format
+msgctxt "Joins the various ways a signature key can be used in a longer string"
+msgid ", "
+msgstr ", "
+
+#: gui/signatureguiutils.cpp:163
+#, kde-format
+msgid "The document has not been modified since it was signed."
+msgstr "Tento dokument nebol upravený od podpísania."
+
+#: gui/signatureguiutils.cpp:166
+#, kde-format
+msgid ""
+"The revision of the document that was covered by this signature has not been "
+"modified;\n"
+"however there have been subsequent changes to the document."
+msgstr ""
+"Revízia dokumentu, na ktorý sa vzťahuje tento podpis, sa nezmenila;\n"
+"v dokumente sa však vyskytli následné zmeny."
+
+#: gui/signatureguiutils.cpp:170
+#, kde-format
+msgid ""
+"The document has been modified in a way not permitted by a previous signer."
+msgstr ""
+"Tento dokument bol upravený spôsobom nepoveleným predchádzajúcim "
+"podpisovateľom."
+
+#: gui/signatureguiutils.cpp:172
+#, kde-format
+msgid "The document integrity verification could not be completed."
+msgstr "Overenie pravosti dokumentu sa nepodarilo dokončiť."
+
+#: gui/signatureguiutils.cpp:205
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid "This document has unsigned signature fields."
+msgstr "Tento dokument je digitálne podpísaný."
+
+#: gui/signatureguiutils.cpp:208
+#, kde-format
+msgid "This document is digitally signed."
+msgstr "Tento dokument je digitálne podpísaný."
+
+#: gui/signatureguiutils.cpp:210
+#, kde-format
+msgid ""
+"This document is digitally signed. There have been changes since last signed."
+msgstr ""
+"Tento dokument je digitálne podpísaný. Od posledného podpísania došlo k "
+"zmenám."
+
+#: gui/signatureguiutils.cpp:213
+#, kde-format
+msgid ""
+"This document is digitally signed. Some of the signatures could not be "
+"validated properly."
+msgstr ""
+"Tento dokument je digitálne podpísaný. Niektoré z podpisov nebolo možné "
+"overiť správne."
+
+#: gui/signaturemodel.cpp:141
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Unsigned Signature %1"
+msgstr "Digitálny podpis"
+
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#, kde-format
+msgid "Field: %1 on page %2"
+msgstr "Pole: %1 na strane %2"
+
+#: gui/signaturemodel.cpp:152
+#, kde-format
+msgid "Rev. %1: Signed By %2"
+msgstr "Rev. %1: Podpísaná By %2"
+
+#: gui/signaturemodel.cpp:158
+#, kde-format
+msgid "Signing Time: %1"
+msgstr "Čas podpisu: %1"
+
+#: gui/signaturemodel.cpp:163
+#, kde-format
+msgid "Reason: %1"
+msgstr "Dôvod: %1"
+
+#: part/annotationactionhandler.cpp:147
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Red"
+msgstr "Červená"
+
+#: part/annotationactionhandler.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Orange"
+msgstr "Oranžová"
+
+#: part/annotationactionhandler.cpp:149
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Yellow"
+msgstr "Žltá"
+
+#: part/annotationactionhandler.cpp:150
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Green"
+msgstr "Zelená"
+
+#: part/annotationactionhandler.cpp:151
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Cyan"
+msgstr "Tyrkysová"
+
+#: part/annotationactionhandler.cpp:152
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Blue"
+msgstr "Modrá"
+
+#: part/annotationactionhandler.cpp:153
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Magenta"
+msgstr "Purpurová"
+
+#: part/annotationactionhandler.cpp:154
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "White"
+msgstr "Biela"
+
+#: part/annotationactionhandler.cpp:155
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Gray"
+msgstr "Šedá"
+
+#: part/annotationactionhandler.cpp:156
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Black"
+msgstr "Čierna"
+
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Width %1"
+msgstr "Šírka %1"
+
+#: part/annotationactionhandler.cpp:251
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "%1%"
+msgstr "%1%"
+
+#: part/annotationactionhandler.cpp:295
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (No annotation selected)"
+msgstr "Šírka riadku poznámky (Nie je vybratá žiadna poznámka)"
+
+#: part/annotationactionhandler.cpp:296
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color (No annotation selected)"
+msgstr "Farba poznámky (Nie sú vybrané žiadne poznámky)"
+
+#: part/annotationactionhandler.cpp:297
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (No annotation selected)"
+msgstr "Farba výplne poznámky (Nie je vybratá žiadna poznámka)"
+
+#: part/annotationactionhandler.cpp:298
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity (No annotation selected)"
+msgstr "Krytie poznámky (Nie sú vybrané žiadne poznámky)"
+
+#: part/annotationactionhandler.cpp:299
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (No annotation selected)"
+msgstr "Písmo poznámky (Nie je vybratá žiadna poznámka)"
+
+#: part/annotationactionhandler.cpp:300
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Add the current annotation to the quick annotations menu (No annotation "
+"selected)"
+msgstr ""
+"Pridajte aktuálnu poznámku do ponuky rýchlych poznámok (nie je vybratá "
+"žiadna poznámka)."
+
+#: part/annotationactionhandler.cpp:301
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
+"selected)"
+msgstr ""
+"Obmedziť pomer tvaru na 1:1 alebo uhol čiar do 15° krokov (Žiadne poznámky "
+"nie sú vybrané)"
+
+#: part/annotationactionhandler.cpp:302
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Advanced settings for the current annotation tool (No annotation selected)"
+msgstr ""
+"Rozšírené nastavenia pre aktuálny nástroj poznámok (nie je vybratá žiadna "
+"poznámka)"
+
+#: part/annotationactionhandler.cpp:307
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width"
+msgstr "Šírka riadku poznámky"
+
+#: part/annotationactionhandler.cpp:309
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (Current annotation has no line width)"
+msgstr "Šírka čiary poznámky (Aktuálna poznámka nemá šírku čiary)"
+
+#: part/annotationactionhandler.cpp:313
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation text color"
+msgstr "Farba textu poznámky"
+
+#: part/annotationactionhandler.cpp:315
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation border color"
+msgstr "Farba okraja poznámky"
+
+#: part/annotationactionhandler.cpp:317
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color"
+msgstr "Farba poznámky"
+
+#: part/annotationactionhandler.cpp:321
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color"
+msgstr "Farba výplne poznámky"
+
+#: part/annotationactionhandler.cpp:323
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (Current annotation has no fill color)"
+msgstr "Farba výplne poznámky (Aktuálna poznámka nemá žiadnu výplň)"
+
+#: part/annotationactionhandler.cpp:327
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font"
+msgstr "Písmo poznámky"
+
+#: part/annotationactionhandler.cpp:329
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (Current annotation has no font)"
+msgstr "Písmo poznámky (Aktuálna poznámka nemá písmo)"
+
+#: part/annotationactionhandler.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain line angle to 15° steps"
+msgstr "Obmedziť uhol čiar do 15° krokov"
+
+#: part/annotationactionhandler.cpp:335
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain shape ratio to 1:1"
+msgstr "Obmedziť pomer tvaru na 1:1"
+
+#: part/annotationactionhandler.cpp:337
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
+"current annotation)"
+msgstr ""
+"Obmedziť pomer tvaru na 1:1 alebo uhol čiar do 15° krokov (súčasná poznámka "
+"toto nepodporuje)"
+
+#: part/annotationactionhandler.cpp:340
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity"
+msgstr "Krytie poznámky"
+
+#: part/annotationactionhandler.cpp:341
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the current annotation to the quick annotations menu"
+msgstr "Pridajte aktuálnu poznámku do ponuky rýchlych poznámok"
+
+#: part/annotationactionhandler.cpp:342
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Advanced settings for the current annotation tool"
+msgstr "Rozšírené nastavenia aktuálneho nástroja poznámok"
+
+#: part/annotationactionhandler.cpp:431
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Color"
+msgstr "Farba"
+
+#: part/annotationactionhandler.cpp:433
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Fill Color"
+msgstr "Farba výplne"
+
+#: part/annotationactionhandler.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Transparent"
+msgstr "Priesvitný"
+
+#: part/annotationactionhandler.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Custom Color..."
+msgstr "Vlastná farba..."
+
+#: part/annotationactionhandler.cpp:502
+#, kde-format
+msgctxt "@title:window"
+msgid "Select color"
+msgstr "Vybrať farbu"
+
+#: part/annotationactionhandler.cpp:554
+#, kde-format
+msgid "&Annotations"
+msgstr "&Poznámky"
+
+#: part/annotationactionhandler.cpp:555
+#, kde-format
+msgctxt "@action:intoolbar Hide the toolbar"
+msgid "Hide"
+msgstr "Skryť"
+
+#: part/annotationactionhandler.cpp:556
+#, kde-format
+msgctxt "@action:intoolbar Show the builtin annotation toolbar"
+msgid "Show more annotation tools"
+msgstr "Zobraziť viac nástrojov pre poznámky"
+
+#: part/annotationactionhandler.cpp:559
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Highlighter"
+msgstr "Zvýrazňovač"
+
+#: part/annotationactionhandler.cpp:560
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Underline"
+msgstr "Podčiarknuté"
+
+#: part/annotationactionhandler.cpp:561
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Squiggle"
+msgstr "Vlnovka"
+
+#: part/annotationactionhandler.cpp:562
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Strike Out"
+msgstr "Prečiarknuté"
+
+#: part/annotationactionhandler.cpp:564
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Typewriter"
+msgstr "Písací stroj"
+
+#: part/annotationactionhandler.cpp:565
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Inline Note"
+msgstr "Vložená poznámka"
+
+#: part/annotationactionhandler.cpp:566
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Popup Note"
+msgstr "Vyskakovacia poznámka"
+
+#: part/annotationactionhandler.cpp:567
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Freehand Line"
+msgstr "Čiara voľnou rukou"
+
+#: part/annotationactionhandler.cpp:569
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Straight line"
+msgstr "Priamka"
+
+#: part/annotationactionhandler.cpp:570
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Arrow"
+msgstr "Šípka"
+
+#: part/annotationactionhandler.cpp:571
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Rectangle"
+msgstr "Obdĺžnik"
+
+#: part/annotationactionhandler.cpp:572
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Ellipse"
+msgstr "Elipsa"
+
+#: part/annotationactionhandler.cpp:573
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Polygon"
+msgstr "Mnohouholník"
+
+#: part/annotationactionhandler.cpp:574
+#, kde-format
+msgctxt "@action"
+msgid "Geometrical shapes"
+msgstr "Geometrické tvary"
+
+#: part/annotationactionhandler.cpp:625
+#, kde-format
+msgctxt "@action"
+msgid "Stamp"
+msgstr "Razítko"
+
+#: part/annotationactionhandler.cpp:650
+#, kde-format
+msgctxt "@action:intoolbar Show list of quick annotation tools"
+msgid "Quick Annotations"
+msgstr "Rýchle poznámky"
+
+#: part/annotationactionhandler.cpp:658
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Choose an annotation tool from the quick annotations"
+msgstr "Vyberte nástroj poznámok z rýchlych poznámok"
+
+#: part/annotationactionhandler.cpp:668
+#, kde-format
+msgid "Quick Annotation Bar"
+msgstr "Panel rýchlych poznámok"
+
+#: part/annotationactionhandler.cpp:682
+#, kde-format
+msgctxt ""
+"@action:intoolbar Add current annotation tool to the quick annotations list"
+msgid "Add to Quick Annotations"
+msgstr "Pridať k rýchlym poznámkam"
+
+#: part/annotationactionhandler.cpp:685
+#, kde-format
+msgctxt ""
+"@action:intoolbar When checked keep the current annotation tool active after "
+"use"
+msgid "Keep Active"
+msgstr "Zachovať aktívne"
+
+#: part/annotationactionhandler.cpp:686
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Keep the annotation tool active after use"
+msgstr "Nástroj poznámok nechať po použití aktívny"
+
+#: part/annotationactionhandler.cpp:691
+#, kde-format
+msgctxt ""
+"@action When checked, line annotations are constrained to 15° steps, shape "
+"annotations to 1:1 ratio"
+msgid "Constrain Ratio and Angle of Annotation Tools"
+msgstr "Obmedziť pomer a uhol nástrojov poznámok"
+
+#: part/annotationactionhandler.cpp:697
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Font"
+msgstr "Písmo"
+
+#: part/annotationactionhandler.cpp:698
+#, kde-format
+msgctxt "@action:intoolbar Current annotation advanced settings"
+msgid "Annotation Settings"
+msgstr "Nastavenia poznámok"
+
+#: part/annotationactionhandler.cpp:701
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Line width"
+msgstr "Šírka čiary"
+
+#: part/annotationactionhandler.cpp:710
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Opacity"
+msgstr "Krytie"
+
+#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#, kde-format
+msgid "Page %1"
+msgstr "Stránka %1"
+
+#: part/annotationpopup.cpp:81
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Poznámka"
+msgstr[1] "%1 poznámky"
+msgstr[2] "%1 poznámok"
+
+#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#, kde-format
+msgid "&Open Pop-up Note"
+msgstr "&Otvoriť vyskakovaciu poznámku"
+
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#, kde-format
+msgid "&Delete"
+msgstr "&Odstrániť"
+
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/propertiesdialog.cpp:54
+#, kde-format
+msgid "&Properties"
+msgstr "&Vlastnosti"
+
+#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#, kde-format
+msgctxt "%1 is the name of the file to save"
+msgid "&Save '%1'..."
+msgstr "&Uložiť '%1'..."
+
+#: part/annotationpropertiesdialog.cpp:54
+#, kde-format
+msgid "&Appearance"
+msgstr "Vz&hľad"
+
+#: part/annotationpropertiesdialog.cpp:59
+#, kde-format
+msgid "&General"
+msgstr "&Všeobecné"
+
+#: part/annotationpropertiesdialog.cpp:64
+#, kde-format
+msgid "&Author:"
+msgstr "&Autor:"
+
+#: part/annotationpropertiesdialog.cpp:69
+#, kde-format
+msgid "Created:"
+msgstr "Vytvorené:"
+
+#: part/annotationpropertiesdialog.cpp:74
+#, kde-format
+msgid "Modified:"
+msgstr "Zmenené:"
+
+#: part/annotationpropertiesdialog.cpp:108
+#, kde-format
+msgid "Pop-up Note Properties"
+msgstr "Vlastnosti vyskakovacej poznámky"
+
+#: part/annotationpropertiesdialog.cpp:111
+#, kde-format
+msgid "Typewriter Properties"
+msgstr "Vlastnosti písacieho stroja"
+
+#: part/annotationpropertiesdialog.cpp:113
+#, kde-format
+msgid "Inline Note Properties"
+msgstr "Vlastnosti vloženej poznámky"
+
+#: part/annotationpropertiesdialog.cpp:119
+#, kde-format
+msgid "Straight Line Properties"
+msgstr "Vlastnosti rovnej čiary"
+
+#: part/annotationpropertiesdialog.cpp:121
+#, kde-format
+msgid "Polygon Properties"
+msgstr "Vlastnosti polygónu"
+
+#: part/annotationpropertiesdialog.cpp:125
+#, kde-format
+msgid "Geometry Properties"
+msgstr "Vlastnosti geometrie"
+
+#: part/annotationpropertiesdialog.cpp:128
+#, kde-format
+msgid "Text Markup Properties"
+msgstr "Vlastnosti textovej značky"
+
+#: part/annotationpropertiesdialog.cpp:131
+#, kde-format
+msgid "Stamp Properties"
+msgstr "Vlastnosti razítka"
+
+#: part/annotationpropertiesdialog.cpp:134
+#, kde-format
+msgid "Freehand Line Properties"
+msgstr "Vlastnosti čiary voľnou rukou"
+
+#: part/annotationpropertiesdialog.cpp:137
+#, kde-format
+msgid "Caret Properties"
+msgstr "Vlastnosti kurzoru"
+
+#: part/annotationpropertiesdialog.cpp:140
+#, kde-format
+msgid "File Attachment Properties"
+msgstr "Vlastnosti súboru s prílohou"
+
+#: part/annotationpropertiesdialog.cpp:143
+#, kde-format
+msgid "Sound Properties"
+msgstr "Vlastnosti zvuku"
+
+#: part/annotationpropertiesdialog.cpp:146
+#, kde-format
+msgid "Movie Properties"
+msgstr "Vlastnosti filmu"
+
+#: part/annotationpropertiesdialog.cpp:149
+#, kde-format
+msgid "Annotation Properties"
+msgstr "Vlastnosti poznámky"
+
+#: part/annotationpropertiesdialog.cpp:175
+#, kde-format
+msgid "Modified: %1"
+msgstr "Zmenené: %1"
+
+#: part/annotationwidgets.cpp:56
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a custom stamp symbol from file"
+msgstr "Vybrať symbol vlastného razítka zo súboru"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgctxt "@title:window file chooser"
+msgid "Select custom stamp symbol"
+msgstr "Vyberte vlastný symbol razítka"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgid ""
+"*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
+msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | Súbory ikon (*.ico *.png *.xpm *.svg *.svgz)"
+
+#: part/annotationwidgets.cpp:160
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not load the file <filename>%1</filename>"
+msgstr "Nepodarilo sa načítať súbor <filename>%1</filename>"
+
+#: part/annotationwidgets.cpp:160
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid file"
+msgstr "Neplatný súbor"
+
+#: part/annotationwidgets.cpp:267
+#, kde-format
+msgid "&Color:"
+msgstr "&Farba:"
+
+#: part/annotationwidgets.cpp:276
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80%'"
+msgid "%"
+msgstr "%"
+
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#, kde-format
+msgid "&Opacity:"
+msgstr "&Krytie:"
+
+#: part/annotationwidgets.cpp:365
+#, kde-format
+msgid "Icon:"
+msgstr "Ikona:"
+
+#: part/annotationwidgets.cpp:366
+#, kde-format
+msgid "Comment"
+msgstr "Komentár"
+
+#: part/annotationwidgets.cpp:367
+#, kde-format
+msgid "Help"
+msgstr "Pomocník"
+
+#: part/annotationwidgets.cpp:368
+#, kde-format
+msgid "Insert"
+msgstr "Vložiť"
+
+#: part/annotationwidgets.cpp:369
+#, kde-format
+msgid "Key"
+msgstr "Klávesa"
+
+#: part/annotationwidgets.cpp:370
+#, kde-format
+msgid "New paragraph"
+msgstr "Nový odstavec"
+
+#: part/annotationwidgets.cpp:371
+#, kde-format
+msgid "Note"
+msgstr "Poznámka"
+
+#: part/annotationwidgets.cpp:372
+#, kde-format
+msgid "Paragraph"
+msgstr "Odstavec"
+
+#: part/annotationwidgets.cpp:380
+#, kde-format
+msgid "Font:"
+msgstr "Písmo:"
+
+#: part/annotationwidgets.cpp:389
+#, kde-format
+msgid "Text &color:"
+msgstr "Farba písma:"
+
+#: part/annotationwidgets.cpp:396
+#, kde-format
+msgid "&Align:"
+msgstr "&Zarovnanie:"
+
+#: part/annotationwidgets.cpp:397
+#, kde-format
+msgid "Left"
+msgstr "Doľava"
+
+#: part/annotationwidgets.cpp:398
+#, kde-format
+msgid "Center"
+msgstr "Vycentrovať"
+
+#: part/annotationwidgets.cpp:399
+#, kde-format
+msgid "Right"
+msgstr "Doprava"
+
+#: part/annotationwidgets.cpp:407
+#, kde-format
+msgid "Border &width:"
+msgstr "Šírka okraja:"
+
+#: part/annotationwidgets.cpp:416
+#, kde-format
+msgid "Approved"
+msgstr "Schválené"
+
+#: part/annotationwidgets.cpp:417
+#, kde-format
+msgid "As Is"
+msgstr "Tak ako je"
+
+#: part/annotationwidgets.cpp:418
+#, kde-format
+msgid "Confidential"
+msgstr "Dôverné"
+
+#: part/annotationwidgets.cpp:419
+#, kde-format
+msgid "Departmental"
+msgstr "Oddelenie"
+
+#: part/annotationwidgets.cpp:420
+#, kde-format
+msgid "Draft"
+msgstr "Návrh"
+
+#: part/annotationwidgets.cpp:421
+#, kde-format
+msgid "Experimental"
+msgstr "Experimentálne"
+
+#: part/annotationwidgets.cpp:422
+#, kde-format
+msgid "Expired"
+msgstr "Expirované"
+
+#: part/annotationwidgets.cpp:423
+#, kde-format
+msgid "Final"
+msgstr "Finálne"
+
+#: part/annotationwidgets.cpp:424
+#, kde-format
+msgid "For Comment"
+msgstr "Pre komentáre"
+
+#: part/annotationwidgets.cpp:425
+#, kde-format
+msgid "For Public Release"
+msgstr "Pre verejné publikovanie"
+
+#: part/annotationwidgets.cpp:426
+#, kde-format
+msgid "Not Approved"
+msgstr "Neschválené"
+
+#: part/annotationwidgets.cpp:427
+#, kde-format
+msgid "Not For Public Release"
+msgstr "Nie pre verejné publikovanie"
+
+#: part/annotationwidgets.cpp:428
+#, kde-format
+msgid "Sold"
+msgstr "Predané"
+
+#: part/annotationwidgets.cpp:429
+#, kde-format
+msgid "Top Secret"
+msgstr "Prísne tajné"
+
+#: part/annotationwidgets.cpp:430
+#, kde-format
+msgid "Bookmark"
+msgstr "Záložka"
+
+#: part/annotationwidgets.cpp:431
+#, kde-format
+msgid "Information"
+msgstr "Informácia"
+
+#: part/annotationwidgets.cpp:432
+#, kde-format
+msgid "KDE"
+msgstr "KDE"
+
+#: part/annotationwidgets.cpp:456
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
+"visible in PDF readers other than Okular.</warning>"
+msgstr ""
+"<warning>experimentálna funkcia<nl /> Známky vložené do dokumentov PDF nie "
+"sú viditeľné v iných čítačkách PDF ako Okular.</warning>"
+
+#: part/annotationwidgets.cpp:469
+#, kde-format
+msgid "Stamp symbol:"
+msgstr "Symbol razítka:"
+
+#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
+#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
+#: part/annotationwidgets.cpp:795
+#, kde-format
+msgid "&Width:"
+msgstr "Šírka &pera:"
+
+#: part/annotationwidgets.cpp:522
+#, kde-format
+msgid "Line start:"
+msgstr "Začiatok riadku:"
+
+#: part/annotationwidgets.cpp:524
+#, kde-format
+msgid "Line end:"
+msgstr "Koniec riadku:"
+
+#: part/annotationwidgets.cpp:527
+#, kde-format
+msgid "Square"
+msgstr "Štvorec"
+
+#: part/annotationwidgets.cpp:528
+#, kde-format
+msgid "Circle"
+msgstr "Kruh"
+
+#: part/annotationwidgets.cpp:529
+#, kde-format
+msgid "Diamond"
+msgstr "Diamant"
+
+#: part/annotationwidgets.cpp:530
+#, kde-format
+msgid "Open Arrow"
+msgstr "Otvorená šípka"
+
+#: part/annotationwidgets.cpp:531
+#, kde-format
+msgid "Closed Arrow"
+msgstr "Zatvorená šípka"
+
+#: part/annotationwidgets.cpp:532
+#, kde-format
+msgid "None"
+msgstr "Žiadny"
+
+#: part/annotationwidgets.cpp:533
+#, kde-format
+msgid "Butt"
+msgstr ""
+
+#: part/annotationwidgets.cpp:534
+#, kde-format
+msgid "Right Open Arrow"
+msgstr "Otvorená šípka vpravo"
+
+#: part/annotationwidgets.cpp:535
+#, kde-format
+msgid "Right Closed Arrow"
+msgstr "Pravá zatvorená šípka"
+
+#: part/annotationwidgets.cpp:536
+#, kde-format
+msgid "Slash"
+msgstr "Lomítko"
+
+#: part/annotationwidgets.cpp:549
+#, kde-format
+msgid "Leader line length:"
+msgstr "Dĺžka vodiacej čiary:"
+
+#: part/annotationwidgets.cpp:551
+#, kde-format
+msgid "Leader line extensions length:"
+msgstr "Dĺžka rozšírení vodiacej čiary:"
+
+#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#, kde-format
+msgid "Enabled"
+msgstr "Povolené"
+
+#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#, kde-format
+msgid "Shape fill:"
+msgstr "Výplň tvaru:"
+
+#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#, kde-format
+msgid "Type:"
+msgstr "Typ:"
+
+#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#, kde-format
+msgid "Strike out"
+msgstr "Prečiarknuté"
+
+#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#, kde-format
+msgid "Rectangle"
+msgstr "Obdĺžnik"
+
+#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#, kde-format
+msgid "Ellipse"
+msgstr "Elipsa"
+
+#: part/annotationwidgets.cpp:763
+#, kde-format
+msgid "File attachment symbol:"
+msgstr "Symbol súboru s prílohou:"
+
+#: part/annotationwidgets.cpp:766
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Graph"
+msgstr "Graf"
+
+#: part/annotationwidgets.cpp:767
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Push Pin"
+msgstr "Pripináčik"
+
+#: part/annotationwidgets.cpp:768
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Paperclip"
+msgstr "Spinka"
+
+#: part/annotationwidgets.cpp:769
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Tag"
+msgstr "Značka"
+
+#: part/annotationwidgets.cpp:778
+#, kde-format
+msgctxt "'File' as normal file, that can be opened, saved, etc.."
+msgid "File"
+msgstr "Súbor"
+
+#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#, kde-format
+msgctxt "Not available size"
+msgid "N/A"
+msgstr "N/A"
+
+#: part/annotationwidgets.cpp:783
+#, kde-format
+msgid "No description available."
+msgstr "Popis nie je k dispozícii."
+
+#: part/annotationwidgets.cpp:791
+#, kde-format
+msgid "Name:"
+msgstr "&Názov:"
+
+#: part/annotationwidgets.cpp:802
+#, kde-format
+msgid "Description:"
+msgstr "Popis:"
+
+#: part/annotationwidgets.cpp:861
+#, kde-format
+msgid "Caret symbol:"
+msgstr "Znak vsuvky:"
+
+#: part/annotationwidgets.cpp:863
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "None"
+msgstr "Žiadny"
+
+#: part/annotationwidgets.cpp:864
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "P"
+msgstr "P"
+
+#: part/annotwindow.cpp:52
+#, kde-format
+msgid "Close this note"
+msgstr "Zavrieť túto poznámku"
+
+#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#, kde-format
+msgid "Options"
+msgstr "Možnosti"
+
+#: part/annotwindow.cpp:106
+#, kde-format
+msgid ""
+"This annotation may contain LaTeX code.\n"
+"Click here to render."
+msgstr ""
+"Táto poznámka môže obsahovať kód LaTeX.\n"
+"Kliknite sem na vykreslenie."
+
+#: part/annotwindow.cpp:415
+#, kde-format
+msgid "Cannot find latex executable."
+msgstr "Nie je možné nájsť program latex."
+
+#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "LaTeX rendering failed"
+msgstr "LaTeX renderovanie zlyhalo"
+
+#: part/annotwindow.cpp:420
+#, kde-format
+msgid "Cannot find dvipng executable."
+msgstr "Nie je možné nájsť program dvipng."
+
+#: part/annotwindow.cpp:425
+#, kde-format
+msgid "A problem occurred during the execution of the 'latex' command."
+msgstr "Počas vykonania príkazu 'latex' nastala chyba."
+
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "A problem occurred during the execution of the 'dvipng' command."
+msgstr "Počas vykonania príkazu 'dvipng' nastala chyba."
+
+#: part/bookmarklist.cpp:115
+#, kde-format
+msgctxt "%1 is the file name"
+msgid ""
+"%1\n"
+"\n"
+"One bookmark"
+msgid_plural ""
+"%1\n"
+"\n"
+"%2 bookmarks"
+msgstr[0] ""
+"%1\n"
+"\n"
+"Jedna záložka"
+msgstr[1] ""
+"%1\n"
+"\n"
+"%2 záložky"
+msgstr[2] ""
+"%1\n"
+"\n"
+"%2 záložiek"
+
+#: part/bookmarklist.cpp:131 part/part.cpp:422
+#, kde-format
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#: part/bookmarklist.cpp:135
+#, fuzzy, kde-format
+#| msgid "End of the document"
+msgid "Show for all documents"
+msgstr "Koniec dokumentu"
+
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
+#: part/toc.cpp:43
+#, kde-format
+msgid "Search..."
+msgstr "Hľadať..."
+
+#: part/bookmarklist.cpp:257
+#, kde-format
+msgid "Go to This Bookmark"
+msgstr "Prejsť na túto záložku"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
+#: part/part.cpp:2467
+#, kde-format
+msgid "Rename Bookmark"
+msgstr "Premenovať záložku"
+
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Odstrániť záložku"
+
+#: part/bookmarklist.cpp:287
+#, kde-format
+msgctxt "Opens the selected document"
+msgid "Open Document"
+msgstr "Otvoriť dokument"
+
+#: part/bookmarklist.cpp:290
+#, kde-format
+msgid "Remove all Bookmarks for this Document"
+msgstr ""
+
+#: part/certificateviewer.cpp:121
+#, kde-format
+msgid "Certificate Viewer"
+msgstr "Prehliadač certifikátov"
+
+#: part/certificateviewer.cpp:124
+#, kde-format
+msgid "Export..."
+msgstr "Exportovať..."
+
+#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General"
+msgstr "Všeobecné"
+
+#: part/certificateviewer.cpp:132
+#, kde-format
+msgid "Issued By"
+msgstr "Vydané (kým)"
+
+#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#, kde-format
+msgid "Common Name(CN)"
+msgstr "Bežný názov (KN)"
+
+#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#, kde-format
+msgid "EMail"
+msgstr "EMail"
+
+#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#, kde-format
+msgid "Organization(O)"
+msgstr "Organizácia"
+
+#: part/certificateviewer.cpp:139
+#, kde-format
+msgid "Issued To"
+msgstr "Vydané (komu)"
+
+#: part/certificateviewer.cpp:146
+#, kde-format
+msgid "Validity"
+msgstr "Platnosť"
+
+#: part/certificateviewer.cpp:152
+#, kde-format
+msgid "Fingerprints"
+msgstr "Odtlačky"
+
+#: part/certificateviewer.cpp:160
+#, kde-format
+msgid "SHA-1 Fingerprint"
+msgstr "Odtlačok SHA-1"
+
+#: part/certificateviewer.cpp:161
+#, kde-format
+msgid "SHA-256 Fingerprint"
+msgstr "Odtlačok SHA-256"
+
+#: part/certificateviewer.cpp:179
+#, kde-format
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: part/certificateviewer.cpp:180
+#, kde-format
+msgid "Certificate Data:"
+msgstr "Údaje certifikátu:"
+
+#: part/certificateviewer.cpp:232
+#, kde-format
+msgid "Where do you want to save this certificate?"
+msgstr "Kde chcete uložiť tento certifikát?"
+
+#: part/certificateviewer.cpp:233
+#, kde-format
+msgid "Certificate File (*.cer)"
+msgstr "Súbor certifikátu (*.cer)"
+
+#: part/certificateviewer.cpp:236
+#, kde-format
+msgid "Could not export the certificate"
+msgstr "Nepodarilo sa exportovať certifikát"
+
+#: part/colormodemenu.cpp:17
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Color Mode"
+msgstr "&Farebný režim"
+
+#: part/colormodemenu.cpp:19
+#, kde-format
+msgctxt "@action Change Colors feature toggle action"
+msgid "Change Colors"
+msgstr "Zmeniť farby"
+
+#: part/colormodemenu.cpp:32
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Normal Colors"
+msgstr "Normálne farby"
+
+#: part/colormodemenu.cpp:44
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Invert Colors"
+msgstr "Invertovať farby"
+
+#: part/colormodemenu.cpp:45
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Paper Color"
+msgstr "Zmeniť farbu papiera"
+
+#: part/colormodemenu.cpp:47
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Dark && Light Colors"
+msgstr "Zmeniť tmavé a svetlé farby"
+
+#: part/colormodemenu.cpp:49
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Convert to &Black && White"
+msgstr "Previesť na čiernobielu"
+
+#: part/colormodemenu.cpp:52
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert &Lightness"
+msgstr "Invertovať svetlosť"
+
+#: part/colormodemenu.cpp:55
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert L&uma (sRGB Linear)"
+msgstr "Invertovať Luma (sRGB lineárne)"
+
+#: part/colormodemenu.cpp:58
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert Luma (&Symmetric)"
+msgstr "Invertovať Luma (Symetrické)"
+
+#: part/colormodemenu.cpp:61
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue P&ositive"
+msgstr "Posunúť odtieň pozitívne"
+
+#: part/colormodemenu.cpp:64
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue N&egative"
+msgstr "Posunúť odtieň negatívne"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:11
+#, kde-format
+msgid "Red"
+msgstr "Červená"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:16
+#, kde-format
+msgid "Green"
+msgstr "Zelená"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:21
+#, kde-format
+msgid "Blue"
+msgstr "Modrá"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:26
+#, kde-format
+msgid "Yellow"
+msgstr "Žltá"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:31
+#, kde-format
+msgid "Black"
+msgstr "Čierna"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:36
+#, kde-format
+msgid "White"
+msgstr "Biela"
+
+#. i18n: tag tool attribute name
+#: part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr "Šípka"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:9
+#, kde-format
+msgid "Yellow Highlighter"
+msgstr "Žltý zvýrazňovač"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:14
+#, kde-format
+msgid "Green Highlighter"
+msgstr "Zelený zvýrazňovač"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:24
+#, kde-format
+msgid "Insert Text"
+msgstr "Vložiť text"
+
+#: part/dlgaccessibility.cpp:38
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Draw border around links"
+msgstr "Kresliť okraj okolo odkazov"
+
+#: part/dlgaccessibility.cpp:48
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Change colors"
+msgstr "Zmeniť farby"
+
+#: part/dlgaccessibility.cpp:54
+#, kde-format
+msgctxt "@info Config dialog, accessibility page"
+msgid "<b>Warning:</b> these options can badly affect drawing speed."
+msgstr ""
+"<b>Varovanie:</b> tieto možnosti môžu vážne ovplyvniť rýchlosť vykresľovania."
+
+#: part/dlgaccessibility.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert colors"
+msgstr "Invertovať farby"
+
+#: part/dlgaccessibility.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change paper color"
+msgstr "Zmeniť farbu papiera"
+
+#: part/dlgaccessibility.cpp:62
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change dark & light colors"
+msgstr "Zmeniť tmavé a svetlé farby"
+
+#: part/dlgaccessibility.cpp:63
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Convert to black & white"
+msgstr "Previesť na čiernobielu"
+
+#: part/dlgaccessibility.cpp:64
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert lightness"
+msgstr "Invertovať ľahkosť"
+
+#: part/dlgaccessibility.cpp:65
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (sRGB linear)"
+msgstr "Invertovať Luma (sRGB lineárne)"
+
+#: part/dlgaccessibility.cpp:66
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (symmetric)"
+msgstr "Invertovať Luma (Symetrické)"
+
+#: part/dlgaccessibility.cpp:67
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue positive"
+msgstr "Posunúť odtieň pozitívne"
+
+#: part/dlgaccessibility.cpp:68
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue negative"
+msgstr "Posunúť odtieň negatívne"
+
+#: part/dlgaccessibility.cpp:70
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Color mode:"
+msgstr "Farebný režim:"
+
+#: part/dlgaccessibility.cpp:87
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Paper color:"
+msgstr "Farba papiera:"
+
+#: part/dlgaccessibility.cpp:99
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Dark color:"
+msgstr "Tmavá farba:"
+
+#: part/dlgaccessibility.cpp:104
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Light color:"
+msgstr "Svetlá farba:"
+
+#: part/dlgaccessibility.cpp:119
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Threshold:"
+msgstr "Prah:"
+
+#: part/dlgaccessibility.cpp:127
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Contrast:"
+msgstr "Kontrast:"
+
+#: part/dlgaccessibility.cpp:158
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech engine:"
+msgstr "Nástroj na prevod textu na reč:"
+
+#: part/dlgaccessibility.cpp:165
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox Config dialog, accessibility page"
+#| msgid "Text-to-speech engine:"
+msgctxt "&label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech voice:"
+msgstr "Nástroj na prevod textu na reč:"
+
+#: part/dlgannotations.cpp:25
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Full Annotation Toolbar"
+msgstr "Panel nástrojov úplných poznámok"
+
+#: part/dlgannotations.cpp:26
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Quick Annotation Toolbar"
+msgstr "Panel nástrojov rýchlych poznámok"
+
+#: part/dlgannotations.cpp:28
+#, kde-format
+msgctxt "label:listbox Config dialog, general page"
+msgid "Annotation toolbar:"
+msgstr "Panel nástrojov poznámok:"
+
+#: part/dlgannotations.cpp:34
+#, kde-format
+msgctxt "@label:textbox Config dialog, annotations page"
+msgid "Author:"
+msgstr "Autor:"
+
+#: part/dlgannotations.cpp:38
+#, kde-format
+msgctxt "@info Config dialog, annotations page"
+msgid ""
+"<b>Note:</b> the information here is used only for annotations. The "
+"information is saved in annotated documents, and so will be transmitted "
+"together with the document."
+msgstr ""
+"<b>Poznámka</b>: použité informácie budú použité iba pre poznámky. "
+"Informácie sú uložené do opoznámkovaných dokumentov a budú prenesené spolu s "
+"dokumentom."
+
+#: part/dlgannotations.cpp:48
+#, kde-format
+msgctxt ""
+"@label Config dialog, annotations page, heading line for Quick Annotations "
+"tool manager"
+msgid "<h3>Quick Annotation Tools</h3>"
+msgstr "<h3>Nástroje rýchlej poznámky</h3>"
+
+#: part/dlgeditor.cpp:28
+#, kde-format
+msgctxt "@info:whatsthis Config dialog, editor page"
+msgid ""
+"Choose the editor you want to launch when Okular wants to open a source file."
+msgstr ""
+"Vyberte editor, ktorý chcete spustiť, ak chce Okular otvoriť zdrojový súbor."
+
+#: part/dlgeditor.cpp:29
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Custom Text Editor"
+msgstr "Vlastný textový editor"
+
+#: part/dlgeditor.cpp:30
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kate"
+msgstr "Kate"
+
+#: part/dlgeditor.cpp:31
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kile"
+msgstr "Kile"
+
+#: part/dlgeditor.cpp:32
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "SciTE"
+msgstr "SciTE"
+
+#: part/dlgeditor.cpp:33
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Emacs client"
+msgstr "Klient Emacs"
+
+#: part/dlgeditor.cpp:34
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Lyx client"
+msgstr "Klient Lyx"
+
+#: part/dlgeditor.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXstudio"
+msgstr "TeXstudio"
+
+#: part/dlgeditor.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXiFy IDEA"
+msgstr "TeXiFy IDEA"
+
+#: part/dlgeditor.cpp:37
+#, kde-format
+msgctxt "@label:listbox Config dialog, editor page"
+msgid "Editor:"
+msgstr "Editor:"
+
+#: part/dlgeditor.cpp:52
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"<qt>Set the command of a custom text editor to be launched.<br />\n"
+"You can also put few placeholders:\n"
+"<ul>\n"
+"  <li>%f - the file name</li>\n"
+"  <li>%l - the line of the file to be reached</li>\n"
+"  <li>%c - the column of the file to be reached</li>\n"
+"</ul>\n"
+"If %f is not specified, then the file name is appended to the specified "
+"command."
+msgstr ""
+"<qt>Nastavte príkaz pre vlastný textový editor.<br />\n"
+"Môžete použiť niekoľko zastupiteľných znakov:\n"
+"<ul>\n"
+"  <li>%f - názov súboru</li>\n"
+"  <li>%l - prejsť na riadok v súbore</li>\n"
+"  <li>%c - prejsť na stĺpec v súbore</li>\n"
+"</ul>\n"
+"Ak nie je zadané %f, názov súboru bude pridaný k zadanému príkazu."
+
+#: part/dlgeditor.cpp:63
+#, kde-format
+msgctxt "@label:textbox Config dialog, editor page"
+msgid "Command:"
+msgstr "Príkaz:"
+
+#: part/dlggeneral.cpp:33
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Use smooth scrolling"
+msgstr "Používať plynulé posúvanie"
+
+#: part/dlggeneral.cpp:35
+#, kde-format
+msgctxt "@title:group Config dialog, general page"
+msgid "Appearance:"
+msgstr "Vzhľad:"
+
+#: part/dlggeneral.cpp:39
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show scrollbars"
+msgstr "Zobrazovať posuvníky"
+
+#: part/dlggeneral.cpp:46
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Link the thumbnails with the page"
+msgstr "Prepojiť náhľady so stránkou"
+
+#: part/dlggeneral.cpp:53
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show hints and info messages"
+msgstr "Zobrazovať rady a informačné správy"
+
+#: part/dlggeneral.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Notify about embedded files, forms, or signatures"
+msgstr "Upozorniť na vložené súbory, formuláre alebo podpisy"
+
+#: part/dlggeneral.cpp:66
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Display document title in titlebar if available"
+msgstr "Zobraziť dokument v záhlaví ak je dostupný"
+
+#: part/dlggeneral.cpp:72
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display file name only"
+msgstr "Zobraziť iba názov súboru"
+
+#: part/dlggeneral.cpp:73
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display full file path"
+msgstr "Zobraziť celú cestu súboru"
+
+#: part/dlggeneral.cpp:75
+#, kde-format
+msgctxt "label:listbox Config dialog, general page"
+msgid "When not displaying document title:"
+msgstr "Pri nezobrazení názvu dokumentu:"
+
+#: part/dlggeneral.cpp:90
+#, kde-format
+msgctxt "@label:listbox Config dialog, general page"
+msgid "Use custom background color:"
+msgstr "Použiť vlastnú farbu pozadia:"
+
+#: part/dlggeneral.cpp:112
+#, kde-format
+msgctxt "@title:group Config dialog, general page"
+msgid "Program features:"
+msgstr "Funkcie programu:"
+
+#: part/dlggeneral.cpp:119
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open new files in tabs"
+msgstr "Otvoriť nové súbory v kartách"
+
+#: part/dlggeneral.cpp:124
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Switch to existing tab if file is already open"
+msgstr "Ak je súbor už otvorený, prepnúť na existujúcu kartu"
+
+#: part/dlggeneral.cpp:137
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Obey DRM limitations"
+msgstr "Rešpektovať DRM obmedzenia"
+
+#: part/dlggeneral.cpp:146
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Reload document on file change"
+msgstr "Znovu načítať dokument pri zmene súboru"
+
+#: part/dlggeneral.cpp:153
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show backend selection dialog"
+msgstr "Zobrazovať dialóg pre výber backendu"
+
+#: part/dlggeneral.cpp:160
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Right to left reading direction"
+msgstr "Smer čítania sprava doľava"
+
+#: part/dlggeneral.cpp:166
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open in continuous mode by default"
+msgstr "Predvolene otvoriť v nepretržitom režime"
+
+#: part/dlggeneral.cpp:173
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "When using Browse Tool, wrap cursor at screen edges"
+msgstr ""
+
+#: part/dlggeneral.cpp:190
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Overview columns:"
+msgstr "Stĺpce v prehľade:"
+
+#: part/dlggeneral.cpp:197
+#, kde-format
+msgctxt "Page Up/Down overlap, spinbox suffix"
+msgid "%"
+msgstr "%"
+
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@info:tooltip Config dialog, general page"
+msgid ""
+"Defines how much of the current viewing area will still be visible when "
+"pressing the Page Up/Down keys."
+msgstr ""
+"Určuje, koľko z aktuálnej plochy pohľadu bude stále vidieť po stlačení "
+"klávesov Page Up/Down."
+
+#: part/dlggeneral.cpp:200
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Page Up/Down overlap:"
+msgstr "Presah Page Up/Down:"
+
+#: part/dlggeneral.cpp:204
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "100%"
+msgstr "100%"
+
+#: part/dlggeneral.cpp:205
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Width"
+msgstr "Prispôsobiť šírke"
+
+#: part/dlggeneral.cpp:206
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Page"
+msgstr "Prispôsobiť stránke"
+
+#: part/dlggeneral.cpp:207
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Auto Fit"
+msgstr "Automaticky prispôsobiť"
+
+#: part/dlggeneral.cpp:208
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid ""
+"Defines the default zoom mode for files which were never opened before. For "
+"files which were opened before the previous zoom is applied."
+msgstr ""
+"Definuje predvolený režim zväčšenia pre súbory, ktoré nikdy predtým neboli "
+"otvorené. Pre súbory, ktoré boli otvorené pred použitím predchádzajúceho "
+"priblíženia."
+
+#: part/dlggeneral.cpp:210
+#, kde-format
+msgctxt "label:listbox Config dialog, general page, default zoom"
+msgid "Default zoom:"
+msgstr "Štandardné zväčšenie:"
+
+#: part/dlgperformance.cpp:26
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable transparency effects"
+msgstr "Povoliť efekty priehľadnosti"
+
+#: part/dlgperformance.cpp:28
+#, kde-format
+msgctxt "@label Config dialog, performance page"
+msgid "CPU usage:"
+msgstr "Využitie procesora:"
+
+#: part/dlgperformance.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Low"
+msgstr "Nízke"
+
+#: part/dlgperformance.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Normal (default)"
+msgstr "Bežné (štandardné)"
+
+#: part/dlgperformance.cpp:37
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Aggressive"
+msgstr "Agresívne"
+
+#: part/dlgperformance.cpp:38
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Greedy"
+msgstr "Nenásitné"
+
+#: part/dlgperformance.cpp:40
+#, kde-format
+msgctxt "@label:listbox Config dialog, performance page, memory usage"
+msgid "Memory usage:"
+msgstr "Využitie pamäte:"
+
+#: part/dlgperformance.cpp:54
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text antialias"
+msgstr "Povoliť vyhladenie textu"
+
+#: part/dlgperformance.cpp:56
+#, kde-format
+msgctxt "@title:group Config dialog, performance page"
+msgid "Rendering options:"
+msgstr "Voľby vykresľovania:"
+
+#: part/dlgperformance.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable graphics antialias"
+msgstr "Povoliť vyhladenie grafiky"
+
+#: part/dlgperformance.cpp:64
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text hinting"
+msgstr "Povoliť textový hinting"
+
+#: part/dlgperformance.cpp:77
+#, kde-format
+msgid ""
+"Keeps used memory as low as possible. Do not reuse anything. (For systems "
+"with low memory.)"
+msgstr ""
+"Snaží sa čo najviac šetriť pamäťou. Nič neukladá pre opätovné použitie. (Pre "
+"systémy s malou pamäťou.)"
+
+#: part/dlgperformance.cpp:80
+#, kde-format
+msgid ""
+"A good compromise between memory usage and speed gain. Preload next page and "
+"boost searches. (For systems with 2GB of memory, typically.)"
+msgstr ""
+"Dobrý kompromis medzi spotrebou pamäte a rýchlosťou. Prednahráva ďalšiu "
+"stránku a urýchľuje vyhľadávanie. (Vhodné pre systémy s pamäťou okolo 2 GB)."
+
+#: part/dlgperformance.cpp:83
+#, kde-format
+msgid ""
+"Keeps everything in memory. Preload next pages. Boost searches. (For systems "
+"with more than 4GB of memory.)"
+msgstr ""
+"Ukladá všetko do pamäte. Prednahráva ďalšie stránky. Urýchľuje vyhľadávanie. "
+"(Pre systémy s minimálne 4 GB pamäťou.)"
+
+#: part/dlgperformance.cpp:87
+#, no-c-format, kde-format
+msgid ""
+"Loads and keeps everything in memory. Preload all pages. (Will use at "
+"maximum 50% of your total memory or your free memory, whatever is bigger.)"
+msgstr ""
+"Načíta a ponechá všetko v pamäti. Prednačíta všetky stránky (použije "
+"maximálne 50% vašej celkovej pamäte alebo voľnej pamäte, podľa toho, čo je "
+"väčšie)."
+
+#: part/dlgpresentation.cpp:37
+#, kde-format
+msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+msgid "every "
+msgstr "každých "
+
+#: part/dlgpresentation.cpp:38
+#, kde-format
+msgctxt "Advance every %1 seconds"
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " sekunda"
+msgstr[1] " sekundy"
+msgstr[2] " sekúnd"
+
+#: part/dlgpresentation.cpp:45
+#, kde-format
+msgctxt "@label:spinbox Config dialog, presentation page"
+msgid "Advance automatically:"
+msgstr "Postupovať automaticky:"
+
+#: part/dlgpresentation.cpp:53
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Loop after last page"
+msgstr "Opakovať po poslednej stránke"
+
+#: part/dlgpresentation.cpp:59
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap left/right side to go back/forward"
+msgstr "Ťuknúť vľavo/vpravo na posun späť/dopredu"
+
+#: part/dlgpresentation.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap anywhere to go forward"
+msgstr "Ťuknúť hocikde na posun dopredu"
+
+#: part/dlgpresentation.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Disabled"
+msgstr "Zakázané"
+
+#: part/dlgpresentation.cpp:63
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
+msgid "Touch navigation:"
+msgstr "Navigácia dotykom:"
+
+#: part/dlgpresentation.cpp:72
+#, kde-format
+msgctxt "@label:chooser Config dialog, presentation page"
+msgid "Background color:"
+msgstr "Farba pozadia:"
+
+#: part/dlgpresentation.cpp:76
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Hidden after delay"
+msgstr "Skrytý po čase"
+
+#: part/dlgpresentation.cpp:77
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always visible"
+msgstr "Vždy viditeľný"
+
+#: part/dlgpresentation.cpp:78
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always hidden"
+msgstr "Vždy skrytý"
+
+#: part/dlgpresentation.cpp:80
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
+msgid "Mouse cursor:"
+msgstr "Kurzor myši:"
+
+#: part/dlgpresentation.cpp:84
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show progress indicator"
+msgstr "Zobrazovať ukazovateľ priebehu"
+
+#: part/dlgpresentation.cpp:90
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show summary page"
+msgstr "Zobrazovať súhrnnú stránku"
+
+#: part/dlgpresentation.cpp:100
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Instant (Never use animations)"
+msgstr "Okamžité (Nikdy nepoužívať animácie)"
+
+#: part/dlgpresentation.cpp:101
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Replace"
+msgstr "Nahradiť"
+
+#: part/dlgpresentation.cpp:102
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Random transition"
+msgstr "Náhodný prechod"
+
+#: part/dlgpresentation.cpp:103
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds vertical"
+msgstr "Zvislá roleta"
+
+#: part/dlgpresentation.cpp:104
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds horizontal"
+msgstr "Vodorovná roleta"
+
+#: part/dlgpresentation.cpp:105
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box in"
+msgstr "Obdĺžnik dovnútra"
+
+#: part/dlgpresentation.cpp:106
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box out"
+msgstr "Obdĺžnik von"
+
+#: part/dlgpresentation.cpp:107
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Dissolve"
+msgstr "Rozplynúť"
+
+#: part/dlgpresentation.cpp:108
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Fade"
+msgstr "Blednutie"
+
+#: part/dlgpresentation.cpp:109
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter down"
+msgstr "Trblietať dole"
+
+#: part/dlgpresentation.cpp:110
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right"
+msgstr "Trblietať vpravo"
+
+#: part/dlgpresentation.cpp:111
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right-down"
+msgstr "Trblietať vpravo dole"
+
+#: part/dlgpresentation.cpp:112
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal in"
+msgstr "Rozdeliť vodorovne dovnútra"
+
+#: part/dlgpresentation.cpp:113
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal out"
+msgstr "Rozdeliť vodorovne von"
+
+#: part/dlgpresentation.cpp:114
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical in"
+msgstr "Rozdeliť zvisle dovnútra"
+
+#: part/dlgpresentation.cpp:115
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical out"
+msgstr "Rozdeliť zvisle von"
+
+#: part/dlgpresentation.cpp:116
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe down"
+msgstr "Rolovanie dole"
+
+#: part/dlgpresentation.cpp:117
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe right"
+msgstr "Rolovanie vpravo"
+
+#: part/dlgpresentation.cpp:118
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe left"
+msgstr "Rolovanie vľavo"
+
+#: part/dlgpresentation.cpp:119
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe up"
+msgstr "Rolovanie hore"
+
+#: part/dlgpresentation.cpp:121
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, transitions"
+msgid "Default transition:"
+msgstr "Štandardný prechod:"
+
+#: part/dlgpresentation.cpp:130
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
+msgid "Preferred screen:"
+msgstr "Preferovaná obrazovka:"
+
+#: part/dlgpresentation.cpp:137
+#, kde-format
+msgctxt ""
+"@label Config dialog, presentation page, heading line for drawing tool "
+"manager"
+msgid "<h3>Drawing Tools</h3>"
+msgstr "<h3>Kresliace nástroje</h3>"
+
+#: part/dlgpresentation.cpp:171
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Current Screen"
+msgstr "Aktuálna obrazovka"
+
+#: part/dlgpresentation.cpp:172
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Default Screen"
+msgstr "Predvolená obrazovka"
+
+#: part/dlgpresentation.cpp:178
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
+"screen model name. %4 is the screen name like DVI-0"
+msgid "Screen %1 (%2 %3 %4)"
+msgstr "Obrazovka %1 (%2 %3 %4)"
+
+#: part/dlgpresentation.cpp:190
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...), hopefully not 0."
+msgid "Screen %1 (disconnected)"
+msgstr "Obrazovka %1 (odpojená)"
+
+#: part/drawingtoolactions.cpp:192
+#, kde-format
+msgid "Drawing Tool: %1"
+msgstr "Kresliaci nástroj: %1"
+
+#: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
+#, kde-format
+msgid "Eraser"
+msgstr "Guma"
+
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#, kde-format
+msgid "&Name:"
+msgstr "&Názov:"
+
+#: part/editannottooldialog.cpp:69
+#, kde-format
+msgid "&Type:"
+msgstr "&Typ:"
+
+#: part/editannottooldialog.cpp:82
+#, kde-format
+msgid "Appearance"
+msgstr "Vzhľad"
+
+#: part/editannottooldialog.cpp:93
+#, kde-format
+msgid "Text markup"
+msgstr "Textová značka"
+
+#: part/editannottooldialog.cpp:94
+#, kde-format
+msgid "Geometrical shape"
+msgstr "Geometrický tvar"
+
+#: part/editannottooldialog.cpp:101
+#, kde-format
+msgid "Create annotation tool"
+msgstr "Vytvoriť nástroj poznámky"
+
+#: part/editannottooldialog.cpp:103
+#, kde-format
+msgid "Edit annotation tool"
+msgstr "Upraviť nástroj poznámky"
+
+#: part/editdrawingtooldialog.cpp:50
+#, kde-format
+msgid "Color:"
+msgstr "Farba:"
+
+#: part/editdrawingtooldialog.cpp:57
+#, kde-format
+msgid "&Pen Width:"
+msgstr "Šírka &pera:"
+
+#: part/editdrawingtooldialog.cpp:63
+#, kde-format
+msgctxt "Suffix for the pen width, eg '10 px'"
+msgid " px"
+msgstr " px"
+
+#: part/editdrawingtooldialog.cpp:73
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80 %'"
+msgid " %"
+msgstr " %"
+
+#: part/editdrawingtooldialog.cpp:78
+#, kde-format
+msgid "Create drawing tool"
+msgstr "Vytvoriť kresliaci nástroj"
+
+#: part/editdrawingtooldialog.cpp:83
+#, kde-format
+msgid "Edit drawing tool"
+msgstr "Upraviť kresliaci nástroj"
+
+#: part/embeddedfilesdialog.cpp:39
+#, kde-format
+msgctxt "Unknown date"
+msgid "Unknown"
+msgstr "Neznámy"
+
+#: part/embeddedfilesdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Embedded Files"
+msgstr "Vložené súbory"
+
+#: part/embeddedfilesdialog.cpp:59
+#, kde-format
+msgctxt "@action:button"
+msgid "View"
+msgstr "Zobraziť"
+
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@title:column"
+msgid "Name"
+msgstr "Názov"
+
+#: part/embeddedfilesdialog.cpp:68
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr "Popis"
+
+#: part/embeddedfilesdialog.cpp:69
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr "Veľkosť"
+
+#: part/embeddedfilesdialog.cpp:70
+#, kde-format
+msgctxt "@title:column"
+msgid "Created"
+msgstr "Vytvorené"
+
+#: part/embeddedfilesdialog.cpp:71
+#, kde-format
+msgctxt "@title:column"
+msgid "Modified"
+msgstr "Zmenené"
+
+#: part/embeddedfilesdialog.cpp:151
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Save As..."
+msgstr "Uložiť &ako..."
+
+#: part/embeddedfilesdialog.cpp:152
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&View..."
+msgstr "&Zobraziť..."
+
+#: part/fileprinterpreview.cpp:115
+#, kde-format
+msgid "Could not load print preview part"
+msgstr "Nepodarilo sa načítať modul pre náhľad tlače"
+
+#: part/fileprinterpreview.cpp:127
+#, kde-format
+msgid "Print Preview"
+msgstr "Náhľad tlače"
+
+#: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
+#, kde-format
+msgid "Close"
+msgstr "Zavrieť"
+
+#: part/findbar.cpp:38
+#, kde-format
+msgctxt "Find text"
+msgid "F&ind:"
+msgstr "&Nájsť:"
+
+#: part/findbar.cpp:49
+#, kde-format
+msgid "Text to search for"
+msgstr "Hľadaný text"
+
+#: part/findbar.cpp:54
+#, kde-format
+msgctxt "Find and go to the next search match"
+msgid "Next"
+msgstr "Nasledujúci"
+
+#: part/findbar.cpp:55
+#, kde-format
+msgid "Jump to next match"
+msgstr "Skočiť na nasledujúci výskyt"
+
+#: part/findbar.cpp:58
+#, kde-format
+msgctxt "Find and go to the previous search match"
+msgid "Previous"
+msgstr "Predchádzajúci"
+
+#: part/findbar.cpp:59
+#, kde-format
+msgid "Jump to previous match"
+msgstr "Skočiť na predchádzajúci výskyt"
+
+#: part/findbar.cpp:64
+#, kde-format
+msgid "Modify search behavior"
+msgstr "Zmeniť chovanie vyhľadávania"
+
+#: part/findbar.cpp:66
+#, kde-format
+msgid "Case sensitive"
+msgstr "Rozlišovať veľkosť písmen"
+
+#: part/findbar.cpp:68
+#, kde-format
+msgid "From current page"
+msgstr "Od aktuálnej stránky"
+
+#: part/findbar.cpp:70
+#, kde-format
+msgid "Find as you type"
+msgstr "Nájsť pri písaní"
+
+#: part/formwidgets.cpp:751
+#, kde-format
+msgid "*|All Files"
+msgstr "*|Všetky súbory"
+
+#: part/formwidgets.cpp:1065
+#, kde-format
+msgid "Unsigned Signature Field (Click to Sign)"
+msgstr ""
+
+#: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
+#, kde-format
+msgid "&Sign..."
+msgstr "Podpísať..."
+
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#, kde-format
+msgid "Signature Properties"
+msgstr "Vlastnosti podpisu"
+
+#: part/ktreeviewsearchline.cpp:283
+#, kde-format
+msgid "Search Options"
+msgstr "Možnosti hľadania"
+
+#: part/ktreeviewsearchline.cpp:284
+#, kde-format
+msgctxt "Enable case sensitive search in the side navigation panels"
+msgid "Case Sensitive"
+msgstr "Rozlišovať veľkosť písmen"
+
+#: part/ktreeviewsearchline.cpp:287
+#, kde-format
+msgctxt "Enable regular expression search in the side navigation panels"
+msgid "Regular Expression"
+msgstr "Regulárny výraz"
+
+#: part/ktreeviewsearchline.cpp:386
+#, kde-format
+msgid "S&earch:"
+msgstr "&Hľadať:"
+
+#: part/layers.cpp:35 part/part.cpp:2315
+#, kde-format
+msgid "Layers"
+msgstr "Vrstvy"
+
+#: part/minibar.cpp:190
+#, kde-format
+msgctxt "Layouted like: '5 [pages] of 10'"
+msgid "of"
+msgstr "z"
+
+#: part/pageview.cpp:541
+#, kde-format
+msgid "Zoom"
+msgstr "Lupa"
+
+#: part/pageview.cpp:553
+#, kde-format
+msgid "Zoom to 100%"
+msgstr "Priblížiť na 100%"
+
+#: part/pageview.cpp:564
+#, kde-format
+msgid "Rotate &Right"
+msgstr "Otočiť dop&rava"
+
+#: part/pageview.cpp:565
+#, kde-format
+msgctxt "Rotate right"
+msgid "Right"
+msgstr "Doprava"
+
+#: part/pageview.cpp:569
+#, kde-format
+msgid "Rotate &Left"
+msgstr "Otočiť doľa&va"
+
+#: part/pageview.cpp:570
+#, kde-format
+msgctxt "Rotate left"
+msgid "Left"
+msgstr "Doľava"
+
+#: part/pageview.cpp:574
+#, kde-format
+msgid "Original Orientation"
+msgstr "Pôvodná orientácia"
+
+#: part/pageview.cpp:580
+#, kde-format
+msgid "&Trim View"
+msgstr "&Orezať pohľad"
+
+#: part/pageview.cpp:584
+#, kde-format
+msgid "&Trim Margins"
+msgstr "&Orezať okraje"
+
+#: part/pageview.cpp:591
+#, kde-format
+msgid "Trim To &Selection"
+msgstr "Orezať na výber"
+
+#: part/pageview.cpp:597
+#, kde-format
+msgid "Fit &Width"
+msgstr "&Prispôsobiť šírke"
+
+#: part/pageview.cpp:601
+#, kde-format
+msgid "Fit &Page"
+msgstr "P&rispôsobiť stránke"
+
+#: part/pageview.cpp:605
+#, kde-format
+msgid "&Auto Fit"
+msgstr "Automaticky prispôsobiť"
+
+#: part/pageview.cpp:609
+#, kde-format
+msgid "Fit Wi&ndow to Page"
+msgstr "Prispôsobiť okno stránke"
+
+#: part/pageview.cpp:616
+#, kde-format
+msgid "&View Mode"
+msgstr "&Režim zobrazenia"
+
+#: part/pageview.cpp:628
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Single Page"
+msgstr "Jedna stránka"
+
+#: part/pageview.cpp:629
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Facing Pages"
+msgstr "Protiľahlé stránky"
+
+#: part/pageview.cpp:630
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Facing Pages (&Center First Page)"
+msgstr "Protiľahlé stránky (Prvú stránku zarovnať na stred)"
+
+#: part/pageview.cpp:633
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Overview"
+msgstr "Prehľad"
+
+#: part/pageview.cpp:645
+#, kde-format
+msgid "&Continuous"
+msgstr "&Súvislý"
+
+#: part/pageview.cpp:652
+#, kde-format
+msgctxt "@action page layout"
+msgid "Use Right to Left Reading Direction"
+msgstr "Použiť smer čítania sprava doľava"
+
+#: part/pageview.cpp:661
+#, kde-format
+msgid "&Browse"
+msgstr "Prehliadanie"
+
+#: part/pageview.cpp:669
+#, kde-format
+msgid "&Zoom"
+msgstr "Lupa"
+
+#: part/pageview.cpp:689
+#, kde-format
+msgid "Area &Selection"
+msgstr "Výber oblasti"
+
+#: part/pageview.cpp:696
+#, kde-format
+msgid "&Text Selection"
+msgstr "Výber textu"
+
+#: part/pageview.cpp:703
+#, kde-format
+msgid "T&able Selection"
+msgstr "Výber tabuľky"
+
+#: part/pageview.cpp:710
+#, kde-format
+msgid "&Magnifier"
+msgstr "&Lupa"
+
+#: part/pageview.cpp:719
+#, kde-format
+msgctxt "@action"
+msgid "Selection Tools"
+msgstr "Nástroje výberu"
+
+#: part/pageview.cpp:750
+#, kde-format
+msgid "Digitally &Sign..."
+msgstr "Digitálne podpísať..."
+
+#: part/pageview.cpp:756
+#, kde-format
+msgid "Speak Whole Document"
+msgstr "Prečítať celý dokument"
+
+#: part/pageview.cpp:761
+#, kde-format
+msgid "Speak Current Page"
+msgstr "Prečítať aktuálnu stránku"
+
+#: part/pageview.cpp:766
+#, kde-format
+msgid "Stop Speaking"
+msgstr "Zastaviť čítanie"
+
+#: part/pageview.cpp:771
+#, kde-format
+msgid "Pause/Resume Speaking"
+msgstr "Pozastaviť/Pokračovať reč"
+
+#: part/pageview.cpp:783
+#, kde-format
+msgid "Scroll Up"
+msgstr "Posunúť hore"
+
+#: part/pageview.cpp:789
+#, kde-format
+msgid "Scroll Down"
+msgstr "Posunúť dole"
+
+#: part/pageview.cpp:795
+#, kde-format
+msgid "Scroll Page Up"
+msgstr "Posun o stránku hore"
+
+#: part/pageview.cpp:801
+#, kde-format
+msgid "Scroll Page Down"
+msgstr "Posun o stránku dole"
+
+#: part/pageview.cpp:807
+#, kde-format
+msgid "Show Forms"
+msgstr "Zobraziť formuláre"
+
+#: part/pageview.cpp:1301
+#, kde-format
+msgid " Loaded a one-page document."
+msgid_plural " Loaded a %1-page document."
+msgstr[0] " Načítaný jednostránkový dokument."
+msgstr[1] " Načítaný %1-stránkový dokument."
+msgstr[2] " Načítaný %1-stránkový dokument."
+
+#: part/pageview.cpp:2521
+#, kde-format
+msgid "Copy Table Contents to Clipboard"
+msgstr "Kopírovať obsah tabuľky do schránky"
+
+#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
+#: part/pageview.cpp:3050
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "Kopírovanie zakázané kvôli DRM"
+
+#: part/pageview.cpp:2843
+#, kde-format
+msgid "Text (1 character)"
+msgid_plural "Text (%1 characters)"
+msgstr[0] "Text (1 znak)"
+msgstr[1] "Text (%1 znaky)"
+msgstr[2] "Text (%1 znakov)"
+
+#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "Kopírovať do schránky"
+
+#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#, kde-format
+msgid "Speak Text"
+msgstr "Prečítať text"
+
+#: part/pageview.cpp:2861
+#, kde-format
+msgid "Image (%1 by %2 pixels)"
+msgstr "Obrázok (%1 x %2 pixelov)"
+
+#: part/pageview.cpp:2863
+#, kde-format
+msgid "Save to File..."
+msgstr "Uložiť do súboru..."
+
+#: part/pageview.cpp:2883
+#, kde-format
+msgid "Image [%1x%2] copied to clipboard."
+msgstr "Obrázok [%1x%2] skopírovaný do schránky."
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Save file"
+msgstr "Uložiť súbor"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Images (*.png *.jpeg)"
+msgstr "Obrázky (*.png *.jpeg)"
+
+#: part/pageview.cpp:2888
+#, kde-format
+msgid "File not saved."
+msgstr "Súbor nebol uložený."
+
+#: part/pageview.cpp:2899
+#, kde-format
+msgid "Image [%1x%2] saved to %3 file."
+msgstr "Obrázok [%1x%2] bol uložený do súboru %3."
+
+#: part/pageview.cpp:3041
+#, kde-format
+msgid "Copy Text"
+msgstr "Kopírovať text"
+
+#: part/pageview.cpp:3061
+#, kde-format
+msgid "Go to '%1'"
+msgstr "Prejsť na '%1'"
+
+#: part/pageview.cpp:4034 part/part.cpp:3155
+#, kde-format
+msgid "Fit Width"
+msgstr "Prispôsobiť šírke"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Fit Page"
+msgstr "Prispôsobiť stránke"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Auto Fit"
+msgstr "Automaticky prispôsobiť"
+
+#: part/pageview.cpp:4355
+#, kde-format
+msgid "Search for '%1' with"
+msgstr "Hľadať '%1' pomocou"
+
+#: part/pageview.cpp:4369
+#, kde-format
+msgid "Configure Web Shortcuts..."
+msgstr "Nastaviť webové skratky..."
+
+#: part/pageview.cpp:4395
+#, kde-format
+msgid "Follow This Link"
+msgstr "Nasledovať tento odkaz"
+
+#: part/pageview.cpp:4398
+#, kde-format
+msgid "Play this Sound"
+msgstr "Prehrať tento zvuk"
+
+#: part/pageview.cpp:4400
+#, kde-format
+msgid "Stop Sound"
+msgstr "Zastaviť zvuk"
+
+#: part/pageview.cpp:4406
+#, kde-format
+msgid "Copy Link Address"
+msgstr "Kopírovať adresu odkazu"
+
+#: part/pageview.cpp:4427
+#, kde-format
+msgid "Search for '%1' in this document"
+msgstr "Hľadať '%1' v tomto dokumente"
+
+#: part/pageview.cpp:4870
+#, kde-format
+msgid "Welcome"
+msgstr "Vitajte"
+
+#: part/pageview.cpp:4994
+#, kde-format
+msgid "Select zooming area. Right-click to zoom out."
+msgstr ""
+"Vyberte oblasť, ktorú chcete zväčšiť. Pravým kliknutím oblasť zmenšíte."
+
+#: part/pageview.cpp:5005
+#, kde-format
+msgid "Click to see the magnified view."
+msgstr "Kliknite na zobrazenie zväčšenia zobrazenia."
+
+#: part/pageview.cpp:5018
+#, kde-format
+msgid "Draw a rectangle around the text/graphics to copy."
+msgstr "Okolo kopírovaného textu/grafiky urobte myšou obdĺžnik."
+
+#: part/pageview.cpp:5030
+#, kde-format
+msgid "Select text"
+msgstr "Vyberte text"
+
+#: part/pageview.cpp:5042
+#, kde-format
+msgid ""
+"Draw a rectangle around the table, then click near edges to divide up; press "
+"Esc to clear."
+msgstr ""
+"Nakreslite obdĺžnik okolo tabuľky, potom kliknite vedľa okrajov na "
+"rozdelenie; Esc na vyčistenie."
+
+#: part/pageview.cpp:5052
+#, kde-format
+msgid ""
+"All your signing certificates are either not valid yet or are past their "
+"validity date."
+msgstr ""
+"Všetky vaše podpisové certifikáty buď ešte nie sú platné, alebo sú po dátume "
+"ich platnosti."
+
+#: part/pageview.cpp:5055
+#, kde-format
+msgid ""
+"There are no available signing certificates.<br/>For more information, "
+"please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
+"the manual."
+msgstr ""
+"Nie sú k dispozícii žiadne podpisové certifikáty.<br/>Ďalšie informácie "
+"nájdete v časti o <a href=\"%1\">Pridávaní digitálnych podpisov</a> v "
+"príručke."
+
+#: part/pageview.cpp:5071
+#, kde-format
+msgid "You have unsaved changes. Please save the document before signing it."
+msgstr "Máte neuložené zmeny. Pred podpísaním dokument uložte."
+
+#: part/pageview.cpp:5079
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The version of the Poppler library this Okular was compiled with does not "
+"support signing documents with passwords. Please ask your provider to update "
+"it to 22.02 or later."
+msgstr ""
+
+#: part/pageview.cpp:5080
+#, kde-format
+msgctxt "@title:window"
+msgid "Poppler library is too old"
+msgstr ""
+
+#: part/pageview.cpp:5098
+#, kde-format
+msgid "Draw a rectangle to insert the signature field"
+msgstr "Nakresliť obdĺžnik na vloženie pola podpisu"
+
+#: part/pageview.cpp:5242
+#, kde-format
+msgid "Draw a rectangle around the page area you wish to keep visible"
+msgstr ""
+"Nakreslite obdĺžnik okolo oblasti strany, ktorú chcete nechať viditeľnú"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "New Text Note"
+msgstr "Nová textová poznámka"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "Text of the new note:"
+msgstr "Text novej poznámky:"
+
+#: part/pageviewannotator.cpp:362
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"A signature of this size may be too small to read. If you would like to "
+"create a potentially more readable signature, press <interface>Start over</"
+"interface> and draw a bigger rectangle."
+msgstr ""
+"Podpis tejto veľkosti môže byť príliš malý na to, aby sa dal prečítať. Ak "
+"chcete vytvoriť potenciálne čitateľnejší podpis, stlačte <interface>Začať "
+"znova</interface> a nakreslite väčší obdĺžnik."
+
+#: part/pageviewannotator.cpp:364
+#, fuzzy, kde-format
+#| msgid "Start over"
+msgctxt "@action:button"
+msgid "Start Over"
+msgstr "Začať odznova"
+
+#: part/pageviewannotator.cpp:365
+#, fuzzy, kde-format
+#| msgid "Sign"
+msgctxt "@action:button"
+msgid "Sign"
+msgstr "Podpísať"
+
+#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+"Nepodarilo sa podpísať. Neplatné heslo k certifikátu alebo sa nepodarilo "
+"zapísať na '%1'"
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name"
+msgstr "Meno autora"
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name for the annotation:"
+msgstr "Meno autora poznámky:"
+
+#: part/pageviewannotator.cpp:1227
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw an ellipse (drag to select a zone)"
+msgstr "Kresliť elipsu (ťahom vyberte oblasť)"
+
+#: part/pageviewannotator.cpp:1229
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Highlight text"
+msgstr "Zvýrazniť text"
+
+#: part/pageviewannotator.cpp:1231
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a freehand line"
+msgstr "Kresliť čiaru voľnou rukou"
+
+#: part/pageviewannotator.cpp:1233
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Inline Text Annotation (drag to select a zone)"
+msgstr "Text vloženej poznámky (ťahom vyberte oblasť)"
+
+#: part/pageviewannotator.cpp:1235
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a pop-up note"
+msgstr "Vložiť popup poznámku"
+
+#: part/pageviewannotator.cpp:1237
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a polygon (click on the first point to close it)"
+msgstr "Nakreslite mnohouholník (kliknite na prvý bod pre uzavretie)"
+
+#: part/pageviewannotator.cpp:1239
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a rectangle"
+msgstr "Kresliť obdĺžnik"
+
+#: part/pageviewannotator.cpp:1241
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Squiggle text"
+msgstr "Vlnitý text"
+
+#: part/pageviewannotator.cpp:1243
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a stamp symbol"
+msgstr "Umiestnite symbol razítka"
+
+#: part/pageviewannotator.cpp:1245
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a straight line"
+msgstr "Kresliť rovnú čiaru"
+
+#: part/pageviewannotator.cpp:1247
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Strike out text"
+msgstr "Prečiarknuť text"
+
+#: part/pageviewannotator.cpp:1249
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Underline text"
+msgstr "Podčiarknuť text"
+
+#: part/pageviewannotator.cpp:1251
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Typewriter Annotation (drag to select a zone)"
+msgstr "Text vloženej poznámky (ťahom vyberte oblasť)"
+
+#: part/pageviewannotator.cpp:1310
+#, kde-format
+msgid "Highlighter"
+msgstr "Zvýrazňovač"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Stamps inserted in PDF documents are not visible in PDF readers other than "
+"Okular"
+msgstr ""
+"Pečiatky vložené do dokumentov PDF nie sú viditeľné v iných čítačkách PDF "
+"ako Okular"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@title:window"
+msgid "Experimental feature"
+msgstr "Experimentálna funkcia"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Add favorite annotation"
+msgstr "Pridať obľúbenú poznámku"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Custom annotation name:"
+msgstr "Vlastný názov poznámky:"
+
+#. i18n: ectx: Menu (file)
+#: part/part-viewermode.rc:6 part/part.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Súbor"
+
+#. i18n: ectx: Menu (settings)
+#: part/part-viewermode.rc:10 part/part.rc:90
+#, kde-format
+msgid "&Settings"
+msgstr "Nas&tavenie"
+
+#. i18n: ectx: Menu (help)
+#: part/part-viewermode.rc:15 part/part.rc:97
+#, kde-format
+msgid "&Help"
+msgstr "&Pomocník"
+
+#. i18n: ectx: Menu (view_orientation)
+#: part/part-viewermode.rc:32 part/part.rc:44
+#, kde-format
+msgid "&Orientation"
+msgstr "&Orientácia"
+
+#. i18n: ectx: Menu (bookmarks)
+#. i18n: ectx: Menu (okular_bookmarks)
+#: part/part-viewermode.rc:50 part/part.rc:65
+#, kde-format
+msgid "&Bookmarks"
+msgstr "&Záložky"
+
+#. i18n: ectx: ToolBar (OkularViewerToolBar)
+#: part/part-viewermode.rc:63
+#, kde-format
+msgid "Viewer Toolbar"
+msgstr "Panel prehliadača"
+
+#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#, kde-format
+msgid "Thumbnails"
+msgstr "Náhľady"
+
+#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#, kde-format
+msgid "Annotations"
+msgstr "Poznámky"
+
+#: part/part.cpp:460
+#, kde-format
+msgid ""
+"This document contains annotations or form data that were saved internally "
+"by a previous Okular version. Internal storage is <b>no longer supported</b>."
+"<br/>Please save to a file in order to move them if you want to continue to "
+"edit the document."
+msgstr ""
+"Tento dokument obsahuje poznámky alebo údaje formulára, ktoré boli interne "
+"uložené predchádzajúcou verziou Okular. Interná pamäť už nie je podporovaná "
+"</b>.<br/> Ak chcete pokračovať v úprave dokumentu, uložte ho do súboru, aby "
+"ste ich mohli presunúť."
+
+#: part/part.cpp:467
+#, kde-format
+msgid ""
+"This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
+"here to see them</a> or go to File -> Embedded Files."
+msgstr ""
+"Tento dokument obsahuje vložené súbory. <a href=\"okular:/embeddedfiles"
+"\">Kliknite sem na ich zobrazenie</a> alebo použite Súbor -> Vložené súbory."
+
+#: part/part.cpp:689
+#, kde-format
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Predchádzajúca"
+
+#: part/part.cpp:690
+#, kde-format
+msgid "Go back to the Previous Page"
+msgstr "Prejsť na predchádzajúcu stránku"
+
+#: part/part.cpp:691
+#, kde-format
+msgid "Moves to the previous page of the document"
+msgstr "Presunie sa na predchádzajúcu stránku dokumentu"
+
+#: part/part.cpp:701
+#, kde-format
+msgctxt "Next page"
+msgid "Next"
+msgstr "Nasledujúca"
+
+#: part/part.cpp:702
+#, kde-format
+msgid "Advance to the Next Page"
+msgstr "Prejsť na nasledujúcu stránku"
+
+#: part/part.cpp:703
+#, kde-format
+msgid "Moves to the next page of the document"
+msgstr "Presunie sa na nasledujúcu stránku dokumentu"
+
+#: part/part.cpp:714
+#, kde-format
+msgid "Beginning of the document"
+msgstr "Začiatok dokumentu"
+
+#: part/part.cpp:715
+#, kde-format
+msgid "Moves to the beginning of the document"
+msgstr "Presunie sa na začiatok dokumentu"
+
+#: part/part.cpp:719
+#, kde-format
+msgid "End of the document"
+msgstr "Koniec dokumentu"
+
+#: part/part.cpp:720
+#, kde-format
+msgid "Moves to the end of the document"
+msgstr "Presunie sa na koniec dokumentu"
+
+#: part/part.cpp:734
+#, kde-format
+msgid "Rename the current bookmark"
+msgstr "Premenovať aktuálnu záložku"
+
+#: part/part.cpp:738
+#, kde-format
+msgid "Previous Bookmark"
+msgstr "Predchádzajúca záložka"
+
+#: part/part.cpp:740
+#, kde-format
+msgid "Go to the previous bookmark"
+msgstr "Prejsť na predošlú záložku"
+
+#: part/part.cpp:744
+#, kde-format
+msgid "Next Bookmark"
+msgstr "Nasledujúca záložka"
+
+#: part/part.cpp:746
+#, kde-format
+msgid "Go to the next bookmark"
+msgstr "Prejsť na ďalšiu záložku"
+
+#: part/part.cpp:775
+#, kde-format
+msgid "Configure Okular..."
+msgstr "Nastaviť Okular..."
+
+#: part/part.cpp:778
+#, kde-format
+msgid "Configure Viewer..."
+msgstr "Nastaviť prehliadač..."
+
+#: part/part.cpp:784
+#, kde-format
+msgid "Configure Viewer Backends..."
+msgstr "Nastaviť subsystémy prehliadača..."
+
+#: part/part.cpp:786
+#, kde-format
+msgid "Configure Backends..."
+msgstr "Nastaviť backendy..."
+
+#: part/part.cpp:822
+#, kde-format
+msgid "About Backend"
+msgstr "O backende"
+
+#: part/part.cpp:827
+#, kde-format
+msgid "Reloa&d"
+msgstr "Znovu &načítať"
+
+#: part/part.cpp:829
+#, kde-format
+msgid "Reload the current document from disk."
+msgstr "Znovu načítať aktuálny dokument z disku."
+
+#: part/part.cpp:835
+#, kde-format
+msgid "Close &Find Bar"
+msgstr "Zavrieť panel &hľadania"
+
+#: part/part.cpp:840
+#, kde-format
+msgid "Page Number"
+msgstr "Číslo stránky"
+
+#: part/part.cpp:844
+#, kde-format
+msgctxt "@action"
+msgid "Configure Color Modes..."
+msgstr "+Nastaviť Okular..."
+
+#: part/part.cpp:887
+#, kde-format
+msgid "Select All Text on Current Page"
+msgstr "Vybrať všetok text na aktuálnej stránke"
+
+#: part/part.cpp:900
+#, kde-format
+msgid "Show S&idebar"
+msgstr "Zobraziť bočný panel"
+
+#: part/part.cpp:909
+#, kde-format
+msgid "Show &Page Bar"
+msgstr "Zobraziť &panel stránky"
+
+#: part/part.cpp:915
+#, kde-format
+msgid "Show &Signatures Panel"
+msgstr "Zobraziť panel podpisov"
+
+#: part/part.cpp:925
+#, kde-format
+msgid "&Embedded Files"
+msgstr "&Vložené súbory"
+
+#: part/part.cpp:931
+#, kde-format
+msgid "E&xport As"
+msgstr "E&xportovať ako"
+
+#: part/part.cpp:943
+#, kde-format
+msgid "S&hare"
+msgstr "Zdieľať"
+
+#: part/part.cpp:952
+#, kde-format
+msgid "P&resentation"
+msgstr "&Prezentácia"
+
+#: part/part.cpp:959
+#, kde-format
+msgid "Open Con&taining Folder"
+msgstr "Otvoriť &priečinok s obsahom"
+
+#: part/part.cpp:975
+#, kde-format
+msgid "&Import PostScript as PDF..."
+msgstr "&Importovať PostScript ako PDF..."
+
+#: part/part.cpp:979
+#, kde-format
+msgid "Switch Blackscreen Mode"
+msgstr "Režim čierna obrazovka"
+
+#: part/part.cpp:987
+#, kde-format
+msgid "Erase Drawing"
+msgstr "Vymazať kreslenie"
+
+#: part/part.cpp:992
+#, kde-format
+msgid "Configure Annotations..."
+msgstr "Nastaviť poznámky..."
+
+#: part/part.cpp:997
+#, kde-format
+msgid "Play/Pause Presentation"
+msgstr "Spustiť/pozastaviť prezentáciu"
+
+#: part/part.cpp:1145
+#, kde-format
+msgid ""
+"You have just modified the open document, but this kind of document can not "
+"be saved.\n"
+"Any modification will be lost once Okular is closed."
+msgstr ""
+
+#: part/part.cpp:1146
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Document can't be saved"
+msgstr "Heslo dokumentu"
+
+#: part/part.cpp:1175
+#, kde-format
+msgid "Could not open '%1' (%2) "
+msgstr "Nepodarilo sa otvoriť '%1' (%2) "
+
+#: part/part.cpp:1229
+#, kde-format
+msgid "The loading of %1 has been canceled."
+msgstr "Načítanie %1 bolo zrušené."
+
+#: part/part.cpp:1245
+#, kde-format
+msgid "Could not open %1. Reason: %2"
+msgstr "Nepodarilo sa otvoriť %1. Dôvod: %2"
+
+#: part/part.cpp:1273
+#, kde-format
+msgid "Configure Viewer Backends"
+msgstr "Nastaviť subsystémy prehliadača"
+
+#: part/part.cpp:1275
+#, kde-format
+msgid "Configure Backends"
+msgstr "Nastaviť backendy"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid ""
+"The program \"ps2pdf\" was not found, so Okular can not import PS files "
+"using it."
+msgstr "Nebol nájdený program \"ps2pdf\", Okular nemôže importovať PS súbory."
+
+#: part/part.cpp:1360
+#, kde-format
+msgid "ps2pdf not found"
+msgstr "ps2pdf nenájdený"
+
+#: part/part.cpp:1365
+#, kde-format
+msgid "PostScript files (%1)"
+msgstr "PostScript súbory (%1)"
+
+#: part/part.cpp:1381
+#, kde-format
+msgid "Importing PS file as PDF (this may take a while)..."
+msgstr "Importovanie PS súboru ako PDF (môže to chvíľu trvať)..."
+
+#: part/part.cpp:1510
+#, kde-format
+msgid "Please enter the password to read the document:"
+msgstr "Prosím zadajte heslo pre zobrazenie dokumentu:"
+
+#: part/part.cpp:1512
+#, kde-format
+msgid "Incorrect password. Try again:"
+msgstr "Nesprávne heslo. Skúste znovu:"
+
+#: part/part.cpp:1518
+#, kde-format
+msgid "Document Password"
+msgstr "Heslo dokumentu"
+
+#: part/part.cpp:1638
+#, kde-format
+msgid "This document has XFA forms, which are currently <b>unsupported</b>."
+msgstr ""
+"Tento dokument obsahuje XFA formuláre, ktoré sú aktuálne <b>nepodporované</"
+"b>."
+
+#: part/part.cpp:1645
+#, kde-format
+msgid ""
+"This document has forms. Click on the button to interact with them, or use "
+"View -> Show Forms."
+msgstr ""
+"Tento dokument obsahuje formuláre. Kliknite na tlačidlo, alebo použite menu "
+"Zobraziť  -> Zobraziť formuláre."
+
+#: part/part.cpp:1661
+#, kde-format
+msgid ""
+"All editing and interactive features for this document are disabled. Please "
+"save a copy and reopen to edit this document."
+msgstr ""
+"Všetky úpravy a interaktívne funkcie tohto dokumentu sú zakázané. "
+"Prosímuložte kópiu a znova otvorte tento súbor na úpravu."
+
+#: part/part.cpp:1749
+#, kde-format
+msgid ""
+"This document wants to be shown full screen.\n"
+"Leave normal mode and enter presentation mode?"
+msgstr ""
+"Tento dokument chce byť zobrazený na celej obrazovke.\n"
+"Opustiť normálny režim a prejsť do režimu prezentácie?"
+
+#: part/part.cpp:1751
+#, kde-format
+msgid "Request to Change Viewing Mode"
+msgstr "Žiadosť o zmenu režimu zobrazenia"
+
+#: part/part.cpp:1752
+#, kde-format
+msgid "Enter Presentation Mode"
+msgstr "Spustiť prezentačný režim"
+
+#: part/part.cpp:1753
+#, kde-format
+msgid "Deny Request"
+msgstr "Zamietnuť žiadosť"
+
+#: part/part.cpp:1843
+#, kde-format
+msgid "Could not open %1. %2"
+msgstr "Nepodarilo sa otvoriť %1. %2"
+
+#: part/part.cpp:1873
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue reloading the file?"
+msgstr ""
+"Existujú neuložené zmeny a súbor '%1' bol upravený iným program. Vaše zmeny "
+"sa stratia, pretože súbor sa už nedá uložiť.<br>Chcete pokračovať v "
+"opätovným načítaním súboru?"
+
+#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#, kde-format
+msgid "File Changed"
+msgstr "Súbor bol zmenený"
+
+#: part/part.cpp:1875
+#, kde-format
+msgid "Continue Reloading"
+msgstr "Pokračovať znovunačítanie"
+
+#: part/part.cpp:1876
+#, kde-format
+msgid "Abort Reloading"
+msgstr "Prerušiť Obnovovanie"
+
+#: part/part.cpp:1880
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue closing the file?"
+msgstr ""
+"Existujú neuložené zmeny a súbor '%1' bol upravený iným program. Vaše zmeny "
+"sa stratia, pretože súbor sa už nedá uložiť.<br>Chcete pokračovať v "
+"zatvorením súboru?"
+
+#: part/part.cpp:1882
+#, kde-format
+msgid "Continue Closing"
+msgstr "Pokračovať v zatváraní"
+
+#: part/part.cpp:1883
+#, kde-format
+msgid "Abort Closing"
+msgstr "Prerušiť zatváranie"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Do you want to save your changes to \"%1\" or discard them?"
+msgstr "Chcete uložiť vaše zmeny do \"%1\" alebo ich zahodiť?"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Close Document"
+msgstr "Zatvoriť dokument"
+
+#: part/part.cpp:2022
+#, kde-format
+msgid ""
+"This link points to a close document action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"Tento odkaz spúšťa operáciu na zatvorenie dokumentu, ktorý nefunguje pri "
+"použití vloženého prehliadača."
+
+#: part/part.cpp:2028
+#, kde-format
+msgid ""
+"This link points to a quit application action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"Tento odkaz spúšťa operáciu na ukončenie aplikácie, ktorý nefunguje pri "
+"použití vloženého prehliadača."
+
+#: part/part.cpp:2120 part/part.cpp:2138
+#, kde-format
+msgid "Reloading the document..."
+msgstr "Znovunačítanie dokumentu..."
+
+#: part/part.cpp:2295 part/toc.cpp:38
+#, kde-format
+msgid "Contents"
+msgstr "Obsah"
+
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#, kde-format
+msgid "Signatures"
+msgstr "Podpisy"
+
+#: part/part.cpp:2351
+#, kde-format
+msgid "Go to Page"
+msgstr "Prejsť na stránku"
+
+#: part/part.cpp:2374
+#, kde-format
+msgid "&Page:"
+msgstr "S&tránka:"
+
+#: part/part.cpp:2467
+#, kde-format
+msgid "Enter the new name of the bookmark:"
+msgstr "Zadajte nový názov záložky:"
+
+#: part/part.cpp:2513
+#, kde-format
+msgid "Rename this Bookmark"
+msgstr "Premenovať túto záložku"
+
+#: part/part.cpp:2516
+#, kde-format
+msgid "Remove this Bookmark"
+msgstr "Odstrániť túto záložku"
+
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/signaturepartutils.cpp:87
+#, kde-format
+msgctxt "File type name and pattern"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#, kde-format
+msgid "Save As"
+msgstr "Uložiť ako"
+
+#: part/part.cpp:2627
+#, kde-format
+msgid ""
+"You have chosen to save an Okular Archive without the file name ending with "
+"the '%1' extension. That is not allowed, do you want to choose a new name?"
+msgstr ""
+
+#: part/part.cpp:2628
+#, fuzzy, kde-format
+#| msgid "Line Extensions"
+msgid "Unsupported extension"
+msgstr "Rozšírenia čiar"
+
+#: part/part.cpp:2629
+#, kde-format
+msgctxt "@action:button"
+msgid "Choose New Name"
+msgstr ""
+
+#: part/part.cpp:2661
+#, kde-format
+msgid ""
+"The file '%1' has been modified by another program, which means it can no "
+"longer be saved."
+msgstr ""
+"Súbor '%1' bol upravený iným programom, čo znamená, že ho už nemožno uložiť."
+
+#: part/part.cpp:2669
+#, kde-format
+msgid ""
+"The current document is protected with a password.<br />In order to save, "
+"the file needs to be reloaded. You will be asked for the password again and "
+"your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"Aktuálny dokument je chránený heslom. <br/> Ak ho chcete uložiť, súbor je "
+"potrebné znova načítať. Budete znova požiadaný o heslo a vaša história "
+"vrátenia / opakovania sa stratí. <br/> Chcete pokračovať?"
+
+#: part/part.cpp:2670 part/part.cpp:2722
+#, kde-format
+msgid "Save - Warning"
+msgstr "Uložiť - Upozornenie"
+
+#: part/part.cpp:2696
+#, kde-format
+msgid "Could not open the temporary file for saving."
+msgstr "Nepodarilo sa otvoriť dočasný súbor pre uloženie."
+
+#: part/part.cpp:2709
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Could not overwrite <filename>%1</filename> because that file is read-only. "
+"Try saving to another location or changing that file's permissions."
+msgstr ""
+"Nemožno prepísať <filename>%1</filename>, pretože tento súbor je len na "
+"čítanie. Skúste uložiť na iné miesto alebo zmeniť oprávnenia tohto súboru."
+
+#: part/part.cpp:2721
+#, kde-format
+msgid ""
+"After saving, the current document format requires the file to be reloaded. "
+"Your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"Po uložení aktuálny formát dokumentu vyžaduje opätovné načítanie súboru. "
+"Vaša história vrátenia/opakovania bude stratená. <br/> Chcete pokračovať?"
+
+#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#, kde-format
+msgid "File could not be saved in '%1'. Try to save it to another location."
+msgstr "Súbor sa nepodarilo uložiť do '%1'. Skúste iné umiestnenie."
+
+#: part/part.cpp:2749
+#, kde-format
+msgid "Filled form contents"
+msgstr "Vyplnený obsah formulára"
+
+#: part/part.cpp:2752
+#, kde-format
+msgid "User annotations"
+msgstr "Poznámky používateľa"
+
+#: part/part.cpp:2757
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them."
+msgstr ""
+"Chystáte sa uložiť zmeny, ale aktuálny formát súboru nepodporuje ukladanie "
+"nasledujúcich prvkov. Na ich uchovanie použite formát <i>Archív dokumentov "
+"Okular</i>."
+
+#: part/part.cpp:2761 part/part.cpp:2783
+#, kde-format
+msgid "Warning"
+msgstr "Varovanie"
+
+#: part/part.cpp:2762 part/part.cpp:2784
+#, kde-format
+msgid "Save as Okular document archive..."
+msgstr "Uložiť ako Archív dokumentov Okular..."
+
+#: part/part.cpp:2774
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save the document and "
+"discard these elements."
+msgstr ""
+"Chystáte sa uložiť zmeny, ale aktuálny formát súboru nepodporujeukladanie "
+"nasledujúcich prvkov. Použite <i>Archív dokumentov Okular</i> na ich "
+"zachovanie. Ak chcete dokument uložiť, kliknite na tlačidlo <i>Pokračovať</"
+"i> na uloženie a zahodenie týchto prvkov."
+
+#: part/part.cpp:2777
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save, but you will lose "
+"these elements as well as the undo/redo history."
+msgstr ""
+"Chystáte sa uložiť zmeny, ale aktuálny formát súboru nepodporujeukladanie "
+"nasledujúcich prvkov. Použite <i>Archív dokumentov Okular</i> na ich "
+"zachovanie. Kliknutím na tlačidlo <i>Pokračovať</i> subor uložíte, ale "
+"stratíte tieto prvky, ako aj históriu vrátenia/opakovania."
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue"
+msgstr "Pokračovať"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue losing changes"
+msgstr "Pokračovať stratením zmien"
+
+#: part/part.cpp:2807
+#, kde-format
+msgid "File could not be saved in '%1'. %2"
+msgstr "Súbor sa nepodarilo uložiť do '%1'. %2"
+
+#: part/part.cpp:2846
+#, kde-format
+msgid ""
+"Okular cannot copy %1 to the specified location.\n"
+"\n"
+"The document does not exist anymore."
+msgstr ""
+"Okular nemôže kopírovať %1 do zadaného umiestnenia.\n"
+"\n"
+"Dokument už neexistuje."
+
+#: part/part.cpp:2882
+#, kde-format
+msgid ""
+"File could not be saved in '%1'. Error: '%2'. Try to save it to another "
+"location."
+msgstr ""
+"Súbor sa nepodarilo uložiť do '%1'. Chyba: '%2'. Skúste iné umiestnenie."
+
+#: part/part.cpp:3133
+#, kde-format
+msgid "Expand whole section"
+msgstr "Rozbaliť celú sekciu"
+
+#: part/part.cpp:3134
+#, kde-format
+msgid "Collapse whole section"
+msgstr "Zbaliť celú sekciu"
+
+#: part/part.cpp:3135
+#, kde-format
+msgid "Expand all"
+msgstr "Rozbaliť všetko"
+
+#: part/part.cpp:3136
+#, kde-format
+msgid "Collapse all"
+msgstr "Zbaliť všetko"
+
+#: part/part.cpp:3147
+#, fuzzy, kde-format
+#| msgctxt "@option:check Config dialog, general page"
+#| msgid "Link the thumbnails with the page"
+msgid "Sync Thumbnail with Page"
+msgstr "Prepojiť náhľady so stránkou"
+
+#: part/part.cpp:3152
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Pridať záložku"
+
+#: part/part.cpp:3176
+#, kde-format
+msgid "Tools"
+msgstr "Nástroje"
+
+#: part/part.cpp:3358
+#, kde-format
+msgctxt "@action:inmenu menu that contains actions to control text to speach"
+msgid "Speak"
+msgstr "Čítať"
+
+#: part/part.cpp:3516
+#, kde-format
+msgctxt "@title:window"
+msgid "Print"
+msgstr "Tlačiť"
+
+#: part/part.cpp:3579
+#, kde-format
+msgid "Printing this document is not allowed."
+msgstr "Tlač tohto dokumentu nie je povolená."
+
+#: part/part.cpp:3587
+#, kde-format
+msgid ""
+"Could not print the document. Unknown error. Please report to bugs.kde.org"
+msgstr ""
+"Nepodarilo sa vytlačiť dokument. Neznáma chyba. Prosím nahláste chybu na "
+"bugs.kde.org"
+
+#: part/part.cpp:3589
+#, kde-format
+msgid ""
+"Could not print the document. Detailed error is \"%1\". Please report to "
+"bugs.kde.org"
+msgstr ""
+"Nepodarilo sa vytlačiť dokument. Podrobný popis chyby je \"%1\" Prosím "
+"nahláste chybu na bugs.kde.org"
+
+#: part/part.cpp:3669
+#, kde-format
+msgid "Go to the place you were before"
+msgstr "Prejsť na predchádzajúce miesto"
+
+#: part/part.cpp:3673
+#, kde-format
+msgid "Go to the place you were after"
+msgstr "Prejsť na nasledujúce miesto"
+
+#: part/part.cpp:3698
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not create temporary file "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+msgstr ""
+"<qt><strong>Chyba súboru!</strong> Nepodarilo sa vytvoriť dočasný súbor "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+
+#: part/part.cpp:3710
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
+"strong></nobr> for uncompression. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>Chyba súboru!</strong> Nepodarilo sa otvoriť súbor <nobr><strong>"
+"%1</strong></nobr> pre rozbalenie. Súbor nebude načítaný.</qt>"
+
+#: part/part.cpp:3714
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if you do not have enough permissions to "
+"read the file. You can check ownership and permissions if you right-click on "
+"the file in the Dolphin file manager, then choose the 'Properties' option, "
+"and select 'Permissions' tab in the opened window.</qt>"
+msgstr ""
+"<qt>Táto chyba sa obvykle vyskytne, ak nemáte dostatočné práva na čítanie "
+"súboru. Vlastníka a práva môžete skontrolovať, ak kliknete pravým tlačidlom "
+"myši na súbor v správcovi súborov Dolphin a vyberiete položku 'Vlastnosti', "
+"a následne záložku 'Oprávnenia' v okne, ktoré sa otvorí.</qt>"
+
+#: part/part.cpp:3736
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
+"%1</strong></nobr>. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>Chyba súboru!</strong> Nepodarilo sa rozbaliť súbor <nobr> "
+"<strong>%1</strong></nobr>. Súbor nebude načítaný.</qt>"
+
+#: part/part.cpp:3740
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if the file is corrupt. If you want to be "
+"sure, try to decompress the file manually using command-line tools.</qt>"
+msgstr ""
+"<qt>Táto chyba sa obvykle vyskytne, ak je súbor poškodený. Ak si chcete byť "
+"istý, skúste rozbaliť súbor ručne pomocou nástrojov príkazového riadku.</qt>"
+
+#: part/part.cpp:3766
+#, kde-format
+msgid "No Bookmarks"
+msgstr "Žiadne záložky"
+
+#: part/part.cpp:3837
+#, kde-format
+msgid "There was a problem sharing the document: %1"
+msgstr "Vyskytol sa problém pri zdieľaní dokumentu: %1"
+
+#: part/part.cpp:3837 part/part.cpp:3843
+#, kde-format
+msgid "Share"
+msgstr "Zdieľať"
+
+#: part/part.cpp:3841
+#, kde-format
+msgid "Document shared successfully"
+msgstr "Dokument úspešne zdieľaný"
+
+#: part/part.cpp:3843
+#, kde-format
+msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
+msgstr "Zdieľaný dokument môžete nájsť na adrese: <a href=\"%1\">%1</a>"
+
+#. i18n: ectx: Menu (edit)
+#: part/part.rc:19
+#, kde-format
+msgid "&Edit"
+msgstr "&Upraviť"
+
+#. i18n: ectx: Menu (view)
+#: part/part.rc:32
+#, kde-format
+msgid "&View"
+msgstr "&Zobraziť"
+
+#. i18n: ectx: Menu (go)
+#: part/part.rc:53
+#, kde-format
+msgid "&Go"
+msgstr "&Prejsť"
+
+#. i18n: ectx: Menu (tools)
+#: part/part.rc:73
+#, kde-format
+msgid "&Tools"
+msgstr "&Nástroje"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: part/part.rc:101 shell/shell.rc:24
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Hlavný panel nástrojov"
+
+#. i18n: ectx: ToolBar (annotationToolBar)
+#: part/part.rc:119
+#, kde-format
+msgid "Annotation Toolbar"
+msgstr "Nástroje poznámok"
+
+#. i18n: ectx: ToolBar (quickAnnotationToolBar)
+#: part/part.rc:143
+#, kde-format
+msgid "Quick Annotation Toolbar"
+msgstr "Panel nástrojov rýchlych poznámok"
+
+#: part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General Options"
+msgstr "Všeobecné možnosti"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility"
+msgstr "Prístupnosť"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility Reading Aids"
+msgstr "Pomôcky pre prístupnosť čítania"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance"
+msgstr "Výkon"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance Tuning"
+msgstr "Ladenie výkonu"
+
+#: part/preferencesdialog.cpp:45
+#, kde-format
+msgid "Configure Viewer"
+msgstr "Nastaviť prehliadač"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Presentation"
+msgstr "Prezentácia"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Options for Presentation Mode"
+msgstr "Možnosti pre prezentačný režim"
+
+#: part/preferencesdialog.cpp:50
+#, kde-format
+msgid "Annotation Options"
+msgstr "Voľby poznámok"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor"
+msgstr "Editor"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor Options"
+msgstr "Možnosti editora"
+
+#: part/preferencesdialog.cpp:56
+#, kde-format
+msgctxt ""
+"Give the user a hint, that it enabled the option --editor-cmd together with "
+"the current value of the option."
+msgid ""
+"The editor was set by the command line to \n"
+" %1 \n"
+"If you want to use the setting, start okular without the option --editor-cmd"
+msgstr ""
+
+#: part/presentationsearchbar.cpp:77
+#, kde-format
+msgid "Find Next"
+msgstr "Nájsť nasledujúci"
+
+#: part/presentationwidget.cpp:167
+#, kde-format
+msgctxt "[document title/filename] – Presentation"
+msgid "%1 – Presentation"
+msgstr "%1 - Prezentácia"
+
+#: part/presentationwidget.cpp:221
+#, kde-format
+msgid "Switch Screen"
+msgstr "Prepnúť obrazovku"
+
+#: part/presentationwidget.cpp:226
+#, kde-format
+msgctxt "%1 is the screen number (0, 1, ...)"
+msgid "Screen %1"
+msgstr "Obrazovka %1"
+
+#: part/presentationwidget.cpp:233
+#, kde-format
+msgid "Exit Presentation Mode"
+msgstr "Ukončiť prezentačný režim"
+
+#: part/presentationwidget.cpp:367
+#, kde-format
+msgid "Title: %1"
+msgstr "Názov: %1"
+
+#: part/presentationwidget.cpp:372
+#, kde-format
+msgid "Pages: %1"
+msgstr "Strán: %1"
+
+#: part/presentationwidget.cpp:373
+#, kde-format
+msgid "Click to begin"
+msgstr "Pre spustenie kliknite"
+
+#: part/presentationwidget.cpp:515
+#, kde-format
+msgctxt "For Presentation"
+msgid "Pause"
+msgstr "Pozastaviť"
+
+#: part/presentationwidget.cpp:518
+#, kde-format
+msgctxt "For Presentation"
+msgid "Play"
+msgstr "Prehrať"
+
+#: part/presentationwidget.cpp:1619
+#, kde-format
+msgid ""
+"There are two ways of exiting presentation mode, you can press either ESC "
+"key or click with the quit button that appears when placing the mouse in the "
+"top-right corner. Of course you can cycle windows (Alt+TAB by default)"
+msgstr ""
+"Existujú dva spôsoby, akým ukončiť režim prezentácie. Buď stlačíte kláves "
+"ESC alebo kliknete na tlačidlo Ukončiť, ktoré sa zobrazí po presunutí "
+"kurzora myši do pravého horného rohu. Prepínanie medzi oknami (Alt+TAB) "
+"samozrejme zostane funkčné."
+
+#: part/presentationwidget.cpp:1705
+#, kde-format
+msgctxt ""
+"Reason for inhibiting the screensaver activation, when the presentation mode "
+"is active"
+msgid "Giving a presentation"
+msgstr "Prebieha prezentácia"
+
+#: part/propertiesdialog.cpp:49
+#, kde-format
+msgid "Unknown File"
+msgstr "Neznámy súbor"
+
+#: part/propertiesdialog.cpp:63
+#, kde-format
+msgid "%1 Properties"
+msgstr "Vlastnosti %1"
+
+#: part/propertiesdialog.cpp:104
+#, kde-format
+msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/propertiesdialog.cpp:117
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: part/propertiesdialog.cpp:124
+#, kde-format
+msgid "&Fonts"
+msgstr "&Písma"
+
+#: part/propertiesdialog.cpp:145
+#, kde-format
+msgid "Reading font information..."
+msgstr "Načítavajú sa informácie o písmach..."
+
+#: part/propertiesdialog.cpp:158
+#, kde-format
+msgid "&Page Sizes"
+msgstr "&Veľkosti stránky"
+
+#: part/propertiesdialog.cpp:225
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Extract Font"
+msgstr "&Extrahovať písmo"
+
+#: part/propertiesdialog.cpp:273
+#, kde-format
+msgid "Type 1"
+msgstr "Type 1"
+
+#: part/propertiesdialog.cpp:276
+#, kde-format
+msgid "Type 1C"
+msgstr "Type 1C"
+
+#: part/propertiesdialog.cpp:279
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "Type 1C (OT)"
+msgstr "Type 1C (OT)"
+
+#: part/propertiesdialog.cpp:282
+#, kde-format
+msgid "Type 3"
+msgstr "Type 3"
+
+#: part/propertiesdialog.cpp:285
+#, kde-format
+msgid "TrueType"
+msgstr "TrueType"
+
+#: part/propertiesdialog.cpp:288
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "TrueType (OT)"
+msgstr "TrueType (OT)"
+
+#: part/propertiesdialog.cpp:291
+#, kde-format
+msgid "CID Type 0"
+msgstr "CID Type 0"
+
+#: part/propertiesdialog.cpp:294
+#, kde-format
+msgid "CID Type 0C"
+msgstr "CID Type 0C"
+
+#: part/propertiesdialog.cpp:297
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID Type 0C (OT)"
+msgstr "CID Type 0C (OT)"
+
+#: part/propertiesdialog.cpp:300
+#, kde-format
+msgid "CID TrueType"
+msgstr "CID TrueType"
+
+#: part/propertiesdialog.cpp:303
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID TrueType (OT)"
+msgstr "CID TrueType (OT)"
+
+#: part/propertiesdialog.cpp:306
+#, kde-format
+msgid "TeX PK"
+msgstr "PK TeX"
+
+#: part/propertiesdialog.cpp:309
+#, kde-format
+msgid "TeX virtual"
+msgstr "Virtuálny TeX"
+
+#: part/propertiesdialog.cpp:312
+#, kde-format
+msgid "TeX Font Metric"
+msgstr "Metrika písma TeX"
+
+#: part/propertiesdialog.cpp:315
+#, kde-format
+msgid "TeX FreeType-handled"
+msgstr "FreeType-spracovaný TeX"
+
+#: part/propertiesdialog.cpp:318
+#, kde-format
+msgctxt "Unknown font type"
+msgid "Unknown"
+msgstr "Neznámy"
+
+#: part/propertiesdialog.cpp:331
+#, kde-format
+msgid "Embedded (subset)"
+msgstr "Vložené (podmnožina)"
+
+#: part/propertiesdialog.cpp:334
+#, kde-format
+msgid "Fully embedded"
+msgstr "Plne vložené"
+
+#: part/propertiesdialog.cpp:344
+#, kde-format
+msgid "No"
+msgstr "Nie"
+
+#: part/propertiesdialog.cpp:347
+#, kde-format
+msgid "Yes (subset)"
+msgstr "Áno (podmnožina)"
+
+#: part/propertiesdialog.cpp:350
+#, kde-format
+msgid "Yes"
+msgstr "Áno"
+
+#: part/propertiesdialog.cpp:370
+#, kde-format
+msgctxt "Replacing missing font with another one"
+msgid "%1 (substituting with %2)"
+msgstr "%1 (nahradenie s %2)"
+
+#: part/propertiesdialog.cpp:372
+#, kde-format
+msgctxt "font name not available (empty)"
+msgid "[n/a]"
+msgstr "[n/a]"
+
+#: part/propertiesdialog.cpp:386
+#, kde-format
+msgid "Unknown font"
+msgstr "Neznáme písmo"
+
+#: part/propertiesdialog.cpp:392
+#, kde-format
+msgid "Embedded: %1"
+msgstr "Vložené: %1"
+
+#: part/propertiesdialog.cpp:426
+#, kde-format
+msgid "Name"
+msgstr "Názov"
+
+#: part/propertiesdialog.cpp:429
+#, kde-format
+msgid "Type"
+msgstr "Typ"
+
+#: part/propertiesdialog.cpp:432
+#, kde-format
+msgid "File"
+msgstr "Súbor"
+
+#: part/propertiesdialog.cpp:500
+#, kde-format
+msgid "Page"
+msgstr "Stránka"
+
+#: part/propertiesdialog.cpp:503
+#, kde-format
+msgid "Size"
+msgstr "Veľkosť"
+
+#: part/revisionviewer.cpp:41
+#, kde-format
+msgid "Revision Preview"
+msgstr "Náhľad revízie"
+
+#: part/revisionviewer.cpp:53
+#, kde-format
+msgid "Where do you want to save this revision?"
+msgstr "Kde chcete uložiť túto revíziu?"
+
+#: part/revisionviewer.cpp:56
+#, kde-format
+msgid "Could not save file %1."
+msgstr "Nepodarilo sa uložiť súbor %1."
+
+#: part/revisionviewer.cpp:75
+#, kde-format
+msgid "Could not view revision."
+msgstr "Nepodarilo sa otvoriť revíziu."
+
+#: part/searchwidget.cpp:38
+#, kde-format
+msgid "Enter at least 3 letters to filter pages"
+msgstr "Pre filtrovanie strán musíte zadať aspoň 3 písmená"
+
+#: part/searchwidget.cpp:48
+#, kde-format
+msgid "Case Sensitive"
+msgstr "Rozlišovať veľkosť písmen"
+
+#: part/searchwidget.cpp:50
+#, kde-format
+msgid "Match Phrase"
+msgstr "Hľadať frázu"
+
+#: part/searchwidget.cpp:51
+#, kde-format
+msgid "Match All Words"
+msgstr "Hľadať všetky slová"
+
+#: part/searchwidget.cpp:52
+#, kde-format
+msgid "Match Any Word"
+msgstr "Hľadať ktorékoľvek slovo"
+
+#: part/searchwidget.cpp:71
+#, kde-format
+msgid "Filter Options"
+msgstr "Možnosti filtra"
+
+#: part/side_reviews.cpp:65
+#, kde-format
+msgid ""
+"<div align=center><h3>No annotations</h3>To create new annotations press F6 "
+"or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
+msgstr ""
+"<div align=center><h3>Žiadne poznámky</h3>Ak chcete vytvoriť nové poznámky, "
+"stlačte kláves F6 alebo vyberte <i>Nástroje -&gt; Poznámky</i> z ponuky.</"
+"div>"
+
+#: part/side_reviews.cpp:137
+#, kde-format
+msgid "Group by Page"
+msgstr "Zoskupiť podľa strán"
+
+#: part/side_reviews.cpp:142
+#, kde-format
+msgid "Group by Author"
+msgstr "Zoskupiť podľa autora"
+
+#: part/side_reviews.cpp:150
+#, kde-format
+msgid "Show annotations for current page only"
+msgstr "Zobraziť poznámky iba pre aktuálnu stránku"
+
+#: part/side_reviews.cpp:160
+#, kde-format
+msgid "Expand all elements"
+msgstr "Rozbaliť všetko"
+
+#: part/side_reviews.cpp:162
+#, kde-format
+msgid "Collapse all elements"
+msgstr "Zbaliť všetko"
+
+#: part/signaturepanel.cpp:101
+#, kde-format
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Select certificate to sign with"
+msgstr "Vyberte certifikát, s ktorým sa chcete podpísať"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Certificates:"
+msgstr "Certifikáty:"
+
+#: part/signaturepartutils.cpp:59
+#, kde-format
+msgid "Enter password (if any) to unlock certificate: %1"
+msgstr "Ak chcete odomknúť certifikát, zadajte heslo (ak existuje): %1"
+
+#: part/signaturepartutils.cpp:61
+#, kde-format
+msgid "Enter certificate password"
+msgstr "Zadajte heslo k certifikátu"
+
+#: part/signaturepartutils.cpp:71
+#, kde-format
+msgid "Enter document password"
+msgstr "Zadajte heslo dokumentu"
+
+#: part/signaturepartutils.cpp:93
+#, kde-format
+msgctxt ""
+"Used when suggesting a new name for a digitally signed file. %1 is the old "
+"file name and %2 it's extension"
+msgid "%1_signed.%2"
+msgstr "%1_podpísaný.%2"
+
+#: part/signaturepartutils.cpp:95
+#, kde-format
+msgid "Save Signed File As"
+msgstr "Uložiť podpísaný súbor ako"
+
+#: part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Nedostupné"
+
+#: part/signaturepropertiesdialog.cpp:49
+#, kde-format
+msgid "Validity Status"
+msgstr "Stav platnosti"
+
+#: part/signaturepropertiesdialog.cpp:52
+#, kde-format
+msgid "Signature Validity:"
+msgstr "Platnosť podpisu:"
+
+#: part/signaturepropertiesdialog.cpp:53
+#, kde-format
+msgid "Document Modifications:"
+msgstr "Úpravy dokumentu:"
+
+#: part/signaturepropertiesdialog.cpp:56
+#, kde-format
+msgid "Additional Information"
+msgstr "Dodatočné informácie"
+
+#: part/signaturepropertiesdialog.cpp:59
+#, kde-format
+msgid "Signed By:"
+msgstr "Podpísané (kým):"
+
+#: part/signaturepropertiesdialog.cpp:60
+#, kde-format
+msgid "Signing Time:"
+msgstr "Čas podpisu:"
+
+#: part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "Dôvod:"
+
+#: part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "Poloha:"
+
+#: part/signaturepropertiesdialog.cpp:74
+#, kde-format
+msgid "Document Version"
+msgstr "Verzia dokumentu"
+
+#: part/signaturepropertiesdialog.cpp:77
+#, kde-format
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Revízia dokumentu %1 z %2"
+
+#: part/signaturepropertiesdialog.cpp:79
+#, kde-format
+msgid "View Signed Version..."
+msgstr "Zobraziť podpísanú verziu..."
+
+#: part/signaturepropertiesdialog.cpp:86
+#, kde-format
+msgid "View Certificate..."
+msgstr "Zobraziť certifikát..."
+
+#: part/thumbnaillist.cpp:1029
+#, kde-format
+msgid "Show bookmarked pages only"
+msgstr "Zobraziť iba stránky v záložkách"
+
+#: part/videowidget.cpp:139
+#, kde-format
+msgctxt "start the movie playback"
+msgid "Play"
+msgstr "Prehrať"
+
+#: part/videowidget.cpp:142
+#, kde-format
+msgctxt "pause the movie playback"
+msgid "Pause"
+msgstr "Pozastaviť"
+
+#: part/videowidget.cpp:248
+#, kde-format
+msgctxt "stop the movie playback"
+msgid "Stop"
+msgstr "Zastaviť"
+
+#: part/widgetconfigurationtoolsbase.cpp:28
+#, kde-format
+msgid "&Add..."
+msgstr "&Pridať..."
+
+#: part/widgetconfigurationtoolsbase.cpp:31
+#, kde-format
+msgid "&Edit..."
+msgstr "&Upraviť..."
+
+#: part/widgetconfigurationtoolsbase.cpp:35
+#, kde-format
+msgid "&Remove"
+msgstr "O&dstrániť"
+
+#: part/widgetconfigurationtoolsbase.cpp:39
+#, kde-format
+msgid "Move &Up"
+msgstr "Posunúť &vyššie"
+
+#: part/widgetconfigurationtoolsbase.cpp:43
+#, kde-format
+msgid "Move &Down"
+msgstr "Posunúť &nižšie"
+
+#: part/widgetdrawingtools.cpp:105
+#, kde-format
+msgid "Default Drawing Tool #%1"
+msgstr "Predvolený kresliaci nástroj #%1"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "There's already a tool with that name. Using a default one"
+msgstr "Už existuje nástroj s týmto názvom. Používam predvolený"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "Duplicated Name"
+msgstr "Duplicitný názov"
+
+#: shell/main.cpp:68
+#, kde-format
+msgid "Page of the document to be shown"
+msgstr "Stránka dokumentu, ktorá sa má zobraziť"
+
+#: shell/main.cpp:69
+#, kde-format
+msgid "Start the document in presentation mode"
+msgstr "Spustiť dokument v prezentačnom režime"
+
+#: shell/main.cpp:70
+#, kde-format
+msgid "Start with print dialog"
+msgstr "Spustiť s tlačovým dialógom"
+
+#: shell/main.cpp:71
+#, kde-format
+msgid "Start with print dialog and exit after printing"
+msgstr "Spustiť s tlačovým dialógom a ukončiť po vytlačení"
+
+#: shell/main.cpp:72
+#, kde-format
+msgid "\"Unique instance\" control"
+msgstr "Ovládanie \"Unikátnej inštancie\""
+
+#: shell/main.cpp:73
+#, kde-format
+msgid "Not raise window"
+msgstr "Nezdvihnúť okno"
+
+#: shell/main.cpp:74
+#, kde-format
+msgid "Find a string on the text"
+msgstr "Nájsť reťazec v texte"
+
+#: shell/main.cpp:75
+#, kde-format
+msgid "sets the external editor command"
+msgstr ""
+
+#: shell/main.cpp:76
+#, kde-format
+msgid "Documents to open. Specify '-' to read from stdin."
+msgstr "Dokument na otvorenie. Zadajte '-' pre čítanie zo stdin."
+
+#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#, kde-format
+msgid ""
+"You cannot set the editor command in an already running okular instance. "
+"Please disable the tabs and try again. Please note, that unique is also not "
+"supported when setting the editor command at the commandline.\n"
+msgstr ""
+
+#: shell/okular_main.cpp:150
+#, kde-format
+msgid "Error: Can't open more than one document with the --unique switch"
+msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --unique"
+
+#: shell/okular_main.cpp:156
+#, kde-format
+msgid "Error: Can't open more than one document with the --presentation switch"
+msgstr ""
+"Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --presentation"
+
+#: shell/okular_main.cpp:162
+#, kde-format
+msgid "Error: Can't open more than one document with the --print switch"
+msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --print"
+
+#: shell/okular_main.cpp:168
+#, kde-format
+msgid "Error: Can't open more than one document with the --page switch"
+msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --page"
+
+#: shell/okular_main.cpp:174
+#, kde-format
+msgid "Error: Can't open more than one document with the --find switch"
+msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument s prepínačom --print"
+
+#: shell/shell.cpp:91
+#, kde-format
+msgid "Unable to find the Okular component: %1"
+msgstr "Nepodarilo sa nájsť komponent Okular. %1"
+
+#: shell/shell.cpp:146
+#, kde-format
+msgid ""
+"There is already a unique Okular instance running. This instance won't be "
+"the unique one."
+msgstr "Už beží jedinečná inštancia Okular. Táto inštancia nebude jedinečná."
+
+#: shell/shell.cpp:169
+#, kde-format
+msgid "Unable to find the Okular component."
+msgstr "Nepodarilo sa nájsť komponent Okular."
+
+#: shell/shell.cpp:399
+#, kde-format
+msgid ""
+"Click to open a file\n"
+"Click and hold to open a recent file"
+msgstr ""
+"Kliknite pre otvorenie súboru\n"
+"Kliknite a podržte pre otvorenie nedávno otvoreného súboru"
+
+#: shell/shell.cpp:400
+#, kde-format
+msgid ""
+"<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
+msgstr ""
+"<b>Kliknite</b> pre otvorenie súboru alebo <b>Kliknite a podržte </b> pre "
+"otvorenie nedávno otvoreného súboru"
+
+#: shell/shell.cpp:413
+#, kde-format
+msgid "Next Tab"
+msgstr "Ďalšia karta"
+
+#: shell/shell.cpp:419
+#, kde-format
+msgid "Previous Tab"
+msgstr "Predošlá karta"
+
+#: shell/shell.cpp:425
+#, kde-format
+msgid "Undo close tab"
+msgstr "Vrátiť zatvorenie karty"
+
+#: shell/shell.cpp:532
+#, kde-format
+msgid "All files (*)"
+msgstr "Všetky súbory (*)"
+
+#: shell/shell.cpp:533
+#, kde-format
+msgid "All supported files (%1)"
+msgstr "Všetky podporované súbory (%1)"
+
+#: shell/shell.cpp:537
+#, kde-format
+msgid "Open Document"
+msgstr "Otvoriť dokument"
+
+#: shell/shell.cpp:641
+#, kde-format
+msgid "Confirm Close"
+msgstr "Potvrdiť zatvorenie"
+
+#: shell/shell.cpp:645
+#, kde-format
+msgid "Close Tabs"
+msgstr "Zavrieť karty"
+
+#: shell/shell.cpp:652
+#, kde-format
+msgid "You are about to close %1 tabs. Are you sure you want to continue?"
+msgstr "Chystáte sa zatvoriť %1 kariet. Ste si istý, že chcete pokračovať?"
+
+#: shell/shell.cpp:654
+#, kde-format
+msgid "Warn me when I attempt to close multiple tabs"
+msgstr "Upozorniť ma keď sa pokúsim zatvoriť naraz niekoľko kariet"
+
+#: shell/welcomescreen.cpp:65
+#, kde-format
+msgid "&Copy Path"
+msgstr "Kopírovať cestu"
+
+#: shell/welcomescreen.cpp:78
+#, kde-format
+msgid "&Open Containing Folder"
+msgstr "Otvoriť priečinok s obsahom"
+
+#: shell/welcomescreen.cpp:93
+#, kde-format
+msgctxt "recent items context menu"
+msgid "&Forget This Item"
+msgstr ""
+
+#: shell/welcomescreen.cpp:143
+#, kde-format
+msgctxt "on welcome screen"
+msgid "No recent documents"
+msgstr "Žiadne nedávne dokumenty"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: shell/welcomescreen.ui:153
+#, kde-format
+msgid "Welcome to Okular"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: shell/welcomescreen.ui:232
+#, kde-format
+msgctxt "on welcome screen"
+msgid "Open Document..."
+msgstr "Otvoriť dokument..."
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: shell/welcomescreen.ui:377
+#, kde-format
+msgctxt "on welcome screen"
+msgid "Recent documents"
+msgstr "Nedávne dokumenty"
+
+#. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
+#: shell/welcomescreen.ui:387
+#, kde-format
+msgctxt "on welcome screen (recent document list)"
+msgid "Forget All"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
+#: shell/welcomescreen.ui:455
+#, kde-format
+msgid "Hide welcome screen"
+msgstr ""
+
+#~ msgid "Remove Bookmarks"
+#~ msgstr "Odstrániť záložky"
+
+#, fuzzy
+#~| msgid "&Annotations"
+#~ msgctxt "verb"
+#~ msgid "&Annotate"
+#~ msgstr "Poznámky"
+
+#, fuzzy
+#~| msgid "Highlight"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Highlight"
+#~ msgstr "Zvýraznenie"
+
+#, fuzzy
+#~| msgid "Underline"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Underline"
+#~ msgstr "Podčiarknuté"
+
+#, fuzzy
+#~| msgid "Squiggle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Squiggle"
+#~ msgstr "Vlnovka"
+
+#, fuzzy
+#~| msgid "Strike Out"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Strike Out"
+#~ msgstr "Prečiarknuté"
+
+#, fuzzy
+#~| msgid "Insert Text"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Text"
+#~ msgstr "Vložiť text"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Inline Note"
+#~ msgstr "Vložená poznámka"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Popup Note"
+#~ msgstr "Vyskakovacia poznámka"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a freehand line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Freehand Line"
+#~ msgstr "Kresliť čiaru voľnou rukou"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a straight line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Straight line"
+#~ msgstr "Kresliť rovnú čiaru"
+
+#, fuzzy
+#~| msgid "Arrow"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Arrow"
+#~ msgstr "Šípka"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a rectangle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Rectangle"
+#~ msgstr "Kresliť obdĺžnik"
+
+#, fuzzy
+#~| msgid "Ellipse"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Ellipse"
+#~ msgstr "Elipsa"
+
+#, fuzzy
+#~| msgid "Polygon"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Polygon"
+#~ msgstr "Mnohouholník"
+
+#, fuzzy
+#~| msgid "Highlighter"
+#~ msgid "Highlight in Yellow"
+#~ msgstr "Zvýrazňovač"
+
+#, fuzzy
+#~| msgid "Highlight with Comment"
+#~ msgid "Highlight in Green"
+#~ msgstr "Zvýraznenie s komentárom"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgid "Insert Inline Note"
+#~ msgstr "Vložená poznámka"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgid "Insert Popup Note"
+#~ msgstr "Vyskakovacia poznámka"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "&Select Area"
+#~ msgstr "Vyberte text"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select &Text"
+#~ msgstr "Vyberte text"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select T&able"
+#~ msgstr "Vyberte text"
+
+#, fuzzy
+#~| msgid "&Magnifier"
+#~ msgctxt "verb"
+#~ msgid "&Magnify"
+#~ msgstr "Lupa"
+
+#~ msgid "Bookmark annotation"
+#~ msgstr "Vytvoriť záložku z poznámky"
+
+#~ msgid "&Toggle Change Colors"
+#~ msgstr "Prepnúť zmenu farieb"
+
+#~ msgctxt "@option:check Config dialog, presentation page, transitions"
+#~ msgid "Enable transitions"
+#~ msgstr "Povoliť prechody"
+
+#~| msgid "Advance every:"
+#~ msgctxt "@label:spinbox Config dialog, presentation page"
+#~ msgid "Advance every:"
+#~ msgstr "Posúvať každých:"
+
+#, fuzzy
+#~| msgid "Use custom background color"
+#~ msgctxt "@label:listbox Config dialog, general page"
+#~ msgid "Custom background color:"
+#~ msgstr "Použiť vlastnú farbu pozadia"
+
+#~ msgid "Draw border around &Images"
+#~ msgstr "&Kresliť okraj okolo obrázkov"
+
+#~ msgid "Speech"
+#~ msgstr "Reč"
+
+#~ msgid "Engine"
+#~ msgstr "Engine"
+
+#~ msgid "Identity"
+#~ msgstr "Identita"
+
+#~ msgid "Au&thor:"
+#~ msgstr "&Autor:"
+
+#~ msgid "View Options"
+#~ msgstr "Možnosti zobrazenia"
+
+#~ msgctxt "@info:whatsthis"
+#~ msgid ""
+#~ "Defines the default zoom mode for files which were never opened before.\n"
+#~ "For files which were opened before the previous zoom is applied."
+#~ msgstr ""
+#~ "Určuje predvolený režim priblíženia pre súbory, ktoré neboli predtým "
+#~ "odvorené.\n"
+#~ "Súbory, ktoré boli už otvorené, sa priblížia rovnako ako predtým."
+
+#~ msgid "Navigation"
+#~ msgstr "Navigácia"
+
+#~ msgid "Placement"
+#~ msgstr "Umiestnenie"
+
+#~ msgid "Screen:"
+#~ msgstr "Obrazovka:"
+
+#~ msgid "Drawing Tool Configuration"
+#~ msgstr "Nastavenie kresliaceho nástroja"
+
+#~ msgid "&Get Books From Internet..."
+#~ msgstr "&Stiahnuť knihy z Internetu..."
+
+#~ msgid "Reviews"
+#~ msgstr "Revízie"
+
+#~ msgctxt "@item:inlistbox Color name"
+#~ msgid "%1"
+#~ msgstr "%1"
+
+#~ msgid "Hide Forms"
+#~ msgstr "Skryť formuláre"
+
+#~ msgid "&Review"
+#~ msgstr "&Revízia"
+
+#~ msgid "Annotations author"
+#~ msgstr "Autor poznámok"
+
+#~ msgid "Please insert your name or initials:"
+#~ msgstr "Prosím vložte vaše meno alebo iniciály:"
+
+#~ msgid "Show &Navigation Panel"
+#~ msgstr "Zobraziť &navigačný panel"
+
+#~ msgid "Show Text"
+#~ msgstr "Zobraziť text"
+
+#~ msgid "Small Icons"
+#~ msgstr "Malé ikony"
+
+#~ msgid "Large Icons"
+#~ msgstr "Veľké ikony"
+
+#~ msgid ""
+#~ "Click to use the current selection tool\n"
+#~ "Click on the arrow to choose another selection tool"
+#~ msgstr ""
+#~ "Kliknutím použijete aktuálny nástroj výberu\n"
+#~ "Kliknutím a podržaním vyberiete iný nástroj výberu"
+
+#~ msgid "Created: %1"
+#~ msgstr "Vytvorené: %1"
+
+#~ msgid "Style"
+#~ msgstr "Štýl"
+
+#~ msgid "&Size:"
+#~ msgstr "&Veľkosť:"
+
+#~ msgid "Inner color:"
+#~ msgstr "Vnútorná farba:"
+
+#~ msgid "Name: %1"
+#~ msgstr "Názov: %1"
+
+#~ msgid "Size: %1"
+#~ msgstr "Veľkosť: %1"
+
+#~ msgid "&Browse Tool"
+#~ msgstr "&Nástroj prehliadania"
+
+#~ msgid "&Zoom Tool"
+#~ msgstr "Nástroj l&upa"
+
+#~ msgctxt "Zoom Tool"
+#~ msgid "Zoom"
+#~ msgstr "Lupa"
+
+#~ msgctxt "Select Tool"
+#~ msgid "Selection"
+#~ msgstr "Výber"
+
+#~ msgid "&Text Selection Tool"
+#~ msgstr "&Nástroj výberu textu"
+
+#~ msgid "T&able Selection Tool"
+#~ msgstr "Nástroj výberu tabuľky"
+
+#, fuzzy
+#~| msgctxt "Symbol for caret annotations"
+#~| msgid "None"
+#~ msgid " None"
+#~ msgstr "Žiadny"
+
+#~ msgid ""
+#~ "The document requested to be launched in presentation mode.\n"
+#~ "Do you want to allow it?"
+#~ msgstr ""
+#~ "Dokument požaduje spustenie prezentačného režimu.\n"
+#~ "Chcete ho povoliť?"
+
+#~ msgid "Presentation Mode"
+#~ msgstr "Prezentačný režim"
+
+#~ msgid "Allow"
+#~ msgstr "Povoliť"
+
+#~ msgid "Allow the presentation mode"
+#~ msgstr "Povoliť prezentačný režim"
+
+#~ msgid "Do Not Allow"
+#~ msgstr "Nepovoliť"
+
+#~ msgid "Do not allow the presentation mode"
+#~ msgstr "Nepovoliť prezentačný režim"
+
+#~ msgid ""
+#~ "Your annotation changes will not be saved automatically. Use File -> Save "
+#~ "As...\n"
+#~ "or your changes will be lost once the document is closed"
+#~ msgstr ""
+#~ "Vaše zmeny anotácie sa nebudú ukladať automaticky. Použite Súbor -> "
+#~ "Uložiť ako...\n"
+#~ "alebo vaše zmeny budú stratené po zatvorení dokumentu"
+
+#~ msgid ""
+#~ "Your annotations are saved internally by Okular.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "Okular interne ukladá vaše anotácie.\n"
+#~ "Anotovaný dokument môžete exportovať pomocou Súbor -> Exportovať ako -> "
+#~ "Archív dokumentu"
+
+#~ msgid "Save &Copy As..."
+#~ msgstr "Uložiť &kópiu ako..."
+
+#~ msgid ""
+#~ "Your annotations will not be exported.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "Vaše anotácie nebudú exportované.\n"
+#~ "Anotovaný dokument môžete exportovať pomocou Súbor -> Exportovať ako -> "
+#~ "Archív dokumentu"
+
+#~ msgid ""
+#~ "End of document reached.\n"
+#~ "Continue from the beginning?"
+#~ msgstr ""
+#~ "Bol dosiahnutý koniec dokumentu.\n"
+#~ "Pokračovať od začiatku dokumentu?"
+
+#~ msgid ""
+#~ "Beginning of document reached.\n"
+#~ "Continue from the bottom?"
+#~ msgstr ""
+#~ "Bol dosiahnutý začiatok dokumentu.\n"
+#~ "Pokračovať od konca dokumentu?"
+
+#~ msgid "Current maintainer"
+#~ msgstr "Aktuálny správca"
+
+#~ msgid " sec."
+#~ msgstr " sek."
+
+#~ msgid "Pencil color:"
+#~ msgstr "Farba ceruzky:"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A0"
+#~ msgstr "krajinka DIN/ISO A0"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A0"
+#~ msgstr "portrét DIN/ISO A0"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A1"
+#~ msgstr "krajinka DIN/ISO A1"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A1"
+#~ msgstr "portrét DIN/ISO A1"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A2"
+#~ msgstr "krajinka DIN/ISO A2"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A2"
+#~ msgstr "portrét DIN/ISO A2"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A3"
+#~ msgstr "krajinka DIN/ISO A3"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A3"
+#~ msgstr "portrét DIN/ISO A3"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A4"
+#~ msgstr "krajinka DIN/ISO A4"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A4"
+#~ msgstr "portrét DIN/ISO A4"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A5"
+#~ msgstr "krajinka DIN/ISO A5"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A5"
+#~ msgstr "portrét DIN/ISO A5"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A6"
+#~ msgstr "krajinka DIN/ISO A6"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A6"
+#~ msgstr "portrét DIN/ISO A6"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A7"
+#~ msgstr "krajinka DIN/ISO A7"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A7"
+#~ msgstr "portrét DIN/ISO A7"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A8"
+#~ msgstr "krajinka DIN/ISO A8"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A8"
+#~ msgstr "portrét DIN/ISO A8"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A9"
+#~ msgstr "krajinka DIN/ISO A9"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A9"
+#~ msgstr "portrét DIN/ISO A9"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B0"
+#~ msgstr "krajinka DIN/ISO B0"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B0"
+#~ msgstr "portrét DIN/ISO B0"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B1"
+#~ msgstr "krajinka DIN/ISO B1"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B1"
+#~ msgstr "portrét DIN/ISO B1"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B2"
+#~ msgstr "krajinka DIN/ISO B2"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B2"
+#~ msgstr "portrét DIN/ISO B2"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B3"
+#~ msgstr "krajinka DIN/ISO B3"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B3"
+#~ msgstr "portrét DIN/ISO B3"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B4"
+#~ msgstr "krajinka DIN/ISO B4"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B4"
+#~ msgstr "portrét DIN/ISO B4"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B5"
+#~ msgstr "krajinka DIN/ISO B5"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B5"
+#~ msgstr "portrét DIN/ISO B5"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B6"
+#~ msgstr "krajinka DIN/ISO B6"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B6"
+#~ msgstr "portrét DIN/ISO B6"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B7"
+#~ msgstr "krajinka DIN/ISO B7"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B7"
+#~ msgstr "portrét DIN/ISO B7"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B8"
+#~ msgstr "krajinka DIN/ISO B8"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B8"
+#~ msgstr "portrét DIN/ISO B8"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B9"
+#~ msgstr "krajinka DIN/ISO B9"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B9"
+#~ msgstr "portrét DIN/ISO B9"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B10"
+#~ msgstr "krajinka DIN/ISO B10"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B10"
+#~ msgstr "portrét DIN/ISO B10"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape letter"
+#~ msgstr "krajinka letter"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait letter"
+#~ msgstr "portrét letter"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape legal"
+#~ msgstr "krajinka legal"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait legal"
+#~ msgstr "portrét legal"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape executive"
+#~ msgstr "krajinka executive"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait executive"
+#~ msgstr "portrét executive"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape Comm10E"
+#~ msgstr "krajinka Comm10E"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait Comm10E"
+#~ msgstr "portrét Comm10E"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DLE"
+#~ msgstr "krajinka DLE"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DLE"
+#~ msgstr "portrét DLE"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape folio"
+#~ msgstr "list krajinka"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait folio"
+#~ msgstr "list portrét"
+
+#~ msgctxt "paper size"
+#~ msgid "ledger"
+#~ msgstr "priečna kniha"
+
+#~ msgctxt "paper size"
+#~ msgid "tabloid"
+#~ msgstr "tabloid"
+
+#~ msgctxt "paper size"
+#~ msgid "unknown landscape paper size"
+#~ msgstr "neznáma veľkosť papiera krajinky"
+
+#~ msgctxt "paper size"
+#~ msgid "unknown portrait paper size"
+#~ msgstr "neznáma veľkosť papiera portrétu"
+
+#~ msgid "Toggle Drawing Mode"
+#~ msgstr "Prepnúť režim kreslenia"
+
+#~ msgid "Starting Jovie Text-to-Speech service Failed: %1"
+#~ msgstr "Spustenie služby Text na reč Jovie zlyhalo: %1"
+
+#~ msgid "Search Columns"
+#~ msgstr "Prehľadávané stĺpce"
+
+#~ msgid "All Visible Columns"
+#~ msgstr "Všetky viditeľné stĺpce"

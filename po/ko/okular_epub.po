@@ -1,0 +1,55 @@
+# Translation of okular_epub to Korean.
+# Copyright (C) 2008 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdegraphics package.
+#
+# Shinjo Park <kde@peremen.name>, 2008, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2013-07-30 02:10+0900\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "EPub 문서를 여는 중 오류가 발생했습니다."
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr "EPub"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "EPub 백엔드 설정"
+
+#~ msgid "EPub Backend"
+#~ msgstr "EPub 백엔드"
+
+#~ msgid "An EPub backend"
+#~ msgstr "EPub 백엔드"
+
+#~ msgid "© 2008 Ely Levy"
+#~ msgstr "© 2008 Ely Levy"
+
+#~ msgid "Ely Levy"
+#~ msgstr "Ely Levy"

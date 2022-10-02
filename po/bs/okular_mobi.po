@@ -1,0 +1,66 @@
+# Bosnian translation for kdegraphics
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the kdegraphics package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-10-18 20:17+0000\n"
+"Last-Translator: Samir Ribić <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:05+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Samir Ribić"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Samir.ribic@etf.unsa.ba"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Greška pri otvaranju Mobipocket dokumenta."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr ""
+"Ova knjiga je zaštićena DRM‑om i može se prikazati samo na naznačenom "
+"uređaju."
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket"
+msgstr "Mobipocket"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket Backend Configuration"
+msgstr "Konfiguracija pozadine za Mobipocket"
+
+#~ msgid "Mobipocket Backend"
+#~ msgstr "Pozadina za Mobipocket"
+
+#~ msgid "A mobipocket backend"
+#~ msgstr "Pozadina za Mobipocket"
+
+#~ msgid "© 2008-2009 Jakub Stachowski"
+#~ msgstr "© 2008-2009 Jakub Stachowski"
+
+#~ msgid "Jakub Stachowski"
+#~ msgstr "Jakub Stachowski"

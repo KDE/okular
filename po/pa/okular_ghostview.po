@@ -1,0 +1,87 @@
+# translation of okular_ghostview.po to Punjabi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2007, 2009, 2010, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_ghostview\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2019-02-09 13:15-0800\n"
+"Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alam.yellow@gmail.com"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "ਪਲੇਟਫਾਰਮ ਫੋਂਟ ਵਰਤੋਂ"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "ਪਲੇਟਫਾਰਮ ਫੋਂਟ ਵਰਤੋਂ(&U)"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "ਗੋਸਟ-ਸਕ੍ਰਿਪਟ"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "ਡੌਕੂਮੈਂਟ ਵਰਜ਼ਨ"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "ਭਾਸ਼ਾ ਪੱਧਰ"
+
+#~ msgid "PS Backend"
+#~ msgstr "PS ਬੈਕਐਂਡ"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "ਇੱਕ ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਫਾਇਲ ਰੈਂਡਰ।"
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "© 2007-2008 Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

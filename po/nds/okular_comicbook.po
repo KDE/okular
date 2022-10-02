@@ -1,0 +1,60 @@
+# Translation of okular_comicbook.po to Low Saxon
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sönke Dibbern <s_dibbern@web.de>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2008-11-12 02:47+0100\n"
+"Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"Language: nds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sönke Dibbern"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "s_dibbern@web.de"
+
+#: document.cpp:96
+#, fuzzy, kde-format
+#| msgid "Cannot open document, unrar was not found."
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr "Dokment lett sik nich opmaken, \"unrar\" lett sik nich finnen."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"Comicböker laat sik mit de Verschoon vun \"unrar\" op Dien Systeem nich "
+"opmaken."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "Nich begäng ComicBook-Formaat."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "ComicBook-Hülpprogramm"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "En Wieser för en Reeg Comicbook-Formaten"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

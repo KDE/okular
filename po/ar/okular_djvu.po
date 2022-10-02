@@ -1,0 +1,139 @@
+# translation of okular_djvu.po to Arabic
+# translation of okular_djvu.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+# hayig2000 <hayig2000@gmail.com>, 2008.
+# zayed <zayed.alsaidi@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-12-17 12:02+0400\n"
+"Last-Translator: zayed <zayed.alsaidi@gmail.com>\n"
+"Language-Team: Arabic <linuxac-kde-arabic-team@googlegroups.com>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mohamed SAAD محمد سعد,زايد السعيدي"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "metehyi@free.fr,zayed.alsaidi@gmail.com"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "المحرر"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "الناشر"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "الحجم"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "نوع  المستند"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "مجهول"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr "مكوّن الملفات"
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "مجهول"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "صفحة مفردة"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "رزمة"
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "غير مباشر"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "رزمة (قديم)"
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "مفهرس (قديم)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "خلفية DjVu"
+
+#~ msgid "DjVu backend based on DjVuLibre."
+#~ msgstr "خلفية DjVu معتمدة على DjVuLibre"
+
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006-2008 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "مجهول"

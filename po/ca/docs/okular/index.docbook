@@ -1,0 +1,4408 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Catalan  "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>El manual de l'&okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			&traductor.Antoni.Bella; 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>19 de febrer de 2022</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>L'&okular; és un visualitzador de documents universal del &kde; basat en el codi del &kpdf;.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>anotació</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Introducció</title>
+		<para
+>L'&okular; és un visualitzador de documents universal del &kde; basat en el codi de l'aplicació &kpdf;. Tot i estar basat en el codi del &kpdf;, l'&okular; conté algunes característiques úniques, com ara el mode de resum, una millor implementació de la presentació i de les anotacions. </para>
+		<para
+>L'&okular; és compatible amb una gran quantitat de formats diferents com &PDF;, &PostScript;, Tiff, CHM, DjVU, Imatges XPS (png, jpg, &etc;), Fiction Books, Comic Books, Plucker, EPub, Fax i Markdown. Per a tots els formats admesos i les seves característiques, vegeu <ulink url="https://okular.kde.org/formats.php"
+>&okular; Document Format Handlers</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Finestra principal de l'&okular;</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Finestra principal de l'&okular;</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Ús bàsic</title>
+		<sect1 id="opening">
+			<title
+>Obrir fitxers</title>
+			<para
+>Per a veure qualsevol fitxer admès per l'&okular;, seleccioneu <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Obre...</guimenuitem
+> </menuchoice
+>, escolliu un fitxer admès en el diàleg i feu clic a <guibutton
+>Obre</guibutton
+>. El fitxer hauria de mostrar-se a la finestra principal. </para>
+			<important>
+			  <para
+>El document nou s'obrirà en una pestanya nova si s'ha marcat l'opció <guilabel
+>Obre els fitxers nous en pestanyes</guilabel
+> a la <link linkend="configgeneral"
+>pàgina de configuració General</link
+>. </para>
+                          <para
+>Podeu tancar la pestanya fent clic amb el &BDR; a sobre seu. </para>
+                          <para
+>El document prèviament tancat en una pestanya es pot tornar a obrir utilitzant l'element de menú <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Desfés el tancament de la pestanya</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>Si ja heu obert fitxers abans a l'&okular;, hi podreu tenir accés seleccionant-los al menú <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guisubmenu
+>Obre recent</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>L'&okular; és l'aplicació &kde; predeterminada per als fitxers &PDF; i &PostScript;, llançada en fer clic amb el &BER; sobre un tipus de fitxer en el gestor de fitxers. Per a obrir qualsevol fitxer en què el format sigui compatible amb l'&okular; utilitzeu <menuchoice
+><guimenu
+>Obre amb...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> des del menú contextual del gestor de fitxers. </para>
+			<para
+>Després de tenir obert un fitxer probablement el voldreu llegir i per tant, navegar a través seu. Aneu a la <link linkend="navigating"
+>següent secció</link
+> per a aprendre més sobre això. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Navegar</title>
+			<para
+>Aquesta secció descriu com navegar a través d'un document a l'&okular;.</para>
+			<para
+>Hi ha múltiples maneres de desplaçar-se per l'àrea de visualització. Una d'elles és utilitzant les tecles &Up; i &Down;. També podeu utilitzar la barra de desplaçament, la roda del ratolí o les tecles &PgUp; i &PgDn;. </para>
+			<para
+>També podeu utilitzar les tecles de navegació com <application
+>vim</application
+>, <keycap
+>H</keycap
+> per a passar a la part superior de la pàgina anterior, <keycap
+>L</keycap
+> per a passar a la part superior de la pàgina següent, <keycap
+>J</keycap
+> per a moure una línia cap avall, i <keycap
+>K</keycap
+> per a moure una línia cap amunt. </para>
+			<para
+>Una altra forma és mantenir premut el &BER; en qualsevol lloc del document mentre arrossegueu el ratolí en la direcció oposada a la que voleu moure. Aquest procediment només funciona si l'eina Navega està activada, la qual podeu seleccionar escollint <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Navega</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>En veure un document en el <link linkend="presentationMode"
+>Mode de presentació</link
+> utilitzeu les tecles &Up; i &Down; per a canviar entre les pàgines o diapositives. El nombre i la posició de la diapositiva actual es mostren a la superposició de la cantonada superior dreta de la pantalla. </para>
+			</note>
+			<para
+>Si voleu llegir un document amb diverses pàgines utilitzant la característica de desplaçament automàtic de l'&okular;. Inicieu el desplaçament automàtic amb <keycombo action="simul"
+>&Maj;&Down;</keycombo
+> o <keycombo action="simul"
+>&Maj;&Up;</keycombo
+>. A continuació, utilitzeu aquestes tecles per a fer augmentar o disminuir la velocitat de desplaçament. Podeu iniciar o aturar el desplaçament automàtic temporalment prement la tecla &Maj; -premeu qualsevol tecla per a desactivar aquesta funció-. </para>
+			<para
+>Una altra manera de navegar a través d'un document amb diverses pàgines és utilitzar el punter del ratolí. Arrossegueu la pàgina cap amunt o cap avall, continueu arrossegant fins i tot mentre abasteu la part inferior o superior de la pantalla i mireu. Quan creueu la vora d'una pàgina, el cursor del ratolí apareixerà a la part superior o inferior de la pantalla de nou i podeu continuar arrossegant. </para>
+			<para
+>La barra lateral que hi ha al costat esquerre de la pantalla permet dues formes més de navegar a través d'un document: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Si feu clic sobre una miniatura de pàgina l'àrea de visualització serà portada a aquesta pàgina. </para>
+				</listitem>
+				<listitem>
+					<para
+>Si el document conté una taula de continguts, en fer clic sobre un element contingut a la taula us portarà dins del document a la pàgina enllaçada amb aquest element. </para>
+				</listitem>
+				<listitem>
+					<para
+>Si el document conté capes, podeu controlar quines capes es mostraran marcant o desmarcant els elements a la llista <guilabel
+>Capes</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Si el document conté punts, activeu la vista de <guilabel
+>Punts</guilabel
+> i feu clic en ells per a anar a la pàgina associada. Els punts no només es mostren per al document actual, podeu canviar ràpidament als punts de tots els fitxers oberts recentment. </para>
+				</listitem>
+				<listitem>
+					<para
+>Si el document conté anotacions, activeu la vista d'<guilabel
+>Anotacions</guilabel
+> i feu-hi clic per a veure les anotacions o seleccionar-los amb les tecles &Up; i &Down; i premeu &Intro; per a anar a la pàgina associada. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Alguns documents tenen enllaços. En aquest cas podreu fer clic sobre seu i la vista canviarà a la pàgina que enllaça. Si l'enllaç és a una pàgina web o algun altre document s'invocarà el gestor predeterminat del &kde; per a aquest format. Per exemple, en fer clic a un enllaç que apunta a <quote
+>https://www.kde.org</quote
+> s'obrirà la pàgina web al navegador web predeterminat del &kde;. </para>
+			<important>
+			  <para
+>Els enllaços interns del document només funcionaran quan s'utilitzi l'<link linkend="menutools"
+>eina Navega</link
+>. </para>
+			</important>
+			<para
+>A més, podeu utilitzar les següents característiques per a moure-us ràpidament a llocs específics en el document: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Podeu anar al començament del document utilitzant <keycombo action="simul"
+>&Ctrl;<keycap
+>Inici</keycap
+></keycombo
+> o <menuchoice
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Començament del document</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu anar al final del document utilitzant <keycombo action="simul"
+>&Ctrl;<keycap
+>Fi</keycap
+></keycombo
+> o <menuchoice
+><guimenu
+>Ves</guimenu
+> <guimenuitem
+>Final del document</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu anar endavant en el document utilitzant les tecles &Space; o &PgDn;. Per a anar a la pàgina següent del document utilitzeu el botó de la barra d'eines <guibutton
+>Pàgina següent</guibutton
+> o <menuchoice
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Pàgina següent</guimenuitem
+> </menuchoice
+> a la barra de menús. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu anar enrere en el document utilitzant les tecles &Retro; o &PgUp;. Per a anar a la pàgina anterior del document utilitzeu el botó de la barra d'eines <guibutton
+>Pàgina anterior</guibutton
+> o <menuchoice
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Pàgina anterior</guimenuitem
+> </menuchoice
+> a la barra de menús. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu tornar a les posicions en el document on heu estat en un ordre cronològic. Considerem &pex; que llegiu la frase <quote
+>Com es mostra a [15], …</quote
+>, i coneixeu la referència de cerca ràpida [15]. De manera que feu clic sobre seu, i l'&okular; saltarà a la llista de referències. Utilitzant <keycombo
+>&Alt;&Maj;&Left;</keycombo
+> o <menuchoice
+><guimenu
+>Ves</guimenu
+> <guimenuitem
+>Enrere</guimenuitem
+> </menuchoice
+> a la barra de menús tornareu a la posició exacta d'on veniu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu anar cap endavant en el document després dels salts enrere descrits anteriorment, utilitzant <keycombo action="simul"
+>&Alt;&Maj;&Right;</keycombo
+> o <menuchoice
+><guimenu
+>Ves</guimenu
+> <guimenuitem
+>Endavant</guimenuitem
+> </menuchoice
+> a la barra de menús. </para>
+				</listitem>
+				<listitem>
+					<para
+>Podeu anar a la següent coincidència en la cerca utilitzant les tecles <keycap
+>F3</keycap
+> o &Intro; (quan el focus resti sobre el camp de text <guilabel
+>Cerca</guilabel
+>) o l'element de menú <menuchoice
+> <guimenu
+>Edita</guimenu
+><guimenuitem
+>Cerca la següent</guimenuitem
+> </menuchoice
+> o tornar a l'anterior coincidència utilitzant les tecles <keycombo
+>&Maj;<keysym
+>F3</keysym
+></keycombo
+> o <keycombo
+>&Maj;&Intro;</keycombo
+> (quan el focus resti sobre el camp de text <guilabel
+>Cerca</guilabel
+>) o l'element de menú <menuchoice
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca l'anterior</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Mode de presentació</title>
+			<para
+>El mode de presentació representa una altra manera de veure els documents a l'&okular;. Es pot activar a <menuchoice
+><guimenu
+>Visualitza</guimenu
+><guimenuitem
+>Presentació</guimenuitem
+></menuchoice
+>. Mostra el document pàgina per pàgina. Les pàgines es mostren amb el zoom a la pàgina, això vol dir que és visible tota la pàgina. </para>
+			<note>
+				<para
+>Els documents &PDF; poden fins i tot especificar que sempre s'obrin en el mode de presentació. </para>
+			</note>
+			<para
+>En el mode de presentació, disposareu d'una barra auxiliar situada a la part superior de la pantalla. Només cal moure el cursor del ratolí a la part superior de la pantalla perquè aparegui. </para>
+			<screenshot>
+			<screeninfo
+>Mode de presentació a l'&okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Mode de presentació a l'&okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Per a navegar entre les pàgines podeu utilitzar el &BER; (pàgina següent) i el &BDR; (pàgina anterior), la roda del ratolí, les icones de fletxa o la línia d'edició a la barra superior, o les tecles especificades a la secció <link linkend="navigating"
+>Navegació</link
+>. </para>
+			<para
+>Utilitzeu el botó <guilabel
+>Reprodueix/Pausa</guilabel
+> a la barra de dalt per a començar a reproduir la presentació o fer una pausa, segons correspongui. </para>
+			<para
+>Podeu sortir del mode de presentació en qualsevol moment prement la tecla &Esc; o fent clic a la icona <guiicon
+>Surt</guiicon
+> a la barra superior. </para>
+			<para
+>També podeu dibuixar sobre la pàgina actual amb un llapis. Feu clic sobre la icona <guilabel
+>Commuta el mode de dibuix</guilabel
+> a la barra superior per a activar o desactivar la possibilitat per a dibuixar en el mode de presentació. Els dibuixos s'esborren automàticament en sortir del mode de presentació. ​​També podeu fer clic sobre la icona <guilabel
+>Esborra dibuixos</guilabel
+> per a eliminar els dibuixos en la pàgina actual. </para>
+			<para
+>El mode de presentació admet més d'una pantalla en una configuració multimonitor. Amb més d'una pantalla apareixerà un botó nou a la barra superior, amb la icona de la pantalla: es tracta d'una llista desplegable que permetrà moure la presentació a qualsevol de les pantalles disponibles. </para>
+			<para
+>El mode de presentació conté algunes opcions de configuració, trobareu la seva descripció en el capítol <link linkend="configpresentation"
+>Configurar l'&okular;</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Cerca inversa entre els editors de &latex; i l'&okular;</title>
+
+		<para
+>La cerca inversa és una característica molt útil quan esteu escrivint un document de &latex;. Si tot és correcte, podeu fer clic a la finestra de l'&okular; amb el &BER; mentre premeu la tecla &Maj;. Després l'editor de &latex; carregarà el fitxer d'origen i saltarà al paràgraf adequat.</para>
+
+		<para
+>La cerca inversa no pot funcionar a menys que:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>El fitxer d'origen s'hagi compilat amb èxit.</para
+></listitem>
+			<listitem
+><para
+>L'&okular; conegui quin editor voleu utilitzar.</para
+></listitem>
+			<listitem
+><para
+>L'eina Navega ha d'estar activada, el que pot seleccionar mitjançant l'elecció, la qual podeu seleccionar escollint <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Navega</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Amb aquesta característica de l'&okular;, el fer un clic del ratolí mentre premeu &Maj; al document &DVI; o &PDF; resultarà en obrir l'editor amb el document de &latex; corresponent i intentarà anar a la línia corresponent. Recordeu de dir-li a l'&okular; que utilitzi l'editor adequat, a l'element de menú <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura l'Okular...</guimenuitem
+></menuchoice
+> (sobre la pàgina <guimenuitem
+>Editor</guimenuitem
+>).</para>
+
+		<para
+>Per a més detalls sobre la configuració de l'editor, consulteu la <link linkend="configeditor"
+>secció corresponent d'aquest manual</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Configurant l'&okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Configurant l'editor a l'&okular;</phrase>
+			</textobject>
+			<caption
+><para
+>Configurant l'editor a l'&okular;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Característiques avançades de l'&okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Fitxers incrustats</title>
+			<para
+>Si el document actual conté alguns fitxers incrustats, quan l'obriu apareixerà una barra per sobre de la vista de pàgina perquè us adoneu dels fitxers incrustats. </para>
+			<screenshot>
+				<screeninfo
+>La barra de fitxers incrustats</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>La barra de fitxers incrustats</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>En aquest cas, podeu fer clic a l'enllaç en el text de la barra o escollir <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Fitxers incrustats</guimenuitem
+></menuchoice
+> per a obrir el diàleg de fitxers incrustats. El diàleg us permetrà veure els fitxers incrustats i extreure'ls. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formularis</title>
+			<para
+>Si el document actual conté formularis, quan l'obriu apareixerà una barra sobre la vista de pàgina on podreu activar els formularis. </para>
+			<screenshot>
+				<screeninfo
+>La barra de formularis</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>La barra de formularis</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>En aquest cas, podeu fer clic sobre <guilabel
+>Mostra els formularis</guilabel
+> a la barra o escolliu <menuchoice
+><guimenu
+>Visualitza</guimenu
+><guimenuitem
+>Mostra els formularis</guimenuitem
+></menuchoice
+> per a introduir dades en els camps del formulari. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Signatures</title>
+			<para
+>Si el document actual conté signatures, quan l'obriu apareixerà una barra a sobre de la vista de pàgina. Aquest permetrà obrir el plafó <guilabel
+>Signatures</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>La barra de signatures</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>La barra de signatures</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Emprant el plafó <guilabel
+>Signatures</guilabel
+> podreu inspeccionar la signatura del document i el seu certificat. </para>
+			<screenshot>
+				<screeninfo
+>El plafó de signatures</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>El plafó de signatures</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Aquesta característica només estarà disponible per als documents en &PDF;. Com a mínim haureu d'instal·lar la versió 0.51 de <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> per a obtenir la majoria de la informació de la signatura, la versió 0.68 per a obtenir la informació de la ubicació/raó de la signatura i la versió 0.73 per a obtenir la informació del certificat de la signatura. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Afegir signatures digitals</title>
+				<para
+>Podeu afegir signatures digitals als documents emprant l'acció corresponent en el menú <guimenu
+>Eines</guimenu
+>. </para>
+				<para
+>Per a poder signar un document, haureu de tenir un certificat de signatura <acronym
+>PKCS</acronym
+> adequat disponible en el sistema. L'&okular; no té la capacitat de crear aquests certificats, ja que han de ser emesos per autoritats de certificació perquè siguin útils per a la validació, &etc; </para>
+				<para
+>Utilitzem la biblioteca Poppler per a gestionar la signatura dels documents &PDF; i el Poppler utilitza la biblioteca NSS per a gestionar els certificats. En el moment d'escriure aquest article, el Poppler intentarà utilitzar un dels següents magatzems de certificats NSS en ordre (el primer que existeixi): </para>
+				<itemizedlist>
+					<listitem
+><para
+>El magatzem de certificats del Firefox de l'usuari actual.</para
+></listitem>
+					<listitem
+><para
+>El magatzem de certificats <filename
+>/etc/pki/nssdb</filename
+> de tot el sistema.</para
+></listitem>
+					<listitem
+><para
+>L'usuari actual <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>Si voleu utilitzar un magatzem de certificats personalitzat, podreu fer-ho configurant-lo a la secció <link linkend="config-pdf-digital-signatures"
+>Configuració del dorsal &PDF;</link
+> del diàleg <link linkend="configure-backends"
+>Configura els dorsals...</link
+>. </para>
+				<note>
+					<para
+>Aquesta característica només estarà disponible per als documents en &PDF;. Com a mínim haureu d'instal·lar la versió 21.01 de <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> per a ser capaç d'afegir signatures a un document. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Anotacions</title>
+			<para
+>L'&okular; permet revisar i anotar els vostres documents. </para>
+			<screenshot>
+			<screeninfo
+>Les anotacions a l'&okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Les anotacions a l'&okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>L'&okular; conté dos tipus d'anotacions diferents:</para>
+			<para
+>Anotacions de text com <guilabel
+>Ressaltat groc</guilabel
+> i <guilabel
+>Subratllat negre</guilabel
+> per a fitxers amb text com, &pex;, &PDF;.</para>
+		      <para
+>Anotacions gràfiques com <guilabel
+>Nota emergent</guilabel
+>, <guilabel
+>Nota inclosa</guilabel
+>, <guilabel
+>Línia a mà alçada</guilabel
+>, <guilabel
+>Marcador fluorescent</guilabel
+>, <guilabel
+>Línia recta</guilabel
+>, <guilabel
+>Polígon</guilabel
+>, <guilabel
+>Segell</guilabel
+>, <guilabel
+>Subratllat</guilabel
+>, <guilabel
+>El·lipse</guilabel
+> i <guilabel
+>Màquina d'escriure</guilabel
+> per a tots els formats admesos per l'&okular;.</para>
+			<para
+>Utilitzant el menú contextual, ja sigui en la vista <guilabel
+>Anotacions</guilabel
+> de la barra lateral o en la finestra principal podeu obrir una <guilabel
+>Nota emergent</guilabel
+> per a qualsevol mena d'anotació i afegir o editar els comentaris.</para>
+			<para
+>Les anotacions no es limiten únicament als fitxers &PDF;, les podeu utilitzar per a qualsevol format admès per l'&okular;.</para>
+			<para
+>L'&okular; conté la característica «arxivat de documents». Aquest és un format específic de l'&okular; per a aportar al document diverses metadades més relacionades amb ell (actualment només anotacions). Podeu desar un «arxiu de document» des del document obert escollint <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guisubmenu
+>Desa com a</guisubmenu
+><guimenuitem
+>Arxiu de document de l'Okular</guimenuitem
+></menuchoice
+> des del selector <guilabel
+>Filtre</guilabel
+>. Els documents desats d'aquesta manera obtindran <filename
+>.okular</filename
+> com a extensió del nom de fitxer. Per a obrir un arxiu de document de l'&okular;, només cal obrir-lo amb &okular; com ho faríeu per exemple amb un document &PDF;. </para>
+			<para
+><emphasis
+>També</emphasis
+> podeu desar les anotacions directament en els fitxers &PDF;. Podeu utilitzar <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desa</guimenuitem
+></menuchoice
+> per a desar-les al fitxer actual o <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desa com a...</guimenuitem
+></menuchoice
+> per a desar-les en un fitxer nou. </para>
+				<note>
+					<para
+>A causa de les limitacions DRM (normalment amb documents &PDF;), afegir, editar o eliminar algunes propietats o eliminar les anotacions podria no ser possible. </para>
+				</note>
+				<note>
+				  <para
+>Qualsevol acció sobre les anotacions (creació i eliminació de les anotacions, editar arbitràriament les propietats de l'anotació, tornar a ubicar les anotacions amb &Ctrl;+arrossega, i editar el contingut del text d'una anotació) es pot <link linkend="edit-undo"
+>desfer</link
+> o <link linkend="edit-redo"
+>refer</link
+> utilitzant l'element corresponent al menú <guimenu
+>Edita</guimenu
+>. També és possible desfer l'acció prement <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> i tornar-la a fer prement <keycombo
+>&Ctrl;&Maj;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>Podeu configurar les propietats i l'aspecte predeterminat de cada eina d'anotació. Per a més detalls, consulteu la <link linkend="configeditor"
+>secció corresponent en aquest manual</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Afegir anotacions</title>
+				<para
+>Per a afegir anotacions al document, haureu d'utilitzar el botó <guilabel
+>Anotacions ràpides</guilabel
+> a la barra d'eines principal de l'&okular; o activar la barra d'eines d'anotació. Això es fa seleccionant <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Anotacions</guimenuitem
+></menuchoice
+> o prement <keycap
+>F6</keycap
+>. Quan es mostri la barra d'eines d'anotació, només caldrà prémer un dels botons o utilitzar les dreceres de teclat (tecles des d'<keycap
+>1</keycap
+> fins a <keycap
+>9</keycap
+>) per a iniciar la construcció d'aquesta anotació. </para>
+				<para
+>La barra d'eines d'anotació ajuda a fer anotacions amb dibuixos, formes i missatges de text. Podeu utilitzar la barra d'eines d'anotació per a marcar un document (&pex;, afegir línies, el·lipses, polígons, segells, ressaltats, subratllats, &etc;) La següent taula descriu exactament el que fa el conjunt de botons predeterminat de la barra d'eines d'anotació. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Botó </entry>
+					<entry
+>Nom de l'eina </entry>
+					<entry
+>Descripció </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Marcador fluorescent </para>
+					</entry>
+					<entry>
+					  <para
+>Per a ressaltar el text en el document amb una mica de color de fons determinat. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text ressaltat, després arrossegueu per a ressaltar-lo. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Ressaltat</guimenuitem
+>, <guimenuitem
+>Giragonses</guimenuitem
+>, <guimenuitem
+>Subratllat</guimenuitem
+> o <guimenuitem
+>Barrat</guimenuitem
+>), el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+> per al ressaltador. Simplement feu clic dret sobre el text ressaltat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Subratllat </para>
+					</entry>
+					<entry>
+					  <para
+>Per a subratllar el text. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Ressaltat</guimenuitem
+>, <guimenuitem
+>Giragonses</guimenuitem
+>, <guimenuitem
+>Subratllat</guimenuitem
+> o <guimenuitem
+>Barrat</guimenuitem
+>), el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+> per al subratllat. Simplement feu clic dret sobre el text subratllat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Giragonses </para>
+					</entry>
+					<entry>
+					  <para
+>Per a subratllar algun text amb una línia ondulada. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Ressaltat</guimenuitem
+>, <guimenuitem
+>Giragonses</guimenuitem
+>, <guimenuitem
+>Subratllat</guimenuitem
+> o <guimenuitem
+>Barrat</guimenuitem
+>), el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+> per al subratllat. Simplement feu clic dret sobre el text subratllat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Barrat </para>
+					</entry>
+					<entry>
+					  <para
+>Per a barrar algun text. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Ressaltat</guimenuitem
+>, <guimenuitem
+>Giragonses</guimenuitem
+>, <guimenuitem
+>Subratllat</guimenuitem
+> o <guimenuitem
+>Barrat</guimenuitem
+>), el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+> per al subratllat. Simplement feu clic dret sobre el text subratllat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Màquina d'escriure </para>
+					</entry>
+					<entry>
+					  <para
+>La màquina d'escriure té lletres opaques sobre un fons transparent, de manera que és útil per a omplir formularis no interactius. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar-la a la cantonada superior esquerra de la nota, després arrossegueu per a col·locar-la a la part inferior dreta. Introduïu el text de la nota, després feu clic a <guibutton
+>D'acord</guibutton
+> per a desar la nota, <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar la nota introduïda o <guibutton
+>Neteja</guibutton
+> per a esborrar la nota. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus de lletra</guilabel
+> i el <guilabel
+>Color del text</guilabel
+> per al text. Simplement feu clic dret sobre el text escrit i seleccioneu l'element del menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota inclosa </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar una nota inclosa. La nota es mostrarà immediatament a la línia. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar-la a la cantonada superior esquerra de la nota, després arrossegueu per a col·locar-la a la part inferior dreta. Introduïu el text de la nota, després feu clic a <guibutton
+>D'acord</guibutton
+> per a desar la nota, <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar la nota introduïda o <guibutton
+>Neteja</guibutton
+> per a esborrar la nota. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+>, l'<guilabel
+>Opacitat</guilabel
+>, el <guilabel
+>Tipus de lletra</guilabel
+>, l'<guilabel
+>Alineació</guilabel
+> i l'<guilabel
+>Amplada de la vora</guilabel
+> per a la nota. Simplement feu clic dret sobre la icona de la nota creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota emergent </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar una nota amb múltiples línies. La nota es podrà veure fent doble clic sobre una icona en el document. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic sobre el lloc del document on s'ha d'afegir la nota emergent. Introduïu el text de la nota emergent i feu clic al botó <guilabel
+>Tanca aquesta nota</guilabel
+> a la cantonada superior dreta de la finestra emergent. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+>, l'<guilabel
+>Opacitat</guilabel
+> i la <guilabel
+>Icona</guilabel
+> de la nota. Simplement feu clic amb dret sobre la icona de la nota creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Línia a mà alçada </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar línies de forma lliure. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici de la línia, després arrossegueu per a dibuixar la línia. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+>, l'<guilabel
+>Opacitat</guilabel
+> i l'<guilabel
+>Amplada</guilabel
+> per a la línia. Simplement feu clic dret sobre la línia creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Fletxa (llista desplegable) </para>
+					</entry>
+					<entry>
+					  <para
+>Per a marcar amb una fletxa. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la línia, després arrossegueu per a col·locar el punt final de la línia que serà i feu clic una vegada més. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+>, l'<guilabel
+>Amplada</guilabel
+>, el <guilabel
+>Començament de línia</guilabel
+>, el <guilabel
+>Final de línia</guilabel
+>, la <guilabel
+>Longitud de la línia principal</guilabel
+> i la <guilabel
+>Longitud de les extensions de la línia principal</guilabel
+> per a la línia. Simplement feu clic dret sobre la línia creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Línia recta (llista desplegable) </para>
+					</entry>
+					<entry>
+					  <para
+>Per a marcar amb una línia. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la línia, després arrossegueu per a col·locar el punt final de la línia que serà i feu clic una vegada més. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+>, l'<guilabel
+>Amplada</guilabel
+>, el <guilabel
+>Començament de línia</guilabel
+>, el <guilabel
+>Final de línia</guilabel
+>, la <guilabel
+>Longitud de la línia principal</guilabel
+> i la <guilabel
+>Longitud de les extensions de la línia principal</guilabel
+> per a la línia. Simplement feu clic dret sobre la línia creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Rectangle (llista desplegable) </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar un rectangle al voltant d'alguna àrea escollida. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar la cantonada superior esquerra del rectangle, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Rectangle</guimenuitem
+> o <guimenuitem
+>El·lipse</guimenuitem
+>), el <guilabel
+>Color</guilabel
+>, l'<guilabel
+>Opacitat</guilabel
+>, l'<guilabel
+>Emplenat de forma</guilabel
+> (i el seu color) i l'<guilabel
+>Amplada</guilabel
+> per a la vora. Simplement feu clic dret sobre la vora creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>El·lipse (llista desplegable) </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar una el·lipse o un rectangle al voltant d'alguna àrea escollida. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar la cantonada superior esquerra de l'el·lipse rectangular circumscrita, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
+					  <para
+>És possible definir el <guilabel
+>Tipus</guilabel
+> (<guimenuitem
+>Rectangle</guimenuitem
+> o <guimenuitem
+>El·lipse</guimenuitem
+>), el <guilabel
+>Color</guilabel
+>, l'<guilabel
+>Opacitat</guilabel
+>, l'<guilabel
+>Emplenat de forma</guilabel
+> (i el seu color) i l'<guilabel
+>Amplada</guilabel
+> per a la vora. Simplement feu clic dret sobre la vora creada i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Polígon (llista desplegable) </para>
+					</entry>
+					<entry>
+					  <para
+>Per a dibuixar una figura plana tancada de tres o més segments. La nota corresponent es pot veure fent doble clic a l'interior del polígon. </para>
+					  <para
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el primer vèrtex del polígon, després arrossegueu per a col·locar el segon vèrtex. Continueu fins que dibuixeu tot el polígon fins al primer vèrtex. Feu clic dues vegades si voleu afegir alguna nota al polígon. Introduïu el text de la nota, després feu clic a <guibutton
+>D'acord</guibutton
+> per a desar la nota, <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar la nota introduïda o <guibutton
+>Neteja</guibutton
+> per a esborrar la nota. </para>
+					  <para
+>És possible definir el <guilabel
+>Color</guilabel
+> i l'<guilabel
+>Opacitat</guilabel
+>, l'<guilabel
+>Emplenat de forma</guilabel
+> (i el seu color) i l'<guilabel
+>Amplada</guilabel
+> per al polígon. Simplement feu clic dret sobre el polígon creat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Segell </para>
+					</entry>
+					<entry>
+					  <para
+>Per a marcar el text o la imatge amb algun segell predefinit. </para>
+					  <para
+>Feu clic sobre el botó d'eina per a triar el segell des de la llista desplegable, després feu clic amb el &BER; per a col·locar el segell. </para>
+					  <para
+>Un sol clic col·loca un segell quadrat (útil per a les icones). Per a afegir un segell rectangular podeu fer clic amb el &BER; i mantenir-lo premut per a col·locar el punt a la part superior esquerra, a continuació, arrossegueu per a col·locar-lo a la part inferior dreta. </para>
+					  <para
+>És possible definir l'<guilabel
+>Opacitat</guilabel
+> i el <guilabel
+>Símbol de segell</guilabel
+> per al segell. Simplement feu clic dret sobre la icona del segell creat i seleccioneu l'element de menú <guimenuitem
+>Propietats</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Aquesta característica és experimental. Els segells personalitzats inserits als documents &PDF; no són visibles en els lectors de &PDF; que no siguin l'&okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>Aquestes són les anotacions predeterminades que proporciona l'&okular;. Emprant la <link linkend="configannotations"
+>pàgina d'Anotacions</link
+> del diàleg de configuració, podeu afegir les vostres pròpies anotacions, com ara segells personalitzats, marcatge de text o una forma geomètrica amb color interior per a destacar les regions, &etc; </para>
+                                  <note>
+                                      <para
+>És possible afegir codi en &latex; dins del text de les anotacions. Afegiu <userinput
+>$$<replaceable
+>codi</replaceable
+>$$</userinput
+> al text de l'anotació, on el <replaceable
+>codi</replaceable
+> serà qualsevol equació de &latex; vàlida, i seguiu les instruccions a la pantalla per a fer que es renderitzi mitjançant una distribució de &latex; instal·lada al sistema. </para>
+                                  </note>
+				<para
+>És possible configurar les actuals opcions d'eina utilitzant la barra d'eines d'anotació. La següent taula descriu exactament el que fa el conjunt predeterminat de botons de configuració de la barra d'eines d'anotació. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Botó </entry>
+					<entry
+>Nom de l'opció </entry>
+					<entry
+>Descripció </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Amplada de la línia </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a triar l'amplada des de la llista desplegable. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Color de l'anotació </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a triar el color del text o la vora de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
+>Color personalitzat...</guimenuitem
+> per a obrir el diàleg de selecció del color. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Color de l'emplenat de l'anotació </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a triar el color per a l'emplenat de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
+>Color personalitzat...</guimenuitem
+> per a obrir el diàleg de selecció del color. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Opacitat de l'anotació </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a triar el nivell d'opacitat des de la llista desplegable (el <guimenuitem
+>100%</guimenuitem
+> és per a les anotacions opaques). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Tipus de lletra de l'anotació </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a obrir el diàleg de selecció del tipus de lletra. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Configuració avançada per a l'actual eina d'anotació </para>
+					</entry>
+					<entry>
+					  <para
+>Feu clic sobre el botó d'eina per a obrir el diàleg de configuració general per a l'anotació. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>A la barra d'eines predeterminada hi ha tres botons d'utilitat addicionals. </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Botó </entry>
+					<entry
+>Descripció </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Afegiu l'anotació actual al menú <guilabel
+>Anotacions ràpides</guilabel
+> a la barra d'eines principal. </para>
+					  <note>
+						  <para
+>Podeu utilitzar les dreceres predeterminades des de <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> a <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> per a seleccionar les accions d'anotació ràpida en qualsevol moment que vulgueu, fins i tot amb la barra d'eines d'anotació oculta. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Quan està marcada, es mantindrà activa l'eina d'anotació actual després del seu ús. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Oculta la barra d'eines d'anotació. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>En prémer &Maj;, podreu restringir l'angle de les anotacions de línia i polígon a passos de 15°, i la relació de les anotacions de forma (&pex;, Rectangle, El·lipse) a 1:1. També obtindreu un botó a la barra d'eines des de <ulink url="help:/fundamentals/config.html#toolbars"
+>Configura les barres d'eines...</ulink
+>. </para>
+				  <para
+>El contingut del menú <guilabel
+>Anotacions ràpides</guilabel
+> es pot configurar utilitzant la pàgina <link linkend="configannotations"
+>Anotacions del diàleg de configuració de l'&okular;</link
+>. Aquesta pàgina es pot obrir fent clic al botó <guilabel
+>Anotacions ràpides</guilabel
+> i després escollint <guimenuitem
+>Configura les anotacions...</guimenuitem
+> des del menú emergent. </para>
+				<note>
+					<para
+>Activar la barra d'eines d'anotació farà canviar al mode Navega. </para>
+				</note>
+				<para
+>Podeu aturar la construcció en qualsevol moment prement de nou el botó de l'anotació que esteu construint, o prement la tecla &Esc;. </para>
+				<para
+>La nova anotació construïda tindrà com a autor l'establert a la <link linkend="configannotations"
+>pàgina <guilabel
+>Anotacions</guilabel
+></link
+> en el diàleg de configuració de l'&okular;. La pàgina <guilabel
+>Anotacions</guilabel
+> també es pot utilitzar per a configurar el contingut de la barra d'eines d'anotació. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Eliminar anotacions</title>
+				<para
+>Per a eliminar una anotació, sols feu clic sobre seu amb el &BDR; i seleccioneu <guimenuitem
+>Suprimeix</guimenuitem
+> o seleccioneu una anotació utilitzant el &BER; i premeu la tecla &Del;. </para>
+				<para
+>En eliminar l'anotació, es tancarà la seva finestra si estava oberta. </para>
+				<note>
+					<para
+>Aquesta opció no es pot activar perquè el document no permet eliminar anotacions. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Editar anotacions</title>
+				<para
+>Per a editar una anotació, feu clic amb el &BDR; i seleccioneu <guimenuitem
+>Propietats</guimenuitem
+>. Apareixerà un diàleg amb la configuració general de l'anotació (com el color i l'opacitat, autor, &etc;) i la configuració específica per a aquest tipus d'anotació. </para>
+				<screenshot>
+				<screeninfo
+>El diàleg de propietats de l'anotació</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>El diàleg de propietats de l'anotació</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Per a moure una anotació, manteniu premuda la tecla &Ctrl;, moveu el punter del ratolí sobre seu i després comenceu-la a arrossegar amb el &BER;. </para>
+				<para
+>Si feu clic amb el &BER; en una anotació, serà seleccionada. Les nanses de redimensionar apareixeran al rectangle de selecció. Quan el cursor es mou sobre una de les 8 nanses de redimensionar que hi ha a les cantonades o a les vores, la forma del cursor canviarà per a indicar el mode de redimensionar. Feu clic a qualsevol altre lloc de l'anotació per a moure-la. Prement &Esc; o fent clic a una àrea fora de l'anotació es cancel·larà una selecció. </para>
+				<para
+>El canvi de mida només és aplicable als tipus d'anotació Nota inclosa, Màquina d'escriure, Segell i El·lipse.</para>
+
+				<note>
+					<para
+>Depenent dels permisos del document (en general amb documents &PDF;), algunes opcions poden restar desactivades. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Gestionar punts</title>
+			<para
+>L'&okular; conté un sistema de punts molt flexible. Desa la posició sobre la pàgina en un punt i permet definir més d'un punt per pàgina. </para>
+			<para
+>Per a gestionar els punts a l'&okular; podeu utilitzar la vista <guilabel
+>Punts</guilabel
+> de la <guilabel
+>Barra lateral</guilabel
+>, el <link linkend="menubookmarks"
+>menú de Punts</link
+> o el menú contextual de la vista del document (feu clic amb el &BDR; per a obrir-lo). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>La vista Punts</title>
+				<para
+>Per a obrir la vista <guilabel
+>Punts</guilabel
+> feu clic sobre la pestanya <guilabel
+>Punts</guilabel
+> a la part superior de la <guilabel
+>Barra lateral</guilabel
+>. Si no es mostra la <guilabel
+>Barra lateral</guilabel
+>, feu clic sobre el botó <guibutton
+>Mostra la barra lateral</guibutton
+> que hi ha a la barra d'eines o en l'element de menú <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Mostra la barra lateral</guimenuitem
+> </menuchoice
+> per a fer-lo visible. </para>
+				<screenshot>
+				    <screeninfo
+>El menú contextual de la vista punts</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>El menú contextual de la vista punts</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>La casella de selecció <guilabel
+>Mostra per a tots els documents</guilabel
+> es pot desactivar per a mostrar només els punts del document actual. </para>
+				<para
+>Podeu utilitzar la barra de filtres a la part superior de la vista <guilabel
+>Punts</guilabel
+> per a filtrar el contingut de la subfinestra de la llista de punts d'acord amb el text al quadre. </para>
+				<para
+>La subfinestra de llista permet veure la llista de punts d'un mode en arbre: cada document a la llista pot ser <quote
+>desplegat</quote
+> o <quote
+>plegat</quote
+> fent clic sobre la icona <guiicon
+>&lt;</guiicon
+> o <guiicon
+>v</guiicon
+> al seu costat. </para>
+				<para
+>El menú que apareix en fer clic dret en un element d'un document, pot obrir el document, canviar el nom o suprimir l'element de la llista. Recordeu que l'eliminació d'un element del document condueix a l'eliminació de tots els punts en el document en qüestió. </para>
+				<para
+>El menú que apareix en fer clic dret en un punt individual us permetrà anar al punt, canviar-ne el nom o eliminar-lo. </para>
+				<para
+>El menú del clic dret als elements de la taula de contingut es pot utilitzar per a crear punts o anar al punt següent o anterior. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Opcions de la línia d'ordres</title>
+		    <para
+>Tot i que és més probable que inicieu l'&okular; des del menú del &kde; o des d'una icona de l'escriptori, també es pot obrir a la línia d'ordres d'una finestra de terminal. Hi ha algunes opcions d'utilitat que estaran disponibles quan ho feu. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Especificar un fitxer</title>
+			<para
+>Especificant el camí i el nom d'un fitxer en particular l'usuari podrà fer que l'&okular; obri el fitxer immediatament després d'iniciar-se. Aquesta opció es pot semblar al següent: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/usuari/docs/el_meu_doc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Per a documents &PDF;, el nom es pot indicar com <replaceable
+>nom_document</replaceable
+>#<replaceable
+>nom_destinació</replaceable
+> on <replaceable
+>nom_destinació</replaceable
+> serà una destinació concreta amb nom incrustada en el document. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>D'altres opcions a la línia d'ordres</title>
+			<para
+>Hi ha disponibles les següents opcions d'ajuda de la línia d'ordres </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>número</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Obre una pàgina amb el número indicat al document. <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>número</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia el document en mode presentació.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia amb el diàleg d'impressió.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia amb el diàleg d'impressió i surt després d'imprimir.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Control d'«Instància única».</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Permet prevenir l'elevació de la finestra de l'&okular; després de l'inici.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>cadena</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Intenta trobar i ressaltar una cadena determinada en el document. Només funciona si només es proporciona un document com a argument de l'ordre <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>cadena</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Defineix l'ordre de l'editor extern. No es pot definir l'ordre de l'editor en una instància en execució de l'&okular;. Tingueu en compte que no es permet <option
+>--unique</option
+> quan es defineix l'ordre de l'editor a la línia d'ordres.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Ajustar la finestra a la pàgina</title>
+			<para
+>La característica d'ajustar la finestra a la pàgina canvia la mida de la finestra, de manera que és exactament de la mateixa mida que la pàgina en el factor de zoom actual. Si la pàgina no s'ajusta completament a la pantalla, la finestra s'engrandirà de manera que mostri la major part possible de la pàgina. </para>
+			<para
+>Es pot accedir a aquesta característica usant la drecera de teclat <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>La barra de menús</title>
+
+		<sect1 id="menufile">
+			<title
+>El menú Fitxer</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Obre...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Obre</action
+> un fitxer admès o arxiu de document de l'&okular;. Si ja hi ha un fitxer obert, es tancarà. Per a obtenir més informació, vegeu la secció <link linkend="opening"
+>Obrir fitxers</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guisubmenu
+>Obre recent</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Obre</action
+> un fitxer que es va utilitzar anteriorment des d'un submenú. Si ja hi ha un fitxer obert, es tancarà. Per a obtenir més informació, vegeu la secció sobre <link linkend="opening"
+>Obrir fitxers</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Importa un PostScript com a &PDF;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Obre</action
+> un fitxer &PostScript; i el converteix a &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desfés el tancament de la pestanya</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Torna a obrir</action
+> l'últim document tancat. Aquesta acció només estarà activa si heu tancat algun document en una pestanya durant la sessió actual. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Obre la carpeta contenidora</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Obre</action
+> la carpeta que conté el document actual en el vostre gestor de fitxers preferit. Aquesta acció és especialment útil en el cas que hàgiu descarregat un fitxer &PDF; d'Internet que s'obrirà en l'&okular;. La ubicació d'aquest fitxer pot no ser clara o fàcil de trobar sense aquesta característica. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Desa</action
+> el document incloent-hi tots els canvis (anotacions, format del contingut, &etc;) -sempre que el dorsal del document permeti desar els canvis-. Si el dorsal no ho admet, l'usuari tindrà l'opció de descartar els canvis o desar-los juntament amb el document en un arxiu de document de l'&okular;.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desa com a...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Desa</action
+> el document sota un altre nom incloent-hi tots els canvis (anotacions, format del contingut, &etc;) -sempre que el dorsal del document permeti desar els canvis-. Si el dorsal no ho admet, l'usuari tindrà l'opció de descartar els canvis o desar-los juntament amb el document en un arxiu de document de l'&okular;.</para>
+                                        <note>
+                                        <para
+>Cal tenir present que, per la forma en què això es du a terme, fins i tot si no hi ha canvis al fitxer, el nou fitxer no té per què ser una còpia exacta bit a bit del fitxer original (&pex;, pot tenir un codi SHA-1 diferent, &etc;) </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Recarrega</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Torna a carregar</action
+> el fitxer actualment obert.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Imprimeix...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Imprimeix</action
+> el document que es mostra. Cal tenir en compte que l'&okular; té algunes opcions específiques per a imprimir els &PDF;, les quals estan disponibles prement el botó <guibutton
+>Opcions 
+>
+></guibutton
+> i seleccionant <guilabel
+>Opcions del &PDF;</guilabel
+>. Utilitzeu aquestes opcions per a imprimir les vostres anotacions o configurar el mode de rasterització si teniu problemes amb imprimir símbols o necessiteu canviar el mode de l'escala. </para>
+                                                <note>
+                                                    <para
+>Les opcions del mode de l'escala només estan disponibles quan marqueu l'opció <guilabel
+>Força la rasterització</guilabel
+>. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Vista prèvia d'impressió...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra una vista prèvia</action
+> de com quedarà el document que es mostra actualment imprès amb les opcions predeterminades. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt;<keycap
+>Retorn</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Propietats</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra informació bàsica</action
+> sobre el document, com el títol, autor, data de creació, i detalls sobre els tipus de lletra utilitzats. La informació disponible dependrà del tipus de document.</para>
+						<note>
+							<para
+>Pareu atenció a la informació sobre la substitució de fonts del tipus de lletra a la pestanya <guilabel
+>Tipus de lletra</guilabel
+> del diàleg <guilabel
+>Propietats</guilabel
+>. Molts dels problemes amb la representació dels tipus de lletra es poden resoldre instal·lant els tipus de lletra substituïts.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Fitxers incrustats...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra els fitxers incrustats</action
+> en el document, si el document en conté cap. Per a obtenir més informació, vegeu la secció sobre <link linkend="embedded-files"
+>Fitxers incrustats</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Exporta com a...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquest element conté els formats d'exportació als quals es pot exportar el document actual. La primera entrada per a tota mena de documents sempre és <guimenuitem
+>Text net...</guimenuitem
+>.</para>
+						<para
+>La segona entrada és <guimenuitem
+>Arxiu del document</guimenuitem
+>, la qual permet desar el document amb les vostres anotacions en un format d'arxiu específic de l'&okular;. D'aquesta manera, serà possible compartir amb facilitat els documents originals i les vostres anotacions amb altres usuaris de l'&okular; o treballar en col·laboració amb ells.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Comparteix</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquest element conté els serveis que es poden utilitzar per a compartir el document actual amb altres persones o enviar-lo als vostres dispositius. Les entrades d'aquest submenú són controlades pel sistema. Depenen del format del document i dels connectors de KPurpose que hi ha instal·lats.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Surt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Tanca</action
+> l'&okular;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>El menú Edita</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Desfés</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Desfà</action
+> l'última ordre d'edició de l'anotació (creació i eliminació de les anotacions, editar arbitràriament les propietats de l'anotació, tornar a ubicar les anotacions amb &Ctrl;+arrossega, i editar el contingut del text d'una anotació).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Refés</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Refà</action
+> l'últim pas desfet en editar les anotacions.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Copia</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Copia</action
+> el text seleccionat en el mode <guibutton
+>Selecció de text</guibutton
+> al porta-retalls.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Selecciona-ho tot</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Selecciona</action
+> tot el text (si el document en proporciona). Això només funciona en el mode <guibutton
+>Selecció de text</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Selecciona tot el text de la pàgina actual</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Selecciona</action
+> tot el text (si el document en proporciona) de la pàgina actual. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Mostra la barra de cerca a la part inferior de l'àrea de visualització que permet <action
+>cercar una cadena en el document</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keysym
+>F3</keysym
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca la següent</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Intenta <action
+>trobar l'anterior cadena cercada</action
+> al document.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Maj;<keycap
+>F3</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca l'anterior</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Va a l'ocurrència anterior de la cadena de cerca</action
+> en el document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>El menú Visualitza</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Presentació</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Activa</action
+> el mode de presentació. Per a obtenir més informació, vegeu la secció sobre el <link linkend="presentationMode"
+>Mode de presentació</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Maj; <keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Mode de pantalla completa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Activa el mode de pantalla completa</action
+>. Cal tenir en compte que el mode de pantalla completa és diferent del mode de presentació i l'única peculiaritat del mode de pantalla completa que té és que oculta la decoració de la finestra, la barra de menús i barra d'eines.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Visualitza</guimenu
+><guimenuitem
+>Apropa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Augmenta l'ampliació</action
+> de la vista del document.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Allunya</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Disminueix l'ampliació</action
+> de la vista del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Zoom al 100%</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Fa zoom sobre la imatge del document fins a la mida real</action
+> tal com es recomana als paràmetres del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Ajusta a l'amplada de pàgina</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Canvia l'ampliació</action
+> de la vista del document a un valor fent que l'amplada de les pàgines sigui igual que la vista del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Ajusta a la pàgina</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Canvia l'ampliació</action
+> de la vista del document a un valor fent visible una pàgina sencera.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Encaixat automàtic</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Canvia l'ampliació</action
+> de la vista del document a un valor que, depenent de la relació de mida entre la pàgina i l'àrea de la vista, de forma automàtica o bé fa les pàgines d'una amplada igual que l'amplada de la vista del document (com ajusta a l'amplada), l'alçada de les pàgines igual que l'alçada de la vista del document (com ajusta a l'alçada), o tota la pàgina visible (com ajust de pàgina).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guisubmenu
+>Mode de vista</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquest submenú permet escollir el mode de vista per a les pàgines. Les opcions possibles són: <guimenuitem
+>Pàgina individual</guimenuitem
+> (només una pàgina per a cada fila), <guimenuitem
+>Pàgines oposades</guimenuitem
+> (dues pàgines per fila, en un llibre d'estil), <guimenuitem
+>Pàgines oposades (Centra la primera pàgina)</guimenuitem
+> i <guimenuitem
+>Vista general</guimenuitem
+> (el nombre de columnes és l'especificat en la <link linkend="configure"
+>configuració de l'&okular;</link
+>).</para>
+						<para
+>A més, podreu habilitar el mode <guimenuitem
+>Continu</guimenuitem
+>. En aquest mode, es mostraran totes les pàgines del document i podreu desplaçar-vos suaument per elles. En cas contrari, només es mostrarà una pàgina (o una fila de pàgines) alhora.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guisubmenu
+>Orientació</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquest submenú permet <action
+>canviar l'orientació</action
+> de les pàgines del document. </para>
+						<note>
+							<para
+>La rotació s'aplica a l'orientació de cada pàgina. </para>
+						</note>
+						<para
+>Podeu seleccionar <guimenuitem
+>Orientació original</guimenuitem
+> per a restaurar l'orientació del document, descartant totes les rotacions aplicades manualment. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guisubmenu
+>Retalla la vista</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquest submenú permet eliminar la vora blanca de les pàgines en visualitzar-les (element <guimenuitem
+>Retalla els marges</guimenuitem
+>) o retallar la vista a la selecció (element <guimenuitem
+>Retalla a la selecció</guimenuitem
+>). </para>
+						<para
+>El mode <quote
+>retalla a la selecció</quote
+> permet dibuixar una selecció sobre la pàgina renderitzada per tal de definir un quadre delimitador visible que s'aplicarà a <emphasis
+>totes les pàgines</emphasis
+> del document. Realitzant la selecció d'un petit quadre delimitador de retall s'imposarà la mida de dimensions mínimes (20% com a percentatge de la mida total de la pàgina). </para>
+						<para
+>El mode <quote
+>retalla els marges</quote
+> és persistent després de reiniciar l'&okular;. El mode <quote
+>retalla a la selecció</quote
+> s'oblida després de reiniciar l'&okular;. </para>
+						<para
+>En canviar l'&okular; des del mode <quote
+>retalla els marges</quote
+> al mode <quote
+>retalla a la selecció</quote
+>, la vista saltarà del mode <quote
+>retalla els marges</quote
+> a la interacció d'un quadre delimitador per a la selecció. </para>
+						<para
+>El mode de retall es pot desactivar seleccionant el mateix element del menú una altra vegada. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Mostra/Oculta els formularis</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra o oculta la visualització</action
+> dels camps de formulari del document. </para>
+						<note>
+							<para
+>Aquest element de menú només s'activa si el document actual conté camps de formulari. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>El menú Ves</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ves</guimenu
+> <guimenuitem
+>Pàgina anterior</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visualitza la pàgina anterior</action
+> del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ves</guimenu
+> <guimenuitem
+>Pàgina següent</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visualitza la pàgina següent</action
+> del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></shortcut
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Començament del document</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Va al començament</action
+> del document.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></shortcut
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Final del document</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Va al final</action
+> del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Maj;&Left;</keycombo
+></shortcut
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Enrere</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Torna a la vista anterior</action
+> del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Maj;&Right;</keycombo
+></shortcut
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Endavant</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Avança a la següent vista del document</action
+>. Això només funciona si heu anat enrere abans.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ves</guimenu
+> <guimenuitem
+>Ves a...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Obre un diàleg que permet <action
+>anar a qualsevol pàgina</action
+> del document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>El menú Punts</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Punts</guimenu
+> <guimenuitem
+>Afegeix/Elimina un punt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Afegeix o elimina un punt per a la posició actual</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Punts</guimenu
+> <guimenuitem
+>Reanomena el punt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Canvia el nom d'un punt per a la posició actual</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Punts</guimenu
+> <guimenuitem
+>Punt anterior</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Va al punt anterior</action
+>, o no fa res si no hi ha punts anteriors a l'actual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Punts</guimenu
+> <guimenuitem
+>Punt següent</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Va al punt següent</action
+>, o no fa res si no hi ha punts després de l'actual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Punts</guimenu
+> <guimenuitem
+>Sense punts</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Es tracta d'una acció sempre desactivada que apareix en aquest menú només si el document actual no conté punts. En cas contrari aquí es mostrarà una llista de tots els punts. En fer clic sobre aquests punts se us permetrà anar directament a la posició associada.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>El menú Eines</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Navega</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>El ratolí tindrà el seu comportament normal, &BER; per a arrossegar el document i seguir els enllaços i el &BDR; per a afegir punts i ajustar l'amplada.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Zoom</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>El ratolí funcionarà com una eina de zoom. En fer clic amb el &BER; i arrossegant el zoom de la vista a l'àrea seleccionada, en fer clic amb el &BDR; restaurarà el document de nou al zoom anterior.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Selecció d'àrea</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>El ratolí funcionarà com una eina de selecció d'àrea rectangular. En aquest mode fent clic amb el &BER; i arrossegant es dibuixarà una casella de selecció i proporcionarà l'opció de copiar el contingut seleccionat al porta-retalls, parlar el text seleccionat o transformar l'àrea seleccionada en una imatge i desant-la en un fitxer.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Selecció de text</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>El ratolí funcionarà com una eina de selecció de text. En aquest mode fent clic amb el &BER; i arrossegant es donarà l'opció de seleccionar el text del document. Després, només cal fer clic amb el &BDR; per a copiar-lo al porta-retalls o parlar la selecció.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Selecció de taula</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dibuixeu un rectangle al voltant del text per a la taula, a continuació, utilitzeu el clic amb el &BER; per a dividir el bloc de text en files i columnes. Un clic del &BER; sobre una línia existent eliminarà i fusionarà les files o columnes adjacents. Per acabar, feu clic amb el &BDR; per a copiar la taula al porta-retalls. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Ampliador</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Activa el mode ampliador per al punter del ratolí. Manteniu premut el &BER; per a activar el giny ampliador, moveu el punter per a moure-us a través del document. L'ampliador escala de cada píxel en el document a 10 píxels al giny ampliador.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Eines</guimenu
+> <guimenuitem
+>Anotacions</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Obre la barra d'eines d'anotació</action
+>. La barra d'eines d'anotació permet afegir anotacions en el document que esteu llegint. Per a obtenir més informació, vegeu la secció sobre <link linkend="annotations"
+>Anotacions</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Signa digitalment...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Inicia el flux de treball per a la creació de signatures digitals.</action
+> En aquest moment, afegir signatures digitals només s'admet per als fitxers &PDF;. Per a més informació, vegeu la secció sobre <link linkend="adding_digital_signatures"
+>Afegir signatures digitals</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Pronuncia tot el document</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Pronuncia la pàgina actual</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Atura la pronunciació</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Atura/reprèn la pronunciació</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aquests elements permeten parlar tot el document o només la pàgina actual i aturar la parla utilitzant el servei de veu del sistema. Aquest servei és proveït per una biblioteca de les &Qt;, la qual embolcalla l'«speech-dispatcher» en &Linux; i els sistemes de veu nadius en les altres plataformes. És possible triar la veu actual mitjançant la pàgina de configuració <link linkend="configaccessibility"
+>Accessibilitat</link
+> de l'&okular;.</para>
+						<para
+>Les accions de <guilabel
+>Parla...</guilabel
+> només estan disponibles si el servei de veu està disponible en el sistema.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Els menús Arranjament i Ajuda</title>
+			<para
+>A part dels menús <guimenu
+>Arranjament</guimenu
+> i <guimenu
+>Ajuda</guimenu
+> comuns al &kde; que es descriuen en el capítol <ulink url="help:/fundamentals/menus.html"
+>Menús comuns</ulink
+> de la documentació Fonaments del &kde;, l'&okular; té aquestes entrades de menú específiques de l'aplicació:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Mostra la barra lateral</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra o oculta la barra lateral.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Mostra la barra de pàgines</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Canvia mostrar o ocultar la barra de pàgina</action
+> a la part inferior de l'àrea del document i oculta per a estalviar espai vertical a la finestra de l'&okular;. Recordeu que els números de pàgina es mostraran de totes maneres a la barra d'eines predeterminada.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura els dorsals...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Obre la finestra <link linkend="configure-backends"
+>Configuració del dorsal</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Configurar els dorsals de l'&okular;</title>
+	  <para
+>Podeu configurar els dorsals de l'&okular; escollint <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura els dorsals...</guimenuitem
+></menuchoice
+>. Actualment, les opcions de configuració sols es proporcionen per als dorsals EPub, &PostScript;, FictionBook, Txt, Text en OpenDocument i &PDF;. </para>
+	  <screenshot>
+	    <screeninfo
+>El diàleg de configuració dels dorsals</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>El diàleg de configuració dels dorsals</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Utilitzant les pàgines de configuració per als dorsals EPub, FictionBook, Mobipocket, Markdown, Txt i Text en OpenDocument podreu definir el tipus de lletra per a representar els documents en els formats corresponents. El botó <guibutton
+>Tria...</guibutton
+> en aquestes pàgines obre la finestra de configuració estàndard del &kde; per a tipus de lletres. Per als detalls, vegeu la <ulink url="help:/fundamentals/fonts.html"
+>documentació Fonaments del &kde;</ulink
+>. </para>
+	  <para
+>La descripció de les pàgines de configuració dels dorsals Markdown, &PostScript; i &PDF; la trobareu a continuació. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Configuració del dorsal de Markdown</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal Markdown de l'&okular; basat en <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> escollint <guilabel
+>Markdown</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. Una opció configurable addicional és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Activa el format SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Quan es marca aquesta opció, l'&okular; permetrà processar el format <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Aquest format pot ser problemàtic en els textos tècnics a causa de substitucions no desitjades (&pex;, substitueix <literal
+>(C)</literal
+> amb un símbol de copyright). De manera predeterminada aquesta opció està marcada. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>Configuració del dorsal de &PostScript;</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal &PostScript; de l'&okular; basat en <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> escollint <guilabel
+>Ghostscript</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Utilitza els tipus de lletra de la plataforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Aquesta opció determina si el Ghostscript ha de poder utilitzar els tipus de lletra de la plataforma, si està sense marcar, només podrà utilitzar els tipus de lletra incrustats en el document. De manera predeterminada es troba marcada. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>Configuració del dorsal de &PDF;</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal &PDF; de l'&okular; basat en <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> escollint <guilabel
+>&PDF;</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Millora les línies fines</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>El dibuix de les línies a l'&okular; està implementat en dos passos: generació del traçat de retall i omplert d'aquest traçat de retall. Quan la línia en el document original sigui inferior a un píxel aquest pas de la implementació podria causar problemes. Per a aquestes línies, el traçat de retall s'emplena amb el color de farciment que dependrà del gruix de la part de línia dins de l'àrea de tall. Si la part de la línia dins de l'àrea de tall es fa molt petita, la diferència entre la forma i el color de fons esdevindrà massa baixa perquè la línia es pugui reconèixer. Llavors les graelles d'aquestes línies es veuran poc agraciades. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Línia fina (vermella), el seu traçat de tall (línia discontínua) i límits dels píxels negres (línies negres contínues)</entry>
+			    <entry
+>Mostra la línia fina amb un contrast baix</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Per a millorar l'aspecte de les línies fines, l'&okular; implementa dues opcions. </para>
+		    <para
+>La primera opció és <guimenuitem
+>Solid</guimenuitem
+>. Amb aquesta opció, l'&okular; ajusta el camí de retall i la posició de la línia de manera que el camí de retall i la línia estiguin en el mateix límit del píxel, &ead;, l'&okular; allargarà les línies fines a un píxel en el dispositiu de sortida. Aquest mode és similar a <guilabel
+>Millora les línies fines</guilabel
+> <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Si es tria aquesta opció, les línies fines sempre s'allargaran. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línia fina amb la millora <guimenuitem
+>Solid</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línia fina amb la millora <guimenuitem
+>Solid</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>La segona opció és <guimenuitem
+>Forma</guimenuitem
+>. Amb aquesta opció el camí del retall i la línia s'ajustaran també al límit del píxel, però la intensitat de la línia es corregirà en funció de la seva amplada. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línia fina amb la millora <guimenuitem
+>Forma</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línia fina amb la millora <guimenuitem
+>Forma</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De manera predeterminada, les línies fines no es veuen millorades (opció <guimenuitem
+>No</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>Certificats de signatura digital de &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Aquesta secció permet configurar una base de dades de certificats personalitzada a utilitzar en afegir signatures digitals als fitxers &PDF;. </para>
+			<para
+>També llista els certificats disponibles a la base de dades de certificats actual (si n'hi ha cap). </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Configurar l'&okular;</title>
+		<sect1 id="configindex">
+			<title
+>Configuració general</title>
+			<para
+>Podeu configurar l'&okular; escollint <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura l'&okular;...</guimenuitem
+></menuchoice
+>. El diàleg de configuració es divideix en sis seccions. En aquest capítol es descriuen detalladament les opcions disponibles. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>General</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Accessibilitat</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Rendiment</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Presentació</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Anotacions</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Editor</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>El diàleg de configuració</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>El diàleg de configuració</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Depenent dels dorsals instal·lats, l'element de menú <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura els dorsals...</guimenuitem
+></menuchoice
+> podria estar activat. Aquest diàleg de configuració en particular conté les configuracions dels dorsals que es poden configurar. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>General</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Usa un desplaçament suau</guilabel
+></term>
+					<listitem>
+						<para
+>Si mostrar transicions animades en desplaçar amb la roda del ratolí i el teclat.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostra les barres de desplaçament</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si mostrar les barres de desplaçament per a la vista del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Enllaça les miniatures a la pàgina</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si la vista de miniatures sempre ha de mostrar la pàgina actual o no.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostra els consells i els missatges d'informació</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si es mostraran alguns missatges informatius durant l'inici, càrrega de fitxers, &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Notifica els fitxers, els formularis o les signatures incrustats</guilabel
+></term>
+					<listitem>
+						<para
+>Ja sigui per a mostrar plafons informatius sobre fitxers, formularis o signatures incrustats, &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Si està disponible, mostra el títol del document en la barra de títol</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si es mostrarà el títol del document a la barra de títol de la finestra de l'&okular;. Si no hi ha metadades per al títol en el document o aquest element està sense marcar, l'&okular; mostrarà el nom de fitxer del document. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Quan no mostrar el títol del document</guilabel
+></term>
+					<listitem>
+					  <para
+>Podeu escollir qualsevol de les dues opcions, <guilabel
+>Mostra sols el nom de fitxer</guilabel
+> o <guilabel
+>Mostra el camí complet del fitxer</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Usa un color de fons personalitzat</guilabel
+></term>
+					<listitem>
+                                            <para
+>Permet <ulink url="help:/fundamentals/colors.html"
+>triar el color del fons del document</ulink
+> (el color que hi ha al voltant de la pàgina que es mostra). De manera predeterminada, s'utilitzarà el color del kit d'eines de les &Qt; quan aquesta opció estigui desmarcada. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Obre els fitxers nous en pestanyes</guilabel
+></term>
+					<listitem>
+						<para
+>Per a obrir els documents nous en pestanyes. De manera predeterminada, les pestanyes restaran desactivades.</para>
+						<para
+>Les dreceres predeterminades per a canviar entre les pestanyes són <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Pestanya següent</guilabel
+>) i <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Pestanya anterior</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Commuta a la pestanya existent si el fitxer ja està obert</guilabel
+></term>
+					<listitem>
+						<para
+>Si l'&okular; hauria de canviar a una pestanya si el fitxer ja està obert en lloc d'obrir una pestanya nova. De manera predeterminada, aquesta opció està habilitada. Només es podrà alternar si s'habilita <guilabel
+>Obre els fitxers nous en pestanyes</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Obeeix les limitacions DRM</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si l'&okular; haurà d'obeir les restriccions <firstterm
+>DRM</firstterm
+> (Digital Rights Management). Les limitacions DRM s'utilitzen per a fer que sigui impossible realitzar certes accions amb els documents &PDF;, com copiar el contingut al porta-retalls. Cal tenir en compte que en algunes configuracions de l'&okular;, aquesta opció no està disponible.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Actualitza el document en canviar el fitxer</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si els fitxers oberts es comprovaran automàticament per a canvis i, si cal, actualitzar-los.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostra el diàleg de selecció de dorsals</guilabel
+></term>
+					<listitem>
+						<para
+>Si l'&okular; ha de preguntar a l'usuari quin dorsal utilitzar en el cas que més d'un pugui obrir el fitxer. Si no està marcada, l'&okular; utilitzarà el dorsal amb la prioritat més alta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Direcció de lectura de dreta a esquerra</guilabel
+></term>
+					<listitem>
+						<para
+>Si s'ha d'utilitzar de manera predeterminada la direcció de la lectura de dreta a esquerra per als fitxers oberts. Pot ser útil per a <ulink url="https://ca.wikipedia.org/wiki/Escriptura_de_dreta_a_esquerra"
+>alguns sistemes d'escriptura</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Obre en mode continu de manera predeterminada</guilabel
+></term>
+					<listitem>
+						<para
+>En aquest mode, es mostraran totes les pàgines del document i podreu desplaçar-vos suaument per elles. En cas contrari, només es mostrarà una pàgina (o una fila de pàgines) alhora. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>En usar l'eina Navega, ajusta el cursor a les vores de la pantalla</guilabel
+></term>
+					<listitem>
+						<para
+>Permet el desplaçament sense fi per tot el document amb l'<link linkend="menutools"
+>eina Navega</link
+>. Si està activat, el cursor del ratolí s'ajustarà al final oposat de la pantalla quan toqui les vores mentre arrossegueu el document. Aquesta característica només és compatible amb X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Columnes de visió general</guilabel
+></term>
+					<listitem>
+						<para
+>Aquesta opció representa el nombre de columnes que s'utilitzen en el mode de vista general. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Superposició Av/Re Pàg</guilabel
+></term>
+					<listitem>
+						<para
+>Aquí podeu definir el percentatge de l'àrea de visualització que haurà de ser visible després de pressionar les tecles &PgUp;/&PgDn;. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Zoom predeterminat</guilabel
+></term>
+					<listitem>
+						<para
+>Aquesta opció especifica el mode de zoom predeterminat per als fitxers que mai s'han obert abans. Per als fitxers que ja s'han obert s'aplicarà el mode de zoom anterior. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Accessibilitat</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Dibuixa una vora al voltant dels enllaços</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si es dibuixarà una vora al voltant dels enllaços.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Canvia els colors</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Activa</action
+> les opcions de canvi de color.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mode de color</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Defineix</action
+> el mode de canvi de color.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Inverteix els colors</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverteix</action
+> els colors sobre la vista, &ead;, els objectes negres es mostraran en blanc.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Canvia el color del paper</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>Canvia</action
+> el color del paper, &ead;, el fons del document.</para>
+                                                                        <para
+>El color es pot seleccionar utilitzant la mostra <guilabel
+>Color del paper</guilabel
+> a continuació. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Canvia els colors foscos i els clars</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Canvia</action
+> el color fosc i clar a la vostra preferència, el qual vol dir que el negre no es representarà com a negre sinó com el color fosc seleccionat i el blanc com el color clar seleccionat.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Converteix a blanc i negre</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Converteix</action
+> el document a blanc i negre. Podeu establir el llindar i el contrast. Ajustant el llindar a un valor major movent-lo cap a la dreta resultarà en l'ús de grisos més clars.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverteix la lluminositat</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Inverteix</action
+> la lluminositat de tots els colors. Els colors clars i foscos s'intercanviaran, però el to i la saturació no es veuran afectats. El contrast en les imatges generalment serà pitjor que a <guilabel
+>Inverteix la luma (sRGB lineal)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverteix la luma (sRGB lineal)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverteix</action
+> la luma de tots els colors. La llum i la foscor s'intercanviaran, però el to i la saturació no es veuran afectats. El contrast en les imatges es conservarà millor que a <guilabel
+>Inverteix la lluminositat</guilabel
+>, però els gràfics i el marcatge de text en color generalment es veurà pitjor. Utilitza coeficients luma sRGB, però no correcció de la gamma.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverteix la luma (Simètrica)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverteix</action
+> la luma de tots els colors. Utilitzant coeficients simètrics de la luma. La llum i la foscor s'intercanviaran, però el to i la saturació no es veuran afectats. Molt similar a <guilabel
+>Inverteix la lluminositat</guilabel
+>, però millorant el contrast en alguns casos.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Desplaça a un to positiu</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Desplaça</action
+> el to de tots els colors en 120 graus. Pot mitigar alguns problemes de contrast en gràfics amb color.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Desplaça a un to negatiu</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Desplaça</action
+> el to de tots els colors en 240 graus. Pot mitigar alguns problemes de contrast en gràfics amb color.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>Podeu configurar les dreceres de teclat i les accions de la barra d'eines per als modes de color utilitzant els elements de menú corresponents al menú <guimenu
+>Arranjament</guimenu
+> de la finestra principal de l'&okular;.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Motor de text a veu</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Permet escollir</action
+> el motor de text a veu (<abbrev
+>TTS</abbrev
+>) que utilitzarà l'&okular;. De manera predeterminada és <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Veu de text a veu</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Permet escollir</action
+> una veu de text a veu que utilitzarà l'&okular;. Podeu utilitzar tots els idiomes i veus segons els sintetitzadors disponibles a la vostra plataforma. A &Linux;, s'utilitza de manera predeterminada l'«speech-dispatcher» per a determinar les veus disponibles.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Rendiment</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Activa els efectes de transparències</guilabel
+></term>
+					<listitem>
+						<para
+>Dibuixa les seleccions i d'altres gràfics especials utilitzant efectes de transparència. Si es desactiva l'opció per a dibuixar s'utilitzaran estils de farciment del contorn o opacs i s'augmentarà la velocitat de les seleccions.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ús de la memòria</guilabel
+></term>
+					<listitem>
+						<para
+>L'&okular; pot aconseguir millors resultats afinant l'ús de la memòria, depenent del vostre sistema i els vostres gustos. Com més memòria permeteu utilitzar, més ràpid es comportarà el programa. El perfil predeterminat és bo per a tots els sistemes, però podeu evitar que l'&okular; utilitzi més memòria de la necessària seleccionant un perfil «Baix», o permetre treure el màxim profit del vostre sistema utilitzant «Enèrgic». Utilitzeu el perfil «Voraç» per a precarregar totes les pàgines sense risc de sobreeixir la memòria del sistema (només s'utilitzarà el 50% de la memòria total o de la memòria lliure).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Opcions de renderització</guilabel
+></term>
+					<listitem>
+						<para
+>Utilitzant aquest grup d'opcions podreu millorar la representació del text i de les imatges a l'&okular;. El resultat dependrà del dispositiu per a visualitzar el document. Els elements <guilabel
+>Activa l'antialiàsing de text</guilabel
+> i <guilabel
+>Activa l'antialiàsing de gràfics</guilabel
+> es poden utilitzar per a activar i desactivar el <ulink url="https://ca.wikipedia.org/wiki/Antialiàsing"
+>suavitzat espacial</ulink
+> del text i les imatges en el document, segons correspongui. L'element <guilabel
+>Activa la correcció de lletres per text</guilabel
+> està destinat a ser un selector per a <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>mostrar tipus de lletra</ulink
+>. L'antialiàsing i la correcció de lletres canvien quan es visualitzen els documents, molts els voldreu ajustar a les vostres preferències.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Presentació</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Avança cada</guilabel
+></term>
+					<listitem>
+						<para
+>Activa l'avanç automàtic de pàgines per un període de temps donat.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Repeteix després de l'última pàgina</guilabel
+></term>
+					<listitem>
+						<para
+>En navegar en el mode de presentació i anar més enllà de l'última pàgina apareixerà la primera pàgina.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Navegació tàctil</guilabel
+></term>
+					<listitem>
+						<para
+>Permet ajustar la navegació per la pantalla tàctil tocant en la presentació emprant els tres valors possibles següents:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Toc a la banda esquerra/dreta per a anar enrere/endavant</guilabel
+>: En tocar la part esquerra (dreta) de la pantalla es farà que la presentació passi a la diapositiva anterior (següent).</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Toc a qualsevol lloc per a anar endavant</guilabel
+> (predeterminat): En tocar a la pantalla, la presentació anirà a la següent diapositiva, sense importar on es toqui.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Desactivat</guilabel
+>: Tocar a la pantalla no farà res.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Color del fons</guilabel
+></term>
+					<listitem>
+						<para
+>El color que emplenarà la part de la pantalla no coberta per la pàgina en el mode presentació.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Cursor del ratolí</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si el ratolí estarà sempre ocult, si es mostrarà sempre o si s'ocultarà després d'un petit temps d'inactivitat.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostra l'indicador de progrés</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si es mostrarà un cercle de progrés que mostri la pàgina actual i el nombre total de pàgines a la part superior dreta de la pantalla de presentació cada vegada que canvieu la pàgina.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostra la pàgina de resum</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si mostrar una pàgina de resum al començament de la presentació amb el títol, autor i el nombre de pàgines del document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Activa les transicions</guilabel
+></term>
+					<listitem>
+						<para
+>Utilitzeu aquesta casella de selecció per a activar o desactivar els efectes de transició entre les pàgines.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Transició predeterminada</guilabel
+></term>
+					<listitem>
+						<para
+>L'efecte de transició entre pàgina i pàgina si el document no n'especifica cap. Establiu-ho a <guilabel
+>Transició aleatòria</guilabel
+> per a fer que l'&okular; triï a l'atzar un dels efectes disponibles.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Emplaçament</guilabel
+></term>
+					<listitem>
+						<para
+>En aquesta secció podeu seleccionar la <guilabel
+>Pantalla</guilabel
+> a utilitzar per a mostrar la presentació.</para>
+						<para
+><guilabel
+>Pantalla actual</guilabel
+> és la mateixa pantalla de la finestra de l'&okular; que inicia el mode de presentació.</para>
+						<para
+><guilabel
+>Pantalla predeterminada</guilabel
+> és la pantalla marcada com a predeterminada a la configuració de «xinerama».</para>
+						<para
+><guilabel
+>Pantalla 0</guilabel
+>, <guilabel
+>Pantalla 1</guilabel
+>, &etc; són les pantalles disponibles.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Configuració de l'eina de dibuix</guilabel
+></term>
+					<listitem>
+						<para
+>Gestiona els colors del llapis utilitzat en dibuixar a les pàgines durant el mode de presentació.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Anotacions</title>
+			<screenshot>
+				<screeninfo
+>La pàgina Anotacions del diàleg de configuració</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>La pàgina Anotacions del diàleg de configuració</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Barra d'eines d'anotació</guilabel
+></term>
+					<listitem>
+                                            <para
+>Permet canviar entre <guimenuitem
+>Barra d'eines completa d'anotacions</guimenuitem
+> (<link linkend="annotations-add"
+>barra d'eines predeterminada</link
+> a la secció superior de la finestra de l'&okular;) i <guimenuitem
+>Barra d'eines d'anotacions ràpides</guimenuitem
+> (barra d'eines lliscant amb les vostres eines preferides a la part dreta de la subfinestra Document).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Autor</guilabel
+></term>
+					<listitem>
+						<para
+>L'autor dels continguts afegit en un document. De manera predeterminada, és el nom de la pàgina <guilabel
+>Contrasenya i compte d'usuari</guilabel
+> del mòdul <guilabel
+>Detalls del compte</guilabel
+> a l'&systemsettings;.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Eines d'anotació</guilabel
+></term>
+					<listitem>
+					  <para
+>Aquesta subfinestra s'utilitza per a configurar la <link linkend="annotations-add"
+>barra d'eines d'anotació</link
+>. </para>
+					  <para
+>Hi ha cinc botons (<guibutton
+>Afegeix</guibutton
+>, <guibutton
+>Edita</guibutton
+>, <guibutton
+>Elimina</guibutton
+>, <guibutton
+>Mou amunt</guibutton
+> i <guibutton
+>Mou avall</guibutton
+>) i un quadre de llista (el qual mostra el contingut de la barra d'eines d'anotació) que s'utilitza per a configurar la barra d'eines. </para>
+					  <para
+>Si us cal afegir algun botó d'eina a la barra d'eines, feu clic al botó <guibutton
+>Afegeix</guibutton
+>. Podeu escollir el <guilabel
+>Nom</guilabel
+>, <guilabel
+>Tipus</guilabel
+> i <guilabel
+>Aparença</guilabel
+> de l'eina creada. </para>
+					  <note>
+					    <para
+>Recordeu que les eines d'anotació a l'&okular; són altament configurables. Per exemple, podeu tenir dos botons de la mateixa eina però amb diferent color. No podeu restar indecís en escollir el conjunt de botons que s'adapti exactament al vostre flux de treball. </para>
+					  </note>
+					  <para
+>Feu clic sobre algun element al quadre de llista i després feu clic al botó corresponent a la part dreta de la pàgina per a editar, eliminar, moure amunt o avall l'element. La drecera de teclat de l'eina (tecles des d'<keycap
+>1</keycap
+> fins a <keycap
+>9</keycap
+>) dependrà de la seva posició en la llista de la barra d'eines d'anotació. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Usar segells personalitzats</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Creeu la icona que voleu utilitzar per al vostre propi segell i deseu-lo en qualsevol format de gràfics admès per l'&okular;</para
+></listitem>
+					<listitem
+><para
+>Feu clic al botó <guibutton
+>Afegeix</guibutton
+>, seleccioneu el tipus <guilabel
+>Segell</guilabel
+> i introduïu un nom per al vostre segell.</para
+></listitem>
+					<listitem
+><para
+>Introduïu el camí complet a la vostra icona personalitzada a la llista desplegable del grup <guilabel
+>Símbol del segell</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Editor</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Editor</guilabel
+></term>
+					<listitem>
+						<para
+>Escolliu l'editor que voleu llançar quan l'&okular; vulgui obrir un fitxer font. Aquest és el cas quan el document conté referències als diversos punts (usualment nombre de fila i columna) de les fonts des de les quals fou generat. El format &DVI; admet de forma nativa afegir la informació sobre les fonts del document &latex; des del que fou generat. Existeix un sistema similar per als documents &PDF;, anomenat <acronym
+>pdfsync</acronym
+>, el qual emmagatzema aquesta informació extra en un fitxer extern anomenat després del fitxer &PDF; mateix (per exemple <filename
+>meu_document.pdfsync</filename
+> per a <filename
+>meu_document.pdf</filename
+>). </para>
+						<para
+>L'&okular; es distribueix amb opcions preconfigurades per als editors següents: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>el client &Emacs;</ulink
+>, <ulink url="https://www.lyx.org/"
+>el client LyX</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> i <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>Per a utilitzar la cerca inversa a &kile;, haureu de compilar el vostre fitxer de &latex; amb la configuració <guilabel
+>Moderna</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ordre</guilabel
+></term>
+					<listitem>
+						<para
+>Aquesta és l'ordre i els seus paràmetres per a invocar l'editor seleccionat amb el fitxer font del document real.</para>
+						<para
+>Aquest camp s'omplirà automàticament si utilitzeu un dels editors preconfigurats. En cas contrari, escolliu <guimenuitem
+>Editor de text personalitzat</guimenuitem
+> a la llista desplegable <guilabel
+>Editor</guilabel
+> i consulteu la documentació del vostre editor preferit per a trobar l'ordre adequada. </para>
+						<para
+>Podeu utilitzar els següents caràcters de comodí:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - el nom del fitxer</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - la línia del fitxer a abastar</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - la columna del fitxer a abastar</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Si no s'especifica «%f», el nom del document serà adjuntat a l'ordre especificada.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Crèdits i llicència</title>
+
+		<itemizedlist>
+			<title
+>Copyright del programa:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; mantenidor actual</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> desenvolupador del &kpdf;</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Copyright de la documentació:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; autor</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> algunes actualitzacions i afegits</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Traductor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

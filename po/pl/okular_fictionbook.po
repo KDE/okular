@@ -1,0 +1,85 @@
+# translation of okular_fictionbook.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Robert Gomulka <carramba@epf.pl>, 2007, 2008.
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008, 2013.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014.
+# Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2020-11-24 20:03+0100\n"
+"Last-Translator: Ignacy Kajdan <ignacy.kajdan@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.08.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Robert Gomulka, Łukasz Wojniłowicz, Ignacy Kajdan"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "carramba@epf.pl, lukasz.wojnilowicz@gmail.com, ignacy.kajdan@gmail.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Dokument nie jest prawidłowym dokumentem FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Nie można otworzyć dokumentu: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Dokument nie jest prawidłowym archiwum ZIP"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Nieprawidłowa struktura dokumentu (brak głównego katalogu)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Nie znaleziono treści w dokumencie"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Nieprawidłowy dokument XML: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Ustawienia silnika FictionBook"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Obsługa Fiction Book"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Wyświetlanie eksiążek FictionBook"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

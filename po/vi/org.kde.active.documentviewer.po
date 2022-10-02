@@ -1,0 +1,203 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# Phu Hung Nguyen <phu.nguyen@kdemail.net>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"PO-Revision-Date: 2022-08-09 22:12+0200\n"
+"Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
+"Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 22.04.1\n"
+
+#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "Dấu nhớ"
+
+#: package/contents/ui/CertificateViewerDialog.qml:21
+msgid "Certificate Viewer"
+msgstr "Trình xem chứng chỉ"
+
+#: package/contents/ui/CertificateViewerDialog.qml:32
+msgid "Issued By"
+msgstr "Cấp bởi"
+
+#: package/contents/ui/CertificateViewerDialog.qml:37
+#: package/contents/ui/CertificateViewerDialog.qml:65
+msgid "Common Name:"
+msgstr "Tên thông thường:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:43
+#: package/contents/ui/CertificateViewerDialog.qml:71
+msgid "EMail:"
+msgstr "Thư điện tử:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:49
+#: package/contents/ui/CertificateViewerDialog.qml:77
+msgid "Organization:"
+msgstr "Tổ chức:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:60
+msgid "Issued To"
+msgstr "Cấp cho"
+
+#: package/contents/ui/CertificateViewerDialog.qml:88
+msgid "Validity"
+msgstr "Thời hiệu"
+
+#: package/contents/ui/CertificateViewerDialog.qml:93
+msgid "Issued On:"
+msgstr "Cấp vào:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:99
+msgid "Expires On:"
+msgstr "Hết hạn vào:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:110
+msgid "Fingerprints"
+msgstr "Điểm chỉ"
+
+#: package/contents/ui/CertificateViewerDialog.qml:115
+msgid "SHA-1 Fingerprint:"
+msgstr "Điểm chỉ SHA-1:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:121
+msgid "SHA-256 Fingerprint:"
+msgstr "Điểm chỉ SHA-256:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:135
+msgid "Export..."
+msgstr "Xuất khẩu..."
+
+#: package/contents/ui/CertificateViewerDialog.qml:141
+#: package/contents/ui/SignaturePropertiesDialog.qml:148
+msgid "Close"
+msgstr "Đóng"
+
+#: package/contents/ui/CertificateViewerDialog.qml:149
+msgid "Certificate File (*.cer)"
+msgstr "Tệp chứng chỉ (*.cer)"
+
+#: package/contents/ui/CertificateViewerDialog.qml:164
+#: package/contents/ui/SignaturePropertiesDialog.qml:168
+msgid "Error"
+msgstr "Lỗi"
+
+#: package/contents/ui/CertificateViewerDialog.qml:166
+msgid "Could not export the certificate."
+msgstr "Không xuất khẩu được chứng chỉ."
+
+#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+msgid "Okular"
+msgstr "Okular"
+
+#: package/contents/ui/main.qml:40
+msgid "Open..."
+msgstr "Mở..."
+
+#: package/contents/ui/main.qml:47
+msgid "About"
+msgstr "Thông tin"
+
+#: package/contents/ui/main.qml:104
+msgid "Password Needed"
+msgstr "Cần mật khẩu"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Remove bookmark"
+msgstr "Xoá dấu nhớ"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Bookmark this page"
+msgstr "Lưu dấu trang này"
+
+#: package/contents/ui/MainView.qml:82
+msgid "No document open"
+msgstr "Không có tài liệu nào mở"
+
+#: package/contents/ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "Hình nhỏ"
+
+#: package/contents/ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "Mục lục"
+
+#: package/contents/ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr "Chữ kí"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:30
+msgid "Signature Properties"
+msgstr "Thuộc tính chữ kí"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:44
+msgid "Validity Status"
+msgstr "Trạng thái hiệu lực"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:50
+msgid "Signature Validity:"
+msgstr "Hiệu lực của chữ kí:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:56
+msgid "Document Modifications:"
+msgstr "Các chỉnh sửa của tài liệu"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:63
+msgid "Additional Information"
+msgstr "Thông tin bổ sung"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:72
+msgid "Signed By:"
+msgstr "Kí bởi:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:78
+msgid "Signing Time:"
+msgstr "Thời gian kí:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:84
+msgid "Reason:"
+msgstr "Lí do:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:91
+msgid "Location:"
+msgstr "Địa điểm:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:100
+msgid "Document Version"
+msgstr "Phiên bản tài liệu"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:110
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Tu bản tài liệu %1 trong %2"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:114
+msgid "Save Signed Version..."
+msgstr "Lưu phiên bản đã được kí..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:128
+msgid "View Certificate..."
+msgstr "Xem chứng chỉ..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:170
+msgid "Could not save the signature."
+msgstr "Không lưu được chữ kí."
+
+#: package/contents/ui/Signatures.qml:27
+msgid "Not Available"
+msgstr "Không có sẵn"
+
+#: package/contents/ui/ThumbnailsBase.qml:43
+msgid "No results found."
+msgstr "Không tìm thấy kết quả nào."
+
+#~ msgid "Search..."
+#~ msgstr "Tìm kiếm..."

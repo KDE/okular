@@ -1,0 +1,4476 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Swedish "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Handbok &okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Stefan</firstname
+><surname
+>Asserhäll</surname
+><affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+><contrib
+>Översättare</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2022-02-19</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; är en generell dokumentvisare för &kde; baserad på &kpdf;-kod.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>kommentar</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Inledning</title>
+		<para
+>&okular; är en generell dokumentvisare för &kde; baserad på koden från programmet &kpdf;. Även om det är baserat på &kpdf;-kod, har &okular; ett antal unika funktioner som översiktsläge, förbättrat stöd för presentationer och tillägg av kommentarer. </para>
+		<para
+>&okular; stöder en mängd olika format såsom PDF, &PostScript;, Tiff, CHM, DjVU, bilder (png, jpg, etc.), XPS, Fiction Books, Comic Book, Plucker, EPub, telefax och Markdown. Se <ulink url="https://okular.kde.org/formats.php"
+>&okular; dokumentformathantering</ulink
+> för alla format som stöds och deras funktioner. </para>
+		<screenshot>
+		<screeninfo
+>&okular;s huvudfönster</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>&okular;s huvudfönster</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Grundläggande användning</title>
+		<sect1 id="opening">
+			<title
+>Öppna filer</title>
+			<para
+>För att visa någon fil som stöds i &okular;, välj <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Öppna...</guimenuitem
+></menuchoice
+>, välj en fil som stöds i dialogrutan och klicka på <guibutton
+>Öppna</guibutton
+>. Filen ska nu visas i huvudfönstret. </para>
+			<important>
+			  <para
+>Det nya dokumentet öppnas under en ny flik, om alternativet <guilabel
+>Öppna nya filer under flikar</guilabel
+> på sidan <link linkend="configgeneral"
+>Allmänna inställningar</link
+> är markerat. </para>
+                          <para
+>Du kan stänga fliken genom att klicka på den med musens mittenknapp. </para>
+                          <para
+>Det föregående stängda dokumentet under en flik kan öppnas igen med menyalternativet <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Ångra stäng flik</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>Om du redan tidigare har öppnat filer i &okular; kan du snabbt komma åt dem genom att välja dem i menyn <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guisubmenu
+>Öppna senaste</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>&okular; är standardprogrammet för PDF och &PostScript;-filer i &kde;, och startas när du klickar med vänster musknapp på en sådan filtyp i filhanteraren. Om du vill öppna vilken fil som helst som stöds av &okular;, använd <menuchoice
+><guimenu
+>Öppna med...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> i den sammanhangsberoende menyn i filhanteraren. </para>
+			<para
+>Efter att ha öppnat en fil vill du troligtvis läsa den, och därför navigera genom den. Fortsätt till <link linkend="navigating"
+>nästa avsnitt</link
+> för att lära dig mer om det. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Navigering</title>
+			<para
+>Det här avsnittet beskriver hur du kan navigera genom ett dokument i &okular;.</para>
+			<para
+>Det finns flera sätt att rulla visningsområdet. Ett är att använda tangenterna <keysym
+>Uppåtpil</keysym
+> och <keysym
+>Neråtpil</keysym
+>. Du kan också använda rullningslisten, mushjulet, eller tangenterna <keycap
+>Page Up</keycap
+> och <keycap
+>Page Down</keycap
+>. </para>
+			<para
+>Du kan också använda navigeringstangenter som liknar de i <application
+>vim</application
+>, närmare bestämt <keycap
+>H</keycap
+> för att gå längst upp på föregående sida, <keycap
+>L</keycap
+> för att gå längst upp på nästa sida, <keycap
+>J</keycap
+> för att gå neråt en rad och <keycap
+>K</keycap
+> för att gå uppåt en rad. </para>
+			<para
+>Ett annat sätt är att hålla nere vänster musknapp var som helst i dokumentet medan du drar musen i motsatt riktning mot det håll du vill flytta dig. Proceduren fungerar bara om bläddringsverktyget är aktiverat, vilket du kan göra genom att välja <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Bläddra</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>När ett dokument visas i <link linkend="presentationMode"
+>presentationsläge</link
+> kan tangenterna <keysym
+>uppåtpil</keysym
+> och <keysym
+>neråtpil</keysym
+> användas för att byta mellan sidor eller blad. Antal blad och position för aktuellt blad visas med överlagringen i skärmens övre högra hörn. </para>
+			</note>
+			<para
+>Om du vill läsa ett dokument med flera sidor, använd den automatiska panoreringsfunktionen i &okular;. Börja automatisk panorering med <keycombo action="simul"
+>&Shift;<keysym
+>Neråtpil</keysym
+></keycombo
+> eller <keycombo action="simul"
+>&Shift;<keysym
+>Uppåtpil</keysym
+></keycombo
+>. Använd därefter tangenterna för att öka eller minska panoreringshastigheten. Du kan tillfälligt starta eller stoppa automatisk panorering genom att trycka på skifttangenten. Att trycka på någon annan tangent inaktiverar funktionen. </para>
+			<para
+>Ett annat sätt att förflytta sig genom ett dokument flera sidor är att använda muspekaren. Dra sidan uppåt eller neråt, fortsätt att dra också när fönstrets nederkant eller överkant nås, och se vad som händer. När en sidkant korsas, visas muspekaren längst upp eller längst ner i fönstret igen, och du kan bara fortsätta att dra. </para>
+			<para
+>Sidoraden till vänster på skärmen gör det möjligt att navigera genom ett dokument på ytterligare två sätt: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Om du klickar på en miniatyrbild av en sida flyttas visningsområdet till den sidan. </para>
+				</listitem>
+				<listitem>
+					<para
+>Om dokumentet har en innehållsförteckning, gör ett klick på en rad i innehållsförteckningen att dokumentet går till sidan som är länkad till den raden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Om dokumentet har lager kan vilka lager som visas bestämmas genom att markera eller avmarkera objekten i listan <guilabel
+>Lager</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Om dokumentet har bokmärken, aktivera vyn <guilabel
+>Bokmärken</guilabel
+> och klicka på dem för att gå till motsvarande sida. Om bokmärken inte bara visas för det nuvarande dokumentet, kan du snabbt byta till bokmärken i alla senast öppnade filer. </para>
+				</listitem>
+				<listitem>
+					<para
+>Om dokumentet har kommentarer, aktivera vyn <guilabel
+>Kommentarer</guilabel
+> och klicka på kommentarerna eller välj dem med tangenterna <keysym
+>uppåtpil</keysym
+> och <keysym
+>neråtpil</keysym
+> och tryck på returtangenten för att gå till motsvarande sida. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Vissa dokument har länkar. Om så är fallet kan du klicka på dem och vyn ändras till sidan länken går till. Om länken går till en webbsida eller annat dokument, startas förvalt hanteringsprogram för formatet i &kde;. Att exempelvis klicka på en länk som pekar på <quote
+>https://www.kde.org</quote
+> öppnar webbsidan i &kde;:s förvalda webbläsare. </para>
+			<important>
+			  <para
+>Dokumentets interna länkar fungerar bara när <link linkend="menutools"
+>bläddringsverktyget</link
+> används. </para>
+			</important>
+			<para
+>Dessutom kan du använda följande funktion för att snabbt gå till specifika platser i dokumentet: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Du kan gå till dokumentets början med <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> eller genom att använda <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Början av  dokumentet</guimenuitem
+></menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå till dokumentets slut med <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> eller genom att använda <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Slutet av  dokumentet</guimenuitem
+></menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå framåt i dokumentet genom att använda <keycap
+>Mellanslag</keycap
+> eller <keycap
+>Page Down</keycap
+>. Använd knappen <guibutton
+>Nästa sida</guibutton
+> i verktygsraden eller <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Nästa sida</guimenuitem
+></menuchoice
+> i menyraden för att gå till dokumentets nästa sida. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå bakåt i dokumentet genom att använda <keycap
+>Baksteg</keycap
+> eller <keycap
+>Page Up</keycap
+>. Använd knappen <guibutton
+>Föregående sida</guibutton
+> i verktygsraden eller <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Föregående sida</guimenuitem
+></menuchoice
+> i menyraden för att gå till dokumentets föregående sida. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå tillbaka till positionerna i dokumentet som du kom från i kronologisk ordning. Tänk dig exempelvis att du läser meningen <quote
+>Som visas i [15], ...</quote
+>, och vill snabbt slå upp referensen [15]. Om du klickar på den, går &okular; till referenslistan. Genom att använda<keycombo
+>&Alt;&Shift;<keysym
+>Vänster</keysym
+></keycombo
+> eller <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Tillbaka</guimenuitem
+> </menuchoice
+> i menyraden, kommer du tillbaka till exakt den position du utgick från. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå framåt i dokumentet efter att ha gått tillbaka enligt beskrivningen ovan med <keycombo
+>&Alt;&Shift;<keysym
+>Höger</keysym
+></keycombo
+> eller med <menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Framåt</guimenuitem
+></menuchoice
+> i menyraden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Du kan gå till nästa träff vid sökning genom att använda tangenten <keycap
+>F3</keycap
+>, <keycap
+>Retur</keycap
+> (när textfältet <guilabel
+>Sök</guilabel
+> har fokus), eller menyalternativet <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök nästa</guimenuitem
+></menuchoice
+>, eller gå tillbaka till föregående träff genom att använda tangenterna <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+>,  <keycombo
+>&Shift;<keysym
+>Retur</keysym
+></keycombo
+> (när textfältet <guilabel
+>Sök</guilabel
+> har fokus), eller menyalternativet <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök föregående</guimenuitem
+></menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Presentationsläge</title>
+			<para
+>Presentationsläget representerar ett annat sätt att visa dokument i &okular;. Det kan aktiveras med <menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Presentation</guimenuitem
+></menuchoice
+>. Det visar dokumentet sida för sida. Sidorna visas med zoom till sida, vilket betyder att hela sidan är synlig. </para>
+			<note>
+				<para
+>PDF-dokument kan till och med ange att de alltid ska öppnas i presentationsläge. </para>
+			</note>
+			<para
+>I presentationsläge finns en hjälprad längst upp på skärmen. Flytta bara musmarkören längst upp på skärmen för att få den att visas. </para>
+			<screenshot>
+			<screeninfo
+>&okular; i presentationsläge</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; i presentationsläge</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>För att navigera mellan sidorna kan du använda vänster musknapp (nästa sida) och höger musknapp (föregående sida), mushjulet, pilikonerna eller redigeringsraden i hjälpraden längst upp, eller tangenterna som anges i avsnittet <link linkend="navigating"
+>Navigering</link
+>. </para>
+			<para
+>Använd knappen <guilabel
+>Visa/Pausa</guilabel
+> i den övre raden för att respektive börja visa presentationen eller pausa den. </para>
+			<para
+>Du kan avsluta presentationsläge genom att trycka på tangenten <keycap
+>Esc</keycap
+> eller klicka på ikonen <guiicon
+>Avsluta</guiicon
+> i hjälpraden längst upp. </para>
+			<para
+>Du kan också rita på nuvarande sida med en penna. Klicka på ikonen <guilabel
+>Växla teckningsläge</guilabel
+> i raden längst upp för att aktivera eller inaktivera möjlighet att rita i presentationsläge. Det som ritas rensas automatiskt när presentationsläget avslutas. Du kan också klicka på ikonen <guilabel
+>Sudda teckning</guilabel
+> för att ta bort teckningarna på nuvarande sida. </para>
+			<para
+>Presentationsläget har stöd för mer än en skärm i en konfiguration med flera skärmar. När det finns mer än en skärm visas en ny knapp i den övre raden, med en ikon av en skärm: det är en kombinationsruta som låter dig flytta presentationen till vilken som helst av de andra tillgängliga skärmarna. </para>
+			<para
+>Presentationsläget har några inställningsalternativ. Du hittar deras beskrivning i kapitlet <link linkend="configpresentation"
+>Anpassa &okular;</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Omvänd sökning mellan &latex;-editorer och &okular;</title>
+
+		<para
+>Omvänd sökning är en mycket användbar funktion när du själv skriver ett &latex;-dokument. Om allting är riktigt inställt, kan du klicka på &okular;s fönster med <mousebutton
+>vänster</mousebutton
+> musknapp medan &Shift; hålls nere. Därefter läser editorn in &latex;-källkodsfilen och går till rätt stycke.</para>
+
+		<para
+>Omvänd sökning kan inte fungera om inte:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Källkodsfilen har kompilerats med lyckat resultat.</para
+></listitem>
+			<listitem
+><para
+>&okular; vet vilken editor som ska användas.</para
+></listitem>
+			<listitem
+><para
+>Bläddringsverktyget måste vara aktiverat, vilket du kan göra genom att välja <menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Bläddra</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Med den här funktionen i &okular; gör ett vänsterklick med musen medan &Shift; hålls nere i ett &DVI;- eller PDF-dokument att en editor öppnar motsvarande &latex;-dokument och försöker gå till motsvarande rad. Kom ihåg att tala om för &okular; att använda rätt editor med &okular;s menyalternativ <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa Okular...</guimenuitem
+></menuchoice
+> (på sidan <guimenuitem
+>Editor</guimenuitem
+>).</para>
+
+		<para
+>För mer information om editorinställning se <link linkend="configeditor"
+>motsvarande avsnitt i handboken</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Anpassa &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Anpassa editorn i &okular;</phrase>
+			</textobject>
+			<caption
+><para
+>Anpassa editorn i &okular;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Avancerade funktioner i &okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Inbäddade filer</title>
+			<para
+>Om nuvarande dokument har inbäddade filer, visas en rad ovanför sidvyn för att underrätta dig om de inbäddade filerna. </para>
+			<screenshot>
+				<screeninfo
+>Raden med inbäddade filer</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Raden med inbäddade filer</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>När det är fallet kan du antingen klicka på länken i radens text eller välja <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Inbäddade filer</guimenuitem
+></menuchoice
+> för att visa dialogrutan för inbäddade filer. Dialogrutan låter dig visa inbäddade filer och extrahera dem. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formulär</title>
+			<para
+>Om nuvarande dokument har formulär, visas en rad ovanför sidvyn där formulären kan aktiveras. </para>
+			<screenshot>
+				<screeninfo
+>Formulärraden</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Formulärraden</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>När det är fallet kan du antingen klicka på <guilabel
+>Visa formulär</guilabel
+> på raden eller välja <menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Visa formulär</guimenuitem
+></menuchoice
+> för att skriva in data i formulärets fält. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Signaturer</title>
+			<para
+>Om nuvarande dokument har signaturer, visas en rad ovanför sidvyn efter dokumentet har öppnats. Den låter dig öppna panelen <guilabel
+>Signaturer</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>Signaturraden</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Signaturraden</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Genom att använda panelen <guilabel
+>Signaturer</guilabel
+> kan du inspektera dokumentets signatur och dess certifikat. </para>
+			<screenshot>
+				<screeninfo
+>Signaturpanelen</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Signaturpanelen</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Funktionen är bara tillgänglig för &PDF;-dokument. Du måste minst installera version 0.51 av <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> för att åtminstone få signaturinformation, version 0.68 för att få information om signaturplats och orsak, och version 0.73 för att få certifikatinformation för signaturen. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Lägga till digitala signaturer</title>
+				<para
+>Du kan lägga till digitala signaturer i dokument genom att använda motsvarande alternativ i menyn <menuchoice
+><guimenu
+>Verktyg</guimenu
+></menuchoice
+>. </para>
+				<para
+>Du måste ha ett riktigt <acronym
+>PKCS</acronym
+>-certifikat för signering tillgängligt på systemet för att kunna signera ett dokument. &okular; har inte möjlighet att skapa sådana certifikat, eftersom de måste ges ut av certifikatutfärdare för att vara användbara för validering, etc. </para>
+				<para
+>Vi använder biblioteket Poppler för att hantera signering av &PDF;-dokument, och Poppler använder biblioteket NSS för att hantera certifikat. När det här skrivs, försöker Poppler använda följande NSS-certifikatlager i ordning (det första som finns): </para>
+				<itemizedlist>
+					<listitem
+><para
+>Firefox aktuella användarcertifikatlager.</para
+></listitem>
+					<listitem
+><para
+>Det systemomfattande certifikatlagret <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>Den aktuella användarens <filename
+>$HOME/.pki/nssdb</filename
+>.</para
+></listitem>
+				</itemizedlist>
+				<para
+>Om du vill använda ett eget certifikatlager går det att göra genom att ange det på sidan <link linkend="config-pdf-digital-signatures"
+>Inställning av &PDF;-gränssnitt</link
+> i dialogrutan <link linkend="configure-backends"
+>Anpassa gränssnitt...</link
+>. </para>
+				<note>
+					<para
+>Funktionen är bara tillgänglig för &PDF;-dokument. Du måste minst installera version 21.01 av <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> för att kunna lägga till digitala signaturer i ett dokument. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Kommentarer</title>
+			<para
+>&okular; låter dig granska och kommentera dokument. </para>
+			<screenshot>
+			<screeninfo
+>&okular;s kommentarer</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular;s kommentarer</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>&okular; har två olika sorters kommentarer:</para>
+			<para
+>Textkommentarer som <guilabel
+>Gul märkpenna</guilabel
+> och <guilabel
+>Svart understrykning</guilabel
+> för filer med text, t.ex. PDF.</para>
+		      <para
+>Grafikkommentarer som <guilabel
+>Anteckningsruta</guilabel
+>, <guilabel
+>Fritextkommentar</guilabel
+>, <guilabel
+>Frihandslinje</guilabel
+>, <guilabel
+>Rak linje</guilabel
+>, <guilabel
+>Polygon</guilabel
+>, <guilabel
+>Stämpel</guilabel
+> och <guilabel
+>Understrykning</guilabel
+>, <guilabel
+>Ellips</guilabel
+> och <guilabel
+>Skrivmaskinstext</guilabel
+> för alla format som stöds av &okular;.</para>
+			<para
+>Genom att använda den sammanhangsberoende menyn antingen i vyn <guilabel
+>Kommentarer</guilabel
+> i sidopanelen eller i huvudfönstret, kan en <guilabel
+>Anteckning</guilabel
+> visas för alla sorters kommentarer, som kan läggas till eller redigeras.</para>
+			<para
+>Kommentarer är inte bara begränsade till PDF-filer. De kan användas för alla format som &okular; stöder.</para>
+			<para
+>&okular; har en funktion för "dokumentarkivering". Det är ett format specifikt för &okular; för att lagra dokumentet samt diverse metadata som hör ihop med det (för närvarande bara kommentarer). Du kan spara ett "dokumentarkiv" från det öppna dokumentet genom att välja <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guisubmenu
+>Spara som</guisubmenu
+></menuchoice
+> och ange <guilabel
+>Okular-dokumentarkiv</guilabel
+> i filterväljaren. Dokument som sparas på detta sätt får filnamnsändelsen <guilabel
+>.okular</guilabel
+>. För att öppna ett &okular; dokumentarkiv, öppna det bara med &okular; som om det t.ex. vore ett &PDF;-dokument. </para>
+			<para
+>Man kan <emphasis
+>också</emphasis
+> spara kommentarer direkt i &PDF;-filer. Använd <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Spara</guimenuitem
+></menuchoice
+> för att skriva över nuvarande fil, eller <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Spara som...</guimenuitem
+></menuchoice
+> för att spara dem i en ny fil. </para>
+				<note>
+					<para
+>Beroende på dokumentets rättigheter (typiskt för PDF-dokument), kanske tillägg, redigering av vissa alternativ eller borttagning av kommentarer inte är möjligt. </para>
+				</note>
+				<note>
+				  <para
+>Alla åtgärder rörande kommentarer (att skapa och ta bort kommentarer,  redigera godtyckliga kommentar egenskaper, flytta om kommentarer med &Ctrl;+drag, och redigera textinnehållet i en kommentar) kan <link linkend="edit-undo"
+>ångras</link
+> eller <link linkend="edit-redo"
+>göras om</link
+> med motsvarande alternativ i menyn <guimenu
+>Redigera</guimenu
+>. Det är också möjligt att ångra åtgärden genom att trycka på <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> och göra om den ångrade åtgärden genom att trycka på <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>Det går att anpassa standardegenskaperna och utseende för varje kommentarverktyg. Se <link linkend="configannotations"
+>motsvarande avsnitt i den här handboken</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Lägga till kommentarer</title>
+				<para
+>För att lägga till några kommentarer i dokumentet, måste du använda knappen <guilabel
+>Snabbkommentarer</guilabel
+> i &okular;s huvudverktygsrad eller aktivera kommentarverktygsraden. Det görs genom att antingen välja <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Kommentarer</guimenuitem
+></menuchoice
+> eller trycka på <keycap
+>F6</keycap
+>. När granskningsverktygsraden visas, klicka bara på någon av knapparna i den eller använd genvägar (tangenter från <keycap
+>1</keycap
+> till <keycap
+>9</keycap
+>) för att börja skapa kommentaren. </para>
+				<para
+>Kommentarverktygsraden hjälper till att skapa kommentarer med ritverktyg, formverktyg och textmeddelanden. Det går att använda kommentarverktygsraden för att lägga till markeringar i ett dokument (t.ex. linjer, ellipser, polygoner, stämplar, märkningar, understreck, etc.). Tabellen nedan beskriver exakt vad den normala uppsättningen knappar i kommentarverktygsraden gör. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Knapp </entry>
+					<entry
+>Verktygsnamn </entry>
+					<entry
+>Beskrivning </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Märkpenna </para>
+					</entry>
+					<entry>
+					  <para
+>För att markera text i dokumentet med en given bakgrundsfärg. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den markerade texten, och dra därefter för att markera den. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Färglägg</guimenuitem
+>, <guimenuitem
+>Vågig</guimenuitem
+>, <guimenuitem
+>Understruken</guimenuitem
+> eller <guimenuitem
+>Överstruken</guimenuitem
+>), <guilabel
+>Färg</guilabel
+> och <guilabel
+>Ogenomskinlighet</guilabel
+> för färgläggningen. Högerklicka bara på den markerade texten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Understreck </para>
+					</entry>
+					<entry>
+					  <para
+>För att stryka under text. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Färglägg</guimenuitem
+>, <guimenuitem
+>Vågig</guimenuitem
+>, <guimenuitem
+>Understruken</guimenuitem
+> eller <guimenuitem
+>Överstruken</guimenuitem
+>), <guilabel
+>Färg</guilabel
+> och <guilabel
+>Ogenomskinlighet</guilabel
+> för understrecket. Högerklicka bara på den understrukna texten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Vågig </para>
+					</entry>
+					<entry>
+					  <para
+>För att stryka under text med en vågig linje. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Färglägg</guimenuitem
+>, <guimenuitem
+>Vågig</guimenuitem
+>, <guimenuitem
+>Understruken</guimenuitem
+> eller <guimenuitem
+>Överstruken</guimenuitem
+>), <guilabel
+>Färg</guilabel
+> och <guilabel
+>Ogenomskinlighet</guilabel
+> för understrecket. Högerklicka bara på den understrukna texten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Stryk över </para>
+					</entry>
+					<entry>
+					  <para
+>För att stryka över text. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Färglägg</guimenuitem
+>, <guimenuitem
+>Vågig</guimenuitem
+>, <guimenuitem
+>Understruken</guimenuitem
+> eller <guimenuitem
+>Överstruken</guimenuitem
+>), <guilabel
+>Färg</guilabel
+> och <guilabel
+>Ogenomskinlighet</guilabel
+> för understrecket. Högerklicka bara på den understrukna texten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Skrivmaskinstext: </para>
+					</entry>
+					<entry>
+					  <para
+>Skrivmaskinstext har ogenomskinliga bokstäver på genomskinlig bakgrund, så att det är användbart för att fylla i icke-interaktiva formulär. </para>
+					  <para
+>Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av kommentaren, dra därefter för att placera det nedre högra hörnet. Ange kommentarens text och klicka därefter på <guibutton
+>Ok</guibutton
+> för att spara kommentaren, <guibutton
+>Avbryt</guibutton
+> för att avbryta inmatningen av kommentaren, eller <guibutton
+>Rensa</guibutton
+> för att rensa kommentaren. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Teckensnitt</guilabel
+> och <guilabel
+>Text färg</guilabel
+> för texten Högerklicka bara på den skapade skrivmaskinstexten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Fritextanmärkning </para>
+					</entry>
+					<entry>
+					  <para
+>För att lägga till fritextkommentar. Kommentaren visas på plats som den är. </para>
+					  <para
+>Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av kommentaren, dra därefter för att placera det nedre högra hörnet. Ange kommentarens text och klicka därefter på <guibutton
+>Ok</guibutton
+> för att spara kommentaren, <guibutton
+>Avbryt</guibutton
+> för att avbryta inmatningen av kommentaren, eller <guibutton
+>Rensa</guibutton
+> för att rensa kommentaren. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Teckensnitt</guilabel
+>, <guilabel
+>Justering</guilabel
+> och <guilabel
+>Kantbredd</guilabel
+> för anteckningen. Högerklicka bara på den skapade anteckningsikonen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Anteckningsruta </para>
+					</entry>
+					<entry>
+					  <para
+>För att lägga till en flerraderskommentar. Kommentaren kan visas genom att dubbelklicka på en ikon i dokumentet. </para>
+					  <para
+>Klicka på verktygsknappen, och klicka därefter på platsen i dokumentet där anteckningsrutan ska läggas till. Skriv in texten i anteckningsrutan och klicka på knappen <guilabel
+>Stäng kommentaren</guilabel
+> i övre högra hörnet av rutans fönster. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+> och <guilabel
+>Ikon</guilabel
+> för anteckningen. Högerklicka bara på den skapade anteckningsikonen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Frihandslinje </para>
+					</entry>
+					<entry>
+					  <para
+>För att rita frihandslinjer. </para>
+					  <para
+>Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera linjens början, och dra därefter för att rita linjen. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+> och <guilabel
+>Bredd</guilabel
+> för linjen. Högerklicka bara på den skapade linjen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pil (kombinationslista) </para>
+					</entry>
+					<entry>
+					  <para
+>För att markera med en pil. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera linjens startpunkt, dra därefter dit linjens slutpunkt ska vara och klicka en gång till. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Bredd</guilabel
+>, <guilabel
+>Linjestart</guilabel
+>, <guilabel
+>Linjeslut</guilabel
+>, <guilabel
+>Längd på hänvisningslinje</guilabel
+> och <guilabel
+>Längd på hänvisningslinjens utökning</guilabel
+> för linjen. Högerklicka bara på den skapade linjen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Rät linje (kombinationslista) </para>
+					</entry>
+					<entry>
+					  <para
+>För att markera med en linje. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera linjens startpunkt, dra därefter dit linjens slutpunkt ska vara och klicka en gång till. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Bredd</guilabel
+>, <guilabel
+>Linjestart</guilabel
+>, <guilabel
+>Linjeslut</guilabel
+>, <guilabel
+>Längd på hänvisningslinje</guilabel
+> och <guilabel
+>Längd på hänvisningslinjens utökning</guilabel
+> för linjen. Högerklicka bara på den skapade linjen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Rektangel (kombinationslista) </para>
+					</entry>
+					<entry>
+					  <para
+>För att rita en rektangel omkring ett valt område. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet rektangeln, dra därefter för att placera det nedre högra hörnet. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Rektangel</guimenuitem
+> eller <guimenuitem
+>Ellips</guimenuitem
+>), <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Formfyllning</guilabel
+> (med färg) och <guilabel
+>Bredd</guilabel
+> för kanten Högerklicka bara på den skapade kanten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Ellips (kombinationslista) </para>
+					</entry>
+					<entry>
+					  <para
+>För att rita en ellips eller rektangel omkring ett valt område. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av ellipsens omgivande rektangel, dra därefter för att placera det nedre högra hörnet. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Typ</guilabel
+> (<guimenuitem
+>Rektangel</guimenuitem
+> eller <guimenuitem
+>Ellips</guimenuitem
+>), <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Formfyllning</guilabel
+> (med färg) och <guilabel
+>Bredd</guilabel
+> för kanten Högerklicka bara på den skapade kanten och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Polygon (kombinationslista) </para>
+					</entry>
+					<entry>
+					  <para
+>För att rita en sluten plan figur med tre eller flera segment. Motsvarande kommentar kan visas genom att dubbelklicka inne i polygonen. </para>
+					  <para
+>Klicka på verktygsraden, klicka med vänster musknapp för att placera polygonens första hörn, dra därefter för att placera det andra hörnet. Fortsätt till hela polygonen har ritats till det första hörnet.Klicka två gånger om du vill lägga till en kommentar i polygonen. Skriv in kommentarens text och klicka på <guibutton
+>Ok</guibutton
+> för att spara kommentaren, <guibutton
+>Avbryt</guibutton
+> för att avbryta inmatningen av kommentaren, eller <guibutton
+>Rensa</guibutton
+> för att rensa kommentaren. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Färg</guilabel
+>, <guilabel
+>Ogenomskinlighet</guilabel
+>, <guilabel
+>Formfyllning</guilabel
+> (med färg) och <guilabel
+>Bredd</guilabel
+> för polygonen. Högerklicka bara på den skapade polygonen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Stämpel </para>
+					</entry>
+					<entry>
+					  <para
+>För att markera texten eller bilden med en fördefinierad form. </para>
+					  <para
+>Klicka på verktygsknappen för att välja en stämpel i kombinationslistan, och klicka därefter med vänster musknapp för att placera stämpeln. </para>
+					  <para
+>Ett enkelklick placerar bara en fyrkantig stämpel (användbar för ikoner). För att lägga till en rektangulär stämpel, kan du klicka med vänster musknapp, hålla nere den för att placera punkten längst upp till vänster, och därefter dra för att placera den längst ner till höger. </para>
+					  <para
+>Det är möjligt att definiera <guilabel
+>Ogenomskinlighet</guilabel
+> och <guilabel
+>Stämpelsymbol</guilabel
+> för stämpeln. Högerklicka bara på den skapade stämpelikonen och välj menyalternativet <guimenuitem
+>Egenskaper</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Funktionen är experimentell. Egna stämplar som infogas i &PDF;-dokument är inte synliga i andra &PDF;-läsare än &okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>De här är standardkommentarerna som tillhandahålls av &okular;. Genom att använda inställningsdialogrutans <link linkend="configannotations"
+>Kommentarsida</link
+> kan egna kommentarer läggas till, såsom egna stämplar, textmarkeringar, en geometrisk form med inre färg för att markera områden, etc. </para>
+                                  <note>
+                                      <para
+>Det är möjligt att lägga till &latex;-kod i kommentartexten. Lägg till <userinput
+>$$<replaceable
+>kod</replaceable
+>$$</userinput
+> i kommentartexten, där <replaceable
+>kod</replaceable
+> är vilken giltig &latex;-ekvation som helst, och följ instruktionerna på skärmen för att återge den med en &latex;-distribution installerad på systemet. </para>
+                                  </note>
+				<para
+>Det är möjligt att anpassa de nuvarande verktygsalternativen genom att använda själva kommentarverktygsraden. Tabellen nedan beskriver exakt vad den normala uppsättningen knappar på kommentarverktygsraden gör. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Knapp </entry>
+					<entry
+>Alternativnamn </entry>
+					<entry
+>Beskrivning </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linjebredd </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att välja bredden i kombinationslistan. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Kommentarfärg </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att välj text- eller kantfärg på kommentaren. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
+>Egen färg...</guimenuitem
+> för att visa färgvalsdialogrutan. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Kommentarfyllnadsfärg </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att välj fyllnadsfärg på kommentaren. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
+>Egen färg...</guimenuitem
+> för att visa färgvalsdialogrutan. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Kommentarogenomskinlighet </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att välja kommentarens grad av ogenomskinlighet från kombinationslistan (<guimenuitem
+>100 %</guimenuitem
+> är för ogenomskinliga kommentarer). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Kommentarteckensnitt </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att visa dialogrutan för teckensnittsval. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Avancerade inställningar för det aktuella kommentarverktyget </para>
+					</entry>
+					<entry>
+					  <para
+>Klicka på verktygsknappen för att visa den allmänna inställningsdialogrutan för kommentaren. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>Det finns tre ytterligare funktionsknappar på den vanliga kommentarverktygsraden. </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Knapp </entry>
+					<entry
+>Beskrivning </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Lägg till den aktuella kommentaren i menyn <guilabel
+>Snabbkommentarer</guilabel
+> i huvudverktygsraden. </para>
+					  <note>
+						  <para
+>Du kan använda de vanliga genvägarna från <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> till <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> för att välja snabbkommentaråtgärderna när som helst, till och med när kommentarverktygsraden är dold. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>När det är markerat behålls det aktuella kommentarverktyget aktivt efter användning. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Dölj kommentarverktygsraden. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>Genom att hålla nere <keycap
+>Skift</keycap
+> kan du begränsa linje- och polygonvinkeln till 15° steg, och proportionen för formkommentarer (t.ex. rektangel, ellips) till 1:1. Du kan också få en verktygsradsknapp med <ulink url="help:/fundamentals/config.html#toolbars"
+>Anpassa verktygsrader...</ulink
+>. </para>
+				  <para
+>Innehållet i menyn <guilabel
+>Snabbkommentarer</guilabel
+> kan anpassas på sidan <link linkend="configannotations"
+>Kommentarer i &okular;s inställningsdialogruta</link
+>. Sidan kan visas genom att högerklicka på knappen <guilabel
+>Snabbkommentarer</guilabel
+> och välja <guimenuitem
+>Anpassa kommentarer...</guimenuitem
+> i den sammanhangsberoende menyn. </para>
+				<note>
+					<para
+>Att aktivera kommentarverktygsraden gör att du byter till bläddringsverktyget. </para>
+				</note>
+				<para
+>Du kan avsluta kommentaren när som helst genom att klicka på knappen för kommentaren som håller på att skapas, eller genom att trycka på tangenten <keycap
+>Esc</keycap
+>. </para>
+				<para
+>Den nyskapade kommentaren har författaren som du ställt in på sidan <link linkend="configannotations"
+><guilabel
+>Kommentarer</guilabel
+></link
+> i &okular;s inställningsdialogruta. Sidan <guilabel
+>Kommentarer</guilabel
+> kan också användas för att anpassa innehållet i kommentarverktygsraden. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Ta bort kommentarer</title>
+				<para
+>För att ta bort en kommentar, klicka bara på den med höger musknapp och välj <guimenuitem
+>Ta bort</guimenuitem
+> eller markera en kommentar genom att använda vänster musknapp och tryck på tangenten Delete. </para>
+				<para
+>När kommentaren tas bort kommer dess fönster att stängas om det är öppet. </para>
+				<note>
+					<para
+>Alternativet kunde inte aktiveras eftersom dokumentet tillåter inte att kommentarer tas bort. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Redigera kommentarer</title>
+				<para
+>För att redigera en kommentar, klicka på den med höger musknapp och välj <guimenuitem
+>Egenskaper</guimenuitem
+>. En dialogruta visas med allmänna kommentarinställningar (som färg och ogenomskinlighet, upphovsman, etc.) och inställningar specifika för kommentartypen. </para>
+				<screenshot>
+				<screeninfo
+>Dialogruta för kommentaregenskaper</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Dialogruta för kommentaregenskaper</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>För att flytta en kommentar, håll nere &Ctrl;-tangenten, flytta muspekaren till den och börja dra med vänster musknapp. </para>
+				<para
+>Om du klickar med vänster musknapp på en kommentar markeras den. Grepp för storleksändring visas på markeringsrektangeln. När markören hålls över ett av de åtta greppen för storleksändring ändras markörens form för att ange storleksändringsläget. Klicka på vilket annat ställe som helst i kommentaren för att flytta den. Att trycka på Esc eller klicka på ett område utanför kommentaren avbryter markeringen. </para>
+				<para
+>Storleksändring gäller bara för kommentartyperna Fritextkommentar, Skrivmaskinstext, Stämpel och Ellips.</para>
+
+				<note>
+					<para
+>Beroende på dokumentets rättigheter (typiskt för PDF-dokument), kanske vissa alternativ är inaktiverade. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Bokmärkeshantering</title>
+			<para
+>&okular; har ett mycket flexibelt bokmärkessystem. &okular; sparar positionen på sidan i bokmärket, och låter dig definiera mer än ett bokmärke per sida. </para>
+			<para
+>Du kan använda vyn <guilabel
+>Bokmärken</guilabel
+> i <guilabel
+>Sidoraden</guilabel
+>, <link linkend="menubookmarks"
+>menyn Bokmärken</link
+> eller den sammanhangsberoende menyn i dokumentvyn (klicka med höger musknapp så visas den), för att hantera bokmärken i &okular;. </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Bokmärkesvy</title>
+				<para
+>Klicka på fliken <guilabel
+>Bokmärken</guilabel
+> längst upp på <guilabel
+>Sidoraden</guilabel
+> för att öppna <guilabel
+>Bokmärken</guilabel
+>. Om <guilabel
+>Sidoraden</guilabel
+> inte visas, använd menyalternativet <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Visa sidorad</guimenuitem
+> </menuchoice
+> för att göra den synlig. </para>
+				<screenshot>
+				    <screeninfo
+>Bokmärkesvyns sammanhangsberoende meny</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Bokmärkesvyns sammanhangsberoende meny</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Kryssrutan <guilabel
+>Visa för alla dokument</guilabel
+> kan avmarkeras för att bara visa bokmärken från det nuvarande dokumentet. </para>
+				<para
+>Filterraden längst upp i <guilabel
+>Bokmärken</guilabel
+> kan användas för att filtrera innehållet i rutan med bokmärkeslistan enligt texten i rutan. </para>
+				<para
+>Listrutan gör det möjligt att visa bokmärkeslistan på ett trädliknande sätt: Varje dokument i listan kan <quote
+>expanderas</quote
+> eller <quote
+>dras ihop</quote
+> genom att klicka på ikonen <guiicon
+>&lt;</guiicon
+> eller <guiicon
+>v</guiicon
+> intill det. </para>
+				<para
+>Dokumentobjektets högerklicksmeny kan användas för att öppna dokument, byta namn på objektet eller ta bort det från listan. Kom ihåg att om ett dokument tas bort leder det till att alla bokmärken i motsvarande dokument tas bort. </para>
+				<para
+>Högerklicksmenyn för enskilda bokmärkesobjekt låter dig gå till bokmärket, byta namn på det eller ta bort det. </para>
+				<para
+>Högerklicksmenyn för objekt i innehållsförteckningen kan användas för att skapa bokmärken eller gå till nästa eller föregående bokmärke. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Kommandoradsväljare</title>
+		    <para
+>Även om &okular; oftast startas från &kde;:s programmeny, eller en skrivbordsikon, kan den också köras från kommandoraden i ett terminalfönster. Det finns ett antal användbara väljare som är tillgängliga när detta görs. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Ange en fil</title>
+			<para
+>Genom att ange sökvägen och namnet på en viss fil kan användaren låta &okular; öppna filen omedelbart vid start. Väljaren kan se ut ungefär på följande sätt: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/min-hemkatalog/dokument/mitt-dokument.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>För PDF-dokument kan namnet anges som <replaceable
+>dokumentnamn</replaceable
+>#<replaceable
+>namngivet-mål</replaceable
+> där <replaceable
+>namngivet-mål</replaceable
+> är ett visst namngivet mål inbäddat i dokumentet. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Andra kommandoradsväljare</title>
+			<para
+>Följande hjälpalternativ är tillgängliga på kommandoraden </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>nummer</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Öppnar en sida med angivet nummer i dokumentet. Också tillgänglig via <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>nummer</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Öppna dokumentet i presentationsläge.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Starta med utskriftsdialogruta.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Starta med utskriftsdialogruta och avsluta efter utskrift.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Styrning av unik instans.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Tillåter eller förhindrar att &okular;s fönster höjs efter start.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>sträng</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Försöker hitta och markera en angiven sträng i dokumentet. Fungerar bara om endast ett dokument anges som argument till kommandot <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>sträng</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Ställer in det externa redigeringskommandot. Du kan inte ställa in redigeringskommandot för en instans av &okular; som redan kör. Observera att <option
+>--unique</option
+> inte heller stöds när redigeringskommandot ställs in på kommandoraden.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Anpassa fönster till sida</title>
+			<para
+>Funktionen för att anpassa fönster till sida ändrar storlek på fönstret så att det är exakt samma storlek som sidan vid aktuell zoomfaktor. Om sidan inte får plats på hela skärmen, förstoras fönstret så att största möjliga del av sidan visas. </para>
+			<para
+>Funktionen kan kommas åt genom att använda snabbtangenten <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Menyraden</title>
+
+		<sect1 id="menufile">
+			<title
+>Menyn Arkiv</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Öppna...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Öppna</action
+> en fil som stöds eller ett &okular;-dokumentarkiv. Om det redan finns en öppnad fil kommer den att stängas. För mer information se avsnittet om att <link linkend="opening"
+>öppna filer</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guisubmenu
+>Öppna senaste</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Öppna</action
+> en fil som tidigare använts från en undermeny. Om en fil för närvarande visas kommer den att stängas. För mer information, se avsnittet om att <link linkend="opening"
+>öppna filer</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Importera Postscript som PDF...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Öppna</action
+> en &PostScript;-fil och konvertera den till PDF. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Ångra stäng flik</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Öppna</action
+> det senast stängda dokumentet igen. Åtgärden är bara aktiv om du har stängt något dokument under en flik i aktuell session. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Visa innehållande katalog</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visar</action
+> katalogen som innehåller nuvarande dokument i din favoritfilhanterare. Åtgärden är särskilt användbar i fallet då du har laddat ner en &PDF;-fil från Internet som öppnas i &okular;. Filens plats kanske inte är uppenbar eller lätt att hitta utan den här funktionen. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Spara</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Sparar</action
+> dokumentet inklusive alla ändringar (kommentarer, formulärinnehåll, etc.) under förutsättning att dokumentgränssnittet stöder att spara ändringarna. Om gränssnittet inte stöder att spara ändringarna, får användaren alternativen att antingen kasta dem eller spara dem tillsammans med dokumentet i ett &okular;-dokumentarkiv.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Spara som...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Sparar</action
+> dokumentet med ett annat namn inklusive alla ändringar (kommentarer, formulärinnehåll, etc.) under förutsättning att dokumentgränssnittet stöder att spara ändringarna. Om gränssnittet inte stöder att spara ändringarna, får användaren alternativen att antingen kasta dem eller spara dem tillsammans med dokumentet i ett &okular;-dokumentarkiv.</para>
+                                        <note>
+                                        <para
+>Observera att på grund av sättet det är implementerat, kanske inte den nya filen är en exakt bit för bit kopia av den ursprungliga filen, även om inga ändringar har gjorts i filen (t.ex. en annan SHA-1 checksumma, etc.). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Uppdatera</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ladda om</action
+> filen som för närvarande är öppen.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Skriv ut...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Skriv ut</action
+> dokumentet som för närvarande visas. Ta hänsyn till att &okular; har några särskilda alternativ för att skriva ut &PDF;, som är tillgängliga genom att klicka på knappen <guibutton
+>Alternativ 
+>
+></guibutton
+>, och därefter välja <guilabel
+>&PDF; alternativ</guilabel
+>. Använd dessa alternativ för att skriva ut kommentarer eller ställa in rastreringsläge om du har problem med att skriva ut vissa symboler eller behöver ändra skalningsmetod. </para>
+                                                <note>
+                                                    <para
+>Skalningsmetodalternativen är bara tillgängliga när alternativet <guilabel
+>Framtvinga rastrering</guilabel
+> är markerat. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Förhandsgranska utskrift...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visa en förhandsgranskning</action
+> av hur dokumentet som för närvarande visas skrivs ut med förinställda alternativ. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Retur</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Egenskaper</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visa viss grundläggande information</action
+> om dokumentet, såsom titel, författare, tillkomstdatum och information om teckensnitt som används.</para>
+						<note>
+							<para
+>Uppmärksamma informationen om att ersätta teckensnitt under fliken <guilabel
+>Teckensnitt</guilabel
+> i dialogrutan <guilabel
+>Egenskaper</guilabel
+>. Många problem med återgivning av teckensnitt kan lösas genom att installera de ersatta teckensnitt.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Inbäddade filer...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visar filer inbäddade i dokumentet</action
+>, om det finns några i det. För mer information, se avsnittet om <link linkend="embedded-files"
+>inbäddade filer</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guisubmenu
+>Exportera som</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Alternativet innehåller de exportformat som det aktuella dokumentet kan exporteras till. Det första alternativet för alla sorters dokument är alltid <guimenuitem
+>Vanlig text...</guimenuitem
+>.</para>
+						<para
+>Det andra alternativet är <guimenuitem
+>Dokumentarkiv</guimenuitem
+>, som låter dig spara dokumentet med dina kommentarer i ett arkivformat specifikt för &okular;. På så sätt är det möjligt att enkelt dela originaldokumentet och dina kommentarer med andra användare av &okular; eller arbeta tillsammans med dem.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guisubmenu
+>Dela</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Alternativet innehåller tjänsterna som kan användas för att dela det aktuella dokumentet med andra eller skicka det till olika enheter, Alternativen i undermenyn bestäms av systemet. De beror på det aktuella dokumentformatet och de installerade KPurpose-insticksprogrammen.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Avsluta</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Stäng</action
+> &okular;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Menyn Redigera</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Ångra</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ångra</action
+> det senaste redigeringskommandot av kommentarer (att skapa och ta bort kommentarer, redigera godtyckliga kommentar egenskaper, flytta om kommentarer med &Ctrl;+drag, och redigera textinnehållet i en kommentar).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Skift</keycap
+> <keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Gör om</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Gör om</action
+> det senast ångrade steget när kommentarer redigeras.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Kopiera</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kopiera</action
+> texten som för närvarande är markerad som <guibutton
+>Textmarkering</guibutton
+> till klippbordet.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Markera alla</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Markerar</action
+> all text (om dokumentet tillåter det). Det fungerar bara med <guibutton
+>Textmarkering</guibutton
+> valt.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Markera all text på aktuell sida</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Markerar</action
+> all text (om dokumentet tillåter det) på aktuell sida. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Visar sökraden längst ner i visningsområdet som låter dig <action
+>söka efter en sträng i dokumentet</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök igen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Försök att <action
+>hitta den föregående strängen igen</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök föregående</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Går till den föregående förekomsten av strängen</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Menyn Visa</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+> <guimenuitem
+>Presentation</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Aktiverar</action
+> presentationsläge. För mer information, se avsnittet om <link linkend="presentationMode"
+>presentationsläget</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+> <guimenuitem
+>Fullskärmsläge</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Aktiverar fullskärmsläge</action
+>. Observera att fullskärmsläge skiljer sig från presentationsläge eftersom det enda unika med fullskärmsläge är att det döljer fönsterdekorationerna, menyraden och verktygsraden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+> <guimenuitem
+>Zooma in</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ökar förstoringen</action
+> av dokumentvisningen.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+> <guimenuitem
+>Zooma ut</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Minskar förstoringen</action
+> av dokumentvisningen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Zooma till 100 %</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zooma dokumentbilden till verklig storlek</action
+> som föreskrivs av dokumentparametrarna.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Fyll bredd</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ändrar förstoringsgraden</action
+> för dokumentvisningen till ett värde som gör att sidornas bredd är lika med dokumentvisningens bredd.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Fyll sidan</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ändrar förstoringsgraden</action
+> för dokumentvisningen till ett värde som åtminstone gör en hel sida synlig.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Anpassa automatiskt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ändra dokumentvisningens förstoring</action
+> till ett värde som beror på storleksförhållandet mellan sidan och visningsområdet, automatiskt gör antingen sidans bredd lika med dokumentvisningens bredd (som fyll sidan), sidans höjd lika med dokumentets höjd (som fyll höjd), eller hela sidan (som fyll sidan).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Vyläge</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Undermenyn låter dig välja vyläge för sidorna. Möjliga alternativ är: <guimenuitem
+>Ensam sida</guimenuitem
+> (bara en sida per rad), <guimenuitem
+>Uppslag</guimenuitem
+> (två sidor per rad, som i en bok), <guimenuitem
+>Uppslag (centrera första sidan)</guimenuitem
+> och <guimenuitem
+>Översikt</guimenuitem
+> (antal kolumner anges av <link linkend="configure"
+>&okular;s inställningar</link
+>).</para>
+						<para
+>Du kan dessutom aktivera <guimenuitem
+>Kontinuerlig</guimenuitem
+>. I kontinuerligt läge visas alla sidorna i ett dokument, och du kan smidigt rulla igenom dem. Annars visas bara en sida (eller en rad av sidor) åt gången.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Orientering</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Undermenyn låter dig <action
+>ändra orientering</action
+> hos dokumentets sidor. </para>
+						<note>
+							<para
+>Rotationen gäller orienteringen hos alla sidor. </para>
+						</note>
+						<para
+>Du kan välja <guimenuitem
+>Ursprunglig orientering</guimenuitem
+> för att återställa dokumentets orientering, och kasta rotationer som lagts till för hand. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Beskär visning</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Den här undermenyn låter dig ta bort den vita kanten på sidor när de visas (alternativet <guimenuitem
+>Bekär marginaler</guimenuitem
+>) eller beskära vad som visas till markeringen (alternativet <guimenuitem
+>Beskär till markering</guimenuitem
+>). </para>
+						<para
+>Valet <quote
+>beskär till markering</quote
+> låter dig rita en markering på den återgivna sidan för att definiera en synlig omgivande ruta som gäller <emphasis
+>alla sidor</emphasis
+> i dokumentet. Att välja en liten omgivande beskärningsruta tvingar fram minimal storlek på dimensionen (20 % som procentandel av den totala sidstorleken). </para>
+						<para
+>Valet <quote
+>beskär marginaler</quote
+> är bestående när &okular; startas om. Valed <quote
+>beskär till markering</quote
+> glöms bort när &okular; startas om. </para>
+						<para
+>När du byter från <quote
+>beskär marginaler</quote
+> till <quote
+>beskär till markering</quote
+> i  &okular;, hoppar visningen ut från <quote
+>beskär marginaler</quote
+> för att kunna välja omgivande ruta. </para>
+						<para
+>Beskärning kan inaktiveras genom att återigen välja samma menyalternativ som aktiverar den. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Visa/Dölj formulär</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visar eller döljer</action
+> formulärfälten i dokumentet. </para>
+						<note>
+							<para
+>Menyalternativet är bara aktiverat om nuvarande dokument har formulärfält. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Menyn Gå</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Föregående sida</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visa föregående sida</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Gå</guimenu
+> <guimenuitem
+>Nästa sida</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visa nästa sida</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Gå</guimenu
+> <guimenuitem
+>Början av  dokumentet</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå till början</action
+> av dokumentet.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Gå</guimenu
+> <guimenuitem
+>Slutet av  dokumentet</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå till slutet</action
+> av dokumentet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Vänster</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Gå</guimenu
+> <guimenuitem
+>Bakåt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå tillbaka till föregående vy</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Höger</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Gå</guimenu
+> <guimenuitem
+>Framåt</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå framåt till nästa vy</action
+> i dokumentet. Det fungerar bara om du redan tidigare har gått tillbaka.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Gå</guimenu
+> <guimenuitem
+>Gå till sida...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Öppnar en dialogruta som låter dig <action
+>gå till vilken sida som helst</action
+> i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Menyn Bokmärken</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Lägg till/Ta bort bokmärke</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Lägg till eller ta bort ett bokmärke för nuvarande position</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Byt namn på bokmärke</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Byt namn på ett bokmärke för nuvarande position</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Föregående bokmärke</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå till föregående bokmärke</action
+>, eller gör ingenting om det inte finns några bokmärken innan det nuvarande.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Nästa bokmärke</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gå till nästa bokmärke</action
+>, eller gör ingenting om det inte finns några bokmärken efter det nuvarande.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Inga bokmärken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Det här är ett alternativ som alltid är inaktivt och visas bara i menyn om det aktuella dokumentet inte har några bokmärken. Annars visas en lista över alla bokmärken här. Att klicka på ett bokmärke låter dig gå direkt till motsvarande position.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Menyn Verktyg</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Bläddra</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Musen har sitt normala beteende, vänsterklick för att dra dokumentet och följa länkar, och högerklick för att lägga till bokmärken och anpassa till sidans bredd.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Zooma</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Musen fungerar som ett zoomverktyg. Att klicka med vänster musknapp och dra zoomar visningen till markerat område, att klicka med höger musknapp återställer dokumentet till föregående zoomnivå.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Områdesmarkering</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Musen fungerar som ett markeringsverktyg av rektangulära områden. Om vänster musknapp klickas och dras i det läget så ritas en markeringsruta och alternativet att kopiera markerat innehåll till klippbordet, läsa upp den markerade texten eller omvandla det markerade området till en bild och spara den i en fil.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Textmarkering</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Musen fungerar som ett textmarkeringsverktyg. Genom att klicka med vänster musknapp och dra erhålls i detta läge möjlighet att markera text i dokumentet. Klicka därefter bara med högerknappen för att kopiera nuvarande markering till klippbordet eller läsa upp den.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Tabellmarkering</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Rita en rektangel omkring tabellens text, och klicka därefter med vänster musknapp för att dela upp textblocket i rader och kolumner. Ett vänsterklick på en befintlig linje tar bort den och sammanfogar de intilliggande raderna eller kolumnerna. Klicka slutligen med höger musknapp för att kopiera tabellen till klippbordet. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Förstoringsglas</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aktiverar förstoringsglaset för muspekaren. Tryck ner och håll vänsterknappen för att aktivera det grafiska förstoringsglaset, flytta pekaren för att panorera i dokumentet. Förstoringsglaset skalar varje bildpunkt i dokumentet till 10 bildpunkter i det grafiska förstoringsglaset.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Kommentarer</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visar kommentarverktygsraden</action
+>. Kommentarverktygsraden låter dig lägga till kommentarer i dokumentet du läser. För mer information, se avsnittet om <link linkend="annotations"
+>kommentarer</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Digital signatur...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Startar arbetsflödet för att skapa en digital signatur</action
+>. Tillägg av digitala signaturer stöds för närvarande bara för PDF-filer. Se avsnittet <link linkend="adding_digital_signatures"
+>Lägga till digitala signaturer</link
+> för mer information.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Läs upp hela dokumentet</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Läs upp aktuell sida</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Sluta läsa</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Pausa eller återuppta uppläsning</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Alternativen låter dig läsa upp hela dokumentet eller bara aktuell sida och stoppa läsningen genom att använda systemets taltjänst. Tjänsten tillhandahålls av ett &Qt;-bibliotek som omger speech-dispatcher på &Linux;, och ett inbyggt talsystem på andra plattformar. Det är möjligt att välja aktuell röst via inställningssidan <link linkend="configaccessibility"
+>Handikappstöd</link
+> i &okular;.</para>
+						<para
+>Alternativen <guilabel
+>Läs upp...</guilabel
+> är bara aktiverade om en taltjänst är tillgängligt på systemet.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Menyerna Inställningar och Hjälp</title>
+			<para
+>Förutom de vanliga menyerna <guimenu
+>Inställningar</guimenu
+> och <guimenu
+>Hjälp</guimenu
+> i &kde; som beskrivs i kapitlet <ulink url="help:/fundamentals/menus.html"
+>Meny</ulink
+> i dokumentet &kde;:s grunder, har &okular; följande programspecifika menyalternativ:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Visa sidorad</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visar eller döljer sidoraden.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Visa sidrad</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Visa eller dölj sidraden</action
+> längst ner i dokumentområdet för att spara vertikal plats i &okular;s fönster. Observera att sidnummer ändå visas på standardverktygsraden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa gränssnitt...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Öppnar fönstret <link linkend="configure-backends"
+>Inställning av gränssnitt</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Anpassar &okular;s gränssnitt</title>
+	  <para
+>Du kan ställa in &okular;s gränssnitt genom att välja <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa gränssnitt...</guimenuitem
+></menuchoice
+>. För närvarande tillhandahålls bara inställningsalternativ för Epub-, &PostScript;-, FictionBook-, Text-, OpenDocument-text- och PDF-gränssnitten. </para>
+	  <screenshot>
+	    <screeninfo
+>Inställningsdialogrutan för gränssnitt</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Inställningsdialogrutan för gränssnitt</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Genom att använda inställningssidorna för EPub, Fictionbook, Mobipocket, Markdown, text och OpenDocument text kan man definiera teckensnitt att återge dokument med i motsvarande format. Knappen <guibutton
+>Välj...</guibutton
+> på dessa sidor öppnar det vanliga inställningsfönstret för teckensnitt i &kde;. Se <ulink url="help:/fundamentals/fonts.html"
+>&kde;:s grunder</ulink
+> för detaljinformation. </para>
+	  <para
+>Beskrivningen av inställningssidorna för Markdown, &PostScript;- och PDF-gränssnitten finns nedan. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Markdown-gränssnittsinställning</title>
+	    <para
+>Du kan anpassa &okular;s gränssnitt för Markdown-återgivning baserat på <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> genom att välja <guilabel
+>Markdown</guilabel
+> i listan till vänster på inställningsdialogrutan. Ett ytterligare inställningsbart alternativ är följande. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Aktivera SmartyPants-formatering</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>När markerat gör alternativet det möjligt för &okular; att behandla formatering med <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Sådan formatering kan vara problematisk i teknisk text på grund av oönskade ersättningar (t.ex. ersätter den <literal
+>(C)</literal
+> med en copyright-symbol). Alternativet är normalt markerat. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>&PostScript;-gränssnittsinställning</title>
+	    <para
+>Du kan anpassa &okular;s gränssnitt för &PostScript;-återgivning baserat på <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> genom att välja <guilabel
+>Ghostscript</guilabel
+> i listan till vänster på inställningsdialogrutan. Det enda inställningsbara alternativet är följande. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Använd plattformens teckensnitt</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Alternativet bestämmer om Ghostscript ska tillåtas använda plattformens teckensnitt. Om omarkerad tillåts bara användning av teckensnitt som är inbäddade i dokumentet. Alternativet är normalt markerat. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>PDF-gränssnittsinställning</title>
+	    <para
+>Du kan anpassa &okular;s gränssnitt för PDF-återgivning baserat på <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> genom att välja <guilabel
+>PDF</guilabel
+> i listan till vänster på inställningsdialogrutan. Det enda inställningsbara alternativet är följande. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Förtydliga tunna linjer</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Att rita linjer i &okular; implementeras i två steg: skapa klippningskonturen och fylla i denna kontur. När linjen i originaldokumentet är mindre än en bildpunkt kan denna tvåstegsimplementering orsaka problem. För dessa linjer fylls klippningskonturen med fyllnadsfärgen som beror på tjockleken hos linjedelen inne i klippningsområdet. Om delen av linjen inne i klippningsområdet blir mycket liten kan kontrasten mellan formen och bakgrundsfärgen bli för dålig för att linjen ska gå att känna igen. Rutnät av sådana linjer ser mycket osnygga ut. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Tunn linje (röd), dess klippningskontur (streckad linje) och bildpunktsgränser (svarta heldragna linjer)</entry>
+			    <entry
+>Tunn linje som visas med dålig kontrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>För att förbättra utseendet hos tunna linjer, implementerar &okular; två alternativ. </para>
+		    <para
+>Det första alternativet är <guimenuitem
+>Heldragen</guimenuitem
+>. Med detta alternativ justerar &okular; klippningskonturen och linjepositionen så att klippningskonturen och linjen är på samma bildpunktsgräns, dvs. &okular; förstorar tunna rader till en bildpunkt på utenheten. Läget liknar <guilabel
+>Enhance thin lines</guilabel
+> i <trademark class="registered"
+>Adobe</trademark
+><trademark class="registered"
+>Reader</trademark
+>. Om alternativet väljes, förstoras alltid tunna linjer. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Tunn rad med <guimenuitem
+>Heldragen</guimenuitem
+>-förbättring</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Tunn rad med <guimenuitem
+>Heldragen</guimenuitem
+>-förbättring</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Det andra alternativet är <guimenuitem
+>Form</guimenuitem
+>. Med detta alternativ justeras klippningskonturen och linjen också till bildpunktsgränser, men linjens intensitet korrigeras i enlighet med dess bredd. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Tunn rad med <guimenuitem
+>Form</guimenuitem
+>-förbättring</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Tunn rad med <guimenuitem
+>Form</guimenuitem
+>-förbättring</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Tunna rader förtydligas inte normalt (alternativet <guimenuitem
+>Nej</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>&PDF; digitala signaturcertifikat</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Sidan låter dig ange en egen certifikatdatabas att använda när digitala signaturer läggs till i &PDF;-filer. </para>
+			<para
+>Den listar också tillgängliga certifikat i den nuvarande certifikatdatabasen (om det finns några). </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Anpassa &okular;</title>
+		<sect1 id="configindex">
+			<title
+>Allmän inställning</title>
+			<para
+>Du kan ställa in &okular; genom att välja <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &okular;...</guimenuitem
+></menuchoice
+>. Inställningsdialogrutan är uppdelad i sex sidor. Det här kapitlet beskriver de tillgängliga alternativen i detalj. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Allmänt</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Handikappstöd</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Prestanda</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Presentation</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Kommentarer</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Editor</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Inställningsdialogrutan</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Inställningsdialogrutan</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Beroende på vilka gränssnitt som för närvarande är installerade, kan menyalternativet <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa gränssnitt...</guimenuitem
+></menuchoice
+> vara aktiverat. Den särskilda inställningsdialogrutan innehåller inställningar för de gränssnitt som verkligen går att ställas in. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Allmänt</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Använd jämn panorering</guilabel
+></term>
+					<listitem>
+						<para
+>Om animerade övergångar ska visas vid panorering med mushjulet eller tangentbordet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa rullningslister</guilabel
+></term>
+					<listitem>
+						<para
+>Om rullningslister ska visas i dokumentvisningen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Länka miniatyrbilder med sidan</guilabel
+></term>
+					<listitem>
+						<para
+>Om miniatyrbildsvyn alltid ska visa nuvarande sida eller inte.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa tips och informationsmeddelanden</guilabel
+></term>
+					<listitem>
+						<para
+>Om vissa informationsmeddelanden ska visas vid start, laddning av filer, etc.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Underrätta om inbäddade filer, formulär eller signaturer</guilabel
+></term>
+					<listitem>
+						<para
+>Om informationsrutor om inbäddade filer, formulär eller signaturer etc. ska visas.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa dokumenttitel i namnlisten om tillgänglig</guilabel
+></term>
+					<listitem>
+						<para
+>Om nuvarande dokuments titel ska visas i namnlisten på &okular;s fönster. Om ingen metadata hittas för titeln i dokumentet eller om det här alternativet inte är markerat, visar &okular; dokumentets filnamn. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>När dokumenttitel inte visas</guilabel
+></term>
+					<listitem>
+					  <para
+>Du kan välja ett av två alternativ, <guilabel
+>Visa bara filnamn</guilabel
+> eller <guilabel
+>Visa fullständig filsökväg</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Använd egen bakgrundsfärg</guilabel
+></term>
+					<listitem>
+                                            <para
+>Aktiverar <ulink url="help:/fundamentals/colors.html"
+>val av dokumentets bakgrundsfärg</ulink
+> (färgen omkring den visade sidan). Normal används färgen från &Qt;-verktygslådan när alternativet inte är markerat. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Öppna nya filer under flikar</guilabel
+></term>
+					<listitem>
+						<para
+>Om nya dokument ska öppnas i flikar. Flikarna är normalt inaktiverade.</para>
+						<para
+>Standardgenvägarna för att byta mellan flikar är <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Nästa flik</guilabel
+>) och <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Föregående flik</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Byt till befintlig flik om filen redan är öppen</guilabel
+></term>
+					<listitem>
+						<para
+>Om &okular; ska byta till en flik om filen redan är öppen istället för att öppna en ny flik. Alternativet är normalt aktiverat. Kan bara ändras om <guilabel
+>Öppna nya filer under flikar</guilabel
+> är aktiverat.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Lyd DRM-begränsningar</guilabel
+></term>
+					<listitem>
+						<para
+>Om &okular; ska lyda begränsningar enligt <firstterm
+>DRM</firstterm
+> (Digital Rights Management). DRM-begränsningar används för att göra det omöjligt att utföra vissa åtgärder med PDF-dokument, som att kopiera innehållet till klippbordet. Observera att i vissa versioner av &okular; är alternativet inte tillgängligt.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Laddar om dokumentet om filen har ändrats</guilabel
+></term>
+					<listitem>
+						<para
+>Om öppnade filer automatiskt ska kontrolleras efter ändringar och uppdaterade om nödvändigt.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa dialogruta för val av gränssnitt</guilabel
+></term>
+					<listitem>
+						<para
+>Om &okular; ska fråga användaren vilket gränssnitt som ska användas i fallet då fler än ett gränssnitt kan öppna nuvarande fil. Om det inte markerat använder &okular; gränssnittet med högst prioritet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Läsriktning från höger till vänster</guilabel
+></term>
+					<listitem>
+						<para
+>Om läsriktning från höger till vänster normalt ska användas för öppnade filer. Kan vara användbart för vissa <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>skriftspråk</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Öppna normalt i kontinuerligt läge</guilabel
+></term>
+					<listitem>
+						<para
+>Om kontinuerligt läge normalt ska användas. I kontinuerligt läge visas alla sidorna i ett dokument, och du kan smidigt rulla igenom dem. Annars visas bara en sida (eller en rad av sidor) åt gången. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>När bläddringsverktyget används, låt markören gå rund vid skärmkanterna</guilabel
+></term>
+					<listitem>
+						<para
+>Tillåter obegränsad rullning i hela dokumentet med <link linkend="menutools"
+>bläddringsverktyget</link
+>. Om aktiverat, går markören runt till skärmens motsatta sida när den rör vid kanterna medan dokumentet dras. Funktionen stöds bara på X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Översiktskolumner</guilabel
+></term>
+					<listitem>
+						<para
+>Alternativen representerar antal kolumner att använda i översiktsläget. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Page Up- och Page Down-överlappning</guilabel
+></term>
+					<listitem>
+						<para
+>Här kan du definiera procentandelen av det aktuella vyområdet som ska vara synligt efter att ha tryckt på tangenterna <keycap
+>Page Up</keycap
+> eller <keycap
+>Page Down</keycap
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Förvald zoomning</guilabel
+></term>
+					<listitem>
+						<para
+>Alternativet definierar förvalt zoomläge för filer som aldrig har öppnats tidigare. För de filer som har öppnats tidigare används föregående zoomläge. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Handikappstöd</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Rita ram runt länkar</guilabel
+></term>
+					<listitem>
+						<para
+>Om en ram ska ritas omkring länkar.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ändra färger</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Aktiverar</action
+> färgändringsalternativen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Färgläge</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Definierar</action
+> färgändringsläget.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Invertera färger</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverterar</action
+> färgerna i vyn, dvs. svarta saker visas som vita.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Ändra pappersfärg</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>Ändrar</action
+> pappersfärg, dvs dokumentets bakgrund.</para>
+                                                                        <para
+>Färgen kan väljas genom att använda rutan <guilabel
+>Pappersfärg</guilabel
+> nedan. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Ändra ljusa och mörka färger</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Ändrar</action
+> mörka och ljusa färger till vad du önskar. Det betyder att svart inte återges som svart utan som den valda mörka färgen, och vitt inte återges som vitt utan som den valda ljusa färgen.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Konvertera till svartvitt</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Konverterar</action
+> dokumentet till svartvitt. Du kan ställa in tröskel och kontrast. Att ställa in tröskeln till ett större värde genom att flytta den åt höger gör att ljusare grå färger används.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Invertera ljushet</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Inverterar</action
+> alla färgers ljushet. Ljusa och mörka färger byts, men färgton och färgmättnad påverkas inte. Kontrasten i bilderna är oftast sämre än för <guilabel
+>Invertera luminans (sRGB-linjär)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Invertera luminans (sRGB-linjär)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverterar</action
+> alla färgers luminans. Ljus och mörk byts, men färgton och färgmättnad påverkas inte. Kontrasten i bilderna bevaras bättre än för <guilabel
+>Invertera ljushet</guilabel
+>, men grafik och färgglad text ser ofta värre ut. Använder sRGB luminanskoefficienter, men ingen gammakorrigering.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Invertera luminans (symmetrisk)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverterar</action
+> alla färgers luminans, genom att använda luminanskoefficienter. Ljus och mörk buts, men färgton och färgmättnad påverkas inte. Mycket lik <guilabel
+>Invertera ljushet</guilabel
+>, men kontrasten är bättre i vissa fall.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Skifta färgton positivt</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Skiftar</action
+> alla färgers färgton med 120 grader. Kan mildra vissa kontrastproblem i färgglad grafik.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Skifta färgton negativt</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Skiftar</action
+> alla färgers färgton med 240 grader. Kan mildra vissa kontrastproblem i färgglad grafik.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>Du kan anpassa snabbtangenter och verktygsåtgärder för färglägen genom att använda motsvarande menyalternativ i menyn <guimenu
+>Inställningar</guimenu
+> i &okular;s huvudfönster.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Text till tal-gränssnitt</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Låter dig välja</action
+> text-till-tal (<abbrev
+>TTS</abbrev
+>) gränssnitt som ska användas av &okular;. Förvalt värde är <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Text till tal-röst</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Låter dig välja</action
+> en röst för text-till-tal gränssnittet som ska användas av &okular;. Du kan använda alla språk och röster beroende på tillgänglig talsyntes på plattformen. På &Linux; används speech-dispatcher normalt för att avgöra tillgängliga röster.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Prestanda</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Aktivera genomskinlighetseffekter</guilabel
+></term>
+					<listitem>
+						<para
+>Ritar markeringar och annan specialgrafik med genomskinliga effekter. Inaktivera alternativet för att rita dem med konturlinjer eller ogenomskinlig ifyllnadsstil och öka hastighet vid markering.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Minnesanvändning</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; kan uppnå bästa prestanda genom att finjustera minnesanvändning baserat på din dator och vad du föredrar. Ju mer minne du låter programmet använda, desto snabbare beter det sig. Normalprofilen är bra för alla system, men du kan förhindra att &okular; använder mer minne än nödvändigt genom att välja profilen Låg, eller låta det få ut så mycket som möjligt av datorn med Omfattande. Använd profilen Glupsk för att läsa in alla sidor i förväg utan risk för att systemminnet blir överfullt (bara 50% av det totala minnet eller det lediga minnet används).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Återgivningsalternativ</guilabel
+></term>
+					<listitem>
+						<para
+>Genom att använda den här gruppen alternativ kan du förbättra återgivning av text och bilder i &okular;. Resultatet beror på enheten som används för att visa dokumentet. Alternativen <guilabel
+>Aktivera kantutjämning för text</guilabel
+> och <guilabel
+>Aktivera kantutjämning för grafik</guilabel
+> kan användas för att sätta på och stänga av <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+>kantutjämning</ulink
+> för text och bilder i dokument, på motsvarande sätt är alternativet <guilabel
+>Aktivera textantydan</guilabel
+> avsett att hantera <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>textantydan</ulink
+>. Kantutjämning och antydan ändrar hur dokumenten visas, så du kanske vill finjustera dem enligt dina önskemål.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Presentation</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Gå vidare efter</guilabel
+></term>
+					<listitem>
+						<para
+>Aktiverar att automatiskt gå vidare till nästa sida efter ett givet tidsintervall.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Börja om efter sista sidan</guilabel
+></term>
+					<listitem>
+						<para
+>Vid förflyttning i presentationsläge förbi sista sidan, visas den första sidan igen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Beröringsnavigering</guilabel
+></term>
+					<listitem>
+						<para
+>Låter dig finjustera pekskärmsnavigering med tryck på presentationen med följande tre möjliga värden:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Tryck på vänster eller höger sida för att gå bakåt eller framåt</guilabel
+>: Tryck på vänster (höger) sida av skärmen gör att presentationen går till föregående (nästa) bild.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Tryck var som helst för att gå framåt</guilabel
+> (normalvärde): Tryck på skärmen gör att presentationen går till nästa bild, oberoende av var man trycker på skärmen.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Inaktiverad</guilabel
+>: Tryck på skärmen gör ingenting.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bakgrundsfärg</guilabel
+></term>
+					<listitem>
+						<para
+>Färgen som fyller den del av skärmen som inte täcks av sidan i presentationsläge.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Musmarkör</guilabel
+></term>
+					<listitem>
+						<para
+>Om musen alltid ska vara dold, alltid visas, eller döljas efter en kort stunds inaktivitet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa förloppsindikering</guilabel
+></term>
+					<listitem>
+						<para
+>Om en förloppsindikering i form av en cirkel ska visas i övre högra hörnet av presentationsskärmen varje gång du byter sida, vilken anger nuvarande sida och totalt antal sidor.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Visa översiktssida</guilabel
+></term>
+					<listitem>
+						<para
+>Om en översiktssida ska visas i början av presentationen med titel, författare och antal sidor i dokumentet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Aktivera övergångar</guilabel
+></term>
+					<listitem>
+						<para
+>Använd kryssrutan för att aktivera eller inaktivera övergångseffekter mellan sidor.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Förvald övergång</guilabel
+></term>
+					<listitem>
+						<para
+>Övergången mellan sidor om dokumentet inte anger en. Ställ in den till <guilabel
+>Slumpmässig övergång</guilabel
+> för att låta &okular; slumpmässigt välja en av de tillgängliga effekterna.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Placering</guilabel
+></term>
+					<listitem>
+						<para
+>På den här sidan kan du välja <guilabel
+>Skärm</guilabel
+> som används för att visa presentationen.</para>
+						<para
+><guilabel
+>Aktuell skärm</guilabel
+> är samma skärm som &okular;s fönster som startar presentationsläget.</para>
+						<para
+><guilabel
+>Standardskärm</guilabel
+> är skärmen som är markerad som standard i Xinerama-inställningen.</para>
+						<para
+><guilabel
+>Skärm 0</guilabel
+>, <guilabel
+>Skärm 1</guilabel
+>, etc. är de tillgängliga skärmarna.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Inställning av ritverktyg</guilabel
+></term>
+					<listitem>
+						<para
+>Hantera färger för pennan som används för att rita på sidorna i presentationsläge.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Kommentarer</title>
+			<screenshot>
+				<screeninfo
+>Kommentarsidan i inställningsdialogrutan</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Kommentarsidan i inställningsdialogrutan</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Kommentarverktygsrad</guilabel
+></term>
+					<listitem>
+                                            <para
+>Gör det möjligt att byta mellan <guimenuitem
+>Fullständig kommentarverktygsrad</guimenuitem
+> (<link linkend="annotations-add"
+>förvald verktygsrad</link
+> i den övre delen av &okular;s fönster) och <guimenuitem
+>Snabbkommentarverktygsrad</guimenuitem
+> (glidande verktygsrad med dina favoritverktyg på höger sida i dokumentrutan).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Författare</guilabel
+></term>
+					<listitem>
+						<para
+>Författaren till innehåll tillagt i ett dokument. Normalt är det namnet från sidan <guilabel
+>Lösenord och användarkonton</guilabel
+>, i systeminställningarnas modul <guilabel
+>Kontoinformation</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kommentarverktyg</guilabel
+></term>
+					<listitem>
+					  <para
+>Rutan används för att ställa in <link linkend="annotations-add"
+>kommentarverktygsraden</link
+>. </para>
+					  <para
+>Det finns fem knappar (<guibutton
+>Lägg till</guibutton
+>, <guibutton
+>Redigera</guibutton
+>, <guibutton
+>Ta bort</guibutton
+>, <guibutton
+>Flytta upp</guibutton
+>, <guibutton
+>Flytta ner</guibutton
+>) och en listruta (som visar innehållet i den nuvarande kommentarverktygsraden), som används för att anpassa verktygsraden. </para>
+					  <para
+>Om du behöver lägga till någon verktygsknapp i verktygsraden, klicka på knappen <guibutton
+>Lägg till</guibutton
+>. Du kan välja <guilabel
+>Namn</guilabel
+>, <guilabel
+>Typ</guilabel
+> och <guilabel
+>Utseende</guilabel
+> på verktyget som skapas. </para>
+					  <note>
+					    <para
+>Kom ihåg att kommentarverktygen i &okular; är väldigt anpassningsbara. Du kan exempelvis ha två knappar för samma verktyg men med olika färger. Tveka inte att experimentera för att välja just den uppsättning knappar som är exakt skräddarsytt för ditt arbetsflöde. </para>
+					  </note>
+					  <para
+>Klicka på något objekt i listrutan och klicka därefter på motsvarande knapp till höger på sidan för att redigera, ta bort, flytta upp eller flytta ner objektet. Verktygets snabbtangent (tangenterna från <keycap
+>1</keycap
+> till <keycap
+>9</keycap
+>) beror på dess position i listan med kommentarverktyg. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Använda egna stämplar</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Skapa ikonen som du vill använda för din egen stämpel och spara den med något grafikformat som stöds av &okular;</para
+></listitem>
+					<listitem
+><para
+>Klicka på knappen <guibutton
+>Lägg till</guibutton
+>, välj typen <guilabel
+>Stämpel</guilabel
+> och skriv in ett namn på stämpeln.</para
+></listitem>
+					<listitem
+><para
+>Skriv in fullständig sökväg till din egna ikon i kombinationsrutan under rubriken <guilabel
+>Stämpelsymbol</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Editor</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Editor</guilabel
+></term>
+					<listitem>
+						<para
+>Välj editor du vill starta när &okular; vill öppna en källfil. Det är fallet när dokumentet har referenser till de olika ställen (oftast rad- och kolumnnummer) i källan det skapades från. &DVI;-formatet har inbyggt stöd för information om källan i &latex;-dokumentet det skapades från. Ett liknande system finns för &PDF;-dokument, som kallas <acronym
+>pdfsync</acronym
+>, som lagrar extrainformationen i en extern fil som namnges efter själva &PDF;-filen (till exempel <filename
+>mitt_dokument.pdfsync</filename
+> för <filename
+>mitt_dokument.pdf</filename
+>). </para>
+						<para
+>&okular; levereras med förinställningar för följande editorer: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>&Emacs;-klient</ulink
+>, <ulink url="https://www.lyx.org/"
+>LyX-klient</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> och <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>För att använda omvänd sökning i &kile; måste &latex;-filen kompileras med <guilabel
+>Modern</guilabel
+> konfiguration. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kommando</guilabel
+></term>
+					<listitem>
+						<para
+>Det här är kommandot och dess parametrar för att starta vald editor med källfilen för aktuellt dokument.</para>
+						<para
+>Fältet fylls i automatiskt om en av de förinställda editorerna används. Välj annars <guimenuitem
+>Egen texteditor</guimenuitem
+> i kombinationsrutan <guilabel
+>Editor</guilabel
+> och titta i dokumentationen för din favoriteditor för att hitta det riktiga kommandot. </para>
+						<para
+>Följande platsmarkörer kan användas:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - filnamnet</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - raden i filen som ska visas</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - kolumnen i filen som ska visas</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Om %f inte anges, läggs dokumentnamnet till sist i det angivna kommandot.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Tack till och licens</title>
+
+		<itemizedlist>
+			<title
+>Program Copyright:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Nuvarande underhåll</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+>Utvecklare av &kpdf;</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Dokumentation Copyright:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Författare</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> Vissa uppdateringar och tillägg</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

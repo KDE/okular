@@ -1,0 +1,65 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2009, 2013.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2014-06-19 18:21+0200\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marta Rybczyńska, Łukasz Wojniłowicz"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-i18n@rybczynska.net, lukasz.wojnilowicz@gmail.com"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Błąd podczas otwierania dokumentu Mobipocket."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr ""
+"Ta książka jest chroniona mechanizmem DRM i może być wyświetlana tylko na "
+"wyznaczonym urządzeniu"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket"
+msgstr "Mobipocket"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket Backend Configuration"
+msgstr "Ustawienia silnika Mobipocket"
+
+#~ msgid "Mobipocket Backend"
+#~ msgstr "Obsługa Mobipocket"
+
+#~ msgid "A mobipocket backend"
+#~ msgstr "Obsługa mobipocket"
+
+#~ msgid "© 2008-2009 Jakub Stachowski"
+#~ msgstr "© 2008-2009 Jakub Stachowski"
+
+#~ msgid "Jakub Stachowski"
+#~ msgstr "Jakub Stachowski"

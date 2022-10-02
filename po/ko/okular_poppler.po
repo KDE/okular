@@ -1,0 +1,338 @@
+# translation of okular_poppler.po to Korean
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdegraphics package.
+# Shinjo Park <kde@peremen.name>, 2007, 2009, 2010, 2012, 2013, 2019, 2020, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2021-11-12 01:34+0100\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 21.08.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr "얇은 선 강화:"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "아니요"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr "단색"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr "도형"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+"이 옵션을 사용하면 Okular에서 제3자 OCSP 서버에 연결하여 디지털 서명 인증서"
+"가 생성 이후 취소되었는지 확인합니다."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr "제3자 서버를 사용하여 디지털 서명 취소 확인"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr "인증서 데이터베이스"
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr "기본값:"
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr "사용자 정의:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr "사용 가능한 인증서"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr "서명 불러오기(&L)"
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "PDF 설정"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr "주석 인쇄"
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "인쇄된 문서에 주석 포함"
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"주석도 같이 인쇄합니다. 주석이 없는 원본 문서를 인쇄하려면 해제하십시오."
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "강제 래스터화"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "그림을 인쇄하기 전에 래스터화합니다"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"인쇄하기 전에 각각 페이지를 래스터화합니다. 출력 결과가 안 좋을 수도 있지만, "
+"올바르게 인쇄되지 않는 문서에 사용해 보십시오."
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "인쇄 가능한 영역으로 맞춤"
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "전체 페이지 맞춤"
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "없음, 원래 크기 인쇄"
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr "인쇄된 쪽의 크기 조절 모드"
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr "크기 조정 모드:"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF 버전 %1.%2"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "형식"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "암호화됨"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "암호화되지 않음"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "보안"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "예"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "최적화됨"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+"서명한 사람: %1\n"
+"\n"
+"날짜: %2"
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr "Poppler %1 사용"
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+"Poppler %1 사용\n"
+"\n"
+"Poppler %2(으)로 빌드됨"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "PDF 백엔드 설정"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+"문서에서 일부 오류를 발견했습니다. Okular에서 내용을 올바르게 표시하지 못할 "
+"수도 있습니다"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr "발급 대상"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr "이메일"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr "만료 날짜"
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+"Poppler 라이브러리에서 NSS를 지원하지 않도록 빌드되었습니다.\n"
+"디지털 서명을 추가할 수 없습니다"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr "다시 시작 필요함"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr "사용할 수 없음"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter Password"
+msgstr "암호 입력"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr "%1을 열려면 암호를 입력하십시오:"
+
+#~ msgid "Select rasterization to enable this!"
+#~ msgstr "이 옵션을 사용하려면 래스터화를 선택하십시오!"
+
+#~ msgid "PDF Backend"
+#~ msgstr "PDF 백엔드"
+
+#~ msgid "A PDF file renderer"
+#~ msgstr "PDF 파일 렌더러"
+
+#~ msgid "© 2005-2008 Albert Astals Cid"
+#~ msgstr "© 2005-2008 Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Saving files with /Encrypt is not supported."
+#~ msgstr "암호화된 파일 저장은 지원되지 않습니다."
+
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgid "Unknown Date"
+#~ msgstr "알 수 없는 날짜"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "알 수 없는 암호화"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "알 수 없는 최적화"
+
+#~ msgid "Please enter the password to read the document:"
+#~ msgstr "이 문서를 읽기 위한 암호를 입력하십시오:"
+
+#~ msgid "Incorrect password. Try again:"
+#~ msgstr "암호가 잘못되었습니다. 다시 시도하십시오:"

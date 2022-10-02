@@ -1,0 +1,328 @@
+# Albanian translation for kdegraphics
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdegraphics package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2010-09-11 12:44+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-22 09:50+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "Jo"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr ""
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "Opsionet PDF"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr ""
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr ""
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "Detyro sheshimin"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "Sheshoje imazhin para printimit"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"Bën që çdo faqe të kthehet në nj imazh para se të printohet. Kjo zakonisht "
+"jep rezultate me cilësi më të dobët, por duhet kur printohen dokumenta që "
+"dalin në mënyrë jo korrekte."
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr ""
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr ""
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr ""
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr ""
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr ""
+
+#: generator_pdf.cpp:930
+#, fuzzy, kde-format
+#| msgctxt "PDF v. <version>"
+#| msgid "PDF v. %1"
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF v. %1"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "Formati"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "I Kriptuar"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "Jo i Kriptuar"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "Siguria"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "Po"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "I Përmirësuar"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr ""
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, fuzzy, kde-format
+#| msgid "PDF Backend"
+msgid "PDF Backend Configuration"
+msgstr "PDF Backend"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr ""
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr ""
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr ""
+
+#: pdfsignatureutils.cpp:275
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Enter Password"
+msgstr "Fjalëkalimi i Dokumentit"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr ""
+
+#~ msgid "PDF Backend"
+#~ msgstr "PDF Backend"
+
+#~ msgid "A PDF file renderer"
+#~ msgstr "Një hapës i skedarëve PDF"
+
+#~ msgid "© 2005-2008 Albert Astals Cid"
+#~ msgstr "© 2005-2008 Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Saving files with /Encrypt is not supported."
+#~ msgstr "Ruajtja e skedarëve me /Encrypt nuk suportohet."
+
+#~ msgid "Unknown"
+#~ msgstr "I Panjohur"
+
+#~ msgid "Unknown Date"
+#~ msgstr "Datë e Panjohur"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "Kriptim i Panjohur"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "Optimizim i Panjohur"
+
+#~ msgid "Please enter the password to read the document:"
+#~ msgstr "Ju lutemi të vendosni fjalëkalimin për të lexuar dokumentin:"
+
+#~ msgid "Incorrect password. Try again:"
+#~ msgstr "Fjalëkalim i gabuar. Provoni përsëri:"

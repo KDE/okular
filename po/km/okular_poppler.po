@@ -1,0 +1,331 @@
+# translation of okular_poppler.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2010, 2012.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+# Seng Sutha, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2012-06-11 14:24+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ​អេង វណ្ណៈ, អោក ពិសិដ្ឋ​"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​evannak@khmeros.info,piseth_dv@khmeros.info"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "ទេ"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr ""
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "ជម្រើស PDF"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr "បោះបង់​ការ​ពន្យល់"
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "ដាក់​បញ្ចូល​ការពន្យល់​ក្នុង​ឯកសារ​ដែល​បានបោះពុម្ព"
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"ដាក់​បញ្ចូល​ការ​ពន្យល់​ក្នុង​​ឯកសារ​ដែលបានបោះពុម្ព ។ អ្នក​អាច​បិទ​វា ប្រសិន​បើ​អ្នក​ចង់​បោះពុម្ព​ឯកសារ​ដែល​គ្មាន​​"
+"ការ​ពន្យល់​ដើម ។"
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "បង្ខំ​ការ​បម្លែង"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "បម្លែង​ទៅជា​រូបភាព​មុន​ពេល​បោះពុម្ព"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"បង្ខំ​ការ​បម្លែង​ទំព័រ​នីមួយៗ​ទៅ​ជា​រូបភាព​មុន​ពេល​បោះពុម្ព​វា ។ វា​តាមធម្មតា​ផ្ដល់នូវ​លទ្ធផល​មិន​ល្អ ប៉ុន្តែ​មាន​"
+"ប្រយោជន៍​នៅ​ពេល​បោះពុម្ព​ឯកសារ ដែល​បង្ហាញ​ដើម្បី​បោះពុម្ព​មិន​ត្រឹមត្រូវ ។"
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr ""
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr ""
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr ""
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr ""
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr ""
+
+#: generator_pdf.cpp:930
+#, fuzzy, kde-format
+#| msgctxt "PDF v. <version>"
+#| msgid "PDF v. %1"
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF v. %1"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "ទ្រង់ទ្រាយ"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "បាន​អ៊ិនគ្រីប"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "មិន​បាន​អ៊ិនគ្រីប"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "សុវត្ថិភាព"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "បាទ/ចាស"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "បង្កើន​ប្រសិទ្ធិភាព"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr ""
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr ""
+
+#: generator_pdf.cpp:1619
+#, fuzzy, kde-format
+#| msgid "PDF Backend"
+msgid "PDF Backend Configuration"
+msgstr "ផ្នែក​ខាង​ក្រោយ​របស់ PDF"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr ""
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr ""
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr ""
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr ""
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr ""
+
+#: pdfsignatureutils.cpp:275
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Enter Password"
+msgstr "ពាក្យ​សម្ងាត់​ឯកសារ"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr ""
+
+#~ msgid "PDF Backend"
+#~ msgstr "ផ្នែក​ខាង​ក្រោយ​របស់ PDF"
+
+#~ msgid "A PDF file renderer"
+#~ msgstr "កម្មវិធី​បង្ហាញ​ឯកសារ PDF"
+
+#~ msgid "© 2005-2008 Albert Astals Cid"
+#~ msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៥-២០០៨ ដោយ Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Saving files with /Encrypt is not supported."
+#~ msgstr "ការ​​រក្សាឯកសារ​ដោយ​មាន /Encrypt ​មិនបាន​គាំទ្រ ។"
+
+#~ msgid "Unknown"
+#~ msgstr "មិន​ស្គាល់"
+
+#~ msgid "Unknown Date"
+#~ msgstr "មិន​ស្គាល់​កាលបរិច្ឆេទ"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "មិន​ស្គាល់​ការ​អ៊ិនគ្រីប"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "មិន​ស្គាល់​ការ​បង្កើន​ប្រសិទ្ធិភាព"
+
+#~ msgid "Please enter the password to read the document:"
+#~ msgstr "សូម​បញ្ចូល​ពាក្យសម្ងាត់ ដើម្បី​អាន​ឯកសារ ៖"
+
+#~ msgid "Incorrect password. Try again:"
+#~ msgstr "ពាក្យ​សម្ងាត់​មិន​ត្រឹមត្រូវ​ឡើយ ។ សូម​ព្យាយាម​ម្ដង​ទៀត ៖"

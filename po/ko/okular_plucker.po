@@ -1,0 +1,45 @@
+# Translation of okular_plucker.po to Korean.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdegraphics package.
+#
+# Shinjo Park <kde@peremen.name>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_plucker\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-06-05 09:08+0900\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#: generator_plucker.cpp:73
+#, kde-format
+msgid "Name"
+msgstr "이름"
+
+#~ msgid "Plucker Document Backend"
+#~ msgstr "Plucker 문서 백엔드"
+
+#~ msgid "A renderer for Plucker eBooks"
+#~ msgstr "Plucker 전자책 렌더러"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

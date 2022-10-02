@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Russian "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Руководство пользователя Okular</title>
+<author
+><firstname
+>Юрий</firstname
+><surname
+>Чорноиван</surname
+> <contrib
+>Страница руководства UNIX для Okular</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>19 февраля 2022 г.</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>универсальное средство просмотра документов</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>параметры Okular</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Описание</title>
+<para
+><command
+>okular</command
+> предназначен для показа документов различных форматов.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Ключи Okular</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>номер_страницы</replaceable
+></option
+></term>
+<listitem>
+<para
+>Открыть указанную страницу документа.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Открыть документ в режиме презентации.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Запустить с открытым диалогом печати.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Сразу открыть диалог печати и выйти из приложения после печати.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Контроль запуска уникального экземпляра приложения.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Позволяет предотвращать вывод Okular на передний план сразу после запуска.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>строка</replaceable
+></option
+></term>
+<listitem>
+<para
+>Запустить поиск заданной строки.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>строка</replaceable
+></option
+></term>
+<listitem>
+<para
+>Указывает команду внешнего редактора. Команду редактора нельзя указать в уже запущенном экземпляре Okular. Обратите внимание, что опция <option
+>--unique</option
+> не поддерживается при указании команды редактора в командной строке.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Параметры</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>URL</option
+></term>
+<listitem>
+<para
+>Адрес URL документа, который будет открыт. Для документов PDF, можно указывать адрес в следующем виде: <replaceable
+>имя_документа</replaceable
+>#<replaceable
+>ссылка</replaceable
+>, где <replaceable
+>ссылка</replaceable
+> &mdash; это именованная метка, встроенная в документ.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Обратная связь</title>
+<para
+>Оставить отзыв можно с помощью IRC: irc.libera.chat #okular, либо по электронной почте: okular-devel@kde.org, либо на веб-сайте: &lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Смотрите также</title>
+<simplelist>
+<member
+>Более подробная документация доступна по адресу <ulink url="help:/okular"
+>help:/okular</ulink
+> (введите данный адрес <acronym
+>URL</acronym
+> в адресную строку &konqueror; или выполните команду <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Дополнительная информация находится на веб-сайте <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>.</member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Авторские права</title>
+<para
+>&copy; Wilco Greven, Christophe Devriese, 2002</para>
+<para
+>&copy; Enrico Ros, 2004-2005</para>
+<para
+>&copy; Piotr Szymanski, 2005</para>
+<para
+>&copy; Albert Astals Cid, 2004-2012</para>
+<para
+>&copy; Pino Toscano, 2006-2009</para>
+<para
+>Лицензия: GNU General Public License, версия 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

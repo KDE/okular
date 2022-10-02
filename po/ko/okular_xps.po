@@ -1,0 +1,57 @@
+# Translation of okular_xps.po to Korean
+# Copyright (C) 2007 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdegraphics package.
+#
+# Shinjo Park <kde@peremen.name>, 2007, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_xps\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2009-01-05 23:20+0900\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#: generator_xps.cpp:1947
+#, kde-format
+msgid "Revision"
+msgstr "리비전"
+
+#~ msgid "XPS Backend"
+#~ msgstr "XPS 백엔드"
+
+#~ msgid "An XPS backend"
+#~ msgstr "XPS 백엔드"
+
+#~ msgid ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+#~ msgstr ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ " © 2008 Pino Toscano"
+
+#~ msgid "Brad Hards"
+#~ msgstr "Brad Hards"
+
+#~ msgid "Jiri Klement"
+#~ msgstr "Jiri Klement"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"

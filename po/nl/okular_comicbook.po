@@ -1,0 +1,61 @@
+# translation of okular_comicbook.po to Dutch
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Rinse de Vries <rinsedevries@kde.nl>, 2008.
+# Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2018-11-08 10:35+0100\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Rinse de Vries - 2008,Freek de Kruijf"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "rinsedevries@kde.nl,freekdekruijf@kde.nl"
+
+#: document.cpp:96
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr "Kan het document niet openen, unrar en unarchiver zijn niet gevonden."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"De versie van unrar op uw systeem is niet geschikt voor het openen van "
+"comicbooks."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "Onbekend ComicBook-formaat."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "ComicBook-backend"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "Een viewer voor diverse ComicBook-formaten"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

@@ -1,0 +1,99 @@
+# translation of okular_fictionbook.po to esperanto
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
+# Axel Rousseau <axel@esperanto-jeunes.org>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2010-01-03 10:58+0100\n"
+"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Pierre-Marie Pédrot"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "pedrotpmx@wanadoo.fr"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "La dokumento ne estas valida FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Ne eblas malfermi la dokumenton: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "La dokumento ne estas valida ZIP arkivo"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Nevalida dokumenta strukturo (ĉefa dosierujo mankas)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Enhavo ne troviĝis en la dokumento"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Nevalida XML dokumento: %1"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook"
+msgstr "FictionBook interno"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook Backend Configuration"
+msgstr "FictionBook interno"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "FictionBook interno"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Rigardilo por FictionBook e-libroj"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Creator"
+#~ msgstr "Kreinto"
+
+#~ msgid "Title"
+#~ msgstr "Titolo"
+
+#~ msgid "Author"
+#~ msgstr "Aŭtoro"
+
+#~ msgid "Producer"
+#~ msgstr "Produktisto"
+
+#~ msgid "Created"
+#~ msgstr "Kreita"

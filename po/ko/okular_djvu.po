@@ -1,0 +1,135 @@
+# Translation of okular_djvu.po to Korean.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the kdegraphics package.
+#
+# Shinjo Park <kde@peremen.name>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-10-17 13:13+0900\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "편집자"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "출판자"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "권"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "문서 종류"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr "구성 요소 파일"
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "단일 페이지"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "꾸러미"
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "간접적"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "꾸러미 (구형)"
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "색인된 (구형)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "DjVu 백엔드"
+
+#~ msgid "DjVu backend based on DjVuLibre."
+#~ msgstr "DjVuLibre 기반 DjVu 백엔드."
+
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006-2008 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"

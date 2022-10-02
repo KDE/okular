@@ -1,0 +1,341 @@
+# translation of okular_poppler.po to Arabic
+# translation of okular_poppler.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+# hayig2000 <hayig2000@gmail.com>, 2008.
+# zayed <zayed.alsaidi@gmail.com>, 2008, 2012, 2021.
+# Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_poppler\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-07 00:43+0000\n"
+"PO-Revision-Date: 2021-11-16 20:56+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "الفليجزايد السعيدي"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zayed.alsaidi@gmail.com"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:19
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr "حَسِّن الخطوط الرفيعة"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:932
+#, kde-format
+msgid "No"
+msgstr "لا"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:35
+#, kde-format
+msgid "Solid"
+msgstr "صلب"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:40
+#, kde-format
+msgid "Shape"
+msgstr "الشكل"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:63
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+"سيسمح تمكين هذا الخيار لأوكلار بالاتصال بخوادم OCSP التابعة لجهات خارجية "
+"للتحقق مما إذا كانت الشهادات المستخدمة للتوقيع الرقمي قد تم إبطالها منذ "
+"إنشائها."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:66
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr "تحقق من إبطال شهادات التوقيعات الرقمية باستخدام خوادم خارجية"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:73
+#, kde-format
+msgid "Certificate Database"
+msgstr "قاعدة الشهادات"
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:82
+#, kde-format
+msgid "Default:"
+msgstr "المبدئيّ:"
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:89
+#, kde-format
+msgid "Custom:"
+msgstr "مخصص:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:106
+#, kde-format
+msgid "Available Certificates"
+msgstr "الشّهادات المتوفرة"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:114
+#, kde-format
+msgid "&Load Signatures"
+msgstr "&حمّل التوقيعات"
+
+#: generator_pdf.cpp:86
+#, kde-format
+msgid "PDF Options"
+msgstr "خيارات بي دي اف"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "Print annotations"
+msgstr "اطبع الحواشي"
+
+#: generator_pdf.cpp:89
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "ضَمِّن الحواشي في المستند المطبوع"
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"ضمِّن الحواشي في المستند المطبوع. عطِّل هذا الخيار إذا كنت تريد طباعة المستند "
+"الأصلي غير ذي الحواشي."
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid "Force rasterization"
+msgstr "أجبر التحويل"
+
+#: generator_pdf.cpp:93
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "حول إلى صورة قبل الطباعة"
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"أجبر تحويل كل صفحة إلى صورة قبل الطباعة. هذا عادة يعطى نتائج أسوا ولكنه مفيد "
+"فى طباعة الملفات التى تطبع بشكل خاطئ."
+
+#: generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "لائم المنطقة المطبوعة"
+
+#: generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "لائم إلى كامل الصفحة"
+
+#: generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "بلا، اطبع الحجم الأصلي"
+
+#: generator_pdf.cpp:104
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr "وضع التحجيم للصفحات المطبوعة"
+
+#: generator_pdf.cpp:105
+#, kde-format
+msgid "Scale mode:"
+msgstr "وضع الحجم:"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF v. %1.%2"
+
+#: generator_pdf.cpp:930
+#, kde-format
+msgid "Format"
+msgstr "التنسيق"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Encrypted"
+msgstr "مشفّرة"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Unencrypted"
+msgstr "غير مشفّرة"
+
+#: generator_pdf.cpp:931
+#, kde-format
+msgid "Security"
+msgstr "الأمن"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Yes"
+msgstr "نعم"
+
+#: generator_pdf.cpp:932
+#, kde-format
+msgid "Optimized"
+msgstr "محسّن"
+
+#: generator_pdf.cpp:1364
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+"وقع بواسطة: %1\n"
+"\n"
+"التاريخ: %2"
+
+#: generator_pdf.cpp:1570
+#, kde-format
+msgid "Using Poppler %1"
+msgstr "يستخدم Poppler %1"
+
+#: generator_pdf.cpp:1572
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+"يستخدم Poppler %1\n"
+"\n"
+"بني على Poppler %2"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF"
+msgstr "بي دي اف"
+
+#: generator_pdf.cpp:1619
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "ضبط خلفية بي دي اف"
+
+#: generator_pdf.cpp:2078
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+"عثر على بعض الأخطاء في المستند ، قد لا تتمكن اوكلار من إظهار المحتوى بشكل "
+"صحيح"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr "أصدر لـ"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgid "E-mail"
+msgstr "البريد الإلكتروني"
+
+#: pdfsettingswidget.cpp:44
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr "تاريخ الانتهاء"
+
+#: pdfsettingswidget.cpp:61
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+"أنت تستخدم مكتبة Poppler تم إنشاؤها بدون دعم NSS. \n"
+"لا تتوفر إضافة التوقيعات الرقمية لهذا السبب"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "Restart needed"
+msgstr "يلزم إعادة التشغيل"
+
+#: pdfsettingswidget.cpp:107
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr "تحتاج إلى إعادة تشغيل أوكلار بعد تغيير إعدادات دليل NSS"
+
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#, kde-format
+msgid "Not Available"
+msgstr "غير متوفّر"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter Password"
+msgstr "أدخل كلمة السر"
+
+#: pdfsignatureutils.cpp:275
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr "يرجي إدخال كلمة السر لفتح %1:"
+
+#~ msgid "PDF Backend"
+#~ msgstr "خلفية PDF"
+
+#~ msgid "A PDF file renderer"
+#~ msgstr "مصير (محول) لملفات PDF"
+
+#~ msgid "© 2005-2008 Albert Astals Cid"
+#~ msgstr "© 2005-2008 Albert Astals Cid"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Saving files with /Encrypt is not supported."
+#~ msgstr "حفظ الملفات بالتشفير غير مدعوم."
+
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgid "Unknown Date"
+#~ msgstr "التاريخ مجهول"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "التشفير مجهول"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "التحسين مجهول"
+
+#~ msgid "Please enter the password to read the document:"
+#~ msgstr "رجاء أدخل كلمة السر لقراءة المستند:"
+
+#~ msgid "Incorrect password. Try again:"
+#~ msgstr "كلمة السر خاطئة حاول مرة آخرى"

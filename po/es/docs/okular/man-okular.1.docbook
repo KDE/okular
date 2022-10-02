@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Spanish "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Manual del usuario de Okular</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Página man de Okular.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2022-02-19</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>un visor universal de documentos</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>opciones de Okular</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Descripción</title>
+<para
+><command
+>okular</command
+> está pensado para mostrar documentos de diferentes formatos.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Opciones de Okular</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>número</replaceable
+></option
+></term>
+<listitem>
+<para
+>Abre la página indicada del documento.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Inicia el documento en el modo de presentación.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Iniciar con el diálogo de impresión.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Iniciar con el diálogo de impresión y salir tras imprimir.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Controla una única ejecución.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Hace que Okular impida que su ventana pase al primer plano tras el inicio.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>texto</replaceable
+></option
+></term>
+<listitem>
+<para
+>Buscar una cadena en el texto.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>texto</replaceable
+></option
+></term>
+<listitem>
+<para
+>Define la orden del editor externo. No se puede definir la orden del editor externo en una instancia de Okular que ya esté en ejecución. Tenga en cuenta que no se puede usar <option
+>--unique</option
+> al definir la orden del editor externo en la línea de órdenes.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Argumentos</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>URL</option
+></term>
+<listitem>
+<para
+>La dirección del documento a abrir. Para PDF se puede indicar como <replaceable
+>nombre_del_documento</replaceable
+>#<replaceable
+>destino</replaceable
+>, donde <replaceable
+>destino</replaceable
+> es un determinado nombre de destino dentro del documento.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Sugerencias y comentarios</title>
+<para
+>En IRC (irc.libera.chat #okular), por correo electrónico (okular-devel@kde.org) o en la Web (&lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;).</para>
+</refsect1>
+
+<refsect1>
+<title
+>Vea también</title>
+<simplelist>
+<member
+>Dispone de documentación de usuario más detallada en <ulink url="help:/okular"
+>help:/okular</ulink
+> (introduzca esa <acronym
+>URL</acronym
+> en &konqueror; o ejecute <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Dispone de más información en <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Copyright</title>
+<para
+>Copyright &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Copyright &copy; 2004-2005 Enrico Ros</para>
+<para
+>Copyright &copy; 2005 Piotr Szymanski</para>
+<para
+>Copyright &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Copyright &copy; 2006-2009 Pino Toscano</para>
+<para
+>Licencia: Pública General de GNU Versión 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

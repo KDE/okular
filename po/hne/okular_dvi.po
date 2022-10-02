@@ -1,0 +1,623 @@
+# translation of okular_dvi.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+# Ravishankar Shrivastava <raviratlami@aol.in>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_dvi\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"PO-Revision-Date: 2009-02-26 15:55+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
+"Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
+"Language: hne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: dviexport.cpp:123
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+"computer. This program is essential for the export function to work. You "
+"can, however, convert the DVI-file to PDF using the print function of "
+"Okular, but that will often produce documents which print okay, but are of "
+"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
+"more recent version of your TeX distribution which includes the <em>dvipdfm</"
+"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
+"the PATH environment variable when looking for programs.</p></qt>"
+msgstr ""
+
+#: dviexport.cpp:142
+#, kde-format
+msgid ""
+"<qt>The external program 'dvipdfm', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+
+#: dviexport.cpp:168
+#, kde-format
+msgid ""
+"<qt>This DVI file refers to external graphic files which are not in "
+"PostScript format, and cannot be handled by the <em>dvips</em> program that "
+"Okular uses internally to print or to export to PostScript. The "
+"functionality that you require is therefore unavailable in this version of "
+"Okular.</qt>"
+msgstr ""
+
+#: dviexport.cpp:176
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+"That program is essential for the export function to work.</p><p>Hint to the "
+"perplexed system administrator: Okular uses the PATH environment variable "
+"when looking for programs.</p></qt>"
+msgstr ""
+
+#: dviexport.cpp:270
+#, kde-format
+msgid ""
+"<qt>The external program 'dvips', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+
+#: dviFile.cpp:91
+#, kde-format
+msgid "The DVI file does not start with the preamble."
+msgstr "डीवीआई फाइल प्रीएम्बल के साथ चालू नइ होय."
+
+#: dviFile.cpp:97
+#, kde-format
+msgid ""
+"The DVI file contains the wrong version of DVI output for this program. "
+"Hint: If you use the typesetting system Omega, you have to use a special "
+"program, such as oxdvi."
+msgstr ""
+
+#: dviFile.cpp:134
+#, kde-format
+msgid ""
+"The DVI file is badly corrupted. Okular was not able to find the postamble."
+msgstr "डीवीआई फाइल बहुत जादा खराब हे. ओकुलर ल पोस्टेम्बल नइ मिलिस."
+
+#: dviFile.cpp:148
+#, kde-format
+msgid "The postamble does not begin with the POST command."
+msgstr "पोस्टेम्बल - पोस्ट कमांड के साथ चालू नइ होय."
+
+#: dviFile.cpp:202
+#, kde-format
+msgid "The postamble contained a command other than FNTDEF."
+msgstr "पोस्टएम्बल मं कमांड FNTDEF के बदला मा अउ कमांड हे."
+
+#: dviFile.cpp:240
+#, kde-format
+msgid "The page %1 does not start with the BOP command."
+msgstr "पेज %1 बीओपी कमांड के साथ चालू नइ होथे ."
+
+#: dviFile.cpp:351
+#, kde-format
+msgid ""
+"<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
+"a result, the PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The program <strong>pdf2ps</strong> may not be installed on your "
+"system, or cannot be found in the current search path.</p><p><b>What you can "
+"do:</b> The program <strong>pdf2ps</strong> is normally contained in "
+"distributions of the ghostscript PostScript interpreter system. If "
+"ghostscript is not installed on your system, you could install it now. If "
+"you are sure that ghostscript is installed, try to use <strong>pdf2ps</"
+"strong> from the command line to check if it really works.</p><p><em>PATH:</"
+"em> %2</p></qt>"
+msgstr ""
+
+#: dviFile.cpp:410
+#, kde-format
+msgid ""
+"<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+"This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
+"p><p><strong>%2</strong></p></qt>"
+msgstr ""
+
+#: dviRenderer.cpp:203 dviRenderer.cpp:435
+#, fuzzy, kde-format
+#| msgid ""
+#| "File not found: \n"
+#| " %1"
+msgid "File corruption. %1"
+msgstr ""
+"फाइल नइ मिलिसः\n"
+"%1"
+
+#: dviRenderer.cpp:326
+#, kde-format
+msgid "Not all PostScript files could be embedded into your document. %1"
+msgstr ""
+
+#: dviRenderer.cpp:329
+#, kde-format
+msgid "All external PostScript files were embedded into your document."
+msgstr ""
+
+#: dviRenderer.cpp:419
+#, fuzzy, kde-format
+#| msgid "The special command '%1' is not implemented."
+msgid "The specified file '%1' does not exist."
+msgstr "विसेस कमांड '%1' लागू नइ हे."
+
+#: dviRenderer.cpp:565
+#, kde-format
+msgid ""
+"You have asked Okular to locate the place in the DVI file which corresponds "
+"to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
+"contain the necessary source file information. "
+msgstr ""
+
+#: dviRenderer.cpp:604
+#, kde-format
+msgid ""
+"Okular was not able to locate the place in the DVI file which corresponds to "
+"line %1 in the TeX-file %2."
+msgstr ""
+
+#: dviRenderer_draw.cpp:243
+#, kde-format
+msgid "The DVI code set a character of an unknown font."
+msgstr "अग्यात फोंट के डीवीआई कोड सेट अक्छर."
+
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#, kde-format
+msgid "The DVI code referred to font #%1, which was not previously defined."
+msgstr ""
+
+#: dviRenderer_draw.cpp:353
+#, kde-format
+msgid "The stack was not empty when the EOP command was encountered."
+msgstr "जब ईओपी कमांड से सामना होइस, स्टैक खाली नइ था."
+
+#: dviRenderer_draw.cpp:365
+#, kde-format
+msgid "The stack was empty when a POP command was encountered."
+msgstr "जब पीओपी कमांड से सामना होइस, स्टैक खाली था."
+
+#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#, kde-format
+msgid "The DVI code referred to a font which was not previously defined."
+msgstr "डीवीआई कोड मं फोंट संदर्भ हे जऊन कि पहिली से परिभासित नइ हे."
+
+#: dviRenderer_draw.cpp:539
+#, kde-format
+msgid "An illegal command was encountered."
+msgstr "एक अवैध कमांड से सामना होइस."
+
+#: dviRenderer_draw.cpp:544
+#, kde-format
+msgid "The unknown op-code %1 was encountered."
+msgstr "अग्यात ओप-कोड %1 से सामना होइस."
+
+#: dviRenderer_prescan.cpp:87
+#, kde-format
+msgid "Embedding %1"
+msgstr "सन्निहित करत हे %1"
+
+#: dviRenderer_prescan.cpp:105
+#, kde-format
+msgid ""
+"Page %1: The PDF file <strong>%2</strong> could not be converted to "
+"PostScript.<br>"
+msgstr ""
+"पेज %1: पीडीएफ फाइल <strong>%2</strong> ल पोस्टस्क्रिप्ट मं परिवर्ति नइ करे जा सके."
+"<br>"
+
+#: dviRenderer_prescan.cpp:107
+#, kde-format
+msgid ""
+"Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
+msgstr "पेज %1: पोस्टस्क्रिप्ट फाइल <strong>%2</strong> नइ मिलिस.<br>"
+
+#: dviRenderer_prescan.cpp:261
+#, kde-format
+msgid "The papersize data '%1' could not be parsed."
+msgstr "पेपरसाइज डाटा '%1' पार नइ कर सकिस."
+
+#: fontpool.cpp:209
+#, kde-format
+msgid ""
+"<qt><p>Okular was not able to locate all the font files which are necessary "
+"to display the current DVI file. Your document might be unreadable.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+
+#: fontpool.cpp:284
+#, kde-format
+msgid ""
+"<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
+"font files could not be located, and your document might be unreadable.<br/"
+">Possible reason: the <em>kpsewhich</em> program is perhaps not installed on "
+"your system, or it cannot be found in the current search path.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+
+#: fontpool.cpp:305
+#, kde-format
+msgid ""
+"<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
+"error %2). As a result, some font files could not be located, and your "
+"document might be unreadable.</qt>"
+msgstr ""
+
+#: fontpool.cpp:481
+#, fuzzy, kde-format
+#| msgid "Currently generating %1 at %2 dpi"
+msgid "Currently generating %1 at %2 dpi..."
+msgstr "अभी हाल के मं बनात हे %1 ल %2 डीपीआई पर"
+
+#: generator_dvi.cpp:293
+#, kde-format
+msgid "Generator/Date"
+msgstr "जेनरेटर/तारीक"
+
+#: generator_dvi.cpp:382
+#, kde-format
+msgid "Font file not found"
+msgstr "फोंट फाइल नइ मिलिस"
+
+#: pageSize.cpp:318
+#, kde-format
+msgid "portrait"
+msgstr "खड़ा"
+
+#: pageSize.cpp:320
+#, kde-format
+msgid "landscape"
+msgstr "आड़ा"
+
+#: psgs.cpp:284
+#, kde-format
+msgid ""
+"The version of Ghostview that is installed on this computer does not contain "
+"any of the Ghostview device drivers that are known to Okular. PostScript "
+"support has therefore been turned off in Okular."
+msgstr ""
+
+#: special.cpp:36
+#, kde-format
+msgid "That makes 25 errors. Further error messages will not be printed."
+msgstr "एला मिला के 25 गलती होइस. अब आगू के गलती संदेस मन ल छापे नइ जाही."
+
+#: special.cpp:232
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Color pop command issued when the color "
+"stack is empty."
+msgstr ""
+
+#: special.cpp:318
+#, kde-format
+msgid ""
+"Malformed parameter in the epsf special command.\n"
+"Expected a float to follow %1 in %2"
+msgstr ""
+
+#: special.cpp:446
+#, kde-format
+msgid ""
+"File not found: \n"
+" %1"
+msgstr ""
+"फाइल नइ मिलिसः\n"
+"%1"
+
+#: special.cpp:695
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
+"special."
+msgstr ""
+
+#: special.cpp:714
+#, kde-format
+msgid "The special command '%1' is not implemented."
+msgstr "विसेस कमांड '%1' लागू नइ हे."
+
+#: TeXFont_PFB.cpp:43
+#, kde-format
+msgid ""
+"The font file %1 could be opened and read, but its font format is "
+"unsupported."
+msgstr ""
+
+#: TeXFont_PFB.cpp:48
+#, kde-format
+msgid "The font file %1 is broken, or it could not be opened or read."
+msgstr "फोंट फाइल %1 टूटा हे, या एला  खोलेया पढ़िस नइ जा सके."
+
+#: TeXFont_PFB.cpp:170
+#, kde-format
+msgid ""
+"FreeType reported an error when setting the character size for font file %1."
+msgstr "फोंट फाइल %1 बर अक्छर आकार सेट करे के दौरा फ्रीटाइप ह एक गलती के रिपोट दीस."
+
+#: TeXFont_PFB.cpp:188
+#, kde-format
+msgid "FreeType is unable to load glyph #%1 from font file %2."
+msgstr "फ्रीटाइप ग्लिफ #%1 ल फोंट फाइल %2 से लोड करे मं अक्छम हे."
+
+#: TeXFont_PFB.cpp:201
+#, kde-format
+msgid "FreeType is unable to render glyph #%1 from font file %2."
+msgstr "फ्रीटाइप ग्लिफ #%1 ल फोंट फाइल %2 से रेंडर करे मं अक्छम हे."
+
+#: TeXFont_PFB.cpp:215
+#, kde-format
+msgid "Glyph #%1 is empty."
+msgstr "Glyph #%1 खाली हे"
+
+#: TeXFont_PFB.cpp:217
+#, kde-format
+msgid "Glyph #%1 from font file %2 is empty."
+msgstr "ग्लिफ #%1 फोंट फाइल %2 मं खाली हे."
+
+#: TeXFont_PFB.cpp:282
+#, kde-format
+msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
+msgstr "फोंट फाइल %2 से ग्लिफ #%1 ल लोड करे मं फ्रीटाइप फेल रहा."
+
+#: TeXFont_PK.cpp:69
+#, kde-format
+msgid "Cannot open font file %1."
+msgstr "फोंट फाइल %1 खोल नइ सकिस."
+
+#: TeXFont_PK.cpp:116
+#, kde-format
+msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
+msgstr "TexFont_PK::operator[]: अक्छर %1 फोंट %2 मं परिभासित नइ हे"
+
+#: TeXFont_PK.cpp:418
+#, kde-format
+msgid "Unexpected %1 in PK file %2"
+msgstr "अप्रत्यासित %1 पीके फाइल %2 में"
+
+#: TeXFont_PK.cpp:484
+#, kde-format
+msgid "The character %1 is too large in file %2"
+msgstr "अक्छर %1 फाइल %2 मं बहुत बड़ा हे"
+
+#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#, kde-format
+msgid "Wrong number of bits stored:  char. %1, font %2"
+msgstr "भंडारित करे बिट्स के गलत संख्या:  अक्छर. %1, फोंट %2"
+
+#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#, kde-format
+msgid "Bad pk file (%1), too many bits"
+msgstr "खराब पीके फाइल (%1), बहुत अकन बिट्स"
+
+#: TeXFont_PK.cpp:713
+#, kde-format
+msgid "Font has non-square aspect ratio "
+msgstr "फोंट मं नान-स्कवेयर आस्पेक्ट रेसो हे"
+
+#: TeXFontDefinition.cpp:106
+#, kde-format
+msgid "Cannot find font %1, file %2."
+msgstr "फोंट फाइल %1 खोज नइ सकिस %2."
+
+#: TeXFontDefinition.cpp:123
+#, kde-format
+msgid "Checksum mismatch for font file %1"
+msgstr "फोंट फाइल %1 बर चेकसम मिसमैच"
+
+#: TeXFontDefinition.cpp:174
+#, kde-format
+msgid "Cannot recognize format for font file %1"
+msgstr "फाइल %1 बर फोंट फाइल प्रारूप नइ पहिचान सकिस"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"Fatal error.\n"
+"\n"
+msgstr ""
+"गंभीर गलती.\n"
+"\n"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"\n"
+"\n"
+"This probably means that either you found a bug in Okular,\n"
+"or that the DVI file, or auxiliary files (such as font files, \n"
+"or virtual font files) were really badly broken.\n"
+"Okular will abort after this message. If you believe that you \n"
+"found a bug, or that Okular should behave better in this situation\n"
+"please report the problem."
+msgstr ""
+
+#: vf.cpp:164
+#, kde-format
+msgid "Wrong command byte found in VF macro list: %1"
+msgstr "वीएफ मेक्रो सूची : %1 मं गलत कमांड बाइट मिलिस"
+
+#, fuzzy
+#~| msgid "DVI File Error"
+#~ msgid "A DVI file renderer"
+#~ msgstr "डीवीआई फाइल गलती"
+
+#~ msgid "Okular is currently generating bitmap fonts..."
+#~ msgstr "ओकुलर अभी हाल मं बिटमैप फोंट तैयार करत हे..."
+
+#~ msgid "Aborts the font generation. Do not do this."
+#~ msgstr "फोंट तैयार करना छोड़व. एला नइ बनाव."
+
+#~ msgid "Okular is generating fonts. Please wait."
+#~ msgstr "किरपा करके, रुकव... ओकुलर फोंट तैयार करत हे."
+
+#~ msgid "Font Generation Progress Dialog"
+#~ msgstr "फोंट जनरेसन प्रगति गोठ"
+
+#~ msgid "Abort"
+#~ msgstr "छोड़व"
+
+#~ msgid "What is happening here?"
+#~ msgstr "इहां का चलत हे?"
+
+#~ msgid "%v of %m"
+#~ msgstr "%m के %v "
+
+#~ msgid "Please be patient"
+#~ msgstr "किरपा करके, धैर्य रखव"
+
+#~ msgid "*.pdf|Portable Document Format (*.pdf)"
+#~ msgstr "*.pdf|पोर्टेबल कागद फार्मेट (*.pdf)"
+
+#~ msgid "Export File As"
+#~ msgstr "फाइल अइसन निर्यात करव"
+
+#~ msgid ""
+#~ "The file %1\n"
+#~ "exists. Do you want to overwrite it?"
+#~ msgstr ""
+#~ "फाइल %1 \n"
+#~ "पहिली से ही मौजूद हे. का आप मन एखर ऊपर लिखना चाहथो ?"
+
+#~ msgid "Overwrite File"
+#~ msgstr "फाइल के ऊपर लिखव"
+
+#~ msgid "Overwrite"
+#~ msgstr "मेटाय के लिखव"
+
+#~ msgid "Using dvipdfm to export the file to PDF"
+#~ msgstr "फाइल ल पीडीएफ मं निर्यात करे बर डीवीआईपीडीएफएम उपयोग करत हे"
+
+#~ msgid "Waiting for dvipdfm to finish..."
+#~ msgstr "डीवीआईपीडीएफएम पूरा होए के इंतजार में..."
+
+#~ msgid "*.ps|PostScript (*.ps)"
+#~ msgstr "*.ps|पोस्टस्क्रिप्ट (*.ps)"
+
+#~ msgid "Using dvips to export the file to PostScript"
+#~ msgstr "फाइल ल पोस्टस्र्किप्ट मं निर्यात करे बर डीवीआईपीएस उपयोग करत हे"
+
+#~ msgid "Waiting for dvips to finish..."
+#~ msgstr "डीवीआईपीएस पूरा होए के इंतजार में..."
+
+#~ msgid "Functionality Unavailable"
+#~ msgstr "फंक्सनलिटी नइ मिलत"
+
+#~ msgid "DVI File Error"
+#~ msgstr "डीवीआई फाइल गलती"
+
+#~ msgid "Not All Font Files Found"
+#~ msgstr "सब्बो फोंट फाइल नइ मिलिस"
+
+#~ msgid "Locating fonts..."
+#~ msgstr "फोंट लोकेट करत हे..."
+
+#~ msgid "Problem locating fonts"
+#~ msgstr "फोंट खोजे मं समस्या"
+
+#~ msgid "Font generation aborted"
+#~ msgstr "फोंट बनाना छोड़िस"
+
+#~ msgid "Export: %1 to PDF"
+#~ msgstr "%1 ल पीडीएफ मं निर्यात करव"
+
+#~ msgid "Export: %1 to PostScript"
+#~ msgstr "%1 ल पोस्टस्क्रिप्ट मं निर्यात करव"
+
+#~ msgid "The fontlist is currently empty."
+#~ msgstr "फोंटलिस्ट अभी हाल मं खाली हे."
+
+#~ msgid "TeX Name"
+#~ msgstr "टीईएक्स नाम"
+
+#~ msgid "Family"
+#~ msgstr "कुटुंब"
+
+#~ msgid "Zoom"
+#~ msgstr "जूम"
+
+#~ msgid "Type"
+#~ msgstr "किसिम"
+
+#~ msgid "Encoding"
+#~ msgstr "एनकोडिंग"
+
+#~ msgid "Comment"
+#~ msgstr "टिप्पनी"
+
+#~ msgid "TeX virtual"
+#~ msgstr "TeX काल्पनिक"
+
+#~ msgid "TeX Font Metric"
+#~ msgstr "TeX फोंट मीट्रिक"
+
+#~ msgid "FreeType"
+#~ msgstr "फ्री-टाइप"
+
+#~ msgid "Could not allocate memory for a font structure"
+#~ msgstr "फोंट ढांचा बर मेमोरी आबंटित नइ करे जा सके"
+
+#~ msgid "Not enough memory to load the DVI-file."
+#~ msgstr "DVI फाइल ल लोड करे बर बहुत मेमोरी नइ हे"
+
+#~ msgid "Could not load the DVI-file."
+#~ msgstr "DVI फाइल लोड नइ कर सकिस."
+
+#~ msgid "Checksum mismatch"
+#~ msgstr "चेकसम मिसमैच"
+
+#~ msgid " in font file "
+#~ msgstr "फोंट फाइल में"
+
+#~ msgid "Could not allocate memory for a macro table."
+#~ msgstr "मेक्रो टेबल बर मेमोरी आवंटित नइ करे जा सके."
+
+#~ msgid "Virtual character "
+#~ msgstr "आभासी कैरेक्टर"
+
+#~ msgid " in font "
+#~ msgstr "फोंट में"
+
+#~ msgid " ignored."
+#~ msgstr "उपेक्छित."
+
+#~ msgid "Fatal Error"
+#~ msgstr "गंभीर गलती"
+
+#~ msgid "KDVI: Information"
+#~ msgstr "केडीवीआईः जानकारी"
+
+#~ msgid "Do not show this message again"
+#~ msgstr "ये संदेस फिर से  नइ देखाव"
+
+#~ msgid "Explain in more detail..."
+#~ msgstr "अधिक विवरन के साथ स्पस्ट करव... "
+
+#~ msgid "File Error"
+#~ msgstr "फाइल गलती"
+
+#~ msgid "Could Not Find Reference"
+#~ msgstr "सन्दर्भ नइ मिलिस"

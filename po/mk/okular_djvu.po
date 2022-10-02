@@ -1,0 +1,154 @@
+# translation of okular_djvu.po to Macedonian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Bozidar Proevski <bobibobi@freemail.com.mk>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2007-12-02 22:32+0100\n"
+"Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
+"Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
+"Language: mk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=3; plural=n%10==1 ? 0 : n%10==2 ? 1 : "
+"2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Божидар Проевски"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bobibobi@freemail.com.mk"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "Уредувач"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "Објавувач"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "Гласност"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "Тип документ"
+
+#: generator_djvu.cpp:141
+#, fuzzy, kde-format
+#| msgid "Unknown"
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "Непознато"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr ""
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "Непознато"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "Единечна страница"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr ""
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "Индиректен"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr ""
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "Индексиран (старо)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "Заден крај за DjVu"
+
+#, fuzzy
+#~| msgid "© 2006-2007 Pino Toscano"
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006-2007 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#, fuzzy
+#~| msgid "Unknown"
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "Непознато"
+
+#~ msgid "A DjVu backend"
+#~ msgstr "Заден крај за DjVu"

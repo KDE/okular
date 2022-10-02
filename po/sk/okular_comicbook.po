@@ -1,0 +1,58 @@
+# translation of okular_comicbook.po to Slovak
+# Michal Sulek <misurel@gmail.com>, 2009.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2019-03-26 08:57+0100\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.03.80\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Michal Šulek"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "misulre@gmail.com"
+
+#: document.cpp:96
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr ""
+"Nie je možné otvoriť dokument, nebol nájdený program unrar ani unarchiver."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"Verzia programu unrar vo vašom systéme nie je vhodná na otváranie kníh "
+"komiksov."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "Neznámy formát knihy komiksov."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "Backend pre knihy komiksov"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "Vykresľovanie rôznych formátov kníh komiksov"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

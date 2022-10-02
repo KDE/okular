@@ -1,0 +1,3533 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&okular;">
+  <!ENTITY latex "L<superscript
+>A</superscript
+>T<subscript
+>E</subscript
+>X">
+  <!ENTITY package "kdegraphics">
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY PDF "<acronym
+>PDF</acronym
+>">
+  <!ENTITY % Polish "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about navigation panel
+Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
+Use Small Icons and deselect Show Text to minimize the navigation panel
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Podręcznik &okular-dopelniacz;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Marcin</firstname
+><surname
+>Kocur</surname
+><affiliation
+><address
+><email
+>marcin2006@gmail.com</email
+></address
+></affiliation
+><contrib
+>Polskie tłumaczenie</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Łukasz</firstname
+><surname
+>Wojniłowicz</surname
+><affiliation
+><address
+><email
+>lukasz.wojnilowicz@gmail.pl</email
+></address
+></affiliation
+><contrib
+>Uaktualnienie i poprawki polskiego tłumaczenia</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2014-02-25</date>
+		<releaseinfo
+>0.19 (&kde; 4.13)</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; jest wszechstronną przeglądarką dokumentów dla &kde;, opartą na kodzie &kpdf;.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>przypis</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Wprowadzenie</title>
+		<para
+>&okular; jest wszechstronną przeglądarką dokumentów dla &kde;, opartą na kodzie &kpdf;. Pomimo tego, &okular; zapewnia dodatkowe możliwości, jak np. tryb przeglądania, lepszą obsługę prezentacji oraz obsługę przypisów. </para>
+		<para
+>&okular; obsługuje wiele różnych formatów takich jak &PDF;, &PostScript;, Tiff, CHM, DjVU, Obrazy (png, jpg, &etc;) XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub oraz Fax. Aby zobaczyć wszystkie obsługiwane formaty i ich możliwości, zajrzyj do <ulink url="http://okular.kde.org/formats.php"
+> &okular; Obsługiwane formaty dokumentów</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Główne okno &okular-biernik;</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Główne okno &okular-biernik;</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Podstawowa obsługa</title>
+		<sect1 id="opening">
+			<title
+>Otwieranie plików</title>
+			<para
+>Aby obejrzeć dowolny obsługiwany przez &okular-biernik; plik, wybierz <menuchoice
+><guimenu
+>Plik</guimenu
+><guimenuitem
+>Otwórz...</guimenuitem
+> </menuchoice
+>, w oknie dialogowym wybierz obsługiwany plik i naciśnij <guibutton
+>Otwórz</guibutton
+>. Plik powinien zostać wyświetlony w głównym oknie. </para>
+			<important>
+			  <para
+>Jeśli zaznaczono <guilabel
+>Otwieraj nowe pliki w kartach</guilabel
+> na <link linkend="configgeneral"
+>Stronie ustawień ogólnych</link
+>, to nowy dokument zostanie otworzony w nowej karcie. </para>
+			</important>
+			<para
+>Jeśli otwierano już jakieś pliki w &okular-miejscownik;, to można do nich szybko powrócić poprzez menu <menuchoice
+><guimenu
+>Plik</guimenu
+><guisubmenu
+>Otwórz poprzedni</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>&okular; jest domyślną aplikacją &kde; dla plików &PDF; oraz &PostScript;, uruchamianą w chwili naciśnięcia lewym przyciskiem myszy na takim pliku w oknie zarządzania plikami. Aby otworzyć dowolny obsługiwany przez  &okular-biernik; format użyj <menuchoice
+><guimenu
+>Otwórz z...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> z menu podręcznego w oknie zarządzania plikami. </para>
+			<para
+>Po otwarciu pliku prawdopodobnie zechcesz go przeczytać, co pociąga za sobą konieczność poruszania się po nim. Przejdź do <link linkend="navigating"
+>kolejnego działu</link
+>, aby dowiedzieć się więcej. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Sterowanie</title>
+			<para
+>Ten dział opisuje jak poruszać się po dokumencie w &okular-miejscownik;.</para>
+			<para
+>Istnieje wiele sposobów przeglądania obszaru widoku. Można przewijać dokument w górę i w dół przy pomocy klawiszy <keycap
+>Strzałka w górę</keycap
+> i <keycap
+>Strzałka w dół</keycap
+>. Można także użyć paska przewijania, rolki myszy lub klawiszy <keycap
+>Page Up</keycap
+> i <keycap
+>Page Down</keycap
+>. </para>
+			<para
+>Można także używać klawiszy sterowania podobnie jak w <application
+>vim</application
+>, tzn.<keycap
+>H</keycap
+>, aby przemieścić się na górę poprzedniej strony, <keycap
+>L</keycap
+>, aby przemieścić się na górę następnej strony, <keycap
+>J</keycap
+>, aby przemieścić się jeden wiersz w dół oraz <keycap
+>K</keycap
+> aby przemieścić się jeden wiersz w górę. </para>
+			<para
+>Kolejny sposób to przytrzymanie lewego przycisku myszy w dowolnym miejscu dokumentu i przeciągnięcie myszy w kierunku przeciwnym do tego, w który chcesz się przesunąć. Ten sposób działa tylko wtedy, gdy jesteś w trybie przeglądania dokumentu. Można go włączyć za pomocą menu <menuchoice
+><guimenu
+>Narzędzia</guimenu
+><guimenuitem
+>Narzędzie przeglądania </guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>Przy przeglądaniu dokumentu w <link linkend="presentationMode"
+>Trybie prezentacji</link
+> użyj klawiszy <keysym
+>Strzałka w górę</keysym
+> oraz <keysym
+>Strzałka w dół</keysym
+>, aby przełączać pomiędzy stronami lub planszami. Liczba i położenie bieżącej planszy zostanie pokazane na nakładce w prawym górnym narożniku ekranu. </para>
+			</note>
+			<para
+>Aby odczytać dokument z kilkoma stronami, użyj możliwości samoczynnego przewijania w &okular-miejscownik;. Rozpocznij samoczynne przewijanie poprzez <keycombo action="simul"
+>&Shift;<keysym
+>Strzałka w dół</keysym
+></keycombo
+> lub <keycombo action="simul"
+>&Shift;<keysym
+>Strzałka w górę</keysym
+></keycombo
+>. Następnie użyj tych klawiszy do zwiększenia lub zmniejszenia szybkości przewijania. Można tymczasowo zatrzymać lub wznowić samoczynne przewijanie poprzez naciśnięcie klawisza &Shift;; naciśnięcie dowolnego innego klawisza przerywa tę możliwość. </para>
+			<para
+>Innym sposobem na poruszanie się po dokumencie z wieloma stronami jest użycie wskaźnika myszy. Przeciągnij stronę w górę lub w dół, kontynuuj przeciąganie także po osiągnięciu dołu lub góry ekranu i wytrwaj w takim działaniu. W chwili przekroczenia granicy strony, wskaźnik myszy pojawi się ponownie na górze lub dole ekranu i będzie można kontynuować przeciąganie. </para>
+			<para
+>Panel sterowania, znajdujący się po lewej stronie okna udostępnia dwa kolejne sposoby przemieszczania się po dokumencie: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Naciśnięcie na miniaturę strony, spowoduje przejście do tej strony. </para>
+				</listitem>
+				<listitem>
+					<para
+>Gdy dokument posiada spis treści, to po naciśnięciu na jeden z jego wpisówspowoduje przejście do przypisanej mu strony. </para>
+				</listitem>
+				<listitem>
+					<para
+>Gdy dokument ma zakładki, włącz widok <guilabel
+>Zakładki</guilabel
+> i naciśnij na nie, aby przejść do przypisanej strony. Jeśli zakładki są pokazywane nie tylko dla bieżącego dokumentu, to można szybko przełączyć się do zakładek we wszystkich ostatnio otwartych plikach. </para>
+				</listitem>
+				<listitem>
+					<para
+>Gdy dokument ma przypisy, włącz widok <guilabel
+>Recenzje</guilabel
+> i naciśnij na przypisy lub wybierz je przy użyciu klawiszy <keysym
+>Strzałka w górę</keysym
+> oraz <keysym
+>Strzałka w dół</keysym
+> oraz naciśnij klawisz <keycap
+>Return</keycap
+>, aby przejść do przypisanej strony. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Niektóre dokumenty posiadają łącza. W takim przypadku można na nie naciskać, aby wyświetlić stronę, na którą łącze wskazuje. Jeśli łącze prowadzi do strony sieciowej lub innego dokumentu, zostanie otworzony domyślny program &kde; dla tego rodzaju. Na przykład naciśnięcie na łącze kierujące do strony <quote
+>http://www.kde.org</quote
+> spowoduje otwarcie tej strony internetowej w domyślnej przeglądarce sieciowej &kde;. </para>
+			<important>
+			  <para
+>Wewnętrzne odsyłacze dokumentu działają tylko, gdy używane jest <link linkend="menutools"
+>Narzędzie przeglądania</link
+>. </para>
+			</important>
+			<para
+>Dodatkowo, można wykorzystać poniższe możliwości do przemieszczania się do wybranych miejsc w dokumencie: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Można przejść na początek dokumentu przy użyciu <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> lub użycie <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Początek dokumentu</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przejść na koniec dokumentu przy użyciu <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> lub użycie <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Koniec dokumentu</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przejść do dalszej części dokumentu przy użyciu klawisza <keycap
+>Spacji</keycap
+> lub <keycap
+>Page Down</keycap
+>. Aby przejść do następnej strony, użyj ikony <guibutton
+>Przejdź do kolejnej strony</guibutton
+> z paska narzędzi lub polecenia <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Następna strona</guimenuitem
+></menuchoice
+> z paska menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przejść do wcześniejszej części dokumentu przy użyciu klawisza &Backspace; lub <keycap
+>Page Up</keycap
+>. Aby przejść do poprzedniej strony, użyj ikony <guibutton
+>Przejdź do poprzedniej strony</guibutton
+> z paska narzędzi lub polecenia <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Poprzednia strona</guimenuitem
+></menuchoice
+> z paska menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przechodzić wstecz do położeń w dokumencie, z których się przyszło w kolejności chronologicznej. Rozważ np. czytanie wyrażenia <quote
+>Jak pokazano w [15], …</quote
+> i że chcesz szybko podejrzeć źródło literaturowe [15]. Tak wiec naciskasz na nie, a &okular; przejdzie do wykazu literatury. Używając klawiszy <keycombo
+>&Alt;&Shift;<keysym
+>Strzałka w lewo</keysym
+></keycombo
+> lub <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Wstecz</guimenuitem
+> </menuchoice
+> na pasku menu cofniesz się wstecz do poprzedniego położenia. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przejść naprzód w dokumencie po przejściu wstecz, jak to opisano powyżej, przy użyciu <keycombo
+>&Alt;&Shift;<keysym
+>Strzałka w prawo</keysym
+></keycombo
+> lub <menuchoice
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Naprzód</guimenuitem
+> </menuchoice
+> na pasku menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Można przejść do następnego pasującego wyrażenia przy przeszukiwaniu przy użyciu klawiszy <keycap
+>F3</keycap
+> lub &Enter; (gdy uaktywnione jest pole tekstowe <guilabel
+>Znajdź</guilabel
+>) lub wpisu menu <menuchoice
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Znajdź następne</guimenuitem
+> </menuchoice
+> lub przejść do poprzedniego pasującego wyrażenia przy użyciu klawisza <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+> lub <keycombo
+>&Shift;&Enter;</keycombo
+> (gdy uaktywnione jest pole tekstowe <guilabel
+>Znajdź</guilabel
+>) lub wpisu menu <menuchoice
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Znajdź poprzednie</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Tryb prezentacji</title>
+			<para
+>Tryb prezentacji to kolejny sposób na przeglądanie dokumentów &okular-narzednik;. Można go włączyć poprzez <menuchoice
+><guimenu
+>Widok</guimenu
+><guimenuitem
+>Prezentacja</guimenuitem
+></menuchoice
+>. W tym trybie dokument jest wyświetlany strona po stronie. Strony dopasowane są do ekranu, co oznacza, że całość strony jest widoczna. </para>
+			<note>
+				<para
+>Dokumenty &PDF; mogą mieć nawet określony tryb prezentacji jako domyślny sposób otwarcia. </para>
+			</note>
+			<para
+>W trybie prezentacji, dostępny jest pasek pomocniczy, znajdujący się na górze ekranu. Aby go wyświetlić, przesuń wskaźnik myszy w górę. </para>
+			<screenshot>
+			<screeninfo
+>&okular; w trybie prezentacji</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; w trybie prezentacji</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Aby przemieszczać się między stronami można użyć lewego przycisku myszy (następna strona) lub prawego przycisku myszy (poprzednia strona), kółka myszy, przycisków strzałek, pola edycji numeru strony lub przycisków wymienionych w dziale <link linkend="navigating"
+>Sterowanie</link
+>. </para>
+			<para
+>Użyj przycisków <guilabel
+>Odtwórz/Wstrzymaj</guilabel
+> na górnym pasku, aby odpowiednio zacząć lub wstrzymać odtwarzanie prezentacji. </para>
+			<para
+>Można wyłączyć tryb prezentacji w każdej chwili naciskając na klawisz &Esc; lub naciskając na przycisk <guiicon
+>Zakończ</guiicon
+> na górnym panelu. </para>
+			<para
+>Można też rysować na wyświetlonej stronie ołówkiem. Naciśnij na przycisk <guilabel
+>Przełącz tryb rysowania</guilabel
+>, znajdującym się na górnym panelu, aby włączyć lub wyłączyć możliwość rysowania w trybie prezentacji. Zmiany poczynione w ten sposób zostaną samoczynnie wyczyszczone po wyjściu z trybu prezentacji. Można także nacisnąć na ikonę <guilabel
+>Wymaż rysunki</guilabel
+>, aby usunąć rysunki na bieżącej stronie. </para>
+			<para
+>Tryb prezentacji może obsłużyć więcej niż jeden ekran, jeśli posiadasz wiele monitorów. W takim przypadku, na górnym panelu pojawi się ikona wyświetlacza: jest to menu rozwijalne, które umożliwia przesunięcie prezentacji na każdy dostępny ekran. </para>
+			<para
+>Tryb prezentacji zawiera kilka możliwości ustawień, ich opis można znaleźć w dziale <link linkend="configpresentation"
+>Ustawianie &okular-dopelniacz;</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Wyszukiwanie zwrotne pomiędzy edytorami &latex; i &okular-narzednik;</title>
+
+		<para
+>Wyszukiwanie zwrotne jest bardzo użyteczną możliwością przy pisaniu dokumentu &latex;. Jeśli wszystko ustawiono poprawnie, można nacisnąć na okno &okular-dopelniacz; <mousebutton
+>lewym</mousebutton
+> przyciskiem myszy, przy naciśniętym klawiszu &Shift;. Po tym edytor wczytuje plik źródłowy &latex; i przechodzi do właściwego akapitu.</para>
+
+		<para
+>Wyszukiwanie zwrotne zadziała jeśli:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Plik źródłowy zostanie pomyślnie skompilowany.</para
+></listitem>
+			<listitem
+><para
+>&okular; będzie wiedział jakiego edytora chcesz użyć.</para
+></listitem>
+			<listitem
+><para
+>Narzędzie przeglądania będzie uruchomione, co można zrobić poprzez <menuchoice
+><guimenu
+>Narzędzia</guimenu
+><guimenuitem
+>Narzędzie przeglądania</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Dzięki tej możliwości &okular-dopelniacz;, naciśnięcie lewym przyciskiem myszy przy naciśniętym klawiszu &Shift; w dokumencie &DVI; lub &PDF; spowoduje otwarcie odpowiedniego dokumentu &latex; i próbę przejścia do odpowiedniego wiersza. Pamiętaj, aby powiadomić &okular-biernik; o użyciu odpowiedniego edytora poprzez menu &okular-dopelniacz; <menuchoice
+><guimenu
+>Ustawienia</guimenu
+><guimenuitem
+>Ustawienia Okulara...</guimenuitem
+></menuchoice
+> (na stronie  <guimenuitem
+>Edytor</guimenuitem
+>).</para>
+
+		<para
+>Po więcej szczegółów nt ustawiania edytora, zajrzyj do <link linkend="configeditor"
+>odpowiedniego działu w tym podręczniku</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Ustawienia &okular-dopelniacz;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Ustawienia edytora w &okular-miejscownik;</phrase>
+			</textobject>
+			<caption
+><para
+>Ustawienia edytora w &okular-miejscownik;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Zaawansowane możliwości &okular-dopelniacz;</title>
+		<sect1 id="embedded-files">
+			<title
+>Pliki osadzone</title>
+			<para
+>Jeśli dokument posiada w sobie zagnieżdżone pliki, przy jego otwarciu powyżej widoku strony pojawi się żółty pasek, powiadamiający o osadzonych plikach. </para>
+			<screenshot>
+				<screeninfo
+>Pasek plików osadzonych</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Pasek plików osadzonych</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>W tym przypadku można nacisnąć na odnośnik w tekście na pasku lub wybrać polecenie <menuchoice
+><guimenu
+>Plik</guimenu
+><guimenuitem
+>Pliki osadzone</guimenuitem
+></menuchoice
+>, aby otworzyć okno plików osadzonych. Okno to umożliwi przejrzenie osadzonych plików i ich wyodrębnienie. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formularze</title>
+			<para
+>Po otwarciu dokumentu zawierającego formularz, na górze widoku strony ukaże się pasek, który umożliwi edycję tego formularza. </para>
+			<screenshot>
+				<screeninfo
+>Pasek formularzy</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Pasek formularzy</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>W tym przypadku, można nacisnąć albo na <guilabel
+>Pokaż formularz</guilabel
+> na pasku albo wybrać <menuchoice
+><guimenu
+>Widok</guimenu
+><guimenuitem
+>Pokaż formularz</guimenuitem
+></menuchoice
+>, aby wprowadzić dane do pól formularza. </para>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Przypisy</title>
+			<para
+>&okular-mianownik; umożliwia przeglądanie i tworzenie przypisów w dokumentach. Przypisy utworzone przez &okular-biernik; przechowywane są wewnętrznie w katalogu danych lokalnych użytkownika. &okular-mianownik; nigdy nie zapisuje w dokumentach, które otwiera. </para>
+			<screenshot>
+			<screeninfo
+>Przypisy &okular-biernik;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Przypisy &okular-biernik;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>&okular; ma dwa różne rodzaj przypisów:</para>
+			<para
+>Przypisy tekstowe takie jak <guilabel
+>Podświetlenie na żółto</guilabel
+> oraz  <guilabel
+>Podkreślenie na czarno</guilabel
+> dla plików z tekstem takich jak np. &PDF;.</para>
+		      <para
+>Graficzne przypisy takie jak <guilabel
+>Żółta karteczka</guilabel
+>, <guilabel
+>Notatka w treści</guilabel
+>, <guilabel
+>Odręczna linia</guilabel
+>, <guilabel
+>Podświetlenie</guilabel
+>, <guilabel
+>Prosta linia</guilabel
+>, <guilabel
+>Wielokąt</guilabel
+>, <guilabel
+>Znaczek</guilabel
+>, <guilabel
+>Podkreślenie</guilabel
+> oraz <guilabel
+>Elipsa</guilabel
+> dla wszystkich formatów obsługiwanych przez &okular-biernik;.</para>
+			<para
+>Użycie menu podręcznego w trybie <guilabel
+>Recenzji</guilabel
+> panelu sterowania albo w głównym oknie może otworzyć <guilabel
+>Żółtą karteczkę</guilabel
+> dla dowolnego rodzaju przypisu i dodać lub zmienić komentarze.</para>
+			<para
+>Przypisy nie są tylko ograniczone do plików &PDF;, można ich używać dla każdego formatu obsługiwanego przez &okular-biernik;.</para>
+			<para
+>Od &kde; 4.2, &okular-mianownik; posiada możliwość "archiwizacji dokumentu". Jest to własny format &okular-dopelniacz; do zapisywania dokumentu i dodatkowych danych (w tej chwili są to tylko przypisy). Można zapisać "archiwum" bieżącego dokumentu z menu <menuchoice
+><guimenu
+>Plik</guimenu
+><guisubmenu
+>Eksportuj jako</guisubmenu
+><guimenuitem
+>Archiwum dokumentu</guimenuitem
+></menuchoice
+>. Aby otworzyć archiwum dokumentu &okular-dopelniacz; zwyczajnie otwórz je w &okular-miejscownik; tak jakby to był na przykład dokument &PDF;. </para>
+			<para
+>Od wydania &okular-dopelniacz; 0.15 można <emphasis
+>także</emphasis
+> zapisywać przypisy bezpośrednio do plików &PDF;. Możliwość ta jest dostępna tylko wtedy, gdy &okular; został zbudowany przy użyciu <ulink url="http://poppler.freedesktop.org/"
+>biblioteki wyświetlającej Poppler</ulink
+> w wersji 0.20 lub późniejszej. Można użyć <menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Zapisz jako...</guimenuitem
+></menuchoice
+>, aby zapisać kopię pliku &PDF; wraz z przypisami. </para>
+				<note>
+					<para
+>Nie jest możliwym zapisanie przypisów do pliku &PDF;, jeśli pierwotny plik został zaszyfrowany oraz &okular; używa bibliotek Poppler w wersji, która jest niższa od 0.22. </para>
+				</note>
+				<note>
+				  <para
+>Po otworzeniu pliku &PDF; z istniejącymi przypisami, twoje zmiany do przypisów nie są samoczynnie zapisywane w wewnętrznym, lokalnym katalogu danych i musisz zapisać zmieniony dokument (przy użyciu <menuchoice
+><guimenu
+>Plik</guimenu
+><guimenuitem
+>Zapisz jako...</guimenuitem
+></menuchoice
+>) przed jego zamknięciem. W przypadku zapomnienia o tym, &okular; pokaże okno potwierdzenia, które umożliwi zapisanie dokumentu. </para>
+				</note>
+
+				<note>
+					<para
+>Z powodu ograniczeń DRM (najczęściej w dokumentach &PDF;), dodawanie, edycja niektórych właściwości lub usuwanie przypisów może nie być możliwe. </para>
+				</note>
+				<note>
+				  <para
+>Dowolne działanie na przypisach (tworzenie i usuwanie przypisów, edytowanie dowolnych właściwości przypisów, przemieszczanie przypisów przy użyciu &Ctrl;+przeciągnięcie oraz edytowanie treści tekstu przypisu) można <link linkend="edit-undo"
+>cofnąć</link
+> lub <link linkend="edit-redo"
+>ponowić</link
+> przy użyciu odpowiedniego wpisu z menu <guimenu
+>Edycja</guimenu
+>. Można także cofnąć działanie poprzez naciśnięcie <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> i ponowić cofnięte działanie poprzez naciśnięcie <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>Od wydania &okular-dopelniacz; 0.17 można ustawiać domyślne właściwości i wygląd każdego narzędzia przypisów. Zajrzyj do <link linkend="configannotations"
+>odpowiedniego rozdziału w tym podręczniku</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Dodawanie przypisów</title>
+				<para
+>Aby dodać przypis do dokumentu, włącz pasek przypisów. Można to zrobić przez wybranie polecenia <menuchoice
+><guimenu
+>Narzędzia </guimenu
+><guimenuitem
+>Recenzja</guimenuitem
+></menuchoice
+> lub naciśnięcie <keycap
+>F6</keycap
+>. Po otwarciu paska narzędziowego przypisów, naciśnij na jednym z jego przycisków lub użyj skrótów klawiszowych (klawisze od <keycap
+>1</keycap
+> do <keycap
+>9</keycap
+>), aby rozpocząć tworzenie tego przypisu. </para>
+				<para
+>Pasek przypisów pomaga przy tworzeniu przypisów dzięki rysunkom, kształtom i wiadomością tekstowym. Można użyć paska przypisów, aby oznaczyć dokument (np. dodać linie, elipsy, wielokąty, znaczki, podświetlenia, podkreślenia itp.). Tabela poniżej opisuje dokładnie co robią przyciski na domyślnym pasku przypisów. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Przycisk </entry>
+					<entry
+>Nazwa narzędzia </entry>
+					<entry
+>Opis </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Żółta karteczka </para>
+					</entry>
+					<entry>
+					  <para
+>Aby narysować wielowierszową notatkę. Notatkę można obejrzeć poprzez dwukrotne naciśnięcie na jej ikonę w dokumencie. </para>
+					  <para
+>Naciśnij na przycisk narzędzia, a następnie w dokumencie wskaż miejsce, w którym ma powstać żółta karteczka. Wprowadź jej tekst i naciśnij na przycisk <guilabel
+>Zamknij tę karteczkę</guilabel
+> w górnym prawym narożniku okna żółtej karteczki. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-inline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Notatka w treści </para>
+					</entry>
+					<entry>
+					  <para
+>Aby narysować notatkę w treści. Notatka zostanie pokazana w treści. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, następnie naciśnij lewym klawiszem myszy i przytrzymaj aby umieścić górny lewy narożnik notatki, następnie przeciągnij, aby umieścić dolny prawy narożnik. Wprowadź tekst notatki, a następnie naciśnij <guibutton
+>OK</guibutton
+>, aby zapisać notatkę, <guibutton
+>Anuluj</guibutton
+>, aby anulować wprowadzanie notatki lub <guibutton
+>Wyczyść</guibutton
+>, aby wyczyścić notatkę. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ink-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linia odręczna </para>
+					</entry>
+					<entry>
+					  <para
+>Aby narysować linię odręczną. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy i przytrzymaj, aby umieścić początek linii, następnie przeciągnij, aby narysować linię. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-highlighter-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Podświetlenie </para>
+					</entry>
+					<entry>
+					  <para
+>Aby podświetlić tekst w dokumencie danym kolorem tła. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy i przytrzymaj, aby umieścić początek podświetlenia wycinku tekstu, a następnie przeciągnij, aby go podświetlić. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-line-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linia prosta </para>
+					</entry>
+					<entry>
+					  <para
+>Aby oznaczyć przy pomocy linii </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy, aby umieścić punkt początkowy linii, następnie przeciągnij, aby umieścić punkt końcowy linii i naciśnij jeszcze raz. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-polygon-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Wielokąt </para>
+					</entry>
+					<entry>
+					  <para
+>Aby narysować zamkniętą figurę płaską z trzech lub więcej odcinków. Odpowiadającą notatkę można obejrzeć poprzez dwukrotne naciśnięcie wewnątrz wielokąta. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy, aby umieścić pierwszy wierzchołek wielokąta, następnie przeciągnij, aby umieścić drugi wierzchołek. Kontynuuj do chwili narysowania całego wielokąta, aż do pierwszego wierzchołka. Naciśnij dwukrotnie, aby dodać notatkę do wielokąta. Wpisz tekst notatki, a następnie naciśnij na <guibutton
+>OK</guibutton
+>, aby zapisać notatkę, <guibutton
+>Anuluj</guibutton
+>, aby anulować wpisywanie notatki lub  <guibutton
+>Wyczyść</guibutton
+>, aby wyczyścić notatkę. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-stamp-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Znaczek </para>
+					</entry>
+					<entry>
+					  <para
+>Aby oznaczyć tekst lub obraz danym kształtem. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy, aby umieścić znaczek. </para>
+					  <para
+>Jednokrotne naciśnięcie po prostu umieszcza kwadratowy znaczek (użyteczne dla ikon). Aby dodać prostokątny znaczek, naciśnij  lewym przyciskiem myszy i przytrzymaj go, aby umieścić lewy górny punkt, a następnie przeciągnij, aby umieścić dolny prawy punkt. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-underline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Podkreślenie </para>
+					</entry>
+					<entry>
+					  <para
+>Aby podkreślić jakiś tekst. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy i przytrzymaj, aby umieścić początek podkreślenia wycinku tekstu, a następnie przeciągnij, aby go podkreślić. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ellipse-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Elipsa </para>
+					</entry>
+					<entry>
+					  <para
+>Aby narysować elipsę wokół wybranego obszaru. </para>
+					  <para
+>Naciśnij na przycisku narzędzia, a następnie naciśnij lewym przyciskiem myszy i przytrzymaj, aby umieścić lewy górny narożnik opisanego na elipsie prostokąta, następnie przeciągnij, aby umieścić prawy dolny narożnik. </para>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>Zawartość paska przypisów można ustawić przy użyciu <link linkend="configannotations"
+>Strony przypisów okna ustawień &okular-dopelniacz;</link
+>. Tę stronę można otworzyć przy użyciu prawego przycisku myszy na pasku przypisów, a następnie wybranie <guimenuitem
+> Ustawienia przypisów...</guimenuitem
+> z menu podręcznego. </para>
+				<para
+>Poprzez jednokrotne naciśnięcie na przycisku narzędzia przypisu, narzędzie zostanie użyte jednokrotnie. Aby np. podświetlić więcej niż jedną ważną  części tekstu, włącz to narzędzie na trwałe poprzez dwukrotne naciśnięcie na przycisku narzędzia. Naciśnij klawisz <keycap
+>Esc</keycap
+> lub naciśnij ponownie na przycisku narzędzia, aby opuścić tryb trwały. </para>
+				<note>
+					<para
+>Pasek przypisów może zostać umieszczony na każdej z krawędzi pola widoku dokumentu: przeciągnij go po prostu w inne miejsce. </para>
+				</note>
+				<note>
+					<para
+>Włączenie paska przypisów spowoduje przełączenie programu w tryb przeglądania. </para>
+				</note>
+				<para
+>W każdej chwili można przerwać tworzenie notatek, wystarczy nacisnąć na przycisk, z którego skorzystano w celu jego rozpoczęcia lub nacisnąć na klawisz &Esc;. </para>
+				<para
+>Nowo utworzone przypisy będą autorstwa osoby określonej na stronie  <link linkend="configannotations"
+><guilabel
+>Przypisy</guilabel
+></link
+> w oknie dialogowym ustawień &okular-biernik;. Strony <guilabel
+>Przypisów</guilabel
+> można także użyć do ustawienia zawartości paska przypisów. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Usuwanie przypisów</title>
+				<para
+>Aby usunąć przypis z dokumentu, naciśnij na niego prawym przyciskiem myszy i wybierz <guimenuitem
+>Usuń</guimenuitem
+>. </para>
+				<para
+>Podczas usuwania przypisów okno pomocnicze jego tworzenia zostanie zamknięte, jeśli jest otwarte. </para>
+				<note>
+					<para
+>To polecenie może nie być dostępne, jeśli dokument nie zezwala na usuwanie przypisów. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Edytowanie przypisów</title>
+				<para
+>Aby zmienić przypis, naciśnij na niego prawym przyciskiem myszy i wybierz <guimenuitem
+>Właściwości...</guimenuitem
+>. Otworzy się okno dialogowe, pozwalające na zmianę ogólnych ustawień przypisu (kolor, przezroczystość, autor, &etc;), a także właściwości wyjątkowych dla tego rodzaju przypisu. </para>
+				<screenshot>
+				<screeninfo
+>Okno dialogowe właściwości przypisów</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Okno dialogowe właściwości przypisów</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Aby przenieść przypis, przytrzymaj przycisk &Ctrl;, najedź wskaźnikiem  myszy na przypis i zacznij go przeciągać. </para>
+				<note>
+					<para
+>W zależności od uprawnień do dokumentu, nie wszystkie możliwości mogą być dostępne (najczęściej tak jest w dokumentach &PDF;). </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Zarządzanie zakładkami</title>
+			<para
+>&okular; zawiera bardzo elastyczny system zakładek. &okular; zapisuje, w zakładce, położenie na stronie i umożliwia określenie więcej niż jednej zakładki na stronę. </para>
+			<para
+>Do zarządzania zakładkami w &okular-miejscownik; można użyć widoku <guilabel
+>Zakładek</guilabel
+> z <guilabel
+>Panelu sterowania</guilabel
+>, <link linkend="menubookmarks"
+>Menu zakładek</link
+> lub menu podręcznego widoku dokumentu (naciśnij prawym przyciskiem myszy, aby je wywołać). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Widok zakładek</title>
+				<para
+>Aby otworzyć widok <guilabel
+>Zakładek</guilabel
+> naciśnij na wpis <guilabel
+>Zakładki</guilabel
+> na <guilabel
+>Panelu sterowania</guilabel
+>. Jeśli <guilabel
+>Panel sterowania</guilabel
+> nie jest wyświetlany, użyj wpisu menu głównego <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Ustawienia</guimenu
+><guimenuitem
+>Pokaż panel sterowania</guimenuitem
+> </menuchoice
+>, aby uczynić go widocznym. </para>
+				<screenshot>
+				    <screeninfo
+>Menu podręczne widoku zakładki</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Menu podręczne widoku zakładki</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Paska filtra na górze widoku <guilabel
+>Zakładek</guilabel
+> można użyć do odfiltrowania spisu zakładek według tekstu w polu wprowadzania. </para>
+				<para
+>Spis umożliwia oglądanie spisu zakładek w postaci drzewa: każdy element w spisie można <quote
+>rozwinąć</quote
+> lub <quote
+>zwinąć</quote
+> poprzez naciśnięcie na ikonę <guiicon
+>&lt;</guiicon
+> lub <guiicon
+>v</guiicon
+> obok niego. </para>
+				<para
+>Naciśnij na <inlinemediaobject
+><imageobject
+><imagedata fileref="rating.png" format="PNG"/></imageobject
+></inlinemediaobject
+> ikonę poniżej spisu, aby wyświetlić ikony tylko z bieżącego dokumentu. </para>
+				<para
+>Menu spod prawego klawisza myszy dla dokumentu można używać do otwarcia dokumentu, zmiany jego nazwy lub usunięcia go z wykazu. Wiedz, że usunięcie dokumentu prowadzi do usunięcia wszystkich z nim związanych zakładek. </para>
+				<para
+>Menu spod prawego klawisza myszy dla poszczególnych zakładek umożliwia przejście do zakładki, zmianę jej nazwy lub jej usunięcie. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Możliwości wiersza poleceń</title>
+		    <para
+>Pomimo tego że &okular; najczęściej otwierany jest za pomocą menu programów &kde; lub ikony pulpitu, może być także otwierany z wiersza poleceń w oknie terminala. Istnieje kilka użytecznych możliwości przy jego uruchamianiu. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Podawanie pliku</title>
+			<para
+>Poprzez określenie ścieżki i nazwy wybranego pliku, użytkownik może spowodować, że program &okular; otworzy plik lub samoczynnie utworzy  plik podczas uruchamiania. Wywołanie takie może wyglądać następująco: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/moj_domowy/Dokumenty/moj_dokument.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Dla dokumentów &PDF;, można podać nazwę jako  <replaceable
+>nazwa_dokumentu</replaceable
+>#<replaceable
+>nazwane_miejsce</replaceable
+> gdzie <replaceable
+>nazwane_miejsce</replaceable
+> jest szczególnie nazwanym miejscem osadzonym w dokumencie. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Inne możliwości wiersza poleceń</title>
+			<para
+>Dostępne są następujące możliwości wyświetlania pomocy w wierszu poleceń </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--help</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia najbardziej podstawowe możliwości dostępne dla wiersza poleceń.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--help-qt</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia dostępne możliwości zmiany sposobu oddziaływania &okular-biernik; z &Qt;.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--help-kde</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia dostępne możliwości zmiany sposobu oddziaływania &okular-biernik; z &kde;.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--help-all</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia wszystkie możliwości dla wiersza poleceń.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--author</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia autorów &okular-dopelniacz; w oknie terminala</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-v, --version</option
+></userinput
+></term>
+				<listitem
+><para
+>Wyszczególnia informacje o wersji dla &Qt;, &kde; oraz &okular-dopelniacz;. Dostępne również przez <userinput
+><command
+>okular</command
+> <option
+>-v</option
+></userinput
+> </para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--license</option
+></userinput
+></term>
+				<listitem
+><para
+>Pokazuje szczegóły licencji.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--page <replaceable
+>numer</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Otwiera dokument na podanej stronie. Dostępne także poprzez <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>numer</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Otwiera dokument w trybie prezentacji.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Uruchamia z oknem dialogowym drukowania.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Steruje niepowtarzalnym wystąpieniem.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Zapobiega skupieniu uwagi na oknie &okular-dopelniacz; po jego uruchomieniu.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--</option
+></userinput
+></term>
+				<listitem
+><para
+>Koniec możliwości.</para
+></listitem>
+			    </varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Pasek menu</title>
+
+		<sect1 id="menufile">
+			<title
+>Menu Plik</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Plik</guimenu
+> <guimenuitem
+>Otwórz...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Otwiera</action
+> obsługiwany plik lub archiwum &okular-dopelniacz;. Jeśli jakiś plik jest już otwarty, zostanie zamknięty. Aby uzyskać więcej informacji, przeczytaj dział <link linkend="opening"
+>Otwieranie plików</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guisubmenu
+>Otwórz poprzedni</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Otwiera</action
+> jeden z poprzednio używanych plików z podmenu. Jeśli jakiś plik jest obecnie wyświetlany, zostanie on zamknięty. Aby uzyskać więcej informacji, przeczytaj dział <link linkend="opening"
+>Otwieranie plików</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Importuj Postscript jako PDF...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Otwórz</action
+> plik &PostScript; i przekształć go do &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Zapisz jako...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Zapisz</action
+> obecnie otwarty plik pod inną nazwą, używając  silnika dokumentu. Silnikiem &PDF; (wymagany Poppler 
+>= 0.8) możliwe jest zapisanie dokumentu ze zmienionymi wartościami pól formularzy.  Możliwym jest także (pod warunkiem, że dane nie zostały zabezpieczone cyfrowo) zapisanie przypisów wraz z plikami &PDF; (wymagany Poppler 
+>= 0.22).</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Zapisz kopię jako...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zapisuje</action
+> kopię obecnie otwartego pliku pod inną nazwą, nie używając silnika dokumentu.</para>
+                                                <!-- does not save the annotations, they are still coupled to the original file-->
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Plik</guimenu
+> <guimenuitem
+>Wczytaj ponownie</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wczytuje ponownie</action
+> obecnie otwarty plik.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Plik</guimenu
+> <guimenuitem
+>Drukuj...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Drukuje</action
+> obecnie wyświetlany dokument. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Podgląd wydruku...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla</action
+> sposób, w jaki zostanie wydrukowany obecnie otwarty dokument przy domyślnych ustawieniach. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Właściwości</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla podstawowe informacje</action
+> o dokumencie, takie jak jego tytuł, autora, datę utworzenia i dane o użytych czcionkach. Dostępność informacji zależy od typu dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guimenuitem
+>Pliki osadzone</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla pliki zagnieżdżone w dokumencie </action
+>, jeśli takie istnieją. Aby uzyskać więcej informacji, przeczytaj dział <link linkend="embedded-files"
+>Pliki osadzone</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Plik</guimenu
+> <guisubmenu
+>Eksportuj jako</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>To podmenu wyświetla dostępne formaty, w których może zostać zapisany bieżący dokument. Pierwszym z wykazu formatów dla każdego dokumentu zawsze będzie <guimenuitem
+>Zwykły tekst...</guimenuitem
+>.</para>
+						<para
+>Drugi wpis to <guimenuitem
+>Archiwum dokumentu</guimenuitem
+>, który umożliwia zachowanie dokumentu wraz z przypisami w formacie właściwym &okular-celownik;. Dzięki temu można łatwo korzystać z pierwotnych dokumentów z przypisami pracując nad nimi z innymi użytkownikami &okular-dopelniacz;.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Plik</guimenu
+> <guimenuitem
+>Zakończ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kończy pracę</action
+> &okular-dopelniacz;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Menu Edycja</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Cofnij</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Cofa</action
+> ostatnie polecenie edytowania przypisu (tworzenie i usuwanie przypisów, edytowanie dowolnych właściwości przypisów, przemieszczanie przypisów przy użyciu &Ctrl;+przeciągnięcie oraz edytowanie treści przypisu).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Przywróć</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Ponawia</action
+> ostatni krok cofnięcia przy edytowaniu przypisów.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Kopiuj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kopiuje</action
+> tekst zaznaczony w trybie <guibutton
+>Zaznaczanie</guibutton
+> do schowka.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Zaznacz wszystko</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zaznacza</action
+> cały tekst (jeśli dokument go posiada). To polecenie działa tylko w trybie <guibutton
+>Zaznaczanie</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Znajdź...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Wyświetla u dołu pola widoku panel, który pozwala na <action
+>wyszukanie ciągu znaków w dokumencie</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Znajdź następne</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Spróbuje <action
+>znaleźć poprzednio szukany ciąg znaków ponownie</action
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Edycja</guimenu
+> <guimenuitem
+>Znajdź poprzednie</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi do poprzedniego wystąpienia szukanego ciągu znaków</action
+> w dokumencie.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Menu Widok</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Widok</guimenu
+> <guimenuitem
+>Prezentacja</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Włącza</action
+> tryb prezentacji. Po więcej szczegółów, zajrzyj do działu <link linkend="presentationMode"
+>Tryb prezentacji</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Widok</guimenu
+> <guimenuitem
+>Powiększ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przybliża</action
+> dokument.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Widok</guimenu
+> <guimenuitem
+>Pomniejsz</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Oddala</action
+> dokument.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Dopasuj szerokość</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmienia powiększenie</action
+> dokumentu tak, że szerokość strony odpowiada szerokości pola widoku.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Dopasuj stronę</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmienia powiększenie</action
+> dokumentu tak, aby widoczna była w całości przynajmniej jedna strona.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Dopasuj samoczynnie</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmień powiększenie</action
+> widoku dokumentu do wartości, która, w zależności od stosunku rozmiaru strony do obszaru widoku, samoczynnie wyrównuje szerokość strony do szerokości widoku dokumentu (tak jak przy dopasowaniu na szerokość), wysokość strony do wysokości widoku dokumentu (tak jak przy dopasowaniu na wysokość) lub czyni całą stronę widoczną (tak jak przy dopasowaniu strony).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Ciągły</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Włącza ciągły tryb przeglądania</action
+>. W tym trybie wyświetlane są wszystkie strony dokumentu, dzięki czemu można je przewijać bez konieczności użycia poleceń <menuchoice
+><guimenu
+>Idź</guimenu
+> <guimenuitem
+>Poprzednia strona</guimenuitem
+></menuchoice
+> i <menuchoice
+><guimenu
+>Idź</guimenu
+><guimenuitem
+>Następna strona</guimenuitem
+> </menuchoice
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guisubmenu
+>Tryb widoku</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>To podmenu wybiera sposób wyświetlania stron. Dostępne możliwości to: <guimenuitem
+>Pojedyncza strona</guimenuitem
+> (jedna strona na wiersz), <guimenuitem
+>Strony sąsiadujące</guimenuitem
+> (blok dwóch stron na wiersz) i <guimenuitem
+>Przegląd</guimenuitem
+> (liczba kolumn jest określana w <link linkend="configure"
+>ustawieniach &okular-dopelniacz;</link
+>).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guisubmenu
+>Kierunek</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>To podmenu <action
+>zmienia kierunek</action
+> (położenie) stron w dokumencie. </para>
+						<note>
+							<para
+>Obrót jest stosowany dla każdej ze stron. </para>
+						</note>
+						<para
+>Po wybraniu polecenia <guimenuitem
+>Pierwotny kierunek</guimenuitem
+> zostaje przywrócony domyślny kierunek dokumentu, cofając tym samym wszelkie obroty użytkownika. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guisubmenu
+>Rozmiar strony</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmienia rozmiar stron</action
+> dokumentu. </para>
+						<note>
+							<para
+>To podmenu zostaje aktywowane tylko wtedy, gdy bieżący dokument obsługuje różne wielkości stron. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Obetnij marginesy</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Usuwa białe obramowanie stron podczas ich przeglądania. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Widok</guimenu
+> <guimenuitem
+>Pokaż/Ukryj formularz</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla lub ukrywa</action
+> pola formularza w dokumencie. </para>
+						<note>
+							<para
+>To polecenie menu jest dostępne tylko wtedy, gdy bieżący dokument posiada formularz. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Menu Idź</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Idź</guimenu
+> <guimenuitem
+>Poprzednia strona</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla poprzednią stronę</action
+> dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Idź</guimenu
+> <guimenuitem
+>Następna strona</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wyświetla następną stronę</action
+> dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Początek dokumentu</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi na początek</action
+> dokumentu.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Koniec dokumentu</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi na koniec</action
+> dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Strzałka w lewo</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Wstecz</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi do poprzedniego widoku</action
+> dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Strzałka w prawo</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Wprzód</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi się do kolejnego widoku</action
+> dokumentu. Możliwe tylko, gdy wcześniej nastąpiło przejście wstecz.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Idź</guimenu
+> <guimenuitem
+>Idź do strony...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Otwiera okno, które umożliwia <action
+>przejście do każdej strony</action
+> dokumentu.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Menu Zakładki</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Zakładki</guimenu
+> <guimenuitem
+>Dodaj/Usuń zakładkę</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Dodaje lub usuwa zakładkę dla obecnego położenia</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zakładki</guimenu
+> <guimenuitem
+>Zmień nazwę zakładki</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmienia nazwę zakładki dla obecnego położenia</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zakładki</guimenu
+> <guimenuitem
+>Poprzednia zakładka</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi do poprzedniej zakładki</action
+> lub nie rób nic, jeśli poprzednia zakładka nie istnieje.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zakładki</guimenu
+> <guimenuitem
+>Następna zakładka</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Przechodzi do następnej zakładki</action
+> lub nie rób nic, jeśli następna zakładka nie istnieje.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zakładki</guimenu
+> <guimenuitem
+>Brak zakładek</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>To polecenie jest zawsze niedostępne, wyświetlane tylko wtedy, gdy bieżący dokument nie posiada zakładek; w przeciwnym przypadku wyświetlany jest w jego miejscu wykaz zakładek. Naciśnięcie na te zakładki umożliwia bezpośrednie przejście do przypisanego położenia.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Menu Narzędzia</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Narzędzie przeglądania</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Mysz zachowuje się w sposób zwyczajny: lewy przycisk myszy służy do przewijania dokumentu i podążania za odsyłaczami, a prawy do dodawania zakładek i dopasowywania szerokości.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Narzędzie powiększania</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Naciśnięcie lewym przyciskiem myszy i przeciągnięcie spowoduje powiększenie wybranego obszaru, naciśnięcie prawym przyciskiem przywróci poprzedni stopień powiększenia.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Narzędzie zaznaczania</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Mysz będzie działała jak narzędzie do zaznaczania. Oznacza to, że naciśnięcie lewym przyciskiem i zaznaczenie czegoś, a następnie puszczenie przycisku wyświetli menu z możliwością skopiowania tekstu lub obrazu do schowka, zapisania obrazu do pliku lub wypowiedzenia tekstu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Narzędzie zaznaczania tekstu</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Mysz będzie działała jak narzędzie do zaznaczania tekstu. Oznacza to, że po zaznaczeniu tekstu lewym przyciskiem myszy będzie go można skopiować do schowka lub wypowiedzieć, po wybraniu odpowiedniej opcji z menu dostępnego pod prawym przyciskiem myszy.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Narzędzie zaznaczania tabeli</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Narysuj prostokąt wokół tekstu dla tabeli, a następnie naciśnij lewym przyciskiem myszy, aby podzielić blok tekstu na wiersze i kolumny. Naciśnięcie lewym przyciskiem na istniejącym wierszu usuwa go i scala z sąsiadującymi wierszami lub kolumnami.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Szkło powiększające</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Włącza tryb szkła powiększającego dla wskaźnika myszy. Naciśnij i przytrzymaj lewy przycisk myszy, aby włączyć okno szkła powiększającego, przesuwaj wskaźnikiem, aby przesuwać się po dokumencie. Szkło powiększające przeskalowuje  każdy piksel w dokumencie na 10 pikseli w oknie szkła powiększającego.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Recenzja</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Otwiera panel dodawania przypisów</action
+>. Umożliwia on dodawanie przypisów do bieżącego dokumentu. Po więcej szczegółów, zajrzyj do działu <link linkend="annotations"
+>Przypisy</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Przeczytaj cały dokument</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Przeczytaj bieżącą stronę</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Narzędzia</guimenu
+> <guimenuitem
+>Przestań czytać</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Te polecenia umożliwiają wypowiedzenie całego dokumentu lub jednej strony oraz przerwanie odczytywania przez system &kde; tekstu-na-mowę  &jovie;.</para>
+						<para
+>Działanie <guilabel
+>Wypowiedz ...</guilabel
+> jest włączone tylko, gdy w systemie dostępny jest system &jovie;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-menu">
+			<title
+>Menu Ustawienia</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>M</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Pokaż pasek menu</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wł/Wył wyświetlanie paska menu</action
+>. Ukryty pasek może zostać przywrócony przy użyciu skrótu klawiszowego <keycombo action="simul"
+>&Ctrl;<keycap
+>M</keycap
+></keycombo
+>. Jeśli pasek menu jest ukryty, to menu podręczne, otwarte prawym klawiszem myszy, zawiera dodatkowy wpis <guimenuitem
+>Pokaż pasek menu</guimenuitem
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Pokaż pasek narzędzi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ukrywa lub wyświetla pasek narzędzi</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Pokaż panel sterowania</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ukrywa lub wyświetla panel sterowania</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Pokaż pasek stron</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wł/Wył pasek strony</action
+> na dole obszaru dokumentu, aby zaoszczędzić miejsce w pionie w oknie &okular-dopelniacz;.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Tryb pełnoekranowy</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Włącza tryb pełnoekranowy</action
+>. Zauważ, że tryb pełnoekranowy różni się od <link linkend="presentationMode"
+>trybu prezentacji</link
+> tym, że jedyną możliwością trybu pełnoekranowego jest ukrycie wystroju okna, paska menu i paska narzędzi.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia skrótów...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Otwiera okno, które pozwala na <action
+>ustawienie skrótów klawiszowych</action
+> dla większości poleceń menu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia pasków narzędzi...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Otwiera okno, które pozwala na wybranie, które ikonki powinny być widoczne na pasku narzędzi.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia silników...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Otwiera okno <link linkend="configure-backends"
+>Ustawień silników</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia &okular-dopelniacz;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Otwiera okno <link linkend="configure"
+>Ustawienia - &okular-mianownik;</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+			</variablelist>
+		</sect1>
+		<sect1 id="menuhelp">
+			<title
+>Menu Pomoc</title>
+&help.menu.documentation; </sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Ustawienia silników &okular-dopelniacz;</title>
+	  <para
+>Można ustawić silniki &okular-dopelniacz; poprzez <menuchoice
+> <guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia silników...</guimenuitem
+> </menuchoice
+>. Obecnie istnieje możliwość ustawiania tylko silników EPub, &PostScript;, FictionBook, Txt, Tekstu OpenDocument oraz &PDF;. </para>
+	  <screenshot>
+	    <screeninfo
+>Okno dialogowe ustawień silników</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Okno dialogowe ustawień silników</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Poprzez użycie stron ustawień dla EPub, FictionBook, Txt oraz tekstu OpenDocument można określić czcionkę do wyświetlania dokumentów w odpowiednich formatach. Przycisk <guibutton
+>Wybierz...</guibutton
+>, na tych stronach, otwiera zwykłe okno ustawień &kde;. Zajrzyj do <ulink url="help:/fundamentals/fonts.html"
+>Podręcznika o podstawach &kde;</ulink
+> po więcej szczegółów. </para>
+	  <para
+>Opis stron ustawień &PostScript; oraz &PDF; podano poniżej. </para>
+	  <sect1 id="config-ghostscript">
+	    <title
+>Ustawienia silnika &PostScript;</title>
+	    <para
+>Silnik wyświetlania &PostScript; w &okular-miejscownik; można ustawić na podstawie <ulink url="http://www.ghostscript.com/"
+>Ghostscript</ulink
+> poprzez wybranie <guilabel
+>Ghostscript</guilabel
+> ze spisu po lewej stronie okna dialogowego ustawień. Jedyna możliwość zmiany jest następująca. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Użyj czcionek systemowych</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>To ustawienie określa, czy Ghostscript ma używać czcionek systemowych, w przypadku odznaczenia, dozwolone jest użycie tylko czcionek osadzonych w dokumencie. Ustawienie to jest domyślnie zaznaczone. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>Ustawienia silnika &PDF;</title>
+	    <para
+>Silnik wyświetlania &PDF; w &okular-miejscownik; można ustawić na podstawie <ulink url="http://wwwghostscript.com/"
+>Poppler</ulink
+> poprzez wybranie <guilabel
+>&PDF;</guilabel
+> ze spisu po lewej stronie okna dialogowego ustawień. Jedyna możliwość zmiany jest następująca. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Polepsz cienkie linie</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Rysowanie linii w &okular-miejscownik; zostało zaimplementowane w dwóch krokach: tworzenie ścieżki przycinającej i wypełnianie tej ścieżki przycinającej. Gdy linia w pierwotnym dokumencie jest mniejsza niż jeden piksel, to ta dwustopniowa implementacja może powodować problemy. Dla tych linii, ścieżka przycinająca jest wypełniana kolorem wypełnienia, który zależy od grubości części linii wewnątrz przyciętego obszaru. Jeśli część linii wewnątrz obszaru przycinania będzie bardzo mała, to kontrast pomiędzy kształtem i kolorem tła może stać się zbyt niski, aby można było rozpoznać linię. Siatki takich linii wyglądają wtedy bardzo nieładnie. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Cienka linia (czerwona), jej ścieżka przycinania (linia kreskowa) oraz granice pikseli (czarne linie ciągłe)</entry>
+			    <entry
+>Cienkie linie są wyświetlane przy niskim kontraście</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Aby polepszyć wygląd cienkich linii &okular; implementuje dwie możliwości. </para>
+		    <para
+>Pierwszym wyborem jest <guimenuitem
+>Jednolicie</guimenuitem
+>. Przy tym wyborze &okular; dostosowuje ścieżkę przycinania i położenie linii, tak aby ścieżka przycinania i linia były na tej samej granicy piksela, tj. &okular; poszerza cienkie linie do jednego piksela na urządzeniu wyjściowym, tak aby w ogóle były widoczne. Ten tryb jest podobny do <guilabel
+>Poszerz cienkie linie</guilabel
+> w programie <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Jeśli dokonano tego wyboru, to cienkie linie zawsze będą powiększane. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Cienka linia wraz z polepszeniem <guimenuitem
+>Jednolitym</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Cienka linia wraz z polepszeniem <guimenuitem
+>Jednolitym</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Drugi wybór to <guimenuitem
+>Kształtowo</guimenuitem
+>. Ten wybór również powoduje dostosowanie ścieżki przycinania z linią na granicach pikseli, lecz natężenie linii jest poprawiane na podstawie jej szerokości. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Cienka linia wraz z polepszeniem <guimenuitem
+>Kształtowym</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Cienka linia wraz z polepszeniem <guimenuitem
+>Kształtowym</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Cienkie linie nie są domyślnie polepszane (wybór  <guimenuitem
+>Nie</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Ustawienia &okular-dopelniacz;</title>
+		<sect1 id="configindex">
+			<title
+>Ustawienia ogólne</title>
+			<para
+>&okular-dopelniacz; można dostosować do swoich potrzeb poprzez<menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia &okular-dopelniacz;...</guimenuitem
+></menuchoice
+>. Okno dialogowe ustawień podzielone jest na sześć działów. Ten rozdział opisuje szczegółowo dostępne możliwości. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Ogólne</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Dostępność</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Wydajność</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Prezentacja</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Przypisy</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Edytor</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Okno dialogowe ustawień</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Okno dialogowe ustawień</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>W zależności od wgranych silników wyświetlających, polecenie <menuchoice
+><guimenu
+>Ustawienia</guimenu
+> <guimenuitem
+>Ustawienia silników...</guimenuitem
+></menuchoice
+> może być włączone lub nie. To szczególne okno dialogowe ustawień zawiera ustawienia dla silników, dla których istnieje możliwość ustawiania. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Ogólne</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaż paski przewijania</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy paski przewijania dla widoku dokumentu mają być widoczne.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Powiąż miniatury ze stronami</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy w widoku miniaturek będzie zawsze pokazywana obecnie przeglądana strona.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaż podpowiedzi i informacje</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy pokazywać bardziej szczegółowe dane przy uruchamianiu, wczytywaniu pliku, itp.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Wyświetl tytuł dokumentu na pasku tytułu, jeśli jest dostępny</guilabel
+></term>
+					<listitem>
+						<para
+>Określa czy wyświetlać tytuł bieżącego dokumentu na pasku tytułu okna &okular-dopelniacz;. Jeśli dokument nie ma metadanej o tytule lub gdy to pole jest odznaczone, to &okular; wyświetla nazwę pliku dokumentu. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Jeśli nie wyświetlać tytułu dokumentu to</guilabel
+></term>
+					<listitem>
+					  <para
+>Można wybrać jedną z dwóch możliwości <guilabel
+>Wyświetl tylko nazwę pliku</guilabel
+> lub <guilabel
+>Wyświetl pełną ścieżkę do pliku</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Przestrzegaj ograniczeń DRM</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy &okular; powinien przestrzegać ograniczeń <firstterm
+>DRM</firstterm
+> (Digital Rights Management). Ograniczenia DRM są używane, aby uniemożliwić wykonywanie pewnych czynności na dokumentach &PDF;, takich jak na przykład kopiowanie ich zawartości do schowka. Zauważ, że na niektórych systemach ta możliwość jest niedostępna.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Otwórz nowe pliki w kartach</guilabel
+></term>
+					<listitem>
+						<para
+>Określa czy otwierać nowe dokumenty w kartach. Karty są domyślnie wyłączone.</para>
+						<para
+>Domyślnym skrótem do przełączania po kartach  jest <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Następna karta</guilabel
+>) oraz <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Poprzednia karta</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Wczytaj ponownie dokument po zmianie pliku</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy otwarty plik powinien być samoczynnie sprawdzany na okoliczność zmian i ponownie wczytywany, jeśli zajdzie taka konieczność.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaż okno wyboru silnika</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy &okular; powinien prosić o wybór silnika, jeśli więcej niż jeden z dostępnych potrafi otworzyć żądany plik. Niezaznaczenie tej opcji spowoduje samoczynny wybór silnika z najwyższym priorytetem.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kolumny przeglądu</guilabel
+></term>
+					<listitem>
+						<para
+>To ustawienie określa liczbę kolumn użytych do wyświetlania stron w trybie przeglądania. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Nachodzenie Page Up/Down:</guilabel
+></term>
+					<listitem>
+						<para
+>Tutaj można określić procent bieżącego obszaru wyświetlania, który ma być widoczny po naciśnięciu klawiszy <keycap
+>Page Up</keycap
+>/<keycap
+>Page Down</keycap
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Domyślne powiększenie</guilabel
+></term>
+					<listitem>
+						<para
+>Ustawienia te określają domyślny tryb powiększenia dla pliku, który nigdy wcześniej nie był otwierany. Dla tych plików, który były otwierane wcześniej, stosowany jest poprzedni tryb powiększenia. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Dostępność</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Narysuj obramowania wokół odsyłaczy</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy będzie rysowana ramka wokół odsyłaczy.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Zmień kolory</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Włącza</action
+> możliwości zmiany kolorów.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Odwróć kolory</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Odwraca</action
+> kolory stron, czyli obiekty w czarnym kolorze staną się białe.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Zmień kolor papieru</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Zmienia</action
+> kolor tła stron.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Zmień ciemne i jasne kolory</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Zmienia</action
+> ciemne i jasne kolory. Oznacza to, że czarny nie będzie wyświetlany jako czarny, ale jako wybrany przez Ciebie ciemny kolor, a biały nie będzie wyświetlany jako biały, ale jako wybrany przez Ciebie jasny kolor.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Przekształć na czarno-białe</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Przekształca</action
+> dokument na czarno-biały. Można dostosować próg i kontrast. Ustawienie progu na wyższą wartość (przesuwając suwak w prawo) spowoduje użycie jaśniejszych odcieni szarego.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Wydajność</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Włącz efekty przezroczystości</guilabel
+></term>
+					<listitem>
+						<para
+>Rysuje zaznaczenia i inne szczególne grafiki, używając efektu przezroczystości. Wyłączenie ustawienia spowoduje rysowanie tych elementów przy użyciu konturów lub nieprzezroczystych wypełnień, przez co wzrośnie wydajność programu w trakcie zaznaczania.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Wykorzystanie pamięci</guilabel
+></term>
+					<listitem>
+						<para
+>Można uzyskać optymalną wydajność &okular-dopelniacz; poprzez ustawienie sposobu używania pamięci RAM na podstawie posiadanego systemu komputerowego i własnych przyzwyczajeń. Im więcej pamięci pozwolisz mu używać, tym szybciej program będzie działał. Domyślny profil jest dobry dla każdego systemu, ale można zapobiec używaniu większej ilości pamięci, niż to konieczne, przez wybranie niskiego wykorzystania pamięci lub pozwolić mu na wyciśnięcie maksimum z twojego sprzętu, przez wybranie dużego wykorzystania pamięci. Użyj profilu zachłanny, aby wstępnie wczytać wszystkie strony bez ryzyka przepełnienia pamięci (zostanie użyte tylko 50% całkowitej lub wolnej pamięci).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Wyświetlanie</guilabel
+></term>
+					<listitem>
+						<para
+>Używając tej grupy ustawień można poprawić wyświetlanie tekstu i obrazów w &okular-miejscownik;. Wynik zależy od urządzenia do wyświetlania dokumentu. Pól <guilabel
+>Włącz wygładzanie tekstu</guilabel
+> oraz <guilabel
+>Włącz wygładzanie grafiki</guilabel
+> można użyć do włączenia i wyłączenia <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+>przestrzennego wygładzania</ulink
+> odpowiednio tekstu oraz obrazów w dokumencie. Pole <guilabel
+>Włącz "hinting" tekstu</guilabel
+> służy jako przełącznik dla efektu drukarskiego zwanego <ulink url="http://en.wikipedia.org/wiki/Font_hinting"
+>"hinting" czcionki</ulink
+>. Wygładzanie oraz "hinting" mogą zmienić sposób wyświetlania dokumentu. Można nimi poprzestawiać, aby uzyskać zadowalający wygląd.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Prezentacja</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Idź do przodu co:</guilabel
+></term>
+					<listitem>
+						<para
+>Włącza samoczynne przechodzenie do następnej strony w określonych odstępach czasowych.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Po ostatniej stronie zacznij od początku</guilabel
+></term>
+					<listitem>
+						<para
+>W trybie prezentacji, po dojściu do ostatniej strony, następną stroną będzie pierwsza strona dokumentu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kolor tła</guilabel
+></term>
+					<listitem>
+						<para
+>To kolor, który będzie wyświetlany w miejscu ekranu, który nie jest zakryty przez stronę. Dotyczy tylko trybu prezentacji.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kolor pędzla</guilabel
+></term>
+					<listitem>
+						<para
+>Określa kolor pędzla używanego do rysowania po stronach podczas prezentacji.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Wskaźnik myszy</guilabel
+></term>
+					<listitem>
+						<para
+>Określa czy wskaźnik myszy powinien być zawsze ukryty, zawsze widoczny, czy ukryty po pewnym, krótkim czasie nieużywania.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaż pasek postępu</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy przy każdej zmianie strony powinien być wyświetlany pasek postępu w przeglądaniu stron. Pokazuje on obecny numer strony i całkowitą ilość stron. Znajduje się w prawym, górnym narożniku ekranu.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaż stronę podsumowania</guilabel
+></term>
+					<listitem>
+						<para
+>Określa, czy na początku prezentacji pokazana zostanie strona z takimi informacjami, jak tytuł, autor i ilość stron w dokumencie.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Włącz przejścia</guilabel
+></term>
+					<listitem>
+						<para
+>Użyj tego pola zaznaczanego do włączenia lub wyłączenia efektu przejścia pomiędzy stronami.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Domyślne przejście</guilabel
+></term>
+					<listitem>
+						<para
+>Efekt przejścia między stronami, jeśli dokument nie precyzuje takiego. Ustaw <guilabel
+>Losowy efekt</guilabel
+>, aby &okular; wybierał losowo jeden z dostępnych efektów.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Umieszczenie</guilabel
+></term>
+					<listitem>
+						<para
+>W tym dziale można wybrać <guilabel
+>Ekran</guilabel
+> używany do wyświetlania prezentacji.</para>
+						<para
+><guilabel
+>Bieżący ekran</guilabel
+> to ten sam ekran, na którym znajduje się okno &okular-dopelniacz; uruchamiające prezentację.</para>
+						<para
+><guilabel
+>Domyślny ekran</guilabel
+> to ekran oznaczony jako domyślny w ustawieniach xinerama.</para>
+						<para
+><guilabel
+>Ekran 0</guilabel
+>, <guilabel
+>Ekran 1</guilabel
+> itd. to dostępne ekrany.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Przypisy</title>
+			<screenshot>
+				<screeninfo
+>Strona przypisów okna dialogowego ustawień</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Strona przypisów okna dialogowego ustawień</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Autor</guilabel
+></term>
+					<listitem>
+						<para
+>Autor treści dodanej do dokumentu. Domyślnie jest to nazwa ze strony <guilabel
+>Hasło i konto użytkownika</guilabel
+> modułu <guilabel
+>Szczegóły konta</guilabel
+> Ustawień Systemowych.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Narzędzia przypisów</guilabel
+></term>
+					<listitem>
+					  <para
+>Panel ten jest używany do ustawienia <link linkend="annotations-add"
+> paska przypisów</link
+>. </para>
+					  <para
+>Jest tam pięć przycisków (<guibutton
+>Dodaj</guibutton
+>, <guibutton
+>Edycja</guibutton
+>, <guibutton
+>Usuń</guibutton
+>, <guibutton
+>Przesuń w górę</guibutton
+>, <guibutton
+>Przesuń w dół</guibutton
+>) oraz pole spisu (które wyszczególnia zawartość bieżącego paska przypisów), które jest używane do ustawienia paska narzędzi. </para>
+					  <para
+>Aby dodać jakieś narzędzie do paska narzędzi naciśnij na przycisk <guibutton
+>Dodaj</guibutton
+>. Można wybrać <guilabel
+>Nazwę</guilabel
+>, <guilabel
+>Rodzaj</guilabel
+> oraz <guilabel
+>Wygląd</guilabel
+> utworzonego narzędzia. </para>
+					  <note>
+					    <para
+>Pamiętaj, że narzędzia przypisów są w &okular-miejscownik; wysoce ustawialne. Na przykład, można mieć dwa przyciski tego samego narzędzia, lecz w różnych kolorach. Nie obawiaj się eksperymentować przy wybieraniu zestawów przycisków, które będą odpowiednio skrojone do twojego sposobu pracy. </para>
+					  </note>
+					  <para
+>Naciśnij na jakimś elemencie w polu spisu, a następnie naciśnij na odpowiednim przycisku po prawej stronie strony, aby edytować, usunąć, przesunąć element w górę lub w dół. Skrót klawiszowy narzędzia (klawisze od <keycap
+>1</keycap
+> do <keycap
+>9</keycap
+>) w zależności od jego położenia na spisie paska przypisów. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Edytor</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Edytor</guilabel
+></term>
+					<listitem>
+						<para
+>Wybierz edytor, który ma być uruchamiany gdy &okular-mianownik; chce otworzyć plik źródłowy. Ma to miejsce wtedy, gdy dokument posiada odniesienia do różnych miejsc źródeł (zwykle numery wierszy i kolumn), z których go wygenerowano. Format &DVI; podstawowo obsługuje szczegóły o źródle dokumentu LaTeX, z którego został utworzony. Podobny system, <acronym
+>pdfsync</acronym
+>, istnieje w dokumentach &PDF;; przechowuje on szczegóły w osobnym pliku nazwanym za oryginalnym dokumentem (na przykład <filename
+>mój_dokument.pdfsync</filename
+> dla <filename
+>mój_dokument.pdf</filename
+>). </para>
+						<para
+>&okular; dostarczany jest z ustawieniami wstępnymi dla następujących edytorów: <ulink url="http://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="http://kile.sourceforge.net/"
+>Kile</ulink
+>, <ulink url="http://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="http://www.gnu.org/software/emacs/"
+>Klient &Emacs;</ulink
+> oraz <ulink url="http://www.lyx.org/"
+>Klient LyX </ulink
+>. </para>
+						<note>
+						  <para
+>Aby użyć wyszukiwania zwrotnego w <application
+>Kile</application
+>, należy skompilować plik &latex; przy użyciu ustawienia <guilabel
+>Nowoczesny</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Polecenie</guilabel
+></term>
+					<listitem>
+						<para
+>Polecenie wraz z parametrami do wywołania wybranego edytora z wczytanym plikiem źródłowym bieżącego dokumentu.</para>
+						<para
+>Pole to zostanie wypełnione samoczynnie w przypadku użycia jednego ze wstępnie ustawionych edytorów. W przeciwnym przypadku, wybierz <guimenuitem
+>Własny edytor tekstu</guimenuitem
+> z pola rozwijanego <guilabel
+>Edytor</guilabel
+> i zajrzyj do dokumentacji swojego ulubionego edytora, aby znaleźć właściwe polecenie. </para>
+						<para
+>Można użyć następujących pól zastępczych:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - nazwa pliku</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - wiersz w pliku, do którego przejść</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - kolumna w pliku, do której przejść</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Jeśli nie podano %f, to zostanie dołączona nazwa dokumentu do podanego polecenia.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Zasługi i licencja</title>
+
+		<itemizedlist>
+			<title
+>Prawa autorskie:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Obecny opiekun</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros<email
+>eros.kde@email.it</email
+> programista &kpdf;</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Prawa autorskie do dokumentacji:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Autor</para
+></listitem>
+			<listitem
+><para
+>Titus Laska<email
+>titus.laska@gmx.de</email
+> Uaktualnienia i dodatki</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Tłumaczenie Marcin Kocur<email
+>marcin2006@gmail.com</email
+></para
+> <para
+>Tłumaczenie Łukasz Wojniłowicz<email
+>lukasz.wojnilowicz@gmail.com</email
+></para
+> 
+&underFDL; &underGPL; </chapter>
+
+	<appendix id="installation">
+		<title
+>Wgrywanie</title>
+		<sect1 id="getting-kapp">
+			<title
+>Jak zdobyć &okular-dopelniacz;</title>
+&install.intro.documentation; </sect1>
+		<sect1 id="compilation">
+			<title
+>Kompilacja i wgrywanie</title>
+			<note>
+				<para
+>Jeśli czytasz tę pomoc w &khelpcenter-mianownik;, &okular; jest już prawdopodobnie wgrany w twoim systemie, więc nie musisz go wgrywać ponownie. </para>
+</note
+> &install.compile.documentation; </sect1>
+	</appendix>
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

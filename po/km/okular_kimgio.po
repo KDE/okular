@@ -1,0 +1,70 @@
+# translation of okular_kimgio.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2010.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_kimgio\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-11-30 00:42+0000\n"
+"PO-Revision-Date: 2010-01-25 11:28+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ​អេង វណ្ណៈ, អោក ពិសិដ្ឋ​"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​evannak@khmeros.info,piseth_dv@khmeros.info"
+
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#, kde-format
+msgid "Unable to load document: %1"
+msgstr "មិនអាច​ផ្ទុក​ឯកសារ ៖ %1"
+
+#: generator_kimgio.cpp:76
+#, kde-format
+msgid ""
+"This document appears malformed. Here is a best approximation of the "
+"document's intended appearance."
+msgstr ""
+
+#~ msgid "Image Backend"
+#~ msgstr "ផ្នែក​ខាងក្រោយ​រូបភាព"
+
+#~ msgid "A simple image backend"
+#~ msgstr "ផ្នែក​ខាងក្រោយ​រូបភាព​ធម្មតា"
+
+#~ msgid ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+#~ msgstr ""
+#~ "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៥ ២០០៩ ដោយ Albert Astals Cid\n"
+#~ "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៦-២០០៧ ដោយ Pino Toscano\n"
+#~ "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៦-២០០៧ ដោយ Tobias Koenig"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "របារ​ឧបករណ៍​មេ"

@@ -1,0 +1,53 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# Kishore G <kishore96@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2021-06-01 19:32+0530\n"
+"Last-Translator: Kishore G <kishore96@gmail.com>\n"
+"Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.04.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: converter.cpp:62
+#, kde-format
+msgid "Failed to open the document"
+msgstr "ஆவணத்தை திறக்க முடியவில்லை"
+
+#: converter.cpp:103
+#, kde-format
+msgid "Failed to compile the Markdown document."
+msgstr "Markdown ஆவணத்தை தொகுத்தல் தோல்வியடைந்தது"
+
+#: generator_md.cpp:56
+#, kde-format
+msgid "Enable SmartyPants formatting"
+msgstr "SmartyPants வடிவமைப்பை இயக்கு"
+
+#: generator_md.cpp:58
+#, kde-format
+msgid "Markdown"
+msgstr "Markdown"
+
+#: generator_md.cpp:58
+#, kde-format
+msgid "Markdown Backend Configuration"
+msgstr "Markdown பின்நிலை அமைப்பு"

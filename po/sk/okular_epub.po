@@ -1,0 +1,54 @@
+# translation of okular_epub.po to Slovak
+# Michal Sulek <misurel@gmail.com>, 2009.
+# Roman Paholík <wizzardsk@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_epub\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2013-05-19 08:42+0200\n"
+"Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Michal Šulek"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "misurel@gmail.com"
+
+#: converter.cpp:163
+#, kde-format
+msgid "Error while opening the EPub document."
+msgstr "Chyba počas otvárania EPub dokumentu."
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub"
+msgstr "EPub"
+
+#: generator_epub.cpp:30
+#, kde-format
+msgid "EPub Backend Configuration"
+msgstr "Nastavenie backendu EPub"
+
+#~ msgid "EPub Backend"
+#~ msgstr "EPub Backend"
+
+#~ msgid "An EPub backend"
+#~ msgstr "EPub backend"
+
+#~ msgid "© 2008 Ely Levy"
+#~ msgstr "© 2008 Ely Levy"
+
+#~ msgid "Ely Levy"
+#~ msgstr "Ely Levy"

@@ -1,0 +1,62 @@
+# translation of okular_comicbook.po to Brazilian Portuguese
+# tradução do okular_comicbook.po para Brazilian Portuguese
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# André Marcelo Alvarenga <andrealvarenga@gmx.net>, 2008.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_comicbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2018-11-13 11:57-0300\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "André Marcelo Alvarenga"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "andrealvarenga@gmx.net"
+
+#: document.cpp:96
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr ""
+"Não foi possível abrir o documento, o unrar ou o unarchiver não foram "
+"encontrados."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"A versão do unrar do seu sistema não é adequada para abertura de comicbooks."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "O formato do ComicBook é desconhecido."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "Infraestrutura de ComicBook"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "Um interpretador de vários formatos de histórias em quadrinhos"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

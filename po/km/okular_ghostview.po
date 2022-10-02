@@ -1,0 +1,94 @@
+# translation of okular_ghostview.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2009.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_ghostview\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2009-05-26 10:10+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ​អេង វណ្ណៈ, អោក ពិសិដ្ឋ​"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​evannak@khmeros.info,piseth_dv@khmeros.info"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "ប្រើពុម្ពអក្សរវេទិកា"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+"កំណត់​ថាតើ​ Ghostscript គួរ​ត្រូវ​បាន​អនុញ្ញាត​ឲ្យ​ប្រើ​ពុម្ពអក្សរ​វេទិកា​ដែរឬទេ ប្រសិនបើបរាជ័យ ប្រើ​តែ​"
+"ពុម្ពអក្សរ​ដែលបានបង្កប់​ក្នុង​េកសារ​នឹង​ត្រូវ​បាន​អនុញ្ញាត ។"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "ការ​កំណត់​ទូទៅ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "ប្រើពុម្ពអក្សរវេទិកា"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript"
+msgstr "Ghostscript"
+
+#: generator_ghostview.cpp:82
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "ការ​កំណត់​រចនា​សម្ព័ន្ធ​ផ្នែក​ខាងក្រោយ Ghostscript"
+
+#: generator_ghostview.cpp:253
+#, kde-format
+msgid "Document version"
+msgstr "កំណែ​ឯកសារ"
+
+#: generator_ghostview.cpp:259
+#, kde-format
+msgid "Language Level"
+msgstr "កម្រិត​ភាសា"
+
+#~ msgid "PS Backend"
+#~ msgstr "កម្មវិធី​ខាងក្រោយ PS"
+
+#~ msgid "A PostScript file renderer."
+#~ msgstr "កម្មវិធី​បង្ហាញ​ឯកសារ PostScript ។"
+
+#~ msgid "© 2007-2008 Albert Astals Cid"
+#~ msgstr "រក្សាសិទ្ធិ​ឆ្នាំ ២០០៧-២០០៨ ដោយ Albert Astals Cid"
+
+#~ msgid "Based on the Spectre library."
+#~ msgstr "មានមូលដ្ឋាន​លើ​បណ្ណាល័យ Spectre ។"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

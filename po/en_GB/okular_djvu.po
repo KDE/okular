@@ -1,0 +1,139 @@
+# translation of okular_djvu.po to British English
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Malcolm Hunter <malcolm.hunter@gmx.co.uk>, 2008.
+# Andrew Coles <andrew_coles@yahoo.co.uk>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2009-03-02 00:18+0000\n"
+"Last-Translator: Andrew Coles <andrew_coles@yahoo.co.uk>\n"
+"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Malcolm Hunter"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "malcolm.hunter@gmx.co.uk"
+
+#: generator_djvu.cpp:136
+#, kde-format
+msgid "Editor"
+msgstr "Editor"
+
+#: generator_djvu.cpp:137
+#, kde-format
+msgid "Publisher"
+msgstr "Publisher"
+
+#: generator_djvu.cpp:138
+#, kde-format
+msgid "Volume"
+msgstr "Volume"
+
+#: generator_djvu.cpp:139
+#, kde-format
+msgid "Type of document"
+msgstr "Type of document"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "Unknown"
+
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Component Files"
+msgstr "Component Files"
+
+#: kdjvu.cpp:684
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "Unknown"
+
+#: kdjvu.cpp:687
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "Single Page"
+
+#: kdjvu.cpp:690
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "Bundled"
+
+#: kdjvu.cpp:693
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "Indirect"
+
+#: kdjvu.cpp:696
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "Bundled (old)"
+
+#: kdjvu.cpp:699
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "Indexed (old)"
+
+#~ msgid "DjVu Backend"
+#~ msgstr "DjVu Backend"
+
+#~ msgid "DjVu backend based on DjVuLibre."
+#~ msgstr "DjVu backend based on DjVuLibre."
+
+#~ msgid "© 2006-2008 Pino Toscano"
+#~ msgstr "© 2006-2008 Pino Toscano"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgctxt "Unknown title"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown author"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown editor"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown publisher"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown creation date"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown volume information"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgctxt "Unknown type of document"
+#~ msgid "Unknown"
+#~ msgstr "Unknown"
+
+#~ msgid "A DjVu backend"
+#~ msgstr "A DjVu backend"

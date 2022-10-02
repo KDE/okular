@@ -1,0 +1,250 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Ukrainian "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Інструкція користувача Okular</title>
+<author
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+> <contrib
+>Сторінка man Okular.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>19 лютого 2022 року</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>універсальний переглядач документів</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>параметри Okular</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>адреса</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Опис</title>
+<para
+><command
+>okular</command
+> призначено для показу документів у різних форматах.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Параметри Okular</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>номер</replaceable
+></option
+></term>
+<listitem>
+<para
+>Відкрити у документі вказану сторінку.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Запустити документ в режимі презентації.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Запустити програму з показаним діалоговим вікном друку.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Запустити програму з показаним діалоговим вікном друку і завершити роботу після того, як друк буде завершено.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Інструмент керування унікальністю сеансу.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Надає змогу запобігти підняттю вікна Okular над іншими вікнами після запуску.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>рядок</replaceable
+></option
+></term>
+<listitem>
+<para
+>Знайти рядок у тексті.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>рядок</replaceable
+></option
+></term>
+<listitem>
+<para
+>Встановлює команду зовнішнього редактора. Встановити команду редактора у вже запущеному екземплярі Okular не можна. Будь ласка, зауважте, якщо редактор визначено у командному рядку, ви не зможете скористатися параметром <option
+>--unique</option
+>.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Аргументи</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>адреса</option
+></term>
+<listitem>
+<para
+>Адреса документа, який слід відкрити. Для PDF цю адресу можна вказати у форматі <replaceable
+>назва_документа</replaceable
+>#<replaceable
+>іменоване_призначення</replaceable
+>, <replaceable
+>іменоване_призначення</replaceable
+> — певне іменоване призначення, вбудоване до документа.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Зворотній зв’язок</title>
+<para
+>За допомогою IRC: irc.libera.chat #okular або за допомогою електронної пошти: okular-devel@kde.org або за допомогою сторінки у інтернеті: &lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;</para>
+</refsect1>
+
+<refsect1>
+<title
+>Також прочитайте</title>
+<simplelist>
+<member
+>Докладніша документація для користувачів доступна у <ulink url="help:/okular"
+>help:/okular</ulink
+> (введіть цю адресу у поле адреси &konqueror; або віддайте команду <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Докладніші відомості можна знайти на сайті <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Авторські права</title>
+<para
+>&copy; Wilco Greven, Christophe Devriese, 2002</para>
+<para
+>&copy; Enrico Ros, 2004–2005</para>
+<para
+>&copy; Piotr Szymanski, 2005</para>
+<para
+>&copy; Albert Astals Cid, 2004–2012</para>
+<para
+>&copy; Pino Toscano, 2006–2009</para>
+<para
+>Умови ліцензування: GNU General Public License, версія 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

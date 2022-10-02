@@ -1,0 +1,6110 @@
+# translation of okular.po to Chinese Traditional
+# Traditional(Big-5) Chinese translation for kpdf
+# Copyright (C) 2003, 2006, 2007, 2008 Free Software Foundation, Inc.
+#
+# Original translator: Edward G.J. Lee <edt1023@info.sayya.org>, 2003.
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2008, 2009, 2010.
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
+# Goodhorse <franklin@goodhorse.idv.tw>, 2008.
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2008, 2010, 2012.
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2011, 2012, 2013, 2014, 2015.
+# Jeff Huang <s8321414@gmail.com>, 2016, 2017.
+# pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"PO-Revision-Date: 2020-04-26 13:07+0800\n"
+"Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.12.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Edward G.J. Lee,Franklin Weng, Jeff Huang, pan93412"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"edt1023@info.sayya.org,franklin@goodhorse.idv.tw, s8321414@gmail.com, "
+"pan93412@gmail.com"
+
+#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#, kde-format
+msgid "Okular"
+msgstr "Okular"
+
+#: aboutdata.h:21
+#, kde-format
+msgid "Okular, a universal document viewer"
+msgstr "Okular，一個多功能文件檢視器"
+
+#: aboutdata.h:23
+#, kde-format
+msgid ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+msgstr ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Pino Toscano"
+msgstr ""
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Former maintainer"
+msgstr "前任維護者"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Tobias Koenig"
+msgstr ""
+
+#: aboutdata.h:32
+#, fuzzy, kde-format
+#| msgid "Lots of framework work, ODT and FictionBook backends"
+msgid "Lots of framework work, FictionBook backend and former ODT backend"
+msgstr "許多框架工作，ODT 與 FictionBook 後端介面"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Albert Astals Cid"
+msgstr ""
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Developer"
+msgstr "開發者"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Piotr Szymanski"
+msgstr ""
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Created Okular from KPDF codebase"
+msgstr "從 KPDF 源碼兌變成 okular"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "Enrico Ros"
+msgstr ""
+
+#: aboutdata.h:35
+#, kde-format
+msgid "KPDF developer"
+msgstr "KPDF 開發者"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Eugene Trounev"
+msgstr ""
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Annotations artwork"
+msgstr "最後狀態註記美化"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Jiri Baum - NICTA"
+msgstr ""
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Table selection tool"
+msgstr "表格選擇工具"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Fabio D'Urso"
+msgstr ""
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Annotation improvements"
+msgstr "註記改進"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Go to page %1"
+msgstr "跳到第 %1 頁"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Open external file"
+msgstr "開啟外部檔案"
+
+#: core/action.cpp:185
+#, kde-format
+msgid "Execute '%1'..."
+msgstr "執行 %1..."
+
+#: core/action.cpp:284
+#, kde-format
+msgid "First Page"
+msgstr "第一頁"
+
+#: core/action.cpp:286 part/presentationwidget.cpp:177
+#, kde-format
+msgid "Previous Page"
+msgstr "前一頁"
+
+#: core/action.cpp:288 part/presentationwidget.cpp:194
+#, kde-format
+msgid "Next Page"
+msgstr "下一頁"
+
+#: core/action.cpp:290
+#, kde-format
+msgid "Last Page"
+msgstr "最後一頁"
+
+#: core/action.cpp:292
+#, kde-format
+msgid "Back"
+msgstr "返回"
+
+#: core/action.cpp:294
+#, kde-format
+msgid "Forward"
+msgstr "往前"
+
+#: core/action.cpp:296
+#, kde-format
+msgid "Quit"
+msgstr "離開"
+
+#: core/action.cpp:298
+#, kde-format
+msgid "Start Presentation"
+msgstr "開始展示"
+
+#: core/action.cpp:300
+#, kde-format
+msgid "End Presentation"
+msgstr "結束展示"
+
+#: core/action.cpp:302
+#, kde-format
+msgid "Find..."
+msgstr "尋找..."
+
+#: core/action.cpp:304
+#, kde-format
+msgid "Go To Page..."
+msgstr "跳到其他頁..."
+
+#: core/action.cpp:355
+#, kde-format
+msgid "Play sound..."
+msgstr "播放聲音..."
+
+#: core/action.cpp:423 core/action.cpp:539
+#, kde-format
+msgid "JavaScript Script"
+msgstr "JavaScript 文稿"
+
+#: core/action.cpp:473
+#, kde-format
+msgid "Play movie..."
+msgstr "播放影片..."
+
+#: core/action.cpp:544
+#, kde-format
+msgid "Play movie"
+msgstr "播放影片"
+
+#: core/action.cpp:546
+#, kde-format
+msgid "Stop movie"
+msgstr "停止影片"
+
+#: core/action.cpp:548
+#, kde-format
+msgid "Pause movie"
+msgstr "暫停影片"
+
+#: core/action.cpp:550
+#, kde-format
+msgid "Resume movie"
+msgstr "回復播放"
+
+#: core/chooseenginedialog.cpp:22
+#, kde-format
+msgid "Backend Selection"
+msgstr "後端介面選擇"
+
+#: core/chooseenginedialog.cpp:40
+#, kde-format
+msgid ""
+"<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
+"><br />Please select which one to use:</qt>"
+msgstr ""
+"<qt>此 MIME 型態有一種以上的後端介面：<br /> <b>%1</b>（%2）。<br /><br /> 請"
+"選擇要使用哪一種：</qt>"
+
+#: core/document.cpp:203
+#, fuzzy, kde-format
+#| msgid "Go to page %1"
+msgctxt "@info %1 is a page size"
+msgid "Most pages are %1."
+msgstr "跳到第 %1 頁"
+
+#: core/document.cpp:224
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Portrait %1"
+msgstr "直向 %1"
+
+#: core/document.cpp:226
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Landscape %1"
+msgstr "橫向 %1"
+
+#: core/document.cpp:249
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 in (%3)"
+msgstr "%1 x %2 英吋（%3）"
+
+#: core/document.cpp:251
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 mm (%3)"
+msgstr "%1 x %2 釐米（%3）"
+
+#: core/document.cpp:1682
+#, kde-format
+msgid "Continuing search from beginning"
+msgstr "從開頭重新搜尋"
+
+#: core/document.cpp:1685
+#, kde-format
+msgid "Continuing search from bottom"
+msgstr "從底端重新搜尋"
+
+#: core/document.cpp:2445
+#, kde-format
+msgid ""
+"Can not find a plugin which is able to handle the document being passed."
+msgstr "找不到可以處理此文件的外掛程式。"
+
+#: core/document.cpp:3595
+#, kde-format
+msgctxt "remove a collection of annotations from the page"
+msgid "remove annotations"
+msgstr "移除註記"
+
+#: core/document.cpp:4160 core/document.cpp:4166
+#, kde-format
+msgid ""
+"The document is trying to execute an external application and, for your "
+"safety, Okular does not allow that."
+msgstr "此文件正試著執行外部應用程式，但為了安全起見，okular 不允許此動作。"
+
+#: core/document.cpp:4177
+#, kde-format
+msgid "No application found for opening file of mimetype %1."
+msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
+
+#: core/document.cpp:4600
+#, kde-format
+msgid "Could not open a temporary file"
+msgstr "無法開啟暫存檔"
+
+#: core/document.cpp:4602
+#, kde-format
+msgid "Print conversion failed"
+msgstr "列印轉換失敗"
+
+#: core/document.cpp:4604
+#, kde-format
+msgid "Printing process crashed"
+msgstr "列印行程發生錯誤"
+
+#: core/document.cpp:4606
+#, kde-format
+msgid "Printing process could not start"
+msgstr "列印行程無法啟動"
+
+#: core/document.cpp:4608
+#, kde-format
+msgid "Printing to file failed"
+msgstr "列印到檔案失敗"
+
+#: core/document.cpp:4610
+#, kde-format
+msgid "Printer was in invalid state"
+msgstr "印表機的狀態有問題"
+
+#: core/document.cpp:4612
+#, kde-format
+msgid "Unable to find file to print"
+msgstr "找不到要列印的檔案"
+
+#: core/document.cpp:4614
+#, kde-format
+msgid "There was no file to print"
+msgstr "沒有檔案可列印"
+
+#: core/document.cpp:4616
+#, kde-format
+msgid ""
+"Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
+"available"
+msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
+
+#: core/document.cpp:4618
+#, kde-format
+msgid "The page print size is invalid"
+msgstr "頁面列印大小不合法"
+
+#: core/document.cpp:5283 part/part.cpp:1168
+#, kde-format
+msgid "Could not open '%1'. File does not exist"
+msgstr "無法開啟 %1。檔案不存在"
+
+#: core/document.cpp:5793
+#, kde-format
+msgid "Title"
+msgstr "標題"
+
+#: core/document.cpp:5796
+#, kde-format
+msgid "Subject"
+msgstr "主旨"
+
+#: core/document.cpp:5799
+#, kde-format
+msgid "Description"
+msgstr "描述"
+
+#: core/document.cpp:5802
+#, kde-format
+msgid "Author"
+msgstr "作者"
+
+#: core/document.cpp:5805
+#, kde-format
+msgid "Creator"
+msgstr "檔案建立者"
+
+#: core/document.cpp:5808
+#, kde-format
+msgid "Producer"
+msgstr "產生者"
+
+#: core/document.cpp:5811
+#, kde-format
+msgid "Copyright"
+msgstr "版權"
+
+#: core/document.cpp:5814
+#, kde-format
+msgid "Pages"
+msgstr "頁面"
+
+#: core/document.cpp:5817
+#, kde-format
+msgid "Created"
+msgstr "已建立"
+
+#: core/document.cpp:5820
+#, kde-format
+msgid "Modified"
+msgstr "已修改"
+
+#: core/document.cpp:5823
+#, fuzzy, kde-format
+#| msgid "Mime Type"
+msgid "MIME Type"
+msgstr "MIME 類型"
+
+#: core/document.cpp:5826
+#, kde-format
+msgid "Category"
+msgstr "類別"
+
+#: core/document.cpp:5829
+#, kde-format
+msgid "Keywords"
+msgstr "關鍵字"
+
+#: core/document.cpp:5832
+#, kde-format
+msgid "File Path"
+msgstr "檔案路徑"
+
+#: core/document.cpp:5835
+#, kde-format
+msgid "File Size"
+msgstr "檔案大小"
+
+#: core/document.cpp:5838
+#, kde-format
+msgid "Page Size"
+msgstr "頁面大小"
+
+#: core/documentcommands.cpp:62
+#, kde-format
+msgctxt "Add an annotation to the page"
+msgid "add annotation"
+msgstr "新增註記"
+
+#: core/documentcommands.cpp:108
+#, kde-format
+msgctxt "Remove an annotation from the page"
+msgid "remove annotation"
+msgstr "移除註記"
+
+#: core/documentcommands.cpp:155
+#, kde-format
+msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
+msgid "modify annotation properties"
+msgstr "變更註記屬性"
+
+#: core/documentcommands.cpp:190
+#, kde-format
+msgctxt "Translate an annotation's position on the page"
+msgid "translate annotation"
+msgstr "翻譯註記"
+
+#: core/documentcommands.cpp:263
+#, kde-format
+msgctxt "Change an annotation's size"
+msgid "adjust annotation"
+msgstr "調整註記"
+
+#: core/documentcommands.cpp:333
+#, kde-format
+msgctxt "Generic text edit command"
+msgid "edit text"
+msgstr "編輯文字"
+
+#: core/documentcommands.cpp:396
+#, kde-format
+msgctxt "Edit an annotation's text contents"
+msgid "edit annotation contents"
+msgstr "編輯註記內容"
+
+#: core/documentcommands.cpp:445
+#, kde-format
+msgctxt "Edit an form's text contents"
+msgid "edit form contents"
+msgstr "編輯表單內容"
+
+#: core/documentcommands.cpp:494
+#, kde-format
+msgctxt "Edit a list form's choices"
+msgid "edit list form choices"
+msgstr "編輯清單表單選擇"
+
+#: core/documentcommands.cpp:528
+#, kde-format
+msgctxt "Edit a combo form's selection"
+msgid "edit combo form selection"
+msgstr "編輯下拉式選單表單選擇"
+
+#: core/documentcommands.cpp:600
+#, kde-format
+msgctxt "Edit the state of a group of form buttons"
+msgid "edit form button states"
+msgstr "編輯表單按鍵狀態"
+
+#: core/generator.cpp:761
+#, kde-format
+msgid "Plain &Text..."
+msgstr "純文字(&T)..."
+
+#: core/generator.cpp:764
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: core/generator.cpp:768
+#, kde-format
+msgctxt "This is the document format"
+msgid "OpenDocument Text"
+msgstr "OpenDocument 文字文件"
+
+#: core/generator.cpp:771
+#, kde-format
+msgctxt "This is the document format"
+msgid "HTML"
+msgstr "HTML"
+
+#: core/printoptionswidget.cpp:19
+#, kde-format
+msgid "Print Options"
+msgstr "列印選項"
+
+#: core/printoptionswidget.cpp:23
+#, kde-format
+msgid "Fit to printable area"
+msgstr "調整大小成可列印區域"
+
+#: core/printoptionswidget.cpp:24
+#, kde-format
+msgid "Fit to full page"
+msgstr "調整大小成整頁"
+
+#: core/printoptionswidget.cpp:25
+#, kde-format
+msgid "Scale mode:"
+msgstr "縮放模式："
+
+#: core/script/kjs_app.cpp:160
+#, kde-format
+msgid "Missing alert type"
+msgstr "缺少通知類型"
+
+#: core/script/kjs_app.cpp:222
+#, kde-format
+msgid "Do not show this message again"
+msgstr "請勿再次顯示此訊息"
+
+#: core/sourcereference.cpp:101
+#, kde-format
+msgctxt "'source' is a source file"
+msgid "Source: %1"
+msgstr "來源：%1"
+
+#: core/textdocumentsettings.cpp:34
+#, kde-format
+msgid "&Default Font:"
+msgstr "預設字型(&D)："
+
+#: gui/certificatemodel.cpp:39
+#, kde-format
+msgid "Version"
+msgstr "版本"
+
+#: gui/certificatemodel.cpp:41
+#, kde-format
+msgid "Serial Number"
+msgstr "序號"
+
+#: gui/certificatemodel.cpp:43
+#, kde-format
+msgid "Issuer"
+msgstr "發行者"
+
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#, kde-format
+msgid "Issued On"
+msgstr "發行時間"
+
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#, kde-format
+msgid "Expires On"
+msgstr "過期時間"
+
+#: gui/certificatemodel.cpp:49
+#, kde-format
+msgctxt "The person/company that made the signature"
+msgid "Subject"
+msgstr "主旨"
+
+#: gui/certificatemodel.cpp:51
+#, kde-format
+msgid "Public Key"
+msgstr "公鑰"
+
+#: gui/certificatemodel.cpp:53
+#, kde-format
+msgid "Key Usage"
+msgstr "金鑰用途"
+
+#: gui/certificatemodel.cpp:72
+#, kde-format
+msgid "V%1"
+msgstr "V%1"
+
+#: gui/certificatemodel.cpp:84
+#, kde-format
+msgid "%1 (%2 bits)"
+msgstr "%1（%2 位元）"
+
+#: gui/certificatemodel.cpp:146
+#, kde-format
+msgid "Property"
+msgstr "屬性"
+
+#: gui/certificatemodel.cpp:148
+#, kde-format
+msgid "Value"
+msgstr "數值"
+
+#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#, kde-format
+msgid "Pop-up Note"
+msgstr "彈出式備註"
+
+#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#, kde-format
+msgid "Typewriter"
+msgstr "打字機"
+
+#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#, kde-format
+msgid "Inline Note"
+msgstr "內含備註"
+
+#: gui/guiutils.cpp:48
+#, kde-format
+msgid "Straight Line with Comment"
+msgstr "含備註的直線"
+
+#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: part/pageviewannotator.cpp:1326
+#, kde-format
+msgid "Straight Line"
+msgstr "直線"
+
+#: gui/guiutils.cpp:50
+#, kde-format
+msgid "Polygon with Comment"
+msgstr "含備註的多邊形+"
+
+#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: part/pageviewannotator.cpp:1318
+#, kde-format
+msgid "Polygon"
+msgstr "五角形"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry with Comment"
+msgstr "含備註的幾何圖形"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry"
+msgstr "幾何圖形"
+
+#: gui/guiutils.cpp:59
+#, kde-format
+msgid "Highlight with Comment"
+msgstr "含備註的突顯文字"
+
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#, kde-format
+msgid "Highlight"
+msgstr "突顯"
+
+#: gui/guiutils.cpp:62
+#, kde-format
+msgid "Squiggle with Comment"
+msgstr "含備註的草寫魂字"
+
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: part/pageviewannotator.cpp:1322
+#, kde-format
+msgid "Squiggle"
+msgstr "草寫"
+
+#: gui/guiutils.cpp:65
+#, kde-format
+msgid "Underline with Comment"
+msgstr "含備註的底線"
+
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: part/pageviewannotator.cpp:1330
+#, kde-format
+msgid "Underline"
+msgstr "底線"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out with Comment"
+msgstr "含備註的刪除線"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out"
+msgstr "刪除線"
+
+#: gui/guiutils.cpp:73
+#, kde-format
+msgid "Stamp with Comment"
+msgstr "含備註的郵票"
+
+#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: part/pageviewannotator.cpp:1324
+#, kde-format
+msgid "Stamp"
+msgstr "印花"
+
+#: gui/guiutils.cpp:76
+#, kde-format
+msgid "Freehand Line with Comment"
+msgstr "含備註的手繪線條"
+
+#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: part/pageviewannotator.cpp:1312
+#, kde-format
+msgid "Freehand Line"
+msgstr "自由手繪線條"
+
+#: gui/guiutils.cpp:79
+#, kde-format
+msgid "Caret"
+msgstr "符號"
+
+#: gui/guiutils.cpp:82
+#, kde-format
+msgid "File Attachment"
+msgstr "附加檔案"
+
+#: gui/guiutils.cpp:85
+#, kde-format
+msgid "Sound"
+msgstr "音效"
+
+#: gui/guiutils.cpp:88
+#, kde-format
+msgid "Movie"
+msgstr "電影"
+
+#: gui/guiutils.cpp:91
+#, kde-format
+msgctxt "Caption for a screen annotation"
+msgid "Screen"
+msgstr "螢幕"
+
+#: gui/guiutils.cpp:94
+#, kde-format
+msgctxt "Caption for a widget annotation"
+msgid "Widget"
+msgstr "元件"
+
+#: gui/guiutils.cpp:97
+#, kde-format
+msgctxt "Caption for a rich media annotation"
+msgid "Rich Media"
+msgstr "豐富媒體"
+
+#: gui/guiutils.cpp:109
+#, kde-format
+msgctxt "Unknown author"
+msgid "Unknown"
+msgstr "未知"
+
+#: gui/guiutils.cpp:126 part/presentationwidget.cpp:370
+#, kde-format
+msgid "Author: %1"
+msgstr "作者：%1"
+
+#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#, kde-format
+msgid "Where do you want to save %1?"
+msgstr "您要將 %1 儲存在哪裡？"
+
+#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#, kde-format
+msgid "Could not open \"%1\" for writing. File was not saved."
+msgstr "無法開啟 %1 以寫入。檔案未儲存。"
+
+#: gui/signatureguiutils.cpp:42
+#, kde-format
+msgid "The signature is cryptographically valid."
+msgstr "這個簽名在密碼學上有效。"
+
+#: gui/signatureguiutils.cpp:44
+#, kde-format
+msgid "The signature is cryptographically invalid."
+msgstr "這個簽名在密碼學上無效。"
+
+#: gui/signatureguiutils.cpp:46
+#, kde-format
+msgid "Digest Mismatch occurred."
+msgstr "發生摘要不相符問題。"
+
+#: gui/signatureguiutils.cpp:48
+#, kde-format
+msgid "The signature CMS/PKCS7 structure is malformed."
+msgstr "CMS/PKCS7 憑證之結構無效。"
+
+#: gui/signatureguiutils.cpp:50
+#, kde-format
+msgid "The requested signature is not present in the document."
+msgstr "請求之憑證未在此文件出現。"
+
+#: gui/signatureguiutils.cpp:52
+#, kde-format
+msgid "The signature could not be verified."
+msgstr "無法驗證該憑證。"
+
+#: gui/signatureguiutils.cpp:60
+#, kde-format
+msgid "Certificate is Trusted."
+msgstr "憑證受信任。"
+
+#: gui/signatureguiutils.cpp:62
+#, kde-format
+msgid "Certificate issuer isn't Trusted."
+msgstr "憑證發行人不受信任。"
+
+#: gui/signatureguiutils.cpp:64
+#, kde-format
+msgid "Certificate issuer is unknown."
+msgstr "憑證發行人未知。"
+
+#: gui/signatureguiutils.cpp:66
+#, kde-format
+msgid "Certificate has been Revoked."
+msgstr "憑證已被撤銷。"
+
+#: gui/signatureguiutils.cpp:68
+#, kde-format
+msgid "Certificate has Expired."
+msgstr "憑證已過期。"
+
+#: gui/signatureguiutils.cpp:70
+#, kde-format
+msgid "Certificate has not yet been verified."
+msgstr "憑證尚未驗證。"
+
+#: gui/signatureguiutils.cpp:72
+#, kde-format
+msgid "Unknown issue with Certificate or corrupted data."
+msgstr "憑證發生未知問題，或是資料損壞。"
+
+#: gui/signatureguiutils.cpp:80
+#, kde-format
+msgid "MD2"
+msgstr "MD2"
+
+#: gui/signatureguiutils.cpp:82
+#, kde-format
+msgid "MD5"
+msgstr "MD5"
+
+#: gui/signatureguiutils.cpp:84
+#, kde-format
+msgid "SHA1"
+msgstr "SHA1"
+
+#: gui/signatureguiutils.cpp:86
+#, kde-format
+msgid "SHA256"
+msgstr "SHA256"
+
+#: gui/signatureguiutils.cpp:88
+#, kde-format
+msgid "SHA384"
+msgstr "SHA384"
+
+#: gui/signatureguiutils.cpp:90
+#, kde-format
+msgid "SHA512"
+msgstr "SHA512"
+
+#: gui/signatureguiutils.cpp:92
+#, kde-format
+msgid "SHA224"
+msgstr "SHA224"
+
+#: gui/signatureguiutils.cpp:94
+#, kde-format
+msgid "Unknown Algorithm"
+msgstr "未知算法"
+
+#: gui/signatureguiutils.cpp:102
+#, kde-format
+msgid "RSA"
+msgstr "RSA"
+
+#: gui/signatureguiutils.cpp:104
+#, kde-format
+msgid "DSA"
+msgstr "DSA"
+
+#: gui/signatureguiutils.cpp:106
+#, kde-format
+msgid "EC"
+msgstr "EC"
+
+#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#, kde-format
+msgid "Unknown Type"
+msgstr "未知類型"
+
+#: gui/signatureguiutils.cpp:118
+#, kde-format
+msgid "Digital Signature"
+msgstr "數位憑證"
+
+#: gui/signatureguiutils.cpp:121
+#, kde-format
+msgid "Non-Repudiation"
+msgstr "未拒絕"
+
+#: gui/signatureguiutils.cpp:124
+#, kde-format
+msgid "Encrypt Keys"
+msgstr "加密金鑰"
+
+#: gui/signatureguiutils.cpp:127
+#, kde-format
+msgid "Decrypt Keys"
+msgstr "解密金鑰"
+
+#: gui/signatureguiutils.cpp:130
+#, kde-format
+msgid "Key Agreement"
+msgstr "金鑰條款"
+
+#: gui/signatureguiutils.cpp:133
+#, kde-format
+msgid "Sign Certificate"
+msgstr "簽署憑證"
+
+#: gui/signatureguiutils.cpp:136
+#, kde-format
+msgid "Sign CRL"
+msgstr "簽署 CRL"
+
+#: gui/signatureguiutils.cpp:139
+#, kde-format
+msgid "Encrypt Only"
+msgstr "僅用於加密"
+
+#: gui/signatureguiutils.cpp:142
+#, kde-format
+msgid "No Usage Specified"
+msgstr "未指定用法"
+
+#: gui/signatureguiutils.cpp:149
+#, kde-format
+msgctxt "Joins the various ways a signature key can be used in a longer string"
+msgid ", "
+msgstr ", "
+
+#: gui/signatureguiutils.cpp:163
+#, kde-format
+msgid "The document has not been modified since it was signed."
+msgstr "自簽名後文件已變更過。"
+
+#: gui/signatureguiutils.cpp:166
+#, kde-format
+msgid ""
+"The revision of the document that was covered by this signature has not been "
+"modified;\n"
+"however there have been subsequent changes to the document."
+msgstr ""
+"此簽名所涵蓋的文件修訂版未被變更；\n"
+"然而此文件之後被變更過。"
+
+#: gui/signatureguiutils.cpp:170
+#, kde-format
+msgid ""
+"The document has been modified in a way not permitted by a previous signer."
+msgstr "此文件用了上位簽名者不允許的方式變更。"
+
+#: gui/signatureguiutils.cpp:172
+#, kde-format
+msgid "The document integrity verification could not be completed."
+msgstr "無法完成此文件的有效性驗證。"
+
+#: gui/signatureguiutils.cpp:205
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid "This document has unsigned signature fields."
+msgstr "此文件已經數位簽名。"
+
+#: gui/signatureguiutils.cpp:208
+#, kde-format
+msgid "This document is digitally signed."
+msgstr "此文件已經數位簽名。"
+
+#: gui/signatureguiutils.cpp:210
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid ""
+"This document is digitally signed. There have been changes since last signed."
+msgstr "此文件已經數位簽名。"
+
+#: gui/signatureguiutils.cpp:213
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid ""
+"This document is digitally signed. Some of the signatures could not be "
+"validated properly."
+msgstr "此文件已經數位簽名。"
+
+#: gui/signaturemodel.cpp:141
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Unsigned Signature %1"
+msgstr "數位憑證"
+
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#, kde-format
+msgid "Field: %1 on page %2"
+msgstr "欄位：%1（於第 %2 頁）"
+
+#: gui/signaturemodel.cpp:152
+#, kde-format
+msgid "Rev. %1: Signed By %2"
+msgstr "修訂版 %1：由 %2 簽署"
+
+#: gui/signaturemodel.cpp:158
+#, kde-format
+msgid "Signing Time: %1"
+msgstr "簽署時間：%1"
+
+#: gui/signaturemodel.cpp:163
+#, kde-format
+msgid "Reason: %1"
+msgstr "原因：%1"
+
+#: part/annotationactionhandler.cpp:147
+#, fuzzy, kde-format
+#| msgid "Red"
+msgctxt "@item:inlistbox Color name"
+msgid "Red"
+msgstr "紅"
+
+#: part/annotationactionhandler.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Orange"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:149
+#, fuzzy, kde-format
+#| msgid "Yellow"
+msgctxt "@item:inlistbox Color name"
+msgid "Yellow"
+msgstr "黃"
+
+#: part/annotationactionhandler.cpp:150
+#, fuzzy, kde-format
+#| msgid "Green"
+msgctxt "@item:inlistbox Color name"
+msgid "Green"
+msgstr "綠"
+
+#: part/annotationactionhandler.cpp:151
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Cyan"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:152
+#, fuzzy, kde-format
+#| msgid "Blue"
+msgctxt "@item:inlistbox Color name"
+msgid "Blue"
+msgstr "藍"
+
+#: part/annotationactionhandler.cpp:153
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Magenta"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:154
+#, fuzzy, kde-format
+#| msgid "White"
+msgctxt "@item:inlistbox Color name"
+msgid "White"
+msgstr "白"
+
+#: part/annotationactionhandler.cpp:155
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Gray"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:156
+#, fuzzy, kde-format
+#| msgid "Black"
+msgctxt "@item:inlistbox Color name"
+msgid "Black"
+msgstr "黑"
+
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#, fuzzy, kde-format
+#| msgid "&Width:"
+msgctxt "@item:inlistbox"
+msgid "Width %1"
+msgstr "寬度(&W)："
+
+#: part/annotationactionhandler.cpp:251
+#, fuzzy, kde-format
+#| msgid "V%1"
+msgctxt "@item:inlistbox"
+msgid "%1%"
+msgstr "V%1"
+
+#: part/annotationactionhandler.cpp:295
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:296
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:297
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:298
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:299
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:300
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Add the current annotation to the quick annotations menu (No annotation "
+"selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:301
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
+"selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:302
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Advanced settings for the current annotation tool (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:307
+#, fuzzy, kde-format
+#| msgid "Annotation Options"
+msgctxt "@info:tooltip"
+msgid "Annotation line width"
+msgstr "註記選項"
+
+#: part/annotationactionhandler.cpp:309
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (Current annotation has no line width)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:313
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "@info:tooltip"
+msgid "Annotation text color"
+msgstr "註記工具"
+
+#: part/annotationactionhandler.cpp:315
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "@info:tooltip"
+msgid "Annotation border color"
+msgstr "註記工具"
+
+#: part/annotationactionhandler.cpp:317
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "@info:tooltip"
+msgid "Annotation color"
+msgstr "註記工具"
+
+#: part/annotationactionhandler.cpp:321
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "@info:tooltip"
+msgid "Annotation fill color"
+msgstr "註記工具"
+
+#: part/annotationactionhandler.cpp:323
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (Current annotation has no fill color)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:327
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
+msgctxt "@info:tooltip"
+msgid "Annotation font"
+msgstr "%1 最後狀態註記"
+
+#: part/annotationactionhandler.cpp:329
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (Current annotation has no font)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain line angle to 15° steps"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:335
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain shape ratio to 1:1"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:337
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
+"current annotation)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:340
+#, fuzzy, kde-format
+#| msgid "Annotation Options"
+msgctxt "@info:tooltip"
+msgid "Annotation opacity"
+msgstr "註記選項"
+
+#: part/annotationactionhandler.cpp:341
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the current annotation to the quick annotations menu"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:342
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Advanced settings for the current annotation tool"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:431
+#, fuzzy, kde-format
+#| msgid "Color:"
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Color"
+msgstr "顏色："
+
+#: part/annotationactionhandler.cpp:433
+#, fuzzy, kde-format
+#| msgid "Color:"
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Fill Color"
+msgstr "顏色："
+
+#: part/annotationactionhandler.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Transparent"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Custom Color..."
+msgstr ""
+
+#: part/annotationactionhandler.cpp:502
+#, fuzzy, kde-format
+#| msgid "Text &color:"
+msgctxt "@title:window"
+msgid "Select color"
+msgstr "文字顏色(&C)："
+
+#: part/annotationactionhandler.cpp:554
+#, fuzzy, kde-format
+#| msgid "Annotations"
+msgid "&Annotations"
+msgstr "註記"
+
+#: part/annotationactionhandler.cpp:555
+#, kde-format
+msgctxt "@action:intoolbar Hide the toolbar"
+msgid "Hide"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:556
+#, fuzzy, kde-format
+#| msgid "Create annotation tool"
+msgctxt "@action:intoolbar Show the builtin annotation toolbar"
+msgid "Show more annotation tools"
+msgstr "建立註記工具"
+
+#: part/annotationactionhandler.cpp:559
+#, fuzzy, kde-format
+#| msgid "Highlighter"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Highlighter"
+msgstr "突顯"
+
+#: part/annotationactionhandler.cpp:560
+#, fuzzy, kde-format
+#| msgid "Underline"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Underline"
+msgstr "底線"
+
+#: part/annotationactionhandler.cpp:561
+#, fuzzy, kde-format
+#| msgid "Squiggle"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Squiggle"
+msgstr "草寫"
+
+#: part/annotationactionhandler.cpp:562
+#, fuzzy, kde-format
+#| msgid "Strike Out"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Strike Out"
+msgstr "刪除線"
+
+#: part/annotationactionhandler.cpp:564
+#, fuzzy, kde-format
+#| msgid "Typewriter"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Typewriter"
+msgstr "打字機"
+
+#: part/annotationactionhandler.cpp:565
+#, fuzzy, kde-format
+#| msgid "Inline Note"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Inline Note"
+msgstr "內含備註"
+
+#: part/annotationactionhandler.cpp:566
+#, fuzzy, kde-format
+#| msgid "Pop-up Note"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Popup Note"
+msgstr "彈出式備註"
+
+#: part/annotationactionhandler.cpp:567
+#, fuzzy, kde-format
+#| msgid "Freehand Line"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Freehand Line"
+msgstr "自由手繪線條"
+
+#: part/annotationactionhandler.cpp:569
+#, fuzzy, kde-format
+#| msgid "Straight Line"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Straight line"
+msgstr "直線"
+
+#: part/annotationactionhandler.cpp:570
+#, fuzzy, kde-format
+#| msgid "Open Arrow"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Arrow"
+msgstr "開放箭頭"
+
+#: part/annotationactionhandler.cpp:571
+#, fuzzy, kde-format
+#| msgid "Rectangle"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Rectangle"
+msgstr "矩形"
+
+#: part/annotationactionhandler.cpp:572
+#, fuzzy, kde-format
+#| msgid "Ellipse"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Ellipse"
+msgstr "橢圓形"
+
+#: part/annotationactionhandler.cpp:573
+#, fuzzy, kde-format
+#| msgid "Polygon"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Polygon"
+msgstr "五角形"
+
+#: part/annotationactionhandler.cpp:574
+#, fuzzy, kde-format
+#| msgid "Geometrical shape"
+msgctxt "@action"
+msgid "Geometrical shapes"
+msgstr "幾何形狀"
+
+#: part/annotationactionhandler.cpp:625
+#, fuzzy, kde-format
+#| msgid "Stamp"
+msgctxt "@action"
+msgid "Stamp"
+msgstr "印花"
+
+#: part/annotationactionhandler.cpp:650
+#, fuzzy, kde-format
+#| msgid "Annotations"
+msgctxt "@action:intoolbar Show list of quick annotation tools"
+msgid "Quick Annotations"
+msgstr "註記"
+
+#: part/annotationactionhandler.cpp:658
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Choose an annotation tool from the quick annotations"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:668
+#, fuzzy, kde-format
+#| msgid "Annotations"
+msgid "Quick Annotation Bar"
+msgstr "註記"
+
+#: part/annotationactionhandler.cpp:682
+#, fuzzy, kde-format
+#| msgctxt "Add an annotation to the page"
+#| msgid "add annotation"
+msgctxt ""
+"@action:intoolbar Add current annotation tool to the quick annotations list"
+msgid "Add to Quick Annotations"
+msgstr "新增註記"
+
+#: part/annotationactionhandler.cpp:685
+#, kde-format
+msgctxt ""
+"@action:intoolbar When checked keep the current annotation tool active after "
+"use"
+msgid "Keep Active"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:686
+#, fuzzy, kde-format
+#| msgid "Create annotation tool"
+msgctxt "@info:tooltip"
+msgid "Keep the annotation tool active after use"
+msgstr "建立註記工具"
+
+#: part/annotationactionhandler.cpp:691
+#, kde-format
+msgctxt ""
+"@action When checked, line annotations are constrained to 15° steps, shape "
+"annotations to 1:1 ratio"
+msgid "Constrain Ratio and Angle of Annotation Tools"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:697
+#, fuzzy, kde-format
+#| msgid "Font:"
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Font"
+msgstr "字型："
+
+#: part/annotationactionhandler.cpp:698
+#, fuzzy, kde-format
+#| msgid "Annotation Options"
+msgctxt "@action:intoolbar Current annotation advanced settings"
+msgid "Annotation Settings"
+msgstr "註記選項"
+
+#: part/annotationactionhandler.cpp:701
+#, fuzzy, kde-format
+#| msgid "Line end:"
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Line width"
+msgstr "行結尾："
+
+#: part/annotationactionhandler.cpp:710
+#, fuzzy, kde-format
+#| msgid "&Opacity:"
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Opacity"
+msgstr "不透明度(&O)："
+
+#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#, kde-format
+msgid "Page %1"
+msgstr "頁 %1"
+
+#: part/annotationpopup.cpp:81
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "%1 最後狀態註記"
+
+#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#, kde-format
+msgid "&Open Pop-up Note"
+msgstr "開啟彈出式備註(&O)"
+
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#, kde-format
+msgid "&Delete"
+msgstr "刪除(&D)"
+
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/propertiesdialog.cpp:54
+#, kde-format
+msgid "&Properties"
+msgstr "屬性(&P)"
+
+#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#, kde-format
+msgctxt "%1 is the name of the file to save"
+msgid "&Save '%1'..."
+msgstr "儲存 %1(&S)..."
+
+#: part/annotationpropertiesdialog.cpp:54
+#, kde-format
+msgid "&Appearance"
+msgstr "外觀(&A)"
+
+#: part/annotationpropertiesdialog.cpp:59
+#, kde-format
+msgid "&General"
+msgstr "一般(&G)"
+
+#: part/annotationpropertiesdialog.cpp:64
+#, kde-format
+msgid "&Author:"
+msgstr "作者(&A)："
+
+#: part/annotationpropertiesdialog.cpp:69
+#, kde-format
+msgid "Created:"
+msgstr "建立日期："
+
+#: part/annotationpropertiesdialog.cpp:74
+#, kde-format
+msgid "Modified:"
+msgstr "修改日期："
+
+#: part/annotationpropertiesdialog.cpp:108
+#, kde-format
+msgid "Pop-up Note Properties"
+msgstr "彈出式備註屬性"
+
+#: part/annotationpropertiesdialog.cpp:111
+#, kde-format
+msgid "Typewriter Properties"
+msgstr "打字機屬性"
+
+#: part/annotationpropertiesdialog.cpp:113
+#, kde-format
+msgid "Inline Note Properties"
+msgstr "內含備註屬性"
+
+#: part/annotationpropertiesdialog.cpp:119
+#, kde-format
+msgid "Straight Line Properties"
+msgstr "直線屬性"
+
+#: part/annotationpropertiesdialog.cpp:121
+#, kde-format
+msgid "Polygon Properties"
+msgstr "五角形屬性"
+
+#: part/annotationpropertiesdialog.cpp:125
+#, kde-format
+msgid "Geometry Properties"
+msgstr "幾何圖形屬性"
+
+#: part/annotationpropertiesdialog.cpp:128
+#, kde-format
+msgid "Text Markup Properties"
+msgstr "文字標記屬性"
+
+#: part/annotationpropertiesdialog.cpp:131
+#, kde-format
+msgid "Stamp Properties"
+msgstr "印花屬性"
+
+#: part/annotationpropertiesdialog.cpp:134
+#, kde-format
+msgid "Freehand Line Properties"
+msgstr "手繪線條屬性"
+
+#: part/annotationpropertiesdialog.cpp:137
+#, kde-format
+msgid "Caret Properties"
+msgstr "符號屬性"
+
+#: part/annotationpropertiesdialog.cpp:140
+#, kde-format
+msgid "File Attachment Properties"
+msgstr "附加檔案屬性"
+
+#: part/annotationpropertiesdialog.cpp:143
+#, kde-format
+msgid "Sound Properties"
+msgstr "音效屬性"
+
+#: part/annotationpropertiesdialog.cpp:146
+#, kde-format
+msgid "Movie Properties"
+msgstr "電影屬性"
+
+#: part/annotationpropertiesdialog.cpp:149
+#, kde-format
+msgid "Annotation Properties"
+msgstr "註釋屬性"
+
+#: part/annotationpropertiesdialog.cpp:175
+#, kde-format
+msgid "Modified: %1"
+msgstr "修改時間：%1"
+
+#: part/annotationwidgets.cpp:56
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a custom stamp symbol from file"
+msgstr "從檔案選取自訂印花標記"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgctxt "@title:window file chooser"
+msgid "Select custom stamp symbol"
+msgstr "選取自訂印花標記"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgid ""
+"*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
+msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | 圖示檔 (*.ico *.png *.xpm *.svg *.svgz)"
+
+#: part/annotationwidgets.cpp:160
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not load the file <filename>%1</filename>"
+msgstr "無法載入 <filename>%1</filename> 檔案"
+
+#: part/annotationwidgets.cpp:160
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid file"
+msgstr "檔案無效"
+
+#: part/annotationwidgets.cpp:267
+#, kde-format
+msgid "&Color:"
+msgstr "顏色(&C)："
+
+#: part/annotationwidgets.cpp:276
+#, fuzzy, kde-format
+#| msgid "%"
+msgctxt "Suffix for the opacity level, eg '80%'"
+msgid "%"
+msgstr " %"
+
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#, kde-format
+msgid "&Opacity:"
+msgstr "不透明度(&O)："
+
+#: part/annotationwidgets.cpp:365
+#, kde-format
+msgid "Icon:"
+msgstr "圖示："
+
+#: part/annotationwidgets.cpp:366
+#, kde-format
+msgid "Comment"
+msgstr "註解"
+
+#: part/annotationwidgets.cpp:367
+#, kde-format
+msgid "Help"
+msgstr "說明"
+
+#: part/annotationwidgets.cpp:368
+#, kde-format
+msgid "Insert"
+msgstr "插入"
+
+#: part/annotationwidgets.cpp:369
+#, kde-format
+msgid "Key"
+msgstr "鍵值"
+
+#: part/annotationwidgets.cpp:370
+#, kde-format
+msgid "New paragraph"
+msgstr "新段落"
+
+#: part/annotationwidgets.cpp:371
+#, kde-format
+msgid "Note"
+msgstr "備註"
+
+#: part/annotationwidgets.cpp:372
+#, kde-format
+msgid "Paragraph"
+msgstr "段落"
+
+#: part/annotationwidgets.cpp:380
+#, kde-format
+msgid "Font:"
+msgstr "字型："
+
+#: part/annotationwidgets.cpp:389
+#, kde-format
+msgid "Text &color:"
+msgstr "文字顏色(&C)："
+
+#: part/annotationwidgets.cpp:396
+#, kde-format
+msgid "&Align:"
+msgstr "對齊(&A)："
+
+#: part/annotationwidgets.cpp:397
+#, kde-format
+msgid "Left"
+msgstr "向左"
+
+#: part/annotationwidgets.cpp:398
+#, kde-format
+msgid "Center"
+msgstr "置中"
+
+#: part/annotationwidgets.cpp:399
+#, kde-format
+msgid "Right"
+msgstr "向右"
+
+#: part/annotationwidgets.cpp:407
+#, kde-format
+msgid "Border &width:"
+msgstr "邊框寬度(&W)："
+
+#: part/annotationwidgets.cpp:416
+#, kde-format
+msgid "Approved"
+msgstr "已批准"
+
+#: part/annotationwidgets.cpp:417
+#, kde-format
+msgid "As Is"
+msgstr "保持原樣"
+
+#: part/annotationwidgets.cpp:418
+#, kde-format
+msgid "Confidential"
+msgstr "機密"
+
+#: part/annotationwidgets.cpp:419
+#, kde-format
+msgid "Departmental"
+msgstr "部門"
+
+#: part/annotationwidgets.cpp:420
+#, kde-format
+msgid "Draft"
+msgstr "草稿"
+
+#: part/annotationwidgets.cpp:421
+#, kde-format
+msgid "Experimental"
+msgstr "實驗性"
+
+#: part/annotationwidgets.cpp:422
+#, kde-format
+msgid "Expired"
+msgstr "已過期"
+
+#: part/annotationwidgets.cpp:423
+#, kde-format
+msgid "Final"
+msgstr "完成"
+
+#: part/annotationwidgets.cpp:424
+#, kde-format
+msgid "For Comment"
+msgstr "註解用"
+
+#: part/annotationwidgets.cpp:425
+#, kde-format
+msgid "For Public Release"
+msgstr "公開發行用"
+
+#: part/annotationwidgets.cpp:426
+#, kde-format
+msgid "Not Approved"
+msgstr "未批准"
+
+#: part/annotationwidgets.cpp:427
+#, kde-format
+msgid "Not For Public Release"
+msgstr "不可公開發行"
+
+#: part/annotationwidgets.cpp:428
+#, kde-format
+msgid "Sold"
+msgstr "已售出"
+
+#: part/annotationwidgets.cpp:429
+#, kde-format
+msgid "Top Secret"
+msgstr "最高機密"
+
+#: part/annotationwidgets.cpp:430
+#, kde-format
+msgid "Bookmark"
+msgstr "書籤"
+
+#: part/annotationwidgets.cpp:431
+#, kde-format
+msgid "Information"
+msgstr "資訊"
+
+#: part/annotationwidgets.cpp:432
+#, kde-format
+msgid "KDE"
+msgstr "KDE"
+
+#: part/annotationwidgets.cpp:456
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
+"visible in PDF readers other than Okular.</warning>"
+msgstr ""
+"<warning>實驗性功能。<nl/>插入 PDF 文件的印花，不能在 Okular 以外的PDF 閱讀器"
+"中顯示。</warning>"
+
+#: part/annotationwidgets.cpp:469
+#, kde-format
+msgid "Stamp symbol:"
+msgstr "印花標記："
+
+#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
+#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
+#: part/annotationwidgets.cpp:795
+#, kde-format
+msgid "&Width:"
+msgstr "寬度(&W)："
+
+#: part/annotationwidgets.cpp:522
+#, kde-format
+msgid "Line start:"
+msgstr "行開頭："
+
+#: part/annotationwidgets.cpp:524
+#, kde-format
+msgid "Line end:"
+msgstr "行結尾："
+
+#: part/annotationwidgets.cpp:527
+#, kde-format
+msgid "Square"
+msgstr "正方形"
+
+#: part/annotationwidgets.cpp:528
+#, kde-format
+msgid "Circle"
+msgstr "圓形"
+
+#: part/annotationwidgets.cpp:529
+#, kde-format
+msgid "Diamond"
+msgstr "鑽石"
+
+#: part/annotationwidgets.cpp:530
+#, kde-format
+msgid "Open Arrow"
+msgstr "開放箭頭"
+
+#: part/annotationwidgets.cpp:531
+#, kde-format
+msgid "Closed Arrow"
+msgstr "閉合箭頭"
+
+#: part/annotationwidgets.cpp:532
+#, kde-format
+msgid "None"
+msgstr "無"
+
+#: part/annotationwidgets.cpp:533
+#, kde-format
+msgid "Butt"
+msgstr "對縫"
+
+#: part/annotationwidgets.cpp:534
+#, kde-format
+msgid "Right Open Arrow"
+msgstr "右指開放箭頭"
+
+#: part/annotationwidgets.cpp:535
+#, kde-format
+msgid "Right Closed Arrow"
+msgstr "右指閉合箭頭"
+
+#: part/annotationwidgets.cpp:536
+#, kde-format
+msgid "Slash"
+msgstr "斜線"
+
+#: part/annotationwidgets.cpp:549
+#, kde-format
+msgid "Leader line length:"
+msgstr "首線條長度："
+
+#: part/annotationwidgets.cpp:551
+#, kde-format
+msgid "Leader line extensions length:"
+msgstr "首線條延伸長度："
+
+#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#, kde-format
+msgid "Enabled"
+msgstr "已啟用"
+
+#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#, kde-format
+msgid "Shape fill:"
+msgstr "圖形填充："
+
+#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#, kde-format
+msgid "Type:"
+msgstr "類型："
+
+#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#, kde-format
+msgid "Strike out"
+msgstr "刪除線"
+
+#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#, kde-format
+msgid "Rectangle"
+msgstr "矩形"
+
+#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#, kde-format
+msgid "Ellipse"
+msgstr "橢圓形"
+
+#: part/annotationwidgets.cpp:763
+#, kde-format
+msgid "File attachment symbol:"
+msgstr "檔案附件符號："
+
+#: part/annotationwidgets.cpp:766
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Graph"
+msgstr "圖形"
+
+#: part/annotationwidgets.cpp:767
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Push Pin"
+msgstr "圖釘"
+
+#: part/annotationwidgets.cpp:768
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Paperclip"
+msgstr "迴紋針"
+
+#: part/annotationwidgets.cpp:769
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Tag"
+msgstr "標籤"
+
+#: part/annotationwidgets.cpp:778
+#, kde-format
+msgctxt "'File' as normal file, that can be opened, saved, etc.."
+msgid "File"
+msgstr "檔案"
+
+#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#, kde-format
+msgctxt "Not available size"
+msgid "N/A"
+msgstr "無"
+
+#: part/annotationwidgets.cpp:783
+#, kde-format
+msgid "No description available."
+msgstr "沒有可用的描述。"
+
+#: part/annotationwidgets.cpp:791
+#, kde-format
+msgid "Name:"
+msgstr "名稱："
+
+#: part/annotationwidgets.cpp:802
+#, kde-format
+msgid "Description:"
+msgstr "描述："
+
+#: part/annotationwidgets.cpp:861
+#, kde-format
+msgid "Caret symbol:"
+msgstr "符號標記："
+
+#: part/annotationwidgets.cpp:863
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "None"
+msgstr "無"
+
+#: part/annotationwidgets.cpp:864
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "P"
+msgstr "P"
+
+#: part/annotwindow.cpp:52
+#, kde-format
+msgid "Close this note"
+msgstr "關閉此通知"
+
+#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#, kde-format
+msgid "Options"
+msgstr "選項"
+
+#: part/annotwindow.cpp:106
+#, kde-format
+msgid ""
+"This annotation may contain LaTeX code.\n"
+"Click here to render."
+msgstr ""
+"這個註記可能包含 LaTeX 的代碼。\n"
+"點擊此處以成像。"
+
+#: part/annotwindow.cpp:415
+#, kde-format
+msgid "Cannot find latex executable."
+msgstr "找不到 latex 執行檔。"
+
+#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "LaTeX rendering failed"
+msgstr "LaTeX 成像失敗"
+
+#: part/annotwindow.cpp:420
+#, kde-format
+msgid "Cannot find dvipng executable."
+msgstr "找不到 dvipng 執行檔。"
+
+#: part/annotwindow.cpp:425
+#, kde-format
+msgid "A problem occurred during the execution of the 'latex' command."
+msgstr "執行 'latex' 指令時發生錯誤。"
+
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "A problem occurred during the execution of the 'dvipng' command."
+msgstr "執行 'dvipng' 指令時發生錯誤。"
+
+#: part/bookmarklist.cpp:115
+#, kde-format
+msgctxt "%1 is the file name"
+msgid ""
+"%1\n"
+"\n"
+"One bookmark"
+msgid_plural ""
+"%1\n"
+"\n"
+"%2 bookmarks"
+msgstr[0] ""
+"%1\n"
+"\n"
+"%2 個書籤"
+
+#: part/bookmarklist.cpp:131 part/part.cpp:422
+#, kde-format
+msgid "Bookmarks"
+msgstr "書籤"
+
+#: part/bookmarklist.cpp:135
+#, kde-format
+msgid "Show for all documents"
+msgstr ""
+
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
+#: part/toc.cpp:43
+#, kde-format
+msgid "Search..."
+msgstr "搜尋…"
+
+#: part/bookmarklist.cpp:257
+#, kde-format
+msgid "Go to This Bookmark"
+msgstr "跳到此書籤"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
+#: part/part.cpp:2467
+#, kde-format
+msgid "Rename Bookmark"
+msgstr "重新命名書籤"
+
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "移除書籤"
+
+#: part/bookmarklist.cpp:287
+#, kde-format
+msgctxt "Opens the selected document"
+msgid "Open Document"
+msgstr "開啟文件"
+
+#: part/bookmarklist.cpp:290
+#, kde-format
+msgid "Remove all Bookmarks for this Document"
+msgstr ""
+
+#: part/certificateviewer.cpp:121
+#, kde-format
+msgid "Certificate Viewer"
+msgstr "憑證檢視器"
+
+#: part/certificateviewer.cpp:124
+#, kde-format
+msgid "Export..."
+msgstr "匯出…"
+
+#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General"
+msgstr "一般"
+
+#: part/certificateviewer.cpp:132
+#, kde-format
+msgid "Issued By"
+msgstr "發行者"
+
+#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#, kde-format
+msgid "Common Name(CN)"
+msgstr "通用名稱(CN)"
+
+#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#, kde-format
+msgid "EMail"
+msgstr "電子郵件"
+
+#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#, kde-format
+msgid "Organization(O)"
+msgstr "組織(O)"
+
+#: part/certificateviewer.cpp:139
+#, kde-format
+msgid "Issued To"
+msgstr "發行目標"
+
+#: part/certificateviewer.cpp:146
+#, kde-format
+msgid "Validity"
+msgstr "有效性"
+
+#: part/certificateviewer.cpp:152
+#, kde-format
+msgid "Fingerprints"
+msgstr "金鑰指紋"
+
+#: part/certificateviewer.cpp:160
+#, kde-format
+msgid "SHA-1 Fingerprint"
+msgstr "SHA-1 指紋"
+
+#: part/certificateviewer.cpp:161
+#, kde-format
+msgid "SHA-256 Fingerprint"
+msgstr "SHA-256 指紋"
+
+#: part/certificateviewer.cpp:179
+#, kde-format
+msgid "Details"
+msgstr "詳細資訊"
+
+#: part/certificateviewer.cpp:180
+#, kde-format
+msgid "Certificate Data:"
+msgstr "憑證資料："
+
+#: part/certificateviewer.cpp:232
+#, kde-format
+msgid "Where do you want to save this certificate?"
+msgstr "此憑證的儲存位置為何？"
+
+#: part/certificateviewer.cpp:233
+#, kde-format
+msgid "Certificate File (*.cer)"
+msgstr "憑證檔案 (*.cer)"
+
+#: part/certificateviewer.cpp:236
+#, fuzzy, kde-format
+#| msgid "Unable to export certificate!"
+msgid "Could not export the certificate"
+msgstr "無法匯出憑證！"
+
+#: part/colormodemenu.cpp:17
+#, fuzzy, kde-format
+#| msgid "Color mode:"
+msgctxt "@title:menu"
+msgid "&Color Mode"
+msgstr "顏色模式："
+
+#: part/colormodemenu.cpp:19
+#, fuzzy, kde-format
+#| msgid "Change &colors"
+msgctxt "@action Change Colors feature toggle action"
+msgid "Change Colors"
+msgstr "改變顏色(&C)"
+
+#: part/colormodemenu.cpp:32
+#, fuzzy, kde-format
+#| msgid "Normal Icons"
+msgctxt "@item:inmenu color mode"
+msgid "&Normal Colors"
+msgstr "一般圖示"
+
+#: part/colormodemenu.cpp:44
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inmenu color mode"
+msgid "&Invert Colors"
+msgstr "反轉顏色"
+
+#: part/colormodemenu.cpp:45
+#, fuzzy, kde-format
+#| msgid "Change Paper Color"
+msgctxt "@item:inmenu color mode"
+msgid "Change &Paper Color"
+msgstr "改變紙張顏色"
+
+#: part/colormodemenu.cpp:47
+#, fuzzy, kde-format
+#| msgid "Change Dark & Light Colors"
+msgctxt "@item:inmenu color mode"
+msgid "Change &Dark && Light Colors"
+msgstr "改變暗與亮的顏色"
+
+#: part/colormodemenu.cpp:49
+#, fuzzy, kde-format
+#| msgid "Convert to Black & White"
+msgctxt "@item:inmenu color mode"
+msgid "Convert to &Black && White"
+msgstr "轉換成黑白"
+
+#: part/colormodemenu.cpp:52
+#, fuzzy, kde-format
+#| msgid "Invert Lightness"
+msgctxt "@item:inmenu color mode"
+msgid "Invert &Lightness"
+msgstr "反轉亮度"
+
+#: part/colormodemenu.cpp:55
+#, fuzzy, kde-format
+#| msgid "Invert Luma (sRGB Linear)"
+msgctxt "@item:inmenu color mode"
+msgid "Invert L&uma (sRGB Linear)"
+msgstr "反轉亮度 (sRGB 線性)"
+
+#: part/colormodemenu.cpp:58
+#, fuzzy, kde-format
+#| msgid "Invert Luma (Symmetric)"
+msgctxt "@item:inmenu color mode"
+msgid "Invert Luma (&Symmetric)"
+msgstr "反轉亮度 (對稱)"
+
+#: part/colormodemenu.cpp:61
+#, fuzzy, kde-format
+#| msgid "Shift Hue Positive"
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue P&ositive"
+msgstr "色相正偏移"
+
+#: part/colormodemenu.cpp:64
+#, fuzzy, kde-format
+#| msgid "Shift Hue Negative"
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue N&egative"
+msgstr "色相負偏移"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:11
+#, kde-format
+msgid "Red"
+msgstr "紅"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:16
+#, kde-format
+msgid "Green"
+msgstr "綠"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:21
+#, kde-format
+msgid "Blue"
+msgstr "藍"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:26
+#, kde-format
+msgid "Yellow"
+msgstr "黃"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:31
+#, kde-format
+msgid "Black"
+msgstr "黑"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:36
+#, kde-format
+msgid "White"
+msgstr "白"
+
+#. i18n: tag tool attribute name
+#: part/data/tools.xml:103
+#, fuzzy, kde-format
+#| msgid "Open Arrow"
+msgid "Arrow"
+msgstr "開放箭頭"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:9
+#, fuzzy, kde-format
+#| msgid "Highlighter"
+msgid "Yellow Highlighter"
+msgstr "突顯"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:14
+#, fuzzy, kde-format
+#| msgid "Highlighter"
+msgid "Green Highlighter"
+msgstr "突顯"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:24
+#, fuzzy, kde-format
+#| msgid "Insert"
+msgid "Insert Text"
+msgstr "插入"
+
+#: part/dlgaccessibility.cpp:38
+#, fuzzy, kde-format
+#| msgid "Draw border around &Links"
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Draw border around links"
+msgstr "在連結周圍畫出框線(&L)"
+
+#: part/dlgaccessibility.cpp:48
+#, fuzzy, kde-format
+#| msgid "Change &colors"
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Change colors"
+msgstr "改變顏色(&C)"
+
+#: part/dlgaccessibility.cpp:54
+#, fuzzy, kde-format
+#| msgid "Warning: these options can badly affect drawing speed."
+msgctxt "@info Config dialog, accessibility page"
+msgid "<b>Warning:</b> these options can badly affect drawing speed."
+msgstr "警告：這些選項可能會嚴重影響速度。"
+
+#: part/dlgaccessibility.cpp:60
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert colors"
+msgstr "反轉顏色"
+
+#: part/dlgaccessibility.cpp:61
+#, fuzzy, kde-format
+#| msgid "Change Paper Color"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change paper color"
+msgstr "改變紙張顏色"
+
+#: part/dlgaccessibility.cpp:62
+#, fuzzy, kde-format
+#| msgid "Change Dark & Light Colors"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change dark & light colors"
+msgstr "改變暗與亮的顏色"
+
+#: part/dlgaccessibility.cpp:63
+#, fuzzy, kde-format
+#| msgid "Convert to Black & White"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Convert to black & white"
+msgstr "轉換成黑白"
+
+#: part/dlgaccessibility.cpp:64
+#, fuzzy, kde-format
+#| msgid "Invert Lightness"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert lightness"
+msgstr "反轉亮度"
+
+#: part/dlgaccessibility.cpp:65
+#, fuzzy, kde-format
+#| msgid "Invert Luma (sRGB Linear)"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (sRGB linear)"
+msgstr "反轉亮度 (sRGB 線性)"
+
+#: part/dlgaccessibility.cpp:66
+#, fuzzy, kde-format
+#| msgid "Invert Luma (Symmetric)"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (symmetric)"
+msgstr "反轉亮度 (對稱)"
+
+#: part/dlgaccessibility.cpp:67
+#, fuzzy, kde-format
+#| msgid "Shift Hue Positive"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue positive"
+msgstr "色相正偏移"
+
+#: part/dlgaccessibility.cpp:68
+#, fuzzy, kde-format
+#| msgid "Shift Hue Negative"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue negative"
+msgstr "色相負偏移"
+
+#: part/dlgaccessibility.cpp:70
+#, fuzzy, kde-format
+#| msgid "Color mode:"
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Color mode:"
+msgstr "顏色模式："
+
+#: part/dlgaccessibility.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paper color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Paper color:"
+msgstr "紙張顏色："
+
+#: part/dlgaccessibility.cpp:99
+#, fuzzy, kde-format
+#| msgid "Dark color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Dark color:"
+msgstr "暗的顏色："
+
+#: part/dlgaccessibility.cpp:104
+#, fuzzy, kde-format
+#| msgid "Light color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Light color:"
+msgstr "亮的顏色："
+
+#: part/dlgaccessibility.cpp:119
+#, fuzzy, kde-format
+#| msgid "Threshold:"
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Threshold:"
+msgstr "下限："
+
+#: part/dlgaccessibility.cpp:127
+#, fuzzy, kde-format
+#| msgid "Contrast:"
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Contrast:"
+msgstr "對比："
+
+#: part/dlgaccessibility.cpp:158
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech engine:"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:165
+#, fuzzy, kde-format
+#| msgid "Text to search for"
+msgctxt "&label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech voice:"
+msgstr "要搜尋的文字"
+
+#: part/dlgannotations.cpp:25
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Full Annotation Toolbar"
+msgstr "註記工具"
+
+#: part/dlgannotations.cpp:26
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Quick Annotation Toolbar"
+msgstr "註記工具"
+
+#: part/dlgannotations.cpp:28
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgctxt "label:listbox Config dialog, general page"
+msgid "Annotation toolbar:"
+msgstr "註記工具"
+
+#: part/dlgannotations.cpp:34
+#, fuzzy, kde-format
+#| msgid "&Author:"
+msgctxt "@label:textbox Config dialog, annotations page"
+msgid "Author:"
+msgstr "作者(&A)："
+
+#: part/dlgannotations.cpp:38
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>Note</b>: the information here is used only for annotations. The "
+#| "information is saved in annotated documents, and so will be transmitted "
+#| "together with the document."
+msgctxt "@info Config dialog, annotations page"
+msgid ""
+"<b>Note:</b> the information here is used only for annotations. The "
+"information is saved in annotated documents, and so will be transmitted "
+"together with the document."
+msgstr ""
+"<b>注意</b>：此處的資訊僅用於註記。資訊將會儲存在註記文件中，且會與文件一併送"
+"出。"
+
+#: part/dlgannotations.cpp:48
+#, fuzzy, kde-format
+#| msgid "Edit annotation tool"
+msgctxt ""
+"@label Config dialog, annotations page, heading line for Quick Annotations "
+"tool manager"
+msgid "<h3>Quick Annotation Tools</h3>"
+msgstr "編輯註記工具"
+
+#: part/dlgeditor.cpp:28
+#, fuzzy, kde-format
+#| msgctxt "@info:whatsthis"
+#| msgid ""
+#| "Choose the editor you want to launch when Okular wants to open a source "
+#| "file."
+msgctxt "@info:whatsthis Config dialog, editor page"
+msgid ""
+"Choose the editor you want to launch when Okular wants to open a source file."
+msgstr "選擇 Okular 要開啟源碼檔時要使用的編輯器。"
+
+#: part/dlgeditor.cpp:29
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Custom Text Editor"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Custom Text Editor"
+msgstr "自訂文字編輯器"
+
+#: part/dlgeditor.cpp:30
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Kate"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kate"
+msgstr "Kate"
+
+#: part/dlgeditor.cpp:31
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Kile"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kile"
+msgstr "Kile"
+
+#: part/dlgeditor.cpp:32
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "SciTE"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "SciTE"
+msgstr "SciTE"
+
+#: part/dlgeditor.cpp:33
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Emacs client"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Emacs client"
+msgstr "Emacs 用戶端"
+
+#: part/dlgeditor.cpp:34
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Lyx client"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Lyx client"
+msgstr "Lyx 用戶端"
+
+#: part/dlgeditor.cpp:35
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "TeXstudio"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXstudio"
+msgstr "TeXstudio"
+
+#: part/dlgeditor.cpp:36
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "TeXiFy IDEA"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXiFy IDEA"
+msgstr "TeXiFy IDEA"
+
+#: part/dlgeditor.cpp:37
+#, fuzzy, kde-format
+#| msgid "Editor:"
+msgctxt "@label:listbox Config dialog, editor page"
+msgid "Editor:"
+msgstr "編輯器："
+
+#: part/dlgeditor.cpp:52
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"<qt>Set the command of a custom text editor to be launched.<br />\n"
+"You can also put few placeholders:\n"
+"<ul>\n"
+"  <li>%f - the file name</li>\n"
+"  <li>%l - the line of the file to be reached</li>\n"
+"  <li>%c - the column of the file to be reached</li>\n"
+"</ul>\n"
+"If %f is not specified, then the file name is appended to the specified "
+"command."
+msgstr ""
+"<qt>請設定要如何啟動自訂的文字編輯器。<br />\n"
+" 您可以用以下的置換符：\n"
+" <ul>\n"
+" <li>%f - 檔案名稱</li>\n"
+" <li>%l - 要跳到檔案的第幾行</li>\n"
+" <li>%c - 要跳到檔案的第幾欄</li>\n"
+" </ul>\n"
+" 若未指定 %f，則檔名會附加在指令的後面。"
+
+#: part/dlgeditor.cpp:63
+#, fuzzy, kde-format
+#| msgid "Command:"
+msgctxt "@label:textbox Config dialog, editor page"
+msgid "Command:"
+msgstr "指令："
+
+#: part/dlggeneral.cpp:33
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Use smooth scrolling"
+msgstr ""
+
+#: part/dlggeneral.cpp:35
+#, fuzzy, kde-format
+#| msgid "Appearance"
+msgctxt "@title:group Config dialog, general page"
+msgid "Appearance:"
+msgstr "外觀"
+
+#: part/dlggeneral.cpp:39
+#, fuzzy, kde-format
+#| msgid "Show scroll&bars"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show scrollbars"
+msgstr "顯示捲軸列(&B)"
+
+#: part/dlggeneral.cpp:46
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgctxt "@option:check Config dialog, general page"
+msgid "Link the thumbnails with the page"
+msgstr "將縮圖與頁面連結(&T)"
+
+#: part/dlggeneral.cpp:53
+#, fuzzy, kde-format
+#| msgid "Show &hints and info messages"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show hints and info messages"
+msgstr "顯示提示與資訊訊息(&H)"
+
+#: part/dlggeneral.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Notify about embedded files, forms, or signatures"
+msgstr ""
+
+#: part/dlggeneral.cpp:66
+#, fuzzy, kde-format
+#| msgid "Display document title in titlebar if available"
+msgctxt "@option:check Config dialog, general page"
+msgid "Display document title in titlebar if available"
+msgstr "若有文件標題的話顯示在標題列"
+
+#: part/dlggeneral.cpp:72
+#, fuzzy, kde-format
+#| msgid "Display file name only"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display file name only"
+msgstr "只顯示檔名"
+
+#: part/dlggeneral.cpp:73
+#, fuzzy, kde-format
+#| msgid "Display full file path"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display full file path"
+msgstr "顯示檔案完整路徑"
+
+#: part/dlggeneral.cpp:75
+#, fuzzy, kde-format
+#| msgid "When not displaying document title:"
+msgctxt "label:listbox Config dialog, general page"
+msgid "When not displaying document title:"
+msgstr "不顯示文件標題時："
+
+#: part/dlggeneral.cpp:90
+#, fuzzy, kde-format
+#| msgid "Use custom background color"
+msgctxt "@label:listbox Config dialog, general page"
+msgid "Use custom background color:"
+msgstr "使用自訂背景顏色"
+
+#: part/dlggeneral.cpp:112
+#, fuzzy, kde-format
+#| msgid "Program Features"
+msgctxt "@title:group Config dialog, general page"
+msgid "Program features:"
+msgstr "程式功能"
+
+#: part/dlggeneral.cpp:119
+#, fuzzy, kde-format
+#| msgid "Open new files in &tabs"
+msgctxt "@option:check Config dialog, general page"
+msgid "Open new files in tabs"
+msgstr "在分頁開啟新檔案(&T)"
+
+#: part/dlggeneral.cpp:124
+#, fuzzy, kde-format
+#| msgid "Switch to existing tab if file is already open"
+msgctxt "@option:check Config dialog, general page"
+msgid "Switch to existing tab if file is already open"
+msgstr "如果檔案已經開啟，則切換至現存分頁"
+
+#: part/dlggeneral.cpp:137
+#, fuzzy, kde-format
+#| msgid "&Obey DRM limitations"
+msgctxt "@option:check Config dialog, general page"
+msgid "Obey DRM limitations"
+msgstr "遵循 DRM 限制(&O)"
+
+#: part/dlggeneral.cpp:146
+#, fuzzy, kde-format
+#| msgid "&Reload document on file change"
+msgctxt "@option:check Config dialog, general page"
+msgid "Reload document on file change"
+msgstr "檔案變更時重新載入文件(&R)"
+
+#: part/dlggeneral.cpp:153
+#, fuzzy, kde-format
+#| msgid "Show backend selection dialog"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show backend selection dialog"
+msgstr "顯示後端介面選取對話框"
+
+#: part/dlggeneral.cpp:160
+#, fuzzy, kde-format
+#| msgid "Right to left reading direction"
+msgctxt "@option:check Config dialog, general page"
+msgid "Right to left reading direction"
+msgstr "右到左閱讀方向"
+
+#: part/dlggeneral.cpp:166
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open in continuous mode by default"
+msgstr ""
+
+#: part/dlggeneral.cpp:173
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "When using Browse Tool, wrap cursor at screen edges"
+msgstr ""
+
+#: part/dlggeneral.cpp:190
+#, fuzzy, kde-format
+#| msgid "Overview &columns:"
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Overview columns:"
+msgstr "概觀欄(&C)："
+
+#: part/dlggeneral.cpp:197
+#, fuzzy, kde-format
+#| msgid "%"
+msgctxt "Page Up/Down overlap, spinbox suffix"
+msgid "%"
+msgstr " %"
+
+#: part/dlggeneral.cpp:198
+#, fuzzy, kde-format
+#| msgid ""
+#| "Defines how much of the current viewing area will still be visible when "
+#| "pressing the Page Up/Down keys."
+msgctxt "@info:tooltip Config dialog, general page"
+msgid ""
+"Defines how much of the current viewing area will still be visible when "
+"pressing the Page Up/Down keys."
+msgstr "定義在按下上一頁或下一頁鍵時，目前檢視區域要保留多少。"
+
+#: part/dlggeneral.cpp:200
+#, fuzzy, kde-format
+#| msgid "&Page Up/Down overlap:"
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Page Up/Down overlap:"
+msgstr "上一頁/下一頁的重疊區(&P)："
+
+#: part/dlggeneral.cpp:204
+#, fuzzy, kde-format
+#| msgid "100%"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "100%"
+msgstr "100%"
+
+#: part/dlggeneral.cpp:205
+#, fuzzy, kde-format
+#| msgid "Fit Width"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Width"
+msgstr "符合寬度"
+
+#: part/dlggeneral.cpp:206
+#, fuzzy, kde-format
+#| msgid "Fit Page"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Page"
+msgstr "符合頁面"
+
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgid "Auto Fit"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Auto Fit"
+msgstr "自動調適"
+
+#: part/dlggeneral.cpp:208
+#, fuzzy, kde-format
+#| msgid ""
+#| "Defines the default zoom mode for files which were never opened before.\n"
+#| "For files which were opened before the previous zoom is applied."
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid ""
+"Defines the default zoom mode for files which were never opened before. For "
+"files which were opened before the previous zoom is applied."
+msgstr ""
+"定義從未開啟過的檔案的預設縮放模式。\n"
+"已開啟過的檔案，則會使用前一次的縮放模式。"
+
+#: part/dlggeneral.cpp:210
+#, fuzzy, kde-format
+#| msgid "&Default Zoom:"
+msgctxt "label:listbox Config dialog, general page, default zoom"
+msgid "Default zoom:"
+msgstr "預設縮放模式(&D)："
+
+#: part/dlgperformance.cpp:26
+#, fuzzy, kde-format
+#| msgid "Enable &transparency effects"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable transparency effects"
+msgstr "開啟透明效果(&T)"
+
+#: part/dlgperformance.cpp:28
+#, fuzzy, kde-format
+#| msgid "CPU Usage"
+msgctxt "@label Config dialog, performance page"
+msgid "CPU usage:"
+msgstr "CPU 使用量"
+
+#: part/dlgperformance.cpp:35
+#, fuzzy, kde-format
+#| msgid "&Low"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Low"
+msgstr "低(&L)"
+
+#: part/dlgperformance.cpp:36
+#, fuzzy, kde-format
+#| msgid "Nor&mal (default)"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Normal (default)"
+msgstr "正常（預設）(&M)"
+
+#: part/dlgperformance.cpp:37
+#, fuzzy, kde-format
+#| msgid "Aggr&essive"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Aggressive"
+msgstr "高(&E)"
+
+#: part/dlgperformance.cpp:38
+#, fuzzy, kde-format
+#| msgid "G&reedy"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Greedy"
+msgstr "非常高(&R)"
+
+#: part/dlgperformance.cpp:40
+#, fuzzy, kde-format
+#| msgid "Memory Usage"
+msgctxt "@label:listbox Config dialog, performance page, memory usage"
+msgid "Memory usage:"
+msgstr "記憶體使用量"
+
+#: part/dlgperformance.cpp:54
+#, fuzzy, kde-format
+#| msgid "Enable Text Antialias"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text antialias"
+msgstr "開啟文字反鋸齒"
+
+#: part/dlgperformance.cpp:56
+#, fuzzy, kde-format
+#| msgid "Rendering"
+msgctxt "@title:group Config dialog, performance page"
+msgid "Rendering options:"
+msgstr "輸出成品"
+
+#: part/dlgperformance.cpp:59
+#, fuzzy, kde-format
+#| msgid "Enable Graphics Antialias"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable graphics antialias"
+msgstr "開啟圖形反鋸齒"
+
+#: part/dlgperformance.cpp:64
+#, fuzzy, kde-format
+#| msgid "Enable Text Hinting"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text hinting"
+msgstr "開啟文字提示"
+
+#: part/dlgperformance.cpp:77
+#, kde-format
+msgid ""
+"Keeps used memory as low as possible. Do not reuse anything. (For systems "
+"with low memory.)"
+msgstr ""
+"盡量減少記憶體使用量。不要重複使用任何東西。（給記憶體較少的系統用的。）"
+
+#: part/dlgperformance.cpp:80
+#, kde-format
+msgid ""
+"A good compromise between memory usage and speed gain. Preload next page and "
+"boost searches. (For systems with 2GB of memory, typically.)"
+msgstr ""
+"這是記憶體使用量與速度增益的折衷方案。預先載入下一頁並加速搜尋。（給 2 GB 左"
+"右記憶體的系統用的。）"
+
+#: part/dlgperformance.cpp:83
+#, kde-format
+msgid ""
+"Keeps everything in memory. Preload next pages. Boost searches. (For systems "
+"with more than 4GB of memory.)"
+msgstr ""
+"盡量在記憶體中保留每個東西。預先載入下一頁並加速搜尋。（給超過 4 GB 記憶體的"
+"系統用的。）"
+
+#: part/dlgperformance.cpp:87
+#, no-c-format, kde-format
+msgid ""
+"Loads and keeps everything in memory. Preload all pages. (Will use at "
+"maximum 50% of your total memory or your free memory, whatever is bigger.)"
+msgstr ""
+"將所有的東西載入記憶體並保存。預先載入所有的頁面。（最多可能會使用到您所有或"
+"可使用的記憶體的 50%。）"
+
+#: part/dlgpresentation.cpp:37
+#, kde-format
+msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+msgid "every "
+msgstr ""
+
+#: part/dlgpresentation.cpp:38
+#, kde-format
+msgctxt "Advance every %1 seconds"
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " 秒。"
+
+#: part/dlgpresentation.cpp:45
+#, kde-format
+msgctxt "@label:spinbox Config dialog, presentation page"
+msgid "Advance automatically:"
+msgstr ""
+
+#: part/dlgpresentation.cpp:53
+#, fuzzy, kde-format
+#| msgid "Loop after last page"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Loop after last page"
+msgstr "循環播放"
+
+#: part/dlgpresentation.cpp:59
+#, fuzzy, kde-format
+#| msgid "Tap left/right side to go back/forward"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap left/right side to go back/forward"
+msgstr "點觸左側或右側以往回或往後移動"
+
+#: part/dlgpresentation.cpp:60
+#, fuzzy, kde-format
+#| msgid "Tap anywhere to go forward"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap anywhere to go forward"
+msgstr "按任何地方以往前移動"
+
+#: part/dlgpresentation.cpp:61
+#, fuzzy, kde-format
+#| msgid "Disabled"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Disabled"
+msgstr "已停用"
+
+#: part/dlgpresentation.cpp:63
+#, fuzzy, kde-format
+#| msgid "Touch navigation:"
+msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
+msgid "Touch navigation:"
+msgstr "觸控導覽："
+
+#: part/dlgpresentation.cpp:72
+#, fuzzy, kde-format
+#| msgid "Background color:"
+msgctxt "@label:chooser Config dialog, presentation page"
+msgid "Background color:"
+msgstr "背景顏色："
+
+#: part/dlgpresentation.cpp:76
+#, fuzzy, kde-format
+#| msgid "Hidden After Delay"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Hidden after delay"
+msgstr "延遲後隱藏"
+
+#: part/dlgpresentation.cpp:77
+#, fuzzy, kde-format
+#| msgid "Always Visible"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always visible"
+msgstr "永遠可見"
+
+#: part/dlgpresentation.cpp:78
+#, fuzzy, kde-format
+#| msgid "Always Hidden"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always hidden"
+msgstr "永遠隱藏"
+
+#: part/dlgpresentation.cpp:80
+#, fuzzy, kde-format
+#| msgid "Mouse cursor:"
+msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
+msgid "Mouse cursor:"
+msgstr "滑鼠游標："
+
+#: part/dlgpresentation.cpp:84
+#, fuzzy, kde-format
+#| msgid "Show &progress indicator"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show progress indicator"
+msgstr "顯示進度指示器(&P)"
+
+#: part/dlgpresentation.cpp:90
+#, fuzzy, kde-format
+#| msgid "Show s&ummary page"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show summary page"
+msgstr "顯示摘要頁(&U)"
+
+#: part/dlgpresentation.cpp:100
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Instant (Never use animations)"
+msgstr ""
+
+#: part/dlgpresentation.cpp:101
+#, fuzzy, kde-format
+#| msgid "Replace"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Replace"
+msgstr "取代"
+
+#: part/dlgpresentation.cpp:102
+#, fuzzy, kde-format
+#| msgid "Random Transition"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Random transition"
+msgstr "隨機變換"
+
+#: part/dlgpresentation.cpp:103
+#, fuzzy, kde-format
+#| msgid "Blinds Vertical"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds vertical"
+msgstr "垂直百頁簾"
+
+#: part/dlgpresentation.cpp:104
+#, fuzzy, kde-format
+#| msgid "Blinds Horizontal"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds horizontal"
+msgstr "水平百頁簾"
+
+#: part/dlgpresentation.cpp:105
+#, fuzzy, kde-format
+#| msgid "Box In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box in"
+msgstr "矩形內收"
+
+#: part/dlgpresentation.cpp:106
+#, fuzzy, kde-format
+#| msgid "Box Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box out"
+msgstr "矩形外擴"
+
+#: part/dlgpresentation.cpp:107
+#, fuzzy, kde-format
+#| msgid "Dissolve"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Dissolve"
+msgstr "溶解"
+
+#: part/dlgpresentation.cpp:108
+#, fuzzy, kde-format
+#| msgid "Fade"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Fade"
+msgstr "淡出"
+
+#: part/dlgpresentation.cpp:109
+#, fuzzy, kde-format
+#| msgid "Glitter Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter down"
+msgstr "閃爍向下"
+
+#: part/dlgpresentation.cpp:110
+#, fuzzy, kde-format
+#| msgid "Glitter Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right"
+msgstr "閃爍向右"
+
+#: part/dlgpresentation.cpp:111
+#, fuzzy, kde-format
+#| msgid "Glitter Right-Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right-down"
+msgstr "閃爍向右下"
+
+#: part/dlgpresentation.cpp:112
+#, fuzzy, kde-format
+#| msgid "Split Horizontal In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal in"
+msgstr "左右合擊"
+
+#: part/dlgpresentation.cpp:113
+#, fuzzy, kde-format
+#| msgid "Split Horizontal Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal out"
+msgstr "左右分離"
+
+#: part/dlgpresentation.cpp:114
+#, fuzzy, kde-format
+#| msgid "Split Vertical In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical in"
+msgstr "上下合擊"
+
+#: part/dlgpresentation.cpp:115
+#, fuzzy, kde-format
+#| msgid "Split Vertical Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical out"
+msgstr "上下分離"
+
+#: part/dlgpresentation.cpp:116
+#, fuzzy, kde-format
+#| msgid "Wipe Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe down"
+msgstr "往下掃描"
+
+#: part/dlgpresentation.cpp:117
+#, fuzzy, kde-format
+#| msgid "Wipe Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe right"
+msgstr "往右掃描"
+
+#: part/dlgpresentation.cpp:118
+#, fuzzy, kde-format
+#| msgid "Wipe Left"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe left"
+msgstr "往左掃描"
+
+#: part/dlgpresentation.cpp:119
+#, fuzzy, kde-format
+#| msgid "Wipe Up"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe up"
+msgstr "往上掃描"
+
+#: part/dlgpresentation.cpp:121
+#, fuzzy, kde-format
+#| msgid "Default transition:"
+msgctxt "@label:listbox Config dialog, presentation page, transitions"
+msgid "Default transition:"
+msgstr "預設換頁特效："
+
+#: part/dlgpresentation.cpp:130
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
+msgid "Preferred screen:"
+msgstr ""
+
+#: part/dlgpresentation.cpp:137
+#, fuzzy, kde-format
+#| msgid "Drawing Tool: %1"
+msgctxt ""
+"@label Config dialog, presentation page, heading line for drawing tool "
+"manager"
+msgid "<h3>Drawing Tools</h3>"
+msgstr "繪製工具：%1"
+
+#: part/dlgpresentation.cpp:171
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox The current screen, for the presentation mode"
+#| msgid "Current Screen"
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Current Screen"
+msgstr "目前的螢幕"
+
+#: part/dlgpresentation.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox The default screen for the presentation mode"
+#| msgid "Default Screen"
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Default Screen"
+msgstr "預設的螢幕"
+
+#: part/dlgpresentation.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox %1 is the screen number (0, 1, ...)"
+#| msgid "Screen %1"
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
+"screen model name. %4 is the screen name like DVI-0"
+msgid "Screen %1 (%2 %3 %4)"
+msgstr "螢幕 %1"
+
+#: part/dlgpresentation.cpp:190
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...), hopefully not 0."
+msgid "Screen %1 (disconnected)"
+msgstr ""
+
+#: part/drawingtoolactions.cpp:192
+#, kde-format
+msgid "Drawing Tool: %1"
+msgstr "繪製工具：%1"
+
+#: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
+#, kde-format
+msgid "Eraser"
+msgstr "擦除器"
+
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#, kde-format
+msgid "&Name:"
+msgstr "名稱(&N)："
+
+#: part/editannottooldialog.cpp:69
+#, kde-format
+msgid "&Type:"
+msgstr "類型(&T)："
+
+#: part/editannottooldialog.cpp:82
+#, kde-format
+msgid "Appearance"
+msgstr "外觀"
+
+#: part/editannottooldialog.cpp:93
+#, kde-format
+msgid "Text markup"
+msgstr "文字標記"
+
+#: part/editannottooldialog.cpp:94
+#, kde-format
+msgid "Geometrical shape"
+msgstr "幾何形狀"
+
+#: part/editannottooldialog.cpp:101
+#, kde-format
+msgid "Create annotation tool"
+msgstr "建立註記工具"
+
+#: part/editannottooldialog.cpp:103
+#, kde-format
+msgid "Edit annotation tool"
+msgstr "編輯註記工具"
+
+#: part/editdrawingtooldialog.cpp:50
+#, kde-format
+msgid "Color:"
+msgstr "顏色："
+
+#: part/editdrawingtooldialog.cpp:57
+#, kde-format
+msgid "&Pen Width:"
+msgstr "筆寬(&P)："
+
+#: part/editdrawingtooldialog.cpp:63
+#, kde-format
+msgctxt "Suffix for the pen width, eg '10 px'"
+msgid " px"
+msgstr " 像素"
+
+#: part/editdrawingtooldialog.cpp:73
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80 %'"
+msgid " %"
+msgstr " %"
+
+#: part/editdrawingtooldialog.cpp:78
+#, kde-format
+msgid "Create drawing tool"
+msgstr "建立繪製工具"
+
+#: part/editdrawingtooldialog.cpp:83
+#, kde-format
+msgid "Edit drawing tool"
+msgstr "編輯繪製工具"
+
+#: part/embeddedfilesdialog.cpp:39
+#, kde-format
+msgctxt "Unknown date"
+msgid "Unknown"
+msgstr "未知"
+
+#: part/embeddedfilesdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Embedded Files"
+msgstr "嵌入式檔案"
+
+#: part/embeddedfilesdialog.cpp:59
+#, kde-format
+msgctxt "@action:button"
+msgid "View"
+msgstr "檢視"
+
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@title:column"
+msgid "Name"
+msgstr "名稱"
+
+#: part/embeddedfilesdialog.cpp:68
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr "描述"
+
+#: part/embeddedfilesdialog.cpp:69
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr "大小"
+
+#: part/embeddedfilesdialog.cpp:70
+#, kde-format
+msgctxt "@title:column"
+msgid "Created"
+msgstr "已建立"
+
+#: part/embeddedfilesdialog.cpp:71
+#, kde-format
+msgctxt "@title:column"
+msgid "Modified"
+msgstr "已修改"
+
+#: part/embeddedfilesdialog.cpp:151
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Save As..."
+msgstr "另存新檔(&S)..."
+
+#: part/embeddedfilesdialog.cpp:152
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&View..."
+msgstr "檢視...(&V)"
+
+#: part/fileprinterpreview.cpp:115
+#, kde-format
+msgid "Could not load print preview part"
+msgstr "無法載入列印預覽部件"
+
+#: part/fileprinterpreview.cpp:127
+#, kde-format
+msgid "Print Preview"
+msgstr "列印預覽"
+
+#: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
+#, kde-format
+msgid "Close"
+msgstr "關閉"
+
+#: part/findbar.cpp:38
+#, kde-format
+msgctxt "Find text"
+msgid "F&ind:"
+msgstr "尋找(&I)："
+
+#: part/findbar.cpp:49
+#, kde-format
+msgid "Text to search for"
+msgstr "要搜尋的文字"
+
+#: part/findbar.cpp:54
+#, kde-format
+msgctxt "Find and go to the next search match"
+msgid "Next"
+msgstr "下一個"
+
+#: part/findbar.cpp:55
+#, kde-format
+msgid "Jump to next match"
+msgstr "跳到下一個符合"
+
+#: part/findbar.cpp:58
+#, kde-format
+msgctxt "Find and go to the previous search match"
+msgid "Previous"
+msgstr "前一個"
+
+#: part/findbar.cpp:59
+#, kde-format
+msgid "Jump to previous match"
+msgstr "跳到前一個符合"
+
+#: part/findbar.cpp:64
+#, kde-format
+msgid "Modify search behavior"
+msgstr "變更搜尋行為"
+
+#: part/findbar.cpp:66
+#, kde-format
+msgid "Case sensitive"
+msgstr "區分大小寫"
+
+#: part/findbar.cpp:68
+#, kde-format
+msgid "From current page"
+msgstr "從目前的頁面"
+
+#: part/findbar.cpp:70
+#, kde-format
+msgid "Find as you type"
+msgstr "輸入時尋找"
+
+#: part/formwidgets.cpp:751
+#, kde-format
+msgid "*|All Files"
+msgstr "*|所有檔案"
+
+#: part/formwidgets.cpp:1065
+#, kde-format
+msgid "Unsigned Signature Field (Click to Sign)"
+msgstr ""
+
+#: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
+#, fuzzy, kde-format
+#| msgid "Sign CRL"
+msgid "&Sign..."
+msgstr "簽署 CRL"
+
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#, kde-format
+msgid "Signature Properties"
+msgstr "簽名屬性"
+
+#: part/ktreeviewsearchline.cpp:283
+#, kde-format
+msgid "Search Options"
+msgstr "搜尋選項"
+
+#: part/ktreeviewsearchline.cpp:284
+#, kde-format
+msgctxt "Enable case sensitive search in the side navigation panels"
+msgid "Case Sensitive"
+msgstr "區分大小寫"
+
+#: part/ktreeviewsearchline.cpp:287
+#, kde-format
+msgctxt "Enable regular expression search in the side navigation panels"
+msgid "Regular Expression"
+msgstr "正則表達式"
+
+#: part/ktreeviewsearchline.cpp:386
+#, kde-format
+msgid "S&earch:"
+msgstr "搜尋(&E)："
+
+#: part/layers.cpp:35 part/part.cpp:2315
+#, kde-format
+msgid "Layers"
+msgstr "圖層"
+
+#: part/minibar.cpp:190
+#, kde-format
+msgctxt "Layouted like: '5 [pages] of 10'"
+msgid "of"
+msgstr " 總共 "
+
+#: part/pageview.cpp:541
+#, kde-format
+msgid "Zoom"
+msgstr "縮放"
+
+#: part/pageview.cpp:553
+#, kde-format
+msgid "Zoom to 100%"
+msgstr "縮放至 100%"
+
+#: part/pageview.cpp:564
+#, kde-format
+msgid "Rotate &Right"
+msgstr "向右旋轉(&R)"
+
+#: part/pageview.cpp:565
+#, kde-format
+msgctxt "Rotate right"
+msgid "Right"
+msgstr "向右"
+
+#: part/pageview.cpp:569
+#, kde-format
+msgid "Rotate &Left"
+msgstr "向左旋轉(&L)"
+
+#: part/pageview.cpp:570
+#, kde-format
+msgctxt "Rotate left"
+msgid "Left"
+msgstr "向左"
+
+#: part/pageview.cpp:574
+#, kde-format
+msgid "Original Orientation"
+msgstr "原始方向"
+
+#: part/pageview.cpp:580
+#, kde-format
+msgid "&Trim View"
+msgstr "修整檢視(&T)"
+
+#: part/pageview.cpp:584
+#, kde-format
+msgid "&Trim Margins"
+msgstr "修整邊界(&T)"
+
+#: part/pageview.cpp:591
+#, kde-format
+msgid "Trim To &Selection"
+msgstr "修整至選取的部份(&S)"
+
+#: part/pageview.cpp:597
+#, kde-format
+msgid "Fit &Width"
+msgstr "符合寬度(&W)"
+
+#: part/pageview.cpp:601
+#, kde-format
+msgid "Fit &Page"
+msgstr "符合頁面(&P)"
+
+#: part/pageview.cpp:605
+#, kde-format
+msgid "&Auto Fit"
+msgstr "自動調適(&A)"
+
+#: part/pageview.cpp:609
+#, kde-format
+msgid "Fit Wi&ndow to Page"
+msgstr "讓視窗大小符合頁面(&N)"
+
+#: part/pageview.cpp:616
+#, kde-format
+msgid "&View Mode"
+msgstr "檢視模式(&V)"
+
+#: part/pageview.cpp:628
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Single Page"
+msgstr "單頁(&S)"
+
+#: part/pageview.cpp:629
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Facing Pages"
+msgstr "封面頁(&F)"
+
+#: part/pageview.cpp:630
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Facing Pages (&Center First Page)"
+msgstr "封面頁（第一頁置中）(&C)"
+
+#: part/pageview.cpp:633
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Overview"
+msgstr "概觀(&O)"
+
+#: part/pageview.cpp:645
+#, kde-format
+msgid "&Continuous"
+msgstr "繼續(&C)"
+
+#: part/pageview.cpp:652
+#, fuzzy, kde-format
+#| msgid "Right to left reading direction"
+msgctxt "@action page layout"
+msgid "Use Right to Left Reading Direction"
+msgstr "右到左閱讀方向"
+
+#: part/pageview.cpp:661
+#, kde-format
+msgid "&Browse"
+msgstr "瀏覽(&B)"
+
+#: part/pageview.cpp:669
+#, kde-format
+msgid "&Zoom"
+msgstr "縮放(&Z)"
+
+#: part/pageview.cpp:689
+#, kde-format
+msgid "Area &Selection"
+msgstr "區域選擇(&S)"
+
+#: part/pageview.cpp:696
+#, kde-format
+msgid "&Text Selection"
+msgstr "文字選擇(&T)"
+
+#: part/pageview.cpp:703
+#, kde-format
+msgid "T&able Selection"
+msgstr "表格選擇(&A)"
+
+#: part/pageview.cpp:710
+#, fuzzy, kde-format
+#| msgid "&Magnifier"
+msgid "&Magnifier"
+msgstr "放大鏡(&M)"
+
+#: part/pageview.cpp:719
+#, kde-format
+msgctxt "@action"
+msgid "Selection Tools"
+msgstr "選擇工具"
+
+#: part/pageview.cpp:750
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Digitally &Sign..."
+msgstr "數位憑證"
+
+#: part/pageview.cpp:756
+#, kde-format
+msgid "Speak Whole Document"
+msgstr "唸出整份文件"
+
+#: part/pageview.cpp:761
+#, kde-format
+msgid "Speak Current Page"
+msgstr "唸出目前的頁面"
+
+#: part/pageview.cpp:766
+#, kde-format
+msgid "Stop Speaking"
+msgstr "停止語音"
+
+#: part/pageview.cpp:771
+#, kde-format
+msgid "Pause/Resume Speaking"
+msgstr "暫停/繼續說話"
+
+#: part/pageview.cpp:783
+#, kde-format
+msgid "Scroll Up"
+msgstr "捲軸向上"
+
+#: part/pageview.cpp:789
+#, kde-format
+msgid "Scroll Down"
+msgstr "捲軸向下"
+
+#: part/pageview.cpp:795
+#, kde-format
+msgid "Scroll Page Up"
+msgstr "捲軸上一頁"
+
+#: part/pageview.cpp:801
+#, kde-format
+msgid "Scroll Page Down"
+msgstr "捲軸下一頁"
+
+#: part/pageview.cpp:807
+#, kde-format
+msgid "Show Forms"
+msgstr "顯示表單"
+
+#: part/pageview.cpp:1301
+#, kde-format
+msgid " Loaded a one-page document."
+msgid_plural " Loaded a %1-page document."
+msgstr[0] "已載入一份 %1 頁的文件。"
+
+#: part/pageview.cpp:2521
+#, fuzzy, kde-format
+#| msgid "Copy to Clipboard"
+msgid "Copy Table Contents to Clipboard"
+msgstr "複製到剪貼簿"
+
+#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
+#: part/pageview.cpp:3050
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "DRM 拒絕複製"
+
+#: part/pageview.cpp:2843
+#, kde-format
+msgid "Text (1 character)"
+msgid_plural "Text (%1 characters)"
+msgstr[0] "文字（%1 個字元）"
+
+#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "複製到剪貼簿"
+
+#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#, kde-format
+msgid "Speak Text"
+msgstr "唸出文字"
+
+#: part/pageview.cpp:2861
+#, kde-format
+msgid "Image (%1 by %2 pixels)"
+msgstr "影像（%1 x %2 像素）"
+
+#: part/pageview.cpp:2863
+#, kde-format
+msgid "Save to File..."
+msgstr "儲存到檔案..."
+
+#: part/pageview.cpp:2883
+#, kde-format
+msgid "Image [%1x%2] copied to clipboard."
+msgstr "影像【%1 x %2】已複製到剪貼簿。"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Save file"
+msgstr "儲存檔案"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Images (*.png *.jpeg)"
+msgstr "圖片檔 (*.png *.jpeg)"
+
+#: part/pageview.cpp:2888
+#, kde-format
+msgid "File not saved."
+msgstr "檔案未儲存。"
+
+#: part/pageview.cpp:2899
+#, kde-format
+msgid "Image [%1x%2] saved to %3 file."
+msgstr "影像【%1 x %2】已儲存到檔案 %3。"
+
+#: part/pageview.cpp:3041
+#, kde-format
+msgid "Copy Text"
+msgstr "複製文字"
+
+#: part/pageview.cpp:3061
+#, kde-format
+msgid "Go to '%1'"
+msgstr "前往 '%1'"
+
+#: part/pageview.cpp:4034 part/part.cpp:3155
+#, kde-format
+msgid "Fit Width"
+msgstr "符合寬度"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Fit Page"
+msgstr "符合頁面"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Auto Fit"
+msgstr "自動調適"
+
+#: part/pageview.cpp:4355
+#, kde-format
+msgid "Search for '%1' with"
+msgstr "搜尋 %1 於？"
+
+#: part/pageview.cpp:4369
+#, kde-format
+msgid "Configure Web Shortcuts..."
+msgstr "設定網頁捷徑..."
+
+#: part/pageview.cpp:4395
+#, kde-format
+msgid "Follow This Link"
+msgstr "開啟此連結"
+
+#: part/pageview.cpp:4398
+#, kde-format
+msgid "Play this Sound"
+msgstr "播放聲音..."
+
+#: part/pageview.cpp:4400
+#, kde-format
+msgid "Stop Sound"
+msgstr "停止音效"
+
+#: part/pageview.cpp:4406
+#, kde-format
+msgid "Copy Link Address"
+msgstr "複製連結位址"
+
+#: part/pageview.cpp:4427
+#, kde-format
+msgid "Search for '%1' in this document"
+msgstr "在這個文件搜尋「%1」"
+
+#: part/pageview.cpp:4870
+#, kde-format
+msgid "Welcome"
+msgstr "歡迎"
+
+#: part/pageview.cpp:4994
+#, kde-format
+msgid "Select zooming area. Right-click to zoom out."
+msgstr "選擇縮放區域。點右鍵以縮小。"
+
+#: part/pageview.cpp:5005
+#, kde-format
+msgid "Click to see the magnified view."
+msgstr "點擊以放大檢視。"
+
+#: part/pageview.cpp:5018
+#, kde-format
+msgid "Draw a rectangle around the text/graphics to copy."
+msgstr "在文字/圖形周圍畫一個矩形以複製。"
+
+#: part/pageview.cpp:5030
+#, kde-format
+msgid "Select text"
+msgstr "選擇文字"
+
+#: part/pageview.cpp:5042
+#, kde-format
+msgid ""
+"Draw a rectangle around the table, then click near edges to divide up; press "
+"Esc to clear."
+msgstr "在表格周圍畫一個矩形，然後在邊緣附近點擊以分割。按下 Esc 清除。"
+
+#: part/pageview.cpp:5052
+#, kde-format
+msgid ""
+"All your signing certificates are either not valid yet or are past their "
+"validity date."
+msgstr ""
+
+#: part/pageview.cpp:5055
+#, kde-format
+msgid ""
+"There are no available signing certificates.<br/>For more information, "
+"please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
+"the manual."
+msgstr ""
+
+#: part/pageview.cpp:5071
+#, kde-format
+msgid "You have unsaved changes. Please save the document before signing it."
+msgstr ""
+
+#: part/pageview.cpp:5079
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The version of the Poppler library this Okular was compiled with does not "
+"support signing documents with passwords. Please ask your provider to update "
+"it to 22.02 or later."
+msgstr ""
+
+#: part/pageview.cpp:5080
+#, kde-format
+msgctxt "@title:window"
+msgid "Poppler library is too old"
+msgstr ""
+
+#: part/pageview.cpp:5098
+#, kde-format
+msgid "Draw a rectangle to insert the signature field"
+msgstr ""
+
+#: part/pageview.cpp:5242
+#, kde-format
+msgid "Draw a rectangle around the page area you wish to keep visible"
+msgstr "在您想要保持可見的頁面區域畫一矩形"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "New Text Note"
+msgstr "新文字備註"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "Text of the new note:"
+msgstr "新備註文字："
+
+#: part/pageviewannotator.cpp:362
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"A signature of this size may be too small to read. If you would like to "
+"create a potentially more readable signature, press <interface>Start over</"
+"interface> and draw a bigger rectangle."
+msgstr ""
+
+#: part/pageviewannotator.cpp:364
+#, kde-format
+msgctxt "@action:button"
+msgid "Start Over"
+msgstr ""
+
+#: part/pageviewannotator.cpp:365
+#, fuzzy, kde-format
+#| msgid "Sign CRL"
+msgctxt "@action:button"
+msgid "Sign"
+msgstr "簽署 CRL"
+
+#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+
+#: part/pageviewannotator.cpp:1166
+#, fuzzy, kde-format
+#| msgid "Author"
+msgid "Author name"
+msgstr "作者"
+
+#: part/pageviewannotator.cpp:1166
+#, fuzzy, kde-format
+#| msgctxt "Add an annotation to the page"
+#| msgid "add annotation"
+msgid "Author name for the annotation:"
+msgstr "新增註記"
+
+#: part/pageviewannotator.cpp:1227
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw an ellipse (drag to select a zone)"
+msgstr "畫一橢圓形（拖曳以選取區域）"
+
+#: part/pageviewannotator.cpp:1229
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Highlight text"
+msgstr "突顯文字"
+
+#: part/pageviewannotator.cpp:1231
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a freehand line"
+msgstr "繪製自由手繪線條"
+
+#: part/pageviewannotator.cpp:1233
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Inline Text Annotation (drag to select a zone)"
+msgstr "內含文字註釋（拖曳以選取區域）"
+
+#: part/pageviewannotator.cpp:1235
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a pop-up note"
+msgstr "放一個彈出式備註"
+
+#: part/pageviewannotator.cpp:1237
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a polygon (click on the first point to close it)"
+msgstr "畫出一多邊形（點選第一個點以結束）"
+
+#: part/pageviewannotator.cpp:1239
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a rectangle"
+msgstr "畫一矩形"
+
+#: part/pageviewannotator.cpp:1241
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Squiggle text"
+msgstr "草寫魂字"
+
+#: part/pageviewannotator.cpp:1243
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a stamp symbol"
+msgstr "放置印花標記"
+
+#: part/pageviewannotator.cpp:1245
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a straight line"
+msgstr "畫一直線"
+
+#: part/pageviewannotator.cpp:1247
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Strike out text"
+msgstr "文字加上刪除線"
+
+#: part/pageviewannotator.cpp:1249
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Underline text"
+msgstr "文字加上底線"
+
+#: part/pageviewannotator.cpp:1251
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Typewriter Annotation (drag to select a zone)"
+msgstr "打字機註解 (拖曳以選取區域)"
+
+#: part/pageviewannotator.cpp:1310
+#, kde-format
+msgid "Highlighter"
+msgstr "突顯"
+
+#: part/pageviewannotator.cpp:1484
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid ""
+#| "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
+#| "not visible in PDF readers other than Okular.</warning>"
+msgctxt "@info"
+msgid ""
+"Stamps inserted in PDF documents are not visible in PDF readers other than "
+"Okular"
+msgstr ""
+"<warning>實驗性功能。<nl/>插入 PDF 文件的印花，不能在 Okular 以外的PDF 閱讀器"
+"中顯示。</warning>"
+
+#: part/pageviewannotator.cpp:1484
+#, fuzzy, kde-format
+#| msgid "Experimental"
+msgctxt "@title:window"
+msgid "Experimental feature"
+msgstr "實驗性"
+
+#: part/pageviewannotator.cpp:1613
+#, fuzzy, kde-format
+#| msgctxt "Add an annotation to the page"
+#| msgid "add annotation"
+msgid "Add favorite annotation"
+msgstr "新增註記"
+
+#: part/pageviewannotator.cpp:1613
+#, fuzzy, kde-format
+#| msgctxt "Change an annotation's size"
+#| msgid "adjust annotation"
+msgid "Custom annotation name:"
+msgstr "調整註記"
+
+#. i18n: ectx: Menu (file)
+#: part/part-viewermode.rc:6 part/part.rc:5
+#, kde-format
+msgid "&File"
+msgstr "檔案(&F)"
+
+#. i18n: ectx: Menu (settings)
+#: part/part-viewermode.rc:10 part/part.rc:90
+#, kde-format
+msgid "&Settings"
+msgstr "設定(&S)"
+
+#. i18n: ectx: Menu (help)
+#: part/part-viewermode.rc:15 part/part.rc:97
+#, kde-format
+msgid "&Help"
+msgstr "說明(&H)"
+
+#. i18n: ectx: Menu (view_orientation)
+#: part/part-viewermode.rc:32 part/part.rc:44
+#, kde-format
+msgid "&Orientation"
+msgstr "方向(&O)"
+
+#. i18n: ectx: Menu (bookmarks)
+#. i18n: ectx: Menu (okular_bookmarks)
+#: part/part-viewermode.rc:50 part/part.rc:65
+#, kde-format
+msgid "&Bookmarks"
+msgstr "書籤(&B)"
+
+#. i18n: ectx: ToolBar (OkularViewerToolBar)
+#: part/part-viewermode.rc:63
+#, kde-format
+msgid "Viewer Toolbar"
+msgstr "檢視工具列"
+
+#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#, kde-format
+msgid "Thumbnails"
+msgstr "縮圖"
+
+#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#, kde-format
+msgid "Annotations"
+msgstr "註記"
+
+#: part/part.cpp:460
+#, kde-format
+msgid ""
+"This document contains annotations or form data that were saved internally "
+"by a previous Okular version. Internal storage is <b>no longer supported</b>."
+"<br/>Please save to a file in order to move them if you want to continue to "
+"edit the document."
+msgstr ""
+"這個文件包含了來自舊版 Okular 的存於內部儲存空間的註解或表單資料。內部儲存空"
+"間已經 <b>不再支援</b>。<br/>假如你要繼續編輯檔案，請儲存至一個檔案以移動它"
+"們。"
+
+#: part/part.cpp:467
+#, kde-format
+msgid ""
+"This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
+"here to see them</a> or go to File -> Embedded Files."
+msgstr ""
+"此文件有嵌入式檔案。<a href=\"okular:/embeddedfiles\">點選此處可查看</a>，或"
+"是到「檔案」─「嵌入式檔案」選單中。"
+
+#: part/part.cpp:689
+#, kde-format
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "前一頁"
+
+#: part/part.cpp:690
+#, kde-format
+msgid "Go back to the Previous Page"
+msgstr "跳到前一頁"
+
+#: part/part.cpp:691
+#, kde-format
+msgid "Moves to the previous page of the document"
+msgstr "移至文件前頁"
+
+#: part/part.cpp:701
+#, kde-format
+msgctxt "Next page"
+msgid "Next"
+msgstr "下一頁"
+
+#: part/part.cpp:702
+#, kde-format
+msgid "Advance to the Next Page"
+msgstr "跳到下一頁"
+
+#: part/part.cpp:703
+#, kde-format
+msgid "Moves to the next page of the document"
+msgstr "移至文件次頁"
+
+#: part/part.cpp:714
+#, kde-format
+msgid "Beginning of the document"
+msgstr "文件開頭"
+
+#: part/part.cpp:715
+#, kde-format
+msgid "Moves to the beginning of the document"
+msgstr "移至文件的開頭"
+
+#: part/part.cpp:719
+#, kde-format
+msgid "End of the document"
+msgstr "文件結尾"
+
+#: part/part.cpp:720
+#, kde-format
+msgid "Moves to the end of the document"
+msgstr "移至文件的結尾"
+
+#: part/part.cpp:734
+#, kde-format
+msgid "Rename the current bookmark"
+msgstr "重新命名目前的書籤"
+
+#: part/part.cpp:738
+#, kde-format
+msgid "Previous Bookmark"
+msgstr "前一個書籤"
+
+#: part/part.cpp:740
+#, kde-format
+msgid "Go to the previous bookmark"
+msgstr "移至上一個書籤"
+
+#: part/part.cpp:744
+#, kde-format
+msgid "Next Bookmark"
+msgstr "下一個書籤"
+
+#: part/part.cpp:746
+#, kde-format
+msgid "Go to the next bookmark"
+msgstr "移至下一個書籤"
+
+#: part/part.cpp:775
+#, kde-format
+msgid "Configure Okular..."
+msgstr "設定 okular..."
+
+#: part/part.cpp:778
+#, kde-format
+msgid "Configure Viewer..."
+msgstr "設定檢視器..."
+
+#: part/part.cpp:784
+#, kde-format
+msgid "Configure Viewer Backends..."
+msgstr "設定檢視器後端介面..."
+
+#: part/part.cpp:786
+#, kde-format
+msgid "Configure Backends..."
+msgstr "設定後端介面..."
+
+#: part/part.cpp:822
+#, kde-format
+msgid "About Backend"
+msgstr "關於後端介面..."
+
+#: part/part.cpp:827
+#, kde-format
+msgid "Reloa&d"
+msgstr "重新載入(&D)"
+
+#: part/part.cpp:829
+#, kde-format
+msgid "Reload the current document from disk."
+msgstr "從磁碟中重新載入目前的文件。"
+
+#: part/part.cpp:835
+#, kde-format
+msgid "Close &Find Bar"
+msgstr "關閉搜尋列(&F)"
+
+#: part/part.cpp:840
+#, kde-format
+msgid "Page Number"
+msgstr "頁面編號"
+
+#: part/part.cpp:844
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgctxt "@action"
+msgid "Configure Color Modes..."
+msgstr "設定 okular..."
+
+#: part/part.cpp:887
+#, kde-format
+msgid "Select All Text on Current Page"
+msgstr "選取目前頁面的所有文字"
+
+#: part/part.cpp:900
+#, fuzzy, kde-format
+#| msgid "Show &Page Bar"
+msgid "Show S&idebar"
+msgstr "顯示頁面列 (&P)"
+
+#: part/part.cpp:909
+#, kde-format
+msgid "Show &Page Bar"
+msgstr "顯示頁面列 (&P)"
+
+#: part/part.cpp:915
+#, kde-format
+msgid "Show &Signatures Panel"
+msgstr "顯示憑證面板(&S)"
+
+#: part/part.cpp:925
+#, kde-format
+msgid "&Embedded Files"
+msgstr "嵌入式檔案(&E)"
+
+#: part/part.cpp:931
+#, kde-format
+msgid "E&xport As"
+msgstr "匯出為(&X)"
+
+#: part/part.cpp:943
+#, kde-format
+msgid "S&hare"
+msgstr "分享 (&H)"
+
+#: part/part.cpp:952
+#, kde-format
+msgid "P&resentation"
+msgstr "展示(&R)"
+
+#: part/part.cpp:959
+#, kde-format
+msgid "Open Con&taining Folder"
+msgstr "開啟包含資料夾(&T)"
+
+#: part/part.cpp:975
+#, kde-format
+msgid "&Import PostScript as PDF..."
+msgstr "匯入 Postscript 為 PDF(&I)..."
+
+#: part/part.cpp:979
+#, kde-format
+msgid "Switch Blackscreen Mode"
+msgstr "切換為黑螢幕模式"
+
+#: part/part.cpp:987
+#, kde-format
+msgid "Erase Drawing"
+msgstr "擦除繪圖"
+
+#: part/part.cpp:992
+#, kde-format
+msgid "Configure Annotations..."
+msgstr "設定註記..."
+
+#: part/part.cpp:997
+#, kde-format
+msgid "Play/Pause Presentation"
+msgstr "開始/暫停展示"
+
+#: part/part.cpp:1145
+#, kde-format
+msgid ""
+"You have just modified the open document, but this kind of document can not "
+"be saved.\n"
+"Any modification will be lost once Okular is closed."
+msgstr ""
+
+#: part/part.cpp:1146
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Document can't be saved"
+msgstr "文件密碼"
+
+#: part/part.cpp:1175
+#, kde-format
+msgid "Could not open '%1' (%2) "
+msgstr "無法開啟 '%1' (%2) "
+
+#: part/part.cpp:1229
+#, kde-format
+msgid "The loading of %1 has been canceled."
+msgstr "已取消載入 %1。"
+
+#: part/part.cpp:1245
+#, kde-format
+msgid "Could not open %1. Reason: %2"
+msgstr "無法開啟 %1。原因：%2"
+
+#: part/part.cpp:1273
+#, kde-format
+msgid "Configure Viewer Backends"
+msgstr "設定檢視器後端介面"
+
+#: part/part.cpp:1275
+#, kde-format
+msgid "Configure Backends"
+msgstr "設定後端介面"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid ""
+"The program \"ps2pdf\" was not found, so Okular can not import PS files "
+"using it."
+msgstr "找不到 \"ps2pdf\" 程式，okular 無法匯入 PS 檔。"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid "ps2pdf not found"
+msgstr "找不到 ps2pdf"
+
+#: part/part.cpp:1365
+#, kde-format
+msgid "PostScript files (%1)"
+msgstr "Postscript 檔案 (%1)"
+
+#: part/part.cpp:1381
+#, kde-format
+msgid "Importing PS file as PDF (this may take a while)..."
+msgstr "匯入 PS 檔成 PDF 格式中（可能要花一點時間）..."
+
+#: part/part.cpp:1510
+#, kde-format
+msgid "Please enter the password to read the document:"
+msgstr "請輸入密碼以讀取文件："
+
+#: part/part.cpp:1512
+#, kde-format
+msgid "Incorrect password. Try again:"
+msgstr "密碼錯誤。請再試一次："
+
+#: part/part.cpp:1518
+#, kde-format
+msgid "Document Password"
+msgstr "文件密碼"
+
+#: part/part.cpp:1638
+#, kde-format
+msgid "This document has XFA forms, which are currently <b>unsupported</b>."
+msgstr "此文件內含 XFA 表單，目前不支援。"
+
+#: part/part.cpp:1645
+#, kde-format
+msgid ""
+"This document has forms. Click on the button to interact with them, or use "
+"View -> Show Forms."
+msgstr "此文件有表單。點擊按鈕可以查看，或是到「檢視」─「顯示表單」。"
+
+#: part/part.cpp:1661
+#, kde-format
+msgid ""
+"All editing and interactive features for this document are disabled. Please "
+"save a copy and reopen to edit this document."
+msgstr ""
+"已在此文件停用所有編輯與互動功能。請儲存副本並重新開啟檔案即可編輯此文件。"
+
+#: part/part.cpp:1749
+#, kde-format
+msgid ""
+"This document wants to be shown full screen.\n"
+"Leave normal mode and enter presentation mode?"
+msgstr ""
+"這個檔案想要在全螢幕模式顯示\n"
+"要離開標準模式，並進入簡報模式嗎？"
+
+#: part/part.cpp:1751
+#, kde-format
+msgid "Request to Change Viewing Mode"
+msgstr "請求變更顯示模式"
+
+#: part/part.cpp:1752
+#, kde-format
+msgid "Enter Presentation Mode"
+msgstr "進入展示模式"
+
+#: part/part.cpp:1753
+#, kde-format
+msgid "Deny Request"
+msgstr "取消請求"
+
+#: part/part.cpp:1843
+#, kde-format
+msgid "Could not open %1. %2"
+msgstr "無法開啟 %1。%2"
+
+#: part/part.cpp:1873
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue reloading the file?"
+msgstr ""
+"這裡有一些未儲存的變更，且檔案 %1 已經被其他程式所變更。您的變更將會遺失，因"
+"為這檔案已經沒辦法被儲存。<br/>你要重新載入這個檔案嗎？"
+
+#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#, kde-format
+msgid "File Changed"
+msgstr "檔案已變更"
+
+#: part/part.cpp:1875
+#, kde-format
+msgid "Continue Reloading"
+msgstr "仍然重新載入"
+
+#: part/part.cpp:1876
+#, kde-format
+msgid "Abort Reloading"
+msgstr "取消重新載入"
+
+#: part/part.cpp:1880
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue closing the file?"
+msgstr ""
+"這裡有一些未儲存的變更，且檔案 %1 已經被其他程式所變更。您的變更將會遺失，因"
+"為這檔案已經沒辦法被儲存。<br/>你要關閉這個檔案嗎？"
+
+#: part/part.cpp:1882
+#, kde-format
+msgid "Continue Closing"
+msgstr "仍然關閉"
+
+#: part/part.cpp:1883
+#, kde-format
+msgid "Abort Closing"
+msgstr "取消關閉"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Do you want to save your changes to \"%1\" or discard them?"
+msgstr "您要儲存你的變更至 %1 還是放棄它們？"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Close Document"
+msgstr "關閉文件"
+
+#: part/part.cpp:2022
+#, kde-format
+msgid ""
+"This link points to a close document action that does not work when using "
+"the embedded viewer."
+msgstr "這個連結指到一個已關閉的文件動作，該動作在嵌入式檢視器中無法進行。"
+
+#: part/part.cpp:2028
+#, kde-format
+msgid ""
+"This link points to a quit application action that does not work when using "
+"the embedded viewer."
+msgstr "這個連結指到一個離開應用程式的動作，該動作在嵌入式檢視器中無法進行。"
+
+#: part/part.cpp:2120 part/part.cpp:2138
+#, kde-format
+msgid "Reloading the document..."
+msgstr "重新載入文件中..."
+
+#: part/part.cpp:2295 part/toc.cpp:38
+#, kde-format
+msgid "Contents"
+msgstr "內容"
+
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#, kde-format
+msgid "Signatures"
+msgstr "簽名"
+
+#: part/part.cpp:2351
+#, kde-format
+msgid "Go to Page"
+msgstr "跳頁"
+
+#: part/part.cpp:2374
+#, kde-format
+msgid "&Page:"
+msgstr "頁數(&P)："
+
+#: part/part.cpp:2467
+#, kde-format
+msgid "Enter the new name of the bookmark:"
+msgstr "輸入書籤的新名稱："
+
+#: part/part.cpp:2513
+#, kde-format
+msgid "Rename this Bookmark"
+msgstr "重新命名書籤"
+
+#: part/part.cpp:2516
+#, kde-format
+msgid "Remove this Bookmark"
+msgstr "移除此書籤"
+
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/signaturepartutils.cpp:87
+#, kde-format
+msgctxt "File type name and pattern"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#, kde-format
+msgid "Save As"
+msgstr "另存新檔"
+
+#: part/part.cpp:2627
+#, kde-format
+msgid ""
+"You have chosen to save an Okular Archive without the file name ending with "
+"the '%1' extension. That is not allowed, do you want to choose a new name?"
+msgstr ""
+
+#: part/part.cpp:2628
+#, kde-format
+msgid "Unsupported extension"
+msgstr ""
+
+#: part/part.cpp:2629
+#, kde-format
+msgctxt "@action:button"
+msgid "Choose New Name"
+msgstr ""
+
+#: part/part.cpp:2661
+#, kde-format
+msgid ""
+"The file '%1' has been modified by another program, which means it can no "
+"longer be saved."
+msgstr "這個檔案 %1 已經被其他程式所變更，這代表著再也沒辦法被儲存了。"
+
+#: part/part.cpp:2669
+#, kde-format
+msgid ""
+"The current document is protected with a password.<br />In order to save, "
+"the file needs to be reloaded. You will be asked for the password again and "
+"your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"目前的檔案已經以密碼保護。<br />為了要儲存它，這檔案必須重新載入。您將會被再"
+"次被詢問密碼，且您的還原 / 重作 (Redo) 紀錄將會消失。<br />仍要繼續？"
+
+#: part/part.cpp:2670 part/part.cpp:2722
+#, kde-format
+msgid "Save - Warning"
+msgstr "儲存 - 警告"
+
+#: part/part.cpp:2696
+#, kde-format
+msgid "Could not open the temporary file for saving."
+msgstr "無法開啟暫存檔來儲存。"
+
+#: part/part.cpp:2709
+#, fuzzy, kde-kuit-format
+#| msgid "File could not be saved in '%1'. Try to save it to another location."
+msgctxt "@info"
+msgid ""
+"Could not overwrite <filename>%1</filename> because that file is read-only. "
+"Try saving to another location or changing that file's permissions."
+msgstr "無法儲存檔案到 %1。請儲存在其他位置。"
+
+#: part/part.cpp:2721
+#, kde-format
+msgid ""
+"After saving, the current document format requires the file to be reloaded. "
+"Your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"儲存後，目前的檔案格式要求檔案需要重新載入。你的還原 / 重做 (redo) 紀錄將會消"
+"失。<br />仍要繼續？"
+
+#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#, kde-format
+msgid "File could not be saved in '%1'. Try to save it to another location."
+msgstr "無法儲存檔案到 %1。請儲存在其他位置。"
+
+#: part/part.cpp:2749
+#, kde-format
+msgid "Filled form contents"
+msgstr "填充表單內容"
+
+#: part/part.cpp:2752
+#, kde-format
+msgid "User annotations"
+msgstr "用戶註記"
+
+#: part/part.cpp:2757
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them."
+msgstr ""
+"你準備要儲存變更，但目前的檔案格式不支援儲存這些元素。請使用 <i>Okular 檔案封"
+"存格式</i> 以保留他們。"
+
+#: part/part.cpp:2761 part/part.cpp:2783
+#, kde-format
+msgid "Warning"
+msgstr "警告"
+
+#: part/part.cpp:2762 part/part.cpp:2784
+#, kde-format
+msgid "Save as Okular document archive..."
+msgstr "儲存為 Okular 檔案封存格式…"
+
+#: part/part.cpp:2774
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save the document and "
+"discard these elements."
+msgstr ""
+"你準備要儲存變更，但目前的檔案格式不支援儲存這些元素。請使用 <i>Okular 檔案封"
+"存格式</i> 以保留他們。點一下 <i>繼續</i> 仍然儲存，並放棄這些元素。"
+
+#: part/part.cpp:2777
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save, but you will lose "
+"these elements as well as the undo/redo history."
+msgstr ""
+"你準備要儲存變更，但目前的檔案格式不支援儲存這些元素。請使用 <i>Okular 檔案封"
+"存格式</i> 以保留他們。點一下 <i>繼續</i> 仍然儲存，但你將會損失這些元素，還"
+"有還原 / 重做 (redo) 紀錄"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue"
+msgstr "繼續"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue losing changes"
+msgstr "仍然放棄變更"
+
+#: part/part.cpp:2807
+#, kde-format
+msgid "File could not be saved in '%1'. %2"
+msgstr "無法儲存檔案到 %1。%2"
+
+#: part/part.cpp:2846
+#, kde-format
+msgid ""
+"Okular cannot copy %1 to the specified location.\n"
+"\n"
+"The document does not exist anymore."
+msgstr ""
+"Okular 無法複製 %1 到指定的位置。\n"
+"\n"
+"文件不再存在。"
+
+#: part/part.cpp:2882
+#, kde-format
+msgid ""
+"File could not be saved in '%1'. Error: '%2'. Try to save it to another "
+"location."
+msgstr "無法儲存檔案到 %1，因為錯誤：「%2」。請儲存在其他位置。"
+
+#: part/part.cpp:3133
+#, kde-format
+msgid "Expand whole section"
+msgstr "展開整個部分"
+
+#: part/part.cpp:3134
+#, kde-format
+msgid "Collapse whole section"
+msgstr "收縮整個部分"
+
+#: part/part.cpp:3135
+#, kde-format
+msgid "Expand all"
+msgstr "全部展開"
+
+#: part/part.cpp:3136
+#, kde-format
+msgid "Collapse all"
+msgstr "全部收縮"
+
+#: part/part.cpp:3147
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgid "Sync Thumbnail with Page"
+msgstr "將縮圖與頁面連結(&T)"
+
+#: part/part.cpp:3152
+#, kde-format
+msgid "Add Bookmark"
+msgstr "加入書籤"
+
+#: part/part.cpp:3176
+#, kde-format
+msgid "Tools"
+msgstr "工具"
+
+#: part/part.cpp:3358
+#, fuzzy, kde-format
+#| msgid "Speak Text"
+msgctxt "@action:inmenu menu that contains actions to control text to speach"
+msgid "Speak"
+msgstr "唸出文字"
+
+#: part/part.cpp:3516
+#, kde-format
+msgctxt "@title:window"
+msgid "Print"
+msgstr "列印"
+
+#: part/part.cpp:3579
+#, kde-format
+msgid "Printing this document is not allowed."
+msgstr "不允許列印此文件。"
+
+#: part/part.cpp:3587
+#, kde-format
+msgid ""
+"Could not print the document. Unknown error. Please report to bugs.kde.org"
+msgstr "無法列印此文件。未知的錯誤。請回報到 bugs.kde.org"
+
+#: part/part.cpp:3589
+#, kde-format
+msgid ""
+"Could not print the document. Detailed error is \"%1\". Please report to "
+"bugs.kde.org"
+msgstr "無法列印此文件。錯誤詳情為：%1。請回報到 bugs.kde.org"
+
+#: part/part.cpp:3669
+#, kde-format
+msgid "Go to the place you were before"
+msgstr "Go to the place you were before"
+
+#: part/part.cpp:3673
+#, kde-format
+msgid "Go to the place you were after"
+msgstr "Go to the place you were after"
+
+#: part/part.cpp:3698
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not create temporary file "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+msgstr ""
+"<qt><strong>檔案錯誤</strong>：無法建立暫存檔。<nobr> <strong>%1</strong></"
+"nobr>。</qt>"
+
+#: part/part.cpp:3710
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
+"strong></nobr> for uncompression. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>檔案錯誤</strong>：無法開啟檔案 <nobr> <strong>%1</strong></nobr>"
+"做解壓縮。此檔案將不會被載入。</qt>"
+
+#: part/part.cpp:3714
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if you do not have enough permissions to "
+"read the file. You can check ownership and permissions if you right-click on "
+"the file in the Dolphin file manager, then choose the 'Properties' option, "
+"and select 'Permissions' tab in the opened window.</qt>"
+msgstr ""
+"<qt>這個錯誤通常是因為您沒有讀取該檔的權限。你可以使用 Dolphin檔案管理器來檢"
+"查所有者和權限。操作方式：對檔案按下右鍵 ，選擇「屬性」選項，並在開啟的視窗中"
+"選擇「權限」標籤頁。</qt>"
+
+#: part/part.cpp:3736
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
+"%1</strong></nobr>. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>檔案錯誤</strong>：無法解壓此檔 <nobr><strong>%1</strong></"
+"nobr>。檔案將不會被載入。</qt>"
+
+#: part/part.cpp:3740
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if the file is corrupt. If you want to be "
+"sure, try to decompress the file manually using command-line tools.</qt>"
+msgstr ""
+"<qt>這個錯誤通常是因為檔案已損毀。您可以試著在命令列直接解壓此檔看看。</qt>"
+
+#: part/part.cpp:3766
+#, kde-format
+msgid "No Bookmarks"
+msgstr "沒有書籤"
+
+#: part/part.cpp:3837
+#, kde-format
+msgid "There was a problem sharing the document: %1"
+msgstr "分享檔案時發生問題：%1"
+
+#: part/part.cpp:3837 part/part.cpp:3843
+#, kde-format
+msgid "Share"
+msgstr "分享"
+
+#: part/part.cpp:3841
+#, kde-format
+msgid "Document shared successfully"
+msgstr "檔案分享完畢"
+
+#: part/part.cpp:3843
+#, kde-format
+msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
+msgstr "你可以在這裡找到分享的檔案：<a href=\"%1\">%1</a>"
+
+#. i18n: ectx: Menu (edit)
+#: part/part.rc:19
+#, kde-format
+msgid "&Edit"
+msgstr "編輯(&E)"
+
+#. i18n: ectx: Menu (view)
+#: part/part.rc:32
+#, kde-format
+msgid "&View"
+msgstr "檢視(&V)"
+
+#. i18n: ectx: Menu (go)
+#: part/part.rc:53
+#, kde-format
+msgid "&Go"
+msgstr "跳至(&G)"
+
+#. i18n: ectx: Menu (tools)
+#: part/part.rc:73
+#, kde-format
+msgid "&Tools"
+msgstr "工具(&T)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: part/part.rc:101 shell/shell.rc:24
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具列"
+
+#. i18n: ectx: ToolBar (annotationToolBar)
+#: part/part.rc:119
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgid "Annotation Toolbar"
+msgstr "註記工具"
+
+#. i18n: ectx: ToolBar (quickAnnotationToolBar)
+#: part/part.rc:143
+#, fuzzy, kde-format
+#| msgid "Annotation tools"
+msgid "Quick Annotation Toolbar"
+msgstr "註記工具"
+
+#: part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General Options"
+msgstr "一般選項"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility"
+msgstr "無障礙"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility Reading Aids"
+msgstr "無障礙讀取輔助"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance"
+msgstr "效能"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance Tuning"
+msgstr "效能微調"
+
+#: part/preferencesdialog.cpp:45
+#, kde-format
+msgid "Configure Viewer"
+msgstr "設定檢視器"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Presentation"
+msgstr "展示"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Options for Presentation Mode"
+msgstr "展示模式選項"
+
+#: part/preferencesdialog.cpp:50
+#, kde-format
+msgid "Annotation Options"
+msgstr "註記選項"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor"
+msgstr "編輯器"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor Options"
+msgstr "編輯器選項"
+
+#: part/preferencesdialog.cpp:56
+#, kde-format
+msgctxt ""
+"Give the user a hint, that it enabled the option --editor-cmd together with "
+"the current value of the option."
+msgid ""
+"The editor was set by the command line to \n"
+" %1 \n"
+"If you want to use the setting, start okular without the option --editor-cmd"
+msgstr ""
+
+#: part/presentationsearchbar.cpp:77
+#, kde-format
+msgid "Find Next"
+msgstr "尋找下一個"
+
+#: part/presentationwidget.cpp:167
+#, kde-format
+msgctxt "[document title/filename] – Presentation"
+msgid "%1 – Presentation"
+msgstr "%1 - 展示"
+
+#: part/presentationwidget.cpp:221
+#, kde-format
+msgid "Switch Screen"
+msgstr "切換螢幕"
+
+#: part/presentationwidget.cpp:226
+#, kde-format
+msgctxt "%1 is the screen number (0, 1, ...)"
+msgid "Screen %1"
+msgstr "螢幕 %1"
+
+#: part/presentationwidget.cpp:233
+#, kde-format
+msgid "Exit Presentation Mode"
+msgstr "離開展示模式"
+
+#: part/presentationwidget.cpp:367
+#, kde-format
+msgid "Title: %1"
+msgstr "標題：%1"
+
+#: part/presentationwidget.cpp:372
+#, kde-format
+msgid "Pages: %1"
+msgstr "頁面：%1"
+
+#: part/presentationwidget.cpp:373
+#, kde-format
+msgid "Click to begin"
+msgstr "點選以開始"
+
+#: part/presentationwidget.cpp:515
+#, kde-format
+msgctxt "For Presentation"
+msgid "Pause"
+msgstr "暫停"
+
+#: part/presentationwidget.cpp:518
+#, kde-format
+msgctxt "For Presentation"
+msgid "Play"
+msgstr "播放"
+
+#: part/presentationwidget.cpp:1619
+#, kde-format
+msgid ""
+"There are two ways of exiting presentation mode, you can press either ESC "
+"key or click with the quit button that appears when placing the mouse in the "
+"top-right corner. Of course you can cycle windows (Alt+TAB by default)"
+msgstr ""
+"有兩個方法離開展示模式。您可以按下 ESC 鍵，或是將滑鼠移到右下角然後點選「離"
+"開」。當然您也可以用 ALT+TAB 切換視窗。"
+
+#: part/presentationwidget.cpp:1705
+#, kde-format
+msgctxt ""
+"Reason for inhibiting the screensaver activation, when the presentation mode "
+"is active"
+msgid "Giving a presentation"
+msgstr "給一個展示"
+
+#: part/propertiesdialog.cpp:49
+#, kde-format
+msgid "Unknown File"
+msgstr "未知的檔案"
+
+#: part/propertiesdialog.cpp:63
+#, kde-format
+msgid "%1 Properties"
+msgstr "%1 屬性"
+
+#: part/propertiesdialog.cpp:104
+#, kde-format
+msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/propertiesdialog.cpp:117
+#, kde-format
+msgid "%1:"
+msgstr "%1："
+
+#: part/propertiesdialog.cpp:124
+#, kde-format
+msgid "&Fonts"
+msgstr "字型(&F)"
+
+#: part/propertiesdialog.cpp:145
+#, kde-format
+msgid "Reading font information..."
+msgstr "讀取字型資訊中..."
+
+#: part/propertiesdialog.cpp:158
+#, fuzzy, kde-format
+#| msgid "&Page Size"
+msgid "&Page Sizes"
+msgstr "頁面大小(&P)"
+
+#: part/propertiesdialog.cpp:225
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Extract Font"
+msgstr "展開字型(&E)"
+
+#: part/propertiesdialog.cpp:273
+#, kde-format
+msgid "Type 1"
+msgstr "類型 1"
+
+#: part/propertiesdialog.cpp:276
+#, kde-format
+msgid "Type 1C"
+msgstr "類型 1C"
+
+#: part/propertiesdialog.cpp:279
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "Type 1C (OT)"
+msgstr "類型 1C（OT）"
+
+#: part/propertiesdialog.cpp:282
+#, kde-format
+msgid "Type 3"
+msgstr "類型 3"
+
+#: part/propertiesdialog.cpp:285
+#, kde-format
+msgid "TrueType"
+msgstr "TrueType"
+
+#: part/propertiesdialog.cpp:288
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "TrueType (OT)"
+msgstr "TrueType（OT）"
+
+#: part/propertiesdialog.cpp:291
+#, kde-format
+msgid "CID Type 0"
+msgstr "CID 類型 0"
+
+#: part/propertiesdialog.cpp:294
+#, kde-format
+msgid "CID Type 0C"
+msgstr "CID 類型 0C"
+
+#: part/propertiesdialog.cpp:297
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID Type 0C (OT)"
+msgstr "CID 類型 0C（OT）"
+
+#: part/propertiesdialog.cpp:300
+#, kde-format
+msgid "CID TrueType"
+msgstr "CID TrueType"
+
+#: part/propertiesdialog.cpp:303
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID TrueType (OT)"
+msgstr "CID TrueType（OT）"
+
+#: part/propertiesdialog.cpp:306
+#, kde-format
+msgid "TeX PK"
+msgstr "TeX PK"
+
+#: part/propertiesdialog.cpp:309
+#, kde-format
+msgid "TeX virtual"
+msgstr "TeX 虛擬的"
+
+#: part/propertiesdialog.cpp:312
+#, kde-format
+msgid "TeX Font Metric"
+msgstr "TeX 字型描述"
+
+#: part/propertiesdialog.cpp:315
+#, kde-format
+msgid "TeX FreeType-handled"
+msgstr "TeX FreeType-handled"
+
+#: part/propertiesdialog.cpp:318
+#, kde-format
+msgctxt "Unknown font type"
+msgid "Unknown"
+msgstr "未知"
+
+#: part/propertiesdialog.cpp:331
+#, kde-format
+msgid "Embedded (subset)"
+msgstr "嵌入式（子集）"
+
+#: part/propertiesdialog.cpp:334
+#, kde-format
+msgid "Fully embedded"
+msgstr "完整嵌入式"
+
+#: part/propertiesdialog.cpp:344
+#, kde-format
+msgid "No"
+msgstr "否"
+
+#: part/propertiesdialog.cpp:347
+#, kde-format
+msgid "Yes (subset)"
+msgstr "是（子集）"
+
+#: part/propertiesdialog.cpp:350
+#, kde-format
+msgid "Yes"
+msgstr "是"
+
+#: part/propertiesdialog.cpp:370
+#, kde-format
+msgctxt "Replacing missing font with another one"
+msgid "%1 (substituting with %2)"
+msgstr "%1（使用 %2 取代）"
+
+#: part/propertiesdialog.cpp:372
+#, kde-format
+msgctxt "font name not available (empty)"
+msgid "[n/a]"
+msgstr "無"
+
+#: part/propertiesdialog.cpp:386
+#, kde-format
+msgid "Unknown font"
+msgstr "未知的字型"
+
+#: part/propertiesdialog.cpp:392
+#, kde-format
+msgid "Embedded: %1"
+msgstr "嵌入式：%1"
+
+#: part/propertiesdialog.cpp:426
+#, kde-format
+msgid "Name"
+msgstr "名稱"
+
+#: part/propertiesdialog.cpp:429
+#, kde-format
+msgid "Type"
+msgstr "類型"
+
+#: part/propertiesdialog.cpp:432
+#, kde-format
+msgid "File"
+msgstr "檔案"
+
+#: part/propertiesdialog.cpp:500
+#, fuzzy, kde-format
+#| msgid "Pages"
+msgid "Page"
+msgstr "頁面"
+
+#: part/propertiesdialog.cpp:503
+#, fuzzy, kde-format
+#| msgctxt "@title:column"
+#| msgid "Size"
+msgid "Size"
+msgstr "大小"
+
+#: part/revisionviewer.cpp:41
+#, kde-format
+msgid "Revision Preview"
+msgstr "修訂版本預覽"
+
+#: part/revisionviewer.cpp:53
+#, kde-format
+msgid "Where do you want to save this revision?"
+msgstr "此修訂版本應儲存於何處？"
+
+#: part/revisionviewer.cpp:56
+#, kde-format
+msgid "Could not save file %1."
+msgstr "無法儲存檔案 %1。"
+
+#: part/revisionviewer.cpp:75
+#, kde-format
+msgid "Could not view revision."
+msgstr "無法檢視修訂版本。"
+
+#: part/searchwidget.cpp:38
+#, kde-format
+msgid "Enter at least 3 letters to filter pages"
+msgstr "請至少輸入三個字母來過濾頁面"
+
+#: part/searchwidget.cpp:48
+#, kde-format
+msgid "Case Sensitive"
+msgstr "區分大小寫"
+
+#: part/searchwidget.cpp:50
+#, kde-format
+msgid "Match Phrase"
+msgstr "符合片語"
+
+#: part/searchwidget.cpp:51
+#, kde-format
+msgid "Match All Words"
+msgstr "符合所有單字"
+
+#: part/searchwidget.cpp:52
+#, kde-format
+msgid "Match Any Word"
+msgstr "符合任何單字"
+
+#: part/searchwidget.cpp:71
+#, kde-format
+msgid "Filter Options"
+msgstr "過濾器選項"
+
+#: part/side_reviews.cpp:65
+#, fuzzy, kde-format
+#| msgid ""
+#| "<div align=center><h3>No annotations</h3>To create new annotations press "
+#| "F6 or select <i>Tools -&gt; Review</i> from the menu.</div>"
+msgid ""
+"<div align=center><h3>No annotations</h3>To create new annotations press F6 "
+"or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
+msgstr ""
+"<div align=center><h3>沒有註記</h3> 要建立新的註記，按 F6 或在選單中選取選擇"
+"「工具」─「回顧」。</div>"
+
+#: part/side_reviews.cpp:137
+#, kde-format
+msgid "Group by Page"
+msgstr "以頁分組"
+
+#: part/side_reviews.cpp:142
+#, kde-format
+msgid "Group by Author"
+msgstr "以作者分組"
+
+#: part/side_reviews.cpp:150
+#, fuzzy, kde-format
+#| msgid "Show reviews for current page only"
+msgid "Show annotations for current page only"
+msgstr "只顯示目前頁面的回顧"
+
+#: part/side_reviews.cpp:160
+#, kde-format
+msgid "Expand all elements"
+msgstr "展開所有元素"
+
+#: part/side_reviews.cpp:162
+#, kde-format
+msgid "Collapse all elements"
+msgstr "收縮所有元素"
+
+#: part/signaturepanel.cpp:101
+#, kde-format
+msgid "Properties"
+msgstr "屬性"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Select certificate to sign with"
+msgstr ""
+
+#: part/signaturepartutils.cpp:46
+#, fuzzy, kde-format
+#| msgid "Certificate Data:"
+msgid "Certificates:"
+msgstr "憑證資料："
+
+#: part/signaturepartutils.cpp:59
+#, kde-format
+msgid "Enter password (if any) to unlock certificate: %1"
+msgstr ""
+
+#: part/signaturepartutils.cpp:61
+#, fuzzy, kde-format
+#| msgid "Certificate has Expired."
+msgid "Enter certificate password"
+msgstr "憑證已過期。"
+
+#: part/signaturepartutils.cpp:71
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Enter document password"
+msgstr "文件密碼"
+
+#: part/signaturepartutils.cpp:93
+#, kde-format
+msgctxt ""
+"Used when suggesting a new name for a digitally signed file. %1 is the old "
+"file name and %2 it's extension"
+msgid "%1_signed.%2"
+msgstr ""
+
+#: part/signaturepartutils.cpp:95
+#, kde-format
+msgid "Save Signed File As"
+msgstr ""
+
+#: part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "無法使用"
+
+#: part/signaturepropertiesdialog.cpp:49
+#, kde-format
+msgid "Validity Status"
+msgstr "有效狀態"
+
+#: part/signaturepropertiesdialog.cpp:52
+#, kde-format
+msgid "Signature Validity:"
+msgstr "簽名有效性："
+
+#: part/signaturepropertiesdialog.cpp:53
+#, kde-format
+msgid "Document Modifications:"
+msgstr "文件變更："
+
+#: part/signaturepropertiesdialog.cpp:56
+#, kde-format
+msgid "Additional Information"
+msgstr "額外資訊"
+
+#: part/signaturepropertiesdialog.cpp:59
+#, kde-format
+msgid "Signed By:"
+msgstr "簽署者："
+
+#: part/signaturepropertiesdialog.cpp:60
+#, kde-format
+msgid "Signing Time:"
+msgstr "簽署時間："
+
+#: part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "原因："
+
+#: part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "位置："
+
+#: part/signaturepropertiesdialog.cpp:74
+#, kde-format
+msgid "Document Version"
+msgstr "文件版本"
+
+#: part/signaturepropertiesdialog.cpp:77
+#, kde-format
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "%2 個文件修訂版中的第 %1 版"
+
+#: part/signaturepropertiesdialog.cpp:79
+#, kde-format
+msgid "View Signed Version..."
+msgstr "檢視簽名過版本…"
+
+#: part/signaturepropertiesdialog.cpp:86
+#, kde-format
+msgid "View Certificate..."
+msgstr "檢視憑證…"
+
+#: part/thumbnaillist.cpp:1029
+#, kde-format
+msgid "Show bookmarked pages only"
+msgstr "只顯示書籤頁"
+
+#: part/videowidget.cpp:139
+#, kde-format
+msgctxt "start the movie playback"
+msgid "Play"
+msgstr "播放"
+
+#: part/videowidget.cpp:142
+#, kde-format
+msgctxt "pause the movie playback"
+msgid "Pause"
+msgstr "暫停"
+
+#: part/videowidget.cpp:248
+#, kde-format
+msgctxt "stop the movie playback"
+msgid "Stop"
+msgstr "停止"
+
+#: part/widgetconfigurationtoolsbase.cpp:28
+#, kde-format
+msgid "&Add..."
+msgstr "新增(&A)..."
+
+#: part/widgetconfigurationtoolsbase.cpp:31
+#, kde-format
+msgid "&Edit..."
+msgstr "編輯(&E)..."
+
+#: part/widgetconfigurationtoolsbase.cpp:35
+#, kde-format
+msgid "&Remove"
+msgstr "移除(&R)"
+
+#: part/widgetconfigurationtoolsbase.cpp:39
+#, kde-format
+msgid "Move &Up"
+msgstr "上移(&U)"
+
+#: part/widgetconfigurationtoolsbase.cpp:43
+#, kde-format
+msgid "Move &Down"
+msgstr "下移(&D)"
+
+#: part/widgetdrawingtools.cpp:105
+#, kde-format
+msgid "Default Drawing Tool #%1"
+msgstr "預設繪製工具 #%1"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "There's already a tool with that name. Using a default one"
+msgstr "已經有一個同名的工具了。使用預設值"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "Duplicated Name"
+msgstr "重覆的名稱"
+
+#: shell/main.cpp:68
+#, kde-format
+msgid "Page of the document to be shown"
+msgstr "此文件要顯示的頁面"
+
+#: shell/main.cpp:69
+#, kde-format
+msgid "Start the document in presentation mode"
+msgstr "以展示模式開啟此文件"
+
+#: shell/main.cpp:70
+#, kde-format
+msgid "Start with print dialog"
+msgstr "以列印對話框開始"
+
+#: shell/main.cpp:71
+#, kde-format
+msgid "Start with print dialog and exit after printing"
+msgstr "以列印對話框開始並且列印後離開"
+
+#: shell/main.cpp:72
+#, kde-format
+msgid "\"Unique instance\" control"
+msgstr "「唯一實體」控制"
+
+#: shell/main.cpp:73
+#, kde-format
+msgid "Not raise window"
+msgstr "不提升視窗"
+
+#: shell/main.cpp:74
+#, kde-format
+msgid "Find a string on the text"
+msgstr "在一段文字中搜尋字串"
+
+#: shell/main.cpp:75
+#, kde-format
+msgid "sets the external editor command"
+msgstr ""
+
+#: shell/main.cpp:76
+#, kde-format
+msgid "Documents to open. Specify '-' to read from stdin."
+msgstr "要開啟的文件。'-' 表示從標準輸入讀取。"
+
+#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#, kde-format
+msgid ""
+"You cannot set the editor command in an already running okular instance. "
+"Please disable the tabs and try again. Please note, that unique is also not "
+"supported when setting the editor command at the commandline.\n"
+msgstr ""
+
+#: shell/okular_main.cpp:150
+#, kde-format
+msgid "Error: Can't open more than one document with the --unique switch"
+msgstr "錯誤：不能用 --unique 選項開啟多個文件"
+
+#: shell/okular_main.cpp:156
+#, kde-format
+msgid "Error: Can't open more than one document with the --presentation switch"
+msgstr "錯誤：不能用 --presentation 選項開啟多個文件"
+
+#: shell/okular_main.cpp:162
+#, kde-format
+msgid "Error: Can't open more than one document with the --print switch"
+msgstr "錯誤：不能用 --print 選項開啟多個文件"
+
+#: shell/okular_main.cpp:168
+#, kde-format
+msgid "Error: Can't open more than one document with the --page switch"
+msgstr "錯誤：不能用 --page 選項開啟多個文件"
+
+#: shell/okular_main.cpp:174
+#, kde-format
+msgid "Error: Can't open more than one document with the --find switch"
+msgstr "錯誤：不能用 --find 選項開啟多個文件"
+
+#: shell/shell.cpp:91
+#, kde-format
+msgid "Unable to find the Okular component: %1"
+msgstr "找不到 okular 組件：%1"
+
+#: shell/shell.cpp:146
+#, kde-format
+msgid ""
+"There is already a unique Okular instance running. This instance won't be "
+"the unique one."
+msgstr "已經有一個唯一的 Okular 實體在執行中。此實體不會是唯一。"
+
+#: shell/shell.cpp:169
+#, kde-format
+msgid "Unable to find the Okular component."
+msgstr "無法找到 okular 組件。"
+
+#: shell/shell.cpp:399
+#, kde-format
+msgid ""
+"Click to open a file\n"
+"Click and hold to open a recent file"
+msgstr "點選以開啟檔案。 點選並按住以開啟最近的檔案。"
+
+#: shell/shell.cpp:400
+#, kde-format
+msgid ""
+"<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
+msgstr "<b>點選</b>以開啟檔案，或是<b>點選並按住</b>以選擇最近開啟的檔案。"
+
+#: shell/shell.cpp:413
+#, kde-format
+msgid "Next Tab"
+msgstr "下一個分頁"
+
+#: shell/shell.cpp:419
+#, kde-format
+msgid "Previous Tab"
+msgstr "前一個分頁"
+
+#: shell/shell.cpp:425
+#, kde-format
+msgid "Undo close tab"
+msgstr "還原關閉分頁"
+
+#: shell/shell.cpp:532
+#, kde-format
+msgid "All files (*)"
+msgstr "所有檔案 (*)"
+
+#: shell/shell.cpp:533
+#, kde-format
+msgid "All supported files (%1)"
+msgstr "所有支援的檔案 (%1)"
+
+#: shell/shell.cpp:537
+#, kde-format
+msgid "Open Document"
+msgstr "開啟文件"
+
+#: shell/shell.cpp:641
+#, kde-format
+msgid "Confirm Close"
+msgstr "確認關閉"
+
+#: shell/shell.cpp:645
+#, kde-format
+msgid "Close Tabs"
+msgstr "關閉分頁"
+
+#: shell/shell.cpp:652
+#, kde-format
+msgid "You are about to close %1 tabs. Are you sure you want to continue?"
+msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
+
+#: shell/shell.cpp:654
+#, kde-format
+msgid "Warn me when I attempt to close multiple tabs"
+msgstr "當我嘗試關閉多個分頁時警告我"
+
+#: shell/welcomescreen.cpp:65
+#, fuzzy, kde-format
+#| msgid "Copy Text"
+msgid "&Copy Path"
+msgstr "複製文字"
+
+#: shell/welcomescreen.cpp:78
+#, fuzzy, kde-format
+#| msgid "Open Con&taining Folder"
+msgid "&Open Containing Folder"
+msgstr "開啟包含資料夾(&T)"
+
+#: shell/welcomescreen.cpp:93
+#, kde-format
+msgctxt "recent items context menu"
+msgid "&Forget This Item"
+msgstr ""
+
+#: shell/welcomescreen.cpp:143
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "No recent documents"
+msgstr "只對目前的文件"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: shell/welcomescreen.ui:153
+#, kde-format
+msgid "Welcome to Okular"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: shell/welcomescreen.ui:232
+#, fuzzy, kde-format
+#| msgid "Open Document"
+msgctxt "on welcome screen"
+msgid "Open Document..."
+msgstr "開啟文件"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: shell/welcomescreen.ui:377
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "Recent documents"
+msgstr "只對目前的文件"
+
+#. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
+#: shell/welcomescreen.ui:387
+#, kde-format
+msgctxt "on welcome screen (recent document list)"
+msgid "Forget All"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
+#: shell/welcomescreen.ui:455
+#, kde-format
+msgid "Hide welcome screen"
+msgstr ""
+
+#~ msgid "Remove Bookmarks"
+#~ msgstr "移除書籤"
+
+#, fuzzy
+#~| msgid "Annotations"
+#~ msgctxt "verb"
+#~ msgid "&Annotate"
+#~ msgstr "註記"
+
+#, fuzzy
+#~| msgid "Highlight"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Highlight"
+#~ msgstr "突顯"
+
+#, fuzzy
+#~| msgid "Underline"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Underline"
+#~ msgstr "底線"
+
+#, fuzzy
+#~| msgid "Squiggle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Squiggle"
+#~ msgstr "草寫"
+
+#, fuzzy
+#~| msgid "Strike Out"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Strike Out"
+#~ msgstr "刪除線"
+
+#, fuzzy
+#~| msgid "Insert"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Text"
+#~ msgstr "插入"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Inline Note"
+#~ msgstr "內含備註"
+
+#, fuzzy
+#~| msgid "Pop-up Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Popup Note"
+#~ msgstr "彈出式備註"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a freehand line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Freehand Line"
+#~ msgstr "繪製自由手繪線條"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a straight line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Straight line"
+#~ msgstr "畫一直線"
+
+#, fuzzy
+#~| msgid "Open Arrow"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Arrow"
+#~ msgstr "開放箭頭"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a rectangle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Rectangle"
+#~ msgstr "畫一矩形"
+
+#, fuzzy
+#~| msgid "Ellipse"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Ellipse"
+#~ msgstr "橢圓形"
+
+#, fuzzy
+#~| msgid "Polygon"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Polygon"
+#~ msgstr "五角形"
+
+#, fuzzy
+#~| msgid "Highlighter"
+#~ msgid "Highlight in Yellow"
+#~ msgstr "突顯"
+
+#, fuzzy
+#~| msgid "Highlight with Comment"
+#~ msgid "Highlight in Green"
+#~ msgstr "含備註的突顯文字"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgid "Insert Inline Note"
+#~ msgstr "內含備註"
+
+#, fuzzy
+#~| msgid "Pop-up Note"
+#~ msgid "Insert Popup Note"
+#~ msgstr "彈出式備註"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "&Select Area"
+#~ msgstr "選擇文字"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select &Text"
+#~ msgstr "選擇文字"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select T&able"
+#~ msgstr "選擇文字"
+
+#, fuzzy
+#~| msgctxt "Add an annotation to the page"
+#~| msgid "add annotation"
+#~ msgid "Bookmark annotation"
+#~ msgstr "新增註記"
+
+#~ msgid "&Toggle Change Colors"
+#~ msgstr "切換改變顏色(&T)"
+
+#, fuzzy
+#~| msgid "Enable transitions"
+#~ msgctxt "@option:check Config dialog, presentation page, transitions"
+#~ msgid "Enable transitions"
+#~ msgstr "開啟轉變"
+
+#, fuzzy
+#~| msgid "Advance every:"
+#~ msgctxt "@label:spinbox Config dialog, presentation page"
+#~ msgid "Advance every:"
+#~ msgstr "自動跳張間隔："
+
+#, fuzzy
+#~| msgid "Use custom background color"
+#~ msgctxt "@label:listbox Config dialog, general page"
+#~ msgid "Custom background color:"
+#~ msgstr "使用自訂背景顏色"
+
+#~ msgid "Draw border around &Images"
+#~ msgstr "在影像周圍畫出框線(&I)"
+
+#~ msgid "Speech"
+#~ msgstr "語音"
+
+#~ msgid "Engine"
+#~ msgstr "引擎"
+
+#~ msgid "Identity"
+#~ msgstr "身份"
+
+#~ msgid "Au&thor:"
+#~ msgstr "作者(&T)："
+
+#~ msgid "View Options"
+#~ msgstr "檢視選項"
+
+#~ msgctxt "@info:whatsthis"
+#~ msgid ""
+#~ "Defines the default zoom mode for files which were never opened before.\n"
+#~ "For files which were opened before the previous zoom is applied."
+#~ msgstr ""
+#~ "定義從未開啟過的檔案的預設縮放模式。\n"
+#~ "已開啟過的檔案，則會使用前一次的縮放模式。"
+
+#~ msgid "Navigation"
+#~ msgstr "導覽"
+
+#~ msgid "Placement"
+#~ msgstr "放置"
+
+#~ msgid "Screen:"
+#~ msgstr "螢幕："
+
+#~ msgid "Drawing Tool Configuration"
+#~ msgstr "繪製工具設定"
+
+#~ msgid "&Get Books From Internet..."
+#~ msgstr "從網路上取得電子書(&G)..."
+
+#~ msgid "Reviews"
+#~ msgstr "回顧"
+
+#, fuzzy
+#~| msgid "V%1"
+#~ msgctxt "@item:inlistbox Color name"
+#~ msgid "%1"
+#~ msgstr "V%1"
+
+#~ msgid "Hide Forms"
+#~ msgstr "隱藏表單"
+
+#~ msgid "&Review"
+#~ msgstr "回顧(&R)"
+
+#~ msgid "Annotations author"
+#~ msgstr "註釋作者"
+
+#~ msgid "Please insert your name or initials:"
+#~ msgstr "請插入您的名字或縮寫："
+
+#~ msgid "Show &Navigation Panel"
+#~ msgstr "顯示導覽面板(&N)"
+
+#~ msgid "Show Text"
+#~ msgstr "顯示文字"
+
+#~ msgid "Small Icons"
+#~ msgstr "小圖示"
+
+#~ msgid "Large Icons"
+#~ msgstr "大圖示"
+
+#~ msgid ""
+#~ "Click to use the current selection tool\n"
+#~ "Click on the arrow to choose another selection tool"
+#~ msgstr ""
+#~ "按一下以使用目前的選擇工具\n"
+#~ "按下箭頭以選擇其它的選擇工具"

@@ -1,0 +1,72 @@
+# translation of okular_kimgio.po to Arabic
+# translation of okular_kimgio.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+# zayed <zayed.alsaidi@gmail.com>, 2008, 2012, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_kimgio\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-11-30 00:42+0000\n"
+"PO-Revision-Date: 2021-07-06 00:02+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "زايد السعيدي"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zayed.alsaidi@gmail.com"
+
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#, kde-format
+msgid "Unable to load document: %1"
+msgstr "عاجز عن تحميل مستند: %1"
+
+#: generator_kimgio.cpp:76
+#, kde-format
+msgid ""
+"This document appears malformed. Here is a best approximation of the "
+"document's intended appearance."
+msgstr ""
+"يبدو أن هذا المستند غير صحيح. فيما يلي أفضل تقدير تقريبي للمظهر المقصود من "
+"المستند."
+
+#~ msgid "Image Backend"
+#~ msgstr "محرك الصور"
+
+#~ msgid "A simple image backend"
+#~ msgstr "محرك صور بسيط"
+
+#~ msgid ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+#~ msgstr ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "شريط الأدوات الرئيسي"

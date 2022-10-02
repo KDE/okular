@@ -1,0 +1,84 @@
+# Translation of okular_ghostview.po into Serbian.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Slobodan Simic <slsimic@gmail.com>, 2007.
+# Zoran Olujic <olujicz@ns-linux.org>, 2010.
+# Chusslove Illich <caslav.ilic@gmx.net>, 2010.
+# Dalibor Djuric <daliborddjuric@gmail.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_ghostview\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"PO-Revision-Date: 2010-03-16 11:25+0100\n"
+"Last-Translator: Dalibor Djuric <daliborddjuric@gmail.com>\n"
+"Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+"X-Environment: kde\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Зоран Олујић"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "olujicz@gmail.com"
+
+#. i18n: ectx: label, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:9
+#, kde-format
+msgid "Use Platform Fonts"
+msgstr "Користи системске фонтове"
+
+#. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
+#: conf/gssettings.kcfg:10
+#, kde-format
+msgid ""
+"Determines whether Ghostscript should be allowed to use platform fonts, if "
+"false only usage of fonts embedded in the document will be allowed."
+msgstr ""
+"Одређује да ли је Гостскрипту дозвољено да користи системске фонтове. Ако "
+"није, моћи ће да користи само фонтове угнежђене у документу."
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: conf/gssettingswidget.ui:28
+#, kde-format
+msgid "General Settings"
+msgstr "Опште поставке"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
+#: conf/gssettingswidget.ui:37
+#, kde-format
+msgid "&Use platform fonts"
+msgstr "&Користи системске фонтове"
+
+#: generator_ghostview.cpp:85
+#, kde-format
+msgid "Ghostscript"
+msgstr "Гостскрипт"
+
+#: generator_ghostview.cpp:85
+#, kde-format
+msgid "Ghostscript Backend Configuration"
+msgstr "Поставке позадине за Гостскрипт"
+
+#: generator_ghostview.cpp:261
+#, kde-format
+msgid "Document version"
+msgstr "Верзија документа"
+
+#: generator_ghostview.cpp:266
+#, kde-format
+msgid "Language Level"
+msgstr "Ниво језика"

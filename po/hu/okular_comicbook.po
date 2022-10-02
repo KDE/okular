@@ -1,0 +1,61 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Tamas Szanto <tszanto@interware.hu>, 2009.
+# Kristóf Kiszel <kiszel.kristof@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: KDE 4.2\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2020-12-30 11:16+0100\n"
+"Last-Translator: Kristóf Kiszel <kiszel.kristof@gmail.com>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.03.70\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kiszel Kristóf"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kiszel.kristof@gmail.com"
+
+#: document.cpp:96
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr ""
+"Nem sikerült megnyitni a dokumentumot, sem az „unrar”, sem az „unarchiver” "
+"program nem található."
+
+#: document.cpp:101
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr ""
+"A telepített „unrar” program nem megfelelő verziójú ComicBook-fájlok "
+"kezeléséhez."
+
+#: document.cpp:130
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "Ismeretlen ComicBook-formátum."
+
+#~ msgid "ComicBook Backend"
+#~ msgstr "ComicBook-kezelő"
+
+#~ msgid "A renderer for various comic book formats"
+#~ msgstr "Megjelenítőmodul különféle képregényformátumokhoz"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "(c) Tobias Koenig, 2007-2008."
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

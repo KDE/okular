@@ -1,0 +1,1908 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&okular;">
+  <!ENTITY package "kdegraphics">
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY PDF "<acronym
+>PDF</acronym
+>">
+  <!ENTITY % Japanese "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+
+<book lang="&language;">
+	<bookinfo>
+		<title
+>&okular; ハンドブック</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+><email
+>aacid@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Yukiko</firstname
+><surname
+>Bando</surname
+><affiliation
+><address
+><email
+></email
+></address
+></affiliation
+><contrib
+>日本語翻訳</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2008-08-21</date>
+		<releaseinfo
+>0.7</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; は &kpdf; のコードを元にした &kde; の汎用文書ビューアです。</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>はじめに</title>
+		<para
+>&okular; は &kpdf; アプリケーションのコードを元にした &kde; の汎用文書ビューアです。&kpdf; のコードを元にしていますが、概観モード、注釈のサポート、より使いやすく改良されたプレゼンテーションモードといった &okular; 独自の機能も備えています。 </para>
+<!--
+		<para>
+			The PDF format is widely used for publishing documents that are
+			mostly not meant to be edited again. &okular; is only a viewer
+			for these files and therefore it doesn't provide any functionality
+			to edit or create PDF documents.
+		</para>
+-->
+	</chapter>
+	<chapter id="use">
+		<title
+>基本的な使い方</title>
+		<sect1 id="opening">
+			<title
+>ファイルを開く</title>
+			<para
+>&okular; でファイルを見るには、<menuchoice
+><guimenu
+>ファイル</guimenu
+><guimenuitem
+>開く...</guimenuitem
+></menuchoice
+> を選択し、ダイアログでサポートされているファイルを選択して <guibutton
+>開く</guibutton
+> を押します。選択したファイルがメインビューに表示されます。 </para>
+			<para
+>以前に &okular; で開いたファイルがあれば、<menuchoice
+><guimenu
+>ファイル</guimenu
+><guisubmenu
+>最近のファイルを開く</guisubmenu
+></menuchoice
+> から素早く開くこともできます。 </para>
+			<para
+>ファイルを開いたら今度は文書を読むために文書内を移動したくなるでしょう。その方法については <link linkend="navigating"
+>次のセクション</link
+> を参照してください。 </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>ナビゲーション</title>
+			<para
+>このセクションでは &okular; で文書内を移動する方法を説明します。</para>
+			<para
+>メインビューをスクロールする方法はたくさんあります。その一つに <keycap
+>上矢印</keycap
+> と <keycap
+>下矢印</keycap
+> キーがあります。他にもスクロールバーやマウスホイール、<keycap
+>Page Up</keycap
+> と <keycap
+>Page Down</keycap
+> キーが使えます。 </para>
+			<para
+>また、閲覧ツールが有効になっているときは、文書のどこかをマウスの左ボタンでクリックし、ボタンを押したまま見たい個所と逆の方向にドラッグして移動することもできます。閲覧ツールは <menuchoice
+><guimenu
+>ツール</guimenu
+><guimenuitem
+>閲覧ツール</guimenuitem
+></menuchoice
+> で有効にします。 </para>
+			<para
+>左側のナビゲーションパネルを利用して文書内を移動する方法も 2 つあります。 </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>ページのサムネイルをクリックするとそのページに移動します。 </para>
+				</listitem>
+				<listitem>
+					<para
+>文書に目次がある場合は、目次の項目をクリックするとその項目のページに移動します。 </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>ページにリンクが含まれている文書では、リンクをクリックするとリンク先のページに移動します。リンク先がウェブページや外部文書であれば、それぞれのフォーマットに関連付けられているデフォルトの &kde; アプリケーションが起動します。 </para>
+			<para
+>さらに、以下の機能を使って文書内の特定の場所に素早く移動することができます。 </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> または <menuchoice
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>最初のページ</guimenuitem
+> </menuchoice
+> で文書の最初のページに移動します。 </para>
+				</listitem>
+				<listitem>
+					<para
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> または <menuchoice
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>最後のページ</guimenuitem
+> </menuchoice
+> で文書の最後のページに移動します。 </para>
+				</listitem>
+				<listitem>
+					<para
+><keycap
+>Space</keycap
+> と <keycap
+>Page Down</keycap
+> キー、ツールバーの <guibutton
+>次のページ</guibutton
+> ボタン、メニューの <menuchoice
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>次のページ</guimenuitem
+> </menuchoice
+> で次のページに移動します。 </para>
+				</listitem>
+				<listitem>
+					<para
+><keycap
+>Backspace</keycap
+> と <keycap
+>Page Up</keycap
+> キー、ツールバーの <guibutton
+>前のページ</guibutton
+> ボタン、メニューの <menuchoice
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>前のページ</guimenuitem
+> </menuchoice
+> で前のページに移動します。 </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>プレゼンテーションモード</title>
+			<para
+>&okular; で文書を見るもう一つの方法にプレゼンテーションモードがあります。プレゼンテーションモードは <menuchoice
+><guimenu
+>表示</guimenu
+><guimenuitem
+>プレゼンテーション</guimenuitem
+></menuchoice
+> で有効にします。このモードでは文書は 1 ページずつ表示されます。また、ページ全体が見えるように「ページに合わせる」表示モードが使われます。 </para>
+			<note>
+				<para
+>&PDF; 文書は文書が常にプレゼンテーションモードで開くように指定することさえできます。 </para>
+			</note>
+			<para
+>プレゼンテーションモードではスクリーンの上部に操作バーが配置されます。マウスカーソルをそこへ移動すると表示されます。 </para>
+			<para
+>ページを変更するには、マウスの左ボタン (次のページ) と右ボタン (前のページ)、マウスホイール、操作バーの矢印アイコンとページ番号を入力できる編集ボックス、および <link linkend="navigating"
+>ナビゲーション</link
+> のセクションに記載されているキーが使えます。 </para>
+			<para
+>プレゼンテーションモードは <keycap
+>ESC</keycap
+> キーを押すか操作バーの <guilabel
+>終了</guilabel
+> アイコンをクリックすることでいつでも終了できます。 </para>
+			<para
+>ペンシルを使って表示されているページに描画することもできます。操作バーの <guilabel
+>描画モードの切り替え</guilabel
+> アイコンをクリックして描画モードを有効にしたり無効にしたりします。描画したものは他のページに移ると自動的に消えますが、操作バーの <guilabel
+>描画を消す</guilabel
+> アイコンをクリックして手動で消すこともできます。 </para>
+			<para
+>マルチモニタ構成では、複数のスクリーンを使ってプレゼンテーションを行うことができます。複数のスクリーンが検出されると、操作バーにスクリーンのアイコンが現れます。このボタンのドロップダウンリストからスクリーンを選択することで、プレゼンテーションを別のスクリーンに移すことができます。 </para>
+			<para
+>プレゼンテーションモードにはいくつかの設定オプションがあります。詳しくは <link linkend="configpresentation"
+>&okular; の設定</link
+> の章を参照してください。 </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>&okular; の高度な機能</title>
+		<sect1 id="embedded-files">
+			<title
+>埋め込みファイル</title>
+			<para
+>文書にファイルが埋め込まれていれば、文書を開いたときにそれを知らせるためにメインビューの上部に黄色いバーが現れます。 </para>
+			<screenshot>
+				<screeninfo
+>埋め込みファイルバー</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>埋め込みファイルバー</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>そのような場合は、バーのテキスト中のリンクをクリックするか、<menuchoice
+><guimenu
+>ファイル</guimenu
+><guimenuitem
+>埋め込みファイル</guimenuitem
+></menuchoice
+> を選択して埋め込みファイルのダイアログを開くことができます。このダイアログを使って埋め込みファイルを見たり取り出したりします。 </para>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>注釈</title>
+			<para
+>&okular; では文書に注釈を加えることができます。 </para>
+				<note>
+					<para
+>DRM (デジタル著作権管理) の制限により (主に &PDF; 文書で) 一部のプロパティの追加と編集および注釈の削除ができない場合があります。 </para>
+				</note>
+			<sect2 id="annotations-add">
+				<title
+>注釈を加える</title>
+				<para
+>文書に注釈を加えるには、<menuchoice
+><guimenu
+>ツール</guimenu
+><guimenuitem
+>注釈</guimenuitem
+></menuchoice
+> を選択するか <keycap
+>F6</keycap
+> を押して注釈バーを有効にする必要があります。注釈バーが表示されたら、その上のボタンを押して注釈の作成を開始します。 </para>
+				<note>
+					<para
+>注釈バーはメインビューのどの辺にでも配置できます。ドラッグして好みの場所に移動してください。 </para>
+				</note>
+				<note>
+					<para
+>注釈バーを有効にすると通常のモードに切り替わります。 </para>
+				</note>
+				<para
+>注釈の作成を中止するには、もう一度同じボタンを押します。 </para>
+				<para
+>新しく追加した注釈の作者は、&okular; の <link linkend="configure"
+>設定</link
+> ダイアログの <guilabel
+>個人情報</guilabel
+> のページで設定されている名前になります。 </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>注釈を削除する</title>
+				<para
+>注釈を削除するには、注釈をマウスの右ボタンでクリックして <guimenuitem
+>削除</guimenuitem
+> を選択します。 </para>
+				<para
+>注釈を削除すると、そのウィンドウが開いていれば閉じられます。 </para>
+				<note>
+					<para
+>このオプションは文書が注釈の削除を許可していないために使えない場合があります。 </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>注釈を編集する</title>
+				<para
+>注釈を編集するには、注釈をマウスの右ボタンでクリックして <guimenuitem
+>プロパティ...</guimenuitem
+> を選択します。注釈の一般的な設定 (色、不透明度、作者など) と選択した注釈のタイプ特有の設定を含むダイアログが表示されます。 </para>
+				<para
+>注釈を移動するには、&Ctrl; キーを押しながらマウスの左ボタンでクリックしてドラッグします。 </para>
+				<note>
+					<para
+>文書の制約により (主に &PDF; 文書で) 一部のオプションが使えない場合があります。 </para>
+				</note>
+			</sect2>
+		</sect1>
+	</chapter>
+			
+	<chapter id="primary-menu-items">
+		<title
+>メニューバー</title>
+
+		<sect1 id="menufile">
+			<title
+><guimenu
+>ファイル</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ファイル</guimenu
+> <guimenuitem
+>開く...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>サポートされているファイルを開きます。既に開いているファイルは新しいファイルを開くと閉じられます。詳しくは <link linkend="opening"
+>ファイルを開く</link
+> のセクションを参照してください。 </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guisubmenu
+>最近のファイルを開く</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>以前に開いたファイルをサブメニューから選択して開きます。既に開いているファイルは新しいファイルを開くと閉じられます。詳しくは <link linkend="opening"
+> ファイルを開く</link
+> のセクションを参照してください。 </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>PostScript を PDF としてインポート...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>PostScript ファイルを開いて &PDF; に変換します。 </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>名前を付けて保存...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書のバックエンドを用いて、現在開いているファイルを別名で保存します。&PDF; バックエンドの場合は、フォームのフィールドの値を変えて保存することも可能です (Poppler 
+>= 0.8 が必要)。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>名前を付けてコピーを保存...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>現在の文書のバックエンドを用いずに、開いているファイルのコピーを別名で保存します。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>ファイル</guimenu
+> <guimenuitem
+>再読み込み</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>現在開いているファイルを再読み込みします。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ファイル</guimenu
+> <guimenuitem
+>印刷...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>表示されている文書を印刷します。 </para>
+					</listitem>
+				</varlistentry>
+				
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>印刷プレビュー...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>表示されている文書がデフォルトのオプションでどのように印刷されるかをプレビューできます。 </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>プロパティ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書に関する基本的な情報 (タイトル、作者、作成日) と使用されているフォントの詳細を表示します。表示される情報は文書のタイプによって異なります。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>埋め込みファイル...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書に埋め込まれているファイルがあれば表示します。詳しくは <link linkend="embedded-files"
+>埋め込みファイル</link
+> のセクションを参照してください。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ファイル</guimenu
+> <guimenuitem
+>エクスポート</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>現在の文書をエクスポートできるフォーマットがサブメニューに表示されます。最初のエントリは文書の種類にかかわらず常に <guimenuitem
+>プレーンテキスト</guimenuitem
+> です。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ファイル</guimenu
+> <guimenuitem
+>終了</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>&okular; を終了します。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+><guimenu
+>編集</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>編集</guimenu
+> <guimenuitem
+>コピー</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><guibutton
+>テキスト選択</guibutton
+> モードで選択したテキストをクリップボードにコピーします。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>編集</guimenu
+> <guimenuitem
+>すべて選択</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書にテキストがある場合、すべてのテキストを選択します。これは <guibutton
+>テキスト選択</guibutton
+> モードでのみ使えます。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>編集</guimenu
+> <guimenuitem
+>検索...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>メインビューの下部に検索バーを表示します。これを使って文書内の文字列を検索することができます。 </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>編集</guimenu
+> <guimenuitem
+>次を検索</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>先に検索した文字列にマッチする次の個所を探します。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		
+		<sect1 id="menuview">
+			<title
+><guimenu
+>表示</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>表示</guimenu
+> <guimenuitem
+>プレゼンテーション</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>プレゼンテーションモードに切り替えます。詳しくは <link linkend="presentationMode"
+>プレゼンテーションモード</link
+> のセクションを参照してください。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>表示</guimenu
+> <guimenuitem
+>拡大</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>メインビューのズーム率を上げます。</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>表示</guimenu
+> <guimenuitem
+>縮小</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>メインビューのズーム率を下げます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guimenuitem
+>幅に合わせる</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ページの幅がメインビューの幅と同じになるようにメインビューのズーム率を調整します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guimenuitem
+>ページに合わせる</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>少なくとも 1 ページ全体が見えるようにメインビューのズーム率を調整します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guimenuitem
+>連続</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>連続表示モードを有効にします。このモードでは文書の全ページがメインビューに表示されるので、<menuchoice
+><guimenu
+>移動</guimenu
+> <guimenuitem
+>前のページ</guimenuitem
+></menuchoice
+> や <menuchoice
+><guimenu
+>移動</guimenu
+><guimenuitem
+>次のページ</guimenuitem
+> </menuchoice
+> を使わずに文書内をスクロールできます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guisubmenu
+>表示モード</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>サブメニューからページの表示モードを選択します。<guimenuitem
+>単一ページ</guimenuitem
+> (横 1 列に 1 ページのみ)、<guimenuitem
+>見開きページ</guimenuitem
+> (本を開いたときのように横 1 列に 2 ページ)、<guimenuitem
+>概観</guimenuitem
+> (横 1 列に表示するページ数は <link linkend="configure"
+>&okular; の設定</link
+> で指定) の 3 つのモードがあります。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guisubmenu
+>向き</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>サブメニューから回転方向を選択して文書の向きを変更します。 </para>
+						<note>
+							<para
+>向きの変更はすべてのページに適用されます。 </para>
+						</note>
+						<para
+>文書を元の向きに戻すには、サブメニューから <guimenuitem
+>元の向き</guimenuitem
+> を選択します。それまでに手動で行った向きの変更はすべて破棄されます。 </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guisubmenu
+>ページサイズ</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書のページサイズを変更します。 </para>
+						<note>
+							<para
+>このサブメニューは文書が複数の異なるページサイズをサポートしている場合にのみ有効になります。 </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guimenuitem
+>余白を除去</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ページを表示するときに周りの余白を除去します。 </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>表示</guimenu
+> <guimenuitem
+>フォームを表示/隠す</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書に含まれるフォームの表示/非表示を切り替えます。 </para>
+						<note>
+							<para
+>このメニュー項目は、文書にフォームが含まれている場合にのみ有効になります。 </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+><guimenu
+>移動</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>Backspace</keycap
+></shortcut
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>前のページ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の前のページに移動します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>Space</keycap
+></shortcut
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>次のページ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の次のページに移動します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+></shortcut
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>最初のページ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の最初のページに移動します。</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+></shortcut
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>最後のページ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の最後のページに移動します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>移動</guimenu
+> <guimenuitem
+>文書の閲覧履歴の前へ戻る</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の閲覧履歴の一つ前へ移動します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>移動</guimenu
+> <guimenuitem
+>文書の閲覧履歴の先へ進む</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>文書の閲覧履歴の一つ先へ移動します。これは <guimenuitem
+>文書の閲覧履歴の前へ戻る</guimenuitem
+> を使った後にのみ動きます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>移動</guimenu
+> <guimenuitem
+>ページに移動...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ダイアログが開き、文書のどのページに移動するかを指定できます。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+><guimenu
+>ブックマーク</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ブックマーク</guimenu
+> <guimenuitem
+>ブックマークを追加/削除</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>現在のページにブックマークを設定したり、既に設定されているブックマークを解除したりします。 </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ブックマーク</guimenu
+> <guimenuitem
+>前のブックマーク</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ブックマークが設定されている前のページに移動します。現在のページより前にブックマークが設定されていなければ何も起こりません。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ブックマーク</guimenu
+> <guimenuitem
+>次のブックマーク</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ブックマークが設定されている次のページに移動します。現在のページより後にブックマークが設定されていなければ何も起こりません。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ブックマーク</guimenu
+> <guimenuitem
+>ブックマークなし</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>このメニュー項目は、現在の文書にブックマークされたページがない場合にのみ表示されます。それ以外の場合は、ブックマークされたすべてのページが表示されます。それをクリックすると、直接そのページに移動できます。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+><guimenu
+>ツール</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ツール</guimenu
+> <guimenuitem
+>閲覧ツール</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>マウスは通常どおりに動きます。左ボタンで文書をドラッグしたりリンクをクリックし、右ボタンでブックマークを追加したりページをビューの幅に合わせたりします。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ツール</guimenu
+> <guimenuitem
+>ズームツール</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>マウスはズームツールになります。左ボタンを押しながらドラッグして領域を選択すると、その領域がビューの幅または高さいっぱいに表示されます。右ボタンをクリックすると前のズーム率に戻ります。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>選択</guimenu
+> <guimenuitem
+>選択ツール</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>マウスは選択ツールになります。左ボタンを押しながらドラッグして領域を選択すると、選択した領域のテキストや画像をクリップボードにコピーしたり、テキストを読み上げたり、画像をファイルに保存したりできます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ツール</guimenu
+> <guimenuitem
+>テキスト選択ツール</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>マウスはテキスト選択ツールになります。左ボタンを押しながらドラッグして文書のテキストを選択します。次に右ボタンを押して選択したテキストをクリップボードにコピーしたり読み上げたりできます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>ツール</guimenu
+> <guimenuitem
+>注釈</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>注釈バーを開きます。注釈バーを使って現在の文書に注釈を加えます。詳しくは <link linkend="annotations"
+>注釈</link
+> のセクションを参照してください。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ツール</guimenu
+> <guimenuitem
+>文書全体を読み上げ</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>ツール</guimenu
+> <guimenuitem
+>現在のページを読み上げ</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>ツール</guimenu
+> <guimenuitem
+>読み上げを停止</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>これらのメニュー項目は、&kde; のテキスト読み上げシステム <application
+>KTTS</application
+> を用いて文書全体あるいは現在のページを読み上げるときに使います。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-menu">
+			<title
+><guimenu
+>設定</guimenu
+> メニュー</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>M</keycap
+></keycombo
+></shortcut
+> <guimenu
+>設定</guimenu
+> <guimenuitem
+>メニューバーを表示</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>メニューバーの表示/非表示を切り替えます。非表示にしたメニューバーは右クリックメニューから再び表示させることができます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>ツールバーを表示</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ツールバーの表示/非表示を切り替えます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>設定</guimenu
+> <guimenuitem
+>ナビゲーションパネルを表示</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ナビゲーションパネルの表示/非表示を切り替えます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>設定</guimenu
+> <guimenuitem
+>フルスクリーンモード</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>フルスクリーンモードに切り替えます。このモードは <link linkend="presentationMode"
+>プレゼンテーションモード</link
+> とは別のものです。ウィンドウの装飾とメニューバーおよびツールバーが表示されないことを除けば、フルスクリーンモードは通常のモードと同じです。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>ショートカットを設定...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>キーボードショートカットを設定するためのウィンドウを開きます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>ツールバーを設定...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ツールバーに表示するボタンを選択するためのウィンドウを開きます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>バックエンドを設定...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><link linkend="configure"
+>バックエンドの設定</link
+> ウィンドウを開きます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>&okular; を設定...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><link linkend="configure"
+>設定</link
+> ウィンドウを開きます。</para>
+					</listitem>
+				</varlistentry>
+				
+			</variablelist>
+		</sect1>
+		<sect1 id="menuhelp">
+			<title
+><guimenu
+>ヘルプ</guimenu
+> メニュー</title>
+&help.menu.documentation; </sect1>
+		
+	</chapter>
+	<chapter id="configure">
+		<title
+>&okular; の設定</title>
+		<sect1 id="configindex">
+			<title
+>設定について</title>
+			<para
+>&okular; を設定するには、<menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>&okular; を設定...</guimenuitem
+></menuchoice
+> を選択します。設定ダイアログは 5 つのセクションに分かれています。この章ではそれぞれのオプションについて詳しく説明します。 </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>全般</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>アクセシビリティ</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>パフォーマンス</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>プレゼンテーション</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configidentity"
+>個人情報</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>設定ダイアログ</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>設定ダイアログ</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>インストールされているバックエンドに応じて <menuchoice
+><guimenu
+>設定</guimenu
+> <guimenuitem
+>バックエンドを設定...</guimenuitem
+></menuchoice
+> が有効になります。この特別な設定ダイアログには、実際に設定可能なバックエンドのオプションのみが含まれます。 </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>全般</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>スクロールバーを表示する</guilabel
+></term>
+					<listitem>
+						<para
+>メインビューにスクロールバーを表示するかどうかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>サムネイルをページとリンクする</guilabel
+></term>
+					<listitem>
+						<para
+>このオプションを指定すると、メインビューに表示されているページが常にサムネイルリストに表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ヒントと情報メッセージを表示する</guilabel
+></term>
+					<listitem>
+						<para
+>起動時やファイルを読み込んだときなどに情報メッセージを表示するかどうかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>DRM (デジタル著作権管理) の制限に従う</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; が DRM (デジタル著作権管理) の制限に従うべきかどうかを指定します。DRM の制限は &PDF; 文書で一部の操作 (内容をクリップボードにコピーするなど) を不可能にするために用いられます。&okular; の設定によっては、このオプションがない場合があります。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ファイルが変更されたら文書を再読み込みする</guilabel
+></term>
+					<listitem>
+						<para
+>既に開いているファイルが変更されていないか自動的にチェックし、必要であればファイルを更新します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>バックエンド選択ダイアログを表示する</guilabel
+></term>
+					<listitem>
+						<para
+>文書を扱えるバックエンドが複数ある場合、文書を開く際にどのバックエンドを使うかをユーザに尋ねます。このオプションのチェックを外すと、&okular; は最も優先度の高いバックエンドを使います。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>最初のページは中央に配置する</guilabel
+></term>
+					<listitem>
+						<para
+>「見開きページ」と「概観」表示モードで最初のページを中央に配置するか左寄せに配置するかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>概観モードの列数</guilabel
+></term>
+					<listitem>
+						<para
+>概観モードで横 1 列に表示するページ数を指定します。 </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>アクセシビリティ</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>リンクに縁取りを付ける</guilabel
+></term>
+					<listitem>
+						<para
+>リンクに縁取りを付けるかどうかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>色を変更</guilabel
+></term>
+					<listitem>
+						<para
+>色を変更するオプションを有効にします。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>色を反転</guilabel
+></term>
+					<listitem>
+						<para
+>ビューの色を反転します。黒いオブジェクトは白で表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>紙の色を変更</guilabel
+></term>
+					<listitem>
+						<para
+>紙の色 (文書の背景色) を変更します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>暗い色と明るい色を変更</guilabel
+></term>
+					<listitem>
+						<para
+>暗い色と明るい色を好みの色に変更します。黒は黒ではなく指定された暗い色で、白は白ではなく指定された明るい色で表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>白黒に変換</guilabel
+></term>
+					<listitem>
+						<para
+>文書を白黒に変換します。しきい値とコントラストを設定できます。しきい値を高くするほど濃いグレーが使われます。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>パフォーマンス</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>透過効果を有効にする</guilabel
+></term>
+					<listitem>
+						<para
+>透過効果を使って選択範囲や他の特殊なグラフィックスを描画します。アウトラインまたは不透明なスタイルを使って描画して選択の動作を速くするには、このオプションを無効にしてください。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>バックグラウンドでページを生成する</guilabel
+></term>
+					<listitem>
+						<para
+>バックグラウンドスレッドを使ってページを生成します。このオプションを無効にするとページの生成とユーザインターフェースが同じスレッドで処理されます。そのためユーザインターフェースの反応が遅くなりますが、ページは少し速く表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>メモリ使用のプロファイル</guilabel
+></term>
+					<listitem>
+						<para
+>お使いのシステムと好みに合わせてメモリの使用を調節することで &okular; のパフォーマンスを最適化することができます。メモリを多く使わせるほどプログラムは速く動作します。標準設定のプロファイルはあらゆるシステムに適していますが、メモリの使用をおさえた「低」プロファイルを選択して &okular; に必要以上のメモリを使わせないようにすることも、逆に「高」プロファイルを選択してシステムの能力を最大限に活用させることもできます。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>プレゼンテーション</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>一定時間ごとに進む</guilabel
+></term>
+					<listitem>
+						<para
+>指定された時間ごとに自動的に次のページに進みます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>最後まで行ったら最初のページに戻る</guilabel
+></term>
+					<listitem>
+						<para
+>プレゼンテーションモードで文書内を移動しているときに、最後のページの次に最初のページが表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>背景色</guilabel
+></term>
+					<listitem>
+						<para
+>プレゼンテーションモードでページによってカバーされていないスクリーンの領域を埋める色です。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ペンシルの色</guilabel
+></term>
+					<listitem>
+						<para
+>プレゼンテーションモードでページに描画するときに使うペンシルの色です。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>マウスカーソル</guilabel
+></term>
+					<listitem>
+						<para
+>マウスカーソルを常に表示するか、操作がなければ一定時間後に隠すか、あるいは常に非表示にするかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>進捗インジケータを表示する</guilabel
+></term>
+					<listitem>
+						<para
+>このオプションを指定すると、プレゼンテーションモードでページを変更するたびにスクリーンの右上に現在のページとページ総数を示す円形のインジケータが表示されます。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>まとめページを表示する</guilabel
+></term>
+					<listitem>
+						<para
+>プレゼンテーションの最初に文書のタイトル、作者、ページ数が記載されたまとめページを表示するかどうかを指定します。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ページの入れ替え</guilabel
+></term>
+					<listitem>
+						<para
+>文書自体に指定がない場合に使うページの入れ替え時の効果を選択します。&okular; に利用可能な効果をランダムに使わせるには、<guilabel
+>ランダム</guilabel
+> を選択してください。</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>配置</guilabel
+></term>
+					<listitem>
+						<para
+>ここでプレゼンテーションを表示する <guilabel
+>スクリーン</guilabel
+> を選択できます。</para
+> 
+						<para
+><guilabel
+>現在のスクリーン</guilabel
+> は、プレゼンテーションモードを開始した &okular; があるスクリーンです。</para>
+						<para
+><guilabel
+>デフォルトのスクリーン</guilabel
+> は、Xinerama の設定でデフォルトとして指定されているスクリーンです。</para>
+						<para
+><guilabel
+>スクリーン 0</guilabel
+>、<guilabel
+>スクリーン 1</guilabel
+> などは、利用可能なスクリーンです。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configidentity">
+			<title
+>個人情報</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>作者</guilabel
+></term>
+					<listitem>
+						<para
+>これが文書に追加したコンテンツの作者になります。</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>クレジットとライセンス</title>
+		
+		<itemizedlist>
+			<title
+>プログラム Copyright:</title>
+			<listitem
+><para
+>Albert Astals Cid<email
+>aacid@kde.org</email
+> </para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+> 現在のメンテナ</para
+></listitem>
+			<listitem
+><para
+>Enrico Ros<email
+>eros.kde@email.it</email
+> &kpdf; の開発者</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>ドキュメンテーション Copyright:</title>
+			<listitem
+><para
+>Albert Astals Cid<email
+>aacid@kde.org</email
+> 著者</para
+></listitem>
+			<listitem
+><para
+>Titus Laska<email
+>titus.laska@gmx.de</email
+> 更新と追加</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>日本語翻訳: Yukiko Bando</para
+> 
+&underFDL; &underGPL; </chapter>
+
+	<appendix id="installation">
+		<title
+>インストール</title>
+		<sect1 id="getting-kapp">
+			<title
+>&okular; の入手方法</title>
+&install.intro.documentation; </sect1>
+		<sect1 id="compilation">
+			<title
+>コンパイルとインストール</title>
+			<note>
+				<para
+>このハンドブックを &khelpcenter; でお読みになっているのであれば &okular; は既にあなたのシステムにインストールされています。したがって、インストールする必要はありません。 </para>
+</note
+> &install.compile.documentation; </sect1>
+	</appendix>
+	&documentation.index; 
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

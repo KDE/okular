@@ -1,0 +1,3878 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY latex "L<superscript
+>A</superscript
+>T<subscript
+>E</subscript
+>X">
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Brazilian-Portuguese "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about navigation panel
+Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
+Use Small Icons and deselect Show Text to minimize the navigation panel
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Manual do &okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>André Marcelo</firstname
+><surname
+>Alvarenga</surname
+><affiliation
+><address
+><email
+>alvarenga@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>08/01/2020</date>
+		<releaseinfo
+>1.10 (Applications 20.04)</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; é um visualizador de documentos universal do &kde;, baseado no código do &kpdf;.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>anotação</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Introdução</title>
+		<para
+>&okular; é um visualizador de documentos universal do &kde;, baseado no código do aplicativo &kpdf;. Embora seja baseado no código do &kpdf;, o &okular; tem alguns recursos exclusivos, tais como: modo visão geral, suporte à apresentação melhorado e suporte a anotações. </para>
+		<para
+>O &okular; tem suporte a um conjunto de formatos diferentes, como &PDF;, &PostScript;, Tiff, CHM, DjVU, Imagens (png, jpg, &etc;) XPS, Open Document (ODT), Comic Book, Plucker, EPub, Fax e Markdown. Para todos os formatos suportados e suas respectivas funcionalidades, consulte a página <ulink url="http://okular.kde.org/formats.php"
+> Tratamento de Formatos de Documentos do &okular;</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Janela principal do &okular;</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Janela principal do &okular;</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Utilização básica</title>
+		<sect1 id="opening">
+			<title
+>Abrindo arquivos</title>
+			<para
+>Para visualizar qualquer arquivo suportado pelo &okular;, selecione <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Abrir...</guimenuitem
+> </menuchoice
+>, escolha um arquivo suportado e clique no botão <guibutton
+>Abrir</guibutton
+>. Seu arquivo será exibido na janela principal. </para>
+			<important>
+			  <para
+>O novo documento será aberto em uma nova aba se a opção <guilabel
+>Abrir novos arquivos em abas</guilabel
+> da <link linkend="configgeneral"
+>página de configuração Geral</link
+> estiver assinalada. </para>
+                          <para
+>Você pode fechar a aba clicando nela com o &MMB;. </para>
+                          <para
+>O documento fechado anteriormente em uma aba poderá ser reaberto usando o item de menu <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Reabrir a aba</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>Se você já abriu arquivos anteriormente no &okular;, é possível acessá-los rapidamente, selecionando-os no menu <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guisubmenu
+>Abrir recente</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>O &okular; é o aplicativo padrão do &kde; para arquivos &PDF; e &PostScript;, sendo carregado quando você clica com o &LMB; em um desses tipos de arquivo no gerenciador de arquivos. Se quiser abrir qualquer arquivo cujo formato seja suportado pelo &okular;, use a opção <menuchoice
+><guimenu
+>Abrir com...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+>, a partir do menu de contexto do gerenciador de arquivos. </para>
+			<para
+>Após abrir um arquivo, provavelmente você irá ler o conteúdo e navegar por ele. Vá para a <link linkend="navigating"
+>próxima seção</link
+> para aprender mais sobre isto. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Navegação</title>
+			<para
+>Esta seção descreve como você pode navegar pelo documento no &okular;.</para>
+			<para
+>Existem diversas formas de rolagem da área de visualização. Uma delas é usar as teclas <keysym
+>Seta para cima</keysym
+> e <keysym
+>Seta para baixo</keysym
+>. Você também pode usar a barra de rolagem, a roda do mouse ou as teclas <keycap
+>Page Up</keycap
+> e <keycap
+>Page Down</keycap
+>. </para>
+			<para
+>Você pode usar as teclas de navegação no estilo <application
+>vim</application
+>, sendo <keycap
+>H</keycap
+> para mover para o topo da página anterior, <keycap
+>L</keycap
+> para mover para o topo da próxima página, <keycap
+>J</keycap
+> para mover uma linha para baixo e <keycap
+>K</keycap
+> para mover uma linha para cima. </para>
+			<para
+>Outra forma é manter pressionado o &LMB; em qualquer local do documento, enquanto arrasta o mouse na direção oposta de onde você deseja mover. Este procedimento somente funcionará se a ferramenta Navegação estiver ativa, a qual pode ser selecionada em <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Navegação</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>Ao visualizar um documento no <link linkend="presentationMode"
+>modo Apresentação</link
+>, use as teclas <keysym
+>Seta para cima</keysym
+> e <keysym
+>Seta para baixo</keysym
+> para alternar entre as páginas ou slides. O número e a posição do slide atual serão mostrados no canto superior direito da tela. </para>
+			</note>
+			<para
+>Se quiser ler um documento com várias páginas, use a funcionalidade de deslocamento automático do &okular;. Inicie o deslocamento automático com as teclas <keycombo action="simul"
+>&Shift;<keysym
+>Baixo</keysym
+></keycombo
+> ou <keycombo action="simul"
+>&Shift;<keysym
+>Cima</keysym
+></keycombo
+>. Depois, use essas teclas para aumentar e diminuir a velocidade de deslocamento. Você poderá iniciar ou parar o deslocamento automático temporariamente, usando a tecla &Shift;; pressione outra tecla qualquer para desativar esta funcionalidade. </para>
+			<para
+>Outra forma de navegar por um documento com diversas páginas é usar o ponteiro do mouse. Arraste a página para cima ou para baixo, continuando a arrastar até atingir a base ou o topo da tela. Assim que passar os limites de uma página, o cursor do mouse aparece no topo ou na base da tela novamente, permitindo continuar o arrastamento. </para>
+			<para
+>O painel de navegação do lado esquerdo da tela habilita outras duas formas de navegação pelo documento: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Se clicar na miniatura da página, a área de visualização será aberta nesta página. </para>
+				</listitem>
+				<listitem>
+					<para
+>Se o documento tiver um sumário, ao clicar em qualquer dos itens mostrados será aberto o documento na página associada a esse item. </para>
+				</listitem>
+				<listitem>
+					<para
+>Caso o documento tenha camadas, você poderá controlar a visibilidade através dos itens da lista <guilabel
+>Camadas</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Se o documento possuir favoritos, ative a área de <guilabel
+>Favoritos</guilabel
+> e clique nos mesmos para ir para a página associada. Se os favoritos não forem só visíveis para o documento atual, você poderá mudar rapidamente para os favoritos de todos os arquivos abertos recentemente. </para>
+				</listitem>
+				<listitem>
+					<para
+>Se o documento tiver anotações, ative a visão das <guilabel
+>Revisões</guilabel
+> e clique nas anotações ou selecione-as com as teclas <keysym
+>Seta para cima</keysym
+> e <keycap
+>Seta para baixo</keycap
+> e pressione <keycap
+>Return</keycap
+> para acessar a página associada. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Alguns documentos possuem links. Nesse caso, você pode clicar neles que a visualização será alterada para a página referenciada. Se o link for uma página Web ou algum outro documento, o aplicativo padrão responsável por esse formato no &kde; será executado. Por exemplo, ao clicar no link que direciona para <quote
+>http://www.kde.org</quote
+>, será aberta uma página Web no navegador padrão do &kde;. </para>
+			<important>
+			  <para
+>Os links internos do documento funcionam somente quando for usada a <link linkend="menutools"
+>Ferramenta de Navegação</link
+>. </para>
+			</important>
+			<para
+>Adicionalmente, você pode usar as funcionalidades a seguir, para mover-se rapidamente a locais específicos do documento: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Você pode ir para o início do documento usando o <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> ou usando a opção <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Início do documento</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode ir para o fim do documento usando <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> ou usando <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Fim do documento</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode avançar no documento usando a tecla <keycap
+>Espaço</keycap
+> ou <keycap
+>Page Down</keycap
+>. Para ir para a próxima página, use o botão <guibutton
+>Próxima página</guibutton
+> da barra de ferramentas ou <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Próxima página</guimenuitem
+> </menuchoice
+> na barra de menus. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode voltar no documento usando a tecla &Backspace; ou <keycap
+>Page Up</keycap
+>. Para ir para a página anterior, use o botão <guibutton
+>Página anterior</guibutton
+> da barra de ferramentas ou <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Página anterior</guimenuitem
+> </menuchoice
+> na barra de menus. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode voltar para as posições no documento de onde veio em ordem cronológica. Considere, &eg;, ler a frase <quote
+>Como apresentado em [15], …</quote
+> e quer consultar rapidamente a referência [15]. Para isso, você pode clicar na mesma, para que o &okular; salte para a lista de referências. Se usar <keycombo
+>&Alt;&Shift;<keysym
+>Esquerda</keysym
+></keycombo
+> ou <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Voltar</guimenuitem
+> </menuchoice
+> na barra de menus, irá voltar exatamente para a posição de onde veio. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode avançar no documento, após ter recuado, com a combinação de teclas <keycombo
+>&Alt;&Shift;<keysym
+>Direita</keysym
+></keycombo
+> ou usando a opção <menuchoice
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Avançar</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Você pode ir para a próxima ocorrência quando pesquisar usando as teclas <keycap
+>F3</keycap
+> ou &Enter; (quando o foco estiver no campo <guilabel
+>Localizar</guilabel
+>) ou o item de menu <menuchoice
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Localizar próxima</guimenuitem
+> </menuchoice
+>, ou então voltar para a ocorrência anterior usando as teclas <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+> ou <keycombo
+>&Shift;&Enter;</keycombo
+> (quando o foco estiver no campo <guilabel
+>Localizar</guilabel
+>) ou o item de menu <menuchoice
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Localizar anterior</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Modo de apresentação</title>
+			<para
+>O modo de apresentação representa outra forma de visualizar documentos no &okular; e pode ser habilitado no menu <menuchoice
+><guimenu
+>Exibir</guimenu
+><guimenuitem
+>Apresentação</guimenuitem
+></menuchoice
+>. Ele mostra o documento página por página. As páginas serão mostradas por completo, o que significa que a página inteira ficará visível. </para>
+			<note>
+				<para
+>Os documentos em &PDF; podem ser especificados para indicar que sempre serão abertos no modo de apresentação. </para>
+			</note>
+			<para
+>No modo de apresentação, você tem uma barra auxiliar localizada no topo da tela. Para que ela apareça, basta mover o ponteiro do mouse para o topo da tela. </para>
+			<screenshot>
+			<screeninfo
+>O &okular; no Modo de Apresentação</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>O &okular; no Modo de Apresentação</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Para navegar pelas páginas, você pode usar o &LMB; (próxima página) e o &RMB; (página anterior); a roda do mouse; os ícones de setas ou a linha de edição na barra do topo da tela; ou as teclas especificadas na seção <link linkend="navigating"
+>Navegação</link
+>. </para>
+			<para
+>Use o botão <guilabel
+>Reproduzir/Pausar</guilabel
+> na barra superior para iniciar a apresentação ou pausá-la, respectivamente. </para>
+			<para
+>A qualquer tempo, você poderá sair do modo de apresentação pressionando a tecla &Esc; ou clicando no ícone <guiicon
+>Sair</guiicon
+> na barra do topo da tela. </para>
+			<para
+>Você também pode desenhar na página do documento com um lápis. Clique no ícone <guilabel
+>Alternar para o modo de desenho</guilabel
+> na barra do topo, para habilitar ou desabilitar a possibilidade de desenhar no modo de apresentação. Os desenhos serão automaticamente apagados ao deixar o modo de apresentação. Você também pode clicar no ícone <guilabel
+>Apagar desenhos</guilabel
+> para remover os desenhos da página atual. </para>
+			<para
+>O modo de apresentação tem suporte para mais de uma tela em uma configuração com múltiplos monitores. Com mais de uma tela, um novo botão aparecerá na barra do topo, com o ícone de uma tela. Esta é uma lista que permite-lhe mover a apresentação para qualquer uma das outras telas disponíveis. </para>
+			<para
+>O modo de apresentação possui algumas opções de configuração, que são descritas no capítulo <link linkend="configpresentation"
+>Configuração do &okular;</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Pesquisa inversa entre os editores de &latex; e o &okular;</title>
+
+		<para
+>A pesquisa inversa é uma funcionalidade muito útil quando estiver escrevendo um documento em &latex;. Se tudo estiver configurado adequadamente, você poderá clicar na janela do &okular; com o botão <mousebutton
+>esquerdo</mousebutton
+> do mouse enquanto pressiona o &Shift;. Depois deste editor carregar o arquivo de código em &latex;, ele irá saltar para o parágrafo adequado.</para>
+
+		<para
+>A pesquisa inversa funcionará que:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>O arquivo fonte foi compilado com sucesso.</para
+></listitem>
+			<listitem
+><para
+>O &okular; saiba qual editor você gostaria de usar.</para
+></listitem>
+			<listitem
+><para
+>A ferramenta Navegação precisa estar ativa, a qual pode ser selecionada em <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Navegação </guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Com esta funcionalidade do &okular;, ao clicar com o botão esquerdo do mouse ao mesmo tempo que o &Shift; no documento &DVI; ou &PDF;, fará com que abra o documento correspondente em &latex; e tente ir para a linha correspondente. Lembre-se de indicar ao &okular; para usar um editor adequado, no item de menu do &okular; <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar o Okular...</guimenuitem
+></menuchoice
+> (na página <guimenuitem
+>Editor</guimenuitem
+>).</para>
+
+		<para
+>Para mais detalhes sobre a configuração do editor, consulte a <link linkend="configeditor"
+>seção correspondente deste manual</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Configurar o &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Configurar o editor no &okular;</phrase>
+			</textobject>
+			<caption
+><para
+>Configurar o editor no &okular;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Recursos avançados do &okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Arquivos incorporados</title>
+			<para
+>Se o documento atual possuir arquivos incorporados, uma barra aparecerá na parte superior da visualização da página após a sua abertura, informando-o da existência de arquivos incorporados. </para>
+			<screenshot>
+				<screeninfo
+>A barra de arquivos incorporados</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>A barra de arquivos incorporados</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Nesse caso, você pode clicar no link do texto da barra ou selecionar <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Arquivos incorporados</guimenuitem
+></menuchoice
+> para abrir o diálogo correspondente. Esse diálogo permite-lhe visualizar e extrair os arquivos incorporados. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formulários</title>
+			<para
+>Se o documento atual possuir formulários, ao abri-lo irá aparecer uma barra na parte superior da visualização da página para que você possa ativá-los. </para>
+			<screenshot>
+				<screeninfo
+>A barra de formulários</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>A barra de formulários</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Nesse caso, você poderá clicar em <guilabel
+>Mostrar formulários</guilabel
+>, na barra ou escolher a opção <menuchoice
+><guimenu
+>Exibir</guimenu
+><guimenuitem
+>Mostrar formulários</guimenuitem
+></menuchoice
+> para inserir dados nos campos dos formulários. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Assinaturas</title>
+			<para
+>Se o documento atual possuir assinaturas, uma barra irá aparecer na parte superior da visualização da página após a abertura do documento. Ela possibilita abrir o painel <guilabel
+>Assinaturas</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>A barra de assinaturas</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>A barra de assinaturas</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Ao usar o painel <guilabel
+>Assinaturas</guilabel
+>, você poderá inspecionar a assinatura do documento e o seu certificado. </para>
+			<screenshot>
+				<screeninfo
+>O painel de assinaturas</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>O painel de assinaturas</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Esta funcionalidade só está disponível para documentos &PDF;. Você precisa instalar pelo menos a versão 0.51 do <ulink url="http://poppler.freedesktop.org/"
+>Poppler</ulink
+> para obter mais informações sobre a assinatura, a versão 0.68 para obter informações sobre a localização/motivo da assinatura e a 0.73 para obter informações sobre o certificado da assinatura. </para>
+			</note>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Anotações</title>
+			<para
+>O &okular; permite-lhe revisar e fazer anotações em seus documentos. </para>
+			<screenshot>
+			<screeninfo
+>Anotações do &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Anotações do &okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>O &okular; possui dois tipos de anotações:</para>
+			<para
+>As anotações de texto, como o <guilabel
+>Realce em amarelo</guilabel
+> e o <guilabel
+>Sublinhado em preto</guilabel
+> para os arquivos de texto como, &eg;, &PDF;.</para>
+		      <para
+>As anotações gráficas, como <guilabel
+>Nota instantânea</guilabel
+>, <guilabel
+>Nota integrada</guilabel
+>, <guilabel
+>Linha livre</guilabel
+>, <guilabel
+>Realce</guilabel
+>, <guilabel
+>Linha reta</guilabel
+>, <guilabel
+>Polígono</guilabel
+>, <guilabel
+>Carimbo</guilabel
+>, <guilabel
+>Sublinhado</guilabel
+>, <guilabel
+>Elipse</guilabel
+> e <guilabel
+>Máquina de escrever</guilabel
+>, para todos os formatos que o &okular; possui suporte.</para>
+			<para
+>Se usar o menu de contexto na área de <guilabel
+>Revisões</guilabel
+> do painel de navegação ou na janela principal, você poderá abrir uma <guilabel
+>Nota instantânea</guilabel
+> para os vários tipos de anotações e adicionar ou editar comentários.</para>
+			<para
+>As anotações não estão limitadas apenas para arquivos &PDF;, podendo ser usadas em qualquer formato com suporte no &okular;.</para>
+			<para
+>O &okular; possui um recurso chamado "arquivo de documento". Trata-se de um formato específico do &okular; para transportar o documento com os vários metadados associados a ele (atualmente, apenas as anotações). Você pode salvar um "arquivo de documento" para o documento aberto, escolhendo <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guisubmenu
+>Salvar como</guisubmenu
+></menuchoice
+> e selecionando <guilabel
+>Arquivo de documento do Okular</guilabel
+> no seletor <guilabel
+>Filtro</guilabel
+>. Documentos salvos dessa forma terão a extensão <filename
+>.okular</filename
+>. Para abrir um arquivo de documento, basta abri-lo com o &okular; da mesma forma como, &eg;, um documento &PDF;. </para>
+			<para
+>Você <emphasis
+>também</emphasis
+> pode salvar as anotações diretamente nos arquivos &PDF;. Use <menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Salvar</guimenuitem
+></menuchoice
+> para salvar sobre o arquivo atual ou <menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Salvar como...</guimenuitem
+></menuchoice
+> para salvá-lo como um novo arquivo. </para>
+				<note>
+					<para
+>Devido a limitações do DRM - Digital Rights Management (normalmente com documentos em &PDF;), pode não ser possível a adição, edição ou remoção de propriedades e anotações. </para>
+				</note>
+				<note>
+				  <para
+>Qualquer ação sobre as anotações (criação, remoção, edição das suas propriedades, mudança de posição com &Ctrl;+arrastar o mouse e edição do conteúdo de texto) podem ser <link linkend="edit-undo"
+>desfeitas</link
+> ou <link linkend="edit-redo"
+>refeitas</link
+> com o item correspondente do menu <guimenu
+>Editar</guimenu
+>. Também é possível desfazer a ação ao pressionar <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> e refazê-la ao pressionar <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>Você pode configurar as propriedades e a aparência padrão de cada ferramenta de anotação. Para mais informações, consulte a <link linkend="configannotations"
+>seção correspondente deste manual</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Adição de anotações</title>
+				<para
+>Para adicionar anotações ao documento, você precisa ativar a barra de ferramentas de anotações. Isso é feito ao selecionar a opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Revisão</guimenuitem
+></menuchoice
+> ou pressionando a tecla <keycap
+>F6</keycap
+>. Assim que a barra de ferramentas de anotações for exibida, basta pressionar um dos botões ou usar os atalhos de teclado (teclas de <keycap
+>1</keycap
+> a <keycap
+>9</keycap
+>) para iniciar a construção da anotação. </para>
+				<para
+>A barra de anotações ajuda-o a fazer anotações com desenhos, formas e mensagens de texto. Você pode usar a barra de anotações para marcar um documento (&eg;, adicionar linhas, elipses, polígonos, carimbos, realces, sublinhados, &etc;). A tabela abaixo descreve exatamente o que faz o conjunto de botões padrão. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Botão </entry>
+					<entry
+>Nome da ferramenta </entry>
+					<entry
+>Descrição </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota instantânea </para>
+					</entry>
+					<entry>
+					  <para
+>Para desenhar uma nota com várias linhas. A nota poderá ser vista com um clique duplo sobre um ícone do documento. </para>
+					  <para
+>Clique no botão da ferramenta e depois no local do documento onde a nota deve ser adicionada. Indique o texto da nota e depois clique no botão <guilabel
+>Fechar esta nota</guilabel
+> no canto superior direito da janela. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+> e o <guilabel
+>Ícone</guilabel
+> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-inline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota integrada </para>
+					</entry>
+					<entry>
+					  <para
+>Para desenhar uma nota integrada. A nota será apresentada integrada ao documento. </para>
+					  <para
+>Clique no botão da ferramenta e depois com o &LMB; para colocar o canto superior esquerdo da nota. Depois arraste para colocar o canto inferior direito. Indique o texto da nota e depois clique em <guibutton
+>OK</guibutton
+> para salvar a nota, em <guibutton
+>Cancelar</guibutton
+> para cancelar a introdução da nota ou em <guibutton
+>Limpar</guibutton
+> para apagar o conteúdo da nota. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Fonte</guilabel
+>, o <guilabel
+>Alinhamento</guilabel
+> e a <guilabel
+>Largura da borda</guilabel
+> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ink-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linha livre </para>
+					</entry>
+					<entry>
+					  <para
+>Para desenhar linhas à mão livre. </para>
+					  <para
+>Clique no botão da ferramenta e depois clique com o &LMB; para marcar o início da linha, depois arraste para desenhar a linha. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+> e a <guilabel
+>Largura</guilabel
+> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-highlighter-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Realce </para>
+					</entry>
+					<entry>
+					  <para
+>Para realçar o texto no documento com a cor de fundo indicada. </para>
+					  <para
+>Clique no botão da ferramenta e depois clique com o &LMB; para marcar o início do texto a realçar, depois arraste para fazer o realce. </para>
+					  <para
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Realce</guimenuitem
+>, <guimenuitem
+>Ondulado</guimenuitem
+>, <guimenuitem
+>Linha ondulada</guimenuitem
+> ou <guimenuitem
+>Sublinhado</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+> e a <guilabel
+>Opacidade</guilabel
+> do realce. Basta clicar com o botão direito do mouse sobre o texto realçado e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-line-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linha reta </para>
+					</entry>
+					<entry>
+					  <para
+>Para marcar com uma linha. </para>
+					  <para
+>Clique no botão da ferramenta e depois clique com o &LMB; para marcar o ponto inicial da linha e depois arraste para marcar o ponto final. Para finalizar, clique mais uma vez. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Largura</guilabel
+>, o <guilabel
+>Início da linha</guilabel
+>, o <guilabel
+>Fim de linha</guilabel
+>, o <guilabel
+>Comprimento da linha principal</guilabel
+> e <guilabel
+>Comprimento das extensões da linha principal</guilabel
+> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-polygon-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Polígono </para>
+					</entry>
+					<entry>
+					  <para
+>Para desenhar uma figura plana fechada com três ou mais segmentos. A nota correspondente poderá ser vista com clique duplo dentro do polígono. </para>
+					  <para
+>Clique no botão da ferramenta e depois com o &LMB; para marcar o primeiro vértice do polígono, depois arraste para marcar o segundo vértice. Continue até que tenha desenhado todo o polígono até ao primeiro vértice. Clique duas vezes se quiser adicionar alguma nota ao polígono. Digite o texto da nota e depois clique em <guibutton
+>OK</guibutton
+> para salvar a nota, em <guibutton
+>Cancelar</guibutton
+> para cancelar a introdução da nota ou em <guibutton
+>Limpar</guibutton
+> para apagar o conteúdo da nota. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Forma de preenchimento</guilabel
+> (e sua cor), assim com a <guilabel
+>Largura</guilabel
+> do polígono. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-stamp-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Carimbo </para>
+					</entry>
+					<entry>
+					  <para
+>Para marcar o texto ou imagem com alguma forma predefinida. </para>
+					  <para
+>Clique no botão da ferramenta e depois no &LMB; para colocar o carimbo. </para>
+					  <para
+>É necessário um único clique para colocar um carimbo quadrado (útil para ícones). Para adicionar um carimbo retangular, você poderá clicar com o &LMB; e mantê-lo pressionado para colocar o ponto superior esquerdo, arrastando depois para colocar o inferior direito. </para>
+					  <para
+>É possível definir a <guilabel
+>Opacidade</guilabel
+> e o <guilabel
+>Símbolo do carimbo</guilabel
+>. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Esta funcionalidade é experimental. Carimbos personalizados inseridos em documentos &PDF; serão visíveis apenas no &okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-underline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Sublinhado </para>
+					</entry>
+					<entry>
+					  <para
+>Para sublinhar algum texto. </para>
+					  <para
+>Clique no botão da ferramenta e depois com o &LMB; para definir o início do trecho de texto sublinhado, em seguida, arraste-o para o sublinhar. </para>
+					  <para
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Realce</guimenuitem
+>, <guimenuitem
+>Ondulado</guimenuitem
+>, <guimenuitem
+>Linha ondulada</guimenuitem
+> ou <guimenuitem
+>Sublinhado</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+> e a <guilabel
+>Opacidade</guilabel
+> do sublinhado. Basta clicar com o botão direito do mouse sobre o texto sublinhado e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ellipse-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Elipse </para>
+					</entry>
+					<entry>
+					  <para
+>Para desenhar uma elipse ou retângulo em torno de uma área determinada. </para>
+					  <para
+>Clique no botão da ferramenta e depois com o &LMB; para definir o canto superior esquerdo do retângulo circunscrito da elipse. Depois, arraste para definir o canto inferior direito. </para>
+					  <para
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Retângulo</guimenuitem
+> ou <guimenuitem
+>Elipse</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Forma de preenchimento</guilabel
+> (e sua cor), assim com a <guilabel
+>Largura</guilabel
+> da borda. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-typewriter-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Máquina de escrever </para>
+					</entry>
+					<entry>
+					  <para
+>A máquina de escrever possui letras opacas em fundo transparente, o que é útil para preencher formulários não interativos. </para>
+					  <para
+>Clique no botão da ferramenta e depois com o &LMB; para colocar o canto superior esquerdo da nota. Depois arraste para colocar o canto inferior direito. Indique o texto da nota e depois clique em <guibutton
+>OK</guibutton
+> para salvar a nota, em <guibutton
+>Cancelar</guibutton
+> para cancelar a introdução da nota ou em <guibutton
+>Limpar</guibutton
+> para apagar o conteúdo da nota. </para>
+					  <para
+>É possível definir a <guilabel
+>Fonte</guilabel
+> e a <guilabel
+>Cor do texto</guilabel
+>. Basta clicar com o botão direito do mouse no texto da máquina de escrever e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>Estas são as anotações padrão e fornecidas pelo &okular;. Ao usar a <link linkend="configannotations"
+>página Anotações</link
+> da caixa de diálogo de configuração, você poderá adicionar as suas próprias anotações, como carimbos personalizados, formatação de texto com <guilabel
+>Linha ondulada</guilabel
+> ou <guilabel
+>Tachado</guilabel
+>, ou uma forma geométrica, como um <guilabel
+>Retângulo</guilabel
+> com cor interna para realçar determinadas regiões, &etc; </para>
+                                  <note>
+                                      <para
+>É possível adicionar código em &latex; ao texto das anotações. Basta, adicionar <userinput
+>$$<replaceable
+>código</replaceable
+>$$</userinput
+> ao texto da anotação, onde o <replaceable
+>código</replaceable
+> será qualquer equação válida em &latex;, seguindo as instruções na tela para permitir a renderização com uma distribuição de &latex; instalada no seu sistema. </para>
+                                  </note>
+				  <para
+>O conteúdo da barra de anotações pode ser configurado usando a <link linkend="configannotations"
+>página de Anotações da caixa de diálogo de configuração do &okular;</link
+>. Essa página pode ser aberta com o &RMB; se clicar na barra de anotações e depois escolher <guimenuitem
+>Configurar anotações...</guimenuitem
+> no menu de contexto. </para>
+				<para
+>Com um único clique do &LMB; no botão de ferramentas de anotação você pode usar uma vez a ferramenta. Por exemplo, se quiser realçar todas as partes importantes de um texto, ative essa ferramenta de forma permanente com um clique duplo sobre o botão respectivo. Pressione a tecla <keycap
+>Esc</keycap
+> ou o botão da ferramenta mais uma vez para sair do modo permanente. </para>
+				<note>
+					<para
+>A barra de ferramentas de anotações pode ser acoplada em qualquer lado da área de visualização. Para isso, basta arrastá-la para outro local. </para>
+				</note>
+				<note>
+					<para
+>Se ativar a barra ferramentas de anotações, a exibição do documento será alterada para o modo de navegação. </para>
+				</note>
+				<para
+>Você pode parar a construção a qualquer momento, clicando novamente no botão da anotação que estiver construindo ou pressionando a tecla &Esc;. </para>
+				<para
+>A anotação recém-criada terá como autor o nome definido na página <link linkend="configannotations"
+><guilabel
+>Anotações</guilabel
+></link
+> da caixa de diálogo de configuração do &okular;. A página <guilabel
+>Anotações</guilabel
+> também pode ser usada para configurar o conteúdo da barra de anotações. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Remoção de anotações</title>
+				<para
+>Para remover uma anotação, basta clicar com o &RMB; e selecionar <guimenuitem
+>Excluir</guimenuitem
+> ou selecione uma anotação usando o &LMB; e pressione a tecla &Del;. </para>
+				<para
+>Ao removê-la, a janela da anotação será fechada, caso esteja aberta. </para>
+				<note>
+					<para
+>Esta opção pode estar desabilitada, se o documento não permitir a remoção de anotações. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Edição de anotações</title>
+				<para
+>Para editar uma anotação, clique nela com o &RMB; e selecione <guimenuitem
+>Propriedades</guimenuitem
+>. Uma caixa de diálogo irá aparecer com as configurações gerais da anotação (cor e opacidade, autor, &etc;), assim como as configurações específicas para esse tipo de anotação. </para>
+				<screenshot>
+				<screeninfo
+>Janela de propriedades das anotações</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Janela de propriedades das anotações</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Para mover uma anotação, mantenha pressionada a tecla &Ctrl;, mova o ponteiro do mouse para ela e então arraste com o &LMB;. </para>
+				<para
+>Se clicar com o &LMB; sobre uma anotação, ela fica selecionada. As alças de dimensionamento irão aparecer no retângulo de seleção. Quando o cursor passa sobre uma das 8 alças de dimensionamento nos cantos ou bordas, a forma do cursor muda para indicar o modo de dimensionamento. Clique em qualquer outro local da anotação para movê-la. Se pressionar &Esc; ou clicar em uma área fora da anotação irá cancelar a seleção. </para>
+				<para
+>O dimensionamento só se aplica aos tipos de anotação Nota integrada, Máquina de escrever, Carimbo e Elipse.</para>
+
+				<note>
+					<para
+>Dependendo das permissões do documento (normalmente com documentos em &PDF;), algumas opções podem estar desabilitadas. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Gerenciamento de favoritos</title>
+			<para
+>O &okular; tem um sistema de marcação de favoritos muito flexível. Ele salva a posição da página no favorito e permite-lhe definir mais que um favorito por página. </para>
+			<para
+>Para gerenciar os favoritos no &okular;, você pode usar a área de <guilabel
+>Favoritos</guilabel
+> no <guilabel
+>Painel de navegação</guilabel
+>, no <link linkend="menubookmarks"
+>menu de Favoritos</link
+> ou no menu de contexto da área do documento (clique com o &RMB; para abri-lo). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Área de favoritos</title>
+				<para
+>Para abrir a área de <guilabel
+>Favoritos</guilabel
+>, clique no item <guilabel
+>Favoritos</guilabel
+> do <guilabel
+>Painel de navegação</guilabel
+>. Se o <guilabel
+>Painel de navegação</guilabel
+> não estiver visível, use a opção do menu <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Configurações</guimenu
+><guimenuitem
+>Mostrar o painel de navegação</guimenuitem
+> </menuchoice
+> para o torná-lo visível. </para>
+				<screenshot>
+				    <screeninfo
+>Menu de contexto da área de favoritos</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Menu de contexto da área de favoritos</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>A barra de filtragem no topo da área de <guilabel
+>Favoritos</guilabel
+> pode ser usada para filtrar o conteúdo da lista de favoritos de acordo com o texto no campo. </para>
+				<para
+>A área da lista permite ver a lista de favoritos num formato em árvore: cada documento da lista pode ser <quote
+>expandido</quote
+> ou <quote
+>recolhido</quote
+> se clicar nos ícones <guiicon
+>&lt;</guiicon
+> ou <guiicon
+>v</guiicon
+> próximos a ele. </para>
+				<para
+>Clique no ícone <inlinemediaobject
+><imageobject
+><imagedata fileref="bookmarks.png" format="PNG"/></imageobject
+></inlinemediaobject
+> abaixo da lista para mostrar apenas os favoritos do documento atual. </para>
+				<para
+>O menu do botão direito para o item do documento pode ser usado para abrir um documento, renomeá-lo ou removê-lo da lista. Lembre-se de que a remoção de um item de documento conduz à remoção de todos os favoritos no documento correspondente. </para>
+				<para
+>Os menus do botão direito para os itens de favoritos individuais permitem-lhe ir para a posição do favorito, renomeá-lo ou removê-lo. </para>
+				<para
+>O menu de itens do botão direito no índice analítico pode ser usado para criar favoritos ou ir para o favorito anterior ou seguinte. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Opções da linha de comando</title>
+		    <para
+>Embora o &okular; possa ser geralmente iniciado a partir do menu de programas do &kde; ou de um ícone da área de trabalho, ele poderá ser aberto a partir da linha de comando de uma janela de terminal. Existem algumas opções úteis que estão disponíveis ao fazer isto. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Especificar um arquivo</title>
+			<para
+>Especificando o caminho e nome de um arquivo específico o usuário pode fazer com que o &okular; abra este arquivo imediatamente após iniciar. Esta opção pode parecer algo como o seguinte: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/minhapasta/documentos/doc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Para documentos em &PDF;, o nome pode ser indicado como <replaceable
+>nome_documento</replaceable
+>#<replaceable
+>nome_destino</replaceable
+> onde <replaceable
+>nome_destino</replaceable
+> é um nome de destino específico incorporado no documento. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Outras opções da linha de comando</title>
+			<para
+>As seguintes opções de ajuda de linha de comando estão disponíveis </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>número</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Abre o documento na página indicada. Também está disponível como <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>número</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia o documento no modo de apresentação.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia com a janela de impressão.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Inicia com a janela de impressão e sai após a impressão.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Controle de instância única.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Permite apresentar a janela do &okular; a elevar-se após o início.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>texto</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Tenta localizar e realçar um texto no documento. Só funciona se for indicado apenas um documento como argumento do comando <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Ajustar janela à página</title>
+			<para
+>A funcionalidade de ajuste da janela à página redimensiona a janela, de forma que fique exatamente com o mesmo tamanho da página no fator de zoom atual. Se a página não couber completamente na tela, a janela é aumentada para que a maior parte possível da página fique visível. </para>
+			<para
+>Esta funcionalidade pode ser acessada com as teclas de atalho <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Barra de menus</title>
+
+		<sect1 id="menufile">
+			<title
+>Menu Arquivo</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Abrir...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Abre</action
+> um arquivo suportado ou um documento do &okular;. Se já existir um arquivo aberto ele será fechado. Para mais informações, veja a seção <link linkend="opening"
+>Abrindo arquivos</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guisubmenu
+>Abrir recente</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Abre</action
+> um arquivo que foi usado anteriormente, a partir de um submenu. Se um arquivo estiver sendo mostrado atualmente, ele será fechado. Para mais informações, veja a seção <link linkend="opening"
+>Abrindo arquivos</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Importar PostScript como &PDF;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Abre</action
+> um arquivo &PostScript; e converte-o para &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Reabrir a aba</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Reabre</action
+> o último documento fechado. Esta ação só fica ativa se você fechou algum documento na aba durante a sessão atual. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Abrir pasta do arquivo</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Abre</action
+> a pasta que contém o documento atual no seu gerenciador de arquivos favorito. Esta ação é especialmente útil no caso em que você tenha baixado um arquivo &PDF; da Internet e abriu diretamente no &okular;. A localização do arquivo pode não ser óbvia ou fácil de encontrar sem esta funcionalidade. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Salvar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Salva</action
+> o documento, incluindo todas as alterações (anotações, conteúdo de formulários, &etc;), desde que a infraestrutura do documento tenha suporte para gravar as alterações. Se a infraestrutura não tiver suporte, o usuário terá a opção de descartar ou salvar as alterações em conjunto com o documento em um arquivo de documento do &okular;.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Salvar como...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Salva</action
+> o documento com um nome diferente, incluindo todas as alterações (anotações, conteúdo de formulários, &etc;), desde que a infraestrutura do documento tenha suporte para gravar as alterações. Se a infraestrutura não tiver suporte, o usuário terá a opção de descartar ou salvar as alterações em conjunto com o documento em um arquivo de documento do &okular;.</para>
+                                        <note>
+                                        <para
+>Note que, devido à forma como isto está implementado, mesmo que não existam alterações no arquivo, o novo arquivo não precisa de ser uma cópia exata (bit a bit), do arquivo original (&eg; poderá ter um código SHA-1 diferente, &etc;). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Recarregar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Recarrega</action
+> o arquivo atualmente aberto.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Imprimir...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Imprime</action
+> o documento apresentado no momento. Tenha em mente que o &okular; possui algumas opções específicas para impressão de arquivos &PDF;, as quais estão disponíveis se clicar no botão <guibutton
+>Opções 
+>
+></guibutton
+> e depois escolher <guilabel
+>Opções do &PDF;</guilabel
+>. Use essas opções para imprimir as suas anotações ou configurar o modo de rasterização, se tiver problemas com a impressão de alguns símbolos ou se precisar alterar o modo de escala. </para>
+                                                <note>
+                                                    <para
+>As opções do modo de escala só estão disponíveis quando marcar a opção <guilabel
+>Forçar a rasterização</guilabel
+>. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Visualizar impressão...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra uma visualização</action
+> de como o documento atualmente exibido seria impresso com as opções padrão. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Propriedades</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra algumas informações básicas</action
+> sobre o documento, tais como: título, autor, data de criação e detalhes sobre as fontes utilizadas. As informações disponíveis dependem do tipo de documento.</para>
+						<note>
+							<para
+>Por favor, preste atenção à informação sobre a substituição de fontes na aba <guilabel
+>Fontes</guilabel
+> da caixa de diálogo <guilabel
+>Propriedades</guilabel
+>. Muitos problemas com a renderização de fontes podem ser resolvidos com a instalação de fontes substitutas.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Arquivos incorporados...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra os arquivos incorporados</action
+> ao documento, caso exista algum. Para mais informações, veja a seção sobre <link linkend="embedded-files"
+>Arquivos incorporados</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guisubmenu
+>Exportar como</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Este item contém os formatos de exportação para os quais o documento atual pode ser convertido. A primeira entrada para todos os tipos de documento é sempre <guimenuitem
+>Texto sem formatação...</guimenuitem
+></para>
+						<para
+>A segunda entrada é <guimenuitem
+>Arquivo de documento</guimenuitem
+>, que permite-lhe salvar o documento com suas anotações, em um formato próprio do &okular;. Deste modo, é possível compartilhar facilmente o documento original e suas anotações com outros usuários do &okular; ou trabalhar com eles de forma colaborativa.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Arquivo</guimenu
+> <guisubmenu
+>Compartilhar</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Este item contém serviços que podem ser usados para compartilhar o documento atual com outra pessoa ou enviá-lo para os seus dispositivos. Os itens neste submenu são controlados pelo sistema. Eles dependem do formato atual do documento e dos plugins do KPurpose que estiverem instalados.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arquivo</guimenu
+> <guimenuitem
+>Sair</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Fecha</action
+> o &okular;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Menu Editar</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Desfazer</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Desfaz</action
+> o último comando de edição de anotações (criação, remoção, edição das suas propriedades, mudança de posição com &Ctrl;+arrastar o mouse e edição do conteúdo de texto).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Refazer</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Refaz</action
+> o último passo desfeito ao editar anotações.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Copiar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Copia</action
+> o texto atualmente selecionado no modo <guibutton
+>Seleção de texto</guibutton
+> para a área de transferência.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Selecionar tudo</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Seleciona</action
+> todo o texto (se existir algum no documento). Isto funcionará somente no modo <guibutton
+>Seleção de texto</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Selecionar todo o texto na página atual</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Seleciona</action
+> todo o texto (se existir algum no documento) da página atual. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Localizar...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Mostra a barra de pesquisa na base da área de visualização, permitindo-lhe <action
+>procurar por uma string no documento</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Localizar próxima</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Tenta <action
+>localizar de novo a string anteriormente pesquisada</action
+> no documento.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Localizar anterior...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vai para a ocorrência anterior do texto de pesquisa</action
+> no documento.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Menu Exibir</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Apresentação</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ativa</action
+> o modo de apresentação. Para mais informações sobre esta seção verifique <link linkend="presentationMode"
+>Modo de apresentação</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Ampliar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Incrementa a ampliação</action
+> do modo de exibição do documento.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Reduzir</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Reduz a ampliação</action
+> do modo de exibição de documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Ampliar para 100%</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Amplia a imagem do documento para o tamanho atual</action
+>, como definido nos parâmetros do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Ajustar à largura</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Altera a ampliação</action
+> da visualização do documento para um valor onde a largura das páginas seja igual a largura da visualização do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Ajustar à página</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Altera a ampliação</action
+> da visualização do documento para um valor onde a página ocupe todo o espaço de visualização.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Ajuste automático</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Altera a ampliação</action
+> da área do documento para um valor que, dependendo da relação de tamanho entre a página e a área de exibição, transforme automaticamente a largura das páginas igual à largura da área do documento (como o ajuste à largura), a altura das páginas igual à altura da área do documento (como o ajuste à altura) ou então ter a página inteira visível (como o ajuste à página).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Contínuo</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Habilita o modo de página contínua</action
+>. No modo contínuo, todas as páginas do documento são mostradas e você pode percorrê-las sem precisar usar as opções <menuchoice
+><guimenu
+>Ir</guimenu
+> <guimenuitem
+>Página anterior</guimenuitem
+></menuchoice
+> e <menuchoice
+><guimenu
+>Ir</guimenu
+><guimenuitem
+>Próxima página</guimenuitem
+></menuchoice
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guisubmenu
+>Modo de exibição</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Este submenu permite-lhe escolher o modo de exibição das páginas. As possíveis opções são: <guimenuitem
+>Página única</guimenuitem
+> (apenas uma página por linha), <guimenuitem
+>Páginas opostas</guimenuitem
+> (duas páginas por linha, em estilo de livro), <guimenuitem
+>Páginas em faces (centralizar primeira página)</guimenuitem
+> e <guimenuitem
+>Visão geral</guimenuitem
+> (o número de colunas corresponde ao especificado nas <link linkend="configure"
+>configurações do &okular;</link
+>).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guisubmenu
+>Orientação</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Este submenu permite-lhe <action
+>alterar a orientação</action
+> das páginas do documento. </para>
+						<note>
+							<para
+>A rotação é aplicada à orientação de todas as páginas. </para>
+						</note>
+						<para
+>Você pode selecionar a <guimenuitem
+>Orientação original</guimenuitem
+> para restaurar a orientação do documento, descartando todas as rotações aplicadas manualmente. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guisubmenu
+>Tamanho da página</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Altera o tamanho das páginas</action
+> do documento. </para>
+						<note>
+							<para
+>Este submenu somente está ativo se o documento atual suportar diferentes tamanhos de página. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guisubmenu
+>Recortar a visualização</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Este submenu permite-lhe remover a borda branca das páginas ao visualizá-las (item <guimenuitem
+>Recortar as margens</guimenuitem
+>) ou recortar a área de visualização à seleção (item <guimenuitem
+>Recortar à seleção</guimenuitem
+>). </para>
+						<para
+>O modo <quote
+>recortar à seleção</quote
+> permite-lhe desenhar uma seleção sobre a página renderizadas, para poder definir uma área delimitadora visível que possa ser aplicada em <emphasis
+>todas as páginas</emphasis
+> do documento. A seleção de uma pequena área delimitadora a recortar obriga a um tamanho de dimensões mínimas (20% como uma porcentagem do tamanho total da página). </para>
+						<para
+>O modo <quote
+>recortar as margens</quote
+> é lembrado nas próximas vezes em que iniciar o &okular;. Já o modo <quote
+>recortar à seleção</quote
+> é esquecido. </para>
+						<para
+>Quando alterar o modo do &okular; de <quote
+>recortar as margens</quote
+> para o <quote
+>recortar à seleção</quote
+>, o visualizador sai do modo de <quote
+>recortar as margens</quote
+> para a interação da seleção da área delimitadora. </para>
+						<para
+>O modo de recorte pode ser desativado se selecionar novamente o item do menu que o ativa. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Mostrar/Ocultar formulários</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Mostra ou oculta a exibição</action
+> dos campos de formulários do documento. </para>
+						<note>
+							<para
+>Este item do menu somente está ativo se o documento atual suportar campos de formulários. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Menu Ir</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ir</guimenu
+> <guimenuitem
+>Página anterior</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Exibe a página anterior</action
+> do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ir</guimenu
+> <guimenuitem
+>Próxima página</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Exibe a próxima página</action
+> do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Início do documento</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vai para o início</action
+> do documento.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Fim do documento</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vai para o fim</action
+> do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Esquerda</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Voltar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Volta para a visualização anterior</action
+> do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>Direita</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Avançar</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Avança para a próxima visualização</action
+> do documento. Isto somente funciona se você já tiver voltado anteriormente.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Ir para a página...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Abrir um diálogo que permite-lhe <action
+>ir para qualquer página </action
+> do documento.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Menu Favoritos</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Favoritos</guimenu
+> <guimenuitem
+>Adicionar/Remover favorito</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Adiciona ou remove um favorito da posição atual</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Favoritos</guimenu
+> <guimenuitem
+>Renomear favorito</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Renomeia um favorito da posição atual</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Favoritos</guimenu
+> <guimenuitem
+>Favorito anterior</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vai para o favorito anterior</action
+> ou não faz nada, se não existirem favoritos anteriores ao atual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Favoritos</guimenu
+> <guimenuitem
+>Próximo favorito</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vai para o próximo favorito</action
+> ou não faz nada, se não existirem favoritos posteriores ao atual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Favoritos</guimenu
+> <guimenuitem
+>Sem favoritos</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Esta é uma ação sempre desabilitada, que aparece somente neste menu se o documento atual não tiver favoritos. Caso contrário, aparece aqui uma lista com todos os favoritos. Clicando nestes favoritos, você poderá ir diretamente para a posição associada.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Menu Ferramentas</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Navegação</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>O mouse terá o seu comportamento normal, com o &LMB; para arrastar o documento e seguir os links e o &RMB; para adicionar favoritos e para se ajustar à largura.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Zoom</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>O mouse atuará como uma ferramenta de zoom. Clicando com o &LMB; e arrastá-lo, irá ampliar a área selecionada, enquanto que o clique com o &RMB; irá retornar o documento ao zoom anterior.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Área de seleção</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>O mouse irá funcionar como uma ferramenta de seleção. Nesse modo, ao clicar com o &LMB; e depois arrastá-lo, aparecerá uma caixa de seleção com a opção de copiar o conteúdo da área selecionada para a área de transferência, falar o texto selecionado ou ainda salvar uma imagem com o conteúdo da região selecionada para um arquivo.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Seleção de texto</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>O mouse funcionará como uma ferramenta de seleção de texto. Nesse modo, ao clicar no &LMB; e arrastá-lo, será mostrada a seleção de texto do documento. Após isso, basta clicar com o &RMB; para copiar para a área de transferência ou falar a seleção atual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Seleção de tabela</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Desenhe um retângulo em torno do texto para a tabela, depois use o botão &LMB; para dividir o bloco de texto em linhas e colunas. Se clicar com o &LMB; sobre uma linha existente, ela será removida e mesclada com as linhas ou colunas adjacentes.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Lupa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ativa o modo de ampliação para o ponteiro do mouse. Pressione e mantenha pressionado o &LMB; para ativar widget de lupa, movendo o ponteiro para se deslocar pelo documento. A lupa amplia em 10 vezes cada pixel do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Revisão</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Abre a barra de ferramentas de revisão</action
+>. Essa barra permite-lhe adicionar anotações no documento que estiver lendo. Para mais informações, veja a seção <link linkend="annotations"
+>Anotações</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Falar o documento inteiro</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Falar a página atual</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Parar de falar</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Pausar/Continuar a fala</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Estes itens permitem-lhe falar o documento inteiro ou apenas a página atual, bem como parar a fala usando o serviço de sintetização de voz do sistema. Este serviço é oferecido por uma biblioteca do &Qt; que encapsula o 'speech-dispatcher' no &Linux; e os sistemas de fala nativos das outras plataformas. É possível escolher a voz atual através da página de configuração de <link linkend="configaccessibility"
+>Acessibilidade</link
+> do &okular;.</para>
+						<para
+>As ações <guilabel
+>Falar ...</guilabel
+> somente serão habilitadas se o serviço de sintetização de voz estiver disponível no sistema.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Menus Configurações e Ajuda</title>
+			<para
+>Além dos menus normais do &kde;, <guimenu
+>Configurações</guimenu
+> e <guimenu
+>Ajuda</guimenu
+>, descritos no capítulo <ulink url="help:/fundamentals/menus.html"
+>Menu</ulink
+> da documentação dos Fundamentos do &kde;, o &okular; tem estes itens de menu específicos do aplicativo:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Mostrar painel de navegação</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Altera o painel de navegação</action
+> em ligado ou desligado.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Mostrar a barra de páginas</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ativa ou desativa a barra de páginas</action
+> na parte inferior do documento para poupar espaço vertical na janela do &okular;.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Modo de tela inteira</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Habilita o modo de tela inteira</action
+>. Observe que este modo é diferente do <link linkend="presentationMode"
+>modo de apresentação</link
+>, pois a única particularidade do modo de tela inteira é a ocultação das decorações das janelas, da barra de menu e da barra de ferramentas.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar infraestruturas...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Abre a janela <link linkend="configure-backends"
+>Configuração da infraestrutura</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Configuração das infraestruturas do &okular;</title>
+	  <para
+>Você pode configurar as infraestruturas do &okular; escolhendo <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar infraestruturas...</guimenuitem
+></menuchoice
+>. O diálogo de configuração é dividido em seis seções. Atualmente, as opções de configuração estão disponíveis apenas para as infraestruturas EPub, &PostScript;, FictionBook, Txt, Texto OpenDocument e &PDF;. </para>
+	  <screenshot>
+	    <screeninfo
+>Janela de configuração das infraestruturas</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Janela de configuração das infraestruturas</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Usar as páginas de configuração das infraestruturas EPub, FictionBook, Mobipocket, Markdown, TXT e Texto OpenDocument, permite-lhe definir a fonte de geração de documentos nos respectivos formatos. O botão <guibutton
+>Escolher...</guibutton
+> dessas páginas abre a janela de configuração de fonte padrão do &kde;. Consulte a <ulink url="help:/fundamentals/fonts.html"
+>documentação dos Fundamentos do &kde;</ulink
+> para mais detalhes. </para>
+	  <para
+>A descrição das páginas de configuração das infraestruturas Markdown, &PostScript; e &PDF; pode ser encontrada abaixo. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Configuração da infraestrutura Markdown</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização Markdown do &okular;, que é baseada no <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Ativar a formatação SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Quando estiver assinalada, esta opção permite ao &okular; executar o processamento da formatação do <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Essa formatação poderá ser problemática com textos técnicos, devido a substituições indesejadas (&eg;, substitui o <literal
+>(C)</literal
+> por um símbolo de copyright). Esta opção está assinalada por padrão. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>Configuração da infraestrutura &PostScript;</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização &PostScript; do &okular;, que é baseada no <ulink url="http://www.ghostscript.com/"
+>Ghostscript</ulink
+>, escolhendo a opção <guilabel
+>Ghostscript</guilabel
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Usar fontes da plataforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Esta opção determina se o Ghostscript pode usar as fontes da plataforma. Se não marcada, só será permitido usar as fontes incorporadas no documento. Esta é a opção marcada por padrão. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>Configuração da infraestrutura &PDF;</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização &PDF; do &okular;, que é baseada no <ulink url="http://poppler.freedesktop.org/"
+>Poppler</ulink
+>, escolhendo a opção <guilabel
+>&PDF;</guilabel
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Melhorar linhas finas</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>O desenho de linhas no &okular; é feito em dois passos: a geração do caminho de recorte e o seu preenchimento. Quando a linha no documento original tem menos de um pixel, esta implementação em dois passos pode causar problemas. Para essas linhas, o caminho de recorte é preenchido com a cor de enchimento, que depende a espessura da linha dentro da área de recorte. Se a parte interna dessa área de recorte ficar muito pequena, o contraste entre a forma e a cor de fundo poderá ser muito baixo para que a linha seja perceptível. As grades dessas linhas parecerão feias. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Linha fina (vermelho), o seu caminho de corte (linha tracejada) e os limites dos pontos (linhas pretas)</entry>
+			    <entry
+>Linha fina apresentada em baixo contraste</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Para melhorar a aparência das linhas finas, o &okular; implementa duas opções. </para>
+		    <para
+>A primeira opção é a <guimenuitem
+>Sólida</guimenuitem
+>. Com esta opção, o &okular; ajusta o caminho de recorte e a posição da linha, de modo que o caminho de recorte e a linha estejam no mesmo limite do pixel, &ie;, o &okular; alarga as linhas finas para um pixel no dispositivo de saída. Esse modo é semelhante ao <guilabel
+>Melhorar linhas finas</guilabel
+> no <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Se esta opção estiver escolhida, as linhas finas são sempre alargadas. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linha fina com realce <guimenuitem
+>Sólido</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linha fina com realce <guimenuitem
+>Sólido</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>A segunda opção é a <guimenuitem
+>Forma</guimenuitem
+>. Com esta opção, o caminho e a linha de recorte são também ajustados em nível de pixel, sendo a intensidade da linha corrigida de acordo com a sua espessura. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linha fina com realce <guimenuitem
+>Forma</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linha fina com realce <guimenuitem
+>Forma</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>As linhas finas não são melhoradas por padrão (opção <guimenuitem
+>Não</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Configuração do &okular;</title>
+		<sect1 id="configindex">
+			<title
+>Configuração geral</title>
+			<para
+>Você pode configurar o &okular; escolhendo <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar o &okular;...</guimenuitem
+></menuchoice
+>. O diálogo de configuração é dividido em seis seções. Este capítulo descreve detalhadamente as opções disponíveis. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Geral</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Acessibilidade</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Desempenho</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Apresentação</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Anotações</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Editor</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>O diálogo de configuração</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>O diálogo de configuração</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Dependendo das infraestruturas atualmente instaladas, o item de menu <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar infraestruturas...</guimenuitem
+></menuchoice
+> pode estar habilitado. Este diálogo de configuração em particular, contém as definições das infraestruturas que podem ser atualmente configuradas. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Geral</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Mostrar barras de rolagem</guilabel
+></term>
+					<listitem>
+						<para
+>Mostra ou não as barras de rolagem na visualização do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Manter miniaturas em sincronia com a página</guilabel
+></term>
+					<listitem>
+						<para
+>Se a visualização das miniaturas deve sempre mostrar ou não a página atual.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostrar dicas e mensagens informativas</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve ou não mostrar algumas mensagens informativas ao iniciar, na abertura de um arquivo, &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Exibir o título do documento na barra de título, se disponível</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve ou não mostrar o título do documento atual na barra da janela do &okular;. Se não forem encontrados metadados para o título no documento ou se este item não estiver assinalado, o &okular; mostra o nome do arquivo do documento. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Quando não exibir o título do documento</guilabel
+></term>
+					<listitem>
+					  <para
+>Você pode escolher uma de duas opções: <guilabel
+>Exibir apenas o nome do arquivo</guilabel
+> ou <guilabel
+>Exibir a localização completa do arquivo</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Usar cor do plano de fundo personalizada</guilabel
+></term>
+					<listitem>
+                                            <para
+>Habilita <ulink url="help:/fundamentals/colors.html"
+>escolhas de cores do plano de fundo no documento</ulink
+> (a cor na página exibida). Por padrão, a ferramenta de cor &Qt; é usada quando esta opção estiver assinalada. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Abrir novos arquivos em abas</guilabel
+></term>
+					<listitem>
+						<para
+>Indica se os novos documentos devem ser abertos em abas. Por padrão, as abas estão desativadas.</para>
+						<para
+>As teclas de atalho padrão para alternar entre as abas são <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Próxima aba</guilabel
+>) e <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Aba anterior</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Obedecer limitações do DRM</guilabel
+></term>
+					<listitem>
+						<para
+>Se o &okular; deverá obedecer às restrições do <firstterm
+>DRM</firstterm
+> (Digital Rights Management - Gerenciamento de Direitos Digitais). As limitações do DRM são usadas para impossibilitar a execução de certas ações com documentos &PDF;, tais como a cópia do conteúdo para a área de transferência. Lembre-se de que, em algumas configurações do &okular;, esta opção não está disponível.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Recarregar documento se o arquivo for alterado</guilabel
+></term>
+					<listitem>
+						<para
+>Se os arquivos abertos devem ser verificados automaticamente, a procura de alterações e atualizações.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostrar diálogo de seleção de infraestrutura</guilabel
+></term>
+					<listitem>
+						<para
+>Se o &okular; deve perguntar ao usuário qual infraestrutura será usada, caso exista mais de uma infraestrutura disponível para abrir o arquivo atual. Se esta opção estiver desmarcada, o &okular; usará a infraestrutura com maior prioridade.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Direção de leitura da direita para a esquerda</guilabel
+></term>
+					<listitem>
+						<para
+>Se usar a direção de leitura da direita para a esquerda para os arquivos abertos. Pode ser útil para <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>alguns sistemas de escrita</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Colunas da visão geral</guilabel
+></term>
+					<listitem>
+						<para
+>Esta opção representa o número de colunas a serem exibidas no modo visão geral. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Sobreposição do Page Up/Down</guilabel
+></term>
+					<listitem>
+						<para
+>Aqui você pode definir o percentual da área de visualização atual que deverá ficar visível após clicar nas teclas <keycap
+>Page Up</keycap
+>/<keycap
+>Page Down</keycap
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Zoom padrão</guilabel
+></term>
+					<listitem>
+						<para
+>Esta opção define o modo de zoom padrão para o arquivo que nunca foi aberto antes. Para os arquivos que já foram abertos será aplicado o modo de zoom anterior. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Acessibilidade</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Desenhar bordas ao redor dos links</guilabel
+></term>
+					<listitem>
+						<para
+>Desenhar ou não uma borda ao redor dos links.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Alterar as cores</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Habilita</action
+> as opções de alteração de cores.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Inverter as cores</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Inverte</action
+> as cores na exibição, &ie;, os objetos pretos serão mostrados como brancos.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Alterar a cor do papel</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Altera</action
+> a cor do papel, &ie;, o plano de fundo do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Alterar as cores claras e escuras</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Altera</action
+> a cor clara e escura de acordo com sua preferência, fazendo com que o preto não seja exibido como preto, mas como a cor escura selecionada, assim como o branco não seja exibido como branco, mas como a cor clara selecionada.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Converter para preto e branco</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Converte</action
+> o documento para preto e branco. Você pode definir o limiar e o contraste. Definindo o limiar em um valor mais alto movendo-o para a direita resultará na utilização de cinza mais escuro.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mecanismo</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Permite-lhe escolher</action
+> o mecanismo de texto-para-fala (<abbrev
+>TTS</abbrev
+>) a usar pelo &okular;. O padrão é o <abbrev
+>TTS</abbrev
+> <application
+>speechd</application
+>, mas poderá usar todos os idiomas e vozes, dependendo dos sintetizadores disponíveis na sua plataforma. No &Linux;, é usado o 'speech-dispatcher' para determinar as vozes disponíveis.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Desempenho</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Habilitar efeitos de transparência</guilabel
+></term>
+					<listitem>
+						<para
+>Desenha as seleções e os outros gráficos especiais usando efeitos de transparência. Desabilite a opção para desenhá-las com um contorno ou com estilos de preenchimento opacos e para aumentar a velocidade nas seleções.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Uso de memória</guilabel
+></term>
+					<listitem>
+						<para
+>O &okular; poderá obter um melhor desempenho se otimizar o uso da memória, baseando-se no seu sistema e na sua preferência. Quanto mais memória deixá-lo usar, mais rápido será o programa. O perfil padrão é bom para todos os sistemas, mas você pode evitar que o &okular; use mais memória do que o necessário se selecionar o perfil Baixo ou deixá-lo obter o máximo do seu sistema, usando o perfil Agressivo. Use o perfil Insaciável para carregar previamente todas as páginas sem correr o risco de esgotar a memória do sistema (apenas 50% da memória livre total serão usados).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Renderização</guilabel
+></term>
+					<listitem>
+						<para
+>Ao usar este grupo de opções, você pode melhorar a apresentação do texto e imagens no &okular;. O resultado depende do dispositivo de apresentação do documento. Os itens <guilabel
+>Habilitar a suavização do texto</guilabel
+> e <guilabel
+>Habilitar a suavização dos gráficos</guilabel
+> podem ser usados para ativar e desativar a <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+>suavização espacial</ulink
+> do texto e imagens no documento, de forma correspondente. O item <guilabel
+>Habilitar a sugestão de texto</guilabel
+> serve para alternar a <ulink url="http://en.wikipedia.org/wiki/Font_hinting"
+>sugestão de dimensões do texto</ulink
+>. A mudança de suavização e sugestão afeta a forma como os documentos são exibidos e podem ser ajustados de acordo com a sua preferência.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Apresentação</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Avançar a cada</guilabel
+></term>
+					<listitem>
+						<para
+>Habilita o avanço automático de páginas após um período de tempo determinado.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Repetir após a última página</guilabel
+></term>
+					<listitem>
+						<para
+>Durante a navegação no modo de apresentação, ao chegar na última página aparecerá a primeira.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Navegação por toque</guilabel
+></term>
+					<listitem>
+						<para
+>Permite-lhe fazer ajustes finos na navegação em telas sensíveis ao toque, ao tocar na apresentação usando os três valores possíveis a seguir:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Toque no lado esquerdo/direito para voltar/avançar</guilabel
+>: Se tocar da metade esquerda (direita) da tela, irá passar para o slide anterior (próximo).</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Toque em qualquer lugar para avançar</guilabel
+> (padrão): Se tocar na tela, fará com que a apresentação avance para o próximo slide, independentemente do local de toque na tela.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Desabilitado</guilabel
+>: Tocar na tela não faz nada.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Cor do plano de fundo</guilabel
+></term>
+					<listitem>
+						<para
+>A cor que irá preencher a parte da tela não coberta pela página, quando estiver no modo de apresentação.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Cursor do mouse</guilabel
+></term>
+					<listitem>
+						<para
+>Se o mouse deve estar sempre oculto, sempre visível ou ocultar-se após um pequeno tempo de inatividade.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostrar indicador de progresso</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve mostrar um círculo de progresso que mostra a página atual e o número total de páginas no canto superior direito da tela de apresentação, toda vez que você mudar de página.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mostrar página de resumo</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve mostrar uma página de resumo no início da apresentação, com o título, o autor e o número de páginas do documento.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Habilitar transições</guilabel
+></term>
+					<listitem>
+						<para
+>Use esta opção para ativar ou desativar os efeitos de transição entre páginas.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Transição padrão</guilabel
+></term>
+					<listitem>
+						<para
+>O efeito de transição na mudança de página, se o documento não especificar um. Configure isto como <guilabel
+>Transição aleatória</guilabel
+> para que o &okular; escolha aleatoriamente um dos efeitos disponíveis.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Posicionamento</guilabel
+></term>
+					<listitem>
+						<para
+>Nesta seção você pode selecionar a <guilabel
+>Tela</guilabel
+> usada para exibir a apresentação.</para>
+						<para
+>A <guilabel
+>Tela atual</guilabel
+> é a mesma tela da janela do &okular; que inicia o modo de apresentação.</para>
+						<para
+>A <guilabel
+>Tela padrão</guilabel
+> é aquela definida como padrão na configuração do xinerama.</para>
+						<para
+>A <guilabel
+>Tela 0</guilabel
+>, a <guilabel
+>Tela 1</guilabel
+>, &etc;, são as telas disponíveis.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Configuração da ferramenta de desenho</guilabel
+></term>
+					<listitem>
+						<para
+>Gerencia as cores do lápis usadas quando estiver desenhando em páginas durante o modo de apresentação.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Anotações</title>
+			<screenshot>
+				<screeninfo
+>Página Anotações da caixa de diálogo de configuração</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Página Anotações da caixa de diálogo de configuração</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Autor</guilabel
+></term>
+					<listitem>
+						<para
+>O autor do conteúdo adicionado num documento. Por padrão, é o nome na página de <guilabel
+>Senha &amp; Conta do Usuário</guilabel
+> do módulo <guilabel
+>Detalhes da conta</guilabel
+> das &systemsettings;.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ferramentas de anotação</guilabel
+></term>
+					<listitem>
+					  <para
+>Este painel é usado para configurar a sua <link linkend="annotations-add"
+>barra de anotações</link
+>. </para>
+					  <para
+>Existem cinco botões (<guibutton
+>Adicionar</guibutton
+>, <guibutton
+>Editar</guibutton
+>, <guibutton
+>Remover</guibutton
+>, <guibutton
+>Mover para cima</guibutton
+>, <guibutton
+>Mover para baixo</guibutton
+>) e uma lista (que apresenta o conteúdo da barra de anotações atual) que são usados para configurar a barra de ferramentas. </para>
+					  <para
+>Se precisar adicionar algum botão de ferramentas na barra, clique no botão <guibutton
+>Adicionar</guibutton
+>. Você pode escolher o <guilabel
+>Nome</guilabel
+>, o <guilabel
+>Tipo</guilabel
+> e a <guilabel
+>Aparência</guilabel
+> da ferramenta criada. </para>
+					  <note>
+					    <para
+>Lembre-se de que as ferramentas de anotações no &okular; são altamente configuráveis. Por exemplo, você pode ter dois botões da mesma ferramenta, mas com cores diferentes. Não deixe de experimentar a escolha do conjunto de botões que melhor se adapta as suas necessidades. </para>
+					  </note>
+					  <para
+>Clique em algum item da lista e depois no botão correspondente do lado direito da página para editar, remover, mover para cima ou mover para baixo o item. O atalho de teclado da ferramenta (as teclas de <keycap
+>1</keycap
+> a <keycap
+>9</keycap
+>) depende da sua posição na lista da barra de ferramentas de anotações. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Uso de carimbos personalizados</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Crie o ícone que deseja como carimbo e salve-o em qualquer formato gráfico com suporte no &okular;</para
+></listitem>
+					<listitem
+><para
+>Clique no botão <guibutton
+>Adicionar</guibutton
+>, selecione o tipo <guilabel
+>Carimbo</guilabel
+> e digite um nome para o seu carimbo.</para
+></listitem>
+					<listitem
+><para
+>Indique o caminho completo do seu ícone personalizado na lista do grupo <guilabel
+>Símbolo de carimbo</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Editor</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Editor</guilabel
+></term>
+					<listitem>
+						<para
+>Escolha o editor que deseja executar quando o &okular; quiser abrir um arquivo-fonte. Esse é o caso de documento que possui referências para os vários pontos (normalmente o número da linha e coluna) do fonte de onde foi gerado. O formato &DVI; suporta nativamente a adição de informações sobre o fonte do documento em LaTeX, a partir de onde foi gerado. Existe um sistema semelhante para os documentos em &PDF; chamado <acronym
+>pdfsync</acronym
+>, que armazena estas informações adicionais em um arquivo externo, com o nome baseado no arquivo &PDF; propriamente dito (por exemplo, <filename
+>meudocumento.pdfsync</filename
+> para <filename
+>meudocumento.pdf</filename
+>). </para>
+						<para
+>O &okular; vem com configurações predefinidas para os seguintes editores: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>&Emacs; client</ulink
+>, <ulink url="https://www.lyx.org/"
+>LyX client</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> e <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>Para usar a pesquisa inversa no <application
+>Kile</application
+>, você terá que compilar o seu arquivo &latex; com a configuração <guilabel
+>Modern</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Comando</guilabel
+></term>
+					<listitem>
+						<para
+>Este é o comando e seus parâmetros, para carregar o editor selecionado com o arquivo de origem real do documento.</para>
+						<para
+>Este campo será preenchido automaticamente se usar um dos editores pré-configurados. Caso contrário, escolha o <guimenuitem
+>Editor de textos personalizado</guimenuitem
+> na lista <guilabel
+>Editor</guilabel
+> e consulte a documentação do seu editor favorito para descobrir o comando adequado. </para>
+						<para
+>Você poderá usar os seguintes itens de substituição:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - o nome do arquivo</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - a linha do arquivo a consultar</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - a coluna do arquivo a consultar</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Se não for indicado o '%f', então o nome do documento será adicionado ao comando indicado.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Créditos e Licença</title>
+
+		<itemizedlist>
+			<title
+>Direitos autorais do programa:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail;, mantenedor atual</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+>, desenvolvedor do &kpdf;</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Direitos autorais da documentação:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail;, autor</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+>, algumas atualizações e adições</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Tradução de André Marcelo Alvarenga <email
+>alvarenga@kde.org</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

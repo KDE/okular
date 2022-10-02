@@ -1,0 +1,50 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-05-21 14:24+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Freek de Kruijf"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "freekdekruijf@kde.nl"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt"
+msgstr "Txt"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt Backend Configuration"
+msgstr "Configuratie van Txt-backend"
+
+#~ msgid "Txt Backend"
+#~ msgstr "Txt-backend"
+
+#~ msgid "Txt backend."
+#~ msgstr "Txt-backend."
+
+#~ msgid "© 2013 Azat Khuzhin"
+#~ msgstr "© 2013 Azat Khuzhin"
+
+#~ msgid "Azat Khuzhin"
+#~ msgstr "Azat Khuzhin"

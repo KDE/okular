@@ -1,0 +1,4442 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Ukrainian "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Підручник з &okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>19 лютого 2022 року</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; — це універсальний переглядач документів для &kde;, заснований на коді &kpdf;.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>анотація</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Вступ</title>
+		<para
+>&okular; — це універсальний переглядач документів для &kde;, заснований на коді програми &kpdf;. Хоча програму і засновано на коді &kpdf;, &okular; має декілька унікальних можливостей, таких як режим огляду, покращену підтримку презентацій і анотування. </para>
+		<para
+>У &okular; передбачено підтримку багатьох форматів даних, зокрема &PDF;, &PostScript;, Tiff, CHM, DjVU, зображення (png, jpg тощо) XPS, Fiction Book, Comic Book, Plucker, EPub, Fax і Markdown. Повний список підтримуваних форматів та можливостей наведено на сторінці <ulink url="https://okular.kde.org/formats.php"
+>інструментів обробки форматів документів &okular;</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Головне вікно &okular;</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Головне вікно &okular;</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Основні прийоми користування</title>
+		<sect1 id="opening">
+			<title
+>Як відкрити файл</title>
+			<para
+>Щоб переглянути будь-який з підтримуваних файлів у &okular;, скористайтесь пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкрити... </guimenuitem
+></menuchoice
+>, оберіть підтримуваний файл у діалоговому вікні, а потім натисніть кнопку <guibutton
+>Відкрити</guibutton
+>. Зображення з вказаного вами файла має з’явитися у головному вікні програми. </para>
+			<important>
+			  <para
+>Новий документ буде відкрито у новій вкладці, якщо позначено пункт <guilabel
+>Відкривати нові документи у вкладках</guilabel
+> на <link linkend="configgeneral"
+>сторінці загальних налаштувань</link
+>. </para>
+                          <para
+>Вкладки можна закривати клацанням на їхніх заголовках середньою кнопкою миші. </para>
+                          <para
+>Раніше закриту вкладку можна повторно відкрити за допомогою пункту меню <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Скасувати закриття вкладки</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>Якщо ви вже раніше відкривали файли у &okular;, ви можете швидко відкрити їх знову, для цього виберіть відповідний пункт у меню <menuchoice
+><guimenu
+>Файл</guimenu
+><guisubmenu
+>Відкрити нещодавній</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>&okular; є типовою програмою &kde; для перегляду файлів &PDF; і &PostScript;. Саме цю програму буде запущено, якщо ви наведете вказівник миші на якийсь з файлів цих типів у програмі для керування файлами і двічі клацнете лівою кнопкою миші. Щоб відкрити будь-який з файлів, підтримку формату якого передбачено у &okular;, скористайтеся пунктом <menuchoice
+><guimenu
+>Відкрити за допомогою...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> контекстного меню програми для керування файлами. </para>
+			<para
+>Після того, як ви відкриєте файл, очевидно, ви захочете прочитати його, а отже якимось чином пересуватися його вмістом. Щоб дізнатися про те, як це зробити, прочитайте <link linkend="navigating"
+>наступний розділ</link
+>. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Навігація</title>
+			<para
+>У цьому розділі описано способи навігації документом, які використовуються у &okular;.</para>
+			<para
+>Існує декілька способів пересування області перегляду. Одним з них є використання клавіш <keycap
+>↑</keycap
+> і <keycap
+>↓</keycap
+>. Крім того, ви можете скористатися смугою прокручування, коліщатком вашої миші, або клавішами <keycap
+>Page Up</keycap
+> і <keycap
+>Page Down</keycap
+>. </para>
+			<para
+>Ви також можете скористатися навігаційними клавішами у стилі <application
+>vim</application
+>, зокрема клавішею <keycap
+>H</keycap
+> для переходу до верхньої частини попередньої сторінки, <keycap
+>L</keycap
+> для переходу до верхньої частини наступної сторінки, <keycap
+>J</keycap
+> для пересування на рядок нижче і <keycap
+>K</keycap
+> для пересування на рядок вище. </para>
+			<para
+>Ще одним способом є утримування натисненою лівої кнопки миші, коли вказівник знаходить у будь-якому місці документа, з одночасним перетягуванням вказівника миші у напрямку, протилежному до того, у якому ви бажаєте пересунутися документом. Ця процедура працює, лише якщо увімкнено засіб навігації, цей інструмент ви можете обрати за допомогою пункту меню <menuchoice
+><guimenu
+>Інструменти</guimenu
+><guimenuitem
+>Навігація</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>Під час перегляду документа у <link linkend="presentationMode"
+>режимі презентації</link
+> користуйтеся клавішами <keycap
+>↑</keycap
+> та <keycap
+>↓</keycap
+> для перемикання між сторінками або слайдами. Номер та розташування у документі поточного слайда буде показано на панелі-накладці у верхньому правому куті екрана. </para>
+			</note>
+			<para
+>Якщо ви читаєте документ з декількома сторінками, скористайтеся можливістю автоматичного гортання у &okular;. Увійти у режим автоматичного гортання можна натисканням комбінацій клавіш <keycombo action="simul"
+>&Shift;<keysym
+>↓</keysym
+></keycombo
+> і <keycombo action="simul"
+>&Shift;<keysym
+>↑</keysym
+></keycombo
+>. Після цього можна скористатися повторними натисканнями цих комбінацій для того, щоб збільшити або зменшити швидкість гортання. Тимчасово розпочати або зупинити гортання можна натисканням клавіші &Shift;. Натискання будь-якої іншої клавіші призводити до виходу з режиму автоматичного гортання. </para>
+			<para
+>Ще одним засобом навігації для переходу одразу на декілька сторінок документа є вказівник миші. Перетягніть сторінку вгору або вниз, продовжуйте перетягування після досягнення нижнього або верхнього краю сторінки. Щойно ви перетнете край сторінки, у верхній або нижній частині екрана знову з’явиться курсор і ви зможете продовжити гортання сторінок. </para>
+			<para
+>За допомогою бічної панелі, розташованої ліворуч на екрані, можна здійснювати пересування документом ще у два способи: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Якщо ви наведете вказівник на мініатюру сторінки і клацнете лівою кнопкою миші, відповідну сторінку буде відображено у області перегляду. </para>
+				</listitem>
+				<listitem>
+					<para
+>Якщо у документі є зміст, наведення вказівника миші з наступним клацанням лівою кнопкою на пункті вмісту пересуне область перегляду до сторінки, пов’язаної з цим пунктом. </para>
+				</listitem>
+				<listitem>
+					<para
+>Якщо у документі є шари, ви можете визначити, які з них слід показувати, за допомогою позначення або зняття позначки з відповідних пунктів у списку <guilabel
+>Шари</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Якщо у документі є закладки, увімкніть показ панелі <guilabel
+>Закладки</guilabel
+>. Для переходу до відповідної сторінки достатньо натиснути пункт закладки. Якщо закладки встановлено не лише для поточного документа, ви зможете швидко перемикатися між закладками у всіх нещодавно відкритих файлах. </para>
+				</listitem>
+				<listitem>
+					<para
+>Якщо у документі передбачено анотації, увімкніть режим перегляду <guilabel
+>Анотації</guilabel
+> і натисніть пункт анотації, або позначте його за допомогою клавіш <keycap
+>↑</keycap
+> і <keycap
+>↓</keycap
+>, а потім натисніть клавішу &Enter;, щоб перейти до відповідної сторінки. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>У деяких документах є посилання. У випадку наявності посилань ви можете навести на посилання вказівник миші і клацнути лівою кнопкою: область перегляду буде пересунуто до сторінки, на яку виконано посилання. Якщо посилання виконано на сторінку мережі або на якийсь інший документ, буде запущено типову програму для обробки відповідного формату даних у &kde;. Наприклад, натискання посилання, що вказує на «https://www.kde.org», відкриє вебсторінку у типовій програмі для перегляду вебсторінок &kde;. </para>
+			<important>
+			  <para
+>Внутрішні посилання у документі працюватимуть лише у режимі when <link linkend="menutools"
+>інструмента «Навігація»</link
+>. </para>
+			</important>
+			<para
+>Крім того, для швидкого пересування до окремих місць у документі ви можете скористатися такими функціональними можливостями: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Перейти до початку документа можна за допомогою натискання комбінації клавіш <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> або пункту меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Початок документа</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>До останньої сторінки документа можна перейти за допомогою комбінації клавіш <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> або за допомогою пункту меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Кінець документа</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>До наступної сторінки документа можна перейти за допомогою клавіш <keycap
+>Пробіл</keycap
+>, <keycap
+>Page Down</keycap
+>, кнопки панелі інструментів <guibutton
+>Наступна сторінка</guibutton
+> або за допомогою пункту меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступна сторінка</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>До попередньої сторінки документа можна перейти за допомогою клавіш &Backspace;, <keycap
+>Page Up</keycap
+>, кнопки панелі інструментів <guibutton
+>Попередня сторінка</guibutton
+> або за допомогою пункту меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Попередня сторінка</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Ви можете повертатися до місць у документі у хронологічному порядку переходів між ними. Наприклад, якщо ви бачите фразу «Як показано у [15], …», і хочете швидко ознайомитися з тим, що таке [15], ви просто натискаєте посилання, і &okular; переходить до списку посилань. За допомогою натискання комбінації клавіш <keycombo
+>&Alt;&Shift;<keysym
+>←</keysym
+></keycombo
+> або пункту меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Назад</guimenuitem
+> </menuchoice
+> ви можете повернутися до тієї самої позиції, з якої ви перейшли до списку посилань. </para>
+				</listitem>
+				<listitem>
+					<para
+>Перейти далі стосом переходів після повернення до попереднього місця за допомогою описаного вище способу можна скориставшись комбінацією клавіш <keycombo
+>&Alt;&Shift;<keysym
+>→</keysym
+></keycombo
+> або пунктом меню <menuchoice
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Вперед</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Крім того, під час пошуку якогось фрагмента у документі ви можете перейти до місця з наступним відповідником за допомогою натискання клавіші <keycap
+>F3</keycap
+> чи &Enter; (якщо фокус перебуває на полі <guilabel
+>Знайти</guilabel
+>) або вибору пункту меню <menuchoice
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти далі</guimenuitem
+> </menuchoice
+> або повернутися до попереднього відповідника за допомогою натискання клавіш <keycombo
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+> чи <keycombo
+>&Shift;&Enter;</keycombo
+> (якщо фокус перебуває на полі <guilabel
+>Знайти</guilabel
+>) або вибору пункту меню <menuchoice
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти позаду</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Режим презентації</title>
+			<para
+>Ще одним способом перегляду документів у &okular; є презентація. Увімкнути цей режим можна за допомогою пункту меню <menuchoice
+><guimenu
+>Перегляд</guimenu
+><guimenuitem
+>Презентація</guimenuitem
+></menuchoice
+>. У цьому режимі документ буде показано посторінково. Сторінки буде вміщено на екрані: для кожної зі сторінок ви бачитимете всю площу сторінки. </para>
+			<note>
+				<para
+>Документи &PDF; навіть можуть самі визначати, що їх слід відкривати у режимі презентації. </para>
+			</note>
+			<para
+>Під час роботи у режимі презентації ви можете використовувати допоміжну панель, яку розташовано вгорі сторінки. Просто пересуньте вказівник миші вгору сторінки, щоб побачити цю панель. </para>
+			<screenshot>
+			<screeninfo
+>&okular; у режимі презентації</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; у режимі презентації</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Для пересування між сторінками ви можете скористатися лівою кнопкою миші (наступна сторінка) і правою кнопкою миші (попередня сторінка), коліщатком миші, кнопками з піктограмами у вигляді стрілок або поле для редагування на верхній панелі, або клавішами, вказаними у розділі <link linkend="navigating"
+>Навігація</link
+>. </para>
+			<para
+>Скористайтеся кнопкою <guilabel
+>Відтворити/Призупинити</guilabel
+> не верхній панелі для того, щоб розпочати відтворення презентації або призупинити його, відповідно. </para>
+			<para
+>Ви можете у будь-який момент часу вийти з режиму презентації натисканням клавіші &Esc; або кнопки з піктограмою <guiicon
+>Вийти</guiicon
+> на верхній панелі. </para>
+			<para
+>Крім того, ви можете малювати на поточній сторінці за допомогою інструмента «олівця». Щоб увімкнути або вимкнути можливість малювання у режимі презентації, натисніть кнопку з піктограмою <guilabel
+>Перемкнути режим малювання</guilabel
+> на верхній панелі. Під час переходу до іншої сторінки або виходу з режиму презентації намальоване буде автоматично вилучено. Крім того, ви можете натиснути піктограму <guilabel
+>Стерти малюнки</guilabel
+>, щоб вилучити намальоване на поточній сторінці. </para>
+			<para
+>Програма підтримує у режимі презентації показ на декількох екранах у конфігураціях обладнання з декількома моніторами. У такому випадку на верхній панелі з’являється нова кнопка — піктограма екрана. Ця кнопка відкриває спадний список, за допомогою якого ви можете пересувати презентацію на будь-який з доступних екранів. </para>
+			<para
+>Деякі з параметрів режиму презентації можна змінити, опис цих параметрів ви можете знайти у розділі <link linkend="configpresentation"
+>Як налаштувати &okular;</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Зворотній пошук у редакторах &latex; з вікна &okular;</title>
+
+		<para
+>Зворотній пошук стане у пригоді, якщо ви створюєте документ &latex; власноруч. Якщо все налаштовано належним чином, ви зможете натиснути клавішу &Shift; і клацнути у вікні &okular; лівою кнопкою миші. Після цього редактор завантажить відповідний файл кодів &latex; і відкриє у ньому відповідний абзац тексту.</para>
+
+		<para
+>Зворотній пошук не працюватиме, якщо ви не виконаєте таких умов:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Файл початкових кодів має бути успішно зібрано.</para
+></listitem>
+			<listitem
+><para
+>&okular; відомі дані щодо редактора, який ви бажаєте використовувати.</para
+></listitem>
+			<listitem
+><para
+>Ця процедура працює, лише якщо увімкнено засіб навігації, цей інструмент ви можете вибрати за допомогою пункту меню <menuchoice
+><guimenu
+>Інструменти</guimenu
+><guimenuitem
+>Навігація</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>За використання цієї можливості &okular; натискання клавіші &Shift; з наступним клацанням лівою кнопкою миші у документі DVI призведе до відкриття відповідного документа &latex; у редакторі з наступною спробою перейти до відповідного рядка у коді. Не забудьте повідомити &okular; про те, що слід використовувати відповідний редактор. Це можна зробити за допомогою пункту меню &okular; <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати Okular</guimenuitem
+></menuchoice
+> (на сторінці <guimenuitem
+>Редактор</guimenuitem
+>).</para>
+
+		<para
+>Щоб дізнатися більше, про налаштовування редактора, будь ласка, зверніться до <link linkend="configeditor"
+>відповідного розділу підручника</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Налаштовування &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Налаштовування редактора у &okular;</phrase>
+			</textobject>
+			<caption
+><para
+>Налаштовування редактора у &okular;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Додаткові можливості &okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Вбудовані файли</title>
+			<para
+>Якщо у поточний документ вбудовано декілька файлів, після його відкриття над областю перегляду сторінки з’явиться прямокутничок, що сповіщатиме вас про вбудовані файли. </para>
+			<screenshot>
+				<screeninfo
+>Панель вбудованих файлів</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Панель вбудованих файлів</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>У цьому випадку ви можете або навести вказівник на текст посилання у прямокутничку і клацнути лівою кнопкою миші, або скористатися пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Вбудовані файли</guimenuitem
+></menuchoice
+>, щоб відкрити діалогове вікно вбудованих файлів. Це діалогове вікно надасть вам змогу переглянути вбудовані файли і видобути їх. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Форми</title>
+			<para
+>Якщо у поточний документ вбудовано форми, після його відкриття над областю перегляду сторінки з’явиться панель, за допомогою якої ви зможете увімкнути ці форми. </para>
+			<screenshot>
+				<screeninfo
+>Панель форм</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Панель форм</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>У такому випадку ви можете натиснути кнопку <guilabel
+>Показати форми</guilabel
+> на панелі або скористатися пунктом меню <menuchoice
+><guimenu
+>Перегляд</guimenu
+><guimenuitem
+>Показати форми</guimenuitem
+></menuchoice
+>, щоб ввести дані до полів форми. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Підписи</title>
+			<para
+>Якщо поточний документ підписано, програма покаже відповідну панель над областю перегляду сторінки одразу після відкриття документа. За допомогою цієї панелі ви зможете відкрити додаткову бічну панель <guilabel
+>Підписи</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>Панель підписів</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Панель підписів</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>За допомогою панелі <guilabel
+>Підписи</guilabel
+> ви зможете ознайомитися із підписом документа та його сертифікатом. </para>
+			<screenshot>
+				<screeninfo
+>Панель підписів</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Панель підписів</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Цією можливість можна скористатися лише для документів &PDF;. Вам слід встановити принаймні версію 0.51 <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> для отримання більшої частини даних підпису, версію 0.68 для отримання даних щодо розташування та причини підписування документа та версію 0.73 для отримання даних щодо сертифіката підпису. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Додавання цифрових підписів</title>
+				<para
+>Ви можете додавати цифрові підписи до документів за допомогою відповідного пункту у меню <menuchoice
+><guimenu
+>Інструменти</guimenu
+></menuchoice
+>. </para>
+				<para
+>Щоб мати змогу підписати документ, вам знадобиться належний сертифікат для підписування <acronym
+>PKCS</acronym
+> у вашій системі. &okular; не може створювати такі сертифікати самостійно, оскільки їх має бути видано належними службами сертифікації, щоб ними можна було скористатися для засвідчення автентичності. </para>
+				<para
+>Для роботи із підписуванням документів &PDF; використано бібліотеку Poppler. Ця бібліотека використовує для керування сертифікатами бібліотеку NSS. На час написання цього підручника Poppler намагатиметься скористатися такими сховищами сертифікатів NSS у порядку пріоритетності (першим з них, яке існує): </para>
+				<itemizedlist>
+					<listitem
+><para
+>Поточне сховище сертифікатів користувача Firefox.</para
+></listitem>
+					<listitem
+><para
+>Загальносистемне сховище сертифікатів <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>Каталог поточного користувача <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>Якщо ви хочете скористатися нетиповим сховищем сертифікатів, ви можете вказати його у розділі <link linkend="config-pdf-digital-signatures"
+>Налаштування модуля &PDF;</link
+> діалогового вікна <link linkend="configure-backends"
+>Налаштувати модулі...</link
+>. </para>
+				<note>
+					<para
+>Цією можливість можна скористатися лише для документів &PDF;. Вам слід встановити принаймні версію 21.01 <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> для уможливлення додавання цифрових підписів до документів. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Анотації</title>
+			<para
+>У &okular; передбачено можливість рецензування та анотування документів. </para>
+			<screenshot>
+			<screeninfo
+>Анотації &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Анотації &okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>У &okular; передбачено два різних типи анотацій:</para>
+			<para
+>Текстові анотації, подібні до <guilabel
+>Підсвічування жовтим</guilabel
+> і <guilabel
+>Підкреслення чорним</guilabel
+> для файлів з текстом, наприклад &PDF;.</para>
+		      <para
+>Графічні анотації, подібні до <guilabel
+>Контекстної нотатки</guilabel
+>, <guilabel
+>Рядкової примітки</guilabel
+>, <guilabel
+>Довільної лінії</guilabel
+>, <guilabel
+>Прямої</guilabel
+>, <guilabel
+>Багатокутника</guilabel
+>, <guilabel
+>Штампа</guilabel
+>, <guilabel
+>Підкреслювання</guilabel
+>, <guilabel
+>Еліпса</guilabel
+> та <guilabel
+>Друкарської машинки</guilabel
+> для всіх форматів, що підтримуються &okular;.</para>
+			<para
+>За допомогою контекстних меню панелі <guilabel
+>Анотації</guilabel
+> бічної панелі і головного меню ви можете відкрити вікно <guilabel
+>Контекстної нотатки</guilabel
+> для введення будь-якої анотації, додавання або внесення змін до коментарів.</para>
+			<para
+>Анотації можна додавати не лише до файлів &PDF;, ними можна скористатися у будь-якому з файлів, які підтримуються &okular;.</para>
+			<para
+>У &okular; передбачено можливість «архівування документів». Ця можливість полягає у створенні файла специфічного для &okular; формату, для зберігання документа разом з різноманітними пов’язаними з ним метаданими (у поточній версії лише анотаціями). Ви можете зберегти відкритий документ до «архіву документа» за допомогою пункту меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Зберегти як</guisubmenu
+></menuchoice
+> і вибору варіанта <guilabel
+>Документ з архівом Okular</guilabel
+> у полі <guilabel
+>Фільтр</guilabel
+>. Збережені у такий спосіб документи матимуть суфікс назви <filename
+>.okular</filename
+>. Щоб відкрити архів з документом &okular;, просто відкрийте відповідний файл у &okular; так, як ви це зробили б, наприклад, з документом &PDF;. </para>
+			<para
+>Ви <emphasis
+>також</emphasis
+> можете зберігати анотації безпосередньо до файлів &PDF;. Щоб зберегти зміни до поточного файла, скористайтеся пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зберегти</guimenuitem
+></menuchoice
+>. Щоб зберегти зміни до нового файла, скористайтеся пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зберегти як...</guimenuitem
+></menuchoice
+>. </para>
+				<note>
+					<para
+>Через обмеження DRM (зокрема для документів &PDF;) додавання, зміна деяких властивостей або вилучення анотацій неможливі. </para>
+				</note>
+				<note>
+				  <para
+>Будь-яку дію з анотаціями (створення та вилучення анотацій, редагування довільних властивостей анотацій, пересування анотацій за допомогою натискання &Ctrl; і перетягування вказівником миші та редагування текстового вмісту анотації) можна <link linkend="edit-undo"
+>скасувати</link
+> або <link linkend="edit-redo"
+>повторити</link
+> за допомогою відповідного пункту з меню <guimenu
+>Зміни</guimenu
+>. Також можна скасувати дію натисканням комбінації клавіш <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> і повторити скасовану дію натисканням комбінації клавіш <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>Ви можете налаштувати типові властивості та вигляд кожної з кнопок інструментів анотування. Будь ласка, зверніться до <link linkend="configannotations"
+>відповідного розділу документації</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Як додати анотацію</title>
+				<para
+>Щоб додати якісь анотації до документа вам слід скористатися кнопкою <guilabel
+>Швидка анотація</guilabel
+> на головній панелі інструментів &okular; або задіяти пенал анотування. Це можна зробити або за допомогою <menuchoice
+><guimenu
+>Інструменти</guimenu
+><guimenuitem
+>Анотації</guimenuitem
+></menuchoice
+>, або натисканням клавіші <keycap
+>F6</keycap
+>. Після того, як панель рецензування буде показано, для створення анотації достатньо просто натиснути одну з її кнопок або скористатися клавіатурним скороченням (натиснути клавішу від <keycap
+>1</keycap
+> до <keycap
+>9</keycap
+>). </para>
+				<para
+>За допомогою пенала анотування ви можете створювати анотації у форматі малюнків, форм та текстових повідомлень. Ви також можете скористатися пеналом для розмічування документа (наприклад, додати лінії, еліпси, багатокутники, штампи, підсвічування, підкреслювання тощо). У наведеній нижче таблиці описано дії, які можна виконувати за допомогою типового набору кнопок пенала анотування. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Кнопка </entry>
+					<entry
+>Назва засобу </entry>
+					<entry
+>Опис </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Підсвічування </para>
+					</entry>
+					<entry>
+					  <para
+>Позначення фрагмента тексту у документі за допомогою вказаного кольору тла. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник на позицію початку фрагмента тексту, який має бути позначено, затисніть і утримуйте ліву кнопку миші, перетягніть вказівник, щоб позначити фрагмент тексту. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Підсвічування</guimenuitem
+>, <guimenuitem
+>Підкреслення хвилястою</guimenuitem
+>, <guimenuitem
+>Підкреслення</guimenuitem
+> або <guimenuitem
+>Перекреслення</guimenuitem
+>), <guilabel
+>Колір</guilabel
+> та <guilabel
+>Непрозорість</guilabel
+> для позначення. Просто клацніть правою кнопкою миші на підсвіченому тексті і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Підкреслення </para>
+					</entry>
+					<entry>
+					  <para
+>Підкреслювання фрагмента тексту </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник на позицію початку фрагмента тексту, який має бути підкреслено, затисніть і утримуйте ліву кнопку миші, перетягніть вказівник, щоб підкреслити фрагмент тексту. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Підсвічування</guimenuitem
+>, <guimenuitem
+>Підкреслення хвилястою</guimenuitem
+>, <guimenuitem
+>Підкреслення</guimenuitem
+> або <guimenuitem
+>Перекреслення</guimenuitem
+>), <guilabel
+>Колір</guilabel
+> та <guilabel
+>Непрозорість</guilabel
+> для підкреслювання. Просто клацніть правою кнопкою миші на підкресленому тексті і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Підкреслення хвилястою </para>
+					</entry>
+					<entry>
+					  <para
+>Підкреслювання фрагмента тексту хвилястою лінією. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник на позицію початку фрагмента тексту, який має бути підкреслено, затисніть і утримуйте ліву кнопку миші, перетягніть вказівник, щоб підкреслити фрагмент тексту. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Підсвічування</guimenuitem
+>, <guimenuitem
+>Підкреслення хвилястою</guimenuitem
+>, <guimenuitem
+>Підкреслення</guimenuitem
+> або <guimenuitem
+>Перекреслення</guimenuitem
+>), <guilabel
+>Колір</guilabel
+> та <guilabel
+>Непрозорість</guilabel
+> для підкреслювання. Просто клацніть правою кнопкою миші на підкресленому тексті і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Закреслення </para>
+					</entry>
+					<entry>
+					  <para
+>Для закреслювання фрагмента тексту. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник на позицію початку фрагмента тексту, який має бути підкреслено, затисніть і утримуйте ліву кнопку миші, перетягніть вказівник, щоб підкреслити фрагмент тексту. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Підсвічування</guimenuitem
+>, <guimenuitem
+>Підкреслення хвилястою</guimenuitem
+>, <guimenuitem
+>Підкреслення</guimenuitem
+> або <guimenuitem
+>Перекреслення</guimenuitem
+>), <guilabel
+>Колір</guilabel
+> та <guilabel
+>Непрозорість</guilabel
+> для підкреслювання. Просто клацніть правою кнопкою миші на підкресленому тексті і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Друкарська машинка </para>
+					</entry>
+					<entry>
+					  <para
+>За допомогою засобу «Друкарська машинка» можна вставляти до документа непрозорі літери на прозорому тлі. Корисно для заповнення неінтерактивних форм. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на місце у документі, де має бути розташовано лівий верхній кут нотатки, затисніть ліву кнопку миші і перетягніть вказівник до правого нижнього кута нотатки. Введіть текст нотатки і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>, щоб зберегти нотатку, кнопку <guibutton
+>Скасувати</guibutton
+>, щоб скасувати введення нотатки або кнопку <guibutton
+>Очистити</guibutton
+>, щоб спорожнити нотатку. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Шрифт</guilabel
+> і <guilabel
+>Колір тексту</guilabel
+> для тексту. Просто клацніть правою кнопкою миші на створеному блоці тексту і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Рядкова примітка </para>
+					</entry>
+					<entry>
+					  <para
+>Додавання рядкової примітки. Примітку буде показано у відповідному рядку без змін. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на місце у документі, де має бути розташовано лівий верхній кут нотатки, затисніть ліву кнопку миші і перетягніть вказівник до правого нижнього кута нотатки. Введіть текст нотатки і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>, щоб зберегти нотатку, кнопку <guibutton
+>Скасувати</guibutton
+>, щоб скасувати введення нотатки або кнопку <guibutton
+>Очистити</guibutton
+>, щоб спорожнити нотатку. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Шрифт</guilabel
+>, <guilabel
+>Вирівнювання</guilabel
+> та <guilabel
+>Товщину рамки</guilabel
+> для нотатки. Просто клацніть правою кнопкою миші на створеній нотатці і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Контекстна нотатка </para>
+					</entry>
+					<entry>
+					  <para
+>Додавання багаторядкової примітки. Примітку можна буде побачити після подвійного клацання на відповідній піктограмі у документі. </para>
+					  <para
+>Натисніть кнопку засобу, потім клацніть у місці документа, куди має бути додано контекстну нотатку. Введіть текст контекстної нотатки, потім натисніть кнопку <guilabel
+>Закрити цю нотатку</guilabel
+> у верхньому правому куті контекстного вікна введення нотатки. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+> та <guilabel
+>Піктограму</guilabel
+> для нотатки. Просто клацніть правою кнопкою миші на створеній піктограмі нотатки і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Довільна лінія </para>
+					</entry>
+					<entry>
+					  <para
+>Малювання ліній довільної форми </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник на точку початку лінії, натисніть і утримуйте ліву кнопку миші, потягніть вказівник, щоб намалювати лінію. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+> та <guilabel
+>Товщину</guilabel
+> для лінії. Просто клацніть правою кнопкою миші на створеній лінії і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Стрілка (спадний список) </para>
+					</entry>
+					<entry>
+					  <para
+>Для позначення стрілочкою. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на місце, де має бути розташовано початкову точку лінії, клацніть лівою кнопкою миші, перетягніть вказівник у кінцеву точку лінії і клацніть лівою кнопкою миші ще раз. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Товщину</guilabel
+>, <guilabel
+>Початок лінії</guilabel
+>, <guilabel
+>Кінчик лінії</guilabel
+>, <guilabel
+>Довжину ведучої лінії</guilabel
+> та <guilabel
+>Довжину розширень ведучої лінії</guilabel
+> для лінії. Просто клацніть правою кнопкою миші на створеній лінії і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Пряма (спадний список) </para>
+					</entry>
+					<entry>
+					  <para
+>Позначення за допомогою прямої лінії </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на місце, де має бути розташовано початкову точку лінії, клацніть лівою кнопкою миші, перетягніть вказівник у кінцеву точку лінії і клацніть лівою кнопкою миші ще раз. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Товщину</guilabel
+>, <guilabel
+>Початок лінії</guilabel
+>, <guilabel
+>Кінчик лінії</guilabel
+>, <guilabel
+>Довжину ведучої лінії</guilabel
+> та <guilabel
+>Довжину розширень ведучої лінії</guilabel
+> для лінії. Просто клацніть правою кнопкою миші на створеній лінії і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Прямокутник (спадний список) </para>
+					</entry>
+					<entry>
+					  <para
+>Малювання прямокутника навколо певної області у документі. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на ліву верхню вершину прямокутника, перетягніть вказівник у правий нижній кут прямокутника, відпустіть кнопку. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Прямокутник</guimenuitem
+> чи <guimenuitem
+>Еліпс</guimenuitem
+>), <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Заповнення форми</guilabel
+> (та його колір) та <guilabel
+>Товщину</guilabel
+> контура для рамки. Просто клацніть правою кнопкою миші на створеній рамці і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Еліпс (спадний список) </para>
+					</entry>
+					<entry>
+					  <para
+>Малювання еліпса або прямокутника навколо певної області у документі. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на ліву верхню вершину прямокутника, описаного навколо еліпса, затисніть і утримуйте ліву кнопку миші, перетягніть вказівник у правий нижній кут описаного навколо еліпса прямокутника, відпустіть кнопку. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Тип</guilabel
+> (<guimenuitem
+>Прямокутник</guimenuitem
+> чи <guimenuitem
+>Еліпс</guimenuitem
+>), <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Заповнення форми</guilabel
+> (та його колір) та <guilabel
+>Товщину</guilabel
+> контура для рамки. Просто клацніть правою кнопкою миші на створеній рамці і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Багатокутник (спадний список) </para>
+					</entry>
+					<entry>
+					  <para
+>Малювання замкненої фігури з трьох або більшої кількості відрізків. Відповідну нотатку можна буде переглянути після подвійного клацання всередині багатокутника. </para>
+					  <para
+>Натисніть кнопку засобу, наведіть вказівник миші на місце у документі, де має бути розташовано першу вершину багатокутника, клацніть лівою кнопкою миші, перетягніть вказівник на місце другої вершини, клацніть лівою кнопкою миші ще раз. Повторюйте, аж доки не повернетеся у першу вершину. Двічі клацніть, якщо ви хочете додати до багатокутника якусь нотатку.  Введіть текст нотатки і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>, щоб зберегти нотатку, кнопку <guibutton
+>Скасувати</guibutton
+>, щоб скасувати введення нотатки або кнопку <guibutton
+>Очистити</guibutton
+>, щоб спорожнити нотатку. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Колір</guilabel
+>, <guilabel
+>Непрозорість</guilabel
+>, <guilabel
+>Заповнення форми</guilabel
+> (та його колір) та <guilabel
+>Товщину</guilabel
+> контура для багатокутника. Просто клацніть правою кнопкою миші на створеному багатокутнику і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Штамп </para>
+					</entry>
+					<entry>
+					  <para
+>Позначення тексту або зображення за допомогою попередньо визначеної форми </para>
+					  <para
+>Натисніть кнопку засобу для вибору штампу зі спадного списку, потім наведіть вказівник миші на відповідне місце у документі і клацніть лівою кнопкою миші. </para>
+					  <para
+>Одинарним клацанням можна вставити квадратний штамп (корисно для додавання піктограм). Щоб додати прямокутний штамп, ви можете натиснути ліву кнопку миші і розтягнути штамп, утримуючи її натиснутою, аж до нижнього правого кута. </para>
+					  <para
+>Ви можете визначити <guilabel
+>Непрозорість</guilabel
+> та <guilabel
+>Символ штампа</guilabel
+> для штампа. Просто клацніть правою кнопкою миші на створеній піктограмі штампа і виберіть у контекстному меню пункт <guimenuitem
+>Властивості</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Ця можливість є експериментальною. Нетипові штампи, які буде вставлено до документів &PDF; не можна буде бачити у засобах для читання &PDF;, відмінних від &okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>У &okular; передбачено набір типових анотацій. За допомогою <link linkend="configannotations"
+>сторінки «Анотації»</link
+> діалогового вікна налаштовування програми ви можете додати власні анотації, зокрема нетипові штампи, позначення тексту або геометричні фігури із кольором заповнення для позначення областей у документі тощо. </para>
+                                  <note>
+                                      <para
+>До тексту анотацій можна додавати код &latex;. Будь ласка, скористайтеся конструкцією <userinput
+>$$<replaceable
+>код</replaceable
+>$$</userinput
+> у тексті анотації, де <replaceable
+>код</replaceable
+> — будь-яке коректне рівняння &latex;, і виконайте настанови на екрані, щоб код було відповідним чином оброблено встановленим у вашій системі дистрибутивом &latex;. </para>
+                                  </note>
+				<para
+>Параметри поточного засобу можна налаштувати за допомогою самої панелі анотацій. У наведеній нижче таблиці описано функціональне призначення усіх кнопок типового набору панелі інструментів анотування. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Кнопка </entry>
+					<entry
+>Назва параметра </entry>
+					<entry
+>Опис </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Товщина лінії </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу для вибору товщини зі спадного списку. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Колір анотації </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу, щоб вибрати колір тексту або рамки вашої анотації. Ви можете вибрати один із кольорів стандартного набору або вибрати пункт <guimenuitem
+>Нетиповий колір...</guimenuitem
+>, щоб відкрити діалогове вікно вибору кольору. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Колір заповнення анотації </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу, щоб вибрати колір заповнення вашої анотації. Ви можете вибрати один із кольорів стандартного набору або вибрати пункт <guimenuitem
+>Нетиповий колір...</guimenuitem
+>, щоб відкрити діалогове вікно вибору кольору. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Непрозорість анотації </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу, щоб вибрати рівень непрозорості анотації зі спадного списку (<guimenuitem
+>100%</guimenuitem
+> — повністю непрозорі анотації). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Шрифт анотації </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу для відкриття діалогового вікна вибору шрифту. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Додаткові параметри поточного засобу анотування </para>
+					</entry>
+					<entry>
+					  <para
+>Натисніть кнопку засобу для відкриття діалогового вікна загального налаштовування ваших анотацій. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>На типовій панелі анотування розташовано три додаткових допоміжних кнопки. </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Кнопка </entry>
+					<entry
+>Опис </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Додати поточну анотацію до меню <guilabel
+>Швидка анотація</guilabel
+> на головній панелі інструментів. </para>
+					  <note>
+						  <para
+>Ви можете будь-коли скористатися типовими клавіатурними скороченням від <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> до <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> для вибору дій зі швидкого анотування, навіть якщо панель засобів анотування приховано. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Якщо позначено, лишати поточний засіб анотування активним після використання. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Приховати панель анотування. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>Натисканням клавіші &Shift; ви можете обмежити крок кута нахилу прямої або сторони багатокутника 15°, а співвідношення сторін анотації-форми (наприклад прямокутника або еліпса) — значенням 1:1. Ви також можете створити відповідну кнопку панелі інструментів за допомогою пункту меню <ulink url="help:/fundamentals/config.html#toolbars"
+>Налаштувати пенали...</ulink
+>. </para>
+				  <para
+>Вміст меню <guilabel
+>Швидка анотація</guilabel
+> можна налаштувати за допомогою <link linkend="configannotations"
+>сторінки «Анотації» діалогового вікна налаштовування &okular;</link
+>. Відкрити цю сторінку можна клацанням кнопкою миші на кнопці <guilabel
+>Швидкі анотації</guilabel
+> із наступним вибором у контекстному меню пункту <guimenuitem
+>Налаштувати анотації...</guimenuitem
+>. </para>
+				<note>
+					<para
+>Активація панелі рецензування перемкне програму у режим засобу навігації. </para>
+				</note>
+				<para
+>Для того, щоб зупинити створення анотації, ви будь-коли можете знову натиснути кнопку на панелі рецензування, за допомогою якої ви створили цю анотацію, або натиснути клавішу &Esc;. </para>
+				<para
+>Автором новоствореної анотації буде особа, яку ви встановили на сторінці <guilabel
+>Особа</guilabel
+> у діалоговому вікні <link linkend="configure"
+>налаштування &okular;</link
+>. Сторінкою <guilabel
+>Анотації</guilabel
+> також можна скористатися для налаштовування вмісту панелі анотування. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Як вилучити анотацію</title>
+				<para
+>Щоб вилучити анотацію, наведіть на неї вказівник миші, клацніть правою кнопкою і виберіть у контекстному меню пункт <guimenuitem
+>Вилучити</guimenuitem
+> або позначте анотацію за допомогою клацання лівою кнопкою миші і натисніть клавішу &Del;. </para>
+				<para
+>Після вилучення анотації її вікно, якщо його було відкрито, буде закрито. </para>
+				<note>
+					<para
+>Цю можливість може бути і вимкнено, оскільки документ може бути створено таким чином, що вилучення анотацій з нього буде неможливим. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Як змінити анотацію</title>
+				<para
+>Щоб змінити анотацію, наведіть на неї вказівник миші, клацніть правою кнопкою миші і виберіть з контекстного меню пункт <guimenuitem
+>Властивості...</guimenuitem
+>. Буде відкрито діалогове вікно з загальними параметрами анотації (на зразок кольору і прозорості, імені автора тощо) і параметрами, специфічними для цього типу анотацій. </para>
+				<screenshot>
+				<screeninfo
+>Діалогове вікно властивостей анотації</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Діалогове вікно властивостей анотації</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Щоб пересунути анотацію, натисніть і утримуйте клавішу &Ctrl;, наведіть вказівник миші на анотацію, а потім почніть пересування анотації вказівником, утримуючи натиснутою ліву клавішу миші. </para>
+				<para
+>Якщо ви клацнете лівою кнопкою на анотації, її буде позначено. На прямокутній рамці позначення буде показано елементи керування розмірами. У відповідь на наведення вказівника миші на один із восьми елементів керування у кутах або на краях рамки, форму вказівника буде змінено так, щоб вона позначала режим зміни розмірів. Перетягніть анотацію за будь-яку її точку, щоб змінити розташування анотації. Щоб скасувати позначення анотації, натисніть клавішу &Esc; або наведіть вказівник миші на будь-яку точку зображення поза анотацією і клацніть лівою кнопкою миші. </para>
+				<para
+>Зміну розмірів можна застосувати лише до анотацій типів «Рядкова примітка», «Друкарська машинка», «Штамп» та «Еліпс».</para>
+
+				<note>
+					<para
+>Залежно від дозволів на зміну документа (це зокрема стосується документів &PDF;), деякі параметри може бути вимкнено. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Керування закладками</title>
+			<para
+>У &okular; передбачено дуже гнучку систему роботи з закладками. Програма &okular; здатна зберігати у закладці дані щодо позиції на сторінці, а також надає вам змогу визначати декілька закладок для однієї сторінки. </para>
+			<para
+>Керувати закладками у &okular; можна за допомогою допоміжної панелі <guilabel
+>Закладки</guilabel
+> <guilabel
+>бічної панелі</guilabel
+>, <link linkend="menubookmarks"
+>меню «Закладки»</link
+> або контекстного меню документа (клацніть правою кнопкою миші на полі перегляду документа, щоб відкрити це меню). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Панель закладок</title>
+				<para
+>Щоб відкрити допоміжну панель <guilabel
+>Закладки</guilabel
+> натисніть пункт вкладки <guilabel
+>Закладки</guilabel
+> у верхній частині <guilabel
+>бічної панелі</guilabel
+>. Якщо <guilabel
+>бічну панель</guilabel
+> не показано, скористайтеся пунктом головного меню <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Параметри</guimenu
+><guimenuitem
+>Показати бічну панель</guimenuitem
+> </menuchoice
+>, щоб наказати програмі показати цю панель. </para>
+				<screenshot>
+				    <screeninfo
+>Контекстне меню панелі закладок</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Контекстне меню панелі закладок</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Щоб було показано закладки лише з поточного документа, зніміть позначку з пункту <guilabel
+>Показати для усіх документів</guilabel
+>. </para>
+				<para
+>За допомогою рядка фільтрування, розташованого у верхній частині панелі <guilabel
+>Закладки</guilabel
+>, ви можете виконати фільтрування списку закладок за ключовим словом, введеняим до рядка. </para>
+				<para
+>За допомогою панелі списку закладок ви зможете переглянути ієрархічний список закладок: кожен пункт документа у списку теки можна «розгорнути» або «згорнути» натисканням кнопок з піктограмами <guiicon
+>&lt;</guiicon
+> та <guiicon
+>v</guiicon
+>, розташованими поряд з її пунктом. </para>
+				<para
+>За допомогою контекстного меню пункту документа ви можете відкрити відповідний документ, перейменувати пункт або вилучити пункт документа зі списку. Пам’ятайте, що вилучення пункту документа призведе до вилучення всіх закладок у відповідному документі. </para>
+				<para
+>За допомогою контекстних меню окремих пунктів закладок ви можете перейти до відповідної закладки, перейменувати закладку або вилучити її. </para>
+				<para
+>Контекстним меню таблиці змісту (викликається клацанням правою кнопкою миші) можна скористатися для створення закладок або переходу до наступної чи попередньої закладки. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Параметри командного рядка</title>
+		    <para
+>Хоча найчастіше &okular; запускається з меню програм &kde; або за допомогою піктограми стільниці, його також можна відкрити за допомогою командного рядка у вікні термінала. Існує декілька корисних параметрів, якими можна скористатися для такого способу запуску. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Визначення файла</title>
+			<para
+>Визначення шляху або окремого файла користувач може наказати &okular; відкрити цей файл одразу після запуску. Цей параметр може виглядати так: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/myhome/Документи/mydoc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Для документів PDF адресу можна вказати у форматі <replaceable
+>назва_документа</replaceable
+>#<replaceable
+>іменоване_призначення</replaceable
+>, <replaceable
+>іменоване_призначення</replaceable
+> — певне іменоване призначення, вбудоване до документа. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Інші параметри командного рядка</title>
+			<para
+>Для отримання довідки ви можете використовувати такі параметри командного рядка </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>номер</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Відкрити у документі сторінку з вказаним номером. Також можна скористатися скороченою командою: <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>номер</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Запустити документ в режимі презентації.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Запустити програму з показаним діалоговим вікном друку.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Запустити програму з показаним діалоговим вікном друку і завершити роботу після того, як друк буде завершено.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Інструмент керування унікальністю сеансу.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Надає змогу запобігти підняттю вікна &okular; над іншими вікнами після запуску.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>рядок</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Намагається знайти і позначити рядок у документі. Працює, лише якщо команді <userinput
+><command
+>okular</command
+></userinput
+> передано як аргумент одну назву документа.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>рядок</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Встановлює команду зовнішнього редактора. Встановити команду редактора у вже запущеному екземплярі &okular; не можна. Будь ласка, зауважте, якщо редактор визначено у командному рядку, ви не зможете скористатися параметром <option
+>--unique</option
+>.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Масштаб вікна за сторінкою</title>
+			<para
+>За допомогою пункту масштабування вікна за сторінкою, можна зробити розміри вікна такими, які збігаються із розмірами сторінки за поточного масштабу. Якщо сторінка не вміщається повністю у екран, вікно буде збільшено так, щоб у ньому було показано якомога більшу частину сторінки. </para>
+			<para
+>Доступ до цієї можливості можна отримати за допомогою клавіатурного скорочення <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Панель меню</title>
+
+		<sect1 id="menufile">
+			<title
+>Меню «Файл»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкрити...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Відкриває</action
+> підтримуваний файл або архів документа &okular;. Якщо якийсь файл вже було раніше відкрито, його буде закрито. Докладнішу інформацію можна отримати з розділу щодо того, <link linkend="opening"
+>Як відкрити файл</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Відкрити недавні</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Відкриває</action
+> файл, який вже раніше було відкрито за допомогою підменю зі списком таких файлів. Якщо у програмі вже відкрито якийсь файл, його буде закрито. Щоб дізнатися більше, прочитайте розділ про те, <link linkend="opening"
+>як відкрити файл</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Імпортувати PostScript як &PDF;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Відкрити</action
+> файл &PostScript; і перетворити його на &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Скасувати закриття вкладки</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Повторно відкрити</action
+> останній закритий документ. Цим пунктом можна скористатися, лише якщо ви закривали якийсь документ у вкладці протягом поточного сеансу. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкрити теку документа</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Відкрити</action
+> теку, у якій зберігається поточний документ у вашій улюбленій програмі для керування файлами. Цей пункт є особливо зручним у випадку, якщо ви отримали файл &PDF; з інтернету і відкрили його у &okular;. Розташування такого файла може бути невідомим, а визначити його без можливості відкрити відповідну теку може бути непросто. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зберегти</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Зберігає</action
+> поточний відкритий файл з новою назвою із усіма змінами (анотаціями, вмістом форм тощо), якщо у модулі обробки документа передбачено збереження змін. Якщо у модулі не передбачено можливості зберігання змін, програма запропонує користувачеві або відкинути зміни, або зберегти зміни разом із документом до аріхву документа &okular;.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зберегти як...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Зберігає</action
+> поточний відкритий файл із усіма змінами (анотаціями, вмістом форм тощо), якщо у модулі обробки документа передбачено збереження змін. Якщо у модулі не передбачено можливості зберігання змін, програма запропонує користувачеві або відкинути зміни, або зберегти зміни разом із документом до аріхву документа &okular;.</para>
+                                        <note>
+                                        <para
+>Зауважте, що через спосіб, у який це все реалізовано, навіть якщо до файла не було внесено змін, новий файл може не бути абсолютною копією початкового файла (наприклад, мати іншу хеш-суму SHA-1 тощо). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перезавантажити</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Перезавантажує</action
+> поточний відкритий файл.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Друкувати...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Надрукувати</action
+> поточний позначений документ. Будь ласка, зауважте, що в &okular; передбачено деякі специфічні параметри для друку &PDF;, доступ до яких можна отримати, натиснувши кнопку <guibutton
+>Параметри 
+>
+></guibutton
+> і перейшовши до вкладки <guilabel
+>Параметри &PDF;</guilabel
+>. Скористайтеся цими параметрами, щоб надрукувати ваші анотації або налаштувати режим перетворення на растрове зображення, якщо у вас виникають проблеми із друком певних символів або є потреба у зміні режиму масштабування зображення. </para>
+                                                <note>
+                                                    <para
+>Доступ до режимів масштабування можна бути отримати, лише позначивши пункт <guilabel
+>Перетворити на растрове зображення</guilabel
+>. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перегляд друку...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Показує попередній перегляд</action
+> того, як поточний показаний документ виглядатиме після друку, за умови застосування типових параметрів. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt;<keycap
+>Enter</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Властивості</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Показує деяку базову інформацію</action
+> щодо документа, зокрема, заголовок, автора, дату створення і подробиці про використані шрифти. Список відомостей залежить від типу документа.</para>
+						<note>
+							<para
+>Будь ласка, зверніть увагу на дані щодо заміни шрифтів на вкладці <guilabel
+>Шрифти</guilabel
+> діалогового вікна <guilabel
+>Властивості</guilabel
+>. Багато проблем із показом текстових даних можна усунути встановленням замінених шрифтів.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вбудовані файли...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Показує файли, вбудовані</action
+> до документа, якщо такі файли є. Докладнішу інформацію можна знайти у розділі, присвяченому <link linkend="embedded-files"
+>Вбудованим файлам</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Експортувати як</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Під цим пунктом міститься список форматів, до яких можна експортувати поточний документ. Першим записом для документів усіх типів завжди є <guimenuitem
+>Звичайний текст...</guimenuitem
+>.</para>
+						<para
+>Другим пунктом є <guimenuitem
+>Архів з документом</guimenuitem
+>, за допомогою цього пункту ви можете зберегти документ з вашими анотаціями до специфічного для &okular; формату архіву. Таким чином, ви зможете передавати початковий документ з вашими анотаціями іншим користувачам &okular; або спільно з ними працювати над певним документом.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Оприлюднити</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>У цьому пункті меню міститься список служб, якими можна скористатися для того, щоб поділитися поточним документом із іншими людьми або надіслати його на пристрій для зберігання. Перелік записів визначається операційною системою. Він залежить від формату поточного документа та встановлених додатків KPurpose.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вийти</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Завершує роботу</action
+> &okular;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Меню «Зміни»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вернути</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Скасувати</action
+> останню команду з редагування анотацій (створення та вилучення анотацій, редагування довільних властивостей анотацій, пересування анотацій за допомогою натискання &Ctrl; і перетягування вказівником миші та редагування текстового вмісту анотації).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Повторити</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Повторити</action
+> останню скасовану дію з редагування анотацій.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Копіювати</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Копіює</action
+> поточний обраний текст, якщо програма працює у режимі <guibutton
+>Вибору тексту</guibutton
+>, до буфера.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вибрати все</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Вибирає</action
+> весь текст (якщо такий текст є у документі). Ця можливість працює лише у режимі <guibutton
+>Вибір тексту</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Позначити увесь текст на поточній сторінці</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Позначає</action
+> весь текст (якщо такий текст є у документі) на поточній сторінці. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Показує панель пошуку, розташовану внизу області перегляду, за допомогою цієї панелі ви можете <action
+>шукати певний рядок у документі</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти далі</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Здійснює спробу <action
+>знайти рядок, який ви вже шукали далі</action
+> за текстом документа.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти позаду</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Переводить перегляд до попереднього випадку виявлення рядку пошуку</action
+> у документі.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Меню «Перегляд»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Презентація</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Вмикає</action
+> режим презентації. Докладніше про цей режим можна дізнатися з розділу про <link linkend="presentationMode"
+>Режим презентації</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Повноекранний режим</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Вмикає повноекранний режим</action
+>. Зауважте, що повноекранний режим відрізняється від режиму презентації, оскільки єдиною відмінністю повноекранного режиму від звичайного є те, що буде сховано обрамлення вікна, смужку меню і панель інструментів.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Збільшити</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Збільшує розмір</action
+> у області перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Зменшити</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Зменшує розмір</action
+> у області перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Масштаб у 100%</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Масштабує зображення документа до натурального розміру</action
+>, який вказано у параметрах самого документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Вмістити за шириною</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Змінює розмір</action
+> у області перегляду документа так, щоб ширина сторінок документа дорівнювала ширині області перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Вмістити сторінку</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Змінює розмір</action
+> у області перегляду документа так, щоб завжди було показано принаймні одну цілу сторінку.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Автомасштаб</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Змінити масштаб</action
+> показу документа так, щоб, залежно від співвідношення розмірів сторінки та області перегляду, зробити ширину сторінок рівною ширині області перегляду документа (подібно до варіанта «влаштувати ширину») зробити висоту сторінки рівною висоті області показу документа (подібно до варіанта «влаштувати висоту») або зробити усі сторінку видимою (подібно до варіанта «влаштувати сторінку»).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Режим перегляду</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>У цьому підменю ви зможете обрати режим перегляду сторінок. Можливими варіантами є: <guimenuitem
+>Одна сторінка</guimenuitem
+> (лише по одній сторінці в рядок), <guimenuitem
+>Суміжні сторінки</guimenuitem
+> (дві сторінки поряд, схоже на книжку) <guimenuitem
+>Суміжні сторінки (перша сторінка у центрі)</guimenuitem
+> і <guimenuitem
+>Огляд</guimenuitem
+> (кількість стовпчиків можна буде визначити у <link linkend="configure"
+>параметрах &okular;</link
+>).</para>
+						<para
+>Крім того, ви можете увімкнути <guimenuitem
+>Неперервний</guimenuitem
+> режим. У неперервному режимі буде показано одразу усі сторінки документа, і ви зможете здійснювати їхнє неперервне гортання. Якщо ж цей режим не буде увімкнено, одночасно буде показано лише одну сторінку (або один ряд сторінок).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Орієнтація</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>За допомогою цього підменю ви зможете <action
+>змінити орієнтацію</action
+> сторінок документа. </para>
+						<note>
+							<para
+>Поворот буде виконано для всіх сторінок документа. </para>
+						</note>
+						<para
+>Щоб відновити початкову орієнтацію документа, відкинувши всі повороти визначені вручну, ви можете обрати пункт <guimenuitem
+>Початкова орієнтація</guimenuitem
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Обрізати перегляд</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>За допомогою цього підменю можна вилучити білі поля сторінок під час перегляду документів (пункт <guimenuitem
+>Обрізати поля</guimenuitem
+>) або обрізати поле перегляду до позначеної області (пункт <guimenuitem
+>Обрізати до позначеного</guimenuitem
+>). </para>
+						<para
+>За допомогою режиму «обрізати до позначеного» ви можете визначити область сторінки документа, яка буде видимою і застосовуватиметься до <emphasis
+>усіх сторінок</emphasis
+> документа. Якщо буде позначено малу область, програма примусово встановити мінімальний розмір області (20% від загального розміру сторінки). </para>
+						<para
+>Параметри режиму «обрізати поля» зберігаються між перезапусками &okular;. Параметри режиму «обрізати до позначеного» між перезапусками &okular; не зберігаються. </para>
+						<para
+>Під час перемикання &okular; з режиму «обрізати поля» до режиму «обрізати до позначеного», режим «обрізати поля» вимикається для уможливлення позначення області на цілій сторінці. </para>
+						<para
+>Режим обрізання можна вимкнути скориставшись ще раз тим самим пунктом меню, за допомогою якого його було увімкнено. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Показати/Сховати форми</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Показує або ховає</action
+> з області показу поля форм документа. </para>
+						<note>
+							<para
+>Цей пункт меню буде задіяно, лише якщо у поточному документі є поля форм. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Меню «Перехід»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Попередня сторінка</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Виводить попередню сторінку</action
+> у область перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступна сторінка</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Виводить наступну сторінку</action
+> у область перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Початок документа</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Перейти на початок</action
+> документа.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Кінець документа</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Перейти до кінця</action
+> документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>←</keysym
+></keycombo
+></shortcut
+><guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Назад</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Виводить попередню переглянуту сторінку</action
+> у область перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;<keysym
+>→</keysym
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Вперед</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Виводить наступну переглянуту сторінку</action
+> у область перегляду документа. Ця дія працюватиме, лише якщо перед цим ви вже пересувалися назад документом.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Перейти до сторінки...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Відкриває діалогове вікно, за допомогою якого ви можете <action
+>перевести область перегляду на будь-яку зі сторінок</action
+> документа.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Меню «Закладки»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Додати/Вилучити закладку</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Додає або вилучає закладку у поточній позиції</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Перейменувати закладку</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Перейменувати закладку у поточній позиції</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Попередня закладка</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Переводить область перегляду до попередньої позиції, раніше позначеної закладкою</action
+>, або нічого не робить, якщо перед поточною закладкою не було закладок.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Наступна закладка</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Переводить область перегляду до наступної позиції, раніше позначеної закладкою</action
+>, або нічого не робить, якщо за поточною закладкою немає закладок.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Немає закладок</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Цей завжди вимкнений пункт з’являється у меню, лише якщо у поточному документі немає закладок. У іншому випадку замість нього буде показано список закладок. Наведення вказівника миші на записи цих закладок з наступним клацанням лівою кнопкою миші переведе область перегляду до відповідної позиції.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Меню «Інструменти»</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Навігація</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>У цьому режимі вказівник миші діятиме як звичайно: ліву кнопку можна буде використовувати для перетягування області перегляду, а праву кнопку для додавання закладок і вміщування за шириною.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Масштабувати</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Вказівник миші діятиме як інструмент зміни розміру. Утримування натисненою лівої кнопки миші з наступним перетягуванням збільшить масштаб вибраної ділянки, а клацання правою кнопкою поверне документ до попереднього масштабу.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Вибір ділянки</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Вказівник миші діятиме як інструмент вибору прямокутної ділянки. У такому режимі, утримування натиснутою лівої кнопки миші з наступним перетягування надасть вам змогу позначити прямокутну ділянку із можливістю копіювати текст або зображення до буфера та передати текст програмі для озвучення або зберегти зображення до файла.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Вибір тексту</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Вказівник миші працюватиме як інструмент виділення тексту. У такому режимі утримування натиснутою лівої кнопки миші з наступним перетягування надасть вам змогу вибирати текст у документі. Після вибору ви зможете за допомогою клацання правою кнопкою миші копіювати текст до буфера або передати його програмі для озвучення.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Вибір таблиці</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Намалюйте навколо таблиці прямокутник, потім скористайтеся клацанням лівою кнопкою миші для поділу текстового блоку на рядки і стовпчики. Повторне клацання лівою кнопкою на вже створеній лінії вилучить її і призведе до об’єднання сусідніх рядків або стовпчиків. Нарешті, просто клацніть правою кнопкою миші, щоб скопіювати таблицю до буфера обміну даними. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Збільшувальне скло</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Вмикає режим збільшувального скла для вказівника миші. Натисніть і утримуйте ліву кнопку миші, щоб задіяти віджет збільшувального скла, пересуньте вказівник, щоб пересунути область збільшення документом. На панелі збільшувального скла кожен з пікселів у документі буде збільшено удесятеро.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Анотації</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Відриває панель інструментів анотування</action
+>. За допомогою панелі анотування ви можете додавати анотації до документа, який ви читаєте. Щоб дізнатися більше, будь ласка, ознайомтеся з розділом щодо <link linkend="annotations"
+>анотацій</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Підписати цифровим підписом…</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Розпочати процедуру створення цифрового підпису</action
+>. На цьому етапі передбачено підтримку додавання цифрових підписів лише до файлів PDF. Щоб дізнатися більше, будь ласка, зверніться до розділу <link linkend="adding_digital_signatures"
+>Додавання цифрових підписів</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Прочитати уголос весь документ</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Прочитати уголос поточну сторінку</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Зупинити читання</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Призупинити/Відновити читання уголос</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>За допомогою цих пунктів можна наказати комп’ютеру прочитати цілий документ або лише поточну сторінку (або припинити таке читання) за допомогою загальносистемного рушія синтезу мовлення з тексту. За роботу цього рушія відповідає бібліотека &Qt;, яка є обгорткою до speech-dispatcher у &Linux; і керує системами синтезу мовлення на інших платформах. Вибрати поточний голос озвучування можна за допомогою сторінки налаштувань <link linkend="configaccessibility"
+>Доступність</link
+> вікна налаштовування &okular;.</para>
+						<para
+>Дії <guilabel
+>Прочитати уголос...</guilabel
+> буде увімкнено, лише якщо у системі буде встановлено службу синтезу мовлення з тексту.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Меню «Параметри» і «Довідка»</title>
+			<para
+>Окрім типових для &kde; пунктів меню <guimenu
+>Параметри</guimenu
+> і <guimenu
+>Довідка</guimenu
+>, описаних у <ulink url="help:/fundamentals/menus.html"
+>розділі щодо меню</ulink
+> підручника з основ роботи у &kde;, у &okular; передбачено такі додаткові пункти:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Показати бічну панель</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Показує або приховує бічну панель.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Показати панель сторінок</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Увімкнути або вимкнути показ панелі сторінок</action
+> у нижній частині області показу документа з метою належного використання вертикального простору у вікні &okular;. Зауважте, що номер поточної сторінки все одно буде показано на типовій панелі інструментів.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати модулі обробки...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Відкриває діалогове вікно <link linkend="configure-backends"
+>Налаштування модулів обробки</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Налаштовування модулів &okular;</title>
+	  <para
+>Ви можете налаштувати модулі &okular; за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати модулі...</guimenuitem
+></menuchoice
+>. У поточній версії передбачено налаштовування лише модулів EPub, &PostScript;, FictionBook, TXT, ODT і &PDF;. </para>
+	  <screenshot>
+	    <screeninfo
+>Діалогове вікно налаштовування модулів</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Діалогове вікно налаштовування модулів</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>За допомогою сторінок налаштовування модулів EPub, FictionBook, Mobipocket, Markdown, TXT та ODT ви можете визначити шрифт, яким буде показано документи у відповідних форматах. За допомогою кнопки <guibutton
+>Вибрати...</guibutton
+> на цих сторінках можна відкрити стандартне вікно налаштування шрифтів &kde;. Докладніший його опис можна знайти у <ulink url="help:/fundamentals/fonts.html"
+>документації щодо основ роботи у &kde;</ulink
+>. </para>
+	  <para
+>Опис сторінок налаштування Markdown, &PostScript; і &PDF; наведено нижче. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Налаштовування модуля Markdown</title>
+	    <para
+>Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Dicsount</ulink
+>, вибором пункту <guilabel
+>Markdown</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано додатковий параметр налаштувань. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Увімкнути форматування SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Якщо позначено, цей пункт уможливлює обробку в &okular; форматування <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Таке форматування може призводити до проблем у технічних текстах через небажані заміни (наприклад, заміну <literal
+>(C)</literal
+> на символ захисту авторських прав). Типово цей пункт позначено. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>Налаштовування модуля &PostScript;</title>
+	    <para
+>Налаштувати модуль показу &PostScript; &okular;, заснований на <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+>, вибором пункту <guilabel
+>Ghostscript</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Використовувати шрифти платформи</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>За допомогою цього пункту можна визначити, чи слід дозволяти Ghostscript використовувати системні шрифти, якщо пункт не буде позначено, дозволятиметься лише використання шрифтів, вбудованих у сам документ. Типово цей пункт позначено. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>Налаштовування модуля &PDF;</title>
+	    <para
+>Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>, вибором пункту <guilabel
+>&PDF;</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Покращення тонких ліній</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Малювання ліній у &okular; відбувається у два кроки: створення контуру-обгортки та заповнення цього контуру обгортки. Якщо лінія у початковому документі є вужчою за один піксель на екрані, така двокрокова реалізація може призвести до проблеми. Для таки тонких ліній контур-обгортка заповнюється кольором, що залежить від товщини частини лінії у огорнутій ним області. Якщо частина ліній у контурі-обгортці є дуже малою, контрастність між формою лінії та кольором тла може стати надто малою для розпізнавання лінії на екрані. Вигляд сіток з таких ліній може стати дуже непривабливим. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Тонка лінія (червоним), її контур-обгортка (пунктирна лінія) та межі пікселів (чорні суцільні лінії)</entry>
+			    <entry
+>Тонка лінія з низькою контрастністю</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Щоб покращити вигляд тонких ліній, у &okular; реалізовано два варіанти обробки. </para>
+		    <para
+>Перший варіант визначається пунктом <guimenuitem
+>Суцільні</guimenuitem
+>. Якщо буде вибрано цей варіант, &okular; вирівнює контур-обгортку та розташування лінії на межу пікселя, тобто &okular; розширює тонкі лінії до одного пікселя на екрані. Цей режим подібний до режиму <guilabel
+>Enhance thin lines</guilabel
+> у <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Якщо буде вибрано цей варіант, програма завжди розширюватиме тонкі лінії. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Суцільні</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Суцільні</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Іншим варіантом є пункт <guimenuitem
+>Надати форму</guimenuitem
+>. Якщо буде вибрано цей пункт, контур-обгортка та лінія також вирівнюватимуться на межу пікселя, але інтенсивність кольору лінії буде виправлено відповідно до її товщини. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Надати форму</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Надати форму</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Типово, показ тонких ліній не покращуватиметься (варіант <guimenuitem
+>Без оптимізації</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>Сертифікати цифрових підписів &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> За допомогою цього розділу ви можете встановити нетипову базу даних сертифікатів, якими можна скористатися для додавання цифрових підписів до файлів &PDF;. </para>
+			<para
+>Тут також буде показано список сертифікатів, які є доступними у поточній базі даних сертифікатів (якщо такі сертифікати зберігаються на комп'ютері). </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Налаштовування &okular;</title>
+		<sect1 id="configindex">
+			<title
+>Загальні налаштування</title>
+			<para
+>Ви можете налаштувати &okular; за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &okular;...</guimenuitem
+></menuchoice
+>. Діалогове вікно налаштування поділене на шість розділів. У цьому розділі підручника докладно описано доступні для зміни параметри. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Загальне</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Доступність</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Швидкодія</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Презентація</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Анотації</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Редактор</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Діалогове вікно налаштування</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Діалогове вікно налаштування</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Залежно від встановлених модулів обробки, може бути задіяно пункт меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати модулі обробки...</guimenuitem
+></menuchoice
+>. У діалоговому вікні, яке можна відкрити за допомогою цього пункту, можна налаштувати модулі обробки, які піддаються налаштуванню. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Загальні</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Використовувати плавне гортання</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати анімовані переходи при гортанні за допомогою коліщатка миші або клавіатури.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показати смужки гортання</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати смужки гортання у області перегляду документа.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Зв'язати мініатюри зі сторінкою</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід у перегляді мініатюр завжди показувати поточну сторінку.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показувати підказки та інформаційні повідомлення</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати деякі інформаційні повідомлення під час запуску, завантаження файла тощо.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Сповіщати про вбудовані файли, форми або підписи</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати інформаційні панелі із повідомленнями про вбудовані файли, форми або підписи тощо.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показувати заголовок документа на смужці заголовка вікна, якщо можна</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати заголовок поточного документа у смужці заголовка вікна &okular;. Якщо метаданих щодо заголовка у документі не буде знайдено, або не буде позначено цей пункт, &okular; показуватиме у смужці заголовка назву файла документа. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Якщо не показано заголовок документа</guilabel
+></term>
+					<listitem>
+					  <para
+>Ви можете вибрати будь-який з варіантів: <guilabel
+>Показувати лише назву файла</guilabel
+> або <guilabel
+>Показувати шлях до документа повністю</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Нетиповий колір тла</guilabel
+></term>
+					<listitem>
+                                            <para
+>Вмикає <ulink url="help:/fundamentals/colors.html"
+>вибір кольору тла документа</ulink
+> (кольору частини інтерфейсу навколо показаної сторінки). Типово, якщо цей пункт не позначено, використовується колір набору бібліотек &Qt;. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Відкривати нові файли у вкладках</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід відкривати нові документи у вкладках. Типово, вкладки вимкнено.</para>
+						<para
+>Типовими клавіатурними скороченнями для перемиканням між вкладками є <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Наступна вкладка</guilabel
+>) і <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Попередня вкладка</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Перемкнутися на наявну вкладку, якщо файл вже відкрито</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи має &okular; перемикатися на вкладу, якщо файл вже відкрито, замість відкриття нової вкладки. Цей пункт типово позначено. Перемикати позначення можна, лише якщо позначено пункт <guilabel
+>Відкривати нові файли у вкладках</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Дотримуватись обмежень DRM</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід &okular; дотримуватися обмежень <firstterm
+>DRM</firstterm
+> (Digital Rights Management). Обмеження DRM використовуються, щоб зробити неможливим виконання певних дій з документами &PDF;, наприклад, копіювання вмісту до буфера. Зауважте, що у деяких варіантах &okular; цього пункту взагалі не буде.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>У разі зміни документа перезавантажити документ</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід автоматично перевіряти на оновлення і оновлювати за потреби відкриті файли.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показати вікно вибору модуля обробки</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід &okular; запитувати у користувача, який з модулів обробки слід використовувати у випадку, якщо для відкриття поточного файла можна використати декілька таких засобів. Якщо цей параметр не буде позначено, &okular; використовуватиме засіб з найбільшим пріоритетом.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Напрям читання справа ліворуч</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід типово використовувати напрям читання справа ліворуч для відкритих файлів. Може бути корисним для читання <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>деяких систем писемності</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Типово відкривати у неперервному режимі</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід типово використовувати неперервний режим перегляду. У неперервному режимі буде показано одразу усі сторінки документа, і ви зможете здійснювати їхнє неперервне гортання. Якщо ж цей режим не буде увімкнено, одночасно буде показано лише одну сторінку (або один ряд сторінок). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>При використанні засобу навігації завертати вказівник на краях екрана</guilabel
+></term>
+					<listitem>
+						<para
+>Уможливлює нескінченне гортання усім документом за допомогою <link linkend="menutools"
+>засобу навігації</link
+>. Якщо позначено, вказівник миші завертатиметься до протилежного краю екрана, коли торкатиметься меж при перетягуванні вмісту документа. Підтримку цієї можливості передбачено лише при використанні графічного сервера X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Колонки огляду</guilabel
+></term>
+					<listitem>
+						<para
+>Цей параметр визначає кількість колонок у режимі огляду. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Перекриття Page Up/Down</guilabel
+></term>
+					<listitem>
+						<para
+>За допомогою цього пункту можна визначити розміри поточної області перегляду, яка залишиться видимою після натискання клавіш <keycap
+>Page Up</keycap
+> і <keycap
+>Page Down</keycap
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Типовий масштаб</guilabel
+></term>
+					<listitem>
+						<para
+>За допомогою цього пункту можна визначити типовий режим масштабування даних у файлі, який ще не відкривався у програмі. До файлів, які вже відкривалися у минулому, буде застосовано попередні параметри масштабування. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Доступність</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Малювати рамки навколо посилань</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід малювати рамку навколо посилань.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Змінити кольори</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Вмикає</action
+> параметри зміни кольорів.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Режим кольорів</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Визначає</action
+> режим зміни кольорів.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Інвертувати кольори</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Інвертує</action
+> кольори у області перегляду, тобто, наприклад, чорні об’єкти стануть білими.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Змінити колір паперу</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>Змінює</action
+> колір паперу, тобто тло документа.</para>
+                                                                        <para
+>Колір можна вибрати за допомогою панелі <guilabel
+>Колір паперу</guilabel
+>, розташованої нижче. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Змінити темні і світлі кольори</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Змінює</action
+> темні і світлі кольори на бажані, тобто чорний вже не показуватиметься чорним, а показуватиметься іншим темним кольором, а білий не показуватиметься білим, а показуватиметься іншим світлим кольором.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Перетворити на чорно-біле</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Перетворює</action
+> документ на чорно-білий. Ви можете встановити порогове значення і контрастність. Встановлення вищого порогового значення пересуванням повзунка праворуч призведе до використання світліших відтінків сірого.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Інвертувати освітленість</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Інвертує</action
+> освітленість усіх кольорів. Світлі і темні кольори поміняються місцями, але відтінок і насиченість залишаться незмінними. Контрастність зображень, зазвичай, буде гіршою, ніж якщо використано <guilabel
+>Інвертувати яскравість (лінійний sRGB)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Інвертувати яскравість (лінійний sRGB)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Інвертує</action
+> освітленість усіх кольорів. Світлі і темні кольори поміняються місцями, але відтінок і насиченість залишаться незмінними. Контрастність зображень зберігатиметься ліпше за випадок використання варіанта <guilabel
+>Інвертувати освітленість</guilabel
+>, але графіка і кольорова розмітка тексту, зазвичай виглядатимуть гірше. Використовує коефіцієнти освітленості sRGB, але без виправлення гамми.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Інвертувати яскравість (симетрично)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Інвертує</action
+> яскравість усіх кольорів із використанням коефіцієнтів симетричної яскравості. Світлі і темні кольори поміняються місцями, але відтінок і насиченість лишаться незмінними. Цей варіант дуже подібний до варіанта <guilabel
+>Інвертувати освітленість</guilabel
+>, але контрастність у деяких випадках буде ліпшою.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Додатний зсув відтінка</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Зсуває</action
+> відтінок усіх кольорів на 120 градусів. Може усунути деякі проблеми із контрастністю у кольоровій графіці.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Від'ємний зсув відтінка</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Зсуває</action
+> відтінок усіх кольорів на 240 градусів. Може усунути деякі проблеми із контрастністю у кольоровій графіці.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>Налаштувати клавіатурні скорочення та кнопки панелі інструментів для режимів кольорів можна за допомогою відповідних пунктів меню <guimenu
+>Параметри</guimenu
+> головного вікна &okular;.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Рушій синтезу мовлення з тексту</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Надає вам змогу вибрати</action
+> рушій озвучування тексту (<abbrev
+>TTS</abbrev
+>), який буде використано у &okular;. Типовим є <application
+>speechd</application
+>, але ви можете скористатися будь-яким </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Диктор синтезу мовлення з тексту</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Надає вам змогу вибрати</action
+> диктора для озвучування тексту. Цього диктора буде використано у &okular;. Ви можете скористатися будь-яким, залежно від доступних синтезаторів мовлення на вашій платформі. У &Linux;, для визначення доступних голосів озвучування використовується speech-dispatcher.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Швидкодія</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Увімкнути ефекти прозорості</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід малювати позначення вибору і інші спеціальні графічні елементи з використання ефектів прозорості. Вимикання цього параметра призведе до малювання цих ефектів у вигляді контурів або суцільного заповнення і збільшить швидкість програми під час виділення.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Використання пам'яті</guilabel
+></term>
+					<listitem>
+						<para
+>Швидкодію &okular; можна покращити налаштуванням використання пам’яті, на основі можливостей вашої системи і ваших уподобань. Чим більше пам’яті ви надасте програмі, тим швидшою вона буде. Типовий профіль годиться для всіх систем, але ви можете заборонити &okular; використовувати більше пам’яті ніж потрібно, якщо виберете профіль «Низьке», або надати програмі можливість брати від системи все можливе, якщо виберете профіль «Агресивне». Скористайтеся профілем «Жадібне», якщо слід попередньо завантажити всі сторінки без ризику переповнення пам’яті (буде використано лише 50% загального обсягу пам’яті або загального обсягу вільної пам’яті).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Параметри візуалізації</guilabel
+></term>
+					<listitem>
+						<para
+>За допомогою цієї групи параметрів ви можете покращити показ тексту і зображень у &okular;. Результат залежатиме від характеристик пристрою, на якому буде показано зображення. За допомогою пунктів <guilabel
+>Увімкнути згладжування тексту</guilabel
+> і <guilabel
+>Увімкнути згладжування зображень</guilabel
+> ви можете увімкнути або вимкнути <ulink url="https://uk.wikipedia.org/wiki/Згладжування_(графіка)"
+>просторове згладжування</ulink
+> тексту та зображень відповідно. Пункт <guilabel
+>Увімкнути гінтінґ тексту</guilabel
+> можна вмикати або вимикати <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>гінтінґ шрифтів</ulink
+>. Згладжування і гінтінґ змінюють характеристики показу документів, ви можете вмикати або вимикати їх з метою досягнення найкращих характеристик показу.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Презентація</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Прокручувати вперед кожні</guilabel
+></term>
+					<listitem>
+						<para
+>Вмикає автоматичний перехід до наступної сторінки за визначений проміжок часу.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Після закінчення — починати спочатку</guilabel
+></term>
+					<listitem>
+						<para
+>Після досягнення останньої сторінки у режимі презентації програма переходитиме до першої сторінки.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Сенсорна навігація</guilabel
+></term>
+					<listitem>
+						<para
+>Надає вам змогу скоригувати параметри сенсорної навігації за допомогою торкання екрана у режимі презентації. Передбачено три варіанти навігації:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Торкання на лівому або правому краю для переходів назад-вперед</guilabel
+>: торкання на лівій (правій) половині екрана призводить до переходу у презентації до попереднього (наступного) слайда.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Торкання будь-де для переходу вперед</guilabel
+> (типовий варіант): торкання до екрана призводить до переходу у презентації до наступного слайда, байдуже, якої частини екрана ви торкнулися.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Вимкнено</guilabel
+>: торкання екрана не призводитиме до зміни слайда.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Колір тла</guilabel
+></term>
+					<listitem>
+						<para
+>Колір, яким буде показано частину екрана, не зайняту сторінкою у режимі презентації.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Курсор мишки</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід завжди приховувати вказівник миші, завжди його показувати або ховати після деякого проміжку, протягом якого він залишається нерухомим.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показувати індикатор поступу</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати індикатор поступу, який показує поточну сторінку і загальну кількість сторінок у верхньому правому куті екрана презентації під час кожної зміни сторінки.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Показати сторінку резюме</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід показувати сторінку резюме на початку презентації, де буде вказано заголовок, автора і кількість сторінок у документі.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Увімкнути переходи</guilabel
+></term>
+					<listitem>
+						<para
+>Цим пунктом можна скористатися для вмикання або вимикання ефектів переходу між сторінками.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Типовий перехід</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає ефект, який використовуватиметься під час переходу між сторінками, якщо такий ефект не визначено документом. Встановіть значення <guilabel
+>Випадковий перехід</guilabel
+>, щоб &okular; міг вибирати випадковим чином один з наявних ефектів.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Розташування</guilabel
+></term>
+					<listitem>
+						<para
+>У цьому розділі ви можете обрати <guilabel
+>Екран</guilabel
+>, який буде використано для презентації.</para>
+						<para
+><guilabel
+>Поточний екран</guilabel
+> — це той же екран, на якому ви бачите вікно &okular;, з якого запускаєте режим презентації.</para>
+						<para
+><guilabel
+>Типовий екран</guilabel
+> — це екран, позначений як типовий у налаштуваннях xinerama.</para>
+						<para
+><guilabel
+>Екран 0</guilabel
+>, <guilabel
+>Екран 1</guilabel
+> тощо — це доступні екрани.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Налаштовування засобу малювання</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає колір олівця, який буде використано для малювання на сторінках під час режиму презентації.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Анотації</title>
+			<screenshot>
+				<screeninfo
+>Сторінка «Анотації» у діалоговому вікні налаштовування модулів</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Сторінка «Анотації» у діалоговому вікні налаштовування модулів</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Панель інструментів анотування</guilabel
+></term>
+					<listitem>
+                                            <para
+>Уможливлює перемикання між режимом <guimenuitem
+>Повна панель анотування</guimenuitem
+> (<link linkend="annotations-add"
+>типова панель інструментів</link
+> у верхній частині вікна &okular;) і режимом <guimenuitem
+>Панель пришвидшеного анотування</guimenuitem
+> (панель інструментів із вашими улюбленими інструментами праворуч від панелі документа).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Автор</guilabel
+></term>
+					<listitem>
+						<para
+>Автор частини доданої до документа. Типово, буде використано ім’я зі сторінки <guilabel
+>Пароль і обліковий запис користувача</guilabel
+> модуля <guilabel
+>Параметри облікового запису</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Інструменти анотації</guilabel
+></term>
+					<listitem>
+					  <para
+>За допомогою цієї панелі можна налаштувати вашу <link linkend="annotations-add"
+>панель анотування</link
+>. </para>
+					  <para
+>Для налаштовування панелі передбачено п’ять кнопок (<guibutton
+>Додати</guibutton
+>, <guibutton
+>Змінити</guibutton
+>, <guibutton
+>Вилучити</guibutton
+>, <guibutton
+>Пересунути вгору</guibutton
+>, <guibutton
+>Пересунути вниз</guibutton
+>) та список (у якому перелічено вміст поточної панелі інструментів анотування). </para>
+					  <para
+>Якщо вам потрібно додати якусь кнопку інструмента на панель, натисніть кнопку <guibutton
+>Додати</guibutton
+>. Ви можете вибрати <guilabel
+>Назву</guilabel
+>, <guilabel
+>Тип</guilabel
+> та <guilabel
+>Вигляд</guilabel
+> кнопки інструмента, яку ви створюєте. </para>
+					  <note>
+					    <para
+>Пам’ятайте, що інструменти анотування у &okular; є дуже гнучкими у налаштуванні. Наприклад, ви можете створити дві кнопки одного інструмента з різними кольорами. Можете поекспериментувати і вибрати той набір кнопок, який точно відповідає вашим звичкам у роботі. </para>
+					  </note>
+					  <para
+>Клацніть на пункті у списку, а потім натисніть відповідну кнопку у правій частині сторінки, щоб змінити, вилучити, пересунути кнопку інструмента вгору чи вниз. Клавіатурне скорочення для інструмента (клавіші від <keycap
+>1</keycap
+> до <keycap
+>9</keycap
+>) залежатиме від його позиції у списку панелі анотування. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Використання нетипових штампів</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Створіть піктограму, якою ви хочете скористатися як зображенням вашого штампа і збережіть зображення у будь-якому форматі, підтримку якого передбачено у &okular;</para
+></listitem>
+					<listitem
+><para
+>Натисніть кнопку <guibutton
+>Додати</guibutton
+>, виберіть тип <guilabel
+>Штамп</guilabel
+> і введіть назву вашого штампа.</para
+></listitem>
+					<listitem
+><para
+>Вкажіть шлях до нетипової піктограми повністю у спадному списку групи <guilabel
+>Символ штампа</guilabel
+>.</para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Редактор</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Редактор</guilabel
+></term>
+					<listitem>
+						<para
+>Тут можна обрати редактор, який ви бажаєте запустити, коли &okular; потрібно буде відкрити файл джерела. Ця можливість з’явиться, якщо у документі є посилання на певні елементи (зазвичай, номери рядка і стовпчика) коду, з якого цей документ було створено. У файл формату &DVI; вбудовано підтримку додавання відомостей про код документа LaTeX, з якого було створено. Подібна система існує і для документів &PDF;, вона називається <acronym
+>pdfsync</acronym
+>, за її використання, дані зберігаються у зовнішньому файлі з назвою, що відповідає назві самого файла &PDF; (наприклад <filename
+>мій_документ.pdfsync</filename
+> для файла <filename
+>мій_документ.pdf</filename
+>). </para>
+						<para
+>&okular; позначається з наборами параметрів, що відповідають таким редакторам: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>клієнту &Emacs;</ulink
+>, <ulink url="https://www.lyx.org/"
+>клієнту LyX</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> та <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>Щоб скористатися зворотним пошуком у <application
+>Kile</application
+>, вам слід компілювати ваш файл &latex; з використанням <guilabel
+>Сучасних</guilabel
+> налаштувань. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Команда</guilabel
+></term>
+					<listitem>
+						<para
+>Тут слід вказати команду для виклику обраного редактора файлів джерела поточного документа і її параметри.</para>
+						<para
+>Це поле буде заповнено автоматично, якщо ви виберете один з відомих програмі редакторів. Якщо ваш редактор невідомий програмі, будь ласка, виберіть пункт <guimenuitem
+>Нетиповий текстовий редактор</guimenuitem
+> у спадному списку <guilabel
+>Редактор</guilabel
+> і скористайтеся документацією з вашого улюбленого редактора, щоб вказати належну команду. </para>
+						<para
+>Можна використовувати такі замінники:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f — замість назви файла;</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l — замість рядка у файлі, до якого слід перейти;</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c — замість позиції у рядку, до якої слід перейти.</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Якщо %f не буде вказано, до відповідної команди буде додано назву поточного документа.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Подяки і ліцензія</title>
+
+		<itemizedlist>
+			<title
+>Авторські права на програму:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; — поточний супровідник</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> — розробник &kpdf;</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Авторські права на документацію:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; — автор</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> — деякі оновлення і доповнення</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

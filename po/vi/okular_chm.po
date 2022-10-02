@@ -1,0 +1,42 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# Phu Hung Nguyen <phu.nguyen@kdemail.net>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2021-09-09 17:29+0200\n"
+"Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
+"Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 20.12.2\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Nguyễn Hùng Phú"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "phu.nguyen@kdemail.net"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr "Mã hoá không được hỗ trợ"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+"Mã hoá của sách điện tử này chưa được hỗ trợ. Vui lòng báo lỗi ở https://"
+"bugs.kde.org để sự hỗ trợ này có thể được bổ sung"

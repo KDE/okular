@@ -1,0 +1,202 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer, 2013.
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"PO-Revision-Date: 2022-08-03 10:34+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 22.04.3\n"
+
+#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "Yer İmleri"
+
+#: package/contents/ui/CertificateViewerDialog.qml:21
+msgid "Certificate Viewer"
+msgstr "Sertifika Görüntüleyici"
+
+#: package/contents/ui/CertificateViewerDialog.qml:32
+msgid "Issued By"
+msgstr "Veren"
+
+#: package/contents/ui/CertificateViewerDialog.qml:37
+#: package/contents/ui/CertificateViewerDialog.qml:65
+msgid "Common Name:"
+msgstr "Ortak Ad:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:43
+#: package/contents/ui/CertificateViewerDialog.qml:71
+msgid "EMail:"
+msgstr "E-posta:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:49
+#: package/contents/ui/CertificateViewerDialog.qml:77
+msgid "Organization:"
+msgstr "Organizasyon:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:60
+msgid "Issued To"
+msgstr "Verilen"
+
+#: package/contents/ui/CertificateViewerDialog.qml:88
+msgid "Validity"
+msgstr "Geçerlilik"
+
+#: package/contents/ui/CertificateViewerDialog.qml:93
+msgid "Issued On:"
+msgstr "Verilme Tarihi:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:99
+msgid "Expires On:"
+msgstr "Süre Dolum Tarihi:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:110
+msgid "Fingerprints"
+msgstr "Parmak İzleri"
+
+#: package/contents/ui/CertificateViewerDialog.qml:115
+msgid "SHA-1 Fingerprint:"
+msgstr "SHA-1 Parmak İzi:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:121
+msgid "SHA-256 Fingerprint:"
+msgstr "SHA-256 Parmak İzi:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:135
+msgid "Export..."
+msgstr "Dışa Aktar..."
+
+#: package/contents/ui/CertificateViewerDialog.qml:141
+#: package/contents/ui/SignaturePropertiesDialog.qml:148
+msgid "Close"
+msgstr "Kapat"
+
+#: package/contents/ui/CertificateViewerDialog.qml:149
+msgid "Certificate File (*.cer)"
+msgstr "Sertifika Dosyası (*.cer)"
+
+#: package/contents/ui/CertificateViewerDialog.qml:164
+#: package/contents/ui/SignaturePropertiesDialog.qml:168
+msgid "Error"
+msgstr "Hata"
+
+#: package/contents/ui/CertificateViewerDialog.qml:166
+msgid "Could not export the certificate."
+msgstr "Sertifika dışa aktarılamadı."
+
+#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+msgid "Okular"
+msgstr "Okular"
+
+#: package/contents/ui/main.qml:40
+msgid "Open..."
+msgstr "Aç..."
+
+#: package/contents/ui/main.qml:47
+msgid "About"
+msgstr "Hakkında"
+
+#: package/contents/ui/main.qml:104
+msgid "Password Needed"
+msgstr "Parola Gerekiyor"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Remove bookmark"
+msgstr "Yer imini kaldır"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Bookmark this page"
+msgstr "Bu sayfayı yer imlerine ekle"
+
+#: package/contents/ui/MainView.qml:82
+msgid "No document open"
+msgstr "Açık belge yok"
+
+#: package/contents/ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "Küçük Resimler"
+
+#: package/contents/ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "İçindekiler tablosu"
+
+#: package/contents/ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr "İmzalar"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:30
+msgid "Signature Properties"
+msgstr "İmza Özellikleri"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:44
+msgid "Validity Status"
+msgstr "Geçerlilik Durumu"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:50
+msgid "Signature Validity:"
+msgstr "İmza Geçerliliği:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:56
+msgid "Document Modifications:"
+msgstr "Belge Değiştirmeleri:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:63
+msgid "Additional Information"
+msgstr "Ek Bilgi"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:72
+msgid "Signed By:"
+msgstr "İmzalayan:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:78
+msgid "Signing Time:"
+msgstr "İmza Zamanı:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:84
+msgid "Reason:"
+msgstr "Neden:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:91
+msgid "Location:"
+msgstr "Konum:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:100
+msgid "Document Version"
+msgstr "Belge Sürümü"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:110
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Belge Sürümü %1/%2"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:114
+msgid "Save Signed Version..."
+msgstr "İmzalı Sürümü Kaydet..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:128
+msgid "View Certificate..."
+msgstr "Sertifikayı Görüntüle..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:170
+msgid "Could not save the signature."
+msgstr "Bu imza kaydedilemedi."
+
+#: package/contents/ui/Signatures.qml:27
+msgid "Not Available"
+msgstr "Kullanılabilir Değil"
+
+#: package/contents/ui/ThumbnailsBase.qml:43
+msgid "No results found."
+msgstr "Sonuç bulunamadı."

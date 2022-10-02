@@ -1,0 +1,44 @@
+# translation of okular_plucker.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2007, 2009, 2010.
+# Michal Sulek <misurel@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_plucker\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2010-01-28 21:54+0100\n"
+"Last-Translator: Richard Fric <Richard.Fric@kdemail.net>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Richard Frič, Michal Šulek"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Richard.Fric@kdemail.net,misurel@gmail.com"
+
+#: generator_plucker.cpp:73
+#, kde-format
+msgid "Name"
+msgstr "Názov"
+
+#~ msgid "Plucker Document Backend"
+#~ msgstr "Backend dokumentov Plucker"
+
+#~ msgid "A renderer for Plucker eBooks"
+#~ msgstr "Vykresľovanie e-kníh Plucker"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

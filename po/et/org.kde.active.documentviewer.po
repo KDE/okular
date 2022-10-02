@@ -1,0 +1,225 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2012, 2016, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"PO-Revision-Date: 2019-11-09 21:17+0200\n"
+"Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
+"Language-Team: Estonian <kde-et@lists.linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.1\n"
+
+#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "Järjehoidjad"
+
+#: package/contents/ui/CertificateViewerDialog.qml:21
+msgid "Certificate Viewer"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:32
+msgid "Issued By"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:37
+#: package/contents/ui/CertificateViewerDialog.qml:65
+msgid "Common Name:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:43
+#: package/contents/ui/CertificateViewerDialog.qml:71
+msgid "EMail:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:49
+#: package/contents/ui/CertificateViewerDialog.qml:77
+msgid "Organization:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:60
+msgid "Issued To"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:88
+msgid "Validity"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:93
+msgid "Issued On:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:99
+msgid "Expires On:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:110
+msgid "Fingerprints"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:115
+msgid "SHA-1 Fingerprint:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:121
+msgid "SHA-256 Fingerprint:"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:135
+msgid "Export..."
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:141
+#: package/contents/ui/SignaturePropertiesDialog.qml:148
+msgid "Close"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:149
+msgid "Certificate File (*.cer)"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:164
+#: package/contents/ui/SignaturePropertiesDialog.qml:168
+msgid "Error"
+msgstr ""
+
+#: package/contents/ui/CertificateViewerDialog.qml:166
+msgid "Could not export the certificate."
+msgstr ""
+
+#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+msgid "Okular"
+msgstr "Okular"
+
+#: package/contents/ui/main.qml:40
+msgid "Open..."
+msgstr "Ava ..."
+
+#: package/contents/ui/main.qml:47
+msgid "About"
+msgstr ""
+
+#: package/contents/ui/main.qml:104
+msgid "Password Needed"
+msgstr ""
+
+#: package/contents/ui/MainView.qml:25
+msgid "Remove bookmark"
+msgstr "Eemalda järjehoidja"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Bookmark this page"
+msgstr "Pane see lehekülg järjehoidjatesse"
+
+#: package/contents/ui/MainView.qml:82
+msgid "No document open"
+msgstr ""
+
+#: package/contents/ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "Pisipildid"
+
+#: package/contents/ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "Sisukord"
+
+#: package/contents/ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:30
+msgid "Signature Properties"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:44
+msgid "Validity Status"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:50
+msgid "Signature Validity:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:56
+msgid "Document Modifications:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:63
+msgid "Additional Information"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:72
+msgid "Signed By:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:78
+msgid "Signing Time:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:84
+msgid "Reason:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:91
+msgid "Location:"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:100
+msgid "Document Version"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:110
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:114
+msgid "Save Signed Version..."
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:128
+msgid "View Certificate..."
+msgstr ""
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:170
+msgid "Could not save the signature."
+msgstr ""
+
+#: package/contents/ui/Signatures.qml:27
+msgid "Not Available"
+msgstr ""
+
+#: package/contents/ui/ThumbnailsBase.qml:43
+msgid "No results found."
+msgstr "Tulemusi ei leitud."
+
+#~ msgid "Search..."
+#~ msgstr "Otsi ..."
+
+#~ msgid ""
+#~ "No Documents found. To start to read, put some files in the Documents "
+#~ "folder of your device."
+#~ msgstr ""
+#~ "Ühtegi dokumenti ei leitud. Lugemise alustamiseks paiguta vähemalt mõned "
+#~ "dokumendid oma seadme kataloogi Dokumendid."
+
+#~ msgid "Document viewer for Plasma Active using Okular"
+#~ msgstr "Okulari kasutav Plasma Active'i dokumendinäitaja"
+
+#~ msgid "Reader"
+#~ msgstr "Lugeja"
+
+#~ msgid "Copyright 2012 Marco Martin"
+#~ msgstr "Autoriõigus 2012: Marco Martin"
+
+#~ msgid "Marco Martin"
+#~ msgstr "Marco Martin"
+
+#~ msgid "URL of the file to open"
+#~ msgstr "Avatava faili URL"

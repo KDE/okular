@@ -1,0 +1,774 @@
+# translation of okular_dvi.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Robert Gomulka <carramba@epf.pl>, 2007, 2008.
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008.
+# Maciej Wikło <maciej.wiklo@wp.pl>, 2009.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2013, 2014, 2018.
+# Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_dvi\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"PO-Revision-Date: 2020-11-24 20:01+0100\n"
+"Last-Translator: Ignacy Kajdan <ignacy.kajdan@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.08.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Robert Gomulka, Łukasz Wojniłowicz, Ignacy Kajdan"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "carramba@epf.pl, lukasz.wojnilowicz@gmail.com, ignacy.kajdan@gmail.com"
+
+#: dviexport.cpp:123
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+"computer. This program is essential for the export function to work. You "
+"can, however, convert the DVI-file to PDF using the print function of "
+"Okular, but that will often produce documents which print okay, but are of "
+"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
+"more recent version of your TeX distribution which includes the <em>dvipdfm</"
+"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
+"the PATH environment variable when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>Okular nie mógł odnaleźć programu <em>dvipdfm</em>. Jest on niezbędny "
+"do działania funkcji eksportu. Można jednak przekształcić plik DVI na PDF "
+"przy pomocy funkcji drukowania Okulara. Spowoduje to uzyskanie dokumentu, "
+"który co prawda wydrukuje się bez problemu, ale będzie niskiej jakości przy "
+"oglądaniu w Acrobat Readerze. Rozsądnym mogłoby być uaktualnienie "
+"dystrybucji TeX (zawierającej program <em>dvipdfm</em>) do nowszej wersji.</"
+"p><p>Wskazówka dla zakłopotanych administratorów: Okular używa zmiennej "
+"środowiskowej PATH przy wyszukiwaniu programów.</p></qt>"
+
+#: dviexport.cpp:142
+#, kde-format
+msgid ""
+"<qt>The external program 'dvipdfm', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>Zewnętrzny program <em>dvipdfm</em>, użyty do wyeksportowania pliku, "
+"zgłosił błąd. Bardziej szczegółowe informacje znajdują się w <strong>oknie "
+"informacyjnym dokumentu</strong>, które znajduje się w podmenu „Plik”.</qt>"
+
+#: dviexport.cpp:168
+#, kde-format
+msgid ""
+"<qt>This DVI file refers to external graphic files which are not in "
+"PostScript format, and cannot be handled by the <em>dvips</em> program that "
+"Okular uses internally to print or to export to PostScript. The "
+"functionality that you require is therefore unavailable in this version of "
+"Okular.</qt>"
+msgstr ""
+"<qt>Ten plik DVI odwołuje się do zewnętrznych plików graficznych, które nie "
+"są w formacie PostScript. Pliki te nie mogą być obsłużone przez program "
+"<em>dvips</em>, używany wewnętrznie przez Okular do drukowania i "
+"eksportowania do PostScriptu. Z tego względu ta funkcjonalność jest "
+"niedostępna.</qt>"
+
+#: dviexport.cpp:176
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+"That program is essential for the export function to work.</p><p>Hint to the "
+"perplexed system administrator: Okular uses the PATH environment variable "
+"when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>Okular nie mógł odnaleźć programu <em>dvips</em>. Jest on niezbędny "
+"do działania funkcji eksportu.</p><p>Wskazówka dla zakłopotanych "
+"administratorów: Okular używa zmiennej środowiskowej PATH przy wyszukiwaniu "
+"programów.</p></qt>"
+
+#: dviexport.cpp:270
+#, kde-format
+msgid ""
+"<qt>The external program 'dvips', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>Zewnętrzny program <em>dvips</em>, użyty do wyeksportowania pliku, "
+"zgłosił błąd. Bardziej szczegółowe informacje znajdują się w <strong>oknie "
+"informacyjnym dokumentu</strong>, które znajduje się w podmenu „Plik”.</qt>"
+
+#: dviFile.cpp:91
+#, kde-format
+msgid "The DVI file does not start with the preamble."
+msgstr "Plik DVI nie rozpoczyna się od preambuły."
+
+#: dviFile.cpp:97
+#, kde-format
+msgid ""
+"The DVI file contains the wrong version of DVI output for this program. "
+"Hint: If you use the typesetting system Omega, you have to use a special "
+"program, such as oxdvi."
+msgstr ""
+"Ten plik DVI zawiera nieprawidłową wersję wyjścia DVI dla tego programu. "
+"Wskazówka: jeśli używasz systemu składu tekstu Omega, powinieneś użyć "
+"specjalnego programu, jak oxdvi."
+
+#: dviFile.cpp:134
+#, kde-format
+msgid ""
+"The DVI file is badly corrupted. Okular was not able to find the postamble."
+msgstr ""
+"Plik DVI jest poważnie uszkodzony. Okular nie był w stanie znaleźć znacznika "
+"końca danych."
+
+#: dviFile.cpp:148
+#, kde-format
+msgid "The postamble does not begin with the POST command."
+msgstr "Znacznik końca nie rozpoczyna się od polecenia POST."
+
+#: dviFile.cpp:202
+#, kde-format
+msgid "The postamble contained a command other than FNTDEF."
+msgstr "Znacznik końca zawiera polecenie różne od FNTDEF."
+
+#: dviFile.cpp:240
+#, kde-format
+msgid "The page %1 does not start with the BOP command."
+msgstr "Strona %1 nie rozpoczyna się od polecenia BOP."
+
+#: dviFile.cpp:351
+#, kde-format
+msgid ""
+"<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
+"a result, the PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The program <strong>pdf2ps</strong> may not be installed on your "
+"system, or cannot be found in the current search path.</p><p><b>What you can "
+"do:</b> The program <strong>pdf2ps</strong> is normally contained in "
+"distributions of the ghostscript PostScript interpreter system. If "
+"ghostscript is not installed on your system, you could install it now. If "
+"you are sure that ghostscript is installed, try to use <strong>pdf2ps</"
+"strong> from the command line to check if it really works.</p><p><em>PATH:</"
+"em> %2</p></qt>"
+msgstr ""
+"<qt><p>Nie można było uruchomić zewnętrznego programu <strong>pdf2ps</"
+"strong>. Dlatego plik PDF %1 nie mógł zostać przekształcony na PostScript, a "
+"niektóre elementy graficzne w dokumencie nie będą wyświetlane. </"
+"p><p><b>Prawdopodobna przyczyna:</b> Być może program <strong>pdf2ps</"
+"strong> nie jest zainstalowany albo nie znajduje się on w ścieżce (PATH).</"
+"p><p><b>Co można zrobić:</b> Program <strong>pdf2ps</strong> jest zazwyczaj "
+"dystrybuowany wraz z systemem interpretera PostScript „Ghostscript”. Jeśli "
+"Ghostscript nie jest zainstalowany, można spróbować go doinstalować. Jeśli "
+"natomiast jest zainstalowany, można spróbować uruchomić <strong>pdf2ps</"
+"strong> z wiersza linii poleceń w celu upewnienia się, że działa.</"
+"p><p><em>ŚCIEŻKA (PATH):</em> %2</p></qt>"
+
+#: dviFile.cpp:410
+#, kde-format
+msgid ""
+"<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+"This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
+"p><p><strong>%2</strong></p></qt>"
+msgstr ""
+"<qt><p>Nie można było przekształcić pliku PDF %1 na PostScript. Z tego "
+"względu niektóre elementy graficzne dokumentu nie będą wyświetlane.</"
+"p><p><b>Prawdopodobna przyczyna:</b> Plik %1 może być uszkodzony albo może w "
+"ogóle nie być plikiem PDF. Oto komunikat wyjścia programu <strong>pdf2ps</"
+"strong>, użytego przez Okular:</p><p><strong>%2</strong></p></qt>"
+
+#: dviRenderer.cpp:203 dviRenderer.cpp:435
+#, kde-format
+msgid "File corruption. %1"
+msgstr "Uszkodzenie pliku. %1"
+
+#: dviRenderer.cpp:326
+#, kde-format
+msgid "Not all PostScript files could be embedded into your document. %1"
+msgstr ""
+"Nie wszystkie pliki PostScript można było osadzić w twoim dokumencie. %1"
+
+#: dviRenderer.cpp:329
+#, kde-format
+msgid "All external PostScript files were embedded into your document."
+msgstr "Wszystkie pliki PostScript zostały osadzone w twoim dokumencie."
+
+#: dviRenderer.cpp:419
+#, kde-format
+msgid "The specified file '%1' does not exist."
+msgstr "Podany plik %1 nie istnieje."
+
+#: dviRenderer.cpp:565
+#, kde-format
+msgid ""
+"You have asked Okular to locate the place in the DVI file which corresponds "
+"to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
+"contain the necessary source file information. "
+msgstr ""
+"Poprosiłeś Okulara o ustalenie miejsca w pliku DVI, które odpowiada "
+"wierszowi %1 w pliku TeX %2. Jednakże, wygląda na to, że rzeczony plik DVI "
+"nie zwiera potrzebnych informacji o źródle pliku. "
+
+#: dviRenderer.cpp:604
+#, kde-format
+msgid ""
+"Okular was not able to locate the place in the DVI file which corresponds to "
+"line %1 in the TeX-file %2."
+msgstr ""
+"Okular nie był w stanie ustalić miejsca w pliku DVI, które odpowiada "
+"wierszowi %1 w pliku TeX %2."
+
+#: dviRenderer_draw.cpp:243
+#, kde-format
+msgid "The DVI code set a character of an unknown font."
+msgstr "Kod DVI ustawił znak nieznanej czcionki."
+
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#, kde-format
+msgid "The DVI code referred to font #%1, which was not previously defined."
+msgstr ""
+"Kod DVI odwołał się do czcionki #%1, która nie była wcześniej zdefiniowana."
+
+#: dviRenderer_draw.cpp:353
+#, kde-format
+msgid "The stack was not empty when the EOP command was encountered."
+msgstr "Stos nie był pusty przy napotkaniu polecenia EOP."
+
+#: dviRenderer_draw.cpp:365
+#, kde-format
+msgid "The stack was empty when a POP command was encountered."
+msgstr "Stos był pusty, kiedy napotkano polecenie POP."
+
+#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#, kde-format
+msgid "The DVI code referred to a font which was not previously defined."
+msgstr ""
+"Kod DVI odwołał się do czcionki, która nie była wcześniej zdefiniowana."
+
+#: dviRenderer_draw.cpp:539
+#, kde-format
+msgid "An illegal command was encountered."
+msgstr "Napotkano nielegalne polecenie."
+
+#: dviRenderer_draw.cpp:544
+#, kde-format
+msgid "The unknown op-code %1 was encountered."
+msgstr "Napotkano nieznany kod operacji (op-code) %1."
+
+#: dviRenderer_prescan.cpp:87
+#, kde-format
+msgid "Embedding %1"
+msgstr "Osadzanie %1"
+
+#: dviRenderer_prescan.cpp:105
+#, kde-format
+msgid ""
+"Page %1: The PDF file <strong>%2</strong> could not be converted to "
+"PostScript.<br>"
+msgstr ""
+"Strona %1: Plik PDF <strong>%2</strong> nie mógł zostać przekształcony na "
+"PostScript.<br>"
+
+#: dviRenderer_prescan.cpp:107
+#, kde-format
+msgid ""
+"Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
+msgstr ""
+"Strona %1: Plik PostScript <strong>%2</strong> nie mógł zostać znaleziony."
+"<br>"
+
+#: dviRenderer_prescan.cpp:261
+#, kde-format
+msgid "The papersize data '%1' could not be parsed."
+msgstr "Nie można przetworzyć danych rozmiaru papieru (papersize) „%1”."
+
+#: fontpool.cpp:209
+#, kde-format
+msgid ""
+"<qt><p>Okular was not able to locate all the font files which are necessary "
+"to display the current DVI file. Your document might be unreadable.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>Okular nie mógł odnaleźć wszystkich plików czcionek potrzebnych do "
+"wyświetlenia bieżącego pliku DVI. Możliwe, że tego dokumentu nie będzie dało "
+"się odczytać.</p><p><small><b>ŚCIEŻKA (PATH):</b> %1</small></p><p><small>"
+"%2</small></p></qt>"
+
+#: fontpool.cpp:284
+#, kde-format
+msgid ""
+"<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
+"font files could not be located, and your document might be unreadable.<br/"
+">Possible reason: the <em>kpsewhich</em> program is perhaps not installed on "
+"your system, or it cannot be found in the current search path.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>Wystąpiły problemy podczas działania <em>kpsewhich</em>. W wyniku "
+"czego nie można było odnaleźć niektórych plików czcionek. Możliwe, że tego "
+"dokumentu nie będzie dało się odczytać.<br/>Prawdopodobnie przyczyna: "
+"Program <em>kpsewhich</em> nie został zainstalowany lub nie znajduje się w "
+"ścieżce PATH.</p><p><small><b>ŚCIEŻKA (PATH):</b> %1</small></p><p><small>"
+"%2</small></p></qt>"
+
+#: fontpool.cpp:305
+#, kde-format
+msgid ""
+"<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
+"error %2). As a result, some font files could not be located, and your "
+"document might be unreadable.</qt>"
+msgstr ""
+"<qt>Tworzenie czcionki przez <em>kpsewhich</em> zostało przerwane (kod "
+"wyjścia %1, błąd %2). W wyniku czego nie można było odnaleźć niektórych "
+"plików czcionek. Możliwe, że tego dokumentu nie będzie dało się odczytać.</"
+"qt>"
+
+#: fontpool.cpp:481
+#, kde-format
+msgid "Currently generating %1 at %2 dpi..."
+msgstr "Obecnie tworzenie %1 przy %2 dpi..."
+
+#: generator_dvi.cpp:293
+#, kde-format
+msgid "Generator/Date"
+msgstr "Twórca/data"
+
+#: generator_dvi.cpp:382
+#, kde-format
+msgid "Font file not found"
+msgstr "Nie odnaleziono pliku czcionek"
+
+#: pageSize.cpp:318
+#, kde-format
+msgid "portrait"
+msgstr "portret"
+
+#: pageSize.cpp:320
+#, kde-format
+msgid "landscape"
+msgstr "pejzaż"
+
+#: psgs.cpp:284
+#, kde-format
+msgid ""
+"The version of Ghostview that is installed on this computer does not contain "
+"any of the Ghostview device drivers that are known to Okular. PostScript "
+"support has therefore been turned off in Okular."
+msgstr ""
+"Zainstalowana wersja Ghostview nie zawiera żadnego znanego Okularowi "
+"sterownika urządzeń. Z tego względu obsługa PostScript w Okularze została "
+"wyłączona."
+
+#: special.cpp:36
+#, kde-format
+msgid "That makes 25 errors. Further error messages will not be printed."
+msgstr "To daje 25 błędów. Kolejne komunikaty błędów nie będą wyświetlane."
+
+#: special.cpp:232
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Color pop command issued when the color "
+"stack is empty."
+msgstr ""
+"Błąd w pliku DVI %1, strona %2. Napotkano polecenie Color pop, kiedy stos "
+"Color był pusty."
+
+#: special.cpp:318
+#, kde-format
+msgid ""
+"Malformed parameter in the epsf special command.\n"
+"Expected a float to follow %1 in %2"
+msgstr ""
+"Nieprawidłowy parametr polecenia specjalnego epsf.\n"
+"Oczekiwano wartości zmiennoprzecinkowej (float) po %1 w %2"
+
+#: special.cpp:446
+#, kde-format
+msgid ""
+"File not found: \n"
+" %1"
+msgstr ""
+"Nie odnaleziono pliku: \n"
+" %1"
+
+#: special.cpp:695
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
+"special."
+msgstr ""
+"Błąd w pliku DVI %1, strona %2. Nie można było zinterpretować kąta w "
+"poleceniu specjalnym obrotu tekstu (text rotation special)."
+
+#: special.cpp:714
+#, kde-format
+msgid "The special command '%1' is not implemented."
+msgstr "Komenda specjalna „%1” nie jest zaimplementowana."
+
+#: TeXFont_PFB.cpp:43
+#, kde-format
+msgid ""
+"The font file %1 could be opened and read, but its font format is "
+"unsupported."
+msgstr ""
+"Plik czcionek %1 można otworzyć i odczytać, jednak jego format nie jest "
+"obsługiwany."
+
+#: TeXFont_PFB.cpp:48
+#, kde-format
+msgid "The font file %1 is broken, or it could not be opened or read."
+msgstr ""
+"Plik czcionek %1 jest uszkodzony albo nie może zostać otwarty ani odczytany."
+
+#: TeXFont_PFB.cpp:170
+#, kde-format
+msgid ""
+"FreeType reported an error when setting the character size for font file %1."
+msgstr ""
+"FreeType zgłosił błąd przy ustawianiu wielkości znaku dla pliku czcionek %1."
+
+#: TeXFont_PFB.cpp:188
+#, kde-format
+msgid "FreeType is unable to load glyph #%1 from font file %2."
+msgstr "FreeType nie jest w stanie odczytać glifu #%1 z pliku czcionek %2."
+
+#: TeXFont_PFB.cpp:201
+#, kde-format
+msgid "FreeType is unable to render glyph #%1 from font file %2."
+msgstr "FreeType nie jest w stanie narysować glifu #%1 z pliku czcionek %2."
+
+#: TeXFont_PFB.cpp:215
+#, kde-format
+msgid "Glyph #%1 is empty."
+msgstr "Glif #%1 jest pusty."
+
+#: TeXFont_PFB.cpp:217
+#, kde-format
+msgid "Glyph #%1 from font file %2 is empty."
+msgstr "Glif #%1 z pliku czcionek %2 jest pusty."
+
+#: TeXFont_PFB.cpp:282
+#, kde-format
+msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
+msgstr ""
+"FreeType nie jest w stanie odczytać metryki glifu #%1 z pliku czcionek %2."
+
+#: TeXFont_PK.cpp:69
+#, kde-format
+msgid "Cannot open font file %1."
+msgstr "Nie można otworzyć pliku czcionek %1."
+
+#: TeXFont_PK.cpp:116
+#, kde-format
+msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
+msgstr "TexFont_PK::operator[]: Znak %1 nie jest zdefiniowany w czcionce %2"
+
+#: TeXFont_PK.cpp:418
+#, kde-format
+msgid "Unexpected %1 in PK file %2"
+msgstr "Nieoczekiwane %1 w pliku PK %2"
+
+#: TeXFont_PK.cpp:484
+#, kde-format
+msgid "The character %1 is too large in file %2"
+msgstr "Znak %1 jest zbyt duży w pliku %2"
+
+#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#, kde-format
+msgid "Wrong number of bits stored:  char. %1, font %2"
+msgstr "Niewłaściwa liczba przechowanych bitów: znak %1, czcionka %2"
+
+#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#, kde-format
+msgid "Bad pk file (%1), too many bits"
+msgstr "Zły plik pk (%1), za dużo bitów"
+
+#: TeXFont_PK.cpp:713
+#, kde-format
+msgid "Font has non-square aspect ratio "
+msgstr "Współczynnik kształtu czcionki nie jest kwadratowy "
+
+#: TeXFontDefinition.cpp:106
+#, kde-format
+msgid "Cannot find font %1, file %2."
+msgstr "Nie można odnaleźć czcionki %1, plik %2."
+
+#: TeXFontDefinition.cpp:123
+#, kde-format
+msgid "Checksum mismatch for font file %1"
+msgstr "Niezgodność sumy sprawdzającej pliku czcionek %1"
+
+#: TeXFontDefinition.cpp:174
+#, kde-format
+msgid "Cannot recognize format for font file %1"
+msgstr "Nie można rozpoznać formatu pliku czcionek %1"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"Fatal error.\n"
+"\n"
+msgstr ""
+"Błąd krytyczny.\n"
+"\n"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"\n"
+"\n"
+"This probably means that either you found a bug in Okular,\n"
+"or that the DVI file, or auxiliary files (such as font files, \n"
+"or virtual font files) were really badly broken.\n"
+"Okular will abort after this message. If you believe that you \n"
+"found a bug, or that Okular should behave better in this situation\n"
+"please report the problem."
+msgstr ""
+"\n"
+"\n"
+"Oznacza to prawdopodobnie, że albo znalazłeś błąd w Okularze,\n"
+"albo plik DVI tudzież pliki dodatkowe (jak np. pliki czcionek\n"
+"lub wirtualne pliki czcionek) były poważnie uszkodzone.\n"
+"Okular skończy działanie po wyświetleniu tego komunikatu. Jeśli uważasz,\n"
+"że znalazłeś błąd albo Okular powinien zachować się lepiej\n"
+"w tej sytuacji, prosimy o zgłoszenie problemu."
+
+#: vf.cpp:164
+#, kde-format
+msgid "Wrong command byte found in VF macro list: %1"
+msgstr "Na liście makra VF znaleziono nieprawidłowy bajt polecenia: %1"
+
+#~ msgid ""
+#~ "<qt><p>The Ghostview program, which Okular uses internally to display the "
+#~ "PostScript graphics that is included in this DVI file, is generally able "
+#~ "to write its output in a variety of formats. The sub-programs that "
+#~ "Ghostview uses for these tasks are called 'device drivers'; there is one "
+#~ "device driver for each format that Ghostview is able to write. Different "
+#~ "versions of Ghostview often have different sets of device drivers "
+#~ "available. It seems that the version of Ghostview that is installed on "
+#~ "this computer does not contain <strong>any</strong> of the device drivers "
+#~ "that are known to Okular.</p><p>It seems unlikely that a regular "
+#~ "installation of Ghostview would not contain these drivers. This error may "
+#~ "therefore point to a serious misconfiguration of the Ghostview "
+#~ "installation on your computer.</p><p>If you want to fix the problems with "
+#~ "Ghostview, you can use the command <strong>gs --help</strong> to display "
+#~ "the list of device drivers contained in Ghostview. Among others, Okular "
+#~ "can use the 'png256', 'jpeg' and 'pnm' drivers. Note that Okular needs to "
+#~ "be restarted to re-enable PostScript support.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p> Program Ghostview, używany wewnętrznie przez Okular do "
+#~ "wyświetlania grafiki PostScriptu zawartej w pliku DVI, ogólnie rzecz "
+#~ "biorąc jest w stanie zapisać swoje wyjście w różnorodnych formatach. "
+#~ "Programy pomocnicze używane w tym celu przez Ghostview, są nazywane "
+#~ "'sterownikami urządzeń' (device drivers); istnieje jeden sterownik "
+#~ "urządzenia dla każdego dla każdego formatu, który jest w stanie zapisać "
+#~ "Ghostview. Różne wersje Ghostview często zawierają różne zestawy "
+#~ "dostępnych sterowników. Wygląda na to, że wersja Ghostview zainstalowana "
+#~ "na tym komputerze nie zawiera <strong>żadnych</strong> sterowników "
+#~ "urządzeń znanych Okularowi.</p><p> W normalnej instalacji Ghostview nie "
+#~ "powinno brakować takich sterowników. Błąd ten w takim wypadku może "
+#~ "wskazywać na poważne błędy konfiguracyjne instalacji Ghostview na tym "
+#~ "komputerze.</p><p> Jeśli chcesz naprawić problemy z Ghostview, możesz "
+#~ "użyć polecenia <strong>gs --help</strong> w celu wyświetlenia listy "
+#~ "sterowników urządzeń zawartych w Ghostview. Między innymi, Okular może "
+#~ "użyć sterowników 'png256', 'jpeg' i 'pnm'. Zauważ, że Okular musi być "
+#~ "uruchomiony ponownie w celu włączenia obsługi PostScriptu.</p></qt>"
+
+#~ msgid "DVI Backend"
+#~ msgstr "Obsługa DVI"
+
+#~ msgid "A DVI file renderer"
+#~ msgstr "Wyświetlanie pliku DVI"
+
+#~ msgid "© 2006 Luigi Toscano"
+#~ msgstr "© 2006 Luigi Toscano"
+
+#~ msgid ""
+#~ "<p>Okular relies on the <b>kpsewhich</b> program to locate font files on "
+#~ "your hard disk and to generate PK fonts, if necessary.</p>"
+#~ msgstr ""
+#~ "<p>Okular polega na programie <b>kpsewhich</b>, odnajdującym pliki "
+#~ "czcionek na dysku twardym i generującym w razie potrzeby czcionki PK.</p>"
+
+#~ msgid "Okular is currently generating bitmap fonts..."
+#~ msgstr "Okular aktualnie generuje czcionki bitmapowe..."
+
+#~ msgid "Aborts the font generation. Do not do this."
+#~ msgstr "Przerywa generowanie czcionek. Nie rób tego."
+
+#~ msgid ""
+#~ "Okular is currently generating bitmap fonts which are needed to display "
+#~ "your document. For this, Okular uses a number of external programs, such "
+#~ "as MetaFont. You can find the output of these programs later in the "
+#~ "document info dialog."
+#~ msgstr ""
+#~ "Okular w tej chwili zajmuje się tworzeniem czcionek bitmapowych "
+#~ "potrzebnych do wyświetlenia dokumentu. W tym celu używa zewnętrznych "
+#~ "narzędzi, takich jak MetaFont. Komunikaty zbierane podczas ich działania "
+#~ "można później znaleźć w okienku z informacjami o dokumencie."
+
+#~ msgid "Okular is generating fonts. Please wait."
+#~ msgstr "Okular aktualnie generuje czcionki. Proszę czekać."
+
+#~ msgid "Font Generation Progress Dialog"
+#~ msgstr "Okno postępu generowania czcionek"
+
+#~ msgid "Abort"
+#~ msgstr "Przerwij"
+
+#~ msgid "What is happening here?"
+#~ msgstr "Co tu się dzieje?"
+
+#~ msgid "%v of %m"
+#~ msgstr "%v z %m"
+
+#~ msgid "Please be patient"
+#~ msgstr "Prosimy o cierpliwość"
+
+#~ msgid "*.pdf|Portable Document Format (*.pdf)"
+#~ msgstr "*.pdf|Portable Document Format (*.pdf)"
+
+#~ msgid "Export File As"
+#~ msgstr "Eksportuj plik jako"
+
+#~ msgid ""
+#~ "The file %1\n"
+#~ "exists. Do you want to overwrite it?"
+#~ msgstr ""
+#~ "Plik %1\n"
+#~ "istnieje. Czy chcesz go zastąpić?"
+
+#~ msgid "Overwrite File"
+#~ msgstr "Zastąp plik"
+
+#~ msgid "Overwrite"
+#~ msgstr "Zastąp"
+
+#~ msgid "Using dvipdfm to export the file to PDF"
+#~ msgstr "Używanie dvipdfm do eksportu pliku do PDF"
+
+#~ msgid ""
+#~ "Okular is currently using the external program 'dvipdfm' to convert your "
+#~ "DVI-file to PDF. Sometimes that can take a while because dvipdfm needs to "
+#~ "generate its own bitmap fonts Please be patient."
+#~ msgstr ""
+#~ "Okular jest w trakcie wykonywania zewnętrznego programu 'dvipdfm' do "
+#~ "konwersji pliku DVI do PDF. Czasami może to zająć dłuższą chwilę, "
+#~ "ponieważ dvipdfm musi wygenerować własne czcionki bitmapowe. Prosimy o "
+#~ "cierpliwość."
+
+#~ msgid "Waiting for dvipdfm to finish..."
+#~ msgstr "Czekanie na zakończenie działania dvipdfm..."
+
+#~ msgid "*.ps|PostScript (*.ps)"
+#~ msgstr "*.ps|PostScript (*.ps)"
+
+#~ msgid "Using dvips to export the file to PostScript"
+#~ msgstr "Używanie dvips do eksportu pliku do PostScriptu"
+
+#~ msgid ""
+#~ "Okular is currently using the external program 'dvips' to convert your "
+#~ "DVI-file to PostScript. Sometimes that can take a while because dvips "
+#~ "needs to generate its own bitmap fonts Please be patient."
+#~ msgstr ""
+#~ "Okular jest w trakcie wykonywania zewnętrznego programu 'dvips' w celu "
+#~ "dokonania konwersji pliku DVI na PostScript. Czasami może to chwilę zająć "
+#~ "ze względu na to, że dvips musi wygenerować własne czcionki bitmapowe. "
+#~ "Prosimy o cierpliwość."
+
+#~ msgid "Waiting for dvips to finish..."
+#~ msgstr "Czekanie na zakończenie działania dvips..."
+
+#~ msgid "Functionality Unavailable"
+#~ msgstr "Funkcjonalność niedostępna"
+
+#~ msgid ""
+#~ "<qt><strong>File corruption</strong> Okular could not interpret your DVI "
+#~ "file. This is most commonly caused by a corrupted file.</qt>"
+#~ msgstr ""
+#~ "<qt><strong>Uszkodzenie pliku</strong> Okular nie był w stanie "
+#~ "zinterpretować pliku DVI. Najczęściej jest to spowodowane uszkodzeniem "
+#~ "pliku.</qt>"
+
+#~ msgid "DVI File Error"
+#~ msgstr "Błąd pliku DVI"
+
+#~ msgid "Not All Font Files Found"
+#~ msgstr "Nie odnaleziono wszystkich plików czcionek"
+
+#~ msgid "Locating fonts..."
+#~ msgstr "Odnajdowanie czcionek..."
+
+#~ msgid ""
+#~ "<p>There were problems running <b>kpsewhich</b>. As a result, some font "
+#~ "files could not be located, and your document might be unreadable.</"
+#~ "p><p><b>Possible reason:</b> The kpsewhich program is perhaps not "
+#~ "installed on your system, or it cannot be found in the current search "
+#~ "path.</p><p><b>What you can do:</b> The kpsewhich program is normally "
+#~ "contained in distributions of the TeX typesetting system. If TeX is not "
+#~ "installed on your system, you could install the TeX Live distribution "
+#~ "(www.tug.org/texlive). If you are sure that TeX is installed, please try "
+#~ "to use the kpsewhich program from the command line to check if it really "
+#~ "works.</p>"
+#~ msgstr ""
+#~ "<p>Wystąpiły problemy przy uruchamianiu <b>kpsewhich</b>. W rezultacie "
+#~ "nie można było odnaleźć niektórych plików czcionek, a dokument może nie "
+#~ "nadawać się do odczytu.</p><p><b>Prawdopodobna przyczyna:</b> Być może "
+#~ "nie zainstalowano w systemie programu kpsewhich albo nie ma go na ścieżce "
+#~ "wyszukiwania.</p><p><b>Co można zrobić:</b> Program kpsewhich zwykle jest "
+#~ "zawarty w dystrybucji systemu składu tekstu TeX. Jeżeli w Twoim systemie "
+#~ "nie ma zainstalowanego TeXa, można zainstalować dystrybucję TeX Live (www."
+#~ "tug.org/texlive). Jeśli jesteś pewien, że TeX jest zainstalowany, spróbuj "
+#~ "użyć programu kpsewhich z linii poleceń, żeby upewnić się, że zadziała.</"
+#~ "p>"
+
+#~ msgid "Problem locating fonts"
+#~ msgstr "Problem z odnalezieniem czcionek"
+
+#~ msgid "Font generation aborted"
+#~ msgstr "Generowanie czcionek przerwane"
+
+#~ msgid "Export: %1 to PDF"
+#~ msgstr "Eksport: %1 do PDF"
+
+#~ msgid "Export: %1 to PostScript"
+#~ msgstr "Eksport: %1 do PostScriptu"
+
+#~ msgid "The fontlist is currently empty."
+#~ msgstr "Lista czcionek jest aktualnie pusta."
+
+#~ msgid "TeX Name"
+#~ msgstr "Nazwa TeX"
+
+#~ msgid "Family"
+#~ msgstr "Krój"
+
+#~ msgid "Zoom"
+#~ msgstr "Powiększenie"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Encoding"
+#~ msgstr "Kodowanie"
+
+#~ msgid "Comment"
+#~ msgstr "Komentarz"
+
+#~ msgid "TeX virtual"
+#~ msgstr "Wirtualny TeX"
+
+#~ msgid "TeX Font Metric"
+#~ msgstr "Metryka czcionki TeX"
+
+#~ msgid "FreeType"
+#~ msgstr "FreeType"

@@ -1,0 +1,82 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Chetan Khona <chetan@kompkin.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2013-03-20 12:31+0530\n"
+"Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
+"Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "चेतन खोना"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "chetan@kompkin.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "दस्तऐवज एक वैध फिक्शनबूक नाही"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "दस्तऐवज उघडू शकत नाही : %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "दस्तऐवज एक वैध झिप संग्रह नाही"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "अवैध दस्तऐवज स्ट्रक्चर (मुख्य संचयीका सापडत नाही)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "दस्तऐवजात मजकूर सापडला नाही"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "अवैध एक्सएमएल दस्तऐवज : %1"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook"
+msgstr "फिक्शन बूक बॅकएन्ड"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook Backend Configuration"
+msgstr "फिक्शन बूक बॅकएन्ड"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "फिक्शन बूक बॅकएन्ड"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "फिक्शनबूक इ-पुस्तकां करिता रेंडरर"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 टोबीआस कोएनींग"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "टोबीआस कोएनींग"

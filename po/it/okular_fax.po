@@ -1,0 +1,45 @@
+# translation of okular_fax.po to Italian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fax\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2008-12-09 12:28+0100\n"
+"Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Luigi Toscano"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "luigi.toscano@tiscali.it"
+
+#: generator_fax.cpp:42
+#, kde-format
+msgid "Unable to load document"
+msgstr "Impossibile caricare il documento"
+
+#~ msgid "Fax Backend"
+#~ msgstr "Backend fax"
+
+#~ msgid "A G3/G4 fax document backend"
+#~ msgstr "Un backend per documenti fax G3/G4"
+
+#~ msgid "© 2008 Tobias Koenig"
+#~ msgstr "© 2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

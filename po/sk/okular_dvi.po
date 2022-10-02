@@ -1,0 +1,570 @@
+# translation of okular_dvi.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2007, 2010.
+# Michal Sulek <misurel@gmail.com>, 2009.
+# Roman Paholík <wizzardsk@gmail.com>, 2013, 2014.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_dvi\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"PO-Revision-Date: 2019-11-18 10:10+0100\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.11.80\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Richard Frič, Michal Šulek"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Richard.Fric@kdemail.net,misurel@gmail.com"
+
+#: dviexport.cpp:123
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+"computer. This program is essential for the export function to work. You "
+"can, however, convert the DVI-file to PDF using the print function of "
+"Okular, but that will often produce documents which print okay, but are of "
+"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
+"more recent version of your TeX distribution which includes the <em>dvipdfm</"
+"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
+"the PATH environment variable when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>Okular nemohol nájsť program <em>dvipdfm</em> na vašom počítači. "
+"Tento program je absolútne nutný pre export. Samozrejme, môžete vytlačiť DVI "
+"do PDF súboru, ale aj keď to bude dobre vytlačené, skoro vždy bude výsledok "
+"vyzerať zle v programe Acrobat Reader. Možno by malo zmysel nainštalovať "
+"novú verziu distribúcie TeXu, ktorá obsahuje program <em>dvipdfm</em>.</"
+"p><p>Rada pre zmäteného administrátora: Okular používa premennú PATH pre "
+"hľadanie programov.</p></qt>"
+
+#: dviexport.cpp:142
+#, kde-format
+msgid ""
+"<qt>The external program 'dvipdfm', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>Externý program 'dvipdfm', použitý pre export súboru oznámil chybu. "
+"Podrobný popis chyby nájdete v dialógu <strong>informácií o dokumente</"
+"strong> v ponuke Súbor.</qt>"
+
+#: dviexport.cpp:168
+#, kde-format
+msgid ""
+"<qt>This DVI file refers to external graphic files which are not in "
+"PostScript format, and cannot be handled by the <em>dvips</em> program that "
+"Okular uses internally to print or to export to PostScript. The "
+"functionality that you require is therefore unavailable in this version of "
+"Okular.</qt>"
+msgstr ""
+"<qt>Tento DVI súbor sa odkazuje na externý grafický súbor, ktorý nie je v "
+"PostScript formáte a nemôže byť obslúžený programom <em>dvips</em>, ktorý "
+"Okular interne používa na tlač a export do PostScript. Funkcionalita, ktorú "
+"vyžadujete preto nie je dostupná v tejto verzii Okular.</qt>"
+
+#: dviexport.cpp:176
+#, kde-format
+msgid ""
+"<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+"That program is essential for the export function to work.</p><p>Hint to the "
+"perplexed system administrator: Okular uses the PATH environment variable "
+"when looking for programs.</p></qt>"
+msgstr ""
+"<qt><p>Okular nemohol nájsť program <em>dvips</em> na vašom počítači. Tento "
+"program je absolútne nutný pre export.</p><p>Rada pre zmäteného "
+"administrátora: Okular používa premennú PATH pre hľadanie programov.</p></qt>"
+
+#: dviexport.cpp:270
+#, kde-format
+msgid ""
+"<qt>The external program 'dvips', which was used to export the file, "
+"reported an error. You might wish to look at the <strong>document info "
+"dialog</strong> which you will find in the File-Menu for a precise error "
+"report.</qt>"
+msgstr ""
+"<qt>Externý program 'divps' použitý pre export súboru oznámil chybu. "
+"Podrobný popis chyby nájdete v dialógu <strong>informácií o dokumente</"
+"strong> v ponuke Súbor.</qt>"
+
+#: dviFile.cpp:91
+#, kde-format
+msgid "The DVI file does not start with the preamble."
+msgstr "Súbor DVI nezačína preambulou."
+
+#: dviFile.cpp:97
+#, kde-format
+msgid ""
+"The DVI file contains the wrong version of DVI output for this program. "
+"Hint: If you use the typesetting system Omega, you have to use a special "
+"program, such as oxdvi."
+msgstr ""
+"Súbor DVI obsahuje neplatnú verziu DVI pre tento program. Rada: Ak používate "
+"systém Omega, musíte použiť špeciálny program, napríklad oxdvi."
+
+#: dviFile.cpp:134
+#, kde-format
+msgid ""
+"The DVI file is badly corrupted. Okular was not able to find the postamble."
+msgstr "Súbor DVI je veľmi poškodený. Okular nedokázal nájsť postambulu."
+
+#: dviFile.cpp:148
+#, kde-format
+msgid "The postamble does not begin with the POST command."
+msgstr "Postambula súboru nezačína príkazom POST."
+
+#: dviFile.cpp:202
+#, kde-format
+msgid "The postamble contained a command other than FNTDEF."
+msgstr "Postambula obsahuje príkaz iný ako FNTDEF."
+
+#: dviFile.cpp:240
+#, kde-format
+msgid "The page %1 does not start with the BOP command."
+msgstr "Stránka %1 nezačína príkazom BOP."
+
+#: dviFile.cpp:351
+#, kde-format
+msgid ""
+"<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
+"a result, the PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The program <strong>pdf2ps</strong> may not be installed on your "
+"system, or cannot be found in the current search path.</p><p><b>What you can "
+"do:</b> The program <strong>pdf2ps</strong> is normally contained in "
+"distributions of the ghostscript PostScript interpreter system. If "
+"ghostscript is not installed on your system, you could install it now. If "
+"you are sure that ghostscript is installed, try to use <strong>pdf2ps</"
+"strong> from the command line to check if it really works.</p><p><em>PATH:</"
+"em> %2</p></qt>"
+msgstr ""
+"<qt><p>Nepodarilo sa spustiť externý program <strong>pdf2ps</strong>. Ako "
+"následok, PDF súbor %1 nebude skonvertovaný do PostScriptu. Preto nebudú v "
+"dokumente zobrazené niektoré grafické prvky.</p><p><b>Možná príčina:</b> "
+"Program <strong>pdf2ps</strong> asi nie je nainštalovaný alebo nemôže byť "
+"nájdený v aktuálnej vyhľadávacej ceste.</p><p><b>Čo môžete urobiť:</b> "
+"Program <strong>pdf2ps</strong> sa normálne nachádza v distribúcii "
+"ghostscript PostScript systému. Ak nie je ghostscript nainštalovaný, môžete "
+"ho teraz doinštalovať. Ak ste si istý, že je ghostscript nainštalovaný, "
+"prosím, skúste použiť program <strong>pdf2ps</strong> z príkazového riadku "
+"na kontrolu či naozaj funguje.</p><p><b>PATH:</b> %2</p></qt>"
+
+#: dviFile.cpp:410
+#, kde-format
+msgid ""
+"<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
+"elements in your document will therefore not be displayed.</p><p><b>Possible "
+"reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
+"This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
+"p><p><strong>%2</strong></p></qt>"
+msgstr ""
+"<qt><p>PDF súbor %1 sa nepodarilo skonvertovať do PostScriptu. Preto nebudú "
+"v dokumente zobrazené niektoré grafické prvky.</p><p><b>Možná príčina:</b> "
+"Súbor %1 môže byť poškodený, alebo nie je vôbec PDF súbor. Výstup programu "
+"<strong>pdf2ps</strong>, ktorý používa Okular:</p><p><strong>%2</strong></"
+"p></qt>"
+
+#: dviRenderer.cpp:203 dviRenderer.cpp:435
+#, kde-format
+msgid "File corruption. %1"
+msgstr "Súbor poškodený. %1"
+
+#: dviRenderer.cpp:326
+#, kde-format
+msgid "Not all PostScript files could be embedded into your document. %1"
+msgstr "Nie všetky súbory PostScript sa dajú vložiť do vášho dokumentu. %1"
+
+#: dviRenderer.cpp:329
+#, kde-format
+msgid "All external PostScript files were embedded into your document."
+msgstr "Všetky externé súbory PostScript boli vložené do vášho dokumentu."
+
+#: dviRenderer.cpp:419
+#, kde-format
+msgid "The specified file '%1' does not exist."
+msgstr "Určený súbor '%1' neexistuje."
+
+#: dviRenderer.cpp:565
+#, kde-format
+msgid ""
+"You have asked Okular to locate the place in the DVI file which corresponds "
+"to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
+"contain the necessary source file information. "
+msgstr ""
+"Požiadali ste Okular o vyhľadanie miesto v DVI súbore, ktoré korešponduje s "
+"riadkom %1 v TeX súbore %2. Zdá sa však, že DVI súbor neobsahuje potrebnú "
+"informáciu o zdrojovom súbore. "
+
+#: dviRenderer.cpp:604
+#, kde-format
+msgid ""
+"Okular was not able to locate the place in the DVI file which corresponds to "
+"line %1 in the TeX-file %2."
+msgstr ""
+"Okular nemohol nájsť miesto v DVI súbore, ktoré korešponduje s riadkom %1 v "
+"TeX súbore %2."
+
+#: dviRenderer_draw.cpp:243
+#, kde-format
+msgid "The DVI code set a character of an unknown font."
+msgstr "Kód DVI nastavil znak s neznámym písmom."
+
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#, kde-format
+msgid "The DVI code referred to font #%1, which was not previously defined."
+msgstr ""
+"Kód DVI obsahuje referenciu na písmo #%1, ktoré predtým nebolo definované."
+
+#: dviRenderer_draw.cpp:353
+#, kde-format
+msgid "The stack was not empty when the EOP command was encountered."
+msgstr "Zásobník nebol prázdny pri nájdený príkazu EOP."
+
+#: dviRenderer_draw.cpp:365
+#, kde-format
+msgid "The stack was empty when a POP command was encountered."
+msgstr "Zásobník bol prázdny pri nájdení príkazu POP."
+
+#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#, kde-format
+msgid "The DVI code referred to a font which was not previously defined."
+msgstr "Kód DVI obsahuje referenciu na písmo, ktoré predtým nebolo definované."
+
+#: dviRenderer_draw.cpp:539
+#, kde-format
+msgid "An illegal command was encountered."
+msgstr "Nájdený neprípustný príkaz."
+
+#: dviRenderer_draw.cpp:544
+#, kde-format
+msgid "The unknown op-code %1 was encountered."
+msgstr "Nájdený neznámy kód %1."
+
+#: dviRenderer_prescan.cpp:87
+#, kde-format
+msgid "Embedding %1"
+msgstr "Vkladanie %1"
+
+#: dviRenderer_prescan.cpp:105
+#, kde-format
+msgid ""
+"Page %1: The PDF file <strong>%2</strong> could not be converted to "
+"PostScript.<br>"
+msgstr ""
+"Stránka %1: Súbor PDF <strong>%2</strong> sa nepodarilo skonvertovať na "
+"PostScript.<br>"
+
+#: dviRenderer_prescan.cpp:107
+#, kde-format
+msgid ""
+"Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
+msgstr ""
+"Stránka %1: Súbor PostScript <strong>%2</strong> sa nepodarilo nájsť.<br>"
+
+#: dviRenderer_prescan.cpp:261
+#, kde-format
+msgid "The papersize data '%1' could not be parsed."
+msgstr "Dáta o veľkosti papiera '%1' nie je možné spracovať."
+
+#: fontpool.cpp:209
+#, kde-format
+msgid ""
+"<qt><p>Okular was not able to locate all the font files which are necessary "
+"to display the current DVI file. Your document might be unreadable.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>Okular nemohol nájsť všetky potrebné súbory s písmami pre zobrazenie "
+"aktuálneho súboru DVI. Dokument môže byť nečitateľný.</p><p><small><b>Cesta:"
+"</b> %1</small></p><p><small>%2</small></p></qt>"
+
+#: fontpool.cpp:284
+#, kde-format
+msgid ""
+"<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
+"font files could not be located, and your document might be unreadable.<br/"
+">Possible reason: the <em>kpsewhich</em> program is perhaps not installed on "
+"your system, or it cannot be found in the current search path.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
+msgstr ""
+"<qt><p>Nastali problémy pri behu <em>kpsewhich</em>. Ako výsledok, niektoré "
+"písma sa nenašli a váš dokument môže byť nečitateľný.<br/>Možný dôvod: "
+"Program <em>kpsewhich</em> možno nie je nainštalovaný vo vašom systéme alebo "
+"ho nie je možné nájsť v aktuálnej ceste.</p><p><small><b>Cesta:</b> %1</"
+"small></p><p><small>%2</small></p></qt>"
+
+#: fontpool.cpp:305
+#, kde-format
+msgid ""
+"<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
+"error %2). As a result, some font files could not be located, and your "
+"document might be unreadable.</qt>"
+msgstr ""
+"<qt>Generovanie písma pomocou <em>kpsewhich</em> bolo prerušené (kód %1, "
+"chyba %2). Preto sa nepodarilo nájsť niektoré súbory písiem a dokument môže "
+"byť nečitateľný.</qt>"
+
+#: fontpool.cpp:481
+#, kde-format
+msgid "Currently generating %1 at %2 dpi..."
+msgstr "Práve generujem %1 v %2 dpi..."
+
+#: generator_dvi.cpp:293
+#, kde-format
+msgid "Generator/Date"
+msgstr "Generátor/Dátum"
+
+#: generator_dvi.cpp:382
+#, kde-format
+msgid "Font file not found"
+msgstr "Súbor písma nenájdený"
+
+#: pageSize.cpp:318
+#, kde-format
+msgid "portrait"
+msgstr "Na výšku"
+
+#: pageSize.cpp:320
+#, kde-format
+msgid "landscape"
+msgstr "Na šírku"
+
+#: psgs.cpp:284
+#, kde-format
+msgid ""
+"The version of Ghostview that is installed on this computer does not contain "
+"any of the Ghostview device drivers that are known to Okular. PostScript "
+"support has therefore been turned off in Okular."
+msgstr ""
+"Nainštalovaná verzia Ghostview neobsahuje žiadne ovládače zariadení, ktoré "
+"Okular podporuje. Podpora pre PostScript bude preto v Okular vypnutá."
+
+#: special.cpp:36
+#, kde-format
+msgid "That makes 25 errors. Further error messages will not be printed."
+msgstr "To znamená 25 chýb. Ďalšie chyby už nebudú zobrazené."
+
+#: special.cpp:232
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Color pop command issued when the color "
+"stack is empty."
+msgstr ""
+"Chyba v súbore DVI '%1', stránka %2. Vykonaný príkaz pop farby, ale zásobník "
+"farieb je prázdny."
+
+#: special.cpp:318
+#, kde-format
+msgid ""
+"Malformed parameter in the epsf special command.\n"
+"Expected a float to follow %1 in %2"
+msgstr ""
+"Nesprávny parameter v špeciálnom príkaze epsf.\n"
+"Očakávané desatinné číslo nasledujúce %1 v %2"
+
+#: special.cpp:446
+#, kde-format
+msgid ""
+"File not found: \n"
+" %1"
+msgstr ""
+"Súbor nenájdený:\n"
+" %1"
+
+#: special.cpp:695
+#, kde-format
+msgid ""
+"Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
+"special."
+msgstr ""
+"Chyba v súbore DVI '%1', stránka %2. Nedá sa interpretovať uhol v špeciálnej "
+"textovej rotácii."
+
+#: special.cpp:714
+#, kde-format
+msgid "The special command '%1' is not implemented."
+msgstr "Špeciálny príkaz '%1' nie je implementovaný."
+
+#: TeXFont_PFB.cpp:43
+#, kde-format
+msgid ""
+"The font file %1 could be opened and read, but its font format is "
+"unsupported."
+msgstr ""
+"Súbor písma %1 je možné otvoriť a prečítať, ale formát písma nie je "
+"podporovaný."
+
+#: TeXFont_PFB.cpp:48
+#, kde-format
+msgid "The font file %1 is broken, or it could not be opened or read."
+msgstr ""
+"Súbor písma %1 je poškodený, alebo ho nie je možné otvoriť alebo prečítať."
+
+#: TeXFont_PFB.cpp:170
+#, kde-format
+msgid ""
+"FreeType reported an error when setting the character size for font file %1."
+msgstr ""
+"FreeType oznámil chybu pri nastavení veľkosti znaku pre súbor písma %1."
+
+#: TeXFont_PFB.cpp:188
+#, kde-format
+msgid "FreeType is unable to load glyph #%1 from font file %2."
+msgstr "FreeType nedokáže načítať znak #%1 zo súboru písma %2."
+
+#: TeXFont_PFB.cpp:201
+#, kde-format
+msgid "FreeType is unable to render glyph #%1 from font file %2."
+msgstr "FreeType nedokáže zobraziť znak #%1 zo súboru písma %2."
+
+#: TeXFont_PFB.cpp:215
+#, kde-format
+msgid "Glyph #%1 is empty."
+msgstr "Znak #%1 je prázdny."
+
+#: TeXFont_PFB.cpp:217
+#, kde-format
+msgid "Glyph #%1 from font file %2 is empty."
+msgstr "Znak #%1 zo súboru písma %2 je prázdny."
+
+#: TeXFont_PFB.cpp:282
+#, kde-format
+msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
+msgstr "FreeType nedokáže načítať metriku pre znak #%1 zo súboru písma %2."
+
+#: TeXFont_PK.cpp:69
+#, kde-format
+msgid "Cannot open font file %1."
+msgstr "Nie je možné otvoriť súbor písma %1."
+
+#: TeXFont_PK.cpp:116
+#, kde-format
+msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
+msgstr "TexFont_PK::operator[]: Znak %1 nie je definovaný v písme %2"
+
+#: TeXFont_PK.cpp:418
+#, kde-format
+msgid "Unexpected %1 in PK file %2"
+msgstr "Nečakané %1 v PK súbore %2"
+
+#: TeXFont_PK.cpp:484
+#, kde-format
+msgid "The character %1 is too large in file %2"
+msgstr "Znak %1 v súbore %2 je príliš veľký"
+
+#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#, kde-format
+msgid "Wrong number of bits stored:  char. %1, font %2"
+msgstr "Uložený nesprávny počet bitov:  znak %1, písmo %2"
+
+#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#, kde-format
+msgid "Bad pk file (%1), too many bits"
+msgstr "Zlý PK súbor (%1), priveľa bitov"
+
+#: TeXFont_PK.cpp:713
+#, kde-format
+msgid "Font has non-square aspect ratio "
+msgstr "Písmo nemá štvorcovú geometriu "
+
+#: TeXFontDefinition.cpp:106
+#, kde-format
+msgid "Cannot find font %1, file %2."
+msgstr "Nie je možné otvoriť písmo %1, súbor %2."
+
+#: TeXFontDefinition.cpp:123
+#, kde-format
+msgid "Checksum mismatch for font file %1"
+msgstr "Chyba kontrolného súčtu pre súbor písma %1"
+
+#: TeXFontDefinition.cpp:174
+#, kde-format
+msgid "Cannot recognize format for font file %1"
+msgstr "Nie je možné rozpoznať formát súboru s písmom %1"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"Fatal error.\n"
+"\n"
+msgstr ""
+"Kritická chyba.\n"
+"\n"
+
+#: util.cpp:58
+#, kde-format
+msgid ""
+"\n"
+"\n"
+"This probably means that either you found a bug in Okular,\n"
+"or that the DVI file, or auxiliary files (such as font files, \n"
+"or virtual font files) were really badly broken.\n"
+"Okular will abort after this message. If you believe that you \n"
+"found a bug, or that Okular should behave better in this situation\n"
+"please report the problem."
+msgstr ""
+"\n"
+"\n"
+"Toto pravdepodobne znamená, že buď ste našli chybu v programe Okular,\n"
+"alebo že daný DVI súbor, alebo pomocné súbory (ako súbory s písmami \n"
+"alebo súbory s virtuálnymi písmami) sú naozaj vážne poškodené.\n"
+"Program Okular sa po tejto správe preruší. Ak si myslíte, že ste našli \n"
+"chybu v programe Okular, alebo ak si myslíte, že by sa mal program \n"
+"správať lepšie v tejto situácii, prosím oznámte nám daný problém."
+
+#: vf.cpp:164
+#, kde-format
+msgid "Wrong command byte found in VF macro list: %1"
+msgstr "Nesprávny bajt príkazu vo VF makro zozname: %1"
+
+#~ msgid ""
+#~ "<qt><p>The Ghostview program, which Okular uses internally to display the "
+#~ "PostScript graphics that is included in this DVI file, is generally able "
+#~ "to write its output in a variety of formats. The sub-programs that "
+#~ "Ghostview uses for these tasks are called 'device drivers'; there is one "
+#~ "device driver for each format that Ghostview is able to write. Different "
+#~ "versions of Ghostview often have different sets of device drivers "
+#~ "available. It seems that the version of Ghostview that is installed on "
+#~ "this computer does not contain <strong>any</strong> of the device drivers "
+#~ "that are known to Okular.</p><p>It seems unlikely that a regular "
+#~ "installation of Ghostview would not contain these drivers. This error may "
+#~ "therefore point to a serious misconfiguration of the Ghostview "
+#~ "installation on your computer.</p><p>If you want to fix the problems with "
+#~ "Ghostview, you can use the command <strong>gs --help</strong> to display "
+#~ "the list of device drivers contained in Ghostview. Among others, Okular "
+#~ "can use the 'png256', 'jpeg' and 'pnm' drivers. Note that Okular needs to "
+#~ "be restarted to re-enable PostScript support.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Program Ghostview, ktorý Okular interne používa na zobrazovanie "
+#~ "grafiky PostScript zo súborov DVI, dokáže vytvárať výstup v rôznych "
+#~ "formátoch. Podprogramy, ktoré Ghostview na to používa, sa nazývajú "
+#~ "'device drivers' (ovládače zariadení). Pre každý formát, ktorý Ghostview "
+#~ "dokáže zapísať, existuje jeden ovládač. Rôzne verzie Ghostview často "
+#~ "obsahujú rôzne verzie ovládačov. Verzia, ktorú máte nainštalovanú, asi "
+#~ "neobsahuje <strong>žiadny</strong> ovládač, ktorý Okular pozná.</p><p>Je "
+#~ "veľmi nepravdepodobné, že by normálna inštalácia Ghostview tieto ovládače "
+#~ "neobsahovala. Preto táto chyba môže byť spôsobená napríklad závažnou "
+#~ "chybou v konfigurácii inštalácie Ghostview.</p><p>Ak chcete problémy s "
+#~ "Ghostview vyriešiť, použite príkaz <strong>gs --help</strong>, ktorý "
+#~ "zobrazí zoznam ovládačov, ktoré Ghostview obsahuje. Okular dokáže "
+#~ "používať ovládače 'png256', 'jpeg' a 'pnm'. Uvedomte si, že musíte Okular "
+#~ "spustiť znovu, aby sa podpora pre PostScript znovu aktivovala.</p></qt>"
+
+#~ msgid "DVI Backend"
+#~ msgstr "DVI Backend"
+
+#~ msgid "A DVI file renderer"
+#~ msgstr "Vykresľovanie DVI súborov"
+
+#~ msgid "© 2006 Luigi Toscano"
+#~ msgstr "© 2006 Luigi Toscano"

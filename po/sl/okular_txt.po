@@ -1,0 +1,51 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Andrej Mernik <andrejm@ubuntu.si>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2020-01-23 16:20+0100\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Andrej Mernik"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "andrejm@ubuntu.si"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt"
+msgstr "Txt"
+
+#: generator_txt.cpp:25
+#, kde-format
+msgid "Txt Backend Configuration"
+msgstr "Nastavitve zaledja za Txt"
+
+#~ msgid "Txt Backend"
+#~ msgstr "Zaledje za txt"
+
+#~ msgid "Txt backend."
+#~ msgstr "Zaledje za txt."
+
+#~ msgid "© 2013 Azat Khuzhin"
+#~ msgstr "© 2013 Azat Khuzhin"
+
+#~ msgid "Azat Khuzhin"
+#~ msgstr "Azat Khuzhin"

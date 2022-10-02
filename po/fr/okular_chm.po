@@ -1,0 +1,68 @@
+# translation of okular_chm.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+# xavier <xavier.besnard@neuf.fr>, 2013.
+# Simon Depiets <sdepiets@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_chm\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2020-04-26 14:54+0800\n"
+"Last-Translator: Simon Depiets <sdepiets@gmail.com>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 20.07.70\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mickaël Sibelle, Simon Depiets"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kimael@gmail.com, sdepiets@gmail.com"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr "Encodage non pris en charge"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+"L'encodage de ce livre électronique n'est pas encore pris en charge. "
+"Veuillez signaler un bogue sur https://bugs.kde.org pour demander sa prise "
+"en charge"
+
+#~ msgid "CHM Backend"
+#~ msgstr "Moteur CHM"
+
+#~ msgid "A Microsoft Windows help file renderer"
+#~ msgstr "Un moteur de rendu pour fichiers d'aide de Microsoft Windows."
+
+#~ msgid ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+#~ msgstr ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+
+#~ msgid "Piotr Szymański"
+#~ msgstr "Piotr Szymański"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

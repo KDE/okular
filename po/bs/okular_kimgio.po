@@ -1,0 +1,70 @@
+# Bosnian translation for kdegraphics
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the kdegraphics package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-11-30 00:42+0000\n"
+"PO-Revision-Date: 2013-10-18 20:28+0000\n"
+"Last-Translator: Samir Ribić <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-15 06:05+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Samir Ribić"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "samir.ribic@etf.unsa.ba"
+
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#, kde-format
+msgid "Unable to load document: %1"
+msgstr "Ne mogu da učitam dokument: %1"
+
+#: generator_kimgio.cpp:76
+#, kde-format
+msgid ""
+"This document appears malformed. Here is a best approximation of the "
+"document's intended appearance."
+msgstr ""
+
+#~ msgid "Image Backend"
+#~ msgstr "Pozadina slike"
+
+#~ msgid "A simple image backend"
+#~ msgstr "Jednostavna pozadina slike"
+
+#~ msgid ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+#~ msgstr ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "Glavna alatna traka"

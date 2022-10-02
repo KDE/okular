@@ -1,0 +1,6155 @@
+# translation of okular.po to Punjabi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2007, 2009, 2010, 2011, 2012, 2018, 2019, 2020, 2021.
+# AP S Alam <aalam@users.sf.net>, 2007.
+# Amanpreet Singh Alam <apreet.alam@gmail.com>, 2008.
+# Amanpreet Singh <aalam@users.sf.net>, 2008, 2013, 2014, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"PO-Revision-Date: 2021-12-31 11:00-0800\n"
+"Last-Translator: A S Alam <aalam@satluj.org>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.04.3\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅ.ਸ.ਆਲਮ. ੨੦੦੯-੨੦੨੨"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alam.yellow@gmail.com"
+
+#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#, kde-format
+msgid "Okular"
+msgstr "ਓਕੁਲਾਰ"
+
+#: aboutdata.h:21
+#, kde-format
+msgid "Okular, a universal document viewer"
+msgstr "ਓਕੁਲਾਰ, ਇੱਕ ਯੂਨੀਵਰਸਲ ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ"
+
+#: aboutdata.h:23
+#, kde-format
+msgid ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+msgstr ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Former maintainer"
+msgstr "ਪੁਰਾਣਾ ਪਰਬੰਧਕ"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Tobias Koenig"
+msgstr "Tobias Koenig"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Lots of framework work, FictionBook backend and former ODT backend"
+msgstr ""
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Albert Astals Cid"
+msgstr "Albert Astals Cid"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Developer"
+msgstr "ਡਿਵੈਲਪਰ"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Piotr Szymanski"
+msgstr "Piotr Szymanski"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Created Okular from KPDF codebase"
+msgstr "KPDF ਕੋਡ-ਬੇਸ ਤੋਂ ਓਕੁਲਾਰ ਬਣਾਇਆ"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "Enrico Ros"
+msgstr "ਇੰਰਿਕੋ ਰੋਜ"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "KPDF developer"
+msgstr "KPDF ਡਿਵੈਲਪਰ"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Eugene Trounev"
+msgstr ""
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Annotations artwork"
+msgstr "ਟਿੱਪਣੀ ਕਲਾਕਾਰੀ"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Jiri Baum - NICTA"
+msgstr ""
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Table selection tool"
+msgstr "ਟੇਬਲ ਚੋਣ ਟੂਲ"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Fabio D'Urso"
+msgstr ""
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Annotation improvements"
+msgstr "ਟਿੱਪਣੀ ਸੁਧਾਰ"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Go to page %1"
+msgstr "%1 ਸਫ਼ੇ ਉੱਤੇ ਜਾਓ"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Open external file"
+msgstr "ਬਾਹਰੀ ਫਾਇਲ ਖੋਲ੍ਹੋ"
+
+#: core/action.cpp:185
+#, kde-format
+msgid "Execute '%1'..."
+msgstr "...'%1' ਚਲਾਓ"
+
+#: core/action.cpp:284
+#, kde-format
+msgid "First Page"
+msgstr "ਪਹਿਲਾਂ ਸਫ਼ਾ"
+
+#: core/action.cpp:286 part/presentationwidget.cpp:177
+#, kde-format
+msgid "Previous Page"
+msgstr "ਪਿਛਲਾ ਸਫ਼ਾ"
+
+#: core/action.cpp:288 part/presentationwidget.cpp:194
+#, kde-format
+msgid "Next Page"
+msgstr "ਸਫ਼ਾ ਅੱਗੇ"
+
+#: core/action.cpp:290
+#, kde-format
+msgid "Last Page"
+msgstr "ਆਖਰੀ ਸਫ਼ਾ"
+
+#: core/action.cpp:292
+#, kde-format
+msgid "Back"
+msgstr "ਪਿੱਛੇ"
+
+#: core/action.cpp:294
+#, kde-format
+msgid "Forward"
+msgstr "ਅੱਗੇ"
+
+#: core/action.cpp:296
+#, kde-format
+msgid "Quit"
+msgstr "ਬਾਹਰ"
+
+#: core/action.cpp:298
+#, kde-format
+msgid "Start Presentation"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: core/action.cpp:300
+#, kde-format
+msgid "End Presentation"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਖਤਮ ਕਰੋ"
+
+#: core/action.cpp:302
+#, kde-format
+msgid "Find..."
+msgstr "...ਖੋਜ"
+
+#: core/action.cpp:304
+#, kde-format
+msgid "Go To Page..."
+msgstr "...ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: core/action.cpp:355
+#, kde-format
+msgid "Play sound..."
+msgstr "...ਸਾਊਂਡ ਚਲਾਓ"
+
+#: core/action.cpp:423 core/action.cpp:539
+#, kde-format
+msgid "JavaScript Script"
+msgstr "ਜਾਵਾਸਕ੍ਰਿਪਟ ਸਕ੍ਰਿਪਟ"
+
+#: core/action.cpp:473
+#, kde-format
+msgid "Play movie..."
+msgstr "...ਮੂਵੀ ਚਲਾਓ"
+
+#: core/action.cpp:544
+#, kde-format
+msgid "Play movie"
+msgstr "ਮੂਵੀ ਚਲਾਓ"
+
+#: core/action.cpp:546
+#, kde-format
+msgid "Stop movie"
+msgstr "ਮੂਵੀ ਰੋਕੋ"
+
+#: core/action.cpp:548
+#, kde-format
+msgid "Pause movie"
+msgstr "ਮੂਵੀ ਵਿਰਾਮ"
+
+#: core/action.cpp:550
+#, kde-format
+msgid "Resume movie"
+msgstr "ਮੂਵੀ ਮੁੜ-ਚਾਲੂ"
+
+#: core/chooseenginedialog.cpp:22
+#, kde-format
+msgid "Backend Selection"
+msgstr "ਬੈਕ-ਐਂਡ ਚੋਣ"
+
+#: core/chooseenginedialog.cpp:40
+#, kde-format
+msgid ""
+"<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
+"><br />Please select which one to use:</qt>"
+msgstr ""
+"<qt>MIME ਕਿਸਮ ਲਈ ਇੱਕ ਤੋਂ ਵੱਧ ਬੈਕਐਂਡ ਮਿਲੇ:<br /><b>%1</b> (%2)।<br /> <br />ਇਹਨਾਂ ਵਿੱਚੋਂ "
+"ਵਰਤਣ ਲਈ ਇੱਕ ਦੀ ਚੋਣ ਕਰੋ:</qt>"
+
+#: core/document.cpp:203
+#, kde-format
+msgctxt "@info %1 is a page size"
+msgid "Most pages are %1."
+msgstr "ਬਹੁਤੇ ਸਫ਼ੇ %1 ਉੱਤੇ ਹਨ।"
+
+#: core/document.cpp:224
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Portrait %1"
+msgstr "ਪੋਰਟਰੇਟ %1"
+
+#: core/document.cpp:226
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Landscape %1"
+msgstr "ਲੈਂਡਸਕੇਪ %1"
+
+#: core/document.cpp:249
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 in (%3)"
+msgstr "%1 x %2 ਇੰ (%3)"
+
+#: core/document.cpp:251
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 mm (%3)"
+msgstr "%1 x %2 mm (%3)"
+
+#: core/document.cpp:1682
+#, kde-format
+msgid "Continuing search from beginning"
+msgstr "ਸ਼ੁਰੂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
+
+#: core/document.cpp:1685
+#, kde-format
+msgid "Continuing search from bottom"
+msgstr "ਹੇਠਾਂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
+
+#: core/document.cpp:2445
+#, kde-format
+msgid ""
+"Can not find a plugin which is able to handle the document being passed."
+msgstr "ਦਿੱਤੇ ਡੌਕੂਮੈਂਟ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਵਾਸਤੇ ਇੱਕ ਪਲੱਗਇਨ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕਦੀ ਹੈ।"
+
+#: core/document.cpp:3595
+#, kde-format
+msgctxt "remove a collection of annotations from the page"
+msgid "remove annotations"
+msgstr "ਟਿੱਪਣੀਆਂ ਹਟਾਓ"
+
+#: core/document.cpp:4160 core/document.cpp:4166
+#, kde-format
+msgid ""
+"The document is trying to execute an external application and, for your "
+"safety, Okular does not allow that."
+msgstr ""
+"ਡੌਕੂਮੈਂਟ ਇੱਕ ਬਾਹਰੀ ਐਪਲੀਕੇਸ਼ਨ ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਿਹਾ ਹੈ, ਅਤੇ ਓਕੁਲਾਰ ਨੇ ਤੁਹਾਡੀ ਸੁਰੱਖਿਆ ਵਾਸਤੇ "
+"ਇਹ ਮਨਜ਼ੂਰ ਨਹੀਂ ਕੀਤਾ ਹੈ।"
+
+#: core/document.cpp:4177
+#, kde-format
+msgid "No application found for opening file of mimetype %1."
+msgstr "ਮਾਈਮ-ਟਾਈਪ %1 ਦੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਲੱਭੀ ਹੈ।"
+
+#: core/document.cpp:4600
+#, kde-format
+msgid "Could not open a temporary file"
+msgstr "ਆਰਜ਼ੀ ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ"
+
+#: core/document.cpp:4602
+#, kde-format
+msgid "Print conversion failed"
+msgstr "ਕਨਵਰਜ਼ਨ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
+
+#: core/document.cpp:4604
+#, kde-format
+msgid "Printing process crashed"
+msgstr "ਪਰਿੰਟ ਕਰਨ ਦੀ ਕਾਰਵਾਈ ਕਰੈਸ਼ ਹੋ ਗਈ"
+
+#: core/document.cpp:4606
+#, kde-format
+msgid "Printing process could not start"
+msgstr "ਪਰਿੰਟ ਕਾਰਵਾਈ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ"
+
+#: core/document.cpp:4608
+#, kde-format
+msgid "Printing to file failed"
+msgstr "ਫਾਇਲ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
+
+#: core/document.cpp:4610
+#, kde-format
+msgid "Printer was in invalid state"
+msgstr "ਪਰਿੰਟਰ ਦੀ ਹਾਲਤ ਅਢੁੱਕਵੀ ਹੈ"
+
+#: core/document.cpp:4612
+#, kde-format
+msgid "Unable to find file to print"
+msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਫਾਇਲ ਲੱਭਣ ਲਈ ਅਸਮਰੱਖ"
+
+#: core/document.cpp:4614
+#, kde-format
+msgid "There was no file to print"
+msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਫਾਇਲ ਨਹੀਂ ਹੈ"
+
+#: core/document.cpp:4616
+#, kde-format
+msgid ""
+"Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
+"available"
+msgstr ""
+"ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਢੁੱਕਵੀਂ ਬਾਈਨਰੀ ਨਹੀਂ ਮਿਲੀ। ਚੈੱਕ ਕਰੋ ਕਿ ਕੀ CUPS lpr ਬਾਈਨਰੀ ਉਪਲੱਬਧ ਹੈ।"
+
+#: core/document.cpp:4618
+#, kde-format
+msgid "The page print size is invalid"
+msgstr ""
+
+#: core/document.cpp:5283 part/part.cpp:1168
+#, kde-format
+msgid "Could not open '%1'. File does not exist"
+msgstr "'%1' ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਫਾਇਲ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
+
+#: core/document.cpp:5793
+#, kde-format
+msgid "Title"
+msgstr "ਟਾਇਟਲ"
+
+#: core/document.cpp:5796
+#, kde-format
+msgid "Subject"
+msgstr "ਵਿਸ਼ਾ"
+
+#: core/document.cpp:5799
+#, kde-format
+msgid "Description"
+msgstr "ਵੇਰਵਾ"
+
+#: core/document.cpp:5802
+#, kde-format
+msgid "Author"
+msgstr "ਲੇਖਕ"
+
+#: core/document.cpp:5805
+#, kde-format
+msgid "Creator"
+msgstr "ਨਿਰਮਾਤਾ"
+
+#: core/document.cpp:5808
+#, kde-format
+msgid "Producer"
+msgstr "ਪਰੋਡਿਊਸਰ"
+
+#: core/document.cpp:5811
+#, kde-format
+msgid "Copyright"
+msgstr "ਕਾਪੀਰਾਈਟ"
+
+#: core/document.cpp:5814
+#, kde-format
+msgid "Pages"
+msgstr "ਪੇਜ਼"
+
+#: core/document.cpp:5817
+#, kde-format
+msgid "Created"
+msgstr "ਨਿਰਮਾਣ"
+
+#: core/document.cpp:5820
+#, kde-format
+msgid "Modified"
+msgstr "ਸੋਧ"
+
+#: core/document.cpp:5823
+#, kde-format
+msgid "MIME Type"
+msgstr "MIME ਕਿਸਮ"
+
+#: core/document.cpp:5826
+#, kde-format
+msgid "Category"
+msgstr "ਕੈਟਾਗਰੀ"
+
+#: core/document.cpp:5829
+#, kde-format
+msgid "Keywords"
+msgstr "ਸ਼ਬਦ"
+
+#: core/document.cpp:5832
+#, kde-format
+msgid "File Path"
+msgstr "ਫਾਇਲ ਪਾਥ"
+
+#: core/document.cpp:5835
+#, kde-format
+msgid "File Size"
+msgstr "ਫਾਇਲ ਸਾਈਜ਼"
+
+#: core/document.cpp:5838
+#, kde-format
+msgid "Page Size"
+msgstr "ਪੇਜ਼ ਸਾਈਜ਼"
+
+#: core/documentcommands.cpp:62
+#, kde-format
+msgctxt "Add an annotation to the page"
+msgid "add annotation"
+msgstr "ਟਿੱਪਣੀ ਸ਼ਾਮਲ ਕਰੋ"
+
+#: core/documentcommands.cpp:108
+#, kde-format
+msgctxt "Remove an annotation from the page"
+msgid "remove annotation"
+msgstr "ਟਿੱਪਣੀ ਹਟਾਓ"
+
+#: core/documentcommands.cpp:155
+#, kde-format
+msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
+msgid "modify annotation properties"
+msgstr "ਟਿੱਪਣੀ ਵਿਸ਼ੇਸ਼ਤਾ ਸੋਧੋ"
+
+#: core/documentcommands.cpp:190
+#, kde-format
+msgctxt "Translate an annotation's position on the page"
+msgid "translate annotation"
+msgstr "ਟਿੱਪਣੀ ਅਨੁਵਾਦ"
+
+#: core/documentcommands.cpp:263
+#, kde-format
+msgctxt "Change an annotation's size"
+msgid "adjust annotation"
+msgstr "ਟਿੱਪਣੀ ਅਡਜੱਸਟ ਕਰੋ"
+
+#: core/documentcommands.cpp:333
+#, kde-format
+msgctxt "Generic text edit command"
+msgid "edit text"
+msgstr "ਲਿਖਤ ਸੋਧੋ"
+
+#: core/documentcommands.cpp:396
+#, kde-format
+msgctxt "Edit an annotation's text contents"
+msgid "edit annotation contents"
+msgstr "ਟਿੱਪਣੀ ਸਮੱਗਰੀ ਸੋਧੋ"
+
+#: core/documentcommands.cpp:445
+#, kde-format
+msgctxt "Edit an form's text contents"
+msgid "edit form contents"
+msgstr "ਫਾਰਮ ਟਿੱਪਣੀਆਂ ਸੋਧੋ"
+
+#: core/documentcommands.cpp:494
+#, kde-format
+msgctxt "Edit a list form's choices"
+msgid "edit list form choices"
+msgstr ""
+
+#: core/documentcommands.cpp:528
+#, kde-format
+msgctxt "Edit a combo form's selection"
+msgid "edit combo form selection"
+msgstr ""
+
+#: core/documentcommands.cpp:600
+#, kde-format
+msgctxt "Edit the state of a group of form buttons"
+msgid "edit form button states"
+msgstr ""
+
+#: core/generator.cpp:761
+#, kde-format
+msgid "Plain &Text..."
+msgstr "ਸਰਲ ਲਿਖਤ(&T)..."
+
+#: core/generator.cpp:764
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: core/generator.cpp:768
+#, kde-format
+msgctxt "This is the document format"
+msgid "OpenDocument Text"
+msgstr "ਓਪਨ-ਡੌਕੂਮੈਂਟ ਲਿਖਤ"
+
+#: core/generator.cpp:771
+#, kde-format
+msgctxt "This is the document format"
+msgid "HTML"
+msgstr "HTML"
+
+#: core/printoptionswidget.cpp:19
+#, kde-format
+msgid "Print Options"
+msgstr "ਪਰਿੰਟ ਚੋਣਾਂ"
+
+#: core/printoptionswidget.cpp:23
+#, kde-format
+msgid "Fit to printable area"
+msgstr "ਛਾਪਣਯੋਗ ਖੇਤਰ ਲਈ ਫਿੱਟ ਕਰੋ"
+
+#: core/printoptionswidget.cpp:24
+#, kde-format
+msgid "Fit to full page"
+msgstr "ਪੂਰੇ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ"
+
+#: core/printoptionswidget.cpp:25
+#, kde-format
+msgid "Scale mode:"
+msgstr "ਸਕੇਲ ਮੋਡ:"
+
+#: core/script/kjs_app.cpp:160
+#, kde-format
+msgid "Missing alert type"
+msgstr ""
+
+#: core/script/kjs_app.cpp:222
+#, kde-format
+msgid "Do not show this message again"
+msgstr "ਇਹ ਸੁਨੇਹਾ ਮੁੜ ਨਾ ਵੇਖਾਓ"
+
+#: core/sourcereference.cpp:101
+#, kde-format
+msgctxt "'source' is a source file"
+msgid "Source: %1"
+msgstr "ਸਰੋਤ: %1"
+
+#: core/textdocumentsettings.cpp:34
+#, kde-format
+msgid "&Default Font:"
+msgstr "ਡਿਫਾਲਟ ਫੋਂਟ(&D):"
+
+#: gui/certificatemodel.cpp:39
+#, kde-format
+msgid "Version"
+msgstr "ਵਰਜ਼ਨ"
+
+#: gui/certificatemodel.cpp:41
+#, kde-format
+msgid "Serial Number"
+msgstr "ਲੜੀ ਨੰਬਰ"
+
+#: gui/certificatemodel.cpp:43
+#, kde-format
+msgid "Issuer"
+msgstr "ਜਾਰੀ ਕਰਤਾ"
+
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#, kde-format
+msgid "Issued On"
+msgstr "ਇਸ ਨੂੰ ਜਾਰੀ ਕੀਤਾ"
+
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#, kde-format
+msgid "Expires On"
+msgstr "ਮਿਆਦ ਪੁੱਗਣੀ"
+
+#: gui/certificatemodel.cpp:49
+#, kde-format
+msgctxt "The person/company that made the signature"
+msgid "Subject"
+msgstr "ਵਿਸ਼ਾ"
+
+#: gui/certificatemodel.cpp:51
+#, kde-format
+msgid "Public Key"
+msgstr "ਪਬਲਿਕ ਕੁੰਜੀ"
+
+#: gui/certificatemodel.cpp:53
+#, kde-format
+msgid "Key Usage"
+msgstr "ਕੁੰਜੀ ਵਰਤੋ"
+
+#: gui/certificatemodel.cpp:72
+#, kde-format
+msgid "V%1"
+msgstr "V%1"
+
+#: gui/certificatemodel.cpp:84
+#, kde-format
+msgid "%1 (%2 bits)"
+msgstr "%1 (%2 ਬਿੱਟ)"
+
+#: gui/certificatemodel.cpp:146
+#, kde-format
+msgid "Property"
+msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: gui/certificatemodel.cpp:148
+#, kde-format
+msgid "Value"
+msgstr "ਮੁੱਲ"
+
+#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#, kde-format
+msgid "Pop-up Note"
+msgstr "ਪੌਪ-ਅੱਪ ਨੋਟ"
+
+#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#, kde-format
+msgid "Typewriter"
+msgstr "ਟਾਈਪ-ਰਾਈਟਰ"
+
+#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#, kde-format
+msgid "Inline Note"
+msgstr "ਇਨ-ਲਾਈਨ ਨੋਟ"
+
+#: gui/guiutils.cpp:48
+#, kde-format
+msgid "Straight Line with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਸਿੱਧੀ ਲਾਇਨ"
+
+#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: part/pageviewannotator.cpp:1326
+#, kde-format
+msgid "Straight Line"
+msgstr "ਸਿੱਧੀ ਲਾਈਨ"
+
+#: gui/guiutils.cpp:50
+#, fuzzy, kde-format
+#| msgid "Geometry with Comment"
+msgid "Polygon with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਜੁਮੈਟਰੀ"
+
+#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: part/pageviewannotator.cpp:1318
+#, kde-format
+msgid "Polygon"
+msgstr "ਬਹੁਭੁਜ"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਜੁਮੈਟਰੀ"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry"
+msgstr "ਜੁਮੈਟਰੀ"
+
+#: gui/guiutils.cpp:59
+#, kde-format
+msgid "Highlight with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਉਘਾੜੋ"
+
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#, kde-format
+msgid "Highlight"
+msgstr "ਉਘਾੜੋ"
+
+#: gui/guiutils.cpp:62
+#, fuzzy, kde-format
+#| msgid "Select text"
+msgid "Squiggle with Comment"
+msgstr "ਚੁਣਿਆ ਟੈਕਸਟ"
+
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: part/pageviewannotator.cpp:1322
+#, kde-format
+msgid "Squiggle"
+msgstr ""
+
+#: gui/guiutils.cpp:65
+#, fuzzy, kde-format
+#| msgctxt "Annotation tool"
+#| msgid "Underline text"
+msgid "Underline with Comment"
+msgstr "ਟੈਕਸਟ ਹੇਠ ਲਾਈਨ"
+
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: part/pageviewannotator.cpp:1330
+#, kde-format
+msgid "Underline"
+msgstr "ਹੇਠਾਂ ਲਾਈਨ"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਵਿੰਨ੍ਹੋ"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out"
+msgstr "ਵਿੰਨ੍ਹੋ"
+
+#: gui/guiutils.cpp:73
+#, fuzzy, kde-format
+#| msgid "Strike Out with Comment"
+msgid "Stamp with Comment"
+msgstr "ਟਿੱਪਣੀ ਨਾਲ ਵਿੰਨ੍ਹੋ"
+
+#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: part/pageviewannotator.cpp:1324
+#, kde-format
+msgid "Stamp"
+msgstr "ਸਟੈਂਪ"
+
+#: gui/guiutils.cpp:76
+#, fuzzy, kde-format
+#| msgid "Freehand Line Properties"
+msgid "Freehand Line with Comment"
+msgstr "ਹੱਥ-ਨਾਲ ਖਿੱਚ ਲਾਇਨ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: part/pageviewannotator.cpp:1312
+#, kde-format
+msgid "Freehand Line"
+msgstr "ਹੱਥ ਨਾਲ ਖਿੱਚੀ ਲਾਈਨ"
+
+#: gui/guiutils.cpp:79
+#, kde-format
+msgid "Caret"
+msgstr "ਕਰੇਟ"
+
+#: gui/guiutils.cpp:82
+#, kde-format
+msgid "File Attachment"
+msgstr "ਫਾਇਲ ਅਟੈਂਚਮੈਂਟ"
+
+#: gui/guiutils.cpp:85
+#, kde-format
+msgid "Sound"
+msgstr "ਸਾਊਂਡ"
+
+#: gui/guiutils.cpp:88
+#, kde-format
+msgid "Movie"
+msgstr "ਮੂਵੀ"
+
+#: gui/guiutils.cpp:91
+#, kde-format
+msgctxt "Caption for a screen annotation"
+msgid "Screen"
+msgstr "ਸਕਰੀਨ"
+
+#: gui/guiutils.cpp:94
+#, kde-format
+msgctxt "Caption for a widget annotation"
+msgid "Widget"
+msgstr "ਵਿਦਜੈਟ"
+
+#: gui/guiutils.cpp:97
+#, kde-format
+msgctxt "Caption for a rich media annotation"
+msgid "Rich Media"
+msgstr ""
+
+#: gui/guiutils.cpp:109
+#, kde-format
+msgctxt "Unknown author"
+msgid "Unknown"
+msgstr "ਅਣਜਾਣ"
+
+#: gui/guiutils.cpp:126 part/presentationwidget.cpp:370
+#, kde-format
+msgid "Author: %1"
+msgstr "ਲੇਖਕ: %1"
+
+#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#, kde-format
+msgid "Where do you want to save %1?"
+msgstr "ਤੁਸੀਂ %1 ਨੂੰ ਕਿੱਥੇ ਸੰਭਾਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#, kde-format
+msgid "Could not open \"%1\" for writing. File was not saved."
+msgstr "\"%1\" ਨੂੰ ਲਿਖਣ ਲਈ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਗਈ।"
+
+#: gui/signatureguiutils.cpp:42
+#, kde-format
+msgid "The signature is cryptographically valid."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:44
+#, kde-format
+msgid "The signature is cryptographically invalid."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:46
+#, kde-format
+msgid "Digest Mismatch occurred."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:48
+#, kde-format
+msgid "The signature CMS/PKCS7 structure is malformed."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:50
+#, kde-format
+msgid "The requested signature is not present in the document."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:52
+#, kde-format
+msgid "The signature could not be verified."
+msgstr "ਦਸਤਖਤ ਤਸਦੀਕ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ।"
+
+#: gui/signatureguiutils.cpp:60
+#, kde-format
+msgid "Certificate is Trusted."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਭਰੋਸੇਯੋਗ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:62
+#, kde-format
+msgid "Certificate issuer isn't Trusted."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਜਾਰੀ ਕਰਤਾ ਭਰੋਸੇਯੋਗ ਨਹੀਂ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:64
+#, kde-format
+msgid "Certificate issuer is unknown."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਜਾਰੀ ਕਰਤਾ ਅਣਪਛਾਤਾ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:66
+#, kde-format
+msgid "Certificate has been Revoked."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਮਨਸੂਖ (ਰੱਦ) ਕੀਤਾ ਗਿਆ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:68
+#, kde-format
+msgid "Certificate has Expired."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਦੀ ਮਿਆਦ ਪੁੱਗੀ।"
+
+#: gui/signatureguiutils.cpp:70
+#, kde-format
+msgid "Certificate has not yet been verified."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਹਾਲੇ ਤਸਦੀਕ ਕੀਤਾ ਗਿਆ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:72
+#, kde-format
+msgid "Unknown issue with Certificate or corrupted data."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:80
+#, kde-format
+msgid "MD2"
+msgstr "MD2"
+
+#: gui/signatureguiutils.cpp:82
+#, kde-format
+msgid "MD5"
+msgstr "MD5"
+
+#: gui/signatureguiutils.cpp:84
+#, kde-format
+msgid "SHA1"
+msgstr "SHA1"
+
+#: gui/signatureguiutils.cpp:86
+#, kde-format
+msgid "SHA256"
+msgstr "SHA256"
+
+#: gui/signatureguiutils.cpp:88
+#, kde-format
+msgid "SHA384"
+msgstr "SHA384"
+
+#: gui/signatureguiutils.cpp:90
+#, kde-format
+msgid "SHA512"
+msgstr "SHA512"
+
+#: gui/signatureguiutils.cpp:92
+#, kde-format
+msgid "SHA224"
+msgstr "SHA224"
+
+#: gui/signatureguiutils.cpp:94
+#, kde-format
+msgid "Unknown Algorithm"
+msgstr "ਅਣਪਛਾਤਾ ਐਲੋਗਰਿਥਮ"
+
+#: gui/signatureguiutils.cpp:102
+#, kde-format
+msgid "RSA"
+msgstr "RSA"
+
+#: gui/signatureguiutils.cpp:104
+#, kde-format
+msgid "DSA"
+msgstr "DSA"
+
+#: gui/signatureguiutils.cpp:106
+#, kde-format
+msgid "EC"
+msgstr "EC"
+
+#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#, kde-format
+msgid "Unknown Type"
+msgstr "ਅਣਪਛਾਤੀ ਕਿਸਮ"
+
+#: gui/signatureguiutils.cpp:118
+#, kde-format
+msgid "Digital Signature"
+msgstr "ਡਿਜ਼ਿਟਲ ਦਸਤਖਤ"
+
+#: gui/signatureguiutils.cpp:121
+#, kde-format
+msgid "Non-Repudiation"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:124
+#, kde-format
+msgid "Encrypt Keys"
+msgstr "ਇੰਕ੍ਰਿਪਟ ਕੁੰਜੀਆਂ"
+
+#: gui/signatureguiutils.cpp:127
+#, kde-format
+msgid "Decrypt Keys"
+msgstr "ਡਿਸਕ੍ਰਿਪਟ ਕੁੰਜੀਆਂ"
+
+#: gui/signatureguiutils.cpp:130
+#, kde-format
+msgid "Key Agreement"
+msgstr "ਕੁੰਜੀ ਇਕਰਾਰ"
+
+#: gui/signatureguiutils.cpp:133
+#, kde-format
+msgid "Sign Certificate"
+msgstr "ਸਾਈਨ ਸਰਟੀਫਿਕੇਟ"
+
+#: gui/signatureguiutils.cpp:136
+#, kde-format
+msgid "Sign CRL"
+msgstr "ਸਾਈਨ CRL"
+
+#: gui/signatureguiutils.cpp:139
+#, kde-format
+msgid "Encrypt Only"
+msgstr "ਸਿਰਫ਼ ਇੰਕ੍ਰਿਪਟ"
+
+#: gui/signatureguiutils.cpp:142
+#, kde-format
+msgid "No Usage Specified"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:149
+#, kde-format
+msgctxt "Joins the various ways a signature key can be used in a longer string"
+msgid ", "
+msgstr ", "
+
+#: gui/signatureguiutils.cpp:163
+#, kde-format
+msgid "The document has not been modified since it was signed."
+msgstr "ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਬਾਅਦ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਗਿਆ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:166
+#, kde-format
+msgid ""
+"The revision of the document that was covered by this signature has not been "
+"modified;\n"
+"however there have been subsequent changes to the document."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:170
+#, fuzzy, kde-format
+#| msgid "The document has not been modified since it was signed."
+msgid ""
+"The document has been modified in a way not permitted by a previous signer."
+msgstr "ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਬਾਅਦ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਗਿਆ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:172
+#, kde-format
+msgid "The document integrity verification could not be completed."
+msgstr ""
+
+#: gui/signatureguiutils.cpp:205
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid "This document has unsigned signature fields."
+msgstr "ਇਹ ਡੌਕੂਮੈਂਟ ਨੂੰ ਡਿਜ਼ੀਟਲ ਰੂਪ ਵਿੱਚ ਦਸਖਤ ਕੀਤਾ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:208
+#, kde-format
+msgid "This document is digitally signed."
+msgstr "ਇਹ ਡੌਕੂਮੈਂਟ ਨੂੰ ਡਿਜ਼ੀਟਲ ਰੂਪ ਵਿੱਚ ਦਸਖਤ ਕੀਤਾ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:210
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid ""
+"This document is digitally signed. There have been changes since last signed."
+msgstr "ਇਹ ਡੌਕੂਮੈਂਟ ਨੂੰ ਡਿਜ਼ੀਟਲ ਰੂਪ ਵਿੱਚ ਦਸਖਤ ਕੀਤਾ ਹੈ।"
+
+#: gui/signatureguiutils.cpp:213
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid ""
+"This document is digitally signed. Some of the signatures could not be "
+"validated properly."
+msgstr "ਇਹ ਡੌਕੂਮੈਂਟ ਨੂੰ ਡਿਜ਼ੀਟਲ ਰੂਪ ਵਿੱਚ ਦਸਖਤ ਕੀਤਾ ਹੈ।"
+
+#: gui/signaturemodel.cpp:141
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Unsigned Signature %1"
+msgstr "ਡਿਜ਼ਿਟਲ ਦਸਤਖਤ"
+
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#, kde-format
+msgid "Field: %1 on page %2"
+msgstr "ਖੇਤਰ: %2 ਸਫ਼ੇ ਉਤੇ %1"
+
+#: gui/signaturemodel.cpp:152
+#, kde-format
+msgid "Rev. %1: Signed By %2"
+msgstr "ਰਿਵਿਜ਼ਨ %1: %2 ਨੇ ਦਸਖਤ ਕੀਤੇ"
+
+#: gui/signaturemodel.cpp:158
+#, kde-format
+msgid "Signing Time: %1"
+msgstr "ਦਸਤਖ਼ਤ ਦਾ ਵੇਲਾ: %1"
+
+#: gui/signaturemodel.cpp:163
+#, kde-format
+msgid "Reason: %1"
+msgstr "ਕਾਰਨ: %1"
+
+#: part/annotationactionhandler.cpp:147
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Red"
+msgstr "ਲਾਲ"
+
+#: part/annotationactionhandler.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Orange"
+msgstr "ਸੰਤਰੀ"
+
+#: part/annotationactionhandler.cpp:149
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Yellow"
+msgstr "ਪੀਲਾ"
+
+#: part/annotationactionhandler.cpp:150
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Green"
+msgstr "ਹਰਾ"
+
+#: part/annotationactionhandler.cpp:151
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Cyan"
+msgstr "ਹਰਾ-ਨੀਲਾ"
+
+#: part/annotationactionhandler.cpp:152
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Blue"
+msgstr "ਨੀਲਾ"
+
+#: part/annotationactionhandler.cpp:153
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Magenta"
+msgstr "ਵੈਂਗਣੀ-ਲਾਲ"
+
+#: part/annotationactionhandler.cpp:154
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "White"
+msgstr "ਚਿੱਟਾ"
+
+#: part/annotationactionhandler.cpp:155
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Gray"
+msgstr "ਸਲੇਟੀ"
+
+#: part/annotationactionhandler.cpp:156
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Black"
+msgstr "ਕਾਲਾ"
+
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Width %1"
+msgstr "ਚੌੜਾਈ %1"
+
+#: part/annotationactionhandler.cpp:251
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "%1%"
+msgstr "%1%"
+
+#: part/annotationactionhandler.cpp:295
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:296
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:297
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:298
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:299
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:300
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Add the current annotation to the quick annotations menu (No annotation "
+"selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:301
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
+"selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:302
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Advanced settings for the current annotation tool (No annotation selected)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:307
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width"
+msgstr "ਟਿੱਪਣੀ ਲਾਈਨ ਚੌੜਾਈ"
+
+#: part/annotationactionhandler.cpp:309
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (Current annotation has no line width)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:313
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation text color"
+msgstr "ਟਿੱਪਣੀ ਲਿਖਤ ਰੰਗ"
+
+#: part/annotationactionhandler.cpp:315
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation border color"
+msgstr "ਟਿੱਪਣੀ ਹਾਸ਼ੀਏ ਦਾ ਰੰਗ"
+
+#: part/annotationactionhandler.cpp:317
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color"
+msgstr "ਟਿੱਪਣੀ ਦਾ ਰੰਗ"
+
+#: part/annotationactionhandler.cpp:321
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color"
+msgstr "ਟਿੱਪਣੀ ਭਰਨ ਰੰਗ"
+
+#: part/annotationactionhandler.cpp:323
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (Current annotation has no fill color)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:327
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font"
+msgstr "ਟਿੱਪਣੀ ਫ਼ੋਂਟ"
+
+#: part/annotationactionhandler.cpp:329
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (Current annotation has no font)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain line angle to 15° steps"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:335
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain shape ratio to 1:1"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:337
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
+"current annotation)"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:340
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity"
+msgstr "ਟਿੱਪਣੀ ਧੁੰਦਲਾਪਨ"
+
+#: part/annotationactionhandler.cpp:341
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the current annotation to the quick annotations menu"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:342
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Advanced settings for the current annotation tool"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:431
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Color"
+msgstr "ਰੰਗ"
+
+#: part/annotationactionhandler.cpp:433
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Fill Color"
+msgstr "ਰੰਗ ਭਰੋ"
+
+#: part/annotationactionhandler.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Transparent"
+msgstr "ਪਾਰਦਰਸ਼ੀ"
+
+#: part/annotationactionhandler.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Custom Color..."
+msgstr ""
+
+#: part/annotationactionhandler.cpp:502
+#, kde-format
+msgctxt "@title:window"
+msgid "Select color"
+msgstr "ਰੰਗ ਚੁਣੋ"
+
+#: part/annotationactionhandler.cpp:554
+#, kde-format
+msgid "&Annotations"
+msgstr "ਟਿੱਪਣੀਆਂ(&A)"
+
+#: part/annotationactionhandler.cpp:555
+#, kde-format
+msgctxt "@action:intoolbar Hide the toolbar"
+msgid "Hide"
+msgstr "ਲੁਕਾਓ"
+
+#: part/annotationactionhandler.cpp:556
+#, kde-format
+msgctxt "@action:intoolbar Show the builtin annotation toolbar"
+msgid "Show more annotation tools"
+msgstr "ਹੋਰ ਟਿੱਪਣੀ ਟੂਲ ਵੇਖਾਓ"
+
+#: part/annotationactionhandler.cpp:559
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Highlighter"
+msgstr "ਹਾਈਲਾਈਰ"
+
+#: part/annotationactionhandler.cpp:560
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Underline"
+msgstr "ਹੇਠਾਂ ਲਾਈਨ"
+
+#: part/annotationactionhandler.cpp:561
+#, fuzzy, kde-format
+#| msgid "Select text"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Squiggle"
+msgstr "ਚੁਣਿਆ ਟੈਕਸਟ"
+
+#: part/annotationactionhandler.cpp:562
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Strike Out"
+msgstr "ਵਿੰਨ੍ਹੋ"
+
+#: part/annotationactionhandler.cpp:564
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Typewriter"
+msgstr "ਟਾਈਪ-ਰਾਈਟਰ"
+
+#: part/annotationactionhandler.cpp:565
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Inline Note"
+msgstr "ਇਨ-ਲਾਈਨ ਨੋਟ"
+
+#: part/annotationactionhandler.cpp:566
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Popup Note"
+msgstr "ਪੌਪ-ਅੱਪ ਨੋਟ"
+
+#: part/annotationactionhandler.cpp:567
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Freehand Line"
+msgstr "ਹੱਥ ਨਾਲ ਖਿੱਚੀ ਲਾਈਨ"
+
+#: part/annotationactionhandler.cpp:569
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Straight line"
+msgstr "ਸਿੱਧੀ ਲਾਈਨ"
+
+#: part/annotationactionhandler.cpp:570
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Arrow"
+msgstr "ਤੀਰ"
+
+#: part/annotationactionhandler.cpp:571
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Rectangle"
+msgstr "ਚਤੁਰਭੁਜ"
+
+#: part/annotationactionhandler.cpp:572
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Ellipse"
+msgstr "ਅੰਡਾਕਾਰ"
+
+#: part/annotationactionhandler.cpp:573
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Polygon"
+msgstr "ਬਹੁਭੁਜ"
+
+#: part/annotationactionhandler.cpp:574
+#, kde-format
+msgctxt "@action"
+msgid "Geometrical shapes"
+msgstr "ਜੁਮੈਟਰੀ ਵਾਲੀਆਂ ਸ਼ਕਲਾਂ"
+
+#: part/annotationactionhandler.cpp:625
+#, kde-format
+msgctxt "@action"
+msgid "Stamp"
+msgstr "ਮੋਹਰ"
+
+#: part/annotationactionhandler.cpp:650
+#, kde-format
+msgctxt "@action:intoolbar Show list of quick annotation tools"
+msgid "Quick Annotations"
+msgstr "ਫ਼ੌਰੀ ਟਿੱਪਣੀਆਂ"
+
+#: part/annotationactionhandler.cpp:658
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Choose an annotation tool from the quick annotations"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:668
+#, kde-format
+msgid "Quick Annotation Bar"
+msgstr "ਫ਼ੌਰੀ ਟਿੱਪਣੀ ਪੱਟੀ"
+
+#: part/annotationactionhandler.cpp:682
+#, kde-format
+msgctxt ""
+"@action:intoolbar Add current annotation tool to the quick annotations list"
+msgid "Add to Quick Annotations"
+msgstr "ਫ਼ੌਰੀ ਟਿੱਪਣੀਆਂ ਜੋੜੋ"
+
+#: part/annotationactionhandler.cpp:685
+#, kde-format
+msgctxt ""
+"@action:intoolbar When checked keep the current annotation tool active after "
+"use"
+msgid "Keep Active"
+msgstr "ਸਰਗਰਮ ਰੱਖੋ"
+
+#: part/annotationactionhandler.cpp:686
+#, fuzzy, kde-format
+#| msgid "Create annotation tool"
+msgctxt "@info:tooltip"
+msgid "Keep the annotation tool active after use"
+msgstr "ਟਿੱਪਣੀ ਟੂਲ ਬਣਾਓ"
+
+#: part/annotationactionhandler.cpp:691
+#, kde-format
+msgctxt ""
+"@action When checked, line annotations are constrained to 15° steps, shape "
+"annotations to 1:1 ratio"
+msgid "Constrain Ratio and Angle of Annotation Tools"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:697
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Font"
+msgstr "ਫ਼ੋਂਟ"
+
+#: part/annotationactionhandler.cpp:698
+#, kde-format
+msgctxt "@action:intoolbar Current annotation advanced settings"
+msgid "Annotation Settings"
+msgstr "ਟਿੱਪਣੀ ਲਈ ਸੈਟਿੰਗਾਂ"
+
+#: part/annotationactionhandler.cpp:701
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Line width"
+msgstr "ਲਾਈਨ ਦੀ ਚੌੜਾਈ"
+
+#: part/annotationactionhandler.cpp:710
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Opacity"
+msgstr "ਪਾਰਦਰਸ਼ਤਾ"
+
+#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#, kde-format
+msgid "Page %1"
+msgstr "%1 ਸਫ਼ਾ"
+
+#: part/annotationpopup.cpp:81
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "ਟਿੱਪਣੀ"
+msgstr[1] "%1 ਟਿੱਪਣੀਆਂ"
+
+#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#, kde-format
+msgid "&Open Pop-up Note"
+msgstr "ਪੌਪ-ਅੱਪ ਨੋਟਿਸ ਖੋਲ੍ਹੋ(&O)"
+
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#, kde-format
+msgid "&Delete"
+msgstr "ਹਟਾਓ(&D)"
+
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/propertiesdialog.cpp:54
+#, kde-format
+msgid "&Properties"
+msgstr "ਵਿਸ਼ੇਸ਼ਤਾ(&P)"
+
+#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#, kde-format
+msgctxt "%1 is the name of the file to save"
+msgid "&Save '%1'..."
+msgstr "'%1' ਸੰਭਾਲੋ(&S)..."
+
+#: part/annotationpropertiesdialog.cpp:54
+#, kde-format
+msgid "&Appearance"
+msgstr "ਦਿੱਖ(&A)"
+
+#: part/annotationpropertiesdialog.cpp:59
+#, kde-format
+msgid "&General"
+msgstr "ਸਧਾਰਨ(&G)"
+
+#: part/annotationpropertiesdialog.cpp:64
+#, kde-format
+msgid "&Author:"
+msgstr "ਲੇਖਕ(&A):"
+
+#: part/annotationpropertiesdialog.cpp:69
+#, kde-format
+msgid "Created:"
+msgstr "ਬਣਾਇਆ:"
+
+#: part/annotationpropertiesdialog.cpp:74
+#, kde-format
+msgid "Modified:"
+msgstr "ਸੋਧਿਆ:"
+
+#: part/annotationpropertiesdialog.cpp:108
+#, kde-format
+msgid "Pop-up Note Properties"
+msgstr "ਪੌਪਅੱਪ ਨੋਟ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: part/annotationpropertiesdialog.cpp:111
+#, kde-format
+msgid "Typewriter Properties"
+msgstr "ਟਾਈਪ-ਰਾਈਟਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:113
+#, kde-format
+msgid "Inline Note Properties"
+msgstr "ਇਨ-ਲਾਇਨ ਨੋਟ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: part/annotationpropertiesdialog.cpp:119
+#, kde-format
+msgid "Straight Line Properties"
+msgstr "ਸਿੱਧੀ ਲਾਇਨ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:121
+#, kde-format
+msgid "Polygon Properties"
+msgstr "ਬਹੁਭੁਜ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:125
+#, kde-format
+msgid "Geometry Properties"
+msgstr "ਜੁਮੈਟਰੀ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:128
+#, kde-format
+msgid "Text Markup Properties"
+msgstr "ਟੈਕਸਟ ਨਿਸ਼ਾਨ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:131
+#, kde-format
+msgid "Stamp Properties"
+msgstr "ਮੋਹਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:134
+#, kde-format
+msgid "Freehand Line Properties"
+msgstr "ਹੱਥ-ਨਾਲ ਖਿੱਚ ਲਾਇਨ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:137
+#, kde-format
+msgid "Caret Properties"
+msgstr "ਕਰੈਟ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:140
+#, kde-format
+msgid "File Attachment Properties"
+msgstr "ਫਾਇਲ ਅਟੈਂਚਮੈਂਟ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:143
+#, kde-format
+msgid "Sound Properties"
+msgstr "ਸਾਊਂਡ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:146
+#, kde-format
+msgid "Movie Properties"
+msgstr "ਮੂਵੀ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:149
+#, kde-format
+msgid "Annotation Properties"
+msgstr "ਟਿੱਪਣੀ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/annotationpropertiesdialog.cpp:175
+#, kde-format
+msgid "Modified: %1"
+msgstr "ਸੋਧ: %1"
+
+#: part/annotationwidgets.cpp:56
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a custom stamp symbol from file"
+msgstr ""
+
+#: part/annotationwidgets.cpp:156
+#, fuzzy, kde-format
+#| msgctxt "Annotation tool"
+#| msgid "Put a stamp symbol"
+msgctxt "@title:window file chooser"
+msgid "Select custom stamp symbol"
+msgstr "ਇੱਕ ਸਟੈਂਪ ਨਿਸ਼ਾਨ ਲਾਓ"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgid ""
+"*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
+msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | ਆਈਕਾਨ ਫਾਇਲਾਂ (*.ico *.png *.xpm *.svg *.svgz)"
+
+#: part/annotationwidgets.cpp:160
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not load the file <filename>%1</filename>"
+msgstr "<filename>%1</filename> ਫਾਇਲ ਨੂੰ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
+
+#: part/annotationwidgets.cpp:160
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid file"
+msgstr "ਨਕਾਰਾ ਫਾਇਲ"
+
+#: part/annotationwidgets.cpp:267
+#, kde-format
+msgid "&Color:"
+msgstr "ਰੰਗ(&C):"
+
+#: part/annotationwidgets.cpp:276
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80%'"
+msgid "%"
+msgstr "%"
+
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#, kde-format
+msgid "&Opacity:"
+msgstr "ਪਾਰਦਰਸ਼ਤਾ(&O):"
+
+#: part/annotationwidgets.cpp:365
+#, kde-format
+msgid "Icon:"
+msgstr "ਆਈਕਾਨ:"
+
+#: part/annotationwidgets.cpp:366
+#, kde-format
+msgid "Comment"
+msgstr "ਟਿੱਪਣੀ"
+
+#: part/annotationwidgets.cpp:367
+#, kde-format
+msgid "Help"
+msgstr "ਮਦਦ"
+
+#: part/annotationwidgets.cpp:368
+#, kde-format
+msgid "Insert"
+msgstr "ਸ਼ਾਮਲ"
+
+#: part/annotationwidgets.cpp:369
+#, kde-format
+msgid "Key"
+msgstr "ਕੁੰਜੀ"
+
+#: part/annotationwidgets.cpp:370
+#, kde-format
+msgid "New paragraph"
+msgstr "ਨਵਾਂ ਪ੍ਹੈਰਾ"
+
+#: part/annotationwidgets.cpp:371
+#, kde-format
+msgid "Note"
+msgstr "ਨੋਟ"
+
+#: part/annotationwidgets.cpp:372
+#, kde-format
+msgid "Paragraph"
+msgstr "ਪ੍ਹੈਰਾ"
+
+#: part/annotationwidgets.cpp:380
+#, kde-format
+msgid "Font:"
+msgstr "ਫੋਂਟ:"
+
+#: part/annotationwidgets.cpp:389
+#, kde-format
+msgid "Text &color:"
+msgstr "ਲਿਖਤ ਰੰਗ(&c):"
+
+#: part/annotationwidgets.cpp:396
+#, kde-format
+msgid "&Align:"
+msgstr "ਇਕਸਾਰ(&A):"
+
+#: part/annotationwidgets.cpp:397
+#, kde-format
+msgid "Left"
+msgstr "ਖੱਬੇ"
+
+#: part/annotationwidgets.cpp:398
+#, kde-format
+msgid "Center"
+msgstr "ਸੈਂਟਰ"
+
+#: part/annotationwidgets.cpp:399
+#, kde-format
+msgid "Right"
+msgstr "ਸੱਜੇ"
+
+#: part/annotationwidgets.cpp:407
+#, kde-format
+msgid "Border &width:"
+msgstr "ਹਾਸ਼ੀਏ ਦੀ ਚੌੜਾਈ(&w):"
+
+#: part/annotationwidgets.cpp:416
+#, kde-format
+msgid "Approved"
+msgstr "ਮਨਜ਼ੂਰ-ਸ਼ੁਦਾ"
+
+#: part/annotationwidgets.cpp:417
+#, kde-format
+msgid "As Is"
+msgstr "ਇੰਝ ਹੀ"
+
+#: part/annotationwidgets.cpp:418
+#, kde-format
+msgid "Confidential"
+msgstr "ਗੁਪਤ"
+
+#: part/annotationwidgets.cpp:419
+#, kde-format
+msgid "Departmental"
+msgstr "ਵਿਭਾਗੀ"
+
+#: part/annotationwidgets.cpp:420
+#, kde-format
+msgid "Draft"
+msgstr "ਖਰੜਾ"
+
+#: part/annotationwidgets.cpp:421
+#, kde-format
+msgid "Experimental"
+msgstr "ਤਜਰਬੇ ਅਧੀਨ"
+
+#: part/annotationwidgets.cpp:422
+#, kde-format
+msgid "Expired"
+msgstr "ਮਿਆਦ ਖਤਮ"
+
+#: part/annotationwidgets.cpp:423
+#, kde-format
+msgid "Final"
+msgstr "ਅੰਤਮ"
+
+#: part/annotationwidgets.cpp:424
+#, kde-format
+msgid "For Comment"
+msgstr "ਟਿੱਪਣੀ ਲਈ"
+
+#: part/annotationwidgets.cpp:425
+#, kde-format
+msgid "For Public Release"
+msgstr "ਪਬਲਿਕ ਰੀਲਿਜ਼ ਲਈ ਨਹੀਂ"
+
+#: part/annotationwidgets.cpp:426
+#, kde-format
+msgid "Not Approved"
+msgstr "ਮਨਜ਼ੂਰ ਨਹੀਂ"
+
+#: part/annotationwidgets.cpp:427
+#, kde-format
+msgid "Not For Public Release"
+msgstr "ਪਬਲਿਕ ਰੀਲਿਜ਼ ਲਈ ਨਹੀਂ ਹੈ"
+
+#: part/annotationwidgets.cpp:428
+#, kde-format
+msgid "Sold"
+msgstr "ਗੂੜ੍ਹਾ"
+
+#: part/annotationwidgets.cpp:429
+#, kde-format
+msgid "Top Secret"
+msgstr "ਬਹੁਤ ਖੁਫ਼ੀਆ"
+
+#: part/annotationwidgets.cpp:430
+#, kde-format
+msgid "Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ"
+
+#: part/annotationwidgets.cpp:431
+#, kde-format
+msgid "Information"
+msgstr "ਜਾਣਕਾਰੀ"
+
+#: part/annotationwidgets.cpp:432
+#, kde-format
+msgid "KDE"
+msgstr "KDE"
+
+#: part/annotationwidgets.cpp:456
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
+"visible in PDF readers other than Okular.</warning>"
+msgstr ""
+
+#: part/annotationwidgets.cpp:469
+#, kde-format
+msgid "Stamp symbol:"
+msgstr "ਮੋਹਰ ਦਾ ਨਿਸ਼ਾਨ:"
+
+#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
+#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
+#: part/annotationwidgets.cpp:795
+#, kde-format
+msgid "&Width:"
+msgstr "ਚੌੜਾਈ(&W):"
+
+#: part/annotationwidgets.cpp:522
+#, kde-format
+msgid "Line start:"
+msgstr "ਲਾਈਨ ਸ਼ੁਰੂ:"
+
+#: part/annotationwidgets.cpp:524
+#, kde-format
+msgid "Line end:"
+msgstr "ਲਾਈਨ ਖਤਮ:"
+
+#: part/annotationwidgets.cpp:527
+#, kde-format
+msgid "Square"
+msgstr "ਵਰਗ"
+
+#: part/annotationwidgets.cpp:528
+#, kde-format
+msgid "Circle"
+msgstr "ਚੱਕਰ"
+
+#: part/annotationwidgets.cpp:529
+#, kde-format
+msgid "Diamond"
+msgstr "ਘਣਾਕਾਰ"
+
+#: part/annotationwidgets.cpp:530
+#, kde-format
+msgid "Open Arrow"
+msgstr "ਖੁੱਲ੍ਹਾ ਤੀਰ"
+
+#: part/annotationwidgets.cpp:531
+#, kde-format
+msgid "Closed Arrow"
+msgstr "ਬੰਦ ਕੀਤਾ ਤੀਰ"
+
+#: part/annotationwidgets.cpp:532
+#, kde-format
+msgid "None"
+msgstr "ਕੋਈ ਨਹੀਂ"
+
+#: part/annotationwidgets.cpp:533
+#, kde-format
+msgid "Butt"
+msgstr "ਪੀਪਾ"
+
+#: part/annotationwidgets.cpp:534
+#, kde-format
+msgid "Right Open Arrow"
+msgstr "ਸੱਜਾ ਖੁੱਲ੍ਹਾ ਤੀਰ"
+
+#: part/annotationwidgets.cpp:535
+#, kde-format
+msgid "Right Closed Arrow"
+msgstr "ਸੱਜਾ ਬੰਦ ਕੀਤਾ ਤੀਰ"
+
+#: part/annotationwidgets.cpp:536
+#, kde-format
+msgid "Slash"
+msgstr "ਟੱਕ"
+
+#: part/annotationwidgets.cpp:549
+#, fuzzy, kde-format
+#| msgid "Leader Line Length:"
+msgid "Leader line length:"
+msgstr "ਲੀਡਰ ਲਾਈਨ ਲੰਬਾਈ:"
+
+#: part/annotationwidgets.cpp:551
+#, fuzzy, kde-format
+#| msgid "Leader Line Extensions Length:"
+msgid "Leader line extensions length:"
+msgstr "ਲੀਡਰ ਲਾਈਨ ਐਕਸ਼ਟੇਸ਼ਨ ਲੰਬਾਈ:"
+
+#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#, kde-format
+msgid "Enabled"
+msgstr "ਸਮਰੱਥ ਹੈ"
+
+#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#, kde-format
+msgid "Shape fill:"
+msgstr "ਸ਼ਕਲ ਭਰਨ:"
+
+#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#, kde-format
+msgid "Type:"
+msgstr "ਕਿਸਮ:"
+
+#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#, kde-format
+msgid "Strike out"
+msgstr "ਵਿੰਨ੍ਹੋ"
+
+#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#, kde-format
+msgid "Rectangle"
+msgstr "ਚਤੁਰਭੁਜ"
+
+#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#, kde-format
+msgid "Ellipse"
+msgstr "ਅੰਡਾਕਾਰ"
+
+#: part/annotationwidgets.cpp:763
+#, kde-format
+msgid "File attachment symbol:"
+msgstr "ਫਾਇਲ ਅਟੈਂਚਮੈਂਟ ਨਿਸ਼ਾਨ:"
+
+#: part/annotationwidgets.cpp:766
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Graph"
+msgstr "ਗਰਾਫ਼"
+
+#: part/annotationwidgets.cpp:767
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Push Pin"
+msgstr "ਪੁਸ਼ ਪਿੰਨ"
+
+#: part/annotationwidgets.cpp:768
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Paperclip"
+msgstr "ਪੇਪਰਕਲਿੱਪ"
+
+#: part/annotationwidgets.cpp:769
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Tag"
+msgstr "ਟੈਗ"
+
+#: part/annotationwidgets.cpp:778
+#, kde-format
+msgctxt "'File' as normal file, that can be opened, saved, etc.."
+msgid "File"
+msgstr "ਫਾਇਲ"
+
+#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#, kde-format
+msgctxt "Not available size"
+msgid "N/A"
+msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
+
+#: part/annotationwidgets.cpp:783
+#, kde-format
+msgid "No description available."
+msgstr "ਕੋਈ ਵੇਰਵਾ ਉਪਲੱਬਧ ਨਹੀਂ।"
+
+#: part/annotationwidgets.cpp:791
+#, kde-format
+msgid "Name:"
+msgstr "ਨਾਂ:"
+
+#: part/annotationwidgets.cpp:802
+#, kde-format
+msgid "Description:"
+msgstr "ਵੇਰਵਾ:"
+
+#: part/annotationwidgets.cpp:861
+#, kde-format
+msgid "Caret symbol:"
+msgstr "ਕਰੈਟ ਨਿਸ਼ਾਨ:"
+
+#: part/annotationwidgets.cpp:863
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "None"
+msgstr "ਕੋਈ ਨਹੀਂ"
+
+#: part/annotationwidgets.cpp:864
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "P"
+msgstr "P"
+
+#: part/annotwindow.cpp:52
+#, kde-format
+msgid "Close this note"
+msgstr "ਇਹ ਨੋਟ ਬੰਦ ਕਰੋ"
+
+#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#, kde-format
+msgid "Options"
+msgstr "ਚੋਣ"
+
+#: part/annotwindow.cpp:106
+#, kde-format
+msgid ""
+"This annotation may contain LaTeX code.\n"
+"Click here to render."
+msgstr ""
+
+#: part/annotwindow.cpp:415
+#, kde-format
+msgid "Cannot find latex executable."
+msgstr ""
+
+#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "LaTeX rendering failed"
+msgstr "LaTeX ਰੈਂਡਰਿੰਗ ਫੇਲ੍ਹ ਹੋਈ ਹੈ"
+
+#: part/annotwindow.cpp:420
+#, kde-format
+msgid "Cannot find dvipng executable."
+msgstr "dvipng ਚੱਲਣਯੋਗ ਨਹੀਂ ਲੱਭੀ।"
+
+#: part/annotwindow.cpp:425
+#, kde-format
+msgid "A problem occurred during the execution of the 'latex' command."
+msgstr "'latex' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ।"
+
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "A problem occurred during the execution of the 'dvipng' command."
+msgstr "'dvipng' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ।"
+
+#: part/bookmarklist.cpp:115
+#, kde-format
+msgctxt "%1 is the file name"
+msgid ""
+"%1\n"
+"\n"
+"One bookmark"
+msgid_plural ""
+"%1\n"
+"\n"
+"%2 bookmarks"
+msgstr[0] ""
+"%1\n"
+"\n"
+"ਇੱਕ ਬੁੱਕਮਾਰਕ"
+msgstr[1] ""
+"%1\n"
+"\n"
+"%2 ਬੁੱਕਮਾਰਕ"
+
+#: part/bookmarklist.cpp:131 part/part.cpp:422
+#, kde-format
+msgid "Bookmarks"
+msgstr "ਬੁੱਕਮਾਰਕ"
+
+#: part/bookmarklist.cpp:135
+#, fuzzy, kde-format
+#| msgid "End of the document"
+msgid "Show for all documents"
+msgstr "ਡੌਕੂਮੈਂਟ ਦਾ ਅੰਤ"
+
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
+#: part/toc.cpp:43
+#, kde-format
+msgid "Search..."
+msgstr "ਖੋਜੋ..."
+
+#: part/bookmarklist.cpp:257
+#, kde-format
+msgid "Go to This Bookmark"
+msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
+#: part/part.cpp:2467
+#, kde-format
+msgid "Rename Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਨਾਂ ਬਦਲੋ"
+
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਹਟਾਓ"
+
+#: part/bookmarklist.cpp:287
+#, kde-format
+msgctxt "Opens the selected document"
+msgid "Open Document"
+msgstr "ਡੌਕੂਮੈਂਟ ਖੋਲ੍ਹੋ"
+
+#: part/bookmarklist.cpp:290
+#, kde-format
+msgid "Remove all Bookmarks for this Document"
+msgstr ""
+
+#: part/certificateviewer.cpp:121
+#, kde-format
+msgid "Certificate Viewer"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਦਰਸ਼ਕ"
+
+#: part/certificateviewer.cpp:124
+#, kde-format
+msgid "Export..."
+msgstr "ਐਕਸਪੋਰਟ..."
+
+#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General"
+msgstr "ਸਧਾਰਨ"
+
+#: part/certificateviewer.cpp:132
+#, kde-format
+msgid "Issued By"
+msgstr "ਇਸ ਵਲੋਂ ਜਾਰੀ"
+
+#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#, kde-format
+msgid "Common Name(CN)"
+msgstr "ਆਮ ਨਾਂ(CN)"
+
+#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#, kde-format
+msgid "EMail"
+msgstr "ਈਮੇਲ"
+
+#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#, kde-format
+msgid "Organization(O)"
+msgstr "ਸੰਗਠਨ(O)"
+
+#: part/certificateviewer.cpp:139
+#, kde-format
+msgid "Issued To"
+msgstr "ਇਸ ਨੂੰ ਜਾਰੀ ਕੀਤਾ"
+
+#: part/certificateviewer.cpp:146
+#, kde-format
+msgid "Validity"
+msgstr "ਵੈਧਤਾ"
+
+#: part/certificateviewer.cpp:152
+#, kde-format
+msgid "Fingerprints"
+msgstr "ਫਿੰਗਰਪਰਿੰਟ"
+
+#: part/certificateviewer.cpp:160
+#, kde-format
+msgid "SHA-1 Fingerprint"
+msgstr "SHA-1 ਫਿੰਗਰਪਰਿੰਟ"
+
+#: part/certificateviewer.cpp:161
+#, kde-format
+msgid "SHA-256 Fingerprint"
+msgstr "SHA-256 ਫਿੰਗਰਪਰਿੰਟ"
+
+#: part/certificateviewer.cpp:179
+#, kde-format
+msgid "Details"
+msgstr "ਵੇਰਵੇ"
+
+#: part/certificateviewer.cpp:180
+#, kde-format
+msgid "Certificate Data:"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਡਾਟਾ:"
+
+#: part/certificateviewer.cpp:232
+#, kde-format
+msgid "Where do you want to save this certificate?"
+msgstr "ਤੁਸੀਂ ਇਸ ਸਰਟੀਫਿਕੇਟ ਨੂੰ ਕਿੱਥੇ ਸੰਭਾਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: part/certificateviewer.cpp:233
+#, kde-format
+msgid "Certificate File (*.cer)"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਫਾਇਲ (*.cer)"
+
+#: part/certificateviewer.cpp:236
+#, kde-format
+msgid "Could not export the certificate"
+msgstr ""
+
+#: part/colormodemenu.cpp:17
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Color Mode"
+msgstr "ਰੰਗ ਮੋਡ(&C)"
+
+#: part/colormodemenu.cpp:19
+#, kde-format
+msgctxt "@action Change Colors feature toggle action"
+msgid "Change Colors"
+msgstr "ਰੰਗ ਬਦਲੋ"
+
+#: part/colormodemenu.cpp:32
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Normal Colors"
+msgstr "ਸਧਾਰਨ ਰੰਗ(&N)"
+
+#: part/colormodemenu.cpp:44
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "&Invert Colors"
+msgstr "ਉਲਟ ਰੰਗ(&I)"
+
+#: part/colormodemenu.cpp:45
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Paper Color"
+msgstr "ਪੇਪਰ ਰੰਗ ਬਦਲੋ(&P)"
+
+#: part/colormodemenu.cpp:47
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Change &Dark && Light Colors"
+msgstr "ਗੂੜੇ ਅਤੇ ਫਿੱਕੇ ਰੰਗ ਬਦਲੋ(&D)"
+
+#: part/colormodemenu.cpp:49
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Convert to &Black && White"
+msgstr "ਕਾਲੇ ਅਤੇ ਚਿੱਟੇ ਲਈ ਬਦਲੋ(&B)"
+
+#: part/colormodemenu.cpp:52
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inmenu color mode"
+msgid "Invert &Lightness"
+msgstr "ਉਲਟ ਰੰਗ"
+
+#: part/colormodemenu.cpp:55
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert L&uma (sRGB Linear)"
+msgstr ""
+
+#: part/colormodemenu.cpp:58
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Invert Luma (&Symmetric)"
+msgstr ""
+
+#: part/colormodemenu.cpp:61
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue P&ositive"
+msgstr ""
+
+#: part/colormodemenu.cpp:64
+#, kde-format
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue N&egative"
+msgstr ""
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:11
+#, kde-format
+msgid "Red"
+msgstr "ਲਾਲ"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:16
+#, kde-format
+msgid "Green"
+msgstr "ਹਰਾ"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:21
+#, kde-format
+msgid "Blue"
+msgstr "ਨੀਲਾ"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:26
+#, kde-format
+msgid "Yellow"
+msgstr "ਪੀਲਾ"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:31
+#, kde-format
+msgid "Black"
+msgstr "ਕਾਲਾ"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:36
+#, kde-format
+msgid "White"
+msgstr "ਚਿੱਟਾ"
+
+#. i18n: tag tool attribute name
+#: part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr "ਤੀਰ"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:9
+#, kde-format
+msgid "Yellow Highlighter"
+msgstr "ਪੀਲਾ ਹਾਈਲਾਇਟਰ"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:14
+#, kde-format
+msgid "Green Highlighter"
+msgstr "ਹਰਾ ਹਾਈਲਾਇਟਰ"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:24
+#, kde-format
+msgid "Insert Text"
+msgstr "ਲਿਖਤ ਪਾਓ"
+
+#: part/dlgaccessibility.cpp:38
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Draw border around links"
+msgstr "ਲਿੰਕ ਦੁਆਲੇ ਹਾਸ਼ੀਆਂ ਖਿੱਚੋ"
+
+#: part/dlgaccessibility.cpp:48
+#, kde-format
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Change colors"
+msgstr "ਰੰਗ ਬਦਲੋ"
+
+#: part/dlgaccessibility.cpp:54
+#, kde-format
+msgctxt "@info Config dialog, accessibility page"
+msgid "<b>Warning:</b> these options can badly affect drawing speed."
+msgstr "<b>ਸਾਵਧਾਨ:</b> ਡਰਾਇੰਗ ਸਪੀਡ ਵਧਣ ਨਾਲ ਇਹਨਾਂ ਚੋਣਾਂ ਬੁਰੀ ਤਰਾਂ ਪ੍ਰਭਾਵਿਤ ਹੋਣਗੀਆਂ।"
+
+#: part/dlgaccessibility.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert colors"
+msgstr "ਉਲਟ ਰੰਗ"
+
+#: part/dlgaccessibility.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change paper color"
+msgstr "ਪੇਪਰ ਰੰਗ ਬਦਲੋ"
+
+#: part/dlgaccessibility.cpp:62
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change dark & light colors"
+msgstr "ਗੂੜੇ ਅਤੇ ਫਿੱਕੇ ਰੰਗ ਬਦਲੋ"
+
+#: part/dlgaccessibility.cpp:63
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Convert to black & white"
+msgstr "ਕਾਲੇ ਅਤੇ ਚਿੱਟੇ ਲਈ ਬਦਲੋ"
+
+#: part/dlgaccessibility.cpp:64
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert lightness"
+msgstr "ਉਲਟ ਰੰਗ"
+
+#: part/dlgaccessibility.cpp:65
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (sRGB linear)"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:66
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (symmetric)"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:67
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue positive"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:68
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue negative"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:70
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Color mode:"
+msgstr "ਰੰਗ ਮੋਡ:"
+
+#: part/dlgaccessibility.cpp:87
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Paper color:"
+msgstr "ਪੇਪਰ ਰੰਗ:"
+
+#: part/dlgaccessibility.cpp:99
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Dark color:"
+msgstr "ਗੂੜ੍ਹਾ ਰੰਗ:"
+
+#: part/dlgaccessibility.cpp:104
+#, kde-format
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Light color:"
+msgstr "ਹਲਕਾ ਰੰਗ:"
+
+#: part/dlgaccessibility.cpp:119
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Threshold:"
+msgstr "ਥਰੈਸ਼ਹੋਲਡ:"
+
+#: part/dlgaccessibility.cpp:127
+#, kde-format
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Contrast:"
+msgstr "ਕਾਨਟਰੈਸਟ:"
+
+#: part/dlgaccessibility.cpp:158
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech engine:"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:165
+#, fuzzy, kde-format
+#| msgid "Text to search for"
+msgctxt "&label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech voice:"
+msgstr "ਲਿਖਤ ਲਈ ਖੋਜ"
+
+#: part/dlgannotations.cpp:25
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Full Annotation Toolbar"
+msgstr "ਪੂਰੀ ਟਿੱਪਣੀ ਟੂਲਬਾਰ"
+
+#: part/dlgannotations.cpp:26
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Quick Annotation Toolbar"
+msgstr "ਫ਼ੌਰੀ ਟਿੱਪਣੀ ਟੂਲਬਾਰ"
+
+#: part/dlgannotations.cpp:28
+#, kde-format
+msgctxt "label:listbox Config dialog, general page"
+msgid "Annotation toolbar:"
+msgstr "ਟਿੱਪਣੀ ਟੂਲਬਾਰ:"
+
+#: part/dlgannotations.cpp:34
+#, kde-format
+msgctxt "@label:textbox Config dialog, annotations page"
+msgid "Author:"
+msgstr "ਲੇਖਕ:"
+
+#: part/dlgannotations.cpp:38
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>Note</b>: the information here is used only for comments and reviews. "
+#| "Information inserted here will not be transmitted without your knowledge."
+msgctxt "@info Config dialog, annotations page"
+msgid ""
+"<b>Note:</b> the information here is used only for annotations. The "
+"information is saved in annotated documents, and so will be transmitted "
+"together with the document."
+msgstr ""
+"<b>ਨੋਟ</b>: ਇੱਥੇ ਦਿੱਤੀ ਜਾਣਕਾਰੀ ਨੂੰ ਕੇਵਲ ਟਿੱਪਣੀਆਂ ਤੇ ਪੜਤਾਲ ਲਈ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ। ਇਹ ਦਿੱਤੀ "
+"ਜਾਣਕਾਰੀ ਨੂੰ ਤੁਹਾਡੀ ਜਾਣਕਾਰੀ ਤੋਂ ਬਿਨਾਂ ਕੀਤੇ ਵੀ ਭੇਜਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।"
+
+#: part/dlgannotations.cpp:48
+#, kde-format
+msgctxt ""
+"@label Config dialog, annotations page, heading line for Quick Annotations "
+"tool manager"
+msgid "<h3>Quick Annotation Tools</h3>"
+msgstr "<h3>ਫ਼ੌਰੀ ਟਿੱਪਣੀ ਟੂਲ</h3>"
+
+#: part/dlgeditor.cpp:28
+#, fuzzy, kde-format
+#| msgctxt "@info:whatsthis"
+#| msgid ""
+#| "Choose the editor you want to launch when Okular wants to open a source "
+#| "file."
+msgctxt "@info:whatsthis Config dialog, editor page"
+msgid ""
+"Choose the editor you want to launch when Okular wants to open a source file."
+msgstr "ਐਡੀਟਰ ਚੁਣੋ, ਜੋ ਕਿ ਤੁਸੀਂ ਚਲਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਜਦੋਂ ਓਕੁਲਾਰ ਇੱਕ ਸਰੋਤ ਫਾਇਲ ਖੋਲ੍ਹਦਾ ਹੈ।"
+
+#: part/dlgeditor.cpp:29
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Custom Text Editor"
+msgstr "ਪਸੰਦੀਦਾ ਲਿਖਤ ਸੰਪਾਦਕ"
+
+#: part/dlgeditor.cpp:30
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kate"
+msgstr "ਕੇਟ"
+
+#: part/dlgeditor.cpp:31
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kile"
+msgstr "ਕਾਇਲ"
+
+#: part/dlgeditor.cpp:32
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "SciTE"
+msgstr "SciTE"
+
+#: part/dlgeditor.cpp:33
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Emacs client"
+msgstr "ਈਮੈਕਸ ਕਲਾਈਂਟ"
+
+#: part/dlgeditor.cpp:34
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Lyx client"
+msgstr "Lyx ਕਲਾਈਂਟ"
+
+#: part/dlgeditor.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXstudio"
+msgstr "TeXstudio"
+
+#: part/dlgeditor.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXiFy IDEA"
+msgstr "TeXiFy IDEA"
+
+#: part/dlgeditor.cpp:37
+#, kde-format
+msgctxt "@label:listbox Config dialog, editor page"
+msgid "Editor:"
+msgstr "ਐਡੀਟਰ:"
+
+#: part/dlgeditor.cpp:52
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"<qt>Set the command of a custom text editor to be launched.<br />\n"
+"You can also put few placeholders:\n"
+"<ul>\n"
+"  <li>%f - the file name</li>\n"
+"  <li>%l - the line of the file to be reached</li>\n"
+"  <li>%c - the column of the file to be reached</li>\n"
+"</ul>\n"
+"If %f is not specified, then the file name is appended to the specified "
+"command."
+msgstr ""
+
+#: part/dlgeditor.cpp:63
+#, kde-format
+msgctxt "@label:textbox Config dialog, editor page"
+msgid "Command:"
+msgstr "ਕਮਾਂਡ:"
+
+#: part/dlggeneral.cpp:33
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Use smooth scrolling"
+msgstr ""
+
+#: part/dlggeneral.cpp:35
+#, kde-format
+msgctxt "@title:group Config dialog, general page"
+msgid "Appearance:"
+msgstr "ਦਿੱਖ:"
+
+#: part/dlggeneral.cpp:39
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Show scrollbars"
+msgstr "ਸਕਰੋਲਪੱਟੀ ਵੇਖੋ"
+
+#: part/dlggeneral.cpp:46
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgctxt "@option:check Config dialog, general page"
+msgid "Link the thumbnails with the page"
+msgstr "ਥੰਮਨੇਲ ਪੇਜ਼ ਨਾਲ ਲਿੰਕ ਕਰੋ(&t)"
+
+#: part/dlggeneral.cpp:53
+#, fuzzy, kde-format
+#| msgid "Show &hints and info messages"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show hints and info messages"
+msgstr "ਸੰਕੇਤ ਅਤੇ ਜਾਣਕਾਰੀ ਸੁਨੇਹੇ ਵੇਖੋ(&h)"
+
+#: part/dlggeneral.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Notify about embedded files, forms, or signatures"
+msgstr ""
+
+#: part/dlggeneral.cpp:66
+#, fuzzy, kde-format
+#| msgid "Display document title in titlebar if available"
+msgctxt "@option:check Config dialog, general page"
+msgid "Display document title in titlebar if available"
+msgstr "ਟਾਈਟਲ ਪੱਟੀ ਵਿੱਚ ਡੌਕੂਮੈਂਟ ਟਾਈਟਲ ਤਾਂ ਵੇਖਾਉ, ਜੇ ਉਪਲੱਬਧ ਹੈ"
+
+#: part/dlggeneral.cpp:72
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display file name only"
+msgstr "ਸਿਰਫ਼ ਫਾਇਲ ਨਾਂ ਹੀ ਵੇਖਾਓ"
+
+#: part/dlggeneral.cpp:73
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display full file path"
+msgstr "ਪੂਰਾ ਫਾਇਲ ਪਾਥ ਵੇਖਾਓ"
+
+#: part/dlggeneral.cpp:75
+#, fuzzy, kde-format
+#| msgid "When not displaying document title:"
+msgctxt "label:listbox Config dialog, general page"
+msgid "When not displaying document title:"
+msgstr "ਡੌਕੂਮੈਂਟ ਟਾਈਟਲ ਨਾ ਵੇਖਾਉਣਾ ਹੋਵੇ ਜਦੋਂ:"
+
+#: part/dlggeneral.cpp:90
+#, fuzzy, kde-format
+#| msgid "Background color:"
+msgctxt "@label:listbox Config dialog, general page"
+msgid "Use custom background color:"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ:"
+
+#: part/dlggeneral.cpp:112
+#, fuzzy, kde-format
+#| msgid "Program Features"
+msgctxt "@title:group Config dialog, general page"
+msgid "Program features:"
+msgstr "ਪ੍ਰੋਗਰਾਮ ਫੀਚਰ"
+
+#: part/dlggeneral.cpp:119
+#, fuzzy, kde-format
+#| msgid "Open new files in &tabs"
+msgctxt "@option:check Config dialog, general page"
+msgid "Open new files in tabs"
+msgstr "ਨਵੀਆਂ ਫਾਇਲਾਂ ਟੈਬਾਂ ਵਿੱਚ ਖੋਲ੍ਹੋ(&t)"
+
+#: part/dlggeneral.cpp:124
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Switch to existing tab if file is already open"
+msgstr ""
+
+#: part/dlggeneral.cpp:137
+#, fuzzy, kde-format
+#| msgid "&Obey DRM limitations"
+msgctxt "@option:check Config dialog, general page"
+msgid "Obey DRM limitations"
+msgstr "DRM ਸੀਮਾਵਾਂ ਦਾ ਖਿਆਲ ਰੱਖੋ(&O)"
+
+#: part/dlggeneral.cpp:146
+#, fuzzy, kde-format
+#| msgid "&Reload document on file change"
+msgctxt "@option:check Config dialog, general page"
+msgid "Reload document on file change"
+msgstr "ਫਾਇਲ ਬਦਲਾਅ ਹੋਣ ਨਾਲ ਡੌਕੂਮੈਂਟ ਮੁੜ-ਲੋਡ ਕਰੋ(&R)"
+
+#: part/dlggeneral.cpp:153
+#, fuzzy, kde-format
+#| msgid "Show backend selection dialog"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show backend selection dialog"
+msgstr "ਬੈਕਐਂਡ ਚੋਣ ਡਾਈਲਾਗ ਵੇਖੋ"
+
+#: part/dlggeneral.cpp:160
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Right to left reading direction"
+msgstr ""
+
+#: part/dlggeneral.cpp:166
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open in continuous mode by default"
+msgstr ""
+
+#: part/dlggeneral.cpp:173
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "When using Browse Tool, wrap cursor at screen edges"
+msgstr ""
+
+#: part/dlggeneral.cpp:190
+#, fuzzy, kde-format
+#| msgid "Overview &columns:"
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Overview columns:"
+msgstr "ਸੰਖੇਪ ਕਾਲਮ(&c):"
+
+#: part/dlggeneral.cpp:197
+#, kde-format
+msgctxt "Page Up/Down overlap, spinbox suffix"
+msgid "%"
+msgstr "%"
+
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@info:tooltip Config dialog, general page"
+msgid ""
+"Defines how much of the current viewing area will still be visible when "
+"pressing the Page Up/Down keys."
+msgstr ""
+
+#: part/dlggeneral.cpp:200
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Page Up/Down overlap:"
+msgstr "ਸਫ਼ੇ ਉੱਤੇ/ਹੇਠਾਂ ਓਵਰਲੈਪ:"
+
+#: part/dlggeneral.cpp:204
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "100%"
+msgstr "100%"
+
+#: part/dlggeneral.cpp:205
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Width"
+msgstr "ਚੌੜਾਈ ਫਿੱਟ"
+
+#: part/dlggeneral.cpp:206
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Page"
+msgstr "ਸਫ਼ਾ ਫਿੱਟ"
+
+#: part/dlggeneral.cpp:207
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Auto Fit"
+msgstr "ਆਟੋ ਫਿੱਟ"
+
+#: part/dlggeneral.cpp:208
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid ""
+"Defines the default zoom mode for files which were never opened before. For "
+"files which were opened before the previous zoom is applied."
+msgstr ""
+
+#: part/dlggeneral.cpp:210
+#, kde-format
+msgctxt "label:listbox Config dialog, general page, default zoom"
+msgid "Default zoom:"
+msgstr "ਡਿਫਾਲਟ ਜ਼ੂਮ:"
+
+#: part/dlgperformance.cpp:26
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable transparency effects"
+msgstr "ਪਾਰਦਰਸ਼ਤਾ ਪ੍ਰਭਾਵ ਸਮਰੱਥ ਕਰੋ"
+
+#: part/dlgperformance.cpp:28
+#, kde-format
+msgctxt "@label Config dialog, performance page"
+msgid "CPU usage:"
+msgstr "CPU ਵਰਤੋਂ:"
+
+#: part/dlgperformance.cpp:35
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Low"
+msgstr "ਘੱਟ"
+
+#: part/dlgperformance.cpp:36
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Normal (default)"
+msgstr "ਸਧਾਰਨ (ਡਿਫਾਲਟ)"
+
+#: part/dlgperformance.cpp:37
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Aggressive"
+msgstr "ਆਕਰਮਣਸ਼ੀਲ"
+
+#: part/dlgperformance.cpp:38
+#, fuzzy, kde-format
+#| msgid "Green"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Greedy"
+msgstr "ਹਰਾ"
+
+#: part/dlgperformance.cpp:40
+#, kde-format
+msgctxt "@label:listbox Config dialog, performance page, memory usage"
+msgid "Memory usage:"
+msgstr "ਮੈਮੋਰੀ ਵਰਤੋਂ:"
+
+#: part/dlgperformance.cpp:54
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text antialias"
+msgstr "ਟੈਕਸਟ ਐਂਟੀਲਾਈਸਿੰਗ ਸਮਰੱਥ"
+
+#: part/dlgperformance.cpp:56
+#, kde-format
+msgctxt "@title:group Config dialog, performance page"
+msgid "Rendering options:"
+msgstr "ਰੈਂਡਰਿੰਗ ਚੋਣਾਂ:"
+
+#: part/dlgperformance.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable graphics antialias"
+msgstr "ਗਰਾਫਿਕਸ ਐਂਟੀਲਾਈਸਿੰਗ ਸਮਰੱਥ"
+
+#: part/dlgperformance.cpp:64
+#, kde-format
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text hinting"
+msgstr "ਲਿਖਤ ਹਿਟਿੰਗ ਸਮਰੱਥ"
+
+#: part/dlgperformance.cpp:77
+#, kde-format
+msgid ""
+"Keeps used memory as low as possible. Do not reuse anything. (For systems "
+"with low memory.)"
+msgstr "ਵਰਤੀ ਮੈਮੋਰੀ ਜਿੰਨਾ ਹੋ ਸਕੇ ਘੱਟ ਰੱਖੋ। ਕੁਝ ਵੀ ਮੁੜ ਨਾ ਵਰਤੋਂ (ਘੱਟ ਮੈਮੋਰੀ ਵਾਲੇ ਸਿਸਟਮਾਂ ਲਈ।)"
+
+#: part/dlgperformance.cpp:80
+#, kde-format
+msgid ""
+"A good compromise between memory usage and speed gain. Preload next page and "
+"boost searches. (For systems with 2GB of memory, typically.)"
+msgstr ""
+"ਮੈਮੋਰੀ ਵਰਤੋਂ ਅਤੇ ਸਪੀਡ ਤੇਜ਼ ਕਰਨ ਲਈ ਚੰਗਾ ਹੈ। ਅਗਲਾ ਸਫ਼ਾ ਪਹਿਲਾਂ ਹੀ ਲੋਡ ਹੁੰਦਾ ਹੈ ਅਤੇ ਖੋਜ ਤੇਜ਼ ਹੁੰਦੀ ਹੈ। "
+"(ਆਮ ਤੌਰ ਉੱਤੇ 2GB ਮੈਮੋਰੀ ਵਾਲੇ ਸਿਸਟਮਾਂ ਲਈ।)"
+
+#: part/dlgperformance.cpp:83
+#, kde-format
+msgid ""
+"Keeps everything in memory. Preload next pages. Boost searches. (For systems "
+"with more than 4GB of memory.)"
+msgstr ""
+"ਹਰ ਚੀਜ਼ ਮੈਮੋਰੀ ਵਿੱਚ ਰੱਖੋ। ਪਹਿਲਾਂ ਲੋਡ ਕੀਤੇ ਅਗਲੇ ਪੇਜ਼। ਖੋਜ ਬਹੁਤ ਤੇਜ਼ ਹੋ ਜਾਂਦੀ ਹੈ (4GB ਤੋਂ ਵੱਧ ਮੈਮੋਰੀ "
+"ਵਾਲੇ ਸਿਸਟਮਾਂ ਲਈ ਹੀ।)"
+
+#: part/dlgperformance.cpp:87
+#, no-c-format, kde-format
+msgid ""
+"Loads and keeps everything in memory. Preload all pages. (Will use at "
+"maximum 50% of your total memory or your free memory, whatever is bigger.)"
+msgstr ""
+
+#: part/dlgpresentation.cpp:37
+#, kde-format
+msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+msgid "every "
+msgstr "ਹਰ "
+
+#: part/dlgpresentation.cpp:38
+#, kde-format
+msgctxt "Advance every %1 seconds"
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " ਸਕਿੰਟ"
+msgstr[1] " ਸਕਿੰਟ"
+
+#: part/dlgpresentation.cpp:45
+#, kde-format
+msgctxt "@label:spinbox Config dialog, presentation page"
+msgid "Advance automatically:"
+msgstr "ਆਪਣੇ-ਆਪ ਅੱਗੇ ਜਾਓ:"
+
+#: part/dlgpresentation.cpp:53
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Loop after last page"
+msgstr "ਆਖਰੀ ਸਫ਼ੇ ਉਪਰੰਤ ਲੂਪ"
+
+#: part/dlgpresentation.cpp:59
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap left/right side to go back/forward"
+msgstr ""
+
+#: part/dlgpresentation.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap anywhere to go forward"
+msgstr ""
+
+#: part/dlgpresentation.cpp:61
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Disabled"
+msgstr "ਅਸਮਰੱਥ ਹੈ"
+
+#: part/dlgpresentation.cpp:63
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
+msgid "Touch navigation:"
+msgstr "ਟੱਚ ਨੇਵੀਗੇਸ਼ਨ:"
+
+#: part/dlgpresentation.cpp:72
+#, kde-format
+msgctxt "@label:chooser Config dialog, presentation page"
+msgid "Background color:"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ:"
+
+#: part/dlgpresentation.cpp:76
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Hidden after delay"
+msgstr "ਦੇਰੀ ਉਪਰੰਤ ਓਹਲੇ"
+
+#: part/dlgpresentation.cpp:77
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always visible"
+msgstr "ਹਮੇਸ਼ਾ ਵੇਖੋ"
+
+#: part/dlgpresentation.cpp:78
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always hidden"
+msgstr "ਹਮੇਸ਼ਾ ਓਹਲੇ"
+
+#: part/dlgpresentation.cpp:80
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
+msgid "Mouse cursor:"
+msgstr "ਮਾਊਸ ਕਰਸਰ:"
+
+#: part/dlgpresentation.cpp:84
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show progress indicator"
+msgstr "ਤਰੱਕੀ ਇੰਡੀਕੇਟਰ ਵੇਖੋ"
+
+#: part/dlgpresentation.cpp:90
+#, kde-format
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show summary page"
+msgstr "ਸੰਖੇਪ ਸਫ਼ੇ ਵੇਖਾਓ"
+
+#: part/dlgpresentation.cpp:100
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Instant (Never use animations)"
+msgstr ""
+
+#: part/dlgpresentation.cpp:101
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Replace"
+msgstr "ਤਬਦੀਲ"
+
+#: part/dlgpresentation.cpp:102
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Random transition"
+msgstr "ਰਲਵਾਂ ਟਰਾਂਸਿਟਸ਼ਨ"
+
+#: part/dlgpresentation.cpp:103
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds vertical"
+msgstr "ਵਰਟੀਕਲ ਬਲੈਂਡ"
+
+#: part/dlgpresentation.cpp:104
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds horizontal"
+msgstr "ਹਰੀਜ਼ਟਲ ਬਲੈਂਡ"
+
+#: part/dlgpresentation.cpp:105
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box in"
+msgstr "ਬਾਕਸ ਇਨ"
+
+#: part/dlgpresentation.cpp:106
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box out"
+msgstr "ਬਾਕਸ ਆਉਟ"
+
+#: part/dlgpresentation.cpp:107
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Dissolve"
+msgstr "ਘੋਲਣਾ"
+
+#: part/dlgpresentation.cpp:108
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Fade"
+msgstr "ਫਿੱਕਾ"
+
+#: part/dlgpresentation.cpp:109
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter down"
+msgstr ""
+
+#: part/dlgpresentation.cpp:110
+#, fuzzy, kde-format
+#| msgid "Rotate &Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right"
+msgstr "ਸੱਜੇ ਘੁੰਮਾਓ(&R)"
+
+#: part/dlgpresentation.cpp:111
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right-down"
+msgstr ""
+
+#: part/dlgpresentation.cpp:112
+#, fuzzy, kde-format
+#| msgid "Split Horizontal In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal in"
+msgstr "ਹਰੀਜ਼ਟਲ ਅੰਦਰ ਵੰਡੋ"
+
+#: part/dlgpresentation.cpp:113
+#, fuzzy, kde-format
+#| msgid "Split Horizontal Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal out"
+msgstr "ਹਰੀਜ਼ਟਲ ਬਾਹਰ ਵੰਡੋ"
+
+#: part/dlgpresentation.cpp:114
+#, fuzzy, kde-format
+#| msgid "Split Vertical In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical in"
+msgstr "ਵਰਟੀਕਲ ਅੰਦਰ ਵੰਡੋ"
+
+#: part/dlgpresentation.cpp:115
+#, fuzzy, kde-format
+#| msgid "Split Vertical Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical out"
+msgstr "ਵਰਟੀਕਲ ਬਾਹਰ ਵੰਡੋ"
+
+#: part/dlgpresentation.cpp:116
+#, fuzzy, kde-format
+#| msgid "Wipe Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe down"
+msgstr "ਹੇਠਾਂ ਹੂੰਝਾ"
+
+#: part/dlgpresentation.cpp:117
+#, fuzzy, kde-format
+#| msgid "Wipe Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe right"
+msgstr "ਸੱਜੇ ਹੂੰਝਾ"
+
+#: part/dlgpresentation.cpp:118
+#, fuzzy, kde-format
+#| msgid "Wipe Left"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe left"
+msgstr "ਖੱਬੇ ਹੂੰਝਾ"
+
+#: part/dlgpresentation.cpp:119
+#, fuzzy, kde-format
+#| msgid "Wipe Up"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe up"
+msgstr "ਉੱਤੇ ਹੂੰਝਾ"
+
+#: part/dlgpresentation.cpp:121
+#, fuzzy, kde-format
+#| msgid "Default transition:"
+msgctxt "@label:listbox Config dialog, presentation page, transitions"
+msgid "Default transition:"
+msgstr "ਡਿਫਾਲਟ ਟਰਾਂਸਿਟਸ਼ਨ:"
+
+#: part/dlgpresentation.cpp:130
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
+msgid "Preferred screen:"
+msgstr "ਤਰਜੀਹੀ ਸਕਰੀਨ:"
+
+#: part/dlgpresentation.cpp:137
+#, kde-format
+msgctxt ""
+"@label Config dialog, presentation page, heading line for drawing tool "
+"manager"
+msgid "<h3>Drawing Tools</h3>"
+msgstr "<h3>ਡਰਾਇੰਗ ਟੂਲ</h3>"
+
+#: part/dlgpresentation.cpp:171
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Current Screen"
+msgstr "ਮੌਜੂਦਾ ਸਕਰੀਨ"
+
+#: part/dlgpresentation.cpp:172
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Default Screen"
+msgstr "ਡਿਫਾਲਟ ਸਕਰੀਨ"
+
+#: part/dlgpresentation.cpp:178
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
+"screen model name. %4 is the screen name like DVI-0"
+msgid "Screen %1 (%2 %3 %4)"
+msgstr "ਸਕਰੀਨ %1 (%2 %3 %4)"
+
+#: part/dlgpresentation.cpp:190
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...), hopefully not 0."
+msgid "Screen %1 (disconnected)"
+msgstr "ਸਕਰੀਨ %1 (ਡਿਸ-ਕਨੈਕਟ ਹੈ)"
+
+#: part/drawingtoolactions.cpp:192
+#, kde-format
+msgid "Drawing Tool: %1"
+msgstr "ਡਰਾਇੰਗ ਟੂਲ: %1"
+
+#: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
+#, kde-format
+msgid "Eraser"
+msgstr "ਰਬੜ"
+
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#, kde-format
+msgid "&Name:"
+msgstr "ਨਾਂ(&N):"
+
+#: part/editannottooldialog.cpp:69
+#, kde-format
+msgid "&Type:"
+msgstr "ਟਾਈਪ(&T):"
+
+#: part/editannottooldialog.cpp:82
+#, kde-format
+msgid "Appearance"
+msgstr "ਦਿੱਖ"
+
+#: part/editannottooldialog.cpp:93
+#, kde-format
+msgid "Text markup"
+msgstr "ਟੈਕਸਟ ਨਿਸ਼ਾਨ"
+
+#: part/editannottooldialog.cpp:94
+#, kde-format
+msgid "Geometrical shape"
+msgstr "ਜੁਮੈਟਰੀ ਸ਼ਕਲ"
+
+#: part/editannottooldialog.cpp:101
+#, kde-format
+msgid "Create annotation tool"
+msgstr "ਟਿੱਪਣੀ ਟੂਲ ਬਣਾਓ"
+
+#: part/editannottooldialog.cpp:103
+#, kde-format
+msgid "Edit annotation tool"
+msgstr "ਟਿੱਪਣੀ ਟੂਲ ਸੋਧ"
+
+#: part/editdrawingtooldialog.cpp:50
+#, kde-format
+msgid "Color:"
+msgstr "ਰੰਗ:"
+
+#: part/editdrawingtooldialog.cpp:57
+#, kde-format
+msgid "&Pen Width:"
+msgstr "ਪੈਨ ਚੌੜਾਈ(&P):"
+
+#: part/editdrawingtooldialog.cpp:63
+#, kde-format
+msgctxt "Suffix for the pen width, eg '10 px'"
+msgid " px"
+msgstr " px"
+
+#: part/editdrawingtooldialog.cpp:73
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80 %'"
+msgid " %"
+msgstr " %"
+
+#: part/editdrawingtooldialog.cpp:78
+#, kde-format
+msgid "Create drawing tool"
+msgstr "ਡਰਾਇੰਗ ਬਣਾਉਣ ਵਾਲਾ ਟੂਲ"
+
+#: part/editdrawingtooldialog.cpp:83
+#, kde-format
+msgid "Edit drawing tool"
+msgstr "ਡਰਾਇੰਗ ਸੋਧਣ ਵਾਲਾ ਟੂਲ"
+
+#: part/embeddedfilesdialog.cpp:39
+#, kde-format
+msgctxt "Unknown date"
+msgid "Unknown"
+msgstr "ਅਣਪਛਾਤਾ"
+
+#: part/embeddedfilesdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Embedded Files"
+msgstr "ਈਮਬੈੱਡ ਕੀਤੀਆਂ ਫਾਇਲਾਂ"
+
+#: part/embeddedfilesdialog.cpp:59
+#, kde-format
+msgctxt "@action:button"
+msgid "View"
+msgstr "ਵੇਖੋ"
+
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@title:column"
+msgid "Name"
+msgstr "ਨਾਂ"
+
+#: part/embeddedfilesdialog.cpp:68
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr "ਵਰਣਨ"
+
+#: part/embeddedfilesdialog.cpp:69
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr "ਸਾਈਜ਼"
+
+#: part/embeddedfilesdialog.cpp:70
+#, kde-format
+msgctxt "@title:column"
+msgid "Created"
+msgstr "ਬਣਾਇਆ"
+
+#: part/embeddedfilesdialog.cpp:71
+#, kde-format
+msgctxt "@title:column"
+msgid "Modified"
+msgstr "ਸੋਧਿਆ"
+
+#: part/embeddedfilesdialog.cpp:151
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Save As..."
+msgstr "...ਇੰਝ ਸੰਭਾਲੋ(&S)"
+
+#: part/embeddedfilesdialog.cpp:152
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&View..."
+msgstr "...ਵੇਖੋ(&V)"
+
+#: part/fileprinterpreview.cpp:115
+#, kde-format
+msgid "Could not load print preview part"
+msgstr "ਪਰਿੰਟ ਝਲਕ ਭਾਗ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
+
+#: part/fileprinterpreview.cpp:127
+#, kde-format
+msgid "Print Preview"
+msgstr "ਪਰਿੰਟ ਝਲਕ"
+
+#: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
+#, kde-format
+msgid "Close"
+msgstr "ਬੰਦ ਕਰੋ"
+
+#: part/findbar.cpp:38
+#, kde-format
+msgctxt "Find text"
+msgid "F&ind:"
+msgstr "ਖੋਜ(&i):"
+
+#: part/findbar.cpp:49
+#, kde-format
+msgid "Text to search for"
+msgstr "ਲਿਖਤ ਲਈ ਖੋਜ"
+
+#: part/findbar.cpp:54
+#, kde-format
+msgctxt "Find and go to the next search match"
+msgid "Next"
+msgstr "ਅੱਗੇ"
+
+#: part/findbar.cpp:55
+#, kde-format
+msgid "Jump to next match"
+msgstr "ਅੱਗੇ ਮੇਲ ਉੱਤੇ ਜੰਪ ਕਰੋ"
+
+#: part/findbar.cpp:58
+#, kde-format
+msgctxt "Find and go to the previous search match"
+msgid "Previous"
+msgstr "ਪਿੱਛੇ"
+
+#: part/findbar.cpp:59
+#, kde-format
+msgid "Jump to previous match"
+msgstr "ਅੱਗੇ ਮੇਲ ਉੱਤੇ ਜੰਪ ਕਰੋ"
+
+#: part/findbar.cpp:64
+#, kde-format
+msgid "Modify search behavior"
+msgstr "ਖੋਜ ਰਵੱਈਆ ਸੋਧ"
+
+#: part/findbar.cpp:66
+#, kde-format
+msgid "Case sensitive"
+msgstr "ਸਾਈਜ਼ ਪ੍ਰਤੀ ਸੰਵੇਦਨਸ਼ੀਲ"
+
+#: part/findbar.cpp:68
+#, kde-format
+msgid "From current page"
+msgstr "ਮੌਜੂਦਾ ਸਫ਼ੇ ਤੋਂ"
+
+#: part/findbar.cpp:70
+#, kde-format
+msgid "Find as you type"
+msgstr "ਜਿਵੇਂ ਤੁਸੀਂ ਲਿਖੋ ਤਿਵੇਂ ਖੋਜੋ"
+
+#: part/formwidgets.cpp:751
+#, kde-format
+msgid "*|All Files"
+msgstr "*|ਸਭ ਫਾਇਲਾਂ"
+
+#: part/formwidgets.cpp:1065
+#, kde-format
+msgid "Unsigned Signature Field (Click to Sign)"
+msgstr ""
+
+#: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
+#, fuzzy, kde-format
+#| msgid "Sign"
+msgid "&Sign..."
+msgstr "ਦਸਤਖਤ"
+
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#, kde-format
+msgid "Signature Properties"
+msgstr "ਦਸਤਖ਼ਤ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/ktreeviewsearchline.cpp:283
+#, kde-format
+msgid "Search Options"
+msgstr "ਖੋਜ ਚੋਣਾਂ"
+
+#: part/ktreeviewsearchline.cpp:284
+#, kde-format
+msgctxt "Enable case sensitive search in the side navigation panels"
+msgid "Case Sensitive"
+msgstr "ਅੱਖਰ ਸੰਵੇਦਨਸ਼ੀਲ"
+
+#: part/ktreeviewsearchline.cpp:287
+#, kde-format
+msgctxt "Enable regular expression search in the side navigation panels"
+msgid "Regular Expression"
+msgstr "ਨਿਯਮਤ ਸਮੀਕਰਨ"
+
+#: part/ktreeviewsearchline.cpp:386
+#, kde-format
+msgid "S&earch:"
+msgstr "ਖੋਜ(&e):"
+
+#: part/layers.cpp:35 part/part.cpp:2315
+#, kde-format
+msgid "Layers"
+msgstr "ਪਰਤਾਂ"
+
+#: part/minibar.cpp:190
+#, kde-format
+msgctxt "Layouted like: '5 [pages] of 10'"
+msgid "of"
+msgstr "ਵਿੱਚੋਂ"
+
+#: part/pageview.cpp:541
+#, kde-format
+msgid "Zoom"
+msgstr "ਜ਼ੂਮ"
+
+#: part/pageview.cpp:553
+#, kde-format
+msgid "Zoom to 100%"
+msgstr "100% ਜ਼ੂਮ ਕਰੋ"
+
+#: part/pageview.cpp:564
+#, kde-format
+msgid "Rotate &Right"
+msgstr "ਸੱਜੇ ਘੁੰਮਾਓ(&R)"
+
+#: part/pageview.cpp:565
+#, kde-format
+msgctxt "Rotate right"
+msgid "Right"
+msgstr "ਸੱਜੇ"
+
+#: part/pageview.cpp:569
+#, kde-format
+msgid "Rotate &Left"
+msgstr "ਖੱਬੇ ਘੁੰਮਾਓ(&L)"
+
+#: part/pageview.cpp:570
+#, kde-format
+msgctxt "Rotate left"
+msgid "Left"
+msgstr "ਖੱਬੇ"
+
+#: part/pageview.cpp:574
+#, kde-format
+msgid "Original Orientation"
+msgstr "ਅਸਲੀ ਸਥਿਤੀ"
+
+#: part/pageview.cpp:580
+#, kde-format
+msgid "&Trim View"
+msgstr "ਛਾਂਗਣ ਝਲਕ(&T)"
+
+#: part/pageview.cpp:584
+#, kde-format
+msgid "&Trim Margins"
+msgstr "ਹਾਸ਼ੀਏ ਛਾਂਗੋ(&T)"
+
+#: part/pageview.cpp:591
+#, kde-format
+msgid "Trim To &Selection"
+msgstr "ਚੋਣ ਲਈ ਛਾਂਗੋ(&S)"
+
+#: part/pageview.cpp:597
+#, kde-format
+msgid "Fit &Width"
+msgstr "ਚੌੜਾਈ ਫਿੱਟ ਕਰੋ(&W)"
+
+#: part/pageview.cpp:601
+#, kde-format
+msgid "Fit &Page"
+msgstr "ਪੇਜ਼ ਫਿੱਟ ਕਰੋ(&P)"
+
+#: part/pageview.cpp:605
+#, kde-format
+msgid "&Auto Fit"
+msgstr "ਆਟੋ ਫਿੱਟ(&A)"
+
+#: part/pageview.cpp:609
+#, kde-format
+msgid "Fit Wi&ndow to Page"
+msgstr "ਵਿੰਡੋ ਨੂੰ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ(&n)"
+
+#: part/pageview.cpp:616
+#, kde-format
+msgid "&View Mode"
+msgstr "ਵੇਖਣ ਢੰਗ(&V)"
+
+#: part/pageview.cpp:628
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Single Page"
+msgstr "ਇੱਕਲਾ ਪੇਜ਼(&S)"
+
+#: part/pageview.cpp:629
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Facing Pages"
+msgstr "ਫੇਸਿੰਗ ਪੇਜ਼(&F)"
+
+#: part/pageview.cpp:630
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Facing Pages (&Center First Page)"
+msgstr "ਪੇਜ਼ ਫੇਸਿੰਗ (ਪਹਿਲਾਂ ਪੇਜ਼ ਸੈਂਟਰ)(&C)"
+
+#: part/pageview.cpp:633
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Overview"
+msgstr "ਸੰਖੇਪ(&O)"
+
+#: part/pageview.cpp:645
+#, kde-format
+msgid "&Continuous"
+msgstr "ਇਕਸਾਰਤਾ(&C)"
+
+#: part/pageview.cpp:652
+#, kde-format
+msgctxt "@action page layout"
+msgid "Use Right to Left Reading Direction"
+msgstr ""
+
+#: part/pageview.cpp:661
+#, kde-format
+msgid "&Browse"
+msgstr "ਝਲਕ(&B)"
+
+#: part/pageview.cpp:669
+#, kde-format
+msgid "&Zoom"
+msgstr "ਜ਼ੂਮ(&Z)"
+
+#: part/pageview.cpp:689
+#, kde-format
+msgid "Area &Selection"
+msgstr "ਖੇਤਰ ਚੋਣ(&S)"
+
+#: part/pageview.cpp:696
+#, kde-format
+msgid "&Text Selection"
+msgstr "ਲਿਖਤ ਚੋਣ(&T)"
+
+#: part/pageview.cpp:703
+#, kde-format
+msgid "T&able Selection"
+msgstr "ਸਾਰਣੀ ਚੋਣ(&a)"
+
+#: part/pageview.cpp:710
+#, kde-format
+msgid "&Magnifier"
+msgstr "ਵੱਡਦਰਸ਼ੀ(&M)"
+
+#: part/pageview.cpp:719
+#, kde-format
+msgctxt "@action"
+msgid "Selection Tools"
+msgstr "ਚੋਣ ਟੂਲ"
+
+#: part/pageview.cpp:750
+#, kde-format
+msgid "Digitally &Sign..."
+msgstr "ਡਿਜ਼ਿਟਲ ਦਸਤਖਤ(&S)..."
+
+#: part/pageview.cpp:756
+#, kde-format
+msgid "Speak Whole Document"
+msgstr "ਪੂਰਾ ਡੌਕੂਮੈਂਟ ਬੋਲੋ"
+
+#: part/pageview.cpp:761
+#, kde-format
+msgid "Speak Current Page"
+msgstr "ਮੌਜੂਦਾ ਸਫ਼ਾ ਬੋਲੋ"
+
+#: part/pageview.cpp:766
+#, kde-format
+msgid "Stop Speaking"
+msgstr "ਬੋਲਣਾ ਚੁੱਪ ਕਰੋ"
+
+#: part/pageview.cpp:771
+#, kde-format
+msgid "Pause/Resume Speaking"
+msgstr "ਬੋਲਣਾ ਰੋਕੋ/ਮੁੜ-ਸੁਣਾਓ"
+
+#: part/pageview.cpp:783
+#, kde-format
+msgid "Scroll Up"
+msgstr "ਉੱਤੇ ਸਰਕਾਓ"
+
+#: part/pageview.cpp:789
+#, kde-format
+msgid "Scroll Down"
+msgstr "ਹੇਠਾਂ ਸਰਕਾਓ"
+
+#: part/pageview.cpp:795
+#, kde-format
+msgid "Scroll Page Up"
+msgstr "ਉੱਤੇ ਸਰਕਾਓ"
+
+#: part/pageview.cpp:801
+#, kde-format
+msgid "Scroll Page Down"
+msgstr "ਸਫ਼ਾ ਹੇਠਾਂ ਨੂੰ ਸਰਕਾਓ"
+
+#: part/pageview.cpp:807
+#, kde-format
+msgid "Show Forms"
+msgstr "ਫਾਰਮ ਵੇਖੋ"
+
+#: part/pageview.cpp:1301
+#, kde-format
+msgid " Loaded a one-page document."
+msgid_plural " Loaded a %1-page document."
+msgstr[0] " ਇੱਕ-ਸਫ਼ਾ ਡੌਕੂਮੈਂਟ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
+msgstr[1] " %1-ਸਫ਼ਾ ਡੌਕੂਮੈਂਟ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
+
+#: part/pageview.cpp:2521
+#, kde-format
+msgid "Copy Table Contents to Clipboard"
+msgstr "ਸਾਰਣੀ ਸਮੱਗਰੀ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ"
+
+#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
+#: part/pageview.cpp:3050
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "ਕਾਪੀ DRM ਵਲੋਂ ਓਹਲੇ ਹੈ"
+
+#: part/pageview.cpp:2843
+#, kde-format
+msgid "Text (1 character)"
+msgid_plural "Text (%1 characters)"
+msgstr[0] "ਲਿਖਤ (1 ਅੱਖਰ)"
+msgstr[1] "ਲਿਖਤ (%1 ਅੱਖਰ)"
+
+#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
+
+#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#, kde-format
+msgid "Speak Text"
+msgstr "ਲਿਖਤ ਨੂੰ ਬੋਲੋ"
+
+#: part/pageview.cpp:2861
+#, kde-format
+msgid "Image (%1 by %2 pixels)"
+msgstr "ਚਿੱਤਰ (%1 x %2 ਪਿਕਸਲ)"
+
+#: part/pageview.cpp:2863
+#, kde-format
+msgid "Save to File..."
+msgstr "...ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ"
+
+#: part/pageview.cpp:2883
+#, kde-format
+msgid "Image [%1x%2] copied to clipboard."
+msgstr "ਚਿੱਤਰ [%1x%2] ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਨਕਲ ਕੀਤਾ ਗਿਆ ਹੈ।"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Save file"
+msgstr "ਫਾਇਲ ਸੰਭਾਲੋ"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Images (*.png *.jpeg)"
+msgstr "ਚਿੱਤਰ (*.png *.jpeg)"
+
+#: part/pageview.cpp:2888
+#, kde-format
+msgid "File not saved."
+msgstr "ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਗਈ ਹੈ।"
+
+#: part/pageview.cpp:2899
+#, kde-format
+msgid "Image [%1x%2] saved to %3 file."
+msgstr "ਚਿੱਤਰ [%1x%2] ਫਾਇਲ %3 ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
+
+#: part/pageview.cpp:3041
+#, kde-format
+msgid "Copy Text"
+msgstr "ਲਿਖਤ ਕਾਪੀ ਕਰੋ"
+
+#: part/pageview.cpp:3061
+#, kde-format
+msgid "Go to '%1'"
+msgstr "'%1' ਉੱਤੇ ਜਾਓ"
+
+#: part/pageview.cpp:4034 part/part.cpp:3155
+#, kde-format
+msgid "Fit Width"
+msgstr "ਚੌੜਾਈ ਫਿੱਟ"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Fit Page"
+msgstr "ਪੇਜ਼ ਫਿੱਟ"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Auto Fit"
+msgstr "ਆਟੋ ਫਿੱਟ"
+
+#: part/pageview.cpp:4355
+#, kde-format
+msgid "Search for '%1' with"
+msgstr "'%1' ਨਾਲ ਭਾਲ ਜਾਰੀ ਹੈ"
+
+#: part/pageview.cpp:4369
+#, kde-format
+msgid "Configure Web Shortcuts..."
+msgstr "...ਵੈੱਬ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ"
+
+#: part/pageview.cpp:4395
+#, kde-format
+msgid "Follow This Link"
+msgstr "ਇਹ ਲਿੰਕ ਵੇਖੋ"
+
+#: part/pageview.cpp:4398
+#, kde-format
+msgid "Play this Sound"
+msgstr "ਇਹ ਸਾਊਂਡ ਚਲਾਓ"
+
+#: part/pageview.cpp:4400
+#, kde-format
+msgid "Stop Sound"
+msgstr "ਸਾਊਂਡ ਰੋਕੋ"
+
+#: part/pageview.cpp:4406
+#, kde-format
+msgid "Copy Link Address"
+msgstr "ਲਿੰਕ ਐਡਰੈੱਸ ਕਾਪੀ ਕਰੋ"
+
+#: part/pageview.cpp:4427
+#, kde-format
+msgid "Search for '%1' in this document"
+msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ '%1' ਲੱਭੋ"
+
+#: part/pageview.cpp:4870
+#, kde-format
+msgid "Welcome"
+msgstr "ਜੀ ਆਇਆਂ ਨੂੰ"
+
+#: part/pageview.cpp:4994
+#, kde-format
+msgid "Select zooming area. Right-click to zoom out."
+msgstr "ਜ਼ੂਮ ਕਰਨ ਖੇਤਰ ਚੁਣੋ। ਜ਼ੂਮ ਕਰਨ ਸੱਜਾ ਬਟਨ ਦਬਾਉ।"
+
+#: part/pageview.cpp:5005
+#, kde-format
+msgid "Click to see the magnified view."
+msgstr ""
+
+#: part/pageview.cpp:5018
+#, kde-format
+msgid "Draw a rectangle around the text/graphics to copy."
+msgstr "ਟੈਕਸਟ/ਗਰਾਫਿਕਸ ਦੀ ਕਾਪੀ ਕਰਨ ਲਈ ਆਇਤ ਬਣਾਓ।"
+
+#: part/pageview.cpp:5030
+#, kde-format
+msgid "Select text"
+msgstr "ਲਿਖਤ ਚੁਣੋ"
+
+#: part/pageview.cpp:5042
+#, kde-format
+msgid ""
+"Draw a rectangle around the table, then click near edges to divide up; press "
+"Esc to clear."
+msgstr "ਟੇਬਲ ਦੁਆਲੇ ਚਤੁਰਭੁਜ ਬਣਾਓ, ਵੰਡਣ ਲਈ ਕੋਨੇ ਦੇ ਨੇੜੇ ਕਲਿੱਕ ਕਰੋ; ਸਾਫ਼ ਕਰਨ ਲਈ Esc ਦੱਬੋ।"
+
+#: part/pageview.cpp:5052
+#, kde-format
+msgid ""
+"All your signing certificates are either not valid yet or are past their "
+"validity date."
+msgstr ""
+
+#: part/pageview.cpp:5055
+#, kde-format
+msgid ""
+"There are no available signing certificates.<br/>For more information, "
+"please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
+"the manual."
+msgstr ""
+
+#: part/pageview.cpp:5071
+#, kde-format
+msgid "You have unsaved changes. Please save the document before signing it."
+msgstr ""
+"ਤੁਹਾਡੇ ਕੋਲ ਕੁਝ ਨਾ-ਸੰਭਾਲੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ। ਇਸ ਉੱਤੇ ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਭਾਲੋ।"
+
+#: part/pageview.cpp:5079
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The version of the Poppler library this Okular was compiled with does not "
+"support signing documents with passwords. Please ask your provider to update "
+"it to 22.02 or later."
+msgstr ""
+
+#: part/pageview.cpp:5080
+#, kde-format
+msgctxt "@title:window"
+msgid "Poppler library is too old"
+msgstr ""
+
+#: part/pageview.cpp:5098
+#, kde-format
+msgid "Draw a rectangle to insert the signature field"
+msgstr "ਦਸਤਖਤ ਖੇਤਰ ਜੋੜਨ ਲਈ ਚੌਰਸ ਖਾਨਾ ਵਾਹੋ"
+
+#: part/pageview.cpp:5242
+#, fuzzy, kde-format
+#| msgid "Draw a rectangle around the text/graphics to copy."
+msgid "Draw a rectangle around the page area you wish to keep visible"
+msgstr "ਟੈਕਸਟ/ਗਰਾਫਿਕਸ ਦੀ ਕਾਪੀ ਕਰਨ ਲਈ ਆਇਤ ਬਣਾਓ।"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "New Text Note"
+msgstr "ਨਵਾਂ ਲਿਖਤ ਨੋਟ"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "Text of the new note:"
+msgstr "ਨਵੇਂ ਨੋਟ ਲਈ ਲਿਖਤ:"
+
+#: part/pageviewannotator.cpp:362
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"A signature of this size may be too small to read. If you would like to "
+"create a potentially more readable signature, press <interface>Start over</"
+"interface> and draw a bigger rectangle."
+msgstr ""
+
+#: part/pageviewannotator.cpp:364
+#, fuzzy, kde-format
+#| msgid "Start over"
+msgctxt "@action:button"
+msgid "Start Over"
+msgstr "ਫੇਰ ਸ਼ੁਰੂ ਕਰੋ"
+
+#: part/pageviewannotator.cpp:365
+#, fuzzy, kde-format
+#| msgid "Sign"
+msgctxt "@action:button"
+msgid "Sign"
+msgstr "ਦਸਤਖਤ"
+
+#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name"
+msgstr "ਲੇਖਕ ਦਾ ਨਾਂ"
+
+#: part/pageviewannotator.cpp:1166
+#, kde-format
+msgid "Author name for the annotation:"
+msgstr "ਟਿੱਪਣੀ ਲਈ ਲੇਖਕ ਦਾ ਨਾਂ:"
+
+#: part/pageviewannotator.cpp:1227
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw an ellipse (drag to select a zone)"
+msgstr "ਅੰਡਾਕਾਰ ਵਾਹੋ (ਖੇਤਰ ਚੁਣਨ ਲਈ ਖਿੱਚੋ)"
+
+#: part/pageviewannotator.cpp:1229
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Highlight text"
+msgstr "ਹਾਈਲਾਈਟ ਟੈਕਸਟ"
+
+#: part/pageviewannotator.cpp:1231
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a freehand line"
+msgstr "ਹੱਥ-ਨਾਲ ਲਾਈਨ ਵਾਹੋ"
+
+#: part/pageviewannotator.cpp:1233
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Inline Text Annotation (drag to select a zone)"
+msgstr "ਇਨ-ਲਾਈਨ ਟੈਕਸਟ ਟਿੱਪਣੀ (ਇੱਕ ਜ਼ੋਨ ਚੁਣਨ ਵਾਸਤੇ ਡਰੈਗ ਕਰੋ)"
+
+#: part/pageviewannotator.cpp:1235
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a pop-up note"
+msgstr "ਪੋਪ-ਅੱਪ ਨੋਟ ਲਾਓ"
+
+#: part/pageviewannotator.cpp:1237
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a polygon (click on the first point to close it)"
+msgstr "ਇੱਕ ਬਹੁ-ਭੁਜ ਵਾਹੋ (ਬੰਦ ਕਰਨ ਲਈ ਪਹਿਲੇਂ ਬਿੰਦੂ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ)"
+
+#: part/pageviewannotator.cpp:1239
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a rectangle"
+msgstr "ਚਤੁਰਭੁਜ ਬਣਾਓ"
+
+#: part/pageviewannotator.cpp:1241
+#, fuzzy, kde-format
+#| msgid "Select text"
+msgctxt "Annotation tool"
+msgid "Squiggle text"
+msgstr "ਚੁਣਿਆ ਟੈਕਸਟ"
+
+#: part/pageviewannotator.cpp:1243
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a stamp symbol"
+msgstr "ਇੱਕ ਸਟੈਂਪ ਨਿਸ਼ਾਨ ਲਾਓ"
+
+#: part/pageviewannotator.cpp:1245
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a straight line"
+msgstr "ਸਿੱਧੀ ਲਾਈਨ ਖਿੱਚੋ"
+
+#: part/pageviewannotator.cpp:1247
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Strike out text"
+msgstr "ਟੈਕਸਟ ਵਿੰਨ੍ਹੋ"
+
+#: part/pageviewannotator.cpp:1249
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Underline text"
+msgstr "ਟੈਕਸਟ ਹੇਠ ਲਾਈਨ"
+
+#: part/pageviewannotator.cpp:1251
+#, fuzzy, kde-format
+#| msgctxt "Annotation tool"
+#| msgid "Inline Text Annotation (drag to select a zone)"
+msgctxt "Annotation tool"
+msgid "Typewriter Annotation (drag to select a zone)"
+msgstr "ਇਨ-ਲਾਈਨ ਟੈਕਸਟ ਟਿੱਪਣੀ (ਇੱਕ ਜ਼ੋਨ ਚੁਣਨ ਵਾਸਤੇ ਡਰੈਗ ਕਰੋ)"
+
+#: part/pageviewannotator.cpp:1310
+#, kde-format
+msgid "Highlighter"
+msgstr "ਹਾਈਲਾਈਰ"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Stamps inserted in PDF documents are not visible in PDF readers other than "
+"Okular"
+msgstr ""
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@title:window"
+msgid "Experimental feature"
+msgstr "ਤਜਰਬੇ ਅਧੀਨ ਫ਼ੀਚਰ"
+
+#: part/pageviewannotator.cpp:1613
+#, fuzzy, kde-format
+#| msgctxt "Add an annotation to the page"
+#| msgid "add annotation"
+msgid "Add favorite annotation"
+msgstr "ਟਿੱਪਣੀ ਸ਼ਾਮਲ ਕਰੋ"
+
+#: part/pageviewannotator.cpp:1613
+#, fuzzy, kde-format
+#| msgctxt "Change an annotation's size"
+#| msgid "adjust annotation"
+msgid "Custom annotation name:"
+msgstr "ਟਿੱਪਣੀ ਅਡਜੱਸਟ ਕਰੋ"
+
+#. i18n: ectx: Menu (file)
+#: part/part-viewermode.rc:6 part/part.rc:5
+#, kde-format
+msgid "&File"
+msgstr "ਫਾਇਲ(&F)"
+
+#. i18n: ectx: Menu (settings)
+#: part/part-viewermode.rc:10 part/part.rc:90
+#, kde-format
+msgid "&Settings"
+msgstr "ਸੈਟਿੰਗ(&S)"
+
+#. i18n: ectx: Menu (help)
+#: part/part-viewermode.rc:15 part/part.rc:97
+#, kde-format
+msgid "&Help"
+msgstr "ਮਦਦ(&H)"
+
+#. i18n: ectx: Menu (view_orientation)
+#: part/part-viewermode.rc:32 part/part.rc:44
+#, kde-format
+msgid "&Orientation"
+msgstr "ਸਥਿਤੀ(&O)"
+
+#. i18n: ectx: Menu (bookmarks)
+#. i18n: ectx: Menu (okular_bookmarks)
+#: part/part-viewermode.rc:50 part/part.rc:65
+#, kde-format
+msgid "&Bookmarks"
+msgstr "ਬੁੱਕਮਾਰਕ(&B)"
+
+#. i18n: ectx: ToolBar (OkularViewerToolBar)
+#: part/part-viewermode.rc:63
+#, kde-format
+msgid "Viewer Toolbar"
+msgstr "ਦਰਸ਼ਕ ਟੂਲਬਾਰ"
+
+#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#, kde-format
+msgid "Thumbnails"
+msgstr "ਥੰਮਨੇਲ"
+
+#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#, kde-format
+msgid "Annotations"
+msgstr "ਟਿੱਪਣੀਆਂ"
+
+#: part/part.cpp:460
+#, kde-format
+msgid ""
+"This document contains annotations or form data that were saved internally "
+"by a previous Okular version. Internal storage is <b>no longer supported</b>."
+"<br/>Please save to a file in order to move them if you want to continue to "
+"edit the document."
+msgstr ""
+
+#: part/part.cpp:467
+#, kde-format
+msgid ""
+"This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
+"here to see them</a> or go to File -> Embedded Files."
+msgstr ""
+"ਇਹ ਡੌਕੂਮੈਂਟ ਵਿੱਚ ਈਮਬੈੱਡ ਫਾਇਲਾਂ ਹਨ। <a href=\"okular:/embeddedfiles\">ਵੇਖਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ "
+"ਕਰੋ</a> ਜਾਂ ਫਾਇਲ -> ਈਮ-ਬੈੱਡ ਕੀਤੀਆਂ ਫਾਇਲਾਂ ਉੱਤੇ ਜਾਓ।"
+
+#: part/part.cpp:689
+#, kde-format
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "ਪਿੱਛੇ"
+
+#: part/part.cpp:690
+#, kde-format
+msgid "Go back to the Previous Page"
+msgstr "ਪਿਛਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:691
+#, kde-format
+msgid "Moves to the previous page of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਦੇ ਪਿਛਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:701
+#, kde-format
+msgctxt "Next page"
+msgid "Next"
+msgstr "ਅੱਗੇ"
+
+#: part/part.cpp:702
+#, kde-format
+msgid "Advance to the Next Page"
+msgstr "ਅੱਗੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:703
+#, kde-format
+msgid "Moves to the next page of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਦੇ ਅਗਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:714
+#, kde-format
+msgid "Beginning of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: part/part.cpp:715
+#, kde-format
+msgid "Moves to the beginning of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਦੇ ਸ਼ੁਰੂ ਵਿੱਚ ਜਾਉ["
+
+#: part/part.cpp:719
+#, kde-format
+msgid "End of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਦਾ ਅੰਤ"
+
+#: part/part.cpp:720
+#, kde-format
+msgid "Moves to the end of the document"
+msgstr "ਡੌਕੂਮੈਂਟ ਦੇ ਅੰਤ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:734
+#, kde-format
+msgid "Rename the current bookmark"
+msgstr "ਮੌਜੂਦਾ ਬੁੱਕਮਾਰਕ ਦਾ ਨਾਂ ਬਦਲੋ"
+
+#: part/part.cpp:738
+#, kde-format
+msgid "Previous Bookmark"
+msgstr "ਪਿੱਛੇ ਬੁੱਕਮਾਰਕ"
+
+#: part/part.cpp:740
+#, kde-format
+msgid "Go to the previous bookmark"
+msgstr "ਪਿਛਲੇ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:744
+#, kde-format
+msgid "Next Bookmark"
+msgstr "ਅੱਗੇ ਬੁੱਕਮਾਰਕ"
+
+#: part/part.cpp:746
+#, kde-format
+msgid "Go to the next bookmark"
+msgstr "ਅੱਗੇ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:775
+#, kde-format
+msgid "Configure Okular..."
+msgstr "ਓਕੁਲਾਰ ਸੰਰਚਨਾ..."
+
+#: part/part.cpp:778
+#, kde-format
+msgid "Configure Viewer..."
+msgstr "ਦਰਸ਼ਕ ਸੰਰਚਨਾ..."
+
+#: part/part.cpp:784
+#, kde-format
+msgid "Configure Viewer Backends..."
+msgstr "ਦਰਸ਼ਕ ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ..."
+
+#: part/part.cpp:786
+#, kde-format
+msgid "Configure Backends..."
+msgstr "ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ..."
+
+#: part/part.cpp:822
+#, kde-format
+msgid "About Backend"
+msgstr "ਬੈਕ-ਐਂਡ ਬਾਰੇ"
+
+#: part/part.cpp:827
+#, kde-format
+msgid "Reloa&d"
+msgstr "ਮੁੜ-ਲੋਡ ਕਰੋ(&d)"
+
+#: part/part.cpp:829
+#, kde-format
+msgid "Reload the current document from disk."
+msgstr "ਮੌਜੂਦਾ ਡੌਕੂਮੈਂਟ ਨੂੰ ਡਿਸਕ ਤੋਂ ਮੁੜ ਲੋਡ ਕਰੋ।"
+
+#: part/part.cpp:835
+#, kde-format
+msgid "Close &Find Bar"
+msgstr "ਖੋਜ ਪੱਟੀ ਬੰਦ ਕਰੋ(&F)"
+
+#: part/part.cpp:840
+#, kde-format
+msgid "Page Number"
+msgstr "ਪੇਜ਼ ਨੰਬਰ"
+
+#: part/part.cpp:844
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgctxt "@action"
+msgid "Configure Color Modes..."
+msgstr "ਓਕੁਲਾਰ ਸੰਰਚਨਾ..."
+
+#: part/part.cpp:887
+#, kde-format
+msgid "Select All Text on Current Page"
+msgstr "ਮੌਜੂਦਾ ਸਫ਼ੇ ਤੋਂ ਸਾਰੀ ਲਿਖਤ ਨੂੰ ਚੁਣੋ"
+
+#: part/part.cpp:900
+#, kde-format
+msgid "Show S&idebar"
+msgstr "ਬਾਹੀ ਵੇਖਾਓ(&i)"
+
+#: part/part.cpp:909
+#, kde-format
+msgid "Show &Page Bar"
+msgstr "ਸਫ਼ਾ ਪੱਟੀ ਵੱਖੋ(&P)"
+
+#: part/part.cpp:915
+#, fuzzy, kde-format
+#| msgid "Show &Navigation Panel"
+msgid "Show &Signatures Panel"
+msgstr "ਨੇਵੀਗੇਸ਼ਨ ਪੈਨਲ ਵੇਖੋ(&N)"
+
+#: part/part.cpp:925
+#, kde-format
+msgid "&Embedded Files"
+msgstr "ਈਮਬੈੱਡ ਕੀਤੀਆਂ ਫਾਇਲ(&E)"
+
+#: part/part.cpp:931
+#, kde-format
+msgid "E&xport As"
+msgstr "ਇੰਝ ਐਕਸਪੋਰਟ ਕਰੋ(&x)"
+
+#: part/part.cpp:943
+#, kde-format
+msgid "S&hare"
+msgstr "ਸਾਂਝਾ ਕਰੋ(&h)"
+
+#: part/part.cpp:952
+#, kde-format
+msgid "P&resentation"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ(&r)"
+
+#: part/part.cpp:959
+#, kde-format
+msgid "Open Con&taining Folder"
+msgstr "ਰੱਖਣ ਵਾਲਾ ਫੋਲਡਰ ਖੋਲ੍ਹੋ(&t)"
+
+#: part/part.cpp:975
+#, kde-format
+msgid "&Import PostScript as PDF..."
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ (ps) PDF ਵਾਂਗ ਇੰਪੋਰਟ ਕਰੋ(&I)..."
+
+#: part/part.cpp:979
+#, kde-format
+msgid "Switch Blackscreen Mode"
+msgstr "ਬਲੈਂਕ-ਸਕਰੀਨ ਮੋਡ ਸਵਿੱਚ"
+
+#: part/part.cpp:987
+#, kde-format
+msgid "Erase Drawing"
+msgstr "ਡਰਾਇੰਗ ਮਿਟਾਓ"
+
+#: part/part.cpp:992
+#, kde-format
+msgid "Configure Annotations..."
+msgstr "...ਟਿੱਪਣੀ ਸੰਰਚਨਾ"
+
+#: part/part.cpp:997
+#, kde-format
+msgid "Play/Pause Presentation"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਚਲਾਓ/ਰੋਕੋ"
+
+#: part/part.cpp:1145
+#, kde-format
+msgid ""
+"You have just modified the open document, but this kind of document can not "
+"be saved.\n"
+"Any modification will be lost once Okular is closed."
+msgstr ""
+
+#: part/part.cpp:1146
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Document can't be saved"
+msgstr "ਡੌਕੂਮੈਂਟ ਪਾਸਵਰਡ"
+
+#: part/part.cpp:1175
+#, kde-format
+msgid "Could not open '%1' (%2) "
+msgstr "'%1' (%2) ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
+
+#: part/part.cpp:1229
+#, kde-format
+msgid "The loading of %1 has been canceled."
+msgstr "%1 ਦੇ ਲੋਡ ਕਰਨ ਨੂੰ ਰੱਦ ਕੀਤਾ ਗਿਆ ਹੈ।"
+
+#: part/part.cpp:1245
+#, kde-format
+msgid "Could not open %1. Reason: %2"
+msgstr "%1 ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਕਾਰਨ: %2"
+
+#: part/part.cpp:1273
+#, kde-format
+msgid "Configure Viewer Backends"
+msgstr "ਦਰਸ਼ਕ ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
+
+#: part/part.cpp:1275
+#, kde-format
+msgid "Configure Backends"
+msgstr "ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid ""
+"The program \"ps2pdf\" was not found, so Okular can not import PS files "
+"using it."
+msgstr ""
+"ਪ੍ਰੋਗਰਾਮ \"ps2pdf\" ਨਹੀਂ ਲੱਭਿਆ ਹੈ, ਇਸਕਰਕੇ ਓਕੁਲਾਰ ਇਹ ਵਰਤ ਕੇ PS ਫਾਇਲਾਂ ਇੰਪੋਰਟ ਨਹੀਂ  ਕਰ "
+"ਸਕਦਾ ਹੈ।"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid "ps2pdf not found"
+msgstr "ps2pdf ਨਹੀਂ ਮਿਲਿਆ"
+
+#: part/part.cpp:1365
+#, kde-format
+msgid "PostScript files (%1)"
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਫਾਇਲਾਂ (%1)"
+
+#: part/part.cpp:1381
+#, kde-format
+msgid "Importing PS file as PDF (this may take a while)..."
+msgstr "PS ਫਾਇਲ PDF ਵਾਂਗ ਲਈ ਜਾ ਰਹੀ ਹੈ (ਇਸ ਨੂੰ ਕੁਝ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ)..."
+
+#: part/part.cpp:1510
+#, kde-format
+msgid "Please enter the password to read the document:"
+msgstr "ਡੌਕੂਮੈਂਟ ਪੜ੍ਹਨ ਲਈ ਪਾਸਵਰਡ ਦਿਉ ਜੀ:"
+
+#: part/part.cpp:1512
+#, kde-format
+msgid "Incorrect password. Try again:"
+msgstr "ਗਲਤ ਪਾਸਵਰਡ। ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ:"
+
+#: part/part.cpp:1518
+#, kde-format
+msgid "Document Password"
+msgstr "ਡੌਕੂਮੈਂਟ ਪਾਸਵਰਡ"
+
+#: part/part.cpp:1638
+#, kde-format
+msgid "This document has XFA forms, which are currently <b>unsupported</b>."
+msgstr ""
+
+#: part/part.cpp:1645
+#, kde-format
+msgid ""
+"This document has forms. Click on the button to interact with them, or use "
+"View -> Show Forms."
+msgstr ""
+"ਇਹ ਡੌਕੂਮੈਂਟ ਵਿੱਚ ਫਾਰਮ ਹੈ। ਇਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਬਟਨ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਵੇਖੋ -> ਫਾਰਮ ਵੇਖੋ ਵਰਤੋਂ।"
+
+#: part/part.cpp:1661
+#, kde-format
+msgid ""
+"All editing and interactive features for this document are disabled. Please "
+"save a copy and reopen to edit this document."
+msgstr ""
+
+#: part/part.cpp:1749
+#, kde-format
+msgid ""
+"This document wants to be shown full screen.\n"
+"Leave normal mode and enter presentation mode?"
+msgstr ""
+
+#: part/part.cpp:1751
+#, kde-format
+msgid "Request to Change Viewing Mode"
+msgstr "ਵੇਖਣ ਦੇ ਢੰਗ ਨੂੰ ਬਦਲਣ ਦੀ ਮੰਗ"
+
+#: part/part.cpp:1752
+#, kde-format
+msgid "Enter Presentation Mode"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ 'ਚ ਜਾਓ"
+
+#: part/part.cpp:1753
+#, kde-format
+msgid "Deny Request"
+msgstr "ਮੰਗ ਤੋਂ ਨਾਂਹ ਕਰੋ"
+
+#: part/part.cpp:1843
+#, kde-format
+msgid "Could not open %1. %2"
+msgstr "%1 ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। %2"
+
+#: part/part.cpp:1873
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue reloading the file?"
+msgstr ""
+
+#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#, kde-format
+msgid "File Changed"
+msgstr "ਫ਼ਾਇਲ ਬਦਲੀ ਗਈ ਹੈ"
+
+#: part/part.cpp:1875
+#, kde-format
+msgid "Continue Reloading"
+msgstr "ਮੁੜ-ਲੋਡ ਕਰਨਾ ਜਾਰੀ ਰੱਖੋ"
+
+#: part/part.cpp:1876
+#, kde-format
+msgid "Abort Reloading"
+msgstr "ਮੁੜ-ਲੋਡ ਕਰਨਾ ਅਧੂਰਾ ਛੱਡੋ"
+
+#: part/part.cpp:1880
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue closing the file?"
+msgstr ""
+
+#: part/part.cpp:1882
+#, kde-format
+msgid "Continue Closing"
+msgstr "ਬੰਦ ਕਰਨਾ ਜਾਰੀ ਰੱਖੋ"
+
+#: part/part.cpp:1883
+#, kde-format
+msgid "Abort Closing"
+msgstr "ਬੰਦ ਕਰਨਾ ਛੱਡੋ"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Do you want to save your changes to \"%1\" or discard them?"
+msgstr "ਕੀ ਤੁਸੀਂ \"%1\" ਲਈ ਆਪਣੀਆਂ ਤਬਦੀਲੀਆਂ ਸੰਭਾਲਣੀਆਂ ਚਾਹੁੰਦੇ ਹੋ ਜਾਂ ਅਣਡਿ਼ੱਠੀਆਂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Close Document"
+msgstr "ਡੌਕੂਮੈਂਟ ਬੰਦ ਕਰੋ"
+
+#: part/part.cpp:2022
+#, kde-format
+msgid ""
+"This link points to a close document action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"ਇਹ ਲਿੰਕ ਇੱਕ ਬੰਦ ਡੌਕੂਮੈਂਟ ਐਕਸ਼ਨ ਲਈ ਪੁਆਇੰਟ ਕਰਦਾ ਹੈ, ਜੋ ਕਿ ਇੰਬੈੱਡ ਦਰਸ਼ਕ ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ ਸਹਾਇਕ ਨਹੀਂ ਹੈ।"
+
+#: part/part.cpp:2028
+#, kde-format
+msgid ""
+"This link points to a quit application action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"ਇਹ ਲਿੰਕ ਇੱਕ ਐਪਲੀਕੇਸ਼ਨ ਬੰਦ ਕਰਨ ਐਕਸ਼ਨ ਲਈ ਪੁਆਇੰਟ ਕਰਦਾ ਹੈ, ਜੋ ਕਿ ਇੰਬੈੱਡ ਦਰਸ਼ਕ ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ "
+"ਸਹਾਇਕ ਨਹੀਂ ਹੈ।"
+
+#: part/part.cpp:2120 part/part.cpp:2138
+#, kde-format
+msgid "Reloading the document..."
+msgstr "ਡੌਕੂਮੈਂਟ ਮੁੜ-ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
+
+#: part/part.cpp:2295 part/toc.cpp:38
+#, kde-format
+msgid "Contents"
+msgstr "ਸਮੱਗਰੀ"
+
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#, kde-format
+msgid "Signatures"
+msgstr "ਦਸਤਖ਼ਤ"
+
+#: part/part.cpp:2351
+#, kde-format
+msgid "Go to Page"
+msgstr "ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:2374
+#, kde-format
+msgid "&Page:"
+msgstr "ਪੇਜ਼(&P):"
+
+#: part/part.cpp:2467
+#, kde-format
+msgid "Enter the new name of the bookmark:"
+msgstr "ਬੁੱਕਮਾਰਕ ਦਾ ਨਵਾਂ ਨਾਂ ਦਿਉ।"
+
+#: part/part.cpp:2513
+#, kde-format
+msgid "Rename this Bookmark"
+msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਨਾਂ ਬਦਲੋ"
+
+#: part/part.cpp:2516
+#, kde-format
+msgid "Remove this Bookmark"
+msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਹਟਾਓ"
+
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/signaturepartutils.cpp:87
+#, kde-format
+msgctxt "File type name and pattern"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#, kde-format
+msgid "Save As"
+msgstr "ਇੰਝ ਸੰਭਾਲੋ"
+
+#: part/part.cpp:2627
+#, kde-format
+msgid ""
+"You have chosen to save an Okular Archive without the file name ending with "
+"the '%1' extension. That is not allowed, do you want to choose a new name?"
+msgstr ""
+
+#: part/part.cpp:2628
+#, fuzzy, kde-format
+#| msgid "Line Extensions"
+msgid "Unsupported extension"
+msgstr "ਲਾਈਨ ਐਕਸ਼ਟੇਸ਼ਨਾਂ"
+
+#: part/part.cpp:2629
+#, kde-format
+msgctxt "@action:button"
+msgid "Choose New Name"
+msgstr ""
+
+#: part/part.cpp:2661
+#, kde-format
+msgid ""
+"The file '%1' has been modified by another program, which means it can no "
+"longer be saved."
+msgstr ""
+
+#: part/part.cpp:2669
+#, kde-format
+msgid ""
+"The current document is protected with a password.<br />In order to save, "
+"the file needs to be reloaded. You will be asked for the password again and "
+"your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+
+#: part/part.cpp:2670 part/part.cpp:2722
+#, kde-format
+msgid "Save - Warning"
+msgstr "ਸੰਭਾਲੋ - ਚੇਤਾਵਨੀ"
+
+#: part/part.cpp:2696
+#, kde-format
+msgid "Could not open the temporary file for saving."
+msgstr "ਆਰਜ਼ੀ ਫਾਇਲ ਸੰਭਾਲਣ ਲਈ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
+
+#: part/part.cpp:2709
+#, fuzzy, kde-kuit-format
+#| msgid "File could not be saved in '%1'. Try to save it to another location."
+msgctxt "@info"
+msgid ""
+"Could not overwrite <filename>%1</filename> because that file is read-only. "
+"Try saving to another location or changing that file's permissions."
+msgstr "ਫਾਇਲ਼ ਨੂੰ '%1' ਵਿੱਚ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਹੋਰ ਥਾਂ ਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰੋ ਜੀ।"
+
+#: part/part.cpp:2721
+#, kde-format
+msgid ""
+"After saving, the current document format requires the file to be reloaded. "
+"Your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+
+#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#, kde-format
+msgid "File could not be saved in '%1'. Try to save it to another location."
+msgstr "ਫਾਇਲ਼ ਨੂੰ '%1' ਵਿੱਚ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਹੋਰ ਥਾਂ ਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰੋ ਜੀ।"
+
+#: part/part.cpp:2749
+#, fuzzy, kde-format
+#| msgctxt "Edit an form's text contents"
+#| msgid "edit form contents"
+msgid "Filled form contents"
+msgstr "ਫਾਰਮ ਟਿੱਪਣੀਆਂ ਸੋਧ"
+
+#: part/part.cpp:2752
+#, kde-format
+msgid "User annotations"
+msgstr "ਵਰਤੋਂਕਾਰ ਟਿੱਪਣੀਆਂ"
+
+#: part/part.cpp:2757
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them."
+msgstr ""
+
+#: part/part.cpp:2761 part/part.cpp:2783
+#, kde-format
+msgid "Warning"
+msgstr "ਸਾਵਧਾਨ"
+
+#: part/part.cpp:2762 part/part.cpp:2784
+#, kde-format
+msgid "Save as Okular document archive..."
+msgstr "...ਓਕੁਲਾਰ ਡੌਕੂਮੈਂਟ ਅਕਾਇਵ ਵਜੋਂ ਸੰਭਾਲੋ"
+
+#: part/part.cpp:2774
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save the document and "
+"discard these elements."
+msgstr ""
+
+#: part/part.cpp:2777
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save, but you will lose "
+"these elements as well as the undo/redo history."
+msgstr ""
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue"
+msgstr "ਜਾਰੀ ਰੱਖੋ"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue losing changes"
+msgstr "ਤਬਦੀਲੀਆਂ ਗੁਆਉਣਾ ਜਾਰੀ ਰੱਖੋ"
+
+#: part/part.cpp:2807
+#, kde-format
+msgid "File could not be saved in '%1'. %2"
+msgstr "ਫਾਇਲ '%1' ਵਿੱਚ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ: %2"
+
+#: part/part.cpp:2846
+#, kde-format
+msgid ""
+"Okular cannot copy %1 to the specified location.\n"
+"\n"
+"The document does not exist anymore."
+msgstr ""
+"ਓਕੁਲਾਰ %1 ਨੂੰ ਦਿੱਤੇ ਟਿਕਾਣੇ ਉੱਤੇ ਕਾਪੀ ਨਹੀਂ ਕਰ ਸਕਦਾ ਹੈ।\n"
+"\n"
+"ਡੌਕੂਮੈਂਟ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
+
+#: part/part.cpp:2882
+#, kde-format
+msgid ""
+"File could not be saved in '%1'. Error: '%2'. Try to save it to another "
+"location."
+msgstr ""
+"ਫਾਇਲ ਨੂੰ '%1' ਵਿੱਚ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਗਲਤੀ: '%2'। ਹੋਰ ਥਾਂ ਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰੋ "
+"ਜੀ।"
+
+#: part/part.cpp:3133
+#, fuzzy, kde-format
+#| msgid "End Presentation"
+msgid "Expand whole section"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਖਤਮ ਕਰੋ"
+
+#: part/part.cpp:3134
+#, kde-format
+msgid "Collapse whole section"
+msgstr "ਪੂਰਾ ਭਾਗ ਸਮੇਟੋ"
+
+#: part/part.cpp:3135
+#, kde-format
+msgid "Expand all"
+msgstr "ਸਭ ਨੂੰ ਫੈਲਾਓ"
+
+#: part/part.cpp:3136
+#, kde-format
+msgid "Collapse all"
+msgstr "ਸਭ ਸਮੇਟੋ"
+
+#: part/part.cpp:3147
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgid "Sync Thumbnail with Page"
+msgstr "ਥੰਮਨੇਲ ਪੇਜ਼ ਨਾਲ ਲਿੰਕ ਕਰੋ(&t)"
+
+#: part/part.cpp:3152
+#, kde-format
+msgid "Add Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਜੋੜੋ"
+
+#: part/part.cpp:3176
+#, kde-format
+msgid "Tools"
+msgstr "ਟੂਲ"
+
+#: part/part.cpp:3358
+#, kde-format
+msgctxt "@action:inmenu menu that contains actions to control text to speach"
+msgid "Speak"
+msgstr "ਬੋਲੋ"
+
+#: part/part.cpp:3516
+#, kde-format
+msgctxt "@title:window"
+msgid "Print"
+msgstr "ਛਾਪੋ"
+
+#: part/part.cpp:3579
+#, kde-format
+msgid "Printing this document is not allowed."
+msgstr "ਇਸ ਡੌਕੂਮੈਂਟ ਨੂੰ ਪਰਿੰਟ ਉੱਤੇ ਪਾਬੰਦੀ ਹੈ।"
+
+#: part/part.cpp:3587
+#, kde-format
+msgid ""
+"Could not print the document. Unknown error. Please report to bugs.kde.org"
+msgstr "ਡੌਕੂਮੈਂਟ ਪਰਿੰਟ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਅਣਪਛਾਤੀ ਗਲਤੀ। bugs.kde.org ਤੇ ਜਾਣਕਾਰੀ ਦਿਓ ਜੀ।"
+
+#: part/part.cpp:3589
+#, kde-format
+msgid ""
+"Could not print the document. Detailed error is \"%1\". Please report to "
+"bugs.kde.org"
+msgstr ""
+"ਡੌਕੂਮੈਂਟ ਪਰਿੰਟ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਵੇਰਵੇ ਸਮੇਤ ਗਲਤੀ \"%1\" ਹੈ। bugs.kde.org ਤੇ ਜਾਣਕਾਰੀ ਦਿਓ "
+"ਜੀ।"
+
+#: part/part.cpp:3669
+#, kde-format
+msgid "Go to the place you were before"
+msgstr "ਆਪਣੀ ਪਿਛਲੀ ਥਾਂ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:3673
+#, kde-format
+msgid "Go to the place you were after"
+msgstr "ਆਪਣੀ ਅਗਲੀ ਥਾਂ ਉੱਤੇ ਜਾਓ"
+
+#: part/part.cpp:3698
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not create temporary file "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+msgstr ""
+"<qt><strong>ਫਾਇਲ ਗਲਤੀ</strong> ਆਰਜ਼ੀ ਫਾਇਲ <nobr><strong>%1</strong></nobr> "
+"ਬਣਾਈ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ।</qt>"
+
+#: part/part.cpp:3710
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
+"strong></nobr> for uncompression. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>ਫਾਇਲ ਗਲਤੀ!</strong> ਅਣ-ਕੰਪਰੈੱਸ ਕਰਨ ਲਈ <nobr><strong>%1</strong></"
+"nobr> ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ। ਇਹ ਫਾਇਲ ਲੋਡ ਨਹੀਂ ਹੋਵੇਗੀ।</qt>"
+
+#: part/part.cpp:3714
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>This error typically occurs if you do not have enough permissions to "
+#| "read the file. You can check ownership and permissions if you right-click "
+#| "on the file in the Dolphin file manager and then choose the 'Properties' "
+#| "tab.</qt>"
+msgid ""
+"<qt>This error typically occurs if you do not have enough permissions to "
+"read the file. You can check ownership and permissions if you right-click on "
+"the file in the Dolphin file manager, then choose the 'Properties' option, "
+"and select 'Permissions' tab in the opened window.</qt>"
+msgstr ""
+"<qt>ਇਹ ਕਿਸਮ ਦੀ ਗਲਤੀ ਅਕਸਰ ਆਉਂਦੀ ਹੈ, ਜਦੋਂ ਤੁਹਾਡੇ ਕੋਲ ਫਾਇਲ ਪੜ੍ਹਨ ਲਈ ਲੋੜੀਦੇ ਅਧਿਕਾਰ ਨਹੀਂ ਹੁੰਦੇ "
+"ਹਨ। ਤੁਸੀਂ ਮਲਕੀਅਤ ਅਤੇ ਅਧਿਕਾਰਾਂ ਨੂੰ ਚੈੱਕ ਕਰ ਸਕਦੇ ਹੋ, ਜੇ ਤੁਹਾਡੇ ਕੋਲ ਡਾਲਫਿਨ ਫਾਇਲ ਮੈਨੇਜਰ ਹੈ ਤਾਂ ਇਸ "
+"ਉੱਤੇ ਸੱਜੇ ਕਲਿੱਕ ਕਰੋ ਅਤੇ ਵਿਸ਼ੇਸ਼ਤਾ ਟੈਬ ਚੁਣੋ।</qt>"
+
+#: part/part.cpp:3736
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
+"%1</strong></nobr>. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>ਫਾਇਲ ਗਲਤੀ!</strong> ਫਾਇਲ <nobr><strong>%1</strong></nobr> ਅਣ-"
+"ਕੰਪਰੈੱਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ। ਇਹ ਫਾਇਲ ਲੋਡ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੇਗੀ।</qt>"
+
+#: part/part.cpp:3740
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if the file is corrupt. If you want to be "
+"sure, try to decompress the file manually using command-line tools.</qt>"
+msgstr ""
+"<qt>ਇਹ ਗਲਤੀ ਅਕਸਰ ਤਾਂ ਆਉਂਦੀ ਹੈ, ਜੇ ਫਾਇਲ ਖਰਾਬ ਹੋਵੇ। ਜੇ ਤੁਸੀਂ ਪੱਕਾ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਫਾਇਲ ਨੂੰ "
+"ਕਮਾਂਡ-ਲਾਈਨ ਟੂਲ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਡੀਕੰਪਰੈੱਸ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</qt>"
+
+#: part/part.cpp:3766
+#, kde-format
+msgid "No Bookmarks"
+msgstr "ਕੋਈ ਬੁੱਕਮਾਰਕ ਨਹੀਂ"
+
+#: part/part.cpp:3837
+#, kde-format
+msgid "There was a problem sharing the document: %1"
+msgstr "ਡੌਕੂਮੈਂਟ ਸਾਂਝਾ ਕਰਨ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ: %1"
+
+#: part/part.cpp:3837 part/part.cpp:3843
+#, kde-format
+msgid "Share"
+msgstr "ਸਾਂਝਾ ਕਰੋ"
+
+#: part/part.cpp:3841
+#, kde-format
+msgid "Document shared successfully"
+msgstr "ਡੌਕੂਮੈਂਟ ਕਾਮਯਾਬੀ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ"
+
+#: part/part.cpp:3843
+#, kde-format
+msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
+msgstr ""
+
+#. i18n: ectx: Menu (edit)
+#: part/part.rc:19
+#, kde-format
+msgid "&Edit"
+msgstr "ਸੋਧ(&E)"
+
+#. i18n: ectx: Menu (view)
+#: part/part.rc:32
+#, kde-format
+msgid "&View"
+msgstr "ਵੇਖੋ(&V)"
+
+#. i18n: ectx: Menu (go)
+#: part/part.rc:53
+#, kde-format
+msgid "&Go"
+msgstr "ਜਾਓ(&G)"
+
+#. i18n: ectx: Menu (tools)
+#: part/part.rc:73
+#, kde-format
+msgid "&Tools"
+msgstr "ਟੂਲ(&T)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: part/part.rc:101 shell/shell.rc:24
+#, kde-format
+msgid "Main Toolbar"
+msgstr "ਮੁੱਖ ਟੂਲਬਾਰ"
+
+#. i18n: ectx: ToolBar (annotationToolBar)
+#: part/part.rc:119
+#, kde-format
+msgid "Annotation Toolbar"
+msgstr "ਟਿੱਪਣੀ ਟੂਲਬਾਰ"
+
+#. i18n: ectx: ToolBar (quickAnnotationToolBar)
+#: part/part.rc:143
+#, kde-format
+msgid "Quick Annotation Toolbar"
+msgstr "ਫ਼ੌਰੀ ਟਿੱਪਣੀ ਟੂਲਬਾਰ"
+
+#: part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General Options"
+msgstr "ਸਧਾਰਨ ਚੋਣ"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility"
+msgstr "ਅਸੈਸਬਿਲਟੀ"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility Reading Aids"
+msgstr "ਅਸੈਸਬਿਲਟੀ ਪੜ੍ਹਨ ਮਦਦ"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance"
+msgstr "ਕਾਰਗੁਜ਼ਾਰੀ"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance Tuning"
+msgstr "ਕਾਰਗੁਜ਼ਾਰੀ ਟਿਊਨਿੰਗ"
+
+#: part/preferencesdialog.cpp:45
+#, kde-format
+msgid "Configure Viewer"
+msgstr "ਦਰਸ਼ਕ ਸੰਰਚਨਾ"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Presentation"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Options for Presentation Mode"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਲਈ ਚੋਣਾਂ"
+
+#: part/preferencesdialog.cpp:50
+#, kde-format
+msgid "Annotation Options"
+msgstr "ਟਿੱਪਣੀ ਚੋਣਾਂ"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor"
+msgstr "ਐਡੀਟਰ"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor Options"
+msgstr "ਐਡੀਟਰ ਚੋਣਾਂ"
+
+#: part/preferencesdialog.cpp:56
+#, kde-format
+msgctxt ""
+"Give the user a hint, that it enabled the option --editor-cmd together with "
+"the current value of the option."
+msgid ""
+"The editor was set by the command line to \n"
+" %1 \n"
+"If you want to use the setting, start okular without the option --editor-cmd"
+msgstr ""
+
+#: part/presentationsearchbar.cpp:77
+#, kde-format
+msgid "Find Next"
+msgstr "ਅੱਗੇ ਖੋਜ"
+
+#: part/presentationwidget.cpp:167
+#, kde-format
+msgctxt "[document title/filename] – Presentation"
+msgid "%1 – Presentation"
+msgstr "%1 - ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ"
+
+#: part/presentationwidget.cpp:221
+#, kde-format
+msgid "Switch Screen"
+msgstr "ਸਕਰੀਨ ਸਵਿੱਚ"
+
+#: part/presentationwidget.cpp:226
+#, kde-format
+msgctxt "%1 is the screen number (0, 1, ...)"
+msgid "Screen %1"
+msgstr "%1 ਸਕਰੀਨ"
+
+#: part/presentationwidget.cpp:233
+#, kde-format
+msgid "Exit Presentation Mode"
+msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਬੰਦ ਕਰੋ"
+
+#: part/presentationwidget.cpp:367
+#, kde-format
+msgid "Title: %1"
+msgstr "ਟਾਈਟਲ: %1"
+
+#: part/presentationwidget.cpp:372
+#, kde-format
+msgid "Pages: %1"
+msgstr "ਪੇਜ਼: %1"
+
+#: part/presentationwidget.cpp:373
+#, kde-format
+msgid "Click to begin"
+msgstr "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਦੱਬੋ"
+
+#: part/presentationwidget.cpp:515
+#, kde-format
+msgctxt "For Presentation"
+msgid "Pause"
+msgstr "ਵਿਰਾਮ"
+
+#: part/presentationwidget.cpp:518
+#, kde-format
+msgctxt "For Presentation"
+msgid "Play"
+msgstr "ਚਲਾਓ"
+
+#: part/presentationwidget.cpp:1619
+#, kde-format
+msgid ""
+"There are two ways of exiting presentation mode, you can press either ESC "
+"key or click with the quit button that appears when placing the mouse in the "
+"top-right corner. Of course you can cycle windows (Alt+TAB by default)"
+msgstr ""
+"ਮੌਜੂਦ ਪਰਿਜੈਟੇਸ਼ਨ ਮੋਡ ਨੂੰ ਬੰਦ ਕਰਨ ਦੇ ਦੋ ਢੰਗ ਹਨ, ਜਾਂ ਤਾਂ ਤੁਸੀਂ ESE ਸਵਿੱਚ ਦੱਬ ਸਕਦੇ ਹੋ ਜਾਂ ਬਾਹਰ ਜਾਓ "
+"ਬਟਨ ਨੂੰ ਕਲਿੱਕ ਕਰ ਸਕਦੇ ਹੋ, ਜੋ ਕਿ ਵਿਖਾਈ ਦਿੰਦਾ ਹੈ, ਜਦੋਂ ਤੁਸੀਂ ਉੱਤੇ ਸੱਜੇ ਕੋਨੇ ਵਿੱਚ ਮਾਊਂਸ ਲੈ ਕੇ ਜਾਂਦੇ ਹੋ। "
+"ਬੇਸ਼ੱਕ ਤੁਸੀਂ ਵਿੰਡੋਜ਼ ਦੇ ਵਿੱਚ ਵੀ ਜਾ ਸਕਦੇ ਹੋ (ਡਿਫਾਲਟ Alt+TAB)"
+
+#: part/presentationwidget.cpp:1705
+#, kde-format
+msgctxt ""
+"Reason for inhibiting the screensaver activation, when the presentation mode "
+"is active"
+msgid "Giving a presentation"
+msgstr "ਇੱਕ ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਦਿਓ"
+
+#: part/propertiesdialog.cpp:49
+#, kde-format
+msgid "Unknown File"
+msgstr "ਅਣਜਾਣੀ ਫਾਇਲ"
+
+#: part/propertiesdialog.cpp:63
+#, kde-format
+msgid "%1 Properties"
+msgstr "%1 ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: part/propertiesdialog.cpp:104
+#, kde-format
+msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/propertiesdialog.cpp:117
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: part/propertiesdialog.cpp:124
+#, kde-format
+msgid "&Fonts"
+msgstr "ਫੋਂਟ(&F)"
+
+#: part/propertiesdialog.cpp:145
+#, kde-format
+msgid "Reading font information..."
+msgstr "ਫੋਂਟ ਜਾਣਕਾਰੀ ਪੜ੍ਹੀ ਜਾ ਰਹੀ ਹੈ..."
+
+#: part/propertiesdialog.cpp:158
+#, kde-format
+msgid "&Page Sizes"
+msgstr "ਪੇਜ਼ ਸਾਈਜ਼(&P)"
+
+#: part/propertiesdialog.cpp:225
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Extract Font"
+msgstr "ਫੋਂਟ ਕੱਢੋ(&E)"
+
+#: part/propertiesdialog.cpp:273
+#, kde-format
+msgid "Type 1"
+msgstr "ਟਾਇਪ 1"
+
+#: part/propertiesdialog.cpp:276
+#, kde-format
+msgid "Type 1C"
+msgstr "ਟਾਇਪ 1C"
+
+#: part/propertiesdialog.cpp:279
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "Type 1C (OT)"
+msgstr "Type 1C (OT)"
+
+#: part/propertiesdialog.cpp:282
+#, kde-format
+msgid "Type 3"
+msgstr "ਟਾਇਪ 3"
+
+#: part/propertiesdialog.cpp:285
+#, kde-format
+msgid "TrueType"
+msgstr "ਟਰੂ-ਟਾਇਪ"
+
+#: part/propertiesdialog.cpp:288
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "TrueType (OT)"
+msgstr "TrueType (OT)"
+
+#: part/propertiesdialog.cpp:291
+#, kde-format
+msgid "CID Type 0"
+msgstr "CID ਟਾਇਪ 0"
+
+#: part/propertiesdialog.cpp:294
+#, kde-format
+msgid "CID Type 0C"
+msgstr "CID Type 0C"
+
+#: part/propertiesdialog.cpp:297
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID Type 0C (OT)"
+msgstr "CID ਟਾਇਪ 0C (OT)"
+
+#: part/propertiesdialog.cpp:300
+#, kde-format
+msgid "CID TrueType"
+msgstr "CID TrueType"
+
+#: part/propertiesdialog.cpp:303
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID TrueType (OT)"
+msgstr "CID TrueType (OT)"
+
+#: part/propertiesdialog.cpp:306
+#, kde-format
+msgid "TeX PK"
+msgstr "TeX PK"
+
+#: part/propertiesdialog.cpp:309
+#, kde-format
+msgid "TeX virtual"
+msgstr "TeX ਵਰਚੁਅਲ"
+
+#: part/propertiesdialog.cpp:312
+#, kde-format
+msgid "TeX Font Metric"
+msgstr "TeX ਫੋਂਟ ਮੈਟਰਿਕਸ"
+
+#: part/propertiesdialog.cpp:315
+#, kde-format
+msgid "TeX FreeType-handled"
+msgstr ""
+
+#: part/propertiesdialog.cpp:318
+#, kde-format
+msgctxt "Unknown font type"
+msgid "Unknown"
+msgstr "ਅਣਜਾਣ"
+
+#: part/propertiesdialog.cpp:331
+#, kde-format
+msgid "Embedded (subset)"
+msgstr "ਇੰਬੈੱਡ ਕੀਤਾ (ਸਬ-ਸੈੱਟ)"
+
+#: part/propertiesdialog.cpp:334
+#, kde-format
+msgid "Fully embedded"
+msgstr "ਪੂਰਾ ਈਮਬੈੱਡ"
+
+#: part/propertiesdialog.cpp:344
+#, kde-format
+msgid "No"
+msgstr "ਨਹੀਂ"
+
+#: part/propertiesdialog.cpp:347
+#, kde-format
+msgid "Yes (subset)"
+msgstr "ਹਾਂ (ਸਬ-ਸੈੱਟ)"
+
+#: part/propertiesdialog.cpp:350
+#, kde-format
+msgid "Yes"
+msgstr "ਹਾਂ"
+
+#: part/propertiesdialog.cpp:370
+#, kde-format
+msgctxt "Replacing missing font with another one"
+msgid "%1 (substituting with %2)"
+msgstr ""
+
+#: part/propertiesdialog.cpp:372
+#, kde-format
+msgctxt "font name not available (empty)"
+msgid "[n/a]"
+msgstr "[n/a]"
+
+#: part/propertiesdialog.cpp:386
+#, kde-format
+msgid "Unknown font"
+msgstr "ਅਣਜਾਣ ਫੋਂਟ"
+
+#: part/propertiesdialog.cpp:392
+#, kde-format
+msgid "Embedded: %1"
+msgstr "ਈਮਬੈੱਡ: %1"
+
+#: part/propertiesdialog.cpp:426
+#, kde-format
+msgid "Name"
+msgstr "ਨਾਂ"
+
+#: part/propertiesdialog.cpp:429
+#, kde-format
+msgid "Type"
+msgstr "ਟਾਇਪ"
+
+#: part/propertiesdialog.cpp:432
+#, kde-format
+msgid "File"
+msgstr "ਫਾਇਲ"
+
+#: part/propertiesdialog.cpp:500
+#, kde-format
+msgid "Page"
+msgstr "ਪੇਜ਼"
+
+#: part/propertiesdialog.cpp:503
+#, kde-format
+msgid "Size"
+msgstr "ਸਾਈਜ਼"
+
+#: part/revisionviewer.cpp:41
+#, kde-format
+msgid "Revision Preview"
+msgstr "ਰੀਵਿਜ਼ਨ ਝਲਕ"
+
+#: part/revisionviewer.cpp:53
+#, fuzzy, kde-format
+#| msgid "Where do you want to save %1?"
+msgid "Where do you want to save this revision?"
+msgstr "ਤੁਸੀਂ %1 ਨੂੰ ਕਿੱਥੇ ਸੰਭਾਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: part/revisionviewer.cpp:56
+#, kde-format
+msgid "Could not save file %1."
+msgstr "%1 ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
+
+#: part/revisionviewer.cpp:75
+#, fuzzy, kde-format
+#| msgid "Could not open %1. Reason: %2"
+msgid "Could not view revision."
+msgstr "%1 ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਕਾਰਨ: %2"
+
+#: part/searchwidget.cpp:38
+#, kde-format
+msgid "Enter at least 3 letters to filter pages"
+msgstr "ਫਿਲਟਰ ਪੇਜ਼ ਲਈ ਘੱਟੋ-ਘੱਟ 3 ਅੱਖਰ ਦਿਓ"
+
+#: part/searchwidget.cpp:48
+#, kde-format
+msgid "Case Sensitive"
+msgstr "ਅੱਖਰ ਸੰਵੇਦਨਸ਼ੀਲ"
+
+#: part/searchwidget.cpp:50
+#, kde-format
+msgid "Match Phrase"
+msgstr "ਪ੍ਹੈਰਾ ਮਿਲਾਓ"
+
+#: part/searchwidget.cpp:51
+#, kde-format
+msgid "Match All Words"
+msgstr "ਸਭ ਸ਼ਬਦ ਮਿਲਾਓ"
+
+#: part/searchwidget.cpp:52
+#, kde-format
+msgid "Match Any Word"
+msgstr "ਕੋਈ ਸ਼ਬਦ ਮਿਲਾਓ"
+
+#: part/searchwidget.cpp:71
+#, kde-format
+msgid "Filter Options"
+msgstr "ਫਿਲਟਰ ਚੋਣ"
+
+#: part/side_reviews.cpp:65
+#, fuzzy, kde-format
+#| msgid ""
+#| "<div align=center><h3>No annotations</h3>To create new annotations press "
+#| "F6 or select <i>Tools -&gt; Review</i> from the menu.</div>"
+msgid ""
+"<div align=center><h3>No annotations</h3>To create new annotations press F6 "
+"or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
+msgstr ""
+"<div align=center><h3>ਕੋਈ ਵਿਆਖਿਆ ਨਹੀਂ</h3>ਨਵੀਂ ਵਿਆਖਿਆ ਬਣਾਉਣ ਲਈ, F6 ਦੱਬੋ ਜਾਂ ਮੇਨੂ ਤੋਂ "
+"<i>ਟੂਲ -&gt;ਪੜਤਾਲ</i> ਚੁਣੋ।</div>"
+
+#: part/side_reviews.cpp:137
+#, kde-format
+msgid "Group by Page"
+msgstr "ਪੇਜ਼ ਰਾਹੀਂ ਗਰੁੱਪ"
+
+#: part/side_reviews.cpp:142
+#, kde-format
+msgid "Group by Author"
+msgstr "ਲੇਖਕ ਰਾਹੀਂ ਗਰੁੱਪ"
+
+#: part/side_reviews.cpp:150
+#, fuzzy, kde-format
+#| msgid "Show reviews for current page only"
+msgid "Show annotations for current page only"
+msgstr "ਸਿਰਫ਼ ਮੌਜੂਦਾ ਪੇਜ਼ ਲਈ ਹੀ ਰੀਵਿਊ ਵੇਖੋ"
+
+#: part/side_reviews.cpp:160
+#, kde-format
+msgid "Expand all elements"
+msgstr "ਸਭ ਭਾਗਾਂ ਨੂੰ ਫੈਲਾਓ"
+
+#: part/side_reviews.cpp:162
+#, kde-format
+msgid "Collapse all elements"
+msgstr "ਸਾਰੇ ਭਾਗ ਸਮੇਟੋ"
+
+#: part/signaturepanel.cpp:101
+#, kde-format
+msgid "Properties"
+msgstr "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Select certificate to sign with"
+msgstr "ਇਸ ਨਾਲ ਦਸਤਖਤ ਕਰਨ ਲਈ ਸਰਟੀਫਿਕੇਟ ਚੁਣੋ"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Certificates:"
+msgstr "ਸਰਟੀਫਿਕੇਟ:"
+
+#: part/signaturepartutils.cpp:59
+#, kde-format
+msgid "Enter password (if any) to unlock certificate: %1"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਅਣ-ਲਾਕ ਕਰਨ ਲਈ ਪਾਸਵਰਡ (ਜੇ ਕੋਈ ਹੈ ਤਾਂ) ਦਿਓ: %1"
+
+#: part/signaturepartutils.cpp:61
+#, kde-format
+msgid "Enter certificate password"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਦਾ ਪਾਸਵਰਡ ਦਿਓ"
+
+#: part/signaturepartutils.cpp:71
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Enter document password"
+msgstr "ਡੌਕੂਮੈਂਟ ਪਾਸਵਰਡ"
+
+#: part/signaturepartutils.cpp:93
+#, kde-format
+msgctxt ""
+"Used when suggesting a new name for a digitally signed file. %1 is the old "
+"file name and %2 it's extension"
+msgid "%1_signed.%2"
+msgstr "%1_ਦਸਤਖਤ.%2"
+
+#: part/signaturepartutils.cpp:95
+#, kde-format
+msgid "Save Signed File As"
+msgstr "ਦਸਤਖਤ ਕੀਤੀ ਫਾਇਲ ਇੰਝ ਸੰਭਾਲੋ"
+
+#: part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
+
+#: part/signaturepropertiesdialog.cpp:49
+#, kde-format
+msgid "Validity Status"
+msgstr "ਵੈਧਤਾ ਸਥਿਤੀ"
+
+#: part/signaturepropertiesdialog.cpp:52
+#, kde-format
+msgid "Signature Validity:"
+msgstr "ਦਸਤਖਤ ਵੈਧਤਾ:"
+
+#: part/signaturepropertiesdialog.cpp:53
+#, kde-format
+msgid "Document Modifications:"
+msgstr "ਡੌਕੂਮੈਂਟ ਸੋਧਾਂ:"
+
+#: part/signaturepropertiesdialog.cpp:56
+#, kde-format
+msgid "Additional Information"
+msgstr "ਹੋਰ ਜਾਣਕਾਰੀ"
+
+#: part/signaturepropertiesdialog.cpp:59
+#, kde-format
+msgid "Signed By:"
+msgstr "ਇਸ ਵਲੋਂ ਦਸਤਖ਼ਤ ਕੀਤੇ:"
+
+#: part/signaturepropertiesdialog.cpp:60
+#, kde-format
+msgid "Signing Time:"
+msgstr "ਦਸਤਖ਼ਤ ਦਾ ਵੇਲਾ: "
+
+#: part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "ਕਾਰਨ:"
+
+#: part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "ਟਿਕਾਣਾ:"
+
+#: part/signaturepropertiesdialog.cpp:74
+#, kde-format
+msgid "Document Version"
+msgstr "ਡੌਕੂਮੈਂਟ ਵਰਜ਼ਨ"
+
+#: part/signaturepropertiesdialog.cpp:77
+#, kde-format
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "%2 ਵਿੱਚੋਂ %1 ਡੌਕੂਮੈਂਟ ਰੀਵਿਜ਼ਨ"
+
+#: part/signaturepropertiesdialog.cpp:79
+#, kde-format
+msgid "View Signed Version..."
+msgstr "ਦਸਤਖਤ ਕੀਤਾ ਵਰਜ਼ਨ ਵੇਖੋ..."
+
+#: part/signaturepropertiesdialog.cpp:86
+#, kde-format
+msgid "View Certificate..."
+msgstr "...ਸਰਟੀਫਿਕੇਟ ਵੇਖੋ"
+
+#: part/thumbnaillist.cpp:1029
+#, kde-format
+msgid "Show bookmarked pages only"
+msgstr "ਸਿਰਫ਼ ਬੁੱਕਮਾਰਕ ਸਫ਼ੇ ਹੀ ਵੇਖੋ"
+
+#: part/videowidget.cpp:139
+#, kde-format
+msgctxt "start the movie playback"
+msgid "Play"
+msgstr "ਚਲਾਓ"
+
+#: part/videowidget.cpp:142
+#, kde-format
+msgctxt "pause the movie playback"
+msgid "Pause"
+msgstr "ਵਿਰਾਮ"
+
+#: part/videowidget.cpp:248
+#, kde-format
+msgctxt "stop the movie playback"
+msgid "Stop"
+msgstr "ਰੋਕੋ"
+
+#: part/widgetconfigurationtoolsbase.cpp:28
+#, kde-format
+msgid "&Add..."
+msgstr "...ਜੋੜੋ(&A)"
+
+#: part/widgetconfigurationtoolsbase.cpp:31
+#, kde-format
+msgid "&Edit..."
+msgstr "...ਸੋਧ(&E)"
+
+#: part/widgetconfigurationtoolsbase.cpp:35
+#, kde-format
+msgid "&Remove"
+msgstr "ਹਟਾਓ(&R)"
+
+#: part/widgetconfigurationtoolsbase.cpp:39
+#, kde-format
+msgid "Move &Up"
+msgstr "ਉੱਪਰ ਭੇਜੋ(&U)"
+
+#: part/widgetconfigurationtoolsbase.cpp:43
+#, kde-format
+msgid "Move &Down"
+msgstr "ਹੇਠਾਂ ਭੇਜੋ(&D)"
+
+#: part/widgetdrawingtools.cpp:105
+#, kde-format
+msgid "Default Drawing Tool #%1"
+msgstr "ਮੂਲ ਡਰਾਇੰਗ ਟੂਲ #%1"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "There's already a tool with that name. Using a default one"
+msgstr ""
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "Duplicated Name"
+msgstr "ਡੁਪਲੀਕੇਟ ਨਾਂ"
+
+#: shell/main.cpp:68
+#, kde-format
+msgid "Page of the document to be shown"
+msgstr "ਵੇਖਾਉਣ ਲਈ ਡੌਕੂਮੈਂਟ ਦੇ ਪੇਜ਼"
+
+#: shell/main.cpp:69
+#, kde-format
+msgid "Start the document in presentation mode"
+msgstr "ਡੌਕੂਮੈਂਟ ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਵਿੱਚ ਸਟਾਰਟ ਕਰੋ"
+
+#: shell/main.cpp:70
+#, kde-format
+msgid "Start with print dialog"
+msgstr "ਪਰਿੰਟ ਡਾਈਲਾਗ ਨਾਲ ਸ਼ੁਰੂ"
+
+#: shell/main.cpp:71
+#, fuzzy, kde-format
+#| msgid "Start with print dialog"
+msgid "Start with print dialog and exit after printing"
+msgstr "ਪਰਿੰਟ ਡਾਈਲਾਗ ਨਾਲ ਸ਼ੁਰੂ"
+
+#: shell/main.cpp:72
+#, kde-format
+msgid "\"Unique instance\" control"
+msgstr "\"ਵਿੱਲਖਣ ਮੌਕਾ\" ਕੰਟਰੋਲ"
+
+#: shell/main.cpp:73
+#, kde-format
+msgid "Not raise window"
+msgstr "ਵਿੰਡੋ ਨਾਲ ਉਭਾਰੋ"
+
+#: shell/main.cpp:74
+#, kde-format
+msgid "Find a string on the text"
+msgstr ""
+
+#: shell/main.cpp:75
+#, kde-format
+msgid "sets the external editor command"
+msgstr ""
+
+#: shell/main.cpp:76
+#, fuzzy, kde-format
+#| msgid "Document to open. Specify '-' to read from stdin."
+msgid "Documents to open. Specify '-' to read from stdin."
+msgstr "ਖੋਲ੍ਹਣ ਲਈ ਡੌਕੂਮੈਂਟ। stdin ਤੋਂ '-' ਨਾਲ ਦਿਉ।"
+
+#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#, kde-format
+msgid ""
+"You cannot set the editor command in an already running okular instance. "
+"Please disable the tabs and try again. Please note, that unique is also not "
+"supported when setting the editor command at the commandline.\n"
+msgstr ""
+
+#: shell/okular_main.cpp:150
+#, kde-format
+msgid "Error: Can't open more than one document with the --unique switch"
+msgstr ""
+
+#: shell/okular_main.cpp:156
+#, fuzzy, kde-format
+#| msgid "Can't open more than one document in the unique Okular instance."
+msgid "Error: Can't open more than one document with the --presentation switch"
+msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#: shell/okular_main.cpp:162
+#, fuzzy, kde-format
+#| msgid "Can't open more than one document in the unique Okular instance."
+msgid "Error: Can't open more than one document with the --print switch"
+msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#: shell/okular_main.cpp:168
+#, fuzzy, kde-format
+#| msgid "Can't open more than one document in the unique Okular instance."
+msgid "Error: Can't open more than one document with the --page switch"
+msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#: shell/okular_main.cpp:174
+#, fuzzy, kde-format
+#| msgid "Can't open more than one document in the unique Okular instance."
+msgid "Error: Can't open more than one document with the --find switch"
+msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#: shell/shell.cpp:91
+#, kde-format
+msgid "Unable to find the Okular component: %1"
+msgstr "ਓਕੁਲਾਰ ਭਾਗ ਲੱਭਣ ਲਈ ਅਸਫ਼ਲ ਹੈ: %1"
+
+#: shell/shell.cpp:146
+#, kde-format
+msgid ""
+"There is already a unique Okular instance running. This instance won't be "
+"the unique one."
+msgstr "ਪਹਿਲਾਂ ਹੀ ਇੱਕਲਾ ਓਕੁਲਾਰ ਚੱਲ ਰਿਹਾ ਹੈ। ਇਹ ਚੱਲਣ ਨਾਲ ਇੱਕਲਾ (ਵਿਲੱਖਣ) ਨਹੀਂ ਰਹੇਗਾ।"
+
+#: shell/shell.cpp:169
+#, kde-format
+msgid "Unable to find the Okular component."
+msgstr "ਓਕੁਲਾਰ ਭਾਗ ਲੱਭਣ ਲਈ ਅਸਫ਼ਲ ਹੈ।"
+
+#: shell/shell.cpp:399
+#, kde-format
+msgid ""
+"Click to open a file\n"
+"Click and hold to open a recent file"
+msgstr ""
+"ਇੱਕ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਕਲਿੱਕ ਕਰੋ\n"
+"ਤਾਜ਼ਾ ਖੋਲ੍ਹੀ ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹਣ ਲਈ ਕਲਿੱਕ ਕਰਨ ਉਪਰੰਤ ਫੜੀ ਰੱਖੋ"
+
+#: shell/shell.cpp:400
+#, kde-format
+msgid ""
+"<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
+msgstr ""
+"ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰੋ</b> ਜਾਂ ਤਾਜ਼ੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰਕੇ ਫੜੀ ਰੱਖੋ</b>"
+
+#: shell/shell.cpp:413
+#, kde-format
+msgid "Next Tab"
+msgstr "ਟੈਬ ਅੱਗੇ"
+
+#: shell/shell.cpp:419
+#, kde-format
+msgid "Previous Tab"
+msgstr "ਟੈਬ ਪਿੱਛੇ"
+
+#: shell/shell.cpp:425
+#, kde-format
+msgid "Undo close tab"
+msgstr "ਬੰਦ ਟੈਬ ਵਾਪਿਸ ਲਵੋ"
+
+#: shell/shell.cpp:532
+#, kde-format
+msgid "All files (*)"
+msgstr "ਸਭ ਫਾਇਲਾਂ (*)"
+
+#: shell/shell.cpp:533
+#, kde-format
+msgid "All supported files (%1)"
+msgstr "ਸਾਰੀਆਂ ਸਹਾਇਕ ਫਾਇਲਾਂ (%1)"
+
+#: shell/shell.cpp:537
+#, kde-format
+msgid "Open Document"
+msgstr "ਡੌਕੂਮੈਂਟ ਖੋਲ੍ਹੋ"
+
+#: shell/shell.cpp:641
+#, kde-format
+msgid "Confirm Close"
+msgstr "ਬੰਦ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ"
+
+#: shell/shell.cpp:645
+#, kde-format
+msgid "Close Tabs"
+msgstr "ਟੈਬਾਂ ਬੰਦ ਕਰੋ"
+
+#: shell/shell.cpp:652
+#, fuzzy, kde-format
+#| msgid ""
+#| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgid "You are about to close %1 tabs. Are you sure you want to continue?"
+msgstr "ਫਾਇਲ ਨਾਂ \"%1\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: shell/shell.cpp:654
+#, kde-format
+msgid "Warn me when I attempt to close multiple tabs"
+msgstr "ਜਦੋਂ ਮੈਂ ਕਈ ਟੈਬਾਂ ਬੰਦ ਕਰਾਂ ਤਾਂ ਮੈਨੂੰ ਸਾਵਧਾਨ ਕਰੋ"
+
+#: shell/welcomescreen.cpp:65
+#, fuzzy, kde-format
+#| msgid "Copy Text"
+msgid "&Copy Path"
+msgstr "ਲਿਖਤ ਕਾਪੀ ਕਰੋ"
+
+#: shell/welcomescreen.cpp:78
+#, fuzzy, kde-format
+#| msgid "Open Con&taining Folder"
+msgid "&Open Containing Folder"
+msgstr "ਰੱਖਣ ਵਾਲਾ ਫੋਲਡਰ ਖੋਲ੍ਹੋ(&t)"
+
+#: shell/welcomescreen.cpp:93
+#, kde-format
+msgctxt "recent items context menu"
+msgid "&Forget This Item"
+msgstr ""
+
+#: shell/welcomescreen.cpp:143
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "No recent documents"
+msgstr "ਸਿਰਫ਼ ਮੌਜੂਦਾ ਡੌਕੂਮੈਂਟ ਹੀ"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: shell/welcomescreen.ui:153
+#, kde-format
+msgid "Welcome to Okular"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: shell/welcomescreen.ui:232
+#, fuzzy, kde-format
+#| msgid "Open Document"
+msgctxt "on welcome screen"
+msgid "Open Document..."
+msgstr "ਡੌਕੂਮੈਂਟ ਖੋਲ੍ਹੋ"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: shell/welcomescreen.ui:377
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "Recent documents"
+msgstr "ਸਿਰਫ਼ ਮੌਜੂਦਾ ਡੌਕੂਮੈਂਟ ਹੀ"
+
+#. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
+#: shell/welcomescreen.ui:387
+#, kde-format
+msgctxt "on welcome screen (recent document list)"
+msgid "Forget All"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
+#: shell/welcomescreen.ui:455
+#, kde-format
+msgid "Hide welcome screen"
+msgstr ""
+
+#~ msgid "Remove Bookmarks"
+#~ msgstr "ਬੁੱਕਮਾਰਕ ਹਟਾਓ"
+
+#, fuzzy
+#~| msgid "&Annotations"
+#~ msgctxt "verb"
+#~ msgid "&Annotate"
+#~ msgstr "ਟਿੱਪਣੀਆਂ(&A)"
+
+#, fuzzy
+#~| msgid "Highlight"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Highlight"
+#~ msgstr "ਉਘਾੜੋ"
+
+#, fuzzy
+#~| msgid "Underline"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Underline"
+#~ msgstr "ਹੇਠਾਂ ਲਾਈਨ"
+
+#, fuzzy
+#~| msgid "Strike Out"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Strike Out"
+#~ msgstr "ਵਿੰਨ੍ਹੋ"
+
+#, fuzzy
+#~| msgid "Insert"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Text"
+#~ msgstr "ਸ਼ਾਮਲ"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Inline Note"
+#~ msgstr "ਇਨ-ਲਾਈਨ ਨੋਟ"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Popup Note"
+#~ msgstr "ਪੋਪ-ਅੱਪ ਨੋਟ"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a freehand line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Freehand Line"
+#~ msgstr "ਹੱਥ-ਨਾਲ ਲਾਈਨ ਵਾਹੋ"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a straight line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Straight line"
+#~ msgstr "ਸਿੱਧੀ ਲਾਈਨ ਖਿੱਚੋ"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Arrow"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Arrow"
+#~ msgstr "ਤੀਰ"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a rectangle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Rectangle"
+#~ msgstr "ਚਤੁਰਭੁਜ ਬਣਾਓ"
+
+#, fuzzy
+#~| msgid "Cyan Ellipse"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Ellipse"
+#~ msgstr "ਕਯਾਨ ਅੰਡਾਕਾਰ"
+
+#, fuzzy
+#~| msgid "Polygon"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Polygon"
+#~ msgstr "ਬਹੁਭੁਜ"
+
+#, fuzzy
+#~| msgid "Highlighter"
+#~ msgid "Highlight in Yellow"
+#~ msgstr "ਹਾਈਲਾਈਰ"
+
+#, fuzzy
+#~| msgid "Highlight with Comment"
+#~ msgid "Highlight in Green"
+#~ msgstr "ਟਿੱਪਣੀ ਨਾਲ ਉਘਾੜੋ"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgid "Insert Inline Note"
+#~ msgstr "ਇਨ-ਲਾਈਨ ਨੋਟ"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgid "Insert Popup Note"
+#~ msgstr "ਪੋਪ-ਅੱਪ ਨੋਟ"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "&Select Area"
+#~ msgstr "ਲਿਖਤ ਚੁਣੋ"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select &Text"
+#~ msgstr "ਲਿਖਤ ਚੁਣੋ"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select T&able"
+#~ msgstr "ਲਿਖਤ ਚੁਣੋ"
+
+#, fuzzy
+#~| msgid "&Magnifier"
+#~ msgctxt "verb"
+#~ msgid "&Magnify"
+#~ msgstr "ਵੱਡਦਰਸ਼ੀ(&M)"
+
+#, fuzzy
+#~| msgctxt "Add an annotation to the page"
+#~| msgid "add annotation"
+#~ msgid "Bookmark annotation"
+#~ msgstr "ਟਿੱਪਣੀ ਸ਼ਾਮਲ ਕਰੋ"
+
+#~ msgid "&Toggle Change Colors"
+#~ msgstr "ਰੰਗ ਬਦਲੋ(&T)"
+
+#, fuzzy
+#~| msgid "Enable transitions"
+#~ msgctxt "@option:check Config dialog, presentation page, transitions"
+#~ msgid "Enable transitions"
+#~ msgstr "ਟਰਾਂਸਿਟਸ਼ਨ ਸਮਰੱਥ ਕਰੋ"
+
+#, fuzzy
+#~| msgid "Advance every:"
+#~ msgctxt "@label:spinbox Config dialog, presentation page"
+#~ msgid "Advance every:"
+#~ msgstr "ਅੱਗੇ ਹਰ:"
+
+#, fuzzy
+#~| msgid "Background color:"
+#~ msgctxt "@label:listbox Config dialog, general page"
+#~ msgid "Custom background color:"
+#~ msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ:"
+
+#~ msgid "Draw border around &Images"
+#~ msgstr "ਚਿੱਤਰ ਦੁਆਲੇ ਹਾਸ਼ੀਆਂ ਖਿੱਚੋ(&I)"
+
+#~ msgid "Speech"
+#~ msgstr "ਬੋਲੀ"
+
+#~ msgid "Engine"
+#~ msgstr "ਇੰਜਣ"
+
+#~ msgid "Identity"
+#~ msgstr "ਪਛਾਣ"
+
+#~ msgid "Au&thor:"
+#~ msgstr "ਲੇਖਕ(&t):"
+
+#~ msgid "View Options"
+#~ msgstr "ਵੇਖਣ ਚੋਣ"
+
+#~ msgid "Navigation"
+#~ msgstr "ਨੇਵੀਗੇਸ਼ਨ"
+
+#~ msgid "Placement"
+#~ msgstr "ਸਥਿਤੀ"
+
+#~ msgid "Screen:"
+#~ msgstr "ਸਕਰੀਨ:"
+
+#~ msgid "Drawing Tool Configuration"
+#~ msgstr "ਡਰਾਇੰਗ ਟੂਲ ਸੰਰਚਨਾ"
+
+#~ msgid "&Get Books From Internet..."
+#~ msgstr "ਇੰਟਰਨੈੱਟ ਤੋਂ ਕਿਤਾਬਾਂ ਲਵੋ(&G)..."
+
+#~ msgid "Reviews"
+#~ msgstr "ਰੀਵਿਊ"
+
+#~ msgctxt "@item:inlistbox Color name"
+#~ msgid "%1"
+#~ msgstr "%1"
+
+#~ msgid "Hide Forms"
+#~ msgstr "ਫਾਰਮ ਓਹਲੇ"
+
+#~ msgid "&Review"
+#~ msgstr "ਰੀਵਿਊ(&R)"
+
+#~ msgid "Annotations author"
+#~ msgstr "ਟਿੱਪਣੀ ਲੇਖਕ"
+
+#~ msgid "Please insert your name or initials:"
+#~ msgstr "ਆਪਣਾ ਨਾਂ ਜਾਂ ਸ਼ੁਰੂ ਵਾਲੇ ਅੱਖਰ ਪਾਓ ਜੀ:"
+
+#~ msgid "Show &Navigation Panel"
+#~ msgstr "ਨੇਵੀਗੇਸ਼ਨ ਪੈਨਲ ਵੇਖੋ(&N)"
+
+#~ msgid "Show Text"
+#~ msgstr "ਟੈਕਸਟ ਵੇਖੋ"
+
+#~ msgid "Small Icons"
+#~ msgstr "ਛੋਟੇ ਆਈਕਾਨ"
+
+#~ msgid "Large Icons"
+#~ msgstr "ਵੱਡੇ ਆਈਕਾਨ"
+
+#, fuzzy
+#~| msgid ""
+#~| "Click to use the current selection tool\n"
+#~| "Click and hold to choose another selection tool"
+#~ msgid ""
+#~ "Click to use the current selection tool\n"
+#~ "Click on the arrow to choose another selection tool"
+#~ msgstr ""
+#~ "ਮੌਜੂਦਾ ਚੋਣ ਟੂਲ ਵਰਤਣ ਲਈ ਕਲਿੱਕ ਕਰੋ\n"
+#~ "ਹੋਰ ਚੋਣ ਟੂਲ ਵਰਤਣ ਲਈ ਕਲਿੱਕ ਕਰਕੇ ਹੋਲਡ ਕਰਕੇ ਰੱਖੋ"
+
+#~ msgid "Created: %1"
+#~ msgstr "ਬਣਾਇਆ: %1"
+
+#~ msgid "Style"
+#~ msgstr "ਸਟਾਇਲ"
+
+#~ msgid "&Size:"
+#~ msgstr "ਸਾਈਜ਼(&S):"
+
+#~ msgid "Inner color:"
+#~ msgstr "ਅੰਦਰੂਨੀ ਰੰਗ:"
+
+#~ msgid "Name: %1"
+#~ msgstr "ਨਾਂ: %1"
+
+#~ msgid "Size: %1"
+#~ msgstr "ਸਾਈਜ਼: %1"
+
+#~ msgid "&Browse Tool"
+#~ msgstr "ਝਲਕ ਟੂਲ(&B)"
+
+#~ msgid "&Zoom Tool"
+#~ msgstr "ਜ਼ੂਮ ਟੂਲ(&Z)"
+
+#~ msgctxt "Zoom Tool"
+#~ msgid "Zoom"
+#~ msgstr "ਜ਼ੂਮ"
+
+#~ msgctxt "Select Tool"
+#~ msgid "Selection"
+#~ msgstr "ਚੋਣ"
+
+#~ msgid "&Text Selection Tool"
+#~ msgstr "ਟੈਕਸਟ ਚੋਣ ਟੂਲ(&T)"
+
+#~ msgid "T&able Selection Tool"
+#~ msgstr "ਟੇਬਲ ਚੋਣ ਟੂਲ(&a)"
+
+#, fuzzy
+#~| msgctxt "Symbol for caret annotations"
+#~| msgid "None"
+#~ msgid " None"
+#~ msgstr "ਕੋਈ ਨਹੀਂ"
+
+#~ msgid ""
+#~ "The document requested to be launched in presentation mode.\n"
+#~ "Do you want to allow it?"
+#~ msgstr ""
+#~ "ਡੌਕੂਮੈਂਟ ਨੂੰ ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਵਿੱਚ ਲਾਂਚ ਕਰਨ ਮੰਗ ਆਈ ਹੈ।\n"
+#~ "ਕੀ ਤੁਸੀਂ ਮਨਜ਼ੂਰ ਕਰਦੇ ਹੋ?"
+
+#~ msgid "Presentation Mode"
+#~ msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ"
+
+#~ msgid "Allow"
+#~ msgstr "ਮਨਜ਼ੂਰ"
+
+#~ msgid "Allow the presentation mode"
+#~ msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਮਨਜ਼ੂਰ"
+
+#~ msgid "Do Not Allow"
+#~ msgstr "ਨਾ ਮਨਜ਼ੂਰ"
+
+#~ msgid "Do not allow the presentation mode"
+#~ msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ ਵਿੱਚ ਮਨਜ਼ੂਰ ਨਾ ਕਰੋ"
+
+#~ msgid ""
+#~ "Your annotation changes will not be saved automatically. Use File -> Save "
+#~ "As...\n"
+#~ "or your changes will be lost once the document is closed"
+#~ msgstr ""
+#~ "ਤੁਹਾਡੇ ਬਦਲਾਅ ਆਪਣੇ-ਆਪ ਨਹੀਂ ਸੰਭਾਲੇ ਗਏ ਹਨ। ਫਾਇਲ -> ...ਵਾਂਗ ਸੰਭਾਲੋ ਦੀ ਵਰਤੋਂ ਕਰੋ\n"
+#~ "ਜਾਂ ਡੌਕੂਮੈਂਟ ਨੂੰ ਬੰਦ ਕਰਨ ਨਾਲ ਤੁਹਾਡੇ ਬਦਲਾਅ ਖਤਮ ਹੋ ਜਾਣਗੇ।"
+
+#~ msgid ""
+#~ "Your annotations are saved internally by Okular.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "ਤੁਹਾਡੀ ਵਿਆਖਿਆ ਨੂੰ ਓਕੁਲਾਰ ਵਲੋਂ ਅੰਦਰੂਨੀ ਤੌਰ ਉੱਤੇ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।\n"
+#~ "ਤੁਸੀਂ ਵਿਆਖਿਆ ਕੀਤੇ ਡੌਕੂਮੈਂਟ ਨੂੰ ਫਾਇਲ -> ਇੰਝ ਐਕਸਪੋਰਟ -> ਡੌਕੂਮੈਂਟ ਅਕਾਇਵ ਰਾਹੀਂ ਐਕਸਪੋਰਟ ਕਰ ਸਕਦੇ ਹੋ"
+
+#~ msgid "Save &Copy As..."
+#~ msgstr "ਕਾਪੀ ਇੰਝ ਸੰਭਾਲੋ(&C)..."
+
+#~ msgid ""
+#~ "Your annotations will not be exported.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "ਤੁਹਾਡੀ ਵਿਆਖਿਆ ਨੂੰ ਐਕਸਪੋਰਟ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ ਹੈ।\n"
+#~ "ਤੁਸੀਂ ਵਿਆਖਿਆ ਕੀਤੇ ਡੌਕੂਮੈਂਟ ਨੂੰ ਫਾਇਲ -> ਇੰਝ ਐਕਸਪੋਰਟ -> ਡੌਕੂਮੈਂਟ ਅਕਾਇਵ ਰਾਹੀਂ ਐਕਸਪੋਰਟ ਕਰ ਸਕਦੇ ਹੋ"
+
+#~ msgid ""
+#~ "End of document reached.\n"
+#~ "Continue from the beginning?"
+#~ msgstr ""
+#~ "ਡੌਕੂਮੈਂਟ ਦਾ ਅੰਤ ਆ ਗਿਆ ਹੈ।\n"
+#~ "ਕੀ ਮੁੱਢ ਤੋਂ ਸ਼ੁਰੂ ਕਰਨਾ ਹੈ?"
+
+#~ msgid ""
+#~ "Beginning of document reached.\n"
+#~ "Continue from the bottom?"
+#~ msgstr ""
+#~ "ਡੌਕੂਮੈਂਟ ਦਾ ਸ਼ੁਰੂ ਆ ਗਿਆ।\n"
+#~ "ਕੀ ਹੇਠਾਂ ਤੋਂ ਜਾਰੀ ਰੱਖਣਾ ਹੈ?"
+
+#~ msgid "Current maintainer"
+#~ msgstr "ਮੌਜੂਦਾ ਪਰਬੰਧਕ"
+
+#~ msgid " sec."
+#~ msgstr " ਸਕਿੰਟ"
+
+#~ msgid "Pencil color:"
+#~ msgstr "ਪਿਨਸਲ ਰੰਗ:"
+
+#~ msgctxt "paper size"
+#~ msgid "ledger"
+#~ msgstr "ਲੈਡਰ"
+
+#~ msgctxt "paper size"
+#~ msgid "tabloid"
+#~ msgstr "ਸਾਰਣੀਰੂਪ"
+
+#~ msgid "Toggle Drawing Mode"
+#~ msgstr "ਡਰਾਇੰਗ ਮੋਡ ਬਦਲੋ"
+
+#~ msgid "Starting Jovie Text-to-Speech service Failed: %1"
+#~ msgstr "ਜੋਵੀ ਟੈਕਸਟ-ਤੋਂ-ਸਪੀਚ ਸਰਵਿਸ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਫੇਲ੍ਹ: %1"
+
+#~ msgid "Search Columns"
+#~ msgstr "ਕਾਲਮ ਖੋਜ"
+
+#~ msgid "All Visible Columns"
+#~ msgstr "ਸਭ ਦਿਸਦੇ ਕਾਲਮ"
+
+#~ msgid "No document opened."
+#~ msgstr "ਕੋਈ ਡੌਕੂਮੈਂਟ ਖੁੱਲ੍ਹਾ ਨਹੀਂ ਹੈ।"
+
+#~ msgid "No matches found for '%1'."
+#~ msgstr "'%1' ਲਈ ਕੋਈ ਮੇਲ ਨਹੀਂ ਲੱਭਿਆ।"
+
+#~ msgid "Search in progress..."
+#~ msgstr "ਭਾਲ ਜਾਰੀ ਹੈ..."
+
+#~ msgid "Searching for %1"
+#~ msgstr "%1 ਲਈ ਭਾਲ ਜਾਰੀ ਹੈ"
+
+#~ msgid "Identity Settings"
+#~ msgstr "ਪਛਾਣ ਸੈਟਿੰਗ"
+
+#~ msgid "Highlight Properties"
+#~ msgstr "ਉਭਾਰਨ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#~ msgid "Ink Properties"
+#~ msgstr "ਸਿਆਹੀ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Text Annotation"
+#~ msgstr "ਟੈਕਸਟ ਟਿੱਪਣੀ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Green Ink"
+#~ msgstr "ਹਰੀ ਸਿਆਹੀ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Yellow Highlight"
+#~ msgstr "ਪੀਲਾ ਹਾਈਲਾਇਟ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Straight Yellow Line"
+#~ msgstr "ਸਿੱਧੀ ਪੀਲੀ ਲਾਈਨ"
+
+#~ msgid "Black Underlining"
+#~ msgstr "ਕਾਲੀ ਹੇਠਾਂ ਲਾਈਨ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Underline the text with a black line"
+#~ msgstr "ਇੱਕ ਕਾਲੀ ਲਾਈਨ ਨਾਲ ਟੈਕਸਟ ਹੇਠ ਰੇਖਾ ਲਾਓ"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "A cyan ellipse"
+#~ msgstr "ਕਯਾਨ ਅੰਡਾਕਾਰ"
+
+#~ msgid "Ink"
+#~ msgstr "ਸਿਆਹੀ"
+
+#~ msgid "Enable &background generation"
+#~ msgstr "ਬੈਕਗਰਾਊਂਡ ਨਿਰਮਾਣ ਯੋਗ(&b)"
+
+#, fuzzy
+#~| msgid "Hide Forms"
+#~ msgid "Reset Forms"
+#~ msgstr "ਫਾਰਮ ਓਹਲੇ"
+
+#~ msgid "Moves to the first page of the document"
+#~ msgstr "ਡੌਕੂਮੈਂਟ ਦੇ ਪਹਿਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#~ msgid "You must set this name:"
+#~ msgstr "ਤੁਹਾਨੂੰ ਇਹ ਨਾਂ ਦੇਣਾ ਪਵੇਗਾ:"
+
+#~ msgctxt "%1 is \"Title\""
+#~ msgid "%1:"
+#~ msgstr "%1:"
+
+#~ msgctxt "%1 is \"File Path\""
+#~ msgid "%1:"
+#~ msgstr "%1:"
+
+#~ msgctxt "@action:button"
+#~ msgid "&Overwrite"
+#~ msgstr "ਉੱਤੇ ਲਿਖੋ(&O)"
+
+#~ msgid "Pages:"
+#~ msgstr "ਪੇਜ਼:"

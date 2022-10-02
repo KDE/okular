@@ -1,0 +1,84 @@
+# Albanian translation for kdegraphics
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdegraphics package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdegraphics\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2009-05-01 03:03+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-22 09:44+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Dokumenti nuk është një FictionBook i vlefshëm"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Nuk jemi në gjendje të hapim dokumentin: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Dokumenti nuk është një arkiv ZIP i vlefshëm"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Strukturë e pavlefshme e dokumentit (direktoria kryesore mungon)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Nuk u gjet përmbajtje në dokument"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Dokument i pavlefshëm XML: %1"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook"
+msgstr "Libër Thriller Backend"
+
+#: generator_fb.cpp:26
+#, fuzzy, kde-format
+#| msgid "Fiction Book Backend"
+msgid "FictionBook Backend Configuration"
+msgstr "Libër Thriller Backend"
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "Libër Thriller Backend"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "Një lexues për FictionBook eBooks"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

@@ -1,0 +1,6630 @@
+# translation of okular.po to Estonian
+# Copyright (C) 2003, 2005 Free Software Foundation, Inc.
+#
+# Marek Laane <bald@smail.ee>, 2003-2009.
+# Peeter Russak <pezz@tkwcy.ee>, 2005.
+# Marek Laane <bald@smail.ee>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020.
+# Mihkel Tõnnov <mihhkel@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"PO-Revision-Date: 2020-10-15 14:19+0200\n"
+"Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
+"Language-Team: Estonian <>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.08.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "qiilaq69@gmail.com"
+
+#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#, kde-format
+msgid "Okular"
+msgstr "Okular"
+
+#: aboutdata.h:21
+#, kde-format
+msgid "Okular, a universal document viewer"
+msgstr "Universaalne dokumentide näitaja Okular"
+
+#: aboutdata.h:23
+#, kde-format
+msgid ""
+"(C) 2002 Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005 Enrico Ros\n"
+"(C) 2005 Piotr Szymanski\n"
+"(C) 2004-2017 Albert Astals Cid\n"
+"(C) 2006-2009 Pino Toscano"
+msgstr ""
+"(C) 2002: Wilco Greven, Christophe Devriese\n"
+"(C) 2004-2005: Enrico Ros\n"
+"(C) 2005: Piotr Szymanski\n"
+"(C) 2004-2017: Albert Astals Cid\n"
+"(C) 2006-2009: Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: aboutdata.h:31
+#, kde-format
+msgid "Former maintainer"
+msgstr "Endine hooldaja"
+
+#: aboutdata.h:32
+#, kde-format
+msgid "Tobias Koenig"
+msgstr "Tobias Koenig"
+
+#: aboutdata.h:32
+#, fuzzy, kde-format
+#| msgid "Lots of framework work, ODT and FictionBook backends"
+msgid "Lots of framework work, FictionBook backend and former ODT backend"
+msgstr "Palju tööd raamistiku kallal, ODT ja FictionBooki taustaprogrammid"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Albert Astals Cid"
+msgstr "Albert Astals Cid"
+
+#: aboutdata.h:33
+#, kde-format
+msgid "Developer"
+msgstr "Arendaja"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Piotr Szymanski"
+msgstr "Piotr Szymanski"
+
+#: aboutdata.h:34
+#, kde-format
+msgid "Created Okular from KPDF codebase"
+msgstr "Lõi KPDF-i koodi põhjal Okulari"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "Enrico Ros"
+msgstr "Enrico Ros"
+
+#: aboutdata.h:35
+#, kde-format
+msgid "KPDF developer"
+msgstr "KPDF-i arendaja"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Eugene Trounev"
+msgstr "Eugene Trounev"
+
+#: aboutdata.h:36
+#, kde-format
+msgid "Annotations artwork"
+msgstr "Annotatsioonide kunstiline külg"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Jiri Baum - NICTA"
+msgstr "Jiri Baum - NICTA"
+
+#: aboutdata.h:37
+#, kde-format
+msgid "Table selection tool"
+msgstr "Tabelivaliku tööriist"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Fabio D'Urso"
+msgstr "Fabio D'Urso"
+
+#: aboutdata.h:38
+#, kde-format
+msgid "Annotation improvements"
+msgstr "Annoteerimise täiustamine"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Go to page %1"
+msgstr "Liigu leheküljele %1"
+
+#: core/action.cpp:125
+#, kde-format
+msgid "Open external file"
+msgstr "Ava väline fail"
+
+#: core/action.cpp:185
+#, kde-format
+msgid "Execute '%1'..."
+msgstr "Käivita '%1'..."
+
+#: core/action.cpp:284
+#, kde-format
+msgid "First Page"
+msgstr "Esimene lehekülg"
+
+#: core/action.cpp:286 part/presentationwidget.cpp:177
+#, kde-format
+msgid "Previous Page"
+msgstr "Eelmine lehekülg"
+
+#: core/action.cpp:288 part/presentationwidget.cpp:194
+#, kde-format
+msgid "Next Page"
+msgstr "Järgmine lehekülg"
+
+#: core/action.cpp:290
+#, kde-format
+msgid "Last Page"
+msgstr "Viimane lehekülg"
+
+#: core/action.cpp:292
+#, kde-format
+msgid "Back"
+msgstr "Tagasi"
+
+#: core/action.cpp:294
+#, kde-format
+msgid "Forward"
+msgstr "Edasi"
+
+#: core/action.cpp:296
+#, kde-format
+msgid "Quit"
+msgstr "Välju"
+
+#: core/action.cpp:298
+#, kde-format
+msgid "Start Presentation"
+msgstr "Käivita esitlus"
+
+#: core/action.cpp:300
+#, kde-format
+msgid "End Presentation"
+msgstr "Lõpeta esitlus"
+
+#: core/action.cpp:302
+#, kde-format
+msgid "Find..."
+msgstr "Otsi..."
+
+#: core/action.cpp:304
+#, kde-format
+msgid "Go To Page..."
+msgstr "Liigu leheküljele..."
+
+#: core/action.cpp:355
+#, kde-format
+msgid "Play sound..."
+msgstr "Esita heli..."
+
+#: core/action.cpp:423 core/action.cpp:539
+#, kde-format
+msgid "JavaScript Script"
+msgstr "JavaScripti skript"
+
+#: core/action.cpp:473
+#, kde-format
+msgid "Play movie..."
+msgstr "Esita video..."
+
+#: core/action.cpp:544
+#, kde-format
+msgid "Play movie"
+msgstr "Esita film"
+
+#: core/action.cpp:546
+#, kde-format
+msgid "Stop movie"
+msgstr "Peata film"
+
+#: core/action.cpp:548
+#, kde-format
+msgid "Pause movie"
+msgstr "Paus filmis"
+
+#: core/action.cpp:550
+#, kde-format
+msgid "Resume movie"
+msgstr "Jätka filmi näitamist"
+
+#: core/chooseenginedialog.cpp:22
+#, kde-format
+msgid "Backend Selection"
+msgstr "Taustaprogrammi valik"
+
+#: core/chooseenginedialog.cpp:40
+#, kde-format
+msgid ""
+"<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
+"><br />Please select which one to use:</qt>"
+msgstr ""
+"<qt>Leiti rohkem kui üks MIME tüübile sobiv taustaprogramm:<br /><b>%1</b> "
+"(%2).<br /><br />Palun vali, millist kasutada:</qt>"
+
+#: core/document.cpp:203
+#, kde-format
+msgctxt "@info %1 is a page size"
+msgid "Most pages are %1."
+msgstr "Enamik lehekülgi on %1"
+
+#: core/document.cpp:224
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Portrait %1"
+msgstr "Püstpaigutusega %1"
+
+#: core/document.cpp:226
+#, kde-format
+msgctxt "paper type and orientation (eg: Portrait A4)"
+msgid "Landscape %1"
+msgstr "Rõhtpaigutusega %1"
+
+#: core/document.cpp:249
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 in (%3)"
+msgstr "%1 x %2 tolli (%3)"
+
+#: core/document.cpp:251
+#, kde-format
+msgctxt "%1 is width, %2 is height, %3 is paper size name"
+msgid "%1 x %2 mm (%3)"
+msgstr "%1 x %2 mm (%3)"
+
+#: core/document.cpp:1682
+#, kde-format
+msgid "Continuing search from beginning"
+msgstr "Otsingu jätkamine algusest"
+
+#: core/document.cpp:1685
+#, kde-format
+msgid "Continuing search from bottom"
+msgstr "Otsingu jätkamine lõpust"
+
+#: core/document.cpp:2445
+#, kde-format
+msgid ""
+"Can not find a plugin which is able to handle the document being passed."
+msgstr "Pluginat töödeldud dokumenti käsitlemiseks ei leitud."
+
+#: core/document.cpp:3595
+#, kde-format
+msgctxt "remove a collection of annotations from the page"
+msgid "remove annotations"
+msgstr "Eemalda annotatsioonid"
+
+#: core/document.cpp:4160 core/document.cpp:4166
+#, kde-format
+msgid ""
+"The document is trying to execute an external application and, for your "
+"safety, Okular does not allow that."
+msgstr ""
+"Dokument üritab käivitada välist rakendust, kuid sinu turvalisuse huvides ei "
+"luba Okular seda teha."
+
+#: core/document.cpp:4177
+#, kde-format
+msgid "No application found for opening file of mimetype %1."
+msgstr "Ei leitud rakendust, millega avada faili MIME tüübiga %1."
+
+#: core/document.cpp:4600
+#, kde-format
+msgid "Could not open a temporary file"
+msgstr "Ajutise faili avamine nurjus"
+
+#: core/document.cpp:4602
+#, kde-format
+msgid "Print conversion failed"
+msgstr "Trükkimiseks teisendamine nurjus"
+
+#: core/document.cpp:4604
+#, kde-format
+msgid "Printing process crashed"
+msgstr "Trükkimisprotsessi tabas krahh"
+
+#: core/document.cpp:4606
+#, kde-format
+msgid "Printing process could not start"
+msgstr "Trükkimisprotsessi käivitamine nurjus"
+
+#: core/document.cpp:4608
+#, kde-format
+msgid "Printing to file failed"
+msgstr "Salvestamine faili nurjus"
+
+#: core/document.cpp:4610
+#, kde-format
+msgid "Printer was in invalid state"
+msgstr "Printer oli vales olekus"
+
+#: core/document.cpp:4612
+#, kde-format
+msgid "Unable to find file to print"
+msgstr "Trükkimiseks ei leitud faili"
+
+#: core/document.cpp:4614
+#, kde-format
+msgid "There was no file to print"
+msgstr "Polnud ühtegi faili trükkida"
+
+#: core/document.cpp:4616
+#, kde-format
+msgid ""
+"Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
+"available"
+msgstr ""
+"Sobivat binaarfaili trükkimiseks ei leitud. Kontrolli, kas CUPS-i lpr "
+"binaarfail on ikka saadaval"
+
+#: core/document.cpp:4618
+#, kde-format
+msgid "The page print size is invalid"
+msgstr "Lehekülje trükisuurus on vigane"
+
+#: core/document.cpp:5283 part/part.cpp:1168
+#, kde-format
+msgid "Could not open '%1'. File does not exist"
+msgstr "\"%1\" avamine nurjus. Faili ei ole olemas."
+
+#: core/document.cpp:5793
+#, kde-format
+msgid "Title"
+msgstr "Pealkiri"
+
+#: core/document.cpp:5796
+#, kde-format
+msgid "Subject"
+msgstr "Teema"
+
+#: core/document.cpp:5799
+#, kde-format
+msgid "Description"
+msgstr "Kirjeldus"
+
+#: core/document.cpp:5802
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: core/document.cpp:5805
+#, kde-format
+msgid "Creator"
+msgstr "Looja"
+
+#: core/document.cpp:5808
+#, kde-format
+msgid "Producer"
+msgstr "Generaator"
+
+#: core/document.cpp:5811
+#, kde-format
+msgid "Copyright"
+msgstr "Autoriõigus"
+
+#: core/document.cpp:5814
+#, kde-format
+msgid "Pages"
+msgstr "Lehekülgi"
+
+#: core/document.cpp:5817
+#, kde-format
+msgid "Created"
+msgstr "Loodud"
+
+#: core/document.cpp:5820
+#, kde-format
+msgid "Modified"
+msgstr "Muudetud"
+
+#: core/document.cpp:5823
+#, fuzzy, kde-format
+#| msgid "Mime Type"
+msgid "MIME Type"
+msgstr "MIME tüüp"
+
+#: core/document.cpp:5826
+#, kde-format
+msgid "Category"
+msgstr "Kategooria"
+
+#: core/document.cpp:5829
+#, kde-format
+msgid "Keywords"
+msgstr "Võtmesõnad"
+
+#: core/document.cpp:5832
+#, kde-format
+msgid "File Path"
+msgstr "Faili asukoht"
+
+#: core/document.cpp:5835
+#, kde-format
+msgid "File Size"
+msgstr "Faili suurus"
+
+#: core/document.cpp:5838
+#, kde-format
+msgid "Page Size"
+msgstr "Lehekülje suurus"
+
+#: core/documentcommands.cpp:62
+#, kde-format
+msgctxt "Add an annotation to the page"
+msgid "add annotation"
+msgstr "Lisa annotatsioon"
+
+#: core/documentcommands.cpp:108
+#, kde-format
+msgctxt "Remove an annotation from the page"
+msgid "remove annotation"
+msgstr "Eemalda annotatsioon"
+
+#: core/documentcommands.cpp:155
+#, kde-format
+msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
+msgid "modify annotation properties"
+msgstr "Muuda annotatsiooni omadusi"
+
+#: core/documentcommands.cpp:190
+#, kde-format
+msgctxt "Translate an annotation's position on the page"
+msgid "translate annotation"
+msgstr "Tõlgi annotatsioon"
+
+#: core/documentcommands.cpp:263
+#, kde-format
+msgctxt "Change an annotation's size"
+msgid "adjust annotation"
+msgstr "Kohanda annotatsiooni"
+
+#: core/documentcommands.cpp:333
+#, kde-format
+msgctxt "Generic text edit command"
+msgid "edit text"
+msgstr "Muuda teksti"
+
+#: core/documentcommands.cpp:396
+#, kde-format
+msgctxt "Edit an annotation's text contents"
+msgid "edit annotation contents"
+msgstr "Muuda annotatsiooni sisu"
+
+#: core/documentcommands.cpp:445
+#, kde-format
+msgctxt "Edit an form's text contents"
+msgid "edit form contents"
+msgstr "Muuda vormi sisu"
+
+#: core/documentcommands.cpp:494
+#, kde-format
+msgctxt "Edit a list form's choices"
+msgid "edit list form choices"
+msgstr "Muuda loendivormi valikuid"
+
+#: core/documentcommands.cpp:528
+#, kde-format
+msgctxt "Edit a combo form's selection"
+msgid "edit combo form selection"
+msgstr "Muuda liitvormi valikut"
+
+#: core/documentcommands.cpp:600
+#, kde-format
+msgctxt "Edit the state of a group of form buttons"
+msgid "edit form button states"
+msgstr "Muuda vorminupu olekut"
+
+#: core/generator.cpp:761
+#, kde-format
+msgid "Plain &Text..."
+msgstr "Liht&tekst..."
+
+#: core/generator.cpp:764
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: core/generator.cpp:768
+#, kde-format
+msgctxt "This is the document format"
+msgid "OpenDocument Text"
+msgstr "OpenDocument-tekstidokument"
+
+#: core/generator.cpp:771
+#, kde-format
+msgctxt "This is the document format"
+msgid "HTML"
+msgstr "HTML"
+
+#: core/printoptionswidget.cpp:19
+#, kde-format
+msgid "Print Options"
+msgstr "Trükkimisvalikud"
+
+#: core/printoptionswidget.cpp:23
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Sobitamine trükitava alaga"
+
+#: core/printoptionswidget.cpp:24
+#, kde-format
+msgid "Fit to full page"
+msgstr "Sobitamine kogu lehele"
+
+#: core/printoptionswidget.cpp:25
+#, kde-format
+msgid "Scale mode:"
+msgstr "Skaleerimisrežiim:"
+
+#: core/script/kjs_app.cpp:160
+#, kde-format
+msgid "Missing alert type"
+msgstr "Puuduv hoiatuse tüüp"
+
+#: core/script/kjs_app.cpp:222
+#, kde-format
+msgid "Do not show this message again"
+msgstr "Rohkem ei näidata"
+
+#: core/sourcereference.cpp:101
+#, kde-format
+msgctxt "'source' is a source file"
+msgid "Source: %1"
+msgstr "Allikas: %1"
+
+#: core/textdocumentsettings.cpp:34
+#, kde-format
+msgid "&Default Font:"
+msgstr "&Vaikimisi font:"
+
+#: gui/certificatemodel.cpp:39
+#, kde-format
+msgid "Version"
+msgstr "Versioon"
+
+#: gui/certificatemodel.cpp:41
+#, kde-format
+msgid "Serial Number"
+msgstr "Seerianumber"
+
+#: gui/certificatemodel.cpp:43
+#, kde-format
+msgid "Issuer"
+msgstr "Väljaandja"
+
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#, kde-format
+msgid "Issued On"
+msgstr "Välja antud"
+
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#, kde-format
+msgid "Expires On"
+msgstr "Aegub"
+
+#: gui/certificatemodel.cpp:49
+#, kde-format
+msgctxt "The person/company that made the signature"
+msgid "Subject"
+msgstr "Allkirjastaja"
+
+#: gui/certificatemodel.cpp:51
+#, kde-format
+msgid "Public Key"
+msgstr "Avalik võti"
+
+#: gui/certificatemodel.cpp:53
+#, kde-format
+msgid "Key Usage"
+msgstr "Võtme kasutus"
+
+#: gui/certificatemodel.cpp:72
+#, kde-format
+msgid "V%1"
+msgstr "V%1"
+
+#: gui/certificatemodel.cpp:84
+#, kde-format
+msgid "%1 (%2 bits)"
+msgstr "%1 (%2-bitine)"
+
+#: gui/certificatemodel.cpp:146
+#, kde-format
+msgid "Property"
+msgstr "Omadus"
+
+#: gui/certificatemodel.cpp:148
+#, kde-format
+msgid "Value"
+msgstr "Väärtus"
+
+#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#, kde-format
+msgid "Pop-up Note"
+msgstr "Hüpikmärkus"
+
+#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#, kde-format
+msgid "Typewriter"
+msgstr "Kirjutusmasin"
+
+#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#, kde-format
+msgid "Inline Note"
+msgstr "Reasisene märkus"
+
+#: gui/guiutils.cpp:48
+#, kde-format
+msgid "Straight Line with Comment"
+msgstr "Sirgjoon kommentaariga"
+
+#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: part/pageviewannotator.cpp:1326
+#, kde-format
+msgid "Straight Line"
+msgstr "Sirgjoon"
+
+#: gui/guiutils.cpp:50
+#, kde-format
+msgid "Polygon with Comment"
+msgstr "Murdjoon kommentaariga"
+
+#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: part/pageviewannotator.cpp:1318
+#, kde-format
+msgid "Polygon"
+msgstr "Murdjoon"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry with Comment"
+msgstr "Geomeetria kommentaariga"
+
+#: gui/guiutils.cpp:54
+#, kde-format
+msgid "Geometry"
+msgstr "Geomeetria"
+
+#: gui/guiutils.cpp:59
+#, kde-format
+msgid "Highlight with Comment"
+msgstr "Esiletõstmine kommentaariga"
+
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#, kde-format
+msgid "Highlight"
+msgstr "Esiletõst"
+
+#: gui/guiutils.cpp:62
+#, kde-format
+msgid "Squiggle with Comment"
+msgstr "Teksti allajoonimine lainelise joonega ja kommentaariga"
+
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: part/pageviewannotator.cpp:1322
+#, kde-format
+msgid "Squiggle"
+msgstr "Laineline joon"
+
+#: gui/guiutils.cpp:65
+#, kde-format
+msgid "Underline with Comment"
+msgstr "Teksti allajoonimine kommentaariga"
+
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: part/pageviewannotator.cpp:1330
+#, kde-format
+msgid "Underline"
+msgstr "Allajoonimine"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out with Comment"
+msgstr "Teksti läbikriipsutamine kommentaariga"
+
+#: gui/guiutils.cpp:68
+#, kde-format
+msgid "Strike Out"
+msgstr "Läbikriipsutus"
+
+#: gui/guiutils.cpp:73
+#, kde-format
+msgid "Stamp with Comment"
+msgstr "Tempel kommentaariga"
+
+#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: part/pageviewannotator.cpp:1324
+#, kde-format
+msgid "Stamp"
+msgstr "Tempel"
+
+#: gui/guiutils.cpp:76
+#, kde-format
+msgid "Freehand Line with Comment"
+msgstr "Vabakäejoon kommentaariga"
+
+#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: part/pageviewannotator.cpp:1312
+#, kde-format
+msgid "Freehand Line"
+msgstr "Vabakäejoon"
+
+#: gui/guiutils.cpp:79
+#, kde-format
+msgid "Caret"
+msgstr "Kursor"
+
+#: gui/guiutils.cpp:82
+#, kde-format
+msgid "File Attachment"
+msgstr "Kaasatud fail"
+
+#: gui/guiutils.cpp:85
+#, kde-format
+msgid "Sound"
+msgstr "Heli"
+
+#: gui/guiutils.cpp:88
+#, kde-format
+msgid "Movie"
+msgstr "Video"
+
+#: gui/guiutils.cpp:91
+#, kde-format
+msgctxt "Caption for a screen annotation"
+msgid "Screen"
+msgstr "Ekraan"
+
+#: gui/guiutils.cpp:94
+#, kde-format
+msgctxt "Caption for a widget annotation"
+msgid "Widget"
+msgstr "Vidin"
+
+#: gui/guiutils.cpp:97
+#, kde-format
+msgctxt "Caption for a rich media annotation"
+msgid "Rich Media"
+msgstr "Multimeedia"
+
+#: gui/guiutils.cpp:109
+#, kde-format
+msgctxt "Unknown author"
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#: gui/guiutils.cpp:126 part/presentationwidget.cpp:370
+#, kde-format
+msgid "Author: %1"
+msgstr "Autor: %1"
+
+#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#, kde-format
+msgid "Where do you want to save %1?"
+msgstr "Kuhu salvestada %1?"
+
+#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#, kde-format
+msgid "Could not open \"%1\" for writing. File was not saved."
+msgstr "\"%1\" avamine kirjutamiseks nurjus. Faili ei salvestatud."
+
+#: gui/signatureguiutils.cpp:42
+#, kde-format
+msgid "The signature is cryptographically valid."
+msgstr "Allkiri on krüptograafiliselt kehtiv."
+
+#: gui/signatureguiutils.cpp:44
+#, kde-format
+msgid "The signature is cryptographically invalid."
+msgstr "Allkiri ei ole krüptograafiliselt kehtiv."
+
+#: gui/signatureguiutils.cpp:46
+#, kde-format
+msgid "Digest Mismatch occurred."
+msgstr "Esines räsi kokkusobimatus."
+
+#: gui/signatureguiutils.cpp:48
+#, kde-format
+msgid "The signature CMS/PKCS7 structure is malformed."
+msgstr "Allkirja CMS/PKCS7 struktuur on moondunud"
+
+#: gui/signatureguiutils.cpp:50
+#, kde-format
+msgid "The requested signature is not present in the document."
+msgstr "Nõutud allkirja dokumendis ei leidu."
+
+#: gui/signatureguiutils.cpp:52
+#, kde-format
+msgid "The signature could not be verified."
+msgstr "Allkirja ei saa kontrollida."
+
+#: gui/signatureguiutils.cpp:60
+#, kde-format
+msgid "Certificate is Trusted."
+msgstr "Sertifikaat on usaldusväärne."
+
+#: gui/signatureguiutils.cpp:62
+#, kde-format
+msgid "Certificate issuer isn't Trusted."
+msgstr "Sertifikaadi väljaandja ei ole usaldusväärne."
+
+#: gui/signatureguiutils.cpp:64
+#, kde-format
+msgid "Certificate issuer is unknown."
+msgstr "Sertifikaadi väljaandja on tundmatu."
+
+#: gui/signatureguiutils.cpp:66
+#, kde-format
+msgid "Certificate has been Revoked."
+msgstr "Sertifikaat on tühistatud."
+
+#: gui/signatureguiutils.cpp:68
+#, kde-format
+msgid "Certificate has Expired."
+msgstr "Sertifikaat on aegunud."
+
+#: gui/signatureguiutils.cpp:70
+#, kde-format
+msgid "Certificate has not yet been verified."
+msgstr "Sertifikaati ei ole veel kontrollitud."
+
+#: gui/signatureguiutils.cpp:72
+#, kde-format
+msgid "Unknown issue with Certificate or corrupted data."
+msgstr "Tundmatu probleem sertifikaadiga või rikutud andmed."
+
+#: gui/signatureguiutils.cpp:80
+#, kde-format
+msgid "MD2"
+msgstr "MD2"
+
+#: gui/signatureguiutils.cpp:82
+#, kde-format
+msgid "MD5"
+msgstr "MD5"
+
+#: gui/signatureguiutils.cpp:84
+#, kde-format
+msgid "SHA1"
+msgstr "SHA1"
+
+#: gui/signatureguiutils.cpp:86
+#, kde-format
+msgid "SHA256"
+msgstr "SHA256"
+
+#: gui/signatureguiutils.cpp:88
+#, kde-format
+msgid "SHA384"
+msgstr "SHA384"
+
+#: gui/signatureguiutils.cpp:90
+#, kde-format
+msgid "SHA512"
+msgstr "SHA512"
+
+#: gui/signatureguiutils.cpp:92
+#, kde-format
+msgid "SHA224"
+msgstr "SHA224"
+
+#: gui/signatureguiutils.cpp:94
+#, kde-format
+msgid "Unknown Algorithm"
+msgstr "Tundmatu algoritm"
+
+#: gui/signatureguiutils.cpp:102
+#, kde-format
+msgid "RSA"
+msgstr "RSA"
+
+#: gui/signatureguiutils.cpp:104
+#, kde-format
+msgid "DSA"
+msgstr "DSA"
+
+#: gui/signatureguiutils.cpp:106
+#, kde-format
+msgid "EC"
+msgstr "EC"
+
+#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#, kde-format
+msgid "Unknown Type"
+msgstr "Tundmatu tüüp"
+
+#: gui/signatureguiutils.cpp:118
+#, kde-format
+msgid "Digital Signature"
+msgstr "Digitaalne allkiri"
+
+#: gui/signatureguiutils.cpp:121
+#, kde-format
+msgid "Non-Repudiation"
+msgstr "Salgamise vääramine"
+
+#: gui/signatureguiutils.cpp:124
+#, kde-format
+msgid "Encrypt Keys"
+msgstr "Võtmete krüptimine"
+
+#: gui/signatureguiutils.cpp:127
+#, kde-format
+msgid "Decrypt Keys"
+msgstr "Võtmete lahtikrüptimine"
+
+#: gui/signatureguiutils.cpp:130
+#, kde-format
+msgid "Key Agreement"
+msgstr "Võtme leping"
+
+#: gui/signatureguiutils.cpp:133
+#, kde-format
+msgid "Sign Certificate"
+msgstr "Sertifikaadi allkirjastamine"
+
+#: gui/signatureguiutils.cpp:136
+#, kde-format
+msgid "Sign CRL"
+msgstr "CRL-i allkirjastamine"
+
+#: gui/signatureguiutils.cpp:139
+#, kde-format
+msgid "Encrypt Only"
+msgstr "Ainult krüptimine"
+
+#: gui/signatureguiutils.cpp:142
+#, kde-format
+msgid "No Usage Specified"
+msgstr "Kasutus pole määratud"
+
+#: gui/signatureguiutils.cpp:149
+#, kde-format
+msgctxt "Joins the various ways a signature key can be used in a longer string"
+msgid ", "
+msgstr ", "
+
+#: gui/signatureguiutils.cpp:163
+#, kde-format
+msgid "The document has not been modified since it was signed."
+msgstr "Dokumenti ei ole pärast allkirjastamist muudetud."
+
+#: gui/signatureguiutils.cpp:166
+#, kde-format
+msgid ""
+"The revision of the document that was covered by this signature has not been "
+"modified;\n"
+"however there have been subsequent changes to the document."
+msgstr ""
+"Dokumendi versiooni, mida see allkiri hõlmab, ei ole muudetud;\n"
+"kuid dokumendis on tehtud hiljem muudatusi."
+
+#: gui/signatureguiutils.cpp:170
+#, kde-format
+msgid ""
+"The document has been modified in a way not permitted by a previous signer."
+msgstr ""
+"Dokumenti on muudetud viisil, mida eelmine allkirjastaja ei ole lubanud."
+
+#: gui/signatureguiutils.cpp:172
+#, kde-format
+msgid "The document integrity verification could not be completed."
+msgstr "Dokumendi terviklikkuse kontrolli ei saanud lõpetada."
+
+#: gui/signatureguiutils.cpp:205
+#, fuzzy, kde-format
+#| msgid "This document is digitally signed."
+msgid "This document has unsigned signature fields."
+msgstr "See dokument on digitaalselt allkirjastatud."
+
+#: gui/signatureguiutils.cpp:208
+#, kde-format
+msgid "This document is digitally signed."
+msgstr "See dokument on digitaalselt allkirjastatud."
+
+#: gui/signatureguiutils.cpp:210
+#, kde-format
+msgid ""
+"This document is digitally signed. There have been changes since last signed."
+msgstr ""
+"See dokument on digitaalselt allkirjastatud, aga seda on pärast viimast "
+"allkirjastamist muudetud."
+
+#: gui/signatureguiutils.cpp:213
+#, kde-format
+msgid ""
+"This document is digitally signed. Some of the signatures could not be "
+"validated properly."
+msgstr ""
+"See dokument on digitaalselt allkirjastatud, aga mõnda allkirja polnud "
+"võimalik valideerida."
+
+#: gui/signaturemodel.cpp:141
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Unsigned Signature %1"
+msgstr "Digitaalne allkiri"
+
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#, kde-format
+msgid "Field: %1 on page %2"
+msgstr "Väli: %1 leheküljel %2"
+
+#: gui/signaturemodel.cpp:152
+#, kde-format
+msgid "Rev. %1: Signed By %2"
+msgstr "Vers. %1: Allkirjastanud %2"
+
+#: gui/signaturemodel.cpp:158
+#, kde-format
+msgid "Signing Time: %1"
+msgstr "Allkirjastamisaeg: %1"
+
+#: gui/signaturemodel.cpp:163
+#, kde-format
+msgid "Reason: %1"
+msgstr "Põhjus: %1"
+
+#: part/annotationactionhandler.cpp:147
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Red"
+msgstr "Punane"
+
+#: part/annotationactionhandler.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Orange"
+msgstr "Oranž"
+
+#: part/annotationactionhandler.cpp:149
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Yellow"
+msgstr "Kollane"
+
+#: part/annotationactionhandler.cpp:150
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Green"
+msgstr "Roheline"
+
+#: part/annotationactionhandler.cpp:151
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Cyan"
+msgstr "Tsüaan"
+
+#: part/annotationactionhandler.cpp:152
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Blue"
+msgstr "Sinine"
+
+#: part/annotationactionhandler.cpp:153
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Magenta"
+msgstr "Magenta"
+
+#: part/annotationactionhandler.cpp:154
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "White"
+msgstr "Valge"
+
+#: part/annotationactionhandler.cpp:155
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Gray"
+msgstr "Hall"
+
+#: part/annotationactionhandler.cpp:156
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Black"
+msgstr "Must"
+
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Width %1"
+msgstr "Jämedus %1"
+
+#: part/annotationactionhandler.cpp:251
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "%1%"
+msgstr "%1%"
+
+#: part/annotationactionhandler.cpp:295
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (No annotation selected)"
+msgstr "Annotatsiooni joone jämedus (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:296
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color (No annotation selected)"
+msgstr "Annotatsiooni värv (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:297
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (No annotation selected)"
+msgstr "Annotatsiooni täitevärv (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:298
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity (No annotation selected)"
+msgstr "Annotatsiooni läbipaistmatus (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:299
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (No annotation selected)"
+msgstr "Annotatsiooni font (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:300
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Add the current annotation to the quick annotations menu (No annotation "
+"selected)"
+msgstr ""
+"Lisa valitud annotatsioon eelmääratud annotatsioonitööriistade menüüsse "
+"(annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:301
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
+"selected)"
+msgstr ""
+"Kujundi proportsioonide piiramine 1 : 1 suhtega või joone suuna piiramine "
+"15° sammudega (annotatsiooni pole valitud)"
+
+#: part/annotationactionhandler.cpp:302
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Advanced settings for the current annotation tool (No annotation selected)"
+msgstr ""
+"Valitud annotatsioonitööriistade täpsemad seadistused (annotatsiooni pole "
+"valitud)"
+
+#: part/annotationactionhandler.cpp:307
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width"
+msgstr "Annotatsiooni joone jämedus"
+
+#: part/annotationactionhandler.cpp:309
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation line width (Current annotation has no line width)"
+msgstr "Annotatsiooni joone jämedus (pole valitud annotatsioonil kasutatav)"
+
+#: part/annotationactionhandler.cpp:313
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation text color"
+msgstr "Annotatsiooni teksti värv"
+
+#: part/annotationactionhandler.cpp:315
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation border color"
+msgstr "Annotatsiooni äärise värv"
+
+#: part/annotationactionhandler.cpp:317
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation color"
+msgstr "Annotatsiooni värv"
+
+#: part/annotationactionhandler.cpp:321
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color"
+msgstr "Annotatsiooni täitevärv"
+
+#: part/annotationactionhandler.cpp:323
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation fill color (Current annotation has no fill color)"
+msgstr "Annotatsiooni täitevärv (pole valitud annotatsioonil kasutatav)"
+
+#: part/annotationactionhandler.cpp:327
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font"
+msgstr "Annotatsiooni font"
+
+#: part/annotationactionhandler.cpp:329
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation font (Current annotation has no font)"
+msgstr "Annotatsiooni font (pole valitud annotatsioonil kasutatav)"
+
+#: part/annotationactionhandler.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain line angle to 15° steps"
+msgstr "Joone suuna piiramine 15° sammudega"
+
+#: part/annotationactionhandler.cpp:335
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Constrain shape ratio to 1:1"
+msgstr "Kujundi proportsioonide piiramine 1 : 1 suhtega"
+
+#: part/annotationactionhandler.cpp:337
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
+"current annotation)"
+msgstr ""
+"Kujundi proportsioonide piiramine 1 : 1 suhtega või joone suuna piiramine "
+"15° sammudega (pole valitud annotatsioonil kasutatav)"
+
+#: part/annotationactionhandler.cpp:340
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Annotation opacity"
+msgstr "Annotatsiooni läbipaistmatus"
+
+#: part/annotationactionhandler.cpp:341
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the current annotation to the quick annotations menu"
+msgstr ""
+"Lisa praegune annotatsioon eelmääratud annotatsioonitööriistade menüüsse"
+
+#: part/annotationactionhandler.cpp:342
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Advanced settings for the current annotation tool"
+msgstr "Valitud annotatsioonitööriista täpsemad seadistused"
+
+#: part/annotationactionhandler.cpp:431
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Color"
+msgstr "Värv"
+
+#: part/annotationactionhandler.cpp:433
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Fill Color"
+msgstr "Täitevärv"
+
+#: part/annotationactionhandler.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox Color name"
+msgid "Transparent"
+msgstr "Läbipaistev"
+
+#: part/annotationactionhandler.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Custom Color..."
+msgstr "Kohandatud värv ..."
+
+#: part/annotationactionhandler.cpp:502
+#, kde-format
+msgctxt "@title:window"
+msgid "Select color"
+msgstr "Värvi valimine"
+
+#: part/annotationactionhandler.cpp:554
+#, fuzzy, kde-format
+#| msgid "Annotations"
+msgid "&Annotations"
+msgstr "Annotatsioonid"
+
+#: part/annotationactionhandler.cpp:555
+#, kde-format
+msgctxt "@action:intoolbar Hide the toolbar"
+msgid "Hide"
+msgstr "Peida"
+
+#: part/annotationactionhandler.cpp:556
+#, fuzzy, kde-format
+#| msgid "Create annotation tool"
+msgctxt "@action:intoolbar Show the builtin annotation toolbar"
+msgid "Show more annotation tools"
+msgstr "Annoteerimistööriista loomine"
+
+#: part/annotationactionhandler.cpp:559
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Highlighter"
+msgstr "Esiletõstmine"
+
+#: part/annotationactionhandler.cpp:560
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Underline"
+msgstr "Allajoonimine"
+
+#: part/annotationactionhandler.cpp:561
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Squiggle"
+msgstr "Laineline joon"
+
+#: part/annotationactionhandler.cpp:562
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Strike Out"
+msgstr "Läbikriipsutamine"
+
+#: part/annotationactionhandler.cpp:564
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Typewriter"
+msgstr "Kirjutusmasin"
+
+#: part/annotationactionhandler.cpp:565
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Inline Note"
+msgstr "Reasisene märkus"
+
+#: part/annotationactionhandler.cpp:566
+#, fuzzy, kde-format
+#| msgid "Pop-up Note"
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Popup Note"
+msgstr "Hüpikmärkus"
+
+#: part/annotationactionhandler.cpp:567
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Freehand Line"
+msgstr "Vabakäejoon"
+
+#: part/annotationactionhandler.cpp:569
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Straight line"
+msgstr "Sirgjoon"
+
+#: part/annotationactionhandler.cpp:570
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Arrow"
+msgstr "Nool"
+
+#: part/annotationactionhandler.cpp:571
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Rectangle"
+msgstr "Ristkülik"
+
+#: part/annotationactionhandler.cpp:572
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Ellipse"
+msgstr "Ellips"
+
+#: part/annotationactionhandler.cpp:573
+#, kde-format
+msgctxt "@action:intoolbar Annotation tool"
+msgid "Polygon"
+msgstr "Murdjoon"
+
+#: part/annotationactionhandler.cpp:574
+#, kde-format
+msgctxt "@action"
+msgid "Geometrical shapes"
+msgstr "Geomeetriakujundid"
+
+#: part/annotationactionhandler.cpp:625
+#, kde-format
+msgctxt "@action"
+msgid "Stamp"
+msgstr "Tempel"
+
+#: part/annotationactionhandler.cpp:650
+#, kde-format
+msgctxt "@action:intoolbar Show list of quick annotation tools"
+msgid "Quick Annotations"
+msgstr "Eelmääratud annotatsioonitööriistad"
+
+#: part/annotationactionhandler.cpp:658
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Choose an annotation tool from the quick annotations"
+msgstr "Vali eelmääratud annotatsioonitööriist"
+
+#: part/annotationactionhandler.cpp:668
+#, fuzzy, kde-format
+#| msgctxt "@action:intoolbar Show list of quick annotation tools"
+#| msgid "Quick Annotations"
+msgid "Quick Annotation Bar"
+msgstr "Eelmääratud annotatsioonitööriistad"
+
+#: part/annotationactionhandler.cpp:682
+#, kde-format
+msgctxt ""
+"@action:intoolbar Add current annotation tool to the quick annotations list"
+msgid "Add to Quick Annotations"
+msgstr "Lisa eelmääratud annotatsioonitööriistade hulka"
+
+#: part/annotationactionhandler.cpp:685
+#, kde-format
+msgctxt ""
+"@action:intoolbar When checked keep the current annotation tool active after "
+"use"
+msgid "Keep Active"
+msgstr "Hoia aktiivne"
+
+#: part/annotationactionhandler.cpp:686
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Keep the annotation tool active after use"
+msgstr "Annoteerimistööriist hoitakse pärast kasutamist aktiivsena"
+
+#: part/annotationactionhandler.cpp:691
+#, kde-format
+msgctxt ""
+"@action When checked, line annotations are constrained to 15° steps, shape "
+"annotations to 1:1 ratio"
+msgid "Constrain Ratio and Angle of Annotation Tools"
+msgstr "Annotatsioonitööriistade proportsioonide ja nurkade piiramine"
+
+#: part/annotationactionhandler.cpp:697
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Font"
+msgstr "Font"
+
+#: part/annotationactionhandler.cpp:698
+#, kde-format
+msgctxt "@action:intoolbar Current annotation advanced settings"
+msgid "Annotation Settings"
+msgstr "Annotatsiooni seadistused"
+
+#: part/annotationactionhandler.cpp:701
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Line width"
+msgstr "Joone jämedus"
+
+#: part/annotationactionhandler.cpp:710
+#, kde-format
+msgctxt "@action:intoolbar Current annotation config option"
+msgid "Opacity"
+msgstr "Läbipaistmatus"
+
+#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#, kde-format
+msgid "Page %1"
+msgstr "Lehekülg %1"
+
+#: part/annotationpopup.cpp:81
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Annotatsioon"
+msgstr[1] "%1 annotatsiooni"
+
+#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#, kde-format
+msgid "&Open Pop-up Note"
+msgstr "&Ava hüpikmärkus"
+
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#, kde-format
+msgid "&Delete"
+msgstr "&Kustuta"
+
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/propertiesdialog.cpp:54
+#, kde-format
+msgid "&Properties"
+msgstr "&Omadused"
+
+#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#, kde-format
+msgctxt "%1 is the name of the file to save"
+msgid "&Save '%1'..."
+msgstr "Salvesta '%1'..."
+
+#: part/annotationpropertiesdialog.cpp:54
+#, kde-format
+msgid "&Appearance"
+msgstr "&Välimus"
+
+#: part/annotationpropertiesdialog.cpp:59
+#, kde-format
+msgid "&General"
+msgstr "Ül&dine"
+
+#: part/annotationpropertiesdialog.cpp:64
+#, kde-format
+msgid "&Author:"
+msgstr "&Autor"
+
+#: part/annotationpropertiesdialog.cpp:69
+#, kde-format
+msgid "Created:"
+msgstr "Loodud:"
+
+#: part/annotationpropertiesdialog.cpp:74
+#, kde-format
+msgid "Modified:"
+msgstr "Muudetud:"
+
+#: part/annotationpropertiesdialog.cpp:108
+#, kde-format
+msgid "Pop-up Note Properties"
+msgstr "Hüpikmärkuse omadused"
+
+#: part/annotationpropertiesdialog.cpp:111
+#, kde-format
+msgid "Typewriter Properties"
+msgstr "Kirjutusmasina omadused"
+
+#: part/annotationpropertiesdialog.cpp:113
+#, kde-format
+msgid "Inline Note Properties"
+msgstr "Reasisese märkuse omadused"
+
+#: part/annotationpropertiesdialog.cpp:119
+#, kde-format
+msgid "Straight Line Properties"
+msgstr "Sirgjoone omadused"
+
+#: part/annotationpropertiesdialog.cpp:121
+#, kde-format
+msgid "Polygon Properties"
+msgstr "Murdjoone omadused"
+
+#: part/annotationpropertiesdialog.cpp:125
+#, kde-format
+msgid "Geometry Properties"
+msgstr "Geomeetriaomadused"
+
+#: part/annotationpropertiesdialog.cpp:128
+#, kde-format
+msgid "Text Markup Properties"
+msgstr "Tekstimärgendi omadused"
+
+#: part/annotationpropertiesdialog.cpp:131
+#, kde-format
+msgid "Stamp Properties"
+msgstr "Templi omadused"
+
+#: part/annotationpropertiesdialog.cpp:134
+#, kde-format
+msgid "Freehand Line Properties"
+msgstr "Vabakäejoone omadused"
+
+#: part/annotationpropertiesdialog.cpp:137
+#, kde-format
+msgid "Caret Properties"
+msgstr "Kursori omadused"
+
+#: part/annotationpropertiesdialog.cpp:140
+#, kde-format
+msgid "File Attachment Properties"
+msgstr "Kaasatud faili omadused"
+
+#: part/annotationpropertiesdialog.cpp:143
+#, kde-format
+msgid "Sound Properties"
+msgstr "Heli omadused"
+
+#: part/annotationpropertiesdialog.cpp:146
+#, kde-format
+msgid "Movie Properties"
+msgstr "Video omadused"
+
+#: part/annotationpropertiesdialog.cpp:149
+#, kde-format
+msgid "Annotation Properties"
+msgstr "Annotatsiooni omadused"
+
+#: part/annotationpropertiesdialog.cpp:175
+#, kde-format
+msgid "Modified: %1"
+msgstr "Muudetud: %1"
+
+#: part/annotationwidgets.cpp:56
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a custom stamp symbol from file"
+msgstr "Kohandatud templi sümboli valimine failist"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgctxt "@title:window file chooser"
+msgid "Select custom stamp symbol"
+msgstr "Kohandatud templi sümboli valimine"
+
+#: part/annotationwidgets.cpp:156
+#, kde-format
+msgid ""
+"*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
+msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | Ikoonifailid (*.ico *.png *.xpm *.svg *."
+"svgz)"
+
+#: part/annotationwidgets.cpp:160
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not load the file <filename>%1</filename>"
+msgstr "Faili <filename>%1</filename> laadimine nurjus"
+
+#: part/annotationwidgets.cpp:160
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid file"
+msgstr "Vigane fail"
+
+#: part/annotationwidgets.cpp:267
+#, kde-format
+msgid "&Color:"
+msgstr "Vä&rv:"
+
+#: part/annotationwidgets.cpp:276
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80%'"
+msgid "%"
+msgstr "%"
+
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#, kde-format
+msgid "&Opacity:"
+msgstr "Lä&bipaistmatus:"
+
+#: part/annotationwidgets.cpp:365
+#, kde-format
+msgid "Icon:"
+msgstr "Ikoon:"
+
+#: part/annotationwidgets.cpp:366
+#, kde-format
+msgid "Comment"
+msgstr "Kommentaar"
+
+#: part/annotationwidgets.cpp:367
+#, kde-format
+msgid "Help"
+msgstr "Abitekst"
+
+#: part/annotationwidgets.cpp:368
+#, kde-format
+msgid "Insert"
+msgstr "Lisand"
+
+#: part/annotationwidgets.cpp:369
+#, kde-format
+msgid "Key"
+msgstr "Võti"
+
+#: part/annotationwidgets.cpp:370
+#, kde-format
+msgid "New paragraph"
+msgstr "Uus lõik"
+
+#: part/annotationwidgets.cpp:371
+#, kde-format
+msgid "Note"
+msgstr "Märkus"
+
+#: part/annotationwidgets.cpp:372
+#, kde-format
+msgid "Paragraph"
+msgstr "Lõik"
+
+#: part/annotationwidgets.cpp:380
+#, kde-format
+msgid "Font:"
+msgstr "Font:"
+
+#: part/annotationwidgets.cpp:389
+#, kde-format
+msgid "Text &color:"
+msgstr "Teksti vä&rv:"
+
+#: part/annotationwidgets.cpp:396
+#, kde-format
+msgid "&Align:"
+msgstr "&Joondus:"
+
+#: part/annotationwidgets.cpp:397
+#, kde-format
+msgid "Left"
+msgstr "Vasakule"
+
+#: part/annotationwidgets.cpp:398
+#, kde-format
+msgid "Center"
+msgstr "Keskele"
+
+#: part/annotationwidgets.cpp:399
+#, kde-format
+msgid "Right"
+msgstr "Paremale"
+
+#: part/annotationwidgets.cpp:407
+#, kde-format
+msgid "Border &width:"
+msgstr "Piir&de laius:"
+
+#: part/annotationwidgets.cpp:416
+#, kde-format
+msgid "Approved"
+msgstr "Heakskiit"
+
+#: part/annotationwidgets.cpp:417
+#, kde-format
+msgid "As Is"
+msgstr "Nagu on"
+
+#: part/annotationwidgets.cpp:418
+#, kde-format
+msgid "Confidential"
+msgstr "Konfidentsiaalne"
+
+#: part/annotationwidgets.cpp:419
+#, kde-format
+msgid "Departmental"
+msgstr "Osakonnasisene"
+
+#: part/annotationwidgets.cpp:420
+#, kde-format
+msgid "Draft"
+msgstr "Mustand"
+
+#: part/annotationwidgets.cpp:421
+#, kde-format
+msgid "Experimental"
+msgstr "Eksperimentaalne"
+
+#: part/annotationwidgets.cpp:422
+#, kde-format
+msgid "Expired"
+msgstr "Aegunud"
+
+#: part/annotationwidgets.cpp:423
+#, kde-format
+msgid "Final"
+msgstr "Lõplik"
+
+#: part/annotationwidgets.cpp:424
+#, kde-format
+msgid "For Comment"
+msgstr "Ootab kommentaare"
+
+#: part/annotationwidgets.cpp:425
+#, kde-format
+msgid "For Public Release"
+msgstr "Avaldamiseks"
+
+#: part/annotationwidgets.cpp:426
+#, kde-format
+msgid "Not Approved"
+msgstr "Heakskiiduta"
+
+#: part/annotationwidgets.cpp:427
+#, kde-format
+msgid "Not For Public Release"
+msgstr "Pole avaldamiseks"
+
+#: part/annotationwidgets.cpp:428
+#, kde-format
+msgid "Sold"
+msgstr "Müüdud"
+
+#: part/annotationwidgets.cpp:429
+#, kde-format
+msgid "Top Secret"
+msgstr "Ülisalajane"
+
+#: part/annotationwidgets.cpp:430
+#, kde-format
+msgid "Bookmark"
+msgstr "Järjehoidja"
+
+#: part/annotationwidgets.cpp:431
+#, kde-format
+msgid "Information"
+msgstr "Info"
+
+#: part/annotationwidgets.cpp:432
+#, kde-format
+msgid "KDE"
+msgstr "KDE"
+
+#: part/annotationwidgets.cpp:456
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
+"visible in PDF readers other than Okular.</warning>"
+msgstr ""
+"<warning>Eksperimentaalne võimalus.<nl/>PDF-dokumenti lisatud templid on "
+"kõigist PDF-i näitajatest näha ainult Okularis.</warning>"
+
+#: part/annotationwidgets.cpp:469
+#, kde-format
+msgid "Stamp symbol:"
+msgstr "Templi sümbol:"
+
+#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
+#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
+#: part/annotationwidgets.cpp:795
+#, kde-format
+msgid "&Width:"
+msgstr "&Laius:"
+
+#: part/annotationwidgets.cpp:522
+#, kde-format
+msgid "Line start:"
+msgstr "Joone algus:"
+
+#: part/annotationwidgets.cpp:524
+#, kde-format
+msgid "Line end:"
+msgstr "Joone lõpp:"
+
+#: part/annotationwidgets.cpp:527
+#, kde-format
+msgid "Square"
+msgstr "Ruut"
+
+#: part/annotationwidgets.cpp:528
+#, kde-format
+msgid "Circle"
+msgstr "Ring"
+
+#: part/annotationwidgets.cpp:529
+#, kde-format
+msgid "Diamond"
+msgstr "Romb"
+
+#: part/annotationwidgets.cpp:530
+#, kde-format
+msgid "Open Arrow"
+msgstr "Avatud nool"
+
+#: part/annotationwidgets.cpp:531
+#, kde-format
+msgid "Closed Arrow"
+msgstr "Suletud nool"
+
+#: part/annotationwidgets.cpp:532
+#, kde-format
+msgid "None"
+msgstr "Puudub"
+
+#: part/annotationwidgets.cpp:533
+#, kde-format
+msgid "Butt"
+msgstr "Tala"
+
+#: part/annotationwidgets.cpp:534
+#, kde-format
+msgid "Right Open Arrow"
+msgstr "Paremale avatud nool"
+
+#: part/annotationwidgets.cpp:535
+#, kde-format
+msgid "Right Closed Arrow"
+msgstr "Paremale suletud nool"
+
+#: part/annotationwidgets.cpp:536
+#, kde-format
+msgid "Slash"
+msgstr "Kaldkriips"
+
+#: part/annotationwidgets.cpp:549
+#, kde-format
+msgid "Leader line length:"
+msgstr "Juhtjoone pikkus:"
+
+#: part/annotationwidgets.cpp:551
+#, kde-format
+msgid "Leader line extensions length:"
+msgstr "Juhtjoone laiendite pikkus:"
+
+#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#, kde-format
+msgid "Enabled"
+msgstr "Lubatud"
+
+#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#, kde-format
+msgid "Shape fill:"
+msgstr "Kujundi täide:"
+
+#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#, kde-format
+msgid "Type:"
+msgstr "Tüüp:"
+
+#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#, kde-format
+msgid "Strike out"
+msgstr "Läbikriipsutamine"
+
+#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#, kde-format
+msgid "Rectangle"
+msgstr "Ristkülik"
+
+#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#, kde-format
+msgid "Ellipse"
+msgstr "Ellips"
+
+#: part/annotationwidgets.cpp:763
+#, kde-format
+msgid "File attachment symbol:"
+msgstr "Kaasatud faili sümbol:"
+
+#: part/annotationwidgets.cpp:766
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Graph"
+msgstr "Diagramm"
+
+#: part/annotationwidgets.cpp:767
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Push Pin"
+msgstr "Knopka"
+
+#: part/annotationwidgets.cpp:768
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Paperclip"
+msgstr "Kirjaklamber"
+
+#: part/annotationwidgets.cpp:769
+#, kde-format
+msgctxt "Symbol for file attachment annotations"
+msgid "Tag"
+msgstr "Lipik"
+
+#: part/annotationwidgets.cpp:778
+#, kde-format
+msgctxt "'File' as normal file, that can be opened, saved, etc.."
+msgid "File"
+msgstr "Fail"
+
+#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#, kde-format
+msgctxt "Not available size"
+msgid "N/A"
+msgstr "-"
+
+#: part/annotationwidgets.cpp:783
+#, kde-format
+msgid "No description available."
+msgstr "Kirjeldus puudub."
+
+#: part/annotationwidgets.cpp:791
+#, kde-format
+msgid "Name:"
+msgstr "Nimi:"
+
+#: part/annotationwidgets.cpp:802
+#, kde-format
+msgid "Description:"
+msgstr "Kirjeldus:"
+
+#: part/annotationwidgets.cpp:861
+#, kde-format
+msgid "Caret symbol:"
+msgstr "Kursori sümbol:"
+
+#: part/annotationwidgets.cpp:863
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "None"
+msgstr "Puudub"
+
+#: part/annotationwidgets.cpp:864
+#, kde-format
+msgctxt "Symbol for caret annotations"
+msgid "P"
+msgstr "P"
+
+#: part/annotwindow.cpp:52
+#, kde-format
+msgid "Close this note"
+msgstr "Sulge see märkus"
+
+#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#, kde-format
+msgid "Options"
+msgstr "Valikud"
+
+#: part/annotwindow.cpp:106
+#, kde-format
+msgid ""
+"This annotation may contain LaTeX code.\n"
+"Click here to render."
+msgstr ""
+"See annotatsioon võib sisaldada LaTeXi koodi.\n"
+"Klõpsa siia selle renderdamiseks."
+
+#: part/annotwindow.cpp:415
+#, kde-format
+msgid "Cannot find latex executable."
+msgstr "LaTeXi täitmisfaili ei leitud."
+
+#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "LaTeX rendering failed"
+msgstr "LaTeXi renderdamine nurjus"
+
+#: part/annotwindow.cpp:420
+#, kde-format
+msgid "Cannot find dvipng executable."
+msgstr "Dvipng täitmisfaili ei leitud."
+
+#: part/annotwindow.cpp:425
+#, kde-format
+msgid "A problem occurred during the execution of the 'latex' command."
+msgstr "Käsu 'latex' täitmisel tekkis probleem."
+
+#: part/annotwindow.cpp:430
+#, kde-format
+msgid "A problem occurred during the execution of the 'dvipng' command."
+msgstr "Käsu 'dvipng' täitmisel tekkis probleem."
+
+#: part/bookmarklist.cpp:115
+#, kde-format
+msgctxt "%1 is the file name"
+msgid ""
+"%1\n"
+"\n"
+"One bookmark"
+msgid_plural ""
+"%1\n"
+"\n"
+"%2 bookmarks"
+msgstr[0] ""
+"%1\n"
+"\n"
+"Üks järjehoidja"
+msgstr[1] ""
+"%1\n"
+"\n"
+"%2 järjehoidjat"
+
+#: part/bookmarklist.cpp:131 part/part.cpp:422
+#, kde-format
+msgid "Bookmarks"
+msgstr "Järjehoidjad"
+
+#: part/bookmarklist.cpp:135
+#, fuzzy, kde-format
+#| msgid "End of the document"
+msgid "Show for all documents"
+msgstr "Dokumendi lõpp"
+
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
+#: part/toc.cpp:43
+#, kde-format
+msgid "Search..."
+msgstr "Otsi ..."
+
+#: part/bookmarklist.cpp:257
+#, kde-format
+msgid "Go to This Bookmark"
+msgstr "Liigu sellele järjehoidjale"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
+#: part/part.cpp:2467
+#, kde-format
+msgid "Rename Bookmark"
+msgstr "Nimeta järjehoidja ümber"
+
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Eemalda järjehoidja"
+
+#: part/bookmarklist.cpp:287
+#, kde-format
+msgctxt "Opens the selected document"
+msgid "Open Document"
+msgstr "Ava dokument"
+
+#: part/bookmarklist.cpp:290
+#, kde-format
+msgid "Remove all Bookmarks for this Document"
+msgstr ""
+
+#: part/certificateviewer.cpp:121
+#, kde-format
+msgid "Certificate Viewer"
+msgstr "Sertifikaadinäitaja"
+
+#: part/certificateviewer.cpp:124
+#, kde-format
+msgid "Export..."
+msgstr "Ekspordi ..."
+
+#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General"
+msgstr "Üldine"
+
+#: part/certificateviewer.cpp:132
+#, kde-format
+msgid "Issued By"
+msgstr "Väljaandja"
+
+#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#, kde-format
+msgid "Common Name(CN)"
+msgstr "Üldnimi (CN)"
+
+#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#, kde-format
+msgid "EMail"
+msgstr "E-post"
+
+#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#, kde-format
+msgid "Organization(O)"
+msgstr "Organisatsioon (O)"
+
+#: part/certificateviewer.cpp:139
+#, kde-format
+msgid "Issued To"
+msgstr "Välja antud"
+
+#: part/certificateviewer.cpp:146
+#, kde-format
+msgid "Validity"
+msgstr "Kehtivus"
+
+#: part/certificateviewer.cpp:152
+#, kde-format
+msgid "Fingerprints"
+msgstr "Sõrmejäljed"
+
+#: part/certificateviewer.cpp:160
+#, kde-format
+msgid "SHA-1 Fingerprint"
+msgstr "SHA-1 sõrmejälg"
+
+#: part/certificateviewer.cpp:161
+#, kde-format
+msgid "SHA-256 Fingerprint"
+msgstr "SHA-256 sõrmejälg"
+
+#: part/certificateviewer.cpp:179
+#, kde-format
+msgid "Details"
+msgstr "Üksikasjad"
+
+#: part/certificateviewer.cpp:180
+#, kde-format
+msgid "Certificate Data:"
+msgstr "Sertifikaadi andmed:"
+
+#: part/certificateviewer.cpp:232
+#, kde-format
+msgid "Where do you want to save this certificate?"
+msgstr "Kuhu see sertifikaat salvestada?"
+
+#: part/certificateviewer.cpp:233
+#, kde-format
+msgid "Certificate File (*.cer)"
+msgstr "Sertifikaadifail (*.cer)"
+
+#: part/certificateviewer.cpp:236
+#, kde-format
+msgid "Could not export the certificate"
+msgstr "Sertifikaati ei õnnestunud eksportida"
+
+#: part/colormodemenu.cpp:17
+#, fuzzy, kde-format
+#| msgid "Color mode:"
+msgctxt "@title:menu"
+msgid "&Color Mode"
+msgstr "Värvirežiim:"
+
+#: part/colormodemenu.cpp:19
+#, fuzzy, kde-format
+#| msgid "Change &colors"
+msgctxt "@action Change Colors feature toggle action"
+msgid "Change Colors"
+msgstr "Värvide &muutmine"
+
+#: part/colormodemenu.cpp:32
+#, fuzzy, kde-format
+#| msgid "Normal Icons"
+msgctxt "@item:inmenu color mode"
+msgid "&Normal Colors"
+msgstr "Tavalised ikoonid"
+
+#: part/colormodemenu.cpp:44
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inmenu color mode"
+msgid "&Invert Colors"
+msgstr "Värvid vahetatakse"
+
+#: part/colormodemenu.cpp:45
+#, fuzzy, kde-format
+#| msgid "Change Paper Color"
+msgctxt "@item:inmenu color mode"
+msgid "Change &Paper Color"
+msgstr "Paberi värvi muutmine"
+
+#: part/colormodemenu.cpp:47
+#, fuzzy, kde-format
+#| msgid "Change Dark & Light Colors"
+msgctxt "@item:inmenu color mode"
+msgid "Change &Dark && Light Colors"
+msgstr "Tumeda ja heleda värvi muutmine"
+
+#: part/colormodemenu.cpp:49
+#, fuzzy, kde-format
+#| msgid "Convert to Black & White"
+msgctxt "@item:inmenu color mode"
+msgid "Convert to &Black && White"
+msgstr "Teisendamine mustvalgeks"
+
+#: part/colormodemenu.cpp:52
+#, fuzzy, kde-format
+#| msgid "Invert Lightness"
+msgctxt "@item:inmenu color mode"
+msgid "Invert &Lightness"
+msgstr "Heleduse inversioon"
+
+#: part/colormodemenu.cpp:55
+#, fuzzy, kde-format
+#| msgid "Invert Luma (sRGB Linear)"
+msgctxt "@item:inmenu color mode"
+msgid "Invert L&uma (sRGB Linear)"
+msgstr "Luma (lineaarne sRGB) inversioon"
+
+#: part/colormodemenu.cpp:58
+#, fuzzy, kde-format
+#| msgid "Invert Luma (Symmetric)"
+msgctxt "@item:inmenu color mode"
+msgid "Invert Luma (&Symmetric)"
+msgstr "Luma (sümmeetriline) inversioon"
+
+#: part/colormodemenu.cpp:61
+#, fuzzy, kde-format
+#| msgid "Shift Hue Positive"
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue P&ositive"
+msgstr "Positiivne tooninihe"
+
+#: part/colormodemenu.cpp:64
+#, fuzzy, kde-format
+#| msgid "Shift Hue Negative"
+msgctxt "@item:inmenu color mode"
+msgid "Shift Hue N&egative"
+msgstr "Negatiivne tooninihe"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:11
+#, kde-format
+msgid "Red"
+msgstr "Punane"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:16
+#, kde-format
+msgid "Green"
+msgstr "Roheline"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:21
+#, kde-format
+msgid "Blue"
+msgstr "Sinine"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:26
+#, kde-format
+msgid "Yellow"
+msgstr "Kollane"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:31
+#, kde-format
+msgid "Black"
+msgstr "Must"
+
+#. i18n: tag tool attribute name
+#: part/data/drawingtools.xml:36
+#, kde-format
+msgid "White"
+msgstr "Valge"
+
+#. i18n: tag tool attribute name
+#: part/data/tools.xml:103
+#, fuzzy, kde-format
+#| msgctxt "@action:intoolbar Annotation tool"
+#| msgid "Arrow"
+msgid "Arrow"
+msgstr "Nool"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:9
+#, kde-format
+msgid "Yellow Highlighter"
+msgstr "Kollane esiletõstmine"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:14
+#, kde-format
+msgid "Green Highlighter"
+msgstr "Roheline esiletõstmine"
+
+#. i18n: tag tool attribute name
+#: part/data/toolsQuick.xml:24
+#, fuzzy, kde-format
+#| msgid "Insert"
+msgid "Insert Text"
+msgstr "Lisand"
+
+#: part/dlgaccessibility.cpp:38
+#, fuzzy, kde-format
+#| msgid "Draw border around &Links"
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Draw border around links"
+msgstr "&Viitade ümber joonistatakse piirded"
+
+#: part/dlgaccessibility.cpp:48
+#, fuzzy, kde-format
+#| msgid "Change &colors"
+msgctxt "@option:check Config dialog, accessibility page"
+msgid "Change colors"
+msgstr "Värvide &muutmine"
+
+#: part/dlgaccessibility.cpp:54
+#, fuzzy, kde-format
+#| msgid "Warning: these options can badly affect drawing speed."
+msgctxt "@info Config dialog, accessibility page"
+msgid "<b>Warning:</b> these options can badly affect drawing speed."
+msgstr "Hoiatus: need valikud võivad oluliselt mõjutada esitamise kiirust."
+
+#: part/dlgaccessibility.cpp:60
+#, fuzzy, kde-format
+#| msgid "Invert Colors"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert colors"
+msgstr "Värvid vahetatakse"
+
+#: part/dlgaccessibility.cpp:61
+#, fuzzy, kde-format
+#| msgid "Change Paper Color"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change paper color"
+msgstr "Paberi värvi muutmine"
+
+#: part/dlgaccessibility.cpp:62
+#, fuzzy, kde-format
+#| msgid "Change Dark & Light Colors"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Change dark & light colors"
+msgstr "Tumeda ja heleda värvi muutmine"
+
+#: part/dlgaccessibility.cpp:63
+#, fuzzy, kde-format
+#| msgid "Convert to Black & White"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Convert to black & white"
+msgstr "Teisendamine mustvalgeks"
+
+#: part/dlgaccessibility.cpp:64
+#, fuzzy, kde-format
+#| msgid "Invert Lightness"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert lightness"
+msgstr "Heleduse inversioon"
+
+#: part/dlgaccessibility.cpp:65
+#, fuzzy, kde-format
+#| msgid "Invert Luma (sRGB Linear)"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (sRGB linear)"
+msgstr "Luma (lineaarne sRGB) inversioon"
+
+#: part/dlgaccessibility.cpp:66
+#, fuzzy, kde-format
+#| msgid "Invert Luma (Symmetric)"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Invert luma (symmetric)"
+msgstr "Luma (sümmeetriline) inversioon"
+
+#: part/dlgaccessibility.cpp:67
+#, fuzzy, kde-format
+#| msgid "Shift Hue Positive"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue positive"
+msgstr "Positiivne tooninihe"
+
+#: part/dlgaccessibility.cpp:68
+#, fuzzy, kde-format
+#| msgid "Shift Hue Negative"
+msgctxt "@item:inlistbox Config dialog, accessibility page"
+msgid "Shift hue negative"
+msgstr "Negatiivne tooninihe"
+
+#: part/dlgaccessibility.cpp:70
+#, fuzzy, kde-format
+#| msgid "Color mode:"
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Color mode:"
+msgstr "Värvirežiim:"
+
+#: part/dlgaccessibility.cpp:87
+#, fuzzy, kde-format
+#| msgid "Paper color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Paper color:"
+msgstr "Paberi värv:"
+
+#: part/dlgaccessibility.cpp:99
+#, fuzzy, kde-format
+#| msgid "Dark color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Dark color:"
+msgstr "Tume värv:"
+
+#: part/dlgaccessibility.cpp:104
+#, fuzzy, kde-format
+#| msgid "Light color:"
+msgctxt "@label:chooser Config dialog, accessibility page"
+msgid "Light color:"
+msgstr "Hele värv:"
+
+#: part/dlgaccessibility.cpp:119
+#, fuzzy, kde-format
+#| msgid "Threshold:"
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Threshold:"
+msgstr "Lävi:"
+
+#: part/dlgaccessibility.cpp:127
+#, fuzzy, kde-format
+#| msgid "Contrast:"
+msgctxt "@label:slider Config dialog, accessibility page"
+msgid "Contrast:"
+msgstr "Kontrast:"
+
+#: part/dlgaccessibility.cpp:158
+#, kde-format
+msgctxt "@label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech engine:"
+msgstr ""
+
+#: part/dlgaccessibility.cpp:165
+#, fuzzy, kde-format
+#| msgid "Text to search for"
+msgctxt "&label:listbox Config dialog, accessibility page"
+msgid "Text-to-speech voice:"
+msgstr "Otsitav tekst"
+
+#: part/dlgannotations.cpp:25
+#, fuzzy, kde-format
+#| msgid "Annotation Toolbar"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Full Annotation Toolbar"
+msgstr "Annotatsioonide tööriistariba"
+
+#: part/dlgannotations.cpp:26
+#, fuzzy, kde-format
+#| msgid "Annotation Toolbar"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Quick Annotation Toolbar"
+msgstr "Annotatsioonide tööriistariba"
+
+#: part/dlgannotations.cpp:28
+#, fuzzy, kde-format
+#| msgid "Annotation Toolbar"
+msgctxt "label:listbox Config dialog, general page"
+msgid "Annotation toolbar:"
+msgstr "Annotatsioonide tööriistariba"
+
+#: part/dlgannotations.cpp:34
+#, fuzzy, kde-format
+#| msgid "&Author:"
+msgctxt "@label:textbox Config dialog, annotations page"
+msgid "Author:"
+msgstr "&Autor"
+
+#: part/dlgannotations.cpp:38
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>Note</b>: the information here is used only for annotations. The "
+#| "information is saved in annotated documents, and so will be transmitted "
+#| "together with the document."
+msgctxt "@info Config dialog, annotations page"
+msgid ""
+"<b>Note:</b> the information here is used only for annotations. The "
+"information is saved in annotated documents, and so will be transmitted "
+"together with the document."
+msgstr ""
+"<b>Märkus</b>: seda kasutatakse ainult annotatsioonide puhul. Teave "
+"salvestatakse annoteeritud dokumenti ja nii liigub see edasi koos "
+"dokumendiga."
+
+#: part/dlgannotations.cpp:48
+#, fuzzy, kde-format
+#| msgid "Quick annotation tools"
+msgctxt ""
+"@label Config dialog, annotations page, heading line for Quick Annotations "
+"tool manager"
+msgid "<h3>Quick Annotation Tools</h3>"
+msgstr "Eelmääratud annotatsioonitööriistad"
+
+#: part/dlgeditor.cpp:28
+#, fuzzy, kde-format
+#| msgctxt "@info:whatsthis"
+#| msgid ""
+#| "Choose the editor you want to launch when Okular wants to open a source "
+#| "file."
+msgctxt "@info:whatsthis Config dialog, editor page"
+msgid ""
+"Choose the editor you want to launch when Okular wants to open a source file."
+msgstr "Vali redaktor, mille soovid käivitada, kui Okular avab lähtefaili."
+
+#: part/dlgeditor.cpp:29
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Custom Text Editor"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Custom Text Editor"
+msgstr "Kohandatud tekstiredaktor"
+
+#: part/dlgeditor.cpp:30
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Kate"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kate"
+msgstr "Kate"
+
+#: part/dlgeditor.cpp:31
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Kile"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Kile"
+msgstr "Kile"
+
+#: part/dlgeditor.cpp:32
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "SciTE"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "SciTE"
+msgstr "SciTE"
+
+#: part/dlgeditor.cpp:33
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Emacs client"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Emacs client"
+msgstr "Emacsi klient"
+
+#: part/dlgeditor.cpp:34
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "Lyx client"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "Lyx client"
+msgstr "Lyxi klient"
+
+#: part/dlgeditor.cpp:35
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "TeXstudio"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXstudio"
+msgstr "TeXstudio"
+
+#: part/dlgeditor.cpp:36
+#, fuzzy, kde-format
+#| msgctxt "Text editor"
+#| msgid "TeXiFy IDEA"
+msgctxt "@item:inlistbox Config dialog, editor page"
+msgid "TeXiFy IDEA"
+msgstr "TeXiFy IDEA"
+
+#: part/dlgeditor.cpp:37
+#, fuzzy, kde-format
+#| msgid "Editor:"
+msgctxt "@label:listbox Config dialog, editor page"
+msgid "Editor:"
+msgstr "Redaktor:"
+
+#: part/dlgeditor.cpp:52
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"<qt>Set the command of a custom text editor to be launched.<br />\n"
+"You can also put few placeholders:\n"
+"<ul>\n"
+"  <li>%f - the file name</li>\n"
+"  <li>%l - the line of the file to be reached</li>\n"
+"  <li>%c - the column of the file to be reached</li>\n"
+"</ul>\n"
+"If %f is not specified, then the file name is appended to the specified "
+"command."
+msgstr ""
+"<qt>Siin saab määrata käsu, millega käivitatakse kohandatud tekstiredaktor."
+"<br />\n"
+"Kasutada saab ka mõningaid kohatäitjaid:\n"
+"<ul>\n"
+"  <li>%f - failinimi</li>\n"
+"  <li>%l - avatav rida failis</li>\n"
+"  <li>%c - avatav veerg failis</li>\n"
+"</ul>\n"
+"Kui %f on määramata, lisatakse määratud käsule failinimi."
+
+#: part/dlgeditor.cpp:63
+#, fuzzy, kde-format
+#| msgid "Command:"
+msgctxt "@label:textbox Config dialog, editor page"
+msgid "Command:"
+msgstr "Käsk:"
+
+#: part/dlggeneral.cpp:33
+#, fuzzy, kde-format
+#| msgid "Use smooth scrolling"
+msgctxt "@option:check Config dialog, general page"
+msgid "Use smooth scrolling"
+msgstr "Sujuva kerimise kasutamine"
+
+#: part/dlggeneral.cpp:35
+#, fuzzy, kde-format
+#| msgid "Appearance"
+msgctxt "@title:group Config dialog, general page"
+msgid "Appearance:"
+msgstr "Välimus"
+
+#: part/dlggeneral.cpp:39
+#, fuzzy, kde-format
+#| msgid "Show scroll&bars"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show scrollbars"
+msgstr "Kerimis&ribade näitamine"
+
+#: part/dlggeneral.cpp:46
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgctxt "@option:check Config dialog, general page"
+msgid "Link the thumbnails with the page"
+msgstr "Pisipil&tide linkimine leheküljega"
+
+#: part/dlggeneral.cpp:53
+#, fuzzy, kde-format
+#| msgid "Show &hints and info messages"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show hints and info messages"
+msgstr "Vi&hjete ja infoteadete näitamine"
+
+#: part/dlggeneral.cpp:59
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Notify about embedded files, forms, or signatures"
+msgstr ""
+
+#: part/dlggeneral.cpp:66
+#, fuzzy, kde-format
+#| msgid "Display document title in titlebar if available"
+msgctxt "@option:check Config dialog, general page"
+msgid "Display document title in titlebar if available"
+msgstr "Võimaluse korral dokumendi pealkirja näitamine tiitliribal"
+
+#: part/dlggeneral.cpp:72
+#, fuzzy, kde-format
+#| msgid "Display file name only"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display file name only"
+msgstr "Ainult failinime näitamine"
+
+#: part/dlggeneral.cpp:73
+#, fuzzy, kde-format
+#| msgid "Display full file path"
+msgctxt "item:inlistbox Config dialog, general page"
+msgid "Display full file path"
+msgstr "Faili täieliku asukoha näitamine"
+
+#: part/dlggeneral.cpp:75
+#, fuzzy, kde-format
+#| msgid "When not displaying document title:"
+msgctxt "label:listbox Config dialog, general page"
+msgid "When not displaying document title:"
+msgstr "Kui ei näidata dokumendi pealkirja:"
+
+#: part/dlggeneral.cpp:90
+#, fuzzy, kde-format
+#| msgid "Use custom background color"
+msgctxt "@label:listbox Config dialog, general page"
+msgid "Use custom background color:"
+msgstr "Kohandatud taustavärvi kasutamine"
+
+#: part/dlggeneral.cpp:112
+#, fuzzy, kde-format
+#| msgid "Program Features"
+msgctxt "@title:group Config dialog, general page"
+msgid "Program features:"
+msgstr "Programmi omadused"
+
+#: part/dlggeneral.cpp:119
+#, fuzzy, kde-format
+#| msgid "Open new files in &tabs"
+msgctxt "@option:check Config dialog, general page"
+msgid "Open new files in tabs"
+msgstr "&Uute failide avamine kaartidel"
+
+#: part/dlggeneral.cpp:124
+#, fuzzy, kde-format
+#| msgid "Switch to existing tab if file is already open"
+msgctxt "@option:check Config dialog, general page"
+msgid "Switch to existing tab if file is already open"
+msgstr "Olemasolevale kaardile lülitumine, kui fail on juba avatud"
+
+#: part/dlggeneral.cpp:137
+#, fuzzy, kde-format
+#| msgid "&Obey DRM limitations"
+msgctxt "@option:check Config dialog, general page"
+msgid "Obey DRM limitations"
+msgstr "DRM-i &piirangute arvestamine"
+
+#: part/dlggeneral.cpp:146
+#, fuzzy, kde-format
+#| msgid "&Reload document on file change"
+msgctxt "@option:check Config dialog, general page"
+msgid "Reload document on file change"
+msgstr "&Dokument laaditakse faili muutmisel uuesti"
+
+#: part/dlggeneral.cpp:153
+#, fuzzy, kde-format
+#| msgid "Show backend selection dialog"
+msgctxt "@option:check Config dialog, general page"
+msgid "Show backend selection dialog"
+msgstr "Taustaprogrammi valimise dialoogi näitamine"
+
+#: part/dlggeneral.cpp:160
+#, fuzzy, kde-format
+#| msgid "Right to left reading direction"
+msgctxt "@option:check Config dialog, general page"
+msgid "Right to left reading direction"
+msgstr "Paremalt vasakule lugemise suund"
+
+#: part/dlggeneral.cpp:166
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Open in continuous mode by default"
+msgstr ""
+
+#: part/dlggeneral.cpp:173
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "When using Browse Tool, wrap cursor at screen edges"
+msgstr ""
+
+#: part/dlggeneral.cpp:190
+#, fuzzy, kde-format
+#| msgid "Overview &columns:"
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Overview columns:"
+msgstr "Üle&vaateveerud:"
+
+#: part/dlggeneral.cpp:197
+#, fuzzy, kde-format
+#| msgid "%"
+msgctxt "Page Up/Down overlap, spinbox suffix"
+msgid "%"
+msgstr "%"
+
+#: part/dlggeneral.cpp:198
+#, fuzzy, kde-format
+#| msgid ""
+#| "Defines how much of the current viewing area will still be visible when "
+#| "pressing the Page Up/Down keys."
+msgctxt "@info:tooltip Config dialog, general page"
+msgid ""
+"Defines how much of the current viewing area will still be visible when "
+"pressing the Page Up/Down keys."
+msgstr ""
+"Määrab, kui palju aktiivsest vaatealast jääb näha Page Up/Down klahvi "
+"kasutamisel."
+
+#: part/dlggeneral.cpp:200
+#, fuzzy, kde-format
+#| msgid "&Page Up/Down overlap:"
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Page Up/Down overlap:"
+msgstr "&Page Up/Down jätab näha:"
+
+#: part/dlggeneral.cpp:204
+#, fuzzy, kde-format
+#| msgid "100%"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "100%"
+msgstr "100%"
+
+#: part/dlggeneral.cpp:205
+#, fuzzy, kde-format
+#| msgid "Fit Width"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Width"
+msgstr "Mahutatakse laiusele"
+
+#: part/dlggeneral.cpp:206
+#, fuzzy, kde-format
+#| msgid "Fit Page"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Fit Page"
+msgstr "Mahutatakse leheküljele"
+
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgid "Auto Fit"
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Auto Fit"
+msgstr "Automaatne mahutamine"
+
+#: part/dlggeneral.cpp:208
+#, fuzzy, kde-format
+#| msgid ""
+#| "Defines the default zoom mode for files which were never opened before.\n"
+#| "For files which were opened before the previous zoom is applied."
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid ""
+"Defines the default zoom mode for files which were never opened before. For "
+"files which were opened before the previous zoom is applied."
+msgstr ""
+"Määrab vaikesuurenduse varem avamata failidele.\n"
+"Varem avatud failide korral kasutatakse viimast suurendustaset."
+
+#: part/dlggeneral.cpp:210
+#, fuzzy, kde-format
+#| msgid "&Default Zoom:"
+msgctxt "label:listbox Config dialog, general page, default zoom"
+msgid "Default zoom:"
+msgstr "Vaikimisi suuren&dus:"
+
+#: part/dlgperformance.cpp:26
+#, fuzzy, kde-format
+#| msgid "Enable &transparency effects"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable transparency effects"
+msgstr "Lä&bipaistvusefektide lubamine"
+
+#: part/dlgperformance.cpp:28
+#, fuzzy, kde-format
+#| msgid "CPU Usage"
+msgctxt "@label Config dialog, performance page"
+msgid "CPU usage:"
+msgstr "Protsessori koormus"
+
+#: part/dlgperformance.cpp:35
+#, fuzzy, kde-format
+#| msgid "&Low"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Low"
+msgstr "&Madal"
+
+#: part/dlgperformance.cpp:36
+#, fuzzy, kde-format
+#| msgid "Nor&mal (default)"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Normal (default)"
+msgstr "&Normaalne (vaikimisi)"
+
+#: part/dlgperformance.cpp:37
+#, fuzzy, kde-format
+#| msgid "Aggr&essive"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Aggressive"
+msgstr "&Agressiivne"
+
+#: part/dlgperformance.cpp:38
+#, fuzzy, kde-format
+#| msgid "G&reedy"
+msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
+msgid "Greedy"
+msgstr "A&hne"
+
+#: part/dlgperformance.cpp:40
+#, fuzzy, kde-format
+#| msgid "Memory Usage"
+msgctxt "@label:listbox Config dialog, performance page, memory usage"
+msgid "Memory usage:"
+msgstr "Mälukasutus"
+
+#: part/dlgperformance.cpp:54
+#, fuzzy, kde-format
+#| msgid "Enable Text Antialias"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text antialias"
+msgstr "Teksti antialiase lubamine"
+
+#: part/dlgperformance.cpp:56
+#, fuzzy, kde-format
+#| msgid "Rendering"
+msgctxt "@title:group Config dialog, performance page"
+msgid "Rendering options:"
+msgstr "Renderdamine"
+
+#: part/dlgperformance.cpp:59
+#, fuzzy, kde-format
+#| msgid "Enable Graphics Antialias"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable graphics antialias"
+msgstr "Graafika antialiase lubamine"
+
+#: part/dlgperformance.cpp:64
+#, fuzzy, kde-format
+#| msgid "Enable Text Hinting"
+msgctxt "@option:check Config dialog, performance page"
+msgid "Enable text hinting"
+msgstr "Teksti varjundamise lubamine"
+
+#: part/dlgperformance.cpp:77
+#, kde-format
+msgid ""
+"Keeps used memory as low as possible. Do not reuse anything. (For systems "
+"with low memory.)"
+msgstr ""
+"Hoiab mälukasutuse võimalikult väiksena. Midagi ei puhverdata. (Vähese "
+"mäluga masinatele.)"
+
+#: part/dlgperformance.cpp:80
+#, kde-format
+msgid ""
+"A good compromise between memory usage and speed gain. Preload next page and "
+"boost searches. (For systems with 2GB of memory, typically.)"
+msgstr ""
+"Asjalik kompromiss mälukasutuse ja kiiruse vahel. Järgmine lehekülg "
+"laaditakse juba eelnevalt, otsimine on kiirem. (Tüüpiliselt 2 GB mäluga "
+"masinatele.)"
+
+#: part/dlgperformance.cpp:83
+#, kde-format
+msgid ""
+"Keeps everything in memory. Preload next pages. Boost searches. (For systems "
+"with more than 4GB of memory.)"
+msgstr ""
+"Kõik puhverdatakse mälus. Järgmised leheküljed laaditakse juba eelnevalt. "
+"Otsingud on kiiremad. (Enam kui 4 GB mäluga masinatele.)"
+
+#: part/dlgperformance.cpp:87
+#, no-c-format, kde-format
+msgid ""
+"Loads and keeps everything in memory. Preload all pages. (Will use at "
+"maximum 50% of your total memory or your free memory, whatever is bigger.)"
+msgstr ""
+"Kõige laadimine ja hoidmine mälus. Kõigi lehekülgede eellaadimine. (Kasutab "
+"maksimaalselt 50% sinu kogumälust või vabast mälust vastavalt sellele, kumb "
+"on suurem.)"
+
+#: part/dlgpresentation.cpp:37
+#, kde-format
+msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+msgid "every "
+msgstr ""
+
+#: part/dlgpresentation.cpp:38
+#, kde-format
+msgctxt "Advance every %1 seconds"
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " sekund"
+msgstr[1] " sekundit"
+
+#: part/dlgpresentation.cpp:45
+#, kde-format
+msgctxt "@label:spinbox Config dialog, presentation page"
+msgid "Advance automatically:"
+msgstr ""
+
+#: part/dlgpresentation.cpp:53
+#, fuzzy, kde-format
+#| msgid "Loop after last page"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Loop after last page"
+msgstr "Viimase lehekülje järel alustatakse uuesti algusest"
+
+#: part/dlgpresentation.cpp:59
+#, fuzzy, kde-format
+#| msgid "Tap left/right side to go back/forward"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap left/right side to go back/forward"
+msgstr "Koputus vasakule/paremale servale liigub tagasi/edasi"
+
+#: part/dlgpresentation.cpp:60
+#, fuzzy, kde-format
+#| msgid "Tap anywhere to go forward"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Tap anywhere to go forward"
+msgstr "Koputus kuhu iganes liigub edasi"
+
+#: part/dlgpresentation.cpp:61
+#, fuzzy, kde-format
+#| msgid "Disabled"
+msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
+msgid "Disabled"
+msgstr "Keelatud"
+
+#: part/dlgpresentation.cpp:63
+#, fuzzy, kde-format
+#| msgid "Touch navigation:"
+msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
+msgid "Touch navigation:"
+msgstr "Puutega liikumine:"
+
+#: part/dlgpresentation.cpp:72
+#, fuzzy, kde-format
+#| msgid "Background color:"
+msgctxt "@label:chooser Config dialog, presentation page"
+msgid "Background color:"
+msgstr "Taustavärv:"
+
+#: part/dlgpresentation.cpp:76
+#, fuzzy, kde-format
+#| msgid "Hidden After Delay"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Hidden after delay"
+msgstr "Peidetakse viivituse järel"
+
+#: part/dlgpresentation.cpp:77
+#, fuzzy, kde-format
+#| msgid "Always Visible"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always visible"
+msgstr "Alati nähtav"
+
+#: part/dlgpresentation.cpp:78
+#, fuzzy, kde-format
+#| msgid "Always Hidden"
+msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
+msgid "Always hidden"
+msgstr "Alati peidetud"
+
+#: part/dlgpresentation.cpp:80
+#, fuzzy, kde-format
+#| msgid "Mouse cursor:"
+msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
+msgid "Mouse cursor:"
+msgstr "Hiirekursor:"
+
+#: part/dlgpresentation.cpp:84
+#, fuzzy, kde-format
+#| msgid "Show &progress indicator"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show progress indicator"
+msgstr "&Edenemisnäidiku näitamine"
+
+#: part/dlgpresentation.cpp:90
+#, fuzzy, kde-format
+#| msgid "Show s&ummary page"
+msgctxt "@option:check Config dialog, presentation page"
+msgid "Show summary page"
+msgstr "&Kokkuvõtte näitamine"
+
+#: part/dlgpresentation.cpp:100
+#, kde-format
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Instant (Never use animations)"
+msgstr ""
+
+#: part/dlgpresentation.cpp:101
+#, fuzzy, kde-format
+#| msgid "Replace"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Replace"
+msgstr "Asendamine"
+
+#: part/dlgpresentation.cpp:102
+#, fuzzy, kde-format
+#| msgid "Random Transition"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Random transition"
+msgstr "Juhuslik üleminek"
+
+#: part/dlgpresentation.cpp:103
+#, fuzzy, kde-format
+#| msgid "Blinds Vertical"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds vertical"
+msgstr "Segunemine püstiselt"
+
+#: part/dlgpresentation.cpp:104
+#, fuzzy, kde-format
+#| msgid "Blinds Horizontal"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Blinds horizontal"
+msgstr "Segunemine rõhtsalt"
+
+#: part/dlgpresentation.cpp:105
+#, fuzzy, kde-format
+#| msgid "Box In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box in"
+msgstr "Kastina sissepoole"
+
+#: part/dlgpresentation.cpp:106
+#, fuzzy, kde-format
+#| msgid "Box Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Box out"
+msgstr "Kastina väljapoole"
+
+#: part/dlgpresentation.cpp:107
+#, fuzzy, kde-format
+#| msgid "Dissolve"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Dissolve"
+msgstr "Hägustumine"
+
+#: part/dlgpresentation.cpp:108
+#, fuzzy, kde-format
+#| msgid "Fade"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Fade"
+msgstr "Hääbumine"
+
+#: part/dlgpresentation.cpp:109
+#, fuzzy, kde-format
+#| msgid "Glitter Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter down"
+msgstr "Säbrutus alla"
+
+#: part/dlgpresentation.cpp:110
+#, fuzzy, kde-format
+#| msgid "Glitter Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right"
+msgstr "Säbrutus paremale"
+
+#: part/dlgpresentation.cpp:111
+#, fuzzy, kde-format
+#| msgid "Glitter Right-Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Glitter right-down"
+msgstr "Säbrutus alla ja paremale"
+
+#: part/dlgpresentation.cpp:112
+#, fuzzy, kde-format
+#| msgid "Split Horizontal In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal in"
+msgstr "Jagamine rõhtsalt sissepoole"
+
+#: part/dlgpresentation.cpp:113
+#, fuzzy, kde-format
+#| msgid "Split Horizontal Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split horizontal out"
+msgstr "Jagamine rõhtsalt väljapoole"
+
+#: part/dlgpresentation.cpp:114
+#, fuzzy, kde-format
+#| msgid "Split Vertical In"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical in"
+msgstr "Jagamine püstiselt sissepoole"
+
+#: part/dlgpresentation.cpp:115
+#, fuzzy, kde-format
+#| msgid "Split Vertical Out"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Split vertical out"
+msgstr "Jagamine püstiselt väljapoole"
+
+#: part/dlgpresentation.cpp:116
+#, fuzzy, kde-format
+#| msgid "Wipe Down"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe down"
+msgstr "Pühkimine alla"
+
+#: part/dlgpresentation.cpp:117
+#, fuzzy, kde-format
+#| msgid "Wipe Right"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe right"
+msgstr "Pühkimine paremale"
+
+#: part/dlgpresentation.cpp:118
+#, fuzzy, kde-format
+#| msgid "Wipe Left"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe left"
+msgstr "Pühkimine vasakule"
+
+#: part/dlgpresentation.cpp:119
+#, fuzzy, kde-format
+#| msgid "Wipe Up"
+msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
+msgid "Wipe up"
+msgstr "Pühkimine üles"
+
+#: part/dlgpresentation.cpp:121
+#, fuzzy, kde-format
+#| msgid "Default transition:"
+msgctxt "@label:listbox Config dialog, presentation page, transitions"
+msgid "Default transition:"
+msgstr "Vaikeüleminek:"
+
+#: part/dlgpresentation.cpp:130
+#, kde-format
+msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
+msgid "Preferred screen:"
+msgstr ""
+
+#: part/dlgpresentation.cpp:137
+#, fuzzy, kde-format
+#| msgid "Drawing Tool: %1"
+msgctxt ""
+"@label Config dialog, presentation page, heading line for drawing tool "
+"manager"
+msgid "<h3>Drawing Tools</h3>"
+msgstr "Joonistamistööriist: %1"
+
+#: part/dlgpresentation.cpp:171
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox The current screen, for the presentation mode"
+#| msgid "Current Screen"
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Current Screen"
+msgstr "Aktiivne ekraan"
+
+#: part/dlgpresentation.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox The default screen for the presentation mode"
+#| msgid "Default Screen"
+msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
+msgid "Default Screen"
+msgstr "Vaikimisi ekraan"
+
+#: part/dlgpresentation.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox %1 is the screen number (0, 1, ...)"
+#| msgid "Screen %1"
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
+"screen model name. %4 is the screen name like DVI-0"
+msgid "Screen %1 (%2 %3 %4)"
+msgstr "Ekraan %1"
+
+#: part/dlgpresentation.cpp:190
+#, kde-format
+msgctxt ""
+"@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+"the screen number (0, 1, ...), hopefully not 0."
+msgid "Screen %1 (disconnected)"
+msgstr ""
+
+#: part/drawingtoolactions.cpp:192
+#, kde-format
+msgid "Drawing Tool: %1"
+msgstr "Joonistamistööriist: %1"
+
+#: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
+#, kde-format
+msgid "Eraser"
+msgstr "Kustutaja"
+
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#, kde-format
+msgid "&Name:"
+msgstr "&Nimi:"
+
+#: part/editannottooldialog.cpp:69
+#, kde-format
+msgid "&Type:"
+msgstr "&Tüüp:"
+
+#: part/editannottooldialog.cpp:82
+#, kde-format
+msgid "Appearance"
+msgstr "Välimus"
+
+#: part/editannottooldialog.cpp:93
+#, kde-format
+msgid "Text markup"
+msgstr "Tekstimärgend"
+
+#: part/editannottooldialog.cpp:94
+#, kde-format
+msgid "Geometrical shape"
+msgstr "Geomeetriakujund"
+
+#: part/editannottooldialog.cpp:101
+#, kde-format
+msgid "Create annotation tool"
+msgstr "Annoteerimistööriista loomine"
+
+#: part/editannottooldialog.cpp:103
+#, kde-format
+msgid "Edit annotation tool"
+msgstr "Annoteerimistööriista muutmine"
+
+#: part/editdrawingtooldialog.cpp:50
+#, kde-format
+msgid "Color:"
+msgstr "Värv:"
+
+#: part/editdrawingtooldialog.cpp:57
+#, kde-format
+msgid "&Pen Width:"
+msgstr "&Pliiatsi laius:"
+
+#: part/editdrawingtooldialog.cpp:63
+#, kde-format
+msgctxt "Suffix for the pen width, eg '10 px'"
+msgid " px"
+msgstr " px"
+
+#: part/editdrawingtooldialog.cpp:73
+#, kde-format
+msgctxt "Suffix for the opacity level, eg '80 %'"
+msgid " %"
+msgstr "%"
+
+#: part/editdrawingtooldialog.cpp:78
+#, kde-format
+msgid "Create drawing tool"
+msgstr "Joonistamistööriista loomine"
+
+#: part/editdrawingtooldialog.cpp:83
+#, kde-format
+msgid "Edit drawing tool"
+msgstr "Joonistamistööriista muutmine"
+
+#: part/embeddedfilesdialog.cpp:39
+#, kde-format
+msgctxt "Unknown date"
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#: part/embeddedfilesdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Embedded Files"
+msgstr "Põimitud failid"
+
+#: part/embeddedfilesdialog.cpp:59
+#, kde-format
+msgctxt "@action:button"
+msgid "View"
+msgstr "Näita"
+
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@title:column"
+msgid "Name"
+msgstr "Nimi"
+
+#: part/embeddedfilesdialog.cpp:68
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr "Kirjeldus"
+
+#: part/embeddedfilesdialog.cpp:69
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr "Suurus"
+
+#: part/embeddedfilesdialog.cpp:70
+#, kde-format
+msgctxt "@title:column"
+msgid "Created"
+msgstr "Loodud"
+
+#: part/embeddedfilesdialog.cpp:71
+#, kde-format
+msgctxt "@title:column"
+msgid "Modified"
+msgstr "Muudetud"
+
+#: part/embeddedfilesdialog.cpp:151
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Save As..."
+msgstr "Sal&vesta kui..."
+
+#: part/embeddedfilesdialog.cpp:152
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&View..."
+msgstr "&Näita ..."
+
+#: part/fileprinterpreview.cpp:115
+#, kde-format
+msgid "Could not load print preview part"
+msgstr "Trükkimise eelvaatluse komponendi laadimine nurjus"
+
+#: part/fileprinterpreview.cpp:127
+#, kde-format
+msgid "Print Preview"
+msgstr "Trükkimise eelvaatlus"
+
+#: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
+#, kde-format
+msgid "Close"
+msgstr "Sulge"
+
+#: part/findbar.cpp:38
+#, kde-format
+msgctxt "Find text"
+msgid "F&ind:"
+msgstr "Ots&ing:"
+
+#: part/findbar.cpp:49
+#, kde-format
+msgid "Text to search for"
+msgstr "Otsitav tekst"
+
+#: part/findbar.cpp:54
+#, kde-format
+msgctxt "Find and go to the next search match"
+msgid "Next"
+msgstr "Järgmine"
+
+#: part/findbar.cpp:55
+#, kde-format
+msgid "Jump to next match"
+msgstr "Hüppamine järgmisele sobivusele"
+
+#: part/findbar.cpp:58
+#, kde-format
+msgctxt "Find and go to the previous search match"
+msgid "Previous"
+msgstr "Eelmine"
+
+#: part/findbar.cpp:59
+#, kde-format
+msgid "Jump to previous match"
+msgstr "Hüppamine eelmisele sobivusele"
+
+#: part/findbar.cpp:64
+#, kde-format
+msgid "Modify search behavior"
+msgstr "Otsingu käitumise muutmine"
+
+#: part/findbar.cpp:66
+#, kde-format
+msgid "Case sensitive"
+msgstr "Tõstutundlik"
+
+#: part/findbar.cpp:68
+#, kde-format
+msgid "From current page"
+msgstr "Alates aktiivsest leheküljest"
+
+#: part/findbar.cpp:70
+#, kde-format
+msgid "Find as you type"
+msgstr "Otsimine kirjutamise ajal"
+
+#: part/formwidgets.cpp:751
+#, kde-format
+msgid "*|All Files"
+msgstr "*|Kõik failid"
+
+#: part/formwidgets.cpp:1065
+#, kde-format
+msgid "Unsigned Signature Field (Click to Sign)"
+msgstr ""
+
+#: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
+#, fuzzy, kde-format
+#| msgid "Sign CRL"
+msgid "&Sign..."
+msgstr "CRL-i allkirjastamine"
+
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#, kde-format
+msgid "Signature Properties"
+msgstr "Allkirja omadused"
+
+#: part/ktreeviewsearchline.cpp:283
+#, kde-format
+msgid "Search Options"
+msgstr "Otsimisvalikud"
+
+#: part/ktreeviewsearchline.cpp:284
+#, kde-format
+msgctxt "Enable case sensitive search in the side navigation panels"
+msgid "Case Sensitive"
+msgstr "Tõstutundlik"
+
+#: part/ktreeviewsearchline.cpp:287
+#, kde-format
+msgctxt "Enable regular expression search in the side navigation panels"
+msgid "Regular Expression"
+msgstr "Regulaaravaldis"
+
+#: part/ktreeviewsearchline.cpp:386
+#, kde-format
+msgid "S&earch:"
+msgstr "&Otsing:"
+
+#: part/layers.cpp:35 part/part.cpp:2315
+#, kde-format
+msgid "Layers"
+msgstr "Kihid"
+
+#: part/minibar.cpp:190
+#, kde-format
+msgctxt "Layouted like: '5 [pages] of 10'"
+msgid "of"
+msgstr "/"
+
+#: part/pageview.cpp:541
+#, kde-format
+msgid "Zoom"
+msgstr "Suurendus"
+
+#: part/pageview.cpp:553
+#, kde-format
+msgid "Zoom to 100%"
+msgstr "Suurendus 100%"
+
+#: part/pageview.cpp:564
+#, kde-format
+msgid "Rotate &Right"
+msgstr "Pöö&ra paremale"
+
+#: part/pageview.cpp:565
+#, kde-format
+msgctxt "Rotate right"
+msgid "Right"
+msgstr "Paremale"
+
+#: part/pageview.cpp:569
+#, kde-format
+msgid "Rotate &Left"
+msgstr "Pööra vasaku&le"
+
+#: part/pageview.cpp:570
+#, kde-format
+msgctxt "Rotate left"
+msgid "Left"
+msgstr "Vasakule"
+
+#: part/pageview.cpp:574
+#, kde-format
+msgid "Original Orientation"
+msgstr "Algne orientatsioon"
+
+#: part/pageview.cpp:580
+#, kde-format
+msgid "&Trim View"
+msgstr "Vaate kär&pimine"
+
+#: part/pageview.cpp:584
+#, kde-format
+msgid "&Trim Margins"
+msgstr "Kär&bi veeriseid"
+
+#: part/pageview.cpp:591
+#, kde-format
+msgid "Trim To &Selection"
+msgstr "Kärbi &valikule"
+
+#: part/pageview.cpp:597
+#, kde-format
+msgid "Fit &Width"
+msgstr "Ma&hutatakse laiusele"
+
+#: part/pageview.cpp:601
+#, kde-format
+msgid "Fit &Page"
+msgstr "Mah&utatakse leheküljele"
+
+#: part/pageview.cpp:605
+#, kde-format
+msgid "&Auto Fit"
+msgstr "&Automaatne mahutamine"
+
+#: part/pageview.cpp:609
+#, kde-format
+msgid "Fit Wi&ndow to Page"
+msgstr "So&bita aken leheküljega"
+
+#: part/pageview.cpp:616
+#, kde-format
+msgid "&View Mode"
+msgstr "&Vaaterežiim"
+
+#: part/pageview.cpp:628
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Single Page"
+msgstr "Ük&s lehekülg"
+
+#: part/pageview.cpp:629
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Facing Pages"
+msgstr "Kõr&vutised leheküljed"
+
+#: part/pageview.cpp:630
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "Facing Pages (&Center First Page)"
+msgstr "Kõrvutised leheküljed (esimene lehekül&g tsentreeritakse)"
+
+#: part/pageview.cpp:633
+#, kde-format
+msgctxt "@item:inmenu"
+msgid "&Overview"
+msgstr "Ülevaa&de"
+
+#: part/pageview.cpp:645
+#, kde-format
+msgid "&Continuous"
+msgstr "&Pidev"
+
+#: part/pageview.cpp:652
+#, kde-format
+msgctxt "@action page layout"
+msgid "Use Right to Left Reading Direction"
+msgstr "Paremalt vasakule lugemise suund"
+
+#: part/pageview.cpp:661
+#, kde-format
+msgid "&Browse"
+msgstr "Si&rvimine"
+
+#: part/pageview.cpp:669
+#, kde-format
+msgid "&Zoom"
+msgstr "S&uurendus"
+
+#: part/pageview.cpp:689
+#, kde-format
+msgid "Area &Selection"
+msgstr "Ala&valik"
+
+#: part/pageview.cpp:696
+#, kde-format
+msgid "&Text Selection"
+msgstr "&Tekstivalik"
+
+#: part/pageview.cpp:703
+#, kde-format
+msgid "T&able Selection"
+msgstr "Ta&belivalik"
+
+#: part/pageview.cpp:710
+#, fuzzy, kde-format
+#| msgctxt "Magnifier Tool"
+#| msgid "Magnifier"
+msgid "&Magnifier"
+msgstr "Suurendaja"
+
+#: part/pageview.cpp:719
+#, kde-format
+msgctxt "@action"
+msgid "Selection Tools"
+msgstr "Valikutööriistad"
+
+#: part/pageview.cpp:750
+#, fuzzy, kde-format
+#| msgid "Digital Signature"
+msgid "Digitally &Sign..."
+msgstr "Digitaalne allkiri"
+
+#: part/pageview.cpp:756
+#, kde-format
+msgid "Speak Whole Document"
+msgstr "Loe kogu dokument ette"
+
+#: part/pageview.cpp:761
+#, kde-format
+msgid "Speak Current Page"
+msgstr "Loe aktiivne lehekülg ette"
+
+#: part/pageview.cpp:766
+#, kde-format
+msgid "Stop Speaking"
+msgstr "Lõpeta ettelugemine"
+
+#: part/pageview.cpp:771
+#, kde-format
+msgid "Pause/Resume Speaking"
+msgstr "Kõne pausile/pausilt ära"
+
+#: part/pageview.cpp:783
+#, kde-format
+msgid "Scroll Up"
+msgstr "Keri üles"
+
+#: part/pageview.cpp:789
+#, kde-format
+msgid "Scroll Down"
+msgstr "Keri alla"
+
+#: part/pageview.cpp:795
+#, kde-format
+msgid "Scroll Page Up"
+msgstr "Keri lehekülg üles"
+
+#: part/pageview.cpp:801
+#, kde-format
+msgid "Scroll Page Down"
+msgstr "Keri lehekülg alla"
+
+#: part/pageview.cpp:807
+#, kde-format
+msgid "Show Forms"
+msgstr "Vormide näitamine"
+
+#: part/pageview.cpp:1301
+#, kde-format
+msgid " Loaded a one-page document."
+msgid_plural " Loaded a %1-page document."
+msgstr[0] "Laaditi üheleheküljeline dokument."
+msgstr[1] "Laaditi %1-leheküljeline dokument."
+
+#: part/pageview.cpp:2521
+#, fuzzy, kde-format
+#| msgid "Copy to Clipboard"
+msgid "Copy Table Contents to Clipboard"
+msgstr "Kopeeri lõikepuhvrisse"
+
+#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
+#: part/pageview.cpp:3050
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "DRM keelab kopeerimise"
+
+#: part/pageview.cpp:2843
+#, kde-format
+msgid "Text (1 character)"
+msgid_plural "Text (%1 characters)"
+msgstr[0] "Tekst (1 märk)"
+msgstr[1] "Tekst (%1 märki)"
+
+#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "Kopeeri lõikepuhvrisse"
+
+#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#, kde-format
+msgid "Speak Text"
+msgstr "Loe tekst ette"
+
+#: part/pageview.cpp:2861
+#, kde-format
+msgid "Image (%1 by %2 pixels)"
+msgstr "Pilt (%1 x %2 pikslit)"
+
+#: part/pageview.cpp:2863
+#, kde-format
+msgid "Save to File..."
+msgstr "Salvesta faili..."
+
+#: part/pageview.cpp:2883
+#, kde-format
+msgid "Image [%1x%2] copied to clipboard."
+msgstr "Pilt [%1x%2] kopeeriti lõikepuhvrisse."
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Save file"
+msgstr "Faili salvestamine"
+
+#: part/pageview.cpp:2886
+#, kde-format
+msgid "Images (*.png *.jpeg)"
+msgstr "Pildid (*.png *.jpeg)"
+
+#: part/pageview.cpp:2888
+#, kde-format
+msgid "File not saved."
+msgstr "Faili ei salvestatud."
+
+#: part/pageview.cpp:2899
+#, kde-format
+msgid "Image [%1x%2] saved to %3 file."
+msgstr "Pilt [%1x%2] salvestati faili %3."
+
+#: part/pageview.cpp:3041
+#, kde-format
+msgid "Copy Text"
+msgstr "Kopeeri tekst"
+
+#: part/pageview.cpp:3061
+#, kde-format
+msgid "Go to '%1'"
+msgstr "Liigu leheküljele %1"
+
+#: part/pageview.cpp:4034 part/part.cpp:3155
+#, kde-format
+msgid "Fit Width"
+msgstr "Mahutatakse laiusele"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Fit Page"
+msgstr "Mahutatakse leheküljele"
+
+#: part/pageview.cpp:4034
+#, kde-format
+msgid "Auto Fit"
+msgstr "Automaatne mahutamine"
+
+#: part/pageview.cpp:4355
+#, kde-format
+msgid "Search for '%1' with"
+msgstr "Otsi '%1', kasutades"
+
+#: part/pageview.cpp:4369
+#, kde-format
+msgid "Configure Web Shortcuts..."
+msgstr "Seadista veebikiirklahve..."
+
+#: part/pageview.cpp:4395
+#, kde-format
+msgid "Follow This Link"
+msgstr "Ava see link"
+
+#: part/pageview.cpp:4398
+#, kde-format
+msgid "Play this Sound"
+msgstr "Esita see heli"
+
+#: part/pageview.cpp:4400
+#, kde-format
+msgid "Stop Sound"
+msgstr "Peata heli"
+
+#: part/pageview.cpp:4406
+#, kde-format
+msgid "Copy Link Address"
+msgstr "Kopeeri lingi aadress"
+
+#: part/pageview.cpp:4427
+#, kde-format
+msgid "Search for '%1' in this document"
+msgstr "'%1' otsimine selles dokumendis"
+
+#: part/pageview.cpp:4870
+#, kde-format
+msgid "Welcome"
+msgstr "Tere tulemast"
+
+#: part/pageview.cpp:4994
+#, kde-format
+msgid "Select zooming area. Right-click to zoom out."
+msgstr "Vali suurendusala. Paremklõpsuga saab vähendada."
+
+#: part/pageview.cpp:5005
+#, kde-format
+msgid "Click to see the magnified view."
+msgstr "Klõpsa suurendatud vaate nägemiseks."
+
+#: part/pageview.cpp:5018
+#, kde-format
+msgid "Draw a rectangle around the text/graphics to copy."
+msgstr "Tõmba hiirega ristkülik ala ümber, mida soovid kopeerida."
+
+#: part/pageview.cpp:5030
+#, kde-format
+msgid "Select text"
+msgstr "Vali tekst"
+
+#: part/pageview.cpp:5042
+#, kde-format
+msgid ""
+"Draw a rectangle around the table, then click near edges to divide up; press "
+"Esc to clear."
+msgstr ""
+"Tõmba hiirega ristkülik tabeli ümber ja klõpsa siis jagamiseks servade "
+"juures; puhastamiseks vajuta Esc."
+
+#: part/pageview.cpp:5052
+#, kde-format
+msgid ""
+"All your signing certificates are either not valid yet or are past their "
+"validity date."
+msgstr ""
+
+#: part/pageview.cpp:5055
+#, kde-format
+msgid ""
+"There are no available signing certificates.<br/>For more information, "
+"please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
+"the manual."
+msgstr ""
+
+#: part/pageview.cpp:5071
+#, kde-format
+msgid "You have unsaved changes. Please save the document before signing it."
+msgstr ""
+
+#: part/pageview.cpp:5079
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The version of the Poppler library this Okular was compiled with does not "
+"support signing documents with passwords. Please ask your provider to update "
+"it to 22.02 or later."
+msgstr ""
+
+#: part/pageview.cpp:5080
+#, kde-format
+msgctxt "@title:window"
+msgid "Poppler library is too old"
+msgstr ""
+
+#: part/pageview.cpp:5098
+#, kde-format
+msgid "Draw a rectangle to insert the signature field"
+msgstr ""
+
+#: part/pageview.cpp:5242
+#, kde-format
+msgid "Draw a rectangle around the page area you wish to keep visible"
+msgstr "Tõmba ristkülik ala ümber, mida soovid nähtaval hoida"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "New Text Note"
+msgstr "Uus tekstimärkus"
+
+#: part/pageviewannotator.cpp:218
+#, kde-format
+msgid "Text of the new note:"
+msgstr "Uue märkuse tekst:"
+
+#: part/pageviewannotator.cpp:362
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"A signature of this size may be too small to read. If you would like to "
+"create a potentially more readable signature, press <interface>Start over</"
+"interface> and draw a bigger rectangle."
+msgstr ""
+
+#: part/pageviewannotator.cpp:364
+#, kde-format
+msgctxt "@action:button"
+msgid "Start Over"
+msgstr ""
+
+#: part/pageviewannotator.cpp:365
+#, fuzzy, kde-format
+#| msgid "Sign CRL"
+msgctxt "@action:button"
+msgid "Sign"
+msgstr "CRL-i allkirjastamine"
+
+#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+
+#: part/pageviewannotator.cpp:1166
+#, fuzzy, kde-format
+#| msgid "Author"
+msgid "Author name"
+msgstr "Autor"
+
+#: part/pageviewannotator.cpp:1166
+#, fuzzy, kde-format
+#| msgid "Insert a custom name for the annotation:"
+msgid "Author name for the annotation:"
+msgstr "Sisesta nimi, mida lisatavate annotatsioonide juures näidata:"
+
+#: part/pageviewannotator.cpp:1227
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw an ellipse (drag to select a zone)"
+msgstr "Ellipsi joonistamine (vali lohistades ala)"
+
+#: part/pageviewannotator.cpp:1229
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Highlight text"
+msgstr "Teksti esiletõstmine"
+
+#: part/pageviewannotator.cpp:1231
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a freehand line"
+msgstr "Vabakäejoone tõmbamine"
+
+#: part/pageviewannotator.cpp:1233
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Inline Text Annotation (drag to select a zone)"
+msgstr "Reasisene tekstiannotatsioon (vali lohistades ala)"
+
+#: part/pageviewannotator.cpp:1235
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a pop-up note"
+msgstr "Hüpikmärkuse asetamine"
+
+#: part/pageviewannotator.cpp:1237
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a polygon (click on the first point to close it)"
+msgstr "Joonista murdjoon (selle sulgemiseks klõpsa esimesel punktil)"
+
+#: part/pageviewannotator.cpp:1239
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a rectangle"
+msgstr "Ristküliku joonistamine"
+
+#: part/pageviewannotator.cpp:1241
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Squiggle text"
+msgstr "Teksti allajoonimine lainelise joonega"
+
+#: part/pageviewannotator.cpp:1243
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Put a stamp symbol"
+msgstr "Aseta templi sümbol"
+
+#: part/pageviewannotator.cpp:1245
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Draw a straight line"
+msgstr "Sirgjoone tõmbamine"
+
+#: part/pageviewannotator.cpp:1247
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Strike out text"
+msgstr "Teksti läbikriipsutamine"
+
+#: part/pageviewannotator.cpp:1249
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Underline text"
+msgstr "Teksti allajoonimine"
+
+#: part/pageviewannotator.cpp:1251
+#, kde-format
+msgctxt "Annotation tool"
+msgid "Typewriter Annotation (drag to select a zone)"
+msgstr "Kirjutusmasina annotatsioon (vali lohistades ala)"
+
+#: part/pageviewannotator.cpp:1310
+#, kde-format
+msgid "Highlighter"
+msgstr "Esiletõstmine"
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Stamps inserted in PDF documents are not visible in PDF readers other than "
+"Okular"
+msgstr ""
+"PDF-dokumenti lisatud templid on kõigist PDF-i näitajatest näha ainult "
+"Okularis."
+
+#: part/pageviewannotator.cpp:1484
+#, kde-format
+msgctxt "@title:window"
+msgid "Experimental feature"
+msgstr "Eksperimentaalne võimalus"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Add favorite annotation"
+msgstr "Lemmikannotatsiooni lisamine"
+
+#: part/pageviewannotator.cpp:1613
+#, kde-format
+msgid "Custom annotation name:"
+msgstr "Kohandatud annotatsiooni nimi:"
+
+#. i18n: ectx: Menu (file)
+#: part/part-viewermode.rc:6 part/part.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Fail"
+
+#. i18n: ectx: Menu (settings)
+#: part/part-viewermode.rc:10 part/part.rc:90
+#, kde-format
+msgid "&Settings"
+msgstr "&Seadistused"
+
+#. i18n: ectx: Menu (help)
+#: part/part-viewermode.rc:15 part/part.rc:97
+#, kde-format
+msgid "&Help"
+msgstr "&Abi"
+
+#. i18n: ectx: Menu (view_orientation)
+#: part/part-viewermode.rc:32 part/part.rc:44
+#, kde-format
+msgid "&Orientation"
+msgstr "&Orientatsioon"
+
+#. i18n: ectx: Menu (bookmarks)
+#. i18n: ectx: Menu (okular_bookmarks)
+#: part/part-viewermode.rc:50 part/part.rc:65
+#, kde-format
+msgid "&Bookmarks"
+msgstr "&Järjehoidjad"
+
+#. i18n: ectx: ToolBar (OkularViewerToolBar)
+#: part/part-viewermode.rc:63
+#, kde-format
+msgid "Viewer Toolbar"
+msgstr "Näitaja riba"
+
+#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#, kde-format
+msgid "Thumbnails"
+msgstr "Pisipildid"
+
+#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#, kde-format
+msgid "Annotations"
+msgstr "Annotatsioonid"
+
+#: part/part.cpp:460
+#, kde-format
+msgid ""
+"This document contains annotations or form data that were saved internally "
+"by a previous Okular version. Internal storage is <b>no longer supported</b>."
+"<br/>Please save to a file in order to move them if you want to continue to "
+"edit the document."
+msgstr ""
+"See dokument sisaldab annotatsioone või vormiandmeid, mis on seesmiselt "
+"salvestatud Okulari varasema versiooniga. Seesmine salvestamine <b>ei ole "
+"enam toetatud</b>.<br/>Palun salvesta faili nende liigutamiseks, kui soovid "
+"jätkata dokumendi redigeerimist."
+
+#: part/part.cpp:467
+#, kde-format
+msgid ""
+"This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
+"here to see them</a> or go to File -> Embedded Files."
+msgstr ""
+"Sel dokumendil on põimitud faile. <a href=\"okular:/embeddedfiles\">Klõpsa "
+"nende vaatamiseks siia</a> või vali menüüst Fail -> Põimitud failid."
+
+#: part/part.cpp:689
+#, kde-format
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Eelmine"
+
+#: part/part.cpp:690
+#, kde-format
+msgid "Go back to the Previous Page"
+msgstr "Liikumine eelmisele leheküljele"
+
+#: part/part.cpp:691
+#, kde-format
+msgid "Moves to the previous page of the document"
+msgstr "Liigub dokumendi eelmisele leheküljele"
+
+#: part/part.cpp:701
+#, kde-format
+msgctxt "Next page"
+msgid "Next"
+msgstr "Järgmine"
+
+#: part/part.cpp:702
+#, kde-format
+msgid "Advance to the Next Page"
+msgstr "Liikumine järgmisele leheküljele"
+
+#: part/part.cpp:703
+#, kde-format
+msgid "Moves to the next page of the document"
+msgstr "Liigub dokumendi järgmisele leheküljele"
+
+#: part/part.cpp:714
+#, kde-format
+msgid "Beginning of the document"
+msgstr "Dokumendi algus"
+
+#: part/part.cpp:715
+#, kde-format
+msgid "Moves to the beginning of the document"
+msgstr "Liigub dokumendi algusse"
+
+#: part/part.cpp:719
+#, kde-format
+msgid "End of the document"
+msgstr "Dokumendi lõpp"
+
+#: part/part.cpp:720
+#, kde-format
+msgid "Moves to the end of the document"
+msgstr "Liigub dokumendi lõppu"
+
+#: part/part.cpp:734
+#, kde-format
+msgid "Rename the current bookmark"
+msgstr "Aktiivse järjehoidja nime muutmine"
+
+#: part/part.cpp:738
+#, kde-format
+msgid "Previous Bookmark"
+msgstr "Eelmine järjehoidja"
+
+#: part/part.cpp:740
+#, kde-format
+msgid "Go to the previous bookmark"
+msgstr "Liikumine eelmisele järjehoidjale"
+
+#: part/part.cpp:744
+#, kde-format
+msgid "Next Bookmark"
+msgstr "Järgmine järjehoidja"
+
+#: part/part.cpp:746
+#, kde-format
+msgid "Go to the next bookmark"
+msgstr "Liikumine järgmisele järjehoidjale"
+
+#: part/part.cpp:775
+#, kde-format
+msgid "Configure Okular..."
+msgstr "Okulari seadistamine..."
+
+#: part/part.cpp:778
+#, kde-format
+msgid "Configure Viewer..."
+msgstr "Näitaja seadistamine..."
+
+#: part/part.cpp:784
+#, kde-format
+msgid "Configure Viewer Backends..."
+msgstr "Näitaja taustaprogrammide seadistamine"
+
+#: part/part.cpp:786
+#, kde-format
+msgid "Configure Backends..."
+msgstr "Taustaprogrammide seadistamine..."
+
+#: part/part.cpp:822
+#, kde-format
+msgid "About Backend"
+msgstr "Taustaprogrammi info"
+
+#: part/part.cpp:827
+#, kde-format
+msgid "Reloa&d"
+msgstr "Laa&di uuesti"
+
+#: part/part.cpp:829
+#, kde-format
+msgid "Reload the current document from disk."
+msgstr "Aktiivse dokumendi taaslaadimine kettalt."
+
+#: part/part.cpp:835
+#, kde-format
+msgid "Close &Find Bar"
+msgstr "Sul&ge otsinguriba"
+
+#: part/part.cpp:840
+#, kde-format
+msgid "Page Number"
+msgstr "Leheküljenumber"
+
+#: part/part.cpp:844
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgctxt "@action"
+msgid "Configure Color Modes..."
+msgstr "Okulari seadistamine..."
+
+#: part/part.cpp:887
+#, kde-format
+msgid "Select All Text on Current Page"
+msgstr "Vali kogu aktiivse lehekülje tekst"
+
+#: part/part.cpp:900
+#, kde-format
+msgid "Show S&idebar"
+msgstr "Külgr&iba näitamine"
+
+#: part/part.cpp:909
+#, kde-format
+msgid "Show &Page Bar"
+msgstr "Le&heküljeriba näitamine"
+
+#: part/part.cpp:915
+#, kde-format
+msgid "Show &Signatures Panel"
+msgstr "Allkir&jade paneeli näitamine"
+
+#: part/part.cpp:925
+#, kde-format
+msgid "&Embedded Files"
+msgstr "&Põimitud failid"
+
+#: part/part.cpp:931
+#, kde-format
+msgid "E&xport As"
+msgstr "&Eksport"
+
+#: part/part.cpp:943
+#, kde-format
+msgid "S&hare"
+msgstr "&Jaga"
+
+#: part/part.cpp:952
+#, kde-format
+msgid "P&resentation"
+msgstr "&Esitlus"
+
+#: part/part.cpp:959
+#, kde-format
+msgid "Open Con&taining Folder"
+msgstr "Ava s&isaldav kataloog"
+
+#: part/part.cpp:975
+#, kde-format
+msgid "&Import PostScript as PDF..."
+msgstr "&Impordi PostScript PDF-ina..."
+
+#: part/part.cpp:979
+#, kde-format
+msgid "Switch Blackscreen Mode"
+msgstr "Lülitu ekraanipimendamise režiimi"
+
+#: part/part.cpp:987
+#, kde-format
+msgid "Erase Drawing"
+msgstr "Kõrvalda joonistus"
+
+#: part/part.cpp:992
+#, kde-format
+msgid "Configure Annotations..."
+msgstr "Seadista annotatsioone..."
+
+#: part/part.cpp:997
+#, kde-format
+msgid "Play/Pause Presentation"
+msgstr "Esita/peata esitlus"
+
+#: part/part.cpp:1145
+#, kde-format
+msgid ""
+"You have just modified the open document, but this kind of document can not "
+"be saved.\n"
+"Any modification will be lost once Okular is closed."
+msgstr ""
+
+#: part/part.cpp:1146
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Document can't be saved"
+msgstr "Dokumendi parool"
+
+#: part/part.cpp:1175
+#, kde-format
+msgid "Could not open '%1' (%2) "
+msgstr "\"%1\" avamine nurjus (%2)"
+
+#: part/part.cpp:1229
+#, kde-format
+msgid "The loading of %1 has been canceled."
+msgstr "%1 laadimine katkestati."
+
+#: part/part.cpp:1245
+#, kde-format
+msgid "Could not open %1. Reason: %2"
+msgstr "%1 avamine nurjus. Põhjus: %2"
+
+#: part/part.cpp:1273
+#, kde-format
+msgid "Configure Viewer Backends"
+msgstr "Näitaja taustaprogrammide seadistamine"
+
+#: part/part.cpp:1275
+#, kde-format
+msgid "Configure Backends"
+msgstr "Taustaprogrammide seadistamine"
+
+#: part/part.cpp:1360
+#, kde-format
+msgid ""
+"The program \"ps2pdf\" was not found, so Okular can not import PS files "
+"using it."
+msgstr ""
+"Programmi  \"ps2pdf\" ei leitud, mistõttu Okular ei saa selle abil importida "
+"PS-faile."
+
+#: part/part.cpp:1360
+#, kde-format
+msgid "ps2pdf not found"
+msgstr "Programmi ps2pdf ei leitud"
+
+#: part/part.cpp:1365
+#, kde-format
+msgid "PostScript files (%1)"
+msgstr "PostScript-failid (%1)"
+
+#: part/part.cpp:1381
+#, kde-format
+msgid "Importing PS file as PDF (this may take a while)..."
+msgstr "PS-faili importimine PDF-ina (see võib võtta veidi aega)..."
+
+#: part/part.cpp:1510
+#, kde-format
+msgid "Please enter the password to read the document:"
+msgstr "Palun anna dokumendi lugemiseks vajalik parool:"
+
+#: part/part.cpp:1512
+#, kde-format
+msgid "Incorrect password. Try again:"
+msgstr "Vigane parool. Proovi uuesti:"
+
+#: part/part.cpp:1518
+#, kde-format
+msgid "Document Password"
+msgstr "Dokumendi parool"
+
+#: part/part.cpp:1638
+#, kde-format
+msgid "This document has XFA forms, which are currently <b>unsupported</b>."
+msgstr "Dokumendis esineb XFA vorme, mis on praegu <b>toetamata</b>."
+
+#: part/part.cpp:1645
+#, kde-format
+msgid ""
+"This document has forms. Click on the button to interact with them, or use "
+"View -> Show Forms."
+msgstr ""
+"Selles dokumendis on vormid. Klõpsa nupule nende kasutamiseks või vali "
+"menüüst Vaade -> Näita vorme."
+
+#: part/part.cpp:1661
+#, kde-format
+msgid ""
+"All editing and interactive features for this document are disabled. Please "
+"save a copy and reopen to edit this document."
+msgstr ""
+"Kõik selle dokumendi redigeerimis- ja interaktiivsed toimingud on keelatud. "
+"Palun salvesta koopia ja ava see uuesti dokumendi muutmiseks."
+
+#: part/part.cpp:1749
+#, kde-format
+msgid ""
+"This document wants to be shown full screen.\n"
+"Leave normal mode and enter presentation mode?"
+msgstr ""
+"See dokument soovib enda näitamist täisekraanis.\n"
+"Kas lahkuda tavalisest režiimist ja minna esitlusrežiimi?"
+
+#: part/part.cpp:1751
+#, kde-format
+msgid "Request to Change Viewing Mode"
+msgstr "Vaaterežiimi muutmise soov"
+
+#: part/part.cpp:1752
+#, kde-format
+msgid "Enter Presentation Mode"
+msgstr "Mine esitlusrežiimi"
+
+#: part/part.cpp:1753
+#, kde-format
+msgid "Deny Request"
+msgstr "Lükka soov tagasi"
+
+#: part/part.cpp:1843
+#, kde-format
+msgid "Could not open %1. %2"
+msgstr "%1 avamine nurjus. %2"
+
+#: part/part.cpp:1873
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue reloading the file?"
+msgstr ""
+"Leidub salvestamata muudatusi ja faili \"%1\" on muutnud mingi teine "
+"programm. Sinu muudatused lähevad kaotsi, sest faili ei saa enam salvestada. "
+"<br>Kas tõesti jätkata faili taaslaadimist?"
+
+#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#, kde-format
+msgid "File Changed"
+msgstr "Faili on muudetud"
+
+#: part/part.cpp:1875
+#, kde-format
+msgid "Continue Reloading"
+msgstr "Jätka taaslaadimist"
+
+#: part/part.cpp:1876
+#, kde-format
+msgid "Abort Reloading"
+msgstr "Loobu taaslaadimisest"
+
+#: part/part.cpp:1880
+#, kde-format
+msgid ""
+"There are unsaved changes, and the file '%1' has been modified by another "
+"program. Your changes will be lost, because the file can no longer be saved."
+"<br>Do you want to continue closing the file?"
+msgstr ""
+"Leidub salvestamata muudatusi ja faili \"%1\" on muutnud mingi teine "
+"programm. Sinu muudatused lähevad kaotsi, sest faili ei saa enam salvestada. "
+"<br>Kas tõesti jätkata faili sulgemisega?"
+
+#: part/part.cpp:1882
+#, kde-format
+msgid "Continue Closing"
+msgstr "Jätka sulgemisega"
+
+#: part/part.cpp:1883
+#, kde-format
+msgid "Abort Closing"
+msgstr "Loobu sulgemisest"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Do you want to save your changes to \"%1\" or discard them?"
+msgstr "Kas salvestada muudatused failis \"%1\" või unustada need?"
+
+#: part/part.cpp:1890
+#, kde-format
+msgid "Close Document"
+msgstr "Sulge dokument"
+
+#: part/part.cpp:2022
+#, kde-format
+msgid ""
+"This link points to a close document action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"See viit osutab dokumendi sulgemise toimingule, mida ei saa kasutada "
+"põimitud näitajas."
+
+#: part/part.cpp:2028
+#, kde-format
+msgid ""
+"This link points to a quit application action that does not work when using "
+"the embedded viewer."
+msgstr ""
+"See viit osutab rakendusest väljumise toimingule, mida ei saa kasutada "
+"põimitud näitajas."
+
+#: part/part.cpp:2120 part/part.cpp:2138
+#, kde-format
+msgid "Reloading the document..."
+msgstr "Dokumendi taaslaadimine..."
+
+#: part/part.cpp:2295 part/toc.cpp:38
+#, kde-format
+msgid "Contents"
+msgstr "Sisu"
+
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#, kde-format
+msgid "Signatures"
+msgstr "Allkirjad"
+
+#: part/part.cpp:2351
+#, kde-format
+msgid "Go to Page"
+msgstr "Liikumine leheküljele"
+
+#: part/part.cpp:2374
+#, kde-format
+msgid "&Page:"
+msgstr "&Lehekülg:"
+
+#: part/part.cpp:2467
+#, kde-format
+msgid "Enter the new name of the bookmark:"
+msgstr "Järjehoidja uus nimi:"
+
+#: part/part.cpp:2513
+#, kde-format
+msgid "Rename this Bookmark"
+msgstr "Muuda järjehoidja nime"
+
+#: part/part.cpp:2516
+#, kde-format
+msgid "Remove this Bookmark"
+msgstr "Eemalda see järjehoidja"
+
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/signaturepartutils.cpp:87
+#, kde-format
+msgctxt "File type name and pattern"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#, kde-format
+msgid "Save As"
+msgstr "Salvesta kui "
+
+#: part/part.cpp:2627
+#, kde-format
+msgid ""
+"You have chosen to save an Okular Archive without the file name ending with "
+"the '%1' extension. That is not allowed, do you want to choose a new name?"
+msgstr ""
+
+#: part/part.cpp:2628
+#, fuzzy, kde-format
+#| msgid "Line Extensions"
+msgid "Unsupported extension"
+msgstr "Joone laiendid"
+
+#: part/part.cpp:2629
+#, kde-format
+msgctxt "@action:button"
+msgid "Choose New Name"
+msgstr ""
+
+#: part/part.cpp:2661
+#, kde-format
+msgid ""
+"The file '%1' has been modified by another program, which means it can no "
+"longer be saved."
+msgstr ""
+"Faili '%1' on muutnud mingi teine programm, mis tähendab, et seda ei saa "
+"enam salvestada."
+
+#: part/part.cpp:2669
+#, kde-format
+msgid ""
+"The current document is protected with a password.<br />In order to save, "
+"the file needs to be reloaded. You will be asked for the password again and "
+"your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"Aktiivne dokument on parooliga kaitstud.<br />Salvestamiseks tuleb fail "
+"uuesti laadida. Sinu käest küsitakse uuesti parooli ja sinu tagasivõtmiste "
+"ja uuestitegemiste ajalugu läheb kaotsi.<br />Kas jätkata?"
+
+#: part/part.cpp:2670 part/part.cpp:2722
+#, kde-format
+msgid "Save - Warning"
+msgstr "Salvestamine - hoiatus"
+
+#: part/part.cpp:2696
+#, kde-format
+msgid "Could not open the temporary file for saving."
+msgstr "Ajutise faili avamine salvestamiseks nurjus."
+
+#: part/part.cpp:2709
+#, fuzzy, kde-kuit-format
+#| msgid "File could not be saved in '%1'. Try to save it to another location."
+msgctxt "@info"
+msgid ""
+"Could not overwrite <filename>%1</filename> because that file is read-only. "
+"Try saving to another location or changing that file's permissions."
+msgstr ""
+"Faili salvestamine asukohta \"%1\" nurjus. Proovi salvestada mõnda teise "
+"asukohta."
+
+#: part/part.cpp:2721
+#, kde-format
+msgid ""
+"After saving, the current document format requires the file to be reloaded. "
+"Your undo/redo history will be lost.<br />Do you want to continue?"
+msgstr ""
+"Salvestamise järel nõuab aktiivse dokumendi vorming faili taaslaadimist. "
+"Seinu tagasivõtmiste ja uuestitegemiste ajalugu läheb kaotsi.<br />Kas "
+"jätkata?"
+
+#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#, kde-format
+msgid "File could not be saved in '%1'. Try to save it to another location."
+msgstr ""
+"Faili salvestamine asukohta \"%1\" nurjus. Proovi salvestada mõnda teise "
+"asukohta."
+
+#: part/part.cpp:2749
+#, kde-format
+msgid "Filled form contents"
+msgstr "Täidetud vormide sisu"
+
+#: part/part.cpp:2752
+#, kde-format
+msgid "User annotations"
+msgstr "Kasutaja annotatsioonid"
+
+#: part/part.cpp:2757
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them."
+msgstr ""
+"Oled muudatusi salvestamas, kuid praegune failivorming ei toeta järgmiste "
+"elementide salvestamist. Palun kasuta nende säilitamiseks <i>Okulari "
+"dokumendiarhiivi</i> vormingut."
+
+#: part/part.cpp:2761 part/part.cpp:2783
+#, kde-format
+msgid "Warning"
+msgstr "Hoiatus"
+
+#: part/part.cpp:2762 part/part.cpp:2784
+#, kde-format
+msgid "Save as Okular document archive..."
+msgstr "Salvesta Okulari dokumendiarhiivina ..."
+
+#: part/part.cpp:2774
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save the document and "
+"discard these elements."
+msgstr ""
+"Oled muudatusi salvestamas, kuid praegune failivorming ei toeta järgmiste "
+"elementide salvestamist. Palun kasuta nende säilitamiseks <i>Okulari "
+"dokumendiarhiivi</i> vormingut. Klõpsa <i>Jätka</i> dokumendi salvestamiseks "
+"ja nende elementide hülgamiseks."
+
+#: part/part.cpp:2777
+#, kde-format
+msgid ""
+"You are about to save changes, but the current file format does not support "
+"saving the following elements. Please use the <i>Okular document archive</i> "
+"format to preserve them. Click <i>Continue</i> to save, but you will lose "
+"these elements as well as the undo/redo history."
+msgstr ""
+"Oled muudatusi salvestamas, kuid praegune failivorming ei toeta järgmiste "
+"elementide salvestamist. Palun kasuta nende säilitamiseks <i>Okulari "
+"dokumendiarhiivi</i> vormingut. Klõpsa <i>Jätka</i> salvestamiseks, kuid "
+"siis kaotad nii need elemendid kui ka tagasivõtmiste ja uuestitegemiste "
+"ajaloo."
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue"
+msgstr "Jätka"
+
+#: part/part.cpp:2779
+#, kde-format
+msgid "Continue losing changes"
+msgstr "Jätka muudatusi kaotades"
+
+#: part/part.cpp:2807
+#, kde-format
+msgid "File could not be saved in '%1'. %2"
+msgstr "Faili salvestamine asukohta \"%1\" nurjus. %2"
+
+#: part/part.cpp:2846
+#, kde-format
+msgid ""
+"Okular cannot copy %1 to the specified location.\n"
+"\n"
+"The document does not exist anymore."
+msgstr ""
+"Okular ei saa kopeerida dokumenti %1 määratud asukohta.\n"
+"\n"
+"Dokumenti ei ole enam olemas."
+
+#: part/part.cpp:2882
+#, kde-format
+msgid ""
+"File could not be saved in '%1'. Error: '%2'. Try to save it to another "
+"location."
+msgstr ""
+"Faili salvestamine asukohta \"%1\" nurjus. Tõrge: '%2'. Proovi salvestada "
+"mõnda teise asukohta."
+
+#: part/part.cpp:3133
+#, kde-format
+msgid "Expand whole section"
+msgstr "Keri kogu sektsioon lahti"
+
+#: part/part.cpp:3134
+#, kde-format
+msgid "Collapse whole section"
+msgstr "Keri kogu sektsioon kokku"
+
+#: part/part.cpp:3135
+#, kde-format
+msgid "Expand all"
+msgstr "Keri kõik lahti"
+
+#: part/part.cpp:3136
+#, kde-format
+msgid "Collapse all"
+msgstr "Keri kõik kokku"
+
+#: part/part.cpp:3147
+#, fuzzy, kde-format
+#| msgid "Link the &thumbnails with the page"
+msgid "Sync Thumbnail with Page"
+msgstr "Pisipil&tide linkimine leheküljega"
+
+#: part/part.cpp:3152
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Lisa järjehoidja"
+
+#: part/part.cpp:3176
+#, kde-format
+msgid "Tools"
+msgstr "Tööriistad"
+
+#: part/part.cpp:3358
+#, fuzzy, kde-format
+#| msgid "Speak Text"
+msgctxt "@action:inmenu menu that contains actions to control text to speach"
+msgid "Speak"
+msgstr "Loe tekst ette"
+
+#: part/part.cpp:3516
+#, kde-format
+msgctxt "@title:window"
+msgid "Print"
+msgstr "Trükkimine"
+
+#: part/part.cpp:3579
+#, kde-format
+msgid "Printing this document is not allowed."
+msgstr "Seda dokumenti ei ole lubatud trükkida."
+
+#: part/part.cpp:3587
+#, kde-format
+msgid ""
+"Could not print the document. Unknown error. Please report to bugs.kde.org"
+msgstr ""
+"Dokumendi trükkimine nurjus. Tundmatu viga. Palun anna sellest teada "
+"aadressil bugs.kde.org"
+
+#: part/part.cpp:3589
+#, kde-format
+msgid ""
+"Could not print the document. Detailed error is \"%1\". Please report to "
+"bugs.kde.org"
+msgstr ""
+"Dokumendi trükkimine nurjus. Täpne viga on \"%1\". Palun anna sellest teada "
+"aadressil bugs.kde.org"
+
+#: part/part.cpp:3669
+#, kde-format
+msgid "Go to the place you were before"
+msgstr "Liigub eelmisesse asukohta"
+
+#: part/part.cpp:3673
+#, kde-format
+msgid "Go to the place you were after"
+msgstr "Liigub järgmisse asukohta"
+
+#: part/part.cpp:3698
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not create temporary file "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+msgstr ""
+"<qt><strong>Faili viga!</strong> Ei õnnestunud luua ajutist faili "
+"<nobr><strong>%1</strong></nobr>.</qt>"
+
+#: part/part.cpp:3710
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
+"strong></nobr> for uncompression. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>Faili viga!</strong> Faili <nobr><strong>%1</strong></nobr> "
+"avamine lahtipakkimiseks nurjus. Faili ei laaditud.</qt>"
+
+#: part/part.cpp:3714
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if you do not have enough permissions to "
+"read the file. You can check ownership and permissions if you right-click on "
+"the file in the Dolphin file manager, then choose the 'Properties' option, "
+"and select 'Permissions' tab in the opened window.</qt>"
+msgstr ""
+"<qt>See viga juhtub tavaliselt siis, kui sul ei ole õigust faili lugeda. "
+"Faili omanikku ja õigusi saad kontrollida, kui klõpsad failihalduris Dolphin "
+"failile hiire parema nupuga ja valid kontekstimenüüst 'Omadused' ning "
+"avanenud aknas kaardi 'Õigused'.</qt>"
+
+#: part/part.cpp:3736
+#, kde-format
+msgid ""
+"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
+"%1</strong></nobr>. The file will not be loaded.</qt>"
+msgstr ""
+"<qt><strong>Faili viga!</strong> Faili <nobr><strong>%1</strong></nobr> "
+"lahtipakkimine nurjus. Faili ei laaditud.</qt>"
+
+#: part/part.cpp:3740
+#, kde-format
+msgid ""
+"<qt>This error typically occurs if the file is corrupt. If you want to be "
+"sure, try to decompress the file manually using command-line tools.</qt>"
+msgstr ""
+"<qt>See viga juhtub tavaliselt siis, kui fail on vigane. Kui soovid seda "
+"kontrollida, proovi fail lahti pakkida käsureatööriistade abil.</qt>"
+
+#: part/part.cpp:3766
+#, kde-format
+msgid "No Bookmarks"
+msgstr "Järjehoidjaid pole"
+
+#: part/part.cpp:3837
+#, kde-format
+msgid "There was a problem sharing the document: %1"
+msgstr "Dokumendi jagamisel tekkis probleem: %1"
+
+#: part/part.cpp:3837 part/part.cpp:3843
+#, kde-format
+msgid "Share"
+msgstr "Jagamine"
+
+#: part/part.cpp:3841
+#, kde-format
+msgid "Document shared successfully"
+msgstr "Dokumendi jagamine oli edukas"
+
+#: part/part.cpp:3843
+#, kde-format
+msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
+msgstr "Jagatud dokumendi leiab aadressilt <a href=\"%1\">%1</a>"
+
+#. i18n: ectx: Menu (edit)
+#: part/part.rc:19
+#, kde-format
+msgid "&Edit"
+msgstr "&Redigeerimine"
+
+#. i18n: ectx: Menu (view)
+#: part/part.rc:32
+#, kde-format
+msgid "&View"
+msgstr "&Vaade"
+
+#. i18n: ectx: Menu (go)
+#: part/part.rc:53
+#, kde-format
+msgid "&Go"
+msgstr "&Liikumine"
+
+#. i18n: ectx: Menu (tools)
+#: part/part.rc:73
+#, kde-format
+msgid "&Tools"
+msgstr "&Tööriistad"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: part/part.rc:101 shell/shell.rc:24
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Peamine tööriistariba"
+
+#. i18n: ectx: ToolBar (annotationToolBar)
+#: part/part.rc:119
+#, kde-format
+msgid "Annotation Toolbar"
+msgstr "Annotatsioonide tööriistariba"
+
+#. i18n: ectx: ToolBar (quickAnnotationToolBar)
+#: part/part.rc:143
+#, fuzzy, kde-format
+#| msgid "Annotation Toolbar"
+msgid "Quick Annotation Toolbar"
+msgstr "Annotatsioonide tööriistariba"
+
+#: part/preferencesdialog.cpp:41
+#, kde-format
+msgid "General Options"
+msgstr "Üldised valikud"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility"
+msgstr "Hõlbustus"
+
+#: part/preferencesdialog.cpp:42
+#, kde-format
+msgid "Accessibility Reading Aids"
+msgstr "Lugemise hõlbustusvahendid"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance"
+msgstr "Jõudlus"
+
+#: part/preferencesdialog.cpp:43
+#, kde-format
+msgid "Performance Tuning"
+msgstr "Jõudluse häälestamine"
+
+#: part/preferencesdialog.cpp:45
+#, kde-format
+msgid "Configure Viewer"
+msgstr "Näitaja seadistamine"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Presentation"
+msgstr "Esitlus"
+
+#: part/preferencesdialog.cpp:49
+#, kde-format
+msgid "Options for Presentation Mode"
+msgstr "Esitlusrežiimi valikud"
+
+#: part/preferencesdialog.cpp:50
+#, kde-format
+msgid "Annotation Options"
+msgstr "Annoteerimise valikud"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor"
+msgstr "Redaktor"
+
+#: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
+#, kde-format
+msgid "Editor Options"
+msgstr "Redaktori valikud"
+
+#: part/preferencesdialog.cpp:56
+#, kde-format
+msgctxt ""
+"Give the user a hint, that it enabled the option --editor-cmd together with "
+"the current value of the option."
+msgid ""
+"The editor was set by the command line to \n"
+" %1 \n"
+"If you want to use the setting, start okular without the option --editor-cmd"
+msgstr ""
+
+#: part/presentationsearchbar.cpp:77
+#, kde-format
+msgid "Find Next"
+msgstr "Otsi järgmine"
+
+#: part/presentationwidget.cpp:167
+#, kde-format
+msgctxt "[document title/filename] – Presentation"
+msgid "%1 – Presentation"
+msgstr "%1 - esitlus"
+
+#: part/presentationwidget.cpp:221
+#, kde-format
+msgid "Switch Screen"
+msgstr "Vaheta ekraani"
+
+#: part/presentationwidget.cpp:226
+#, kde-format
+msgctxt "%1 is the screen number (0, 1, ...)"
+msgid "Screen %1"
+msgstr "Ekraan %1"
+
+#: part/presentationwidget.cpp:233
+#, kde-format
+msgid "Exit Presentation Mode"
+msgstr "Välju esitlusrežiimist"
+
+#: part/presentationwidget.cpp:367
+#, kde-format
+msgid "Title: %1"
+msgstr "Pealkiri: %1"
+
+#: part/presentationwidget.cpp:372
+#, kde-format
+msgid "Pages: %1"
+msgstr "Lehekülgi: %1"
+
+#: part/presentationwidget.cpp:373
+#, kde-format
+msgid "Click to begin"
+msgstr "Klõpsa alustamiseks"
+
+#: part/presentationwidget.cpp:515
+#, kde-format
+msgctxt "For Presentation"
+msgid "Pause"
+msgstr "Paus"
+
+#: part/presentationwidget.cpp:518
+#, kde-format
+msgctxt "For Presentation"
+msgid "Play"
+msgstr "Esita"
+
+#: part/presentationwidget.cpp:1619
+#, kde-format
+msgid ""
+"There are two ways of exiting presentation mode, you can press either ESC "
+"key or click with the quit button that appears when placing the mouse in the "
+"top-right corner. Of course you can cycle windows (Alt+TAB by default)"
+msgstr ""
+"Esitlusrežiimist saab väljuda kahel viisil: kas vajutades klahvi Esc või "
+"klõpsates väljumisnupupule, mis ilmub nähtavale, kui viid hiire ülemisse "
+"paremasse nurka. Mõistagi saab aknaid läbi kerida (vaikimisi "
+"klahvikombinatsiooniga Alt+TAB)."
+
+#: part/presentationwidget.cpp:1705
+#, kde-format
+msgctxt ""
+"Reason for inhibiting the screensaver activation, when the presentation mode "
+"is active"
+msgid "Giving a presentation"
+msgstr "Esitluse näitamine"
+
+#: part/propertiesdialog.cpp:49
+#, kde-format
+msgid "Unknown File"
+msgstr "Tundmatu fail"
+
+#: part/propertiesdialog.cpp:63
+#, kde-format
+msgid "%1 Properties"
+msgstr "%1 omadused"
+
+#: part/propertiesdialog.cpp:104
+#, kde-format
+msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: part/propertiesdialog.cpp:117
+#, kde-format
+msgid "%1:"
+msgstr "%1:"
+
+#: part/propertiesdialog.cpp:124
+#, kde-format
+msgid "&Fonts"
+msgstr "&Fondid"
+
+#: part/propertiesdialog.cpp:145
+#, kde-format
+msgid "Reading font information..."
+msgstr "Fondiinfo lugemine..."
+
+#: part/propertiesdialog.cpp:158
+#, kde-format
+msgid "&Page Sizes"
+msgstr "&Lehekülgede suurused"
+
+#: part/propertiesdialog.cpp:225
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Extract Font"
+msgstr "&Paki font lahti"
+
+#: part/propertiesdialog.cpp:273
+#, kde-format
+msgid "Type 1"
+msgstr "Type 1"
+
+#: part/propertiesdialog.cpp:276
+#, kde-format
+msgid "Type 1C"
+msgstr "Type 1C"
+
+#: part/propertiesdialog.cpp:279
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "Type 1C (OT)"
+msgstr "Type 1C (OT)"
+
+#: part/propertiesdialog.cpp:282
+#, kde-format
+msgid "Type 3"
+msgstr "Type 3"
+
+#: part/propertiesdialog.cpp:285
+#, kde-format
+msgid "TrueType"
+msgstr "TrueType"
+
+#: part/propertiesdialog.cpp:288
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "TrueType (OT)"
+msgstr "TrueType (OT)"
+
+#: part/propertiesdialog.cpp:291
+#, kde-format
+msgid "CID Type 0"
+msgstr "CID Type 0"
+
+#: part/propertiesdialog.cpp:294
+#, kde-format
+msgid "CID Type 0C"
+msgstr "CID Type 0C"
+
+#: part/propertiesdialog.cpp:297
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID Type 0C (OT)"
+msgstr "CID Type 0C (OT)"
+
+#: part/propertiesdialog.cpp:300
+#, kde-format
+msgid "CID TrueType"
+msgstr "CID TrueType"
+
+#: part/propertiesdialog.cpp:303
+#, kde-format
+msgctxt "OT means OpenType"
+msgid "CID TrueType (OT)"
+msgstr "CID TrueType (OT)"
+
+#: part/propertiesdialog.cpp:306
+#, kde-format
+msgid "TeX PK"
+msgstr "TeX PK"
+
+#: part/propertiesdialog.cpp:309
+#, kde-format
+msgid "TeX virtual"
+msgstr "TeXi virtuaalne"
+
+#: part/propertiesdialog.cpp:312
+#, kde-format
+msgid "TeX Font Metric"
+msgstr "TeXi fondimeetrika"
+
+#: part/propertiesdialog.cpp:315
+#, kde-format
+msgid "TeX FreeType-handled"
+msgstr "TeX FreeType'i käsitluses"
+
+#: part/propertiesdialog.cpp:318
+#, kde-format
+msgctxt "Unknown font type"
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#: part/propertiesdialog.cpp:331
+#, kde-format
+msgid "Embedded (subset)"
+msgstr "Põimitud (alamhulk)"
+
+#: part/propertiesdialog.cpp:334
+#, kde-format
+msgid "Fully embedded"
+msgstr "Täielikult põimitud"
+
+#: part/propertiesdialog.cpp:344
+#, kde-format
+msgid "No"
+msgstr "Ei"
+
+#: part/propertiesdialog.cpp:347
+#, kde-format
+msgid "Yes (subset)"
+msgstr "Jah (alamhulk)"
+
+#: part/propertiesdialog.cpp:350
+#, kde-format
+msgid "Yes"
+msgstr "Jah"
+
+#: part/propertiesdialog.cpp:370
+#, kde-format
+msgctxt "Replacing missing font with another one"
+msgid "%1 (substituting with %2)"
+msgstr "%1 (asenduseks %2)"
+
+#: part/propertiesdialog.cpp:372
+#, kde-format
+msgctxt "font name not available (empty)"
+msgid "[n/a]"
+msgstr "[-]"
+
+#: part/propertiesdialog.cpp:386
+#, kde-format
+msgid "Unknown font"
+msgstr "Tundmatu font"
+
+#: part/propertiesdialog.cpp:392
+#, kde-format
+msgid "Embedded: %1"
+msgstr "Põimitud: %1"
+
+#: part/propertiesdialog.cpp:426
+#, kde-format
+msgid "Name"
+msgstr "Nimi"
+
+#: part/propertiesdialog.cpp:429
+#, kde-format
+msgid "Type"
+msgstr "Tüüp"
+
+#: part/propertiesdialog.cpp:432
+#, kde-format
+msgid "File"
+msgstr "Fail"
+
+#: part/propertiesdialog.cpp:500
+#, kde-format
+msgid "Page"
+msgstr "Lehekülg"
+
+#: part/propertiesdialog.cpp:503
+#, kde-format
+msgid "Size"
+msgstr "Suurus"
+
+#: part/revisionviewer.cpp:41
+#, kde-format
+msgid "Revision Preview"
+msgstr "Versiooni eelvaatlus"
+
+#: part/revisionviewer.cpp:53
+#, kde-format
+msgid "Where do you want to save this revision?"
+msgstr "Kuhu see versioon salvestada?"
+
+#: part/revisionviewer.cpp:56
+#, kde-format
+msgid "Could not save file %1."
+msgstr "Faili %1 salvestamine nurjus."
+
+#: part/revisionviewer.cpp:75
+#, kde-format
+msgid "Could not view revision."
+msgstr "Versiooni näitamine nurjus."
+
+#: part/searchwidget.cpp:38
+#, kde-format
+msgid "Enter at least 3 letters to filter pages"
+msgstr "Kirjuta lehekülgede filtreerimiseks vähemalt 3 tähte"
+
+#: part/searchwidget.cpp:48
+#, kde-format
+msgid "Case Sensitive"
+msgstr "Tõstutundlik"
+
+#: part/searchwidget.cpp:50
+#, kde-format
+msgid "Match Phrase"
+msgstr "Väljendi sobivus"
+
+#: part/searchwidget.cpp:51
+#, kde-format
+msgid "Match All Words"
+msgstr "Kõigi sõnade sobivus"
+
+#: part/searchwidget.cpp:52
+#, kde-format
+msgid "Match Any Word"
+msgstr "Suvalise sõna sobivus"
+
+#: part/searchwidget.cpp:71
+#, kde-format
+msgid "Filter Options"
+msgstr "Filtri valikud"
+
+#: part/side_reviews.cpp:65
+#, kde-format
+msgid ""
+"<div align=center><h3>No annotations</h3>To create new annotations press F6 "
+"or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
+msgstr ""
+"<div align=center><h3>Annotatsioonid puuduvad</h3>Uue annotatsiooni "
+"loomiseks vajuta F6 või vali menüükäsk <i>Tööriistad -&gt; Annotatsioonid</"
+"i>.</div>"
+
+#: part/side_reviews.cpp:137
+#, kde-format
+msgid "Group by Page"
+msgstr "Rühmitamine lehekülgede kaupa"
+
+#: part/side_reviews.cpp:142
+#, kde-format
+msgid "Group by Author"
+msgstr "Rühmitamine autorite kaupa"
+
+#: part/side_reviews.cpp:150
+#, kde-format
+msgid "Show annotations for current page only"
+msgstr "Ainult aktiivse lehekülje annotatsioonide näitamine"
+
+#: part/side_reviews.cpp:160
+#, kde-format
+msgid "Expand all elements"
+msgstr "Keri kõik elemendid lahti"
+
+#: part/side_reviews.cpp:162
+#, kde-format
+msgid "Collapse all elements"
+msgstr "Keri kõik elemendid kokku"
+
+#: part/signaturepanel.cpp:101
+#, kde-format
+msgid "Properties"
+msgstr "Omadused"
+
+#: part/signaturepartutils.cpp:46
+#, kde-format
+msgid "Select certificate to sign with"
+msgstr ""
+
+#: part/signaturepartutils.cpp:46
+#, fuzzy, kde-format
+#| msgid "Certificate Data:"
+msgid "Certificates:"
+msgstr "Sertifikaadi andmed:"
+
+#: part/signaturepartutils.cpp:59
+#, kde-format
+msgid "Enter password (if any) to unlock certificate: %1"
+msgstr ""
+
+#: part/signaturepartutils.cpp:61
+#, fuzzy, kde-format
+#| msgid "Certificate has Expired."
+msgid "Enter certificate password"
+msgstr "Sertifikaat on aegunud."
+
+#: part/signaturepartutils.cpp:71
+#, fuzzy, kde-format
+#| msgid "Document Password"
+msgid "Enter document password"
+msgstr "Dokumendi parool"
+
+#: part/signaturepartutils.cpp:93
+#, kde-format
+msgctxt ""
+"Used when suggesting a new name for a digitally signed file. %1 is the old "
+"file name and %2 it's extension"
+msgid "%1_signed.%2"
+msgstr ""
+
+#: part/signaturepartutils.cpp:95
+#, kde-format
+msgid "Save Signed File As"
+msgstr ""
+
+#: part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Pole teada"
+
+#: part/signaturepropertiesdialog.cpp:49
+#, kde-format
+msgid "Validity Status"
+msgstr "Kehtivuse olek"
+
+#: part/signaturepropertiesdialog.cpp:52
+#, kde-format
+msgid "Signature Validity:"
+msgstr "Allkirja kehtivus:"
+
+#: part/signaturepropertiesdialog.cpp:53
+#, kde-format
+msgid "Document Modifications:"
+msgstr "Dokumendi muudatused:"
+
+#: part/signaturepropertiesdialog.cpp:56
+#, kde-format
+msgid "Additional Information"
+msgstr "Lisateave"
+
+#: part/signaturepropertiesdialog.cpp:59
+#, kde-format
+msgid "Signed By:"
+msgstr "Allkirjastaja:"
+
+#: part/signaturepropertiesdialog.cpp:60
+#, kde-format
+msgid "Signing Time:"
+msgstr "Allkirjastamisaeg:"
+
+#: part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "Põhjus:"
+
+#: part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "Asukoht:"
+
+#: part/signaturepropertiesdialog.cpp:74
+#, kde-format
+msgid "Document Version"
+msgstr "Dokumendi versioon"
+
+#: part/signaturepropertiesdialog.cpp:77
+#, kde-format
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Dokumendi versioon %1 / %2"
+
+#: part/signaturepropertiesdialog.cpp:79
+#, kde-format
+msgid "View Signed Version..."
+msgstr "Vaata allkirjastatud versiooni ..."
+
+#: part/signaturepropertiesdialog.cpp:86
+#, kde-format
+msgid "View Certificate..."
+msgstr "Vaata sertifikaati ..."
+
+#: part/thumbnaillist.cpp:1029
+#, kde-format
+msgid "Show bookmarked pages only"
+msgstr "Ainult järjehoidjates olevate lehekülgede näitamine"
+
+#: part/videowidget.cpp:139
+#, kde-format
+msgctxt "start the movie playback"
+msgid "Play"
+msgstr "Esita"
+
+#: part/videowidget.cpp:142
+#, kde-format
+msgctxt "pause the movie playback"
+msgid "Pause"
+msgstr "Paus"
+
+#: part/videowidget.cpp:248
+#, kde-format
+msgctxt "stop the movie playback"
+msgid "Stop"
+msgstr "Peata"
+
+#: part/widgetconfigurationtoolsbase.cpp:28
+#, kde-format
+msgid "&Add..."
+msgstr "Lis&a..."
+
+#: part/widgetconfigurationtoolsbase.cpp:31
+#, kde-format
+msgid "&Edit..."
+msgstr "&Muuda..."
+
+#: part/widgetconfigurationtoolsbase.cpp:35
+#, kde-format
+msgid "&Remove"
+msgstr "&Eemalda"
+
+#: part/widgetconfigurationtoolsbase.cpp:39
+#, kde-format
+msgid "Move &Up"
+msgstr "Liiguta ü&les"
+
+#: part/widgetconfigurationtoolsbase.cpp:43
+#, kde-format
+msgid "Move &Down"
+msgstr "Liiguta &alla"
+
+#: part/widgetdrawingtools.cpp:105
+#, kde-format
+msgid "Default Drawing Tool #%1"
+msgstr "Vaikimisi joonistamistööriist nr %1"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "There's already a tool with that name. Using a default one"
+msgstr "Selle nimega tööriist on juba olemas. Kasutatakse vaikevarianti"
+
+#: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
+#, kde-format
+msgid "Duplicated Name"
+msgstr "Topeltnimi"
+
+#: shell/main.cpp:68
+#, kde-format
+msgid "Page of the document to be shown"
+msgstr "Näidatav dokumendi lehekülg"
+
+#: shell/main.cpp:69
+#, kde-format
+msgid "Start the document in presentation mode"
+msgstr "Dokumendi avamine esitlusrežiimis"
+
+#: shell/main.cpp:70
+#, kde-format
+msgid "Start with print dialog"
+msgstr "Käivitamine trükkimisdialoogiga"
+
+#: shell/main.cpp:71
+#, kde-format
+msgid "Start with print dialog and exit after printing"
+msgstr "Käivitamine trükkimisdialoogiga ja väljumine pärast trükkimist"
+
+#: shell/main.cpp:72
+#, kde-format
+msgid "\"Unique instance\" control"
+msgstr "\"Unikaalse isendi\" kontroll"
+
+#: shell/main.cpp:73
+#, kde-format
+msgid "Not raise window"
+msgstr "Akent esile ei tooda"
+
+#: shell/main.cpp:74
+#, kde-format
+msgid "Find a string on the text"
+msgstr "Stringi leidmine tekstis"
+
+#: shell/main.cpp:75
+#, kde-format
+msgid "sets the external editor command"
+msgstr ""
+
+#: shell/main.cpp:76
+#, kde-format
+msgid "Documents to open. Specify '-' to read from stdin."
+msgstr "Avatavad dokumendid. '-' korral loetakse standardsisendist."
+
+#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#, kde-format
+msgid ""
+"You cannot set the editor command in an already running okular instance. "
+"Please disable the tabs and try again. Please note, that unique is also not "
+"supported when setting the editor command at the commandline.\n"
+msgstr ""
+
+#: shell/okular_main.cpp:150
+#, kde-format
+msgid "Error: Can't open more than one document with the --unique switch"
+msgstr "Tõrge: võtit --unique kasutades ei saa avada üle ühe dokumendi korraga"
+
+#: shell/okular_main.cpp:156
+#, kde-format
+msgid "Error: Can't open more than one document with the --presentation switch"
+msgstr ""
+"Tõrge: võtit --presentation kasutades ei saa avada üle ühe dokumendi korraga"
+
+#: shell/okular_main.cpp:162
+#, kde-format
+msgid "Error: Can't open more than one document with the --print switch"
+msgstr "Tõrge: võtit --print kasutades ei saa avada üle ühe dokumendi korraga"
+
+#: shell/okular_main.cpp:168
+#, kde-format
+msgid "Error: Can't open more than one document with the --page switch"
+msgstr "Tõrge: võtit --page kasutades ei saa avada üle ühe dokumendi korraga"
+
+#: shell/okular_main.cpp:174
+#, kde-format
+msgid "Error: Can't open more than one document with the --find switch"
+msgstr "Tõrge: võtit --find kasutades ei saa avada üle ühe dokumendi korraga"
+
+#: shell/shell.cpp:91
+#, kde-format
+msgid "Unable to find the Okular component: %1"
+msgstr "Okulari komponendi leidmine nurjus: %1"
+
+#: shell/shell.cpp:146
+#, kde-format
+msgid ""
+"There is already a unique Okular instance running. This instance won't be "
+"the unique one."
+msgstr ""
+"Okulari unikaalne isend juba töötab. Käesolev isend ei oleks unikaalne."
+
+#: shell/shell.cpp:169
+#, kde-format
+msgid "Unable to find the Okular component."
+msgstr "Okulari komponendi leidmine nurjus."
+
+#: shell/shell.cpp:399
+#, kde-format
+msgid ""
+"Click to open a file\n"
+"Click and hold to open a recent file"
+msgstr ""
+"Klõpsa faili avamiseks\n"
+"Klõpsa ja hoia nuppu all viimati kasutatud faili avamiseks"
+
+#: shell/shell.cpp:400
+#, kde-format
+msgid ""
+"<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
+msgstr ""
+"<b>Klõpsa</b> faili avamiseks või <b>klõpsa ja hoia nuppu all</b> viimati "
+"kasutatud faili avamiseks"
+
+#: shell/shell.cpp:413
+#, kde-format
+msgid "Next Tab"
+msgstr "Järgmine kaart"
+
+#: shell/shell.cpp:419
+#, kde-format
+msgid "Previous Tab"
+msgstr "Eelmine kaart"
+
+#: shell/shell.cpp:425
+#, kde-format
+msgid "Undo close tab"
+msgstr "Võta kaardi sulgemine tagasi"
+
+#: shell/shell.cpp:532
+#, kde-format
+msgid "All files (*)"
+msgstr "Kõik failid (*)"
+
+#: shell/shell.cpp:533
+#, kde-format
+msgid "All supported files (%1)"
+msgstr "Kõik toetatud failid (%1)"
+
+#: shell/shell.cpp:537
+#, kde-format
+msgid "Open Document"
+msgstr "Ava dokument"
+
+#: shell/shell.cpp:641
+#, kde-format
+msgid "Confirm Close"
+msgstr "Sulgemise kinnitus"
+
+#: shell/shell.cpp:645
+#, kde-format
+msgid "Close Tabs"
+msgstr "Sulge kaardid"
+
+#: shell/shell.cpp:652
+#, kde-format
+msgid "You are about to close %1 tabs. Are you sure you want to continue?"
+msgstr "Kavatsed sulgeda %1 kaarti. Kas tõesti jätkata?"
+
+#: shell/shell.cpp:654
+#, kde-format
+msgid "Warn me when I attempt to close multiple tabs"
+msgstr "Hoiatus, kui ma proovin sulgeda palju aknaid"
+
+#: shell/welcomescreen.cpp:65
+#, fuzzy, kde-format
+#| msgid "Copy Text"
+msgid "&Copy Path"
+msgstr "Kopeeri tekst"
+
+#: shell/welcomescreen.cpp:78
+#, fuzzy, kde-format
+#| msgid "Open Con&taining Folder"
+msgid "&Open Containing Folder"
+msgstr "Ava s&isaldav kataloog"
+
+#: shell/welcomescreen.cpp:93
+#, kde-format
+msgctxt "recent items context menu"
+msgid "&Forget This Item"
+msgstr ""
+
+#: shell/welcomescreen.cpp:143
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "No recent documents"
+msgstr "Ainult aktiivne dokument"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: shell/welcomescreen.ui:153
+#, kde-format
+msgid "Welcome to Okular"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: shell/welcomescreen.ui:232
+#, fuzzy, kde-format
+#| msgid "Open Document"
+msgctxt "on welcome screen"
+msgid "Open Document..."
+msgstr "Ava dokument"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: shell/welcomescreen.ui:377
+#, fuzzy, kde-format
+#| msgid "Current document only"
+msgctxt "on welcome screen"
+msgid "Recent documents"
+msgstr "Ainult aktiivne dokument"
+
+#. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
+#: shell/welcomescreen.ui:387
+#, kde-format
+msgctxt "on welcome screen (recent document list)"
+msgid "Forget All"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
+#: shell/welcomescreen.ui:455
+#, kde-format
+msgid "Hide welcome screen"
+msgstr ""
+
+#~ msgid "Remove Bookmarks"
+#~ msgstr "Eemalda järjehoidjad"
+
+#, fuzzy
+#~| msgid "&Annotations"
+#~ msgctxt "verb"
+#~ msgid "&Annotate"
+#~ msgstr "&Annotatsioonid"
+
+#, fuzzy
+#~| msgid "Highlight"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Highlight"
+#~ msgstr "Esiletõst"
+
+#, fuzzy
+#~| msgid "Underline"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Underline"
+#~ msgstr "Allajoonimine"
+
+#, fuzzy
+#~| msgid "Squiggle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Squiggle"
+#~ msgstr "Laineline joon"
+
+#, fuzzy
+#~| msgid "Strike Out"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Strike Out"
+#~ msgstr "Läbikriipsutus"
+
+#, fuzzy
+#~| msgid "Insert"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Text"
+#~ msgstr "Lisand"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Inline Note"
+#~ msgstr "Reasisene märkus"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Insert Popup Note"
+#~ msgstr "Hüpikmärkus"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a freehand line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Freehand Line"
+#~ msgstr "Vabakäejoone tõmbamine"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a straight line"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Straight line"
+#~ msgstr "Sirgjoone tõmbamine"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Arrow"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Arrow"
+#~ msgstr "Nool"
+
+#, fuzzy
+#~| msgctxt "Annotation tool"
+#~| msgid "Draw a rectangle"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Rectangle"
+#~ msgstr "Ristküliku joonistamine"
+
+#, fuzzy
+#~| msgid "Cyan Ellipse"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Ellipse"
+#~ msgstr "Tsüaanvärvi ellips"
+
+#, fuzzy
+#~| msgid "Polygon"
+#~ msgctxt "@action:intoolbar Annotation tool, verb"
+#~ msgid "Draw Polygon"
+#~ msgstr "Murdjoon"
+
+#, fuzzy
+#~| msgid "Highlighter"
+#~ msgid "Highlight in Yellow"
+#~ msgstr "Esiletõstmine"
+
+#, fuzzy
+#~| msgid "Highlight with Comment"
+#~ msgid "Highlight in Green"
+#~ msgstr "Esiletõstmine kommentaariga"
+
+#, fuzzy
+#~| msgid "Inline Note"
+#~ msgid "Insert Inline Note"
+#~ msgstr "Reasisene märkus"
+
+#, fuzzy
+#~| msgctxt "@action:intoolbar Annotation tool"
+#~| msgid "Popup Note"
+#~ msgid "Insert Popup Note"
+#~ msgstr "Hüpikmärkus"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "&Select Area"
+#~ msgstr "Vali tekst"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select &Text"
+#~ msgstr "Vali tekst"
+
+#, fuzzy
+#~| msgid "Select text"
+#~ msgctxt "verb"
+#~ msgid "Select T&able"
+#~ msgstr "Vali tekst"
+
+#, fuzzy
+#~| msgid "&Magnifier"
+#~ msgctxt "verb"
+#~ msgid "&Magnify"
+#~ msgstr "&Suurendaja"
+
+# Originaal on ajuvaba. Tegemist on annotatsioonide autori nime küsiva dialoogi tiitliga - näidatakse annotatsiooni lisamisel juhul, kui Okulari seadistuses on vaikimisi määratud nimi ära kustutatud.
+#~ msgid "Bookmark annotation"
+#~ msgstr "Annotatsioonide autori nimi"
+
+#~ msgid "&Toggle Change Colors"
+#~ msgstr "Värvide &muutmise lülitamine"
+
+#, fuzzy
+#~| msgid "Enable transitions"
+#~ msgctxt "@option:check Config dialog, presentation page, transitions"
+#~ msgid "Enable transitions"
+#~ msgstr "Üleminekute lubamine"
+
+#, fuzzy
+#~| msgid "Advance every:"
+#~ msgctxt "@label:spinbox Config dialog, presentation page"
+#~ msgid "Advance every:"
+#~ msgstr "Edasiliikumise intervall:"
+
+#, fuzzy
+#~| msgid "Use custom background color"
+#~ msgctxt "@label:listbox Config dialog, general page"
+#~ msgid "Custom background color:"
+#~ msgstr "Kohandatud taustavärvi kasutamine"
+
+#~ msgid "Draw border around &Images"
+#~ msgstr "&Piltide ümber joonistatakse piirded"
+
+#~ msgid "Speech"
+#~ msgstr "Kõne"
+
+#~ msgid "Engine"
+#~ msgstr "Mootor"
+
+#~ msgid "Identity"
+#~ msgstr "Identiteet"
+
+#~ msgid "Au&thor:"
+#~ msgstr "&Autor:"
+
+#~ msgid "View Options"
+#~ msgstr "Vaatevalikud"
+
+#~ msgctxt "@info:whatsthis"
+#~ msgid ""
+#~ "Defines the default zoom mode for files which were never opened before.\n"
+#~ "For files which were opened before the previous zoom is applied."
+#~ msgstr ""
+#~ "Määrab vaikesuurenduse varem avamata failidele.\n"
+#~ "Varem avatud failide korral kasutatakse viimast suurendustaset."
+
+#~ msgid "Navigation"
+#~ msgstr "Liikumine"
+
+#~ msgid "Placement"
+#~ msgstr "Asetus"
+
+#~ msgid "Screen:"
+#~ msgstr "Ekraan:"
+
+#~ msgid "Drawing Tool Configuration"
+#~ msgstr "Joonistamistööriista seadistamine"
+
+#~ msgid "&Get Books From Internet..."
+#~ msgstr "&Hangi raamatuid internetist..."
+
+#~ msgid "Reviews"
+#~ msgstr "Annotatsioonid"
+
+#, fuzzy
+#~| msgid "V%1"
+#~ msgctxt "@item:inlistbox Color name"
+#~ msgid "%1"
+#~ msgstr "V%1"
+
+#~ msgid "Hide Forms"
+#~ msgstr "Peida vormid"
+
+#~ msgid "&Review"
+#~ msgstr "&Annotatsioon"
+
+#~ msgid "Annotations author"
+#~ msgstr "Annotatsiooni autor"
+
+#~ msgid "Please insert your name or initials:"
+#~ msgstr "Palun sisesta oma nimi või initsiaalid:"
+
+#~ msgid "Show &Navigation Panel"
+#~ msgstr "Liikumispa&neeli näitamine"
+
+#~ msgid "Show Text"
+#~ msgstr "Näita teksti"
+
+#~ msgid "Small Icons"
+#~ msgstr "Väikesed ikoonid"
+
+#~ msgid "Large Icons"
+#~ msgstr "Suured ikoonid"
+
+#~ msgid ""
+#~ "Click to use the current selection tool\n"
+#~ "Click on the arrow to choose another selection tool"
+#~ msgstr ""
+#~ "Klõpsa aktiivse valikutööriista kasutamiseks\n"
+#~ "Klõpsa noolele mõne teise valikutööriista valimiseks"
+
+#~ msgid "Created: %1"
+#~ msgstr "Loodud: %1"
+
+#~ msgid "Style"
+#~ msgstr "Stiil"
+
+#~ msgid "&Size:"
+#~ msgstr "&Suurus:"
+
+#~ msgid "Inner color:"
+#~ msgstr "Sisevärv:"
+
+#~ msgid "Name: %1"
+#~ msgstr "Nimi: %1"
+
+#~ msgid "Size: %1"
+#~ msgstr "Suurus: %1"
+
+#~ msgid "&Browse Tool"
+#~ msgstr "S&irvimistööriist"
+
+#~ msgid "&Zoom Tool"
+#~ msgstr "&Suurendustööriist"
+
+#~ msgctxt "Zoom Tool"
+#~ msgid "Zoom"
+#~ msgstr "Suurendus"
+
+#~ msgid "&Selection Tool"
+#~ msgstr "&Valikutööriist"
+
+#~ msgctxt "Select Tool"
+#~ msgid "Selection"
+#~ msgstr "Valik"
+
+#~ msgid "&Text Selection Tool"
+#~ msgstr "&Tekstivaliku tööriist"
+
+#~ msgid "T&able Selection Tool"
+#~ msgstr "T&abelivaliku tööriist"
+
+#, fuzzy
+#~| msgctxt "Symbol for caret annotations"
+#~| msgid "None"
+#~ msgid " None"
+#~ msgstr "Puudub"
+
+#~ msgid ""
+#~ "The document requested to be launched in presentation mode.\n"
+#~ "Do you want to allow it?"
+#~ msgstr ""
+#~ "Dokument käivitatakse esitlusrežiimis, sest fail nõuab seda.\n"
+#~ "Kas lubada seda?"
+
+#~ msgid "Presentation Mode"
+#~ msgstr "Esitlusrežiim"
+
+#~ msgid "Allow"
+#~ msgstr "Luba"
+
+#~ msgid "Allow the presentation mode"
+#~ msgstr "Esitlusrežiimi lubamine"
+
+#~ msgid "Do Not Allow"
+#~ msgstr "Ära luba"
+
+#~ msgid "Do not allow the presentation mode"
+#~ msgstr "Esitlusrežiimi ei lubata"
+
+#~ msgid ""
+#~ "Your annotation changes will not be saved automatically. Use File -> Save "
+#~ "As...\n"
+#~ "or your changes will be lost once the document is closed"
+#~ msgstr ""
+#~ "Annotatsioonide muudatusi ei salvestata automaatselt.\n"
+#~ "Vali Fail -> Salvesta kui... või muudatused lähevad dokumendi sulgemisel "
+#~ "kaotsi"
+
+#~ msgid ""
+#~ "Your annotations are saved internally by Okular.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "Okular salvestab sinu annotatsioonid sisemiselt.\n"
+#~ "Annoteeritud dokumendi võib eksportida menüükäsuga Fail -> Eksport -> "
+#~ "Dokumendiarhiiv"
+
+#~ msgid "Save &Copy As..."
+#~ msgstr "Salvesta &koopia..."
+
+#~ msgid ""
+#~ "Your annotations will not be exported.\n"
+#~ "You can export the annotated document using File -> Export As -> Document "
+#~ "Archive"
+#~ msgstr ""
+#~ "Sinu annotatsioone ei ekspordita.\n"
+#~ "Annoteeritud dokumendi võib eksportida menüükäsuga Fail -> Eksport -> "
+#~ "Dokumendiarhiiv"
+
+#~ msgid ""
+#~ "End of document reached.\n"
+#~ "Continue from the beginning?"
+#~ msgstr ""
+#~ "Jõuti dokumendi lõppu.\n"
+#~ "Kas jätkata algusest?"
+
+#~ msgid ""
+#~ "Beginning of document reached.\n"
+#~ "Continue from the bottom?"
+#~ msgstr ""
+#~ "Jõuti dokumendi algusesse.\n"
+#~ "Kas jätkata lõpust?"
+
+#~ msgid "Current maintainer"
+#~ msgstr "Praegune hooldaja"
+
+#~ msgid " sec."
+#~ msgstr " sek."
+
+#~ msgid "Pencil color:"
+#~ msgstr "Pliiatsi värv:"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A0"
+#~ msgstr "rõhtpaigutusega DIN/ISO A0"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A0"
+#~ msgstr "püstpaigutusega DIN/ISO A0"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A1"
+#~ msgstr "rõhtpaigutusega DIN/ISO A1"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A1"
+#~ msgstr "püstpaigutusega DIN/ISO A1"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A2"
+#~ msgstr "rõhtpaigutusega DIN/ISO A2"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A2"
+#~ msgstr "püstpaigutusega DIN/ISO A2"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A3"
+#~ msgstr "rõhtpaigutusega DIN/ISO A3"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A3"
+#~ msgstr "püstpaigutusega DIN/ISO A3"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A4"
+#~ msgstr "rõhtpaigutusega DIN/ISO A4"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A4"
+#~ msgstr "püstpaigutusega DIN/ISO A4"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A5"
+#~ msgstr "rõhtpaigutusega DIN/ISO A5"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A5"
+#~ msgstr "püstpaigutusega DIN/ISO A5"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A6"
+#~ msgstr "rõhtpaigutusega DIN/ISO A6"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A6"
+#~ msgstr "püstpaigutusega DIN/ISO A6"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A7"
+#~ msgstr "rõhtpaigutusega DIN/ISO A7"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A7"
+#~ msgstr "püstpaigutusega DIN/ISO A7"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A8"
+#~ msgstr "rõhtpaigutusega DIN/ISO A8"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A8"
+#~ msgstr "püstpaigutusega DIN/ISO A8"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO A9"
+#~ msgstr "rõhtpaigutusega DIN/ISO A9"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO A9"
+#~ msgstr "püstpaigutusega DIN/ISO A9"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B0"
+#~ msgstr "rõhtpaigutusega DIN/ISO B0"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B0"
+#~ msgstr "püstpaigutusega DIN/ISO B0"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B1"
+#~ msgstr "rõhtpaigutusega DIN/ISO B1"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B1"
+#~ msgstr "püstpaigutusega DIN/ISO B1"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B2"
+#~ msgstr "rõhtpaigutusega DIN/ISO B2"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B2"
+#~ msgstr "püstpaigutusega DIN/ISO B2"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B3"
+#~ msgstr "rõhtpaigutusega DIN/ISO B3"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B3"
+#~ msgstr "püstpaigutusega DIN/ISO B3"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B4"
+#~ msgstr "rõhtpaigutusega DIN/ISO B4"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B4"
+#~ msgstr "püstpaigutusega DIN/ISO B4"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B5"
+#~ msgstr "rõhtpaigutusega DIN/ISO B5"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B5"
+#~ msgstr "püstpaigutusega DIN/ISO B5"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B6"
+#~ msgstr "rõhtpaigutusega DIN/ISO B6"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B6"
+#~ msgstr "püstpaigutusega DIN/ISO B6"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B7"
+#~ msgstr "rõhtpaigutusega DIN/ISO B7"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B7"
+#~ msgstr "püstpaigutusega DIN/ISO B7"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B8"
+#~ msgstr "rõhtpaigutusega DIN/ISO B8"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B8"
+#~ msgstr "püstpaigutusega DIN/ISO B8"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B9"
+#~ msgstr "rõhtpaigutusega DIN/ISO B9"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B9"
+#~ msgstr "püstpaigutusega DIN/ISO B9"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DIN/ISO B10"
+#~ msgstr "rõhtpaigutusega DIN/ISO B10"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DIN/ISO B10"
+#~ msgstr "püstpaigutusega DIN/ISO B10"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape letter"
+#~ msgstr "rõhtpaigutusega Letter"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait letter"
+#~ msgstr "püstpaigutusega Letter"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape legal"
+#~ msgstr "rõhtpaigutusega Legal"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait legal"
+#~ msgstr "püstpaigutusega Legal"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape executive"
+#~ msgstr "rõhtpaigutusega Executive"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait executive"
+#~ msgstr "püstpaigutusega Executive"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape Comm10E"
+#~ msgstr "rõhtpaigutusega Comm10E"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait Comm10E"
+#~ msgstr "püstpaigutusega Comm10E"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape DLE"
+#~ msgstr "rõhtpaigutusega DLE"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait DLE"
+#~ msgstr "püstpaigutusega DLE"
+
+#~ msgctxt "paper size"
+#~ msgid "landscape folio"
+#~ msgstr "rõhtpaigutusega Folio"
+
+#~ msgctxt "paper size"
+#~ msgid "portrait folio"
+#~ msgstr "püstpaigutusega Folio"
+
+#~ msgctxt "paper size"
+#~ msgid "ledger"
+#~ msgstr "Ledger"
+
+#~ msgctxt "paper size"
+#~ msgid "tabloid"
+#~ msgstr "Tabloid"
+
+#~ msgctxt "paper size"
+#~ msgid "unknown landscape paper size"
+#~ msgstr "tundmatu rõhtpaigutusega paberisuurus"
+
+#~ msgctxt "paper size"
+#~ msgid "unknown portrait paper size"
+#~ msgstr "tundmatu püstpaigutusega paberisuurus"
+
+#~ msgid "Toggle Drawing Mode"
+#~ msgstr "Joonistamisrežiimi lülitamine"
+
+#~ msgid "Starting Jovie Text-to-Speech service Failed: %1"
+#~ msgstr "Jovie teksti ettelugemise teenuse käivitamine nurjus: %1"
+
+#~ msgid "Search Columns"
+#~ msgstr "Otsinguveerud"
+
+#~ msgid "All Visible Columns"
+#~ msgstr "Kõik nähtavad veerud"
+
+#~ msgid "No document opened."
+#~ msgstr "Ühtki dokumenti pole avatud."
+
+#~ msgid "Can't open more than one document in the unique Okular instance."
+#~ msgstr ""
+#~ "Okulari unikaalse isendi kasutamisel ei saa avada üle ühe dokumendi "
+#~ "korraga."
+
+#~ msgid "No matches found for '%1'."
+#~ msgstr "'%1' sobivusi ei leitud."
+
+#~ msgid "Search in progress..."
+#~ msgstr "Käib otsimine..."
+
+#~ msgid "Searching for %1"
+#~ msgstr "%1 otsimine"
+
+#~ msgid "Identity Settings"
+#~ msgstr "Identiteediseadistused"
+
+#~ msgid "Highlight Properties"
+#~ msgstr "Esiletõstmise omadused"
+
+#~ msgid "Ink Properties"
+#~ msgstr "Tindi omadused"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Text Annotation"
+#~ msgstr "Tekstiannotatsioon"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Green Ink"
+#~ msgstr "Roheline tint"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Yellow Highlight"
+#~ msgstr "Kollane esiletõstmine"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Straight Yellow Line"
+#~ msgstr "Kollane sirgjoon"
+
+#~ msgid "Black Underlining"
+#~ msgstr "Must allajoonimine"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Underline the text with a black line"
+#~ msgstr "Jooni tekst alla musta joonega"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "A cyan ellipse"
+#~ msgstr "Tsüaanvärvi ellips"
+
+#~ msgid "Ink"
+#~ msgstr "tint"
+
+#~ msgid "Enable &background generation"
+#~ msgstr "Tausta &genereerimise lubamine"
+
+#, fuzzy
+#~| msgid "Hide Forms"
+#~ msgid "Reset Forms"
+#~ msgstr "Peida vormid"
+
+#~ msgid "Moves to the first page of the document"
+#~ msgstr "Liigub dokumendi esimesele leheküljele"
+
+#~ msgid "Moves to the last page of the document"
+#~ msgstr "Liigub dokumendi viimasele leheküljele"
+
+#~ msgid "You must set this name:"
+#~ msgstr "Vajalik on määrata järgmine nimi:"
+
+#~ msgid "Toggles between File Path and Title"
+#~ msgstr "Faili asukoha ja nime lülitamine"
+
+#~ msgctxt "%1 is \"Title\""
+#~ msgid "%1:"
+#~ msgstr "%1:"
+
+#~ msgctxt "%1 is \"File Path\""
+#~ msgid "%1:"
+#~ msgstr "%1:"
+
+#~ msgctxt "@action:button"
+#~ msgid "&Overwrite"
+#~ msgstr "&Kirjuta üle"
+
+#~ msgid "Pages:"
+#~ msgstr "Lehekülgi:"
+
+#~ msgid "Activate to ignore file-specific page-durations"
+#~ msgstr "Sisselülitamisel eiratakse failipõhiseid lehekülje kestusi"
+
+#~ msgid "s"
+#~ msgstr "s"
+
+#~ msgctxt "Annotation tool"
+#~ msgid "Pink Ink"
+#~ msgstr "Roosa tint"
+
+#, fuzzy
+#~| msgid "Highlight"
+#~ msgid "Pink Highlighter"
+#~ msgstr "Esiletõst"
+
+#~ msgid "Could not load the necessary plugin to view the document."
+#~ msgstr "Vajaliku plugina laadimine dokumendi vaatamiseks nurjus."
+
+#~ msgid "Security"
+#~ msgstr "Turvalisus"
+
+#~ msgid "Optimized"
+#~ msgstr "Optimeeritud"
+
+#~ msgid "Unknown Encryption"
+#~ msgstr "Tundmatu krüpto"
+
+#~ msgid "Unknown Optimization"
+#~ msgstr "Tundmatu optimeerimine"
+
+#~ msgid ""
+#~ "The margins you specified change the page aspect ratio. Do you want to "
+#~ "print with the aspect ratio changed or do you want the margins to be "
+#~ "adapted so that the aspect ratio is preserved?"
+#~ msgstr ""
+#~ "Määratud veerised muudavad lehekülje proportsiooni. Kas soovid trükkida "
+#~ "lehekülje muudetud proportsiooniga või kohandada veeriseid, nii et "
+#~ "proportsioon säiliks?"
+
+#~ msgid "Aspect ratio change"
+#~ msgstr "Proportsiooni muutmine"
+
+#~ msgid "Print with specified margins"
+#~ msgstr "Trükkimine määratud veeristega"
+
+#~ msgid "Print adapting margins to keep aspect ratio"
+#~ msgstr "Trükkimine proportsiooni säilitades ja veeriseid kohandades"

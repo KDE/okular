@@ -1,0 +1,66 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2009-05-27 19:58+0300\n"
+"Last-Translator: Viesturs Zariņš <viesturs.zarins@mii.lu.lv>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Viesturs Zariņš"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "viesturs.zarins@mii.lu.lv"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Kļūda atverot Mobipocket dokumentu."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr ""
+"Šī grāmata ir aizsargāta ar DRM un to var atvērt tikai ar tam paradzētu "
+"ierīci."
+
+#: generator_mobi.cpp:25
+#, fuzzy, kde-format
+#| msgid "Mobipocket Backend"
+msgid "Mobipocket"
+msgstr "Mobipocket aizmugure"
+
+#: generator_mobi.cpp:25
+#, fuzzy, kde-format
+#| msgid "Mobipocket Backend"
+msgid "Mobipocket Backend Configuration"
+msgstr "Mobipocket aizmugure"
+
+#~ msgid "Mobipocket Backend"
+#~ msgstr "Mobipocket aizmugure"
+
+#~ msgid "A mobipocket backend"
+#~ msgstr "Mobipocket aizmugure"
+
+#~ msgid "© 2008-2009 Jakub Stachowski"
+#~ msgstr "© 2008-2009 Jakub Stachowski"
+
+#~ msgid "Jakub Stachowski"
+#~ msgstr "Jakub Stachowski"

@@ -1,0 +1,4406 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Dutch "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Het handboek van &okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			&Freek.de.Kruijf;&Ruben.Van.Laerhoven; 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2022-02-19</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; is een universeel &kde; programma om documenten weer te geven, gebaseerd op de &kpdf;-code.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>annotaties</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Inleiding</title>
+		<para
+>&okular; is een universeel &kde; programma om documenten weer te geven, gebaseerd op de code van het &kpdf;-programma. Hoewel gebaseerd op de &kpdf;-code, heeft &okular; enige unieke mogelijkheden zoals een overzichtsmodus, een verbeterde ondersteuning voor het weergeven van verschillende formaten en ondersteuning voor annotatie. </para>
+		<para
+>&okular; ondersteunt heel wat verschillende formaten zoals &PDF;, &PostScript;, Tiff, CHM, DjVU, afbeeldingen (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax en Markdown. Voor alle ondersteunde formaten en hun features zie <ulink url="https://okular.kde.org/formats.php"
+> &okular; Document Format Handlers</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Hoofdvenster van &okular;</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Hoofdvenster van &okular;</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Basishandelingen</title>
+		<sect1 id="opening">
+			<title
+>Bestanden openen</title>
+			<para
+>Selecteer, om een ondersteund bestand te bekijken in &okular;, <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Openen...</guimenuitem
+> </menuchoice
+>, kies dan een ondersteund bestand in het dialoogvenster en klik op <guibutton
+>Openen</guibutton
+>. Nu kunt u uw bestand zien in het hoofdvenster. </para>
+			<important>
+			  <para
+>Het nieuwe document zal geopend worden in een nieuw tabblad als de optie <guilabel
+>Nieuwe bestanden in tabbladen openen</guilabel
+> op de <link linkend="configgeneral"
+>Pagina voor algemene configuratie</link
+> is geactiveerd. </para>
+                          <para
+>U kunt het tabbladen sluiten door erop te klikken met de &MMB;. </para>
+                          <para
+>Het eerder gesloten document in een tabbladen kan opnieuw geopend worden met het menu-item <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Sluiten tabbladen ongedaan maken</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>Indien u vroeger reeds bestanden hebt geopend in &okular;, kunt u deze snel bereiken door ze te selecteren in het menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Recent geopend</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>&okular; is de standaard toepassing van &kde; voor &PDF; en &PostScript; bestanden, die worden gestart wanneer u met de &LMB; op zo'n bestandstype klikt in de bestandsbeheerder. Als u elk bestand wilt openen, waarvan het format door &okular; wordt ondersteund, gebruik dan <menuchoice
+><guimenu
+>Openen met...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> uit het contextmenu in de bestandsbeheerder. </para>
+			<para
+>Nadat u een bestand geopend hebt, wilt u deze waarschijnlijk ook lezen, en er dus ook door willen navigeren. Ga naar de <link linkend="navigating"
+>volgende sectie</link
+> om hier meer over te weten. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Navigeren</title>
+			<para
+>Deze paragraaf beschrijft hoe u door een document kunt navigeren met &okular;.</para>
+			<para
+>Er zijn verschillende manieren om door het document te navigeren. Eén ervan is het gebruiken van de toetsen &Up; en &Down;. U kunt ook de schuifbalk, uw muiswiel of de toetsen &PgUp; en &PgDn; gebruiken. </para>
+			<para
+>U kunt ook <application
+>vim</application
+>-achtige navigatietoetsen gebruiken, namelijk <keycap
+>H</keycap
+> om naar de top van de vorige page te gaan, <keycap
+>L</keycap
+> naar de top van de volgende pagina, <keycap
+>J</keycap
+> één regel omlaag en <keycap
+>K</keycap
+> één regel omhoog. </para>
+			<para
+>Nog een manier is de &LMB; ingedrukt te houden op welke plaats dan ook in het document, en dan de muis te schuiven in de tegengestelde richting waar u naar toe wilt. Deze functie werkt alleen indien het bladergereedschap geactiveerd is; dit kunt u selecteren door te klikken op <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Bladeren</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>Bij het bekijken van een document in de <link linkend="presentationMode"
+>Presentatiemodus</link
+> gebruikt u de pijltjestoetsen &Up; en &Down; om tussen pagina's of dia's te wisselen. Het nummer en de positie van de huidige dia zal getoond worden in de overlay de rechtsboven hoek van het scherm. </para>
+			</note>
+			<para
+>Als u een document met verschillende pagina's wilt lezen gebruik dan de automatische mogelijkheid van doorschuiven van &okular;. Start het automatisch doorschuiven met <keycombo action="simul"
+>&Shift;&Down;</keycombo
+> of <keycombo action="simul"
+>&Shift;&Up;</keycombo
+>. Gebruik daarna deze toetsen om de schuifsnelheid te vergroten of te verkleinen. U kunt automatisch schuiven tijdelijk starten of stoppen door de &Shift;-toets in te drukken; elke andere knop indrukken schakelt deze functie uit. </para>
+			<para
+>Een andere manier om door een document met een aantal pagina's te lopen is om de muisaanwijzer te gebruiken. Sleep de pagina omhoog of omlaag, ga door met slepen zelfs als u de onder of bovenkant van het scherm hebt bereikt en blijf doorgaan. Nadat u de rand van een pagina hebt bereikt, verschijnt de muisaanwijzer weer boven of onderaan het scherm en kunt u gewoon doorgaan met slepen. </para>
+			<para
+>De zijbalk aan de linkerzijde van het scherm geeft nog twee extra mogelijkheden om door een document te navigeren: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Wanneer u op een miniatuur van een pagina klikt, zal die pagina getoond worden in het weergavegebied. </para>
+				</listitem>
+				<listitem>
+					<para
+>Indien het document een inhoudsopgave heeft, kunt u klikken op een item daarin, en dan gaat de weergave automatisch naar de pagina die daaraan gekoppeld is. </para>
+				</listitem>
+				<listitem>
+					<para
+>Als het document lagen heeft, dan kunt u de getoonde lagen kiezen door the items te activeren of te deactiveren in de lijst met <guilabel
+>Lagen</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Als het document bladwijzers heeft, schakel dan de weergave <guilabel
+>Bladwijzers</guilabel
+> in en klik erop om naar de bijbehorende pagina te gaan. Als bladwijzers niet alleen worden getoond voor het huidige document, dan kunt u snel schakelen naar bladwijzers in alle recente geopende bestanden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Als het document annotaties heeft, schakel dan de weergave <guilabel
+>Annotaties</guilabel
+> in en klik op de annotaties of selecteer ze met de toetsen &Up; en &Down; en druk op &Enter; om naar de de bijbehorende pagina te gaan. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Sommige documenten bevatten koppelingen. U kunt deze aanklikken, en dan wordt automatisch de pagina weergegeven waarnaar de koppeling verwijst. Als de koppeling verwijst naar een webpagina of een niet ondersteund documentformaat, zal het standaard &kde; programma opgeroepen worden. Bijvoorbeeld, wanneer u klikt op een koppeling die verwijst naar <quote
+>https://www.kde.nl</quote
+> zal deze webpagina geopend worden in de standaard &kde; internetbrowser. </para>
+			<important>
+			  <para
+>De interne koppelingen van het document werken alleen wanneer <link linkend="menutools"
+>Hulpmiddel Bladeren</link
+> wordt gebruikt. </para>
+			</important>
+			<para
+>Als aanvulling kunt u nog de volgende functionaliteit gebruiken om snel naar specifieke plaatsen te gaan in het document: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>U kunt naar het begin van het document gaan door <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Begin van het document</guimenuitem
+> </menuchoice
+> te gebruiken. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt naar het einde van het document gaan door <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Einde van het document</guimenuitem
+> </menuchoice
+> te gebruiken. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt verder door het document scrollen door de &Space; of de toets &PgDn; te gebruiken. Ga naar de volgende pagina van het document door de werkbalkknop <guibutton
+>Volgende</guibutton
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Volgende pagina</guimenuitem
+> </menuchoice
+> in de menubalk te gebruiken. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt teruggaan in het document door de toets &Backspace; of &PgDn; te gebruiken. Ga naar de vorige pagina van het document door de werkbalkknop <guibutton
+>Vorige</guibutton
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Vorige pagina</guimenuitem
+> </menuchoice
+> in de menubalk te gebruiken. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt teruggaan naar de posities in het document waar u vandaan kwam in een chronologische volgorde. Bekijk &eg; het lezen van de zin <quote
+>Zoals getoond in [15], …</quote
+> en u wilt snel de referentie [15] opzoeken. Dan klikt u erop en &okular; zal naar de lijst met referenties springen. Met <keycombo
+>&Alt;&Shift;&Left;</keycombo
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Terug</guimenuitem
+> </menuchoice
+> in de menubalk zal u terugbrengen naar de exacte positie waar u vandaan kwam. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt verder in het document gaan na het terugspringen zoals bovenstaand beschreven met <keycombo
+>&Alt;&Shift;&Right;</keycombo
+> of <menuchoice
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Voorwaarts</guimenuitem
+> </menuchoice
+> in de menubalk. </para>
+				</listitem>
+				<listitem>
+					<para
+>U kunt naar de volgende overeenkomst gaan bij het zoeken met de toetsen <keycap
+>F3</keycap
+> of &Enter; (wanneer het tekstveld <guilabel
+>Zoeken</guilabel
+> focus heeft) of menu-item <menuchoice
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Volgende zoeken</guimenuitem
+> </menuchoice
+> of terug verplaatsen naar de vorige overeenkomst met de toetsen <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+> of &Enter; (wanneer het tekstveld <guilabel
+>Zoeken</guilabel
+> focus heeft) of menu-item <menuchoice
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Vorige zoeken</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Presentatiemodus</title>
+			<para
+>De presentatiemodus is nog een andere manier om documenten te bekijken in &okular;. Deze kan geactiveerd worden in <menuchoice
+><guimenu
+>Beeld</guimenu
+><guimenuitem
+>Presentatie</guimenuitem
+></menuchoice
+>. Deze toont het document pagina per pagina. De pagina's worden zo getoond dat steeds de hele pagina zichtbaar is. </para>
+			<note>
+				<para
+>&PDF; documenten kunnen zelfs zo ingesteld worden dat ze altijd geopend worden in de presentatiemodus. </para>
+			</note>
+			<para
+>Wanneer u de presentatiemodus gebruikt, is er een hulpbalk beschikbaar aan de bovenzijde van het scherm. Verplaats gewoon de muiscursor naar de bovenzijde van het scherm om deze te zien. </para>
+			<screenshot>
+			<screeninfo
+>&okular; in presentatiemodus</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; in presentatiemodus</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Om te navigeren tussen de pagina's kunt u de &LMB; (volgende pagina) en de &RMB; (vorige pagina) gebruiken, of anders het muiswiel, of de pijlknoppen of paginanummer in de bovenbalk, of de toetsen zoals gespecificeerd in de <link linkend="navigating"
+>Navigatie</link
+>sectie. </para>
+			<para
+>Gebruik de knop <guilabel
+>Afspelen/Pauzeren</guilabel
+> in de bovenste balk om de presentatie respectievelijk af te spelen of te pauzeren. </para>
+			<para
+>U kan op elk moment de presentatie beëindigen door op de &Esc;-toets te drukken of door te klikken op het pictogram <guiicon
+>Afsluiten</guiicon
+> in de bovenbalk. </para>
+			<para
+>U kunt ook met een pen op de huidige pagina tekenen. Klik op het pictogram <guilabel
+>Tekenmodus aan/uit</guilabel
+> in de bovenbalk om de tekenfunctie aan of uit te zetten in de presentatiemodus. De tekeningen worden automatisch gewist bij het verlaten van de presentatiemodus. U kunt ook op het pictogram <guilabel
+>Tekeningen wissen</guilabel
+> klikken om de tekeningen op de huidige pagina te wissen. </para>
+			<para
+>De presentatiemodus biedt ondersteuning voor meer dan één scherm in een configuratie met meerdere schermen. Met meer dan één actief scherm, zal er een nieuwe knop verschijnen in de bovenbalk, met het pictogram van een scherm: dit is een afrolvak dat toelaat om de presentatie te verplaatsen naar een van de andere beschikbare schermen. </para>
+			<para
+>De presentatiemodus heeft enkele configuratie-instellingen, waarvan u de beschrijving kunt vinden in het hoofdstuk <link linkend="configpresentation"
+>&okular; configureren</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Terugzoeken tussen &latex;-bewerkers en &okular;</title>
+
+		<para
+>Terugzoeken (inverse search) is een zeer handige functie als u zelf een &latex;-document schrijft. Als alles goed is opgezet kunt u met de <mousebutton
+>linker</mousebutton
+> muisknop klikken, terwijl &Shift; wordt ingedrukt, in het &okular;-venster. Daarna zal de bewerker het &latex;-bronbestand laden en naar de juiste alinea gaan.</para>
+
+		<para
+>Terugzoeken werkt niet, tenzij:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Het broncode-bestand met succes is gecompileerd.</para
+></listitem>
+			<listitem
+><para
+>&okular; weet welke editor u wilt gebruiken.</para
+></listitem>
+			<listitem
+><para
+>Het hulpmiddel Bladeren moet geactiveerd zijn, wat kan als u <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Bladeren</guimenuitem
+></menuchoice
+> kiest.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Met deze functie van &okular;, zal het klikken met de linker muisknop, terwijl &Shift; wordt ingedrukt, in het &DVI;- of &PDF;-document, resulteren in het openen van het bijbehorende &latex;-document en dan te proberen naar de bijhorende regel te gaan. Vergeet niet &okular; te vertellen de juiste editor te gebruiken in het menu-item van &okular; <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Okular instellen...</guimenuitem
+></menuchoice
+> (op de pagina <guimenuitem
+>Editor</guimenuitem
+>).</para>
+
+		<para
+>Voor meer details over configuratie van de editor ga naar de <link linkend="configeditor"
+>bijbehorende sectie van dit handboek</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>&okular; configureren</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>De editor instellen in &okular;</phrase>
+			</textobject>
+			<caption
+><para
+>De editor instellen in &okular;</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Uitgebreide mogelijkheden van &okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Ingebedde bestanden</title>
+			<para
+>Wanneer een document enkele ingebedde bestanden heeft, zal bij het openen een balk verschijnen boven de paginaweergave om u te melden dat er ingebedde bestanden aanwezig zijn. </para>
+			<screenshot>
+				<screeninfo
+>De ingebedde bestandenbalk</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>De ingebedde bestandenbalk</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>In dit geval kunt u ofwel klikken op de link in de tekst van de balk ofwel<menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Ingebedde bestanden</guimenuitem
+></menuchoice
+> selecteren om het dialoogvenster voor ingebedde bestanden te openen. Via dit venster kunt u de ingebedde bestanden bekijken of uitpakken. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formulieren</title>
+			<para
+>Als het huidige document formulieren heeft, dan zal bij het openen een balk verschijnen boven de bekeken pagina waar u de formulieren in kunt schakelen. </para>
+			<screenshot>
+				<screeninfo
+>De formulierenbalk</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>De formulierenbalk</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>In dit geval kunt u ofwel klikken op <guilabel
+>Formulieren tonen</guilabel
+> in de balk ofwel <menuchoice
+><guimenu
+>Beeld</guimenu
+><guimenuitem
+>Formulieren tonen</guimenuitem
+></menuchoice
+> selecteren om gegevens in te voeren in de formuliervelden. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Ondertekeningen</title>
+			<para
+>Als het huidige document ondertekeningen heeft, zal er een balk verschijnen boven de bekeken pagina na het openen van het document. Het stelt u in staat het paneel <guilabel
+>Ondertekeningen</guilabel
+> te openen. </para>
+			<screenshot>
+				<screeninfo
+>De ondertekeningenbalk</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>De ondertekeningenbalk</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Met het paneel <guilabel
+>Ondertekeningen</guilabel
+> kunt u de ondertekening van het document en zijn certificaat inspecteren. </para>
+			<screenshot>
+				<screeninfo
+>Het ondertekeningenpaneel</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Het ondertekeningenpaneel</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Deze functie is alleen beschikbaar voor &PDF; documenten. U moet minstens versie 0.51 installeren van <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> om de meeste informatie over ondertekening te krijgen, versie 0.68 om informatie over locatie/reden van ondertekening te krijgen en versie 0.73 om informatie over het certificaat van de ondertekening te krijgen. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Digitale ondertekeningen worden toegevoegd</title>
+				<para
+>U kunt digitale ondertekeningen aan documenten toevoegen met de overeenkomende actie in het menu <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+></menuchoice
+>. </para>
+				<para
+>Om in staat te zijn een document te ondertekenen moet u een juist <acronym
+>PKCS</acronym
+> certificaat voor ondertekening beschikbaar te hebben op uw systeem. &okular; is niet in staat zulke certificaten aan te maken omdat ze uitgegeven moeten worden door certificaatautoriteiten om nuttig te zijn voor validatie, &etc; </para>
+				<para
+>We gebruiken de bibliotheek Poppler om ondertekening van &PDF;-documenten en Poppler gebruikt de bibliotheek NSS om certificaten te behandelen. Op het moment van schrijven zal Poppler proberen een van de volgende opslagruimten van NSS certificaten te gebruiken (de eerste die bestaat): </para>
+				<itemizedlist>
+					<listitem
+><para
+>De huidige opslag van Firefox voor gebruikerscertificaten.</para
+></listitem>
+					<listitem
+><para
+>De systeembrede opslag van certificaten <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>De huidige gebruiker <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>Als u een eigen opslag voor certificaten wilt gebruiken, dan kunt u dat doen in de sectie <link linkend="config-pdf-digital-signatures"
+> Backendconfiguratie van &PDF;</link
+> van de dialoog <link linkend="configure-backends"
+>Backends configureren...</link
+>. </para>
+				<note>
+					<para
+>Deze functie is alleen beschikbaar voor &PDF; documenten. U moet minstens versie 21.01 installeren van <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> om digitale ondertekening aan een document toe te kunnen voegen. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Annotaties</title>
+			<para
+>&okular; stelt u in staat uw documenten te bekijken en te annoteren. </para>
+			<screenshot>
+			<screeninfo
+>Annotaties van &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Annotaties van &okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>&okular; heeft twee verschillende soorten of annotaties:</para>
+			<para
+>Tekstannotaties zoals <guilabel
+>Geel laten oplichten</guilabel
+> en <guilabel
+>Zwart onderstrepen</guilabel
+> voor bestanden met tekst zoals &eg; &PDF;.</para>
+		      <para
+>Grafische annotaties zoals <guilabel
+>Pop-up-notitie</guilabel
+>, <guilabel
+>Inline notitie</guilabel
+>, <guilabel
+>Lijn uit de vrije hand</guilabel
+>, <guilabel
+>Accentuering</guilabel
+>, <guilabel
+>Rechte lijn</guilabel
+>, <guilabel
+>Veelhoek</guilabel
+>, <guilabel
+>Stempel</guilabel
+>, <guilabel
+>Onderstreping</guilabel
+>, <guilabel
+>Ellips</guilabel
+> en <guilabel
+>Schrijfmachine</guilabel
+> wordt door &okular; ondersteund voor alle formaten .</para>
+			<para
+>Met het contextmenu in de weergave van het zijbalk <guilabel
+>Annotaties</guilabel
+> of in het hoofdvenster kunt u een <guilabel
+>Pop-up notitie</guilabel
+> openen voor elk soort annotatie en commentaar bewerken of toevoegen.</para>
+			<para
+>Annotaties zijn niet alleen gelimiteerd tot &PDF; bestanden, zij kunnen worden gebruikt voor elk format dat &okular; ondersteunt.</para>
+			<para
+>&okular; de "documentenarchief"-functie. Dit is een specifiek formaat van &okular; om het document inclusief gerelateerde metadata (momenteel enkel annotaties) over te dragen. U kunt een "documentenarchief" van het geopende document opslaan door <menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Opslaan als</guisubmenu
+></menuchoice
+> en <guilabel
+>Okular-documentenarchief</guilabel
+> in de selectie <guilabel
+>Filter</guilabel
+> te selecteren. Documenten op deze manier opgeslagen zullen <filename
+>.okular</filename
+> als hun bestandsnaamextensie. Om een documentenarchief van &okular; te openen, opent u deze met &okular; net zoals u &eg; een &PDF; document zou openen. </para>
+			<para
+>U kunt <emphasis
+>ook</emphasis
+> annotaties direct opslaan in &PDF;-bestanden. U kunt <menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opslaan</guimenuitem
+></menuchoice
+> gebruiken om het over het huidige bestand op te slaan of <menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opslaan als...</guimenuitem
+></menuchoice
+> om het op te slaan naar een nieuw bestand. </para>
+				<note>
+					<para
+>Wegens DRM beperkingen (typisch voor &PDF; documenten), is toevoegen, bewerken van sommige eigenschappen of het verwijderen van annotaties niet mogelijk. </para>
+				</note>
+				<note>
+				  <para
+>Elke actie op annotaties (maken en verwijderen van annotaties, bewerken van willekeurige eigenschappen van annotaties, annotaties op een andere plaats zetten met &Ctrl;+verslepen en de inhoud van een annotatie bewerken) kan <link linkend="edit-undo"
+>ongedaan worden</link
+> of <link linkend="edit-redo"
+>opnieuw gedaan worden</link
+> met het overeenkomstige item uit het menu <guimenu
+>Bewerken</guimenu
+>. Het is ook mogelijk de actie ongedaan maken door op <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> te drukken en opnieuw te doen door op <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+> te drukken. </para>
+				</note>
+			<para
+>U kunt de standaard eigenschappen en het uiterlijk van elk hulpmiddel voor annotaties instellen. Ga naar de <link linkend="configeditor"
+>bijbehorende sectie van dit handboek</link
+> voor meer informatie. </para>
+			<sect2 id="annotations-add">
+				<title
+>Annotaties toevoegen</title>
+				<para
+>Om enkele annotaties toe te voegen aan het document, moet u de knop <guilabel
+>Snelle annotaties</guilabel
+> gebruiken op de hoofdbalk van &okular; of de annotatiewerkbalk activeren. Dit kunt u doen door <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Annotaties</guimenuitem
+></menuchoice
+> te selecteren of door op <keycap
+>F6</keycap
+> te drukken. Als eenmaal de annotatiewerkbalk getoond wordt, kunt u één van de knoppen erop of sneltoetsen (de toetsen <keycap
+>1</keycap
+> tot <keycap
+>9</keycap
+>) gebruiken om te beginnen met het maken van een annotatie. </para>
+				<para
+>De werkbalk voor annotaties helpt u om annotaties te maken bij tekeningen, vormen en tekstberichten. U kunt de werkbalk voor annotaties gebruiken om een document te markeren (&eg; lijnen, ellipsen, polygonen, stempels, accentueringen, onderstrepingen &etc; toe te voegen). De onderstaande tabel beschrijft exact wat de standaard set van knoppen op de werkbalk voor annotaties doet. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Knop </entry>
+					<entry
+>Naam hulpmiddel </entry>
+					<entry
+>Beschrijving </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Accentuering </para>
+					</entry>
+					<entry>
+					  <para
+>Om de tekst in het document te accentueren met een gegeven achtergrondkleur. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van het te accentueren tekstfragment in te stellen, sleep daarna om het te accentueren. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Accentuering</guimenuitem
+>, <guimenuitem
+>Krulling</guimenuitem
+>, <guimenuitem
+>Onderstreping</guimenuitem
+> of <guimenuitem
+>Doorstreping</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+> en <guilabel
+>Dekking</guilabel
+> voor de accentuering te definiëren. Klik gewoon rechts op de geaccentueerde tekst en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Onderstrepen </para>
+					</entry>
+					<entry>
+					  <para
+>Om tekst te onderstrepen. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van het te onderstrepen tekstfragment in te stellen, sleep daarna om het te onderstrepen. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Accentuering</guimenuitem
+>, <guimenuitem
+>Krulling</guimenuitem
+>, <guimenuitem
+>Onderstreping</guimenuitem
+> of <guimenuitem
+>Doorstreping</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+> en <guilabel
+>Dekking</guilabel
+> voor de onderstreping te definiëren. Klik gewoon rechts op de onderstreepte tekst en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Golvend </para>
+					</entry>
+					<entry>
+					  <para
+>Om tekst te onderstrepen met een slingerlijn. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van het te onderstrepen tekstfragment in te stellen, sleep daarna om het te onderstrepen. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Accentuering</guimenuitem
+>, <guimenuitem
+>Krulling</guimenuitem
+>, <guimenuitem
+>Onderstreping</guimenuitem
+> of <guimenuitem
+>Doorstreping</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+> en <guilabel
+>Dekking</guilabel
+> voor de onderstreping te definiëren. Klik gewoon rechts op de onderstreepte tekst en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Doorstrepen </para>
+					</entry>
+					<entry>
+					  <para
+>Om tekst door te strepen. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van het te onderstrepen tekstfragment in te stellen, sleep daarna om het te onderstrepen. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Accentuering</guimenuitem
+>, <guimenuitem
+>Krulling</guimenuitem
+>, <guimenuitem
+>Onderstreping</guimenuitem
+> of <guimenuitem
+>Doorstreping</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+> en <guilabel
+>Dekking</guilabel
+> voor de onderstreping te definiëren. Klik gewoon rechts op de onderstreepte tekst en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Schrijfmachine </para>
+					</entry>
+					<entry>
+					  <para
+>Schrijfmachine biedt ondoorzichtige letters op een transparante achtergrond, zodat het nuttig is om niet interactieve formulieren te vullen. </para>
+					  <para
+>Klik op de knop hulpmiddel, klik daarna met de &LMB; en houd deze omlaag om de hoek linksboven van de notitie vast te leggen, sleep daarna naar de plek rechtsonder. Voer de tekst in van de notitie en klik daarna op <guibutton
+>OK</guibutton
+> om de notitie op te slaan, <guibutton
+>Annuleren</guibutton
+> om het invoeren van een notitie af te breken of <guibutton
+>Wissen</guibutton
+> om de notitie leeg te maken. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Lettertype</guilabel
+> en <guilabel
+>Tekstkleur</guilabel
+> voor de test te definiëren. Klik gewoon rechts op de aangemaakte schrijfmachinetekst en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Inline-notitie </para>
+					</entry>
+					<entry>
+					  <para
+>Om een inline-notitie in te voeren. De notitie zal inline getoond worden zoals deze is. </para>
+					  <para
+>Klik op de knop hulpmiddel, klik daarna met de &LMB; en houd deze omlaag om de hoek linksboven van de notitie vast te leggen, sleep daarna naar de plek rechtsonder. Voer de tekst in van de notitie en klik daarna op <guibutton
+>OK</guibutton
+> om de notitie op te slaan, <guibutton
+>Annuleren</guibutton
+> om het invoeren van een notitie af te breken of <guibutton
+>Wissen</guibutton
+> om de notitie leeg te maken. </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Lettertype</guilabel
+>, <guilabel
+>Uitlijning</guilabel
+> en <guilabel
+>Randbreedte</guilabel
+> voor de notitie te definiëren. Klik gewoon rechts op het aangemaakte notitiepictogram en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pop-up-notitie </para>
+					</entry>
+					<entry>
+					  <para
+>Om notitie op meerdere regels te maken. De notitie kan bekeken worden door dubbel te klikken op een pictogram in het document. </para>
+					  <para
+>Klik op de knop hulpmiddel, klik daarna op de plaats in het document waar de pop-up-notitie zou moeten worden toegevoegd. Voer de tekst van pop-up-notitie in en klik daarna op de knop <guilabel
+>Deze notitie sluiten</guilabel
+> rechts bovenin de hoek van het pop-up-venster. </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+> en <guilabel
+>Pictogram</guilabel
+> voor de notitie te definiëren. Klik gewoon rechts op het aangemaakte notitiepictogram en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Lijn uit de vrije hand </para>
+					</entry>
+					<entry>
+					  <para
+>Om vrij gevormde lijnen te tekenen. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van de lijn in te stellen, sleep daarna om de lijn te tekenen. </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+> en <guilabel
+>Breedte</guilabel
+> voor de lijn te definiëren. Klik gewoon rechts op de aangemaakte lijn en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pijl (afrollijst) </para>
+					</entry>
+					<entry>
+					  <para
+>Om met een pijltje te markeren. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van de lijn in te stellen, sleep daarna naar het eindpunt van de lijn en klik nog eens. . </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Breedte</guilabel
+>, <guilabel
+>Lijnbegin</guilabel
+>, <guilabel
+>Lijneinde</guilabel
+>, <guilabel
+>Startlijnlengte</guilabel
+> en <guilabel
+>Lengte hoofdlijnextensies</guilabel
+> voor de lijn te definiëren. Klik gewoon op de aangemaakte lijn en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Rechte lijn (afrollijst) </para>
+					</entry>
+					<entry>
+					  <para
+>Om met een lijn te markeren. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van de lijn in te stellen, sleep daarna naar het eindpunt van de lijn en klik nog eens. . </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Breedte</guilabel
+>, <guilabel
+>Lijnbegin</guilabel
+>, <guilabel
+>Lijneinde</guilabel
+>, <guilabel
+>Startlijnlengte</guilabel
+> en <guilabel
+>Lengte hoofdlijnextensies</guilabel
+> voor de lijn te definiëren. Klik gewoon op de aangemaakte lijn en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Rechthoek (afrollijst) </para>
+					</entry>
+					<entry>
+					  <para
+>Om een rechthoek rond een gekozen gebied te tekenen. </para>
+					  <para
+>Klik op de knop hulpmiddel, klik daarna met de &LMB; en houd deze neer om de de linkerbovenhoek van de rechthoek te plaatsen, sleep daarna de rechteronderhoek te plaatsen. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Rechthoek</guimenuitem
+> of <guimenuitem
+>Ellips</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Vulling van vorm</guilabel
+> (en zijn kleur) en <guilabel
+>Breedte</guilabel
+> voor de rand te definiëren. Klik gewoon rechts op de aangemaakte rand en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+> </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Ellips (afrollijst) </para>
+					</entry>
+					<entry>
+					  <para
+>Om een ellips of rechthoek rond een gekozen gebied te tekenen. </para>
+					  <para
+>Klik op de knop hulpmiddel, klik daarna met de &LMB; en houd deze neer om de plek van de linkerbovenhoek van de omschreven rechthoek van de ellips, sleep daarna naar de plaats van de rechteronderhoek. </para>
+					  <para
+>Het is mogelijk om het <guilabel
+>Type</guilabel
+> (<guimenuitem
+>Rechthoek</guimenuitem
+> of <guimenuitem
+>Ellips</guimenuitem
+>), <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Vulling van vorm</guilabel
+> (en zijn kleur) en <guilabel
+>Breedte</guilabel
+> voor de rand te definiëren. Klik gewoon rechts op de aangemaakte rand en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+> </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Veelhoek (afrollijst) </para>
+					</entry>
+					<entry>
+					  <para
+>Om een gesloten vlakke figuur te tekenen met drie of meer segmenten. De overeenkomstige notitie kan bekeken worden door dubbel te klikken binnen de veelhoek. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; om de eerste hoek van de veelhoek te plaatsen en houd deze omlaag, sleep daarna naar de plek van de tweede hoek. Ga door totdat u de gehele veelhoek hebt geplaatst, dus tot de eerste hoek. Klik twee keer als u een notitie aan de veelhoek wilt toevoegen. Voer de tekst van de notitie in en klik op de knop <guibutton
+>OK</guibutton
+> om de notitie op te slaan, op <guibutton
+>Annnuleren</guibutton
+> om het invoeren te annuleren of <guibutton
+>Wissen</guibutton
+> om de notitie te wissen. </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Kleur</guilabel
+>, <guilabel
+>Dekking</guilabel
+>, <guilabel
+>Vulling van vorm</guilabel
+> (en zijn kleur) en <guilabel
+>Breedte</guilabel
+> voor de veelhoek te definiëren. Klik gewoon rechts op de aangemaakte veelhoek en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+> </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Stempel </para>
+					</entry>
+					<entry>
+					  <para
+>Om de tekst of afbeelding te markeren met een voorgedefinieerde vorm. </para>
+					  <para
+>Klik op de knop voor hulpmiddelen om het stempel uit de afrollijst te kiezen en klik daarna met de &LMB; om het stempel te plaatsen. </para>
+					  <para
+>Een enkele klik plaatst eenvoudig een vierkant stempel (nuttig voor pictogrammen). Om een rechthoekig stempel te zetten kunt u klikken met de &LMB; en ingedrukt houden om het punt linksboven neer te zetten, sleep daarna naar de plaats van het punt rechtsonder. </para>
+					  <para
+>Het is mogelijk om de <guilabel
+>Dekking</guilabel
+> en <guilabel
+>Stempelsymbool</guilabel
+> voor het stempel te definiëren. Klik gewoon rechts op het aangemaakte stempelpictogram en selecteer het menu-item <guimenuitem
+>Eigenschappen</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Deze functie is experimenteel. Aangepaste postzegels ingevoegd in &PDF;-documenten zijn niet zichtbaar in &PDF;-lezers anders dan &okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>Dit zijn de standaard annotaties geleverd door &okular;. Met het tonen van de <link linkend="configannotations"
+>Annotatiespagina</link
+> van de configuratiedialoog kunt u uw eigen annotaties toevoegen, zoals eigen stempels, tekstmarkeringen of een geometrische vorm met binnenkleur om gebieden te accentueren &etc; </para>
+                                  <note>
+                                      <para
+>Het is mogelijk om &latex;-code toe te voegen aan de tekst met annotaties. Voeg <userinput
+>$$<replaceable
+>code</replaceable
+>$$</userinput
+> toe aan de tekst van de annotatie, waar <replaceable
+>code</replaceable
+> elke geldige &latex;-vergelijking is en volg instructies op het scherm om het te laten renderen door een &latex;-distributie geïnstalleerd in uw systeem. </para>
+                                  </note>
+				<para
+>Het is mogelijk de huidige opties van hulpmiddelen te configureren met de annotatiewerkbalk zelf. De onderstaande tabel beschrijft exact wat de standaard set knoppen voor configuratie van de annotatiewerkbalk doen. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Knop </entry>
+					<entry
+>Naam optie </entry>
+					<entry
+>Beschrijving </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Lijndikte </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de knop voor hulpmiddelen om de breedte van de afrollijst te kiezen. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Annotatiekleur </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de hulpmiddelknop om de kleur van tekst of rand van uw annotatie te kiezen. U kunt een van de voorgedefinieerde kleuren kiezen of klikken op het item <guimenuitem
+>Aangepaste kleur...</guimenuitem
+> om de dialoog kleurselectie te openen. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Annotatievulkleur </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de hulpmiddelknop om de vulkleur van uw annotatie te kiezen. U kunt een van de voorgedefinieerde kleuren kiezen of klikken op het item <guimenuitem
+>Aangepaste kleur...</guimenuitem
+> om de dialoog kleurselectie te openen. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Dekking van annotatie </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de knop voor hulpmiddelen om het niveau van de dekking uit de afrollijst te kiezen (<guimenuitem
+>100%</guimenuitem
+> is voor ondoorzichtige annotaties). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Lettertype van annotatie </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de knop voor hulpmiddelen om de dialoog voor selecteren van lettertypen te openen. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Geavanceerde instellingen voor het huidige hulpmiddel voor annotaties </para>
+					</entry>
+					<entry>
+					  <para
+>Klik op de knop voor hulpmiddelen om de algemene dialoog voor configuratie voor uw annotatie te openen. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>Er zijn drie extra hulpmiddelknoppen op de standaard annotatiewerkbalk. </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Knop </entry>
+					<entry
+>Beschrijving </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>De huidige annotatie aan het menu <guilabel
+>Snelle annotaties</guilabel
+> op de hoofdwerkbalk toevoegen. </para>
+					  <note>
+						  <para
+>U kunt de standaard sneltoetsen uit <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> tot <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> gebruiken om de acties uit snelle annotatie op elk moment dat u wilt gebruiken zelfs met de verborgen annotatiewerkbalk. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Indien geactiveerd het huidige hulpmiddel voor annotatie actief houden na gebruik. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>De annotatiewerkbalk verbergen </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>Door op &Shift; te drukken kunt u de hoek van de lijn en veelhoekannotaties beperken tot 15° stapjes en de verhouding van vorm-annotaties (&eg; rechthoek, ellips) tot 1:1. U kunt ook een werkbalkknop krijgen met <ulink url="help:/fundamentals/config.html#toolbars"
+>Werkbalken configureren...</ulink
+>. </para>
+				  <para
+>De inhoud van het menu <guilabel
+>Snelle annotaties</guilabel
+> kan gecorrigeerd worden met de <link linkend="configannotations"
+>Annotatiepagina van de configuratiedialoog van &okular;</link
+>. Deze pagina kan geopend worden door te klikken op de knop <guilabel
+>Snelle annotaties</guilabel
+> en daarna kiezen van <guimenuitem
+>Annotaties configureren...</guimenuitem
+> uit het pop-upmenu. </para>
+				<note>
+					<para
+>Bij het activeren van de annotatiewerkbalk wordt er automatisch gewisseld naar de modus bladeren. </para>
+				</note>
+				<para
+>U kunt het aanmaken van een annotatie op elk tijdstip stoppen door opnieuw te drukken op de knop van die annotatie, of door op de &Esc;-toets te duwen. </para>
+				<para
+>De nieuw aangemaakte annotatie zal als auteur de auteur kiezen die u ingesteld hebt in de <link linkend="configannotations"
+>pagina <guilabel
+>Annotaties</guilabel
+></link
+> in het dialoogvenster voor &okular;. De pagina <guilabel
+>Annotaties</guilabel
+> kan ook gebruikt worden om de inhoud van de annotatiewerkbalk in te stellen. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Annotaties verwijderen</title>
+				<para
+>Om een annotatie te verwijderen, klikt u er gewoon op met de &RMB;, en selecteert u <guimenuitem
+>Verwijderen</guimenuitem
+> of selecteer een annotatie met de &LMB; en drul op de toets &Del;. </para>
+				<para
+>Indien het venster van de annotatie open staat bij het verwijderen van de annotatie, zal dit venster tegelijk gesloten worden. </para>
+				<note>
+					<para
+>Deze optie kan niet geactiveerd worden omdat het document niet toelaatannotaties te verwijderen. </para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Annotaties bewerken</title>
+				<para
+>Om een annotatie te bewerken, klikt u erop met de &RMB; en selecteert u <guimenuitem
+>Eigenschappen</guimenuitem
+>. Dan zal er een dialoogvenster verschijnen met de algemene annotatie-instellingen (zoals kleur, dekking, auteur, &etc;) en de specifieke instellingen voor dat type annotatie. </para>
+				<screenshot>
+				<screeninfo
+>Dialoogvenster voor annotatie-eigenschappen</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Dialoogvenster voor annotatie-eigenschappen</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Om een annotatie te verplaatsen, houdt u de &Ctrl; toets ingedrukt, zet u de muiscursor op de annotatie, en verplaatst u het met de &LMB;. </para>
+				<para
+>Als u met de &LMB; op een annotatie drukt wordt het geselecteerd. Handvatten wijzigen van grootte verschijnen op het selectievierkant. Wanneer de cursor is geplaatst boven een van de 8 handvatten voor wijziging van de grootte op de hoeken of de randen, zal de cursor van vorm veranderen om de modus wijzigen van grootte aan te geven. Klik ergens anders op de annotatie om het te verplaatsen. &Esc; indrukken of in een gebied klikken buiten de annotatie annuleert een selectie. </para>
+				<para
+>Grootte wijzigen is alleen van toepassing op annotatietypen inlinenotitie, schrijfmachine, stempel en ellips.</para>
+
+				<note>
+					<para
+>Afhankelijk van de documentrechten (typisch voor &PDF; documenten), kunnen sommige opties niet beschikbaar zijn. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Beheer van bladwijzers</title>
+			<para
+>&okular; heeft een zeer flexibel systeem voor bladwijzers. &okular; slaat de positie op de pagina op in de bladwijzer en laat u meer dan één bladwijzer per pagina maken. </para>
+			<para
+>Om bladwijzers in &okular; te beheren kunt u de <guilabel
+>Bladwijzer</guilabel
+>weergave uit de <guilabel
+>Zijbalk</guilabel
+>, <link linkend="menubookmarks"
+>Bladwijzermenu</link
+> of contextmenu van de documentweergave (klik met &RMB; om het te openen) gebruiken.. </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Bladwijzerweergave</title>
+				<para
+>Om de <guilabel
+>Bladwijzer</guilabel
+>weergave te openen, klik op het tabblad <guilabel
+>Bladwijzers</guilabel
+> bovenaan de <guilabel
+>Zijbalk</guilabel
+>. Als de <guilabel
+>Zijbalk</guilabel
+> niet wordt getoond, klik op de knop <guibutton
+>Zijbalk tonen</guibutton
+> op de werkbalk of het menu-item <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Zijbalk tonen</guimenuitem
+></menuchoice
+> om het zichtbaar te maken. </para>
+				<screenshot>
+				    <screeninfo
+>Contextmenu van bladwijzerweergave</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Contextmenu van bladwijzerweergave</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Het keuzevakje <guilabel
+>Voor alle documenten tonen</guilabel
+> kan gedeactiveerd worden om alleen de bladwijzers uit het huidige document te tonen. </para>
+				<para
+>De filterbalk bovenaan de weergave van <guilabel
+>Bladwijzers</guilabel
+> kan gebruikt worden om de inhoud van het paneel met de lijst van bladwijzers te filteren volgens de tekst in het vak. </para>
+				<para
+>In het paneel met lijst ziet u de lijst met bladwijzers in een boomstructuur: elke submap van de huidige map kan worden <quote
+>uitgevouwen</quote
+> of <quote
+>ingeklapt</quote
+> door op het <guiicon
+>&lt;</guiicon
+>-teken of <guiicon
+>v</guiicon
+> naast het pictogram te klikken. </para>
+				<para
+>Door rechts te klikken op een document-item kunt u het document-item openen en hernoemen of uit de lijst verwijderen. Bedenk dat het verwijderen van een document-item tot gevolg heeft dat alle bladwijzers in het bijbehorende document worden verwijderd. </para>
+				<para
+>Door rechts te klikken op een individuele bladwijzer krijgt u een contextmenu waarmee u naar die bladwijzer kunt gaan, het hernoemen of verwijderen. </para>
+				<para
+>Het menu na rechtsklikken met items in de inhoudsopgave kan gebruikt worden om bladwijzers te maken of naar de volgende of vorige bladwijzer te gaan. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Commandoregelopties</title>
+		    <para
+>In de meeste gevallen wordt &okular; gestart vanuit het &kde; programma-menu of door te klikken op een pictogram op het bureaublad, maar het kan ook worden geopend vanaf de commandoregel van een terminalvenster. Er is een aantal nuttige opties beschikbaar wanneer u het programma op deze manier start. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Een bestand opgeven</title>
+			<para
+>Door een pad en bestandsnaam van een bepaald bestand op te geven, opent &okular; bij het opstarten dat bestand. De opdracht ziet er dan als volgt uit: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/mijnhome/docs/mydoc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Voor &PDF; documenten kan de naam gegeven worden als <replaceable
+>documentnaam</replaceable
+>#<replaceable
+>benoemde_bestemming</replaceable
+> waar <replaceable
+>benoemde_bestemming</replaceable
+> een specifieke benoemde bestemming is ingebed in het document. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Overige commandoregel-opties</title>
+			<para
+>De volgende commandoregel-opties zijn beschikbaar </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>nummer</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Opent een pagina met een gegeven nummer in het document. Is ook beschikbaar via <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>nummer</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Document in presentatiemodus starten.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Met afdrukdialoog beginnen.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Met afdrukdialoog beginnen en na afdrukken beëindigen.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Controle over "unieke sessie".</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Stelt u in staat om te voorkomen dat &okular; het venster vooraan brengt na de start.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>tekenreeks</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Probeert een gegeven tekenreeks in het document te vinden en te accentueren. Werkt alleen als slechts één document is als argument gegeven in het commando <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>tekenreeks</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Stelt het externe commando voor de bewerker. U kunt het niet instellen in een al actief exemplaar van &okular;. Merk op dat <option
+>--unique</option
+> niet wordt ondersteund bij instellen van het commando voor de bewerker op de opdrachtregel.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Venster op pagina laten passen</title>
+			<para
+>De functie Venster op pagina laten passen maakt het venster zo groot dat het exact dezelfde grootte als de pagina op de huidige zoomfactor heeft. Als de pagina niet volledig op het scherm past zal het venster vergroot zijn zodat het grootst mogelijke deel van de pagina wordt getoond. </para>
+			<para
+>Deze functie kan uitgevoerd worden met de sneltoets <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>De menubalk</title>
+
+		<sect1 id="menufile">
+			<title
+>Het menu Bestand</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Openen...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Open</action
+> een ondersteund bestand of een &okular;-documentarchief. Indien er reeds een document geopend was, zal het worden gesloten. Kijk voor meer informatie in de sectie over <link linkend="opening"
+>Bestanden openen</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guisubmenu
+>Recent geopend</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Open</action
+> een bestand dat reeds gebruikt is geweest via een submenu. Indien er op dat moment een bestand getoond wordt, zal het worden gesloten. Kijk voor meer informatie in de sectie over <link linkend="opening"
+>Bestanden openen</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>PostScript als &PDF; importeren...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Open</action
+> een &PostScript;-bestand en converteer het naar &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Tabblad sluiten ongedaan maken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Opnieuw openen</action
+> van het laatst gesloten document. Deze actie is alleen actief als u een document in een tabbladen hebt gesloten tijdens de huidige sessie. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Map waarin het zich bevindt openen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Open</action
+> de map die het huidige document in uw favoriete bestandsbeheerder bevat. Deze actie is speciaal nuttig voor het geval dat u een &PDF;-bestand uit het internet hebt gedownload die zichzelf in &okular; opent. De locatie van dit bestand kan niet helder zijn of gemakkelijk te vinden zonder deze functie. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opslaan</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Sla op</action
+> slaat het document op onder een nieuwe naam, inclusief alle wijzigingen (annotaties, inhoud van formulieren, &etc;), mits de backend van het document dit opslaan ondersteunt. Als de backend het opslaan van de wijzigingen niet ondersteunt, zal de gebruiker gevraagd worden om te kiezen uit de optie om ze te verwerpen of ze op te slaan samen met het document in een &okular;-documentarchief.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opslaan als...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Sla op</action
+> slaat het document op onder een nieuwe naam, inclusief alle wijzigingen (annotaties, inhoud van formulieren, &etc;), mits de backend van het document opslaan ondersteunt. Als de backend opslaan van wijzigingen niet ondersteunt, zal de gebruiker de optie krijgen om ze te verwerpen of ze samen op te slaan met het document in een &okular;-documentarchief.</para>
+                                        <note>
+                                        <para
+>Merk op dat, vanwege de manier waarop dit is geïmplementeerd, zelfs wanneer er geen wijzigingen zijn in het bestand, hoeft het nieuwe bestand geen exacte bit-voor-bit kopie van het originele bestand (&eg; het kan een andere SHA-1 hash hebben, &etc;). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Herladen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Herlaad</action
+> het huidige geopende bestand.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afdrukken...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Afdrukken</action
+> van het huidige getoonde document. Let erop dat &okular; enige specifieke opties voor afdrukken van &PDF; heeft die beschikbaar zijn via drukken op de knop <guibutton
+>Opties 
+>
+></guibutton
+> en daarna <guilabel
+>&PDF; opties</guilabel
+> te kiezen. Deze opties zijn er om uw annotaties af te drukken of modus rasteriseren te configureren als u problemen heeft met afdrukken van sommige symbolen of de modus schalen wilt wijzigen. </para>
+                                                <note>
+                                                    <para
+>De opties modus schalen zijn alleen beschikbaar wanneer u de optie <guilabel
+>Rasteriseren afdwingen</guilabel
+> activeert. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afdrukvoorbeeld...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Toont een voorbeeld</action
+> van hoe het huidig getoonde document afgedrukt zou worden met de standaard instellingen. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Enter</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Eigenschappen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Laat wat basisinformatie zien</action
+> over het document, zoals titel, auteur, aanmaakdatum, en details over de gebruikte lettertypes. De beschikbare informatie hangt af van het type document.</para>
+						<note>
+							<para
+>Neem notitie van de informatie over vervangen van lettertype in het tabblad <guilabel
+>Lettertypen</guilabel
+> van de dialoog <guilabel
+>Eigenschappen</guilabel
+>. Veel problemen met weergeven van lettertypen kan opgelost worden de installatie van de vervangende lettertypen.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Ingebedde bestanden...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Toon de ingebedde bestanden</action
+> in het document, indien het document er één of meer heeft. Kijk voor meer informatie in de sectie over <link linkend="embedded-files"
+>Ingebedde bestanden</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Exporteren als</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit item bevat de formaten waarnaar het huidige document geëxporteerd kan worden. Het eerste item is altijd voor alle soorten documenten <guimenuitem
+>Platte tekst...</guimenuitem
+>.</para>
+						<para
+>Het tweede item is <guimenuitem
+>Documentenarchief</guimenuitem
+>, waarmee u het document met uw annotaties kunt opslaan in het specifieke archiefformaat van &okular;. Het is dus zeer gemakkelijk om het originele document samen met uw annotaties te delen met andere &okular;-gebruikers, of met hen samen te werken.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Delen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit item bevat de services die gebruikt kunnen worden om het huidige document met andere mensen te delen of het naar uw apparaten te verzenden. De items in dit submenu worden gecontroleerd door het systeem. Ze hangen af van het huidige documentformaat en de geïnstalleerde KPurpose plug-ins.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afsluiten</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>&okular; <action
+>afsluiten</action
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Het menu Bewerken</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Ongedaan maken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ongedaan maken</action
+> het commando voor bewerking van de laatste annotatie (maken en verwijderen van annotaties, bewerken van willekeurige annotatie-eigenschappen, verplaatsen van annotaties met &Ctrl;+verslepen en bewerken van de inhoud van een annotatie).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Opnieuw</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Opnieuw</action
+> de laatste opnieuwstap bij bewerken van annotaties.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Kopiëren</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kopieer</action
+> de huidige geselecteerde tekst in de <guibutton
+>Tekstselecteermodus</guibutton
+> naar het klembord.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Alles selecteren</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Selecteert</action
+> alle tekst (indien aanwezig in het document). Dit werkt enkel in de <guibutton
+>Tekstselectiemodus</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Alle tekst op huidige pagina selecteren</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Selecteert</action
+> alle tekst (indien het document dit levert) van de huidige pagina. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Zoeken...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Toont de zoekbalk aan de onderkant van het weergavegebied, waarmee u kunt <action
+>zoeken naar een rij opeenvolgende letters in het document</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Volgende zoeken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Probeer om <action
+>de vorige positie van de gezochte rij opeenvolgende tekens opnieuw te vinden</action
+> in het document.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Vorige zoeken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Gaat naar de vorige positie waar de gezochte rij opeenvolgende tekens</action
+> voor komt in het document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Het menu Beeld</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Presentatie</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Activeert</action
+> de Presentatiemodus. Zie voor meer informatie in de sectie over <link linkend="presentationMode"
+>Presentatiemodus</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Volledig scherm</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Volledig scherm modus activeren</action
+>. Merk op dat deze modus anders is dan de presentatiemodus. Volledig scherm modus dient alleen maar om de vensterdecoratie en de menu- en werkbalk te verbergen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Inzoomen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Versterk de vergroting</action
+> van de documentweergave.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Uitzoomen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Verminder de vergroting</action
+> van de documentweergave.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Inzoomen tot 100%</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zoom het afbeeldingsdocument tot op de actuele grootte</action
+> zoals voorgeschreven door de parameters van het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Passend in de breedte</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Verander de vergroting</action
+> van de documentweergave naar een factor die ervoor zorgt dat de paginabreedte gelijk is aan de breedte van de documentweergave.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Pagina passend maken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Verander de vergroting</action
+> van het documentweergave naar een factor die ervoor zorgt dat er minstens één volledige pagina tegelijk bekeken kan worden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Automatisch passend maken</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Wijzig de vergroting</action
+> van het document naar een waarde die, afhankelijk van de relatie tussen de afmetingen van de pagina en het weergavegebied, automatisch de breedte van de pagina's' gelijk maakt aan de weergavebreedte van het document (zoals passend op de breedte), de hoogte van de pagina's gelijk maakt aan de hoogte van de weergave van het document (zoals passend in de hoogte) of de gehele pagina zichtbaar maakt (zoals passend op de pagina).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guisubmenu
+>Weergavemodus</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>In dit submenu kunt u de weergavemodus kiezen voor de pagina's. De beschikbare opties zijn: <guimenuitem
+>Eén pagina</guimenuitem
+> (maar één pagina per rij), <guimenuitem
+>Overliggende pagina's</guimenuitem
+> (twee pagina's per rij, zoals in een boek), <guimenuitem
+>Overliggende pagina's (Eerste pagina centreren)</guimenuitem
+> en <guimenuitem
+>Overzicht</guimenuitem
+> (het aantal kolommen wordt gespecificeerd in de <link linkend="configure"
+>instellingen van &okular;</link
+>).</para>
+						<para
+>Daarnaast kunt u de modus <guimenuitem
+>Continu</guimenuitem
+> inschakelen. In modus continu worden alle pagina's van het document getoond en kunt u er rustig doorheen schuiven. Anders wordt slechts één pagina (of één rij pagina's) tegelijk getoond.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guisubmenu
+>Oriëntatie</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>In dit submenu kunt u <action
+>de oriëntatie veranderen</action
+> van de pagina's in het document. </para>
+						<note>
+							<para
+>De rotatie die hier geselecteerd is, wordt toegepast op de oriëntatie van elke pagina. </para>
+						</note>
+						<para
+>U kunt <guimenuitem
+>Oorspronkelijke oriëntatie</guimenuitem
+> selecteren om de oriëntatie van het document te herstellen, ongeacht welke rotaties handmatig toegepast zijn. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guisubmenu
+>Weergave trimmen</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit submenu stelt u in staat de witte randen aan de pagina's bij het bekijken te verwijderen van deze pagina's (item <guimenuitem
+>Marges trimmen</guimenuitem
+>) of zichtbare gedeelte trimmem op selectie (item <guimenuitem
+>Op selectie trimmem</guimenuitem
+>). </para>
+						<para
+>De modus <quote
+>Op selectie trimmen</quote
+> stelt u in staat om een selectie van de weergegeven pagina te maken om een zichtbaar gebied te definiëren toe te passen op <emphasis
+>alle pagina's</emphasis
+> in het document. Selectie van een klein trimgebied dwingt minimale afmetingen af (20% als percentage van de totale paginagrootte). </para>
+						<para
+>De modus <quote
+>trimmarges</quote
+> is blijvend over herstarts van &okular;. De modus <quote
+>Op selectie trimmen</quote
+> wordt vergeten over herstarts van &okular;. </para>
+						<para
+>Wanneer u &okular; schakelt van modus <quote
+>trimmarges</quote
+> naar modus <quote
+>Op selectie trimmen</quote
+>, springt het beeld uit de modus <quote
+>trimmarges</quote
+> naar de interactie voor selectie van het gebied. </para>
+						<para
+>De trimmodus kan gedeactiveerd worden door hetzelfde menu-item te kiezen dat het activeert. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Formulieren tonen/verbergen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Toont of verbergt</action
+> de formuliervelden van het document. </para>
+						<note>
+							<para
+>Dit menu-item is alleen geactiveerd indien het huidige document formuliervelden heeft. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Het menu Ga naar</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Vorige pagina</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>De vorige pagina bekijken</action
+> van het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Volgende pagina</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>De volgende pagina bekijken</action
+> van het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></shortcut
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Begin van het document</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Naar het begin gaan</action
+> van het document.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></shortcut
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Einde van het document</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Naar het einde gaan</action
+> van het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;&Shift;&Left;</keycombo
+></shortcut
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Terug</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Teruggaan naar de vorige weergave</action
+> van het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Right;</keycombo
+></shortcut
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Verder</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Verdergaan naar de volgende weergave</action
+> van het document. Dit zal alleen werken als u reeds een keer teruggegaan bent.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ga</guimenu
+> <guimenuitem
+>Ga naar pagina...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit opent een dialoogvenster waarmee u <action
+>naar eender welke pagina kunt gaan</action
+> in het document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Menu Bladwijzers</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Bladwijzer toevoegen/verwijderen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Een bladwijzer toevoegen of verwijderen op de huidige positie</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Bladwijzer hernoemen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Een bladwijzer op de huidige positie hernoemen</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Vorige bladwijzer</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Naar de vorige bladwijzer</action
+>, of doe niets indien er geen voorgaande bladwijzer is ten opzichte van de huidige.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Volgende bladwijzer</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ga naar de volgende bladwijzer</action
+> of doe niets indien er geen bladwijzer is na de huidige.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Geen bladwijzers</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit is een actie die altijd inactief is en enkel zal verschijnen in dit menu wanneer het huidige document geen bladwijzers heeft. Anders is hier een lijst zichtbaar met alle bladwijzers. Door te klikken op deze bladwijzers, kunt u direct naar de bijbehorende positie gaan.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Het menu Hulpmiddelen</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Bladeren</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Hier heeft de muis zijn normale gedrag: &LMB; om door het document te scrollen en koppelingen aan te klikken, en de &RMB; om bladwijzers toe te voegen en in de breedte te passen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Zoomen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>De muis zal werken als zoomgereedschap. Door op de &LMB; te klikken en de muis te verslepen, zal de weergave inzoomen naar het geselecteerde gebied. Wanneer u daarna klikt op de &RMB;, zal het document terug naar de vorige zoomfactor gezet worden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Selecteren</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>De muis zal werken als een hulpmiddel voor selectie van een rechthoekig gebied. In die modus klikken met &LMB; en slepen tekent een selectievak en biedt de optie de geselecteerde inhoud naar het klembord te kopiëren, met uitspreken van de geselecteerde tekst of het geselecteerde gebied te transformeren in een afbeelding en het opslaan naar een bestand.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Tekstselectie</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>De muis dient hierbij als selectiehulpmiddel voor tekst. Als u dan klikt op de &LMB; en sleept met de muis, krijgt u de mogelijkheid om de tekst van het document te selecteren. Daarna moet u enkel op de &RMB; klikken om de tekst te kopiëren naar het klembord, of de huidige selectie uit te spreken.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Selectie voor tabel</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Trek een rechthoek rond de tekst voor de tabel, klik daarna met de &LMB; om het tekstblok in rijen en kolommen te verdelen. Een klik met de &LMB; op een bestaande regel verwijdert het en mengt de naastliggende rijen of kolommen. Klik tenslotte met de &RMB; om de tabel naar het klembord te kopiëren. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Vergrootglas</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Activeert de modus vergrootglas voor de muisaanwijzer. Houd de &LMB; ingedrukt om het vergrootglaswidget te activeren, beweeg de aanwijzer door het document. Het vergrootglas schaalt elk pixel in het document op naar 10 pixels in het vergrootglaswidget.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Annotaties</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>De annotatiewerkbalk openen</action
+>. Via de annotatiewerkbalk kunt u annotaties toevoegen aan het document dat u aan het lezen bent. Kijk voor meer informatie in de sectie over <link linkend="annotations"
+>Annotaties</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Digitaal ondertekenen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Start de workflow voor aanmaken van digitaal ondertekenen</action
+>. Toevoegen van digitale ondertekening wordt op dit moment alleen ondersteund voor PDF-bestanden. Voor meer informatie, bekijk de sectie over <link linkend="adding_digital_signatures"
+>Digitale ondertekening toevoegen</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Gehele document uitspreken</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Huidige pagina uitspreken</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Stoppen met spreken</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Spreken pauzeren/hervatten</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Met deze items kunt u het gehele document of alleen de huidige pagina laten uitspreken, en ook laten stoppen met uitspreken, met de spraakservice van het systeem. Deze service wordt geleverd door een &Qt;-bibliotheek die de spraakgever op &Linux;, en inheemse spraaksystemen op andere platforms omgeeft. Het is mogelijk om de huidige stem via &okular; te kiezen configuratiepagina <link linkend="configaccessibility"
+>Toegankelijkheid</link
+>.</para>
+						<para
+>De <guilabel
+>Spreek ...</guilabel
+> acties zijn enkel geactiveerd indien een spraakservice beschikbaar is op het systeem.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>De menu's Instellingen en Help</title>
+			<para
+>Naast de standaard &kde;-menu's <guimenu
+>Instellingen</guimenu
+> en <guimenu
+>Help</guimenu
+> zoals beschreven in het hoofdstuk <ulink url="help:/fundamentals/menus.html#menus"
+>Menu</ulink
+> van de documentatie in &kde; Fundamentals heeft &okular; specifieke menu-items van het programma:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Zijbalk tonen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Toont of verbergt de Zijbalk.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Paginabalk tonen</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Schakel de paginabalk</action
+> onderaan het documentgebied aan of uit voor verticale ruimte in het venster van &okular;. Merk op dat de paginanummers in elk geval getoond zullen worden in de standaard werkbalk.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Backends instellen...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Dit opent het venster <link linkend="configure-backends"
+>Backend-configuratie</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Backends van &okular; configureren</title>
+	  <para
+>U kunt backends van &okular; instellen door te klikken op <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Backends instellen...</guimenuitem
+></menuchoice
+>. Op dit moment worden instellingsmogelijkheden alleen geboden voor backends van EPub, &PostScript;, FictionBook, Txt, OpenDocument-tekst en &PDF; </para>
+	  <screenshot>
+	    <screeninfo
+>Het dialoogvenster voor configuratie van backends</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Het dialoogvenster voor configuratie van backends</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Met het gebruik van de instellingenpagina van backends voor EPub, FictionBook, Mobipocket, Markdown, TXT and OpenDocument-tekst kunt u het lettertype definiëren om documenten weer te geven in de overeenkomstige formaten. De knop <guibutton
+>Kiezen...</guibutton
+> in deze pagina's opent het standaard instellingenvenster van &kde; voor lettertypen. Kijk in de <ulink url="help:/fundamentals/fonts.html"
+>&kde; Fundamentals documentatie</ulink
+> voor de details. </para>
+	  <para
+>De beschrijving van de instellingenpagina's van de backends van Markdown, &PostScript; en &PDF; zijn hier onder te vinden. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Configuratie van Markdown-backend</title>
+	    <para
+>U kunt rendering van &okular; Markdown-backend gebaseerd op <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> configureren door <guilabel
+>Markdown</guilabel
+> te kiezen uit de lijst in het linker deel van de configuratiedialoog. Een extra te configureren optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>SmartyPants formattering inschakelen</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Indien geactiveerd staat deze optie toe aan &okular; om <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+> formattering toe te passen. Die formattering kan problemen geven in de technische teksten vanwege ongewenste substitutities (&eg;, het vervangt <literal
+>(C)</literal
+> door een copyrightsymbool). Deze optie is standaard geactiveerd. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>Backendinstellingen van &PostScript;</title>
+	    <para
+>U kunt &PostScript; rendering backend van &okular; gebaseerd op <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> instellen door <guilabel
+>Ghostscript</guilabel
+> te kiezen uit de lijst aan de linkerkant van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Platformlettertypen gebruiken</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Deze optie bepaalt of Ghostscript moet worden toegestaan platformlettertypen te gebruiken, zo niet dan zijn alleen lettertypen ingebed in het document toegestaan. De optie is standaard geactiveerd. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>Configuratie van &PDF;-backend</title>
+	    <para
+>U kunt de &PDF; rendering backend van &okular; gebaseerd op <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> instellen door <guilabel
+>&PDF;</guilabel
+> te kiezen uit de lijst aan de linker van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Maak dunne lijnen beter zichtbaar</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Lijnen trekken is in &okular; geïmplementeerd in twee stappen: generatie van het pad voor clipping en dit opvullen. Wanneer de lijn in het originele document minder is dan één pixel dan kan deze implementatie in twee stappen problemen veroorzaken. Voor deze lijnen wordt het pad voor clipping gevuld met de vulkleur die afhangt van de dikte van de lijngedeelte binnen het clippinggebied. Als het deel van de lijn binnen het clippinggebied erg klein wordt dan zal het contrast tussen de vorm en de achtergrondkleur te laag worden om de lijn te kunnen herkennen. De rasters van zulke lijnen zien er erg onaangenaam uit. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Dunne lijn (rood), het knippad (gestreepte lijn) en pixelranden (zwarte volle lijnen)</entry>
+			    <entry
+>Dunne lijn getoond in een laag contrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Om dunne lijnen beter zichtbaar te maken implementeert &okular; twee opties. </para>
+		    <para
+>De eerste optie is <guimenuitem
+>Vast</guimenuitem
+>. Met deze optie past &okular; het pad voor clipping en de lijnpositie aan zodat het pad voor clipping en lijn zich op dezelfde pixelgrens bevinden, &ie; &okular; vergroot de dunne lijnen tot één pixel op het uitvoerapparaat. Deze modus is vergelijkbaar met de <guilabel
+>Verbeter dunne lijnen</guilabel
+> in <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Als deze optie wordt gekozen, dan worden de dunne lijnen altijd vergroot. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dunne <guimenuitem
+>Volle</guimenuitem
+> lijn voor attentie</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dunne <guimenuitem
+>Volle</guimenuitem
+> lijn voor attentie</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De tweede optie is <guimenuitem
+>Vorm</guimenuitem
+>. Met deze optie worden het pad van de clipping en lijn ook aangepast aan de pixelgrens, maar de lijnintensiteit wordt overeenkomstig zijn breedte gecorrigeerd. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dunne <guimenuitem
+>Vorm</guimenuitem
+> lijn voor attentie</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dunne <guimenuitem
+>Vorm</guimenuitem
+> lijn voor attentie</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De dunne lijnen worden niet standaard verbeterd (optie <guimenuitem
+>Nee</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Digitale ondertekeningscertificaten</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Deze sectie biedt u het instellen van een eigen certificatendatabase om te gebruiken bij toevoegen van digitale ondertekening aan &PDF; bestanden. </para>
+			<para
+>Het kan ook een lijst maken van de beschikbare certificaten in de huidige certificatendatabase (indien aanwezig). </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>&okular; configureren</title>
+		<sect1 id="configindex">
+			<title
+>Algemene instellingen</title>
+			<para
+>U kunt &okular; instellen door te klikken op <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&okular; instellen...</guimenuitem
+></menuchoice
+>. Het dialoogvenster voor de configuratie is opgesplitst in 6 stukken. In dit hoofdstuk kunt u de beschikbare opties in detail terugvinden. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Algemeen</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Toegankelijkheid</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Prestatie</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Presentatie</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Annotaties</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Bewerker</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Het dialoogvenster voor configuratie</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Het dialoogvenster voor configuratie</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Afhankelijk van de huidig geïnstalleerde backends, is het menu-item <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Backends configureren...</guimenuitem
+> </menuchoice
+> geactiveerd. In dit configuratievenster kunt u de instellingen van de backends terugvinden (indien deze een configuratie hebben). </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Algemeen</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Vloeiend schuiven gebruiken</guilabel
+></term>
+					<listitem>
+						<para
+>Of geanimeerde transities getoond worden bij schuiven met het muiswiel en toetsenbord.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Schuifbalken weergeven</guilabel
+></term>
+					<listitem>
+						<para
+>Of er schuifbalken getoond moeten worden in de documentweergave.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>De miniaturen koppelen aan de bijbehorende pagina's</guilabel
+></term>
+					<listitem>
+						<para
+>Of de miniatuurweergave altijd de huidige pagina moet tonen of niet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Toon hints en informatieberichten</guilabel
+></term>
+					<listitem>
+						<para
+>Of er informatieberichten getoond moeten worden bij het opstarten, het laden van een bestand, &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Over ingebedde bestanden, formulieren of ondertekeningen een melding geven</guilabel
+></term>
+					<listitem>
+						<para
+>Of er informatiepanelen getoond moeten worden over ingebedde bestanden, formulieren of ondertekeningen &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Documenttitel in titelbalk tonen, indien beschikbaar</guilabel
+></term>
+					<listitem>
+						<para
+>Of de huidige documenttitel in de titelbalk van het venster van &okular; wordt getoond. Als er geen metagegevens voor de titel in het document zijn gevonden of dit item is niet geactiveerd, zal &okular; de bestandsnaam van het document tonen. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bij het niet tonen van de documenttitel</guilabel
+></term>
+					<listitem>
+					  <para
+>Kunt u uit twee twee opties kiezen, <guilabel
+>Alleen bestandsnaam</guilabel
+> of <guilabel
+>Volledig pad van bestand tonen</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Eigen achtergrondkleur gebruiken</guilabel
+></term>
+					<listitem>
+                                            <para
+>Schakelt <ulink url="help:/fundamentals/colors.html"
+>achtergrondkleur van het document kiezen</ulink
+> in (de kleur rond de getoonde pagina). Standaard wordt de kleur van de &Qt; hulpmiddelenkit gebruikt wanneer deze optie niet is geactiveerd. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Nieuwe bestanden in tabbladen openen</guilabel
+></term>
+					<listitem>
+						<para
+>Of nieuwe documenten in tabbladen worden geopend. De tabbladen zijn standaard uitgeschakeld.</para>
+						<para
+>De standaard sneltoetsen om te schakelen tussen tabbladen zijn <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Volgend tabblad</guilabel
+>) en <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Vorig tabblad</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Naar bestaand tabblad omschakelen als bestand al geopend is</guilabel
+></term>
+					<listitem>
+						<para
+>Of &okular; naar een tabblad zou moeten omschakelen als het bestand al geopend is in plaats van een nieuw tabblad te openen. Deze optie is standaard ingeschakeld. Kan alleen omgeschakeld worden als <guilabel
+>Nieuwe bestanden in tabbladen openen</guilabel
+> is ingeschakeld.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>DRM-beperkingen opvolgen</guilabel
+></term>
+					<listitem>
+						<para
+>Of &okular; de <firstterm
+>DRM</firstterm
+> (Digital Rights Management) beperkingen opgevolgd moeten worden. DRM-beperkingen worden gebruikt om ervoor te zorgen dat bepaalde acties met &PDF; documenten niet mogelijk zijn, zoals het kopiëren van inhoud naar het klembord. Merk op dat in sommige configuraties van &okular; deze optie niet beschikbaar is.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Document bij bestandswijziging opnieuw laden</guilabel
+></term>
+					<listitem>
+						<para
+>Of geopende bestanden automatisch gecontroleerd moeten worden op wijzigingen, en indien nodig ook bijgewerkt moeten worden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Dialoog voor backend-selectie tonen</guilabel
+></term>
+					<listitem>
+						<para
+>Of &okular; aan de gebruiker moet vragen welke backend gebruikt moet worden, in het geval dat er meer dan één backend in staat is het huidige bestand te openen. Wanneer dit niet aangevinkt is, zal &okular; de backend met de hoogste prioriteit kiezen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Leesrichting rechts naar links</guilabel
+></term>
+					<listitem>
+						<para
+>Of leesrichting rechts naar links standaard wordt gebruikt voor geopende bestanden. Kan nuttig zijn voor <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>bepaalde schrijfsystemen</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Standaard in modus continu openen</guilabel
+></term>
+					<listitem>
+						<para
+>Of de modus continu standaard wordt gebruikt. In modus continu worden alle pagina's van het document getoond en kunt u er rustig doorheen schuiven. Anders wordt slechts één pagina (of één rij pagina's) tegelijk getoond. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bij gebruik van hulpmiddel Bladeren, laat cursor teruglopen bij schermranden</guilabel
+></term>
+					<listitem>
+						<para
+>Biedt eindeloos schuiven in het gehele document met het <link linkend="menutools"
+>Hulpmiddel Bladeren</link
+>. Indien ingeschakeld, zak de muiscursor teruglopen naar het andere einde van het scherm wanneer het de randen raakt tijdens het verslepen van het document. Deze functie wordt alleen ondersteund onder X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Overzichtkolommen</guilabel
+></term>
+					<listitem>
+						<para
+>Deze instelling gaat over het aantal kolommen dat getoond moet worden bij gebruik van de overzichtsmodus. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Overlap bij Page Up/Down</guilabel
+></term>
+					<listitem>
+						<para
+>Hier kunt u het percentage van het huidige weergavegebied definiëren dat zichtbaar zou moeten zijn na het indrukken van de toetsen &PgUp;/&PgDn;. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Standaard zoom</guilabel
+></term>
+					<listitem>
+						<para
+>Deze optie definieert de standaard zoommodus voor bestanden die nooit eerder zijn geopend. Voor eerder geopende bestanden wordt de vorige zoommodus gebruikt. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Toegankelijkheid</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Rand rond koppelingen tonen</guilabel
+></term>
+					<listitem>
+						<para
+>Of er een rand rond koppelingen getoond moet worden.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kleuren wijzigen</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Activeert</action
+> de mogelijkheden om kleuren te wijzigen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kleurmodus</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Definieert</action
+> de modus kleuren wijzigen.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Kleuren omkeren</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Keert</action
+> de kleuren in de weergave om, &ie; zwarte objecten zullen als witte getoond worden.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Papierkleur wijzigen</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>Verandert</action
+> de papierkleur, &ie; de achtergrond van het document.</para>
+                                                                        <para
+>De kleur kan geselecteerd worden met het onderstaande patroon <guilabel
+>Papierkleur</guilabel
+>. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Donkere &amp; lichte kleuren wijzigen</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Verandert</action
+> de donkere en lichte kleuren naar uw voorkeur. Dit betekent dat zwart niet als zwart getoond wordt, maar als de door u gekozen donkere kleur, en dat wit niet getoond zal worden als wit, maar als de lichte kleur die u hebt geselecteerd.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Naar zwart-wit omzetten</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Zet</action
+> het document om in zwart-wit. U kunt de drempelwaarde en het contrast instellen. Als u de drempelwaarde verhoogt (door het naar rechts te verplaatsen) zullen er lichtere tinten grijs gebruikt worden.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Lichtheid inverteren</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Inverteert</action
+> lichtheid van alle kleuren. Lichte en donkere kleuren zullen omgedraaid worden, maar tint en verzadiging zullen niet veranderen. Het contrast in afbeeldingen zullen gewoonlijk slechter zijn dan in <guilabel
+>Luma inverteren (sRGB lineair)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Luma inverteren (sRGB Lineair)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverteert</action
+> luma van alle kleuren. Licht en donker zullen omgedraaid worden, maar verzadiging zal niet veranderen. Het contrast in afbeeldingen wordt beter bewaard dan in <guilabel
+>Lichtheid inverteren</guilabel
+>, maar illustraties en kleurrijke tekstopmaak lijken gewoonlijk slechter. Gebruikt sRGB luma-coëfficiënten, maar geen gammacorrectie.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Luma inverteren (symmetrisch)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverteert</action
+> luma van alle kleuren, met symmetrische luma coëfficienten. Licht en donker zullen omgedraaid worden, maar tint en verzadiging zullen niet veranderen. Vrijwel gelijk aan <guilabel
+>Lichtheid inverteren</guilabel
+>, maar het contrast is in sommige gevallen beter.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Tint positief verschuiven</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Verschuift</action
+> tint van alle kleuren met 120 graden. Kan sommige problemen met contrast in kleurrijke illustraties verminderen.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Tint negatief verschuiven</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Verschuift</action
+> tint van alle kleuren met 120 graden. Kan sommige problemen met contrast in kleurrijke illustraties verminderen.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>U kunt sneltoetsen en werkbalk acties voor de kleurmodi met de overeenkomstige menu-items configureren in het menu <guimenu
+>Instellingen</guimenu
+> van het hoofdvenster van &okular;.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Engine voor tekst-naar-spraak</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Biedt u de keuze</action
+> van de engine tekst-naar-spraak (<abbrev
+>TTS</abbrev
+>) te gebruiken door &okular;. De standaard is <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Stem tekst-naar-spraak</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Biedt u de keuze</action
+> van een stem tekst-naar-spraak-engine te gebruiken door &okular;. U kunt alle talen en stemmen gebruiken afhankelijk van de beschikbaarheid van synthesizers op uw platform. In &Linux; wordt speech-dispatcher standaard gebruikt om beschikbare stemmen te bepalen.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Snelheid</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Transparantie-effecten inschakelen</guilabel
+></term>
+					<listitem>
+						<para
+>Maak gebruik van transparantie-effecten bij het aanmaken van selecties en andere grafische dingen. Schakel deze optie uit om deze aan te maken met behulp van de omtrek- en dekking-opvulstijlen; hiermee verhoogt u de snelheid bij het selecteren van iets.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Geheugengebruik</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; kan de grootste snelheid bereiken door het geheugengebruik af te stellen, afhankelijk van uw systeem en uw voorkeuren. Hoe meer geheugen u het laat gebruiken, hoe sneller het programma zal zijn. Het standaardprofiel is geschikt voor alle systemen, maar u kunt voorkomen dat &okular; meer geheugen dan echt nodig is gebruikt door "Laag profiel" te kiezen; in tegenstelling daarmee kunt u het meest uit uw systeem halen door "Agressief" te selecteren. Gebruik het profiel "Gulzig" om alle pagina's vooraf te laden zonder het risico dat te veel systeemgeheugen wordt gebruikt (slechts 50% van het totale geheugen of het het vrije geheugen wordt gebruikt).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Renderingopties</guilabel
+></term>
+					<listitem>
+						<para
+>Met deze groep opties kunt u weergave van tekst en afbeeldingen in &okular; verbeteren. Het resultaat hangt af van het apparaat voor weergave van het document. De items <guilabel
+>Anti-aliasing van tekst inschakelen</guilabel
+> en <guilabel
+>Anti-aliasing van grafische elementen inschakelen</guilabel
+> kunnen gebruikt worden om <ulink url="https://nl.wikipedia.org/wiki/Anti-aliasing"
+>anti-aliasing</ulink
+> van tekst en afbeeldingen in het document in of uit te schakelen. Het item <guilabel
+>Hinten van tekst inschakelen</guilabel
+> is bedoeld om het <ulink url="https://nl.wikipedia.org/wiki/Hinten"
+>hinten van lettertypen</ulink
+> om te schakelen. Anti-aliasing en hinten wijzigen de weergave van documenten, u kunt ze naar uw voorkeur gebruiken.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Presentatie</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Verdergaan elke</guilabel
+></term>
+					<listitem>
+						<para
+>Activeert het verdergaan naar een volgende pagina bij het verstrijken van een bepaalde hoeveelheid tijd.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Herhalen na de laatste pagina</guilabel
+></term>
+					<listitem>
+						<para
+>Bij het navigeren in de presentatiemodus zal bij het verder navigeren voorbij de laatste pagina, de eerste pagina weer verschijnen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Navigeren door aanraken</guilabel
+></term>
+					<listitem>
+						<para
+>Stelt u in staat om navigatie door aanraken fijn af te stemmen met tikken in de presentatie met de volgende drie mogelijke waarden:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Links/rechts aan de kant tikken om terug/vooruit te gaan</guilabel
+>: Op de linker(rechter)helft van het scherm tikken laat de presentatie naar de vorige (volgende) dia gaan.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Tik overal om vooruit te gaan</guilabel
+> (standaard): Tikken op het scherm laat de presentatie naar de volgende dia gaan, ongeacht waar op het scherm is getikt.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Uitgeschakeld</guilabel
+>: Tikken op het scherm doet niets.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Achtergrondkleur</guilabel
+></term>
+					<listitem>
+						<para
+>De kleur die op het scherm in presentatiemodus getoond zal worden daar waar die niet bedekt wordt door de pagina zelf.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Muiscursor</guilabel
+></term>
+					<listitem>
+						<para
+>Of de muiscursor altijd verborgen moet worden, altijd zichtbaar moet zijn, of verborgen moet worden na een vertraging (bij inactiviteit).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Voortgangsindicator tonen</guilabel
+></term>
+					<listitem>
+						<para
+>Of er een voortgangscirkel getoond moet worden, welke telkens de huidige pagina en het totale aantal pagina's toont in de rechterbovenhoek van het presentatiescherm bij het verwisselen van de pagina.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pagina met samenvatting tonen</guilabel
+></term>
+					<listitem>
+						<para
+>Of er een pagina met samenvatting getoond moet worden bij het begin van de presentatie met de titel, de auteur en het aantal pagina's in het document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Overgangen activeren</guilabel
+></term>
+					<listitem>
+						<para
+>Dit keuzevakje gebruiken om overgangseffecten tussen pagina's in of uit te schakelen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Standaardovergang</guilabel
+></term>
+					<listitem>
+						<para
+>Het overgangseffect tussen de pagina's, indien het document zelf dit niet aangeeft. U kunt dit op <guilabel
+>Willekeurige overgang</guilabel
+> zetten, als u wilt dat &okular; zelf willekeurig een keuze maakt uit de beschikbare effecten.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Plaatsing</guilabel
+></term>
+					<listitem>
+						<para
+>Op deze plaats kunt u het <guilabel
+>Scherm</guilabel
+> kiezen dat gebruikt wordt om de presentatie te tonen.</para>
+						<para
+><guilabel
+>Huidig scherm</guilabel
+> is hetzelfde scherm dat gebruikt wordt om het &okular;venster zelf te tonen (en die de presentatie dus start).</para>
+						<para
+>Het <guilabel
+>standaardscherm</guilabel
+> is het scherm dat als standaard ingesteld is in de instellingen van xinerama.</para>
+						<para
+><guilabel
+>Scherm 0</guilabel
+>, <guilabel
+>Scherm 1</guilabel
+> &etc; zijn de beschikbare schermen.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Instellingen van tekenhulpmiddel</guilabel
+></term>
+					<listitem>
+						<para
+>Beheer de kleuren van de pen die gebruikt wordt bij het tekenen op de pagina's tijdens de presentatiemodus.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Annotaties</title>
+			<screenshot>
+				<screeninfo
+>De pagina Annotaties van de instellingendialoog</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>De pagina Annotaties van de instellingendialoog</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Annotatiewerkbalk</guilabel
+></term>
+					<listitem>
+                                            <para
+>Biedt het schakelen tussen <guimenuitem
+>Volledige annotatiewerkbalk</guimenuitem
+> (<link linkend="annotations-add"
+>standaard werkbalk</link
+> in de bovenste sectie van het venster van &okular;) en <guimenuitem
+>Snelle annotatiewerkbalk</guimenuitem
+> (schuivende werkbalk met uw favoriete hulpmiddelen in het rechter deel van het documentpaneel).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Auteur</guilabel
+></term>
+					<listitem>
+						<para
+>De auteur van de inhoud die toegevoegd is aan het document. Standaard is het de naam uit de pagina met <guilabel
+>Wachtwoord &amp; gebruikersbeheer</guilabel
+> uit de module &systemsettings; <guilabel
+>Accountdetails</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Annotatie-hulpmiddelen</guilabel
+></term>
+					<listitem>
+					  <para
+>Dit paneel wordt gebruikt om uw <link linkend="annotations-add"
+>annotatiewerkbalk</link
+> in te stellen. </para>
+					  <para
+>Er zijn vijf knoppen (<guibutton
+>Toevoegen</guibutton
+>, <guibutton
+>Bewerken</guibutton
+>, <guibutton
+>Verwijderen</guibutton
+>, <guibutton
+>Omhoog verplaatsen</guibutton
+>, <guibutton
+>Omlaag verplaatsen</guibutton
+>) en een lijstvak (die een lijst met de inhoud van de huidige annotatiewerkbalk bevat) die gebruikt worden om de werkbalk in te stellen. </para>
+					  <para
+>Als u behoefte heb om hulpmiddelknop aan de werkbalk toe te voegen, klik dan op de knop <guibutton
+>Toevoegen</guibutton
+>. U kunt kiezen uit de <guilabel
+>Naam</guilabel
+>, het <guilabel
+>Type</guilabel
+> en het <guilabel
+>Uiterlijk</guilabel
+> van het aangemaakte hulpmiddel. </para>
+					  <note>
+					    <para
+>Denk er aan dat hulpmiddelen voor annotatie in &okular; makkelijk in te stellen zijn. U kunt bijvoorbeeld twee knoppen hebben voor hetzelfde hulpmiddel maar met een andere kleur. Aarzel niet om te experimenteren met het kiezen van de set knoppen die exact zijn toegespitst op uw workflow. </para>
+					  </note>
+					  <para
+>Klik op een item in het lijstvak en klik daarna op de overeenkomstige knop in het rechter gedeelte van de pagina om het item te bewerken, te verwijderen, omhoog of omlaag te verplaatsen. De sneltoets van het hulpmiddel (toetsen <keycap
+>1</keycap
+> tot <keycap
+>9</keycap
+>) hangen af van hun positie in de lijst van de annotatiewerkbalk. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Aangepaste stempels gebruiken</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Maak het pictogram dat u wilt gebruiken voor uw eigen stempel en sla het op in elk grafisch formaat dat door &okular; wordt ondersteund</para
+></listitem>
+					<listitem
+><para
+>Klik op de knop <guibutton
+>Toevoegen</guibutton
+>, selecteer het type <guilabel
+>Stempel</guilabel
+> en voer een naam in voor uw stempel.</para
+></listitem>
+					<listitem
+><para
+>Voer het volledige pad naar uw aangepaste pictogram in in het uitklapvak in de groep <guilabel
+>Stempelsymbool</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Editor</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Editor</guilabel
+></term>
+					<listitem>
+						<para
+>Kies de editor die &okular; moet opstarten om een bronbestand te openen. Dit is het geval wanneer het document verwijzingen bevat naar verschillende punten (meestal rij- en kolomnummer) uit de bronnen waar het op gebaseerd is. Het &DVI;-formaat ondersteunt zelf de toevoeging van informatie over de bronnen waar het &latex;-document uit gegenereerd is. Er bestaat een gelijkaardig systeem voor &PDF;-documenten, <acronym
+>pdfsync</acronym
+> genaamd, die extra informatie opslaat in een apart bestand, genoemd naar het &PDF;-bestand zelf (bijvoorbeeld <filename
+>mijndocument.pdfsync</filename
+> voor <filename
+>mijndocument.pdf</filename
+>). </para>
+						<para
+>&okular; wordt geleverd met vooraf geconfigureerde instellingen voor de volgende editors: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>&Emacs; client</ulink
+>, <ulink url="https://www.lyx.org/"
+>LyX client</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> en <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>Om terugzoeken in &kile; te gebruiken, moet u uw &latex;-bestand compileren met de configuratie <guilabel
+>Modern</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Commando</guilabel
+></term>
+					<listitem>
+						<para
+>Dit is het commando met bijbehorende parameters om de gekozen editor op te starten met het bronbestand van het document waar het om draait.</para>
+						<para
+>Dit veld zal automatisch gevuld worden als u een van de voorgeconfigureerde editors gebruikt. Kies anders <guimenuitem
+>Eigen teksteditor</guimenuitem
+> in het afrolvak <guilabel
+>Editor</guilabel
+> en verwijs naar de documentatie over uw favoriete editor om het juiste command te vinden. </para>
+						<para
+>U kunt de volgende plaatshouders gebruiken:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - de bestandsnaam</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - de regel in het bestand waar naartoe gegaan moet worden</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - de kolom in het bestand waar naartoe gegaan moet worden</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Als %f niet is gespecificeerd, zal de naam van het document achter het gespecificeerde commando worden gevoegd.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Dankbetuiging en licentie</title>
+
+		<itemizedlist>
+			<title
+>Copyright van het programma:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; huidige onderhouder</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> &kpdf; ontwikkelaar</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Copyright van de documentatie:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; auteur</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> Enkele herzieningen en toevoegingen</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		&meld.fouten;&vertaling.freek;&vertaling.ruben; &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

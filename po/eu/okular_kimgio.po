@@ -1,0 +1,75 @@
+# Translation of okular_kimgio.po to Euskara/Basque (eu).
+# Copyright (C) 2009-2018, Free Software Foundation.
+# This file is distributed under the same license as the kdegraphics package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Enbata <urazpian@hotmail.com>, 2009.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# marcos, 2011.
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_kimgio\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-11-30 00:42+0000\n"
+"PO-Revision-Date: 2018-08-03 17:43+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marcos Goyenetxe"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "marcos@euskalgnu.org"
+
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#, kde-format
+msgid "Unable to load document: %1"
+msgstr "Ezin da zamatu dokumentua: %1"
+
+#: generator_kimgio.cpp:76
+#, kde-format
+msgid ""
+"This document appears malformed. Here is a best approximation of the "
+"document's intended appearance."
+msgstr ""
+"Dokumentu hau gaizki eratuta dagoela dirudi. Hemen dago dokumentuarentzat "
+"nahi zen itxuraren hurbilketa hobe bat."
+
+#~ msgid "Image Backend"
+#~ msgstr "Irudien motorra"
+
+#~ msgid "A simple image backend"
+#~ msgstr "Irudi bakunen motorra"
+
+#~ msgid ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+#~ msgstr ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "Tresna-barra nagusia"

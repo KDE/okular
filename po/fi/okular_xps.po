@@ -1,0 +1,64 @@
+# translation of okular_xps.po to Finnish
+# translation of okular_xps.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Mikko Piippo <piippo@cc.helsinki.fi>, 2007.
+# Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2008.
+# Lasse Liehu <lliehu@kolumbus.fi>, 2011.
+#
+# KDE Finnish translation sprint participants:
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_xps\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2011-01-16 19:45+0200\n"
+"Last-Translator: Lasse Liehu <lliehu@kolumbus.fi>\n"
+"Language-Team: Finnish <lokalisointi@lists.coss.fi>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-POT-Import-Date: 2012-12-01 22:24:15+0000\n"
+"X-Generator: MediaWiki 1.21alpha (963ddae); Translate 2012-11-08\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mikko Piippo"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mikko.piippo@helsinki.fi"
+
+#: generator_xps.cpp:1947
+#, kde-format
+msgid "Revision"
+msgstr "Versio"
+
+# pmap: =/elat=XPS-taustaosasta/
+#~ msgid "XPS Backend"
+#~ msgstr "XPS-taustaosa"
+
+#~ msgid "An XPS backend"
+#~ msgstr "XPS-taustaosa"
+
+#~ msgid ""
+#~ "© 2006-2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+#~ msgstr ""
+#~ "© 2006–2007 Brad Hards\n"
+#~ "© 2007 Jiri Klement\n"
+#~ "© 2008 Pino Toscano"
+
+#~ msgid "Brad Hards"
+#~ msgstr "Brad Hards"
+
+#~ msgid "Jiri Klement"
+#~ msgstr "Jiri Klement"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "Pino Toscano"

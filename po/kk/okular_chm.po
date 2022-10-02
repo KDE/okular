@@ -1,0 +1,59 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sairan Kikkarin <sairan@computer.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2010-07-23 20:15+0600\n"
+"Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
+"Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Сайран Киккарин"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sairan@computer.org"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr ""
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+
+#~ msgid "CHM Backend"
+#~ msgstr "CHM тетігі"
+
+#~ msgid "A Microsoft Windows help file renderer"
+#~ msgstr "Microsoft Windows көмек файлын көрсету"
+
+#~ msgid ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+#~ msgstr ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+
+#~ msgid "Piotr Szymański"
+#~ msgstr "Piotr Szymański"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

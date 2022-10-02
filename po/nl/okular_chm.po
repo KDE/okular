@@ -1,0 +1,63 @@
+# translation of okular_chm.po to Dutch
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Rinse de Vries <rinsedevries@kde.nl>, 2007, 2008.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_chm\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2020-02-24 12:20+0100\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 19.12.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Rinse de Vries,Freek de Kruijf - 2020"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "rinsedevries@kde.nl,freekdekruijf@kde.nl"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid "Unsupported encoding"
+msgstr "Niet ondersteunde codering"
+
+#: lib/ebook_epub.cpp:311
+#, kde-format
+msgid ""
+"The encoding of this ebook is not supported yet. Please open a bug in "
+"https://bugs.kde.org for support to be added"
+msgstr ""
+"De codering van dit e-boek wordt nog niet ondersteund yet. Open een "
+"bugrapport in https://bugs.kde.org voor toevoegen van ondersteuning"
+
+#~ msgid "CHM Backend"
+#~ msgstr "CHM-backend"
+
+#~ msgid "A Microsoft Windows help file renderer"
+#~ msgstr "Een viewer voor Microsoft Windows-helpbestanden"
+
+#~ msgid ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+#~ msgstr ""
+#~ "© 2005-2007 Piotr Szymański\n"
+#~ "© 2008 Albert Astals Cid"
+
+#~ msgid "Piotr Szymański"
+#~ msgstr "Piotr Szymański"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "Albert Astals Cid"

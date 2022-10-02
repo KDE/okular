@@ -1,0 +1,85 @@
+# translation of okular_fictionbook.po to Arabic
+# translation of okular_fictionbook.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+# ahmad samawi <ahmad.samawi@gmail.com>, 2008.
+# zayed <zayed.alsaidi@gmail.com>, 2008, 2021.
+# Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_fictionbook\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2021-07-06 00:03+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ahmad Samawi"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ahmad.samawi@gmail.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "المستند ليس FictionBook صحيح"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "لا يمكن فتح الملف: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "نوع ملف غير صحيح , ليس ملف أرشيف من نوع zip"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "بنية ملف غير صحيحة (المجلد الرئيسي مفقود)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "لا يوجد محتوى في المستند"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "مستند XML غير صحيح %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "ضبط خلفية FictionBook "
+
+#~ msgid "Fiction Book Backend"
+#~ msgstr "منصة خلفية لملفات Fiction book"
+
+#~ msgid "A renderer for FictionBook eBooks"
+#~ msgstr "معالج الكتب الالكترونية الخاصة ب FictionBook"
+
+#~ msgid "© 2007-2008 Tobias Koenig"
+#~ msgstr "© 2007-2008 Tobias Koenig"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "Tobias Koenig"

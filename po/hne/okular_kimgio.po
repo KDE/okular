@@ -1,0 +1,73 @@
+# translation of okular_kimgio.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_kimgio\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-11-30 00:42+0000\n"
+"PO-Revision-Date: 2007-12-27 17:18+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
+"Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
+"Language: hne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविसंकर सिरीवास्तव, जी. करूनाकर"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in,"
+
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#, kde-format
+msgid "Unable to load document: %1"
+msgstr "दस्तावेज लोड करे मं अक्छम:%1"
+
+#: generator_kimgio.cpp:76
+#, kde-format
+msgid ""
+"This document appears malformed. Here is a best approximation of the "
+"document's intended appearance."
+msgstr ""
+
+#~ msgid "Image Backend"
+#~ msgstr "इमेज बैकएन्ड"
+
+#~ msgid "A simple image backend"
+#~ msgstr "एक सरल फोटू बैकएन्ड"
+
+#, fuzzy
+#~| msgid ""
+#~| "© 2005 Albert Astals Cid\n"
+#~| "© 2006-2007 Pino Toscano\n"
+#~| "© 2006-2007 Tobias Koenig"
+#~ msgid ""
+#~ "© 2005, 2009 Albert Astals Cid\n"
+#~ "© 2006-2007 Pino Toscano\n"
+#~ "© 2006-2007 Tobias Koenig"
+#~ msgstr ""
+#~ "© 2005 अलबर्ट एस्टल्स सिड\n"
+#~ "© 2006-2007 पिनो टोस्कानो\n"
+#~ "© 2006-2007 टाबियस कोएनिग"
+
+#~ msgid "Albert Astals Cid"
+#~ msgstr "अलबर्ट एस्टल्स सिड"
+
+#~ msgid "Pino Toscano"
+#~ msgstr "पिनो टोसकिसनो"
+
+#~ msgid "Tobias Koenig"
+#~ msgstr "टाबियस कोएनिग"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "मुख्य औजार पट्टी"

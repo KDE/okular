@@ -1,0 +1,57 @@
+# Peter Potrowl <peter.potrowl@gmail.com>, 2017, 2019.
+# Simon Depiets <sdepiets@gmail.com>, 2018.
+# Xavier Besnard <xavier.besnard@neuf.fr>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_markdown\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"PO-Revision-Date: 2021-01-13 17:17+0100\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 20.12.0\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Geoffray Levasseur, Matthieu Robin, Peter Potrowl, Simon Depiets"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"geoffray.levasseurbrandin@numericable.fr, kde@macolu.org, peter."
+"potrowl@gmail.com, sdepiets@gmail.com"
+
+#: converter.cpp:62
+#, kde-format
+msgid "Failed to open the document"
+msgstr "Impossible d'ouvrir le document"
+
+#: converter.cpp:103
+#, kde-format
+msgid "Failed to compile the Markdown document."
+msgstr "Impossible de compiler le document « Markdown »."
+
+#: generator_md.cpp:56
+#, kde-format
+msgid "Enable SmartyPants formatting"
+msgstr "Formatage SmartyPants"
+
+#: generator_md.cpp:58
+#, kde-format
+msgid "Markdown"
+msgstr "Markdown"
+
+#: generator_md.cpp:58
+#, kde-format
+msgid "Markdown Backend Configuration"
+msgstr "Configuration du moteur markdown"

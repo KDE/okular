@@ -1,0 +1,103 @@
+# Translation of okular_djvu.po into Serbian.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Slobodan Simic <slsimic@gmail.com>, 2007.
+# Zoran Olujic <olujicz@ns-linux.org>, 2010.
+# Chusslove Illich <caslav.ilic@gmx.net>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular_djvu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"PO-Revision-Date: 2010-10-05 22:02+0200\n"
+"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+"X-Environment: kde\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Слободан Симић"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "slsimic@gmail.com"
+
+# skip-rule: t-editor
+#: generator_djvu.cpp:141
+#, kde-format
+msgid "Editor"
+msgstr "Уредник"
+
+#: generator_djvu.cpp:142
+#, kde-format
+msgid "Publisher"
+msgstr "Издавач"
+
+#: generator_djvu.cpp:143
+#, kde-format
+msgid "Volume"
+msgstr "Свеска"
+
+#: generator_djvu.cpp:144
+#, kde-format
+msgid "Type of document"
+msgstr "Врста документа"
+
+#: generator_djvu.cpp:146
+#, kde-format
+msgctxt "Unknown number of component files"
+msgid "Unknown"
+msgstr "непознато"
+
+#: generator_djvu.cpp:146
+#, kde-format
+msgid "Component Files"
+msgstr "Саставних фајлова"
+
+#: kdjvu.cpp:697
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Unknown"
+msgstr "непозната"
+
+#: kdjvu.cpp:700
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Single Page"
+msgstr "једнострани"
+
+#: kdjvu.cpp:703
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled"
+msgstr "комплет"
+
+#: kdjvu.cpp:706
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indirect"
+msgstr "индиректни"
+
+#: kdjvu.cpp:709
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Bundled (old)"
+msgstr "комплет (стари)"
+
+#: kdjvu.cpp:712
+#, kde-format
+msgctxt "Type of DjVu document"
+msgid "Indexed (old)"
+msgstr "индексирани (стари)"

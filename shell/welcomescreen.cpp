@@ -7,13 +7,12 @@
 #include "welcomescreen.h"
 
 #include <KConfigGroup>
+#include <KIO/OpenFileManagerWindowJob>
 #include <KIconLoader>
 #include <KSharedConfig>
 
 #include <QAction>
 #include <QClipboard>
-#include <QDesktopServices>
-#include <QDir>
 #include <QGraphicsOpacityEffect>
 #include <QGuiApplication>
 #include <QMenu>
@@ -79,10 +78,7 @@ public:
                 showDirectoryAction->setIcon(QIcon::fromTheme(QStringLiteral("document-open-folder")));
                 connect(showDirectoryAction, &QAction::triggered, this, [item]() {
                     if (item->url.isLocalFile()) {
-                        QFileInfo fileInfo(item->url.toLocalFile());
-                        QDir parentDir = fileInfo.dir();
-                        QUrl parentDirUrl = QUrl::fromLocalFile(parentDir.absolutePath());
-                        QDesktopServices::openUrl(parentDirUrl);
+                        KIO::highlightInFileManager({item->url});
                     }
                 });
                 menu.addAction(showDirectoryAction);

@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-28 00:45+0000\n"
-"PO-Revision-Date: 2022-08-09 13:27+0200\n"
+"PO-Revision-Date: 2022-10-03 16:04+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
-"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language-Team: Korean <kde-i18n-doc@kde.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2726,7 +2726,7 @@ msgstr "기본값으로 연속 모드에서 열기"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "탐색 도구를 사용할 때 화면 경계에서 커서 둘러싸기"
 
 #: part/dlggeneral.cpp:190
 #, kde-format

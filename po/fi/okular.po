@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2022-07-21 18:59+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -5712,23 +5712,23 @@ msgstr "Olet sulkemassa %1 välilehteä. Haluatko varmasti jatkaa?"
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Varoita suljettaessa useampia välilehtiä"
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, kde-format
 msgid "&Copy Path"
 msgstr "&Kopioi sijainti"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr "Avaa &yläkansio"
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "&Unohda tämä kohde"
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

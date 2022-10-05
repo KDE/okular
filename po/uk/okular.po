@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2022-09-28 07:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -5736,23 +5736,23 @@ msgstr "Ви наказали програми закрити вкладки (%1
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Попереджати, якщо відбувається спроба закрити декілька вкладок"
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, kde-format
 msgid "&Copy Path"
 msgstr "С&копіювати шлях"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr "Відкрити &теку документа"
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "З&абути цей запис"
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

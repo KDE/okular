@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2020-04-26 13:07+0800\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -5813,25 +5813,25 @@ msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "當我嘗試關閉多個分頁時警告我"
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, fuzzy, kde-format
 #| msgid "Copy Text"
 msgid "&Copy Path"
 msgstr "複製文字"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, fuzzy, kde-format
 #| msgid "Open Con&taining Folder"
 msgid "&Open Containing Folder"
 msgstr "開啟包含資料夾(&T)"
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, fuzzy, kde-format
 #| msgid "Current document only"
 msgctxt "on welcome screen"

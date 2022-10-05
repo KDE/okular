@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2022-09-28 20:46+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -5696,23 +5696,23 @@ msgstr "Masz zamiar zamknąć %1 karty. Czy na pewno chcesz kontynuować?"
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ostrzeż przy zamykaniu wielu kart"
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, kde-format
 msgid "&Copy Path"
 msgstr "&Skopiuj ścieżkę"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr "&Otwórz katalog zawierający"
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "&Zapomnij o tym elemencie"
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

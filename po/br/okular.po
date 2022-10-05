@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2005-01-14 16:13+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -5770,24 +5770,24 @@ msgstr ""
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, fuzzy, kde-format
 #| msgid "Copy Text"
 msgid "&Copy Path"
 msgstr "E&ilañ ar skrid"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr ""
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, fuzzy, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

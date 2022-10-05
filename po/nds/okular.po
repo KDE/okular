@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -5978,24 +5978,24 @@ msgstr ""
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, fuzzy, kde-format
 #| msgid "Copy Text"
 msgid "&Copy Path"
 msgstr "Text koperen"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr ""
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, fuzzy, kde-format
 #| msgid "Current document only"
 msgctxt "on welcome screen"

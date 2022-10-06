@@ -58,7 +58,7 @@ msgstr "Paràmetres generals"
 #: conf/gssettingswidget.ui:37
 #, kde-format
 msgid "&Use platform fonts"
-msgstr "&Utilitza els tipus de lletra de la plataforma"
+msgstr "Utilit&za els tipus de lletra de la plataforma"
 
 #: generator_ghostview.cpp:82
 #, kde-format

@@ -1534,7 +1534,7 @@ msgstr[1] "%1 anotacions"
 #: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
 #, kde-format
 msgid "&Open Pop-up Note"
-msgstr "&Obri una nota emergent"
+msgstr "O&bri una nota emergent"
 
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
 #, kde-format
@@ -1881,7 +1881,7 @@ msgstr "Símbol de segell:"
 #: part/annotationwidgets.cpp:795
 #, kde-format
 msgid "&Width:"
-msgstr "&Amplària:"
+msgstr "A&mplària:"
 
 #: part/annotationwidgets.cpp:522
 #, kde-format
@@ -2271,7 +2271,7 @@ msgstr "Colors &normals"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
-msgstr "&Invertix els colors"
+msgstr "I&nvertix els colors"
 
 #: part/colormodemenu.cpp:45
 #, kde-format
@@ -3325,13 +3325,13 @@ msgstr "Modificat"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
-msgstr "&Anomena i guarda..."
+msgstr "Anomena i gu&arda..."
 
 #: part/embeddedfilesdialog.cpp:152
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
-msgstr "&Visualitza..."
+msgstr "Vi&sualitza..."
 
 #: part/fileprinterpreview.cpp:115
 #, kde-format
@@ -4039,7 +4039,7 @@ msgstr "Nom personalitzat d'anotació:"
 #: part/part-viewermode.rc:6 part/part.rc:5
 #, kde-format
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #. i18n: ectx: Menu (settings)
 #: part/part-viewermode.rc:10 part/part.rc:90
@@ -5116,7 +5116,7 @@ msgstr "Mides de les &pàgines"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Extract Font"
-msgstr "&Extrau el tipus de lletra"
+msgstr "E&xtrau el tipus de lletra"
 
 #: part/propertiesdialog.cpp:273
 #, kde-format
@@ -5495,7 +5495,7 @@ msgstr "Para"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add..."
-msgstr "&Afig..."
+msgstr "Afi&g..."
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
@@ -5720,7 +5720,7 @@ msgstr "&Copia el camí"
 #: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
-msgstr "&Obri la carpeta contenidora"
+msgstr "O&bri la carpeta contenidora"
 
 #: shell/welcomescreen.cpp:89
 #, kde-format

@@ -115,6 +115,10 @@ if(KF5Activities_FOUND AND BUILD_DESKTOP)
 		LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 	)
 	target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
+
+	if (HAVE_X11)
+        target_link_libraries(mainshelltest Qt5::X11Extras)
+    endif()
 endif()
 
 if(BUILD_DESKTOP)
@@ -122,6 +126,10 @@ if(BUILD_DESKTOP)
         TEST_NAME "annotationtoolbartest"
         LINK_LIBRARIES Qt5::Test okularpart
     )
+
+    if (HAVE_X11)
+        target_link_libraries(annotationtoolbartest Qt5::X11Extras)
+    endif()
 endif()
 
 ecm_add_test(generatorstest.cpp

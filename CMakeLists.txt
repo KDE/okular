@@ -185,6 +185,11 @@ if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
         DESCRIPTION  "Activities interface library"
         URL "https://api.kde.org/frameworks/kactivities/html/"
         PURPOSE "Required for Activities integration.")
+
+    find_package(Qt5X11Extras REQUIRED)
+    set(HAVE_X11 TRUE)
+else()
+    set(HAVE_X11 FALSE)
 endif()
 find_package(Phonon4Qt5 CONFIG REQUIRED)
 

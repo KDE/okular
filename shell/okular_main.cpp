@@ -19,7 +19,27 @@
 #include <QDBusInterface>
 #include <QTextStream>
 
+#include "config-okular.h"
+#if HAVE_X11
+#include <QX11Info>
+#endif
+
 #include <iostream>
+
+static QString startupId()
+{
+    QString result;
+    if (KWindowSystem::isPlatformWayland()) {
+        result = qEnvironmentVariable("XDG_ACTIVATION_TOKEN");
+        qunsetenv("XDG_ACTIVATION_TOKEN");
+    } else if (KWindowSystem::isPlatformX11()) {
+#if HAVE_X11
+        result = QString::fromUtf8(QX11Info::nextStartupId());
+#endif
+    }
+
+    return result;
+}
 
 static bool attachUniqueInstance(const QStringList &paths, const QString &serializedOptions)
 {
@@ -42,7 +62,7 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
     const QString page = ShellUtils::page(serializedOptions);
     iface.call(QStringLiteral("openDocument"), ShellUtils::urlFromArg(paths[0], ShellUtils::qfileExistFunc(), page).url(), serializedOptions);
     if (!ShellUtils::noRaise(serializedOptions)) {
-        iface.call(QStringLiteral("tryRaise"));
+        iface.call(QStringLiteral("tryRaise"), startupId());
     }
 
     return true;
@@ -136,7 +156,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         exit(1);
     }
 
-    bestService->call(QStringLiteral("tryRaise"));
+    bestService->call(QStringLiteral("tryRaise"), startupId());
 
     return true;
 }

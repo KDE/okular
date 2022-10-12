@@ -30,6 +30,10 @@ if(TARGET KF5::Activities)
 	target_link_libraries(okular KF5::Activities)
 endif()
 
+if (HAVE_X11)
+    target_link_libraries(okular Qt5::X11Extras)
+endif()
+
 install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 

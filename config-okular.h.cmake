@@ -6,3 +6,6 @@
 
 /* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM
+
+/* Defines whether we are building with X11 support */
+#cmakedefine01 HAVE_X11

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:45+0000\n"
+"POT-Creation-Date: 2022-10-05 00:44+0000\n"
 "PO-Revision-Date: 2022-09-11 19:48+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -5663,23 +5663,23 @@ msgstr "Du er i ferd med å lukka %1 faner. Er du sikker på at du vil dette?"
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Åtvar meg når eg prøver å lukka fleire faner"
 
-#: shell/welcomescreen.cpp:65
+#: shell/welcomescreen.cpp:64
 #, kde-format
 msgid "&Copy Path"
 msgstr "&Kopier filadressa"
 
-#: shell/welcomescreen.cpp:78
+#: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
 msgstr "&Opna foreldermappa"
 
-#: shell/welcomescreen.cpp:93
+#: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "&Gløym denne oppføringa"
 
-#: shell/welcomescreen.cpp:143
+#: shell/welcomescreen.cpp:139
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

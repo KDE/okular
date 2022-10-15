@@ -10,6 +10,7 @@
 #include <KBookmarkAction>
 #include <KBookmarkManager>
 #include <KBookmarkMenu>
+#include <KBookmarkOwner>
 #include <QDebug>
 #include <QFileInfo>
 #include <QGuiApplication>

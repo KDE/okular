@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-10-01 20:34+0200\n"
+"PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
 "Language: vi\n"
@@ -953,7 +953,7 @@ msgstr "Chữ kí số"
 #: gui/signatureguiutils.cpp:121
 #, kde-format
 msgid "Non-Repudiation"
-msgstr ""
+msgstr "Không phản đối"
 
 #: gui/signatureguiutils.cpp:124
 #, kde-format
@@ -968,38 +968,38 @@ msgstr "Giải mật mã khoá"
 #: gui/signatureguiutils.cpp:130
 #, kde-format
 msgid "Key Agreement"
-msgstr ""
+msgstr "Thoả thuận của khoá"
 
 #: gui/signatureguiutils.cpp:133
 #, kde-format
 msgid "Sign Certificate"
-msgstr ""
+msgstr "Kí chứng chỉ"
 
 #: gui/signatureguiutils.cpp:136
 #, kde-format
 msgid "Sign CRL"
-msgstr ""
+msgstr "Kí CRL"
 
 #: gui/signatureguiutils.cpp:139
 #, kde-format
 msgid "Encrypt Only"
-msgstr ""
+msgstr "Chỉ mật mã hoá"
 
 #: gui/signatureguiutils.cpp:142
 #, kde-format
 msgid "No Usage Specified"
-msgstr ""
+msgstr "Chưa chỉ định tác dụng nào"
 
 #: gui/signatureguiutils.cpp:149
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: gui/signatureguiutils.cpp:163
 #, kde-format
 msgid "The document has not been modified since it was signed."
-msgstr ""
+msgstr "Tài liệu chưa bị chỉnh sửa kể từ khi kí."
 
 #: gui/signatureguiutils.cpp:166
 #, kde-format
@@ -1008,33 +1008,37 @@ msgid ""
 "modified;\n"
 "however there have been subsequent changes to the document."
 msgstr ""
+"Tu bản tài liệu mà được bảo đảm bởi chữ kí này thì chưa bị chỉnh sửa;\n"
+"tuy vậy đã có các thay đổi sau đó đối với tài liệu."
 
 #: gui/signatureguiutils.cpp:170
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
 msgstr ""
+"Tài liệu đã bị chỉnh sửa theo một cách mà một người kí trước đây không cho "
+"phép."
 
 #: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid "The document integrity verification could not be completed."
-msgstr ""
+msgstr "Không hoàn tất được việc xác minh tính toàn vẹn của tài liệu."
 
 #: gui/signatureguiutils.cpp:205
 #, kde-format
 msgid "This document has unsigned signature fields."
-msgstr ""
+msgstr "Tài liệu này có các trường chữ kí chưa được kí."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document is digitally signed."
-msgstr ""
+msgstr "Tài liệu này đã được kí số."
 
 #: gui/signatureguiutils.cpp:210
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
-msgstr ""
+msgstr "Tài liệu này đã được kí số. Đã có thay đổi từ lần kí cuối."
 
 #: gui/signatureguiutils.cpp:213
 #, kde-format
@@ -1042,31 +1046,32 @@ msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
 msgstr ""
+"Tài liệu này đã được kí số. Không kiểm nhận được chính xác một số chữ kí."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
 msgid "Unsigned Signature %1"
-msgstr ""
+msgstr "Chữ kí chưa được kí %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
 #, kde-format
 msgid "Field: %1 on page %2"
-msgstr ""
+msgstr "Trường: %1 ở trang %2"
 
 #: gui/signaturemodel.cpp:152
 #, kde-format
 msgid "Rev. %1: Signed By %2"
-msgstr ""
+msgstr "Tu bản %1: Kí bởi %2"
 
 #: gui/signaturemodel.cpp:158
 #, kde-format
 msgid "Signing Time: %1"
-msgstr ""
+msgstr "Thời gian kí: %1"
 
 #: gui/signaturemodel.cpp:163
 #, kde-format
 msgid "Reason: %1"
-msgstr ""
+msgstr "Lí do: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

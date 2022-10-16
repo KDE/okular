@@ -2267,7 +2267,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
         PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         if (leftButton) {
             d->leftClickTimer.stop();
-            if (pageItem && d->mouseAnnotation->isActive()) {
+            if (d->mouseAnnotation->isActive()) {
                 // if left button pressed and annotation is focused, forward move event
                 d->mouseAnnotation->routeMouseMoveEvent(pageItem, eventPos, leftButton);
             }
@@ -4680,8 +4680,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
 
     // precalc view limits for intersecting with page coords inside the loop
     const bool isEvent = newValue != -1 && !d->blockViewport;
-    const QRect viewportRect(horizontalScrollBar()->value(), verticalScrollBar()->value(), viewport()->width(), viewport()->height());
-    const QRect viewportRectAtZeroZero(0, 0, viewport()->width(), viewport()->height());
+    const QRectF viewportRect(horizontalScrollBar()->value(), verticalScrollBar()->value(), viewport()->width(), viewport()->height());
+    const QRectF viewportRectAtZeroZero(0, 0, viewport()->width(), viewport()->height());
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
@@ -4720,14 +4720,18 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         qWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects(i->croppedGeometry());
 #endif
         // if the item doesn't intersect the viewport, skip it
-        QRect intersectionRect = viewportRect.intersected(i->croppedGeometry());
+        QRectF intersectionRect = viewportRect.intersected(i->croppedGeometry());
         if (intersectionRect.isEmpty()) {
             continue;
         }
 
         // add the item to the 'visible list'
         d->visibleItems.push_back(i);
-        Okular::VisiblePageRect *vItem = new Okular::VisiblePageRect(i->pageNumber(), Okular::NormalizedRect(intersectionRect.translated(-i->uncroppedGeometry().topLeft()), i->uncroppedWidth(), i->uncroppedHeight()));
+
+        intersectionRect.translate(-i->uncroppedGeometry().topLeft());
+        const Okular::NormalizedRect normRect(intersectionRect.left() / i->uncroppedWidth(), intersectionRect.top() / i->uncroppedHeight(), intersectionRect.right() / i->uncroppedWidth(), intersectionRect.bottom() / i->uncroppedHeight());
+
+        Okular::VisiblePageRect *vItem = new Okular::VisiblePageRect(i->pageNumber(), normRect);
         visibleRects.push_back(vItem);
 #ifdef PAGEVIEW_DEBUG
         qWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap(this, i->uncroppedWidth(), i->uncroppedHeight());
@@ -4793,7 +4797,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
             pagesToPreload = d->items.count();
         }
 
-        const QRect expandedViewportRect = viewportRect.adjusted(0, -pixelsToExpand, 0, pixelsToExpand);
+        const QRectF adjustedViewportRect = viewportRect.adjusted(0, -pixelsToExpand, 0, pixelsToExpand);
+        const QRect expandedViewportRect(adjustedViewportRect.x(), adjustedViewportRect.y(), adjustedViewportRect.width(), adjustedViewportRect.height());
 
         for (int j = 1; j <= pagesToPreload; j++) {
             // add the page after the 'visible series' in preload

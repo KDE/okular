@@ -127,18 +127,16 @@ QRect SmoothPathEngine::event(EventType type, Button button, Modifiers /*modifie
         Okular::NormalizedPoint nextPoint = Okular::NormalizedPoint(nX, nY);
         points.append(nextPoint);
         // update total rect
-        double dX = 2.0 / (double)xScale;
-        double dY = 2.0 / (double)yScale;
-        totalRect.left = qMin(totalRect.left, nX - dX);
-        totalRect.top = qMin(totalRect.top, nY - dY);
-        totalRect.right = qMax(nX + dX, totalRect.right);
-        totalRect.bottom = qMax(nY + dY, totalRect.bottom);
+        totalRect.left = qMin(totalRect.left, nX);
+        totalRect.top = qMin(totalRect.top, nY);
+        totalRect.right = qMax(nX, totalRect.right);
+        totalRect.bottom = qMax(nY, totalRect.bottom);
         // paint the difference to previous full rect
         Okular::NormalizedRect incrementalRect;
-        incrementalRect.left = qMin(nextPoint.x, lastPoint.x) - dX;
-        incrementalRect.right = qMax(nextPoint.x, lastPoint.x) + dX;
-        incrementalRect.top = qMin(nextPoint.y, lastPoint.y) - dY;
-        incrementalRect.bottom = qMax(nextPoint.y, lastPoint.y) + dY;
+        incrementalRect.left = qMin(nextPoint.x, lastPoint.x);
+        incrementalRect.right = qMax(nextPoint.x, lastPoint.x);
+        incrementalRect.top = qMin(nextPoint.y, lastPoint.y);
+        incrementalRect.bottom = qMax(nextPoint.y, lastPoint.y);
         lastPoint = nextPoint;
         return incrementalRect.geometry((int)xScale, (int)yScale);
         //}

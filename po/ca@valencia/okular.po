@@ -359,12 +359,12 @@ msgstr "La impressora està en un estat no vàlid"
 #: core/document.cpp:4612
 #, kde-format
 msgid "Unable to find file to print"
-msgstr "No s'ha pogut trobar el fitxer a imprimir"
+msgstr "No s'ha pogut trobar el fitxer que s'ha d'imprimir"
 
 #: core/document.cpp:4614
 #, kde-format
 msgid "There was no file to print"
-msgstr "No hi ha cap fitxer a imprimir"
+msgstr "No hi ha cap fitxer per a imprimir"
 
 #: core/document.cpp:4616
 #, kde-format
@@ -2624,7 +2624,8 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Indiqueu l'ordre de l'editor de text personalitzat a executar.<br />\n"
+"<qt>Indiqueu l'ordre de l'editor de text personalitzat que s'executarà.<br /"
+">\n"
 "Podeu afegir les variables següents de substitució:\n"
 "<ul>\n"
 "  <li>%f - el nom del fitxer</li>\n"
@@ -3357,7 +3358,7 @@ msgstr "Bu&sca:"
 #: part/findbar.cpp:49
 #, kde-format
 msgid "Text to search for"
-msgstr "Text que cal buscar"
+msgstr "Text que s'ha de buscar"
 
 #: part/findbar.cpp:54
 #, kde-format
@@ -3802,7 +3803,7 @@ msgstr "Clic per a veure la vista ampliada."
 #: part/pageview.cpp:5018
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
-msgstr "Dibuixa un rectangle al voltant del text/gràfics a copiar."
+msgstr "Dibuixa un rectangle al voltant del text/gràfics que es copiaran."
 
 #: part/pageview.cpp:5030
 #, kde-format
@@ -5535,7 +5536,7 @@ msgstr "Nom duplicat"
 #: shell/main.cpp:68
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr "Pàgina a mostrar del document"
+msgstr "Pàgina que s'ha de mostrar del document"
 
 #: shell/main.cpp:69
 #, kde-format
@@ -5576,7 +5577,7 @@ msgstr "establix l'ordre de l'editor extern"
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
-"Documents que cal obrir. Indiqueu «-» per a llegir de l'entrada estàndard "
+"Documents que s'obriran. Indiqueu «-» per a llegir de l'entrada estàndard "
 "(stdin)."
 
 #: shell/okular_main.cpp:37 shell/okular_main.cpp:134

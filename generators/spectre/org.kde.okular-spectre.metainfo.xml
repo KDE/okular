@@ -25,6 +25,7 @@
   <name xml:lang="ia">PostScript</name>
   <name xml:lang="id">PostScript</name>
   <name xml:lang="it">PostScript</name>
+  <name xml:lang="ka">PostScript</name>
   <name xml:lang="ko">포스트스크립트</name>
   <name xml:lang="lt">PostScript</name>
   <name xml:lang="ml">പോസ്റ്റ്സ്ക്രിപ്റ്റ്</name>
@@ -70,6 +71,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos PostScript</summary>
   <summary xml:lang="id">Dukungan tambahan untuk pembacaan dokumen PostScript</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti PostScript</summary>
+  <summary xml:lang="ka">PostScript დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">포스트스크립트 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą PostScript dokumentų skaitymui</summary>
   <summary xml:lang="ml">പോസ്റ്റ്സ്ക്രിപ്റ്റ് പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>

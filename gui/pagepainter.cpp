@@ -106,7 +106,6 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
         if (p != nullptr) {
             pixmap = *p;
-            pixmap.setDevicePixelRatio(dpr);
         }
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
@@ -255,7 +254,6 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio(dpr);
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
                         destPainter->drawPixmap(limitsInTile.topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
@@ -266,9 +264,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 tIt++;
             }
         } else {
-            QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
-            scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            destPainter->drawPixmap(limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(), dLimits.height()));
+            destPainter->drawPixmap(limits, pixmap.scaled(dScaledWidth, dScaledHeight), dLimitsInPixmap);
         }
 
         // 4A.2. active painter is the one passed to this method
@@ -295,7 +291,6 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio(dpr);
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
                         p.drawPixmap(limitsInTile.translated(-limits.topLeft()).topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
@@ -310,9 +305,8 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             }
         } else {
             // 4B.1. draw the page pixmap: normal or scaled
-            QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
-            scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            p.drawPixmap(0, 0, scaledCroppedPixmap);
+
+            p.drawPixmap(QRectF(0, 0, limits.width(), limits.height()), pixmap.scaled(dScaledWidth, dScaledHeight), dLimitsInPixmap);
         }
 
         p.end();
@@ -599,13 +593,12 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 QPixmap pixmap = Okular::AnnotationUtils::loadStamp(stamp->stampIconName(), qMax(annotBoundary.width(), annotBoundary.height()) * dpr);
                 if (!pixmap.isNull()) // should never happen but can happen on huge sizes
                 {
-                    QPixmap scaledCroppedPixmap = pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr).copy(dInnerRect.toAlignedRect());
-                    scaledCroppedPixmap.setDevicePixelRatio(dpr);
-
                     // Draw pixmap with opacity:
                     mixedPainter->save();
                     mixedPainter->setOpacity(mixedPainter->opacity() * opacity / 255.0);
-                    mixedPainter->drawPixmap(annotRect.topLeft(), scaledCroppedPixmap);
+
+                    mixedPainter->drawPixmap(annotRect.topLeft(), pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr), dInnerRect.toAlignedRect());
+
                     mixedPainter->restore();
                 }
             }

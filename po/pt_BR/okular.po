@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-07-14 09:15-0300\n"
+"PO-Revision-Date: 2022-10-19 15:37-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -2768,6 +2768,7 @@ msgstr "Abrir no modo contínuo por padrão"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Quando usar a ferramenta de navegação, envolva o cursor nas bordas da tela"
 
 #: part/dlggeneral.cpp:190
 #, kde-format

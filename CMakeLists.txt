@@ -501,11 +501,7 @@ install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
 
-if (${ECM_VERSION} STRGREATER "5.58.0")
-    install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
-else()
-    install(FILES okular.categories  DESTINATION ${KDE_INSTALL_CONFDIR})
-endif()
+install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 ########### cmake files #################
 

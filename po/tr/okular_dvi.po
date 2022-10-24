@@ -50,7 +50,7 @@ msgstr ""
 "Reader'da görüntülendiğinde oldukça kalitesiz olan belgeler üretecektir. TeX "
 "dağıtımınızı <em>dvipdfm</em> programını içeren daha güncel bir sürüme "
 "güncellemeniz akıllıca olabilir.</p><p>Kafası karışık sistem yöneticisi için "
-"ip ucu: Okular, programları ararken PATH ortam değişkenini kullanır.</p></qt>"
+"ip ucu: Okular, programları ararken PATH çevre değişkenini kullanır.</p></qt>"
 
 #: dviexport.cpp:142
 #, kde-format
@@ -90,7 +90,7 @@ msgstr ""
 "<qt><p>Okular bilgisayarınızda <em>dvips</em> programının yerini "
 "belirleyemedi. Bu program dışa aktarım işlevinin çalışması için önemlidir.</"
 "p><p>Kafası karışık sistem yöneticisi için ip ucu: Okular, programları "
-"ararken PATH ortam değişkenini kullanır.</p></qt>"
+"ararken PATH çevre değişkenini kullanır.</p></qt>"
 
 #: dviexport.cpp:270
 #, kde-format

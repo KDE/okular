@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("okularkirigami"));
 
+    KLocalizedString::setApplicationDomain("org.kde.active.documentviewer");
+
     KAboutData aboutData = okularAboutData();
     KAboutData::setApplicationData(aboutData);
 

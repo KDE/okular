@@ -4683,7 +4683,7 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a "
+"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
 "guardar el document i descartar estos elements."
 
 #: part/part.cpp:2777
@@ -4696,7 +4696,7 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a "
+"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
 "guardar, però es perdran estos elements, així com l'historial de desfer/"
 "refer."
 

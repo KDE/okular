@@ -63,7 +63,7 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
-"En activar esta opció es permet que Okular contacti amb servidors OCSP de "
+"En activar esta opció es permet que Okular contacte amb servidors OCSP de "
 "tercers per a verificar si els certificats emprats per a la signatura "
 "digital s'han revocat des de la seua creació."
 

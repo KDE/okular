@@ -4160,7 +4160,7 @@ msgstr "Va al final del document"
 #: part/part.cpp:734
 #, kde-format
 msgid "Rename the current bookmark"
-msgstr "Canvia el nom el punt actual"
+msgstr "Canvia el nom del punt actual"
 
 #: part/part.cpp:738
 #, kde-format
@@ -4547,7 +4547,7 @@ msgstr "Introduïu el nom nou del punt:"
 #: part/part.cpp:2513
 #, kde-format
 msgid "Rename this Bookmark"
-msgstr "Canvia el nom este punt"
+msgstr "Canvia el nom d'este punt"
 
 #: part/part.cpp:2516
 #, kde-format

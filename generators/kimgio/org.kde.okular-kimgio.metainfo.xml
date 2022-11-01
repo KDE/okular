@@ -23,6 +23,7 @@
   <name xml:lang="hi">छवियाँ</name>
   <name xml:lang="hu">Képek</name>
   <name xml:lang="ia">Images</name>
+  <name xml:lang="ie">Images</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="ka">გამოსახულებები</name>
   <name xml:lang="ko">그림</name>
@@ -68,6 +69,7 @@
   <summary xml:lang="hi">कई छवियों के प्रारूपों को पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás számos képformátum olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger formatos de image</summary>
+  <summary xml:lang="ie">Adjunte li supporte por letion de multiplic formates de images</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="ka">ამატებს მრავალი გამოსახულების ფორმატის წაკითხვის მხარდაჭერას</summary>
   <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>

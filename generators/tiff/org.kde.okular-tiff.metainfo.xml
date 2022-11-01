@@ -23,6 +23,7 @@
   <name xml:lang="hi">टिफ़</name>
   <name xml:lang="hu">Tiff</name>
   <name xml:lang="ia">TIFF</name>
+  <name xml:lang="ie">Tiff</name>
   <name xml:lang="it">Tiff</name>
   <name xml:lang="ka">Tiff</name>
   <name xml:lang="ko">TIFF</name>
@@ -68,6 +69,7 @@
   <summary xml:lang="hi">टिफ़ दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás Tiff-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos Tiff</summary>
+  <summary xml:lang="ie">Adjunter li supporte de letion de documentes Tiff</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Tiff</summary>
   <summary xml:lang="ka">TIFF დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">TIFF 문서 읽기 지원 추가</summary>

@@ -23,6 +23,7 @@
   <name xml:lang="hi">डीवीआइ दस्तावेज़</name>
   <name xml:lang="hu">DVI-dokumentumok</name>
   <name xml:lang="ia">Documentos DVI</name>
+  <name xml:lang="ie">Documentes DVI</name>
   <name xml:lang="it">Documenti DVI</name>
   <name xml:lang="ka">DVI დოკუმენტები</name>
   <name xml:lang="ko">DVI 문서</name>
@@ -68,6 +69,7 @@
   <summary xml:lang="hi">डीवीआइ दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás DVI-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos DVI</summary>
+  <summary xml:lang="ie">Adjunte li supporte de letion de documentes DVI</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti DVI</summary>
   <summary xml:lang="ka">DVI დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">DVI 문서 읽기 지원 추가</summary>

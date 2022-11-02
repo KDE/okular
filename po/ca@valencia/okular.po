@@ -1868,7 +1868,7 @@ msgid ""
 "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
 "visible in PDF readers other than Okular.</warning>"
 msgstr ""
-"<warning>funcionalitat experimental.<nl/>Els segells inserits en els "
+"<warning>característica experimental.<nl/>Els segells inserits en els "
 "documents PDF no són visibles en lectors de PDF diferents d'Okular.</warning>"
 
 #: part/annotationwidgets.cpp:469
@@ -2711,7 +2711,7 @@ msgstr "Utilitza un color de fons personalitzat:"
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
-msgstr "Funcionalitats del programa:"
+msgstr "Característiques del programa:"
 
 #: part/dlggeneral.cpp:119
 #, kde-format
@@ -4024,7 +4024,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Experimental feature"
-msgstr "Funcionalitat experimental"
+msgstr "Característica experimental"
 
 #: part/pageviewannotator.cpp:1613
 #, kde-format
@@ -4842,8 +4842,8 @@ msgid ""
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
 "<qt>Este error normalment passa quan no teniu permisos suficients per a "
-"llegir el fitxer. Podeu comprovar el propietari i els permisos si feu clic "
-"dret sobre el fitxer en el gestor de fitxers Dolphin, després trieu l'opció "
+"llegir el fitxer. Podeu comprovar el propietari i els permisos si feu un "
+"clic dret al fitxer en el gestor de fitxers Dolphin, després trieu l'opció "
 "«Propietats». i seleccioneu la pestanya «Permisos» en la finestra oberta.</"
 "qt>"
 

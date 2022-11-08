@@ -2966,7 +2966,7 @@ msgstr "Repetix després de l'última pàgina"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap left/right side to go back/forward"
-msgstr "Toc a la banda esquerra/dreta per a anar arrere/avant"
+msgstr "Toc en la banda esquerra/dreta per a anar arrere/avant"
 
 #: part/dlgpresentation.cpp:60
 #, kde-format

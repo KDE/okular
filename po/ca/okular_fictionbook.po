@@ -70,12 +70,3 @@ msgstr "FictionBook"
 #, kde-format
 msgid "FictionBook Backend Configuration"
 msgstr "Configuració del dorsal de FictionBook"
-
-#~ msgid "A renderer for FictionBook eBooks"
-#~ msgstr "Un renderitzador per a llibres electrònics FictionBook"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

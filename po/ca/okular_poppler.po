@@ -310,9 +310,3 @@ msgstr "Introduïu la contrasenya"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Introduïu la contrasenya per a obrir %1:"
-
-#~ msgid "PDF Certificates"
-#~ msgstr "Certificats de PDF"
-
-#~ msgid "PDF Digital Signature Certificates"
-#~ msgstr "Certificats de signatura digital de PDF"

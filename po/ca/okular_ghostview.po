@@ -79,18 +79,3 @@ msgstr "Versió del document"
 #, kde-format
 msgid "Language Level"
 msgstr "Nivell del llenguatge"
-
-#~ msgid "PS Backend"
-#~ msgstr "Dorsal PS"
-
-#~ msgid "A PostScript file renderer."
-#~ msgstr "Un renderitzador de fitxers PostScript."
-
-#~ msgid "© 2007-2008 Albert Astals Cid"
-#~ msgstr "© 2007-2008 Albert Astals Cid"
-
-#~ msgid "Based on the Spectre library."
-#~ msgstr "Basat en la biblioteca Spectre."
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"

@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the okular package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2022-10-27 20:33+0700\n"
+"Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
+"Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
+"Language: ie\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "OIS"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mistresssilvara@hotmail.com"
+
+#: converter.cpp:98
+#, kde-format
+msgid "Document is not a valid FictionBook"
+msgstr "Li document ne es un valid FictionBook"
+
+#: document.cpp:29
+#, kde-format
+msgid "Unable to open document: %1"
+msgstr "Ne successat aperter un document: %1"
+
+#: document.cpp:36
+#, kde-format
+msgid "Document is not a valid ZIP archive"
+msgstr "Documente ne es un valid archive ZIP"
+
+#: document.cpp:42
+#, kde-format
+msgid "Invalid document structure (main directory is missing)"
+msgstr "Ínvalid structura de document (li primari directoria manca)"
+
+#: document.cpp:57
+#, kde-format
+msgid "No content found in the document"
+msgstr "Null contenete esset trovat in li document"
+
+#: document.cpp:68
+#, kde-format
+msgid "Invalid XML document: %1"
+msgstr "Ínvalid document XML: %1"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook"
+msgstr "FictionBook"
+
+#: generator_fb.cpp:26
+#, kde-format
+msgid "FictionBook Backend Configuration"
+msgstr "Configuration del infrastructura FictionBook"

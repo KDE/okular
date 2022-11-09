@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the okular package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-11 00:15+0000\n"
+"PO-Revision-Date: 2022-10-27 20:24+0700\n"
+"Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
+"Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
+"Language: ie\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "OIS"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mistresssilvara@hotmail.com"
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Un error evenit apertente li document Mobipocket."
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr ""
+"Ti libre es protectet per DRM e posse esser monstrat solmen sur li intentet "
+"aparate"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket"
+msgstr "Mobipocket"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket Backend Configuration"
+msgstr "Configuration del infrastructura Mobipocket"

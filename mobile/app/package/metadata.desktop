@@ -2,6 +2,7 @@
 Name=Okular
 Name[ar]=اوكلار
 Name[az]=Okular
+Name[be]=Okular
 Name[bg]=Okular
 Name[bs]=Okular
 Name[ca]=Okular
@@ -66,6 +67,7 @@ Name[zh_TW]=文件檢視_Okular
 GenericName=Document viewer
 GenericName[ar]=عارض المستندات
 GenericName[az]=Sənədə baxış vasitısi
+GenericName[be]=Сродак прагляду дакументаў
 GenericName[bg]=Преглед на документи
 GenericName[bs]=Prikazivač dokumenata
 GenericName[ca]=Visualitzador de documents

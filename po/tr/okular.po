@@ -2646,7 +2646,7 @@ msgstr "Komut:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
-msgstr "Pürüzsüz kaydırma kullan"
+msgstr "Pürüzsüz sarma kullan"
 
 #: part/dlggeneral.cpp:35
 #, kde-format
@@ -2658,7 +2658,7 @@ msgstr "Görünüm:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
-msgstr "Kaydırma çubuklarını göster"
+msgstr "Sarma çubuklarını göster"
 
 #: part/dlggeneral.cpp:46
 #, kde-format
@@ -3627,22 +3627,22 @@ msgstr "Seslendirmeyi Duraklat/Sürdür"
 #: part/pageview.cpp:783
 #, kde-format
 msgid "Scroll Up"
-msgstr "Yukarı Kaydır"
+msgstr "Yukarı Sar"
 
 #: part/pageview.cpp:789
 #, kde-format
 msgid "Scroll Down"
-msgstr "Aşağı Kaydır"
+msgstr "Aşağı Sar"
 
 #: part/pageview.cpp:795
 #, kde-format
 msgid "Scroll Page Up"
-msgstr "Sayfayı Yukarı Kaydır"
+msgstr "Sayfayı Yukarı Sar"
 
 #: part/pageview.cpp:801
 #, kde-format
 msgid "Scroll Page Down"
-msgstr "Sayfayı Aşağı Kaydır"
+msgstr "Sayfayı Aşağı Sar"
 
 #: part/pageview.cpp:807
 #, kde-format

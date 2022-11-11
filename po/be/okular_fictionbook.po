@@ -1,16 +1,12 @@
-# translation of okular_fictionbook.po to Belarusian
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-#
 # Darafei Praliaskouski <komzpa@licei2.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: okular_fictionbook\n"
+"Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2007-05-02 17:22+0300\n"
+"PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
-"Language-Team: Belarusian <i18n@mova.org>\n"
+"Language-Team: Belarusian\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,21 +15,26 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || n%10>=5 && n%10<=9 || n"
 "%100>=11 && n%100<=14 ? 2 : 3);\n"
+"X-Crowdin-Project: 86ff119b1606fcaa910d6b44fc14b611\n"
+"X-Crowdin-Project-ID: 127\n"
+"X-Crowdin-Language: be\n"
+"X-Crowdin-File: /main/be/okular/okular_fictionbook.po\n"
+"X-Crowdin-File-ID: 8463\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Дарафей Праляскоўскі, Antikruk"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "komzpa@licei2.com, nashtlumach@gmail.com"
 
 #: converter.cpp:98
 #, kde-format
 msgid "Document is not a valid FictionBook"
-msgstr "Дакумент не з'яўляецца FictionBook"
+msgstr "Дакумент не ёсць FictionBook"
 
 #: document.cpp:29
 #, kde-format
@@ -43,12 +44,12 @@ msgstr "Немагчыма адкрыць дакумент: %1"
 #: document.cpp:36
 #, kde-format
 msgid "Document is not a valid ZIP archive"
-msgstr "Дакумент не з'яўляецца ZIP-архівам"
+msgstr "Дакумент не ёсць ZIP-архівам"
 
 #: document.cpp:42
 #, kde-format
 msgid "Invalid document structure (main directory is missing)"
-msgstr "Памылковая структура дакумента (галоўная тэчка адсутнічае)"
+msgstr "Хібная структура дакумента (няма галоўнага каталога)"
 
 #: document.cpp:57
 #, kde-format
@@ -58,17 +59,17 @@ msgstr "Не знойдзена змесціва ў дакуменце"
 #: document.cpp:68
 #, kde-format
 msgid "Invalid XML document: %1"
-msgstr "Няўдалы фармат XML: %1"
+msgstr "Хібны дакумент XML: %1"
 
 #: generator_fb.cpp:26
 #, kde-format
 msgid "FictionBook"
-msgstr ""
+msgstr "FictionBook"
 
 #: generator_fb.cpp:26
 #, kde-format
 msgid "FictionBook Backend Configuration"
-msgstr ""
+msgstr "Канфігурацыя рухавіка FictionBook"
 
 #~ msgid "Creator"
 #~ msgstr "Стваральнік"

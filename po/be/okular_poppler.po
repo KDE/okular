@@ -1,16 +1,12 @@
-# translation of okular_poppler.po to Belarusian
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-#
 # Darafei Praliaskouski <komzpa@licei2.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: okular_poppler\n"
+"Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-03 00:44+0000\n"
-"PO-Revision-Date: 2007-05-25 11:15+0300\n"
+"PO-Revision-Date: 2022-11-10 14:24\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
-"Language-Team: Belarusian <i18n@mova.org>\n"
+"Language-Team: Belarusian\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,22 +15,27 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || n%10>=5 && n%10<=9 || n"
 "%100>=11 && n%100<=14 ? 2 : 3);\n"
+"X-Crowdin-Project: 86ff119b1606fcaa910d6b44fc14b611\n"
+"X-Crowdin-Project-ID: 127\n"
+"X-Crowdin-Language: be\n"
+"X-Crowdin-File: /main/be/okular/okular_poppler.po\n"
+"X-Crowdin-File-ID: 8471\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Дарафей Праляскоўскі, Antikruk"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "komzpa@licei2.com, nashtlumach@gmail.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enhance thin lines:"
-msgstr ""
+msgstr "Паляпшэнне тонкіх ліній:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
@@ -46,13 +47,13 @@ msgstr "Не"
 #: conf/pdfsettingswidget.ui:35
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "Суцэльныя"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:40
 #, kde-format
 msgid "Shape"
-msgstr ""
+msgstr "Фігуры"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:63
@@ -62,6 +63,8 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Калі ўключыць гэты параметр, то Okular зможа звязвацца з серверамі OCSP, каб "
+"правяраць сапраўднасць сертыфікатаў."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:66
@@ -69,51 +72,53 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Правяраць ануляванне сертыфікатаў лічбавых подпісаў з дапамогай пабочных "
+"сервераў"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:73
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "База даных сертыфікатаў"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:82
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "Прадвызначаны:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:89
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "Адвольны:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:106
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "Даступныя сертыфікаты"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:114
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "&Загрузіць подпісы"
 
 #: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
-msgstr "Настаўленні PDF"
+msgstr "Параметры PDF"
 
 #: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
-msgstr ""
+msgstr "Друкаваць анатацыі"
 
 #: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
-msgstr ""
+msgstr "Уключэнне анатацый у вобласць друкавання дакумента"
 
 #: generator_pdf.cpp:90
 #, kde-format
@@ -121,16 +126,18 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
+"Уключэнне анатацый у вобласць друкавання дакумента. Калі вы хочаце "
+"надрукаваць арыгінальны дакумент, то можаце адключыць гэты параметр."
 
 #: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
-msgstr "Прымусова растэрызаваць"
+msgstr "Прымусовая растэрызацыя"
 
 #: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
-msgstr ""
+msgstr "Перад друкаваннем выконваць растэрызацыю дакумента"
 
 #: generator_pdf.cpp:94
 #, kde-format
@@ -139,39 +146,40 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
+"Прымусовае пераўтварэнне кожнай старонкі ў малюнак перад друкаваннем. "
+"Звычайна гэта пагаршае якасць, але карысна пры друкаванні дакументаў, якія "
+"друкуюцца няправільна."
 
 #: generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "Падладжванне да вобласці друкавання"
 
 #: generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "Падладжванне да памераў старонкі"
 
 #: generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "Няма"
 
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "Рэжым маштабавання старонак, якія друкуюцца"
 
 #: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "Рэжым маштабавання:"
 
 #: generator_pdf.cpp:936
-#, fuzzy, kde-format
-#| msgctxt "PDF v. <version>"
-#| msgid "PDF v. %1"
+#, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr "PDF v. %1"
+msgstr "PDF в. %1.%2"
 
 #: generator_pdf.cpp:936
 #, kde-format
@@ -201,7 +209,7 @@ msgstr "Так"
 #: generator_pdf.cpp:938
 #, kde-format
 msgid "Optimized"
-msgstr "Аптымізаваны"
+msgstr "Аптымізавана"
 
 #: generator_pdf.cpp:1370
 #, kde-format
@@ -210,11 +218,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Падпісана: %1\n"
+"\n"
+"Дата: %2"
 
 #: generator_pdf.cpp:1576
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Выкарыстоўваецца Poppler %1"
 
 #: generator_pdf.cpp:1578
 #, kde-format
@@ -223,16 +234,19 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Выкарыстоўваецца Poppler %1\n"
+"\n"
+"Убудавана над Poppler %2"
 
 #: generator_pdf.cpp:1625
 #, kde-format
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: generator_pdf.cpp:1625
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr ""
+msgstr "Канфігурацыя рухавіка PDF"
 
 #: generator_pdf.cpp:2084
 #, kde-format
@@ -240,23 +254,25 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"У дакуменце знойдзены некаторыя памылкі, Okular можа няправільна паказаць "
+"змесціва"
 
 #: pdfsettingswidget.cpp:44
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "Выдадзена"
 
 #: pdfsettingswidget.cpp:44
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "Электронная пошта"
 
 #: pdfsettingswidget.cpp:44
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "Тэрмін дзеяння"
 
 #: pdfsettingswidget.cpp:61
 #, kde-format
@@ -264,32 +280,33 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Вы выкарыстоўваеце бібліятэку Poppler, створаную без падтрымкі NSS.\n"
+"З гэтай прычыны даданне лічбавых подпісаў недаступна"
 
 #: pdfsettingswidget.cpp:107
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "Патрэбны перазапуск"
 
 #: pdfsettingswidget.cpp:107
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr ""
+msgstr "Пасля змены параметраў каталога NSS трэба перазапусціць Okular"
 
 #: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
 #, kde-format
 msgid "Not Available"
-msgstr ""
+msgstr "Недаступна"
 
 #: pdfsignatureutils.cpp:275
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "Пароль дакументу"
+msgstr "Увядзіце пароль"
 
 #: pdfsignatureutils.cpp:275
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
+msgstr "Увядзіце пароль, каб адкрыць %1:"
 
 #~ msgid "Unknown"
 #~ msgstr "Невядомы"

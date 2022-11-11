@@ -4842,10 +4842,10 @@ msgid ""
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
 "<qt>Este error normalment passa quan no teniu permisos suficients per a "
-"llegir el fitxer. Podeu comprovar el propietari i els permisos si feu un "
-"clic dret al fitxer en el gestor de fitxers Dolphin, després trieu l'opció "
-"«Propietats». i seleccioneu la pestanya «Permisos» en la finestra oberta.</"
-"qt>"
+"llegir el fitxer. Podeu comprovar el propietari i els permisos si feu clic "
+"dret damunt del fitxer en el gestor de fitxers Dolphin, després trieu "
+"l'opció «Propietats». i seleccioneu la pestanya «Permisos» en la finestra "
+"oberta.</qt>"
 
 #: part/part.cpp:3736
 #, kde-format

@@ -7,6 +7,7 @@
   <name>FictionBook</name>
   <name xml:lang="ar">كتب FictionBook</name>
   <name xml:lang="az">FictionBook</name>
+  <name xml:lang="be">FictionBook</name>
   <name xml:lang="bg">FictionBook</name>
   <name xml:lang="ca">FictionBook</name>
   <name xml:lang="ca-valencia">FictionBook</name>
@@ -53,6 +54,7 @@
   <summary>Adds support for reading FictionBooks</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة كتب FictionBook</summary>
   <summary xml:lang="az">FictionBooks sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="be">Падтрымка чытання FictionBooks</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на FictionBooks</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir FictionBooks</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir FictionBooks</summary>

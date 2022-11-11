@@ -7,6 +7,7 @@
   <name>Tiff</name>
   <name xml:lang="ar">Tiff</name>
   <name xml:lang="az">Tiff</name>
+  <name xml:lang="be">Tiff</name>
   <name xml:lang="bg">Tiff</name>
   <name xml:lang="ca">TIFF</name>
   <name xml:lang="ca-valencia">TIFF</name>
@@ -53,6 +54,7 @@
   <summary>Adds support for reading Tiff documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات Tiff</summary>
   <summary xml:lang="az">Tiff sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="be">Падтрымка чытання дакументаў Tiff</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на Tiff документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents TIFF</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents TIFF</summary>

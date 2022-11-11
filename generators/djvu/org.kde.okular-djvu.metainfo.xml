@@ -7,6 +7,7 @@
   <name>DjVu Documents</name>
   <name xml:lang="ar">مستندات DjVu</name>
   <name xml:lang="az">DjVu sənədləri</name>
+  <name xml:lang="be">Дакументы DjVu</name>
   <name xml:lang="bg">DjVu документи</name>
   <name xml:lang="ca">Documents DjVu</name>
   <name xml:lang="ca-valencia">Documents DjVu</name>
@@ -52,6 +53,7 @@
   <summary>Adds support for reading DjVu documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات DjVu</summary>
   <summary xml:lang="az">DjVu sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="be">Падтрымка чытання дакументаў DjVu</summary>
   <summary xml:lang="bg">Добавя поддръжка за DjVu документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents DjVu</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents DjVu</summary>

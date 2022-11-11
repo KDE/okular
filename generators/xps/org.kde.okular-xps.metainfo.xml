@@ -7,6 +7,7 @@
   <name>XPS</name>
   <name xml:lang="ar">XPS</name>
   <name xml:lang="az">XPS</name>
+  <name xml:lang="be">XPS</name>
   <name xml:lang="bg">XPS</name>
   <name xml:lang="ca">XPS</name>
   <name xml:lang="ca-valencia">XPS</name>
@@ -52,6 +53,7 @@
   <summary>Adds support for reading XPS documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات XPS</summary>
   <summary xml:lang="az">XPS sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="be">Падтрымка чытання дакументаў XPS</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на XPS документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents XPS</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents XPS</summary>

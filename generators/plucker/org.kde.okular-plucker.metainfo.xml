@@ -7,6 +7,7 @@
   <name>Plucker</name>
   <name xml:lang="ar">Plucker</name>
   <name xml:lang="az">Plucker</name>
+  <name xml:lang="be">Plucker</name>
   <name xml:lang="bg">Plucker</name>
   <name xml:lang="ca">Plucker</name>
   <name xml:lang="ca-valencia">Plucker</name>
@@ -52,6 +53,7 @@
   <summary>Adds support for reading Plucker documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات Plucker</summary>
   <summary xml:lang="az">Plucker sənədlərini oxumaq üçün dəstək əlavə edir</summary>
+  <summary xml:lang="be">Падтрымка чытання дакументаў Plucker</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на Plucker документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents Plucker</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents Plucker</summary>

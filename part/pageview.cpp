@@ -3300,7 +3300,7 @@ void PageView::wheelEvent(QWheelEvent *e)
                     slotScrollUp(count);
                 }
             } else {
-                d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() * multiplier / 4.0, 0);
+                d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() * multiplier, 0);
             }
         }
     }

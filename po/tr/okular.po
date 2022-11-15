@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-09-29 22:07+0300\n"
+"PO-Revision-Date: 2022-11-14 14:24+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1561,7 +1561,7 @@ msgstr "'%1' Dosyasını Kaydet..."
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
 msgid "&Appearance"
-msgstr "&Görünüm"
+msgstr "&Görünüş"
 
 #: part/annotationpropertiesdialog.cpp:59
 #, kde-format
@@ -2652,7 +2652,7 @@ msgstr "Pürüzsüz sarma kullan"
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
-msgstr "Görünüm:"
+msgstr "Görünüş:"
 
 #: part/dlggeneral.cpp:39
 #, kde-format
@@ -3216,7 +3216,7 @@ msgstr "&Tür:"
 #: part/editannottooldialog.cpp:82
 #, kde-format
 msgid "Appearance"
-msgstr "Görünüm"
+msgstr "Görünüş"
 
 #: part/editannottooldialog.cpp:93
 #, kde-format

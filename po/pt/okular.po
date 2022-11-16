@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-30 00:05+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -3789,32 +3789,32 @@ msgstr "Copiar o Endereço da Ligação"
 msgid "Search for '%1' in this document"
 msgstr "Procurar por '%1' neste documento"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Bem-vindo"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Escolha a zona a ampliar. Botão direito para reduzir a ampliação."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Carregue para ver a vista ampliada."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Desenhe um rectângulo em torno do texto/imagem a copiar."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Seleccionar o texto"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3823,7 +3823,7 @@ msgstr ""
 "Desenhe um rectângulo em torno da tabela, depois carregue nas arestas "
 "próximas para as dividir; carregue em Esc para limpar."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3832,7 +3832,7 @@ msgstr ""
 "Todos os seus certificados de assinatura ainda não são válidos ou passaram o "
 "seu prazo de validade."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3843,13 +3843,13 @@ msgstr ""
 "informações, veja por favor a secção para <a href=\"%1\">Adicionar "
 "Assinaturas Digitais</a> do manual."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Tem modificações por gravar. Por favor grave o documento antes de o assinar."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3861,18 +3861,18 @@ msgstr ""
 "a assinatura de documentos protegidos com senhas. Por favor, peça ao seu "
 "fornecedor para a actualizar para a 22.02 ou posterior."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Biblioteca Poppler Demasiado Antiga"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Desenhe um rectângulo para inserir o campo da assinatura"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

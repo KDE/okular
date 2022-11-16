@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-27 16:54+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -3800,33 +3800,33 @@ msgstr "Скопировать адрес ссылки"
 msgid "Search for '%1' in this document"
 msgstr "Искать «%1» в этом документе"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Добро пожаловать"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Выберите область для увеличения. Щелчок правой кнопкой мыши уменьшит масштаб."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Щелкните мышью для просмотра увеличения."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Выделите прямоугольную область с текстом или графикой для копирования."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Выделить текст"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3835,7 +3835,7 @@ msgstr ""
 "Выделите прямоугольную область с таблицей, затем щёлкайте у краёв для "
 "разлиновки; нажмите Esc для очистки."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3844,7 +3844,7 @@ msgstr ""
 "Срок действия всех сертификатов, которые могли быть использованы для "
 "подписания, ещё не наступил или уже истёк."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3855,13 +3855,13 @@ msgstr ""
 "Дополнительная информация приведена в руководстве пользователя программы в "
 "разделе <a href=\"%1\">Добавление цифровых подписей</a>."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Имеются несохранённые изменения, необходимо сохранить их до подписания."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3873,18 +3873,18 @@ msgstr ""
 "Okular, не поддерживает подписание документов с паролями. Обратитесь к "
 "поставщику для обновления библиотеки до версии 22.02 или более поздней."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Устаревшая библиотека Poppler"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Для вставки поля подписи нарисуйте прямоугольник"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Выделите прямоугольную область, которая останется видимой"

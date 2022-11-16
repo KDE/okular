@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-02 15:57+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -3900,32 +3900,32 @@ msgstr "Afrita vistfang tengils"
 msgid "Search for '%1' in this document"
 msgstr "Leita að '%1' með"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Velkomin(n)"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Veldu stækkunarsvæði. Hægrismelltu til að renna frá."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Smelltu til að sjá stækkaða sýn."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dragðu kassa yfir textann/myndina sem þú vilt afrita."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Velja texta"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3934,14 +3934,14 @@ msgstr ""
 "Dragðu ferhyrnt svæði í kringum töfluna, smelltu nálægt jöðrum til að skipta "
 "upp; ýttu á Esc til að hreinsa."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3949,12 +3949,12 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3963,18 +3963,18 @@ msgid ""
 "it to 22.02 or later."
 msgstr ""
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr ""
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Dragðu kassa yfir svæðið á síðunni sem þú vilt halda sýnilegu."

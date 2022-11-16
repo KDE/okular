@@ -3749,6 +3749,18 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Quando utilizzi lo strumento Sfoglia, riporta il cursore ai bordi dello schermo</guilabel
+></term>
+					<listitem>
+						<para
+>Consente lo scorrimento senza fine dell'intero documento con lo <link linkend="menutools"
+>strumento Sfoglia</link
+>. Se abilitata, il cursore del mouse si sposta all'estremità opposta dello schermo quando tocca i bordi durante il trascinamento del documento. Questa funzione è supportata solo su X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Colonne in modalità panoramica</guilabel
 ></term>
 					<listitem>

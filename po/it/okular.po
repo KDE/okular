@@ -7,21 +7,22 @@
 # Nicola Ruggero <nixprog.adsl@tiscali.it>, 2005, 2006.
 # Nicola Ruggero <nicola@nxnt.org>, 2006, 2007.
 # Luigi Toscano <luigi.toscano@tiscali.it>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Vincenzo Reale <smart2128vr@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-07-16 19:43+0200\n"
-"Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
+"PO-Revision-Date: 2022-11-06 16:51+0100\n"
+"Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2757,6 +2758,8 @@ msgstr "Apri in modalità continua per impostazione predefinita"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Quando utilizzi lo strumento Sfoglia, riporta il cursore ai bordi dello "
+"schermo"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3777,34 +3780,34 @@ msgstr "Copia indirizzo collegamento"
 msgid "Search for '%1' in this document"
 msgstr "Cerca «%1» in questo documento"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Benvenuto"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Seleziona la regione da ingrandire. Fai clic con il pulsante destro per "
 "rimpicciolire."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Fai clic per la vista ingrandita."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Seleziona la regione di testo o grafica da copiare."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Seleziona il testo"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3813,14 +3816,14 @@ msgstr ""
 "Traccia un rettangolo attorno alla tabella, quindi fai clic vicino ai bordi "
 "per suddividerla; premi Esc per annullare."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "Tutti i certificati di firma sono non ancora validi o già scaduti."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3831,12 +3834,12 @@ msgstr ""
 "consulta la sezione sull'<a href=\"%1\">Aggiunta di firme digitali</a> nel "
 "manuale."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Hai delle modifiche non salvate. Salva il documento prima di firmarlo."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3848,18 +3851,18 @@ msgstr ""
 "non permette di firmare i documenti con password. Chiedi al tuo fornitore di "
 "aggiornarla alla versione 22.02 o successiva."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "La libreria Poppler è troppo vecchia"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Disegna un rettangolo per inserire il campo della firma"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Seleziona l'area della pagina che vuoi mantenere visibile"
@@ -5182,7 +5185,7 @@ msgstr "Metrica dei caratteri TeX"
 #: part/propertiesdialog.cpp:315
 #, kde-format
 msgid "TeX FreeType-handled"
-msgstr "TeX, gestito da Freetype"
+msgstr "TeX, gestito da FreeType"
 
 #: part/propertiesdialog.cpp:318
 #, kde-format

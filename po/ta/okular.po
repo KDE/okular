@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-29 21:26+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3769,34 +3769,34 @@ msgstr "இணைப்பின் முகவரியை நகலெடு"
 msgid "Search for '%1' in this document"
 msgstr "'%1' என்பதற்கு இந்த ஆவணத்தில் தேடு"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "நல்வரவு"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "பெரிதாக்க வேண்டிய பரப்பை தேர்ந்தெடுங்கள். உருப்பெருக்கத்தை ரத்து செய்ய வலது-க்ளிக் "
 "செய்யுங்கள்."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "பெரிதாக்கப்பட்ட காட்சியைக் காண க்ளிக் செய்யுங்கள்."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "உரை/படங்களை நகலெடுக்க, அவற்றைச் சுற்றி ஒரு செவ்வகத்தை வரையுங்கள்."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "உரையைத் தேர்ந்தெடு"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3805,14 +3805,14 @@ msgstr ""
 "அட்டவணையைச் சுற்றி ஒரு செவ்வகத்தை வரைந்து, அதை பிரிக்க ஓரங்களில் க்ளிக் செய்யுங்கள்; "
 "நிராகரிக்க Esc விசையை அழுத்துங்கள்."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகவில்லை அல்லது காலாவதியாகிவிட்டன."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3822,12 +3822,12 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "சேமிக்கப்படாத மாற்றங்கள் உள்ளன. கையொப்பம் இடுவதற்கு முன் ஆவணத்தை சேமியுங்கள்."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3839,18 +3839,18 @@ msgstr ""
 "கடவுச்சொல்லுடன் கூடிய கையொப்பங்களுக்கான ஆதரவு இல்லை. அதை 22.02 (அல்லது அதற்கு பிந்தைய) "
 "பதிப்பிற்கு புதுப்பியுங்கள்."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Poppler நிரல் பழையதாக உள்ளது"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "கையொப்பப் புலத்தை நுழைக்க ஒரு செவ்வகத்தை வரையுங்கள்"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

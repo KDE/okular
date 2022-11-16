@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-28 10:11+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -3788,32 +3788,32 @@ msgstr "Koppelingsadres kopiëren"
 msgid "Search for '%1' in this document"
 msgstr "Zoeken naar '%1' in dit document"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Welkom"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Zoomgebied selecteren. Rechter muisklik zoomt uit."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik om het vergrote beeld te bekijken."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Teken een rechthoek rond de tekst/afbeelding om te kopiëren."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Tekst selecteren"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3822,7 +3822,7 @@ msgstr ""
 "Teken een rechthoek rond de tabel, klik daarna bij de randen om ze op te "
 "delen; druk op Esc om te wissen."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3831,7 +3831,7 @@ msgstr ""
 "Al uw certificaten voor ondertekenen zijn ofwel nog niet geldig of zijn over "
 "hun geldigheidsdatum."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3842,14 +3842,14 @@ msgstr ""
 "informatie, bekijk de sectie over <a href=\"%1\">Digitale ondertekening "
 "toevoegen</a> in de handleiding."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "U hebt niet opgeslagen wijzigingen. Het document opslaan alvorens het te "
 "ondertekenen."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3861,18 +3861,18 @@ msgstr ""
 "ondersteunt het ondertekenen van documenten met wachtwoorden niet. Vraag uw "
 "leverancier om het bij te werken tot 22.02 of later."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Poppler-bibliotheek is te oud"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Een rechthoek tekenen voor het veld voor ondertekenen in te voegen"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Teken een rechthoek rond het paginagebied dat u zichtbaar wilt laten"

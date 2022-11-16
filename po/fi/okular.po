@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-07-21 18:59+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3805,32 +3805,32 @@ msgstr "Kopioi linkin osoite"
 msgid "Search for '%1' in this document"
 msgstr "Etsi ”%1” tästä tiedostosta"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Tervetuloa"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Valitse lähennysalue. Loitonna hiiren oikealla painikkeella."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Napsauta nähdäksesi suurennetun alueen."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Kopioi tekstiä tai grafiikkaa valitsemalla ne."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Valitse teksti"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3839,7 +3839,7 @@ msgstr ""
 "Piirrä suorakulmio taulukon ympärille, ja jaa se sitten sarakkeisiin "
 "napsauttamalla lähellä reunoja. Poista valinta painamalla Esc."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3848,7 +3848,7 @@ msgstr ""
 "Kaikki allekirjoitusvarmenteet eivät joko ole vielä voimassa tai ovat jo "
 "vanhentuneet."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3859,13 +3859,13 @@ msgstr ""
 "käyttöoppaan osiosta <a href=\"%1\">Digitaalisten allekirjoitusten "
 "lisääminen</a>."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Muutoksia on tallentamatta. Tallenna tiedosto ennen sen allekirjoitusta."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3877,18 +3877,18 @@ msgstr ""
 "allekirjoittamista salasanalla. Pyydä ylläpitoa päivittämään se versioon "
 "22.02 tai uudempaan."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Poppler-kirjasto on liian vanha"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Piirrä nelikulmio allekirjoituskenttää varten"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Piirrä suorakaide sivualueen ympärille, jonka haluat pitää näkyvissä"

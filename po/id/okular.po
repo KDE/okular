@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-09-27 18:12+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -3771,32 +3771,32 @@ msgstr "Salin Alamat Tautan"
 msgid "Search for '%1' in this document"
 msgstr "Mencari '%1' dalam dokumen ini"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Selamat Datang"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Pilih area pengezooman. Klik kanan untuk mengezoom perkecil."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik untuk melihat tinjauan diperbesar."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Gambari sebuah persegi di sekitar teks/grafik untuk menyalin."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Pilih teks"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3805,7 +3805,7 @@ msgstr ""
 "Gambari sebuah persegi di sekitar tabel, kemudian klik dekat pinggiran untuk "
 "membaginya; tekan Esc untuk membersihkan."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3814,7 +3814,7 @@ msgstr ""
 "Semua sertifikat tandatangan Anda antara tidak valid atau tanggal "
 "kebasaannya sudah kedaluwarsa"
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3825,14 +3825,14 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Anda memiliki perubahan yang tak disimpan. Mohon simpan dokumen sebelum "
 "menandatanganinya."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3844,18 +3844,18 @@ msgstr ""
 "penandatanganan dokumen dengan kata sandi. Silakan minta penyedia Anda untuk "
 "memperbaruinya ke 22.02 atau lebih baru."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Pustaka Poppler terlalu usang"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Gambari sebuah persegi untuk menyisipkan bidang tandatangan"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

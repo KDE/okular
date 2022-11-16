@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2022-10-18 00:05+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -3757,32 +3757,32 @@ msgstr "Keçid ünvanını kopyalamaq"
 msgid "Search for '%1' in this document"
 msgstr "Bu sənəddə '%1' axtarmaq"
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Xoş Gəldiniz"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Miqyaslanacaq sahəni seçmək. Sağ kliklə böyüdün."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Lupa ilə baxmaq üçün vurun."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Kpyalamaq üçün mətnin/qrafiklərin ətrafını kvadrata alın."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Mətni seçmək"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3791,7 +3791,7 @@ msgstr ""
 "Cədvəlin ətrafını kvadrata alın və, bölmək üçün kənarlarına vurun, silmək "
 "üçün Esc vurun."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3800,7 +3800,7 @@ msgstr ""
 "Bütün imza sertifikatlarınız ya hələlik qüvvədə deyil və ya etibarlılıq "
 "tarixi bitmişdir."
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3810,12 +3810,12 @@ msgstr ""
 "Mövcud İmzalama sertifikatları yoxdur.<br/> Daha çox məlumat üçün təlimatda "
 "<a href=\"%1\">Elektron imza əlavə etmək</a> bölməsinə baxın."
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Saxlanılmamış dəyişiklikləriniz var. İmzalamadan öncə sənədi saxlayın."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3827,18 +3827,18 @@ msgstr ""
 "dəstəklənmədən tərtib olunmuşdur. Lütfən təminatçınızdan onun 22.02 və "
 "sonrakı versiyaya yeniləməsini xahis edin."
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr "Poppler kitabxanası çox köhnədir"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Düzbucaqlı çəkərək imzalama sahəsi əlavə edin"
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"

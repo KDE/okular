@@ -215,35 +215,10 @@ void PartTest::testForwardPDF()
     const QDir workDir(QDir(tempDir.path()).filePath(dir));
     workDir.mkpath(QStringLiteral("."));
 
-    QFile f(QStringLiteral(KDESRCDIR "data/synctextest.tex"));
-    const QString texDestination = workDir.path() + QStringLiteral("/synctextest.tex");
-    QVERIFY(f.copy(texDestination));
-    QProcess process;
-    process.setWorkingDirectory(workDir.path());
-
-    const QString pdflatexPath(QStandardPaths::findExecutable(QStringLiteral("pdflatex")));
-    if (pdflatexPath.isEmpty()) {
-        QFAIL("pdflatex executable not found, but needed for the test. Try installing the respective TeXLive packages.");
-    }
-    process.start(pdflatexPath, QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
-    bool started = process.waitForStarted();
-    if (!started) {
-        qDebug() << "start error:" << process.error();
-        qDebug() << "start stdout:" << process.readAllStandardOutput();
-        qDebug() << "start stderr:" << process.readAllStandardError();
-    }
-    QVERIFY(started);
-
-    process.waitForFinished();
-    if (process.exitStatus() != QProcess::NormalExit || process.exitCode() != 0) {
-        qDebug() << "exit error:" << process.error() << "status" << process.exitStatus() << "code" << process.exitCode();
-        qDebug() << "exit stdout:" << process.readAllStandardOutput();
-        qDebug() << "exit stderr:" << process.readAllStandardError();
-    }
-
     const QString pdfResult = workDir.path() + QStringLiteral("/synctextest.pdf");
-
-    QVERIFY(QFile::exists(pdfResult));
+    QVERIFY(QFile::copy(QStringLiteral(KDESRCDIR "data/synctextest.pdf"), pdfResult));
+    const QString gzDestination = workDir.path() + QStringLiteral("/synctextest.synctex.gz");
+    QVERIFY(QFile::copy(QStringLiteral(KDESRCDIR "data/synctextest.synctex.gz"), gzDestination));
 
     QVERIFY(openDocument(&part, pdfResult));
     part.m_document->setViewportPage(0);
@@ -251,7 +226,8 @@ void PartTest::testForwardPDF()
     part.closeUrl();
 
     QUrl u(QUrl::fromLocalFile(pdfResult));
-    u.setFragment(QStringLiteral("src:100") + texDestination);
+    // Update this if you regenerate the synctextest.pdf somewhere else
+    u.setFragment(QStringLiteral("src:100/home/tsdgeos/devel/kde/okular/autotests/data/synctextest.tex"));
     part.openUrl(u);
     QCOMPARE(part.m_document->currentPage(), 1u);
 }

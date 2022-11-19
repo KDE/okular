@@ -916,13 +916,9 @@ Okular::DocumentInfo PDFGenerator::generateDocumentInfo(const QSet<Okular::Docum
         }
         if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
             int major, minor;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(21, 8, 0)
             auto version = pdfdoc->getPdfVersion();
             major = version.major;
             minor = version.minor;
-#else
-            pdfdoc->getPdfVersion(&major, &minor);
-#endif
             docInfo.set(QStringLiteral("format"), i18nc("PDF v. <version>", "PDF v. %1.%2", major, minor), i18n("Format"));
             docInfo.set(QStringLiteral("encryption"), pdfdoc->isEncrypted() ? i18n("Encrypted") : i18n("Unencrypted"), i18n("Security"));
             docInfo.set(QStringLiteral("optimization"), pdfdoc->isLinearized() ? i18n("Yes") : i18n("No"), i18n("Optimized"));

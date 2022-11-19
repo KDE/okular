@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-16 00:45+0000\n"
-"PO-Revision-Date: 2022-11-16 23:31+0200\n"
+"PO-Revision-Date: 2022-11-18 18:51+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -1031,10 +1031,9 @@ msgid "The document integrity verification could not be completed."
 msgstr "Nepavyko užbaigti dokumento vientisumo patikrinimo."
 
 #: gui/signatureguiutils.cpp:205
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid "This document has unsigned signature fields."
-msgstr "Šis dokumentas yra skaitmeniškai pasirašytas."
+msgstr "Šiame dokumente yra nepasirašytų parašo laukų."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
@@ -1059,10 +1058,9 @@ msgstr ""
 "tinkamai patikrinti."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Digital Signature"
+#, kde-format
 msgid "Unsigned Signature %1"
-msgstr "Skaitmeninis parašas"
+msgstr "Nepasirašytas parašas %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
 #, kde-format
@@ -2136,10 +2134,9 @@ msgid "Bookmarks"
 msgstr "Žymelės"
 
 #: part/bookmarklist.cpp:135
-#, fuzzy, kde-format
-#| msgid "End of the document"
+#, kde-format
 msgid "Show for all documents"
-msgstr "Dokumento pabaiga"
+msgstr "Rodyti visiems dokumentams"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
@@ -2172,7 +2169,7 @@ msgstr "Atverti dokumentą"
 #: part/bookmarklist.cpp:290
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
-msgstr ""
+msgstr "Šalinti visas žymeles šiam dokumentui"
 
 #: part/certificateviewer.cpp:121
 #, kde-format
@@ -2767,6 +2764,7 @@ msgstr "Pagal numatymą, atverti nuoseklioje veiksenoje"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Naudojant naršymo įrankį, cikliškai perkėlinėti žymeklį ties ekrano kraštais"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3417,7 +3415,7 @@ msgstr "*|Visi failai"
 #: part/formwidgets.cpp:1065
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "Nepasirašyto parašo laukas (Spustelėkite, norėdami pasirašyti)"
 
 #: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
 #, kde-format
@@ -3866,6 +3864,9 @@ msgid ""
 "support signing documents with passwords. Please ask your provider to update "
 "it to 22.02 or later."
 msgstr ""
+"Poppler versija, su kuria buvo sukompiliuota Okular, nepalaiko dokumentų su "
+"slaptažodžiu pasirašymo. Paprašykite teikėjo, kad atnaujintų Poppler iki "
+"22.02 ar naujesnės versijos."
 
 #: part/pageview.cpp:5085
 #, kde-format
@@ -4322,6 +4323,9 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Jūs ką tik modifikavote atvertą dokumentą, bet šio tipo dokumento negalima "
+"įrašyti.\n"
+"Užvėrus Okular, bet kokie pakeitimai bus prarasti."
 
 #: part/part.cpp:1146
 #, kde-format
@@ -4579,18 +4583,19 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Jūs pasirinkote įrašyti Okular archyvą be failo pavadinimo galūnės su „%1“ "
+"prievardžiu. Tai neleistina, ar norite pasirinkti naują pavadinimą?"
 
 #: part/part.cpp:2628
-#, fuzzy, kde-format
-#| msgid "Line Extensions"
+#, kde-format
 msgid "Unsupported extension"
-msgstr "Papildomos linijos"
+msgstr "Nepalaikomas prievardis"
 
 #: part/part.cpp:2629
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Pasirinkti naują pavadinimą"
 
 #: part/part.cpp:2661
 #, kde-format
@@ -5002,6 +5007,9 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"Redaktorius komandų eilutės pagalba buvo nustatytas į \n"
+" %1 \n"
+"Jei norite naudoti nuostatą, paleiskite okular be --editor-cmd parinkties"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5586,6 +5594,10 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"Jūs negalite jau veikiančiame okular egzemplioriuje nustatyti redaktoriaus "
+"komandos. Išjunkite korteles ir bandykite dar kartą. Turėkite omenyje, kad "
+"unikumas taip pat nėra palaikomas nustatant redaktoriaus komandą komandų "
+"eilutėje.\n"
 
 #: shell/okular_main.cpp:150
 #, kde-format
@@ -5721,20 +5733,19 @@ msgstr "A&tverti vidinį aplanką"
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "&Išvalyti šį elementą"
 
 #: shell/welcomescreen.cpp:139
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "Tik šio dokumento"
+msgstr "Nėra paskiausiai naudotų dokumentų"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Jus sveikina Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
@@ -5745,24 +5756,23 @@ msgstr "Atverti dokumentą..."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:377
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "Tik šio dokumento"
+msgstr "Paskiausiai naudoti dokumentai"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:387
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Išvalyti visus"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Slėpti pasisveikinimo langą"
 
 #~ msgid "Remove Bookmarks"
 #~ msgstr "Šalinti žymeles"

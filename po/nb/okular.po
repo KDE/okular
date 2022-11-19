@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-11-16 00:45+0000\n"
 "PO-Revision-Date: 2014-10-29 17:37+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -3729,32 +3729,32 @@ msgstr "Kopier lenkeadresse"
 msgid "Search for '%1' in this document"
 msgstr ""
 
-#: part/pageview.cpp:4870
+#: part/pageview.cpp:4875
 #, kde-format
 msgid "Welcome"
 msgstr "Velkommen"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:4999
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Velg visningsområde. Høyreklikk for å vise i mindre størrelse."
 
-#: part/pageview.cpp:5005
+#: part/pageview.cpp:5010
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Trykk for å se den forstørrede visningen."
 
-#: part/pageview.cpp:5018
+#: part/pageview.cpp:5023
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Tegn en firkant rundt teksten/grafikken som skal kopieres."
 
-#: part/pageview.cpp:5030
+#: part/pageview.cpp:5035
 #, kde-format
 msgid "Select text"
 msgstr "Velg tekst"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5047
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3763,14 +3763,14 @@ msgstr ""
 "Tegn en firkant rundt tabellen, klikk så nær kantene for å dele opp, trykk "
 "Esc for å tømme."
 
-#: part/pageview.cpp:5052
+#: part/pageview.cpp:5057
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5055
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3778,12 +3778,12 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5071
+#: part/pageview.cpp:5076
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5084
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -3792,18 +3792,18 @@ msgid ""
 "it to 22.02 or later."
 msgstr ""
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5085
 #, kde-format
 msgctxt "@title:window"
 msgid "Poppler library is too old"
 msgstr ""
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5242
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4024,8 +4024,9 @@ msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
-"Dette dokumentet har innebygde filer. <a href=\"okular:/embeddedfiles"
-"\">Trykk her for å se dem</a> eller gå til Fil → Innebygde filer."
+"Dette dokumentet har innebygde filer. <a href=\"okular:/"
+"embeddedfiles\">Trykk her for å se dem</a> eller gå til Fil → Innebygde "
+"filer."
 
 #: part/part.cpp:689
 #, kde-format
@@ -4699,8 +4700,8 @@ msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 msgstr ""
-"<qt><strong>Fil-feil!</strong>Klarte ikke lage midlertidig fil <nobr><strong>"
-"%1</strong></nobr>.</qt>"
+"<qt><strong>Fil-feil!</strong>Klarte ikke lage midlertidig fil "
+"<nobr><strong>%1</strong></nobr>.</qt>"
 
 #: part/part.cpp:3710
 #, kde-format
@@ -4723,11 +4724,11 @@ msgstr ""
 #: part/part.cpp:3736
 #, kde-format
 msgid ""
-"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
-"%1</strong></nobr>. The file will not be loaded.</qt>"
+"<qt><strong>File Error!</strong> Could not uncompress the file "
+"<nobr><strong>%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
-"<qt><strong>Filfeil!</strong> Klarte ikke dekomprimere fila <nobr><strong>"
-"%1</strong></nobr>. Fila blir ikke lastet inn.</qt>"
+"<qt><strong>Filfeil!</strong> Klarte ikke dekomprimere fila "
+"<nobr><strong>%1</strong></nobr>. Fila blir ikke lastet inn.</qt>"
 
 #: part/part.cpp:3740
 #, kde-format

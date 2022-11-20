@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:45+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2022-10-03 16:04+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-i18n-doc@kde.org>\n"
@@ -372,7 +372,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5283 part/part.cpp:1168
+#: core/document.cpp:5283 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
@@ -702,7 +702,7 @@ msgstr "도형"
 msgid "Highlight with Comment"
 msgstr "주석이 있는 강조"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
 #, kde-format
 msgid "Highlight"
 msgstr "하이라이트"
@@ -712,7 +712,7 @@ msgstr "하이라이트"
 msgid "Squiggle with Comment"
 msgstr "주석이 있는 휘어진 모양"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
 #: part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Squiggle"
@@ -723,7 +723,7 @@ msgstr "곡선"
 msgid "Underline with Comment"
 msgstr "주석이 있는 밑줄"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Underline"
@@ -1133,7 +1133,7 @@ msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "검은색"
 
-#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:685
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
@@ -1316,144 +1316,144 @@ msgctxt "@item:inlistbox"
 msgid "Custom Color..."
 msgstr "사용자 정의 색상..."
 
-#: part/annotationactionhandler.cpp:502
+#: part/annotationactionhandler.cpp:498
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
 msgstr "색 선택"
 
-#: part/annotationactionhandler.cpp:554
+#: part/annotationactionhandler.cpp:550
 #, kde-format
 msgid "&Annotations"
 msgstr "주석(&A)"
 
-#: part/annotationactionhandler.cpp:555
+#: part/annotationactionhandler.cpp:551
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr "숨기기"
 
-#: part/annotationactionhandler.cpp:556
+#: part/annotationactionhandler.cpp:552
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "더 많은 주석 도구 표시"
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:555
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "강조 도구"
 
-#: part/annotationactionhandler.cpp:560
+#: part/annotationactionhandler.cpp:556
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "밑줄"
 
-#: part/annotationactionhandler.cpp:561
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "곡선"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:558
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "취소선"
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:560
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "타자기"
 
-#: part/annotationactionhandler.cpp:565
+#: part/annotationactionhandler.cpp:561
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "인라인 노트"
 
-#: part/annotationactionhandler.cpp:566
+#: part/annotationactionhandler.cpp:562
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "팝업 노트"
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:563
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "자유형 선"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:565
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "직선"
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:566
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr "화살표"
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "직사각형"
 
-#: part/annotationactionhandler.cpp:572
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "타원"
 
-#: part/annotationactionhandler.cpp:573
+#: part/annotationactionhandler.cpp:569
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "다각형"
 
-#: part/annotationactionhandler.cpp:574
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr "기하학적 도형"
 
-#: part/annotationactionhandler.cpp:625
+#: part/annotationactionhandler.cpp:616
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "스탬프"
 
-#: part/annotationactionhandler.cpp:650
+#: part/annotationactionhandler.cpp:636
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "빠른 주석"
 
-#: part/annotationactionhandler.cpp:658
+#: part/annotationactionhandler.cpp:639
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr "빠른 주석에서 주석 도구 선택"
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:649
 #, kde-format
 msgid "Quick Annotation Bar"
 msgstr "빠른 주석 표시줄"
 
-#: part/annotationactionhandler.cpp:682
+#: part/annotationactionhandler.cpp:663
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
 msgstr "빠른 주석에 추가"
 
-#: part/annotationactionhandler.cpp:685
+#: part/annotationactionhandler.cpp:666
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1461,13 +1461,13 @@ msgctxt ""
 msgid "Keep Active"
 msgstr "계속 유지"
 
-#: part/annotationactionhandler.cpp:686
+#: part/annotationactionhandler.cpp:667
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "주석 도구를 사용한 후 계속 활성 상태로 유지"
 
-#: part/annotationactionhandler.cpp:691
+#: part/annotationactionhandler.cpp:672
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1475,31 +1475,31 @@ msgctxt ""
 msgid "Constrain Ratio and Angle of Annotation Tools"
 msgstr "주석 도구의 비율과 각도 제한"
 
-#: part/annotationactionhandler.cpp:697
+#: part/annotationactionhandler.cpp:678
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "글꼴"
 
-#: part/annotationactionhandler.cpp:698
+#: part/annotationactionhandler.cpp:679
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "주석 설정"
 
-#: part/annotationactionhandler.cpp:701
+#: part/annotationactionhandler.cpp:682
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "선 폭"
 
-#: part/annotationactionhandler.cpp:710
+#: part/annotationactionhandler.cpp:691
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "불투명도"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#: part/annotationmodel.cpp:324 part/part.cpp:3122
 #, kde-format
 msgid "Page %1"
 msgstr "%1쪽"
@@ -1520,7 +1520,7 @@ msgstr "팝업 노트 열기(&O)"
 msgid "&Delete"
 msgstr "삭제(&D)"
 
-#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:782
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -1839,196 +1839,186 @@ msgstr "정보"
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:456
-#, kde-kuit-format
-msgctxt "@info"
-msgid ""
-"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
-"visible in PDF readers other than Okular.</warning>"
-msgstr ""
-"<warning>실험적 기능입니다.<nl/>PDF 문서에 삽입한 스탬프는 Okular가 아닌 다"
-"른 PDF 리더에서 보이지 않을 수도 있습니다.</warning>"
-
-#: part/annotationwidgets.cpp:469
+#: part/annotationwidgets.cpp:453
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "스탬프 기호:"
 
-#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
-#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
-#: part/annotationwidgets.cpp:795
+#: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
+#: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
+#: part/annotationwidgets.cpp:779
 #, kde-format
 msgid "&Width:"
 msgstr "너비(&W):"
 
-#: part/annotationwidgets.cpp:522
+#: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line start:"
 msgstr "선 시작:"
 
-#: part/annotationwidgets.cpp:524
+#: part/annotationwidgets.cpp:508
 #, kde-format
 msgid "Line end:"
 msgstr "선 끝:"
 
-#: part/annotationwidgets.cpp:527
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Square"
 msgstr "사각형"
 
-#: part/annotationwidgets.cpp:528
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Circle"
 msgstr "원형"
 
-#: part/annotationwidgets.cpp:529
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Diamond"
 msgstr "마름모꼴"
 
-#: part/annotationwidgets.cpp:530
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Open Arrow"
 msgstr "열린 화살표"
 
-#: part/annotationwidgets.cpp:531
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Closed Arrow"
 msgstr "닫힌 화살표"
 
-#: part/annotationwidgets.cpp:532
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "None"
 msgstr "없음"
 
-#: part/annotationwidgets.cpp:533
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Butt"
 msgstr "끝부분"
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "오른쪽으로 열린 화살표"
 
-#: part/annotationwidgets.cpp:535
+#: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "오른쪽으로 닫힌 화살표"
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Slash"
 msgstr "/"
 
-#: part/annotationwidgets.cpp:549
+#: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line length:"
 msgstr "위쪽 연장선 길이:"
 
-#: part/annotationwidgets.cpp:551
+#: part/annotationwidgets.cpp:535
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "아래쪽 연장선 길이:"
 
-#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
 #, kde-format
 msgid "Enabled"
 msgstr "사용함"
 
-#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
 #, kde-format
 msgid "Shape fill:"
 msgstr "도형 채우기:"
 
-#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
 #, kde-format
 msgid "Type:"
 msgstr "종류:"
 
-#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Strike out"
 msgstr "취소선"
 
-#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Rectangle"
 msgstr "직사각형"
 
-#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
 #, kde-format
 msgid "Ellipse"
 msgstr "타원"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:747
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "첨부 파일 기호:"
 
-#: part/annotationwidgets.cpp:766
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "그래프"
 
-#: part/annotationwidgets.cpp:767
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "압핀"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:752
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "종이 클립"
 
-#: part/annotationwidgets.cpp:769
+#: part/annotationwidgets.cpp:753
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "태그"
 
-#: part/annotationwidgets.cpp:778
+#: part/annotationwidgets.cpp:762
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "파일"
 
-#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:87
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "N/A"
 
-#: part/annotationwidgets.cpp:783
+#: part/annotationwidgets.cpp:767
 #, kde-format
 msgid "No description available."
 msgstr "설명이 없습니다."
 
-#: part/annotationwidgets.cpp:791
+#: part/annotationwidgets.cpp:775
 #, kde-format
 msgid "Name:"
 msgstr "이름:"
 
-#: part/annotationwidgets.cpp:802
+#: part/annotationwidgets.cpp:786
 #, kde-format
 msgid "Description:"
 msgstr "설명:"
 
-#: part/annotationwidgets.cpp:861
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgid "Caret symbol:"
 msgstr "캐럿 기호:"
 
-#: part/annotationwidgets.cpp:863
+#: part/annotationwidgets.cpp:847
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "없음"
 
-#: part/annotationwidgets.cpp:864
+#: part/annotationwidgets.cpp:848
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -2095,7 +2085,7 @@ msgstr[0] ""
 "\n"
 "책갈피 %2개"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:422
+#: part/bookmarklist.cpp:131 part/part.cpp:404
 #, kde-format
 msgid "Bookmarks"
 msgstr "책갈피"
@@ -2116,13 +2106,13 @@ msgstr "찾기..."
 msgid "Go to This Bookmark"
 msgstr "이 책갈피로 가기"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
-#: part/part.cpp:2467
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:714
+#: part/part.cpp:2445
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "책갈피 이름 바꾸기"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#: part/bookmarklist.cpp:259 part/part.cpp:2250 part/part.cpp:3128
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "책갈피 삭제"
@@ -2235,61 +2225,61 @@ msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
 msgstr "색상 변경"
 
-#: part/colormodemenu.cpp:32
+#: part/colormodemenu.cpp:27
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "일반 색상(&N)"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:39
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "색 반전(&I)"
 
-#: part/colormodemenu.cpp:45
+#: part/colormodemenu.cpp:40
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "종이 색 바꾸기(&P)"
 
-#: part/colormodemenu.cpp:47
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "어두운 색과 밝은 색 바꾸기(&D)"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:44
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "흑백으로 바꾸기(&B)"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "광도 반전(&L)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "루마 반전(sRGB 선형)(&U)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "루마 반전(대칭)(&S)"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "색조를 양으로 전환(&O)"
 
-#: part/colormodemenu.cpp:64
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -3403,7 +3393,7 @@ msgstr "정규 표현식"
 msgid "S&earch:"
 msgstr "찾기(&E):"
 
-#: part/layers.cpp:35 part/part.cpp:2315
+#: part/layers.cpp:35 part/part.cpp:2293
 #, kde-format
 msgid "Layers"
 msgstr "레이어"
@@ -3414,358 +3404,358 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "중"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:534
 #, kde-format
 msgid "Zoom"
 msgstr "확대/축소"
 
-#: part/pageview.cpp:553
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100%로 크기 조절"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Rotate &Right"
 msgstr "오른쪽으로 회전(&R)"
 
-#: part/pageview.cpp:565
+#: part/pageview.cpp:558
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "오른쪽"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Left"
 msgstr "왼쪽으로 회전(&L)"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "왼쪽"
 
-#: part/pageview.cpp:574
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Original Orientation"
 msgstr "원래 방향"
 
-#: part/pageview.cpp:580
+#: part/pageview.cpp:573
 #, kde-format
 msgid "&Trim View"
 msgstr "보기 잘라내기(&T)"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Trim Margins"
 msgstr "여백 잘라내기(&T)"
 
-#: part/pageview.cpp:591
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "선택 영역으로 잘라내기(&S)"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:590
 #, kde-format
 msgid "Fit &Width"
 msgstr "폭 맞춤(&W)"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:594
 #, kde-format
 msgid "Fit &Page"
 msgstr "쪽 맞춤(&P)"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:598
 #, kde-format
 msgid "&Auto Fit"
 msgstr "자동 맞춤(&A)"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:602
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "창을 쪽에 맞춤(&N)"
 
-#: part/pageview.cpp:616
+#: part/pageview.cpp:609
 #, kde-format
 msgid "&View Mode"
 msgstr "보기 모드(&V)"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "한 쪽(&S)"
 
-#: part/pageview.cpp:629
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "맞쪽(&F)"
 
-#: part/pageview.cpp:630
+#: part/pageview.cpp:623
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "맞쪽(첫 쪽 가운데로)(&C)"
 
-#: part/pageview.cpp:633
+#: part/pageview.cpp:626
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "한눈에 보기(&O)"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:638
 #, kde-format
 msgid "&Continuous"
 msgstr "연속적(&C)"
 
-#: part/pageview.cpp:652
+#: part/pageview.cpp:645
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "오른쪽에서 왼쪽 방향으로 읽기"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:654
 #, kde-format
 msgid "&Browse"
 msgstr "탐색(&B)"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Zoom"
 msgstr "확대/축소(&Z)"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:682
 #, kde-format
 msgid "Area &Selection"
 msgstr "영역 선택(&S)"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:689
 #, kde-format
 msgid "&Text Selection"
 msgstr "텍스트 선택(&T)"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:696
 #, kde-format
 msgid "T&able Selection"
 msgstr "표 선택(&A)"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:703
 #, kde-format
 msgid "&Magnifier"
 msgstr "돋보기(&M)"
 
-#: part/pageview.cpp:719
+#: part/pageview.cpp:712
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "선택 도구"
 
-#: part/pageview.cpp:750
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "디지털 서명(&S)..."
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:744
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "전체 문서 말하기"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak Current Page"
 msgstr "현재 쪽 말하기"
 
-#: part/pageview.cpp:766
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Stop Speaking"
 msgstr "그만 말하기"
 
-#: part/pageview.cpp:771
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "말하기 일시 정지/다시 시작"
 
-#: part/pageview.cpp:783
+#: part/pageview.cpp:771
 #, kde-format
 msgid "Scroll Up"
 msgstr "위로 스크롤"
 
-#: part/pageview.cpp:789
+#: part/pageview.cpp:777
 #, kde-format
 msgid "Scroll Down"
 msgstr "아래로 스크롤"
 
-#: part/pageview.cpp:795
+#: part/pageview.cpp:783
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "한 페이지 위로 스크롤"
 
-#: part/pageview.cpp:801
+#: part/pageview.cpp:789
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "한 페이지 아래로 스크롤"
 
-#: part/pageview.cpp:807
+#: part/pageview.cpp:795
 #, kde-format
 msgid "Show Forms"
 msgstr "양식 표시"
 
-#: part/pageview.cpp:1301
+#: part/pageview.cpp:1289
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " %1쪽 문서를 불러왔습니다."
 
-#: part/pageview.cpp:2521
+#: part/pageview.cpp:2509
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "클립보드에 표 내용 복사"
 
-#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
-#: part/pageview.cpp:3050
+#: part/pageview.cpp:2514 part/pageview.cpp:2837 part/pageview.cpp:2981
+#: part/pageview.cpp:3038
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM 때문에 복사 제한됨"
 
-#: part/pageview.cpp:2843
+#: part/pageview.cpp:2831
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "텍스트 (%1자)"
 
-#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#: part/pageview.cpp:2832 part/pageview.cpp:2850
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "클립보드에 복사"
 
-#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#: part/pageview.cpp:2841 part/pageview.cpp:3033
 #, kde-format
 msgid "Speak Text"
 msgstr "텍스트 말하기"
 
-#: part/pageview.cpp:2861
+#: part/pageview.cpp:2849
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "그림 (%1 x %2 픽셀)"
 
-#: part/pageview.cpp:2863
+#: part/pageview.cpp:2851
 #, kde-format
 msgid "Save to File..."
 msgstr "파일로 저장..."
 
-#: part/pageview.cpp:2883
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "그림 [%1x%2] 이(가) 클립보드에 복사되었습니다."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2874
 #, kde-format
 msgid "Save file"
 msgstr "파일 저장"
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2874
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "그림 (*.png *.jpeg)"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2876
 #, kde-format
 msgid "File not saved."
 msgstr "파일이 저장되지 않았습니다."
 
-#: part/pageview.cpp:2899
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "[%1x%2] 크기 그림이 %3 파일로 저장되었습니다."
 
-#: part/pageview.cpp:3041
+#: part/pageview.cpp:3029
 #, kde-format
 msgid "Copy Text"
 msgstr "텍스트 복사"
 
-#: part/pageview.cpp:3061
+#: part/pageview.cpp:3049
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1'(으)로 가기"
 
-#: part/pageview.cpp:4034 part/part.cpp:3155
+#: part/pageview.cpp:4022 part/part.cpp:3133
 #, kde-format
 msgid "Fit Width"
 msgstr "폭 맞춤"
 
-#: part/pageview.cpp:4034
+#: part/pageview.cpp:4022
 #, kde-format
 msgid "Fit Page"
 msgstr "쪽 맞춤"
 
-#: part/pageview.cpp:4034
+#: part/pageview.cpp:4022
 #, kde-format
 msgid "Auto Fit"
 msgstr "자동 맞춤"
 
-#: part/pageview.cpp:4355
+#: part/pageview.cpp:4328
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "다음으로 '%1' 찾기"
 
-#: part/pageview.cpp:4369
+#: part/pageview.cpp:4342
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "웹 바로가기 설정..."
 
-#: part/pageview.cpp:4395
+#: part/pageview.cpp:4368
 #, kde-format
 msgid "Follow This Link"
 msgstr "이 링크 따라가기"
 
-#: part/pageview.cpp:4398
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Play this Sound"
 msgstr "이 소리 재생"
 
-#: part/pageview.cpp:4400
+#: part/pageview.cpp:4373
 #, kde-format
 msgid "Stop Sound"
 msgstr "소리 끄기"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4379
 #, kde-format
 msgid "Copy Link Address"
 msgstr "링크 주소 복사하기"
 
-#: part/pageview.cpp:4427
+#: part/pageview.cpp:4400
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "현재 문서에서 '%1' 검색"
 
-#: part/pageview.cpp:4875
+#: part/pageview.cpp:4848
 #, kde-format
 msgid "Welcome"
 msgstr "환영합니다"
 
-#: part/pageview.cpp:4999
+#: part/pageview.cpp:4968
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "확대할 구역을 선택하십시오. 오른쪽으로 클릭하면 축소합니다."
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:4979
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "확대해서 보려면 클릭하십시오."
 
-#: part/pageview.cpp:5023
+#: part/pageview.cpp:4992
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "복사할 텍스트나 그림 주위로 사각형을 그리십시오."
 
-#: part/pageview.cpp:5035
+#: part/pageview.cpp:5004
 #, kde-format
 msgid "Select text"
 msgstr "텍스트를 선택하십시오"
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5016
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3774,14 +3764,14 @@ msgstr ""
 "복사할 표 주위로 사각형을 그린 다음 경계선을 클릭해서 나누십시오. Esc 키를 누"
 "르면 다시 시작합니다."
 
-#: part/pageview.cpp:5057
+#: part/pageview.cpp:5026
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "모든 서명용 인증서의 유효 기간이 시작되지 않았거나 만료되었습니다."
 
-#: part/pageview.cpp:5060
+#: part/pageview.cpp:5029
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3791,35 +3781,17 @@ msgstr ""
 "서명용 인증서를 사용할 수 없습니다.<br/>자세한 정보를 보려면 도움말의 <a "
 "href=\"%1\">디지털 서명 추가</a>를 참조하십시오."
 
-#: part/pageview.cpp:5076
+#: part/pageview.cpp:5045
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "저장하지 않은 변경 사항이 있습니다. 문서에 서명하기 전에 저장하십시오."
 
-#: part/pageview.cpp:5084
-#, kde-format
-msgctxt "@info"
-msgid ""
-"The version of the Poppler library this Okular was compiled with does not "
-"support signing documents with passwords. Please ask your provider to update "
-"it to 22.02 or later."
-msgstr ""
-"이 Okular를 컴파일할 때 사용한 Poppler 라이브러리 버전에서 암호를 적용한 문"
-"서 서명을 지원하지 않습니다. 배포자에게 22.02 이상의 버전으로 업데이트해 줄 "
-"것을 요청하십시오."
-
-#: part/pageview.cpp:5085
-#, kde-format
-msgctxt "@title:window"
-msgid "Poppler library is too old"
-msgstr "Poppler 라이브러리가 너무 오래됨"
-
-#: part/pageview.cpp:5103
+#: part/pageview.cpp:5061
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "서명 필드를 삽입하려면 직사각형 그리기"
 
-#: part/pageview.cpp:5247
+#: part/pageview.cpp:5205
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "표시할 텍스트나 그림 주위로 사각형을 그리십시오."
@@ -3956,28 +3928,12 @@ msgstr "타자기 형태 메모(드래그해서 영역 선택)"
 msgid "Highlighter"
 msgstr "강조 도구"
 
-#: part/pageviewannotator.cpp:1484
-#, kde-format
-msgctxt "@info"
-msgid ""
-"Stamps inserted in PDF documents are not visible in PDF readers other than "
-"Okular"
-msgstr ""
-"PDF 문서에 삽입한 스탬프는 Okular가 아닌 다른 PDF 리더에서 보이지 않을 수도 "
-"있습니다"
-
-#: part/pageviewannotator.cpp:1484
-#, kde-format
-msgctxt "@title:window"
-msgid "Experimental feature"
-msgstr "실험적 기능"
-
-#: part/pageviewannotator.cpp:1613
+#: part/pageviewannotator.cpp:1607
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "책갈피에 주석 추가"
 
-#: part/pageviewannotator.cpp:1613
+#: part/pageviewannotator.cpp:1607
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "사용자 정의 주석 이름:"
@@ -4019,17 +3975,17 @@ msgstr "책갈피(&B)"
 msgid "Viewer Toolbar"
 msgstr "뷰어 도구 모음"
 
-#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#: part/part.cpp:394 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "축소판"
 
-#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:400 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
 #, kde-format
 msgid "Annotations"
 msgstr "주석"
 
-#: part/part.cpp:460
+#: part/part.cpp:442
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4041,7 +3997,7 @@ msgstr ""
 "어 있습니다. 내부 저장소는 <b>더 이상 지원하지 않습니다</b>.<br/>이 문서를 계"
 "속 편집하려면 파일을 다시 저장하여 데이터를 이동시키십시오."
 
-#: part/part.cpp:467
+#: part/part.cpp:449
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4050,205 +4006,205 @@ msgstr ""
 "이 문서에는 첨부된 파일이 있습니다. <a href=\"okular:/embeddedfiles\">여기를 "
 "클릭해서 내용을 보거나</a> 파일 -> 첨부된 파일로 가십시오."
 
-#: part/part.cpp:689
+#: part/part.cpp:671
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "이전"
 
-#: part/part.cpp:690
+#: part/part.cpp:672
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "이전 쪽으로 갑니다"
 
-#: part/part.cpp:691
+#: part/part.cpp:673
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "문서의 이전 쪽으로 이동합니다"
 
-#: part/part.cpp:701
+#: part/part.cpp:683
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "다음"
 
-#: part/part.cpp:702
+#: part/part.cpp:684
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "다음 쪽으로 갑니다"
 
-#: part/part.cpp:703
+#: part/part.cpp:685
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "문서의 다음 쪽으로 갑니다"
 
-#: part/part.cpp:714
+#: part/part.cpp:696
 #, kde-format
 msgid "Beginning of the document"
 msgstr "문서의 시작"
 
-#: part/part.cpp:715
+#: part/part.cpp:697
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "문서의 시작으로 갑니다"
 
-#: part/part.cpp:719
+#: part/part.cpp:701
 #, kde-format
 msgid "End of the document"
 msgstr "문서의 끝"
 
-#: part/part.cpp:720
+#: part/part.cpp:702
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "문서의 끝으로 갑니다"
 
-#: part/part.cpp:734
+#: part/part.cpp:716
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "현재 책갈피 이름 바꾸기"
 
-#: part/part.cpp:738
+#: part/part.cpp:720
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "이전 책갈피"
 
-#: part/part.cpp:740
+#: part/part.cpp:722
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "이전 책갈피로 가기"
 
-#: part/part.cpp:744
+#: part/part.cpp:726
 #, kde-format
 msgid "Next Bookmark"
 msgstr "다음 책갈피"
 
-#: part/part.cpp:746
+#: part/part.cpp:728
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "다음 책갈피로 가기"
 
-#: part/part.cpp:775
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Okular 설정..."
 
-#: part/part.cpp:778
+#: part/part.cpp:760
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "뷰어 설정..."
 
-#: part/part.cpp:784
+#: part/part.cpp:766
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "뷰어 백엔드 설정..."
 
-#: part/part.cpp:786
+#: part/part.cpp:768
 #, kde-format
 msgid "Configure Backends..."
 msgstr "백엔드 설정..."
 
-#: part/part.cpp:822
+#: part/part.cpp:804
 #, kde-format
 msgid "About Backend"
 msgstr "백엔드 정보..."
 
-#: part/part.cpp:827
+#: part/part.cpp:809
 #, kde-format
 msgid "Reloa&d"
 msgstr "새로 고침(&D)"
 
-#: part/part.cpp:829
+#: part/part.cpp:811
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "현재 문서를 디스크에서 새로 읽어옵니다."
 
-#: part/part.cpp:835
+#: part/part.cpp:817
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "검색 바 닫기(&F)"
 
-#: part/part.cpp:840
+#: part/part.cpp:822
 #, kde-format
 msgid "Page Number"
 msgstr "쪽 번호"
 
-#: part/part.cpp:844
+#: part/part.cpp:826
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "색상 모드 설정..."
 
-#: part/part.cpp:887
+#: part/part.cpp:867
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "현재 쪽의 모든 텍스트 선택"
 
-#: part/part.cpp:900
+#: part/part.cpp:880
 #, kde-format
 msgid "Show S&idebar"
 msgstr "사이드바 표시(&I)"
 
-#: part/part.cpp:909
+#: part/part.cpp:889
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "페이지 표시줄 표시(&P)"
 
-#: part/part.cpp:915
+#: part/part.cpp:895
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "서명 패널 표시(&S)"
 
-#: part/part.cpp:925
+#: part/part.cpp:905
 #, kde-format
 msgid "&Embedded Files"
 msgstr "첨부된 파일(&E)"
 
-#: part/part.cpp:931
+#: part/part.cpp:911
 #, kde-format
 msgid "E&xport As"
 msgstr "다음으로 내보내기(&X)"
 
-#: part/part.cpp:943
+#: part/part.cpp:923
 #, kde-format
 msgid "S&hare"
 msgstr "공유(&H)"
 
-#: part/part.cpp:952
+#: part/part.cpp:932
 #, kde-format
 msgid "P&resentation"
 msgstr "프레젠테이션(&R)"
 
-#: part/part.cpp:959
+#: part/part.cpp:939
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "포함하는 폴더 열기(&T)"
 
-#: part/part.cpp:975
+#: part/part.cpp:953
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "포스트스크립트를 PDF로 불러오기(&I)..."
 
-#: part/part.cpp:979
+#: part/part.cpp:957
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "화면 검게 바꾸기"
 
-#: part/part.cpp:987
+#: part/part.cpp:965
 #, kde-format
 msgid "Erase Drawing"
 msgstr "그리기 삭제"
 
-#: part/part.cpp:992
+#: part/part.cpp:970
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "주석 설정..."
 
-#: part/part.cpp:997
+#: part/part.cpp:975
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "프레젠테이션 재생/일시 정지"
 
-#: part/part.cpp:1145
+#: part/part.cpp:1123
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4258,79 +4214,79 @@ msgstr ""
 "열린 문서를 수정했으나 이 형식의 문서를 저장할 수는 없습니다.\n"
 "Okular를 닫으면 변경 사항이 손실됩니다."
 
-#: part/part.cpp:1146
+#: part/part.cpp:1124
 #, kde-format
 msgid "Document can't be saved"
 msgstr "문서를 저장할 수 없음"
 
-#: part/part.cpp:1175
+#: part/part.cpp:1153
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1'을(를) 열 수 없음(%2)"
 
-#: part/part.cpp:1229
+#: part/part.cpp:1207
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 불러오기가 취소되었습니다."
 
-#: part/part.cpp:1245
+#: part/part.cpp:1223
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1을(를) 열 수 없습니다. 이유: %2"
 
-#: part/part.cpp:1273
+#: part/part.cpp:1251
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "뷰어 백엔드 설정"
 
-#: part/part.cpp:1275
+#: part/part.cpp:1253
 #, kde-format
 msgid "Configure Backends"
 msgstr "백엔드 설정"
 
-#: part/part.cpp:1360
+#: part/part.cpp:1338
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr "프로그램 \"ps2pdf\"를 찾을 수 없어서 PS 파일을 불러올 수 없습니다."
 
-#: part/part.cpp:1360
+#: part/part.cpp:1338
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf를 찾을 수 없음"
 
-#: part/part.cpp:1365
+#: part/part.cpp:1343
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "포스트스크립트 파일(%1)"
 
-#: part/part.cpp:1381
+#: part/part.cpp:1359
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "PS 파일을 PDF로 불러오는 중 (이 작업은 시간이 걸릴 수 있습니다)..."
 
-#: part/part.cpp:1510
+#: part/part.cpp:1488
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "문서를 읽으려면 암호를 입력하십시오:"
 
-#: part/part.cpp:1512
+#: part/part.cpp:1490
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "암호가 잘못되었습니다. 다시 시도하십시오:"
 
-#: part/part.cpp:1518
+#: part/part.cpp:1496
 #, kde-format
 msgid "Document Password"
 msgstr "문서 암호"
 
-#: part/part.cpp:1638
+#: part/part.cpp:1616
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "이 문서에는 현재 <b>지원되지 않는</b> XFA 양식이 있습니다."
 
-#: part/part.cpp:1645
+#: part/part.cpp:1623
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4339,7 +4295,7 @@ msgstr ""
 "이 문서에는 양식이 있습니다. 양식을 편집하려면 단추를 누르시거나, 보기 -> 양"
 "식 표시를 클릭하십시오."
 
-#: part/part.cpp:1661
+#: part/part.cpp:1639
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4348,7 +4304,7 @@ msgstr ""
 "이 문서에서 편집 및 인터랙티브 기능이 비활성화되었습니다. 문서를 편집하려면 "
 "복사본을 저장한 후 다시 여십시오."
 
-#: part/part.cpp:1749
+#: part/part.cpp:1727
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4357,27 +4313,27 @@ msgstr ""
 "이 문서에서 전체 화면으로 볼 것을 요구했습니다.\n"
 "일반 모드를 벗어나서 프레젠테이션 모드를 사용하시겠습니까?"
 
-#: part/part.cpp:1751
+#: part/part.cpp:1729
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "보기 모드 전환 요청"
 
-#: part/part.cpp:1752
+#: part/part.cpp:1730
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "프레젠테이션 모드 진입"
 
-#: part/part.cpp:1753
+#: part/part.cpp:1731
 #, kde-format
 msgid "Deny Request"
 msgstr "요청 거부"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1821
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1을(를) 열 수 없습니다. %2"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1851
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4388,22 +4344,22 @@ msgstr ""
 "다. 파일을 더 이상 저장할 수 없기 때문에 변경 사항이 손실됩니다.<br>그래도 파"
 "일을 다시 불러오시겠습니까?"
 
-#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#: part/part.cpp:1852 part/part.cpp:1859 part/part.cpp:2639
 #, kde-format
 msgid "File Changed"
 msgstr "파일 변경됨"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1853
 #, kde-format
 msgid "Continue Reloading"
 msgstr "새로 고침 계속"
 
-#: part/part.cpp:1876
+#: part/part.cpp:1854
 #, kde-format
 msgid "Abort Reloading"
 msgstr "새로 고침 중단"
 
-#: part/part.cpp:1880
+#: part/part.cpp:1858
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4414,27 +4370,27 @@ msgstr ""
 "다. 파일을 더 이상 저장할 수 없기 때문에 변경 사항이 손실됩니다.<br>그래도 파"
 "일을 닫으시겠습니까?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1860
 #, kde-format
 msgid "Continue Closing"
 msgstr "닫기 계속"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1861
 #, kde-format
 msgid "Abort Closing"
 msgstr "닫기 중단"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1868
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "\"%1\"의 변경 사항을 저장하거나 무시하겠습니까?"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1868
 #, kde-format
 msgid "Close Document"
 msgstr "문서 닫기"
 
-#: part/part.cpp:2022
+#: part/part.cpp:2000
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4442,7 +4398,7 @@ msgid ""
 msgstr ""
 "이 링크는 포함된 뷰어를 사용할 때 작동하지 않는 문서 닫기 동작을 가리킵니다."
 
-#: part/part.cpp:2028
+#: part/part.cpp:2006
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4451,59 +4407,59 @@ msgstr ""
 "이 링크는 포함된 뷰어를 사용할 때 작동하지 않는 프로그램 종료 동작을 가리킵니"
 "다."
 
-#: part/part.cpp:2120 part/part.cpp:2138
+#: part/part.cpp:2098 part/part.cpp:2116
 #, kde-format
 msgid "Reloading the document..."
 msgstr "문서 새로 읽는 중..."
 
-#: part/part.cpp:2295 part/toc.cpp:38
+#: part/part.cpp:2273 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "내용"
 
-#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#: part/part.cpp:2302 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "서명"
 
-#: part/part.cpp:2351
+#: part/part.cpp:2329
 #, kde-format
 msgid "Go to Page"
 msgstr "쪽으로 가기"
 
-#: part/part.cpp:2374
+#: part/part.cpp:2352
 #, kde-format
 msgid "&Page:"
 msgstr "쪽(&P):"
 
-#: part/part.cpp:2467
+#: part/part.cpp:2445
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "책갈피의 새로운 이름을 입력하십시오:"
 
-#: part/part.cpp:2513
+#: part/part.cpp:2491
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "이 책갈피 이름 바꾸기"
 
-#: part/part.cpp:2516
+#: part/part.cpp:2494
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3437
 #: part/signaturepartutils.cpp:87
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#: part/part.cpp:2588 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "다른 이름으로 저장"
 
-#: part/part.cpp:2627
+#: part/part.cpp:2605
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4512,25 +4468,25 @@ msgstr ""
 "Okular 문서 압축 파일에 '%1' 확장자를 사용하지 않고 저장하려고 했습니다. 그 "
 "이름으로는 저장할 수 없습니다. 다른 이름으로 변경하시겠습니까?"
 
-#: part/part.cpp:2628
+#: part/part.cpp:2606
 #, kde-format
 msgid "Unsupported extension"
 msgstr "지원하지 않는 확장 기능"
 
-#: part/part.cpp:2629
+#: part/part.cpp:2607
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "새 이름 선택"
 
-#: part/part.cpp:2661
+#: part/part.cpp:2639
 #, kde-format
 msgid ""
 "The file '%1' has been modified by another program, which means it can no "
 "longer be saved."
 msgstr "'%1' 파일이 다른 프로그램에서 수정되어 더 이상 저장할 수 없습니다."
 
-#: part/part.cpp:2669
+#: part/part.cpp:2647
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4541,17 +4497,17 @@ msgstr ""
 "와야 합니다. 다시 한 번 암호를 입력해야 하며 실행 취소/다시 실행 기록이 지워"
 "집니다.<br />계속 진행하시겠습니까?"
 
-#: part/part.cpp:2670 part/part.cpp:2722
+#: part/part.cpp:2648 part/part.cpp:2700
 #, kde-format
 msgid "Save - Warning"
 msgstr "저장 - 경고"
 
-#: part/part.cpp:2696
+#: part/part.cpp:2674
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "임시 파일에 저장하려고 열 수 없습니다."
 
-#: part/part.cpp:2709
+#: part/part.cpp:2687
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4561,7 +4517,7 @@ msgstr ""
 "<filename>%1</filename> 파일이 읽기 전용이므로 덮어쓸 수 없습니다. 다른 위치"
 "에 저장하거나 권한을 변경하십시오."
 
-#: part/part.cpp:2721
+#: part/part.cpp:2699
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4570,22 +4526,22 @@ msgstr ""
 "현재 문서 형식은 문서를 저장한 후 다시 불러와야 합니다. 실행 취소/다시 실행 "
 "기록이 지워집니다.<br />계속 진행하시겠습니까?j"
 
-#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#: part/part.cpp:2714 part/part.cpp:2783 part/part.cpp:2804 part/part.cpp:3452
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "파일이 '%1' 안에 저장될 수 없습니다. 다른 경로에 저장해 보십시오."
 
-#: part/part.cpp:2749
+#: part/part.cpp:2727
 #, kde-format
 msgid "Filled form contents"
 msgstr "채워 넣은 양식 내용"
 
-#: part/part.cpp:2752
+#: part/part.cpp:2730
 #, kde-format
 msgid "User annotations"
 msgstr "사용자 주석"
 
-#: part/part.cpp:2757
+#: part/part.cpp:2735
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4595,17 +4551,17 @@ msgstr ""
 "현재 문서 파일 형식에서 다음 구성 요소 저장을 지원하지 않습니다. 구성 요소를 "
 "보존하려면 <i>Okular 문서 압축 파일</i>로 저장하십시오."
 
-#: part/part.cpp:2761 part/part.cpp:2783
+#: part/part.cpp:2739 part/part.cpp:2761
 #, kde-format
 msgid "Warning"
 msgstr "경고"
 
-#: part/part.cpp:2762 part/part.cpp:2784
+#: part/part.cpp:2740 part/part.cpp:2762
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Okular 문서 압축 파일로 저장..."
 
-#: part/part.cpp:2774
+#: part/part.cpp:2752
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4617,7 +4573,7 @@ msgstr ""
 "보존하려면 <i>Okular 문서 압축 파일</i>로 저장하십시오. <i>계속</i>을 클릭하"
 "면 같은 파일 형식으로 저장하지만 해당 구성 요소는 저장하지 않습니다."
 
-#: part/part.cpp:2777
+#: part/part.cpp:2755
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4630,22 +4586,22 @@ msgstr ""
 "면 같은 파일 형식으로 저장하지만 해당 구성 요소는 저장하지 않으며 실행 취소/"
 "다시 실행 기록이 초기화됩니다."
 
-#: part/part.cpp:2779
+#: part/part.cpp:2757
 #, kde-format
 msgid "Continue"
 msgstr "계속"
 
-#: part/part.cpp:2779
+#: part/part.cpp:2757
 #, kde-format
 msgid "Continue losing changes"
 msgstr "변경 사항을 지우고 계속"
 
-#: part/part.cpp:2807
+#: part/part.cpp:2785
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "파일을 '%1' 안에 저장할 수 없습니다. %2"
 
-#: part/part.cpp:2846
+#: part/part.cpp:2824
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4656,7 +4612,7 @@ msgstr ""
 "\n"
 "문서가 더 이상 없습니다."
 
-#: part/part.cpp:2882
+#: part/part.cpp:2860
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4664,59 +4620,59 @@ msgid ""
 msgstr ""
 "파일을 '%1' 안에 저장할 수 없습니다. 오류: '%2'. 다른 경로에 저장해 보십시오."
 
-#: part/part.cpp:3133
+#: part/part.cpp:3111
 #, kde-format
 msgid "Expand whole section"
 msgstr "전체 선택 펼치기"
 
-#: part/part.cpp:3134
+#: part/part.cpp:3112
 #, kde-format
 msgid "Collapse whole section"
 msgstr "전체 선택 접기"
 
-#: part/part.cpp:3135
+#: part/part.cpp:3113
 #, kde-format
 msgid "Expand all"
 msgstr "모두 펴기"
 
-#: part/part.cpp:3136
+#: part/part.cpp:3114
 #, kde-format
 msgid "Collapse all"
 msgstr "모두 접기"
 
-#: part/part.cpp:3147
+#: part/part.cpp:3125
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "축소판과 쪽 동기화"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3130
 #, kde-format
 msgid "Add Bookmark"
 msgstr "책갈피에 추가"
 
-#: part/part.cpp:3176
+#: part/part.cpp:3152
 #, kde-format
 msgid "Tools"
 msgstr "도구"
 
-#: part/part.cpp:3358
+#: part/part.cpp:3333
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "말하기"
 
-#: part/part.cpp:3516
+#: part/part.cpp:3490
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "인쇄"
 
-#: part/part.cpp:3579
+#: part/part.cpp:3553
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "이 문서를 인쇄하는 것이 허가되어 있지 않습니다."
 
-#: part/part.cpp:3587
+#: part/part.cpp:3561
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4724,7 +4680,7 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 알 수 없는 오류입니다. bugs.kde.org에 버그를 보"
 "고하십시오."
 
-#: part/part.cpp:3589
+#: part/part.cpp:3563
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4733,17 +4689,17 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 오류 정보: \"%1\". bugs.kde.org에 버그를 보고하"
 "십시오."
 
-#: part/part.cpp:3669
+#: part/part.cpp:3643
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "이전에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3673
+#: part/part.cpp:3647
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "이후에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3698
+#: part/part.cpp:3672
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4752,7 +4708,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 임시 파일 <nobr><strong>%1</strong></nobr>을"
 "(를) 만들 수 없습니다.</qt>"
 
-#: part/part.cpp:3710
+#: part/part.cpp:3684
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4761,7 +4717,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제하려고 열 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3714
+#: part/part.cpp:3688
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4774,7 +4730,7 @@ msgstr ""
 "션을 선택한 다음 대화 상자의 권한 탭에서 소유권과 권한을 확인해 보십시오.</"
 "qt>"
 
-#: part/part.cpp:3736
+#: part/part.cpp:3710
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4783,7 +4739,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제할 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3740
+#: part/part.cpp:3714
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4792,27 +4748,27 @@ msgstr ""
 "<qt>이 오류는 파일이 잘못되었을 때 발생합니다. 만약 확인해 보고 싶으면, 명령"
 "행 유틸리티를 사용해서 압축을 풀어 보십시오.</qt>"
 
-#: part/part.cpp:3766
+#: part/part.cpp:3740
 #, kde-format
 msgid "No Bookmarks"
 msgstr "책갈피 없음"
 
-#: part/part.cpp:3837
+#: part/part.cpp:3811
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "문서 공유 중 문제 발생: %1"
 
-#: part/part.cpp:3837 part/part.cpp:3843
+#: part/part.cpp:3811 part/part.cpp:3817
 #, kde-format
 msgid "Share"
 msgstr "공유"
 
-#: part/part.cpp:3841
+#: part/part.cpp:3815
 #, kde-format
 msgid "Document shared successfully"
 msgstr "문서를 성공적으로 공유함"
 
-#: part/part.cpp:3843
+#: part/part.cpp:3817
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "다음에서 공유된 문서를 확인할 수 있습니다: <a href=\"%1\">%1</a>"
@@ -4994,7 +4950,7 @@ msgstr ""
 "오른쪽 위 모서리에 나타나는 종료 버튼을 클릭하십시오. 물론 창 사이를 전환할 "
 "수도 있습니다.(Alt+Tab이 기본값)"
 
-#: part/presentationwidget.cpp:1705
+#: part/presentationwidget.cpp:1701
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -5394,7 +5350,7 @@ msgstr "서명된 버전 보기..."
 msgid "View Certificate..."
 msgstr "인증서 보기..."
 
-#: part/thumbnaillist.cpp:1029
+#: part/thumbnaillist.cpp:1028
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "책갈피에 추가한 페이지만 표시"
@@ -5457,47 +5413,47 @@ msgstr "이름이 같은 도구가 이미 있습니다. 기본값을 사용합�
 msgid "Duplicated Name"
 msgstr "중복된 이름"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:66
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "문서의 표시할 쪽"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:67
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "문서를 프레젠테이션 모드에서 시작"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:68
 #, kde-format
 msgid "Start with print dialog"
 msgstr "인쇄 대화 상자로 시작"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:69
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "인쇄 대화 상자로 시작해서 인쇄 후 끝내기"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:70
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "\"단일 실행\" 제어"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:71
 #, kde-format
 msgid "Not raise window"
 msgstr "창 올리지 않음"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:72
 #, kde-format
 msgid "Find a string on the text"
 msgstr "텍스트에서 문자열 찾기"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:73
 #, kde-format
 msgid "sets the external editor command"
 msgstr "외부 편집기 명령 설정"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:74
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "열 문서입니다. 표준 입력에서 읽으려면 '-'를 사용하십시오."
@@ -5558,7 +5514,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Okular 구성 요소를 찾을 수 없습니다."
 
-#: shell/shell.cpp:399
+#: shell/shell.cpp:397
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5567,7 +5523,7 @@ msgstr ""
 "파일을 열려면 클릭하십시오\n"
 "누르고 있으면 최근 파일을 열 수 있습니다"
 
-#: shell/shell.cpp:400
+#: shell/shell.cpp:398
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5575,52 +5531,52 @@ msgstr ""
 "<b>클릭하면</b> 파일을 열 수 있으며 <b>클릭하고 있으면</b> 최근 파일을 열 수 "
 "있습니다"
 
-#: shell/shell.cpp:413
+#: shell/shell.cpp:411
 #, kde-format
 msgid "Next Tab"
 msgstr "다음 탭"
 
-#: shell/shell.cpp:419
+#: shell/shell.cpp:417
 #, kde-format
 msgid "Previous Tab"
 msgstr "이전 탭"
 
-#: shell/shell.cpp:425
+#: shell/shell.cpp:423
 #, kde-format
 msgid "Undo close tab"
 msgstr "탭 닫기 실행 취소"
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:522
 #, kde-format
 msgid "All files (*)"
 msgstr "모든 파일 (*)"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:523
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "모든 지원하는 파일 (%1)"
 
-#: shell/shell.cpp:537
+#: shell/shell.cpp:527
 #, kde-format
 msgid "Open Document"
 msgstr "문서 열기"
 
-#: shell/shell.cpp:641
+#: shell/shell.cpp:631
 #, kde-format
 msgid "Confirm Close"
 msgstr "닫기 확인"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:635
 #, kde-format
 msgid "Close Tabs"
 msgstr "탭 닫기"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:642
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "탭 %1개를 닫으려고 합니다. 계속 진행하시겠습니까?"
 
-#: shell/shell.cpp:654
+#: shell/shell.cpp:644
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "탭 여러 개를 닫을 때 물어보기"
@@ -5679,6 +5635,40 @@ msgstr "모두 잊기"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "시작 화면 숨기기"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
+#~ "not visible in PDF readers other than Okular.</warning>"
+#~ msgstr ""
+#~ "<warning>실험적 기능입니다.<nl/>PDF 문서에 삽입한 스탬프는 Okular가 아닌 "
+#~ "다른 PDF 리더에서 보이지 않을 수도 있습니다.</warning>"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "The version of the Poppler library this Okular was compiled with does not "
+#~ "support signing documents with passwords. Please ask your provider to "
+#~ "update it to 22.02 or later."
+#~ msgstr ""
+#~ "이 Okular를 컴파일할 때 사용한 Poppler 라이브러리 버전에서 암호를 적용한 "
+#~ "문서 서명을 지원하지 않습니다. 배포자에게 22.02 이상의 버전으로 업데이트"
+#~ "해 줄 것을 요청하십시오."
+
+#~ msgctxt "@title:window"
+#~ msgid "Poppler library is too old"
+#~ msgstr "Poppler 라이브러리가 너무 오래됨"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
+#~ "than Okular"
+#~ msgstr ""
+#~ "PDF 문서에 삽입한 스탬프는 Okular가 아닌 다른 PDF 리더에서 보이지 않을 수"
+#~ "도 있습니다"
+
+#~ msgctxt "@title:window"
+#~ msgid "Experimental feature"
+#~ msgstr "실험적 기능"
 
 #~ msgid "Remove Bookmarks"
 #~ msgstr "책갈피 삭제"

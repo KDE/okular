@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-03 00:44+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2019-02-09 13:13-0800\n"
 "Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -35,7 +35,7 @@ msgid "Enhance thin lines:"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
 #, kde-format
 msgid "No"
 msgstr "ਨਹੀਂ"
@@ -163,43 +163,43 @@ msgstr ""
 msgid "Scale mode:"
 msgstr ""
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF ਵਰਜ਼ਨ %1.%2"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgid "Format"
 msgstr "ਫਾਰਮੈਟ"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Encrypted"
 msgstr "ਇਕ੍ਰਿਪਟਡ"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Unencrypted"
 msgstr "ਅਣ-ਇਕ੍ਰਿਪਟਡ"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Security"
 msgstr "ਸੁਰੱਖਿਆ"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Yes"
 msgstr "ਹਾਂ"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Optimized"
 msgstr "ਅਨੁਕੂਲ ਕੀਤਾ"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1355
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -207,12 +207,12 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: generator_pdf.cpp:1576
+#: generator_pdf.cpp:1556
 #, kde-format
 msgid "Using Poppler %1"
 msgstr ""
 
-#: generator_pdf.cpp:1578
+#: generator_pdf.cpp:1558
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -220,69 +220,69 @@ msgid ""
 "Built against Poppler %2"
 msgstr ""
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF ਬੈਕਐਂਡ ਸੰਰਚਨਾ"
 
-#: generator_pdf.cpp:2084
+#: generator_pdf.cpp:2038
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr ""
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
 msgstr ""
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr ""
 
-#: pdfsettingswidget.cpp:61
+#: pdfsettingswidget.cpp:60
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
 msgstr ""
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
 msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter Password"
 msgstr "ਡੌਕੂਮੈਂਟ ਪਾਸਵਰਡ"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr ""

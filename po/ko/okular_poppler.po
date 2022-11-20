@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-03 00:44+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2021-11-12 01:34+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -35,7 +35,7 @@ msgid "Enhance thin lines:"
 msgstr "얇은 선 강화:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
 #, kde-format
 msgid "No"
 msgstr "아니요"
@@ -168,43 +168,43 @@ msgstr "인쇄된 쪽의 크기 조절 모드"
 msgid "Scale mode:"
 msgstr "크기 조정 모드:"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF 버전 %1.%2"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgid "Format"
 msgstr "형식"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Encrypted"
 msgstr "암호화됨"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Unencrypted"
 msgstr "암호화되지 않음"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Security"
 msgstr "보안"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Yes"
 msgstr "예"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Optimized"
 msgstr "최적화됨"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1355
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -215,12 +215,12 @@ msgstr ""
 "\n"
 "날짜: %2"
 
-#: generator_pdf.cpp:1576
+#: generator_pdf.cpp:1556
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 사용"
 
-#: generator_pdf.cpp:1578
+#: generator_pdf.cpp:1558
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -231,17 +231,17 @@ msgstr ""
 "\n"
 "Poppler %2(으)로 빌드됨"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF 백엔드 설정"
 
-#: generator_pdf.cpp:2084
+#: generator_pdf.cpp:2038
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -250,24 +250,24 @@ msgstr ""
 "문서에서 일부 오류를 발견했습니다. Okular에서 내용을 올바르게 표시하지 못할 "
 "수도 있습니다"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "발급 대상"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
 msgstr "이메일"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "만료 날짜"
 
-#: pdfsettingswidget.cpp:61
+#: pdfsettingswidget.cpp:60
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -276,27 +276,27 @@ msgstr ""
 "Poppler 라이브러리에서 NSS를 지원하지 않도록 빌드되었습니다.\n"
 "디지털 서명을 추가할 수 없습니다"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
 msgstr "다시 시작 필요함"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
 msgstr "사용할 수 없음"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter Password"
 msgstr "암호 입력"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "%1을 열려면 암호를 입력하십시오:"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-03 00:44+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2021-10-01 17:58+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -34,7 +34,7 @@ msgid "Enhance thin lines:"
 msgstr "İncə xətləri artırın:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
 #, kde-format
 msgid "No"
 msgstr "Xeyr"
@@ -172,43 +172,43 @@ msgstr "Çap olunmuş səhifələr üçün miqyaslandırma rejimi"
 msgid "Scale mode:"
 msgstr "Miqyas rejimi:"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Encrypted"
 msgstr "Şifrələnmiş"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Unencrypted"
 msgstr "Şifrələnməmiş"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Security"
 msgstr "Təhlükəsizlik"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Yes"
 msgstr "Bəli"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Optimized"
 msgstr "Optimallaşdırılmış"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1355
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -219,12 +219,12 @@ msgstr ""
 "\n"
 "Tarix: %2"
 
-#: generator_pdf.cpp:1576
+#: generator_pdf.cpp:1556
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 istifadə edilməsi"
 
-#: generator_pdf.cpp:1578
+#: generator_pdf.cpp:1558
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -235,17 +235,17 @@ msgstr ""
 "\n"
 "Poppler %2 qarşı yaradılıb"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Modulu Tənzimləmələri"
 
-#: generator_pdf.cpp:2084
+#: generator_pdf.cpp:2038
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -254,24 +254,24 @@ msgstr ""
 "Sənəddə bəzi xətalar tapıldı, Okulyar bu sənədin məzmununu düzgün göstərməyə "
 "bilər"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Adına verilən"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
 msgstr "E-poçt"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Bitmə Tarixi"
 
-#: pdfsettingswidget.cpp:61
+#: pdfsettingswidget.cpp:60
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -280,28 +280,28 @@ msgstr ""
 "NSS dəstəklənməsi olmadan bir Poppler kitabxanası istifadə edirsiniz.\n"
 "Bu səbəbdən Elektron İmza əlavə etmək mümkündeyildir"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
 msgstr "Yenidən başlatmaq lazımdır"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "NSS kataloqu ayarlarını dəyişdikdən sonra Okuları yenidən başlatmalısınız"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
 msgstr "Əlçatan deyil"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter Password"
 msgstr "Şifrəni daxil edin"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "%1 açmaq üçün şifrəni daxil edin:"

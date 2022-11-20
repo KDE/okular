@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-03 00:44+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2021-10-10 11:11+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -37,7 +37,7 @@ msgid "Enhance thin lines:"
 msgstr "Enhance thin lines:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
 #, kde-format
 msgid "No"
 msgstr "No"
@@ -174,43 +174,43 @@ msgstr "Scaling mode for the printed pages"
 msgid "Scale mode:"
 msgstr "Scale mode:"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Encrypted"
 msgstr "Encrypted"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Unencrypted"
 msgstr "Unencrypted"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Security"
 msgstr "Security"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Yes"
 msgstr "Yes"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Optimized"
 msgstr "Optimised"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1355
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -221,12 +221,12 @@ msgstr ""
 "\n"
 "Date: %2"
 
-#: generator_pdf.cpp:1576
+#: generator_pdf.cpp:1556
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Using Poppler %1"
 
-#: generator_pdf.cpp:1578
+#: generator_pdf.cpp:1558
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -237,17 +237,17 @@ msgstr ""
 "\n"
 "Built against Poppler %2"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Backend Configuration"
 
-#: generator_pdf.cpp:2084
+#: generator_pdf.cpp:2038
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -256,24 +256,24 @@ msgstr ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Issued to"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Expiration date"
 
-#: pdfsettingswidget.cpp:61
+#: pdfsettingswidget.cpp:60
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -282,27 +282,27 @@ msgstr ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
 msgstr "Restart needed"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "You need to restart Okular after changing the NSS directory settings"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
 msgstr "Not Available"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter Password"
 msgstr "Enter Password"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Enter password to open %1:"

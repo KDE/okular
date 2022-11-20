@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:45+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2022-09-27 18:12+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -374,7 +374,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Ukuran cetak halaman tak absah"
 
-#: core/document.cpp:5283 part/part.cpp:1168
+#: core/document.cpp:5283 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Tidak bisa membuka file '%1'. File tidak ada"
@@ -704,7 +704,7 @@ msgstr "Geometri"
 msgid "Highlight with Comment"
 msgstr "Sorotan dengan Komentar"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
 #, kde-format
 msgid "Highlight"
 msgstr "Sorot"
@@ -714,7 +714,7 @@ msgstr "Sorot"
 msgid "Squiggle with Comment"
 msgstr "Garis-lekuk dengan Komentar"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
 #: part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Squiggle"
@@ -725,7 +725,7 @@ msgstr "Garis Berlekuk-lekuk"
 msgid "Underline with Comment"
 msgstr "Garis-bawah dengan Komentar"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Underline"
@@ -1140,7 +1140,7 @@ msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "Hitam"
 
-#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:704
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:685
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
@@ -1329,144 +1329,144 @@ msgctxt "@item:inlistbox"
 msgid "Custom Color..."
 msgstr "Warna Kustom..."
 
-#: part/annotationactionhandler.cpp:502
+#: part/annotationactionhandler.cpp:498
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
 msgstr "Pilih warna"
 
-#: part/annotationactionhandler.cpp:554
+#: part/annotationactionhandler.cpp:550
 #, kde-format
 msgid "&Annotations"
 msgstr "&Anotasi"
 
-#: part/annotationactionhandler.cpp:555
+#: part/annotationactionhandler.cpp:551
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr "Sembunyikan"
 
-#: part/annotationactionhandler.cpp:556
+#: part/annotationactionhandler.cpp:552
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "Tampilkan alat anotasi lainnya"
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:555
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "Penyorot"
 
-#: part/annotationactionhandler.cpp:560
+#: part/annotationactionhandler.cpp:556
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "Garis bawah"
 
-#: part/annotationactionhandler.cpp:561
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "Berlekuk-lekuk"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:558
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "Garis Tengah"
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:560
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Tulisan ketik"
 
-#: part/annotationactionhandler.cpp:565
+#: part/annotationactionhandler.cpp:561
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "Catatan Dalam Baris"
 
-#: part/annotationactionhandler.cpp:566
+#: part/annotationactionhandler.cpp:562
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Catatan Sembul"
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:563
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "Garisan Tangan"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:565
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "Garis Lurus"
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:566
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr "Panah"
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Persegi"
 
-#: part/annotationactionhandler.cpp:572
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "Bulatan"
 
-#: part/annotationactionhandler.cpp:573
+#: part/annotationactionhandler.cpp:569
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "Segibanyak"
 
-#: part/annotationactionhandler.cpp:574
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr "Bentuk geometri"
 
-#: part/annotationactionhandler.cpp:625
+#: part/annotationactionhandler.cpp:616
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "Stempel"
 
-#: part/annotationactionhandler.cpp:650
+#: part/annotationactionhandler.cpp:636
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "Anotasi Cepat"
 
-#: part/annotationactionhandler.cpp:658
+#: part/annotationactionhandler.cpp:639
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr "Pilih sebuah alat anotasi dari anotasi-anotasi cepat"
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:649
 #, kde-format
 msgid "Quick Annotation Bar"
 msgstr "Bilah Anotasi Cepat"
 
-#: part/annotationactionhandler.cpp:682
+#: part/annotationactionhandler.cpp:663
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
 msgstr "Tambahkan ke Anotasi Cepat"
 
-#: part/annotationactionhandler.cpp:685
+#: part/annotationactionhandler.cpp:666
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1474,13 +1474,13 @@ msgctxt ""
 msgid "Keep Active"
 msgstr "Biarkan Aktif"
 
-#: part/annotationactionhandler.cpp:686
+#: part/annotationactionhandler.cpp:667
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "Biarkan alat anotasi aktif setelah digunakan"
 
-#: part/annotationactionhandler.cpp:691
+#: part/annotationactionhandler.cpp:672
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1488,31 +1488,31 @@ msgctxt ""
 msgid "Constrain Ratio and Angle of Annotation Tools"
 msgstr "Batasi Rasio dan Sudutpandang pada Alat-alat Anotasi"
 
-#: part/annotationactionhandler.cpp:697
+#: part/annotationactionhandler.cpp:678
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "Font"
 
-#: part/annotationactionhandler.cpp:698
+#: part/annotationactionhandler.cpp:679
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "Pengaturan Anotasi"
 
-#: part/annotationactionhandler.cpp:701
+#: part/annotationactionhandler.cpp:682
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "Lebar garis"
 
-#: part/annotationactionhandler.cpp:710
+#: part/annotationactionhandler.cpp:691
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Opasitas"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3144
+#: part/annotationmodel.cpp:324 part/part.cpp:3122
 #, kde-format
 msgid "Page %1"
 msgstr "Halaman %1"
@@ -1534,7 +1534,7 @@ msgstr "&Buka Catatan Sembul"
 msgid "&Delete"
 msgstr "&Hapus"
 
-#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
+#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:782
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -1853,196 +1853,186 @@ msgstr "Informasi"
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:456
-#, kde-kuit-format
-msgctxt "@info"
-msgid ""
-"<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
-"visible in PDF readers other than Okular.</warning>"
-msgstr ""
-"<warning>fitur percobaan.<nl/>Stempel yang disisipkan dalam dokumen PDF "
-"belumlah terlihat dalam pembaca PDF lain selain Okular.</warning>"
-
-#: part/annotationwidgets.cpp:469
+#: part/annotationwidgets.cpp:453
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "Simbol Stempel:"
 
-#: part/annotationwidgets.cpp:517 part/annotationwidgets.cpp:579
-#: part/annotationwidgets.cpp:642 part/annotationwidgets.cpp:716
-#: part/annotationwidgets.cpp:795
+#: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
+#: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
+#: part/annotationwidgets.cpp:779
 #, kde-format
 msgid "&Width:"
 msgstr "&Lebar:"
 
-#: part/annotationwidgets.cpp:522
+#: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line start:"
 msgstr "Awal Baris:"
 
-#: part/annotationwidgets.cpp:524
+#: part/annotationwidgets.cpp:508
 #, kde-format
 msgid "Line end:"
 msgstr "Akhir Baris:"
 
-#: part/annotationwidgets.cpp:527
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Square"
 msgstr "Persegi"
 
-#: part/annotationwidgets.cpp:528
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Circle"
 msgstr "Lingkaran"
 
-#: part/annotationwidgets.cpp:529
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Diamond"
 msgstr "Berlian"
 
-#: part/annotationwidgets.cpp:530
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Open Arrow"
 msgstr "Panah Buka"
 
-#: part/annotationwidgets.cpp:531
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Closed Arrow"
 msgstr "Panah Tutup"
 
-#: part/annotationwidgets.cpp:532
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "None"
 msgstr "Nihil"
 
-#: part/annotationwidgets.cpp:533
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Butt"
 msgstr "Gagang"
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "Panah Buka Kanan"
 
-#: part/annotationwidgets.cpp:535
+#: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "Panah Tutup Kiri"
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Slash"
 msgstr "Setrip"
 
-#: part/annotationwidgets.cpp:549
+#: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line length:"
 msgstr "Panjang garis leader:"
 
-#: part/annotationwidgets.cpp:551
+#: part/annotationwidgets.cpp:535
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "Panjang ekstensi garis leader:"
 
-#: part/annotationwidgets.cpp:565 part/annotationwidgets.cpp:709
+#: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
 #, kde-format
 msgid "Enabled"
 msgstr "Difungsikan"
 
-#: part/annotationwidgets.cpp:569 part/annotationwidgets.cpp:713
+#: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
 #, kde-format
 msgid "Shape fill:"
 msgstr "Isi bentuk:"
 
-#: part/annotationwidgets.cpp:669 part/annotationwidgets.cpp:703
+#: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
 #, kde-format
 msgid "Type:"
 msgstr "Tipe:"
 
-#: part/annotationwidgets.cpp:674 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Strike out"
 msgstr "Garis tengah"
 
-#: part/annotationwidgets.cpp:718 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Rectangle"
 msgstr "Persegi"
 
-#: part/annotationwidgets.cpp:719 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
 #, kde-format
 msgid "Ellipse"
 msgstr "Bulat"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:747
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "Simbol lampiran file:"
 
-#: part/annotationwidgets.cpp:766
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "Graph"
 
-#: part/annotationwidgets.cpp:767
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "Push Pin"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:752
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "Paperclip"
 
-#: part/annotationwidgets.cpp:769
+#: part/annotationwidgets.cpp:753
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "Tag"
 
-#: part/annotationwidgets.cpp:778
+#: part/annotationwidgets.cpp:762
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "File"
 
-#: part/annotationwidgets.cpp:782 part/embeddedfilesdialog.cpp:87
+#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:87
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "N/A"
 
-#: part/annotationwidgets.cpp:783
+#: part/annotationwidgets.cpp:767
 #, kde-format
 msgid "No description available."
 msgstr "Tidak ada deskripsi yang tersedia."
 
-#: part/annotationwidgets.cpp:791
+#: part/annotationwidgets.cpp:775
 #, kde-format
 msgid "Name:"
 msgstr "Nama:"
 
-#: part/annotationwidgets.cpp:802
+#: part/annotationwidgets.cpp:786
 #, kde-format
 msgid "Description:"
 msgstr "Deskripsi:"
 
-#: part/annotationwidgets.cpp:861
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgid "Caret symbol:"
 msgstr "Simbol tanda sisipan:"
 
-#: part/annotationwidgets.cpp:863
+#: part/annotationwidgets.cpp:847
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "Nihil"
 
-#: part/annotationwidgets.cpp:864
+#: part/annotationwidgets.cpp:848
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -2113,7 +2103,7 @@ msgstr[1] ""
 "\n"
 "%2 markah"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:422
+#: part/bookmarklist.cpp:131 part/part.cpp:404
 #, kde-format
 msgid "Bookmarks"
 msgstr "Markah"
@@ -2134,13 +2124,13 @@ msgstr "Cari..."
 msgid "Go to This Bookmark"
 msgstr "Menuju ke Markah Ini"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:732
-#: part/part.cpp:2467
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:714
+#: part/part.cpp:2445
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Ubah Nama Markah"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3150
+#: part/bookmarklist.cpp:259 part/part.cpp:2250 part/part.cpp:3128
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Buang Markah"
@@ -2253,61 +2243,61 @@ msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
 msgstr "Ubah Warna"
 
-#: part/colormodemenu.cpp:32
+#: part/colormodemenu.cpp:27
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "&Warna Normal"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:39
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "&Balikkan Warna"
 
-#: part/colormodemenu.cpp:45
+#: part/colormodemenu.cpp:40
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Ubah Warna &Kertas"
 
-#: part/colormodemenu.cpp:47
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Ubah Warna &Gelap && Terang"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:44
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Ubah ke &Hitam && Putih"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Balikkan &Kecerahan"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Balikkan L&uma (Linier sRGB)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Balikkan Luma (&Simetris)"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "Geser Rona P&ositif"
 
-#: part/colormodemenu.cpp:64
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -3432,7 +3422,7 @@ msgstr "Ekspresi Reguler"
 msgid "S&earch:"
 msgstr "&Cari:"
 
-#: part/layers.cpp:35 part/part.cpp:2315
+#: part/layers.cpp:35 part/part.cpp:2293
 #, kde-format
 msgid "Layers"
 msgstr "Lapisan"
@@ -3443,360 +3433,360 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "dari"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:534
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom "
 
-#: part/pageview.cpp:553
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Zoom ke 100%"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Rotasikan &Kanan"
 
-#: part/pageview.cpp:565
+#: part/pageview.cpp:558
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Kanan"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rotasikan &Kiri"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Kiri"
 
-#: part/pageview.cpp:574
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Original Orientation"
 msgstr "Orientasi Asli"
 
-#: part/pageview.cpp:580
+#: part/pageview.cpp:573
 #, kde-format
 msgid "&Trim View"
 msgstr "Tampilan &Trim"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Trim Pinggiran"
 
-#: part/pageview.cpp:591
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Trim Ke &Pilihan"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:590
 #, kde-format
 msgid "Fit &Width"
 msgstr "Pas &Lebar"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:594
 #, kde-format
 msgid "Fit &Page"
 msgstr "Pas &Halaman"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:598
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Auto Pas"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:602
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Paskan &Jendela ke Halaman"
 
-#: part/pageview.cpp:616
+#: part/pageview.cpp:609
 #, kde-format
 msgid "&View Mode"
 msgstr "&Mode Tampilan"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Halaman Tung&gal"
 
-#: part/pageview.cpp:629
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Halaman Gan&da"
 
-#: part/pageview.cpp:630
+#: part/pageview.cpp:623
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Halaman Ganda (Halaman Pertama di &Tengah)"
 
-#: part/pageview.cpp:633
+#: part/pageview.cpp:626
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Ikhtisar"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:638
 #, kde-format
 msgid "&Continuous"
 msgstr "&Terus-menerus"
 
-#: part/pageview.cpp:652
+#: part/pageview.cpp:645
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Gunakan Arah Pembacaan Kanan ke Kiri"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:654
 #, kde-format
 msgid "&Browse"
 msgstr "&Telusuri"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:682
 #, kde-format
 msgid "Area &Selection"
 msgstr "Pemilihan &Area"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:689
 #, kde-format
 msgid "&Text Selection"
 msgstr "Pemilihan &Teks"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:696
 #, kde-format
 msgid "T&able Selection"
 msgstr "Pemilihan Ta&bel"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:703
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Kaca Pembesar"
 
-#: part/pageview.cpp:719
+#: part/pageview.cpp:712
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Peralatan Pemilihan"
 
-#: part/pageview.cpp:750
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Tandatangan &Digital..."
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:744
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Bicarakan Seluruh Dokumen"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Bicara Halaman Saat Ini"
 
-#: part/pageview.cpp:766
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Hentikan Bicara"
 
-#: part/pageview.cpp:771
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Jeda/Lanjutkan Bicara"
 
-#: part/pageview.cpp:783
+#: part/pageview.cpp:771
 #, kde-format
 msgid "Scroll Up"
 msgstr "Gulir Naik"
 
-#: part/pageview.cpp:789
+#: part/pageview.cpp:777
 #, kde-format
 msgid "Scroll Down"
 msgstr "Gulir Turun"
 
-#: part/pageview.cpp:795
+#: part/pageview.cpp:783
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Gulir Halaman Naik"
 
-#: part/pageview.cpp:801
+#: part/pageview.cpp:789
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Gulir Halaman Turun"
 
-#: part/pageview.cpp:807
+#: part/pageview.cpp:795
 #, kde-format
 msgid "Show Forms"
 msgstr "Tampilkan Formulir"
 
-#: part/pageview.cpp:1301
+#: part/pageview.cpp:1289
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Termuat dokumen satu-halaman."
 msgstr[1] " Termuat dokumen %1-halaman."
 
-#: part/pageview.cpp:2521
+#: part/pageview.cpp:2509
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Salin Konten Tabel ke Clipboard"
 
-#: part/pageview.cpp:2526 part/pageview.cpp:2849 part/pageview.cpp:2993
-#: part/pageview.cpp:3050
+#: part/pageview.cpp:2514 part/pageview.cpp:2837 part/pageview.cpp:2981
+#: part/pageview.cpp:3038
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Salinan dilarang oleh DRM"
 
-#: part/pageview.cpp:2843
+#: part/pageview.cpp:2831
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Teks (1 karakter)"
 msgstr[1] "Teks (%1 karakter)"
 
-#: part/pageview.cpp:2844 part/pageview.cpp:2862
+#: part/pageview.cpp:2832 part/pageview.cpp:2850
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Salin ke Clipboard"
 
-#: part/pageview.cpp:2853 part/pageview.cpp:3045
+#: part/pageview.cpp:2841 part/pageview.cpp:3033
 #, kde-format
 msgid "Speak Text"
 msgstr "Teks Bicara"
 
-#: part/pageview.cpp:2861
+#: part/pageview.cpp:2849
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Citra (%1 oleh %2 pixel)"
 
-#: part/pageview.cpp:2863
+#: part/pageview.cpp:2851
 #, kde-format
 msgid "Save to File..."
 msgstr "Simpan ke File..."
 
-#: part/pageview.cpp:2883
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Citra [%1x%2] disalin ke papan-klip."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2874
 #, kde-format
 msgid "Save file"
 msgstr "Simpan file"
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2874
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Citra (*.png *.jpeg)"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2876
 #, kde-format
 msgid "File not saved."
 msgstr "File tidak tersimpan."
 
-#: part/pageview.cpp:2899
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Citra [%1x%2] disimpan ke %3 file."
 
-#: part/pageview.cpp:3041
+#: part/pageview.cpp:3029
 #, kde-format
 msgid "Copy Text"
 msgstr "Salin Teks"
 
-#: part/pageview.cpp:3061
+#: part/pageview.cpp:3049
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Menuju ke '%1'"
 
-#: part/pageview.cpp:4034 part/part.cpp:3155
+#: part/pageview.cpp:4022 part/part.cpp:3133
 #, kde-format
 msgid "Fit Width"
 msgstr "Pas Lebar"
 
-#: part/pageview.cpp:4034
+#: part/pageview.cpp:4022
 #, kde-format
 msgid "Fit Page"
 msgstr "Pas Halaman"
 
-#: part/pageview.cpp:4034
+#: part/pageview.cpp:4022
 #, kde-format
 msgid "Auto Fit"
 msgstr "Auto Pas"
 
-#: part/pageview.cpp:4355
+#: part/pageview.cpp:4328
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Pencarian untuk '%1% dengan"
 
-#: part/pageview.cpp:4369
+#: part/pageview.cpp:4342
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfigurasikan Pintasan Web..."
 
-#: part/pageview.cpp:4395
+#: part/pageview.cpp:4368
 #, kde-format
 msgid "Follow This Link"
 msgstr "Ikuti Tautan Ini"
 
-#: part/pageview.cpp:4398
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Play this Sound"
 msgstr "Bunyikan Suara ini"
 
-#: part/pageview.cpp:4400
+#: part/pageview.cpp:4373
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hentikan Suara"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4379
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Salin Alamat Tautan"
 
-#: part/pageview.cpp:4427
+#: part/pageview.cpp:4400
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Mencari '%1' dalam dokumen ini"
 
-#: part/pageview.cpp:4875
+#: part/pageview.cpp:4848
 #, kde-format
 msgid "Welcome"
 msgstr "Selamat Datang"
 
-#: part/pageview.cpp:4999
+#: part/pageview.cpp:4968
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Pilih area pengezooman. Klik kanan untuk mengezoom perkecil."
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:4979
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik untuk melihat tinjauan diperbesar."
 
-#: part/pageview.cpp:5023
+#: part/pageview.cpp:4992
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Gambari sebuah persegi di sekitar teks/grafik untuk menyalin."
 
-#: part/pageview.cpp:5035
+#: part/pageview.cpp:5004
 #, kde-format
 msgid "Select text"
 msgstr "Pilih teks"
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5016
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3805,7 +3795,7 @@ msgstr ""
 "Gambari sebuah persegi di sekitar tabel, kemudian klik dekat pinggiran untuk "
 "membaginya; tekan Esc untuk membersihkan."
 
-#: part/pageview.cpp:5057
+#: part/pageview.cpp:5026
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3814,7 +3804,7 @@ msgstr ""
 "Semua sertifikat tandatangan Anda antara tidak valid atau tanggal "
 "kebasaannya sudah kedaluwarsa"
 
-#: part/pageview.cpp:5060
+#: part/pageview.cpp:5029
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3825,37 +3815,19 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5076
+#: part/pageview.cpp:5045
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Anda memiliki perubahan yang tak disimpan. Mohon simpan dokumen sebelum "
 "menandatanganinya."
 
-#: part/pageview.cpp:5084
-#, kde-format
-msgctxt "@info"
-msgid ""
-"The version of the Poppler library this Okular was compiled with does not "
-"support signing documents with passwords. Please ask your provider to update "
-"it to 22.02 or later."
-msgstr ""
-"Versi pustaka Poppler yang dikompilasi dengan Okular ini tidak mendukung "
-"penandatanganan dokumen dengan kata sandi. Silakan minta penyedia Anda untuk "
-"memperbaruinya ke 22.02 atau lebih baru."
-
-#: part/pageview.cpp:5085
-#, kde-format
-msgctxt "@title:window"
-msgid "Poppler library is too old"
-msgstr "Pustaka Poppler terlalu usang"
-
-#: part/pageview.cpp:5103
+#: part/pageview.cpp:5061
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Gambari sebuah persegi untuk menyisipkan bidang tandatangan"
 
-#: part/pageview.cpp:5247
+#: part/pageview.cpp:5205
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4000,28 +3972,12 @@ msgstr "Anotasi Mesin-ketik (seret untuk memilih zona)"
 msgid "Highlighter"
 msgstr "Penyorot"
 
-#: part/pageviewannotator.cpp:1484
-#, kde-format
-msgctxt "@info"
-msgid ""
-"Stamps inserted in PDF documents are not visible in PDF readers other than "
-"Okular"
-msgstr ""
-"Stampel yang dimasukkan ke dalam dokumen PDF tidak terlihat di pembaca PDF "
-"selain Okular"
-
-#: part/pageviewannotator.cpp:1484
-#, kde-format
-msgctxt "@title:window"
-msgid "Experimental feature"
-msgstr "Fitur eksperimental"
-
-#: part/pageviewannotator.cpp:1613
+#: part/pageviewannotator.cpp:1607
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Tambahkan anotasi faforit"
 
-#: part/pageviewannotator.cpp:1613
+#: part/pageviewannotator.cpp:1607
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Nama anotasi kustom:"
@@ -4063,17 +4019,17 @@ msgstr "&Markah"
 msgid "Viewer Toolbar"
 msgstr "Bilah Alat Penampil"
 
-#: part/part.cpp:412 part/thumbnaillist.cpp:48
+#: part/part.cpp:394 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "Thumbnail"
 
-#: part/part.cpp:418 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:400 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
 #, kde-format
 msgid "Annotations"
 msgstr "Anotasi"
 
-#: part/part.cpp:460
+#: part/part.cpp:442
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4086,7 +4042,7 @@ msgstr ""
 "didukung</b>.<br/>Silakan simpan ke sebuah file untuk memindahkan mereka "
 "jika Anda ingin lanjut mengedit dokumen."
 
-#: part/part.cpp:467
+#: part/part.cpp:449
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4095,205 +4051,205 @@ msgstr ""
 "Dokumen ini memiliki file tersemat. <a href=\"okular:/embeddedfiles\">Klik "
 "di sini untuk melihatnya</a> atau menuju ke File -> File Tersemat."
 
-#: part/part.cpp:689
+#: part/part.cpp:671
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Sebelumnya"
 
-#: part/part.cpp:690
+#: part/part.cpp:672
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Menuju kembali ke Halaman Sebelumnya"
 
-#: part/part.cpp:691
+#: part/part.cpp:673
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Pindah ke halaman sebelumnya dari dokumen"
 
-#: part/part.cpp:701
+#: part/part.cpp:683
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Selanjutnya"
 
-#: part/part.cpp:702
+#: part/part.cpp:684
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Lanjut ke Halaman Selanjutnya"
 
-#: part/part.cpp:703
+#: part/part.cpp:685
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Pindah ke halaman selanjutnya di dokumen"
 
-#: part/part.cpp:714
+#: part/part.cpp:696
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Pangkal dokumen"
 
-#: part/part.cpp:715
+#: part/part.cpp:697
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Pindah ke pangkal dari dokumen"
 
-#: part/part.cpp:719
+#: part/part.cpp:701
 #, kde-format
 msgid "End of the document"
 msgstr "Ujung dokumen"
 
-#: part/part.cpp:720
+#: part/part.cpp:702
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Pindah ke ujung dari dokumen"
 
-#: part/part.cpp:734
+#: part/part.cpp:716
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Ubah nama markah saat ini"
 
-#: part/part.cpp:738
+#: part/part.cpp:720
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Markah Sebelumnya"
 
-#: part/part.cpp:740
+#: part/part.cpp:722
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Menuju ke markah sebelumnya"
 
-#: part/part.cpp:744
+#: part/part.cpp:726
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Markah Selanjutnya"
 
-#: part/part.cpp:746
+#: part/part.cpp:728
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Menuju ke markah selanjutnya"
 
-#: part/part.cpp:775
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Konfigurasikan Okular..."
 
-#: part/part.cpp:778
+#: part/part.cpp:760
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "Konfigurasikan Penampil..."
 
-#: part/part.cpp:784
+#: part/part.cpp:766
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "Konfigurasikan Backend Penampil..."
 
-#: part/part.cpp:786
+#: part/part.cpp:768
 #, kde-format
 msgid "Configure Backends..."
 msgstr "Konfigurasikan Backend..."
 
-#: part/part.cpp:822
+#: part/part.cpp:804
 #, kde-format
 msgid "About Backend"
 msgstr "Tentang Backend"
 
-#: part/part.cpp:827
+#: part/part.cpp:809
 #, kde-format
 msgid "Reloa&d"
 msgstr "&Muat ulang"
 
-#: part/part.cpp:829
+#: part/part.cpp:811
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Muat ulang dokumen saat ini dari disk."
 
-#: part/part.cpp:835
+#: part/part.cpp:817
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Tutup &Bilah Temukan"
 
-#: part/part.cpp:840
+#: part/part.cpp:822
 #, kde-format
 msgid "Page Number"
 msgstr "Nomor Halaman"
 
-#: part/part.cpp:844
+#: part/part.cpp:826
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "Konfigurasikan Mode Warna..."
 
-#: part/part.cpp:887
+#: part/part.cpp:867
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Pilih Semua Teks pada Halaman Saat Ini"
 
-#: part/part.cpp:900
+#: part/part.cpp:880
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Tampilkan S&idebar"
 
-#: part/part.cpp:909
+#: part/part.cpp:889
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Tampilkan &Bilah Halaman"
 
-#: part/part.cpp:915
+#: part/part.cpp:895
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Tampilkan Panel &Tandatangan"
 
-#: part/part.cpp:925
+#: part/part.cpp:905
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&File-file Tertanam"
 
-#: part/part.cpp:931
+#: part/part.cpp:911
 #, kde-format
 msgid "E&xport As"
 msgstr "&Ekspor Sebagai"
 
-#: part/part.cpp:943
+#: part/part.cpp:923
 #, kde-format
 msgid "S&hare"
 msgstr "&Bagikan"
 
-#: part/part.cpp:952
+#: part/part.cpp:932
 #, kde-format
 msgid "P&resentation"
 msgstr "P&resentasi"
 
-#: part/part.cpp:959
+#: part/part.cpp:939
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Buka Folder Yang Mengan&dungnya"
 
-#: part/part.cpp:975
+#: part/part.cpp:953
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "&Import PostScript sebagai PDF..."
 
-#: part/part.cpp:979
+#: part/part.cpp:957
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Peralihan Mode Blackscreen"
 
-#: part/part.cpp:987
+#: part/part.cpp:965
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Hapus Penggambaran"
 
-#: part/part.cpp:992
+#: part/part.cpp:970
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "Konfigurasikan Anotasi..."
 
-#: part/part.cpp:997
+#: part/part.cpp:975
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Play/Jeda Presentasi"
 
-#: part/part.cpp:1145
+#: part/part.cpp:1123
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4304,37 +4260,37 @@ msgstr ""
 "dapat disimpan.\n"
 "Perubahan apa pun akan hilang ketika Okular ditutup."
 
-#: part/part.cpp:1146
+#: part/part.cpp:1124
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokumen tidak dapat disimpan"
 
-#: part/part.cpp:1175
+#: part/part.cpp:1153
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Tidak bisa membuka '%1' (%2) "
 
-#: part/part.cpp:1229
+#: part/part.cpp:1207
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Pemuatan %1 telah dibatalkan."
 
-#: part/part.cpp:1245
+#: part/part.cpp:1223
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Tidak bisa membuka %1. Alasan: %2"
 
-#: part/part.cpp:1273
+#: part/part.cpp:1251
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Konfigurasikan Backend Penampil"
 
-#: part/part.cpp:1275
+#: part/part.cpp:1253
 #, kde-format
 msgid "Configure Backends"
 msgstr "Konfigurasikan Backend"
 
-#: part/part.cpp:1360
+#: part/part.cpp:1338
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4343,44 +4299,44 @@ msgstr ""
 "Program \"ps2pdf\" tidak ditemukan, sehingga Okular tidak bisa mengimport "
 "file PS menggunakan itu."
 
-#: part/part.cpp:1360
+#: part/part.cpp:1338
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf tidak ditemukan"
 
-#: part/part.cpp:1365
+#: part/part.cpp:1343
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "File PostScript (%1)"
 
-#: part/part.cpp:1381
+#: part/part.cpp:1359
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr ""
 "Pengimporan file PS sebagai PDF (ini mungkin membutuhkan beberapa saat)..."
 
-#: part/part.cpp:1510
+#: part/part.cpp:1488
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Silakan masukkan sandi untuk membaca dokumen:"
 
-#: part/part.cpp:1512
+#: part/part.cpp:1490
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Sandi salah. Coba lagi:"
 
-#: part/part.cpp:1518
+#: part/part.cpp:1496
 #, kde-format
 msgid "Document Password"
 msgstr "Sandi Dokumen"
 
-#: part/part.cpp:1638
+#: part/part.cpp:1616
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Dokumen ini memiliki formulir XFA, yang baru-baru ini <b>tidak didukung</b>."
 
-#: part/part.cpp:1645
+#: part/part.cpp:1623
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4389,7 +4345,7 @@ msgstr ""
 "Dokumen ini memiliki formulir. Klik pada tombol untuk berinteraksi "
 "dengannya, atau gunakan Tampilan -> Tampilkan Formulir."
 
-#: part/part.cpp:1661
+#: part/part.cpp:1639
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4398,7 +4354,7 @@ msgstr ""
 "Semua fitur pengeditan dan interaktif untuk dokumen ini dinonaktifkan. "
 "Silahkan simpan salinan dan buka kembali untuk mengedit dokumen ini."
 
-#: part/part.cpp:1749
+#: part/part.cpp:1727
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4407,27 +4363,27 @@ msgstr ""
 "Dokumen ini ingin ditampilkan pada layar penuh.\n"
 "Biarkan mode normal dan masuk ke mode presentasi?"
 
-#: part/part.cpp:1751
+#: part/part.cpp:1729
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Minta untuk Mode Menampilkan Perubahan"
 
-#: part/part.cpp:1752
+#: part/part.cpp:1730
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Masuk Mode Presentasi"
 
-#: part/part.cpp:1753
+#: part/part.cpp:1731
 #, kde-format
 msgid "Deny Request"
 msgstr "Sangkal Permintaan"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1821
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Tidak bisa membuka %1. %2"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1851
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4438,22 +4394,22 @@ msgstr ""
 "program lainnya. Perubahan Anda akan hilang, karena file tidak bisa lagi "
 "disimpan.<br>Apakah Anda ingin melanjutkan pemuatan ulang file?"
 
-#: part/part.cpp:1874 part/part.cpp:1881 part/part.cpp:2661
+#: part/part.cpp:1852 part/part.cpp:1859 part/part.cpp:2639
 #, kde-format
 msgid "File Changed"
 msgstr "File Terubah"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1853
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Lanjutkan Pemuatan-ulang"
 
-#: part/part.cpp:1876
+#: part/part.cpp:1854
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Gugurkan Pemuatan-ulang"
 
-#: part/part.cpp:1880
+#: part/part.cpp:1858
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4464,27 +4420,27 @@ msgstr ""
 "program lainnya. Perubahan Anda akan hilang, karena file tidak bisa lagi "
 "disimpan.<br>Apakah Anda ingin melanjutkan penutupan file?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1860
 #, kde-format
 msgid "Continue Closing"
 msgstr "Lanjutkan Penutupan"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1861
 #, kde-format
 msgid "Abort Closing"
 msgstr "Gugurkan Penutupan"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1868
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Apakan Anda ingin menyimpan perubahan \"%1\" atau membuangnya?"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1868
 #, kde-format
 msgid "Close Document"
 msgstr "Tutup Dokumen"
 
-#: part/part.cpp:2022
+#: part/part.cpp:2000
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4493,7 +4449,7 @@ msgstr ""
 "Titik tautan ini untuk tindakan menutup dokumen yang tidak bekerja ketika "
 "menggunakan peninjau tersemat."
 
-#: part/part.cpp:2028
+#: part/part.cpp:2006
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4502,59 +4458,59 @@ msgstr ""
 "Titik tautan ini untuk tindakan mengeluarkan aplikasi yang tidak bekerja "
 "ketika menggunakan peninjau tersemat."
 
-#: part/part.cpp:2120 part/part.cpp:2138
+#: part/part.cpp:2098 part/part.cpp:2116
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Memuat ulang dokumen..."
 
-#: part/part.cpp:2295 part/toc.cpp:38
+#: part/part.cpp:2273 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Daftar Isi"
 
-#: part/part.cpp:2324 part/signaturepanel.cpp:47
+#: part/part.cpp:2302 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Tandatangan"
 
-#: part/part.cpp:2351
+#: part/part.cpp:2329
 #, kde-format
 msgid "Go to Page"
 msgstr "Menuju ke Halaman"
 
-#: part/part.cpp:2374
+#: part/part.cpp:2352
 #, kde-format
 msgid "&Page:"
 msgstr "&Halaman:"
 
-#: part/part.cpp:2467
+#: part/part.cpp:2445
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Masukkan nama barunya markah:"
 
-#: part/part.cpp:2513
+#: part/part.cpp:2491
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Ubah nama Markah ini"
 
-#: part/part.cpp:2516
+#: part/part.cpp:2494
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Buang Markah ini"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3463
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3437
 #: part/signaturepartutils.cpp:87
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2610 part/revisionviewer.cpp:44
+#: part/part.cpp:2588 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Simpan Sebagai"
 
-#: part/part.cpp:2627
+#: part/part.cpp:2605
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4564,18 +4520,18 @@ msgstr ""
 "diakhiri dengan ekstensi '%1'. Itu tidak diperbolehkan, apakah Anda ingin "
 "memilih nama baru?"
 
-#: part/part.cpp:2628
+#: part/part.cpp:2606
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Ekstensi tidak didukung"
 
-#: part/part.cpp:2629
+#: part/part.cpp:2607
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2661
+#: part/part.cpp:2639
 #, kde-format
 msgid ""
 "The file '%1' has been modified by another program, which means it can no "
@@ -4584,7 +4540,7 @@ msgstr ""
 "File '%1' telah dimodifikasi oleh program lainnya, yang berati itu tidak "
 "bisa lagi disimpan."
 
-#: part/part.cpp:2669
+#: part/part.cpp:2647
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4595,17 +4551,17 @@ msgstr ""
 "file tersebut perlu dimuat ulang. Anda akan dimintai kata sandi lagi dan "
 "riwayat urungan/ulangan Anda akan hilang.<br />Apakah Anda ingin melanjutkan?"
 
-#: part/part.cpp:2670 part/part.cpp:2722
+#: part/part.cpp:2648 part/part.cpp:2700
 #, kde-format
 msgid "Save - Warning"
 msgstr "Simpan - Peringatan"
 
-#: part/part.cpp:2696
+#: part/part.cpp:2674
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Tidak bisa membuka file temporer untuk penyimpanan."
 
-#: part/part.cpp:2709
+#: part/part.cpp:2687
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4615,7 +4571,7 @@ msgstr ""
 "Tidak dapat menimpa <filename>%1</filename> karena file itu hanya-baca. Coba "
 "simpan ke lokasi yang lain atau ubah izin file itu."
 
-#: part/part.cpp:2721
+#: part/part.cpp:2699
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4625,24 +4581,24 @@ msgstr ""
 "ulang. Riwayat urung/ulang Anda akan hilang.<br />Apakah Anda ingin "
 "melanjutkan?"
 
-#: part/part.cpp:2736 part/part.cpp:2805 part/part.cpp:2826 part/part.cpp:3478
+#: part/part.cpp:2714 part/part.cpp:2783 part/part.cpp:2804 part/part.cpp:3452
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "File tidak bisa disimpan di '%1'. Coba untuk menyimpannya ke lokasi yang "
 "lain."
 
-#: part/part.cpp:2749
+#: part/part.cpp:2727
 #, kde-format
 msgid "Filled form contents"
 msgstr "Pengisian formulir konten"
 
-#: part/part.cpp:2752
+#: part/part.cpp:2730
 #, kde-format
 msgid "User annotations"
 msgstr "Anotasi pengguna"
 
-#: part/part.cpp:2757
+#: part/part.cpp:2735
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4653,17 +4609,17 @@ msgstr ""
 "penyimpanan elemen ini. Silakan gunakan format <i>arsip dokumen Okular</i> "
 "untuk mengamankannya."
 
-#: part/part.cpp:2761 part/part.cpp:2783
+#: part/part.cpp:2739 part/part.cpp:2761
 #, kde-format
 msgid "Warning"
 msgstr "Peringatan"
 
-#: part/part.cpp:2762 part/part.cpp:2784
+#: part/part.cpp:2740 part/part.cpp:2762
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Simpan sebagai arsip dokumen Okular..."
 
-#: part/part.cpp:2774
+#: part/part.cpp:2752
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4676,7 +4632,7 @@ msgstr ""
 "untuk mengamankannya. Klik <i>Lanjutkan</i> untuk menyimpan dokumen dan "
 "membuang elemen tersebut."
 
-#: part/part.cpp:2777
+#: part/part.cpp:2755
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4689,22 +4645,22 @@ msgstr ""
 "untuk mengamankannya. Klik <i>Lanjutkan</i> untuk menyimpannya, tapi Anda "
 "akan kehilangan elemen ini serta riwayat urung/ulang."
 
-#: part/part.cpp:2779
+#: part/part.cpp:2757
 #, kde-format
 msgid "Continue"
 msgstr "Lanjutkan"
 
-#: part/part.cpp:2779
+#: part/part.cpp:2757
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Lanjutkan kehilangan perubahan"
 
-#: part/part.cpp:2807
+#: part/part.cpp:2785
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "File tidak bisa disimpan di '%1'. %2"
 
-#: part/part.cpp:2846
+#: part/part.cpp:2824
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4715,7 +4671,7 @@ msgstr ""
 "\n"
 "Dokumen sudah tidak ada lagi."
 
-#: part/part.cpp:2882
+#: part/part.cpp:2860
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4724,59 +4680,59 @@ msgstr ""
 "File tidak bisa disimpan di '%1'. Galat: '%2'. Cobalah untuk menyimpannya ke "
 "lokasi yang lain."
 
-#: part/part.cpp:3133
+#: part/part.cpp:3111
 #, kde-format
 msgid "Expand whole section"
 msgstr "Bentangkan seluruh bagian"
 
-#: part/part.cpp:3134
+#: part/part.cpp:3112
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Ciutkan seluruh bagian"
 
-#: part/part.cpp:3135
+#: part/part.cpp:3113
 #, kde-format
 msgid "Expand all"
 msgstr "Besarkan semua"
 
-#: part/part.cpp:3136
+#: part/part.cpp:3114
 #, kde-format
 msgid "Collapse all"
 msgstr "Kecilkan semua"
 
-#: part/part.cpp:3147
+#: part/part.cpp:3125
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinkronkan Thumbnail dengan Halaman"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3130
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Tambah Markah"
 
-#: part/part.cpp:3176
+#: part/part.cpp:3152
 #, kde-format
 msgid "Tools"
 msgstr "Peralatan"
 
-#: part/part.cpp:3358
+#: part/part.cpp:3333
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Bacakan"
 
-#: part/part.cpp:3516
+#: part/part.cpp:3490
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Cetak"
 
-#: part/part.cpp:3579
+#: part/part.cpp:3553
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Mencetak dokumen ini tidak dibolehkan."
 
-#: part/part.cpp:3587
+#: part/part.cpp:3561
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4784,7 +4740,7 @@ msgstr ""
 "Tidak bisa mencetak dokumen. Galat tidak diketahui. Silakan laporkan ke bugs."
 "kde.org"
 
-#: part/part.cpp:3589
+#: part/part.cpp:3563
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4793,17 +4749,17 @@ msgstr ""
 "Tidak bisa mencetak dokumen. Rincian error adalah \"%1\". Silakan laporkan "
 "ke bugs.kde.org"
 
-#: part/part.cpp:3669
+#: part/part.cpp:3643
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Menuju ke tempat di mana Anda sebelumnya"
 
-#: part/part.cpp:3673
+#: part/part.cpp:3647
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Menuju ke tempat di mana Anda sesudahnya"
 
-#: part/part.cpp:3698
+#: part/part.cpp:3672
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4812,7 +4768,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa menciptakan file temporer "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3710
+#: part/part.cpp:3684
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4821,7 +4777,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa membuka file <nobr><strong>%1</"
 "strong></nobr> untuk uncompression. File tidak akan dimuat.</qt>"
 
-#: part/part.cpp:3714
+#: part/part.cpp:3688
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4834,7 +4790,7 @@ msgstr ""
 "klik kanan pada file di pengelola file Dolphin, kemudian pilihlah opsi "
 "'Properti', dan pilih tab 'Perizinan' di dalam jendela yang terbuka.</qt>"
 
-#: part/part.cpp:3736
+#: part/part.cpp:3710
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4843,7 +4799,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa meng-uncompress file "
 "<nobr><strong>%1</strong></nobr>. File tidak akan dimuat.</qt>"
 
-#: part/part.cpp:3740
+#: part/part.cpp:3714
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4853,27 +4809,27 @@ msgstr ""
 "memastikan, coba decompress file secara manual menggunakan alat baris-"
 "perintah.</qt>"
 
-#: part/part.cpp:3766
+#: part/part.cpp:3740
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Tidak ada Markah"
 
-#: part/part.cpp:3837
+#: part/part.cpp:3811
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Ada masalah berbagi dengan dokumen: %1"
 
-#: part/part.cpp:3837 part/part.cpp:3843
+#: part/part.cpp:3811 part/part.cpp:3817
 #, kde-format
 msgid "Share"
 msgstr "Bagikan"
 
-#: part/part.cpp:3841
+#: part/part.cpp:3815
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Sukses membagikan dokumen"
 
-#: part/part.cpp:3843
+#: part/part.cpp:3817
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Anda dapat menemukan dokumen yang dibagikan di: <a href=\"%1\">%1</a>"
@@ -5055,7 +5011,7 @@ msgstr ""
 "ditempatkan di sudut atas kanan. Tentu saja Anda dapat mendaur jendela (Alt"
 "+TAB secara baku)"
 
-#: part/presentationwidget.cpp:1705
+#: part/presentationwidget.cpp:1701
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -5455,7 +5411,7 @@ msgstr "Tampilan Versi Tertandatangan"
 msgid "View Certificate..."
 msgstr "Tampilan Sertifikat..."
 
-#: part/thumbnaillist.cpp:1029
+#: part/thumbnaillist.cpp:1028
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Tampilkan hanya halaman yang dimarkahi"
@@ -5518,47 +5474,47 @@ msgstr "Sudah ada alat dengan nama itu. Gunakanlah bakunya"
 msgid "Duplicated Name"
 msgstr "Nama Terduplikat"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:66
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Halaman dokumen untuk ditampilkan"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:67
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Mulai dokumen dalam mode presentasi"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:68
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Mulai dengan dialog cetak"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:69
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Jalankan dengan dialog cetak dan keluarkan sesudah pencetakan"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:70
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Kontrol \"instansi unik\""
 
-#: shell/main.cpp:73
+#: shell/main.cpp:71
 #, kde-format
 msgid "Not raise window"
 msgstr "Tidak angkat jendela"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:72
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Temukan string pada teks"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:73
 #, kde-format
 msgid "sets the external editor command"
 msgstr "menetapkan perintah editor eksternal"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:74
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokumen kebuka. Tentukan '-' untuk membaca dari stdin."
@@ -5622,7 +5578,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Tak mampu menemukan komponen Okular."
 
-#: shell/shell.cpp:399
+#: shell/shell.cpp:397
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5631,7 +5587,7 @@ msgstr ""
 "Klik untuk membuka file\n"
 "Klik dan tahan untuk membuka file saat ini"
 
-#: shell/shell.cpp:400
+#: shell/shell.cpp:398
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5639,52 +5595,52 @@ msgstr ""
 "<b>Klik</b> untuk membuka sebuah file atau <b>Klik dan tahan</b> untuk "
 "memilih sebuah file yang terkini"
 
-#: shell/shell.cpp:413
+#: shell/shell.cpp:411
 #, kde-format
 msgid "Next Tab"
 msgstr "Tab Selanjutnya"
 
-#: shell/shell.cpp:419
+#: shell/shell.cpp:417
 #, kde-format
 msgid "Previous Tab"
 msgstr "Tab Sebelumnya"
 
-#: shell/shell.cpp:425
+#: shell/shell.cpp:423
 #, kde-format
 msgid "Undo close tab"
 msgstr "Urung penutupan tab"
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:522
 #, kde-format
 msgid "All files (*)"
 msgstr "Semua file (*)"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:523
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Semua file didukung (%1)"
 
-#: shell/shell.cpp:537
+#: shell/shell.cpp:527
 #, kde-format
 msgid "Open Document"
 msgstr "Buka Dokumen"
 
-#: shell/shell.cpp:641
+#: shell/shell.cpp:631
 #, kde-format
 msgid "Confirm Close"
 msgstr "Konfirmasi Penutupan"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:635
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tutup Tab"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:642
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Anda akan menutup %1 tab. Apakah Anda yakin ingin melanjutkan?"
 
-#: shell/shell.cpp:654
+#: shell/shell.cpp:644
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ingatkan saya ketika saya berusaha menutup beberapa tab"
@@ -5743,6 +5699,40 @@ msgstr "Lupakan Semuanya"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
+#~ "not visible in PDF readers other than Okular.</warning>"
+#~ msgstr ""
+#~ "<warning>fitur percobaan.<nl/>Stempel yang disisipkan dalam dokumen PDF "
+#~ "belumlah terlihat dalam pembaca PDF lain selain Okular.</warning>"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "The version of the Poppler library this Okular was compiled with does not "
+#~ "support signing documents with passwords. Please ask your provider to "
+#~ "update it to 22.02 or later."
+#~ msgstr ""
+#~ "Versi pustaka Poppler yang dikompilasi dengan Okular ini tidak mendukung "
+#~ "penandatanganan dokumen dengan kata sandi. Silakan minta penyedia Anda "
+#~ "untuk memperbaruinya ke 22.02 atau lebih baru."
+
+#~ msgctxt "@title:window"
+#~ msgid "Poppler library is too old"
+#~ msgstr "Pustaka Poppler terlalu usang"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
+#~ "than Okular"
+#~ msgstr ""
+#~ "Stampel yang dimasukkan ke dalam dokumen PDF tidak terlihat di pembaca "
+#~ "PDF selain Okular"
+
+#~ msgctxt "@title:window"
+#~ msgid "Experimental feature"
+#~ msgstr "Fitur eksperimental"
 
 #~ msgid "Remove Bookmarks"
 #~ msgstr "Buang Markah"

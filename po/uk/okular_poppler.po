@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-03 00:44+0000\n"
+"POT-Creation-Date: 2022-11-20 00:44+0000\n"
 "PO-Revision-Date: 2021-09-30 09:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -38,7 +38,7 @@ msgid "Enhance thin lines:"
 msgstr "Покращення тонких ліній:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:938
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
 #, kde-format
 msgid "No"
 msgstr "Без оптимізації"
@@ -178,43 +178,43 @@ msgstr "Режим масштабування для друкованих сто
 msgid "Scale mode:"
 msgstr "Режим масштабування:"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF вер. %1.%2"
 
-#: generator_pdf.cpp:936
+#: generator_pdf.cpp:922
 #, kde-format
 msgid "Format"
 msgstr "Формат"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Encrypted"
 msgstr "Зашифровано"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Unencrypted"
 msgstr "Не зашифровано"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:923
 #, kde-format
 msgid "Security"
 msgstr "Захист"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Yes"
 msgstr "Так"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:924
 #, kde-format
 msgid "Optimized"
 msgstr "Оптимізовано"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1355
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -225,12 +225,12 @@ msgstr ""
 "\n"
 "Дата: %2"
 
-#: generator_pdf.cpp:1576
+#: generator_pdf.cpp:1556
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Вжито Poppler %1"
 
-#: generator_pdf.cpp:1578
+#: generator_pdf.cpp:1558
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -241,17 +241,17 @@ msgstr ""
 "\n"
 "Зібрано з Poppler %2"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Налаштовування модуля PDF"
 
-#: generator_pdf.cpp:2084
+#: generator_pdf.cpp:2038
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -260,24 +260,24 @@ msgstr ""
 "У документі знайдено деякі помилки. Ймовірно, Okular не вдасться показати "
 "його належним чином."
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Видано для"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
 msgstr "Ел. пошта"
 
-#: pdfsettingswidget.cpp:44
+#: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Дата завершення строку дії"
 
-#: pdfsettingswidget.cpp:61
+#: pdfsettingswidget.cpp:60
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -286,29 +286,29 @@ msgstr ""
 "Ви користуєтеся бібліотекою Poppler, яку зібрано без підтримки NSS.\n"
 "З цієї причини ви не зможете скористатися додаванням цифрових підписів"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
 msgstr "Потрібен перезапуск"
 
-#: pdfsettingswidget.cpp:107
+#: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Для набуття чинності внесеними змінами до параметрів каталогу NSS вам слід "
 "перезапустити Okular"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46 pdfsignatureutils.cpp:54
+#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
 msgstr "Недоступне"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter Password"
 msgstr "Введіть пароль"
 
-#: pdfsignatureutils.cpp:275
+#: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Введіть пароль для відкриття %1:"

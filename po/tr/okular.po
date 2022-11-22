@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-20 00:44+0000\n"
-"PO-Revision-Date: 2022-11-14 14:24+0300\n"
+"PO-Revision-Date: 2022-11-21 22:35+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3318,7 +3318,7 @@ msgstr "&Farklı Kaydet..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
-msgstr "Görünüm..."
+msgstr "&Görüntüle..."
 
 #: part/fileprinterpreview.cpp:115
 #, kde-format
@@ -3995,7 +3995,7 @@ msgstr "&Dosya"
 #: part/part-viewermode.rc:10 part/part.rc:90
 #, kde-format
 msgid "&Settings"
-msgstr "Aya&rlar"
+msgstr "Ayar&lar"
 
 #. i18n: ectx: Menu (help)
 #: part/part-viewermode.rc:15 part/part.rc:97
@@ -5441,7 +5441,7 @@ msgstr "&Ekle..."
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
 msgid "&Edit..."
-msgstr "&Düzenle..."
+msgstr "Dü&zenle..."
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

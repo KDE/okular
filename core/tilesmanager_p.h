@@ -67,6 +67,13 @@ public:
     bool dirty;
 
     /**
+    Whether the tile contains a partially rendered pixmap.
+    Some backends, such as PDF, can send partial updates that contain
+    only some of the page's elements (e.g. only a background image) drawn.
+    */
+    bool partial;
+
+    /**
      * Distance between the tile and the viewport.
      * This is used by the evicting algorithm.
      */

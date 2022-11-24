@@ -226,6 +226,10 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
     if (!tile.rect.intersects(rect)) {
         return;
     }
+    // Avoid painting partial pixmaps over tiles that already have a fully rendered pixmap, even if dirty
+    if (isPartialPixmap && tile.pixmap != nullptr && !tile.partial) {
+        return;
+    }
 
     // if the tile is not entirely within the viewport (the tile intersects an
     // edged of the viewport), attempt to set the pixmap in the children tiles
@@ -239,13 +243,17 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
             delete tile.pixmap;
             tile.pixmap = nullptr;
         }
-
+        // We could paint the pixmap over part of the tile here, but
+        // there is little reason to as it will usually be offscreen
+        // and it will be overwritten later if more tiles enter the screen,
+        // as we only track the dirty state of whole tiles, not rects.
         return;
     }
 
     // the tile lies entirely within the viewport
     if (tile.nTiles == 0) {
         tile.dirty = isPartialPixmap;
+        tile.partial = isPartialPixmap;
 
         // check whether the tile size is big and split it if necessary
         if (!splitBigTiles(tile, rect)) {
@@ -276,8 +284,11 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
         QRect tileRect = tile.rect.geometry(width, height);
         // sets the pixmap of the children tiles. if the tile's size is too
         // small, discards the children tiles and use the current one
-        if (tileRect.width() * tileRect.height() >= TILES_MAXSIZE) {
+        // Never join small tiles during a partial update in order to
+        // not lose existing image data
+        if (tileRect.width() * tileRect.height() >= TILES_MAXSIZE || isPartialPixmap) {
             tile.dirty = isPartialPixmap;
+            tile.partial = isPartialPixmap;
             if (tile.pixmap) {
                 totalPixels -= tile.pixmap->width() * tile.pixmap->height();
                 delete tile.pixmap;
@@ -312,6 +323,7 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
                 tile.pixmap = nullptr;
             }
             tile.dirty = isPartialPixmap;
+            tile.partial = isPartialPixmap;
         }
     }
 }
@@ -471,6 +483,8 @@ void TilesManager::cleanupPixmapMemory(qulonglong numberOfBytes, const Normalize
         delete tile->pixmap;
         tile->pixmap = nullptr;
 
+        tile->partial = true;
+
         d->markParentDirty(*tile);
     }
 }
@@ -625,6 +639,7 @@ TileNode::TileNode()
     : pixmap(nullptr)
     , rotation(Rotation0)
     , dirty(true)
+    , partial(true)
     , distance(-1)
     , tiles(nullptr)
     , nTiles(0)

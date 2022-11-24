@@ -247,18 +247,18 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while (tIt != tEnd) {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());
-                QRect dTileRect = QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect();
-                QRect limitsInTile = limits & tileRect;
-                QRectF dLimitsInTile = dLimits & dTileRect;
+                QRectF tileRect = tile.rect().geometryF(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());
+                QRect dTileRect = tile.rect().geometry(dScaledWidth, dScaledHeight).translated(-dScaledCrop.topLeft());
+                QRectF limitsInTile = QRectF(limits) & tileRect;
+                QRect dLimitsInTile = dLimits & dTileRect;
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
-                        destPainter->drawPixmap(limitsInTile.topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
+                        destPainter->drawPixmap(limitsInTile, *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
                     } else {
-                        destPainter->drawPixmap(tileRect, *tilePixmap);
+                        destPainter->drawPixmap(tileRect, *tilePixmap, tilePixmap->rect());
                     }
                 }
                 tIt++;
@@ -284,16 +284,16 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while (tIt != tEnd) {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());
-                QRect dTileRect(QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect());
-                QRect limitsInTile = limits & tileRect;
+                QRectF tileRect = tile.rect().geometryF(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());
+                QRect dTileRect = tile.rect().geometry(dScaledWidth, dScaledHeight).translated(-dScaledCrop.topLeft());
+                QRectF limitsInTile = QRectF(limits) & tileRect;
                 QRect dLimitsInTile = dLimits & dTileRect;
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
-                        p.drawPixmap(limitsInTile.translated(-limits.topLeft()).topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
+                        p.drawPixmap(limitsInTile.translated(-limits.topLeft()), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
                     } else {
                         double xScale = tilePixmap->width() / (double)dTileRect.width();
                         double yScale = tilePixmap->height() / (double)dTileRect.height();

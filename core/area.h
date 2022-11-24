@@ -283,6 +283,11 @@ public:
     QRect roundedGeometry(int xScale, int yScale) const;
 
     /**
+     * Same functionality as geometry, but nothing is converted into int.
+     */
+    QRectF geometryF(float xScale, float yScale) const;
+
+    /**
      * Returns the normalized bounding rectangle of the normalized rectangle
      * combined with the @p other normalized rectangle.
      */

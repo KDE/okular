@@ -1366,6 +1366,9 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         }
         const long screenSize = screen->devicePixelRatio() * screen->size().width() * screen->devicePixelRatio() * screen->size().height();
 
+        // Make sure the page is the right size to receive the pixmap
+        r->page()->setPageSize(r->observer(), r->width(), r->height());
+
         // If it's a preload but the generator is not threaded no point in trying to preload
         if (r->preload() && !m_generator->hasFeature(Generator::Threaded)) {
             m_pixmapRequestsStack.pop_back();

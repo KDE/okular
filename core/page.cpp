@@ -221,11 +221,6 @@ bool Page::hasPixmap(DocumentObserver *observer, int width, int height, const No
     TilesManager *tm = d->tilesManager(observer);
     if (tm) {
         if (width != tm->width() || height != tm->height()) {
-            // FIXME hasPixmap should not be calling setSize on the TilesManager this is not very "const"
-            // as this function claims to be
-            if (width != -1 && height != -1) {
-                tm->setSize(width, height);
-            }
             return false;
         }
 
@@ -248,6 +243,14 @@ bool Page::hasPixmap(DocumentObserver *observer, int width, int height, const No
     const QPixmap *pixmap = it.value().m_pixmap;
 
     return (pixmap->width() == width && pixmap->height() == height);
+}
+
+void Page::setPageSize(DocumentObserver *observer, int width, int height)
+{
+    TilesManager *tm = d->tilesManager(observer);
+    if (tm) {
+        tm->setSize(width, height);
+    }
 }
 
 bool Page::hasTextPage() const

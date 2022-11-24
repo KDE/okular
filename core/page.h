@@ -142,6 +142,11 @@ public:
     bool hasPixmap(DocumentObserver *observer, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect()) const;
 
     /**
+     * Sets the size of the page (in screen pixels) if there is a TilesManager.
+     */
+    void setPageSize(DocumentObserver *observer, int width, int height);
+
+    /**
      * Returns whether the page provides a text page (@ref TextPage).
      */
     bool hasTextPage() const;

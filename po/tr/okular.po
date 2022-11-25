@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-11-21 22:35+0300\n"
+"PO-Revision-Date: 2022-11-24 17:07+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -5689,7 +5689,7 @@ msgstr "Çok sayıda sekmeyi kapatmaya çalıştığımda beni uyar"
 #: shell/welcomescreen.cpp:64
 #, kde-format
 msgid "&Copy Path"
-msgstr "&Yolu Kopyala"
+msgstr "Yolu Ko&pyala"
 
 #: shell/welcomescreen.cpp:77
 #, kde-format

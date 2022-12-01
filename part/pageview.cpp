@@ -4048,7 +4048,7 @@ void PageView::updateZoomText()
         if (localValue.right(1) == QLatin1String("0") && localValue.indexOf(QLocale().decimalPoint()) > -1) {
             localValue.chop(1);
         }
-        translated << QStringLiteral("%1%").arg(localValue);
+        translated << i18n("%1%").arg(localValue);
     }
     d->aZoom->setItems(translated);
 

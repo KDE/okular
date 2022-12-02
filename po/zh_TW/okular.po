@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-20 00:44+0000\n"
+"POT-Creation-Date: 2022-12-02 00:44+0000\n"
 "PO-Revision-Date: 2020-04-26 13:07+0800\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -293,174 +293,174 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 釐米（%3）"
 
-#: core/document.cpp:1682
+#: core/document.cpp:1685
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "從開頭重新搜尋"
 
-#: core/document.cpp:1685
+#: core/document.cpp:1688
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "從底端重新搜尋"
 
-#: core/document.cpp:2445
+#: core/document.cpp:2448
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "找不到可以處理此文件的外掛程式。"
 
-#: core/document.cpp:3595
+#: core/document.cpp:3598
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除註記"
 
-#: core/document.cpp:4160 core/document.cpp:4166
+#: core/document.cpp:4163 core/document.cpp:4169
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文件正試著執行外部應用程式，但為了安全起見，okular 不允許此動作。"
 
-#: core/document.cpp:4177
+#: core/document.cpp:4180
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
 
-#: core/document.cpp:4600
+#: core/document.cpp:4603
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "無法開啟暫存檔"
 
-#: core/document.cpp:4602
+#: core/document.cpp:4605
 #, kde-format
 msgid "Print conversion failed"
 msgstr "列印轉換失敗"
 
-#: core/document.cpp:4604
+#: core/document.cpp:4607
 #, kde-format
 msgid "Printing process crashed"
 msgstr "列印行程發生錯誤"
 
-#: core/document.cpp:4606
+#: core/document.cpp:4609
 #, kde-format
 msgid "Printing process could not start"
 msgstr "列印行程無法啟動"
 
-#: core/document.cpp:4608
+#: core/document.cpp:4611
 #, kde-format
 msgid "Printing to file failed"
 msgstr "列印到檔案失敗"
 
-#: core/document.cpp:4610
+#: core/document.cpp:4613
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "印表機的狀態有問題"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4615
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要列印的檔案"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4617
 #, kde-format
 msgid "There was no file to print"
 msgstr "沒有檔案可列印"
 
-#: core/document.cpp:4616
+#: core/document.cpp:4619
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4621
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "頁面列印大小不合法"
 
-#: core/document.cpp:5283 part/part.cpp:1146
+#: core/document.cpp:5286 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "無法開啟 %1。檔案不存在"
 
-#: core/document.cpp:5793
+#: core/document.cpp:5796
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:5796
+#: core/document.cpp:5799
 #, kde-format
 msgid "Subject"
 msgstr "主旨"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5802
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5805
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5808
 #, kde-format
 msgid "Creator"
 msgstr "檔案建立者"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5811
 #, kde-format
 msgid "Producer"
 msgstr "產生者"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5814
 #, kde-format
 msgid "Copyright"
 msgstr "版權"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5817
 #, kde-format
 msgid "Pages"
 msgstr "頁面"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5820
 #, kde-format
 msgid "Created"
 msgstr "已建立"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5823
 #, kde-format
 msgid "Modified"
 msgstr "已修改"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5826
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "MIME 類型"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5829
 #, kde-format
 msgid "Category"
 msgstr "類別"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5832
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5835
 #, kde-format
 msgid "File Path"
 msgstr "檔案路徑"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5838
 #, kde-format
 msgid "File Size"
 msgstr "檔案大小"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5841
 #, kde-format
 msgid "Page Size"
 msgstr "頁面大小"

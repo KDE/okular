@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-20 00:44+0000\n"
-"PO-Revision-Date: 2022-11-19 14:48\n"
+"POT-Creation-Date: 2022-12-02 00:44+0000\n"
+"PO-Revision-Date: 2022-12-01 06:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -286,173 +286,173 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 毫米 (%3)"
 
-#: core/document.cpp:1682
+#: core/document.cpp:1685
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "从开头继续搜索"
 
-#: core/document.cpp:1685
+#: core/document.cpp:1688
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "从底部继续搜索"
 
-#: core/document.cpp:2445
+#: core/document.cpp:2448
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "找不到可处理所给文档的插件。"
 
-#: core/document.cpp:3595
+#: core/document.cpp:3598
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除批注"
 
-#: core/document.cpp:4160 core/document.cpp:4166
+#: core/document.cpp:4163 core/document.cpp:4169
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文档正试图执行外部应用程序。为安全起见 Okular 不允许这样做。"
 
-#: core/document.cpp:4177
+#: core/document.cpp:4180
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到可打开 MIME 类型为 %1 的应用程序。"
 
-#: core/document.cpp:4600
+#: core/document.cpp:4603
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "无法打开临时文件"
 
-#: core/document.cpp:4602
+#: core/document.cpp:4605
 #, kde-format
 msgid "Print conversion failed"
 msgstr "打印转换失败"
 
-#: core/document.cpp:4604
+#: core/document.cpp:4607
 #, kde-format
 msgid "Printing process crashed"
 msgstr "打印进程崩溃"
 
-#: core/document.cpp:4606
+#: core/document.cpp:4609
 #, kde-format
 msgid "Printing process could not start"
 msgstr "无法启动打印进程"
 
-#: core/document.cpp:4608
+#: core/document.cpp:4611
 #, kde-format
 msgid "Printing to file failed"
 msgstr "打印到文件失败"
 
-#: core/document.cpp:4610
+#: core/document.cpp:4613
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "打印机状态无效"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4615
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要打印的文件"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4617
 #, kde-format
 msgid "There was no file to print"
 msgstr "没有可打印的文件"
 
-#: core/document.cpp:4616
+#: core/document.cpp:4619
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到合适的二进制文件进行打印。请确保 CUPS lpr 二进制程序是可用的。"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4621
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "打印页的尺寸无效"
 
-#: core/document.cpp:5283 part/part.cpp:1146
+#: core/document.cpp:5286 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "无法打开“%1”。文件不存在"
 
-#: core/document.cpp:5793
+#: core/document.cpp:5796
 #, kde-format
 msgid "Title"
 msgstr "标题"
 
-#: core/document.cpp:5796
+#: core/document.cpp:5799
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5802
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5805
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5808
 #, kde-format
 msgid "Creator"
 msgstr "创建者"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5811
 #, kde-format
 msgid "Producer"
 msgstr "制作者"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5814
 #, kde-format
 msgid "Copyright"
 msgstr "版权"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5817
 #, kde-format
 msgid "Pages"
 msgstr "页数"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5820
 #, kde-format
 msgid "Created"
 msgstr "创建时间"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5823
 #, kde-format
 msgid "Modified"
 msgstr "修改时间"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5826
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 类型"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5829
 #, kde-format
 msgid "Category"
 msgstr "类别"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5832
 #, kde-format
 msgid "Keywords"
 msgstr "关键字"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5835
 #, kde-format
 msgid "File Path"
 msgstr "文件路径"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5838
 #, kde-format
 msgid "File Size"
 msgstr "文件大小"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5841
 #, kde-format
 msgid "Page Size"
 msgstr "页面大小"
@@ -5597,34 +5597,3 @@ msgstr "忘记全部"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
-#~ "not visible in PDF readers other than Okular.</warning>"
-#~ msgstr ""
-#~ "<warning>实验功能。<nl/>在 PDF 文档中插入的水印在 Okular 以外的 PDF 阅读器"
-#~ "中不可见。</warning>"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "The version of the Poppler library this Okular was compiled with does not "
-#~ "support signing documents with passwords. Please ask your provider to "
-#~ "update it to 22.02 or later."
-#~ msgstr ""
-#~ "Okular 编译的 Poppler 库版本不支持用密码签名文档。请咨询您的系统管理员将其"
-#~ "更新到 22.02 或更高版本。"
-
-#~ msgctxt "@title:window"
-#~ msgid "Poppler library is too old"
-#~ msgstr "您的系统中的 Poppler 库版本太旧了"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
-#~ "than Okular"
-#~ msgstr "在 PDF 文档中插入的图章在非 Okular PDF 阅读器中不可见"
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "实验性功能"

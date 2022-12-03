@@ -1576,9 +1576,15 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Annotaties verwijderen</title>
 				<para
->Om een annotatie te verwijderen, klikt u er gewoon op met de &RMB;, en selecteert u <guimenuitem
+>Om een annotatie te verwijderen, ga na dat het hulpmiddel Bladeren is geselecteerd (<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Bladeren</guimenuitem
+></menuchoice
+>) daarna klikt u er gewoon op met de &RMB;, en selecteert u <guimenuitem
 >Verwijderen</guimenuitem
-> of selecteer een annotatie met de &LMB; en drul op de toets &Del;. </para>
+> of selecteer een annotatie met de &LMB; en druk op de toets &Del;. </para>
 				<para
 >Indien het venster van de annotatie open staat bij het verwijderen van de annotatie, zal dit venster tegelijk gesloten worden. </para>
 				<note>
@@ -1590,7 +1596,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Annotaties bewerken</title>
 				<para
->Om een annotatie te bewerken, klikt u erop met de &RMB; en selecteert u <guimenuitem
+>Om een annotatie te bewerken, ga na dat het hulpmiddel Bladeren is geselecteerd (<menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Bladeren</guimenuitem
+></menuchoice
+>) daarna klikt u erop met de &RMB; en selecteert u <guimenuitem
 >Eigenschappen</guimenuitem
 >. Dan zal er een dialoogvenster verschijnen met de algemene annotatie-instellingen (zoals kleur, dekking, auteur, &etc;) en de specifieke instellingen voor dat type annotatie. </para>
 				<screenshot>

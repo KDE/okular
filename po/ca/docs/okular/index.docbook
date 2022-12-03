@@ -1574,7 +1574,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Eliminar anotacions</title>
 				<para
->Per a eliminar una anotació, sols feu clic sobre seu amb el &BDR; i seleccioneu <guimenuitem
+>Per a eliminar una anotació, primer assegureu-vos que s'ha seleccionat l'eina Navega (<menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Navega</guimenuitem
+></menuchoice
+>), després feu-hi clic amb el &BDR; i seleccioneu <guimenuitem
 >Suprimeix</guimenuitem
 > o seleccioneu una anotació utilitzant el &BER; i premeu la tecla &Del;. </para>
 				<para
@@ -1588,7 +1594,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Editar anotacions</title>
 				<para
->Per a editar una anotació, feu clic amb el &BDR; i seleccioneu <guimenuitem
+>Per a editar una anotació, primer assegureu-vos que s'ha seleccionat l'eina Navega (<menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Navega</guimenuitem
+></menuchoice
+>), després feu-hi clic amb el &BDR; i seleccioneu <guimenuitem
 >Propietats</guimenuitem
 >. Apareixerà un diàleg amb la configuració general de l'anotació (com el color i l'opacitat, autor, &etc;) i la configuració específica per a aquest tipus d'anotació. </para>
 				<screenshot>

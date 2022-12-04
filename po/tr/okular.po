@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-11-24 17:07+0300\n"
+"PO-Revision-Date: 2022-12-03 19:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -669,7 +669,7 @@ msgstr "Değer"
 #: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
 #, kde-format
 msgid "Pop-up Note"
-msgstr "Açılabilir Not"
+msgstr "Açılır Not"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
 #: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
@@ -1533,13 +1533,13 @@ msgstr "Sayfa %1"
 #, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "%1 Bilgi notu"
-msgstr[1] "%1 Bilgi notu"
+msgstr[0] "Bilgi Notu"
+msgstr[1] "%1 Bilgi Notu"
 
 #: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
 #, kde-format
 msgid "&Open Pop-up Note"
-msgstr "Açılabilir &Not Aç"
+msgstr "Açılır &Not Aç"
 
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
 #, kde-format
@@ -1556,7 +1556,7 @@ msgstr "Ö&zellikler"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "'%1' Dosyasını Kaydet..."
+msgstr "Kaydet: '%1'..."
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2003,7 +2003,7 @@ msgstr "Grafik"
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
-msgstr "İğne"
+msgstr "Raptiye"
 
 #: part/annotationwidgets.cpp:768
 #, kde-format
@@ -2821,14 +2821,14 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
-"Daha önce açılmamış dosyalar için öntanımlı büyütme kipini tanımlar.\n"
-"Daha önce açılan dosyalara önceki büyütme oranı uygulanır."
+"Daha önce açılmamış dosyalar için öntanımlı yakınlaştırma kipini tanımlar.\n"
+"Daha önce açılan dosyalara önceki yakınlaştırma oranı uygulanır."
 
 #: part/dlggeneral.cpp:210
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "Öntanımlı büyütme:"
+msgstr "Öntanımlı yakınlaştırma:"
 
 #: part/dlgperformance.cpp:26
 #, kde-format
@@ -3058,7 +3058,7 @@ msgstr "Yatay geçiş"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
-msgstr "İçte kutu"
+msgstr "Şurada kutu"
 
 #: part/dlgpresentation.cpp:106
 #, kde-format
@@ -3100,7 +3100,7 @@ msgstr "Sağ aşağı doğru parılda"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal in"
-msgstr "İçeri yatay ayrıl"
+msgstr "Şurada yatay böl"
 
 #: part/dlgpresentation.cpp:113
 #, kde-format
@@ -3112,7 +3112,7 @@ msgstr "Dışarı yatay ayrıl"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical in"
-msgstr "İçeri dikey ayrıl"
+msgstr "Şurada dikey böl"
 
 #: part/dlgpresentation.cpp:115
 #, kde-format
@@ -3454,12 +3454,12 @@ msgstr "/"
 #: part/pageview.cpp:541
 #, kde-format
 msgid "Zoom"
-msgstr "Büyüt"
+msgstr "Yakınlaştır"
 
 #: part/pageview.cpp:553
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "%​100'e Büyüt"
+msgstr "%​100'e Yakınlaştır"
 
 #: part/pageview.cpp:564
 #, kde-format
@@ -3571,7 +3571,7 @@ msgstr "&Göz At"
 #: part/pageview.cpp:669
 #, kde-format
 msgid "&Zoom"
-msgstr "&Büyüt"
+msgstr "&Yakınlaştır"
 
 #: part/pageview.cpp:689
 #, kde-format
@@ -3788,7 +3788,8 @@ msgstr "Hoş Geldiniz"
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
-"Büyütülecek alanı seçin. Küçültmek için farenin sağ düğmesine tıklayın."
+"Yakınlaştırılacak alanı seçin. Uzaklaşmak için farenin sağ düğmesine "
+"tıklayın."
 
 #: part/pageview.cpp:5005
 #, kde-format
@@ -3948,7 +3949,7 @@ msgstr "İç Metin Bilg Notu (bir alan seçmek için fare işaretçisini sürük
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
-msgstr "Açılan bir not ekle"
+msgstr "Bir açılır not koy"
 
 #: part/pageviewannotator.cpp:1237
 #, kde-format
@@ -4479,8 +4480,7 @@ msgstr "Kapatmayı İptal Et"
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
-"\"%1\" dosyasına yaptığınız değişiklikleri kaydetmek mi yoksa atmak mı "
-"istiyorsunuz?"
+"\"%1\" dosyasına yaptığınız değişiklikler kaydedilsin mi yoksa atılsın mı?"
 
 #: part/part.cpp:1890
 #, kde-format

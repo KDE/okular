@@ -1618,9 +1618,15 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Borrar anotaciones</title>
 				<para
->Para eliminar una anotación, pulse sobre ella con el &RMB; y seleccione <guimenuitem
+>Para eliminar una anotación, asegúrese primero de que la herramienta de exploración esté seleccionada (<menuchoice
+><guimenu
+>Herramientas</guimenu
+><guimenuitem
+>Explorar</guimenuitem
+></menuchoice
+>), pulse sobre ella con el &RMB; y seleccione <guimenuitem
 >Borrar</guimenuitem
-> o seleccione una anotación usando el &LMB; y pulse la tecla &Del;. </para>
+>; también puede seleccionar una anotación usando el &LMB; y pulsar la tecla &Del;. </para>
 				<para
 >Al borrar una anotación, su ventana se cerrará si estuviera abierta. </para>
 				<note>
@@ -1632,9 +1638,15 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Editar anotaciones</title>
 				<para
->Para editar una anotación, pulse sobre esta con el &RMB; y seleccione <guimenuitem
+>Para editar una anotación, asegúrese primero de que la herramienta de exploración esté seleccionada (<menuchoice
+><guimenu
+>Herramientas</guimenu
+><guimenuitem
+>Explorar</guimenuitem
+></menuchoice
+>), pulse sobre ella con el &RMB; y seleccione <guimenuitem
 >Propiedades</guimenuitem
->. Se mostrará un diálogo con las preferencias generales (como color, opacidad, autor, &etc;) y las específicas para ese tipo de anotación. </para>
+>. Se mostrará un diálogo con las preferencias generales (como color, opacidad, autor, etc.) y las específicas para ese tipo de anotación. </para>
 				<screenshot>
 				<screeninfo
 >Diálogo de propiedades de la anotación</screeninfo>

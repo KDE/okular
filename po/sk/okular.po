@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-06-16 09:33+0200\n"
+"PO-Revision-Date: 2022-12-09 20:58+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 22.12.0\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -3896,15 +3896,13 @@ msgstr ""
 "znova</interface> a nakreslite väčší obdĺžnik."
 
 #: part/pageviewannotator.cpp:364
-#, fuzzy, kde-format
-#| msgid "Start over"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Začať odznova"
 
 #: part/pageviewannotator.cpp:365
-#, fuzzy, kde-format
-#| msgid "Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpísať"
@@ -4568,10 +4566,9 @@ msgid ""
 msgstr ""
 
 #: part/part.cpp:2628
-#, fuzzy, kde-format
-#| msgid "Line Extensions"
+#, kde-format
 msgid "Unsupported extension"
-msgstr "Rozšírenia čiar"
+msgstr "Nepodporovaná prípona"
 
 #: part/part.cpp:2629
 #, kde-format
@@ -5726,7 +5723,7 @@ msgstr "Nedávne dokumenty"
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Zabudnúť všetko"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:455

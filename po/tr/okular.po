@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-12-03 19:48+0300\n"
+"PO-Revision-Date: 2022-12-10 18:14+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2078,7 +2078,7 @@ msgid ""
 "Click here to render."
 msgstr ""
 "Bu bilgi notu LaTeX kodu içeriyor olabilir.\n"
-"Hazırlamak için buraya tıklayın."
+"Sunmak için buraya tıklayın."
 
 #: part/annotwindow.cpp:415
 #, kde-format
@@ -2089,7 +2089,7 @@ msgstr "Latex çalıştırılabilir dosyası bulunamadı."
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "LaTeX rendering failed"
-msgstr "LaTeX hazırlama işlemi başarısız oldu"
+msgstr "LaTeX sunumu başarısız oldu"
 
 #: part/annotwindow.cpp:420
 #, kde-format
@@ -2882,7 +2882,7 @@ msgstr "Metin kenar yumuşatmasını etkinleştir"
 #, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "Dokuma seçenekleri:"
+msgstr "Sunum seçenekleri:"
 
 #: part/dlgperformance.cpp:59
 #, kde-format
@@ -3943,7 +3943,8 @@ msgstr "Serbest çizim çizgisi çiz"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
-msgstr "İç Metin Bilg Notu (bir alan seçmek için fare işaretçisini sürükleyin)"
+msgstr ""
+"İç Metin Bilgi Notu (bir alan seçmek için fare işaretçisini sürükleyin)"
 
 #: part/pageviewannotator.cpp:1235
 #, kde-format

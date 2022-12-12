@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-05 00:44+0000\n"
-"PO-Revision-Date: 2022-09-02 15:57+0000\n"
+"PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -2051,10 +2051,9 @@ msgid "No description available."
 msgstr "Engin lýsing tiltæk."
 
 #: part/annotationwidgets.cpp:791
-#, fuzzy, kde-format
-#| msgid "&Name:"
+#, kde-format
 msgid "Name:"
-msgstr "&Heiti:"
+msgstr "Heiti:"
 
 #: part/annotationwidgets.cpp:802
 #, kde-format
@@ -2062,10 +2061,9 @@ msgid "Description:"
 msgstr "Lýsing:"
 
 #: part/annotationwidgets.cpp:861
-#, fuzzy, kde-format
-#| msgid "Caret Symbol"
+#, kde-format
 msgid "Caret symbol:"
-msgstr "Innskotstákn (caret)"
+msgstr "Innskotstákn (caret):"
 
 #: part/annotationwidgets.cpp:863
 #, kde-format
@@ -2157,10 +2155,9 @@ msgstr "Endir skjalisins"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search..."
-msgstr "L&eita:"
+msgstr "Leita..."
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2190,16 +2187,14 @@ msgid "Remove all Bookmarks for this Document"
 msgstr "Fjarlægja öll bókamerki úr núverandi skjali"
 
 #: part/certificateviewer.cpp:121
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificate Viewer"
-msgstr "Stilla skoðara"
+msgstr "Skilríkjaskoðari"
 
 #: part/certificateviewer.cpp:124
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export..."
-msgstr "Fl&ytja út sem"
+msgstr "Flytja út..."
 
 #: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2262,10 +2257,9 @@ msgid "Certificate Data:"
 msgstr ""
 
 #: part/certificateviewer.cpp:232
-#, fuzzy, kde-format
-#| msgid "Where do you want to save %1?"
+#, kde-format
 msgid "Where do you want to save this certificate?"
-msgstr "Hvar viltu vista %1?"
+msgstr "Hvar viltu vista þetta skilríki?"
 
 #: part/certificateviewer.cpp:233
 #, kde-format
@@ -2278,39 +2272,34 @@ msgid "Could not export the certificate"
 msgstr ""
 
 #: part/colormodemenu.cpp:17
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Color Mode"
-msgstr "Litahamur:"
+msgstr "Lita&hamur"
 
 #: part/colormodemenu.cpp:19
-#, fuzzy, kde-format
-#| msgid "Change &colors"
+#, kde-format
 msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
-msgstr "Breyta &litum"
+msgstr "Breyta litum"
 
 #: part/colormodemenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Normal Icons"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
-msgstr "Venjulegar táknmyndir"
+msgstr "Ve&njulegar táknmyndir"
 
 #: part/colormodemenu.cpp:44
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
-msgstr "Snúa við litum"
+msgstr "Snúa v&ið litum"
 
 #: part/colormodemenu.cpp:45
-#, fuzzy, kde-format
-#| msgid "Change Paper Color"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
-msgstr "Breyta blaðsíðulit"
+msgstr "&Breyta blaðsíðulit"
 
 #: part/colormodemenu.cpp:47
 #, fuzzy, kde-format
@@ -2407,17 +2396,15 @@ msgstr "Gul áherslustrikun"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:14
-#, fuzzy, kde-format
-#| msgid "Highlighter"
+#, kde-format
 msgid "Green Highlighter"
-msgstr "Uppljómun"
+msgstr "Græn áherslulitun"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:24
-#, fuzzy, kde-format
-#| msgid "Insert"
+#, kde-format
 msgid "Insert Text"
-msgstr "Setja inn"
+msgstr "Setja inn texta"
 
 #: part/dlgaccessibility.cpp:38
 #, fuzzy, kde-format
@@ -4849,8 +4836,7 @@ msgid "Tools"
 msgstr "Verkfæri"
 
 #: part/part.cpp:3358
-#, fuzzy, kde-format
-#| msgid "Speak Text"
+#, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Tala texta"
@@ -5189,10 +5175,9 @@ msgid "Reading font information..."
 msgstr "Les upplýsingar um letur..."
 
 #: part/propertiesdialog.cpp:158
-#, fuzzy, kde-format
-#| msgid "&Page Size"
+#, kde-format
 msgid "&Page Sizes"
-msgstr "&Blaðsíðustærð"
+msgstr "&Blaðsíðustærðir"
 
 #: part/propertiesdialog.cpp:225
 #, kde-format
@@ -5457,7 +5442,7 @@ msgstr "Eiginleikar"
 #: part/signaturepartutils.cpp:46
 #, kde-format
 msgid "Select certificate to sign with"
-msgstr ""
+msgstr "Veldu skilríki til að undirrita með"
 
 #: part/signaturepartutils.cpp:46
 #, kde-format
@@ -5467,7 +5452,7 @@ msgstr "Skilríki:"
 #: part/signaturepartutils.cpp:59
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
 #: part/signaturepartutils.cpp:61
 #, kde-format
@@ -5485,12 +5470,12 @@ msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
-msgstr ""
+msgstr "%1_undirritað.%2"
 
 #: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
+msgstr "Vista undirritaða skrá sem"
 
 #: part/signaturepropertiesdialog.cpp:29
 #, kde-format
@@ -5500,17 +5485,17 @@ msgstr "Ekki tiltækt"
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
 msgid "Validity Status"
-msgstr ""
+msgstr "Lögmæti"
 
 #: part/signaturepropertiesdialog.cpp:52
 #, kde-format
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Gildi undirritunar:"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Breytingar á skjali:"
 
 #: part/signaturepropertiesdialog.cpp:56
 #, kde-format
@@ -5785,10 +5770,9 @@ msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Aðvara þegar mörgum flipum er lokað"
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "Afrita texta"
+msgstr "A&frita slóð"
 
 #: shell/welcomescreen.cpp:77
 #, kde-format

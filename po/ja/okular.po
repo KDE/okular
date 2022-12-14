@@ -5687,7 +5687,3 @@ msgstr "すべて忘れる"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "ようこそスクリーンを隠す"
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "試験的な機能"

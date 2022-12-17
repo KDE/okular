@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-02 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 00:48+0000\n"
 "PO-Revision-Date: 2022-09-28 10:11+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -5497,47 +5497,47 @@ msgstr "Er is al een hulpmiddel met die naam. De standaard wordt gebruikt"
 msgid "Duplicated Name"
 msgstr "Gedupliceerde naam"
 
-#: shell/main.cpp:66
+#: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Pagina van het document om te tonen"
 
-#: shell/main.cpp:67
+#: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Document in presentatiemodus starten"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Met afdrukdialoog beginnen"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Met afdrukdialoog beginnen en na afdrukken beëindigen"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Controle over \"unieke sessie\""
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
 msgstr "Venster niet naar voorgrond"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Een tekenreeks zoeken in de tekst"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
 msgstr "stelt het externe commando voor bewerker in"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Te openen documenten. Specificeer '-' om van standaardinvoer te lezen."

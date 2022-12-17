@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-02 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 00:48+0000\n"
 "PO-Revision-Date: 2020-04-26 13:07+0800\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -5609,47 +5609,47 @@ msgstr "已經有一個同名的工具了。使用預設值"
 msgid "Duplicated Name"
 msgstr "重覆的名稱"
 
-#: shell/main.cpp:66
+#: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "此文件要顯示的頁面"
 
-#: shell/main.cpp:67
+#: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "以展示模式開啟此文件"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
 msgstr "以列印對話框開始"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "以列印對話框開始並且列印後離開"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "「唯一實體」控制"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
 msgstr "不提升視窗"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
 msgstr "在一段文字中搜尋字串"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "要開啟的文件。'-' 表示從標準輸入讀取。"

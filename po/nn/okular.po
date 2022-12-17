@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 02:42+0000\n"
 "PO-Revision-Date: 2022-09-11 19:48+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -4083,8 +4083,9 @@ msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
-"Dette dokumentet har innebygde filer. <a href=\"okular:/embeddedfiles"
-"\">Trykk her for å sjå dei</a>, eller gå til «Fil → Innebygde filer»."
+"Dette dokumentet har innebygde filer. <a href=\"okular:/"
+"embeddedfiles\">Trykk her for å sjå dei</a>, eller gå til «Fil → Innebygde "
+"filer»."
 
 #: part/part.cpp:689
 #, kde-format
@@ -4821,11 +4822,11 @@ msgstr ""
 #: part/part.cpp:3736
 #, kde-format
 msgid ""
-"<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
-"%1</strong></nobr>. The file will not be loaded.</qt>"
+"<qt><strong>File Error!</strong> Could not uncompress the file "
+"<nobr><strong>%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
-"<qt><strong>Filfeil:</strong> Klarte ikkje dekomprimera fila <nobr><strong>"
-"%1</strong></nobr>. Fila vert ikkje lesen inn.</qt>"
+"<qt><strong>Filfeil:</strong> Klarte ikkje dekomprimera fila "
+"<nobr><strong>%1</strong></nobr>. Fila vert ikkje lesen inn.</qt>"
 
 #: part/part.cpp:3740
 #, kde-format
@@ -5499,47 +5500,47 @@ msgstr "Det finst alt eit verktøy med dette namnet. Brukar standardnamn."
 msgid "Duplicated Name"
 msgstr "Namneduplikat"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Dokumentside som skal visast"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Start dokumentet i presentasjonsmodus"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Start med utskriftsvindauge"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Start med utskriftsvindauge og avslutt etter utskrift"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "«Unik køyring»-kontroll"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, kde-format
 msgid "Not raise window"
 msgstr "Ikkje hev vindauget"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Find søkjeteksten i dokumentet"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:84
 #, kde-format
 msgid "sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:76
+#: shell/main.cpp:85
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokument som skal opnast. Bruk «-» for å lesa frå standard inn."

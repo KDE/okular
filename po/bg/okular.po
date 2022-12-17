@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 02:42+0000\n"
 "PO-Revision-Date: 2022-09-29 14:34+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -5516,47 +5516,47 @@ msgstr ""
 msgid "Duplicated Name"
 msgstr "Дублирано име"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Страница от документа която да бъде показана"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Стартиране на документа в режим на презентация"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Започване с диалоговия прозорец за печат"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Започване с диалоговия прозорец за печат и излизане след печат"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Контрол \"Unique instance\""
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, kde-format
 msgid "Not raise window"
 msgstr "Без вдигане на прозорец"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Намиране на низ в текста"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:84
 #, kde-format
 msgid "sets the external editor command"
 msgstr "задава командите на външния редактор"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:85
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Документи за отваряне. Посочете '-' за четене от stdin."

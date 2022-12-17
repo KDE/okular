@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 02:42+0000\n"
 "PO-Revision-Date: 2022-10-18 00:05+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -5490,47 +5490,47 @@ msgstr "Bu adla alət artıq var. Standart birini seçin."
 msgid "Duplicated Name"
 msgstr "Təkrarlanan ad"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Göstərilən sənədin səhifəsi"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Sənədi təqdimat rejimində açmaq"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Çap dialoqu ilə açmaq"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Çap dialoqu ilə açmaq və çapdan sonra çıxmaq"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "\"Tətbiqin yeganə nüsxəsi\""
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, kde-format
 msgid "Not raise window"
 msgstr "Pəncərəni aktiv etməmək"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Mətndə sətri tapmaq"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:84
 #, kde-format
 msgid "sets the external editor command"
 msgstr "xarici redaktor əmrini təyin edin"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:85
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Açılacaq sənədlər. Standart girişdən oxumaq üçün \"-\" göstərin."

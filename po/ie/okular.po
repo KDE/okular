@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-05 00:44+0000\n"
+"POT-Creation-Date: 2022-12-17 02:42+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -5351,47 +5351,47 @@ msgstr ""
 msgid "Duplicated Name"
 msgstr "Deleter %d duplicat elementes"
 
-#: shell/main.cpp:68
+#: shell/main.cpp:77
 #, fuzzy, kde-format
 msgid "Page of the document to be shown"
 msgstr "Appender li document pos li ultim págine"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:78
 #, fuzzy, kde-format
 msgid "Start the document in presentation mode"
 msgstr "_Mode de presentation"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:79
 #, fuzzy, kde-format
 msgid "Start with print dialog"
 msgstr "&Printar"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:80
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr ""
 
-#: shell/main.cpp:72
+#: shell/main.cpp:81
 #, fuzzy, kde-format
 msgid "\"Unique instance\" control"
 msgstr "_Instantie"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:82
 #, fuzzy, kde-format
 msgid "Not raise window"
 msgstr "Levar li fenestre"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:83
 #, fuzzy, kde-format
 msgid "Find a string on the text"
 msgstr "Trovar textu sur li págine"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:84
 #, fuzzy, kde-format
 msgid "sets the external editor command"
 msgstr "Comande del redactor de textus: "
 
-#: shell/main.cpp:76
+#: shell/main.cpp:85
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""

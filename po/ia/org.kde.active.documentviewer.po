@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-03 00:44+0000\n"
-"PO-Revision-Date: 2022-02-22 23:15+0100\n"
+"PO-Revision-Date: 2022-12-20 17:06+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.2\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -108,7 +108,7 @@ msgstr "A proposito"
 
 #: package/contents/ui/main.qml:104
 msgid "Password Needed"
-msgstr ""
+msgstr "Il necesita un contrasigno"
 
 #: package/contents/ui/MainView.qml:25
 msgid "Remove bookmark"

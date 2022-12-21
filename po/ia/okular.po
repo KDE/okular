@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 00:48+0000\n"
-"PO-Revision-Date: 2022-07-15 12:10+0200\n"
+"PO-Revision-Date: 2022-12-20 17:18+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2745,6 +2745,8 @@ msgstr "Aperi in modo continuo per definition"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Quando on usa Instrumento de Navigator, inveloppa le cursor al margines de "
+"schermo "
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -4048,7 +4050,7 @@ msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
-"Isto documento ha files incorporate. <a href=\"okular:/embeddedfiles\">Pulsa "
+"Iste documento ha files incorporate. <a href=\"okular:/embeddedfiles\">Pulsa "
 "ci pro vider los</a> o va a File->Files Incorporate."
 
 #: part/part.cpp:671
@@ -4333,7 +4335,7 @@ msgstr "Contrasigno  de documento"
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
-"Isto documento ha formularios XFA, que currentemente <b>non es supportate</"
+"Iste documento ha formularios XFA, que currentemente <b>non es supportate</"
 "b>."
 
 #: part/part.cpp:1623
@@ -4342,7 +4344,7 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"Isto documento ha formularios. Pulsa sur le button pro interager con illos, "
+"Iste documento ha formularios. Pulsa sur le button pro interager con illos, "
 "o usa Vista->Monstra formularios."
 
 #: part/part.cpp:1639

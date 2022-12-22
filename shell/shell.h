@@ -24,6 +24,7 @@
 
 #include "welcomescreen.h"
 
+class Sidebar;
 class KRecentFilesAction;
 class KToggleAction;
 class QTabWidget;
@@ -155,7 +156,7 @@ private:
     void setupActions();
     void openNewTab(const QUrl &url, const QString &serializedOptions);
     void applyOptionsToPart(QObject *part, const QString &serializedOptions);
-    void connectPart(QObject *part);
+    void connectPart(const KParts::ReadWritePart *part);
     int findTabIndex(QObject *sender) const;
     int findTabIndex(const QUrl &url) const;
 
@@ -177,6 +178,7 @@ private:
     KToggleAction *m_openInTab;
     WelcomeScreen *m_welcomeScreen;
     QStackedWidget *m_centralStackedWidget;
+    Sidebar *m_sidebar = nullptr;
 
     struct TabState {
         explicit TabState(KParts::ReadWritePart *p)
@@ -194,6 +196,8 @@ private:
     QAction *m_nextTabAction;
     QAction *m_prevTabAction;
     QAction *m_undoCloseTab;
+    QAction *m_showSidebarAction = nullptr;
+    QAction *m_lockSidebarAction = nullptr;
 
 #ifndef Q_OS_WIN
     KActivities::ResourceInstance *m_activityResource;

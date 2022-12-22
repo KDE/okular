@@ -79,6 +79,13 @@ public:
      */
     virtual bool openNewFilesInTabs() const = 0;
 
+    /**
+     * Returns the sidebar container.
+     *
+     * @since 23.04
+     */
+    virtual QWidget *getSideContainer() const = 0;
+
     // SIGNALS
     /**
      * The signal 'openSourceReference' is emitted whenever the user has triggered a source

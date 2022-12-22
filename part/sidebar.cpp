@@ -166,6 +166,11 @@ void Sidebar::moveSplitter(int sideWidgetSize)
     d->splitter->setSizes(splitterSizeList);
 }
 
+QWidget *Sidebar::getSideContainer() const
+{
+    return d->sideContainer;
+}
+
 void Sidebar::splitterMoved(int /*pos*/, int index)
 {
     // if the side panel has been resized, save splitter sizes

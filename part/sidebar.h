@@ -33,6 +33,8 @@ public:
 
     void moveSplitter(int sideWidgetSize);
 
+    QWidget *getSideContainer() const;
+
 Q_SIGNALS:
     void urlsDropped(const QList<QUrl> &urls);
 

@@ -1107,6 +1107,11 @@ bool Part::openNewFilesInTabs() const
     return Okular::Settings::self()->shellOpenFileInTabs();
 }
 
+QWidget *Part::getSideContainer() const
+{
+    return m_sidebar->getSideContainer();
+}
+
 bool Part::activateTabIfAlreadyOpenFile() const
 {
     return Okular::Settings::self()->switchToTabIfOpen();

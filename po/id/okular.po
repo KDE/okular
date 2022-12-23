@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-17 00:48+0000\n"
+"POT-Creation-Date: 2022-12-23 00:44+0000\n"
 "PO-Revision-Date: 2022-09-27 18:12+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -374,7 +374,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Ukuran cetak halaman tak absah"
 
-#: core/document.cpp:5286 part/part.cpp:1146
+#: core/document.cpp:5286 part/part.cpp:1151
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Tidak bisa membuka file '%1'. File tidak ada"
@@ -1512,7 +1512,7 @@ msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Opasitas"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3122
+#: part/annotationmodel.cpp:324 part/part.cpp:3127
 #, kde-format
 msgid "Page %1"
 msgstr "Halaman %1"
@@ -2125,12 +2125,12 @@ msgid "Go to This Bookmark"
 msgstr "Menuju ke Markah Ini"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:714
-#: part/part.cpp:2445
+#: part/part.cpp:2450
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Ubah Nama Markah"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2250 part/part.cpp:3128
+#: part/bookmarklist.cpp:259 part/part.cpp:2255 part/part.cpp:3133
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Buang Markah"
@@ -3422,7 +3422,7 @@ msgstr "Ekspresi Reguler"
 msgid "S&earch:"
 msgstr "&Cari:"
 
-#: part/layers.cpp:35 part/part.cpp:2293
+#: part/layers.cpp:35 part/part.cpp:2298
 #, kde-format
 msgid "Layers"
 msgstr "Lapisan"
@@ -3711,7 +3711,7 @@ msgstr "Salin Teks"
 msgid "Go to '%1'"
 msgstr "Menuju ke '%1'"
 
-#: part/pageview.cpp:4022 part/part.cpp:3133
+#: part/pageview.cpp:4022 part/part.cpp:3138
 #, kde-format
 msgid "Fit Width"
 msgstr "Pas Lebar"
@@ -4249,7 +4249,7 @@ msgstr "Konfigurasikan Anotasi..."
 msgid "Play/Pause Presentation"
 msgstr "Play/Jeda Presentasi"
 
-#: part/part.cpp:1123
+#: part/part.cpp:1128
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4260,37 +4260,37 @@ msgstr ""
 "dapat disimpan.\n"
 "Perubahan apa pun akan hilang ketika Okular ditutup."
 
-#: part/part.cpp:1124
+#: part/part.cpp:1129
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokumen tidak dapat disimpan"
 
-#: part/part.cpp:1153
+#: part/part.cpp:1158
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Tidak bisa membuka '%1' (%2) "
 
-#: part/part.cpp:1207
+#: part/part.cpp:1212
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Pemuatan %1 telah dibatalkan."
 
-#: part/part.cpp:1223
+#: part/part.cpp:1228
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Tidak bisa membuka %1. Alasan: %2"
 
-#: part/part.cpp:1251
+#: part/part.cpp:1256
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Konfigurasikan Backend Penampil"
 
-#: part/part.cpp:1253
+#: part/part.cpp:1258
 #, kde-format
 msgid "Configure Backends"
 msgstr "Konfigurasikan Backend"
 
-#: part/part.cpp:1338
+#: part/part.cpp:1343
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4299,44 +4299,44 @@ msgstr ""
 "Program \"ps2pdf\" tidak ditemukan, sehingga Okular tidak bisa mengimport "
 "file PS menggunakan itu."
 
-#: part/part.cpp:1338
+#: part/part.cpp:1343
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf tidak ditemukan"
 
-#: part/part.cpp:1343
+#: part/part.cpp:1348
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "File PostScript (%1)"
 
-#: part/part.cpp:1359
+#: part/part.cpp:1364
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr ""
 "Pengimporan file PS sebagai PDF (ini mungkin membutuhkan beberapa saat)..."
 
-#: part/part.cpp:1488
+#: part/part.cpp:1493
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Silakan masukkan sandi untuk membaca dokumen:"
 
-#: part/part.cpp:1490
+#: part/part.cpp:1495
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Sandi salah. Coba lagi:"
 
-#: part/part.cpp:1496
+#: part/part.cpp:1501
 #, kde-format
 msgid "Document Password"
 msgstr "Sandi Dokumen"
 
-#: part/part.cpp:1616
+#: part/part.cpp:1621
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Dokumen ini memiliki formulir XFA, yang baru-baru ini <b>tidak didukung</b>."
 
-#: part/part.cpp:1623
+#: part/part.cpp:1628
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4345,7 +4345,7 @@ msgstr ""
 "Dokumen ini memiliki formulir. Klik pada tombol untuk berinteraksi "
 "dengannya, atau gunakan Tampilan -> Tampilkan Formulir."
 
-#: part/part.cpp:1639
+#: part/part.cpp:1644
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4354,7 +4354,7 @@ msgstr ""
 "Semua fitur pengeditan dan interaktif untuk dokumen ini dinonaktifkan. "
 "Silahkan simpan salinan dan buka kembali untuk mengedit dokumen ini."
 
-#: part/part.cpp:1727
+#: part/part.cpp:1732
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4363,27 +4363,27 @@ msgstr ""
 "Dokumen ini ingin ditampilkan pada layar penuh.\n"
 "Biarkan mode normal dan masuk ke mode presentasi?"
 
-#: part/part.cpp:1729
+#: part/part.cpp:1734
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Minta untuk Mode Menampilkan Perubahan"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1735
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Masuk Mode Presentasi"
 
-#: part/part.cpp:1731
+#: part/part.cpp:1736
 #, kde-format
 msgid "Deny Request"
 msgstr "Sangkal Permintaan"
 
-#: part/part.cpp:1821
+#: part/part.cpp:1826
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Tidak bisa membuka %1. %2"
 
-#: part/part.cpp:1851
+#: part/part.cpp:1856
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4394,22 +4394,22 @@ msgstr ""
 "program lainnya. Perubahan Anda akan hilang, karena file tidak bisa lagi "
 "disimpan.<br>Apakah Anda ingin melanjutkan pemuatan ulang file?"
 
-#: part/part.cpp:1852 part/part.cpp:1859 part/part.cpp:2639
+#: part/part.cpp:1857 part/part.cpp:1864 part/part.cpp:2644
 #, kde-format
 msgid "File Changed"
 msgstr "File Terubah"
 
-#: part/part.cpp:1853
+#: part/part.cpp:1858
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Lanjutkan Pemuatan-ulang"
 
-#: part/part.cpp:1854
+#: part/part.cpp:1859
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Gugurkan Pemuatan-ulang"
 
-#: part/part.cpp:1858
+#: part/part.cpp:1863
 #, kde-format
 msgid ""
 "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4420,27 +4420,27 @@ msgstr ""
 "program lainnya. Perubahan Anda akan hilang, karena file tidak bisa lagi "
 "disimpan.<br>Apakah Anda ingin melanjutkan penutupan file?"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1865
 #, kde-format
 msgid "Continue Closing"
 msgstr "Lanjutkan Penutupan"
 
-#: part/part.cpp:1861
+#: part/part.cpp:1866
 #, kde-format
 msgid "Abort Closing"
 msgstr "Gugurkan Penutupan"
 
-#: part/part.cpp:1868
+#: part/part.cpp:1873
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Apakan Anda ingin menyimpan perubahan \"%1\" atau membuangnya?"
 
-#: part/part.cpp:1868
+#: part/part.cpp:1873
 #, kde-format
 msgid "Close Document"
 msgstr "Tutup Dokumen"
 
-#: part/part.cpp:2000
+#: part/part.cpp:2005
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4449,7 +4449,7 @@ msgstr ""
 "Titik tautan ini untuk tindakan menutup dokumen yang tidak bekerja ketika "
 "menggunakan peninjau tersemat."
 
-#: part/part.cpp:2006
+#: part/part.cpp:2011
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4458,59 +4458,59 @@ msgstr ""
 "Titik tautan ini untuk tindakan mengeluarkan aplikasi yang tidak bekerja "
 "ketika menggunakan peninjau tersemat."
 
-#: part/part.cpp:2098 part/part.cpp:2116
+#: part/part.cpp:2103 part/part.cpp:2121
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Memuat ulang dokumen..."
 
-#: part/part.cpp:2273 part/toc.cpp:38
+#: part/part.cpp:2278 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Daftar Isi"
 
-#: part/part.cpp:2302 part/signaturepanel.cpp:47
+#: part/part.cpp:2307 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Tandatangan"
 
-#: part/part.cpp:2329
+#: part/part.cpp:2334
 #, kde-format
 msgid "Go to Page"
 msgstr "Menuju ke Halaman"
 
-#: part/part.cpp:2352
+#: part/part.cpp:2357
 #, kde-format
 msgid "&Page:"
 msgstr "&Halaman:"
 
-#: part/part.cpp:2445
+#: part/part.cpp:2450
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Masukkan nama barunya markah:"
 
-#: part/part.cpp:2491
+#: part/part.cpp:2496
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Ubah nama Markah ini"
 
-#: part/part.cpp:2494
+#: part/part.cpp:2499
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Buang Markah ini"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3437
+#: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3442
 #: part/signaturepartutils.cpp:87
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2588 part/revisionviewer.cpp:44
+#: part/part.cpp:2593 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Simpan Sebagai"
 
-#: part/part.cpp:2605
+#: part/part.cpp:2610
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4520,18 +4520,18 @@ msgstr ""
 "diakhiri dengan ekstensi '%1'. Itu tidak diperbolehkan, apakah Anda ingin "
 "memilih nama baru?"
 
-#: part/part.cpp:2606
+#: part/part.cpp:2611
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Ekstensi tidak didukung"
 
-#: part/part.cpp:2607
+#: part/part.cpp:2612
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2639
+#: part/part.cpp:2644
 #, kde-format
 msgid ""
 "The file '%1' has been modified by another program, which means it can no "
@@ -4540,7 +4540,7 @@ msgstr ""
 "File '%1' telah dimodifikasi oleh program lainnya, yang berati itu tidak "
 "bisa lagi disimpan."
 
-#: part/part.cpp:2647
+#: part/part.cpp:2652
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4551,17 +4551,17 @@ msgstr ""
 "file tersebut perlu dimuat ulang. Anda akan dimintai kata sandi lagi dan "
 "riwayat urungan/ulangan Anda akan hilang.<br />Apakah Anda ingin melanjutkan?"
 
-#: part/part.cpp:2648 part/part.cpp:2700
+#: part/part.cpp:2653 part/part.cpp:2705
 #, kde-format
 msgid "Save - Warning"
 msgstr "Simpan - Peringatan"
 
-#: part/part.cpp:2674
+#: part/part.cpp:2679
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Tidak bisa membuka file temporer untuk penyimpanan."
 
-#: part/part.cpp:2687
+#: part/part.cpp:2692
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4571,7 +4571,7 @@ msgstr ""
 "Tidak dapat menimpa <filename>%1</filename> karena file itu hanya-baca. Coba "
 "simpan ke lokasi yang lain atau ubah izin file itu."
 
-#: part/part.cpp:2699
+#: part/part.cpp:2704
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4581,24 +4581,24 @@ msgstr ""
 "ulang. Riwayat urung/ulang Anda akan hilang.<br />Apakah Anda ingin "
 "melanjutkan?"
 
-#: part/part.cpp:2714 part/part.cpp:2783 part/part.cpp:2804 part/part.cpp:3452
+#: part/part.cpp:2719 part/part.cpp:2788 part/part.cpp:2809 part/part.cpp:3457
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "File tidak bisa disimpan di '%1'. Coba untuk menyimpannya ke lokasi yang "
 "lain."
 
-#: part/part.cpp:2727
+#: part/part.cpp:2732
 #, kde-format
 msgid "Filled form contents"
 msgstr "Pengisian formulir konten"
 
-#: part/part.cpp:2730
+#: part/part.cpp:2735
 #, kde-format
 msgid "User annotations"
 msgstr "Anotasi pengguna"
 
-#: part/part.cpp:2735
+#: part/part.cpp:2740
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4609,17 +4609,17 @@ msgstr ""
 "penyimpanan elemen ini. Silakan gunakan format <i>arsip dokumen Okular</i> "
 "untuk mengamankannya."
 
-#: part/part.cpp:2739 part/part.cpp:2761
+#: part/part.cpp:2744 part/part.cpp:2766
 #, kde-format
 msgid "Warning"
 msgstr "Peringatan"
 
-#: part/part.cpp:2740 part/part.cpp:2762
+#: part/part.cpp:2745 part/part.cpp:2767
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Simpan sebagai arsip dokumen Okular..."
 
-#: part/part.cpp:2752
+#: part/part.cpp:2757
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4632,7 +4632,7 @@ msgstr ""
 "untuk mengamankannya. Klik <i>Lanjutkan</i> untuk menyimpan dokumen dan "
 "membuang elemen tersebut."
 
-#: part/part.cpp:2755
+#: part/part.cpp:2760
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4645,22 +4645,22 @@ msgstr ""
 "untuk mengamankannya. Klik <i>Lanjutkan</i> untuk menyimpannya, tapi Anda "
 "akan kehilangan elemen ini serta riwayat urung/ulang."
 
-#: part/part.cpp:2757
+#: part/part.cpp:2762
 #, kde-format
 msgid "Continue"
 msgstr "Lanjutkan"
 
-#: part/part.cpp:2757
+#: part/part.cpp:2762
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Lanjutkan kehilangan perubahan"
 
-#: part/part.cpp:2785
+#: part/part.cpp:2790
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "File tidak bisa disimpan di '%1'. %2"
 
-#: part/part.cpp:2824
+#: part/part.cpp:2829
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4671,7 +4671,7 @@ msgstr ""
 "\n"
 "Dokumen sudah tidak ada lagi."
 
-#: part/part.cpp:2860
+#: part/part.cpp:2865
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4680,59 +4680,59 @@ msgstr ""
 "File tidak bisa disimpan di '%1'. Galat: '%2'. Cobalah untuk menyimpannya ke "
 "lokasi yang lain."
 
-#: part/part.cpp:3111
+#: part/part.cpp:3116
 #, kde-format
 msgid "Expand whole section"
 msgstr "Bentangkan seluruh bagian"
 
-#: part/part.cpp:3112
+#: part/part.cpp:3117
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Ciutkan seluruh bagian"
 
-#: part/part.cpp:3113
+#: part/part.cpp:3118
 #, kde-format
 msgid "Expand all"
 msgstr "Besarkan semua"
 
-#: part/part.cpp:3114
+#: part/part.cpp:3119
 #, kde-format
 msgid "Collapse all"
 msgstr "Kecilkan semua"
 
-#: part/part.cpp:3125
+#: part/part.cpp:3130
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinkronkan Thumbnail dengan Halaman"
 
-#: part/part.cpp:3130
+#: part/part.cpp:3135
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Tambah Markah"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3157
 #, kde-format
 msgid "Tools"
 msgstr "Peralatan"
 
-#: part/part.cpp:3333
+#: part/part.cpp:3338
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Bacakan"
 
-#: part/part.cpp:3490
+#: part/part.cpp:3495
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Cetak"
 
-#: part/part.cpp:3553
+#: part/part.cpp:3558
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Mencetak dokumen ini tidak dibolehkan."
 
-#: part/part.cpp:3561
+#: part/part.cpp:3566
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4740,7 +4740,7 @@ msgstr ""
 "Tidak bisa mencetak dokumen. Galat tidak diketahui. Silakan laporkan ke bugs."
 "kde.org"
 
-#: part/part.cpp:3563
+#: part/part.cpp:3568
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4749,17 +4749,17 @@ msgstr ""
 "Tidak bisa mencetak dokumen. Rincian error adalah \"%1\". Silakan laporkan "
 "ke bugs.kde.org"
 
-#: part/part.cpp:3643
+#: part/part.cpp:3648
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Menuju ke tempat di mana Anda sebelumnya"
 
-#: part/part.cpp:3647
+#: part/part.cpp:3652
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Menuju ke tempat di mana Anda sesudahnya"
 
-#: part/part.cpp:3672
+#: part/part.cpp:3677
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4768,7 +4768,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa menciptakan file temporer "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3684
+#: part/part.cpp:3689
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4777,7 +4777,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa membuka file <nobr><strong>%1</"
 "strong></nobr> untuk uncompression. File tidak akan dimuat.</qt>"
 
-#: part/part.cpp:3688
+#: part/part.cpp:3693
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4790,7 +4790,7 @@ msgstr ""
 "klik kanan pada file di pengelola file Dolphin, kemudian pilihlah opsi "
 "'Properti', dan pilih tab 'Perizinan' di dalam jendela yang terbuka.</qt>"
 
-#: part/part.cpp:3710
+#: part/part.cpp:3715
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4799,7 +4799,7 @@ msgstr ""
 "<qt><strong>Galat File!</strong> Tidak bisa meng-uncompress file "
 "<nobr><strong>%1</strong></nobr>. File tidak akan dimuat.</qt>"
 
-#: part/part.cpp:3714
+#: part/part.cpp:3719
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4809,27 +4809,27 @@ msgstr ""
 "memastikan, coba decompress file secara manual menggunakan alat baris-"
 "perintah.</qt>"
 
-#: part/part.cpp:3740
+#: part/part.cpp:3745
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Tidak ada Markah"
 
-#: part/part.cpp:3811
+#: part/part.cpp:3816
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Ada masalah berbagi dengan dokumen: %1"
 
-#: part/part.cpp:3811 part/part.cpp:3817
+#: part/part.cpp:3816 part/part.cpp:3822
 #, kde-format
 msgid "Share"
 msgstr "Bagikan"
 
-#: part/part.cpp:3815
+#: part/part.cpp:3820
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Sukses membagikan dokumen"
 
-#: part/part.cpp:3817
+#: part/part.cpp:3822
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Anda dapat menemukan dokumen yang dibagikan di: <a href=\"%1\">%1</a>"
@@ -4859,7 +4859,7 @@ msgid "&Tools"
 msgstr "Pera&latan"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:24
+#: part/part.rc:101 shell/shell.rc:26
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Bilah Alat Utama"
@@ -5559,12 +5559,18 @@ msgstr "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --page switch"
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --find switch"
 
-#: shell/shell.cpp:91
+#: shell/shell.cpp:172
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Tak bisa menemukan komponen Okular: %1"
 
-#: shell/shell.cpp:146
+#: shell/shell.cpp:213
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
+msgid "Sidebar"
+msgstr "Tampilkan S&idebar"
+
+#: shell/shell.cpp:242
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5573,12 +5579,12 @@ msgstr ""
 "Sudah ada instansi Okular unik yang berjalan. Instansi ini tidak akan "
 "menjadi yang unik."
 
-#: shell/shell.cpp:169
+#: shell/shell.cpp:265
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Tak mampu menemukan komponen Okular."
 
-#: shell/shell.cpp:397
+#: shell/shell.cpp:507
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5587,7 +5593,7 @@ msgstr ""
 "Klik untuk membuka file\n"
 "Klik dan tahan untuk membuka file saat ini"
 
-#: shell/shell.cpp:398
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5595,52 +5601,64 @@ msgstr ""
 "<b>Klik</b> untuk membuka sebuah file atau <b>Klik dan tahan</b> untuk "
 "memilih sebuah file yang terkini"
 
-#: shell/shell.cpp:411
+#: shell/shell.cpp:521
 #, kde-format
 msgid "Next Tab"
 msgstr "Tab Selanjutnya"
 
-#: shell/shell.cpp:417
+#: shell/shell.cpp:527
 #, kde-format
 msgid "Previous Tab"
 msgstr "Tab Sebelumnya"
 
-#: shell/shell.cpp:423
+#: shell/shell.cpp:533
 #, kde-format
 msgid "Undo close tab"
 msgstr "Urung penutupan tab"
 
-#: shell/shell.cpp:522
+#: shell/shell.cpp:542
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
+msgid "Show Sidebar"
+msgstr "Tampilkan S&idebar"
+
+#: shell/shell.cpp:548
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
+msgid "Lock Sidebar"
+msgstr "Tampilkan S&idebar"
+
+#: shell/shell.cpp:645
 #, kde-format
 msgid "All files (*)"
 msgstr "Semua file (*)"
 
-#: shell/shell.cpp:523
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Semua file didukung (%1)"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:650
 #, kde-format
 msgid "Open Document"
 msgstr "Buka Dokumen"
 
-#: shell/shell.cpp:631
+#: shell/shell.cpp:754
 #, kde-format
 msgid "Confirm Close"
 msgstr "Konfirmasi Penutupan"
 
-#: shell/shell.cpp:635
+#: shell/shell.cpp:758
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tutup Tab"
 
-#: shell/shell.cpp:642
+#: shell/shell.cpp:765
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Anda akan menutup %1 tab. Apakah Anda yakin ingin melanjutkan?"
 
-#: shell/shell.cpp:644
+#: shell/shell.cpp:767
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ingatkan saya ketika saya berusaha menutup beberapa tab"

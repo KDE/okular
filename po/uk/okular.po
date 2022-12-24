@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-28 07:20+0300\n"
+"PO-Revision-Date: 2022-12-23 08:49+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -5611,10 +5611,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Не вдається знайти компонент Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Показати &бічну панель"
+msgstr "Бічна панель"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5662,16 +5661,14 @@ msgid "Undo close tab"
 msgstr "Скасувати закриття вкладки"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Показати &бічну панель"
+msgstr "Показати бічну панель"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Показати &бічну панель"
+msgstr "Заблокувати бічну панель"
 
 #: shell/shell.cpp:645
 #, kde-format

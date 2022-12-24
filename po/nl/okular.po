@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-28 10:11+0200\n"
+"PO-Revision-Date: 2022-12-23 11:27+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.12.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -5586,10 +5586,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Niet gevonden de okular-component: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Z&ijbalk tonen"
+msgstr "Zijbalk"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5638,16 +5637,14 @@ msgid "Undo close tab"
 msgstr "Tabblad sluiten ongedaan maken"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Z&ijbalk tonen"
+msgstr "Zijbalk tonen"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Z&ijbalk tonen"
+msgstr "Zijbalk vergrendelen"
 
 #: shell/shell.cpp:645
 #, kde-format

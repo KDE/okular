@@ -5580,10 +5580,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Não foi possível encontrar a componente do Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Mostrar a Barra &Lateral"
+msgstr "Barra lateral"
 
 #: shell/shell.cpp:242
 #, kde-format

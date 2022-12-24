@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-29 14:34+0200\n"
+"PO-Revision-Date: 2022-12-23 18:26+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.12.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -5564,10 +5564,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Не може да се намери компонента на Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Показване на &страничния панел"
+msgstr "Страничен панел"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5616,16 +5615,14 @@ msgid "Undo close tab"
 msgstr "Отмяна на затварянето на раздела"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Показване на &страничния панел"
+msgstr "Показване на страничния панел"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Показване на &страничния панел"
+msgstr "Заключване на страничния панел"
 
 #: shell/shell.cpp:645
 #, kde-format

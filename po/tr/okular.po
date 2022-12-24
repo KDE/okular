@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-10 18:14+0300\n"
+"PO-Revision-Date: 2022-12-23 20:40+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5563,10 +5563,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Okular bileşeni bulunamıyor: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "&Kenar Çubuğunu Göster"
+msgstr "Kenar Çubuğu"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5615,16 +5614,14 @@ msgid "Undo close tab"
 msgstr "Sekme Kapatmayı Geri Al"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "&Kenar Çubuğunu Göster"
+msgstr "Kenar Çubuğunu Göster"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "&Kenar Çubuğunu Göster"
+msgstr "Kenar Çubuğunu Kilitle"
 
 #: shell/shell.cpp:645
 #, kde-format

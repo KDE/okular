@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-30 00:05+0100\n"
+"PO-Revision-Date: 2022-12-23 22:40+0000\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -5631,16 +5631,14 @@ msgid "Undo close tab"
 msgstr "Desfazer o fecho da página"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
 msgstr "Mostrar a Barra &Lateral"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Mostrar a Barra &Lateral"
+msgstr "Bloquear a Barra &Lateral"
 
 #: shell/shell.cpp:645
 #, kde-format
@@ -5731,38 +5729,3 @@ msgstr "Esquecer Tudo"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Esconder o ecrã de boas-vindas"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
-#~ "not visible in PDF readers other than Okular.</warning>"
-#~ msgstr ""
-#~ "<warning>Funcionalidade experimental.<nl/>Os carimbos inseridos nos "
-#~ "documentos PDF não são visíveis nos leitores de PDF que não sejam o "
-#~ "Okular.</warning>"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "The version of the Poppler library this Okular was compiled with does not "
-#~ "support signing documents with passwords. Please ask your provider to "
-#~ "update it to 22.02 or later."
-#~ msgstr ""
-#~ "A versão da biblioteca Poppler com que este Okular foi compilado não "
-#~ "suporta a assinatura de documentos protegidos com senhas. Por favor, peça "
-#~ "ao seu fornecedor para a actualizar para a 22.02 ou posterior."
-
-#~ msgctxt "@title:window"
-#~ msgid "Poppler library is too old"
-#~ msgstr "Biblioteca Poppler Demasiado Antiga"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
-#~ "than Okular"
-#~ msgstr ""
-#~ "Os carimbos inseridos nos documentos PDF não são visíveis nos leitores de "
-#~ "PDF que não sejam o Okular"
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "Funcionalidade experimental"

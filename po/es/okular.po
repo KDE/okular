@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-30 00:27+0200\n"
+"PO-Revision-Date: 2022-12-24 20:49+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5575,10 +5575,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "No se ha podido encontrar el componente Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Mostrar la barra &lateral"
+msgstr "Barra lateral"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5627,16 +5626,14 @@ msgid "Undo close tab"
 msgstr "Deshacer el cierre de pestaña"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Mostrar la barra &lateral"
+msgstr "Mostrar la barra lateral"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Mostrar la barra &lateral"
+msgstr "Fijar la barra lateral"
 
 #: shell/shell.cpp:645
 #, kde-format

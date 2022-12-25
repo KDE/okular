@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-28 18:24+0400\n"
+"PO-Revision-Date: 2022-12-24 18:26+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -5539,10 +5539,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "عجز عن إيجاد مكون أوكلار: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "أظهر ال&شريط الجانبي"
+msgstr "الشريط الجانبي"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5587,16 +5586,14 @@ msgid "Undo close tab"
 msgstr "تراجع عن إغلاق اللسان"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "أظهر ال&شريط الجانبي"
+msgstr "أظهر الشريط الجانبي"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "أظهر ال&شريط الجانبي"
+msgstr "اقفل الشريط الجانبي"
 
 #: shell/shell.cpp:645
 #, kde-format

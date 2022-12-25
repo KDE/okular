@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-13 12:21\n"
+"PO-Revision-Date: 2022-12-24 11:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -5467,10 +5467,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "无法找到 Okular 组件︰ %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "显示侧边栏(&I)"
+msgstr ""
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5515,16 +5514,14 @@ msgid "Undo close tab"
 msgstr "撤销关闭标签"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "显示侧边栏(&I)"
+msgstr ""
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "显示侧边栏(&I)"
+msgstr ""
 
 #: shell/shell.cpp:645
 #, kde-format

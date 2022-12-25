@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-28 10:21+0200\n"
+"PO-Revision-Date: 2022-12-23 14:39+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -5589,10 +5589,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "No s'ha pogut trobar el component d'Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Mostra la barra &lateral"
+msgstr "Barra lateral"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5641,16 +5640,14 @@ msgid "Undo close tab"
 msgstr "Desfés el tancament de la pestanya"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Mostra la barra &lateral"
+msgstr "Mostra la barra lateral"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Mostra la barra &lateral"
+msgstr "Bloca la barra lateral"
 
 #: shell/shell.cpp:645
 #, kde-format
@@ -5741,38 +5738,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
-#~ "not visible in PDF readers other than Okular.</warning>"
-#~ msgstr ""
-#~ "<warning>característica experimental.<nl/>Els segells inserits en els "
-#~ "documents PDF no són visibles en lectors de PDF diferents d'Okular.</"
-#~ "warning>"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "The version of the Poppler library this Okular was compiled with does not "
-#~ "support signing documents with passwords. Please ask your provider to "
-#~ "update it to 22.02 or later."
-#~ msgstr ""
-#~ "La versió de la biblioteca Poppler amb què es va compilar este Okular no "
-#~ "permet signar documents amb contrasenyes. Demaneu al vostre proveïdor que "
-#~ "l'actualitze a la versió 22.02 o posterior."
-
-#~ msgctxt "@title:window"
-#~ msgid "Poppler library is too old"
-#~ msgstr "La biblioteca Poppler és massa antiga"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
-#~ "than Okular"
-#~ msgstr ""
-#~ "Els segells inserits en els documents PDF no són visibles en els lectors "
-#~ "de PDF diferents d'Okular"
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "Característica experimental"

@@ -1711,7 +1711,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
 		<sect1 id="command-line-options">
 		    <title
->Commandoregelopties</title>
+>Opdrachtregel-opties</title>
 		    <para
 >In de meeste gevallen wordt &okular; gestart vanuit het &kde; programma-menu of door te klikken op een pictogram op het bureaublad, maar het kan ook worden geopend vanaf de commandoregel van een terminalvenster. Er is een aantal nuttige opties beschikbaar wanneer u het programma op deze manier start. </para>
 		    <sect2 id="specify-a-file">
@@ -1746,7 +1746,7 @@ Context menu actions like Rename Bookmarks etc.)
 		    </sect2>
 		    <sect2 id="other-command-line-options">
 			<title
->Overige commandoregel-opties</title>
+>Overige opdrachtregel-opties</title>
 			<para
 >De volgende commandoregel-opties zijn beschikbaar </para>
 			<variablelist>

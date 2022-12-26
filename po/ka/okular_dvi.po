@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-09 00:43+0000\n"
-"PO-Revision-Date: 2022-09-17 18:35+0200\n"
+"PO-Revision-Date: 2022-12-25 08:29+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -201,17 +201,17 @@ msgstr ""
 #: dviRenderer_draw.cpp:539
 #, kde-format
 msgid "An illegal command was encountered."
-msgstr ""
+msgstr "შემჩნეულია არასწორი ბრძანება."
 
 #: dviRenderer_draw.cpp:544
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
-msgstr ""
+msgstr "შეჩნეულია უცნობი ოპკოდი %1."
 
 #: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
-msgstr ""
+msgstr "%1-ის ჩაშენება"
 
 #: dviRenderer_prescan.cpp:105
 #, kde-format
@@ -265,12 +265,12 @@ msgstr ""
 #: generator_dvi.cpp:293
 #, kde-format
 msgid "Generator/Date"
-msgstr ""
+msgstr "გენერატორი/თარიღი"
 
 #: generator_dvi.cpp:382
 #, kde-format
 msgid "Font file not found"
-msgstr ""
+msgstr "ფონტის ფაილი ვერ ვიპოვე"
 
 #: pageSize.cpp:318
 #, kde-format
@@ -293,7 +293,7 @@ msgstr ""
 #: special.cpp:36
 #, kde-format
 msgid "That makes 25 errors. Further error messages will not be printed."
-msgstr ""
+msgstr "სულ 25 შეცდომა. მეტი შეცდომაგამოტანილი აღარ იქნება"
 
 #: special.cpp:232
 #, kde-format
@@ -359,7 +359,7 @@ msgstr ""
 #: TeXFont_PFB.cpp:215
 #, kde-format
 msgid "Glyph #%1 is empty."
-msgstr ""
+msgstr "გლიფი #%1 ცარიელია."
 
 #: TeXFont_PFB.cpp:217
 #, kde-format
@@ -374,7 +374,7 @@ msgstr ""
 #: TeXFont_PK.cpp:69
 #, kde-format
 msgid "Cannot open font file %1."
-msgstr ""
+msgstr "ფონტის ფაილის (%1) გახსნის შეცდომა."
 
 #: TeXFont_PK.cpp:116
 #, kde-format
@@ -409,17 +409,17 @@ msgstr ""
 #: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
-msgstr ""
+msgstr "ფონტის (%1) გახსნის შეცდომა. ფაილი: %2."
 
 #: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr ""
+msgstr "არასწორი საკონტროლო ჯამი ფონტის ფაილისთვის %1"
 
 #: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr ""
+msgstr "ფაილის უცნობი ფორმატი ფონტის ფაილისთვის %1"
 
 #: util.cpp:58
 #, kde-format

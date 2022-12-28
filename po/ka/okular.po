@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 02:42+0000\n"
-"PO-Revision-Date: 2022-12-25 08:29+0100\n"
+"PO-Revision-Date: 2022-12-27 09:58+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -386,7 +386,7 @@ msgstr "თემა"
 #: core/document.cpp:5799
 #, kde-format
 msgid "Description"
-msgstr "აღწერა:"
+msgstr "აღწერა"
 
 #: core/document.cpp:5802
 #, kde-format
@@ -849,7 +849,7 @@ msgstr "ხელმოწერის შემოწმება შეუძ�
 #: gui/signatureguiutils.cpp:60
 #, kde-format
 msgid "Certificate is Trusted."
-msgstr "სერტიფიკატი სანდოა"
+msgstr "სერტიფიკატი სანდოა."
 
 #: gui/signatureguiutils.cpp:62
 #, kde-format
@@ -874,7 +874,7 @@ msgstr "სერტიფიკატი ვადაგასულია."
 #: gui/signatureguiutils.cpp:70
 #, kde-format
 msgid "Certificate has not yet been verified."
-msgstr "სერტიფიკატი ჯერ არ შემოწმებულა"
+msgstr "სერტიფიკატი ჯერ არ შემოწმებულა."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
@@ -1997,7 +1997,7 @@ msgstr "აღწერის გარეშე."
 #: part/annotationwidgets.cpp:791
 #, kde-format
 msgid "Name:"
-msgstr "სახელი"
+msgstr "სახელი:"
 
 #: part/annotationwidgets.cpp:802
 #, kde-format
@@ -2007,7 +2007,7 @@ msgstr "აღწერა:"
 #: part/annotationwidgets.cpp:861
 #, kde-format
 msgid "Caret symbol:"
-msgstr "კარეტის სიმბოლო"
+msgstr "კარეტის სიმბოლო:"
 
 #: part/annotationwidgets.cpp:863
 #, kde-format
@@ -2129,7 +2129,7 @@ msgstr "სერტიფიკატების ნახვა"
 #: part/certificateviewer.cpp:124
 #, kde-format
 msgid "Export..."
-msgstr "გატანა"
+msgstr "გატანა..."
 
 #: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2961,7 +2961,7 @@ msgstr ""
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Replace"
-msgstr ""
+msgstr "გამოცვლა"
 
 #: part/dlgpresentation.cpp:102
 #, kde-format
@@ -3225,7 +3225,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:column"
 msgid "Description"
-msgstr "აღწერა:"
+msgstr "აღწერა"
 
 #: part/embeddedfilesdialog.cpp:69
 #, kde-format
@@ -3408,7 +3408,7 @@ msgstr "&მარცხნივ შებრუნება"
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
-msgstr ""
+msgstr "Left"
 
 #: part/pageview.cpp:574
 #, kde-format
@@ -4407,7 +4407,7 @@ msgstr "გვერდზე გადასვლა"
 #: part/part.cpp:2374
 #, kde-format
 msgid "&Page:"
-msgstr "&გვერდი"
+msgstr "&გვერდი:"
 
 #: part/part.cpp:2467
 #, kde-format
@@ -4716,7 +4716,7 @@ msgstr ""
 #: part/part.rc:19
 #, kde-format
 msgid "&Edit"
-msgstr ""
+msgstr "&ჩასწორება"
 
 #. i18n: ectx: Menu (view)
 #: part/part.rc:32
@@ -4898,7 +4898,7 @@ msgstr "უცნობი ფაილი"
 #: part/propertiesdialog.cpp:63
 #, kde-format
 msgid "%1 Properties"
-msgstr ""
+msgstr "%1 -ის თვისებები"
 
 #: part/propertiesdialog.cpp:104
 #, kde-format
@@ -4909,7 +4909,7 @@ msgstr "%1 (%2)"
 #: part/propertiesdialog.cpp:117
 #, kde-format
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: part/propertiesdialog.cpp:124
 #, kde-format
@@ -5030,7 +5030,7 @@ msgstr ""
 #: part/propertiesdialog.cpp:344
 #, kde-format
 msgid "No"
-msgstr ""
+msgstr "არა"
 
 #: part/propertiesdialog.cpp:347
 #, kde-format
@@ -5067,17 +5067,17 @@ msgstr "ჩაშენებული: %1"
 #: part/propertiesdialog.cpp:426
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "სახელი"
 
 #: part/propertiesdialog.cpp:429
 #, kde-format
 msgid "Type"
-msgstr ""
+msgstr "ტიპი"
 
 #: part/propertiesdialog.cpp:432
 #, kde-format
 msgid "File"
-msgstr ""
+msgstr "ფაილი"
 
 #: part/propertiesdialog.cpp:500
 #, kde-format
@@ -5087,7 +5087,7 @@ msgstr "გვერდი"
 #: part/propertiesdialog.cpp:503
 #, kde-format
 msgid "Size"
-msgstr ""
+msgstr "ზომა"
 
 #: part/revisionviewer.cpp:41
 #, kde-format
@@ -5306,7 +5306,7 @@ msgstr "შეჩერება"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add..."
-msgstr ""
+msgstr "&დამატება.."
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
@@ -5316,7 +5316,7 @@ msgstr "&ჩასწორება..."
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
 msgid "&Remove"
-msgstr ""
+msgstr "&წაშლა"
 
 #: part/widgetconfigurationtoolsbase.cpp:39
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-09-29 21:26+0530\n"
+"PO-Revision-Date: 2022-12-27 21:48+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5545,10 +5545,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "ஆக்குலர் கூறை கண்டுபிடிக்க முடியவில்லை: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "&ஓரப்பட்டையைக் காட்டு"
+msgstr "ஓரப்பட்டை"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5556,6 +5555,7 @@ msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
+"ஓர் ஆக்குலர் பணி ஏற்கனவே ஓடிக்கொண்டிருக்கிறது. ஒரே ஆக்குலர் பணியாக தற்போதையது இருக்காது."
 
 #: shell/shell.cpp:265
 #, kde-format
@@ -5595,16 +5595,14 @@ msgid "Undo close tab"
 msgstr "கீற்றை மூடியதை செயல்நீக்கு"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "&ஓரப்பட்டையைக் காட்டு"
+msgstr "ஓரப்பட்டையைக் காட்டு"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "&ஓரப்பட்டையைக் காட்டு"
+msgstr "ஓரப்பட்டையைப் பூட்டு"
 
 #: shell/shell.cpp:645
 #, kde-format

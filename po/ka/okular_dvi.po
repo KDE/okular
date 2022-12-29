@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-09 00:43+0000\n"
-"PO-Revision-Date: 2022-11-28 18:37+0100\n"
+"PO-Revision-Date: 2022-12-28 05:11+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -81,7 +81,7 @@ msgstr ""
 #: dviFile.cpp:91
 #, kde-format
 msgid "The DVI file does not start with the preamble."
-msgstr ""
+msgstr "DVI ფაილი შესავლის გარეშე იწყება."
 
 #: dviFile.cpp:97
 #, kde-format
@@ -176,7 +176,7 @@ msgstr ""
 #: dviRenderer_draw.cpp:243
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr ""
+msgstr "DVI კოდის ფონტი უცნობ კოდირებას მიუთითებს."
 
 #: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
 #, kde-format
@@ -293,7 +293,7 @@ msgstr ""
 #: special.cpp:36
 #, kde-format
 msgid "That makes 25 errors. Further error messages will not be printed."
-msgstr "სულ 25 შეცდომა. მეტი შეცდომაგამოტანილი აღარ იქნება"
+msgstr "სულ 25 შეცდომა. მეტი შეცდომაგამოტანილი აღარ იქნება."
 
 #: special.cpp:232
 #, kde-format

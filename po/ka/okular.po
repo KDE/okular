@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-28 05:09+0100\n"
+"PO-Revision-Date: 2022-12-29 10:18+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3684,7 +3684,7 @@ msgstr "ვებ მალსახმობების მორგება.
 #: part/pageview.cpp:4368
 #, kde-format
 msgid "Follow This Link"
-msgstr ""
+msgstr "ამ ბმულის მიყოლა"
 
 #: part/pageview.cpp:4371
 #, kde-format

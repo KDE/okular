@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-29 10:18+0100\n"
+"PO-Revision-Date: 2022-12-30 07:42+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3855,7 +3855,7 @@ msgstr ""
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
-msgstr ""
+msgstr "მართკუთხედის დახაზვა"
 
 #: part/pageviewannotator.cpp:1241
 #, kde-format
@@ -3873,19 +3873,19 @@ msgstr ""
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
-msgstr ""
+msgstr "სწორი ხაზის დახატვა"
 
 #: part/pageviewannotator.cpp:1247
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
-msgstr ""
+msgstr "ტექსტზე ხაზის გადასმა"
 
 #: part/pageviewannotator.cpp:1249
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
-msgstr ""
+msgstr "ტექსტის ხაზგასმა"
 
 #: part/pageviewannotator.cpp:1251
 #, kde-format
@@ -4016,7 +4016,7 @@ msgstr ""
 #: part/part.cpp:701
 #, kde-format
 msgid "End of the document"
-msgstr ""
+msgstr "დოკუმენტის დასასრული"
 
 #: part/part.cpp:702
 #, kde-format

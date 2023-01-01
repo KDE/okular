@@ -65,7 +65,8 @@ msgstr ""
 "© 2006-2009 Pino Toscano"
 
 #: aboutdata.h:31
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Pino Toscano"
 msgid "Pino Toscano"
 msgstr "Pino Toscano"
 
@@ -75,7 +76,8 @@ msgid "Former maintainer"
 msgstr "Anterior mantedor"
 
 #: aboutdata.h:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tobias Koenig"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
@@ -86,7 +88,8 @@ msgid "Lots of framework work, FictionBook backend and former ODT backend"
 msgstr "Moito traballo no framework, infraestruturas para ODT e FictionBook"
 
 #: aboutdata.h:33
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Albert Astals Cid"
 msgid "Albert Astals Cid"
 msgstr "Albert Astals Cid"
 
@@ -96,7 +99,8 @@ msgid "Developer"
 msgstr "Desenvolvedor."
 
 #: aboutdata.h:34
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Piotr Szymanski"
 msgid "Piotr Szymanski"
 msgstr "Piotr Szymanski"
 
@@ -106,7 +110,8 @@ msgid "Created Okular from KPDF codebase"
 msgstr "Creou Okular a partir de código de KPDF"
 
 #: aboutdata.h:35
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Enrico Ros"
 msgid "Enrico Ros"
 msgstr "Enrico Ros"
 
@@ -116,7 +121,8 @@ msgid "KPDF developer"
 msgstr "Desenvolvedor de KPDF"
 
 #: aboutdata.h:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Eugene Trounev"
 msgid "Eugene Trounev"
 msgstr "Eugene Trounev"
 
@@ -126,7 +132,8 @@ msgid "Annotations artwork"
 msgstr "Traballo gráfico das anotacións"
 
 #: aboutdata.h:37
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Jiri Baum - NICTA"
 msgid "Jiri Baum - NICTA"
 msgstr "Jiri Baum - NICTA"
 
@@ -136,7 +143,8 @@ msgid "Table selection tool"
 msgstr "Ferramenta de selección de táboas"
 
 #: aboutdata.h:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Fabio D'Urso"
 msgid "Fabio D'Urso"
 msgstr "Fabio D'Urso"
 
@@ -2409,7 +2417,8 @@ msgstr "Frecha aberta"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Yellow Highlighter"
 msgid "Yellow Highlighter"
 msgstr "Realzado amarelo"
 
@@ -3766,11 +3775,9 @@ msgid "T&able Selection"
 msgstr "Selección de &táboas"
 
 #: part/pageview.cpp:703
-#, fuzzy, kde-format
-#| msgctxt "Magnifier Tool"
-#| msgid "Magnifier"
+#, kde-format
 msgid "&Magnifier"
-msgstr "Lupa"
+msgstr "&Lupa"
 
 #: part/pageview.cpp:712
 #, kde-format

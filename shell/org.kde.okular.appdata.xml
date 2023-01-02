@@ -394,17 +394,9 @@
     <value key="KDE::forum">251</value>
   </custom>
   <releases>
+    <release version="22.12.1" date="2023-01-05"/>
     <release version="22.12.0" date="2022-12-08"/>
     <release version="22.08.2" date="2022-10-13"/>
     <release version="22.08.1" date="2022-09-08"/>
-    <release version="22.08.0" date="2022-08-18">
-      <artifacts>
-        <artifact type="binary" platform="x86_64-windows-msvc">
-          <location>https://download.kde.org/stable/release-service/22.08.0/windows/okular-22.08.0-windows-msvc2019_64-cl.exe</location>
-          <checksum type="sha256">312c9951712257599420bc77c97c8e7bb719e732ac506f5f926d7be9c6f591c3</checksum>
-          <size type="download">82504320</size>
-        </artifact>
-      </artifacts>
-    </release>
   </releases>
 </component>

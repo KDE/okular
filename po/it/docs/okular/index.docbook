@@ -1618,7 +1618,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Rimozione della annotazioni</title>
 				<para
->Per rimuovere un'annotazione, fai clic su di essa con il &RMB; e seleziona <guimenuitem
+>Per rimuovere un'annotazione, assicurati che lo «Strumento navigazione» sia selezionato (<menuchoice
+><guimenu
+>Strumenti</guimenu
+><guimenuitem
+>Navigazione</guimenuitem
+></menuchoice
+>), quindi fai clic su di essa con il &RMB; e seleziona <guimenuitem
 >Elimina</guimenuitem
 > o seleziona un'annotazione usando il &LMB; e premi il pulsante &Del;. </para>
 				<para
@@ -1632,7 +1638,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Modifica della annotazioni</title>
 				<para
->Per modificare un'annotazione, fai clic su di essa con il &RMB; e seleziona <guimenuitem
+>Per modificare un'annotazione, assicurati che lo «Strumento navigazione» sia selezionato (<menuchoice
+><guimenu
+>Strumenti</guimenu
+><guimenuitem
+>Navigazione</guimenuitem
+></menuchoice
+>), quini fai clic su di essa con il &RMB; e seleziona <guimenuitem
 >Proprietà</guimenuitem
 >. Sarà mostrata una finestra di dialogo con le impostazioni, sia generali per tutti i tipi di annotazioni (come colore e opacità, autore, &etc;) che specifiche per quel tipo di annotazione. </para>
 				<screenshot>

@@ -86,7 +86,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<sect1 id="opening">
 			<title>Opening Files</title>
 			<para>
-				To view any supported file in &okular;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...</guimenuitem>
+				To open any supported file in &okular;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...</guimenuitem>
 				</menuchoice>, choose a supported file in the dialog and click <guibutton>Open</guibutton>.
 				Your file should now be displayed in the main window.
 			</para>
@@ -515,10 +515,11 @@ Context menu actions like Rename Bookmarks etc.)
 			</screenshot>
 			<para>&okular; has two different kind of annotations:</para>
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
-			for files with text like &eg; &PDF;.</para>
-		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel> for all formats supported by &okular;.</para>
-			<para>Using the context menu either in the <guilabel>Annotations</guilabel> view of the sidebar or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
-			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
+			can be used with files containing text (&eg; &PDF;).</para>
+		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel>.</para>
+			  <para>Graphic annotations are not limited to &PDF; files; they can be used for any format that &okular; supports.</para>
+			<para>Using the <guilabel>Annotations</guilabel> menu, you can add a <guilabel>Pop up Note</guilabel> or any other kind of annotation to add or edit comments.</para>
+
 			<para>
                 &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Save As</guisubmenu></menuchoice> and selecting <guilabel>Okular document archive</guilabel> in the <guilabel>Filter</guilabel> selector. Documents saved this way will get <filename>.okular</filename> as their filename extension. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
@@ -527,29 +528,28 @@ Context menu actions like Rename Bookmarks etc.)
 			</para>
 				<note>
 					<para>
-						Due to DRM limitations (typically with &PDF; documents), adding, editing some properties
-						or removing annotations could not be possible.
+						Note that adding, editing, or removing annotations may not be possible with DRM-enabled files.
 					</para>
 				</note>
 				<note>
 				  <para>
-				    Any action on annotations (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation) can be <link linkend="edit-undo">undone</link> or <link linkend="edit-redo">redone</link> using the corresponding item from the <guimenu>Edit</guimenu> menu. It is also possible to undo the action by pressing <keycombo>&Ctrl;<keycap>Z</keycap></keycombo> and redo the undone action by pressing <keycombo>&Ctrl;&Shift;<keycap>Z</keycap></keycombo>.
+				    It is possible to <link linkend="edit-undo">undo</link> or <link linkend="edit-redo">redo</link> any annotation action by using the corresponding item from the <guimenu>Edit</guimenu> menu. It is also possible to undo the action by pressing <keycombo>&Ctrl;<keycap>Z</keycap></keycombo> and to redo a previously undone action by pressing <keycombo>&Ctrl;&Shift;<keycap>Z</keycap></keycombo>.
 				  </para>
 				</note>
 			<para>
-			  You can configure the default properties and appearance of each annotating tool. Please refer to the <link linkend="configannotations">corresponding section in this documentation</link>.
+			  You can configure the default properties and appearance of each annotation tool. Please refer to the <link linkend="configannotations">corresponding section in this documentation</link>.
 			</para>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
 				<para>
-					To add some annotations to the document, you have to use <guilabel>Quick Annotations</guilabel> button on the main &okular; toolbar or activate the annotating toolbar.
+					To add annotations to the document, you can use <guilabel>Quick Annotations</guilabel> button on the main &okular; toolbar, or activate the annotation toolbar.
 					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Annotations</guimenuitem></menuchoice> or
-					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
-					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.
+					pressing <keycap>F6</keycap>. Once the annotation toolbar is shown, just press one of
+					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to use that annotation.
 				</para>
 				<para>
-				  The annotating toolbar helps you to make annotations with drawings, shapes, and text messages. You can use the annotating toolbar to mark up a document (&eg; add lines, ellipses, polygons, stamps, highlights, underlines &etc;). The table below describes exactly what the default set of annotating toolbar buttons does.
+				  The annotation toolbar helps you to make annotations with drawings, shapes, and text messages. You can use the annotation toolbar to mark up a document (&eg; add lines, ellipses, polygons, stamps, highlights, underlines &etc;). The table below describes exactly what the default set of annotation toolbar buttons does.
 				</para>
 				<informaltable>
 				  <tgroup cols="3">
@@ -584,10 +584,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To highlight text in the document with some given background color.
+					    Highlights text in the document with a given background color.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the highlighted text snippet, then drag to highlight it.
+					    Click on the tool button, then click with the &LMB; and drag to highlight a text snippet.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the highlighter. Just right-click on the highlighted text and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -611,10 +611,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To underline some text.
+					    Underlines text with a straight line.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
+					    Click on the tool button, then click with the &LMB; and drag to underline a text snippet.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -638,10 +638,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To underline some text by a squiggle line.
+					    Underlines text with a squiggly line.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
+					    Click on the tool button, then click with the &LMB; and drag to squiggly underline a text snippet.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -665,10 +665,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To strike out some text.
+						Strikes out some text.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
+					    Click on the tool button, then click with the &LMB; and drag to squiggly strike out a text snippet.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -692,10 +692,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Typewriter features opaque letters on transparent background, so that it is useful to fill noninteractive forms.
+					    Adds text on a transparent background. This is useful for filling out forms lacking integrated editable text fields.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					    Click on the tool button, then click with the &LMB; where you wish to add the top-left corner of the text, then drag to place the bottom-right one. Type some text, then click on the <guibutton>OK</guibutton> to save it, <guibutton>Clear</guibutton> to clear the text and start over, or <guibutton>Cancel</guibutton> to cancel.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Font</guilabel> and <guilabel>Text color</guilabel> for the text. Just right-click on the typewriter text created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -719,10 +719,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw inline note. The note will be shown inline as is.
+					    Draws an inline note. The note will be shown inline as is.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					    Click on the tool button, then click with the &LMB; where you wish to add the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Clear</guibutton> to clear the note's text, or <guibutton>Cancel</guibutton> to cancel note creation.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Font</guilabel>, <guilabel>Align</guilabel>, and <guilabel>Border width</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -746,7 +746,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw multiline note. The note will can be viewed by double clicking on an icon in the document.
+					    Draws a multiline note. The note can be viewed by double clicking on the icon created in the document.
 					  </para>
 					  <para>
 					    Click on the tool button, then click on the place in the document where the pop-up note should be added. Enter the text of pop-up note then click on the <guilabel>Close this note</guilabel> button in the top right corner of the pop-up window.
@@ -773,10 +773,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw free-form lines.
+					    Draws free-form lines.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line.
+					    Click on the tool button, then click with the &LMB; and drag to draw the line.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Width</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -800,10 +800,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To mark with an arrow.
+					    Draws an arrow between two points.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
+					    Click on the tool button, then click with the &LMB; to place the starting point of the arrow, then drag to place the ending point of the line and click once more.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -827,10 +827,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To mark with a line.
+						Draws a line between two points.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
+					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place the ending point of the line and click once more.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -854,10 +854,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw a rectangle around some chosen area.
+					    Draws a rectangle around the chosen area.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the rectangle, then drag to place the bottom-right one.
+					    Click on the tool button, then click with the &LMB; to place the top-left corner of the rectangle, then drag to place the bottom-right one.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -881,10 +881,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw an ellipse or rectangle around some chosen area.
+					    Draws an ellipse or rectangle around a chosen area.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one.
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangle for the ellipse, then drag to place the bottom-right one.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -908,10 +908,10 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw a closed plane figure from three or more segments. The corresponding note can be viewed by double clicking inside the polygon.
+					    Draws a closed shape from three or more line segments. The corresponding note can be viewed by double clicking inside the polygon.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you have drawn the whole polygon and connected back up with the first vertex. Click twice to add a note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Clear</guibutton> to clear the note, or <guibutton>Cancel</guibutton> to cancel note entry.
 					  </para>
 					  <para>
                           It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the polygon. Just right-click on the polygon created and select the <guimenuitem>Properties</guimenuitem> menu item.
@@ -935,7 +935,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To mark the text or image with some predefined shape.
+					    Inserts a pre-defined shape into the document.
 					  </para>
 					  <para>
 					    Click on the tool button to choose the stamp from the drop-down list then click with the &LMB; to place the stamp.
@@ -962,11 +962,11 @@ Context menu actions like Rename Bookmarks etc.)
                                   </para>
                                   <note>
                                       <para>
-                                          It is possible to add &latex; code into the text of annotations. Please add <userinput>$$<replaceable>code</replaceable>$$</userinput> to the text of annotation, where <replaceable>code</replaceable> is any valid &latex; equation, and follow instructions on the screen to make it render by a &latex; distribution installed in your system.
+                                          It is possible to add &latex; code into the text of annotations. To do so, add <userinput>$$<replaceable>code</replaceable>$$</userinput> into the text of annotation, where <replaceable>code</replaceable> is any valid &latex; equation. Follow the instructions that will appear on the screen to render it using a &latex; distribution installed in your system.
                                       </para>
                                   </note>
 				<para>
-				  It is possible to configure the current tool options using the annotating toolbar itself. The table below describes exactly what the default set of annotating toolbar configuring buttons does.
+				  It is possible to configure the selected tool using the annotation toolbar itself:
 				</para>
 				<informaltable>
 				  <tgroup cols="3">
@@ -1001,7 +1001,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Click on the tool button to choose the width from the drop-down list.
+					    Click on this button to choose the width from the drop-down list.
 					  </para>
 					</entry>
 				      </row>
@@ -1028,7 +1028,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-						  Click on the tool button to choose color of text or border of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
+						  Click on this button to choose the color of the text or border of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
 					  </para>
 					</entry>
 				      </row>
@@ -1049,7 +1049,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-						  Click on the tool button to choose a fill color of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
+						  Click on this button to choose the fill color of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
 					  </para>
 					</entry>
 				      </row>
@@ -1070,7 +1070,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-						  Click on the tool button to choose annotation level of opacity from the drop-down list (<guimenuitem>100%</guimenuitem> is for the opaque annotations).
+						  Click on this button to choose the opacity of your annotation from the drop-down list (<guimenuitem>100%</guimenuitem> creates opaque annotations).
 					  </para>
 					</entry>
 				      </row>
@@ -1091,7 +1091,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-						  Click on the tool button to open the font selection dialog.
+						  Click on this button to open the font selection dialog.
 					  </para>
 					</entry>
 				      </row>
@@ -1112,7 +1112,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-						  Click on the tool button to open the general configuration dialog for your annotation.
+						  Click on this button to open the general configuration dialog for your annotation.
 					  </para>
 					</entry>
 				      </row>
@@ -1120,7 +1120,7 @@ Context menu actions like Rename Bookmarks etc.)
 				    </tgroup>
 				  </informaltable>
 				<para>
-				  There are three additional utility buttons on the default annotating toolbar.
+				  There are three additional utility buttons on the annotation toolbar:
 				</para>
 				<informaltable>
 				  <tgroup cols="2">
@@ -1151,7 +1151,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					  <note>
 						  <para>
-							  You can use the default shortcuts from <keycombo action="simul">&Alt;<keycap>9</keycap></keycombo> to <keycombo action="simul">&Alt;<keycap>0</keycap></keycombo> to select the quick annotation actions any time you like even with the annotating toolbar hidden.
+							  You can use the default shortcuts from <keycombo action="simul">&Alt;<keycap>9</keycap></keycombo> to <keycombo action="simul">&Alt;<keycap>0</keycap></keycombo> to select the quick annotation actions any time you like, even with the annotation toolbar hidden.
 						  </para>
 					  </note>
 					</entry>
@@ -1168,7 +1168,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    When checked keep the current annotation tool active after use.
+					    When checked, keep the current annotation tool active after use.
 					  </para>
 					</entry>
 				      </row>
@@ -1184,7 +1184,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    Hide the annotating toolbar.
+					    Hide the annotation toolbar.
 					  </para>
 					</entry>
 				      </row>
@@ -1199,39 +1199,33 @@ Context menu actions like Rename Bookmarks etc.)
 				</para>
 				<note>
 					<para>
-						Activating the annotating toolbar will make you switch to the Browse Mode.
+						Activating the annotation toolbar will automatically switch to Browse Mode.
 					</para>
 				</note>
 				<para>
-					You can stop the construction any time by pressing again on the button of the
-					annotation you are constructing, or by pressing the &Esc; key.
+					You can stop annotating any time by pressing the button of the
+					annotation you are using again, or by pressing the &Esc; key.
 				</para>
 				<para>
-					The newly constructed annotation will have as author the author you set in the
+					The newly created annotation will have the author you set in the
 					<link linkend="configannotations"><guilabel>Annotations</guilabel> page</link> in &okular;s
-					configuration dialog. The <guilabel>Annotations</guilabel> page can also be used to configure the content of the annotating toolbar.
+					configuration dialog as its author. The <guilabel>Annotations</guilabel> page can also be used to configure the content of the annotations toolbar.
 				</para>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title>Removing annotations</title>
 				<para>
-					To remove an annotation, first ensure the Browse tool is selected (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then just click on it with the &RMB;, and select
+					To remove an annotation, first select the Browse tool (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then just click on it with the &RMB;, and select
 					<guimenuitem>Delete</guimenuitem> or select an annotation using the &LMB; and press the &Del; key.
 				</para>
 				<para>
-					When removing the annotation, its window will be closed if open.
+					When removing the annotation, its window will be closed if it is open.
 				</para>
-				<note>
-					<para>
-						This option could not be enabled because the document does not allow removing
-						annotations.
-					</para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title>Editing annotations</title>
 				<para>
-					To edit an annotation, first ensure the Browse tool is selected (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then click on it with the &RMB; and select
+					To edit an annotation, first select the Browse tool (<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse</guimenuitem></menuchoice>) then click on an annotation with the &RMB; and select
 					<guimenuitem>Properties</guimenuitem>. A dialog will appear with the general
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
@@ -1257,12 +1251,11 @@ Context menu actions like Rename Bookmarks etc.)
 					else on the annotation to move it.
 					Pressing &Esc; or clicking an area outside the annotation cancels a selection.
 				</para>
-				<para>Resizing is only applicable for annotation types Inline Note, Typewriter, Stamp and Ellipse.</para>
+				<para>Resizing is only available for the Inline Note, Typewriter, Stamp and Ellipse annotation types.</para>
 
 				<note>
 					<para>
-						Depending on the document permissions (typically with &PDF; documents), some options
-						can be disabled.
+						Some options may be disabled depending on the document's permissions (this typically only affects some &PDF; documents).
 					</para>
 				</note>
 			</sect2>
@@ -2214,7 +2207,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Open the annotating toolbar</action>. The annotating toolbar allows you to add
+						<para><action>Open the annotation toolbar</action>. The annotation toolbar allows you to add
 							annotations on the document you are reading. For more information, please see the
 							section about <link linkend="annotations">Annotations</link>.</para>
 					</listitem>
@@ -2942,10 +2935,10 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Annotation tools</guilabel></term>
 					<listitem>
 					  <para>
-					    This pane is used to configure your <link linkend="annotations-add">annotating toolbar</link>.
+					    This pane is used to configure your <link linkend="annotations-add">annotation toolbar</link>.
 					  </para>
 					  <para>
-					    There are five buttons (<guibutton>Add</guibutton>, <guibutton>Edit</guibutton>, <guibutton>Remove</guibutton>, <guibutton>Move Up</guibutton>, <guibutton>Move Down</guibutton>) and a list box (which lists the contents of the current annotating toolbar) which are used to configure the toolbar.
+					    There are five buttons (<guibutton>Add</guibutton>, <guibutton>Edit</guibutton>, <guibutton>Remove</guibutton>, <guibutton>Move Up</guibutton>, <guibutton>Move Down</guibutton>) and a list box (which lists the contents of the current annotation toolbar) which are used to configure the toolbar.
 					  </para>
 					  <para>
 					    If you need to add some tool button on the toolbar click on the <guibutton>Add</guibutton> button. You can choose the <guilabel>Name</guilabel>, the <guilabel>Type</guilabel> and the <guilabel>Appearance</guilabel> of the created tool.
@@ -2956,7 +2949,7 @@ Context menu actions like Rename Bookmarks etc.)
 					    </para>
 					  </note>
 					  <para>
-					    Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap>1</keycap> to <keycap>9</keycap>) depends on its position in the list of annotating toolbar.
+					    Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap>1</keycap> to <keycap>9</keycap>) depends on its position in the list of annotation toolbar.
 					  </para>
 					</listitem>
 				</varlistentry>

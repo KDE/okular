@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2023-01-02 09:20+0100\n"
+"PO-Revision-Date: 2023-01-03 08:32+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2705,7 +2705,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
-msgstr ""
+msgstr "სვეტების მიმოხილვა:"
 
 #: part/dlggeneral.cpp:197
 #, kde-format
@@ -3776,7 +3776,7 @@ msgstr "ახალი ტექსტური შენიშვნა"
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "Text of the new note:"
-msgstr ""
+msgstr "ახალი შენიშვნის ტექსტი:"
 
 #: part/pageviewannotator.cpp:362
 #, kde-kuit-format
@@ -4768,7 +4768,7 @@ msgstr ""
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr ""
+msgstr "ანოტაციის მორგება"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -4831,7 +4831,7 @@ msgstr "გვერდები: %1"
 #: part/presentationwidget.cpp:373
 #, kde-format
 msgid "Click to begin"
-msgstr ""
+msgstr "დასაწყებად დააწკაპუნეთ"
 
 #: part/presentationwidget.cpp:515
 #, kde-format

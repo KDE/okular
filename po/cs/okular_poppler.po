@@ -3,7 +3,7 @@
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2013, 2014, 2017, 2019.
 # Lukáš Tinkl <lukas@kde.org>, 2012.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012.
-# Vit Pelcak <vpelcak@suse.cz>, 2021.
+# Vit Pelcak <vit@pelcak.org>, 2021.
 #
 msgid ""
 msgstr ""

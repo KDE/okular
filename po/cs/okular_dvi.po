@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2013, 2014, 2019.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2013.
-# Vit Pelcak <vpelcak@suse.cz>, 2021.
+# Vit Pelcak <vit@pelcak.org>, 2021.
 #
 msgid ""
 msgstr ""

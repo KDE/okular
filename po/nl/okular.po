@@ -13,14 +13,14 @@
 # Freek de Kruijf <freek@opensuse.org>, 2008.
 # Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2011, 2012.
-# Freek de Kruijf <f.de.kruijf@gmail.com>, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Freek de Kruijf <f.de.kruijf@gmail.com>, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Luc Castermans <luc.castermans@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-23 11:27+0100\n"
+"PO-Revision-Date: 2023-01-04 12:42+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -2505,19 +2505,19 @@ msgstr "Stem voor tekst-naar-spraak:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Volledige annotatiewerkbalk"
+msgstr "Volledige werkbalk voor annotaties"
 
 #: part/dlgannotations.cpp:26
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Snelle annotatiewerkbalk"
+msgstr "Snelle werkbalk voor annotaties"
 
 #: part/dlgannotations.cpp:28
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "Annotatiewerkbalk:"
+msgstr "Werkbalk voor annotaties:"
 
 #: part/dlgannotations.cpp:34
 #, kde-format
@@ -4890,13 +4890,13 @@ msgstr "Hoofdwerkbalk"
 #: part/part.rc:119
 #, kde-format
 msgid "Annotation Toolbar"
-msgstr "Annotatiewerkbalk"
+msgstr "Werkbalk voor annotaties"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:143
 #, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "Snelle annotatiewerkbalk"
+msgstr "Snelle werkbalk voor annotaties"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format

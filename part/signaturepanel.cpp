@@ -43,7 +43,7 @@ SignaturePanel::SignaturePanel(Okular::Document *document, QWidget *parent)
     Q_D(SignaturePanel);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-    titleWidget->setLevel(2);
+    titleWidget->setLevel(4);
     titleWidget->setText(i18n("Signatures"));
 
     d->m_view = new QTreeView(this);

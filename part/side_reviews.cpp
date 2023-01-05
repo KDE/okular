@@ -94,7 +94,7 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
     vLayout->setSpacing(6);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-    titleWidget->setLevel(2);
+    titleWidget->setLevel(4);
     titleWidget->setText(i18n("Annotations"));
 
     m_view = new TreeView(m_document, this);

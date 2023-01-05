@@ -127,7 +127,7 @@ BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     mainlay->setSpacing(6);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-    titleWidget->setLevel(2);
+    titleWidget->setLevel(4);
     titleWidget->setText(i18n("Bookmarks"));
     mainlay->addWidget(titleWidget);
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);

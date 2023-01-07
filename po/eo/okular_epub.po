@@ -1,13 +1,16 @@
 # Translation of okular_epub into esperanto.
-#
+# mesaĝoj por "okular"
+# Copyright (C) 2009 Free Software Foundation, Inc.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009, 2010.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2010-01-03 10:56+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-06 22:00+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +22,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Axel Rousseau"
+msgstr "Axel Rousseau, Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "axel@esperanto-jeunes.org"
+msgstr "axel@esperanto-jeunes.org, okellogg@users.sourceforge.net"
 
 #: converter.cpp:163
 #, kde-format
@@ -34,22 +37,9 @@ msgstr "Eraro dum malfermo de EPub dokumento"
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub"
-msgstr ""
+msgstr "EPub"
 
 #: generator_epub.cpp:30
-#, fuzzy, kde-format
-#| msgid "EPub Backend"
+#, kde-format
 msgid "EPub Backend Configuration"
-msgstr "EPub interno"
-
-#~ msgid "EPub Backend"
-#~ msgstr "EPub interno"
-
-#~ msgid "An EPub backend"
-#~ msgstr "EPub interno"
-
-#~ msgid "© 2008 Ely Levy"
-#~ msgstr "© 2008 Ely Levy"
-
-#~ msgid "Ely Levy"
-#~ msgstr "Ely Levy"
+msgstr "EPub Interna Agordo"

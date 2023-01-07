@@ -1,16 +1,17 @@
-# translation of okular_ghostview.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# translation of okular_ghostview.pot to esperanto
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2010.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_ghostview\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2010-01-03 10:59+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-06 22:00+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -42,6 +43,8 @@ msgid ""
 "Determines whether Ghostscript should be allowed to use platform fonts, if "
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
+"Determinas ĉu Ghostscript rajtu uzi platformajn tiparojn, se malvera nur "
+"uzado de tiparoj enkorpigitaj en la dokumento estos allasata."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: conf/gssettingswidget.ui:28
@@ -61,10 +64,9 @@ msgid "Ghostscript"
 msgstr "Ghostscript"
 
 #: generator_ghostview.cpp:82
-#, fuzzy, kde-format
-#| msgid "Ghostscript backend configuration"
+#, kde-format
 msgid "Ghostscript Backend Configuration"
-msgstr "Ghostscript interna agordo"
+msgstr "Ghostscript Interna Agordo"
 
 #: generator_ghostview.cpp:253
 #, kde-format
@@ -75,31 +77,3 @@ msgstr "Dokumenta versio"
 #, kde-format
 msgid "Language Level"
 msgstr "Lingva nivelo"
-
-#~ msgid "PS Backend"
-#~ msgstr "PS interno"
-
-#~ msgid "A PostScript file renderer."
-#~ msgstr "PostScript dosiera rigardilo"
-
-#~ msgid "© 2007-2008 Albert Astals Cid"
-#~ msgstr "© 2007-2008 Albert Astals Cid"
-
-#~ msgid "Based on the Spectre library."
-#~ msgstr "Bazata sur Spectre biblioteko."
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid ""
-#~ "Anti-aliasing makes the result look better, but it makes the display take "
-#~ "longer"
-#~ msgstr ""
-#~ "Glatigo plibonigas la aperon de la dokumento, tamen plidaŭrigas la "
-#~ "bildigon."
-
-#~ msgid "&Enable anti-aliasing of fonts"
-#~ msgstr "&Aktivigi la glitigon de tiparoj"
-
-#~ msgid "&Enable anti-aliasing of graphics"
-#~ msgstr "&Aktivigi la glitigon de grafikaĵoj"

@@ -1,143 +1,237 @@
 <?xml version="1.0" ?>
 <!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-<!ENTITY % English "INCLUDE">
+<!ENTITY % German "INCLUDE">
 ]>
 
 <!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
 <refentry lang="&language;">
 <refentryinfo>
-<title>Okular User's Manual</title>
-<author><firstname>Yuri</firstname><surname>Chornoivan</surname>
-<contrib>Okular man page.</contrib>
-<email>yurchor@ukr.net</email></author>
-<date>2022-02-19</date>
-<releaseinfo>Okular 22.04</releaseinfo>
-<productname>KDE Gear</productname>
+<title
+>Okular-Benutzerhandbuch</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular-Benutzerhandbuch</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2019-02-14</date>
+<releaseinfo
+>Okular 1.7</releaseinfo>
+<productname
+>KDE-Anwendungen</productname>
 </refentryinfo>
 
 <refmeta>
-<refentrytitle><command>okular</command></refentrytitle>
-<manvolnum>1</manvolnum>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
 </refmeta>
 
 <refnamediv>
-<refname>okular</refname>
-<refpurpose>a universal document viewer</refpurpose>
+<refname
+>okular</refname>
+<refpurpose
+>Ein Betrachter für alle Dokumente</refpurpose>
 </refnamediv>
 <!-- body begins here -->
 <refsynopsisdiv id='synopsis'>
-<cmdsynopsis>
-<command>okular</command>
-<arg choice="opt"><replaceable>Okular options</replaceable></arg>
-<arg choice="opt"><replaceable>URL</replaceable></arg>
-</cmdsynopsis>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Okular-Optionen</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
 </refsynopsisdiv>
 
 
-<refsect1 id="description"><title>Description</title>
-<para><command>okular</command>
-is aimed to show documents in different formats.</para>
+<refsect1 id="description"
+><title
+>Beschreibung</title>
+<para
+><command
+>okular</command
+> zeigt Dokumente in verschiedenen Formaten an.</para>
 
 </refsect1>
 
-<refsect1 id="options"><title>Okular options</title>
+<refsect1 id="options"
+><title
+>Okular-Optionen</title>
 <variablelist>
 
 <varlistentry>
-<term><option>-p, --page <replaceable>number</replaceable></option></term>
+<term
+><option
+>-p, --page <replaceable
+>zahl</replaceable
+></option
+></term>
 <listitem>
-<para>Open a given page in the document.</para>
+<para
+>Öffnet die angegebene Seite im Dokument.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--presentation</option></term>
+<term
+><option
+>--presentation</option
+></term>
 <listitem>
-<para>Start the document in presentation mode.</para>
+<para
+>Dokumentanzeige im Präsentationsmodus beginnen.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--print</option></term>
+<term
+><option
+>--print</option
+></term>
 <listitem>
-<para>Start with print dialog.</para>
+<para
+>Startet mit dem Druckdialog.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--print-and-exit</option></term>
+<term
+><option
+>--print-and-exit</option
+></term>
 <listitem>
-<para>Start with print dialog and exit after printing.</para>
+<para
+>Startet mit dem Druckdialog und wird nach dem Drucken beendet.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--unique</option></term>
+<term
+><option
+>--unique</option
+></term>
 <listitem>
-<para>Unique instance control.</para>
+<para
+>Nur eine Instanz des Programms verwenden.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--noraise</option></term>
+<term
+><option
+>--noraise</option
+></term>
 <listitem>
-<para>Allows to prevent Okular window raising after the start.</para>
+<para
+>Mit dieser Option startet Okular minimiert in der Kontrollleiste.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><option>--find <replaceable>string</replaceable></option></term>
+<term
+><option
+>--find <replaceable
+>string</replaceable
+></option
+></term>
 <listitem>
-<para>Find a string on the text.</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><option>--editor-cmd <replaceable>string</replaceable></option></term>
-<listitem>
-<para>Sets the external editor command. You cannot set the editor command in an already running Okular instance. Please note that <option>--unique</option> is not supported when setting the editor command at the commandline.</para>
+<para
+>Sucht eine Zeichenfolge im Text.</para>
 </listitem>
 </varlistentry>
 </variablelist>
 </refsect1>
 
-<refsect1 id="arguments"><title>Arguments</title>
+<refsect1 id="arguments"
+><title
+>Argumente</title>
 <variablelist>
 <varlistentry>
-<term><option>URL</option></term>
+<term
+><option
+>URL</option
+></term>
 <listitem>
-<para>An address of the document to be opened. For PDF, can be given as <replaceable>document_name</replaceable>#<replaceable>named_destination</replaceable> where <replaceable>named_destination</replaceable> is a particular named destination embedded in the document.</para>
+<para
+>Die Adresse des zu öffnenden Dokuments. Bei PDF-Dokumenten kann der Name in der Form <replaceable
+>document_name</replaceable
+>#<replaceable
+>named_destination</replaceable
+> angegeben werden. Dabei ist <replaceable
+>named_destination</replaceable
+> ein bestimmter benannter Bereich im Dokument.</para>
 </listitem>
 </varlistentry>
 </variablelist>
 </refsect1>
 
-<refsect1 id="feedback"><title>Feedback</title>
-<para>On IRC, irc.libera.chat #okular or via email, okular-devel@kde.org or on the web, &lt;<ulink url="https://okular.kde.org/">https://okular.kde.org/</ulink>&gt;.</para>
+<refsect1 id="feedback"
+><title
+>Rückmeldung</title>
+<para
+>Im IRC-Kanal #okular auf irc.libera.chat, über E-Mails an die Mailingliste okular-devel@kde.org oder im Internet auf der Seite &lt;<ulink url="https://okular.kde.org/"
+>http://okular.kde.org/</ulink
+>&gt;</para>
 </refsect1>
 
 <refsect1>
-<title>See Also</title>
+<title
+>Siehe auch</title>
 <simplelist>
-<member>More detailed user documentation is available from <ulink
-url="help:/okular">help:/okular</ulink>
-(either enter this <acronym>URL</acronym> into &konqueror;, or run
-<userinput><command>khelpcenter</command>
-<parameter>help:/okular</parameter></userinput>).</member>
-<member>kf5options(7)</member>
-<member>qt5options(7)</member>
-<member>There is also further information available at
-<ulink url="https://okular.kde.org/">https://okular.kde.org/</ulink></member>
+<member
+>Weitere ausführliche Dokumentation finden Sie unter <ulink url="help:/okular"
+>help:/okular</ulink
+> (geben Sie diese <acronym
+>URL</acronym
+> entweder im &konqueror; ein oder starten Sie <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Weitere Informationen finden Sie auf der Webseite <ulink url="http://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>.</member>
 </simplelist>
 </refsect1>
 
-<refsect1 id="copyright"><title>Copyright</title>
-<para>Copyright &copy; 2002 Wilco Greven, Christophe Devriese</para>
-<para>Copyright &copy; 2004-2005 Enrico Ros</para>
-<para>Copyright &copy; 2005 Piotr Szymanski</para>
-<para>Copyright &copy; 2004-2012 Albert Astals Cid</para>
-<para>Copyright &copy; 2006-2009 Pino Toscano</para>
-<para>License: GNU General Public Version 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html">https://www.gnu.org/licenses/gpl-2.0.html</ulink>&gt;</para>
+<refsect1 id="copyright"
+><title
+>Copyright</title>
+<para
+>Copyright &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Copyright &copy; 2004-2005 Enrico Ros</para>
+<para
+>Copyright &copy; 2005 Piotr Szymanski</para>
+<para
+>Copyright &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Copyright &copy; 2006-2009 Pino Toscano</para>
+<para
+>Lizenz: GNU General Public License Version 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
 </refsect1>
 </refentry>
 

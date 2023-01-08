@@ -118,7 +118,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Obrir fitxers</title>
 			<para
->Per a veure qualsevol fitxer admès per l'&okular;, seleccioneu <menuchoice
+>Per a obrir qualsevol fitxer admès per l'&okular;, seleccioneu <menuchoice
 ><guimenu
 >Fitxer</guimenu
 ><guimenuitem
@@ -655,11 +655,11 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >L'&okular; conté dos tipus d'anotacions diferents:</para>
 			<para
->Anotacions de text com <guilabel
+>Es poden emprar anotacions de text com <guilabel
 >Ressaltat groc</guilabel
-> i <guilabel
+> o <guilabel
 >Subratllat negre</guilabel
-> per a fitxers amb text com, &pex;, &PDF;.</para>
+> amb els fitxers que contenen text com, &pex;, &PDF;.</para>
 		      <para
 >Anotacions gràfiques com <guilabel
 >Nota emergent</guilabel
@@ -681,15 +681,16 @@ Context menu actions like Rename Bookmarks etc.)
 >El·lipse</guilabel
 > i <guilabel
 >Màquina d'escriure</guilabel
-> per a tots els formats admesos per l'&okular;.</para>
+>.</para>
+			  <para
+>Les anotacions gràfiques no es limiten als fitxers &PDF;, les podeu utilitzar per a qualsevol format admès per l'&okular;.</para>
 			<para
->Utilitzant el menú contextual, ja sigui en la vista <guilabel
+>Utilitzant el menú <guilabel
 >Anotacions</guilabel
-> de la barra lateral o en la finestra principal podeu obrir una <guilabel
+> podeu afegir una <guilabel
 >Nota emergent</guilabel
-> per a qualsevol mena d'anotació i afegir o editar els comentaris.</para>
-			<para
->Les anotacions no es limiten únicament als fitxers &PDF;, les podeu utilitzar per a qualsevol format admès per l'&okular;.</para>
+> o qualsevol altre d'anotació per a afegir o editar els comentaris.</para>
+
 			<para
 >L'&okular; conté la característica «arxivat de documents». Aquest és un format específic de l'&okular; per a aportar al document diverses metadades més relacionades amb ell (actualment només anotacions). Podeu desar un «arxiu de document» des del document obert escollint <menuchoice
 ><guimenu
@@ -722,15 +723,15 @@ Context menu actions like Rename Bookmarks etc.)
 > per a desar-les en un fitxer nou. </para>
 				<note>
 					<para
->A causa de les limitacions DRM (normalment amb documents &PDF;), afegir, editar o eliminar algunes propietats o eliminar les anotacions podria no ser possible. </para>
+>Tingueu en compte que afegir, editar o eliminar anotacions pot no ser possible amb fitxers amb DRM activat. </para>
 				</note>
 				<note>
 				  <para
->Qualsevol acció sobre les anotacions (creació i eliminació de les anotacions, editar arbitràriament les propietats de l'anotació, tornar a ubicar les anotacions amb &Ctrl;+arrossega, i editar el contingut del text d'una anotació) es pot <link linkend="edit-undo"
+>És possible <link linkend="edit-undo"
 >desfer</link
 > o <link linkend="edit-redo"
 >refer</link
-> utilitzant l'element corresponent al menú <guimenu
+> qualsevol acció d'anotació utilitzant l'element corresponent del menú <guimenu
 >Edita</guimenu
 >. També és possible desfer l'acció prement <keycombo
 >&Ctrl;<keycap
@@ -750,7 +751,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Afegir anotacions</title>
 				<para
->Per a afegir anotacions al document, haureu d'utilitzar el botó <guilabel
+>Per a afegir anotacions al document, podeu utilitzar el botó <guilabel
 >Anotacions ràpides</guilabel
 > a la barra d'eines principal de l'&okular; o activar la barra d'eines d'anotació. Això es fa seleccionant <menuchoice
 ><guimenu
@@ -764,9 +765,9 @@ Context menu actions like Rename Bookmarks etc.)
 >1</keycap
 > fins a <keycap
 >9</keycap
->) per a iniciar la construcció d'aquesta anotació. </para>
+>) per a utilitzar aquesta anotació. </para>
 				<para
->La barra d'eines d'anotació ajuda a fer anotacions amb dibuixos, formes i missatges de text. Podeu utilitzar la barra d'eines d'anotació per a marcar un document (&pex;, afegir línies, el·lipses, polígons, segells, ressaltats, subratllats, &etc;) La següent taula descriu exactament el que fa el conjunt de botons predeterminat de la barra d'eines d'anotació. </para>
+>La barra d'eines d'anotació ajuda a fer anotacions amb dibuixos, formes i missatges de text. Podeu utilitzar la barra d'eines d'anotació per a marcar un document (&pex;, afegir línies, el·lipses, polígons, segells, ressaltats, subratllats, &etc;) La taula següent descriu exactament el que fa el conjunt de botons predeterminat de la barra d'eines d'anotació. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -796,9 +797,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a ressaltar el text en el document amb una mica de color de fons determinat. </para>
+>Ressalta el text en el document amb un color de fons indicat. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text ressaltat, després arrossegueu per a ressaltar-lo. </para>
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i arrossegueu per a ressaltar un fragment de text. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -835,9 +836,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a subratllar el text. </para>
+>Subratlla un text amb una línia recta. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a subratllar un l fragment de text. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -874,9 +875,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a subratllar algun text amb una línia ondulada. </para>
+>Subratlla un text amb una línia ondulada. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a subratllar amb una línia ondulada un fragment de text. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -913,9 +914,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a barrar algun text. </para>
+>Barra un text. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici del fragment de text subratllat, després arrossegueu per a subratllar-lo. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a barrar un fragment de text. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -952,15 +953,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->La màquina d'escriure té lletres opaques sobre un fons transparent, de manera que és útil per a omplir formularis no interactius. </para>
+>Afegeix text en un fons transparent. Això és útil per a omplir formularis que manquen de camps integrats de text editable. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar-la a la cantonada superior esquerra de la nota, després arrossegueu per a col·locar-la a la part inferior dreta. Introduïu el text de la nota, després feu clic a <guibutton
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; a on vulgueu afegir la cantonada superior esquerra del text, després arrossegueu per a col·locar la cantonada inferior dreta. Introduïu el text, després feu clic a <guibutton
 >D'acord</guibutton
-> per a desar la nota, <guibutton
->Cancel·la</guibutton
-> per a cancel·lar la nota introduïda o <guibutton
+> per a desar-lo, <guibutton
 >Neteja</guibutton
-> per a esborrar la nota. </para>
+> per a esborrar el text i tornar a començar, o <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus de lletra</guilabel
@@ -987,15 +988,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar una nota inclosa. La nota es mostrarà immediatament a la línia. </para>
+>Dibuixa una nota inclosa. La nota es mostrarà en línia tal qual. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar-la a la cantonada superior esquerra de la nota, després arrossegueu per a col·locar-la a la part inferior dreta. Introduïu el text de la nota, després feu clic a <guibutton
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; a on vulgueu col·locar la cantonada superior esquerra de la nota, després arrossegueu per a col·locar la cantonada inferior dreta. Introduïu el text de la nota, després feu clic a <guibutton
 >D'acord</guibutton
 > per a desar la nota, <guibutton
->Cancel·la</guibutton
-> per a cancel·lar la nota introduïda o <guibutton
 >Neteja</guibutton
-> per a esborrar la nota. </para>
+> per a esborrar el text de la nota o <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar la creació de la nota. </para>
 					  <para
 >És possible definir el <guilabel
 >Color</guilabel
@@ -1028,7 +1029,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar una nota amb múltiples línies. La nota es podrà veure fent doble clic sobre una icona en el document. </para>
+>Dibuixa una nota amb múltiples línies. La nota es podrà veure fent doble clic sobre la icona creada en el document. </para>
 					  <para
 >Feu clic sobre el botó d'eina, feu clic sobre el lloc del document on s'ha d'afegir la nota emergent. Introduïu el text de la nota emergent i feu clic al botó <guilabel
 >Tanca aquesta nota</guilabel
@@ -1061,9 +1062,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar línies de forma lliure. </para>
+>Dibuixa línies de forma lliure. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar l'inici de la línia, després arrossegueu per a dibuixar la línia. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a dibuixar la línia. </para>
 					  <para
 >És possible definir el <guilabel
 >Color</guilabel
@@ -1092,9 +1093,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a marcar amb una fletxa. </para>
+>Dibuixa una fletxa entre dos punts. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la línia, després arrossegueu per a col·locar el punt final de la línia que serà i feu clic una vegada més. </para>
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la fletxa, després arrossegueu per a col·locar el punt final de la línia i feu clic una vegada més. </para>
 					  <para
 >És possible definir el <guilabel
 >Color</guilabel
@@ -1131,9 +1132,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a marcar amb una línia. </para>
+>Dibuixa una línia entre dos punts. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la línia, després arrossegueu per a col·locar el punt final de la línia que serà i feu clic una vegada més. </para>
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el punt inicial de la línia, després arrossegueu per a col·locar el punt final de la línia i feu clic una vegada més. </para>
 					  <para
 >És possible definir el <guilabel
 >Color</guilabel
@@ -1170,9 +1171,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar un rectangle al voltant d'alguna àrea escollida. </para>
+>Dibuixa un rectangle al voltant de l'àrea escollida. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar la cantonada superior esquerra del rectangle, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; per a col·locar la cantonada superior esquerra del rectangle, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -1209,9 +1210,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar una el·lipse o un rectangle al voltant d'alguna àrea escollida. </para>
+>Dibuixa una el·lipse o un rectangle al voltant de l'àrea escollida. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar la cantonada superior esquerra de l'el·lipse rectangular circumscrita, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
+>Feu clic sobre el botó d'eina, feu clic amb el &BER; i manteniu-lo premut per a col·locar la cantonada superior esquerra del rectangle circumscrit per l'el·lipse, després arrossegueu per a col·locar la cantonada inferior dreta. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -1248,15 +1249,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a dibuixar una figura plana tancada de tres o més segments. La nota corresponent es pot veure fent doble clic a l'interior del polígon. </para>
+>Dibuixa una forma tancada de tres o més segments de línies. La nota corresponent es pot veure fent doble clic a l'interior del polígon. </para>
 					  <para
->Feu clic sobre el botó d'eina, feu clic amb el &BER; per a col·locar el primer vèrtex del polígon, després arrossegueu per a col·locar el segon vèrtex. Continueu fins que dibuixeu tot el polígon fins al primer vèrtex. Feu clic dues vegades si voleu afegir alguna nota al polígon. Introduïu el text de la nota, després feu clic a <guibutton
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; per a col·locar el primer vèrtex del polígon, després arrossegueu per a col·locar el segon vèrtex. Continueu fins que dibuixeu tot el polígon fins al primer vèrtex. Feu clic dues vegades per a afegir una nota al polígon. Introduïu el text de la nota, després feu clic a <guibutton
 >D'acord</guibutton
 > per a desar la nota, <guibutton
->Cancel·la</guibutton
-> per a cancel·lar la nota introduïda o <guibutton
 >Neteja</guibutton
-> per a esborrar la nota. </para>
+> per a esborrar la nota o <guibutton
+>Cancel·la</guibutton
+> per a cancel·lar l'entrada de la nota. </para>
 					  <para
 >És possible definir el <guilabel
 >Color</guilabel
@@ -1287,7 +1288,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Per a marcar el text o la imatge amb algun segell predefinit. </para>
+>Insereix una forma predefinida en el document. </para>
 					  <para
 >Feu clic sobre el botó d'eina per a triar el segell des de la llista desplegable, després feu clic amb el &BER; per a col·locar el segell. </para>
 					  <para
@@ -1315,16 +1316,16 @@ Context menu actions like Rename Bookmarks etc.)
 > del diàleg de configuració, podeu afegir les vostres pròpies anotacions, com ara segells personalitzats, marcatge de text o una forma geomètrica amb color interior per a destacar les regions, &etc; </para>
                                   <note>
                                       <para
->És possible afegir codi en &latex; dins del text de les anotacions. Afegiu <userinput
+>És possible afegir codi en &latex; dins del text de les anotacions. Per fer-ho, afegiu <userinput
 >$$<replaceable
 >codi</replaceable
 >$$</userinput
-> al text de l'anotació, on el <replaceable
+> en el text de l'anotació, on el <replaceable
 >codi</replaceable
-> serà qualsevol equació de &latex; vàlida, i seguiu les instruccions a la pantalla per a fer que es renderitzi mitjançant una distribució de &latex; instal·lada al sistema. </para>
+> serà qualsevol equació vàlida de &latex;. Seguiu les instruccions que apareixeran a la pantalla per a renderitzar-la mitjançant una distribució de &latex; instal·lada al sistema. </para>
                                   </note>
 				<para
->És possible configurar les actuals opcions d'eina utilitzant la barra d'eines d'anotació. La següent taula descriu exactament el que fa el conjunt predeterminat de botons de configuració de la barra d'eines d'anotació. </para>
+>És possible configurar l'eina seleccionada utilitzant la mateixa barra d'eines d'anotació: </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1354,7 +1355,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a triar l'amplada des de la llista desplegable. </para>
+>Feu clic sobre aquest botó per a triar l'amplada des de la llista desplegable. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1378,7 +1379,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a triar el color del text o la vora de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
+>Feu clic sobre aquest botó per a triar el color del text o la vora de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
 >Color personalitzat...</guimenuitem
 > per a obrir el diàleg de selecció del color. </para>
 					</entry>
@@ -1399,7 +1400,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a triar el color per a l'emplenat de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
+>Feu clic sobre aquest botó per a triar el color d'emplenat de l'anotació. Podeu triar un dels colors predefinits o fer clic sobre l'element <guimenuitem
 >Color personalitzat...</guimenuitem
 > per a obrir el diàleg de selecció del color. </para>
 					</entry>
@@ -1420,9 +1421,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a triar el nivell d'opacitat des de la llista desplegable (el <guimenuitem
+>Feu clic sobre aquest botó per a triar l'opacitat de l'anotació des de la llista desplegable (el <guimenuitem
 >100%</guimenuitem
-> és per a les anotacions opaques). </para>
+> crea anotacions opaques). </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1441,7 +1442,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a obrir el diàleg de selecció del tipus de lletra. </para>
+>Feu clic sobre aquest botó per a obrir el diàleg de selecció del tipus de lletra. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1460,14 +1461,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre el botó d'eina per a obrir el diàleg de configuració general per a l'anotació. </para>
+>Feu clic sobre aquest botó per a obrir el diàleg de configuració general per a l'anotació. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->A la barra d'eines predeterminada hi ha tres botons d'utilitat addicionals. </para>
+>A la barra d'eines d'anotacions hi ha tres botons d'utilitat addicionals: </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1557,12 +1558,12 @@ Context menu actions like Rename Bookmarks etc.)
 > des del menú emergent. </para>
 				<note>
 					<para
->Activar la barra d'eines d'anotació farà canviar al mode Navega. </para>
+>Activar la barra d'eines d'anotació automàticament farà canviar al mode Navega. </para>
 				</note>
 				<para
->Podeu aturar la construcció en qualsevol moment prement de nou el botó de l'anotació que esteu construint, o prement la tecla &Esc;. </para>
+>Podeu aturar l'anotació en qualsevol moment prement de nou el botó de l'anotació que esteu utilitzant, o prement la tecla &Esc;. </para>
 				<para
->La nova anotació construïda tindrà com a autor l'establert a la <link linkend="configannotations"
+>La nova anotació creada tindrà com a autor l'establert a la <link linkend="configannotations"
 >pàgina <guilabel
 >Anotacions</guilabel
 ></link
@@ -1574,7 +1575,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Eliminar anotacions</title>
 				<para
->Per a eliminar una anotació, primer assegureu-vos que s'ha seleccionat l'eina Navega (<menuchoice
+>Per a eliminar una anotació, primer seleccioneu l'eina Navega (<menuchoice
 ><guimenu
 >Eines</guimenu
 ><guimenuitem
@@ -1585,22 +1586,18 @@ Context menu actions like Rename Bookmarks etc.)
 > o seleccioneu una anotació utilitzant el &BER; i premeu la tecla &Del;. </para>
 				<para
 >En eliminar l'anotació, es tancarà la seva finestra si estava oberta. </para>
-				<note>
-					<para
->Aquesta opció no es pot activar perquè el document no permet eliminar anotacions. </para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Editar anotacions</title>
 				<para
->Per a editar una anotació, primer assegureu-vos que s'ha seleccionat l'eina Navega (<menuchoice
+>Per a editar una anotació, primer seleccioneu l'eina Navega (<menuchoice
 ><guimenu
 >Eines</guimenu
 ><guimenuitem
 >Navega</guimenuitem
 ></menuchoice
->), després feu-hi clic amb el &BDR; i seleccioneu <guimenuitem
+>), després feu clic en una anotació amb el &BDR; i seleccioneu <guimenuitem
 >Propietats</guimenuitem
 >. Apareixerà un diàleg amb la configuració general de l'anotació (com el color i l'opacitat, autor, &etc;) i la configuració específica per a aquest tipus d'anotació. </para>
 				<screenshot>
@@ -1621,11 +1618,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Si feu clic amb el &BER; en una anotació, serà seleccionada. Les nanses de redimensionar apareixeran al rectangle de selecció. Quan el cursor es mou sobre una de les 8 nanses de redimensionar que hi ha a les cantonades o a les vores, la forma del cursor canviarà per a indicar el mode de redimensionar. Feu clic a qualsevol altre lloc de l'anotació per a moure-la. Prement &Esc; o fent clic a una àrea fora de l'anotació es cancel·larà una selecció. </para>
 				<para
->El canvi de mida només és aplicable als tipus d'anotació Nota inclosa, Màquina d'escriure, Segell i El·lipse.</para>
+>El canvi de mida només és disponible als tipus d'anotació Nota inclosa, Màquina d'escriure, Segell i El·lipse.</para>
 
 				<note>
 					<para
->Depenent dels permisos del document (en general amb documents &PDF;), algunes opcions poden restar desactivades. </para>
+>Algunes opcions poden estar desactivades depenent dels permisos del document (en general amb documents &PDF;). </para>
 				</note>
 			</sect2>
 		</sect1>

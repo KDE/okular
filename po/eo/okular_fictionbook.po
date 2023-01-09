@@ -1,16 +1,17 @@
-# translation of okular_fictionbook.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# translation of okular_fictionbook.pot to esperanto
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2010.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_fictionbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2010-01-03 10:58+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +23,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot, Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr, okellogg@users.sourceforge.net"
 
 #: converter.cpp:98
 #, kde-format
@@ -60,40 +61,11 @@ msgid "Invalid XML document: %1"
 msgstr "Nevalida XML dokumento: %1"
 
 #: generator_fb.cpp:26
-#, fuzzy, kde-format
-#| msgid "Fiction Book Backend"
+#, kde-format
 msgid "FictionBook"
-msgstr "FictionBook interno"
+msgstr "FictionBook"
 
 #: generator_fb.cpp:26
-#, fuzzy, kde-format
-#| msgid "Fiction Book Backend"
+#, kde-format
 msgid "FictionBook Backend Configuration"
-msgstr "FictionBook interno"
-
-#~ msgid "Fiction Book Backend"
-#~ msgstr "FictionBook interno"
-
-#~ msgid "A renderer for FictionBook eBooks"
-#~ msgstr "Rigardilo por FictionBook e-libroj"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Creator"
-#~ msgstr "Kreinto"
-
-#~ msgid "Title"
-#~ msgstr "Titolo"
-
-#~ msgid "Author"
-#~ msgstr "Aŭtoro"
-
-#~ msgid "Producer"
-#~ msgstr "Produktisto"
-
-#~ msgid "Created"
-#~ msgstr "Kreita"
+msgstr "Agordo de FictionBook Backend"

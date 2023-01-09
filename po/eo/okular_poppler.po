@@ -1,15 +1,16 @@
 # translation of okular_poppler.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-20 00:44+0000\n"
-"PO-Revision-Date: 2007-11-28 21:02+0100\n"
-"Last-Translator: Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>\n"
+"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -21,18 +22,18 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot, Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr, okellogg@users.sourceforge.net"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enhance thin lines:"
-msgstr ""
+msgstr "Plibonigi maldikajn liniojn:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:924
@@ -72,31 +73,31 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:73
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "Atestila Datumbazo"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:82
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "Defaŭlto:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:89
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "Propra:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:106
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "Disponeblaj Atestiloj"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:114
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "Ŝargi &Subskribojn"
 
 #: generator_pdf.cpp:86
 #, kde-format
@@ -106,7 +107,7 @@ msgstr "PDF opcioj"
 #: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
-msgstr ""
+msgstr "Presi prinotojn"
 
 #: generator_pdf.cpp:89
 #, kde-format
@@ -167,12 +168,10 @@ msgid "Scale mode:"
 msgstr ""
 
 #: generator_pdf.cpp:922
-#, fuzzy, kde-format
-#| msgctxt "PDF v. <version>"
-#| msgid "PDF v. %1"
+#, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr "PDF v. %1"
+msgstr "PDF v. %1.%2"
 
 #: generator_pdf.cpp:922
 #, kde-format
@@ -269,7 +268,7 @@ msgstr ""
 #: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "Restartigo bezonata"
 
 #: pdfsettingswidget.cpp:95
 #, kde-format
@@ -279,41 +278,14 @@ msgstr ""
 #: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format
 msgid "Not Available"
-msgstr ""
+msgstr "Ne Disponebla"
 
 #: pdfsignatureutils.cpp:265
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "Dokumenta pasvorto"
+msgstr "Enigi Pasvorton"
 
 #: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
-
-#~ msgid "© 2005-2008 Albert Astals Cid"
-#~ msgstr "© 2005-2008 Albert Astals Cid"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Unknown"
-#~ msgstr "Nekonata"
-
-#~ msgid "Unknown Date"
-#~ msgstr "Nekonata dato"
-
-#~ msgid "Unknown Encryption"
-#~ msgstr "Nekonata ĉifraĵo"
-
-#~ msgid "Unknown Optimization"
-#~ msgstr "Nekonata optimumigo"
-
-#, fuzzy
-#~| msgid "Please insert the password to read the document:"
-#~ msgid "Please enter the password to read the document:"
-#~ msgstr "Bonvolu tajpi la pasvorton por legi la dokumenton:"
-
-#~ msgid "Incorrect password. Try again:"
-#~ msgstr "Malĝusta pasvorto. Bonvolu reprovi:"
+msgstr "Enigi pasvorton por malfermi %1:"

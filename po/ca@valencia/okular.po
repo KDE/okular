@@ -4645,7 +4645,7 @@ msgstr ""
 #: part/part.cpp:2749
 #, kde-format
 msgid "Filled form contents"
-msgstr "Contingut dels formularis omplits"
+msgstr "Contingut dels formularis emplenats"
 
 #: part/part.cpp:2752
 #, kde-format

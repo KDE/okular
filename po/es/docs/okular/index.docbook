@@ -160,7 +160,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Abrir archivos</title>
 			<para
->Para ver un archivo reconocido por &okular;, seleccione <menuchoice
+>Para abrir un archivo reconocido por &okular;, seleccione <menuchoice
 ><guimenu
 > Archivo</guimenu
 ><guimenuitem
@@ -705,7 +705,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Resaltador amarillo</guilabel
 > y <guilabel
 >Subrayado negro</guilabel
-> para archivos de texto como, &eg;, &PDF;.</para>
+> se pueden usar en archivos que contienen texto (como, por ejemplo, &PDF;).</para>
 		      <para
 >Las anotaciones gráficas como <guilabel
 >Nota emergente</guilabel
@@ -727,15 +727,16 @@ Context menu actions like Rename Bookmarks etc.)
 >Elipse</guilabel
 > y <guilabel
 >Máquina de escribir</guilabel
-> para todos los formatos reconocidos por &okular;.</para>
+>.</para>
+			  <para
+>Las anotaciones gráficas no están limitadas a archivos &PDF;, sino que se pueden emplear con cualquier formato que admita &okular;.</para>
 			<para
->Al utilizar el menú de contexto bien en la vista <guilabel
+>Mediante el uso del menú <guilabel
 >Anotaciones</guilabel
-> de la barra lateral o en la ventana principal, puede abrir una <guilabel
+>, puede añadir una <guilabel
 >Nota emergente</guilabel
-> para cualquier clase de anotación y añadir o editar comentarios.</para>
-			<para
->Las anotaciones no se limitan solamente a archivos PDF, sino que pueden emplearse con cualquier formato que admita &okular;.</para>
+> o cualquier otra clase de anotación para añadir o editar comentarios.</para>
+
 			<para
 >&okular; posee la función de «archivado de documentos». Este es un formato específico de &okular; para almacenar el documento más varios metadatos relacionados (en la actualidad solo anotaciones). Puede guardar un «archivo comprimido de documento» del documento abierto eligiendo <menuchoice
 ><guimenu
@@ -768,21 +769,21 @@ Context menu actions like Rename Bookmarks etc.)
 > para guardarlas en un nuevo archivo. </para>
 				<note>
 					<para
->Debido a restricciones por DRM (por lo general con documentos &PDF;), puede que no sea posible añadir o editar algunas propiedades o suprimir anotaciones. </para>
+>Observe que no se pueden añadir, editar ni eliminar anotaciones en archivos con DRM activada. </para>
 				</note>
 				<note>
 				  <para
->Cualquier acción sobre anotaciones (creación y eliminación de anotaciones, edición de propiedades de anotaciones, reubicación de anotaciones con &Ctrl;+arrastrar y edición del texto contenido en una anotación) se puede <link linkend="edit-undo"
+>Se puede <link linkend="edit-undo"
 >deshacer</link
 > o <link linkend="edit-redo"
 >rehacer</link
-> usando los elementos correspondientes del menú <guimenu
+> cualquier acción de anotación usando las correspondientes opciones del menú <guimenu
 >Editar</guimenu
 >. También se puede deshacer la acción pulsando <keycombo
 >&Ctrl;<keycap
 >Z</keycap
 ></keycombo
->, o volver a hacer la acción deshecha pulsando <keycombo
+> y volver a hacer una acción previamente deshecha pulsando <keycombo
 >&Ctrl;&Shift;<keycap
 >Z</keycap
 ></keycombo
@@ -796,7 +797,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Añadir anotaciones</title>
 				<para
->Para añadir anotaciones documento debe usar el botón <guilabel
+>Para añadir anotaciones al documento puede usar el botón <guilabel
 >Anotaciones rápidas</guilabel
 > de la barra de herramientas principal de &okular; o activar la barra de herramientas de comentarios. Esto se hace seleccionando <menuchoice
 ><guimenu
@@ -810,7 +811,7 @@ Context menu actions like Rename Bookmarks etc.)
 >1</keycap
 > a <keycap
 >9</keycap
->) para comenzar la creación de esa anotación. </para>
+>) para usar esa anotación. </para>
 				<para
 >La barra de herramientas de anotaciones le ayuda a hacer anotaciones con dibujos, formas y mensajes de texto. Puede usar la barra de herramientas de anotaciones para marcar un documento (&eg;, añadir líneas, elipses, polígonos, sellos, resaltados, subrayados, &etc;). La tabla siguiente describe lo que hace exactamente cada botón por omisión de la barra de herramientas de anotaciones. </para>
 				<informaltable>
@@ -842,9 +843,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para resaltar texto del documento con un determinado color de fondo. </para>
+>Resalta texto del documento con un determinado color de fondo. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para situar el principio del fragmento de texto resaltado; arrastre a continuación para resaltarlo. </para>
+>Pulse el botón de la herramienta y a continuación arrastre con el &LMB; para resaltar un fragmento de texto. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo</guilabel
@@ -881,9 +882,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para subrayar algún texto. </para>
+>Subraya texto usando una línea recta. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para situar el principio del fragmento de texto subrayado; arrastre a continuación para subrayarlo. </para>
+>Pulse el botón de la herramienta y a continuación arrastre con el &LMB; para subrayar un fragmento de texto. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo</guilabel
@@ -920,9 +921,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para subrayar texto usando una línea ondulada. </para>
+>Subraya texto usando una línea ondulada. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para situar el principio del fragmento de texto subrayado; arrastre a continuación para subrayarlo. </para>
+>Pulse el botón de la herramienta y a continuación arrastre con el &LMB; para subrayar un fragmento de texto con una línea ondulada. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo</guilabel
@@ -959,9 +960,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para tachar algún texto. </para>
+>Tacha texto. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para situar el principio del fragmento de texto subrayado; arrastre a continuación para subrayarlo. </para>
+>Pulse el botón de la herramienta y a continuación arrastre con el &LMB; para tachar un fragmento de texto con una línea ondulada. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo</guilabel
@@ -998,15 +999,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->La máquina de escribir muestra letras opacas sobre fondo transparente, por lo que es útil para rellenar formularios no interactivos. </para>
+>Añade texto sobre un fondo transparente. Esto es útil para rellenar formularios que carecen de campos de texto integrados que se puedan editar. </para>
 					  <para
->Pulse el botón de la herramienta y luego haga clic con el &LMB; mientras lo mantiene pulsado para situar la esquina superior izquierda de la nota; arrastre a continuación para situar la esquina inferior derecha. Introduzca el texto de la nota y pulse <guibutton
+>Pulse el botón de la herramienta y luego haga clic con el &LMB; donde quiera situar la esquina superior izquierda del texto; arrastre a continuación para situar la esquina inferior derecha. Escriba el texto y pulse <guibutton
 >Aceptar</guibutton
-> para guardar la nota, <guibutton
->Cancelar</guibutton
-> para suprimir la inserción de la nota, o <guibutton
+> para guardarlo, <guibutton
 >Borrar</guibutton
-> para borrar la nota. </para>
+> para borrar el texto y comenzar de nuevo, o <guibutton
+>Cancelar</guibutton
+> para cancelar la operación. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo de letra</guilabel
@@ -1033,15 +1034,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para intercalar una nota. La nota se mostrará intercalada en el texto. </para>
+>Dibuja una nota intercalada. La nota se mostrará intercalada en el texto. </para>
 					  <para
->Pulse el botón de la herramienta y luego haga clic con el &LMB; mientras lo mantiene pulsado para situar la esquina superior izquierda de la nota; arrastre a continuación para situar la esquina inferior derecha. Introduzca el texto de la nota y pulse <guibutton
+>Pulse el botón de la herramienta y luego haga clic con el &LMB; donde quiera situar la esquina superior izquierda de la nota; arrastre a continuación para situar la esquina inferior derecha. Introduzca el texto de la nota y pulse <guibutton
 >Aceptar</guibutton
 > para guardar la nota, <guibutton
->Cancelar</guibutton
-> para suprimir la inserción de la nota, o <guibutton
 >Borrar</guibutton
-> para borrar la nota. </para>
+> para borrar el texto de la nota, o <guibutton
+>Cancelar</guibutton
+> para cancelar la creación de la nota. </para>
 					  <para
 >Es posible definir el <guilabel
 >Color</guilabel
@@ -1074,7 +1075,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para dibujar una nota de varias líneas. La nota se podrá ver haciendo doble clic sobre un icono del documento. </para>
+>Dibuja una nota multilínea. La nota se puede ver haciendo doble clic sobre el icono que se ha creado en el documento. </para>
 					  <para
 >Pulse el botón de la herramienta y luego vuelva a pulsar en el lugar del documento donde quiera añadir la nota emergente. Introduzca el texto de la nota emergente y a continuación pulse el botón <guilabel
 >Cerrar esta nota</guilabel
@@ -1107,9 +1108,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para dibujar líneas a mano alzada. </para>
+>Dibuja líneas a mano alzada. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic con el &LMB; mientras lo mantiene pulsado para situar el inicio de la línea; arrastre a continuación para dibujar la línea. </para>
+>Pulse el botón de la herramienta y a continuación arrastre con el &LMB; para dibujar la línea. </para>
 					  <para
 >Es posible definir el <guilabel
 >Color</guilabel
@@ -1138,9 +1139,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para marcar con una flecha. </para>
+>Dibuja una flecha entre dos puntos. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para situar el punto inicial de la línea; arrastre a continuación para situar el punto final de la línea y vuelva a hacer clic una vez más. </para>
+>Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para situar el punto inicial de la flecha; arrastre a continuación para situar el punto final de la línea y vuelva a hacer clic una vez más. </para>
 					  <para
 >Es posible definir el <guilabel
 >Color</guilabel
@@ -1177,7 +1178,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para marcar con una línea. </para>
+>Dibuja una línea entre dos puntos. </para>
 					  <para
 >Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para situar el punto inicial de la línea; arrastre a continuación para situar el punto final de la línea y vuelva a hacer clic una vez más. </para>
 					  <para
@@ -1216,9 +1217,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para dibujar un rectángulo alrededor de un área determinada. </para>
+>Dibuja un rectángulo alrededor del área escogida. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para posicionar la esquina superior izquierda del rectángulo; arrastre a continuación para situar la esquina inferior derecha de dicho rectángulo. </para>
+>Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para posicionar la esquina superior izquierda del rectángulo; arrastre a continuación para situar la esquina inferior derecha de dicho rectángulo. </para>
 					  <para
 >Es posible definir el <guilabel
 >Tipo</guilabel
@@ -1255,7 +1256,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para dibujar una elipse o un rectángulo alrededor de un área determinada. </para>
+>Dibuja una elipse o un rectángulo alrededor del área escogida. </para>
 					  <para
 >Pulse el botón de la herramienta y haga clic a continuación con el &LMB; mientras lo mantiene pulsado para posicionar la esquina superior izquierda del rectángulo que contendrá la elipse; arrastre a continuación para situar la esquina inferior derecha de dicho rectángulo. </para>
 					  <para
@@ -1294,15 +1295,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para dibujar una figura plana cerrada de tres o más segmentos. La nota correspondiente se puede ver haciendo doble clic dentro del polígono. </para>
+>Dibuja una forma cerrada a partir de tres o más segmentos de línea. La nota correspondiente se puede ver haciendo doble clic dentro del polígono. </para>
 					  <para
->Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para situar el primer vértice del polígono; arrastre para situar el segundo vértice. Repita el proceso para dibujar todo el polígono hasta el primer vértice. Haga doble clic si desea añadir alguna nota al polígono. Introduzca el texto de la nota y pulse el botón <guibutton
+>Pulse el botón de la herramienta y haga clic a continuación con el &LMB; para situar el primer vértice del polígono; arrastre para situar el segundo vértice. Repita el proceso para dibujar el resto del polígono y conectarlo con el primer vértice. Haga doble clic para añadir una nota al polígono. Introduzca el texto de la nota y pulse <guibutton
 >Aceptar</guibutton
 > para guardar la nota, <guibutton
->Cancelar</guibutton
-> para suprimir la inserción de la nota, o <guibutton
 >Borrar</guibutton
-> para borrar la nota. </para>
+> para borrar la nota, o<guibutton
+>Cancelar</guibutton
+> para cancelar la inserción de la nota. </para>
 					  <para
 >Es posible definir el <guilabel
 >Color</guilabel
@@ -1333,7 +1334,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para marcar el texto o la imagen con una determinada forma predefinida. </para>
+>Inserta una forma predefinida en el documento. </para>
 					  <para
 >Pulse el botón de la herramienta para escoger el sello en la lista desplegable y haga clic a continuación con el &LMB; para situar el sello. </para>
 					  <para
@@ -1361,16 +1362,16 @@ Context menu actions like Rename Bookmarks etc.)
 > del diálogo de configuración puede añadir sus propias anotaciones, como sellos personalizados, marcadores de texto o una forma geométrica con color interior para resaltar regiones, etc. </para>
                                   <note>
                                       <para
->Es posible añadir código &latex; al texto de las anotaciones. Por favor, añada <userinput
+>Es posible añadir código &latex; al texto de las anotaciones. Para ello, añada <userinput
 >$$<replaceable
 >código</replaceable
 >$$</userinput
 > al texto de la anotación, donde <replaceable
 >código</replaceable
-> es cualquier ecuación válida de &latex;, y siga las instrucciones que se muestran en la pantalla para hacer que se visualice usando la distribución de &latex; instalada en su sistema. </para>
+> es cualquier ecuación válida de &latex;. Siga las instrucciones que se muestran en la pantalla para mostrarlo usando la distribución de &latex; instalada en su sistema. </para>
                                   </note>
 				<para
->Se pueden configurar las opciones de la herramienta actual usando la propia barra de anotaciones. La tabla siguiente describe exactamente lo que hace el conjunto predeterminado de botones de configuración de la barra de anotaciones. </para>
+>Se puede configurar la herramienta seleccionada usando la propia barra de anotaciones: </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1400,7 +1401,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para escoger la anchura de la lista desplegable. </para>
+>Pulse este botón para escoger la anchura de la lista desplegable. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1424,7 +1425,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para escoger el color del texto o del borde de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
+>Pulse este botón para escoger el color del texto o del borde de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
 >Color personalizado...</guimenuitem
 > para abrir el diálogo de selección de color. </para>
 					</entry>
@@ -1445,7 +1446,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para escoger el color relleno de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
+>Pulse este botón para escoger el color relleno de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
 >Color personalizado...</guimenuitem
 > para abrir el diálogo de selección de color. </para>
 					</entry>
@@ -1466,9 +1467,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para escoger el nivel de opacidad de la anotación en la lista desplegable (<guimenuitem
+>Pulse este botón para escoger la opacidad de la anotación en la lista desplegable (<guimenuitem
 >100%</guimenuitem
-> es para anotaciones opacas). </para>
+> es para crear anotaciones opacas). </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1487,7 +1488,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para abrir el diálogo de selección de tipo de letra. </para>
+>Pulse este botón para abrir el diálogo de selección del tipo de letra. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1506,14 +1507,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Pulse el botón de la herramienta para abrir el diálogo de configuración general de la anotación. </para>
+>Pulse este botón para abrir el diálogo de configuración general de la anotación. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->Existen tres botones de utilidades adicionales en la barra de anotaciones por omisión. </para>
+>Existen tres botones de utilidades adicionales en la barra de anotaciones: </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1601,15 +1602,15 @@ Context menu actions like Rename Bookmarks etc.)
 > en el menú emergente. </para>
 				<note>
 					<para
->Al activar la barra de herramientas de anotaciones le cambiará al modo de navegación. </para>
+>Al activar la barra de herramientas de anotaciones se cambiará automáticamente al modo de navegación. </para>
 				</note>
 				<para
->Puede detener la edición en cualquier momento pulsando de nuevo el botón de la anotación que está creando o la tecla &Esc;. </para>
+>Puede detener la anotación en cualquier momento pulsando de nuevo el botón de la anotación que está usando o la tecla &Esc;. </para>
 				<para
->La nueva anotación que se cree, tendrá como autor al que designe en la <link linkend="configannotations"
+>La nueva anotación que se cree tendrá como autor al indicado en la página <link linkend="configannotations"
 ><guilabel
 >Anotaciones</guilabel
-> página</link
+></link
 > del diálogo de configuración de &okular;. La página <guilabel
 >Anotaciones</guilabel
 > también puede usarse para configurar el contenido de la barra de herramientas de anotaciones. </para>
@@ -1618,7 +1619,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Borrar anotaciones</title>
 				<para
->Para eliminar una anotación, asegúrese primero de que la herramienta de exploración esté seleccionada (<menuchoice
+>Para eliminar una anotación, seleccione primero la herramienta de exploración (<menuchoice
 ><guimenu
 >Herramientas</guimenu
 ><guimenuitem
@@ -1629,22 +1630,18 @@ Context menu actions like Rename Bookmarks etc.)
 >; también puede seleccionar una anotación usando el &LMB; y pulsar la tecla &Del;. </para>
 				<para
 >Al borrar una anotación, su ventana se cerrará si estuviera abierta. </para>
-				<note>
-					<para
->Esta opción no puede ser activada porque el documento no permite borrar anotaciones. </para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Editar anotaciones</title>
 				<para
->Para editar una anotación, asegúrese primero de que la herramienta de exploración esté seleccionada (<menuchoice
+>Para editar una anotación, seleccione primero la herramienta de exploración (<menuchoice
 ><guimenu
 >Herramientas</guimenu
 ><guimenuitem
 >Explorar</guimenuitem
 ></menuchoice
->), pulse sobre ella con el &RMB; y seleccione <guimenuitem
+>), pulse sobre una anotación con el &RMB; y seleccione <guimenuitem
 >Propiedades</guimenuitem
 >. Se mostrará un diálogo con las preferencias generales (como color, opacidad, autor, etc.) y las específicas para ese tipo de anotación. </para>
 				<screenshot>
@@ -1665,11 +1662,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Haga clic con el &LMB; sobre una anotación para seleccionarla. En el rectángulo de selección aparecerán asas para cambiar su tamaño. Al situar el cursor sobre cualquiera de estas 8 asas que hay en las esquinas o en los bordes, su forma cambiará para indicar que está en el modo que permite cambiar el tamaño. Pulse en cualquier lugar de la anotación para moverla. Pulse &Esc; o haga clic fuera de la anotación para cancelar la selección. </para>
 				<para
->El cambio de tamaño solo está disponible para las los tipos de anotaciones «Nota en línea», «Máquina de escribir», «Sello» y «Elipse».</para>
+>El cambio de tamaño solo está disponible para los tipos de anotaciones «Notas en línea», «Máquina de escribir», «Sello» y «Elipse».</para>
 
 				<note>
 					<para
->Algunas opciones pueden esta desactivadas dependiendo de los permisos del documento (por lo general con documentos &PDF;). </para>
+>Algunas opciones pueden estar desactivadas dependiendo de los permisos del documento (por lo general, esto solo afecta a algunos documentos &PDF;). </para>
 				</note>
 			</sect2>
 		</sect1>

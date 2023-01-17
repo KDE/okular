@@ -1505,7 +1505,7 @@ msgstr "Tipus de lletra"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "Configuració de les anotacions"
+msgstr "Configureu les anotacions"
 
 #: part/annotationactionhandler.cpp:701
 #, kde-format
@@ -3580,7 +3580,7 @@ msgstr "&Zoom"
 #: part/pageview.cpp:689
 #, kde-format
 msgid "Area &Selection"
-msgstr "&Selecció d'àrea"
+msgstr "&Seleccioneu un àrea"
 
 #: part/pageview.cpp:696
 #, kde-format
@@ -4614,7 +4614,7 @@ msgstr "Guardar - Avís"
 #: part/part.cpp:2696
 #, kde-format
 msgid "Could not open the temporary file for saving."
-msgstr "No s'ha pogut obrir el fitxer temporal per a guardar."
+msgstr "No s'ha pogut obrir el fitxer temporal per que es guardarà."
 
 #: part/part.cpp:2709
 #, kde-kuit-format
@@ -4683,8 +4683,8 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
-"guardar el document i descartar estos elements."
+"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per "
+"que es guardarà el document i descartar estos elements."
 
 #: part/part.cpp:2777
 #, kde-format
@@ -4696,9 +4696,9 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
-"guardar, però es perdran estos elements, així com l'historial de desfer/"
-"refer."
+"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per "
+"que es guardarà, però es perdran estos elements, així com l'historial de "
+"desfer/refer."
 
 #: part/part.cpp:2779
 #, kde-format

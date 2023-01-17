@@ -52,4 +52,4 @@ msgstr "Mobipocket"
 #: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket Backend Configuration"
-msgstr "Configuració del dorsal de Mobipocket"
+msgstr "Configureu el dorsal de Mobipocket"

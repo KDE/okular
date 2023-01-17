@@ -44,4 +44,4 @@ msgstr "EPub"
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub Backend Configuration"
-msgstr "Configuració del dorsal d'EPub"
+msgstr "Configureu el dorsal d'EPub"

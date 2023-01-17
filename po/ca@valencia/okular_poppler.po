@@ -247,7 +247,7 @@ msgstr "PDF"
 #: generator_pdf.cpp:1593
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr "Configuració del dorsal de PDF"
+msgstr "Configureu el dorsal de PDF"
 
 #: generator_pdf.cpp:2038
 #, kde-format

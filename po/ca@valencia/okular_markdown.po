@@ -53,4 +53,4 @@ msgstr "Markdown"
 #: generator_md.cpp:58
 #, kde-format
 msgid "Markdown Backend Configuration"
-msgstr "Configuració del dorsal de Markdown"
+msgstr "Configureu el dorsal de Markdown"

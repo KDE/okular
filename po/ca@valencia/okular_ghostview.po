@@ -68,7 +68,7 @@ msgstr "Ghostscript"
 #: generator_ghostview.cpp:82
 #, kde-format
 msgid "Ghostscript Backend Configuration"
-msgstr "Configuració del dorsal de Ghostscript"
+msgstr "Configureu el dorsal de Ghostscript"
 
 #: generator_ghostview.cpp:253
 #, kde-format

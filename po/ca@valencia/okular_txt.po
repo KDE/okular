@@ -39,4 +39,4 @@ msgstr "Txt"
 #: generator_txt.cpp:25
 #, kde-format
 msgid "Txt Backend Configuration"
-msgstr "Configuració del dorsal de txt"
+msgstr "Configureu el dorsal de txt"

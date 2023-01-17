@@ -69,4 +69,4 @@ msgstr "FictionBook"
 #: generator_fb.cpp:26
 #, kde-format
 msgid "FictionBook Backend Configuration"
-msgstr "Configuració del dorsal de FictionBook"
+msgstr "Configureu el dorsal de FictionBook"

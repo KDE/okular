@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2023-01-14 22:10+0300\n"
+"PO-Revision-Date: 2023-01-18 22:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4684,22 +4684,22 @@ msgstr ""
 #: part/part.cpp:3116
 #, kde-format
 msgid "Expand whole section"
-msgstr "Tüm bölümü genişlet"
+msgstr "Tüm Bölümü Genişlet"
 
 #: part/part.cpp:3117
 #, kde-format
 msgid "Collapse whole section"
-msgstr "Tüm bölümü daralt"
+msgstr "Tüm Bölümü Daralt"
 
 #: part/part.cpp:3118
 #, kde-format
 msgid "Expand all"
-msgstr "Tümünü genişlet"
+msgstr "Tümünü Genişlet"
 
 #: part/part.cpp:3119
 #, kde-format
 msgid "Collapse all"
-msgstr "Tümünü daralt"
+msgstr "Tümünü Daralt"
 
 #: part/part.cpp:3130
 #, kde-format
@@ -5295,12 +5295,12 @@ msgstr "Yalnızca geçerli sayfa için bilgi notlarını göster"
 #: part/side_reviews.cpp:160
 #, kde-format
 msgid "Expand all elements"
-msgstr "Tüm ögeleri genişlet"
+msgstr "Tüm Ögeleri Genişlet"
 
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr "Tüm ögeleri daralt"
+msgstr "Tüm Ögeleri Daralt"
 
 #: part/signaturepanel.cpp:101
 #, kde-format

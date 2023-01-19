@@ -8,7 +8,8 @@
                   android:name="org.kde.something.OpenFileActivity"
                   android:label="Okular"
                   android:hardwareAccelerated="true"
-                  android:screenOrientation="unspecified">
+                  android:screenOrientation="unspecified"
+                  android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

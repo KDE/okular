@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Giovanni Sora <g.sora@tiscali.it>, 2013, 2014, 2016, 2017, 2020, 2021, 2022.
+# Giovanni Sora <g.sora@tiscali.it>, 2013, 2014, 2016, 2017, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2022-12-20 17:18+0100\n"
+"PO-Revision-Date: 2023-01-24 15:54+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -5576,10 +5576,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Incapace de trovar le componente de Okular: %1"
 
 #: shell/shell.cpp:213
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Monstra barra &lateral"
+msgstr "Barra Lateral"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5628,16 +5627,14 @@ msgid "Undo close tab"
 msgstr "Annulla operation de clauder scheda"
 
 #: shell/shell.cpp:542
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Monstra barra &lateral"
+msgstr "Monstra barra lateral"
 
 #: shell/shell.cpp:548
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Monstra barra &lateral"
+msgstr "Bloca Barra lateral"
 
 #: shell/shell.cpp:645
 #, kde-format

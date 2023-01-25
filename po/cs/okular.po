@@ -3,22 +3,22 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vit@pelcak.org>, 2021, 2022.
+# Vit Pelcak <vit@pelcak.org>, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 02:42+0000\n"
-"PO-Revision-Date: 2022-06-28 14:24+0200\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"PO-Revision-Date: 2023-01-23 10:48+0100\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 22.12.1\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -678,7 +678,7 @@ msgstr "Vložená poznámka"
 #: gui/guiutils.cpp:48
 #, kde-format
 msgid "Straight Line with Comment"
-msgstr ""
+msgstr "Rovná čára s komentářem"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1326
@@ -731,7 +731,7 @@ msgstr "Vlnovka"
 #: gui/guiutils.cpp:65
 #, kde-format
 msgid "Underline with Comment"
-msgstr ""
+msgstr "Podtržení s komentářem"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:673
 #: part/pageviewannotator.cpp:1330
@@ -742,7 +742,7 @@ msgstr "Podtržené"
 #: gui/guiutils.cpp:68
 #, kde-format
 msgid "Strike Out with Comment"
-msgstr ""
+msgstr "Přeškrtnout s komentářem"
 
 #: gui/guiutils.cpp:68
 #, kde-format
@@ -752,7 +752,7 @@ msgstr "Přeškrtnuté"
 #: gui/guiutils.cpp:73
 #, kde-format
 msgid "Stamp with Comment"
-msgstr ""
+msgstr "Razítko s komentářem"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1324
@@ -763,7 +763,7 @@ msgstr "Razítko"
 #: gui/guiutils.cpp:76
 #, kde-format
 msgid "Freehand Line with Comment"
-msgstr ""
+msgstr "Čára od ruky s komentářem"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1312
@@ -833,12 +833,12 @@ msgstr "Nelze otevřít \"%1\" pro zápis. Soubor nebyl uložen."
 #: gui/signatureguiutils.cpp:42
 #, kde-format
 msgid "The signature is cryptographically valid."
-msgstr ""
+msgstr "Podpis je kryptograficky platný."
 
 #: gui/signatureguiutils.cpp:44
 #, kde-format
 msgid "The signature is cryptographically invalid."
-msgstr ""
+msgstr "Podpis je kryptograficky neplatný."
 
 #: gui/signatureguiutils.cpp:46
 #, kde-format
@@ -863,17 +863,17 @@ msgstr ""
 #: gui/signatureguiutils.cpp:60
 #, kde-format
 msgid "Certificate is Trusted."
-msgstr ""
+msgstr "Certifikát je důvěryhodný."
 
 #: gui/signatureguiutils.cpp:62
 #, kde-format
 msgid "Certificate issuer isn't Trusted."
-msgstr ""
+msgstr "Vydavatel certifikátu není důvěryhodný."
 
 #: gui/signatureguiutils.cpp:64
 #, kde-format
 msgid "Certificate issuer is unknown."
-msgstr ""
+msgstr "Vydavatel certifikátu je neznámý."
 
 #: gui/signatureguiutils.cpp:66
 #, kde-format
@@ -1038,7 +1038,7 @@ msgstr ""
 #: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document is digitally signed."
-msgstr ""
+msgstr "Tento dokument je digitálně podepsán."
 
 #: gui/signatureguiutils.cpp:210
 #, kde-format
@@ -1056,7 +1056,7 @@ msgstr ""
 #: gui/signaturemodel.cpp:141
 #, kde-format
 msgid "Unsigned Signature %1"
-msgstr ""
+msgstr "Nepodepsaný podpis %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
 #, kde-format
@@ -1066,7 +1066,7 @@ msgstr "Pole: %1 na straně %2"
 #: gui/signaturemodel.cpp:152
 #, kde-format
 msgid "Rev. %1: Signed By %2"
-msgstr ""
+msgstr "Rev. %1: Podepsal(a) %2"
 
 #: gui/signaturemodel.cpp:158
 #, kde-format
@@ -1641,13 +1641,13 @@ msgstr "Změněno: %1"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
-msgstr ""
+msgstr "Vyberte vlastní symbol razítka ze souboru"
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
-msgstr ""
+msgstr "Vyberte vlastní symbol razítka"
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
@@ -1851,6 +1851,8 @@ msgid ""
 "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are not "
 "visible in PDF readers other than Okular.</warning>"
 msgstr ""
+"<warning>experimentální vlastnost.<nl/>Razítka vložená do dokumentu PDF "
+"nejsou viditelná v jiných čtečkách souborů PDF kromě Okularu.</warning>"
 
 #: part/annotationwidgets.cpp:469
 #, kde-format
@@ -3397,7 +3399,7 @@ msgstr "Podep&sat..."
 #: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
 #, kde-format
 msgid "Signature Properties"
-msgstr ""
+msgstr "Vlastnosti podpisu"
 
 #: part/ktreeviewsearchline.cpp:283
 #, kde-format
@@ -3583,7 +3585,7 @@ msgstr "Nástroje výběru"
 #: part/pageview.cpp:750
 #, kde-format
 msgid "Digitally &Sign..."
-msgstr ""
+msgstr "Digitálně podep&sat..."
 
 #: part/pageview.cpp:756
 #, kde-format
@@ -3866,13 +3868,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
-msgstr ""
+msgstr "Začít znovu"
 
 #: part/pageviewannotator.cpp:365
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
-msgstr ""
+msgstr "Podepsat"
 
 #: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
 #, kde-format
@@ -3980,6 +3982,8 @@ msgid ""
 "Stamps inserted in PDF documents are not visible in PDF readers other than "
 "Okular"
 msgstr ""
+"Razítka vložená do dokumentu PDF nejsou viditelná v jiných čtečkách souborů "
+"PDF kromě Okularu"
 
 #: part/pageviewannotator.cpp:1484
 #, kde-format
@@ -4189,7 +4193,7 @@ msgstr "Číslo strany"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr ""
+msgstr "Nastavit režimy barvy..."
 
 #: part/part.cpp:887
 #, kde-format
@@ -4209,7 +4213,7 @@ msgstr "Ukázat panel st&ránek"
 #: part/part.cpp:915
 #, kde-format
 msgid "Show &Signatures Panel"
-msgstr ""
+msgstr "Zobrazit panel &s podpisy"
 
 #: part/part.cpp:925
 #, kde-format
@@ -4422,12 +4426,12 @@ msgstr ""
 #: part/part.cpp:1882
 #, kde-format
 msgid "Continue Closing"
-msgstr ""
+msgstr "Pokračovat v zavření"
 
 #: part/part.cpp:1883
 #, kde-format
 msgid "Abort Closing"
-msgstr ""
+msgstr "Přerušit zavření"
 
 #: part/part.cpp:1890
 #, kde-format
@@ -4525,7 +4529,7 @@ msgstr "Nepodporovaná přípona"
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Vyberte nový název"
 
 #: part/part.cpp:2661
 #, kde-format
@@ -4577,7 +4581,7 @@ msgstr "Nelze uložit soubor do '%1'. Pokuste se jej uložit jinam."
 #: part/part.cpp:2749
 #, kde-format
 msgid "Filled form contents"
-msgstr ""
+msgstr "Vyplněno z obsahu"
 
 #: part/part.cpp:2752
 #, kde-format
@@ -5370,7 +5374,7 @@ msgstr ""
 #: part/signaturepropertiesdialog.cpp:79
 #, kde-format
 msgid "View Signed Version..."
-msgstr ""
+msgstr "Zobrazit podepsanou verzi..."
 
 #: part/signaturepropertiesdialog.cpp:86
 #, kde-format

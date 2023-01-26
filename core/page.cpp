@@ -391,7 +391,7 @@ void PagePrivate::rotateAt(Rotation orientation)
     deleteTextSelections();
 
     if (((int)m_orientation + (int)m_rotation) % 2 != ((int)m_orientation + (int)orientation) % 2) {
-        qSwap(m_width, m_height);
+        std::swap(m_width, m_height);
     }
 
     Rotation oldRotation = m_rotation;
@@ -451,7 +451,7 @@ void PagePrivate::changeSize(const PageSize &size)
     m_width = size.width();
     m_height = size.height();
     if (m_rotation % 2) {
-        qSwap(m_width, m_height);
+        std::swap(m_width, m_height);
     }
 }
 

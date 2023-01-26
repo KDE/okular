@@ -201,7 +201,7 @@ void TilesManager::setPixmap(const QPixmap *pixmap, const NormalizedRect &rect, 
             int w = width();
             int h = height();
             if (d->rotation % 2) {
-                qSwap(w, h);
+                std::swap(w, h);
                 pixmapSize.transpose();
             }
 

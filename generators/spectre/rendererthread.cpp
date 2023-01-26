@@ -64,7 +64,7 @@ void GSRendererThread::run()
             int wantedHeight = req.request->height();
 
             if (req.orientation % 2) {
-                qSwap(wantedWidth, wantedHeight);
+                std::swap(wantedWidth, wantedHeight);
             }
 
             spectre_page_render(req.spectrePage, m_renderContext, &data, &row_length);

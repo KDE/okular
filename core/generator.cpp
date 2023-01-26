@@ -676,7 +676,7 @@ PixmapRequestPrivate *PixmapRequestPrivate::get(const PixmapRequest *req)
 
 void PixmapRequestPrivate::swap()
 {
-    qSwap(mWidth, mHeight);
+    std::swap(mWidth, mHeight);
 }
 
 class Okular::ExportFormatPrivate : public QSharedData

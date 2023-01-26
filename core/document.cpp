@@ -5230,7 +5230,7 @@ QPrinter::Orientation Document::orientation() const
         width = currentPage->width();
         height = currentPage->height();
         if (currentPage->orientation() == Okular::Rotation90 || currentPage->orientation() == Okular::Rotation270) {
-            qSwap(width, height);
+            std::swap(width, height);
         }
         if (width > height) {
             landscape++;

@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2023-01-13 17:42+0300\n"
+"PO-Revision-Date: 2023-01-28 10:45+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -2765,6 +2765,7 @@ msgstr "Открывать по умолчанию в режиме «рулон�
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Переносить курсор при его выходе за край экрана в режиме перетаскивания"
 
 #: part/dlggeneral.cpp:190
 #, kde-format

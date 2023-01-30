@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 02:42+0000\n"
-"PO-Revision-Date: 2023-01-28 11:35+0100\n"
+"PO-Revision-Date: 2023-01-29 10:48+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -990,7 +990,7 @@ msgstr "გამოყენება მითითებული არა�
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: gui/signatureguiutils.cpp:163
 #, kde-format
@@ -1134,7 +1134,7 @@ msgstr "სიგანე %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1285,7 +1285,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Color"
-msgstr ""
+msgstr "ფერი"
 
 #: part/annotationactionhandler.cpp:433
 #, kde-format
@@ -1508,7 +1508,7 @@ msgstr "მხტუნარა შეტყობინების &გახ
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
 #, kde-format
 msgid "&Delete"
-msgstr ""
+msgstr "&წაშლა"
 
 #: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:800
 #: part/propertiesdialog.cpp:54
@@ -1888,7 +1888,7 @@ msgstr "დახურული ისარი"
 #: part/annotationwidgets.cpp:532
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "არაფერი"
 
 #: part/annotationwidgets.cpp:533
 #, kde-format
@@ -2100,7 +2100,7 @@ msgstr "ყველა დოკუმენტისთვის ჩვენ�
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
-msgstr ""
+msgstr "ძებნა..."
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2192,7 +2192,7 @@ msgstr "SHA-256 ანაბეჭდი"
 #: part/certificateviewer.cpp:179
 #, kde-format
 msgid "Details"
-msgstr ""
+msgstr "დეტალები"
 
 #: part/certificateviewer.cpp:180
 #, kde-format
@@ -2719,7 +2719,7 @@ msgstr "სვეტების მიმოხილვა:"
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: part/dlggeneral.cpp:198
 #, kde-format
@@ -3193,7 +3193,7 @@ msgstr " px"
 #, kde-format
 msgctxt "Suffix for the opacity level, eg '80 %'"
 msgid " %"
-msgstr ""
+msgstr " %"
 
 #: part/editdrawingtooldialog.cpp:78
 #, kde-format
@@ -3209,7 +3209,7 @@ msgstr "ხატვის ხელსაწყოს ჩასწორებ�
 #, kde-format
 msgctxt "Unknown date"
 msgid "Unknown"
-msgstr ""
+msgstr "უცნობი"
 
 #: part/embeddedfilesdialog.cpp:45
 #, kde-format
@@ -3221,13 +3221,13 @@ msgstr "ჩაშენებული ფაილები"
 #, kde-format
 msgctxt "@action:button"
 msgid "View"
-msgstr ""
+msgstr "ნახვა"
 
 #: part/embeddedfilesdialog.cpp:67
 #, kde-format
 msgctxt "@title:column"
 msgid "Name"
-msgstr ""
+msgstr "სახელი"
 
 #: part/embeddedfilesdialog.cpp:68
 #, kde-format
@@ -3239,7 +3239,7 @@ msgstr "აღწერა"
 #, kde-format
 msgctxt "@title:column"
 msgid "Size"
-msgstr ""
+msgstr "ზომა"
 
 #: part/embeddedfilesdialog.cpp:70
 #, kde-format
@@ -3257,7 +3257,7 @@ msgstr "შეიცვალა"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
-msgstr ""
+msgstr "&შენახვა, როგორც..."
 
 #: part/embeddedfilesdialog.cpp:152
 #, kde-format
@@ -3384,12 +3384,12 @@ msgstr "ფენები"
 #, kde-format
 msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
-msgstr ""
+msgstr "დან"
 
 #: part/pageview.cpp:541
 #, kde-format
 msgid "Zoom"
-msgstr ""
+msgstr "გადიდება"
 
 #: part/pageview.cpp:553
 #, kde-format
@@ -3506,7 +3506,7 @@ msgstr "&არჩევა"
 #: part/pageview.cpp:669
 #, kde-format
 msgid "&Zoom"
-msgstr ""
+msgstr "გადიდება"
 
 #: part/pageview.cpp:689
 #, kde-format
@@ -3949,7 +3949,7 @@ msgstr ""
 #: part/part-viewermode.rc:6 part/part.rc:5
 #, kde-format
 msgid "&File"
-msgstr ""
+msgstr "&ფაილი"
 
 #. i18n: ectx: Menu (settings)
 #: part/part-viewermode.rc:10 part/part.rc:90
@@ -4123,7 +4123,7 @@ msgstr ""
 #: part/part.cpp:835
 #, kde-format
 msgid "Close &Find Bar"
-msgstr ""
+msgstr "ძებნის &ზოლის დახურვა"
 
 #: part/part.cpp:840
 #, kde-format
@@ -4442,7 +4442,7 @@ msgstr "%1 (%2)"
 #: part/part.cpp:2610 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
-msgstr ""
+msgstr "შენახვა, როგორც"
 
 #: part/part.cpp:2627
 #, kde-format
@@ -5023,7 +5023,7 @@ msgstr ""
 #, kde-format
 msgctxt "Unknown font type"
 msgid "Unknown"
-msgstr ""
+msgstr "უცნობი"
 
 #: part/propertiesdialog.cpp:331
 #, kde-format
@@ -5535,7 +5535,7 @@ msgstr "ახლახანს გახსნილი დოკუმენ�
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "მოგესალმებათ Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
@@ -5562,4 +5562,4 @@ msgstr "ყველას დავიწყება"
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "საწყისი ეკრანის დამალვა"

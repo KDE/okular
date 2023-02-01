@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="52">
+<gui name="okular_part" version="53">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -100,7 +100,6 @@
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
   <Action name="show_leftpanel"/>
-  <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_selecttools"/>
   <Action name="annotation_favorites"/>
@@ -110,11 +109,13 @@
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
-  <Separator/>
+  <Action name="view_render_mode"/>
   <Action name="hamburger_menu"/>
 </ToolBar>
 <ActionProperties scheme="Default">
   <Action priority="0" name="show_leftpanel"/>
+  <Action priority="0" name="view_zoom_out"/>
+  <Action priority="0" name="view_zoom_in"/>
 </ActionProperties>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>

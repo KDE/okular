@@ -5,13 +5,13 @@
 # obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-09 00:43+0000\n"
-"PO-Revision-Date: 2022-12-16 21:36+0300\n"
+"PO-Revision-Date: 2023-01-31 21:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -303,10 +303,10 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 "<qt><p><em>kpsewhich</em> çalıştırılırken sorun oluştu. Sonuç olarak bazı "
-"yazıtipi dosyaları konumlandırılamadı ve belgeniz okunamaz olabilir.<br/"
-">Olası sebep: <em>kpsewhich</em> programı sistemde yüklü olmayabilir veya "
-"geçerli arama yolunda olmayabilir.</p><p><small><b>YOL:</b> %1</small></"
-"p><p><small>%2</small></p></qt>"
+"yazıtipi dosyaları bulunamadı ve belgeniz okunamaz olabilir.<br/>Olası "
+"sebep: <em>kpsewhich</em> programı sistemde kurulu olmayabilir veya geçerli "
+"arama yolunda olmayabilir.</p><p><small><b>YOL:</b> %1</small></p><p><small>"
+"%2</small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format

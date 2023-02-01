@@ -93,6 +93,8 @@ QTextDocument *Converter::convertOpenFile()
 {
     rewind(m_markdownFile);
 
+#if defined(MKD_NOLINKS)
+    // on discount 2 MKD_NOLINKS is a define
     MMIOT *markdownHandle = mkd_in(m_markdownFile, 0);
 
     int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR;
@@ -103,6 +105,21 @@ QTextDocument *Converter::convertOpenFile()
         Q_EMIT error(i18n("Failed to compile the Markdown document."), -1);
         return nullptr;
     }
+#else
+    // on discount 3 MKD_NOLINKS is an enum value
+    MMIOT *markdownHandle = mkd_in(m_markdownFile, nullptr);
+
+    mkd_flag_t *flags = mkd_flags();
+    mkd_set_flag_bitmap(flags, MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR);
+    if (!m_isFancyPantsEnabled) {
+        mkd_set_flag_num(flags, MKD_NOPANTS);
+    }
+    if (!mkd_compile(markdownHandle, flags)) {
+        Q_EMIT error(i18n("Failed to compile the Markdown document."), -1);
+        return nullptr;
+    }
+    mkd_free_flags(flags);
+#endif
 
     char *htmlDocument;
     const int size = mkd_document(markdownHandle, &htmlDocument);

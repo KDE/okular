@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 02:42+0000\n"
-"PO-Revision-Date: 2023-01-23 10:48+0100\n"
+"PO-Revision-Date: 2023-02-03 13:47+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -635,7 +635,7 @@ msgstr "Veřejný klíč"
 #: gui/certificatemodel.cpp:53
 #, kde-format
 msgid "Key Usage"
-msgstr ""
+msgstr "Použití klávesy"
 
 #: gui/certificatemodel.cpp:72
 #, kde-format
@@ -689,7 +689,7 @@ msgstr "Rovná čára"
 #: gui/guiutils.cpp:50
 #, kde-format
 msgid "Polygon with Comment"
-msgstr ""
+msgstr "Mnohoúhelník bez komentáře"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1318
@@ -700,7 +700,7 @@ msgstr "Mnohoúhelník"
 #: gui/guiutils.cpp:54
 #, kde-format
 msgid "Geometry with Comment"
-msgstr ""
+msgstr "Geometrie s komentářem"
 
 #: gui/guiutils.cpp:54
 #, kde-format
@@ -710,7 +710,7 @@ msgstr "Geometrie"
 #: gui/guiutils.cpp:59
 #, kde-format
 msgid "Highlight with Comment"
-msgstr ""
+msgstr "Zvýraznění s komentářem"
 
 #: gui/guiutils.cpp:59 part/annotationwidgets.cpp:671
 #, kde-format
@@ -720,7 +720,7 @@ msgstr "Zvýraznění"
 #: gui/guiutils.cpp:62
 #, kde-format
 msgid "Squiggle with Comment"
-msgstr ""
+msgstr "Vlnovka s komentářem"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:672
 #: part/pageviewannotator.cpp:1322
@@ -848,17 +848,17 @@ msgstr ""
 #: gui/signatureguiutils.cpp:48
 #, kde-format
 msgid "The signature CMS/PKCS7 structure is malformed."
-msgstr ""
+msgstr "Struktura podpisu CMS/PKCS7 je chybná."
 
 #: gui/signatureguiutils.cpp:50
 #, kde-format
 msgid "The requested signature is not present in the document."
-msgstr ""
+msgstr "Vyžadovaný podpis v dokumentu není přítomen."
 
 #: gui/signatureguiutils.cpp:52
 #, kde-format
 msgid "The signature could not be verified."
-msgstr ""
+msgstr "Podpis nemohl být ověřen."
 
 #: gui/signatureguiutils.cpp:60
 #, kde-format
@@ -888,7 +888,7 @@ msgstr "Certifikát vypršel."
 #: gui/signatureguiutils.cpp:70
 #, kde-format
 msgid "Certificate has not yet been verified."
-msgstr ""
+msgstr "Certifikát ještě nebyl nelze ověřen."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
@@ -998,7 +998,7 @@ msgstr "Pouze šifrovat"
 #: gui/signatureguiutils.cpp:142
 #, kde-format
 msgid "No Usage Specified"
-msgstr ""
+msgstr "Nebylo zadáno žádné použití"
 
 #: gui/signatureguiutils.cpp:149
 #, kde-format
@@ -1009,7 +1009,7 @@ msgstr ", "
 #: gui/signatureguiutils.cpp:163
 #, kde-format
 msgid "The document has not been modified since it was signed."
-msgstr ""
+msgstr "Dokument nebyl od podepsání změněn."
 
 #: gui/signatureguiutils.cpp:166
 #, kde-format
@@ -1023,17 +1023,17 @@ msgstr ""
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
-msgstr ""
+msgstr "Dokument byl změněn způsobem, který nebyl podepisujícím povolen."
 
 #: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid "The document integrity verification could not be completed."
-msgstr ""
+msgstr "Ověření Požadovanou operaci není možné dokončit"
 
 #: gui/signatureguiutils.cpp:205
 #, kde-format
 msgid "This document has unsigned signature fields."
-msgstr ""
+msgstr "Tento dokument má nepodepsaná pole s podpisem."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
@@ -1045,6 +1045,7 @@ msgstr "Tento dokument je digitálně podepsán."
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr ""
+"tento dokument je digitálně podepsán. Od posledního podpisu došlo ke změnám."
 
 #: gui/signatureguiutils.cpp:213
 #, kde-format
@@ -1052,6 +1053,7 @@ msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
 msgstr ""
+"Tento dokument je digitálně podepsán. Některé z podpisů nešlo pořádně ověřit."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
@@ -2155,7 +2157,7 @@ msgstr "Odstranit všechny záložky tohoto dokumentu"
 #: part/certificateviewer.cpp:121
 #, kde-format
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "Prohlížeč certifikátů"
 
 #: part/certificateviewer.cpp:124
 #, kde-format
@@ -2200,7 +2202,7 @@ msgstr "Platnost"
 #: part/certificateviewer.cpp:152
 #, kde-format
 msgid "Fingerprints"
-msgstr ""
+msgstr "Otisky"
 
 #: part/certificateviewer.cpp:160
 #, kde-format
@@ -2230,12 +2232,12 @@ msgstr ""
 #: part/certificateviewer.cpp:233
 #, kde-format
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "Soubor s certifikátem (*.cer)"
 
 #: part/certificateviewer.cpp:236
 #, kde-format
 msgid "Could not export the certificate"
-msgstr ""
+msgstr "Certifikát nelze exportovat"
 
 #: part/colormodemenu.cpp:17
 #, kde-format
@@ -2253,7 +2255,7 @@ msgstr "Změnit barvy"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
-msgstr ""
+msgstr "&Normální barvy"
 
 #: part/colormodemenu.cpp:44
 #, kde-format
@@ -2483,7 +2485,7 @@ msgstr "Kontrast:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr ""
+msgstr "Nástroj pro hlasovou syntézu:"
 
 #: part/dlgaccessibility.cpp:165
 #, kde-format
@@ -2523,6 +2525,8 @@ msgid ""
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
+"<b>Poznámka:</b> Tot nastavení je použito pouze pro poznámky. Informace je "
+"uložena v dokumentu s poznámkami, a taky bude vysílána spolu s dokumentem."
 
 #: part/dlgannotations.cpp:48
 #, kde-format
@@ -2706,7 +2710,7 @@ msgstr "Otevírat nové soubory v kartách"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr ""
+msgstr "Přepnout na existující kartu pokud je soubor již otevřen"
 
 #: part/dlggeneral.cpp:137
 #, kde-format
@@ -2736,7 +2740,7 @@ msgstr "Směr čtení zprava doleva"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr ""
+msgstr "Otevřít v průběžném režimu jako výchozí"
 
 #: part/dlggeneral.cpp:173
 #, kde-format
@@ -2846,7 +2850,7 @@ msgstr "Agresivní"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Greedy"
-msgstr "Nenasytné"
+msgstr "Nenasytná"
 
 #: part/dlgperformance.cpp:40
 #, kde-format
@@ -2918,7 +2922,7 @@ msgstr ""
 #, kde-format
 msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 msgid "every "
-msgstr "každých"
+msgstr "každých "
 
 #: part/dlgpresentation.cpp:38
 #, kde-format
@@ -2933,7 +2937,7 @@ msgstr[2] " sekund"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr ""
+msgstr "Pokračovat automaticky:"
 
 #: part/dlgpresentation.cpp:53
 #, kde-format
@@ -3011,7 +3015,7 @@ msgstr "Zobrazovat souhrnnou stránku"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Instant (Never use animations)"
-msgstr ""
+msgstr "Okamžitě (nepoužívat animace)"
 
 #: part/dlgpresentation.cpp:101
 #, kde-format
@@ -3137,7 +3141,7 @@ msgstr "Výchozí přechod:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
 msgid "Preferred screen:"
-msgstr ""
+msgstr "Preferovaná obrazovka:"
 
 #: part/dlgpresentation.cpp:137
 #, kde-format
@@ -3145,7 +3149,7 @@ msgctxt ""
 "@label Config dialog, presentation page, heading line for drawing tool "
 "manager"
 msgid "<h3>Drawing Tools</h3>"
-msgstr ""
+msgstr "<h3>Nástroje pro kreslení</h3>"
 
 #: part/dlgpresentation.cpp:171
 #, kde-format
@@ -4198,7 +4202,7 @@ msgstr "Nastavit režimy barvy..."
 #: part/part.cpp:887
 #, kde-format
 msgid "Select All Text on Current Page"
-msgstr ""
+msgstr "Vybrat všechen text na současné stránce"
 
 #: part/part.cpp:900
 #, kde-format
@@ -4208,7 +4212,7 @@ msgstr "Zobraz&it postranní panel"
 #: part/part.cpp:909
 #, kde-format
 msgid "Show &Page Bar"
-msgstr "Ukázat panel st&ránek"
+msgstr "Zobrazit panel st&ránek"
 
 #: part/part.cpp:915
 #, kde-format
@@ -5308,12 +5312,12 @@ msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
-msgstr ""
+msgstr "%1_podepsal.%2"
 
 #: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
+msgstr "Uložit podepsaný soubor jako"
 
 #: part/signaturepropertiesdialog.cpp:29
 #, kde-format
@@ -5328,12 +5332,12 @@ msgstr "Stav platnosti"
 #: part/signaturepropertiesdialog.cpp:52
 #, kde-format
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Platnost podpisu:"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Změny dokumentu:"
 
 #: part/signaturepropertiesdialog.cpp:56
 #, kde-format
@@ -5369,7 +5373,7 @@ msgstr "Verze dokumentu"
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "Revize dokumentu %1 z %2"
 
 #: part/signaturepropertiesdialog.cpp:79
 #, kde-format
@@ -5608,7 +5612,7 @@ msgstr ""
 #: shell/shell.cpp:654
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr ""
+msgstr "Varovat mě při pokusu o uzavření vícero karet"
 
 #: shell/welcomescreen.cpp:64
 #, kde-format

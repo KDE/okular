@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2023-01-03 08:32+0100\n"
+"PO-Revision-Date: 2023-02-03 16:17+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1486,7 +1486,7 @@ msgstr "ხაზის სიგანე"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
-msgstr "_გაუმჭვირვალობა"
+msgstr "გაუმჭვირვალობა"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3127
 #, kde-format
@@ -1673,12 +1673,12 @@ msgstr "&გაუმჭვირვალობა:"
 #: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Icon:"
-msgstr "_ხატულა:"
+msgstr "ხატულა:"
 
 #: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Comment"
-msgstr "კომე_ნტარი"
+msgstr "კომენტარი"
 
 #: part/annotationwidgets.cpp:367
 #, kde-format
@@ -2925,7 +2925,7 @@ msgstr ""
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Always visible"
-msgstr ""
+msgstr "ყოველთვის ხილული"
 
 #: part/dlgpresentation.cpp:78
 #, kde-format
@@ -4086,7 +4086,7 @@ msgstr ""
 #: part/part.cpp:817
 #, kde-format
 msgid "Close &Find Bar"
-msgstr ""
+msgstr "ძებნის &ზოლის დახურვა"
 
 #: part/part.cpp:822
 #, kde-format
@@ -5125,7 +5125,7 @@ msgstr ""
 #: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Author"
-msgstr ""
+msgstr "ავტორით დაჯგუფება"
 
 #: part/side_reviews.cpp:150
 #, kde-format
@@ -5513,7 +5513,7 @@ msgstr "ახლახანს გახსნილი დოკუმენ�
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "მოგესალმებათ Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
@@ -5540,4 +5540,4 @@ msgstr "ყველას დავიწყება"
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "საწყისი ეკრანის დამალვა"

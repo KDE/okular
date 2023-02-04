@@ -3,22 +3,22 @@
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2013, 2014, 2017, 2019.
 # Lukáš Tinkl <lukas@kde.org>, 2012.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012.
-# Vit Pelcak <vit@pelcak.org>, 2021.
+# Vit Pelcak <vit@pelcak.org>, 2021, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-20 00:44+0000\n"
-"PO-Revision-Date: 2021-06-18 12:42+0200\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"PO-Revision-Date: 2023-02-03 13:46+0100\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.04.2\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -62,6 +62,8 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Povolením této volby umožní okularu kontaktovat servery třetích stran pro "
+"kontrolu zda nebyly použité certifikáty od jejich vytvoření odvolány."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:66
@@ -69,6 +71,8 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Zkontrolovat odvolání digitálních podpisů certifikátů pomocí serverů třetích "
+"stran."
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:73
@@ -98,7 +102,7 @@ msgstr "Dostupné certifikáty"
 #: conf/pdfsettingswidget.ui:114
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "Načíst podp&isy"
 
 #: generator_pdf.cpp:86
 #, kde-format
@@ -158,12 +162,12 @@ msgstr "Přizpůsobit plné stránce"
 #: generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "Žádné. Vytisknout v původní velikosti."
 
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "Režim škálování pro vytištěné stránky"
 
 #: generator_pdf.cpp:105
 #, kde-format
@@ -213,6 +217,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Podepsal: %1\n"
+"\n"
+"Datum: %2"
 
 #: generator_pdf.cpp:1556
 #, kde-format
@@ -245,7 +252,7 @@ msgstr "Nastavení podpůrné vrstvy PDF"
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
-msgstr ""
+msgstr "V dokumentu byly nalezeny chyby. Okular jej nemusí zobrazit správně."
 
 #: pdfsettingswidget.cpp:43
 #, kde-format
@@ -270,6 +277,8 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Používáte knihovnu Poppler sestavenou bez podpory NSS.\n"
+"Přidání digitálních podpisů z tohoto důvodu není možné"
 
 #: pdfsettingswidget.cpp:95
 #, kde-format
@@ -279,7 +288,7 @@ msgstr "Vyžadován restart"
 #: pdfsettingswidget.cpp:95
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr ""
+msgstr "Pro změnu nastavení adresáře NSS potřebujete restartovat Okular"
 
 #: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format

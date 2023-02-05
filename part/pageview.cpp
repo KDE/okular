@@ -2195,6 +2195,17 @@ void PageView::tabletEvent(QTabletEvent *e)
     }
 }
 
+void PageView::continuousZoom(double delta)
+{
+    if (delta) {
+        d->zoomFactor *= (1.0 + (delta / 500.0));
+        d->blockPixmapsRequest = true;
+        updateZoom(ZoomRefreshCurrent);
+        d->blockPixmapsRequest = false;
+        viewport()->update();
+    }
+}
+
 void PageView::mouseMoveEvent(QMouseEvent *e)
 {
     // For some reason in Qt 5.11.2 (no idea when this started) all wheel
@@ -2227,13 +2238,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
         }
 
         // update zoom level, perform zoom and redraw
-        if (deltaY) {
-            d->zoomFactor *= (1.0 + ((double)deltaY / 500.0));
-            d->blockPixmapsRequest = true;
-            updateZoom(ZoomRefreshCurrent);
-            d->blockPixmapsRequest = false;
-            viewport()->update();
-        }
+        continuousZoom(deltaY);
         return;
     }
 

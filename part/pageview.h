@@ -156,6 +156,7 @@ protected:
 
     void paintEvent(QPaintEvent *e) override;
     void tabletEvent(QTabletEvent *e) override;
+    void continuousZoom(double delta);
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;

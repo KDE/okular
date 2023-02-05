@@ -174,7 +174,6 @@ public:
     int lastSourceLocationViewportPageNumber;
     double lastSourceLocationViewportNormalizedX;
     double lastSourceLocationViewportNormalizedY;
-    int controlWheelAccumulatedDelta;
 
     // for everything except PgUp/PgDn and scroll to arbitrary locations
     const int baseShortScrollDuration = 100;
@@ -335,7 +334,6 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->lastSourceLocationViewportPageNumber = -1;
     d->lastSourceLocationViewportNormalizedX = 0.0;
     d->lastSourceLocationViewportNormalizedY = 0.0;
-    d->controlWheelAccumulatedDelta = 0;
     d->currentShortScrollDuration = d->baseShortScrollDuration;
     d->currentLongScrollDuration = d->baseLongScrollDuration;
     d->scrollIncrement = 0;
@@ -2153,6 +2151,10 @@ void PageView::keyReleaseEvent(QKeyEvent *e)
         d->scrollIncrement = 0;
         d->autoScrollTimer->stop();
     }
+
+    if (e->key() == Qt::Key_Control) {
+        continuousZoomEnd();
+    }
 }
 
 void PageView::inputMethodEvent(QInputMethodEvent *e)
@@ -2206,14 +2208,17 @@ void PageView::continuousZoom(double delta)
     }
 }
 
+void PageView::continuousZoomEnd()
+{
+    // request pixmaps since it was disabled during drag
+    slotRequestVisiblePixmaps();
+
+    // the cursor may now be over a link.. update it
+    updateCursor();
+}
+
 void PageView::mouseMoveEvent(QMouseEvent *e)
 {
-    // For some reason in Qt 5.11.2 (no idea when this started) all wheel
-    // events are followed by mouse move events (without changing position),
-    // so we only actually reset the controlWheelAccumulatedDelta if there is a mouse movement
-    if (e->globalPos() != d->previousMouseMovePos) {
-        d->controlWheelAccumulatedDelta = 0;
-    }
     d->previousMouseMovePos = e->globalPos();
 
     // don't perform any mouse action when no document is shown
@@ -2337,8 +2342,6 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
 void PageView::mousePressEvent(QMouseEvent *e)
 {
-    d->controlWheelAccumulatedDelta = 0;
-
     // don't perform any mouse action when no document is shown
     if (d->items.isEmpty()) {
         return;
@@ -2536,8 +2539,6 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
 void PageView::mouseReleaseEvent(QMouseEvent *e)
 {
-    d->controlWheelAccumulatedDelta = 0;
-
     // stop the drag scrolling
     d->dragScrollTimer.stop();
 
@@ -2564,10 +2565,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
     // handle mode independent mid bottom zoom
     if (e->button() == Qt::MiddleButton) {
-        // request pixmaps since it was disabled during drag
-        slotRequestVisiblePixmaps();
-        // the cursor may now be over a link.. update it
-        updateCursor(eventPos);
+        continuousZoomEnd();
         return;
     }
 
@@ -3187,8 +3185,6 @@ void PageView::guessTableDividers()
 
 void PageView::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    d->controlWheelAccumulatedDelta = 0;
-
     if (e->button() == Qt::LeftButton) {
         const QPoint eventPos = contentAreaPoint(e->pos());
         PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
@@ -3220,6 +3216,7 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
 
             const QRect &itemRect = pageItem->uncroppedGeometry();
             Okular::Annotation *ann = nullptr;
+
             const Okular::ObjectRect *orect = pageItem->page()->objectRect(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
             if (orect) {
                 ann = ((Okular::AnnotationObjectRect *)orect)->annotation();
@@ -3241,17 +3238,8 @@ void PageView::wheelEvent(QWheelEvent *e)
     int delta = e->angleDelta().y(), vScroll = verticalScrollBar()->value();
     e->accept();
     if ((e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier) {
-        d->controlWheelAccumulatedDelta += delta;
-        if (d->controlWheelAccumulatedDelta <= -QWheelEvent::DefaultDeltasPerStep) {
-            slotZoomOut();
-            d->controlWheelAccumulatedDelta = 0;
-        } else if (d->controlWheelAccumulatedDelta >= QWheelEvent::DefaultDeltasPerStep) {
-            slotZoomIn();
-            d->controlWheelAccumulatedDelta = 0;
-        }
+        continuousZoom(delta);
     } else {
-        d->controlWheelAccumulatedDelta = 0;
-
         if (delta <= -QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->maximum()) {
             // go to next page
             if ((int)d->document->currentPage() < d->items.count() - 1) {

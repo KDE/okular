@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-23 00:44+0000\n"
-"PO-Revision-Date: 2023-01-12 10:31\n"
+"PO-Revision-Date: 2023-02-07 11:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2711,7 +2711,7 @@ msgstr "默认以连续模式打开"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "使用浏览工具时，光标在屏幕边缘自动换行"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -5469,7 +5469,7 @@ msgstr "无法找到 Okular 组件︰ %1"
 #: shell/shell.cpp:213
 #, kde-format
 msgid "Sidebar"
-msgstr ""
+msgstr "侧边栏"
 
 #: shell/shell.cpp:242
 #, kde-format
@@ -5516,12 +5516,12 @@ msgstr "撤销关闭标签"
 #: shell/shell.cpp:542
 #, kde-format
 msgid "Show Sidebar"
-msgstr ""
+msgstr "显示侧边栏"
 
 #: shell/shell.cpp:548
 #, kde-format
 msgid "Lock Sidebar"
-msgstr ""
+msgstr "锁定侧边栏"
 
 #: shell/shell.cpp:645
 #, kde-format

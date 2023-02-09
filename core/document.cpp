@@ -1394,7 +1394,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // If the requested area is above 4*screenSize pixels, and we're not rendering most of the page,  switch on the tile manager
-        else if (!tilesManager && m_generator->hasFeature(Generator::TiledRendering) && (long)r->width() * (long)r->height() > 4L * screenSize && normalizedArea < 0.75 && normalizedArea != 0) {
+        else if (!tilesManager && m_generator->hasFeature(Generator::TiledRendering) && (long)r->width() * (long)r->height() > 4L * screenSize && normalizedArea < 0.75) {
             // if the image is too big. start using tiles
             qCDebug(OkularCoreDebug).nospace() << "Start using tiles on page " << r->pageNumber() << " (" << r->width() << "x" << r->height() << " px);";
 

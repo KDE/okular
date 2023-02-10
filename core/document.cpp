@@ -164,7 +164,10 @@ struct RunningSearch {
 #define OKULAR_HISTORY_SAVEDSTEPS 10
 
 // how often to run slotTimedMemoryCheck
-const int kMemCheckTime = 2000; // in msec
+constexpr int kMemCheckTime = 2000; // in msec
+// getFreeMemory is called every two seconds when checking to see if the system is low on memory. If this timeout was left at kMemCheckTime, half of these checks are useless (when okular is idle) since the cache is used when the cache is
+// <=2 seconds old. This means that after the system is out of memory, up to 4 seconds (instead of 2) could go by before okular starts to free memory.
+constexpr int kFreeMemCacheTimeout = kMemCheckTime - 100;
 
 /***** Document ******/
 
@@ -474,11 +477,11 @@ qulonglong DocumentPrivate::getTotalMemory()
 
 qulonglong DocumentPrivate::getFreeMemory(qulonglong *freeSwap)
 {
-    static QTime lastUpdate = QTime::currentTime().addSecs(-3);
+    static QDeadlineTimer cacheTimer(0);
     static qulonglong cachedValue = 0;
     static qulonglong cachedFreeSwap = 0;
 
-    if (qAbs(lastUpdate.msecsTo(QTime::currentTime())) <= kMemCheckTime - 100) {
+    if (!cacheTimer.hasExpired()) {
         if (freeSwap) {
             *freeSwap = cachedFreeSwap;
         }
@@ -537,7 +540,7 @@ qulonglong DocumentPrivate::getFreeMemory(qulonglong *freeSwap)
         return 0;
     }
 
-    lastUpdate = QTime::currentTime();
+    cacheTimer.setRemainingTime(kFreeMemCacheTimeout);
 
     if (freeSwap) {
         *freeSwap = (cachedFreeSwap = (Q_UINT64_C(1024) * values[3]));
@@ -553,7 +556,7 @@ qulonglong DocumentPrivate::getFreeMemory(qulonglong *freeSwap)
     // sum up inactive, cached and free memory
     if (sysctlbyname("vm.stats.vm.v_cache_count", &cache, &cachelen, NULL, 0) == 0 && sysctlbyname("vm.stats.vm.v_inactive_count", &inact, &inactlen, NULL, 0) == 0 &&
         sysctlbyname("vm.stats.vm.v_free_count", &free, &freelen, NULL, 0) == 0 && sysctlbyname("vm.stats.vm.v_page_size", &psize, &psizelen, NULL, 0) == 0) {
-        lastUpdate = QTime::currentTime();
+        cacheTimer.setRemainingTime(kFreeMemCacheTimeout);
         return (cachedValue = (cache + inact + free) * psize);
     } else {
         return 0;
@@ -563,7 +566,7 @@ qulonglong DocumentPrivate::getFreeMemory(qulonglong *freeSwap)
     stat.dwLength = sizeof(stat);
     GlobalMemoryStatusEx(&stat);
 
-    lastUpdate = QTime::currentTime();
+    cacheTimer.setRemainingTime(kFreeMemCacheTimeout);
 
     if (freeSwap)
         *freeSwap = (cachedFreeSwap = stat.ullAvailPageFile);

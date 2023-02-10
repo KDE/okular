@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2022-02-18 11:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -5506,7 +5506,7 @@ msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 "A megnyitandó dokumentumok. '-' megadása esetén a standard bemenetről olvas."
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5514,61 +5514,61 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --unique kapcsolóval"
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --presentation "
 "kapcsolóval"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --print kapcsolóval"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --page kapcsolóval"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --find kapcsolóval"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nem található az Okular objektum: %1"
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "Már fut egy egyedi Okular példány. Ez a példány nem lesz egyedi."
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nem található az Okular objektum."
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5577,7 +5577,7 @@ msgstr ""
 "Kattintson ide fájl megnyitásához\n"
 "Kattintson ide és tartsa lenyomva a gombot nemrég használt fájl megnyitásához"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5585,64 +5585,64 @@ msgstr ""
 "<b>Kattintson ide</b> fájl megnyitásához vagy <b>kattintson ide és tartsa "
 "lenyomva a gombot</b> nemrég használt fájl kiválasztásához"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "Következő lap"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "Előző lap"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr "Lap bezárásának visszavonása"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Show Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All files (*)"
 msgstr "Minden fájl (*)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Minden támogatott fájl (%1)"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "Dokumentum megnyitása"
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr "Bezárás megerősítése"
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, kde-format
 msgid "Close Tabs"
 msgstr "Lapok bezárása"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 lap bezárására készül. Biztosan szeretné folytatni?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Figyelmeztetés több lap bezárása előtt"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2022-11-18 18:51+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -5543,7 +5543,7 @@ msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 "Dokumentai, kuriuos atverti. Skaitymui iš „stdin“ nurodykite brūkšnelį „-“."
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5555,53 +5555,53 @@ msgstr ""
 "unikumas taip pat nėra palaikomas nustatant redaktoriaus komandą komandų "
 "eilutėje.\n"
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --unique "
 "perjungiklį"
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --"
 "presentation perjungiklį"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --print "
 "perjungiklį"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --page "
 "perjungiklį"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --find "
 "perjungiklį"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nepavyko rasti Okular komponento: %1"
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5609,12 +5609,12 @@ msgid ""
 msgstr ""
 "Jau veikia unikalus Okular egzempliorius. Šis egzempliorius nebus unikalus."
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nepavyko rasti Okular komponento."
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5623,7 +5623,7 @@ msgstr ""
 "Spustelėkite norėdami atverti failą\n"
 "Spustelėkite ir laikykite norėdami atverti paskiausią failą"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5631,64 +5631,64 @@ msgstr ""
 "<b>Spustelėkite</b> norėdami atverti failą, arba <b>spustelėkite ir "
 "laikykite</b> norėdami pasirinkti paskiausiai naudotą failą"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "Kita kortelė"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "Ankstesnė kortelė"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr "Atšaukti kortelės užvėrimą"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Show Sidebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All files (*)"
 msgstr "Visi failai (*)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Visi palaikomi failai (%1)"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "Atverti dokumentą"
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr "Patvirtinti užvėrimą"
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, kde-format
 msgid "Close Tabs"
 msgstr "Užverti korteles"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Ketinate užverti %1 korteles. Ar tikrai norite tęsti?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Įspėti mane, kai aš bandau užverti kelias korteles"

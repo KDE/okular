@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -5799,7 +5799,7 @@ msgstr ""
 "Dokment, dat opmaakt warrn schall. Bruuk \"-\", wenn Du ut de Standardingaav "
 "lesen wullt."
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5807,21 +5807,21 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Fehler: Mit de Optschoon \"--unique\" lett sik nich mehr as een Dokment "
 "opmaken"
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Fehler: Mit de Optschoon „--presentation“ lett sik nich mehr as een Dokment "
 "opmaken"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, fuzzy, kde-format
 #| msgid ""
 #| "Error: Can't open more than one document with the --presentation switch"
@@ -5830,7 +5830,7 @@ msgstr ""
 "Fehler: Mit de Optschoon „--presentation“ lett sik nich mehr as een Dokment "
 "opmaken"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, fuzzy, kde-format
 #| msgid "Error: Can't open more than one document with the --unique switch"
 msgid "Error: Can't open more than one document with the --page switch"
@@ -5838,7 +5838,7 @@ msgstr ""
 "Fehler: Mit de Optschoon \"--unique\" lett sik nich mehr as een Dokment "
 "opmaken"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, fuzzy, kde-format
 #| msgid ""
 #| "Error: Can't open more than one document with the --presentation switch"
@@ -5847,19 +5847,19 @@ msgstr ""
 "Fehler: Mit de Optschoon „--presentation“ lett sik nich mehr as een Dokment "
 "opmaken"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "Okular-Komponent lett sik nich finnen."
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "&Siedenbalken wiesen"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5868,12 +5868,12 @@ msgstr ""
 "Dat gifft al en eenkennig (\"unique\") Utgaav vun Okular. Disse Utgaav warrt "
 "nich eenkennig."
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular-Komponent lett sik nich finnen."
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5883,7 +5883,7 @@ msgstr ""
 "Klick, un holl de Muustast daal, wenn Du en annerlest bruukt Datei opmaken "
 "wullt"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5891,61 +5891,61 @@ msgstr ""
 "<b>Klick</b>, wenn Du en Datei opmaken wullt oder <b>Klick, un holl de "
 "Muustast daal</b>, wenn Du en annerlest bruukt Datei opmaken wullt"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "Nakamen Paneel"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "Verleden Paneel"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Show Sidebar"
 msgstr "&Siedenbalken wiesen"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "&Siedenbalken wiesen"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|All Dateien"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "Dokment opmaken"
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Tomaken"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5953,7 +5953,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Dat gifft al en Datei mit den Naam \"%1\". Wullt Du ehr redig överschrieven?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

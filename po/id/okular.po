@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -5515,7 +5515,7 @@ msgstr "menetapkan perintah editor eksternal"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokumen kebuka. Tentukan '-' untuk membaca dari stdin."
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5526,46 +5526,46 @@ msgstr ""
 "berjalan. Nonaktifkan tab dan coba lagi. Harap dicatat, unik itu juga tidak "
 "didukung saat mengatur perintah editor di baris perintah.\n"
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --unique switch"
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --presentation "
 "switch"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --print switch"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --page switch"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Galat: Tidak bisa membuka lebih dari satu dokumen dengan --find switch"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Tak bisa menemukan komponen Okular: %1"
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, kde-format
 msgid "Sidebar"
 msgstr "Bilah Samping"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5574,12 +5574,12 @@ msgstr ""
 "Sudah ada instansi Okular unik yang berjalan. Instansi ini tidak akan "
 "menjadi yang unik."
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Tak mampu menemukan komponen Okular."
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5588,7 +5588,7 @@ msgstr ""
 "Klik untuk membuka file\n"
 "Klik dan tahan untuk membuka file saat ini"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5596,62 +5596,62 @@ msgstr ""
 "<b>Klik</b> untuk membuka sebuah file atau <b>Klik dan tahan</b> untuk "
 "memilih sebuah file yang terkini"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "Tab Selanjutnya"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "Tab Sebelumnya"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr "Urung penutupan tab"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, kde-format
 msgid "Show Sidebar"
 msgstr "Tampilkan Bilah Samping"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Kunci Bilah Samping"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All files (*)"
 msgstr "Semua file (*)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Semua file didukung (%1)"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "Buka Dokumen"
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr "Konfirmasi Penutupan"
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tutup Tab"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Anda akan menutup %1 tab. Apakah Anda yakin ingin melanjutkan?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ingatkan saya ketika saya berusaha menutup beberapa tab"

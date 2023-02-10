@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2022-09-17 18:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -33,7 +33,7 @@ msgstr "Temuri.doghonadze@gmail.com"
 msgid "Failed to open the document"
 msgstr "დოკუმენტის გახსნის შეცდომა"
 
-#: converter.cpp:103
+#: converter.cpp:105 converter.cpp:118
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Markdown-ის დოკუმენტის კომპილაციის შეცდომა."

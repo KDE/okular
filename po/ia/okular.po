@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2023-01-24 15:54+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -5527,7 +5527,7 @@ msgstr "fixa le commando de editor externe"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Documento de aperir. Specifica '-' pro leger ex stdin."
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5539,48 +5539,48 @@ msgstr ""
 "tu nota,  que unic es anque non supportate quando fixa le commando de editor "
 "al linea de commando.\n"
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Error: Il non pote aperir plus que un documento con le commutator --unique"
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Error: Il non pote aperir plus que un documento con le commutator --"
 "presentation"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Error: Il non pote aperir plus que un documento con le commutator --print"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Error: Il non pote aperir plus que un documento con le commutator --page"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Error: Il non pote aperir plus que un documento con le commutator --find"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Incapace de trovar le componente de Okular: %1"
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, kde-format
 msgid "Sidebar"
 msgstr "Barra Lateral"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5589,12 +5589,12 @@ msgstr ""
 "Il ha ja un unic instantia de Okular executante. Iste instantia non essera "
 "le unic."
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Incapace de trovar le componente de Okular."
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5603,7 +5603,7 @@ msgstr ""
 "Pulsa pro aperir un file\n"
 "Pulsa a mentene pro aperir un file recente"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5611,62 +5611,62 @@ msgstr ""
 "<b>Pulsa</b> pro aperir un file o <b>Pulsa e mentene</b> pro seliger un file "
 "recente"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "Proxime scheda"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "Previe scheda"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr "Annulla operation de clauder scheda"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, kde-format
 msgid "Show Sidebar"
 msgstr "Monstra barra lateral"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloca Barra lateral"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All files (*)"
 msgstr "Omne files (*)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Omne files supportate (%1)"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "Aperi documento "
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirma Clausura"
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, kde-format
 msgid "Close Tabs"
 msgstr "Claude schedas"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Tu es per clauder %1 schedas. Tu es secur que tu vole continuar?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Adverte  me quando on cerca clauder multiple schedas"

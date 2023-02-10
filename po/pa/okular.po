@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-23 00:44+0000\n"
+"POT-Creation-Date: 2023-02-10 00:56+0000\n"
 "PO-Revision-Date: 2021-12-31 11:00-0800\n"
 "Last-Translator: A S Alam <aalam@satluj.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -5486,7 +5486,7 @@ msgstr ""
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "ਖੋਲ੍ਹਣ ਲਈ ਡੌਕੂਮੈਂਟ। stdin ਤੋਂ '-' ਨਾਲ ਦਿਉ।"
 
-#: shell/okular_main.cpp:37 shell/okular_main.cpp:134
+#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5494,59 +5494,59 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:150
+#: shell/okular_main.cpp:170
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 
-#: shell/okular_main.cpp:156
+#: shell/okular_main.cpp:176
 #, fuzzy, kde-format
 #| msgid "Can't open more than one document in the unique Okular instance."
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: shell/okular_main.cpp:162
+#: shell/okular_main.cpp:182
 #, fuzzy, kde-format
 #| msgid "Can't open more than one document in the unique Okular instance."
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: shell/okular_main.cpp:168
+#: shell/okular_main.cpp:188
 #, fuzzy, kde-format
 #| msgid "Can't open more than one document in the unique Okular instance."
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: shell/okular_main.cpp:174
+#: shell/okular_main.cpp:194
 #, fuzzy, kde-format
 #| msgid "Can't open more than one document in the unique Okular instance."
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "ਇੱਕੋ ਓਕੁਲਾਰ ਚੱਲਣ ਦੀ ਚੋਣ ਦੇ ਦੌਰਾਨ ਇੱਕ ਤੋਂ ਵੱਧ ਡੌਕੂਮੈਂਟਾਂ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: shell/shell.cpp:172
+#: shell/shell.cpp:173
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "ਓਕੁਲਾਰ ਭਾਗ ਲੱਭਣ ਲਈ ਅਸਫ਼ਲ ਹੈ: %1"
 
-#: shell/shell.cpp:213
+#: shell/shell.cpp:214
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ(&i)"
 
-#: shell/shell.cpp:242
+#: shell/shell.cpp:243
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "ਪਹਿਲਾਂ ਹੀ ਇੱਕਲਾ ਓਕੁਲਾਰ ਚੱਲ ਰਿਹਾ ਹੈ। ਇਹ ਚੱਲਣ ਨਾਲ ਇੱਕਲਾ (ਵਿਲੱਖਣ) ਨਹੀਂ ਰਹੇਗਾ।"
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:266
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "ਓਕੁਲਾਰ ਭਾਗ ਲੱਭਣ ਲਈ ਅਸਫ਼ਲ ਹੈ।"
 
-#: shell/shell.cpp:507
+#: shell/shell.cpp:508
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5555,73 +5555,73 @@ msgstr ""
 "ਇੱਕ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਕਲਿੱਕ ਕਰੋ\n"
 "ਤਾਜ਼ਾ ਖੋਲ੍ਹੀ ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹਣ ਲਈ ਕਲਿੱਕ ਕਰਨ ਉਪਰੰਤ ਫੜੀ ਰੱਖੋ"
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:509
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
 "ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰੋ</b> ਜਾਂ ਤਾਜ਼ੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰਕੇ ਫੜੀ ਰੱਖੋ</b>"
 
-#: shell/shell.cpp:521
+#: shell/shell.cpp:522
 #, kde-format
 msgid "Next Tab"
 msgstr "ਟੈਬ ਅੱਗੇ"
 
-#: shell/shell.cpp:527
+#: shell/shell.cpp:528
 #, kde-format
 msgid "Previous Tab"
 msgstr "ਟੈਬ ਪਿੱਛੇ"
 
-#: shell/shell.cpp:533
+#: shell/shell.cpp:534
 #, kde-format
 msgid "Undo close tab"
 msgstr "ਬੰਦ ਟੈਬ ਵਾਪਿਸ ਲਵੋ"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Show Sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ(&i)"
 
-#: shell/shell.cpp:548
+#: shell/shell.cpp:549
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ(&i)"
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:646
 #, kde-format
 msgid "All files (*)"
 msgstr "ਸਭ ਫਾਇਲਾਂ (*)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:647
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ਸਾਰੀਆਂ ਸਹਾਇਕ ਫਾਇਲਾਂ (%1)"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:651
 #, kde-format
 msgid "Open Document"
 msgstr "ਡੌਕੂਮੈਂਟ ਖੋਲ੍ਹੋ"
 
-#: shell/shell.cpp:754
+#: shell/shell.cpp:761
 #, kde-format
 msgid "Confirm Close"
 msgstr "ਬੰਦ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ"
 
-#: shell/shell.cpp:758
+#: shell/shell.cpp:765
 #, kde-format
 msgid "Close Tabs"
 msgstr "ਟੈਬਾਂ ਬੰਦ ਕਰੋ"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:772
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "ਫਾਇਲ ਨਾਂ \"%1\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:774
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "ਜਦੋਂ ਮੈਂ ਕਈ ਟੈਬਾਂ ਬੰਦ ਕਰਾਂ ਤਾਂ ਮੈਨੂੰ ਸਾਵਧਾਨ ਕਰੋ"

@@ -4540,7 +4540,7 @@ msgstr "Extensió no admesa"
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr "Trieu un nom nou"
+msgstr "Seleccioneu un nom nou"
 
 #: part/part.cpp:2644
 #, kde-format

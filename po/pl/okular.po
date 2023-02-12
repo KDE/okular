@@ -16,14 +16,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-10 00:56+0000\n"
-"PO-Revision-Date: 2023-02-04 09:04+0100\n"
+"PO-Revision-Date: 2023-02-11 08:40+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -5572,10 +5572,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Nie można znaleźć składnika Okulara: %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "&Pokaż pasek boczny"
+msgstr "Pasek boczny"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5624,16 +5623,14 @@ msgid "Undo close tab"
 msgstr "Cofnij zamknięcie karty"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "&Pokaż pasek boczny"
+msgstr "Pokaż pasek boczny"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "&Pokaż pasek boczny"
+msgstr "Zablokuj pasek boczny"
 
 #: shell/shell.cpp:646
 #, kde-format

@@ -9,3 +9,4 @@
 14-fix-misc-compiler-warnings.diff
 15-prevent-leaks-and-segfault.diff
 16-use-windows-ansi-api-path-find.diff
+17-call-va_end-before-return.diff

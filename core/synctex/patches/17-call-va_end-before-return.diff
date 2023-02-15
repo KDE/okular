@@ -1,0 +1,26 @@
+Call va_end() before return
+
+Fixes va_list 'arg' was opened but not closed by va_end(). (CWE-664)
+
+Author: Willyanto Willyanto <willyanto39@protonmail.com>
+
+Index: core/synctex/synctex_parser_utils.c
+===================================================================
+--- core/synctex/synctex_parser_utils.c
++++ core/synctex/synctex_parser_utils.c
+@@ -94,6 +94,7 @@ int _synctex_log(int level, const char *prompt, const char *reason, ...)
+             result = _vsnprintf(buff, buffersize - 1, reason, arg);
+         }
+         if (-1 == result) {
++            va_end(arg);
+             // could not make the buffer big enough or simply could not write to it
+             free(buff);
+             return -1;
+@@ -357,6 +358,7 @@ char *_synctex_merge_strings(const char *first, ...)
+     do {
+         size_t len = strlen(temp);
+         if (UINT_MAX - len < size) {
++            va_end(arg);
+             _synctex_error("!  _synctex_merge_strings: Capacity exceeded.");
+             return NULL;
+         }

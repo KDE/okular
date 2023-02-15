@@ -30,6 +30,7 @@ public:
         , m_tmp(nullptr)
         , m_showControls(false)
         , m_autoPlay(false)
+        , m_startPaused(false)
         , m_showPosterImage(false)
     {
     }
@@ -43,6 +44,7 @@ public:
     QImage m_posterImage;
     bool m_showControls : 1;
     bool m_autoPlay : 1;
+    bool m_startPaused : 1;
     bool m_showPosterImage : 1;
 };
 
@@ -143,6 +145,16 @@ void Movie::setAutoPlay(bool autoPlay)
 bool Movie::autoPlay() const
 {
     return d->m_autoPlay;
+}
+
+void Movie::setStartPaused(bool startPaused)
+{
+    d->m_startPaused = startPaused;
+}
+
+bool Movie::startPaused() const
+{
+    return d->m_startPaused;
 }
 
 void Movie::setShowPosterImage(bool show)

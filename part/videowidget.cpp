@@ -325,6 +325,9 @@ void VideoWidget::pageEntered()
     if (d->movie->autoPlay()) {
         show();
         QMetaObject::invokeMethod(this, "play", Qt::QueuedConnection);
+        if (d->movie->startPaused()) {
+            QMetaObject::invokeMethod(this, "pause", Qt::QueuedConnection);
+        }
     }
 }
 

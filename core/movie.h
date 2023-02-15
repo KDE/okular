@@ -118,6 +118,16 @@ public:
     bool autoPlay() const;
 
     /**
+     * Sets whether to start the movie in paused mode
+     */
+    void setStartPaused(bool startPaused);
+
+    /**
+     * Whether to start the movie in paused mode
+     */
+    bool startPaused() const;
+
+    /**
      * Sets whether to show a poster image.
      *
      * @since 4.10

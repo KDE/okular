@@ -218,6 +218,7 @@ Okular::Movie *createMovieFromPopplerMovie(const Poppler::MovieObject *popplerMo
     movie->setShowControls(popplerMovie->showControls());
     movie->setPlayMode((Okular::Movie::PlayMode)popplerMovie->playMode());
     movie->setAutoPlay(false); // will be triggered by external MovieAnnotation
+    movie->setStartPaused(false);
     movie->setShowPosterImage(popplerMovie->showPosterImage());
     movie->setPosterImage(popplerMovie->posterImage());
     return movie;
@@ -240,7 +241,13 @@ Okular::Movie *createMovieFromPopplerScreen(const Poppler::LinkRendition *popple
         movie->setPlayMode(Okular::Movie::PlayLimited);
         movie->setPlayRepetitions(rendition->repeatCount());
     }
-    movie->setAutoPlay(rendition->autoPlay());
+    /**
+     * Warning: Confusing flag name from PDF spec. Described as:
+     * > If true, the media should automatically play when activated.
+     * > If false, the media should be initially paused when activated
+     * To set autoplay, page actions are used.
+     */
+    movie->setStartPaused(!rendition->autoPlay());
     return movie;
 }
 

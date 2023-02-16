@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2023-02-07 11:02\n"
+"PO-Revision-Date: 2023-02-15 11:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -40,7 +40,7 @@ msgstr "无法打开文档：%1"
 #: document.cpp:36
 #, kde-format
 msgid "Document is not a valid ZIP archive"
-msgstr "文档不是有效的 ZIP 存档"
+msgstr "文档不是有效的 ZIP 压缩包"
 
 #: document.cpp:42
 #, kde-format

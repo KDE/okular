@@ -163,7 +163,7 @@ Comment[ug]=ھەر خىل تىپتىكى پۈتۈكلەرنى كۆرىدىغان
 Comment[uk]=Програма для перегляду документів різних типів
 Comment[vi]=Trình xem các kiểu tài liệu khác nhau
 Comment[x-test]=xxViewer for various types of documentsxx
-Comment[zh_CN]=可以查看多种文档的工具
+Comment[zh_CN]=支持查看多种文档类型
 Comment[zh_TW]=多種型態文件的檢視器
 
 TryExec=okularkirigami
@@ -228,6 +228,6 @@ X-KDE-Keywords[tr]=PDF, Taşınabilir Belge Biçimi
 X-KDE-Keywords[uk]=PDF,Portable Document Format,пдф
 X-KDE-Keywords[vi]=PDF, Định dạng tài liệu linh động
 X-KDE-Keywords[x-test]=xxPDFxx,xx Portable Document Formatxx
-X-KDE-Keywords[zh_CN]=PDF, Portable Document Format,开放文档格式
+X-KDE-Keywords[zh_CN]=PDF, Portable Document Format, 可移植文档格式
 X-KDE-Keywords[zh_TW]=PDF, Portable Document Format
 X-KDE-AliasFor=org.kde.okular.kirigami.desktop

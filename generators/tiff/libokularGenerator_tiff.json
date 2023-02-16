@@ -138,7 +138,7 @@
         "Description[uk]": "Програма для TIFF",
         "Description[vi]": "Một hậu phương TIFF",
         "Description[x-test]": "xxA TIFF backendxx",
-        "Description[zh_CN]": "TIFF 后端",
+        "Description[zh_CN]": "TIFF 后端程序",
         "Description[zh_TW]": "TIFF 後端介面",
         "Id": "okular_tiff",
         "License": "GPL",
@@ -188,7 +188,7 @@
         "Name[uk]": "Модуль TIFF",
         "Name[vi]": "Hậu phương TIFF",
         "Name[x-test]": "xxTIFF Backendxx",
-        "Name[zh_CN]": "TIFF 后端",
+        "Name[zh_CN]": "TIFF 后端程序",
         "Name[zh_TW]": "TIFF 後端介面",
         "Version": "0.2.4"
     },

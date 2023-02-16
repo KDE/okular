@@ -137,7 +137,7 @@
         "Description[uk]": "Модуль тексту",
         "Description[vi]": "Hậu phương Txt",
         "Description[x-test]": "xxTxt backendxx",
-        "Description[zh_CN]": "纯文本后端",
+        "Description[zh_CN]": "纯文本后端程序",
         "Description[zh_TW]": "Txt 後端介面",
         "Id": "okular_txt",
         "License": "GPL",
@@ -187,7 +187,7 @@
         "Name[uk]": "Модуль тексту",
         "Name[vi]": "Hậu phương Txt",
         "Name[x-test]": "xxTxt Backendxx",
-        "Name[zh_CN]": "纯文本后端",
+        "Name[zh_CN]": "纯文本后端程序",
         "Name[zh_TW]": "Txt 後端介面",
         "Version": "0.1"
     },

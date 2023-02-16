@@ -233,7 +233,7 @@
         "Description[uk]": "Проста програма для зображень",
         "Description[vi]": "Một hậu phương ảnh đơn giản",
         "Description[x-test]": "xxA simple image backendxx",
-        "Description[zh_CN]": "简单的图像后端",
+        "Description[zh_CN]": "简易图像后端程序",
         "Description[zh_TW]": "簡易的圖片後端介面",
         "Id": "okular_kimgio",
         "License": "GPL",
@@ -311,7 +311,7 @@
         "Name[uk]": "Модуль зображень",
         "Name[vi]": "Hậu phương ảnh",
         "Name[x-test]": "xxImage Backendxx",
-        "Name[zh_CN]": "图像后端",
+        "Name[zh_CN]": "图像后端程序",
         "Name[zh_TW]": "圖片後端介面",
         "Version": "0.1.2"
     },

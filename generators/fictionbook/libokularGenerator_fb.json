@@ -135,7 +135,7 @@
         "Description[uk]": "Програма для відображення електронної белетристики",
         "Description[vi]": "Một trình kết xuất cho các sách điện tử FictionBook",
         "Description[x-test]": "xxA renderer for FictionBook eBooksxx",
-        "Description[zh_CN]": "FictionBook 电子书渲染器",
+        "Description[zh_CN]": "FictionBook 电子书的渲染程序",
         "Description[zh_TW]": "FictionBook 電子書成像器",
         "Id": "okular_fictionbook",
         "License": "GPL",
@@ -183,7 +183,7 @@
         "Name[uk]": "Модуль FictionBook",
         "Name[vi]": "Hậu phương FictionBook",
         "Name[x-test]": "xxFiction Book Backendxx",
-        "Name[zh_CN]": "Fiction Book 后端",
+        "Name[zh_CN]": "Fiction Book 后端程序",
         "Name[zh_TW]": "Fiction Book 後端介面",
         "Version": "0.1.5"
     },

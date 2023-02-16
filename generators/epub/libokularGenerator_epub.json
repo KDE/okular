@@ -136,7 +136,7 @@
         "Description[uk]": "Сервер EPub",
         "Description[vi]": "Một hậu phương EPub",
         "Description[x-test]": "xxAn EPub backendxx",
-        "Description[zh_CN]": "EPub 后端",
+        "Description[zh_CN]": "EPub 的后端程序",
         "Description[zh_TW]": "EPub 後端介面",
         "Id": "okular_epub",
         "License": "GPL",
@@ -187,7 +187,7 @@
         "Name[uk]": "Модуль EPub",
         "Name[vi]": "Hậu phương EPub",
         "Name[x-test]": "xxEPub Backendxx",
-        "Name[zh_CN]": "EPub 后端",
+        "Name[zh_CN]": "EPub 后端程序",
         "Name[zh_TW]": "EPub 後端介面",
         "Version": "0.2.3"
     },

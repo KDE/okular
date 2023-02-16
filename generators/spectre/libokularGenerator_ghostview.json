@@ -135,7 +135,7 @@
         "Description[uk]": "Обробник файлів PostScript на основі бібліотеки Spectre",
         "Description[vi]": "Một trình kết xuất tệp PostScript dựa trên thư viện Spectre",
         "Description[x-test]": "xxA PostScript file renderer based on the Spectre libraryxx",
-        "Description[zh_CN]": "基于 Spectre 库的 PostScript 文件渲染器",
+        "Description[zh_CN]": "基于 Spectre 程序库的 PostScript 文件渲染程序",
         "Description[zh_TW]": "基於 Spectre 函式庫的 PostScript 檔成像器",
         "Id": "okular_ghostview",
         "License": "GPL",
@@ -186,7 +186,7 @@
         "Name[uk]": "Модуль PS",
         "Name[vi]": "Hậu phương PS",
         "Name[x-test]": "xxPS Backendxx",
-        "Name[zh_CN]": "PS 后端",
+        "Name[zh_CN]": "PS 后端程序",
         "Name[zh_TW]": "PS 後端介面",
         "Version": "0.1.7"
     },

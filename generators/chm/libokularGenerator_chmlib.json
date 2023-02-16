@@ -187,7 +187,7 @@
         "Description[uk]": "Відображення файлів довідки Microsoft Windows",
         "Description[vi]": "Một trình kết xuất tệp trợ giúp Windows Microsoft",
         "Description[x-test]": "xxA Microsoft Windows help file rendererxx",
-        "Description[zh_CN]": "Microsoft Windows 帮助文件渲染器",
+        "Description[zh_CN]": "Microsoft Windows 帮助文件的渲染程序",
         "Description[zh_TW]": "Microsoft Windows 說明檔成像器",
         "Id": "okular_chm",
         "License": "GPL",
@@ -239,7 +239,7 @@
         "Name[uk]": "Модуль CHM",
         "Name[vi]": "Hậu phương CHM",
         "Name[x-test]": "xxCHM Backendxx",
-        "Name[zh_CN]": "CHM 后端",
+        "Name[zh_CN]": "CHM 后端程序",
         "Name[zh_TW]": "CHM 後端介面",
         "Version": "0.1.4"
     },

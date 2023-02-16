@@ -140,7 +140,7 @@
         "Description[uk]": "Програма для показу файлів PDF",
         "Description[vi]": "Một trình kết xuất tệp PDF",
         "Description[x-test]": "xxA PDF file rendererxx",
-        "Description[zh_CN]": "PDF 文件渲染器",
+        "Description[zh_CN]": "PDF 文件渲染程序",
         "Description[zh_TW]": "PDF 檔成像器",
         "Id": "okular_poppler",
         "License": "GPL",
@@ -194,7 +194,7 @@
         "Name[uk]": "Модуль PDF",
         "Name[vi]": "Hậu phương PDF",
         "Name[x-test]": "xxPDF Backendxx",
-        "Name[zh_CN]": "PDF 后端",
+        "Name[zh_CN]": "PDF 后端程序",
         "Name[zh_TW]": "PDF 後端介面",
         "Version": "0.6.5"
     },

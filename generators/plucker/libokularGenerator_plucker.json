@@ -138,7 +138,7 @@
         "Description[uk]": "Програма для відображення ел. книг Plucker",
         "Description[vi]": "Một trình kết xuất cho các sách điện tử Plucker",
         "Description[x-test]": "xxA renderer for Plucker eBooksxx",
-        "Description[zh_CN]": "Plucker 电子书渲染器",
+        "Description[zh_CN]": "Plucker 电子书渲染程序",
         "Description[zh_TW]": "Plucker 電子書成像器",
         "Id": "okular_plucker",
         "License": "GPL",
@@ -187,7 +187,7 @@
         "Name[uk]": "Модуль документів Plucker",
         "Name[vi]": "Hậu phương tài liệu Plucker",
         "Name[x-test]": "xxPlucker Document Backendxx",
-        "Name[zh_CN]": "Plucker 文档后端",
+        "Name[zh_CN]": "Plucker 文档后端程序",
         "Name[zh_TW]": "Pluker 文件後端介面",
         "Version": "0.1.1"
     },

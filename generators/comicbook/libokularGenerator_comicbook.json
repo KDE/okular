@@ -138,7 +138,7 @@
         "Description[uk]": "Програма для відображення коміксів у різних форматах",
         "Description[vi]": "Một trình kết xuất cho nhiều định dạng truyện tranh khác nhau",
         "Description[x-test]": "xxA renderer for various comic book formatsxx",
-        "Description[zh_CN]": "多种漫画书格式的渲染器",
+        "Description[zh_CN]": "支持多种漫画书格式的渲染程序",
         "Description[zh_TW]": "多種漫畫書的成像器",
         "Id": "okular_comicbook",
         "License": "GPL",
@@ -192,7 +192,7 @@
         "Name[uk]": "Модуль коміксів",
         "Name[vi]": "Hậu phương ComicBook",
         "Name[x-test]": "xxComicBook Backendxx",
-        "Name[zh_CN]": "漫画书后端",
+        "Name[zh_CN]": "ComicBook 后端程序",
         "Name[zh_TW]": "ComicBook 後端介面",
         "Version": "0.4"
     },

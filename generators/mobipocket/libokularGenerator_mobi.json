@@ -139,7 +139,7 @@
         "Description[uk]": "Сервер mobipocket",
         "Description[vi]": "Một hậu phương Mobipocket",
         "Description[x-test]": "xxA mobipocket backendxx",
-        "Description[zh_CN]": "Mobipocket 后端",
+        "Description[zh_CN]": "Mobipocket 后端程序",
         "Description[zh_TW]": "Mobipocket 後端介面",
         "Id": "okular_mobi",
         "License": "GPL",
@@ -189,7 +189,7 @@
         "Name[uk]": "Модуль Mobipocket",
         "Name[vi]": "Hậu phương Mobipocket",
         "Name[x-test]": "xxMobipocket Backendxx",
-        "Name[zh_CN]": "Mobipocket 后端",
+        "Name[zh_CN]": "Mobipocket 后端程序",
         "Name[zh_TW]": "Mobipocket 後端介面",
         "Version": "0.1.1"
     },

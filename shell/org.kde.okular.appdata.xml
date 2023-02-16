@@ -148,7 +148,7 @@
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="vi">Okular là một trình xem tài liệu vạn năng do KDE phát triển. Okular hoạt động trên nhiều nền tảng, bao gồm Linux, Windows, Mac OS X, *BSD, v.v.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
-    <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
+    <p xml:lang="zh-CN">Okular 是一款由 KDE 开发的通用文档查看器。它支持在多种平台上运行，包括且不限于 Linux、Windows、Mac OS X、* BSD 等。</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
@@ -196,7 +196,7 @@
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="vi">Tính năng:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
-    <p xml:lang="zh-CN">程序功能：</p>
+    <p xml:lang="zh-CN">功能特性：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -237,7 +237,7 @@
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="vi">Hỗ trợ các định dạng: PDF, PS, Tiff, CHM, DjVu, ảnh, DVI, XPS, FictionBook, truyện tranh, Plucker, EPub, Fax</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
-      <li xml:lang="zh-CN">支持格式：PDF、PS、TIFF、CHM、DjVu、图像、DVI、XPS、ODT、FictionBook (FB*)、Comic Book (CB*)、Plucker、EPub、传真</li>
+      <li xml:lang="zh-CN">支持的格式：PDF、PS、TIFF、CHM、DjVu、图像、DVI、XPS、ODT、FictionBook (FB*)、Comic Book (CB*)、Plucker、EPub、传真</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>
@@ -283,7 +283,7 @@
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="vi">Thanh bên với mục lục, hình nhỏ, nhận xét và dấu nhớ</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
-      <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
+      <li xml:lang="zh-CN">侧栏可以显示目录、页面缩略图、批注和书签</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
       <li>Annotations support</li>
       <li xml:lang="ar">دعم التعليقات</li>
@@ -331,7 +331,7 @@
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="vi">Hỗ trợ chú dẫn</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
-      <li xml:lang="zh-CN">支持批注</li>
+      <li xml:lang="zh-CN">支持批注功能</li>
       <li xml:lang="zh-TW">支援註記</li>
     </ul>
   </description>

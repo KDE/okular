@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-10 00:56+0000\n"
-"PO-Revision-Date: 2023-02-17 01:23+0400\n"
+"PO-Revision-Date: 2023-02-18 19:12+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -5534,10 +5534,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Tapılması mümkün olmayan Okular komponentləri: %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Yan panel&i göstərmək"
+msgstr "Yan panel"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5584,16 +5583,14 @@ msgid "Undo close tab"
 msgstr "Bağlanmış vərəqi qaytarmaq"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Yan panel&i göstərmək"
+msgstr "Yan paneli göstərmək"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Yan panel&i göstərmək"
+msgstr "Yan paneli kilidləmək"
 
 #: shell/shell.cpp:646
 #, kde-format

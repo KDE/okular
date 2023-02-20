@@ -1,15 +1,16 @@
 # translation of okular_xps.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_xps\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2007-11-09 17:33+0100\n"
-"Last-Translator: Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -21,38 +22,14 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr,okellogg@users.sourceforge.net"
 
 #: generator_xps.cpp:1947
 #, kde-format
 msgid "Revision"
 msgstr "Revizio"
-
-#~ msgid "XPS Backend"
-#~ msgstr "XPS interno"
-
-#~ msgid "An XPS backend"
-#~ msgstr "XPS interno"
-
-#~ msgid ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-#~ msgstr ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-
-#~ msgid "Brad Hards"
-#~ msgstr "Brad Hards"
-
-#~ msgid "Jiri Klement"
-#~ msgstr "Jiri Klement"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"

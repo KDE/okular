@@ -1,16 +1,17 @@
 # translation of okular_kimgio.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_kimgio\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-11-30 00:42+0000\n"
-"PO-Revision-Date: 2009-12-06 20:20+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +23,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr,okellogg@users.sourceforge.net"
 
 #: generator_kimgio.cpp:55 generator_kimgio.cpp:78
 #, kde-format
@@ -40,30 +41,5 @@ msgid ""
 "This document appears malformed. Here is a best approximation of the "
 "document's intended appearance."
 msgstr ""
-
-#~ msgid "Image Backend"
-#~ msgstr "Bilda interno"
-
-#~ msgid "A simple image backend"
-#~ msgstr "Simpla bilda interno"
-
-#~ msgid ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-#~ msgstr ""
-#~ "© 2005 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Main Toolbar"
-#~ msgstr "Ĉefa ilobreto"
+"Ĉi dokumento aperas malformita. Jen laŭeble bona alproksimiĝo de ties celita "
+"apero."

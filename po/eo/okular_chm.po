@@ -1,15 +1,16 @@
 # translation of okular_chm.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_chm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2007-11-09 17:45+0100\n"
-"Last-Translator: Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -21,17 +22,17 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr,okellogg@users.sourceforge.net"
 
 #: lib/ebook_epub.cpp:311
 #, kde-format
 msgid "Unsupported encoding"
-msgstr ""
+msgstr "Nesubtenata kodigo"
 
 #: lib/ebook_epub.cpp:311
 #, kde-format
@@ -39,22 +40,5 @@ msgid ""
 "The encoding of this ebook is not supported yet. Please open a bug in "
 "https://bugs.kde.org for support to be added"
 msgstr ""
-
-#~ msgid "CHM Backend"
-#~ msgstr "CHM interno"
-
-#~ msgid "A Microsoft Windows help file renderer"
-#~ msgstr "Vindoza helpdosiera rigardilo"
-
-#~ msgid ""
-#~ "© 2005-2007 Piotr Szymański\n"
-#~ "© 2008 Albert Astals Cid"
-#~ msgstr ""
-#~ "© 2005-2007 Piotr Szymański\n"
-#~ "© 2008 Albert Astals Cid"
-
-#~ msgid "Piotr Szymański"
-#~ msgstr "Piotr Szymański"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
+"La kodigo de ĉi tiu e-libro ankoraŭ ne estas subtenata. Bonvolu malfermi "
+"cimraporton en https://bugs.kde.org por ke subteno estu aldonata."

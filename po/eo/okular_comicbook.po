@@ -1,13 +1,16 @@
 # Translation of okular_comicbook into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,31 +22,26 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Axel Rousseau"
+msgstr "Axel Rousseau,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "axel@esperanto-jeunes.org"
+msgstr "axel@esperanto-jeunes.org,okellogg@users.sourceforge.net"
 
 #: document.cpp:96
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
-msgstr ""
+msgstr "Ne eblas malfermi dokumenton, nek unrar nek unarchiver estis trovitaj."
 
 #: document.cpp:101
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
 msgstr ""
+"La versio de unrar en via sistemo ne estas taŭga por malfermi komiklibrojn."
 
 #: document.cpp:130
 #, kde-format
 msgid "Unknown ComicBook format."
-msgstr ""
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
+msgstr "Nekonata ComicBook-formato."

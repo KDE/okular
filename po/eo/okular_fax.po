@@ -1,13 +1,16 @@
 # Translation of okular_fax into esperanto.
-#
+# Esperantaj mesaĝoj por "okular"
+# Copyright (C) 1998, 2007 Free Software Foundation, Inc.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009, 2010.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_fax\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2010-01-03 10:57+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -30,15 +33,3 @@ msgstr "axel@esperanto-jeunes.org"
 #, kde-format
 msgid "Unable to load document"
 msgstr "Ne eblis ŝargi la dokumenton"
-
-#~ msgid "Fax Backend"
-#~ msgstr "Faksa interno"
-
-#~ msgid "A G3/G4 fax document backend"
-#~ msgstr "G3/G4 faksa dokumenta interno"
-
-#~ msgid "© 2008 Tobias Koenig"
-#~ msgstr "© 2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

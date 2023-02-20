@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-16 00:56+0000\n"
-"PO-Revision-Date: 2023-01-08 12:30+0100\n"
+"PO-Revision-Date: 2023-02-19 15:20+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -61,6 +61,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Ebligi ĉi tiun opcion permesos al Okular kontakti triajn OCSP-servilojn por "
+"kontroli ĉu la atestiloj uzataj por cifereca subskribo estas nuligitaj ekde "
+"sia kreado."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:66
@@ -68,6 +71,7 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Kontroli revokon de atestiloj de ciferecaj subskriboj per triaj serviloj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:73
@@ -112,7 +116,7 @@ msgstr "Presi prinotojn"
 #: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
-msgstr ""
+msgstr "Enmeti komentadojn en la presita dokumento"
 
 #: generator_pdf.cpp:90
 #, kde-format
@@ -120,6 +124,8 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
+"Inkluzivas komentadojn en la presita dokumento. Vi povas malŝalti ĉi tion se "
+"vi volas presi la originalan nekotitan dokumenton."
 
 #: generator_pdf.cpp:92
 #, kde-format
@@ -145,27 +151,27 @@ msgstr ""
 #: generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "Kongruas al printebla areo"
 
 #: generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "Ĝisrandigi al plena paĝo"
 
 #: generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "Neniu; presi originalan grandecon"
 
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "Skala reĝimo por la presitaj paĝoj"
 
 #: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "Skala reĝimo:"
 
 #: generator_pdf.cpp:929
 #, kde-format
@@ -210,11 +216,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Subskribite de: %1\n"
+"\n"
+"Dato: %2"
 
 #: generator_pdf.cpp:1563
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Uzante Poppler %1"
 
 #: generator_pdf.cpp:1565
 #, kde-format
@@ -223,16 +232,19 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Uzante Poppler %1\n"
+"\n"
+"Konstruite kontraŭ Poppler %2"
 
 #: generator_pdf.cpp:1600
 #, kde-format
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: generator_pdf.cpp:1600
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr ""
+msgstr "PDF Backend Agordo"
 
 #: generator_pdf.cpp:2045
 #, kde-format
@@ -240,23 +252,25 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"Kelkaj eraroj estis trovitaj en la dokumento, Okular eble ne povos montri la "
+"enhavon ĝuste"
 
 #: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "Eldonita al"
 
 #: pdfsettingswidget.cpp:43
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "Retpoŝto"
 
 #: pdfsettingswidget.cpp:43
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "Findato"
 
 #: pdfsettingswidget.cpp:60
 #, kde-format
@@ -264,6 +278,8 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Vi uzas Poppler-bibliotekon konstruitan sen NSS-subteno.\n"
+"Aldoni Ciferecajn Subskribojn ne disponeblas pro tio"
 
 #: pdfsettingswidget.cpp:95
 #, kde-format
@@ -274,6 +290,7 @@ msgstr "Restartigo bezonata"
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
+"Vi devas rekomenci Okular post ŝanĝi la agordojn de la dosierujo de NSS"
 
 #: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
 #, kde-format

@@ -1,5 +1,8 @@
 # Translation of okular_mobi into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the okular package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
@@ -19,36 +22,32 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Axel Rousseau"
+msgstr "Axel Rousseau,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "axel@esperanto-jeunes.org"
+msgstr "axel@esperanto-jeunes.org,okellogg@users.sourceforge.net"
 
 #: converter.cpp:59
 #, kde-format
 msgid "Error while opening the Mobipocket document."
-msgstr ""
+msgstr "Eraro dum malfermo de Mobipocket-dokumento."
 
 #: converter.cpp:64
 #, kde-format
 msgid ""
 "This book is protected by DRM and can be displayed only on designated device"
 msgstr ""
+"Tiu libro estas protektata de DRM kaj povas estas bildigata nur sur indikita "
+"aparato"
 
 #: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket"
-msgstr ""
+msgstr "Mobipocket"
 
 #: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket Backend Configuration"
-msgstr ""
-
-#~ msgid "© 2008-2009 Jakub Stachowski"
-#~ msgstr "© 2008-2009 Jakub Stachowski"
-
-#~ msgid "Jakub Stachowski"
-#~ msgstr "Jakub Stachowski"
+msgstr "Agordo de Mobipocket-Backend"

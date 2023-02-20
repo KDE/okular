@@ -15,6 +15,7 @@
   <name xml:lang="de">Okular</name>
   <name xml:lang="el">Okular</name>
   <name xml:lang="en-GB">Okular</name>
+  <name xml:lang="eo">Okular</name>
   <name xml:lang="es">Okular</name>
   <name xml:lang="et">Okular</name>
   <name xml:lang="eu">Okular</name>
@@ -63,6 +64,7 @@
   <summary xml:lang="de">Dokumentenbetrachter</summary>
   <summary xml:lang="el">Πρόγραμμα προβολής εγγράφων</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
+  <summary xml:lang="eo">Dokumentrigardilo</summary>
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="et">Dokumendinäitaja</summary>
   <summary xml:lang="eu">Dokumentu erakuslea</summary>
@@ -113,6 +115,7 @@
     <p xml:lang="de">Okular ist ein universeller Dokumentenbetrachter, der von  KDE entwickelt wird. Okular ist auf verschiedenen Plattformen verfügbar, darunter auch Linux, Windows, Mac OS X, *BSD usw.</p>
     <p xml:lang="el">Το Okular είναι ένας καθολικός προβολέας εγγράφων που αναπτύχθηκε από το KDE. Το Okular λειτουργεί σε πολλές πλατφόρμες, όπως σε Linux, Windows, Mac OS X, *BSD, κλπ.</p>
     <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="eo">Okular estas universala dokumentrigardilo evoluigita de KDE. Okular funkcias sur pluraj platformoj, inkluzive sed ne limigitaj al Linukso, Vindozo, Mac OS X, *BSD, ktp.</p>
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="et">Okular on KDE välja töötatud universaalne dokumentide näitaja. Okular võib töötada eri platvormidel, kaasa arvatud Linux, Windows, Mac OS X, *BSD jne.</p>
     <p xml:lang="eu">Okular KDEk garatutako dokumentu erakusle unibertsal bat da. Okular hainbat  plataformatan dabil, haien artean baino ez soilik haietara mugatua, Linux,  windows, Mac OS X, *BSD, etab.</p>
@@ -161,6 +164,7 @@
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="eo">Trajtoj:</p>
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="eu">Eginbideak:</p>
@@ -210,6 +214,7 @@
       <li xml:lang="de">Unterstützte Formate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="el">Υποστηριζόμενοι τύποι αποθήκευσης: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="eo">Subtenataj Formatoj: PDF, PS, Tiff, CHM, DjVu, Bildoj, DVI, XPS, Fikciolibro, Komiklibro, Plucker, EPub, Faksi</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="eu">Onartutako formatuak: PDF, PS, Tiff, CHM, DjVu, irudiak, DVI, XPS, FictionBook, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
@@ -248,6 +253,7 @@
       <li xml:lang="de">Seitenleiste mit Inhalten, Vorschau, Anmerkungen und Lesezeichen</li>
       <li xml:lang="el">Πλευρική γραμμή με περιεχόμενα, εικόνες προεπισκόπησης, αναλύσεις και σελιδοδείκτες</li>
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
+      <li xml:lang="eo">Flankbreto kun enhavo, bildetoj, recenzoj kaj legosignoj</li>
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
       <li xml:lang="et">Külgriba sisukorra, pisipiltide, annotatsioonide ja järjehoidjatega</li>
       <li xml:lang="eu">Alboko-barra edukiekin, koadro-txikiekin, iritziekin eta laster-markekin</li>
@@ -296,6 +302,7 @@
       <li xml:lang="de">Unterstützung für Anmerkungen</li>
       <li xml:lang="el">Υποστήριξη σημειώσεων</li>
       <li xml:lang="en-GB">Annotations support</li>
+      <li xml:lang="eo">Subteno de komentarioj</li>
       <li xml:lang="es">Permite el uso de notas</li>
       <li xml:lang="et">Annotatsioonide toetus</li>
       <li xml:lang="eu">Idatzoharrak onartzen ditu</li>
@@ -348,6 +355,7 @@
       <caption xml:lang="de">Lesen eines Handbuchs in Okular</caption>
       <caption xml:lang="el">Ανάγνωση οδηγού χρήσης στο Okular</caption>
       <caption xml:lang="en-GB">Reading manual in Okular</caption>
+      <caption xml:lang="eo">Legomanlibro en Okular</caption>
       <caption xml:lang="es">Lectura del manual en Okular</caption>
       <caption xml:lang="et">Käsiraamatu lugemine Okularis</caption>
       <caption xml:lang="eu">Eskuliburua Okularren irakurtzea</caption>

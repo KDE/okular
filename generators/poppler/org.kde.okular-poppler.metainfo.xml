@@ -15,6 +15,7 @@
   <name xml:lang="de">PDF</name>
   <name xml:lang="el">PDF</name>
   <name xml:lang="en-GB">PDF</name>
+  <name xml:lang="eo">PDF</name>
   <name xml:lang="es">PDF</name>
   <name xml:lang="et">PDF</name>
   <name xml:lang="eu">PDF</name>
@@ -61,6 +62,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von PDF-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων PDF</summary>
   <summary xml:lang="en-GB">Adds support for reading PDF documents</summary>
+  <summary xml:lang="eo">Aldonas subtenon por legi PDF-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos PDF</summary>
   <summary xml:lang="et">PDF-dokumentide lugemise toetus</summary>
   <summary xml:lang="eu">PDF dokumentuak irakurtzeko euskarria gehitzen du</summary>

@@ -15,6 +15,7 @@
   <name xml:lang="de">Bilder</name>
   <name xml:lang="el">Εικόνες</name>
   <name xml:lang="en-GB">Images</name>
+  <name xml:lang="eo">Bildoj</name>
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="et">Pildid</name>
   <name xml:lang="eu">Irudiak</name>
@@ -62,6 +63,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von vielen Bildformaten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση πολλών τύπων αποθήκευσης εικόνων</summary>
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
+  <summary xml:lang="eo">Aldonas subtenon por legi multajn bildformatojn</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
   <summary xml:lang="eu">Irudi formatu ugari irakurtzeko euskarria gehitzen du</summary>

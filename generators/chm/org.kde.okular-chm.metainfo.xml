@@ -15,6 +15,7 @@
   <name xml:lang="de">CHM-Dokumente</name>
   <name xml:lang="el">Έγγραφα CHM</name>
   <name xml:lang="en-GB">CHM Documents</name>
+  <name xml:lang="eo">CHM-Dokumentoj</name>
   <name xml:lang="es">Documentos CHM</name>
   <name xml:lang="et">CHM-dokumendid</name>
   <name xml:lang="eu">CHM dokumentuak</name>
@@ -61,6 +62,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von CHM-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων CHM</summary>
   <summary xml:lang="en-GB">Adds support for reading CHM documents</summary>
+  <summary xml:lang="eo">Aldonas subtenon por lego de CHM-Dokumentoj</summary>
   <summary xml:lang="es">Permite la lectura de documentos CHM</summary>
   <summary xml:lang="et">CHM-dokumentide lugemise toetus</summary>
   <summary xml:lang="eu">CHM dokumentuak irakurtzeko euskarria gehitzen du</summary>

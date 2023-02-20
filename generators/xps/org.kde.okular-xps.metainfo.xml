@@ -15,6 +15,7 @@
   <name xml:lang="de">XPS</name>
   <name xml:lang="el">XPS</name>
   <name xml:lang="en-GB">XPS</name>
+  <name xml:lang="eo">XPS</name>
   <name xml:lang="es">XPS</name>
   <name xml:lang="et">XPS</name>
   <name xml:lang="eu">XPS</name>
@@ -61,6 +62,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von XPS-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων XPS</summary>
   <summary xml:lang="en-GB">Adds support for reading XPS documents</summary>
+  <summary xml:lang="eo">Aldonas subtenon por legi XPS-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos XPS</summary>
   <summary xml:lang="et">XPS-dokumentide lugemise toetus</summary>
   <summary xml:lang="eu">XPS dokumentuak irakurtzeko euskarria gehitzen du</summary>

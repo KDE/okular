@@ -15,6 +15,7 @@
   <name xml:lang="de">Fax</name>
   <name xml:lang="el">Fax</name>
   <name xml:lang="en-GB">Fax</name>
+  <name xml:lang="eo">Faks</name>
   <name xml:lang="es">Fax</name>
   <name xml:lang="et">Faks</name>
   <name xml:lang="eu">Fax</name>
@@ -62,6 +63,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Fax-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων τηλεμοιοτυπίας</summary>
   <summary xml:lang="en-GB">Adds support for reading Fax documents</summary>
+  <summary xml:lang="eo">Aldonas subtenon por legi Telefaksil-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos de fax</summary>
   <summary xml:lang="et">Faksidokumentide lugemise toetus</summary>
   <summary xml:lang="eu">Fax dokumentuak irakurtzeko euskarria gehitzen du</summary>

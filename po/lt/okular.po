@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-10 00:56+0000\n"
+"POT-Creation-Date: 2023-02-21 00:57+0000\n"
 "PO-Revision-Date: 2022-11-18 18:51+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3450,205 +3450,205 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "iš"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:532
 #, kde-format
 msgid "Zoom"
 msgstr "Mastelis"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:544
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100% mastelis"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:555
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Pasukti &dešinėn"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:556
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Dešinėn"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:560
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Pasukti &kairėn"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:561
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Kairėn"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:565
 #, kde-format
 msgid "Original Orientation"
 msgstr "Pradinė orientacija"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:571
 #, kde-format
 msgid "&Trim View"
 msgstr "Ap&kirptas rodinys"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:575
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Apkirpti paraštes"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:582
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Apkirpti iki ž&ymėjimo"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:588
 #, kde-format
 msgid "Fit &Width"
 msgstr "Talpinti į &plotį"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:592
 #, kde-format
 msgid "Fit &Page"
 msgstr "Talpinti į p&uslapį"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:596
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automatiškai talpinti"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:600
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Talpinti langą į &puslapį"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:607
 #, kde-format
 msgid "&View Mode"
 msgstr "&Rodinio veiksena"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:619
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Vienas puslapis"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Puslapiai poromis"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Puslapiai poromis (&Centruoti pirmą puslapį)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:624
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Apžvalga"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:636
 #, kde-format
 msgid "&Continuous"
 msgstr "&Nuosekliai"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:643
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Naudoti skaitymo kryptį iš dešinės į kairę"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:652
 #, kde-format
 msgid "&Browse"
 msgstr "&Naršyti"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:660
 #, kde-format
 msgid "&Zoom"
 msgstr "&Mastelis"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:680
 #, kde-format
 msgid "Area &Selection"
 msgstr "Srities ž&ymėjimas"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:687
 #, kde-format
 msgid "&Text Selection"
 msgstr "&Teksto žymėjimas"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:694
 #, kde-format
 msgid "T&able Selection"
 msgstr "&Lentelės žymėjimas"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:701
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Didinamasis stiklas"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:710
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Žymėjimo įrankiai"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:736
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Skaitmeniškai pa&sirašyti..."
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:742
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Skaityti balsu visą dokumentą"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:747
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Skaityti balsu dabartinį puslapį"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:752
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Baigti skaitymą balsu"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:757
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pristabdyti/Pratęsti skaitymą balsu"
 
-#: part/pageview.cpp:771
+#: part/pageview.cpp:769
 #, kde-format
 msgid "Scroll Up"
 msgstr "Slinkti aukštyn"
 
-#: part/pageview.cpp:777
+#: part/pageview.cpp:775
 #, kde-format
 msgid "Scroll Down"
 msgstr "Slinkti žemyn"
 
-#: part/pageview.cpp:783
+#: part/pageview.cpp:781
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Slinkti puslapį aukštyn"
 
-#: part/pageview.cpp:789
+#: part/pageview.cpp:787
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Slinkti puslapį žemyn"
 
-#: part/pageview.cpp:795
+#: part/pageview.cpp:793
 #, kde-format
 msgid "Show Forms"
 msgstr "Rodyti formas"
 
-#: part/pageview.cpp:1289
+#: part/pageview.cpp:1287
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3657,18 +3657,18 @@ msgstr[1] " Įkeltas %1 puslapių dokumentas."
 msgstr[2] " Įkeltas %1 puslapių dokumentas."
 msgstr[3] " Įkeltas %1 puslapio dokumentas."
 
-#: part/pageview.cpp:2509
+#: part/pageview.cpp:2517
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopijuoti lentelės turinį į iškarpinę"
 
-#: part/pageview.cpp:2514 part/pageview.cpp:2837 part/pageview.cpp:2981
-#: part/pageview.cpp:3038
+#: part/pageview.cpp:2522 part/pageview.cpp:2840 part/pageview.cpp:2984
+#: part/pageview.cpp:3041
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM draudžia kopijavimą"
 
-#: part/pageview.cpp:2831
+#: part/pageview.cpp:2834
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3677,141 +3677,141 @@ msgstr[1] "Tekstas (%1 simboliai)"
 msgstr[2] "Tekstas (%1 simbolių)"
 msgstr[3] "Tekstas (%1 simbolis)"
 
-#: part/pageview.cpp:2832 part/pageview.cpp:2850
+#: part/pageview.cpp:2835 part/pageview.cpp:2853
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
-#: part/pageview.cpp:2841 part/pageview.cpp:3033
+#: part/pageview.cpp:2844 part/pageview.cpp:3036
 #, kde-format
 msgid "Speak Text"
 msgstr "Pradėti skaitymą balsu"
 
-#: part/pageview.cpp:2849
+#: part/pageview.cpp:2852
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Paveikslas (%1 ant %2 pikselių)"
 
-#: part/pageview.cpp:2851
+#: part/pageview.cpp:2854
 #, kde-format
 msgid "Save to File..."
 msgstr "Įrašyti į failą..."
 
-#: part/pageview.cpp:2871
+#: part/pageview.cpp:2874
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Paveikslas [%1x%2] nukopijuotas į iškarpinę."
 
-#: part/pageview.cpp:2874
+#: part/pageview.cpp:2877
 #, kde-format
 msgid "Save file"
 msgstr "Įrašyti failą"
 
-#: part/pageview.cpp:2874
+#: part/pageview.cpp:2877
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Paveikslai (*.png *.jpeg)"
 
-#: part/pageview.cpp:2876
+#: part/pageview.cpp:2879
 #, kde-format
 msgid "File not saved."
 msgstr "Failas neįrašytas."
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2890
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Paveikslas [%1x%2] įrašytas į failą %3."
 
-#: part/pageview.cpp:3029
+#: part/pageview.cpp:3032
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopijuoti tekstą"
 
-#: part/pageview.cpp:3049
+#: part/pageview.cpp:3052
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Eiti į „%1“"
 
-#: part/pageview.cpp:4022 part/part.cpp:3138
+#: part/pageview.cpp:4015 part/part.cpp:3138
 #, kde-format
 msgid "Fit Width"
 msgstr "Talpinti į plotį"
 
-#: part/pageview.cpp:4022
+#: part/pageview.cpp:4015
 #, kde-format
 msgid "Fit Page"
 msgstr "Talpinti į puslapį"
 
-#: part/pageview.cpp:4022
+#: part/pageview.cpp:4015
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatiškai talpinti"
 
-#: part/pageview.cpp:4328
+#: part/pageview.cpp:4321
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Ieškoti „%1“ naudojant"
 
-#: part/pageview.cpp:4342
+#: part/pageview.cpp:4335
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfigūruoti saityno trumpinius..."
 
-#: part/pageview.cpp:4368
+#: part/pageview.cpp:4361
 #, kde-format
 msgid "Follow This Link"
 msgstr "Eiti šia nuoroda"
 
-#: part/pageview.cpp:4371
+#: part/pageview.cpp:4364
 #, kde-format
 msgid "Play this Sound"
 msgstr "Atkurti šį garsą"
 
-#: part/pageview.cpp:4373
+#: part/pageview.cpp:4366
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stabdyti garsą"
 
-#: part/pageview.cpp:4379
+#: part/pageview.cpp:4372
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopijuoti nuorodos adresą"
 
-#: part/pageview.cpp:4400
+#: part/pageview.cpp:4393
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Ieškoti „%1“ šiame dokumente"
 
-#: part/pageview.cpp:4848
+#: part/pageview.cpp:4841
 #, kde-format
 msgid "Welcome"
 msgstr "Sveiki"
 
-#: part/pageview.cpp:4968
+#: part/pageview.cpp:4961
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Pažymėkite didinamą sritį. Norėdami mažinti, spustelėkite dešiniuoju pelės "
 "mygtuku."
 
-#: part/pageview.cpp:4979
+#: part/pageview.cpp:4972
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Spustelėkite norėdami matyti padidintą vaizdą."
 
-#: part/pageview.cpp:4992
+#: part/pageview.cpp:4985
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 "Norėdami kopijuoti, apibrėžkite stačiakampį aplink tekstą ar grafikos "
 "objektą."
 
-#: part/pageview.cpp:5004
+#: part/pageview.cpp:4997
 #, kde-format
 msgid "Select text"
 msgstr "Žymėti tekstą"
 
-#: part/pageview.cpp:5016
+#: part/pageview.cpp:5009
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3820,7 +3820,7 @@ msgstr ""
 "Apibrėžkite stačiakampį aplink lentelę, tada spustelėkite šalia kraštų "
 "norėdami perskirti; paspauskite Grįžimo (Esc) klavišą norėdami išvalyti."
 
-#: part/pageview.cpp:5026
+#: part/pageview.cpp:5019
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3829,7 +3829,7 @@ msgstr ""
 "Visi jūsų pasirašymo liudijimai arba dar kol kas nepradėjo galioti, arba jau "
 "nebegalioja."
 
-#: part/pageview.cpp:5029
+#: part/pageview.cpp:5022
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3840,18 +3840,18 @@ msgstr ""
 "vadove žiūrėkite sekciją apie <a href=\"%1\">Skaitmeninių parašų pridėjimą</"
 "a>."
 
-#: part/pageview.cpp:5045
+#: part/pageview.cpp:5038
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Yra neįrašytų pakeitimų. Prieš pasirašydami dokumentą, įrašykite pakeitimus."
 
-#: part/pageview.cpp:5061
+#: part/pageview.cpp:5054
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Pieškite stačiakampį, norėdami įterpti parašo lauką"
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5198
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

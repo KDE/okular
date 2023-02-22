@@ -8,19 +8,20 @@
 # Mthw <jari_45@hotmail.com>, 2019.
 # Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020, 2021, 2022.
 # Dusan Kazik <prescott66@gmail.com>, 2020.
+# Ferdinand Galko <galko.ferdinand@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-21 00:57+0000\n"
-"PO-Revision-Date: 2022-06-16 09:33+0200\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
-"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-02-21 18:58+0100\n"
+"Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
+"Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 21.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -631,11 +632,9 @@ msgid "Public Key"
 msgstr "Verejný kľúč"
 
 #: gui/certificatemodel.cpp:53
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, performance page, memory usage"
-#| msgid "Memory usage:"
+#, kde-format
 msgid "Key Usage"
-msgstr "Využitie pamäte:"
+msgstr "Použitie kľúča"
 
 #: gui/certificatemodel.cpp:72
 #, kde-format
@@ -963,7 +962,7 @@ msgstr "Digitálny podpis"
 #: gui/signatureguiutils.cpp:121
 #, kde-format
 msgid "Non-Repudiation"
-msgstr ""
+msgstr "Neodmietnutie"
 
 #: gui/signatureguiutils.cpp:124
 #, kde-format
@@ -1035,10 +1034,9 @@ msgid "The document integrity verification could not be completed."
 msgstr "Overenie pravosti dokumentu sa nepodarilo dokončiť."
 
 #: gui/signatureguiutils.cpp:205
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid "This document has unsigned signature fields."
-msgstr "Tento dokument je digitálne podpísaný."
+msgstr "Tento dokument má nepodpísané podpisové polia."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
@@ -1063,10 +1061,9 @@ msgstr ""
 "overiť správne."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Digital Signature"
+#, kde-format
 msgid "Unsigned Signature %1"
-msgstr "Digitálny podpis"
+msgstr "Nepodpísaný podpis %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
 #, kde-format
@@ -1917,7 +1914,7 @@ msgstr "Žiadny"
 #: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Butt"
-msgstr ""
+msgstr "Značka"
 
 #: part/annotationwidgets.cpp:518
 #, kde-format
@@ -2122,10 +2119,9 @@ msgid "Bookmarks"
 msgstr "Záložky"
 
 #: part/bookmarklist.cpp:135
-#, fuzzy, kde-format
-#| msgid "End of the document"
+#, kde-format
 msgid "Show for all documents"
-msgstr "Koniec dokumentu"
+msgstr "Zobraziť pre všetky dokumenty"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
@@ -2158,7 +2154,7 @@ msgstr "Otvoriť dokument"
 #: part/bookmarklist.cpp:290
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
-msgstr ""
+msgstr "Odstrániť všetky záložky pre tento dokument"
 
 #: part/certificateviewer.cpp:121
 #, kde-format
@@ -2493,12 +2489,10 @@ msgid "Text-to-speech engine:"
 msgstr "Nástroj na prevod textu na reč:"
 
 #: part/dlgaccessibility.cpp:165
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, accessibility page"
-#| msgid "Text-to-speech engine:"
+#, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "Nástroj na prevod textu na reč:"
+msgstr "Hlas pre prevod textu na reč:"
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -2754,6 +2748,7 @@ msgstr "Predvolene otvoriť v nepretržitom režime"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Pri používaní nástroja prehliadania obtočiť kurzor na okrajoch obrazovky"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3402,7 +3397,7 @@ msgstr "*|Všetky súbory"
 #: part/formwidgets.cpp:1065
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "Nepodpísané podpisové pole (kliknúť na podpísanie)"
 
 #: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
 #, kde-format
@@ -3871,15 +3866,13 @@ msgstr ""
 "znova</interface> a nakreslite väčší obdĺžnik."
 
 #: part/pageviewannotator.cpp:364
-#, fuzzy, kde-format
-#| msgid "Start over"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Začať odznova"
 
 #: part/pageviewannotator.cpp:365
-#, fuzzy, kde-format
-#| msgid "Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpísať"
@@ -4269,12 +4262,14 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Práve ste zmenili otvorený dokument, ale tento druh dokumentu sa nedá "
+"uložiť.\n"
+"Všetky zmeny sa po zatvorení aplikácie Okular stratia."
 
 #: part/part.cpp:1129
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Document can't be saved"
-msgstr "Heslo dokumentu"
+msgstr "Dokument sa nedá uložiť"
 
 #: part/part.cpp:1158
 #, kde-format
@@ -4525,18 +4520,19 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Rozhodli ste sa uložiť archív Okular bez názvu súboru končiaceho príponou "
+"'%1'. To nie je povolené, chcete si vybrať nový názov?"
 
 #: part/part.cpp:2611
-#, fuzzy, kde-format
-#| msgid "Line Extensions"
+#, kde-format
 msgid "Unsupported extension"
-msgstr "Rozšírenia čiar"
+msgstr "Nepodporovaná prípona"
 
 #: part/part.cpp:2612
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Vybrať nový názov"
 
 #: part/part.cpp:2644
 #, kde-format
@@ -4703,11 +4699,9 @@ msgid "Collapse all"
 msgstr "Zbaliť všetko"
 
 #: part/part.cpp:3130
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Link the thumbnails with the page"
+#, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr "Prepojiť náhľady so stránkou"
+msgstr "Synchronizovať náhľady so stránkou"
 
 #: part/part.cpp:3135
 #, kde-format
@@ -4944,6 +4938,9 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"Editor bol nastavený príkazovým riadkom na \n"
+" %1 \n"
+"Ak chcete použiť toto nastavenie, spustite okular bez voľby --editor-cmd"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5513,7 +5510,7 @@ msgstr "Nájsť reťazec v texte"
 #: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "nastaví príkaz externého editora"
 
 #: shell/main.cpp:83
 #, kde-format
@@ -5527,6 +5524,10 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"Príkaz editora nie je možné nastaviť v už spustenej inštancii aplikácie "
+"okular. Prosím, zakážte karty a skúste to znova. Treba upozorniť, že "
+"unikátna nie je tiež podporovaná pri nastavovaní príkazu editora na "
+"príkazovom riadku.\n"
 
 #: shell/okular_main.cpp:170
 #, kde-format
@@ -5560,10 +5561,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Nepodarilo sa nájsť komponent Okular. %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Zobraziť bočný panel"
+msgstr "Bočný panel"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5610,16 +5610,14 @@ msgid "Undo close tab"
 msgstr "Vrátiť zatvorenie karty"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
 msgstr "Zobraziť bočný panel"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Zobraziť bočný panel"
+msgstr "Zamknúť bočný panel"
 
 #: shell/shell.cpp:646
 #, kde-format
@@ -5670,7 +5668,7 @@ msgstr "Otvoriť priečinok s obsahom"
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "Zabudnúť túto položku"
 
 #: shell/welcomescreen.cpp:139
 #, kde-format
@@ -5682,7 +5680,7 @@ msgstr "Žiadne nedávne dokumenty"
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Vitajte v aplikácii Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
@@ -5703,13 +5701,13 @@ msgstr "Nedávne dokumenty"
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Zabudnúť všetko"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Skryť uvítaciu obrazovku"
 
 #~ msgctxt "@info"
 #~ msgid ""

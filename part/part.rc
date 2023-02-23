@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="53">
+<gui name="okular_part" version="54">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -32,8 +32,8 @@
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
     <Separator/>
-    <Action name="view_zoom_in"/>
     <Action name="view_zoom_out"/>
+    <Action name="view_zoom_in"/>
     <Action name="view_actual_size"/>
     <Action name="view_fit_to_width"/>
     <Action name="view_fit_to_page"/>
@@ -100,16 +100,18 @@
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
   <Action name="show_leftpanel"/>
-  <Action name="mouse_drag"/>
-  <Action name="mouse_selecttools"/>
-  <Action name="annotation_favorites"/>
+  <Separator/>
+  <Action name="view_zoom_in"/>
+  <Action name="view_zoom_out"/>
+  <Action name="zoom_to" />
+  <Action name="view_render_mode"/>
   <Spacer/>
   <Action name="page_number"/>
   <Spacer/>
-  <Action name="view_zoom_out"/>
-  <Action name="zoom_to" />
-  <Action name="view_zoom_in"/>
-  <Action name="view_render_mode"/>
+  <Action name="mouse_drag"/>
+  <Action name="mouse_selecttools"/>
+  <Action name="annotation_favorites"/>
+  <Separator/>
   <Action name="hamburger_menu"/>
 </ToolBar>
 <ActionProperties scheme="Default">

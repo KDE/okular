@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-21 00:57+0000\n"
+"POT-Creation-Date: 2023-02-24 00:57+0000\n"
 "PO-Revision-Date: 2022-02-27 20:44+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -255,59 +255,59 @@ msgstr ""
 "<qt>Au fost găsite mai multe platforme pentru tipul MIME:<br /><b>%1</b> "
 "(%2).<br /><br />Alegeți care dintre acestea să fie utilizată:</qt>"
 
-#: core/document.cpp:203
+#: core/document.cpp:206
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Majoritatea paginilor sunt %1."
 
-#: core/document.cpp:224
+#: core/document.cpp:227
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Portret %1"
 
-#: core/document.cpp:226
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Peisaj %1"
 
-#: core/document.cpp:249
+#: core/document.cpp:252
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 țoli (%3)"
 
-#: core/document.cpp:251
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1685
+#: core/document.cpp:1688
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Se continuă căutarea de la început"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Se continuă căutarea de la sfârșit"
 
-#: core/document.cpp:2448
+#: core/document.cpp:2451
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nu poate fi găsit niciun modul capabil să manevreze documentul cerut."
 
-#: core/document.cpp:3598
+#: core/document.cpp:3601
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "elimină adnotările"
 
-#: core/document.cpp:4163 core/document.cpp:4169
+#: core/document.cpp:4166 core/document.cpp:4172
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -316,146 +316,146 @@ msgstr ""
 "Documentul încearcă să execute o aplicație externă și, pentru siguranța "
 "dumneavoastră, Okular nu permite acest lucru."
 
-#: core/document.cpp:4180
+#: core/document.cpp:4183
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 "Nu a fost găsită nicio aplicație pentru deschiderea fișierului cu tipul MIME "
 "%1."
 
-#: core/document.cpp:4603
+#: core/document.cpp:4606
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Fișierul temporar nu a putut fi deschis"
 
-#: core/document.cpp:4605
+#: core/document.cpp:4608
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Conversia pentru imprimare a eșuat"
 
-#: core/document.cpp:4607
+#: core/document.cpp:4610
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Procesul de imprimare s-a prăbușit"
 
-#: core/document.cpp:4609
+#: core/document.cpp:4612
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesul de imprimare nu s-a putut porni"
 
-#: core/document.cpp:4611
+#: core/document.cpp:4614
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Imprimarea în fișier a eșuat"
 
-#: core/document.cpp:4613
+#: core/document.cpp:4616
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Imprimanta era în stare nevalidă"
 
-#: core/document.cpp:4615
+#: core/document.cpp:4618
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Fișierul de tipărit nu a putut fi găsit"
 
-#: core/document.cpp:4617
+#: core/document.cpp:4620
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nu era niciun fișier de tipărit"
 
-#: core/document.cpp:4619
+#: core/document.cpp:4622
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4621
+#: core/document.cpp:4624
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Dimensiunea de tipar a paginii nu e validă"
 
-#: core/document.cpp:5286 part/part.cpp:1151
+#: core/document.cpp:5289 part/part.cpp:1151
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nu s-a putut deschide „%1”. Fișierul nu există"
 
-#: core/document.cpp:5796
+#: core/document.cpp:5799
 #, kde-format
 msgid "Title"
 msgstr "Titlu"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5802
 #, kde-format
 msgid "Subject"
 msgstr "Subiect"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5805
 #, kde-format
 msgid "Description"
 msgstr "Descriere"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5808
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5811
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5814
 #, kde-format
 msgid "Producer"
 msgstr "Producător"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5817
 #, kde-format
 msgid "Copyright"
 msgstr "Drept de autor"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5820
 #, kde-format
 msgid "Pages"
 msgstr "Pagini"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5823
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5826
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5829
 #, kde-format
 msgid "MIME Type"
 msgstr "Tip MIME"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5832
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5835
 #, kde-format
 msgid "Keywords"
 msgstr "Cuvinte-cheie"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5838
 #, kde-format
 msgid "File Path"
 msgstr "Calea fișierului"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5841
 #, kde-format
 msgid "File Size"
 msgstr "Dimensiune fișier"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5844
 #, kde-format
 msgid "Page Size"
 msgstr "Dimensiune pagină"
@@ -4810,13 +4810,13 @@ msgid "Main Toolbar"
 msgstr "Bara de unelte principală"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:119
+#: part/part.rc:120
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Bară cu adnotări"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:143
+#: part/part.rc:144
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Bară cu adnotări rapide"

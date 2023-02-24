@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-21 00:57+0000\n"
+"POT-Creation-Date: 2023-02-24 00:57+0000\n"
 "PO-Revision-Date: 2022-12-31 15:35+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -253,60 +253,60 @@ msgstr ""
 "<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
 "><br />Please select which one to use:</qt>"
 
-#: core/document.cpp:203
+#: core/document.cpp:206
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Most pages are %1."
 
-#: core/document.cpp:224
+#: core/document.cpp:227
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Portrait %1"
 
-#: core/document.cpp:226
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Landscape %1"
 
-#: core/document.cpp:249
+#: core/document.cpp:252
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:251
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1685
+#: core/document.cpp:1688
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Continuing search from beginning"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Continuing search from bottom"
 
-#: core/document.cpp:2448
+#: core/document.cpp:2451
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Can not find a plugin which is able to handle the document being passed."
 
-#: core/document.cpp:3598
+#: core/document.cpp:3601
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "remove annotations"
 
-#: core/document.cpp:4163 core/document.cpp:4169
+#: core/document.cpp:4166 core/document.cpp:4172
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -315,52 +315,52 @@ msgstr ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 
-#: core/document.cpp:4180
+#: core/document.cpp:4183
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "No application found for opening file of mimetype %1."
 
-#: core/document.cpp:4603
+#: core/document.cpp:4606
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Could not open a temporary file"
 
-#: core/document.cpp:4605
+#: core/document.cpp:4608
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Print conversion failed"
 
-#: core/document.cpp:4607
+#: core/document.cpp:4610
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Printing process crashed"
 
-#: core/document.cpp:4609
+#: core/document.cpp:4612
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Printing process could not start"
 
-#: core/document.cpp:4611
+#: core/document.cpp:4614
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Printing to file failed"
 
-#: core/document.cpp:4613
+#: core/document.cpp:4616
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer was in invalid state"
 
-#: core/document.cpp:4615
+#: core/document.cpp:4618
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Unable to find file to print"
 
-#: core/document.cpp:4617
+#: core/document.cpp:4620
 #, kde-format
 msgid "There was no file to print"
 msgstr "There was no file to print"
 
-#: core/document.cpp:4619
+#: core/document.cpp:4622
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -369,92 +369,92 @@ msgstr ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 
-#: core/document.cpp:4621
+#: core/document.cpp:4624
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "The page print size is invalid"
 
-#: core/document.cpp:5286 part/part.cpp:1151
+#: core/document.cpp:5289 part/part.cpp:1151
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Could not open '%1'. File does not exist"
 
-#: core/document.cpp:5796
+#: core/document.cpp:5799
 #, kde-format
 msgid "Title"
 msgstr "Title"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5802
 #, kde-format
 msgid "Subject"
 msgstr "Subject"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5805
 #, kde-format
 msgid "Description"
 msgstr "Description"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5808
 #, kde-format
 msgid "Author"
 msgstr "Author"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5811
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5814
 #, kde-format
 msgid "Producer"
 msgstr "Producer"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5817
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5820
 #, kde-format
 msgid "Pages"
 msgstr "Pages"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5823
 #, kde-format
 msgid "Created"
 msgstr "Created"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5826
 #, kde-format
 msgid "Modified"
 msgstr "Modified"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5829
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME Type"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5832
 #, kde-format
 msgid "Category"
 msgstr "Category"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5835
 #, kde-format
 msgid "Keywords"
 msgstr "Keywords"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5838
 #, kde-format
 msgid "File Path"
 msgstr "File Path"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5841
 #, kde-format
 msgid "File Size"
 msgstr "File Size"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5844
 #, kde-format
 msgid "Page Size"
 msgstr "Page Size"
@@ -4840,13 +4840,13 @@ msgid "Main Toolbar"
 msgstr "Main Toolbar"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:119
+#: part/part.rc:120
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Annotation Toolbar"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:143
+#: part/part.rc:144
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Quick Annotation Toolbar"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-11-30 00:42+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国"
+msgstr "KDE 中国, Guo Yunhe, Ni Hui, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org"
+msgstr "KDE 中国, Guo Yunhe, Ni Hui, Tyson Tan"
 
 #: generator_kimgio.cpp:55 generator_kimgio.cpp:78
 #, kde-format
@@ -37,4 +37,4 @@ msgstr "无法加载文档：%1"
 msgid ""
 "This document appears malformed. Here is a best approximation of the "
 "document's intended appearance."
-msgstr "此文档格式不正确。下面给出了这个文档原本外观的最佳近似。"
+msgstr "此文档的格式不正确。下面显示了尽可能接近它原始效果的状态。"

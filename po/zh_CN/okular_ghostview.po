@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国"
+msgstr "Guo Yunhe, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org"
+msgstr "Guo Yunhe, Tyson Tan"
 
 #. i18n: ectx: label, entry (PlatformFonts), group (General)
 #: conf/gssettings.kcfg:9
@@ -40,8 +40,7 @@ msgid ""
 "Determines whether Ghostscript should be allowed to use platform fonts, if "
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
-"决定 Ghostscript 是否可以使用平台字体，如果禁用，则仅允许使用文档中的内嵌字"
-"体。"
+"指定是否允许 Ghostscript 使用平台字体。如果禁止，则只允许使用文档内嵌的字体。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: conf/gssettingswidget.ui:28
@@ -63,7 +62,7 @@ msgstr "Ghostscript"
 #: generator_ghostview.cpp:82
 #, kde-format
 msgid "Ghostscript Backend Configuration"
-msgstr "Ghostscript 后端配置"
+msgstr "Ghostscript 后端配置程序"
 
 #: generator_ghostview.cpp:253
 #, kde-format

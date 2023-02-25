@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-03 00:44+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -28,7 +28,7 @@ msgstr "证书查看器"
 
 #: package/contents/ui/CertificateViewerDialog.qml:32
 msgid "Issued By"
-msgstr "颁发者："
+msgstr "颁发者"
 
 #: package/contents/ui/CertificateViewerDialog.qml:37
 #: package/contents/ui/CertificateViewerDialog.qml:65
@@ -47,11 +47,11 @@ msgstr "组织："
 
 #: package/contents/ui/CertificateViewerDialog.qml:60
 msgid "Issued To"
-msgstr "颁发给："
+msgstr "颁发给"
 
 #: package/contents/ui/CertificateViewerDialog.qml:88
 msgid "Validity"
-msgstr "有效性"
+msgstr "有效期"
 
 #: package/contents/ui/CertificateViewerDialog.qml:93
 msgid "Issued On:"
@@ -59,7 +59,7 @@ msgstr "颁发时间："
 
 #: package/contents/ui/CertificateViewerDialog.qml:99
 msgid "Expires On:"
-msgstr "失效时间："
+msgstr "过期时间："
 
 #: package/contents/ui/CertificateViewerDialog.qml:110
 msgid "Fingerprints"
@@ -121,7 +121,7 @@ msgstr "添加此页到书签"
 
 #: package/contents/ui/MainView.qml:82
 msgid "No document open"
-msgstr "没有打开的文档"
+msgstr "没有打开文档"
 
 #: package/contents/ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -141,11 +141,11 @@ msgstr "签名属性"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:44
 msgid "Validity Status"
-msgstr "有效性状态"
+msgstr "有效期状态"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:50
 msgid "Signature Validity:"
-msgstr "签名有效性："
+msgstr "签名有效期："
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:56
 msgid "Document Modifications:"
@@ -178,7 +178,7 @@ msgstr "文档版本"
 #: package/contents/ui/SignaturePropertiesDialog.qml:110
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr "文档修订版 %1，共 %2 版"
+msgstr "文档修订版本 %1，共 %2 版"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:114
 msgid "Save Signed Version..."
@@ -198,4 +198,4 @@ msgstr "不可用"
 
 #: package/contents/ui/ThumbnailsBase.qml:43
 msgid "No results found."
-msgstr "无搜索结果。"
+msgstr "未找到任何结果。"

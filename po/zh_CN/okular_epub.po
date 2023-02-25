@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,14 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国,Ni Hui"
+msgstr "KDE 中国, Guo Yunhe, Ni Hui, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org,shuizhuyuanluo@126.com"
+msgstr ""
+"kde-china@kde.org, i@guoyunhe.me, shuizhuyuanluo@126.com, tysontan@tysontan."
+"com"
 
 #: converter.cpp:163
 #, kde-format
@@ -40,4 +42,4 @@ msgstr "EPub"
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub Backend Configuration"
-msgstr "EPub 后端配置"
+msgstr "EPub 后端程序配置"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,14 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国,Ni Hui"
+msgstr "KDE 中国, Guo Yunhe, Ni Hui, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org,shuizhuyuanluo@126.com"
+msgstr ""
+"kde-china@kde.org, i@guoyunhe.me, shuizhuyuanluo@126.com, tysontan@tysontan."
+"com"
 
 #: document.cpp:96
 #, kde-format
@@ -36,9 +38,9 @@ msgstr "无法打开文档，无法找到 unrar 或者 unarchiver 程序。"
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
-msgstr "您系统中的 unrar 版本无法用于打开 ComicBook 文档。"
+msgstr "本机系统安装的 unrar 程序版本无法打开 ComicBook 文档。"
 
 #: document.cpp:130
 #, kde-format
 msgid "Unknown ComicBook format."
-msgstr "未知 ComicBook 格式。"
+msgstr "未知的 ComicBook 格式。"

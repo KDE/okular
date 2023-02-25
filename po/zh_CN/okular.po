@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-17 02:42+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2178,7 +2178,7 @@ msgstr "颁发给"
 #: part/certificateviewer.cpp:146
 #, kde-format
 msgid "Validity"
-msgstr "有效性"
+msgstr "有效期"
 
 #: part/certificateviewer.cpp:152
 #, kde-format
@@ -4701,14 +4701,14 @@ msgstr "此文档不允许打印。"
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
-msgstr "无法打印此文档。未知错误。请向 bugs.kde.org 报告"
+msgstr "无法打印此文档。未知错误。请到 bugs.kde.org 网站提交程序缺陷报告"
 
 #: part/part.cpp:3589
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
-msgstr "无法打印此文档。详细错误是“%1”。请向 bugs.kde.org 报告"
+msgstr "无法打印此文档。具体错误是“%1”。请到 bugs.kde.org 网站提交程序缺陷报告"
 
 #: part/part.cpp:3669
 #, kde-format
@@ -4726,7 +4726,7 @@ msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 msgstr ""
-"<qt><strong>文件错误！</strong> 无法创建临时文件 <nobr><strong>%1</strong></"
+"<qt><strong>文件错误。</strong>无法创建临时文件 <nobr><strong>%1</strong></"
 "nobr>。</qt>"
 
 #: part/part.cpp:3710
@@ -4746,8 +4746,8 @@ msgid ""
 "the file in the Dolphin file manager, then choose the 'Properties' option, "
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
-"<qt>此错误一般发生在您没有读文件权限的情况下。您可以在 Dolphin 文件管理器中对"
-"文件点击右键，并选择“属性”菜单检查其所有者和权限。</qt>"
+"<qt>此错误通常是因为您没有文件的读取权限。您可以在 Dolphin 文件管理器中右键点"
+"击该文件，选择“属性”，然后切换到“权限”标签页，检查文件的所有者和权限。</qt>"
 
 #: part/part.cpp:3736
 #, kde-format
@@ -4764,13 +4764,13 @@ msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
-"<qt>此错误一般发生在文件已损坏的情况下。如果您想要确认这点，请尝试使用命令行"
-"工具手动解压此文件。</qt>"
+"<qt>此错误通常是因为文件已经损坏。您可以尝试使用命令行工具手动解压此文件，以"
+"确认它是否已经损坏。</qt>"
 
 #: part/part.cpp:3766
 #, kde-format
 msgid "No Bookmarks"
-msgstr "无书签"
+msgstr "没有书签"
 
 #: part/part.cpp:3837
 #, kde-format
@@ -4857,12 +4857,12 @@ msgstr "性能"
 #: part/preferencesdialog.cpp:43
 #, kde-format
 msgid "Performance Tuning"
-msgstr "性能调整"
+msgstr "性能调优"
 
 #: part/preferencesdialog.cpp:45
 #, kde-format
 msgid "Configure Viewer"
-msgstr "配置查看器..."
+msgstr "配置查看器"
 
 #: part/preferencesdialog.cpp:49
 #, kde-format
@@ -4872,7 +4872,7 @@ msgstr "演示"
 #: part/preferencesdialog.cpp:49
 #, kde-format
 msgid "Options for Presentation Mode"
-msgstr "演示模式的选项"
+msgstr "演示模式选项"
 
 #: part/preferencesdialog.cpp:50
 #, kde-format
@@ -4965,7 +4965,7 @@ msgid ""
 "top-right corner. Of course you can cycle windows (Alt+TAB by default)"
 msgstr ""
 "退出演示模式有两种方法，您可以按 Esc 键，也可以将鼠标移至右上角，单击随后出现"
-"的退出按钮。当然，您也可以轮换到其他窗口 (默认键位是 Alt+Tab)"
+"的退出按钮。您也可以切换到其他窗口 (默认快捷键是 Alt+Tab)"
 
 #: part/presentationwidget.cpp:1705
 #, kde-format
@@ -4973,7 +4973,7 @@ msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
 "is active"
 msgid "Giving a presentation"
-msgstr "展现演示"
+msgstr "正在进行演示"
 
 #: part/propertiesdialog.cpp:49
 #, kde-format
@@ -5120,7 +5120,7 @@ msgstr "否"
 #: part/propertiesdialog.cpp:347
 #, kde-format
 msgid "Yes (subset)"
-msgstr "是(子集)"
+msgstr "是 (子集)"
 
 #: part/propertiesdialog.cpp:350
 #, kde-format
@@ -5137,7 +5137,7 @@ msgstr "%1 (替换为 %2)"
 #, kde-format
 msgctxt "font name not available (empty)"
 msgid "[n/a]"
-msgstr "无"
+msgstr "[不可用]"
 
 #: part/propertiesdialog.cpp:386
 #, kde-format
@@ -5177,12 +5177,12 @@ msgstr "大小"
 #: part/revisionviewer.cpp:41
 #, kde-format
 msgid "Revision Preview"
-msgstr "修订预览"
+msgstr "修订版本预览"
 
 #: part/revisionviewer.cpp:53
 #, kde-format
 msgid "Where do you want to save this revision?"
-msgstr "你想在哪里保存此版本？"
+msgstr "你想要将此修订版本保存到哪个位置？"
 
 #: part/revisionviewer.cpp:56
 #, kde-format
@@ -5192,12 +5192,12 @@ msgstr "无法保存文件 %1。"
 #: part/revisionviewer.cpp:75
 #, kde-format
 msgid "Could not view revision."
-msgstr "无法查看修订版。"
+msgstr "无法查看修订版本。"
 
 #: part/searchwidget.cpp:38
 #, kde-format
 msgid "Enter at least 3 letters to filter pages"
-msgstr "输入至少三个字母来过滤页面"
+msgstr "请输入至少 3 个字母的筛选条件"
 
 #: part/searchwidget.cpp:48
 #, kde-format
@@ -5207,7 +5207,7 @@ msgstr "区分大小写"
 #: part/searchwidget.cpp:50
 #, kde-format
 msgid "Match Phrase"
-msgstr "匹配短语"
+msgstr "匹配词组"
 
 #: part/searchwidget.cpp:51
 #, kde-format
@@ -5217,12 +5217,12 @@ msgstr "匹配全部单词"
 #: part/searchwidget.cpp:52
 #, kde-format
 msgid "Match Any Word"
-msgstr "匹配任何单词"
+msgstr "匹配任一单词"
 
 #: part/searchwidget.cpp:71
 #, kde-format
 msgid "Filter Options"
-msgstr "过滤器选项"
+msgstr "筛选器选项"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5236,7 +5236,7 @@ msgstr ""
 #: part/side_reviews.cpp:137
 #, kde-format
 msgid "Group by Page"
-msgstr "按页分组"
+msgstr "按页面分组"
 
 #: part/side_reviews.cpp:142
 #, kde-format
@@ -5251,12 +5251,12 @@ msgstr "仅显示当前页面的批注"
 #: part/side_reviews.cpp:160
 #, kde-format
 msgid "Expand all elements"
-msgstr "展开所有元素"
+msgstr "展开所有项目"
 
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr "折叠所有元素"
+msgstr "折叠所有项目"
 
 #: part/signaturepanel.cpp:101
 #, kde-format
@@ -5309,7 +5309,7 @@ msgstr "不可用"
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
 msgid "Validity Status"
-msgstr "验证状态"
+msgstr "有效期状态"
 
 #: part/signaturepropertiesdialog.cpp:52
 #, kde-format
@@ -5324,7 +5324,7 @@ msgstr "文档修改："
 #: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Additional Information"
-msgstr "附加信息"
+msgstr "额外信息"
 
 #: part/signaturepropertiesdialog.cpp:59
 #, kde-format
@@ -5334,7 +5334,7 @@ msgstr "签名者："
 #: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Signing Time:"
-msgstr "签名日期："
+msgstr "签名时间："
 
 #: part/signaturepropertiesdialog.cpp:62
 #, kde-format
@@ -5355,7 +5355,7 @@ msgstr "文档版本"
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr "文档修订版 %1，共 %2 个"
+msgstr "文档修订版本 %1，共 %2 版"
 
 #: part/signaturepropertiesdialog.cpp:79
 #, kde-format
@@ -5423,22 +5423,22 @@ msgstr "默认绘图工具 #%1"
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr "已存在此名称的工具。使用默认工具"
+msgstr "已有其他工具使用了该名称。将使用默认名称"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "Duplicated Name"
-msgstr "重复的名称"
+msgstr "名称重复"
 
 #: shell/main.cpp:77
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr "要显示的文档页数"
+msgstr "要显示的文档页码"
 
 #: shell/main.cpp:78
 #, kde-format
 msgid "Start the document in presentation mode"
-msgstr "以演示模式打开文档"
+msgstr "在演示模式下打开文档"
 
 #: shell/main.cpp:79
 #, kde-format
@@ -5448,7 +5448,7 @@ msgstr "启动时显示打印对话框"
 #: shell/main.cpp:80
 #, kde-format
 msgid "Start with print dialog and exit after printing"
-msgstr "启动时打开打印对话框，并在打印完后退出"
+msgstr "启动时打开打印对话框，并在打印完成后退出"
 
 #: shell/main.cpp:81
 #, kde-format
@@ -5463,7 +5463,7 @@ msgstr "不升起窗口"
 #: shell/main.cpp:83
 #, kde-format
 msgid "Find a string on the text"
-msgstr "在文本中查找字符串"
+msgstr "查找文字中的字符串"
 
 #: shell/main.cpp:84
 #, kde-format
@@ -5482,8 +5482,8 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
-"您不能在正在运行的 Okular 实例中设置编辑器命令。请禁用该标签页，然后重试。注"
-"意：通过命令行设置编辑器命令时，不支持使用 unique。\n"
+"您不能在已经运行的 Okular 实例中设置编辑器命令。请禁用标签页然后重试。注意："
+"通过命令行设置编辑器命令时，不支持使用 unique。\n"
 
 #: shell/okular_main.cpp:150
 #, kde-format
@@ -5513,14 +5513,14 @@ msgstr "错误：无法在使用 --find 选项时打开多个文档"
 #: shell/shell.cpp:91
 #, kde-format
 msgid "Unable to find the Okular component: %1"
-msgstr "无法找到 Okular 组件︰ %1"
+msgstr "无法找到 Okular 组件：%1"
 
 #: shell/shell.cpp:146
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
-msgstr "已经有一个唯一实例在运行，此实例无法成为唯一实例。"
+msgstr "已经有一个 Okular 的唯一实例正在运行，此实例无法成为唯一实例。"
 
 #: shell/shell.cpp:169
 #, kde-format
@@ -5533,24 +5533,24 @@ msgid ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 msgstr ""
-"单击可打开文件\n"
-"单击并按住可打开最近文件"
+"点击可打开文件\n"
+"点击并按住可打开最近文件"
 
 #: shell/shell.cpp:400
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
-msgstr "<b>单击</b>可打开文件，<b>单击并按住</b>可打开最近文件"
+msgstr "<b>点击</b>可打开文件，<b>点击并按住</b>可打开最近文件"
 
 #: shell/shell.cpp:413
 #, kde-format
 msgid "Next Tab"
-msgstr "下个标签页"
+msgstr "下一个标签页"
 
 #: shell/shell.cpp:419
 #, kde-format
 msgid "Previous Tab"
-msgstr "上个标签页"
+msgstr "上一个标签页"
 
 #: shell/shell.cpp:425
 #, kde-format
@@ -5560,7 +5560,7 @@ msgstr "撤销关闭标签"
 #: shell/shell.cpp:532
 #, kde-format
 msgid "All files (*)"
-msgstr "所有文件(*)"
+msgstr "所有文件 (*)"
 
 #: shell/shell.cpp:533
 #, kde-format
@@ -5585,12 +5585,12 @@ msgstr "关闭标签"
 #: shell/shell.cpp:652
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr "您将要关闭 %1 个标签。您确定要继续吗？"
+msgstr "您即将关闭 %1 个标签页。您确定要继续吗？"
 
 #: shell/shell.cpp:654
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr "在我试图关闭多个标签时警告我"
+msgstr "关闭多个标签页时发出警告"
 
 #: shell/welcomescreen.cpp:64
 #, kde-format
@@ -5606,7 +5606,7 @@ msgstr "打开所在文件夹(&O)"
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr "忘记此项(&F)"
+msgstr "忘记此项目(&F)"
 
 #: shell/welcomescreen.cpp:139
 #, kde-format

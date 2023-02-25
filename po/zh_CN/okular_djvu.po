@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2023-02-15 11:07\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国"
+msgstr "KDE 中国, Guo Yunhe, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org"
+msgstr "kde-china@kde.org, i@guoyunhe.me, tysontan@tysontan.com"
 
 #: generator_djvu.cpp:136
 #, kde-format
@@ -35,12 +35,12 @@ msgstr "编辑"
 #: generator_djvu.cpp:137
 #, kde-format
 msgid "Publisher"
-msgstr "出版"
+msgstr "出版社"
 
 #: generator_djvu.cpp:138
 #, kde-format
 msgid "Volume"
-msgstr "量"
+msgstr "册数"
 
 #: generator_djvu.cpp:139
 #, kde-format
@@ -86,10 +86,10 @@ msgstr "间隔型"
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
-msgstr "老式打包型"
+msgstr "打包型 (旧式)"
 
 #: kdjvu.cpp:699
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"
-msgstr "老式索引型"
+msgstr "索引型 (旧式)"

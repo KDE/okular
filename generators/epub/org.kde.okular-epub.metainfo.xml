@@ -98,7 +98,7 @@
   <summary xml:lang="uk">Додає підтримку читання електронних книг</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc sách điện tử</summary>
   <summary xml:lang="x-test">xxAdds support for reading E-Booksxx</summary>
-  <summary xml:lang="zh-CN">增加对电子书的阅读支持</summary>
+  <summary xml:lang="zh-CN">增加对 EPub 电子书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取電子書的支援</summary>
   <provides>
     <mediatype>application/epub+zip</mediatype>

@@ -98,7 +98,7 @@
   <summary xml:lang="uk">Додає підтримку читання документів FictionBook (FB2)</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc FictionBook</summary>
   <summary xml:lang="x-test">xxAdds support for reading FictionBooksxx</summary>
-  <summary xml:lang="zh-CN">添加对 FictionBook 的阅读支持</summary>
+  <summary xml:lang="zh-CN">增加对 FictionBook 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 FictionBooks 的支援</summary>
   <provides>
     <mediatype>application/x-fictionbook+xml</mediatype>

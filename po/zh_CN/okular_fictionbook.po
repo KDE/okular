@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-06-11 00:15+0000\n"
-"PO-Revision-Date: 2023-02-15 11:04\n"
+"PO-Revision-Date: 2023-02-24 12:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,17 +20,17 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国"
+msgstr "Guo Yunhe, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org"
+msgstr "i@guoyunhe.me, tysontan@tysontan.com"
 
 #: converter.cpp:98
 #, kde-format
 msgid "Document is not a valid FictionBook"
-msgstr "文档不是有效的 FictionBook"
+msgstr "文档不是有效的 FictionBook 文件"
 
 #: document.cpp:29
 #, kde-format
@@ -45,12 +45,12 @@ msgstr "文档不是有效的 ZIP 压缩包"
 #: document.cpp:42
 #, kde-format
 msgid "Invalid document structure (main directory is missing)"
-msgstr "无效的文档结构(缺少主目录)"
+msgstr "无效的文档结构 (缺少主目录)"
 
 #: document.cpp:57
 #, kde-format
 msgid "No content found in the document"
-msgstr "文档中未找到内容"
+msgstr "文档中没有找到内容"
 
 #: document.cpp:68
 #, kde-format
@@ -60,9 +60,9 @@ msgstr "无效的 XML 文档：%1"
 #: generator_fb.cpp:26
 #, kde-format
 msgid "FictionBook"
-msgstr "Fiction 电子书"
+msgstr "FictionBook"
 
 #: generator_fb.cpp:26
 #, kde-format
 msgid "FictionBook Backend Configuration"
-msgstr "Fiction 电子书后端配置"
+msgstr "FictionBook 后端程序配置"

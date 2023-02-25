@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-16 00:56+0000\n"
-"PO-Revision-Date: 2023-02-15 11:04\n"
+"PO-Revision-Date: 2023-02-24 12:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国"
+msgstr "Guo Yunhe, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org"
+msgstr "i@guoyunhe.me, tysontan@tysontan.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:19
@@ -37,7 +37,7 @@ msgstr "增强细线："
 #: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:931
 #, kde-format
 msgid "No"
-msgstr "否"
+msgstr "无"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:35
@@ -59,8 +59,8 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
-"启用此选项将允许 Okular 访问第三方 OCSP 服务器，检查用于数字签名的证书是否已"
-"被吊销。"
+"启用此选项后将允许 Okular 访问第三方 OCSP 服务器，以检查用于数字签名的证书是"
+"否已被吊销。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:66
@@ -119,7 +119,7 @@ msgstr "在打印的文档中包含批注"
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
-msgstr "在打印的文档中包含批注。您可禁用此选项以打印原始的无批注文档。"
+msgstr "在打印的文档中包含批注。如果您需要打印原始的无批注文档，请禁用此项。"
 
 #: generator_pdf.cpp:92
 #, kde-format
@@ -129,7 +129,7 @@ msgstr "强制光栅化"
 #: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
-msgstr "打印前将图像光栅化"
+msgstr "打印前将文档光栅化为图像"
 
 #: generator_pdf.cpp:94
 #, kde-format
@@ -138,8 +138,8 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
-"强制在打印前先对每页中的图像作光栅处理。通常这多少会造成一点负面影响，但对解"
-"决部分文档不能正确打印的问题往往很有用。"
+"强制将每个页面光栅化成图像之后打印。这通常会造成一定的画质劣化，但可以用来应"
+"对某些文档打印结果不正确的情况。"
 
 #: generator_pdf.cpp:101
 #, kde-format
@@ -154,12 +154,12 @@ msgstr "适合整页"
 #: generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
-msgstr "无；打印原始大小"
+msgstr "不缩放，打印原始大小"
 
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr "打印页面的缩放模式"
+msgstr "要打印页面的缩放模式"
 
 #: generator_pdf.cpp:105
 #, kde-format
@@ -190,7 +190,7 @@ msgstr "未加密"
 #: generator_pdf.cpp:930
 #, kde-format
 msgid "Security"
-msgstr "安全"
+msgstr "安全性"
 
 #: generator_pdf.cpp:931
 #, kde-format
@@ -209,9 +209,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
-"签名人员： %1\n"
+"签名者：%1\n"
 "\n"
-"签名日期： %2"
+"签名日期：%2"
 
 #: generator_pdf.cpp:1563
 #, kde-format
@@ -237,7 +237,7 @@ msgstr "PDF"
 #: generator_pdf.cpp:1600
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr "PDF 后端配置"
+msgstr "PDF 后端程序配置"
 
 #: generator_pdf.cpp:2045
 #, kde-format
@@ -269,8 +269,8 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
-"你正在使用的 Poppler 程序库在构建时未启用 NSS 支持，\n"
-"数字签名功能将不可用。"
+"程序使用的 Poppler 程序库在构建时没有启用 NSS 支持。\n"
+"添加数字签名因此不可用。"
 
 #: pdfsettingswidget.cpp:95
 #, kde-format
@@ -295,4 +295,4 @@ msgstr "输入密码"
 #: pdfsignatureutils.cpp:265
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr "输入密码以打开 %1 ："
+msgstr "输入密码以打开 %1："

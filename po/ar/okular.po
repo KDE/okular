@@ -1842,7 +1842,7 @@ msgstr "معلومات"
 #: part/annotationwidgets.cpp:432
 #, kde-format
 msgid "KDE"
-msgstr "كدي"
+msgstr "كِيدِي"
 
 #: part/annotationwidgets.cpp:456
 #, kde-kuit-format

@@ -7,7 +7,6 @@
   <name>DVI Documents</name>
   <name xml:lang="ar">مستندات DVI</name>
   <name xml:lang="az">DVI sənədləri</name>
-  <name xml:lang="be">Дакументы DVI</name>
   <name xml:lang="bg">DVI документи</name>
   <name xml:lang="ca">Documents DVI</name>
   <name xml:lang="ca-valencia">Documents DVI</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">DVI-Dokumente</name>
   <name xml:lang="el">Έγγραφα DVI</name>
   <name xml:lang="en-GB">DVI Documents</name>
-  <name xml:lang="eo">DVI-Dokumentoj</name>
   <name xml:lang="es">Documentos DVI</name>
   <name xml:lang="et">DVI dokumendid</name>
   <name xml:lang="eu">DVI dokumentuak</name>
@@ -55,7 +53,6 @@
   <summary>Adds support for reading DVI documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات DVI</summary>
   <summary xml:lang="az">DjVu sənədlərini oxumaq üçün dəstək əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання дакументаў DVI</summary>
   <summary xml:lang="bg">Добавя поддръжка за DVI документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents DVI</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents DVI</summary>
@@ -63,7 +60,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von DVI-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων DVI</summary>
   <summary xml:lang="en-GB">Adds support for reading DVI documents</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi DVI-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos DVI</summary>
   <summary xml:lang="et">DVI dokumentide lugemise toetus</summary>
   <summary xml:lang="eu">DVI dokumentuak irakurtzeko euskarria gehitzen du</summary>

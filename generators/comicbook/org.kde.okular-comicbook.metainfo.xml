@@ -7,7 +7,6 @@
   <name>Comic Books</name>
   <name xml:lang="ar">الكتب الهزليّة</name>
   <name xml:lang="az">Comic Books</name>
-  <name xml:lang="be">Коміксы</name>
   <name xml:lang="bg">Комикси</name>
   <name xml:lang="ca">Llibres de còmic</name>
   <name xml:lang="ca-valencia">Llibres de còmic</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">Comic-Buch</name>
   <name xml:lang="el">Comic Books</name>
   <name xml:lang="en-GB">Comic Books</name>
-  <name xml:lang="eo">Komika Libro</name>
   <name xml:lang="es">Libros de cómics</name>
   <name xml:lang="et">Koomiksid</name>
   <name xml:lang="eu">Komiki-liburuak</name>
@@ -54,7 +52,6 @@
   <summary>Adds support for reading comic books</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة الكتب الهزلية</summary>
   <summary xml:lang="az">Komiks sənədlərini oxumaq üçün dəstək əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання коміксаў</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на комикси</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir llibres de còmic</summary>
@@ -62,7 +59,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Comic-Büchern</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση comic books</summary>
   <summary xml:lang="en-GB">Adds support for reading comic books</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi komiklibrojn</summary>
   <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
   <summary xml:lang="et">Koomiksite lugemise toetus</summary>
   <summary xml:lang="eu">Komiki-liburuak irakurtzeko euskarria gehitzen du</summary>

@@ -7,7 +7,6 @@
   <name>Images</name>
   <name xml:lang="ar">الصور</name>
   <name xml:lang="az">Şəkillər</name>
-  <name xml:lang="be">Выявы</name>
   <name xml:lang="bg">Изображения</name>
   <name xml:lang="ca">Imatges</name>
   <name xml:lang="ca-valencia">Imatges</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">Bilder</name>
   <name xml:lang="el">Εικόνες</name>
   <name xml:lang="en-GB">Images</name>
-  <name xml:lang="eo">Bildoj</name>
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="et">Pildid</name>
   <name xml:lang="eu">Irudiak</name>
@@ -55,7 +53,6 @@
   <summary>Adds support for reading many image formats</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة العديد من تنسيقات الصور</summary>
   <summary xml:lang="az">Şəkil formatlarının oxunması dəstəyini əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання многіх фарматаў выяў</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на множество формати за изображения</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir molts formats d'imatge</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir molts formats d'imatge</summary>
@@ -63,7 +60,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von vielen Bildformaten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση πολλών τύπων αποθήκευσης εικόνων</summary>
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi multajn bildformatojn</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
   <summary xml:lang="eu">Irudi formatu ugari irakurtzeko euskarria gehitzen du</summary>

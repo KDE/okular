@@ -7,7 +7,6 @@
   <name>FictionBook</name>
   <name xml:lang="ar">كتب FictionBook</name>
   <name xml:lang="az">FictionBook</name>
-  <name xml:lang="be">FictionBook</name>
   <name xml:lang="bg">FictionBook</name>
   <name xml:lang="ca">FictionBook</name>
   <name xml:lang="ca-valencia">FictionBook</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">FictionBook</name>
   <name xml:lang="el">FictionBook</name>
   <name xml:lang="en-GB">FictionBook</name>
-  <name xml:lang="eo">FictionBook</name>
   <name xml:lang="es">FictionBook</name>
   <name xml:lang="et">FictionBook</name>
   <name xml:lang="eu">FictionBook</name>
@@ -55,7 +53,6 @@
   <summary>Adds support for reading FictionBooks</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة كتب FictionBook</summary>
   <summary xml:lang="az">FictionBooks sənədlərini oxumaq üçün dəstək əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання FictionBooks</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на FictionBooks</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir FictionBooks</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir FictionBooks</summary>
@@ -63,7 +60,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von FictionBooks</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση FictionBooks</summary>
   <summary xml:lang="en-GB">Adds support for reading FictionBooks</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi FictionBooks</summary>
   <summary xml:lang="es">Permite la lectura de libros en formato FictionBook</summary>
   <summary xml:lang="et">FictionBooki lugemise toetus</summary>
   <summary xml:lang="eu">FictionBooks irakurtzeko euskarria gehitzen du</summary>

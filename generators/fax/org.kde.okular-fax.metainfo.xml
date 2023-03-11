@@ -7,7 +7,6 @@
   <name>Fax</name>
   <name xml:lang="ar">فاكس</name>
   <name xml:lang="az">Fax</name>
-  <name xml:lang="be">Факс</name>
   <name xml:lang="bg">Факс</name>
   <name xml:lang="ca">Fax</name>
   <name xml:lang="ca-valencia">Fax</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">Fax</name>
   <name xml:lang="el">Fax</name>
   <name xml:lang="en-GB">Fax</name>
-  <name xml:lang="eo">Faks</name>
   <name xml:lang="es">Fax</name>
   <name xml:lang="et">Faks</name>
   <name xml:lang="eu">Fax</name>
@@ -55,7 +53,6 @@
   <summary>Adds support for reading Fax documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات الفاكس</summary>
   <summary xml:lang="az">Faks sənədlərini oxumaq üçün dəstək əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання факсавых дакументаў</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на факс документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents de Fax</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents de Fax</summary>
@@ -63,7 +60,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Fax-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων τηλεμοιοτυπίας</summary>
   <summary xml:lang="en-GB">Adds support for reading Fax documents</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi Telefaksil-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos de fax</summary>
   <summary xml:lang="et">Faksidokumentide lugemise toetus</summary>
   <summary xml:lang="eu">Fax dokumentuak irakurtzeko euskarria gehitzen du</summary>

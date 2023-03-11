@@ -7,7 +7,6 @@
   <name>Markdown</name>
   <name xml:lang="ar">مارك‌داون</name>
   <name xml:lang="az">Markdown</name>
-  <name xml:lang="be">Markdown</name>
   <name xml:lang="bg">Markdown</name>
   <name xml:lang="ca">Markdown</name>
   <name xml:lang="ca-valencia">Markdown</name>
@@ -15,7 +14,6 @@
   <name xml:lang="de">Markdown</name>
   <name xml:lang="el">Markdown</name>
   <name xml:lang="en-GB">Markdown</name>
-  <name xml:lang="eo">Markdown</name>
   <name xml:lang="es">Markdown</name>
   <name xml:lang="et">Markdown</name>
   <name xml:lang="eu">Markdown</name>
@@ -55,7 +53,6 @@
   <summary>Adds support for reading Markdown documents</summary>
   <summary xml:lang="ar">يضيف دعم لقراءة مستندات مارك‌داون</summary>
   <summary xml:lang="az">Markdown sənədlərini oxumaq üçün dəstək əlavə edir</summary>
-  <summary xml:lang="be">Падтрымка чытання дакументаў Markdown</summary>
   <summary xml:lang="bg">Добавя поддръжка за четене на Markdown документи</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents en Markdown</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents en Markdown</summary>
@@ -63,7 +60,6 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Markdown-Dokumenten</summary>
   <summary xml:lang="el">Προσθέτει υποστήριξη για ανάγνωση Markdown εγγράφων</summary>
   <summary xml:lang="en-GB">Adds support for reading Markdown documents</summary>
-  <summary xml:lang="eo">Aldonas subtenon por legi Markdown-dokumentojn</summary>
   <summary xml:lang="es">Permite la lectura de documentos Markdown</summary>
   <summary xml:lang="et">Markdowni dokumentide lugemise toetuse lisamine</summary>
   <summary xml:lang="eu">Markdown dokumentuak irakurtzeko euskarria gehitzen du</summary>

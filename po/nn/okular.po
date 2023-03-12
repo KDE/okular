@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-04 00:45+0000\n"
-"PO-Revision-Date: 2023-02-09 21:48+0100\n"
+"PO-Revision-Date: 2023-03-11 15:04+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -76,6 +76,7 @@ msgstr "Tobias König"
 #, kde-format
 msgid "Lots of framework work, FictionBook backend and former ODT backend"
 msgstr ""
+"Mykje arbeid med rammeverket, FictionBook-motoren og tidlegare ODT-motor"
 
 #: aboutdata.h:33
 #, kde-format
@@ -120,7 +121,7 @@ msgstr "Bilete for merknadar"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr ""
+msgstr "Jiri Baum – NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -2739,7 +2740,7 @@ msgstr "Opna i samanhengande-modus som standard"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "Flytt skrivemerket til neste/førre linje når det når skjermkanten"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -4510,6 +4511,8 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Du har valt å lagra ei Okular-arkivfil utan etternamnet «%1». Dette er ikkje "
+"mogleg. Vil du velja eit nytt namn?"
 
 #: part/part.cpp:2616
 #, kde-format
@@ -4929,6 +4932,10 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"Skriveprogrammet var sett til \n"
+" %1 \n"
+"via kommandolinja. Viss du vil bruka innstillinga, start Okular utan valet "
+"«--editor-cmd»."
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5459,50 +5466,58 @@ msgstr "Det finst alt eit verktøy med dette namnet. Brukar standardnamn."
 msgid "Duplicated Name"
 msgstr "Namneduplikat"
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr "Dokumentside som skal visast"
+msgstr "Dokumentside som skal visast."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
-msgstr "Start dokumentet i presentasjonsmodus"
+msgstr "Start dokumentet i presentasjonsmodus."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
-msgstr "Start med utskriftsvindauge"
+msgstr "Start med utskriftsvindauge."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
-msgstr "Start med utskriftsvindauge og avslutt etter utskrift"
+msgstr "Start med utskriftsvindauge og avslutt etter utskrift."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr "«Unik køyring»-kontroll"
+msgstr "«Unik instans»-kontroll."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
-msgstr "Ikkje hev vindauget"
+msgstr "Ikkje hev vindauget."
 
+# Kommandolinjeval, så skal ha avsluttande punktum.
 #: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
-msgstr "Find søkjeteksten i dokumentet"
+msgstr "Finn søkjeteksten i dokumentet."
 
+# Kommandolinjeval, så skal ha stor forbokstav og avsluttande punktum.
 #: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "Definer eksternt skriveprogram."
 
 #: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
-msgstr "Dokument som skal opnast. Bruk «-» for å lesa frå standard inn."
+msgstr "Dokument som skal opnast. Bruk «-» for å lesa frå standard-inn."
 
 #: shell/okular_main.cpp:57 shell/okular_main.cpp:154
 #, kde-format

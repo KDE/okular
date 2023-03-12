@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-04 00:45+0000\n"
-"PO-Revision-Date: 2023-02-24 12:43\n"
+"PO-Revision-Date: 2023-03-11 04:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/okular/okular.pot\n"
-"X-Crowdin-File-ID: 5766\n"
+"X-Crowdin-File: /kf5-stable/messages/okular/okular.pot\n"
+"X-Crowdin-File-ID: 3823\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5475,9 +5475,10 @@ msgid "Unable to find the Okular component: %1"
 msgstr "无法找到 Okular 组件：%1"
 
 #: shell/shell.cpp:214
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
 msgid "Sidebar"
-msgstr "侧边栏"
+msgstr "显示侧边栏(&I)"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5522,14 +5523,16 @@ msgid "Undo close tab"
 msgstr "撤销关闭标签"
 
 #: shell/shell.cpp:543
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
 msgid "Show Sidebar"
-msgstr "显示侧边栏"
+msgstr "显示侧边栏(&I)"
 
 #: shell/shell.cpp:549
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show S&idebar"
 msgid "Lock Sidebar"
-msgstr "锁定侧边栏"
+msgstr "显示侧边栏(&I)"
 
 #: shell/shell.cpp:646
 #, kde-format
@@ -5620,3 +5623,34 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
+#~ "not visible in PDF readers other than Okular.</warning>"
+#~ msgstr ""
+#~ "<warning>实验性功能。<nl/>在 PDF 文档中插入的图章在 Okular 之外的 PDF 阅读"
+#~ "器中无法显示。</warning>"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "The version of the Poppler library this Okular was compiled with does not "
+#~ "support signing documents with passwords. Please ask your provider to "
+#~ "update it to 22.02 or later."
+#~ msgstr ""
+#~ "Okular 编译时使用的 Poppler 程序库版本不支持使用密码签名文档。请让您的系统"
+#~ "管理员将它更新到 22.02 或者更高版本。"
+
+#~ msgctxt "@title:window"
+#~ msgid "Poppler library is too old"
+#~ msgstr "Poppler 程序库版本太旧"
+
+#~ msgctxt "@info"
+#~ msgid ""
+#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
+#~ "than Okular"
+#~ msgstr "在 PDF 文档中插入的图章在 Okular 之外的 PDF 阅读器中无法显示。"
+
+#~ msgctxt "@title:window"
+#~ msgid "Experimental feature"
+#~ msgstr "实验性功能"

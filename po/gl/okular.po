@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 00:58+0000\n"
 "PO-Revision-Date: 2020-03-07 08:25+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -5060,14 +5060,14 @@ msgid "Main Toolbar"
 msgstr "Barra de ferramentas principal"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, fuzzy, kde-format
 #| msgid "Annotation tools"
 msgid "Annotation Toolbar"
 msgstr "Ferramentas de anotación"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, fuzzy, kde-format
 #| msgid "Annotation tools"
 msgid "Quick Annotation Toolbar"

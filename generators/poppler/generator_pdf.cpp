@@ -718,6 +718,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword(const QStrin
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load(filePath, nullptr, nullptr);
+    documentFilePath = filePath;
     return init(pagesVector, password);
 }
 
@@ -731,6 +732,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword(cons
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::loadFromData(fileData, nullptr, nullptr);
+    documentFilePath = QString();
     return init(pagesVector, password);
 }
 
@@ -1564,6 +1566,18 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
         }
         painter.end();
         return Okular::Document::NoPrintError;
+    }
+
+    // Check if we can send the PDF directly to the printer or need to convert to PS first
+    // We need PS if:
+    // - we are printing with annotations
+    // - we are printing to a file (otherwise page ranges are not respected)
+    // - our document isn't backed by a file
+    if (!printAnnots && printer.outputFileName().isEmpty() && !documentFilePath.isEmpty()) {
+        const Okular::FilePrinter::ScaleMode filePrinterScaleMode = (scaleMode == PDFOptionsPage::None) ? Okular::FilePrinter::ScaleMode::NoScaling : Okular::FilePrinter::ScaleMode::FitToPrintArea;
+
+        return Okular::FilePrinter::printFile(
+            printer, documentFilePath, document()->orientation(), Okular::FilePrinter::ApplicationDeletesFiles, Okular::FilePrinter::SystemSelectsPages, document()->bookmarkedPageRange(), filePrinterScaleMode);
     }
 
 #ifdef DUMMY_QPRINTER_COPY

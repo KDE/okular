@@ -152,6 +152,7 @@ private:
     void xrefReconstructionHandler();
 
     // misc variables for document info and synopsis caching
+    QString documentFilePath;
     bool docSynopsisDirty;
     bool xrefReconstructed;
     Okular::DocumentSynopsis docSyn;

@@ -3577,6 +3577,11 @@ bool Part::doPrint(QPrinter &printer)
         return false;
     }
 
+    if (printer.printRange() == QPrinter::CurrentPage) {
+        printer.setPrintRange(QPrinter::PageRange);
+        printer.setFromTo(currentPage(), currentPage());
+    }
+
     const Document::PrintError printError = m_document->print(printer);
     if (printError != Document::NoPrintError) {
         const QString error = Okular::Document::printErrorString(printError);

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -4875,14 +4875,14 @@ msgid "Main Toolbar"
 msgstr ""
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Annotation Toolbar"
 msgstr "Cyflwyniad"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Quick Annotation Toolbar"

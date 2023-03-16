@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2022-02-27 20:44+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -4810,13 +4810,13 @@ msgid "Main Toolbar"
 msgstr "Bara de unelte principală"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Bară cu adnotări"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Bară cu adnotări rapide"

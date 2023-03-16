@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -4861,13 +4861,13 @@ msgid "Main Toolbar"
 msgstr "Bilah Alat Utama"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Bilah Alat Anotasi"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Bilah Alat Anotasi Cepat"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2005-01-14 16:13+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -4939,14 +4939,14 @@ msgid "Main Toolbar"
 msgstr "Barrenn kentañ an ostilhoù"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, fuzzy, kde-format
 #| msgid "Annotation"
 msgid "Annotation Toolbar"
 msgstr "Notennañ"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, fuzzy, kde-format
 #| msgid "Annotation"
 msgid "Quick Annotation Toolbar"

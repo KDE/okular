@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -4986,7 +4986,7 @@ msgid "Main Toolbar"
 msgstr "میله ابزار اصلی"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -4994,7 +4994,7 @@ msgid "Annotation Toolbar"
 msgstr "حاشیه‌نویسی"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-04 00:45+0000\n"
+"POT-Creation-Date: 2023-03-16 02:47+0000\n"
 "PO-Revision-Date: 2021-10-04 11:01+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4894,13 +4894,13 @@ msgid "Main Toolbar"
 msgstr "Κύρια γραμμή εργαλείων"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:120
+#: part/part.rc:122
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Γραμμή εργαλείων σημειώσεων"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:144
+#: part/part.rc:146
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Γραμμή εργαλείων για γρήγορες σημειώσεις"

@@ -54,6 +54,8 @@
 #include <KConfigDialog>
 #include <KFormat>
 #include <KIO/Global>
+#include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMacroExpander>
 #include <KPluginMetaData>
@@ -61,6 +63,7 @@
 #include <KRun>
 #include <KShell>
 #include <Kdelibs4Migration>
+#include <kio_version.h>
 #include <kzip.h>
 
 // local includes
@@ -4174,6 +4177,16 @@ void Document::processAction(const Action *action)
             }
         }
 
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url, mime.name());
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget));
+        job->start();
+        connect(job, &KIO::OpenUrlJob::result, this, [this, mime](KJob *job) {
+            if (job->error()) {
+                Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
+            }
+        });
+#else
         KService::Ptr ptr = KApplicationTrader::preferredService(mime.name());
         if (ptr) {
             QList<QUrl> lst;
@@ -4182,6 +4195,7 @@ void Document::processAction(const Action *action)
         } else {
             Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
         }
+#endif
     } break;
 
     case Action::DocAction: {

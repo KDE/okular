@@ -30,8 +30,8 @@ class Anchor
 public:
     /** \brief Constructs an anchor that points to an invalid page */
     Anchor()
+        : page(0)
     {
-        page = 0;
     }
 
     /** \brief Constructs an anchor that points to a given position on a

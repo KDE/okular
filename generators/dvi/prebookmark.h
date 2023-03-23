@@ -23,10 +23,10 @@ public:
         noOfChildren = 0;
     }
     PreBookmark(const QString &t, const QString &a, quint16 n)
+        : title(t)
+        , anchorName(a)
+        , noOfChildren(n)
     {
-        title = t;
-        anchorName = a;
-        noOfChildren = n;
     }
 
     // Title of the bookmark

@@ -28,15 +28,13 @@
 
 EBook_CHM::EBook_CHM()
     : EBook()
+    , m_chmFile(nullptr)
+    , m_detectedLCID(0)
+    , m_textCodec(nullptr)
+    , m_textCodecForSpecialFiles(nullptr)
+    , m_currentEncoding(QStringLiteral("UTF-8"))
+    , m_envOptions(QString::fromLatin1(qgetenv("KCHMVIEWEROPTS")))
 {
-    m_envOptions = QString::fromLatin1(qgetenv("KCHMVIEWEROPTS"));
-    m_chmFile = nullptr;
-    m_filename = m_font = QString();
-
-    m_textCodec = nullptr;
-    m_textCodecForSpecialFiles = nullptr;
-    m_detectedLCID = 0;
-    m_currentEncoding = QStringLiteral("UTF-8");
 }
 
 EBook_CHM::~EBook_CHM()

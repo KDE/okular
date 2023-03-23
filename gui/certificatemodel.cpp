@@ -17,9 +17,9 @@
 
 CertificateModel::CertificateModel(const Okular::CertificateInfo &certInfo, QObject *parent)
     : QAbstractTableModel(parent)
+    , m_certificateProperties({Version, SerialNumber, Issuer, IssuedOn, ExpiresOn, Subject, PublicKey, KeyUsage})
     , m_certificateInfo(certInfo)
 {
-    m_certificateProperties = {Version, SerialNumber, Issuer, IssuedOn, ExpiresOn, Subject, PublicKey, KeyUsage};
 }
 
 int CertificateModel::columnCount(const QModelIndex &) const

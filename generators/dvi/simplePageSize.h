@@ -48,9 +48,9 @@ public:
         @param height
     */
     SimplePageSize(const Length width, const Length height)
+        : pageWidth(width)
+        , pageHeight(height)
     {
-        pageWidth = width;
-        pageHeight = height;
     }
 
     ~SimplePageSize()

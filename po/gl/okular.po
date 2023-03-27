@@ -9,14 +9,14 @@
 # Miguel Branco <mgl.branco@gmail.com>, 2010, 2013.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-16 02:47+0000\n"
-"PO-Revision-Date: 2020-03-07 08:25+0100\n"
+"PO-Revision-Date: 2023-03-26 18:53+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -24,13 +24,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Martina Ramilo Pereira, mvillarino, Xosé Calvo, Adrián Chaves Fernández"
+"Martina Ramilo Pereira, mvillarino, Xosé Calvo, Adrián Chaves (Gallaecio)"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -65,8 +65,7 @@ msgstr ""
 "© 2006-2009 Pino Toscano"
 
 #: aboutdata.h:31
-#, fuzzy, kde-format
-#| msgid "Pino Toscano"
+#, kde-format
 msgid "Pino Toscano"
 msgstr "Pino Toscano"
 
@@ -76,20 +75,19 @@ msgid "Former maintainer"
 msgstr "Anterior mantedor"
 
 #: aboutdata.h:32
-#, fuzzy, kde-format
-#| msgid "Tobias Koenig"
+#, kde-format
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
 #: aboutdata.h:32
-#, fuzzy, kde-format
-#| msgid "Lots of framework work, ODT and FictionBook backends"
+#, kde-format
 msgid "Lots of framework work, FictionBook backend and former ODT backend"
-msgstr "Moito traballo no framework, infraestruturas para ODT e FictionBook"
+msgstr ""
+"Moito traballo de infraestruturas, motor de FictionBook e anterior motor de "
+"ODT"
 
 #: aboutdata.h:33
-#, fuzzy, kde-format
-#| msgid "Albert Astals Cid"
+#, kde-format
 msgid "Albert Astals Cid"
 msgstr "Albert Astals Cid"
 
@@ -99,8 +97,7 @@ msgid "Developer"
 msgstr "Desenvolvedor."
 
 #: aboutdata.h:34
-#, fuzzy, kde-format
-#| msgid "Piotr Szymanski"
+#, kde-format
 msgid "Piotr Szymanski"
 msgstr "Piotr Szymanski"
 
@@ -110,8 +107,7 @@ msgid "Created Okular from KPDF codebase"
 msgstr "Creou Okular a partir de código de KPDF"
 
 #: aboutdata.h:35
-#, fuzzy, kde-format
-#| msgid "Enrico Ros"
+#, kde-format
 msgid "Enrico Ros"
 msgstr "Enrico Ros"
 
@@ -121,8 +117,7 @@ msgid "KPDF developer"
 msgstr "Desenvolvedor de KPDF"
 
 #: aboutdata.h:36
-#, fuzzy, kde-format
-#| msgid "Eugene Trounev"
+#, kde-format
 msgid "Eugene Trounev"
 msgstr "Eugene Trounev"
 
@@ -132,8 +127,7 @@ msgid "Annotations artwork"
 msgstr "Traballo gráfico das anotacións"
 
 #: aboutdata.h:37
-#, fuzzy, kde-format
-#| msgid "Jiri Baum - NICTA"
+#, kde-format
 msgid "Jiri Baum - NICTA"
 msgstr "Jiri Baum - NICTA"
 
@@ -143,8 +137,7 @@ msgid "Table selection tool"
 msgstr "Ferramenta de selección de táboas"
 
 #: aboutdata.h:38
-#, fuzzy, kde-format
-#| msgid "Fabio D'Urso"
+#, kde-format
 msgid "Fabio D'Urso"
 msgstr "Fabio D'Urso"
 
@@ -273,11 +266,10 @@ msgstr ""
 "<br/><br/>Escolla a que queira usar:</qt>"
 
 #: core/document.cpp:206
-#, fuzzy, kde-format
-#| msgid "Go to page %1"
+#, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
-msgstr "Ir á páxina %1"
+msgstr "A maioría das páxinas ten %1."
 
 #: core/document.cpp:227
 #, kde-format
@@ -451,10 +443,9 @@ msgid "Modified"
 msgstr "Modificado"
 
 #: core/document.cpp:5829
-#, fuzzy, kde-format
-#| msgid "Mime Type"
+#, kde-format
 msgid "MIME Type"
-msgstr "Tipo mime"
+msgstr "Tipo MIME"
 
 #: core/document.cpp:5832
 #, kde-format
@@ -1049,10 +1040,9 @@ msgid "The document integrity verification could not be completed."
 msgstr "Non puido completarse a verificación da integridade do documento."
 
 #: gui/signatureguiutils.cpp:205
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid "This document has unsigned signature fields."
-msgstr "Este documento está asinado dixitalmente."
+msgstr "Este documento ten campos de sinatura sen asinar."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
@@ -1060,25 +1050,25 @@ msgid "This document is digitally signed."
 msgstr "Este documento está asinado dixitalmente."
 
 #: gui/signatureguiutils.cpp:210
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
-msgstr "Este documento está asinado dixitalmente."
+msgstr ""
+"Este documento está asinado dixitalmente. Cambiou desde a última sinatura."
 
 #: gui/signatureguiutils.cpp:213
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
-msgstr "Este documento está asinado dixitalmente."
+msgstr ""
+"Este documento está asinado dixitalmente. Non se puideron validar "
+"correctamente algunhas das sinaturas."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Digital Signature"
+#, kde-format
 msgid "Unsigned Signature %1"
-msgstr "Sinatura dixital"
+msgstr "Sinatura sen asinar %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
 #, kde-format
@@ -1101,8 +1091,7 @@ msgid "Reason: %1"
 msgstr "Razón: %1"
 
 #: part/annotationactionhandler.cpp:147
-#, fuzzy, kde-format
-#| msgid "Red"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Red"
 msgstr "Vermello"
@@ -1111,18 +1100,16 @@ msgstr "Vermello"
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Orange"
-msgstr ""
+msgstr "Laranxa"
 
 #: part/annotationactionhandler.cpp:149
-#, fuzzy, kde-format
-#| msgid "Yellow"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Yellow"
 msgstr "Amarelo"
 
 #: part/annotationactionhandler.cpp:150
-#, fuzzy, kde-format
-#| msgid "Green"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Green"
 msgstr "Verde"
@@ -1131,11 +1118,10 @@ msgstr "Verde"
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Cyan"
-msgstr ""
+msgstr "Ciano"
 
 #: part/annotationactionhandler.cpp:152
-#, fuzzy, kde-format
-#| msgid "Blue"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Blue"
 msgstr "Azul"
@@ -1144,11 +1130,10 @@ msgstr "Azul"
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Magenta"
-msgstr ""
+msgstr "Maxenta"
 
 #: part/annotationactionhandler.cpp:154
-#, fuzzy, kde-format
-#| msgid "White"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "White"
 msgstr "Branco"
@@ -1157,58 +1142,55 @@ msgstr "Branco"
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Gray"
-msgstr ""
+msgstr "Gris"
 
 #: part/annotationactionhandler.cpp:156
-#, fuzzy, kde-format
-#| msgid "Black"
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "Negro"
 
 #: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:685
-#, fuzzy, kde-format
-#| msgid "&Width:"
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
-msgstr "&Anchura:"
+msgstr "Anchura %1"
 
 #: part/annotationactionhandler.cpp:251
-#, fuzzy, kde-format
-#| msgid "V%1"
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "V%1"
+msgstr "%1%"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr ""
+msgstr "Anchura da liña de anotación (non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr ""
+msgstr "Cor da anotación (non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr ""
+msgstr "Cor de recheo da anotación (non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr ""
+msgstr "Opacidade da anotación (non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr ""
+msgstr "Tipo de letra da anotación (non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
@@ -1217,6 +1199,8 @@ msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
 msgstr ""
+"Engadir a anotación actual ao menú de anotacións rápidas (non se "
+"seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1225,6 +1209,8 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
 "selected)"
 msgstr ""
+"Restrinxir a proporción da forma a 1:1 ou o ángulo da liña a pasos de 15° "
+"(non se seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1232,79 +1218,75 @@ msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
+"Configuración avanzada para a ferramenta de anotacións actual (non se "
+"seleccionaron anotacións)"
 
 #: part/annotationactionhandler.cpp:307
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
-msgstr "Opcións das anotacións"
+msgstr "Anchura da liña de anotación"
 
 #: part/annotationactionhandler.cpp:309
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
 msgstr ""
+"Anchura da liña de anotación (a anotación actual non ten anchura de liña)"
 
 #: part/annotationactionhandler.cpp:313
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
-msgstr "Ferramentas de anotación"
+msgstr "Cor do texto da anotación"
 
 #: part/annotationactionhandler.cpp:315
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "Ferramentas de anotación"
+msgstr "Cor do bordo da anotación"
 
 #: part/annotationactionhandler.cpp:317
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
-msgstr "Ferramentas de anotación"
+msgstr "Cor da anotación"
 
 #: part/annotationactionhandler.cpp:321
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
-msgstr "Ferramentas de anotación"
+msgstr "Cor de recheo da anotación"
 
 #: part/annotationactionhandler.cpp:323
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr ""
+msgstr "Cor de recheo da anotación (a anotación actual non ten cor de recheo)"
 
 #: part/annotationactionhandler.cpp:327
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Anotación"
+msgstr "Tipo de letra da anotación"
 
 #: part/annotationactionhandler.cpp:329
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
+msgstr "Tipo de letra da anotación (a anotación actual non ten tipo de letra)"
 
 #: part/annotationactionhandler.cpp:333
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr ""
+msgstr "Restrinxir o ángulo da liña a pasos de 15°"
 
 #: part/annotationactionhandler.cpp:335
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr ""
+msgstr "Restrinxir as proporcións da forma a 1:1"
 
 #: part/annotationactionhandler.cpp:337
 #, kde-format
@@ -1313,210 +1295,187 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
 "current annotation)"
 msgstr ""
+"Restrinxir a proporción da forma a 1:1 ou o ángulo da liña a pasos de 15° (a "
+"anotación actual non o permite)"
 
 #: part/annotationactionhandler.cpp:340
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
-msgstr "Opcións das anotacións"
+msgstr "Opacidade da anotación"
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr ""
+msgstr "Engadir a anotación actual ao menú de anotacións rápidas"
 
 #: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr ""
+msgstr "Configuración avanzada para a ferramenta de anotacións actual"
 
 #: part/annotationactionhandler.cpp:431
-#, fuzzy, kde-format
-#| msgid "Color:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Color"
-msgstr "Cor:"
+msgstr "Cor"
 
 #: part/annotationactionhandler.cpp:433
-#, fuzzy, kde-format
-#| msgid "Color:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Fill Color"
-msgstr "Cor:"
+msgstr "Cor de recheo"
 
 #: part/annotationactionhandler.cpp:434
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Transparent"
-msgstr ""
+msgstr "Transparente"
 
 #: part/annotationactionhandler.cpp:444
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr ""
+msgstr "Cor personalizada…"
 
 #: part/annotationactionhandler.cpp:498
-#, fuzzy, kde-format
-#| msgid "&Selection Tool"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select color"
-msgstr "Utilidade de &selección"
+msgstr "Seleccionar a cor"
 
 #: part/annotationactionhandler.cpp:550
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgid "&Annotations"
-msgstr "Anotacións"
+msgstr "&Anotacións"
 
 #: part/annotationactionhandler.cpp:551
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
-msgstr ""
+msgstr "Agochar"
 
 #: part/annotationactionhandler.cpp:552
-#, fuzzy, kde-format
-#| msgid "Create annotation tool"
+#, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Ferramenta de creación de anotacións"
+msgstr "Mostras máis ferramentas de anotación"
 
 #: part/annotationactionhandler.cpp:555
-#, fuzzy, kde-format
-#| msgid "Highlighter"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "Realzador"
 
 #: part/annotationactionhandler.cpp:556
-#, fuzzy, kde-format
-#| msgid "Underline"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
-msgstr "Subliñado"
+msgstr "Subliñar"
 
 #: part/annotationactionhandler.cpp:557
-#, fuzzy, kde-format
-#| msgid "Squiggle"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "Borrancho"
 
 #: part/annotationactionhandler.cpp:558
-#, fuzzy, kde-format
-#| msgid "Strike Out"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
-msgstr "Riscado"
+msgstr "Tachar"
 
 #: part/annotationactionhandler.cpp:560
-#, fuzzy, kde-format
-#| msgid "Typewriter"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Campo para completar"
 
 #: part/annotationactionhandler.cpp:561
-#, fuzzy, kde-format
-#| msgid "Inline Note"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
-msgstr "Nota incluída"
+msgstr "Nota in situ"
 
 #: part/annotationactionhandler.cpp:562
-#, fuzzy, kde-format
-#| msgid "Pop-up Note"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Nota emerxente"
 
 #: part/annotationactionhandler.cpp:563
-#, fuzzy, kde-format
-#| msgid "Freehand Line"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "Liña a man alzada"
 
 #: part/annotationactionhandler.cpp:565
-#, fuzzy, kde-format
-#| msgid "Straight Line"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "Liña recta"
 
 #: part/annotationactionhandler.cpp:566
-#, fuzzy, kde-format
-#| msgid "Open Arrow"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
-msgstr "Frecha aberta"
+msgstr "Frecha"
 
 #: part/annotationactionhandler.cpp:567
-#, fuzzy, kde-format
-#| msgid "Rectangle"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Rectángulo"
 
 #: part/annotationactionhandler.cpp:568
-#, fuzzy, kde-format
-#| msgid "Ellipse"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "Elipse"
 
 #: part/annotationactionhandler.cpp:569
-#, fuzzy, kde-format
-#| msgid "Polygon"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "Polígono"
 
 #: part/annotationactionhandler.cpp:570
-#, fuzzy, kde-format
-#| msgid "Geometrical shape"
+#, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
-msgstr "Forma xeométrica"
+msgstr "Formas xeométricas"
 
 #: part/annotationactionhandler.cpp:616
-#, fuzzy, kde-format
-#| msgid "Stamp"
+#, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "Selo"
 
 #: part/annotationactionhandler.cpp:636
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
-msgstr "Anotacións"
+msgstr "Anotacións rápidas"
 
 #: part/annotationactionhandler.cpp:639
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr ""
+msgstr "Escolla unha ferramenta de anotación de entre as anotacións rápidas"
 
 #: part/annotationactionhandler.cpp:649
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgid "Quick Annotation Bar"
-msgstr "Anotacións"
+msgstr "Barra de anotacións rápidas"
 
 #: part/annotationactionhandler.cpp:663
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "Engadir unha anotación"
+msgstr "Engadir ás anotacións rápidas"
 
 #: part/annotationactionhandler.cpp:666
 #, kde-format
@@ -1524,14 +1483,13 @@ msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
 "use"
 msgid "Keep Active"
-msgstr ""
+msgstr "Manter activa"
 
 #: part/annotationactionhandler.cpp:667
-#, fuzzy, kde-format
-#| msgid "Create annotation tool"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "Ferramenta de creación de anotacións"
+msgstr "Manter a ferramenta de anotación activa tras usala"
 
 #: part/annotationactionhandler.cpp:672
 #, kde-format
@@ -1539,35 +1497,31 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr ""
+msgstr "Restrinxir as proporcións e o ángulo das ferramentas de anotación"
 
 #: part/annotationactionhandler.cpp:678
-#, fuzzy, kde-format
-#| msgid "Font:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
-msgstr "Fonte:"
+msgstr "Tipo de letra"
 
 #: part/annotationactionhandler.cpp:679
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "Opcións das anotacións"
+msgstr "Configuración das anotacións"
 
 #: part/annotationactionhandler.cpp:682
-#, fuzzy, kde-format
-#| msgid "Line end:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
-msgstr "Fin de liña:"
+msgstr "Anchura da liña"
 
 #: part/annotationactionhandler.cpp:691
-#, fuzzy, kde-format
-#| msgid "&Opacity:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
-msgstr "&Opacidade:"
+msgstr "Opacidade"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3132
 #, kde-format
@@ -1741,8 +1695,7 @@ msgid "&Color:"
 msgstr "&Cor:"
 
 #: part/annotationwidgets.cpp:276
-#, fuzzy, kde-format
-#| msgid "%"
+#, kde-format
 msgctxt "Suffix for the opacity level, eg '80%'"
 msgid "%"
 msgstr "%"
@@ -2168,10 +2121,9 @@ msgid "Bookmarks"
 msgstr "Marcadores"
 
 #: part/bookmarklist.cpp:135
-#, fuzzy, kde-format
-#| msgid "End of the document"
+#, kde-format
 msgid "Show for all documents"
-msgstr "Final do documento"
+msgstr "Mostrar para todos os documentos"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
@@ -2204,7 +2156,7 @@ msgstr "Abrir un documento"
 #: part/bookmarklist.cpp:290
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
-msgstr ""
+msgstr "Retirar todos os marcadores deste documento"
 
 #: part/certificateviewer.cpp:121
 #, kde-format
@@ -2287,90 +2239,81 @@ msgid "Certificate File (*.cer)"
 msgstr "Ficheiro de certificado (*.cer)"
 
 #: part/certificateviewer.cpp:236
-#, fuzzy, kde-format
-#| msgid "Unable to export certificate!"
+#, kde-format
 msgid "Could not export the certificate"
-msgstr "Non se pode exportar o certificado!"
+msgstr "Non se puido exportar o certificado"
 
 #: part/colormodemenu.cpp:17
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Color Mode"
-msgstr "Modo de cor:"
+msgstr "Modo de &cor"
 
 #: part/colormodemenu.cpp:19
-#, fuzzy, kde-format
-#| msgid "Change &colors"
+#, kde-format
 msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
-msgstr "Cambiar as &cores"
+msgstr "Cambiar as cores"
 
 #: part/colormodemenu.cpp:27
-#, fuzzy, kde-format
-#| msgid "Normal Icons"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
-msgstr "Iconas normais"
+msgstr "Cores &normais"
 
 #: part/colormodemenu.cpp:39
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
-msgstr "Inverter as cores"
+msgstr "&Inverter as cores"
 
 #: part/colormodemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Change Paper Color"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
-msgstr "Cambiar a cor do papel"
+msgstr "Cambiar a cor do &papel"
 
 #: part/colormodemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Change Dark & Light Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
-msgstr "Cambiar as cores escuras e claras"
+msgstr "Cambiar as cores &escuras e claras"
 
 #: part/colormodemenu.cpp:44
-#, fuzzy, kde-format
-#| msgid "Convert to Black & White"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
-msgstr "Converter a branco e negro"
+msgstr "Converter a &branco e negro"
 
 #: part/colormodemenu.cpp:47
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
-msgstr "Inverter as cores"
+msgstr "Inverter o brillo"
 
 #: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr ""
+msgstr "Inverter o l&uma (sRGB lineal)"
 
 #: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr ""
+msgstr "Inverter o luma (&simétrico)"
 
 #: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
-msgstr ""
+msgstr "Cambiar o ton a p&ositivo"
 
 #: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
-msgstr ""
+msgstr "Cambiar o ton a n&egativo"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:11
@@ -2410,151 +2353,134 @@ msgstr "Branco"
 
 #. i18n: tag tool attribute name
 #: part/data/tools.xml:103
-#, fuzzy, kde-format
-#| msgid "Open Arrow"
+#, kde-format
 msgid "Arrow"
-msgstr "Frecha aberta"
+msgstr "Frecha"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:9
-#, fuzzy, kde-format
-#| msgid "Yellow Highlighter"
+#, kde-format
 msgid "Yellow Highlighter"
-msgstr "Realzado amarelo"
+msgstr "Realzador amarelo"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:14
-#, fuzzy, kde-format
-#| msgid "Highlighter"
+#, kde-format
 msgid "Green Highlighter"
-msgstr "Realzador"
+msgstr "Realzador verde"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:24
-#, fuzzy, kde-format
-#| msgid "Insert"
+#, kde-format
 msgid "Insert Text"
-msgstr "Inserir"
+msgstr "Inserir texto"
 
 #: part/dlgaccessibility.cpp:38
-#, fuzzy, kde-format
-#| msgid "Draw border around &Links"
+#, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Draw border around links"
-msgstr "Debuxar un bordo arredor das &ligazóns"
+msgstr "Debuxar un bordo arredor das ligazóns"
 
 #: part/dlgaccessibility.cpp:48
-#, fuzzy, kde-format
-#| msgid "Change &colors"
+#, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Change colors"
-msgstr "Cambiar as &cores"
+msgstr "Cambiar as cores"
 
 #: part/dlgaccessibility.cpp:54
-#, fuzzy, kde-format
-#| msgid "Warning: these options can badly affect drawing speed."
+#, kde-format
 msgctxt "@info Config dialog, accessibility page"
 msgid "<b>Warning:</b> these options can badly affect drawing speed."
 msgstr ""
-"Coidado: estas opcións de debuxado poden afectar negativamente á velocidade."
+"<b>Aviso</b>: estas opcións poden afectar negativamente á velocidade de "
+"debuxado."
 
 #: part/dlgaccessibility.cpp:60
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert colors"
 msgstr "Inverter as cores"
 
 #: part/dlgaccessibility.cpp:61
-#, fuzzy, kde-format
-#| msgid "Change Paper Color"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Change paper color"
 msgstr "Cambiar a cor do papel"
 
 #: part/dlgaccessibility.cpp:62
-#, fuzzy, kde-format
-#| msgid "Change Dark & Light Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Change dark & light colors"
 msgstr "Cambiar as cores escuras e claras"
 
 #: part/dlgaccessibility.cpp:63
-#, fuzzy, kde-format
-#| msgid "Convert to Black & White"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Convert to black & white"
 msgstr "Converter a branco e negro"
 
 #: part/dlgaccessibility.cpp:64
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "Inverter as cores"
+msgstr "Inverter o brillo"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (sRGB linear)"
-msgstr ""
+msgstr "Inverter o luma (sRGB lineal)"
 
 #: part/dlgaccessibility.cpp:66
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (symmetric)"
-msgstr ""
+msgstr "Inverter o luma (simétrico)"
 
 #: part/dlgaccessibility.cpp:67
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue positive"
-msgstr ""
+msgstr "Cambiar o ton a positivo"
 
 #: part/dlgaccessibility.cpp:68
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue negative"
-msgstr ""
+msgstr "Cambiar o ton a negativo"
 
 #: part/dlgaccessibility.cpp:70
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Color mode:"
 msgstr "Modo de cor:"
 
 #: part/dlgaccessibility.cpp:87
-#, fuzzy, kde-format
-#| msgid "Paper color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Paper color:"
 msgstr "Cor do papel:"
 
 #: part/dlgaccessibility.cpp:99
-#, fuzzy, kde-format
-#| msgid "Dark color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Dark color:"
 msgstr "Cor escura:"
 
 #: part/dlgaccessibility.cpp:104
-#, fuzzy, kde-format
-#| msgid "Light color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Light color:"
 msgstr "Cor clara:"
 
 #: part/dlgaccessibility.cpp:119
-#, fuzzy, kde-format
-#| msgid "Threshold:"
+#, kde-format
 msgctxt "@label:slider Config dialog, accessibility page"
 msgid "Threshold:"
 msgstr "Limiar:"
 
 #: part/dlgaccessibility.cpp:127
-#, fuzzy, kde-format
-#| msgid "Contrast:"
+#, kde-format
 msgctxt "@label:slider Config dialog, accessibility page"
 msgid "Contrast:"
 msgstr "Contraste:"
@@ -2563,74 +2489,60 @@ msgstr "Contraste:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr ""
+msgstr "Motor de fala:"
 
 #: part/dlgaccessibility.cpp:165
-#, fuzzy, kde-format
-#| msgid "Text to search for"
+#, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "Texto a buscar"
+msgstr "Voz de fala:"
 
 #: part/dlgannotations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Ferramentas de anotación"
+msgstr "Barra de ferramentas completa de anotación"
 
 #: part/dlgannotations.cpp:26
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Ferramentas de anotación"
+msgstr "Barra de ferramentas rápida de anotación"
 
 #: part/dlgannotations.cpp:28
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "Ferramentas de anotación"
+msgstr "Barra de ferramentas de anotación:"
 
 #: part/dlgannotations.cpp:34
-#, fuzzy, kde-format
-#| msgid "&Author:"
+#, kde-format
 msgctxt "@label:textbox Config dialog, annotations page"
 msgid "Author:"
-msgstr "&Autor:"
+msgstr "Autoría:"
 
 #: part/dlgannotations.cpp:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Note</b>: the information here is used only for annotations. The "
-#| "information is saved in annotated documents, and so will be transmitted "
-#| "together with the document."
+#, kde-format
 msgctxt "@info Config dialog, annotations page"
 msgid ""
 "<b>Note:</b> the information here is used only for annotations. The "
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
-"<b>Nota</b>: esta información úsase só para anotacións. A información "
+"<b>Nota:</b> esta información úsase só para anotacións. A información "
 "gárdase en documentos anotados, e polo tanto transmitirase xunto co "
 "documento."
 
 #: part/dlgannotations.cpp:48
-#, fuzzy, kde-format
-#| msgid "Edit annotation tool"
+#, kde-format
 msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
 msgid "<h3>Quick Annotation Tools</h3>"
-msgstr "Ferramenta de edición de anotacións"
+msgstr "<h3>Ferramentas rápidas de anotación</h3>"
 
 #: part/dlgeditor.cpp:28
-#, fuzzy, kde-format
-#| msgctxt "@info:whatsthis"
-#| msgid ""
-#| "Choose the editor you want to launch when Okular wants to open a source "
-#| "file."
+#, kde-format
 msgctxt "@info:whatsthis Config dialog, editor page"
 msgid ""
 "Choose the editor you want to launch when Okular wants to open a source file."
@@ -2639,72 +2551,55 @@ msgstr ""
 "fonte."
 
 #: part/dlgeditor.cpp:29
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Custom Text Editor"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Custom Text Editor"
 msgstr "Editor de texto personalizado"
 
 #: part/dlgeditor.cpp:30
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Kate"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Kate"
 msgstr "Kate"
 
 #: part/dlgeditor.cpp:31
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Kile"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Kile"
 msgstr "Kile"
 
 #: part/dlgeditor.cpp:32
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "SciTE"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "SciTE"
 msgstr "SciTE"
 
 #: part/dlgeditor.cpp:33
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Emacs client"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Emacs client"
 msgstr "Cliente do Emacs"
 
 #: part/dlgeditor.cpp:34
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Lyx client"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Lyx client"
-msgstr "Cliente Lyx"
+msgstr "Cliente de Lyx"
 
 #: part/dlgeditor.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "TeXstudio"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "TeXstudio"
 msgstr "TeXstudio"
 
 #: part/dlgeditor.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "TeXiFy IDEA"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "TeXiFy IDEA"
 msgstr "TeXiFy IDEA"
 
 #: part/dlgeditor.cpp:37
-#, fuzzy, kde-format
-#| msgid "Editor:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, editor page"
 msgid "Editor:"
 msgstr "Editor:"
@@ -2734,8 +2629,7 @@ msgstr ""
 "fornecida."
 
 #: part/dlgeditor.cpp:63
-#, fuzzy, kde-format
-#| msgid "Command:"
+#, kde-format
 msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Orde:"
@@ -2744,87 +2638,76 @@ msgstr "Orde:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
-msgstr ""
+msgstr "Usar desprazamento suave"
 
 #: part/dlggeneral.cpp:35
-#, fuzzy, kde-format
-#| msgid "Appearance"
+#, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
-msgstr "Aparencia"
+msgstr "Aparencia:"
 
 #: part/dlggeneral.cpp:39
-#, fuzzy, kde-format
-#| msgid "Show scroll&bars"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
-msgstr "Mostrar barras de &desprazamento"
+msgstr "Mostrar as barras de desprazamento"
 
 #: part/dlggeneral.cpp:46
-#, fuzzy, kde-format
-#| msgid "Link the &thumbnails with the page"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
-msgstr "Ligar as &miniaturas coa páxina"
+msgstr "Ligar as miniaturas coa páxina"
 
 #: part/dlggeneral.cpp:53
-#, fuzzy, kde-format
-#| msgid "Show &hints and info messages"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
-msgstr "Mostrar os &consellos e mensaxes de información"
+msgstr "Mostrar os consellos e mensaxes de información"
 
 #: part/dlggeneral.cpp:59
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr ""
+msgstr "Avisar de ficheiros incluídos, formularios ou sinaturas"
 
 #: part/dlggeneral.cpp:66
-#, fuzzy, kde-format
-#| msgid "Display document title in titlebar if available"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Mostrar o título do documento na barra de título de estar dispoñíbel."
 
 #: part/dlggeneral.cpp:72
-#, fuzzy, kde-format
-#| msgid "Display file name only"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Mostrar só o nome do ficheiro"
 
 #: part/dlggeneral.cpp:73
-#, fuzzy, kde-format
-#| msgid "Display full file path"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Mostrar a ruta completa ao ficheiro"
 
 #: part/dlggeneral.cpp:75
-#, fuzzy, kde-format
-#| msgid "When not displaying document title:"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Cando non se mostre o título do documento:"
 
 #: part/dlggeneral.cpp:90
-#, fuzzy, kde-format
-#| msgid "Use custom background color"
+#, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
-msgstr "Usar unha cor de fondo personalizada."
+msgstr "Usar unha cor de fondo personalizada:"
 
 #: part/dlggeneral.cpp:112
-#, fuzzy, kde-format
-#| msgid "Program Features"
+#, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
-msgstr "Funcionalidades do programa"
+msgstr "Funcionalidades do programa:"
 
 #: part/dlggeneral.cpp:119
-#, fuzzy, kde-format
-#| msgid "Open new files in &tabs"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Abrir os ficheiros novos en separadores"
@@ -2833,32 +2716,28 @@ msgstr "Abrir os ficheiros novos en separadores"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr ""
+msgstr "Ir ao separador existente se o ficheiro xa está aberto"
 
 #: part/dlggeneral.cpp:137
-#, fuzzy, kde-format
-#| msgid "&Obey DRM limitations"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
-msgstr "&Obedecer as limitacións DRM"
+msgstr "Obedecer as limitacións de DRM"
 
 #: part/dlggeneral.cpp:146
-#, fuzzy, kde-format
-#| msgid "&Reload document on file change"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "&Cargar de novo o documento ao cambiar de ficheiro"
+msgstr "Cargar de novo o documento cando o ficheiro cambie"
 
 #: part/dlggeneral.cpp:153
-#, fuzzy, kde-format
-#| msgid "Show backend selection dialog"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Mostrar o diálogo de escolla de infraestrutura"
 
 #: part/dlggeneral.cpp:160
-#, fuzzy, kde-format
-#| msgid "Right to left reading direction"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Dirección de lectura de dereita a esquerda."
@@ -2867,33 +2746,30 @@ msgstr "Dirección de lectura de dereita a esquerda."
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr ""
+msgstr "Abrir no modo continuo de maneira predeterminada"
 
 #: part/dlggeneral.cpp:173
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Ao usar a ferramenta de exploración, envolver o cursor nos límites da "
+"pantalla"
 
 #: part/dlggeneral.cpp:190
-#, fuzzy, kde-format
-#| msgid "Overview &columns:"
+#, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
-msgstr "&Columnas de resumo:"
+msgstr "Columnas de resumo:"
 
 #: part/dlggeneral.cpp:197
-#, fuzzy, kde-format
-#| msgid "%"
+#, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
 #: part/dlggeneral.cpp:198
-#, fuzzy, kde-format
-#| msgid ""
-#| "Defines how much of the current viewing area will still be visible when "
-#| "pressing the Page Up/Down keys."
+#, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
 "Defines how much of the current viewing area will still be visible when "
@@ -2903,138 +2779,117 @@ msgstr ""
 "ao premer as teclas Páxina arriba/abaixo."
 
 #: part/dlggeneral.cpp:200
-#, fuzzy, kde-format
-#| msgid "&Page Up/Down overlap:"
+#, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
-msgstr "Sola&pamento de páxina arriba/abaixo:"
+msgstr "Solapamento de páxina arriba/abaixo:"
 
 #: part/dlggeneral.cpp:204
-#, fuzzy, kde-format
-#| msgid "100%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:205
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Axustar á anchura"
 
 #: part/dlggeneral.cpp:206
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Axustar á páxina"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Axuste automático"
 
 #: part/dlggeneral.cpp:208
-#, fuzzy, kde-format
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before.\n"
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
 "Define o modo de ampliación predeterminado dos ficheiros que non se abrisen "
-"nunca antes.\n"
-"Para os ficheiros que se abrisen antes emprégase o modo de ampliación "
-"anterior."
+"nunca antes. Para os ficheiros que se abrisen antes emprégase o modo de "
+"ampliación anterior."
 
 #: part/dlggeneral.cpp:210
-#, fuzzy, kde-format
-#| msgid "&Default Zoom:"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "&Ampliación predeterminada:"
+msgstr "Ampliación predeterminada:"
 
 #: part/dlgperformance.cpp:26
-#, fuzzy, kde-format
-#| msgid "Enable &transparency effects"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable transparency effects"
-msgstr "Activar os efectos de &transparencia"
+msgstr "Activar os efectos de transparencia"
 
 #: part/dlgperformance.cpp:28
-#, fuzzy, kde-format
-#| msgid "CPU Usage"
+#, kde-format
 msgctxt "@label Config dialog, performance page"
 msgid "CPU usage:"
-msgstr "Uso da CPU"
+msgstr "Uso da CPU:"
 
 #: part/dlgperformance.cpp:35
-#, fuzzy, kde-format
-#| msgid "&Low"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Low"
-msgstr "&Baixo"
+msgstr "Baixo"
 
 #: part/dlgperformance.cpp:36
-#, fuzzy, kde-format
-#| msgid "Nor&mal (default)"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Normal (default)"
-msgstr "Nor&mal (predeterminado)"
+msgstr "Normal (predeterminado)"
 
 #: part/dlgperformance.cpp:37
-#, fuzzy, kde-format
-#| msgid "Aggr&essive"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Aggressive"
-msgstr "Agr&esivo"
+msgstr "Agresivo"
 
 #: part/dlgperformance.cpp:38
-#, fuzzy, kde-format
-#| msgid "G&reedy"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Greedy"
-msgstr "Cobi&zoso"
+msgstr "Egoísta"
 
 #: part/dlgperformance.cpp:40
-#, fuzzy, kde-format
-#| msgid "Memory Usage"
+#, kde-format
 msgctxt "@label:listbox Config dialog, performance page, memory usage"
 msgid "Memory usage:"
-msgstr "Uso da memoria"
+msgstr "Uso da memoria:"
 
 #: part/dlgperformance.cpp:54
-#, fuzzy, kde-format
-#| msgid "Enable Text Antialias"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text antialias"
-msgstr "Activar o suavizado do texto."
+msgstr "Activar o suavizado do texto"
 
 #: part/dlgperformance.cpp:56
-#, fuzzy, kde-format
-#| msgid "Rendering"
+#, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "Debuxado"
+msgstr "Opcións de debuxado:"
 
 #: part/dlgperformance.cpp:59
-#, fuzzy, kde-format
-#| msgid "Enable Graphics Antialias"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable graphics antialias"
-msgstr "Activar o suavizado das imaxes."
+msgstr "Activar o suavizado das imaxes"
 
 #: part/dlgperformance.cpp:64
-#, fuzzy, kde-format
-#| msgid "Enable Text Hinting"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "Activar o axuste do texto."
+msgstr "Activar o axuste do texto"
 
 #: part/dlgperformance.cpp:77
 #, kde-format
@@ -3077,7 +2932,7 @@ msgstr ""
 #, kde-format
 msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 msgid "every "
-msgstr ""
+msgstr "cada"
 
 #: part/dlgpresentation.cpp:38
 #, kde-format
@@ -3091,234 +2946,202 @@ msgstr[1] " segundos"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr ""
+msgstr "Avanzar automaticamente:"
 
 #: part/dlgpresentation.cpp:53
-#, fuzzy, kde-format
-#| msgid "Loop after last page"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Loop after last page"
-msgstr "Recomezar despois da última páxina"
+msgstr "Volver ao principio tras a última páxina"
 
 #: part/dlgpresentation.cpp:59
-#, fuzzy, kde-format
-#| msgid "Tap left/right side to go back/forward"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap left/right side to go back/forward"
 msgstr "Tocar os lados esquerdo e dereito para ir cara atrás e cara adiante"
 
 #: part/dlgpresentation.cpp:60
-#, fuzzy, kde-format
-#| msgid "Tap anywhere to go forward"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap anywhere to go forward"
 msgstr "Toque en calquera parte para ir cara adiante"
 
 #: part/dlgpresentation.cpp:61
-#, fuzzy, kde-format
-#| msgid "Disabled"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Disabled"
-msgstr "Desactivada"
+msgstr "Desactivado"
 
 #: part/dlgpresentation.cpp:63
-#, fuzzy, kde-format
-#| msgid "Touch navigation:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
 msgid "Touch navigation:"
 msgstr "Navegación táctil:"
 
 #: part/dlgpresentation.cpp:72
-#, fuzzy, kde-format
-#| msgid "Background color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, presentation page"
 msgid "Background color:"
-msgstr "Cor do fondo:"
+msgstr "Cor de fondo:"
 
 #: part/dlgpresentation.cpp:76
-#, fuzzy, kde-format
-#| msgid "Hidden After Delay"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Hidden after delay"
 msgstr "Agochar despois do retardo"
 
 #: part/dlgpresentation.cpp:77
-#, fuzzy, kde-format
-#| msgid "Always Visible"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Always visible"
 msgstr "Sempre visíbel"
 
 #: part/dlgpresentation.cpp:78
-#, fuzzy, kde-format
-#| msgid "Always Hidden"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Always hidden"
 msgstr "Sempre agochado"
 
 #: part/dlgpresentation.cpp:80
-#, fuzzy, kde-format
-#| msgid "Mouse cursor:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
 msgid "Mouse cursor:"
 msgstr "Cursor do rato:"
 
 #: part/dlgpresentation.cpp:84
-#, fuzzy, kde-format
-#| msgid "Show &progress indicator"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show progress indicator"
-msgstr "Mostrar o indicador de &progreso"
+msgstr "Mostrar o indicador de progreso"
 
 #: part/dlgpresentation.cpp:90
-#, fuzzy, kde-format
-#| msgid "Show s&ummary page"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show summary page"
-msgstr "Mostrar a páxina de re&sumo"
+msgstr "Mostrar a páxina de resumo"
 
 #: part/dlgpresentation.cpp:100
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Instant (Never use animations)"
-msgstr ""
+msgstr "Instantánea (non usar animacións)"
 
 #: part/dlgpresentation.cpp:101
-#, fuzzy, kde-format
-#| msgid "Replace"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Replace"
 msgstr "Substituír"
 
 #: part/dlgpresentation.cpp:102
-#, fuzzy, kde-format
-#| msgid "Random Transition"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Random transition"
 msgstr "Transición aleatoria"
 
 #: part/dlgpresentation.cpp:103
-#, fuzzy, kde-format
-#| msgid "Blinds Vertical"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds vertical"
 msgstr "Contras verticais"
 
 #: part/dlgpresentation.cpp:104
-#, fuzzy, kde-format
-#| msgid "Blinds Horizontal"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds horizontal"
 msgstr "Contras horizontais"
 
 #: part/dlgpresentation.cpp:105
-#, fuzzy, kde-format
-#| msgid "Box In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
 msgstr "Caixa cara dentro"
 
 #: part/dlgpresentation.cpp:106
-#, fuzzy, kde-format
-#| msgid "Box Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
 msgstr "Caixa cara fóra"
 
 #: part/dlgpresentation.cpp:107
-#, fuzzy, kde-format
-#| msgid "Dissolve"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Dissolve"
 msgstr "Disolver"
 
 #: part/dlgpresentation.cpp:108
-#, fuzzy, kde-format
-#| msgid "Fade"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Fade"
 msgstr "Esvaer"
 
 #: part/dlgpresentation.cpp:109
-#, fuzzy, kde-format
-#| msgid "Glitter Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter down"
 msgstr "Cortina baixando"
 
 #: part/dlgpresentation.cpp:110
-#, fuzzy, kde-format
-#| msgid "Glitter Right"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter right"
 msgstr "Cortina cara á dereita"
 
 #: part/dlgpresentation.cpp:111
-#, fuzzy, kde-format
-#| msgid "Glitter Right-Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter right-down"
 msgstr "Cortina dereita e baixando"
 
 #: part/dlgpresentation.cpp:112
-#, fuzzy, kde-format
-#| msgid "Split Horizontal In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal in"
 msgstr "Dividir horizontalmente"
 
 #: part/dlgpresentation.cpp:113
-#, fuzzy, kde-format
-#| msgid "Split Horizontal Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal out"
 msgstr "Saír da división horizontal"
 
 #: part/dlgpresentation.cpp:114
-#, fuzzy, kde-format
-#| msgid "Split Vertical In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical in"
 msgstr "Dividir verticalmente"
 
 #: part/dlgpresentation.cpp:115
-#, fuzzy, kde-format
-#| msgid "Split Vertical Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical out"
 msgstr "Saír da división vertical"
 
 #: part/dlgpresentation.cpp:116
-#, fuzzy, kde-format
-#| msgid "Wipe Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe down"
 msgstr "Limpar cara a abaixo"
 
 #: part/dlgpresentation.cpp:117
-#, fuzzy, kde-format
-#| msgid "Wipe Right"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe right"
 msgstr "Limpar cara a dereita"
 
 #: part/dlgpresentation.cpp:118
-#, fuzzy, kde-format
-#| msgid "Wipe Left"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe left"
 msgstr "Limpar cara a esquerda"
 
 #: part/dlgpresentation.cpp:119
-#, fuzzy, kde-format
-#| msgid "Wipe Up"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe up"
 msgstr "Limpar cara a arriba"
 
 #: part/dlgpresentation.cpp:121
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, transitions"
 msgid "Default transition:"
 msgstr "Transición predeterminada:"
@@ -3327,43 +3150,36 @@ msgstr "Transición predeterminada:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
 msgid "Preferred screen:"
-msgstr ""
+msgstr "Pantalla preferida:"
 
 #: part/dlgpresentation.cpp:137
-#, fuzzy, kde-format
-#| msgid "Drawing Tool: %1"
+#, kde-format
 msgctxt ""
 "@label Config dialog, presentation page, heading line for drawing tool "
 "manager"
 msgid "<h3>Drawing Tools</h3>"
-msgstr "Ferramenta de debuxo: %1"
+msgstr "<h3>Ferramentas de debuxo</h3>"
 
 #: part/dlgpresentation.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox The current screen, for the presentation mode"
-#| msgid "Current Screen"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Current Screen"
 msgstr "Pantalla actual"
 
 #: part/dlgpresentation.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox The default screen for the presentation mode"
-#| msgid "Default Screen"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
 msgstr "Pantalla predeterminada"
 
 #: part/dlgpresentation.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox %1 is the screen number (0, 1, ...)"
-#| msgid "Screen %1"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
 "screen model name. %4 is the screen name like DVI-0"
 msgid "Screen %1 (%2 %3 %4)"
-msgstr "Pantalla: %1"
+msgstr "Pantalla %1 (%2 %3 %4)"
 
 #: part/dlgpresentation.cpp:190
 #, kde-format
@@ -3371,7 +3187,7 @@ msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...), hopefully not 0."
 msgid "Screen %1 (disconnected)"
-msgstr ""
+msgstr "Pantalla %1 (desconectada)"
 
 #: part/drawingtoolactions.cpp:192
 #, kde-format
@@ -3586,13 +3402,12 @@ msgstr "*|Todos os ficheiros"
 #: part/formwidgets.cpp:1065
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "Campo de sinatura sen asinar (prema para asinar)"
 
 #: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgid "Sign CRL"
+#, kde-format
 msgid "&Sign..."
-msgstr "Asinar o CRL"
+msgstr "A&sinar…"
 
 #: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
 #, kde-format
@@ -3710,32 +3525,28 @@ msgid "&View Mode"
 msgstr "Modo da &vista"
 
 #: part/pageview.cpp:619
-#, fuzzy, kde-format
-#| msgid "Single Page"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
-msgstr "Páxina única"
+msgstr "Pá&xina única"
 
 #: part/pageview.cpp:620
-#, fuzzy, kde-format
-#| msgid "Facing Pages"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
-msgstr "Páxinas opostas"
+msgstr "Páxinas &opostas"
 
 #: part/pageview.cpp:621
-#, fuzzy, kde-format
-#| msgid "Facing Pages (Center First Page)"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
-msgstr "Páxinas opostas (Centrar a primeira páxina)"
+msgstr "Páxinas opostas (&centrar a primeira páxina)"
 
 #: part/pageview.cpp:624
-#, fuzzy, kde-format
-#| msgid "Overview"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
-msgstr "Resumo"
+msgstr "Resum&o"
 
 #: part/pageview.cpp:636
 #, kde-format
@@ -3743,11 +3554,10 @@ msgid "&Continuous"
 msgstr "&Continuo"
 
 #: part/pageview.cpp:643
-#, fuzzy, kde-format
-#| msgid "Right to left reading direction"
+#, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
-msgstr "Dirección de lectura de dereita a esquerda."
+msgstr "Usar a dirección de lectura de dereita a esquerda."
 
 #: part/pageview.cpp:652
 #, kde-format
@@ -3786,10 +3596,9 @@ msgid "Selection Tools"
 msgstr "Ferramentas de selección"
 
 #: part/pageview.cpp:736
-#, fuzzy, kde-format
-#| msgid "Digital Signature"
+#, kde-format
 msgid "Digitally &Sign..."
-msgstr "Sinatura dixital"
+msgstr "A&sinar dixitalmente…"
 
 #: part/pageview.cpp:742
 #, kde-format
@@ -3844,10 +3653,9 @@ msgstr[0] " Cargouse un documento dunha páxina."
 msgstr[1] " Cargouse un documento de %1 páxinas."
 
 #: part/pageview.cpp:2517
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Table Contents to Clipboard"
-msgstr "Copiar no portapapeis"
+msgstr "Copiar o contido da táboa ao portapapeis"
 
 #: part/pageview.cpp:2522 part/pageview.cpp:2840 part/pageview.cpp:2984
 #: part/pageview.cpp:3041
@@ -4007,6 +3815,7 @@ msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
+"Todos os seus certificados de sinatura ou non son válidos ou caducaron."
 
 #: part/pageview.cpp:5022
 #, kde-format
@@ -4015,16 +3824,19 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
+"Non hai certificados de sinatura dispoñíbeis.<br/>Para máis información, "
+"consulte a sección sobre <a href=\"%1\">engadir sinaturas dixitais</a> no "
+"manual."
 
 #: part/pageview.cpp:5038
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
-msgstr ""
+msgstr "Ten cambios sen gardar. Garde o documento antes de asinalo."
 
 #: part/pageview.cpp:5054
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr ""
+msgstr "Debuxe un rectángulo para inserir o campo de sinatura"
 
 #: part/pageview.cpp:5198
 #, kde-format
@@ -4050,38 +3862,39 @@ msgid ""
 "create a potentially more readable signature, press <interface>Start over</"
 "interface> and draw a bigger rectangle."
 msgstr ""
+"Unha sinatura deste tamaño podería ser demasiado pequena para lerse. Se "
+"quere crear unha sinatura potencialmente máis lexíbel, prema "
+"<interface>Comezar de novo</interface> e debuxe un rectángulo máis grande."
 
 #: part/pageviewannotator.cpp:364
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
-msgstr ""
+msgstr "Comezar de novo"
 
 #: part/pageviewannotator.cpp:365
-#, fuzzy, kde-format
-#| msgid "Sign CRL"
+#, kde-format
 msgctxt "@action:button"
 msgid "Sign"
-msgstr "Asinar o CRL"
+msgstr "Asinar"
 
 #: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
+"Non se puido asinar. O contrasinal do certificado non é correcto ou non se "
+"puido escribir en «%1»"
 
 #: part/pageviewannotator.cpp:1166
-#, fuzzy, kde-format
-#| msgid "Author"
+#, kde-format
 msgid "Author name"
-msgstr "Autor"
+msgstr "Nome da persoa autora"
 
 #: part/pageviewannotator.cpp:1166
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgid "Author name for the annotation:"
-msgstr "Engadir unha anotación"
+msgstr "Nome da persoa autora para a anotación:"
 
 #: part/pageviewannotator.cpp:1227
 #, kde-format
@@ -4167,18 +3980,14 @@ msgid "Highlighter"
 msgstr "Realzador"
 
 #: part/pageviewannotator.cpp:1607
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgid "Add favorite annotation"
-msgstr "Engadir unha anotación"
+msgstr "Engadir a anotación ás favoritas"
 
 #: part/pageviewannotator.cpp:1607
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Custom annotation name:"
-msgstr "axustar a anotación"
+msgstr "Nome de anotación personalizado:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -4372,11 +4181,10 @@ msgid "Page Number"
 msgstr "Número de páxina"
 
 #: part/part.cpp:831
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr "Configurar Okular…"
+msgstr "Configurar os modos de cor…"
 
 #: part/part.cpp:872
 #, kde-format
@@ -4384,10 +4192,9 @@ msgid "Select All Text on Current Page"
 msgstr "Seleccionar todo o texto da páxina actual"
 
 #: part/part.cpp:885
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Show S&idebar"
-msgstr "Mostrar a barra de &páxina"
+msgstr "Mostrar a barra &lateral"
 
 #: part/part.cpp:894
 #, kde-format
@@ -4456,12 +4263,14 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Acaba de modificar o documento aberto, pero este tipo de documento non pode "
+"gardarse.\n"
+"Calquera modificación perderase ao pechar Okular."
 
 #: part/part.cpp:1134
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Document can't be saved"
-msgstr "Contrasinal do documento"
+msgstr "Non se pode gardar o documento"
 
 #: part/part.cpp:1163
 #, kde-format
@@ -4713,18 +4522,19 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Escoller gardar un arquivo de Okular sen que o nome de ficheiro remate coa "
+"extensión «%1». Iso non está permitido, quere escoller outro nome?"
 
 #: part/part.cpp:2616
-#, fuzzy, kde-format
-#| msgid "Line Extensions"
+#, kde-format
 msgid "Unsupported extension"
-msgstr "Extensión da liña"
+msgstr "Extensión incompatíbel"
 
 #: part/part.cpp:2617
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Escolla un novo nome"
 
 #: part/part.cpp:2649
 #, kde-format
@@ -4757,13 +4567,15 @@ msgid "Could not open the temporary file for saving."
 msgstr "Non se puido abrir o ficheiro temporal para gardar."
 
 #: part/part.cpp:2697
-#, fuzzy, kde-kuit-format
-#| msgid "File could not be saved in '%1'. Try to save it to another location."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Could not overwrite <filename>%1</filename> because that file is read-only. "
 "Try saving to another location or changing that file's permissions."
-msgstr "Non se puido gardar o ficheiro en «%1». Inténteo gardar noutro sitio."
+msgstr ""
+"Non se puido substituír <filename>%1</filename> por ser un ficheiro de só "
+"lectura. Prove a gardar noutra localización ou a cambiar os permisos do "
+"ficheiro."
 
 #: part/part.cpp:2709
 #, kde-format
@@ -4893,10 +4705,9 @@ msgid "Collapse all"
 msgstr "Pregalas todas"
 
 #: part/part.cpp:3135
-#, fuzzy, kde-format
-#| msgid "Link the &thumbnails with the page"
+#, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr "Ligar as &miniaturas coa páxina"
+msgstr "Sincronizar as miniaturas coa páxina"
 
 #: part/part.cpp:3140
 #, kde-format
@@ -4909,11 +4720,10 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #: part/part.cpp:3343
-#, fuzzy, kde-format
-#| msgid "Speak Text"
+#, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
-msgstr "Pronunciar o texto"
+msgstr "Falar"
 
 #: part/part.cpp:3500
 #, kde-format
@@ -5061,17 +4871,15 @@ msgstr "Barra de ferramentas principal"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
 #: part/part.rc:122
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgid "Annotation Toolbar"
-msgstr "Ferramentas de anotación"
+msgstr "Barra de ferramentas de anotación"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:146
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "Ferramentas de anotación"
+msgstr "Barra de ferramentas rápida de anotación"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format
@@ -5138,6 +4946,9 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"O editor definiuse na liña de ordes como\n"
+" %1 \n"
+"Se quere usar a opción, inicie Okular sen a opción «--editor-cmd»."
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5245,10 +5056,9 @@ msgid "Reading font information..."
 msgstr "Lendo a información da fonte…"
 
 #: part/propertiesdialog.cpp:158
-#, fuzzy, kde-format
-#| msgid "&Page Size"
+#, kde-format
 msgid "&Page Sizes"
-msgstr "&Tamaño da páxina"
+msgstr "Tamaños de &páxina"
 
 #: part/propertiesdialog.cpp:225
 #, kde-format
@@ -5404,15 +5214,12 @@ msgid "File"
 msgstr "Ficheiro"
 
 #: part/propertiesdialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Page"
-msgstr "Páxinas"
+msgstr "Páxina"
 
 #: part/propertiesdialog.cpp:503
-#, fuzzy, kde-format
-#| msgctxt "@title:column"
-#| msgid "Size"
+#, kde-format
 msgid "Size"
 msgstr "Tamaño"
 
@@ -5467,16 +5274,13 @@ msgid "Filter Options"
 msgstr "Opcións de filtro"
 
 #: part/side_reviews.cpp:65
-#, fuzzy, kde-format
-#| msgid ""
-#| "<div align=center><h3>No annotations</h3>To create new annotations press "
-#| "F6 or select <i>Tools -&gt; Review</i> from the menu.</div>"
+#, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Sen anotacións</h3>Para crear novas anotacións prema "
-"F6 ou escolla <i>Utilidades -&gt; Revisar</i> no menú.</div>"
+"F6 ou escolla <i>Utilidades -&gt; Anotacións</i> no menú.</div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format
@@ -5489,10 +5293,9 @@ msgid "Group by Author"
 msgstr "Agrupar segundo o autor"
 
 #: part/side_reviews.cpp:150
-#, fuzzy, kde-format
-#| msgid "Show reviews for current page only"
+#, kde-format
 msgid "Show annotations for current page only"
-msgstr "Mostrar só as revisións da páxina actual"
+msgstr "Mostrar só as anotacións da páxina actual"
 
 #: part/side_reviews.cpp:160
 #, kde-format
@@ -5512,30 +5315,27 @@ msgstr "Propiedades"
 #: part/signaturepartutils.cpp:46
 #, kde-format
 msgid "Select certificate to sign with"
-msgstr ""
+msgstr "Seleccione o certificado co que asinar"
 
 #: part/signaturepartutils.cpp:46
-#, fuzzy, kde-format
-#| msgid "Certificate Data:"
+#, kde-format
 msgid "Certificates:"
-msgstr "Datos do certificado:"
+msgstr "Certificados:"
 
 #: part/signaturepartutils.cpp:59
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "Introduza o contrasinal (se existe) para desbloquear o certificado: %1"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgid "Certificate has Expired."
+#, kde-format
 msgid "Enter certificate password"
-msgstr "O certificado caducou."
+msgstr "Introduza o contrasinal do certificado"
 
 #: part/signaturepartutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter document password"
-msgstr "Contrasinal do documento"
+msgstr "Introduza o contrasinal do documento"
 
 #: part/signaturepartutils.cpp:93
 #, kde-format
@@ -5543,12 +5343,12 @@ msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
-msgstr ""
+msgstr "%1_asinado.%2"
 
 #: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
+msgstr "Gardar o ficheiro asinado como"
 
 #: part/signaturepropertiesdialog.cpp:29
 #, kde-format
@@ -5717,7 +5517,7 @@ msgstr "Atopar unha cadea no texto"
 #: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "define a orde do editor externo"
 
 #: shell/main.cpp:83
 #, kde-format
@@ -5731,6 +5531,10 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"Non pode definir a orde do editor externo nunha instancia de Okular que xa "
+"está en execución. Desactive os separadores e inténteo de novo. Teña en "
+"conta que «unique» tampouco se permite ao definir a orde do editor na liña "
+"de ordes.\n"
 
 #: shell/okular_main.cpp:170
 #, kde-format
@@ -5764,10 +5568,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Non se pode atopar o compoñente de Okular: %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Mostrar a barra de &páxina"
+msgstr "Barra lateral"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5816,16 +5619,14 @@ msgid "Undo close tab"
 msgstr "Desfacer o peche de separador"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Mostrar a barra de &páxina"
+msgstr "Mostrar a barra lateral"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Mostrar a barra de &páxina"
+msgstr "Bloquear a barra lateral"
 
 #: shell/shell.cpp:646
 #, kde-format
@@ -5863,64 +5664,59 @@ msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avisarme cando intente pechar varios separadores."
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "Copiar o texto"
+msgstr "&Copiar a ruta"
 
 #: shell/welcomescreen.cpp:77
-#, fuzzy, kde-format
-#| msgid "Open Con&taining Folder"
+#, kde-format
 msgid "&Open Containing Folder"
-msgstr "Abrir o cartafol con&tedor"
+msgstr "Abrir o cartafol c&ontedor…"
 
 #: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "&Esquecer este elemento"
 
 #: shell/welcomescreen.cpp:139
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "Só o documento actual"
+msgstr "Non hai documentos recentes"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Benvida a Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
-#, fuzzy, kde-format
-#| msgid "Open Document"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Abrir un documento"
+msgstr "Abrir un documento…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:377
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "Só o documento actual"
+msgstr "Documentos recentes"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:387
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Esquecelo todo"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Agochar a pantalla de benvida"
 
 #~ msgctxt "@info"
 #~ msgid ""

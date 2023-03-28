@@ -134,7 +134,14 @@ static KJSObject fieldGetValue(KJSContext * /*context*/, void *object)
     }
     case FormField::FormText: {
         const FormFieldText *text = static_cast<const FormFieldText *>(field);
-        return KJSString(text->text());
+        const QLocale locale;
+        bool ok;
+        const double textAsNumber = locale.toDouble(text->text(), &ok);
+        if (ok) {
+            return KJSNumber(textAsNumber);
+        } else {
+            return KJSString(text->text());
+        }
     }
     case FormField::FormChoice: {
         const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(field);

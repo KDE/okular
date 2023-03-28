@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-16 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 00:45+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -265,64 +265,64 @@ msgstr ""
 "<qt>Dj' a trové pus k' on programe fondmint pol sôre MIME: <br /><b>%1</b> "
 "(%2).<br /><br />Tchoezixhoz s' i vs plait li ké eployî:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:209
 #, fuzzy, kde-format
 #| msgid "Go to page %1"
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Potchî al pådje %1"
 
-#: core/document.cpp:227
+#: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr ""
 
-#: core/document.cpp:229
+#: core/document.cpp:232
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr ""
 
-#: core/document.cpp:252
+#: core/document.cpp:255
 #, fuzzy, kde-format
 #| msgid "%1 x %2 in"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 pôces"
 
-#: core/document.cpp:254
+#: core/document.cpp:257
 #, fuzzy, kde-format
 #| msgid "%1 x %2 mm"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1691
+#: core/document.cpp:1694
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2451
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Dji n' sai trover d' tchôke-divins ki pout apougnî l' documint ki passe."
 
-#: core/document.cpp:3601
+#: core/document.cpp:3604
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Prezintaedje"
 
-#: core/document.cpp:4166 core/document.cpp:4172
+#: core/document.cpp:4169 core/document.cpp:4175
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -331,149 +331,149 @@ msgstr ""
 "Li documint saye d' enonder on dfoûtrin programe eyet, po vosse såvrité, "
 "Okular nel permet nén."
 
-#: core/document.cpp:4183
+#: core/document.cpp:4186 core/document.cpp:4196
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Dji n' a trové nou programe po drovi l' fitchî del sôre mime %1."
 
-#: core/document.cpp:4606
+#: core/document.cpp:4620
 #, fuzzy, kde-format
 #| msgid "Could not open the temporary file for saving."
 msgid "Could not open a temporary file"
 msgstr "Dji n' sai drovi l' fitchî timporaire po schaper."
 
-#: core/document.cpp:4608
+#: core/document.cpp:4622
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4610
+#: core/document.cpp:4624
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4612
+#: core/document.cpp:4626
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4614
+#: core/document.cpp:4628
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4616
+#: core/document.cpp:4630
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4618
+#: core/document.cpp:4632
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find file to print"
 msgstr "Dji n' a savou trover l' componint Okular."
 
-#: core/document.cpp:4620
+#: core/document.cpp:4634
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4622
+#: core/document.cpp:4636
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4624
+#: core/document.cpp:4638
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5289 part/part.cpp:1156
+#: core/document.cpp:5303 part/part.cpp:1156
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "Dji n' a savou drovi « %1 » po-z î scrire. Fitchî nén schapé."
 
-#: core/document.cpp:5799
+#: core/document.cpp:5813
 #, kde-format
 msgid "Title"
 msgstr "Tite"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5816
 #, kde-format
 msgid "Subject"
 msgstr "Sudjet"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5819
 #, kde-format
 msgid "Description"
 msgstr "Discrijhaedje"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5822
 #, kde-format
 msgid "Author"
 msgstr "Oteur"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5825
 #, kde-format
 msgid "Creator"
 msgstr "Ahiveu"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5828
 #, kde-format
 msgid "Producer"
 msgstr "Produjheu"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5831
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5834
 #, kde-format
 msgid "Pages"
 msgstr "Pådjes"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5837
 #, kde-format
 msgid "Created"
 msgstr "Ahivé"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5840
 #, kde-format
 msgid "Modified"
 msgstr "Candjî"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5843
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Sôre MIME"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5846
 #, kde-format
 msgid "Category"
 msgstr "Categoreye"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5849
 #, kde-format
 msgid "Keywords"
 msgstr "Mot-clés"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5852
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "Fitchî"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5855
 #, kde-format
 msgid "File Size"
 msgstr "Grandeu do fitchî"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5858
 #, kde-format
 msgid "Page Size"
 msgstr "Grandeu do papî"

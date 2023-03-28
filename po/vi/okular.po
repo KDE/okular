@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-16 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 00:45+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -252,59 +252,59 @@ msgstr ""
 "<qt>Tìm thấy nhiều hơn một hậu phương cho kiểu MIME:<br /><b>%1</b> (%2)."
 "<br /><br />Vui lòng chọn cái để dùng:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:209
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Hầu hết các trang là %1."
 
-#: core/document.cpp:227
+#: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Dọc %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:232
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Ngang %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:255
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 inch (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:257
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Tiếp tục tìm từ đầu"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1694
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Tiếp tục tìm từ cuối"
 
-#: core/document.cpp:2451
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Không tìm được phần cài cắm nào có thể xử lí tài liệu được truyền vào."
 
-#: core/document.cpp:3601
+#: core/document.cpp:3604
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "xoá chú dẫn"
 
-#: core/document.cpp:4166 core/document.cpp:4172
+#: core/document.cpp:4169 core/document.cpp:4175
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -313,52 +313,52 @@ msgstr ""
 "Tài liệu đang định thực thi một ứng dụng bên ngoài và vì sự an toàn của bạn, "
 "Okular không cho phép việc đó."
 
-#: core/document.cpp:4183
+#: core/document.cpp:4186 core/document.cpp:4196
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Không tìm thấy ứng dụng nào để mở tệp thuộc kiểu MIME %1."
 
-#: core/document.cpp:4606
+#: core/document.cpp:4620
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Không mở được tệp tạm"
 
-#: core/document.cpp:4608
+#: core/document.cpp:4622
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Chuyển đổi in thất bại"
 
-#: core/document.cpp:4610
+#: core/document.cpp:4624
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Tiến trình in gặp sự cố"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4626
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Tiến trình in không khởi động được"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4628
 #, kde-format
 msgid "Printing to file failed"
 msgstr "In thành tệp thất bại"
 
-#: core/document.cpp:4616
+#: core/document.cpp:4630
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Máy in ở trạng thái không hợp lệ"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4632
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Không tìm thấy tệp để in"
 
-#: core/document.cpp:4620
+#: core/document.cpp:4634
 #, kde-format
 msgid "There was no file to print"
 msgstr "Không có tệp nào để in"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4636
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -367,92 +367,92 @@ msgstr ""
 "Không tìm được tệp nhị phân phù hợp với việc in. Hãy đảm bảo rằng đang sẵn "
 "có tệp nhị phân lpr của CUPS"
 
-#: core/document.cpp:4624
+#: core/document.cpp:4638
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Cỡ in trang không hợp lệ"
 
-#: core/document.cpp:5289 part/part.cpp:1156
+#: core/document.cpp:5303 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Không mở được '%1'. Tệp không tồn tại"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5813
 #, kde-format
 msgid "Title"
 msgstr "Tiêu đề"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5816
 #, kde-format
 msgid "Subject"
 msgstr "Chủ đề"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5819
 #, kde-format
 msgid "Description"
 msgstr "Mô tả"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5822
 #, kde-format
 msgid "Author"
 msgstr "Tác giả"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5825
 #, kde-format
 msgid "Creator"
 msgstr "Trình tạo"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5828
 #, kde-format
 msgid "Producer"
 msgstr "Trình sinh"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5831
 #, kde-format
 msgid "Copyright"
 msgstr "Bản quyền"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5834
 #, kde-format
 msgid "Pages"
 msgstr "Số trang"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5837
 #, kde-format
 msgid "Created"
 msgstr "Tạo"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5840
 #, kde-format
 msgid "Modified"
 msgstr "Chỉnh sửa"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5843
 #, kde-format
 msgid "MIME Type"
 msgstr "Kiểu MIME"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5846
 #, kde-format
 msgid "Category"
 msgstr "Loại:"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5849
 #, kde-format
 msgid "Keywords"
 msgstr "Từ khoá"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5852
 #, kde-format
 msgid "File Path"
 msgstr "Đường dẫn tệp"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5855
 #, kde-format
 msgid "File Size"
 msgstr "Kích thước tệp"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5858
 #, kde-format
 msgid "Page Size"
 msgstr "Cỡ trang"

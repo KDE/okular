@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-16 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 00:45+0000\n"
 "PO-Revision-Date: 2021-12-31 11:00-0800\n"
 "Last-Translator: A S Alam <aalam@satluj.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -255,59 +255,59 @@ msgstr ""
 "<qt>MIME ਕਿਸਮ ਲਈ ਇੱਕ ਤੋਂ ਵੱਧ ਬੈਕਐਂਡ ਮਿਲੇ:<br /><b>%1</b> (%2)।<br /> <br />ਇਹਨਾਂ ਵਿੱਚੋਂ "
 "ਵਰਤਣ ਲਈ ਇੱਕ ਦੀ ਚੋਣ ਕਰੋ:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:209
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "ਬਹੁਤੇ ਸਫ਼ੇ %1 ਉੱਤੇ ਹਨ।"
 
-#: core/document.cpp:227
+#: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "ਪੋਰਟਰੇਟ %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:232
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "ਲੈਂਡਸਕੇਪ %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:255
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 ਇੰ (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:257
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ਸ਼ੁਰੂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1694
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "ਹੇਠਾਂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: core/document.cpp:2451
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "ਦਿੱਤੇ ਡੌਕੂਮੈਂਟ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਵਾਸਤੇ ਇੱਕ ਪਲੱਗਇਨ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: core/document.cpp:3601
+#: core/document.cpp:3604
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ਟਿੱਪਣੀਆਂ ਹਟਾਓ"
 
-#: core/document.cpp:4166 core/document.cpp:4172
+#: core/document.cpp:4169 core/document.cpp:4175
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -316,52 +316,52 @@ msgstr ""
 "ਡੌਕੂਮੈਂਟ ਇੱਕ ਬਾਹਰੀ ਐਪਲੀਕੇਸ਼ਨ ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਿਹਾ ਹੈ, ਅਤੇ ਓਕੁਲਾਰ ਨੇ ਤੁਹਾਡੀ ਸੁਰੱਖਿਆ ਵਾਸਤੇ "
 "ਇਹ ਮਨਜ਼ੂਰ ਨਹੀਂ ਕੀਤਾ ਹੈ।"
 
-#: core/document.cpp:4183
+#: core/document.cpp:4186 core/document.cpp:4196
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "ਮਾਈਮ-ਟਾਈਪ %1 ਦੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਲੱਭੀ ਹੈ।"
 
-#: core/document.cpp:4606
+#: core/document.cpp:4620
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "ਆਰਜ਼ੀ ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ"
 
-#: core/document.cpp:4608
+#: core/document.cpp:4622
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ਕਨਵਰਜ਼ਨ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
 
-#: core/document.cpp:4610
+#: core/document.cpp:4624
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਦੀ ਕਾਰਵਾਈ ਕਰੈਸ਼ ਹੋ ਗਈ"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4626
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ਪਰਿੰਟ ਕਾਰਵਾਈ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4628
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ਫਾਇਲ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
 
-#: core/document.cpp:4616
+#: core/document.cpp:4630
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "ਪਰਿੰਟਰ ਦੀ ਹਾਲਤ ਅਢੁੱਕਵੀ ਹੈ"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4632
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਫਾਇਲ ਲੱਭਣ ਲਈ ਅਸਮਰੱਖ"
 
-#: core/document.cpp:4620
+#: core/document.cpp:4634
 #, kde-format
 msgid "There was no file to print"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4636
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -369,92 +369,92 @@ msgid ""
 msgstr ""
 "ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਢੁੱਕਵੀਂ ਬਾਈਨਰੀ ਨਹੀਂ ਮਿਲੀ। ਚੈੱਕ ਕਰੋ ਕਿ ਕੀ CUPS lpr ਬਾਈਨਰੀ ਉਪਲੱਬਧ ਹੈ।"
 
-#: core/document.cpp:4624
+#: core/document.cpp:4638
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5289 part/part.cpp:1156
+#: core/document.cpp:5303 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਫਾਇਲ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5813
 #, kde-format
 msgid "Title"
 msgstr "ਟਾਇਟਲ"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5816
 #, kde-format
 msgid "Subject"
 msgstr "ਵਿਸ਼ਾ"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5819
 #, kde-format
 msgid "Description"
 msgstr "ਵੇਰਵਾ"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5822
 #, kde-format
 msgid "Author"
 msgstr "ਲੇਖਕ"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5825
 #, kde-format
 msgid "Creator"
 msgstr "ਨਿਰਮਾਤਾ"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5828
 #, kde-format
 msgid "Producer"
 msgstr "ਪਰੋਡਿਊਸਰ"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5831
 #, kde-format
 msgid "Copyright"
 msgstr "ਕਾਪੀਰਾਈਟ"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5834
 #, kde-format
 msgid "Pages"
 msgstr "ਪੇਜ਼"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5837
 #, kde-format
 msgid "Created"
 msgstr "ਨਿਰਮਾਣ"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5840
 #, kde-format
 msgid "Modified"
 msgstr "ਸੋਧ"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5843
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ਕਿਸਮ"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5846
 #, kde-format
 msgid "Category"
 msgstr "ਕੈਟਾਗਰੀ"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5849
 #, kde-format
 msgid "Keywords"
 msgstr "ਸ਼ਬਦ"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5852
 #, kde-format
 msgid "File Path"
 msgstr "ਫਾਇਲ ਪਾਥ"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5855
 #, kde-format
 msgid "File Size"
 msgstr "ਫਾਇਲ ਸਾਈਜ਼"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5858
 #, kde-format
 msgid "Page Size"
 msgstr "ਪੇਜ਼ ਸਾਈਜ਼"

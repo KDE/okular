@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-16 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 00:45+0000\n"
 "PO-Revision-Date: 2023-02-28 23:02+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -253,59 +253,59 @@ msgstr ""
 "<qt>MIME 형식 <b>%1</b> (%2)에 대한 백엔드가 하나 이상 존재합니다.<br /><br /"
 ">사용할 백엔드를 선택하십시오:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:209
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "대부분 쪽 크기는 %1입니다."
 
-#: core/document.cpp:227
+#: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "세로 %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:232
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "가로 %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:255
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 인치 (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:257
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "처음부터 계속 검색"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1694
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "아래에서부터 계속 검색"
 
-#: core/document.cpp:2451
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "전달된 문서를 처리할 플러그인을 찾을 수 없습니다."
 
-#: core/document.cpp:3601
+#: core/document.cpp:3604
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "주석 삭제"
 
-#: core/document.cpp:4166 core/document.cpp:4172
+#: core/document.cpp:4169 core/document.cpp:4175
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -313,52 +313,52 @@ msgid ""
 msgstr ""
 "이 문서는 외부 프로그램을 불러오려고 하며, 안전을 위해서 허용하지 않습니다."
 
-#: core/document.cpp:4183
+#: core/document.cpp:4186 core/document.cpp:4196
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME 형식이 %1인 파일에 필요한 프로그램을 찾을 수 없습니다."
 
-#: core/document.cpp:4606
+#: core/document.cpp:4620
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "임시 파일을 열 수 없습니다"
 
-#: core/document.cpp:4608
+#: core/document.cpp:4622
 #, kde-format
 msgid "Print conversion failed"
 msgstr "인쇄 변환 실패"
 
-#: core/document.cpp:4610
+#: core/document.cpp:4624
 #, kde-format
 msgid "Printing process crashed"
 msgstr "인쇄 프로세스 충돌함"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4626
 #, kde-format
 msgid "Printing process could not start"
 msgstr "인쇄 프로세스를 시작할 수 없음"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4628
 #, kde-format
 msgid "Printing to file failed"
 msgstr "파일로 인쇄할 수 없음"
 
-#: core/document.cpp:4616
+#: core/document.cpp:4630
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "프린터 상태가 올바르지 않음"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4632
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "인쇄할 파일을 찾을 수 없음"
 
-#: core/document.cpp:4620
+#: core/document.cpp:4634
 #, kde-format
 msgid "There was no file to print"
 msgstr "인쇄할 파일이 없음"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4636
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -367,92 +367,92 @@ msgstr ""
 "인쇄할 수 있는 실행 파일을 찾을 수 없습니다. CUPS lpr 실행 파일이 있는지 확인"
 "하십시오"
 
-#: core/document.cpp:4624
+#: core/document.cpp:4638
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5289 part/part.cpp:1156
+#: core/document.cpp:5303 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
 
-#: core/document.cpp:5799
+#: core/document.cpp:5813
 #, kde-format
 msgid "Title"
 msgstr "제목"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5816
 #, kde-format
 msgid "Subject"
 msgstr "주제"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5819
 #, kde-format
 msgid "Description"
 msgstr "설명"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5822
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5825
 #, kde-format
 msgid "Creator"
 msgstr "제작 도구"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5828
 #, kde-format
 msgid "Producer"
 msgstr "생성 도구"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5831
 #, kde-format
 msgid "Copyright"
 msgstr "저작권자"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5834
 #, kde-format
 msgid "Pages"
 msgstr "쪽 수"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5837
 #, kde-format
 msgid "Created"
 msgstr "만든 날짜"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5840
 #, kde-format
 msgid "Modified"
 msgstr "수정한 날짜"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5843
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 형식"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5846
 #, kde-format
 msgid "Category"
 msgstr "분류"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5849
 #, kde-format
 msgid "Keywords"
 msgstr "키워드"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5852
 #, kde-format
 msgid "File Path"
 msgstr "파일 경로"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5855
 #, kde-format
 msgid "File Size"
 msgstr "파일 크기"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5858
 #, kde-format
 msgid "Page Size"
 msgstr "쪽 크기"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-16 02:47+0000\n"
+"POT-Creation-Date: 2023-03-28 03:30+0000\n"
 "PO-Revision-Date: 2013-10-30 03:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -263,14 +263,14 @@ msgstr ""
 "<qt><b>%1</b> (%2).<br /><br />MIME түрімен айналысатын бірнеше тетіктер "
 "табылды:<br />Қайсын қолданатынын таңдаңыз:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:209
 #, fuzzy, kde-format
 #| msgid "Go to page %1"
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "%1-бетіне өту"
 
-#: core/document.cpp:227
+#: core/document.cpp:230
 #, fuzzy, kde-format
 #| msgctxt "paper size"
 #| msgid "portrait C5E"
@@ -278,7 +278,7 @@ msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "тік C5E"
 
-#: core/document.cpp:229
+#: core/document.cpp:232
 #, fuzzy, kde-format
 #| msgctxt "paper size"
 #| msgid "landscape C5E"
@@ -286,41 +286,41 @@ msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "көлденең C5E"
 
-#: core/document.cpp:252
+#: core/document.cpp:255
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 дюйм (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:257
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 мм (%3)"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1691
+#: core/document.cpp:1694
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2451
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Тапсырылған құжатпен айналысатын плагині табылған жоқ."
 
-#: core/document.cpp:3601
+#: core/document.cpp:3604
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "аңдатпаларды өшіру"
 
-#: core/document.cpp:4166 core/document.cpp:4172
+#: core/document.cpp:4169 core/document.cpp:4175
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -329,52 +329,52 @@ msgstr ""
 "Құжат бір сыртқы қолданбаны жегу әрекет жасауда, бірақ Okular қауіпсіздікті "
 "қамтамасыз етіп оған жол бермеді."
 
-#: core/document.cpp:4183
+#: core/document.cpp:4186 core/document.cpp:4196
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 MIME түрлі файлды ашатын қолданба табылған жоқ."
 
-#: core/document.cpp:4606
+#: core/document.cpp:4620
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "EУақытша файлы ашылмады."
 
-#: core/document.cpp:4608
+#: core/document.cpp:4622
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Басу үшін түрлендіру жаңылысы."
 
-#: core/document.cpp:4610
+#: core/document.cpp:4624
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Басып шығару процесі қирады"
 
-#: core/document.cpp:4612
+#: core/document.cpp:4626
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Басып шығару процесі басталмады"
 
-#: core/document.cpp:4614
+#: core/document.cpp:4628
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Файлға басып шығару жаңылысы."
 
-#: core/document.cpp:4616
+#: core/document.cpp:4630
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Принтер дұрыс емес күйде"
 
-#: core/document.cpp:4618
+#: core/document.cpp:4632
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Басып шығаратын файл табылмады"
 
-#: core/document.cpp:4620
+#: core/document.cpp:4634
 #, kde-format
 msgid "There was no file to print"
 msgstr "Басып шығаратын файл жоқ"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4636
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -383,93 +383,93 @@ msgstr ""
 "Басып шығару үшін керек орындайтын файл табылған жоқ. CUPS-тың lpr "
 "бағдарламасы бар екенін тексеріңіз."
 
-#: core/document.cpp:4624
+#: core/document.cpp:4638
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5289 part/part.cpp:1156
+#: core/document.cpp:5303 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "\"%1\" деген ашылмады. Файл жоқ."
 
-#: core/document.cpp:5799
+#: core/document.cpp:5813
 #, kde-format
 msgid "Title"
 msgstr "Атауы"
 
-#: core/document.cpp:5802
+#: core/document.cpp:5816
 #, kde-format
 msgid "Subject"
 msgstr "Тақырыбы"
 
-#: core/document.cpp:5805
+#: core/document.cpp:5819
 #, kde-format
 msgid "Description"
 msgstr "Сипаттамасы"
 
-#: core/document.cpp:5808
+#: core/document.cpp:5822
 #, kde-format
 msgid "Author"
 msgstr "Авторы"
 
-#: core/document.cpp:5811
+#: core/document.cpp:5825
 #, kde-format
 msgid "Creator"
 msgstr "Құрушысы"
 
-#: core/document.cpp:5814
+#: core/document.cpp:5828
 #, kde-format
 msgid "Producer"
 msgstr "Өндірушісі"
 
-#: core/document.cpp:5817
+#: core/document.cpp:5831
 #, kde-format
 msgid "Copyright"
 msgstr "Авторлық құқығы"
 
-#: core/document.cpp:5820
+#: core/document.cpp:5834
 #, kde-format
 msgid "Pages"
 msgstr "Беттері"
 
-#: core/document.cpp:5823
+#: core/document.cpp:5837
 #, kde-format
 msgid "Created"
 msgstr "Құрылған кезі"
 
-#: core/document.cpp:5826
+#: core/document.cpp:5840
 #, kde-format
 msgid "Modified"
 msgstr "Өзгертілген кезі"
 
-#: core/document.cpp:5829
+#: core/document.cpp:5843
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "MIME түрі"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5846
 #, kde-format
 msgid "Category"
 msgstr "Санаты"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5849
 #, kde-format
 msgid "Keywords"
 msgstr "Түйінді сөздері"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5852
 #, kde-format
 msgid "File Path"
 msgstr "Файл жолы"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5855
 #, kde-format
 msgid "File Size"
 msgstr "Файл өлшемі"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5858
 #, kde-format
 msgid "Page Size"
 msgstr "Бет өлшемі"

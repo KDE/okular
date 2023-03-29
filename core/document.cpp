@@ -4094,9 +4094,35 @@ QString Document::bookmarkedPageRange() const
     return range;
 }
 
-struct ExecuteNextActionsHelper : public QObject {
+struct ExecuteNextActionsHelper : public QObject, private DocumentObserver {
     Q_OBJECT
 public:
+    explicit ExecuteNextActionsHelper(Document *doc)
+        : m_doc(doc)
+    {
+        doc->addObserver(this);
+        connect(doc, &Document::aboutToClose, this, [this] { b = false; });
+    }
+
+    ~ExecuteNextActionsHelper() override
+    {
+        m_doc->removeObserver(this);
+    }
+
+    void notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags) override
+    {
+        if (setupFlags == DocumentChanged || setupFlags == UrlChanged) {
+            b = false;
+        }
+    }
+
+    bool shouldExecuteNextAction() const
+    {
+        return b;
+    }
+
+private:
+    Document *const m_doc;
     bool b = true;
 };
 
@@ -4107,8 +4133,7 @@ void Document::processAction(const Action *action)
     }
 
     // Don't execute next actions if the action itself caused the closing of the document
-    ExecuteNextActionsHelper executeNextActions;
-    connect(this, &Document::aboutToClose, &executeNextActions, [&executeNextActions] { executeNextActions.b = false; });
+    const ExecuteNextActionsHelper executeNextActionsHelper(this);
 
     switch (action->actionType()) {
     case Action::Goto: {
@@ -4311,7 +4336,7 @@ void Document::processAction(const Action *action)
     } break;
     }
 
-    if (executeNextActions.b) {
+    if (executeNextActionsHelper.shouldExecuteNextAction()) {
         const QVector<Action *> nextActions = action->nextActions();
         for (const Action *a : nextActions) {
             processAction(a);

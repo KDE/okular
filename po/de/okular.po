@@ -3,7 +3,7 @@
 # Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2007, 2008, 2009, 2010.
 # Burkhard Lück <lueck@hube-lueck.de>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
 # Stephan Johach <lucardus@onlinehome.de>, 2006.
-# Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022.
+# Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022, 2023.
 # Panagiotis Papadopoulos <pano_90@gmx.net>, 2010, 2011.
 # Johannes Obermayr <johannesobermayr@gmx.de>, 2010.
 # Michael Weghorn <m.weghorn@posteo.de>, 2017.
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-28 03:30+0000\n"
-"PO-Revision-Date: 2022-07-23 23:37+0200\n"
+"PO-Revision-Date: 2023-03-24 19:41+0100\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.07.70\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2265,7 +2265,7 @@ msgstr "&Normale Farben"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
-msgstr "Farben &invertieren"
+msgstr "Farben &umkehren"
 
 #: part/colormodemenu.cpp:40
 #, kde-format
@@ -2399,7 +2399,7 @@ msgstr ""
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert colors"
-msgstr "Farben invertieren"
+msgstr "Farben umkehren"
 
 #: part/dlgaccessibility.cpp:61
 #, kde-format

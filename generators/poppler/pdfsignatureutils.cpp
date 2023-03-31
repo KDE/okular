@@ -79,7 +79,19 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setPublicKeyStrength(pInfo.publicKeyStrength());
     oInfo.setSelfSigned(pInfo.isSelfSigned());
     oInfo.setCertificateData(pInfo.certificateData());
-    oInfo.setCheckPasswordFunction([pInfo](const QString &password) { return pInfo.checkPassword(password); });
+    oInfo.setCheckPasswordFunction([pInfo](const QString &password) {
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
+        auto backend = Poppler::activeCryptoSignBackend();
+        if (!backend) {
+            return false;
+        }
+        if (Poppler::hasCryptoSignBackendFeature(backend.value(), Poppler::CryptoSignBackendFeature::BackendAsksPassphrase)) {
+            // we shouldn't ask anyone about passwords. The backend will do that themselves, so just assume everything is okay.
+            return true;
+        }
+#endif
+        return pInfo.checkPassword(password);
+    });
     return oInfo;
 }
 

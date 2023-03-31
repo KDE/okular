@@ -19,11 +19,92 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
+QString PDFSettingsWidget::popplerEnumToSettingString(Poppler::CryptoSignBackend backend)
+{
+    switch (backend) {
+    case Poppler::CryptoSignBackend::NSS:
+        return QStringLiteral("NSS");
+    case Poppler::CryptoSignBackend::GPG:
+        return QStringLiteral("GPG");
+    }
+    return {};
+}
+
+static QString popplerEnumToUserString(Poppler::CryptoSignBackend backend)
+{
+    // I'm unsure if we want these translatable, but if so
+    // we sholud do something here rather than forward directly to the
+    // technical popplerEnumToSettingString
+    return PDFSettingsWidget::popplerEnumToSettingString(backend);
+}
+
+std::optional<Poppler::CryptoSignBackend> PDFSettingsWidget::settingStringToPopplerEnum(QStringView backend)
+{
+    if (backend == QStringLiteral("NSS"))
+        return Poppler::CryptoSignBackend::NSS;
+    if (backend == QStringLiteral("GPG"))
+        return Poppler::CryptoSignBackend::GPG;
+    return std::nullopt;
+}
+#endif
+
 PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
     : QWidget(parent)
 {
     m_pdfsw.setupUi(this);
+
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
+    auto backends = Poppler::availableCryptoSignBackends();
+    if (!backends.empty()) {
+        // Let's try get the currently stored backend:
+        auto currentBackend = settingStringToPopplerEnum(PDFSettings::self()->signatureBackend());
+        if (!currentBackend) {
+            currentBackend = Poppler::activeCryptoSignBackend();
+        }
+        if (currentBackend != Poppler::activeCryptoSignBackend() && currentBackend) {
+            if (!Poppler::setActiveCryptoSignBackend(currentBackend.value())) {
+                // erm. This must be a case of having either modified
+                // the config file manually to something not available
+                // in the poppler installed here or have reconfigured
+                // their poppler to not have the previously selected one
+                // available any longer.
+                // Probably the safest bet is to take whatever is active
+                currentBackend = Poppler::activeCryptoSignBackend();
+            }
+        }
+        int selected = -1;
+        for (auto backend : backends) {
+            if (backend == currentBackend) {
+                selected = m_pdfsw.kcfg_SignatureBackend->count();
+            }
+            m_pdfsw.kcfg_SignatureBackend->addItem(popplerEnumToUserString(backend), QVariant(popplerEnumToSettingString(backend)));
+        }
+        m_pdfsw.kcfg_SignatureBackend->setProperty("kcfg_property", QByteArray("currentData"));
+
+        m_pdfsw.kcfg_SignatureBackend->setCurrentIndex(selected);
+        connect(m_pdfsw.kcfg_SignatureBackend, &QComboBox::currentTextChanged, [this](const QString &text) {
+            auto backendEnum = settingStringToPopplerEnum(text);
+            if (!backendEnum) {
+                return;
+            }
+            Poppler::setActiveCryptoSignBackend(backendEnum.value());
+            m_pdfsw.certDBGroupBox->setVisible(backendEnum == Poppler::CryptoSignBackend::NSS);
+            m_certificatesAsked = false;
+            if (m_tree) {
+                m_tree->clear();
+            }
+            update();
+        });
+
+        m_pdfsw.certDBGroupBox->setVisible(currentBackend == Poppler::CryptoSignBackend::NSS);
+#else
     if (Poppler::hasNSSSupport()) {
+        // Better hide the signature backend selection; we have not really any
+        // need for that.
+        m_pdfsw.signatureBackendContainer->hide();
+#endif
+
         m_pdfsw.loadSignaturesButton->hide();
 
         KUrlRequester *pDlg = new KUrlRequester();
@@ -92,6 +173,11 @@ bool PDFSettingsWidget::event(QEvent *e)
 void PDFSettingsWidget::warnRestartNeeded()
 {
     if (!m_warnedAboutRestart) {
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
+        if (PDFSettings::self()->signatureBackend() != QStringLiteral("NSS")) {
+            return;
+        }
+#endif
         m_warnedAboutRestart = true;
         QMessageBox::information(this, i18n("Restart needed"), i18n("You need to restart Okular after changing the NSS directory settings"));
     }

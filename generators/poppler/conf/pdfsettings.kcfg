@@ -5,6 +5,7 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <kcfgfile name="okular-generator-popplerrc"/>
     <signal name="useDefaultDBChanged" />
+    <signal name="signatureBackendChanged" />
     <signal name="dBCertificatePathChanged" />
     <group name="General">
         <entry key="EnhanceThinLines" type="Enum" >
@@ -23,6 +24,9 @@
         </entry>
     </group>
     <group name="Signatures" >
+      <entry key="SignatureBackend" type="String">
+          <emit signal="signatureBackendChanged" />
+      </entry>
       <entry key="UseDefaultCertDB" type="Bool">
           <default>true</default>
           <emit signal="useDefaultDBChanged" />

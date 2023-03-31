@@ -3713,7 +3713,6 @@ infinite_loop:
  */
 static synctex_status_t _synctex_match_string(synctex_scanner_p scanner, const char *the_string)
 {
-    size_t tested_len = 0;    /*  the number of characters at the beginning of the_string that match */
     size_t remaining_len = 0; /*  the number of remaining characters of the_string that should match */
     size_t available = 0;
     synctex_zs_s zs = {0, 0};
@@ -3750,7 +3749,6 @@ static synctex_status_t _synctex_match_string(synctex_scanner_p scanner, const c
         the_string += zs.size;
         /*  update the remaining length and the parsed length. */
         remaining_len -= zs.size;
-        tested_len += zs.size;
         SYNCTEX_CUR += zs.size; /*  We validate the tested characters. */
         if (0 == remaining_len) {
             /*  Nothing left to test, we have found the given string. */
@@ -3801,7 +3799,6 @@ static synctex_status_t _synctex_match_string(synctex_scanner_p scanner, const c
             the_string += available;
             /*  update the remaining length and the parsed length. */
             remaining_len -= zs.size;
-            tested_len += zs.size;
             SYNCTEX_CUR += zs.size; /*  We validate the tested characters. */
             goto more_characters;
         }

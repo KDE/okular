@@ -5,7 +5,7 @@ It supports native PDF annotations.
 
 ### Downloads
 
-For download and installation instructions, see https://apps.kde.org/okular/
+For download and installation instructions, see https://okular.kde.org/download.php
 
 ### User manual
 

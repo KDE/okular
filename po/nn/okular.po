@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-28 00:45+0000\n"
-"PO-Revision-Date: 2023-03-11 15:04+0100\n"
+"PO-Revision-Date: 2023-03-30 22:51+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -5282,7 +5282,7 @@ msgstr "Grupper etter forfattar"
 #: part/side_reviews.cpp:150
 #, kde-format
 msgid "Show annotations for current page only"
-msgstr "Vis berre merknadar for den gjeldande sida"
+msgstr "Vis berre påteikningar for den gjeldande sida"
 
 #: part/side_reviews.cpp:160
 #, kde-format

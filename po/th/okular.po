@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 00:45+0000\n"
+"POT-Creation-Date: 2023-04-06 00:45+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -320,7 +320,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "การนำเสนอ"
 
-#: core/document.cpp:4169 core/document.cpp:4175
+#: core/document.cpp:4194 core/document.cpp:4200
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -329,52 +329,52 @@ msgstr ""
 "เอกสารกำลังพยายามเรียกประมวลผลโปรแกรมภายนอก เพื่อความปลอดภัยของระบบคุณ โอกูลาร์ "
 "จะไม่อนุญาตให้มีการประมวลผล"
 
-#: core/document.cpp:4186 core/document.cpp:4196
+#: core/document.cpp:4211 core/document.cpp:4221
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "ไม่พบโปรแกรมสำหรับใช้เปิดแฟ้มประเภท %1"
 
-#: core/document.cpp:4620
+#: core/document.cpp:4645
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "ไม่สามารถเปิดแฟ้มชั่วคราวได้"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4647
 #, kde-format
 msgid "Print conversion failed"
 msgstr "การแปลงการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4624
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process crashed"
 msgstr "โพรเซสการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4626
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ไม่สามารถเริ่มโพรเซสการพิมพ์ได้"
 
-#: core/document.cpp:4628
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printing to file failed"
 msgstr "การพิมพ์ไปยังแฟ้มทำงานล้มเหลว"
 
-#: core/document.cpp:4630
+#: core/document.cpp:4655
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "เครื่องพิมพ์อยู่ในสถานะที่ใช้งานไม่ได้"
 
-#: core/document.cpp:4632
+#: core/document.cpp:4657
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "ไม่สามารถค้นพบแฟ้มที่จะใช้พิมพ์"
 
-#: core/document.cpp:4634
+#: core/document.cpp:4659
 #, kde-format
 msgid "There was no file to print"
 msgstr "ไม่มีแฟ้มใดที่จะใช้ในการพิมพ์"
 
-#: core/document.cpp:4636
+#: core/document.cpp:4661
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -383,94 +383,94 @@ msgstr ""
 "ไม่สามารถค้นพบแฟ้มโปรแกรมแบบไบนารีที่เหมาะสมสำหรับใช้ในการพิมพ์ โปรดตรวจสอบว่าโปรแกรม "
 "lpr ของแพกเกจ CUPS ได้ถูกติดตั้งไว้อย่างถูกต้องแล้วหรือไม่"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4663
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5303 part/part.cpp:1156
+#: core/document.cpp:5328 part/part.cpp:1156
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "แฟ้มไม่ถูกบันทึก เนื่องจากไม่สามารถเปิดแฟ้ม \"%1\" เพื่อเขียนได้ "
 
-#: core/document.cpp:5813
+#: core/document.cpp:5838
 #, kde-format
 msgid "Title"
 msgstr "ชื่อเรื่อง"
 
-#: core/document.cpp:5816
+#: core/document.cpp:5841
 #, kde-format
 msgid "Subject"
 msgstr "หัวข้อเรื่อง"
 
-#: core/document.cpp:5819
+#: core/document.cpp:5844
 #, kde-format
 msgid "Description"
 msgstr "คำอธิบาย"
 
-#: core/document.cpp:5822
+#: core/document.cpp:5847
 #, kde-format
 msgid "Author"
 msgstr "ผู้เขียน"
 
-#: core/document.cpp:5825
+#: core/document.cpp:5850
 #, kde-format
 msgid "Creator"
 msgstr "ผู้สร้าง"
 
-#: core/document.cpp:5828
+#: core/document.cpp:5853
 #, kde-format
 msgid "Producer"
 msgstr "ผู้ผลิต"
 
-#: core/document.cpp:5831
+#: core/document.cpp:5856
 #, kde-format
 msgid "Copyright"
 msgstr "ลิขสิทธิ์"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5859
 #, kde-format
 msgid "Pages"
 msgstr "จำนวนหน้า"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5862
 #, kde-format
 msgid "Created"
 msgstr "สร้างเมื่อ"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5865
 #, kde-format
 msgid "Modified"
 msgstr "แก้ไขเมื่อ"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5868
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "ประเภท Mime"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5871
 #, kde-format
 msgid "Category"
 msgstr "หมวดหมู่"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5874
 #, kde-format
 msgid "Keywords"
 msgstr "คำค้น/คำสำคัญ"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5877
 #, kde-format
 msgid "File Path"
 msgstr "พาธของแฟ้ม"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5880
 #, kde-format
 msgid "File Size"
 msgstr "ขนาดแฟ้ม"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5883
 #, kde-format
 msgid "Page Size"
 msgstr "ขนาดกระดาษ"

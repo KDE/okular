@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 00:45+0000\n"
+"POT-Creation-Date: 2023-04-06 00:45+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -310,7 +310,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "fjern annotationer"
 
-#: core/document.cpp:4169 core/document.cpp:4175
+#: core/document.cpp:4194 core/document.cpp:4200
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -319,52 +319,52 @@ msgstr ""
 "Dokumentet forsøger at køre et eksternt program og for din sikkerheds skyld, "
 "vil Okular ikke tillade dette."
 
-#: core/document.cpp:4186 core/document.cpp:4196
+#: core/document.cpp:4211 core/document.cpp:4221
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Intet program fundet til at åbne filer af mimetype %1."
 
-#: core/document.cpp:4620
+#: core/document.cpp:4645
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Kunne ikke åbne midlertidig fil"
 
-#: core/document.cpp:4622
+#: core/document.cpp:4647
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konvertering af udskrift mislykkedes"
 
-#: core/document.cpp:4624
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Udskriftsprocessen brød sammen"
 
-#: core/document.cpp:4626
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Udskriftsprocessen kunne ikke starte"
 
-#: core/document.cpp:4628
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Udskrift til fil mislykkedes"
 
-#: core/document.cpp:4630
+#: core/document.cpp:4655
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printeren var i ugyldig tilstand"
 
-#: core/document.cpp:4632
+#: core/document.cpp:4657
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Kan ikke finde fil til udskrift"
 
-#: core/document.cpp:4634
+#: core/document.cpp:4659
 #, kde-format
 msgid "There was no file to print"
 msgstr "Der var ingen fil at udskrive"
 
-#: core/document.cpp:4636
+#: core/document.cpp:4661
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -373,93 +373,93 @@ msgstr ""
 "Kunne ikke finde en passende kørbar fil til udskrift. Sørg for at CUPS-"
 "programmet lpr er tilgængeligt"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4663
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Sidens udskriftsstørrelse er ugyldig"
 
-#: core/document.cpp:5303 part/part.cpp:1156
+#: core/document.cpp:5328 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Kunne ikke åbne \"%1\". Filen findes ikke."
 
-#: core/document.cpp:5813
+#: core/document.cpp:5838
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:5816
+#: core/document.cpp:5841
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: core/document.cpp:5819
+#: core/document.cpp:5844
 #, kde-format
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: core/document.cpp:5822
+#: core/document.cpp:5847
 #, kde-format
 msgid "Author"
 msgstr "Forfatter"
 
-#: core/document.cpp:5825
+#: core/document.cpp:5850
 #, kde-format
 msgid "Creator"
 msgstr "Ophavsmand"
 
-#: core/document.cpp:5828
+#: core/document.cpp:5853
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:5831
+#: core/document.cpp:5856
 #, kde-format
 msgid "Copyright"
 msgstr "Ophavsret"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5859
 #, kde-format
 msgid "Pages"
 msgstr "Sider"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5862
 #, kde-format
 msgid "Created"
 msgstr "Oprettet"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5865
 #, kde-format
 msgid "Modified"
 msgstr "Ændret"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5868
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Mimetype"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5871
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5874
 #, kde-format
 msgid "Keywords"
 msgstr "Nøgleord"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5877
 #, kde-format
 msgid "File Path"
 msgstr "Filsti"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5880
 #, kde-format
 msgid "File Size"
 msgstr "Filstørrelse"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5883
 #, kde-format
 msgid "Page Size"
 msgstr "Sidestørrelse"

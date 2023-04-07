@@ -119,8 +119,7 @@ static KJSObject fieldGetType(KJSContext *, void *object)
     return KJSString(fieldGetTypeHelper(field));
 }
 
-// Field.value (getter)
-static KJSObject fieldGetValue(KJSContext *context, void *object)
+static KJSObject fieldGetValueCore(KJSContext *context, bool asString, void *object)
 {
     FormField *field = reinterpret_cast<FormField *>(object);
     KJSObject result = KJSUndefined();
@@ -140,7 +139,7 @@ static KJSObject fieldGetValue(KJSContext *context, void *object)
         const QLocale locale;
         bool ok;
         const double textAsNumber = locale.toDouble(text->text(), &ok);
-        if (ok) {
+        if (ok && !asString) {
             result = KJSNumber(textAsNumber);
         } else {
             result = KJSString(text->text());
@@ -160,8 +159,14 @@ static KJSObject fieldGetValue(KJSContext *context, void *object)
     }
     }
 
-    qCDebug(OkularCoreDebug) << "fieldGetValue: Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << result.toString(context) << (result.isString() ? "(as string)" : "");
+    qCDebug(OkularCoreDebug) << "fieldGetValueCore:"
+                             << " Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << result.toString(context) << (result.isString() ? "(as string)" : "");
     return result;
+}
+// Field.value (getter)
+static KJSObject fieldGetValue(KJSContext *context, void *object)
+{
+    return fieldGetValueCore(context, /*asString*/ false, object);
 }
 
 // Field.value (setter)
@@ -201,6 +206,12 @@ static void fieldSetValue(KJSContext *context, void *object, KJSObject value)
         break;
     }
     }
+}
+
+// Field.valueAsString (getter)
+static KJSObject fieldGetValueAsString(KJSContext *context, void *object)
+{
+    return fieldGetValueCore(context, /*asString*/ true, object);
 }
 
 // Field.hidden (getter)
@@ -305,6 +316,7 @@ void JSField::initType(KJSContext *ctx)
     g_fieldProto->defineProperty(ctx, QStringLiteral("readonly"), fieldGetReadOnly, fieldSetReadOnly);
     g_fieldProto->defineProperty(ctx, QStringLiteral("type"), fieldGetType);
     g_fieldProto->defineProperty(ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue);
+    g_fieldProto->defineProperty(ctx, QStringLiteral("valueAsString"), fieldGetValueAsString);
     g_fieldProto->defineProperty(ctx, QStringLiteral("hidden"), fieldGetHidden, fieldSetHidden);
     g_fieldProto->defineProperty(ctx, QStringLiteral("display"), fieldGetDisplay, fieldSetDisplay);
 

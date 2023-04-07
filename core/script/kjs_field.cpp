@@ -120,17 +120,20 @@ static KJSObject fieldGetType(KJSContext *, void *object)
 }
 
 // Field.value (getter)
-static KJSObject fieldGetValue(KJSContext * /*context*/, void *object)
+static KJSObject fieldGetValue(KJSContext *context, void *object)
 {
     FormField *field = reinterpret_cast<FormField *>(object);
+    KJSObject result = KJSUndefined();
 
     switch (field->type()) {
     case FormField::FormButton: {
         const FormFieldButton *button = static_cast<const FormFieldButton *>(field);
         if (button->state()) {
-            return KJSString(QStringLiteral("Yes"));
+            result = KJSString(QStringLiteral("Yes"));
+        } else {
+            result = KJSString(QStringLiteral("Off"));
         }
-        return KJSString(QStringLiteral("Off"));
+        break;
     }
     case FormField::FormText: {
         const FormFieldText *text = static_cast<const FormFieldText *>(field);
@@ -138,16 +141,17 @@ static KJSObject fieldGetValue(KJSContext * /*context*/, void *object)
         bool ok;
         const double textAsNumber = locale.toDouble(text->text(), &ok);
         if (ok) {
-            return KJSNumber(textAsNumber);
+            result = KJSNumber(textAsNumber);
         } else {
-            return KJSString(text->text());
+            result = KJSString(text->text());
         }
+        break;
     }
     case FormField::FormChoice: {
         const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(field);
         const QList<int> currentChoices = choice->currentChoices();
         if (currentChoices.count() == 1) {
-            return KJSString(choice->exportValueForChoice(choice->choices().at(currentChoices[0])));
+            result = KJSString(choice->exportValueForChoice(choice->choices().at(currentChoices[0])));
         }
         break;
     }
@@ -156,7 +160,8 @@ static KJSObject fieldGetValue(KJSContext * /*context*/, void *object)
     }
     }
 
-    return KJSUndefined();
+    qCDebug(OkularCoreDebug) << "fieldGetValue: Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << result.toString(context) << (result.isString() ? "(as string)" : "");
+    return result;
 }
 
 // Field.value (setter)
@@ -164,6 +169,7 @@ static void fieldSetValue(KJSContext *context, void *object, KJSObject value)
 {
     FormField *field = reinterpret_cast<FormField *>(object);
 
+    qCDebug(OkularCoreDebug) << "fieldSetValue: Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << value.toString(context);
     switch (field->type()) {
     case FormField::FormButton: {
         FormFieldButton *button = static_cast<FormFieldButton *>(field);

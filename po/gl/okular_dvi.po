@@ -1,17 +1,17 @@
 # translation of okular_dvi.po to galician
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # mvillarino <mvillarino@users.sourceforge.net>, 2007, 2008, 2009.
 # Marce Villarino <mvillarino@gmail.com>, 2009, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-09 00:43+0000\n"
-"PO-Revision-Date: 2019-11-17 09:21+0100\n"
+"PO-Revision-Date: 2023-04-06 21:45+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -126,17 +126,17 @@ msgstr ""
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
 msgstr ""
-"O ficheiro DVI está corrompido. Okular non foi capaz de atopar o postámbulo."
+"O ficheiro DVI está corrompido. Okular non foi capaz de atopar a conclusión."
 
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr "O postámbulo non comeza pola orde POST."
+msgstr "A conclusión non comeza pola orde POST."
 
 #: dviFile.cpp:202
 #, kde-format
 msgid "The postamble contained a command other than FNTDEF."
-msgstr "O postámbulo contiña unha orde distinta de FNTDEF."
+msgstr "A conclusión contiña unha orde distinta de FNTDEF."
 
 #: dviFile.cpp:240
 #, kde-format
@@ -480,7 +480,7 @@ msgstr "O carácter %1 é grande de máis no ficheiro %2"
 #: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr "Número incorrecto de bits almacenados: car. %1, fonte %2"
+msgstr "Número incorrecto de bits almacenados: carácter %1, tipo de letra %2"
 
 #: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
 #, kde-format

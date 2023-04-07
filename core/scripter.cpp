@@ -45,7 +45,7 @@ Scripter::~Scripter()
 
 void Scripter::execute(ScriptType type, const QString &script)
 {
-    qCDebug(OkularCoreDebug) << "executing the script:";
+    qCDebug(OkularCoreDebug) << "executing the script:" << script;
 #ifdef WITH_KJS
     static QString builtInScript;
     if (builtInScript.isNull()) {

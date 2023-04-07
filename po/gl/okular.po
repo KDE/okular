@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-06 00:45+0000\n"
-"PO-Revision-Date: 2023-03-26 18:53+0200\n"
+"PO-Revision-Date: 2023-04-06 21:46+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -1798,7 +1798,7 @@ msgstr "Confidencial"
 #: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Departmental"
-msgstr "Compartimentado"
+msgstr "Por departamentos"
 
 #: part/annotationwidgets.cpp:420
 #, kde-format
@@ -4553,7 +4553,7 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 "O documento actual está protexido cun contrasinal.<br /> Para gardar hai que "
-"recargar o ficheiro. Preguntaráselle o contrasinal de novo e prederá o "
+"recargar o ficheiro. Preguntaráselle o contrasinal de novo e perderá o "
 "historial de desfacer e refacer.<br /> Quere continuar?"
 
 #: part/part.cpp:2658 part/part.cpp:2710
@@ -5467,7 +5467,7 @@ msgstr "&Baixar"
 #: part/widgetdrawingtools.cpp:105
 #, kde-format
 msgid "Default Drawing Tool #%1"
-msgstr "Ferramenta de debuxo predeterminada núm. %1"
+msgstr "Ferramenta de debuxo predeterminada número %1"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format

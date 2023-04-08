@@ -118,15 +118,15 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Bestanden openen</title>
 			<para
->Selecteer, om een ondersteund bestand te openen in &okular;, <menuchoice
+>To view any supported file in &okular;, select <menuchoice
 ><guimenu
->Bestand</guimenu
+>File</guimenu
 ><guimenuitem
->Openen...</guimenuitem
+>Open...</guimenuitem
 > </menuchoice
->, kies dan een ondersteund bestand in het dialoogvenster en klik op <guibutton
->Openen</guibutton
->. Nu kunt u uw bestand zien in het hoofdvenster. </para>
+>, choose a supported file in the dialog and click <guibutton
+>Open</guibutton
+>. Your file should now be displayed in the main window. </para>
 			<important>
 			  <para
 >Het nieuwe document zal geopend worden in een nieuw tabblad als de optie <guilabel
@@ -657,42 +657,41 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >&okular; heeft twee verschillende soorten of annotaties:</para>
 			<para
->Tekstannotaties zoals <guilabel
->Met geel accentueren</guilabel
-> en <guilabel
->Zwart onderstrepen</guilabel
-> kan gebruikt worden voor bestanden met tekst zoals (&eg; &PDF;).</para>
+>Text annotations like <guilabel
+>Yellow Highlighter</guilabel
+> and <guilabel
+>Black Underlining</guilabel
+> for files with text like &eg; &PDF;.</para>
 		      <para
->Grafische annotaties zoals <guilabel
->Pop-up-notitie</guilabel
+>Graphic annotations like <guilabel
+>Pop-up Note</guilabel
 >, <guilabel
->Inline notitie</guilabel
+>Inline Note</guilabel
 >, <guilabel
->Lijn uit de vrije hand</guilabel
+>Freehand Line</guilabel
 >, <guilabel
->Accentuering</guilabel
+>Highlighter</guilabel
 >, <guilabel
->Rechte lijn</guilabel
+>Straight Line</guilabel
 >, <guilabel
->Veelhoek</guilabel
+>Polygon</guilabel
 >, <guilabel
->Stempel</guilabel
+>Stamp</guilabel
 >, <guilabel
->Onderstreping</guilabel
+>Underline</guilabel
 >, <guilabel
->Ellips</guilabel
-> en <guilabel
->Schrijfmachine</guilabel
->.</para>
-			  <para
->Grafische annotaties zijn niet beperkt tot &PDF; bestanden, zij kunnen worden gebruikt voor elk format dat &okular; ondersteunt.</para>
+>Ellipse</guilabel
+>, and <guilabel
+>Typewriter</guilabel
+> for all formats supported by &okular;.</para>
 			<para
->Met het menu <guilabel
->Annotaties</guilabel
-> kunt u een <guilabel
->Pop-up-notitie</guilabel
-> of een ander soort annotatie toevoegen of commentaar bewerken.</para>
-
+>Using the context menu either in the <guilabel
+>Annotations</guilabel
+> view of the sidebar or in the main window you can open a <guilabel
+>Pop up Note</guilabel
+> for any kind of annotation and add or edit comments.</para>
+			<para
+>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para
 >&okular; de "documentenarchief"-functie. Dit is een specifiek formaat van &okular; om het document inclusief gerelateerde metadata (momenteel enkel annotaties) over te dragen. U kunt een "documentenarchief" van het geopende document opslaan door <menuchoice
 ><guimenu
@@ -725,51 +724,51 @@ Context menu actions like Rename Bookmarks etc.)
 > om het op te slaan naar een nieuw bestand. </para>
 				<note>
 					<para
->Merk op dat toevoegen, bewerken of verwijderen van annotaties niet mogelijk kan zijn met ingeschakelde DRM in bestanden. </para>
+>Due to DRM limitations (typically with &PDF; documents), adding, editing some properties or removing annotations could not be possible. </para>
 				</note>
 				<note>
 				  <para
->Het is mogelijk om elke annotatieactie <link linkend="edit-undo"
->ongedaante maken</link
-> of <link linkend="edit-redo"
->opnieuw te doen</link
-> door het overeenkomstige item uit het menu <guimenu
->Bewerken</guimenu
-> te gebruiken. Het is ook mogelijk de actie ongedaan maken door op <keycombo
+>Any action on annotations (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation) can be <link linkend="edit-undo"
+>undone</link
+> or <link linkend="edit-redo"
+>redone</link
+> using the corresponding item from the <guimenu
+>Edit</guimenu
+> menu. It is also possible to undo the action by pressing <keycombo
 >&Ctrl;<keycap
 >Z</keycap
 ></keycombo
-> te drukken en deze opnieuw te doen door op <keycombo
+> and redo the undone action by pressing <keycombo
 >&Ctrl;&Shift;<keycap
 >Z</keycap
 ></keycombo
-> te drukken. </para>
+>. </para>
 				</note>
 			<para
->U kunt de standaard eigenschappen en het uiterlijk van elk hulpmiddel voor annotaties instellen. Ga naar de <link linkend="configeditor"
->bijbehorende sectie van dit handboek</link
-> voor meer informatie. </para>
+>You can configure the default properties and appearance of each annotating tool. Please refer to the <link linkend="configannotations"
+>corresponding section in this documentation</link
+>. </para>
 			<sect2 id="annotations-add">
 				<title
 >Annotaties toevoegen</title>
 				<para
->Om annotaties toe te voegen aan het document, kunt u de knop <guilabel
->Snelle annotaties</guilabel
-> gebruiken op de hoofdbalk van &okular; of de werkbalk voor annotaties activeren. Dit kunt u doen door <menuchoice
+>To add some annotations to the document, you have to use <guilabel
+>Quick Annotations</guilabel
+> button on the main &okular; toolbar or activate the annotating toolbar. This is done by either selecting <menuchoice
 ><guimenu
->Hulpmiddelen</guimenu
+>Tools</guimenu
 ><guimenuitem
->Annotaties</guimenuitem
+>Annotations</guimenuitem
 ></menuchoice
-> te selecteren of door op <keycap
+> or pressing <keycap
 >F6</keycap
-> te drukken. Als eenmaal de werkbalk voor annotaties getoond wordt, kunt u één van de knoppen erop of sneltoetsen (de toetsen <keycap
+>. Once the annotating toolbar is shown, just press one of its buttons or use keyboard shortcuts (keys from <keycap
 >1</keycap
-> tot <keycap
+> to <keycap
 >9</keycap
->) gebruiken om te beginnen die annotatie te maken. </para>
+>) to start constructing that annotation. </para>
 				<para
->De werkbalk voor annotaties helpt u om annotaties te maken bij tekeningen, vormen en tekstberichten. U kunt de werkbalk voor annotaties gebruiken om een document te markeren (&eg; lijnen, ellipsen, polygonen, stempels, accentueringen, onderstrepingen &etc; toe te voegen). De onderstaande tabel beschrijft exact wat de standaard set van knoppen op de werkbalk voor annotaties doet. </para>
+>The annotating toolbar helps you to make annotations with drawings, shapes, and text messages. You can use the annotating toolbar to mark up a document (&eg; add lines, ellipses, polygons, stamps, highlights, underlines &etc;). The table below describes exactly what the default set of annotating toolbar buttons does. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -799,9 +798,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Accentueert tekst in het document met een gegeven achtergrondkleur. </para>
+>To highlight text in the document with some given background color. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; sleep om een tekstfragment te accentueren. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the beginning of the highlighted text snippet, then drag to highlight it. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -838,9 +837,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Onderstreept tekst met een rechte lijn. </para>
+>To underline some text. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; sleep om een tekstfragment te onderstrepen. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -877,9 +876,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Onderstreept tekst met een slingerlijn. </para>
+>To underline some text by a squiggle line. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; sleep om een tekstfragment met een slingerlijn te onderstrepen. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -916,9 +915,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Streept enige tekst door. </para>
+>To strike out some text. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; sleep om een tekstfragment door te strepen. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -955,15 +954,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Voegt tekst toe op een doorzichtige achtergrond. Dit is nuttig voor het invullen van formulieren waarin geïntegreerde bewerkbare tekst velden ontbreken. </para>
+>Typewriter features opaque letters on transparent background, so that it is useful to fill noninteractive forms. </para>
 					  <para
->Klik op de knop hulpmiddel, klik daarna met de &LMB; op de hoek linksboven waar u de tekst wilt toevoegen, sleep daarna naar de plek rechtsonder. Type enige tekst en klik daarna op <guibutton
+>Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton
 >OK</guibutton
-> om het op te slaan, <guibutton
->Wissen</guibutton
-> om de tekstte wissen of <guibutton
->Annuleren</guibutton
-> om te annuleren. </para>
+> to save the note, <guibutton
+>Cancel</guibutton
+> to cancel note entering or <guibutton
+>Clear</guibutton
+> to clear the note. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Lettertype</guilabel
@@ -990,15 +989,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Maakt een inline-notitie. De notitie zal inline getoond worden zoals deze is. </para>
+>To draw inline note. The note will be shown inline as is. </para>
 					  <para
->Klik op de knop hulpmiddel, klik daarna met de &LMB; op de hoek linksboven van waar u de notitie wilt toevoegen, sleep daarna naar een plek rechtsonder. Voer de tekst in van de notitie en klik op <guibutton
+>Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton
 >OK</guibutton
-> om de notitie op te slaan, <guibutton
->Wissen</guibutton
-> om de tekst van de notitie te wissen of <guibutton
->Annuleren</guibutton
-> om het maken van de notitie te annuleren. </para>
+> to save the note, <guibutton
+>Cancel</guibutton
+> to cancel note entering or <guibutton
+>Clear</guibutton
+> to clear the note. </para>
 					  <para
 >Het is mogelijk om de <guilabel
 >Kleur</guilabel
@@ -1031,7 +1030,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Maakt een notitie met meerdere regels. De notitie kan bekeken worden door dubbel te klikken op het aangemaakte pictogram in het document. </para>
+>To draw multiline note. The note will can be viewed by double clicking on an icon in the document. </para>
 					  <para
 >Klik op de knop hulpmiddel, klik daarna op de plaats in het document waar de pop-up-notitie zou moeten worden toegevoegd. Voer de tekst van pop-up-notitie in en klik daarna op de knop <guilabel
 >Deze notitie sluiten</guilabel
@@ -1064,9 +1063,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent vrij gevormde lijnen. </para>
+>To draw free-form lines. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en sleep om de lijn te tekenen. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line. </para>
 					  <para
 >Het is mogelijk om de <guilabel
 >Kleur</guilabel
@@ -1095,9 +1094,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent een pijl tussen twee punten. </para>
+>To mark with an arrow. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; om het begin van de pijl in te stellen, sleep daarna naar het eindpunt van de lijn en klik nog eens. </para>
+>Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more. </para>
 					  <para
 >Het is mogelijk om de <guilabel
 >Kleur</guilabel
@@ -1134,9 +1133,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent een lijn tussen twee punten. </para>
+>To mark with a line. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; en houd deze omlaag om het begin van de lijn in te stellen, sleep daarna naar het eindpunt van de lijn en klik nog eens. </para>
+>Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more. </para>
 					  <para
 >Het is mogelijk om de <guilabel
 >Kleur</guilabel
@@ -1173,9 +1172,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent een rechthoek rond een gekozen gebied. </para>
+>To draw a rectangle around some chosen area. </para>
 					  <para
->Klik op de knop hulpmiddel, klik daarna met de &LMB; om de de linkerbovenhoek van de rechthoek te plaatsen, sleep daarna de plek voor de hoek rechtsonder. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the rectangle, then drag to place the bottom-right one. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -1212,9 +1211,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent een ellips of rechthoek rond een gekozen gebied. </para>
+>To draw an ellipse or rectangle around some chosen area. </para>
 					  <para
->Klik op de knop hulpmiddel, klik daarna met de &LMB; en houd deze omlaag om de plek van de linkerbovenhoek van de omschreven rechthoek van de ellips, sleep daarna naar de plaats van de hoek rechtsonder. </para>
+>Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one. </para>
 					  <para
 >Het is mogelijk om het <guilabel
 >Type</guilabel
@@ -1251,15 +1250,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tekent een gesloten figuur met drie of meer lijnsegmenten. De overeenkomstige notitie kan bekeken worden door dubbel te klikken binnen de veelhoek. </para>
+>To draw a closed plane figure from three or more segments. The corresponding note can be viewed by double clicking inside the polygon. </para>
 					  <para
->Klik op de knop voor hulpmiddelen, klik daarna met de &LMB; om de eerste hoek van de veelhoek te plaatsen, sleep daarna naar de plek van de tweede hoek. Ga door totdat u de gehele veelhoek hebt geplaatst, dus tot de eerste hoek. Dubbelklik als u een notitie aan de veelhoek wilt toevoegen. Voer de tekst van de notitie in en klik op <guibutton
+>Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon. Enter the text of the note then click on the <guibutton
 >OK</guibutton
-> om de notitie op te slaan, op <guibutton
->Wissen</guibutton
-> om de notitie te wissen of <guibutton
->Annuleren</guibutton
-> om het invoeren te annuleren. </para>
+> to save the note, <guibutton
+>Cancel</guibutton
+> to cancel note entering or <guibutton
+>Clear</guibutton
+> to clear the note. </para>
 					  <para
 >Het is mogelijk om de <guilabel
 >Kleur</guilabel
@@ -1290,7 +1289,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Voegt een voorgedefinieerde vorm in in het document. </para>
+>To mark the text or image with some predefined shape. </para>
 					  <para
 >Klik op de knop voor hulpmiddelen om het stempel uit de afrollijst te kiezen en klik daarna met de &LMB; om het stempel te plaatsen. </para>
 					  <para
@@ -1318,16 +1317,16 @@ Context menu actions like Rename Bookmarks etc.)
 > van de configuratiedialoog kunt u uw eigen annotaties toevoegen, zoals eigen stempels, tekstmarkeringen of een geometrische vorm met binnenkleur om gebieden te accentueren &etc; </para>
                                   <note>
                                       <para
->Het is mogelijk om &latex;-code toe te voegen aan de tekst met annotaties. Voeg <userinput
+>It is possible to add &latex; code into the text of annotations. Please add <userinput
 >$$<replaceable
 >code</replaceable
 >$$</userinput
-> toe aan de tekst van de annotatie, waar <replaceable
+> to the text of annotation, where <replaceable
 >code</replaceable
-> elke geldige &latex;-vergelijking is. Volg de instructies op het scherm op om het te laten renderen door een &latex;-distributie geïnstalleerd in uw systeem. </para>
+> is any valid &latex; equation, and follow instructions on the screen to make it render by a &latex; distribution installed in your system. </para>
                                   </note>
 				<para
->Het is mogelijk om het geselecteerde hulpmiddel te configureren met de werkbalk voor annotaties zelf: </para>
+>It is possible to configure the current tool options using the annotating toolbar itself. The table below describes exactly what the default set of annotating toolbar configuring buttons does. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1357,7 +1356,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om de breedte van de afrollijst te kiezen. </para>
+>Click on the tool button to choose the width from the drop-down list. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1381,9 +1380,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om de kleur van de tekst of rand van uw annotatie te kiezen. U kunt een van de voorgedefinieerde kleuren kiezen of klikken op het item <guimenuitem
->Aangepaste kleur...</guimenuitem
-> om de dialoog kleurselectie te openen. </para>
+>Click on the tool button to choose color of text or border of your annotation. You can chose one of the predefined colors or click on the <guimenuitem
+>Custom Color...</guimenuitem
+> item to open the color selection dialog. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1402,9 +1401,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om de vulkleur van uw annotatie te kiezen. U kunt een van de voorgedefinieerde kleuren kiezen of klikken op het item <guimenuitem
->Aangepaste kleur...</guimenuitem
-> om de dialoog kleurselectie te openen. </para>
+>Click on the tool button to choose a fill color of your annotation. You can chose one of the predefined colors or click on the <guimenuitem
+>Custom Color...</guimenuitem
+> item to open the color selection dialog. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1423,9 +1422,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om het niveau van de dekking uit de afrollijst te kiezen (<guimenuitem
+>Click on the tool button to choose annotation level of opacity from the drop-down list (<guimenuitem
 >100%</guimenuitem
-> is voor ondoorzichtige annotaties). </para>
+> is for the opaque annotations). </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1444,7 +1443,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om de dialoog voor selecteren van lettertypen te openen. </para>
+>Click on the tool button to open the font selection dialog. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1463,14 +1462,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klik op deze knop om de algemene dialoog voor configuratie voor uw annotatie te openen. </para>
+>Click on the tool button to open the general configuration dialog for your annotation. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->Er zijn drie extra hulpmiddelknoppen op de standaard werkbalk voor annotaties. </para>
+>There are three additional utility buttons on the default annotating toolbar. </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1499,15 +1498,15 @@ Context menu actions like Rename Bookmarks etc.)
 > op de hoofdwerkbalk toevoegen. </para>
 					  <note>
 						  <para
->U kunt de standaard sneltoetsen uit <keycombo action="simul"
+>You can use the default shortcuts from <keycombo action="simul"
 >&Alt;<keycap
 >9</keycap
 ></keycombo
-> tot <keycombo action="simul"
+> to <keycombo action="simul"
 >&Alt;<keycap
 >0</keycap
 ></keycombo
-> gebruiken om de acties uit snelle annotatie op elk moment dat u wilt gebruiken zelfs met de verborgen werkbalk voor annotaties. </para>
+> to select the quick annotation actions any time you like even with the annotating toolbar hidden. </para>
 					  </note>
 					</entry>
 				      </row>
@@ -1523,7 +1522,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Indien geactiveerd, het huidige hulpmiddel voor annotatie blijft actief na gebruik. </para>
+>When checked keep the current annotation tool active after use. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1538,7 +1537,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->De werkbalk voor annotaties verbergen </para>
+>Hide the annotating toolbar. </para>
 					</entry>
 				      </row>
 			            </tbody>
@@ -1560,48 +1559,40 @@ Context menu actions like Rename Bookmarks etc.)
 > uit het pop-upmenu. </para>
 				<note>
 					<para
->Bij het activeren van de werkbalk voor annotaties wordt er automatisch gewisseld naar de modus bladeren. </para>
+>Activating the annotating toolbar will make you switch to the Browse Mode. </para>
 				</note>
 				<para
->U kunt het maken van een annotatie op elk tijdstip stoppen door nog eens op de knop, die u gebruikt, te drukken of door de &Esc;-toets in te drukken. </para>
+>You can stop the construction any time by pressing again on the button of the annotation you are constructing, or by pressing the &Esc; key. </para>
 				<para
->De nieuw aangemaakte annotatie zal als auteur hebben die u ingesteld hebt in de <link linkend="configannotations"
+>The newly constructed annotation will have as author the author you set in the <link linkend="configannotations"
 ><guilabel
->Annotaties</guilabel
-> pagina</link
-> in het dialoogvenster voor &okular; als auteur. De pagina <guilabel
->Annotaties</guilabel
-> kan ook gebruikt worden om de inhoud van de werkbalk voor annotaties te configureren. </para>
+>Annotations</guilabel
+> page</link
+> in &okular;s configuration dialog. The <guilabel
+>Annotations</guilabel
+> page can also be used to configure the content of the annotating toolbar. </para>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title
 >Annotaties verwijderen</title>
 				<para
->Om een annotatie te verwijderen, ga eerst na dat het hulpmiddel Bladeren is geselecteerd (<menuchoice
-><guimenu
->Hulpmiddelen</guimenu
-><guimenuitem
->Bladeren</guimenuitem
-></menuchoice
->), daarna klikt u er gewoon op met de &RMB; en selecteert u <guimenuitem
->Verwijderen</guimenuitem
-> of selecteer een annotatie met de &LMB; en druk op de toets &Del;. </para>
+>To remove an annotation, just click on it with the &RMB;, and select <guimenuitem
+>Delete</guimenuitem
+> or select an annotation using the &LMB; and press the &Del; key. </para>
 				<para
->Indien het venster van de annotatie open staat bij het verwijderen van de annotatie, zal dit gesloten worden. </para>
+>When removing the annotation, its window will be closed if open. </para>
+				<note>
+					<para
+>This option could not be enabled because the document does not allow removing annotations. </para>
+				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Annotaties bewerken</title>
 				<para
->Om een annotatie te bewerken, ga eerst na dat het hulpmiddel Bladeren is geselecteerd (<menuchoice
-><guimenu
->Hulpmiddelen</guimenu
-><guimenuitem
->Bladeren</guimenuitem
-></menuchoice
->) daarna klikt u op een annotatie met de &RMB; en selecteert u <guimenuitem
->Eigenschappen</guimenuitem
->. Er zal dan een dialoogvenster verschijnen met de algemene annotatie-instellingen (zoals kleur, dekking, auteur, &etc;) en de specifieke instellingen voor dat type annotatie. </para>
+>To edit an annotation, click on it with the &RMB; and select <guimenuitem
+>Properties</guimenuitem
+>. A dialog will appear with the general annotation settings (like color and opacity, author, &etc;) and the settings specific to that annotation type. </para>
 				<screenshot>
 				<screeninfo
 >Dialoogvenster voor annotatie-eigenschappen</screeninfo>
@@ -1620,11 +1611,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Als u met de &LMB; op een annotatie drukt wordt het geselecteerd. Handvatten wijzigen van grootte verschijnen op het selectievierkant. Wanneer de cursor is geplaatst boven een van de 8 handvatten voor wijziging van de grootte op de hoeken of de randen, zal de cursor van vorm veranderen om de modus wijzigen van grootte aan te geven. Klik ergens anders op de annotatie om het te verplaatsen. &Esc; indrukken of in een gebied klikken buiten de annotatie annuleert een selectie. </para>
 				<para
->Grootte wijzigen is alleen beschikbaar op annotatietypen inlinenotitie, schrijfmachine, stempel en ellips.</para>
+>Resizing is only applicable for annotation types Inline Note, Typewriter, Stamp and Ellipse.</para>
 
 				<note>
 					<para
->Afhankelijk van de documentrechten (typisch alleen voor &PDF; documenten), kunnen sommige opties uitgeschakeld zijn. </para>
+>Depending on the document permissions (typically with &PDF; documents), some options can be disabled. </para>
 				</note>
 			</sect2>
 		</sect1>
@@ -3099,9 +3090,9 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 ><action
->De werkbalk voor annotaties openen</action
->. Via de werkbalk voor annotaties kunt u annotaties toevoegen aan het document dat u aan het lezen bent. Kijk voor meer informatie in de sectie over <link linkend="annotations"
->Annotaties</link
+>Open the annotating toolbar</action
+>. The annotating toolbar allows you to add annotations on the document you are reading. For more information, please see the section about <link linkend="annotations"
+>Annotations</link
 >.</para>
 					</listitem>
 				</varlistentry>
@@ -4207,21 +4198,21 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 					  <para
->Dit paneel wordt gebruikt om uw <link linkend="annotations-add"
->werkbalk voor annotaties</link
-> in te stellen. </para>
+>This pane is used to configure your <link linkend="annotations-add"
+>annotating toolbar</link
+>. </para>
 					  <para
->Er zijn vijf knoppen (<guibutton
->Toevoegen</guibutton
+>There are five buttons (<guibutton
+>Add</guibutton
 >, <guibutton
->Bewerken</guibutton
+>Edit</guibutton
 >, <guibutton
->Verwijderen</guibutton
+>Remove</guibutton
 >, <guibutton
->Omhoog verplaatsen</guibutton
+>Move Up</guibutton
 >, <guibutton
->Omlaag verplaatsen</guibutton
->) en een lijstvak (die een lijst met de inhoud van de huidige werkbalk voor annotaties bevat) die gebruikt worden om de werkbalk in te stellen. </para>
+>Move Down</guibutton
+>) and a list box (which lists the contents of the current annotating toolbar) which are used to configure the toolbar. </para>
 					  <para
 >Als u behoefte heb om hulpmiddelknop aan de werkbalk toe te voegen, klik dan op de knop <guibutton
 >Toevoegen</guibutton
@@ -4237,11 +4228,11 @@ Context menu actions like Rename Bookmarks etc.)
 >Denk er aan dat hulpmiddelen voor annotatie in &okular; makkelijk in te stellen zijn. U kunt bijvoorbeeld twee knoppen hebben voor hetzelfde hulpmiddel maar met een andere kleur. Aarzel niet om te experimenteren met het kiezen van de set knoppen die exact zijn toegespitst op uw workflow. </para>
 					  </note>
 					  <para
->Klik op een item in het lijstvak en klik daarna op de overeenkomstige knop in het rechter gedeelte van de pagina om het item te bewerken, te verwijderen, omhoog of omlaag te verplaatsen. De sneltoets van het hulpmiddel (toetsen <keycap
+>Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap
 >1</keycap
-> tot <keycap
+> to <keycap
 >9</keycap
->) hangen af van hun positie in de lijst van de werkbalk voor annotaties. </para>
+>) depends on its position in the list of annotating toolbar. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

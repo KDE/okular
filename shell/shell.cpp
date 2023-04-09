@@ -537,12 +537,6 @@ void Shell::setupActions()
     m_undoCloseTab->setEnabled(false);
     connect(m_undoCloseTab, &QAction::triggered, this, &Shell::undoCloseTab);
 
-    m_showSidebarAction = actionCollection()->addAction(QStringLiteral("okular_show_sidebar"));
-    m_showSidebarAction->setCheckable(true);
-    m_showSidebarAction->setIcon(QIcon::fromTheme(QStringLiteral("sidebar-show-symbolic")));
-    m_showSidebarAction->setText(i18n("Show Sidebar"));
-    connect(m_showSidebarAction, &QAction::triggered, m_sidebar, &Sidebar::setVisible);
-
     m_lockSidebarAction = actionCollection()->addAction(QStringLiteral("okular_lock_sidebar"));
     m_lockSidebarAction->setCheckable(true);
     m_lockSidebarAction->setIcon(QIcon::fromTheme(QStringLiteral("lock")));
@@ -802,6 +796,10 @@ bool Shell::queryClose()
 
 void Shell::setActiveTab(int tab)
 {
+    if (m_showSidebarAction) {
+        m_showSidebarAction->disconnect();
+    }
+
     m_tabWidget->setCurrentIndex(tab);
 
     // NOTE : createGUI(...) breaks the visibility of the sidebar, so we need
@@ -821,6 +819,12 @@ void Shell::setActiveTab(int tab)
         }
     }
     m_sidebar->setCurrentWidget(sideContainer);
+
+    m_showSidebarAction = m_tabs[tab].part->actionCollection()->action(QStringLiteral("show_leftpanel"));
+    Q_ASSERT(m_showSidebarAction);
+    m_showSidebarAction->disconnect();
+    m_showSidebarAction->setChecked(m_sidebar->isVisibleTo(this));
+    connect(m_showSidebarAction, &QAction::triggered, m_sidebar, &Sidebar::setVisible);
 
     m_printAction->setEnabled(m_tabs[tab].printEnabled);
     m_closeAction->setEnabled(m_tabs[tab].closeEnabled);
@@ -942,12 +946,6 @@ void Shell::connectPart(const KParts::ReadWritePart *part)
     // Otherwise the QSize,QSize gets turned into QSize, QSize that is not normalized signals and is slightly slower
     connect(part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)));   // clazy:exclude=old-style-connect
     // clang-format on
-
-    // since sidebar is now docked to main window, we use another action
-    // to show/hide it, so we should hide a similar KPart's action
-    if (QAction *action = part->actionCollection()->action(QStringLiteral("show_leftpanel"))) {
-        action->setVisible(false);
-    }
 }
 
 void Shell::print()

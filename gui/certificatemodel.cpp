@@ -104,6 +104,33 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
     return QString();
 }
 
+QVariant CertificateModel::propertyVisibleDetailValue(CertificateModel::Property p) const
+{
+    switch (p) {
+    case CertificateModel::Issuer: {
+        // let's see if we have a pre-parsed one
+        auto preParsed = m_certificateInfo.splitIssuerDN();
+        if (!preParsed.isEmpty()) {
+            return QVariant::fromValue(preParsed);
+        } else {
+            return propertyVisibleValue(p);
+        }
+    }
+    case CertificateModel::Subject: {
+        // let's see if we have  a pre-parsed one
+        auto preParsed = m_certificateInfo.splitSubjectDN();
+        if (!preParsed.isEmpty()) {
+            return QVariant::fromValue(preParsed);
+        } else {
+            return propertyVisibleValue(p);
+        }
+    }
+    default:
+        return propertyVisibleValue(p);
+    }
+    return QVariant();
+}
+
 QVariant CertificateModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
@@ -126,6 +153,8 @@ QVariant CertificateModel::data(const QModelIndex &index, int role) const
         return m_certificateProperties[row];
     case PropertyVisibleValueRole:
         return propertyVisibleValue(m_certificateProperties[row]);
+    case PropertyVisibleDetailRole:
+        return propertyVisibleDetailValue(m_certificateProperties[row]);
     }
 
     return QVariant();

@@ -120,6 +120,18 @@ public:
     void setIssuerInfo(EntityInfoKey key, const QString &value);
 
     /**
+     * The issuer distinguished name, parsed and split up
+     * @since 23.08
+     */
+    QVector<QPair<QString, QString>> splitIssuerDN() const;
+
+    /**
+     * Sets the issuer distinguished name, parsed and split up
+     * @since 23.08
+     */
+    void setSplitIssuerDN(const QVector<QPair<QString, QString>> &issuerDN);
+
+    /**
      * Information about the subject
      * @since 23.08
      */
@@ -130,6 +142,18 @@ public:
      * @since 23.08
      */
     void setSubjectInfo(EntityInfoKey key, const QString &value);
+
+    /**
+     * The subject distinguished name, parsed and split up
+     * @since 23.08
+     */
+    QVector<QPair<QString, QString>> splitSubjectDN() const;
+
+    /**
+     * Sets the subject distinguished name, parsed and split up
+     * @since 23.08
+     */
+    void setSplitSubjectDN(const QVector<QPair<QString, QString>> &subjectDN);
 
     /**
      * The certificate internal database nickname

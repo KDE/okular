@@ -19,7 +19,7 @@ class CertificateModel : public QAbstractTableModel
 public:
     explicit CertificateModel(const Okular::CertificateInfo &certInfo, QObject *parent = nullptr);
 
-    enum { PropertyKeyRole = Qt::UserRole, PropertyVisibleValueRole };
+    enum { PropertyKeyRole = Qt::UserRole, PropertyVisibleValueRole, PropertyVisibleDetailRole };
 
     enum Property { Version, SerialNumber, Issuer, IssuedOn, ExpiresOn, Subject, PublicKey, KeyUsage, IssuerName, IssuerEmail, IssuerOrganization, SubjectName, SubjectEmail, SubjectOrganization, Sha1, Sha256 };
     Q_ENUM(Property)
@@ -31,6 +31,8 @@ public:
 
     Q_INVOKABLE QString propertyVisibleValue(CertificateModel::Property p) const;
     Q_INVOKABLE bool exportCertificateTo(const QString &path);
+
+    QVariant propertyVisibleDetailValue(CertificateModel::Property p) const;
 
 private:
     QVector<Property> m_certificateProperties;

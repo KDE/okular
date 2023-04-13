@@ -204,9 +204,20 @@ void CertificateViewer::updateText(const QModelIndex &index)
         text = m_certificateModel->data(index, CertificateModel::PropertyVisibleValueRole).toString();
         break;
     case CertificateModel::Issuer:
-    case CertificateModel::Subject:
-        text = splitDNAttributes(m_certificateModel->data(index, CertificateModel::PropertyVisibleValueRole).toString());
-        break;
+    case CertificateModel::Subject: {
+        auto data = m_certificateModel->data(index, CertificateModel::PropertyVisibleDetailRole);
+        if (data.canConvert<QVector<QPair<QString, QString>>>()) {
+            auto vector = data.value<QVector<QPair<QString, QString>>>();
+            for (auto &&pair : vector) {
+                if (!text.isEmpty()) {
+                    text += QLatin1Char('\n');
+                }
+                text += pair.first + QLatin1Char('=') + pair.second;
+            }
+        } else {
+            text = splitDNAttributes(data.toString());
+        }
+    } break;
     case CertificateModel::PublicKey:
         text = QString::fromLatin1(m_certificateInfo.publicKey().toHex(' '));
         break;

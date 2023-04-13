@@ -49,6 +49,8 @@ public:
     bool isSelfSigned = false;
     QByteArray certificateData;
     CertificateInfo::Backend backend = CertificateInfo::Backend::Unknown;
+    QVector<QPair<QString, QString>> splitIssuerDN;
+    QVector<QPair<QString, QString>> splitSubjectDN;
     std::function<bool(QString)> checkPasswordFunction;
 };
 
@@ -258,6 +260,26 @@ CertificateInfo::Backend CertificateInfo::backend() const
 void CertificateInfo::setBackend(Backend backend)
 {
     d->backend = backend;
+}
+
+void CertificateInfo::setSplitSubjectDN(const QVector<QPair<QString, QString>> &splitSubjectDN)
+{
+    d->splitSubjectDN = splitSubjectDN;
+}
+
+QVector<QPair<QString, QString>> CertificateInfo::splitSubjectDN() const
+{
+    return d->splitSubjectDN;
+}
+
+void CertificateInfo::setSplitIssuerDN(const QVector<QPair<QString, QString>> &splitIssuerDN)
+{
+    d->splitIssuerDN = splitIssuerDN;
+}
+
+QVector<QPair<QString, QString>> CertificateInfo::splitIssuerDN() const
+{
+    return d->splitIssuerDN;
 }
 
 bool CertificateInfo::checkPassword(const QString &password) const

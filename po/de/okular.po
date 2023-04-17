@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-06 00:45+0000\n"
-"PO-Revision-Date: 2023-03-24 19:41+0100\n"
+"PO-Revision-Date: 2023-04-16 13:53+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 22.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1361,7 +1361,7 @@ msgstr "Ausblenden"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Weitere Anmerkungs-Werkzeug anzeigen"
+msgstr "Weitere Anmerkungs-Werkzeuge anzeigen"
 
 #: part/annotationactionhandler.cpp:555
 #, kde-format
@@ -5593,10 +5593,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Die Okular-Komponente wurde nicht gefunden: %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Se&itenleiste anzeigen"
+msgstr "Seitenleiste"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5645,16 +5644,14 @@ msgid "Undo close tab"
 msgstr "Unterfenster wieder herstellen"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Se&itenleiste anzeigen"
+msgstr "Seitenleiste anzeigen"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Se&itenleiste anzeigen"
+msgstr "Seitenleiste sperren"
 
 #: shell/shell.cpp:646
 #, kde-format

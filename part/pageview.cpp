@@ -569,7 +569,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
 
     // Trim View actions
     d->aTrimMode = new KActionMenu(i18n("&Trim View"), this);
-    d->aTrimMode->setDelayed(false);
+    d->aTrimMode->setPopupMode(QToolButton::InstantPopup);
     ac->addAction(QStringLiteral("view_trim_mode"), d->aTrimMode);
 
     d->aTrimMargins = new KToggleAction(QIcon::fromTheme(QStringLiteral("trim-margins")), i18n("&Trim Margins"), d->aTrimMode->menu());
@@ -605,7 +605,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
 
     // View Mode action menu (Single Page, Facing Pages,...(choose), and Continuous (on/off))
     d->aViewModeMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-split-left-right")), i18n("&View Mode"), this);
-    d->aViewModeMenu->setDelayed(false);
+    d->aTrimMode->setPopupMode(QToolButton::InstantPopup);
     ac->addAction(QStringLiteral("view_render_mode"), d->aViewModeMenu);
 
     d->viewModeActionGroup = new QActionGroup(this);

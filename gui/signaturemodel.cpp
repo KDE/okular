@@ -23,7 +23,7 @@
 #include "core/signatureutils.h"
 
 struct SignatureItem {
-    enum DataType { Root, RevisionInfo, ValidityStatus, SigningTime, Reason, FieldInfo };
+    enum DataType { Root, RevisionInfo, ValidityStatus, SigningTime, Reason, Location, FieldInfo };
 
     SignatureItem();
     SignatureItem(SignatureItem *parent, const Okular::FormFieldSignature *form, DataType type, int page);
@@ -161,6 +161,11 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
             if (!reason.isEmpty()) {
                 auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Reason, pageNumber);
                 childItem3->displayString = i18n("Reason: %1", reason);
+            }
+            const QString location = info.location();
+            if (!location.isEmpty()) {
+                auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Location, pageNumber);
+                childItem3->displayString = i18n("Location: %1", location);
             }
 
             auto childItem4 = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, pageNumber);

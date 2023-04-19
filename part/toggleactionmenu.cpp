@@ -95,13 +95,7 @@ void ToggleActionMenu::updateButtons()
             // so that it hides the text
             button->setToolButtonStyle(styleFor(button));
 
-            if (delayed()) { // TODO deprecated interface.
-                button->setPopupMode(QToolButton::DelayedPopup);
-            } else if (stickyMenu()) {
-                button->setPopupMode(QToolButton::InstantPopup);
-            } else {
-                button->setPopupMode(QToolButton::MenuButtonPopup);
-            }
+            button->setPopupMode(popupMode());
         }
     }
 }

@@ -254,7 +254,7 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
     case SignerNameRole:
         return form->signatureInfo().signerName();
     case SigningTimeRole:
-        return form->signatureInfo().signingTime().toString(Qt::DefaultLocaleLongDate);
+        return QLocale().toString(form->signatureInfo().signingTime(), QLocale::LongFormat);
     case SigningLocationRole:
         return form->signatureInfo().location();
     case SigningReasonRole:

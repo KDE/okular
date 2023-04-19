@@ -257,7 +257,7 @@ const Okular::CertificateInfo &PopplerSignatureInfo::certificateInfo() const
 
 PopplerCertificateStore::~PopplerCertificateStore() = default;
 
-QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
+std::vector<std::unique_ptr<Okular::CertificateInfo>> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
 {
     *userCancelled = false;
     auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
@@ -269,9 +269,9 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
     Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
 
     const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
-    QList<Okular::CertificateInfo *> vReturnCerts;
+    std::vector<std::unique_ptr<Okular::CertificateInfo>> vReturnCerts;
     for (const auto &cert : certs) {
-        vReturnCerts.append(new PopplerCertificateInfo(cert));
+        vReturnCerts.push_back(std::make_unique<PopplerCertificateInfo>(cert));
     }
 
     Poppler::setNSSPasswordCallback(nullptr);

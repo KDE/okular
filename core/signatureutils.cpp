@@ -170,16 +170,16 @@ CertificateStore::~CertificateStore()
 {
 }
 
-QList<CertificateInfo *> CertificateStore::signingCertificates(bool *userCancelled) const
+std::vector<std::unique_ptr<CertificateInfo>> CertificateStore::signingCertificates(bool *userCancelled) const
 {
     *userCancelled = false;
-    return QList<CertificateInfo *>();
+    return {};
 }
 
-QList<CertificateInfo *> CertificateStore::signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const
+std::vector<std::unique_ptr<CertificateInfo>> CertificateStore::signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const
 {
     const QDateTime now = QDateTime::currentDateTime();
-    QList<Okular::CertificateInfo *> certs = signingCertificates(userCancelled);
+    auto certs = signingCertificates(userCancelled);
     auto it = certs.begin();
     *nonDateValidCerts = false;
     while (it != certs.end()) {

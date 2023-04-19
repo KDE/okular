@@ -68,7 +68,7 @@ class PopplerCertificateStore : public Okular::CertificateStore
 public:
     ~PopplerCertificateStore() override;
 
-    QList<Okular::CertificateInfo *> signingCertificates(bool *userCancelled) const override;
+    std::vector<std::unique_ptr<Okular::CertificateInfo>> signingCertificates(bool *userCancelled) const override;
 };
 
 #endif

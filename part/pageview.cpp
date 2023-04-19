@@ -5041,12 +5041,12 @@ void PageView::slotSignature()
 
     const Okular::CertificateStore *certStore = d->document->certificateStore();
     bool userCancelled, nonDateValidCerts;
-    const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+    auto certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
     if (userCancelled) {
         return;
     }
 
-    if (certs.isEmpty()) {
+    if (certs.empty()) {
         showNoSigningCertificatesDialog(nonDateValidCerts);
         return;
     }

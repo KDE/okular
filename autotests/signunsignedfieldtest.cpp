@@ -94,8 +94,8 @@ void SignUnsignedFieldTest::testSignUnsignedField()
     bool userCancelled, nonDateValidCerts;
     {
         EnterPasswordDialogHelper helper;
-        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
-        QCOMPARE(certs.count(), 1);
+        auto certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+        QCOMPARE(certs.size(), 1);
     }
 
     Okular::NewSignatureData data;

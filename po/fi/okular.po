@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-06 00:45+0000\n"
-"PO-Revision-Date: 2023-01-17 15:58+0200\n"
+"PO-Revision-Date: 2023-04-04 23:04+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:24:13+0000\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5588,10 +5588,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Okular-komponenttia ei löytynyt: %1"
 
 #: shell/shell.cpp:214
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Näytä si&vupalkki"
+msgstr "Sivupalkki"
 
 #: shell/shell.cpp:243
 #, kde-format
@@ -5640,16 +5639,14 @@ msgid "Undo close tab"
 msgstr "Kumoa välilehden sulkeminen"
 
 #: shell/shell.cpp:543
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Show Sidebar"
-msgstr "Näytä si&vupalkki"
+msgstr "Näytä sivupalkki"
 
 #: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Näytä si&vupalkki"
+msgstr "Lukitse sivupalkki"
 
 #: shell/shell.cpp:646
 #, kde-format

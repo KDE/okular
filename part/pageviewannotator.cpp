@@ -370,14 +370,16 @@ public:
             }
         }
 
-        const std::unique_ptr<Okular::CertificateInfo> cert = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, &passToUse, &documentPassword);
-        if (!cert) {
+        const auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document);
+        if (!signInfo) {
             m_aborted = true;
             passToUse.clear();
             documentPassword.clear();
         } else {
-            certNicknameToUse = cert->nickName();
-            certCommonName = cert->subjectInfo(Okular::CertificateInfo::CommonName);
+            certNicknameToUse = signInfo->certificate->nickName();
+            certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName);
+            passToUse = signInfo->certificatePassword;
+            documentPassword = signInfo->documentPassword;
         }
 
         m_creationCompleted = false;

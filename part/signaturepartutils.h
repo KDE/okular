@@ -8,6 +8,7 @@
 #define OKULAR_SIGNATUREPARTUTILS_H
 
 #include <memory>
+#include <optional>
 
 #include "gui/signatureguiutils.h"
 
@@ -15,7 +16,17 @@ class PageView;
 
 namespace SignaturePartUtils
 {
-std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, QString *password, QString *documentPassword);
+struct SigningInformation {
+    std::unique_ptr<Okular::CertificateInfo> certificate;
+    QString certificatePassword;
+    QString documentPassword;
+};
+
+/** Retrieves signing information for this operation
+    \return nullopt on failure, otherwise information
+ */
+std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc);
+
 QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc);
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
 

@@ -21,19 +21,21 @@
 
 namespace SignaturePartUtils
 {
-std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, QString *password, QString *documentPassword)
+std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc)
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
     bool userCancelled, nonDateValidCerts;
     QList<Okular::CertificateInfo *> certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
     if (userCancelled) {
-        return nullptr;
+        return std::nullopt;
     }
 
     if (certs.isEmpty()) {
         pageView->showNoSigningCertificatesDialog(nonDateValidCerts);
-        return nullptr;
+        return std::nullopt;
     }
+    QString password;
+    QString documentPassword;
 
     QStringList items;
     QHash<QString, Okular::CertificateInfo *> nickToCert;
@@ -47,28 +49,31 @@ std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(Pag
 
     if (!resok) {
         qDeleteAll(certs);
-        return nullptr;
+        return std::nullopt;
     }
 
     // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
     // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
     // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
     Okular::CertificateInfo *cert = nickToCert.value(certNicknameToUse);
-    bool passok = cert->checkPassword(*password);
+    bool passok = cert->checkPassword(password);
     while (!passok) {
         const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
         bool ok;
-        *password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
+        password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
         if (ok) {
-            passok = cert->checkPassword(*password);
+            passok = cert->checkPassword(password);
         } else {
             passok = false;
             break;
         }
     }
+    if (!passok) {
+        return std::nullopt;
+    }
 
     if (doc->metaData(QStringLiteral("DocumentHasPassword")).toString() == QLatin1String("yes")) {
-        *documentPassword = QInputDialog::getText(pageView, i18n("Enter document password"), i18n("Enter document password"), QLineEdit::Password, QString(), &passok);
+        documentPassword = QInputDialog::getText(pageView, i18n("Enter document password"), i18n("Enter document password"), QLineEdit::Password, QString(), &passok);
     }
 
     if (passok) {
@@ -76,7 +81,10 @@ std::unique_ptr<Okular::CertificateInfo> getCertificateAndPasswordForSigning(Pag
     }
     qDeleteAll(certs);
 
-    return passok ? std::unique_ptr<Okular::CertificateInfo>(cert) : std::unique_ptr<Okular::CertificateInfo>();
+    if (passok) {
+        return SigningInformation {std::unique_ptr<Okular::CertificateInfo>(cert), password, documentPassword};
+    }
+    return std::nullopt;
 }
 
 QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc)
@@ -98,19 +106,16 @@ QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc)
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc)
 {
     Q_ASSERT(form && form->signatureType() == Okular::FormFieldSignature::UnsignedSignature);
-    QString password, documentPassword;
-    const std::unique_ptr<Okular::CertificateInfo> cert = getCertificateAndPasswordForSigning(pageView, doc, &password, &documentPassword);
-    if (!cert) {
+    const std::optional<SigningInformation> signingInfo = getCertificateAndPasswordForSigning(pageView, doc);
+    if (!signingInfo) {
         return;
     }
 
     Okular::NewSignatureData data;
-    data.setCertNickname(cert->nickName());
-    data.setCertSubjectCommonName(cert->subjectInfo(Okular::CertificateInfo::CommonName));
-    data.setPassword(password);
-    data.setDocumentPassword(documentPassword);
-    password.clear();
-    documentPassword.clear();
+    data.setCertNickname(signingInfo->certificate->nickName());
+    data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName));
+    data.setPassword(signingInfo->certificatePassword);
+    data.setDocumentPassword(signingInfo->documentPassword);
 
     const QString newFilePath = getFileNameForNewSignedFile(pageView, doc);
 

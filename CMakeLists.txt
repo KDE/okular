@@ -558,6 +558,7 @@ if(BUILD_DESKTOP)
     part/signaturepropertiesdialog.cpp
     part/signaturepanel.cpp
   )
+  ki18n_wrap_ui(okularpart_SRCS part/selectcertificatedialog.ui)
 
 if (Qt5TextToSpeech_FOUND)
    set(okularpart_SRCS ${okularpart_SRCS}

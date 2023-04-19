@@ -17,8 +17,7 @@
 #include "gui/signatureguiutils.h"
 
 class PageView;
-class QListView;
-class QDialogButtonBox;
+class Ui_SelectCertificateDialog;
 
 namespace SignaturePartUtils
 {
@@ -49,8 +48,8 @@ class SelectCertificateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QListView *list;
-    QDialogButtonBox *buttonBox;
+    std::unique_ptr<Ui_SelectCertificateDialog> ui;
+    ~SelectCertificateDialog() override;
 
     explicit SelectCertificateDialog(QWidget *parent);
 };

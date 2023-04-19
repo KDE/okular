@@ -25,6 +25,7 @@
 #include <QStandardItemModel>
 #include <QVBoxLayout>
 
+#include "ui_selectcertificatedialog.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 
@@ -68,23 +69,21 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
 
     SelectCertificateDialog dialog(pageView);
     QFontMetrics fm = dialog.fontMetrics();
-    dialog.list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
-    dialog.list->setModel(&items);
-    dialog.list->setAlternatingRowColors(true);
-    dialog.list->setSelectionMode(QAbstractItemView::SingleSelection);
-    QObject::connect(dialog.list->selectionModel(), &QItemSelectionModel::selectionChanged, &dialog, [dialog = &dialog](auto &&, auto &&) {
+    dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
+    dialog.ui->list->setModel(&items);
+    dialog.ui->list->selectionModel()->select(items.index(0, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
+    QObject::connect(dialog.ui->list->selectionModel(), &QItemSelectionModel::selectionChanged, &dialog, [dialog = &dialog](auto &&, auto &&) {
         // One can ctrl-click on the selected item to deselect it, that would
         // leave the selection empty, so better prevent the OK button
         // from being usable
-        dialog->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog->list->selectionModel()->hasSelection());
+        dialog->ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog->ui->list->selectionModel()->hasSelection());
     });
-    dialog.list->selectionModel()->select(items.index(0, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
     auto result = dialog.exec();
 
     if (result == QDialog::Rejected) {
         return std::nullopt;
     }
-    auto certNicknameToUse = dialog.list->selectionModel()->currentIndex().data(Qt::DisplayRole).toString();
+    const auto certNicknameToUse = dialog.ui->list->selectionModel()->currentIndex().data(Qt::DisplayRole).toString();
 
     // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
     // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
@@ -160,19 +159,12 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
 
 SelectCertificateDialog::SelectCertificateDialog(QWidget *parent)
     : QDialog(parent)
+    , ui {std::make_unique<Ui_SelectCertificateDialog>()}
 {
-    setWindowTitle(i18n("Certificates"));
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    list = new QListView();
-    list->setItemDelegate(new KeyDelegate);
-    auto layout = new QVBoxLayout();
-    layout->addWidget(new QLabel(i18n("Select certificate to sign with:")));
-    layout->addWidget(list);
-    layout->addWidget(buttonBox);
-    setLayout(layout);
+    ui->setupUi(this);
+    ui->list->setItemDelegate(new KeyDelegate(ui->list));
 }
+SelectCertificateDialog::~SelectCertificateDialog() = default;
 
 QSize KeyDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {

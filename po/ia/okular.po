@@ -3321,12 +3321,12 @@ msgstr "&Vista"
 #: part/fileprinterpreview.cpp:115
 #, kde-format
 msgid "Could not load print preview part"
-msgstr "Il non pote cargar le parte del vista preliminari de impression"
+msgstr "Il non pote cargar le parte del vista preliminar de impression"
 
 #: part/fileprinterpreview.cpp:127
 #, kde-format
 msgid "Print Preview"
-msgstr "Vista preliminari de imprimer"
+msgstr "Vista preliminar de imprimer"
 
 #: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
 #, kde-format
@@ -5228,7 +5228,7 @@ msgstr "Dimension"
 #: part/revisionviewer.cpp:41
 #, kde-format
 msgid "Revision Preview"
-msgstr "Vista preliminari de revision"
+msgstr "Vista preliminar de revision"
 
 #: part/revisionviewer.cpp:53
 #, kde-format

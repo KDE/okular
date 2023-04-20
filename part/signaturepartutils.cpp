@@ -110,7 +110,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     if (passok) {
-        return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword};
+        return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword, dialog.ui->reasonInput->text(), dialog.ui->locationInput->text()};
     }
     return std::nullopt;
 }
@@ -144,6 +144,8 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
     data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
     data.setPassword(signingInfo->certificatePassword);
     data.setDocumentPassword(signingInfo->documentPassword);
+    data.setReason(signingInfo->reason);
+    data.setLocation(signingInfo->location);
 
     const QString newFilePath = getFileNameForNewSignedFile(pageView, doc);
 

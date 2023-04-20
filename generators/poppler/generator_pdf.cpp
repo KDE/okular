@@ -1373,6 +1373,8 @@ void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Popple
     pData->setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData->setFontColor(Qt::black);
     pData->setBorderColor(Qt::black);
+    pData->setReason(oData.reason());
+    pData->setLocation(oData.location());
     pData->setDocumentOwnerPassword(oData.documentPassword().toLatin1());
     pData->setDocumentUserPassword(oData.documentPassword().toLatin1());
 }

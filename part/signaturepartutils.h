@@ -25,6 +25,8 @@ struct SigningInformation {
     std::unique_ptr<Okular::CertificateInfo> certificate;
     QString certificatePassword;
     QString documentPassword;
+    QString reason;
+    QString location;
 };
 
 /** Retrieves signing information for this operation

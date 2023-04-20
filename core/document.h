@@ -1549,6 +1549,12 @@ public:
     NormalizedRect boundingRectangle() const;
     void setBoundingRectangle(const NormalizedRect &rect);
 
+    void setReason(const QString &reason);
+    QString reason() const;
+
+    void setLocation(const QString &location);
+    QString location() const;
+
     /// @since 22.04
     QString documentPassword() const;
 

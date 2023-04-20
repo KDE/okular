@@ -5929,6 +5929,8 @@ struct Okular::NewSignatureDataPrivate {
     QString certSubjectCommonName;
     QString password;
     QString documentPassword;
+    QString location;
+    QString reason;
     int page;
     NormalizedRect boundingRectangle;
 };
@@ -6001,6 +6003,26 @@ QString NewSignatureData::documentPassword() const
 void NewSignatureData::setDocumentPassword(const QString &password)
 {
     d->documentPassword = password;
+}
+
+QString NewSignatureData::location() const
+{
+    return d->location;
+}
+
+void NewSignatureData::setLocation(const QString &location)
+{
+    d->location = location;
+}
+
+QString NewSignatureData::reason() const
+{
+    return d->reason;
+}
+
+void NewSignatureData::setReason(const QString &reason)
+{
+    d->reason = reason;
 }
 
 #undef foreachObserver

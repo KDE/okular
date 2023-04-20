@@ -380,6 +380,8 @@ public:
             certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
             passToUse = signInfo->certificatePassword;
             documentPassword = signInfo->documentPassword;
+            reason = signInfo->reason;
+            location = signInfo->location;
         }
 
         m_creationCompleted = false;
@@ -412,6 +414,8 @@ public:
         data.setDocumentPassword(documentPassword);
         data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
+        data.setReason(reason);
+        data.setLocation(location);
         passToUse.clear();
         documentPassword.clear();
         return m_document->sign(data, newFilePath);
@@ -422,6 +426,8 @@ private:
     QString certCommonName;
     QString passToUse;
     QString documentPassword;
+    QString location;
+    QString reason;
 
     Okular::Document *m_document;
     const Okular::Page *m_page;

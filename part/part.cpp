@@ -2645,7 +2645,9 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // TODO When we get different saving backends we need to query the backend
     // as to if it can save changes even if the open file has been modified,
     // since we only have poppler as saving backend for now we're skipping that check
-    if (m_fileLastModified != QFileInfo(localFilePath()).lastModified()) {
+    // Don't warn the user about external changes if they're doing a Save As with a different URL, since then there's nothing to warn about
+    // because the original changed document is safe.
+    if (m_fileLastModified != QFileInfo(localFilePath()).lastModified() && saveUrl == realUrl()) {
         KMessageBox::error(widget(), i18n("The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName()), i18n("File Changed"));
         return false;
     }

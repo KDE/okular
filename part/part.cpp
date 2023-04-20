@@ -1856,19 +1856,25 @@ bool Part::queryClose()
     if (m_fileLastModified != QFileInfo(localFilePath()).lastModified()) {
         int res;
         if (m_isReloading) {
-            res = KMessageBox::warningYesNo(
-                widget(),
-                i18n("There are unsaved changes, and the file '%1' has been modified by another program. Your changes will be lost, because the file can no longer be saved.<br>Do you want to continue reloading the file?", url().fileName()),
-                i18n("File Changed"),
-                KGuiItem(i18n("Continue Reloading")), // <- KMessageBox::Yes
-                KGuiItem(i18n("Abort Reloading")));
+            res = KMessageBox::warningYesNo(widget(),
+                                            xi18nc("@info",
+                                                   "The file <filename>%1</filename> has unsaved changes but has been modified by another program. Reloading it "
+                                                   "will replace the unsaved changes with the changes made in the other "
+                                                   "program.<nl/><nl/>Do you want to continue reloading the file?",
+                                                   url().fileName()),
+                                            i18n("File Changed"),
+                                            KGuiItem(i18n("Continue Reloading")), // <- KMessageBox::Yes
+                                            KGuiItem(i18n("Abort Reloading")));
         } else {
-            res = KMessageBox::warningYesNo(
-                widget(),
-                i18n("There are unsaved changes, and the file '%1' has been modified by another program. Your changes will be lost, because the file can no longer be saved.<br>Do you want to continue closing the file?", url().fileName()),
-                i18n("File Changed"),
-                KGuiItem(i18n("Continue Closing")), // <- KMessageBox::Yes
-                KGuiItem(i18n("Abort Closing")));
+            res = KMessageBox::warningYesNo(widget(),
+                                            xi18nc("@info",
+                                                   "The file <filename>%1</filename> has unsaved changes but has been modified by another program. Closing it "
+                                                   "will replace the unsaved changes with the changes made in the other "
+                                                   "program.<nl/><nl/>Do you want to continue closing the file?",
+                                                   url().fileName()),
+                                            i18n("File Changed"),
+                                            KGuiItem(i18n("Continue Closing")), // <- KMessageBox::Yes
+                                            KGuiItem(i18n("Abort Closing")));
         }
         return res == KMessageBox::Yes;
     }
@@ -2645,11 +2651,26 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // TODO When we get different saving backends we need to query the backend
     // as to if it can save changes even if the open file has been modified,
     // since we only have poppler as saving backend for now we're skipping that check
+
     // Don't warn the user about external changes if they're doing a Save As with a different URL, since then there's nothing to warn about
     // because the original changed document is safe.
     if (m_fileLastModified != QFileInfo(localFilePath()).lastModified() && saveUrl == realUrl()) {
-        KMessageBox::error(widget(), i18n("The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName()), i18n("File Changed"));
-        return false;
+        const int res = KMessageBox::warningYesNoCancel(widget(),
+                                                        xi18nc("@info",
+                                                               "The file <filename>%1</filename> has been modified by another program. If you save now, any "
+                                                               "changes made in the other program will be lost. Are you sure you want to continue?",
+                                                               realUrl().fileName()),
+                                                        i18n("Save - Warning"),
+                                                        KStandardGuiItem::cont(),                // <- KMessageBox::Yes
+                                                        KGuiItem(i18n("Save a Copy Elsewhere")), // <- KMessageBox::No
+                                                        KStandardGuiItem::cancel());             // <- KMessageBox::Cancel
+
+        if (res == KMessageBox::No) {
+            slotSaveFileAs(false);
+        }
+        if (res != KMessageBox::Yes) {
+            return false;
+        }
     }
 
     bool hasUserAcceptedReload = false;

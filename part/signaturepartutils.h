@@ -27,12 +27,17 @@ struct SigningInformation {
     QString documentPassword;
     QString reason;
     QString location;
+    QString backgroundImagePath;
 };
+
+enum class SigningInformationOption { None = 0x0, BackgroundImage = 0x1 };
+Q_DECLARE_FLAGS(SigningInformationOptions, SigningInformationOption);
+Q_DECLARE_OPERATORS_FOR_FLAGS(SigningInformationOptions);
 
 /** Retrieves signing information for this operation
     \return nullopt on failure, otherwise information
  */
-std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc);
+std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, SigningInformationOptions opts);
 
 QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc);
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);

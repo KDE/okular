@@ -17,6 +17,7 @@ set(okularGenerator_poppler_PART_SRCS
    annots.cpp
    pdfsignatureutils.cpp
    pdfsettingswidget.cpp
+   imagescaling.cpp
 )
 
 ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
@@ -28,6 +29,15 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/pdfse
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
 target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt5 Qt5::Xml)
+
+########### autotests ###############
+
+ecm_add_test(autotests/testimagescaling.cpp
+    TEST_NAME "imageScalingTest"
+    LINK_LIBRARIES Qt5::Test Qt5::Gui
+)
+
+target_compile_definitions(imageScalingTest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_poppler>")
 
 ########### install files ###############
 install( FILES okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

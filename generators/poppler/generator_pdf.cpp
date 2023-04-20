@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QFile>
 #include <QImage>
+#include <QImageReader>
 #include <QLayout>
 #include <QMutex>
 #include <QPainter>
@@ -56,6 +57,7 @@
 #include "annots.h"
 #include "debug_pdf.h"
 #include "formfields.h"
+#include "imagescaling.h"
 #include "pdfsettingswidget.h"
 #include "pdfsignatureutils.h"
 #include "popplerembeddedfile.h"
@@ -2012,6 +2014,13 @@ bool PDFGenerator::canSign() const
 
 bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
+    // We need a temporary file to pass a prepared image to poppler
+    QTemporaryFile timg(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.png"));
+    timg.setAutoRemove(true);
+    if (!timg.open()) {
+        return false;
+    }
+
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
@@ -2024,6 +2033,29 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
 
     Poppler::PDFConverter::NewSignatureData pData;
     okularToPoppler(oData, &pData);
+    if (!oData.backgroundImagePath().isEmpty() && QFile::exists(oData.backgroundImagePath())) {
+        // width and height for target image
+        const Okular::NormalizedRect bRect = oData.boundingRectangle();
+        // 2 is an experimental decided upon fudge factor to compensate for the fact that pageSize is in points
+        // but most of this ends up working in pixels anyway
+        double width = pdfdoc->page(oData.page())->pageSizeF().width() * bRect.width() * 2;
+        double height = pdfdoc->page(oData.page())->pageSizeF().height() * bRect.height() * 2;
+
+        QImageReader reader(oData.backgroundImagePath());
+        QSize imageSize = reader.size();
+        if (!reader.size().isNull()) {
+            reader.setScaledSize(imageSize.scaled(width, height, Qt::KeepAspectRatio));
+        }
+        auto input = reader.read();
+        if (!input.isNull()) {
+            auto scaled = imagescaling::scaleAndFitCanvas(input, QSize(width, height));
+            bool success = scaled.save(timg.fileName(), "png");
+            if (success) {
+                pData.setImagePath(timg.fileName());
+                pData.setBackgroundColor(Qt::white);
+            }
+        }
+    }
     if (!converter->sign(pData)) {
         tf.remove();
         return false;

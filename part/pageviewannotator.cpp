@@ -370,7 +370,7 @@ public:
             }
         }
 
-        const auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document);
+        const auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, SignaturePartUtils::SigningInformationOption::BackgroundImage);
         if (!signInfo) {
             m_aborted = true;
             passToUse.clear();
@@ -382,6 +382,7 @@ public:
             documentPassword = signInfo->documentPassword;
             reason = signInfo->reason;
             location = signInfo->location;
+            backgroundImagePath = signInfo->backgroundImagePath;
         }
 
         m_creationCompleted = false;
@@ -416,6 +417,7 @@ public:
         data.setBoundingRectangle(rect);
         data.setReason(reason);
         data.setLocation(location);
+        data.setBackgroundImagePath(backgroundImagePath);
         passToUse.clear();
         documentPassword.clear();
         return m_document->sign(data, newFilePath);
@@ -427,6 +429,7 @@ private:
     QString passToUse;
     QString documentPassword;
     QString location;
+    QString backgroundImagePath;
     QString reason;
 
     Okular::Document *m_document;

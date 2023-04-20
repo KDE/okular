@@ -1555,6 +1555,9 @@ public:
     void setLocation(const QString &location);
     QString location() const;
 
+    void setBackgroundImagePath(const QString &path);
+    QString backgroundImagePath() const;
+
     /// @since 22.04
     QString documentPassword() const;
 

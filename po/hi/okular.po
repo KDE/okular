@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2021-08-22 12:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -1076,7 +1076,7 @@ msgstr "यह दस्तावेज़ डिजिटल रूप से �
 msgid "Unsigned Signature %1"
 msgstr "डिजिटल हस्ताक्षर"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1095,6 +1095,12 @@ msgstr ""
 #, kde-format
 msgid "Reason: %1"
 msgstr "कारण : %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "स्थान :"
 
 #: part/annotationactionhandler.cpp:147
 #, fuzzy, kde-format

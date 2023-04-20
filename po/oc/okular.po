@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2008-01-12 15:03+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -1067,7 +1067,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr ""
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1086,6 +1086,12 @@ msgstr ""
 #, kde-format
 msgid "Reason: %1"
 msgstr ""
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Presentation"
+msgid "Location: %1"
+msgstr "Presentacion"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

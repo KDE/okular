@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -1066,7 +1066,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr ""
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1086,6 +1086,12 @@ msgstr ""
 #| msgid "Pages: %1"
 msgid "Reason: %1"
 msgstr "Strony: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Pozicija teksta:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

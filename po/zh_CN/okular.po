@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2023-04-16 12:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1052,7 +1052,7 @@ msgstr "此文档已经过数字签名，但它包含的某些签名无法通过
 msgid "Unsigned Signature %1"
 msgstr "未经签名的签名 %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "字段：页面 %2 中的 %1"
@@ -1071,6 +1071,12 @@ msgstr "签名时间：%1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "原因：%1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "位置："
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

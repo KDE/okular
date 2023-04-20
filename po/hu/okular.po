@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2022-02-18 11:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -1059,7 +1059,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Üres aláírás %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Mező: %1 az %2. oldalon"
@@ -1078,6 +1078,12 @@ msgstr "Aláírás ideje: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Ok: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Hely:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

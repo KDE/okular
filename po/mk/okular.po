@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -1105,7 +1105,7 @@ msgstr "Печатењето на овој документ не е дозвол
 msgid "Unsigned Signature %1"
 msgstr ""
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1125,6 +1125,12 @@ msgstr ""
 #| msgid "Pages: %1"
 msgid "Reason: %1"
 msgstr "Страници: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Presentation"
+msgid "Location: %1"
+msgstr "Презентација"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

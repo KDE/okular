@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2022-12-31 15:35+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -1057,7 +1057,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Unsigned Signature %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Field: %1 on page %2"
@@ -1076,6 +1076,12 @@ msgstr "Signing Time: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Reason: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Location:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2023-04-09 12:26+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1052,7 +1052,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "புலம்: %1 (பக்கம் %2)"
@@ -1071,6 +1071,12 @@ msgstr "கையொப்பமிட்ட நேரம்: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "காரணம்: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "இடம்:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2023-02-03 16:17+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1044,7 +1044,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "ხელმოუწერელი ხელმოწერა %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "ველი: %1 გვერდზე %2"
@@ -1063,6 +1063,12 @@ msgstr "ხელმოწერის დრო: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "მიზეზი: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "მდებარეობა:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

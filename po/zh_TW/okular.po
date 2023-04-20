@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2020-04-26 13:07+0800\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -1062,7 +1062,7 @@ msgstr "此文件已經數位簽名。"
 msgid "Unsigned Signature %1"
 msgstr "數位憑證"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "欄位：%1（於第 %2 頁）"
@@ -1081,6 +1081,12 @@ msgstr "簽署時間：%1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "原因：%1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "位置："
 
 #: part/annotationactionhandler.cpp:147
 #, fuzzy, kde-format

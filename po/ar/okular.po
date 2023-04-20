@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2022-12-24 18:26+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1051,7 +1051,7 @@ msgstr "هذا المستند موقع رقمياً. لا يمكن التحقق 
 msgid "Unsigned Signature %1"
 msgstr "توقيع غير موقع %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "الحقل: %1 على الصفحة %2"
@@ -1070,6 +1070,12 @@ msgstr "وقت التوقيع: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "السّبب: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "المكان:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

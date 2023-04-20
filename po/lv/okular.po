@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2020-07-24 12:58+0300\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -1083,7 +1083,7 @@ msgstr "Šis dokuments ir digitāli parakstīts."
 msgid "Unsigned Signature %1"
 msgstr "Digitālais paraksts"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1102,6 +1102,12 @@ msgstr "Parakstīšanas laiks: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Iemesls: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Vieta:"
 
 #: part/annotationactionhandler.cpp:147
 #, fuzzy, kde-format

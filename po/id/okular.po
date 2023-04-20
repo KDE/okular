@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -1058,7 +1058,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Tanda Tangan Tidak Tertandatangani %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Bidang: %1 pada halaman %2"
@@ -1077,6 +1077,12 @@ msgstr "Waktu Penadatanganan: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Alasan: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Lokasi:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

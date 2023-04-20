@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1059,7 +1059,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Подпіс без подпісу %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Поле: %1 на старонцы %2"
@@ -1078,6 +1078,12 @@ msgstr "Час падпісання: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Прычына: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Location:"
+msgid "Location: %1"
+msgstr "Размяшчэнне:"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

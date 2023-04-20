@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2017-05-24 08:35-0400\n"
 "Last-Translator: Elkana Bardugo <ttv200@gmail.com>\n"
 "Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
@@ -1082,7 +1082,7 @@ msgstr "הדפסת המסמך הזה אסורה."
 msgid "Unsigned Signature %1"
 msgstr ""
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1102,6 +1102,13 @@ msgstr ""
 #| msgid "Pages: %1"
 msgid "Reason: %1"
 msgstr "עמודים: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
+msgid "Location: %1"
+msgstr "הערת צד"
 
 #: part/annotationactionhandler.cpp:147
 #, fuzzy, kde-format

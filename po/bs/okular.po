@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -1106,7 +1106,7 @@ msgstr "Nije dozvoljeno štapanje ovog dokumenta."
 msgid "Unsigned Signature %1"
 msgstr ""
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr ""
@@ -1126,6 +1126,13 @@ msgstr ""
 #| msgid "Pages: %1"
 msgid "Reason: %1"
 msgstr "Stranice: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
+msgid "Location: %1"
+msgstr "%1 Zabilješka"
 
 #: part/annotationactionhandler.cpp:147
 #, fuzzy, kde-format

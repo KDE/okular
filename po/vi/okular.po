@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -1053,7 +1053,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Chữ kí chưa được kí %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Trường: %1 ở trang %2"
@@ -1071,6 +1071,12 @@ msgstr "Thời gian kí: %1"
 #: gui/signaturemodel.cpp:163
 #, kde-format
 msgid "Reason: %1"
+msgstr "Lí do: %1"
+
+#: gui/signaturemodel.cpp:168
+#, fuzzy, kde-format
+#| msgid "Reason: %1"
+msgid "Location: %1"
 msgstr "Lí do: %1"
 
 #: part/annotationactionhandler.cpp:147

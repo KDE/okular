@@ -25,7 +25,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
     bool userCancelled, nonDateValidCerts;
-    QList<Okular::CertificateInfo *> certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+    QList<Okular::CertificateInfo> certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
     if (userCancelled) {
         return std::nullopt;
     }
@@ -38,31 +38,30 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QString documentPassword;
 
     QStringList items;
-    QHash<QString, Okular::CertificateInfo *> nickToCert;
-    for (auto cert : qAsConst(certs)) {
-        items.append(cert->nickName());
-        nickToCert[cert->nickName()] = cert;
+    QHash<QString, Okular::CertificateInfo> nickToCert;
+    for (const auto &cert : qAsConst(certs)) {
+        items.append(cert.nickName());
+        nickToCert[cert.nickName()] = cert;
     }
 
     bool resok = false;
     const QString certNicknameToUse = QInputDialog::getItem(pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
     if (!resok) {
-        qDeleteAll(certs);
         return std::nullopt;
     }
 
     // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
     // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
     // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
-    Okular::CertificateInfo *cert = nickToCert.value(certNicknameToUse);
-    bool passok = cert->checkPassword(password);
+    Okular::CertificateInfo cert = nickToCert.value(certNicknameToUse);
+    bool passok = cert.checkPassword(password);
     while (!passok) {
         const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
         bool ok;
         password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
         if (ok) {
-            passok = cert->checkPassword(password);
+            passok = cert.checkPassword(password);
         } else {
             passok = false;
             break;
@@ -77,12 +76,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     if (passok) {
-        certs.removeOne(cert);
-    }
-    qDeleteAll(certs);
-
-    if (passok) {
-        return SigningInformation {std::unique_ptr<Okular::CertificateInfo>(cert), password, documentPassword};
+        return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword};
     }
     return std::nullopt;
 }

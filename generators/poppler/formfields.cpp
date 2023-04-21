@@ -397,14 +397,11 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
     if (!PDFSettings::checkOCSPServers()) {
         validateOptions = validateOptions | Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
     }
-    m_info = new PopplerSignatureInfo(m_field->validate(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions)));
+    m_info = fromPoppler(m_field->validate(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions)));
     SET_ACTIONS
 }
 
-PopplerFormFieldSignature::~PopplerFormFieldSignature()
-{
-    delete m_info;
-}
+PopplerFormFieldSignature::~PopplerFormFieldSignature() = default;
 
 Okular::NormalizedRect PopplerFormFieldSignature::rect() const
 {
@@ -457,9 +454,9 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
     }
 }
 
-const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
+Okular::SignatureInfo PopplerFormFieldSignature::signatureInfo() const
 {
-    return *m_info;
+    return m_info;
 }
 
 bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const

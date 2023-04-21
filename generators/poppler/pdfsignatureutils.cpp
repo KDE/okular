@@ -10,254 +10,174 @@
 #include <QDebug>
 #include <QInputDialog>
 
-PopplerCertificateInfo::PopplerCertificateInfo(const Poppler::CertificateInfo &info)
-    : m_info(info)
+static QString notAvailableIfEmpty(const QString &string)
 {
+    if (string.isEmpty()) {
+        return i18n("Not Available");
+    }
+    return string;
 }
 
-PopplerCertificateInfo::~PopplerCertificateInfo()
+static Okular::CertificateInfo::KeyUsageExtensions fromPoppler(Poppler::CertificateInfo::KeyUsageExtensions popplerKu)
 {
-}
-
-bool PopplerCertificateInfo::isNull() const
-{
-    return m_info.isNull();
-}
-
-int PopplerCertificateInfo::version() const
-{
-    return m_info.version();
-}
-
-QByteArray PopplerCertificateInfo::serialNumber() const
-{
-    return m_info.serialNumber();
-}
-
-QString PopplerCertificateInfo::issuerInfo(PopplerCertificateInfo::EntityInfoKey key) const
-{
-    QString str = m_info.issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>(key));
-    return !str.isEmpty() ? str : i18n("Not Available");
-}
-
-QString PopplerCertificateInfo::subjectInfo(PopplerCertificateInfo::EntityInfoKey key) const
-{
-    QString str = m_info.subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>(key));
-    return !str.isEmpty() ? str : i18n("Not Available");
-}
-
-QString PopplerCertificateInfo::nickName() const
-{
-    return m_info.nickName();
-}
-
-QDateTime PopplerCertificateInfo::validityStart() const
-{
-    return m_info.validityStart();
-}
-
-QDateTime PopplerCertificateInfo::validityEnd() const
-{
-    return m_info.validityEnd();
-}
-
-PopplerCertificateInfo::KeyUsageExtensions PopplerCertificateInfo::keyUsageExtensions() const
-{
-    Poppler::CertificateInfo::KeyUsageExtensions popplerKu = m_info.keyUsageExtensions();
-    KeyUsageExtensions ku = KuNone;
+    using namespace Okular;
+    CertificateInfo::KeyUsageExtensions ku = CertificateInfo::KuNone;
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuDigitalSignature)) {
-        ku |= KuDigitalSignature;
+        ku |= CertificateInfo::KuDigitalSignature;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuNonRepudiation)) {
-        ku |= KuNonRepudiation;
+        ku |= CertificateInfo::KuNonRepudiation;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyEncipherment)) {
-        ku |= KuKeyEncipherment;
+        ku |= CertificateInfo::KuKeyEncipherment;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuDataEncipherment)) {
-        ku |= KuDataEncipherment;
+        ku |= CertificateInfo::KuDataEncipherment;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyAgreement)) {
-        ku |= KuKeyAgreement;
+        ku |= CertificateInfo::KuKeyAgreement;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyCertSign)) {
-        ku |= KuKeyCertSign;
+        ku |= CertificateInfo::KuKeyCertSign;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuClrSign)) {
-        ku |= KuClrSign;
+        ku |= CertificateInfo::KuClrSign;
     }
     if (popplerKu.testFlag(Poppler::CertificateInfo::KuEncipherOnly)) {
-        ku |= KuEncipherOnly;
+        ku |= CertificateInfo::KuEncipherOnly;
     }
     return ku;
 }
 
-QByteArray PopplerCertificateInfo::publicKey() const
+static Okular::CertificateInfo::PublicKeyType fromPoppler(Poppler::CertificateInfo::PublicKeyType type)
 {
-    return m_info.publicKey();
-}
-
-PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::publicKeyType() const
-{
-    switch (m_info.publicKeyType()) {
+    switch (type) {
     case Poppler::CertificateInfo::RsaKey:
-        return RsaKey;
+        return Okular::CertificateInfo::RsaKey;
     case Poppler::CertificateInfo::DsaKey:
-        return DsaKey;
+        return Okular::CertificateInfo::DsaKey;
     case Poppler::CertificateInfo::EcKey:
-        return EcKey;
+        return Okular::CertificateInfo::EcKey;
     case Poppler::CertificateInfo::OtherKey:
-        return OtherKey;
+        return Okular::CertificateInfo::OtherKey;
     }
-
-    return OtherKey;
+    return Okular::CertificateInfo::OtherKey;
 }
 
-int PopplerCertificateInfo::publicKeyStrength() const
+Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
 {
-    return m_info.publicKeyStrength();
-}
-
-bool PopplerCertificateInfo::isSelfSigned() const
-{
-    return m_info.isSelfSigned();
-}
-
-QByteArray PopplerCertificateInfo::certificateData() const
-{
-    return m_info.certificateData();
-}
-
-bool PopplerCertificateInfo::checkPassword(const QString &password) const
-{
-    return m_info.checkPassword(password);
-}
-
-PopplerSignatureInfo::PopplerSignatureInfo(const Poppler::SignatureValidationInfo &info)
-    : m_info(info)
-{
-    m_certfiticateInfo = new PopplerCertificateInfo(m_info.certificateInfo());
-}
-
-PopplerSignatureInfo::~PopplerSignatureInfo()
-{
-    delete m_certfiticateInfo;
-}
-
-PopplerSignatureInfo::SignatureStatus PopplerSignatureInfo::signatureStatus() const
-{
-    switch (m_info.signatureStatus()) {
-    case Poppler::SignatureValidationInfo::SignatureValid:
-        return SignatureValid;
-    case Poppler::SignatureValidationInfo::SignatureInvalid:
-        return SignatureInvalid;
-    case Poppler::SignatureValidationInfo::SignatureDigestMismatch:
-        return SignatureDigestMismatch;
-    case Poppler::SignatureValidationInfo::SignatureDecodingError:
-        return SignatureDecodingError;
-    case Poppler::SignatureValidationInfo::SignatureGenericError:
-        return SignatureGenericError;
-    case Poppler::SignatureValidationInfo::SignatureNotFound:
-        return SignatureNotFound;
-    case Poppler::SignatureValidationInfo::SignatureNotVerified:
-        return SignatureNotVerified;
-    default:
-        return SignatureStatusUnknown;
+    Okular::CertificateInfo oInfo;
+    if (pInfo.isNull()) {
+        return oInfo;
     }
+    oInfo.setNull(false);
+    oInfo.setVersion(pInfo.version());
+    oInfo.setSerialNumber(pInfo.serialNumber());
+    for (auto key :
+         {Poppler::CertificateInfo::EntityInfoKey::CommonName, Poppler::CertificateInfo::EntityInfoKey::DistinguishedName, Poppler::CertificateInfo::EntityInfoKey::EmailAddress, Poppler::CertificateInfo::EntityInfoKey::Organization}) {
+        oInfo.setIssuerInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), notAvailableIfEmpty(pInfo.issuerInfo(key)));
+        oInfo.setSubjectInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), notAvailableIfEmpty(pInfo.subjectInfo(key)));
+    }
+    oInfo.setNickName(pInfo.nickName());
+    oInfo.setValidityStart(pInfo.validityStart());
+    oInfo.setValidityEnd(pInfo.validityEnd());
+    oInfo.setKeyUsageExtensions(fromPoppler(pInfo.keyUsageExtensions()));
+    oInfo.setPublicKey(pInfo.publicKey());
+    oInfo.setPublicKeyType(fromPoppler(pInfo.publicKeyType()));
+    oInfo.setPublicKeyStrength(pInfo.publicKeyStrength());
+    oInfo.setSelfSigned(pInfo.isSelfSigned());
+    oInfo.setCertificateData(pInfo.certificateData());
+    oInfo.setCheckPasswordFunction([pInfo](const QString &password) { return pInfo.checkPassword(password); });
+    return oInfo;
 }
 
-PopplerSignatureInfo::CertificateStatus PopplerSignatureInfo::certificateStatus() const
+Okular::SignatureInfo::CertificateStatus fromPoppler(Poppler::SignatureValidationInfo::CertificateStatus status)
 {
-    switch (m_info.certificateStatus()) {
+    switch (status) {
     case Poppler::SignatureValidationInfo::CertificateTrusted:
-        return CertificateTrusted;
+        return Okular::SignatureInfo::CertificateTrusted;
     case Poppler::SignatureValidationInfo::CertificateUntrustedIssuer:
-        return CertificateUntrustedIssuer;
+        return Okular::SignatureInfo::CertificateUntrustedIssuer;
     case Poppler::SignatureValidationInfo::CertificateUnknownIssuer:
-        return CertificateUnknownIssuer;
+        return Okular::SignatureInfo::CertificateUnknownIssuer;
     case Poppler::SignatureValidationInfo::CertificateRevoked:
-        return CertificateRevoked;
+        return Okular::SignatureInfo::CertificateRevoked;
     case Poppler::SignatureValidationInfo::CertificateExpired:
-        return CertificateExpired;
+        return Okular::SignatureInfo::CertificateExpired;
     case Poppler::SignatureValidationInfo::CertificateGenericError:
-        return CertificateGenericError;
+        return Okular::SignatureInfo::CertificateGenericError;
     case Poppler::SignatureValidationInfo::CertificateNotVerified:
-        return CertificateNotVerified;
+        return Okular::SignatureInfo::CertificateNotVerified;
     default:
-        return CertificateStatusUnknown;
+        return Okular::SignatureInfo::CertificateStatusUnknown;
     }
 }
 
-PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
+Okular::SignatureInfo::SignatureStatus fromPoppler(Poppler::SignatureValidationInfo::SignatureStatus status)
 {
-    switch (m_info.hashAlgorithm()) {
+    switch (status) {
+    case Poppler::SignatureValidationInfo::SignatureValid:
+        return Okular::SignatureInfo::SignatureValid;
+    case Poppler::SignatureValidationInfo::SignatureInvalid:
+        return Okular::SignatureInfo::SignatureInvalid;
+    case Poppler::SignatureValidationInfo::SignatureDigestMismatch:
+        return Okular::SignatureInfo::SignatureDigestMismatch;
+    case Poppler::SignatureValidationInfo::SignatureDecodingError:
+        return Okular::SignatureInfo::SignatureDecodingError;
+    case Poppler::SignatureValidationInfo::SignatureGenericError:
+        return Okular::SignatureInfo::SignatureGenericError;
+    case Poppler::SignatureValidationInfo::SignatureNotFound:
+        return Okular::SignatureInfo::SignatureNotFound;
+    case Poppler::SignatureValidationInfo::SignatureNotVerified:
+        return Okular::SignatureInfo::SignatureNotVerified;
+    default:
+        return Okular::SignatureInfo::SignatureStatusUnknown;
+    }
+}
+
+Okular::SignatureInfo::HashAlgorithm fromPoppler(Poppler::SignatureValidationInfo::HashAlgorithm hash)
+{
+    switch (hash) {
     case Poppler::SignatureValidationInfo::HashAlgorithmMd2:
-        return HashAlgorithmMd2;
+        return Okular::SignatureInfo::HashAlgorithmMd2;
     case Poppler::SignatureValidationInfo::HashAlgorithmMd5:
-        return HashAlgorithmMd5;
+        return Okular::SignatureInfo::HashAlgorithmMd5;
     case Poppler::SignatureValidationInfo::HashAlgorithmSha1:
-        return HashAlgorithmSha1;
+        return Okular::SignatureInfo::HashAlgorithmSha1;
     case Poppler::SignatureValidationInfo::HashAlgorithmSha256:
-        return HashAlgorithmSha256;
+        return Okular::SignatureInfo::HashAlgorithmSha256;
     case Poppler::SignatureValidationInfo::HashAlgorithmSha384:
-        return HashAlgorithmSha384;
+        return Okular::SignatureInfo::HashAlgorithmSha384;
     case Poppler::SignatureValidationInfo::HashAlgorithmSha512:
-        return HashAlgorithmSha512;
+        return Okular::SignatureInfo::HashAlgorithmSha512;
     case Poppler::SignatureValidationInfo::HashAlgorithmSha224:
-        return HashAlgorithmSha224;
+        return Okular::SignatureInfo::HashAlgorithmSha224;
     default:
-        return HashAlgorithmUnknown;
+        return Okular::SignatureInfo::HashAlgorithmUnknown;
     }
 }
 
-QString PopplerSignatureInfo::signerName() const
+Okular::SignatureInfo fromPoppler(const Poppler::SignatureValidationInfo &pInfo)
 {
-    return m_info.signerName();
-}
-
-QString PopplerSignatureInfo::signerSubjectDN() const
-{
-    return m_info.signerSubjectDN();
-}
-
-QString PopplerSignatureInfo::location() const
-{
-    return m_info.location();
-}
-
-QString PopplerSignatureInfo::reason() const
-{
-    return m_info.reason();
-}
-
-QDateTime PopplerSignatureInfo::signingTime() const
-{
-    return QDateTime::fromSecsSinceEpoch(m_info.signingTime());
-}
-
-QByteArray PopplerSignatureInfo::signature() const
-{
-    return m_info.signature();
-}
-
-QList<qint64> PopplerSignatureInfo::signedRangeBounds() const
-{
-    return m_info.signedRangeBounds();
-}
-
-bool PopplerSignatureInfo::signsTotalDocument() const
-{
-    return m_info.signsTotalDocument();
-}
-
-const Okular::CertificateInfo &PopplerSignatureInfo::certificateInfo() const
-{
-    return *m_certfiticateInfo;
+    Okular::SignatureInfo oInfo;
+    oInfo.setCertificateInfo(fromPoppler(pInfo.certificateInfo()));
+    oInfo.setSignatureStatus(fromPoppler(pInfo.signatureStatus()));
+    oInfo.setCertificateStatus(fromPoppler(pInfo.certificateStatus()));
+    oInfo.setHashAlgorithm(fromPoppler(pInfo.hashAlgorithm()));
+    oInfo.setSignerName(pInfo.signerName());
+    oInfo.setSignerSubjectDN(pInfo.signerSubjectDN());
+    oInfo.setLocation(pInfo.location());
+    oInfo.setReason(pInfo.reason());
+    oInfo.setSigningTime(QDateTime::fromSecsSinceEpoch(pInfo.signingTime()));
+    oInfo.setSignature(pInfo.signature());
+    oInfo.setSignedRangeBounds(pInfo.signedRangeBounds());
+    oInfo.setSignsTotalDocument(pInfo.signsTotalDocument());
+    return oInfo;
 }
 
 PopplerCertificateStore::~PopplerCertificateStore() = default;
 
-QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
+QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
 {
     *userCancelled = false;
     auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
@@ -269,9 +189,9 @@ QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bo
     Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
 
     const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
-    QList<Okular::CertificateInfo *> vReturnCerts;
+    QList<Okular::CertificateInfo> vReturnCerts;
     for (const auto &cert : certs) {
-        vReturnCerts.append(new PopplerCertificateInfo(cert));
+        vReturnCerts.append(fromPoppler(cert));
     }
 
     Poppler::setNSSPasswordCallback(nullptr);

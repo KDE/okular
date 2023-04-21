@@ -17,11 +17,11 @@
 
 namespace Okular
 {
-class SignatureInfoPrivate;
 
 /**
  * @short A helper class to store information about x509 certificate
  */
+class CertificateInfoPrivate;
 class OKULARCORE_EXPORT CertificateInfo
 {
 public:
@@ -49,96 +49,205 @@ public:
     /**
      * Destructor
      */
-    virtual ~CertificateInfo();
+    ~CertificateInfo();
 
     /**
-     * Returns true if certificate has no contents; otherwise returns false.
+     * Returns true if the certificate has no contents; otherwise returns false
+     * @since 23.08
      */
-    virtual bool isNull() const;
+    bool isNull() const;
+
+    /**
+     * Sets the null value of the certificate.
+     * @since 23.08
+     */
+    void setNull(bool null);
 
     /**
      * The certificate version string.
+     * @since 23.08
      */
-    virtual int version() const;
+    int version() const;
+
+    /**
+     * Sets the certificate version string.
+     * @since 23.08
+     */
+    void setVersion(int version);
 
     /**
      * The certificate serial number.
+     * @since 23.08
      */
-    virtual QByteArray serialNumber() const;
+    QByteArray serialNumber() const;
+
+    /**
+     * Sets the certificate serial number.
+     * @since 23.08
+     */
+    void setSerialNumber(const QByteArray &serial);
 
     /**
      * Information about the issuer.
+     * @since 23.08
      */
-    virtual QString issuerInfo(EntityInfoKey key) const;
+    QString issuerInfo(EntityInfoKey key) const;
+
+    /**
+     * Sets information about the issuer.
+     * @since 23.08
+     */
+    void setIssuerInfo(EntityInfoKey key, const QString &value);
 
     /**
      * Information about the subject
+     * @since 23.08
      */
-    virtual QString subjectInfo(EntityInfoKey key) const;
+    QString subjectInfo(EntityInfoKey key) const;
+
+    /**
+     * Sets information about the subject
+     * @since 23.08
+     */
+    void setSubjectInfo(EntityInfoKey key, const QString &value);
 
     /**
      * The certificate internal database nickname
+     * @since 23.08
      */
-    virtual QString nickName() const;
+    QString nickName() const;
+
+    /**
+     * Sets the certificate internal database nickname
+     * @since 23.08
+     */
+    void setNickName(const QString &nickName);
 
     /**
      * The date-time when certificate becomes valid.
+     * @since 23.08
      */
-    virtual QDateTime validityStart() const;
+    QDateTime validityStart() const;
+
+    /**
+     * Sets the date-time when certificate becomes valid.
+     * @since 23.08
+     */
+    void setValidityStart(const QDateTime &start);
 
     /**
      * The date-time when certificate expires.
+     * @since 23.08
      */
-    virtual QDateTime validityEnd() const;
+    QDateTime validityEnd() const;
+
+    /**
+     * Sets the date-time when certificate expires.
+     * @since 23.08
+     */
+    void setValidityEnd(const QDateTime &validityEnd);
 
     /**
      * The uses allowed for the certificate.
+     * @since 23.08
      */
-    virtual KeyUsageExtensions keyUsageExtensions() const;
+    KeyUsageExtensions keyUsageExtensions() const;
+
+    /**
+     * Sets the uses allowed for the certificate.
+     * @since 23.08
+     */
+    void setKeyUsageExtensions(KeyUsageExtensions ext);
 
     /**
      * The public key value.
+     * @since 23.08
      */
-    virtual QByteArray publicKey() const;
+    QByteArray publicKey() const;
+    /**
+     * Sets the public key value.
+     * @since 23.08
+     */
+    void setPublicKey(const QByteArray &publicKey);
 
     /**
      * The public key type.
+     * @since 23.08
      */
-    virtual PublicKeyType publicKeyType() const;
+    PublicKeyType publicKeyType() const;
+
+    /**
+     * Sets the public key type.
+     * @since 23.08
+     */
+    void setPublicKeyType(PublicKeyType type);
 
     /**
      * The strength of public key in bits.
+     * @since 23.08
      */
-    virtual int publicKeyStrength() const;
+    int publicKeyStrength() const;
+
+    /**
+     * Sets the strength of strength key in bits.
+     * @since 23.08
+     */
+    void setPublicKeyStrength(int strength);
 
     /**
      * Returns true if certificate is self-signed otherwise returns false.
+     * @since 23.08
      */
-    virtual bool isSelfSigned() const;
+    bool isSelfSigned() const;
+
+    /**
+     * Sets if certificate is self-signed
+     * @since 23.08
+     */
+    void setSelfSigned(bool selfSigned);
 
     /**
      * The DER encoded certificate.
+     * @since 23.08
      */
-    virtual QByteArray certificateData() const;
+    QByteArray certificateData() const;
+
+    /**
+     * Sets the DER encoded certificate.
+     * @since 23.08
+     */
+    void setCertificateData(const QByteArray &certificateData);
 
     /**
      * Checks if the given password is the correct one for this certificate
      *
-     * @since 21.04
+     * @since 23.08
      */
-    virtual bool checkPassword(const QString &password) const;
+    bool checkPassword(const QString &password) const;
 
-protected:
-    friend class SignatureInfo;
+    /**
+     * Sets a function to check if the current password is correct.
+     *
+     * The default reject all passwords
+     *
+     * @since 23.08
+     */
+    void setCheckPasswordFunction(const std::function<bool(const QString &)> &passwordFunction);
+
     CertificateInfo();
+    CertificateInfo(const CertificateInfo &other);
+    CertificateInfo(CertificateInfo &&other) noexcept;
+    CertificateInfo &operator=(const CertificateInfo &other);
+    CertificateInfo &operator=(CertificateInfo &&other) noexcept;
 
 private:
-    Q_DISABLE_COPY(CertificateInfo)
+    QSharedDataPointer<CertificateInfoPrivate> d;
 };
 
 /**
  * @short A helper class to store information about digital signature
  */
+class SignatureInfoPrivate;
 class OKULARCORE_EXPORT SignatureInfo
 {
 public:
@@ -178,74 +287,162 @@ public:
     /**
      * Destructor.
      */
-    virtual ~SignatureInfo();
+    ~SignatureInfo();
 
     /**
      * The signature status of the signature.
+     * @since 23.08
      */
-    virtual SignatureStatus signatureStatus() const;
+    SignatureStatus signatureStatus() const;
+
+    /**
+     * Sets the signature status of the signature.
+     * @since 23.08
+     */
+    void setSignatureStatus(SignatureStatus status);
 
     /**
      * The certificate status of the signature.
+     * @since 23.08
      */
-    virtual CertificateStatus certificateStatus() const;
+    CertificateStatus certificateStatus() const;
+
+    /**
+     * Sets the certificate status of the signature.
+     * @since 23.08
+     */
+    void setCertificateStatus(CertificateStatus status);
 
     /**
      * The signer subject common name associated with the signature.
+     * @since 23.08
      */
-    virtual QString signerName() const;
+    QString signerName() const;
+
+    /**
+     * Sets the signer subject common name associated with the signature.
+     * @since 23.08
+     */
+    void setSignerName(const QString &signerName);
 
     /**
      * The signer subject distinguished name associated with the signature.
+     * @since 23.08
      */
-    virtual QString signerSubjectDN() const;
+    QString signerSubjectDN() const;
+
+    /**
+     * Sets the signer subject distinguished name associated with the signature.
+     * @since 23.08
+     */
+    void setSignerSubjectDN(const QString &signerSubjectDN);
 
     /**
      * Get signing location.
+     * @since 23.08
      */
-    virtual QString location() const;
+    QString location() const;
+
+    /**
+     * Sets the signing location.
+     * @since 23.08
+     */
+    void setLocation(const QString &location);
 
     /**
      * Get signing reason.
+     * @since 23.08
      */
-    virtual QString reason() const;
+    QString reason() const;
+
+    /**
+     * Sets the signing reason.
+     * @since 23.08
+     */
+    void setReason(const QString &reason);
 
     /**
      * The hash algorithm used for the signature.
+     * @since 23.08
      */
-    virtual HashAlgorithm hashAlgorithm() const;
+    HashAlgorithm hashAlgorithm() const;
+
+    /**
+     * Sets the hash algorithm used for the signature.
+     * @since 23.08
+     */
+    void setHashAlgorithm(HashAlgorithm algorithm);
 
     /**
      * The signing time associated with the signature.
+     * @since 23.08
      */
-    virtual QDateTime signingTime() const;
+    QDateTime signingTime() const;
+
+    /**
+     * Sets the signing time associated with the signature.
+     * @since 23.08
+     */
+    void setSigningTime(const QDateTime &time);
 
     /**
      * Get the signature binary data.
+     * @since 23.08
      */
-    virtual QByteArray signature() const;
+    QByteArray signature() const;
+
+    /**
+     * Sets the signature binary data.
+     * @since 23.08
+     */
+    void setSignature(const QByteArray &signature);
 
     /**
      * Get the bounds of the ranges of the document which are signed.
+     * @since 23.08
      */
-    virtual QList<qint64> signedRangeBounds() const;
+    QList<qint64> signedRangeBounds() const;
+
+    /**
+     * Sets the bounds of the ranges of the document which are signed.
+     * @since 23.08
+     */
+    void setSignedRangeBounds(const QList<qint64> &range);
 
     /**
      * Checks whether the signature authenticates the total document
      * except for the signature itself.
+     * @since 23.08
      */
-    virtual bool signsTotalDocument() const;
+    bool signsTotalDocument() const;
+
+    /**
+     * Checks whether the signature authenticates the total document
+     * except for the signature itself.
+     * @since 23.08
+     */
+    void setSignsTotalDocument(bool total);
 
     /**
      * Get certificate details.
+     * @since 23.08
      */
-    virtual const CertificateInfo &certificateInfo() const;
+    CertificateInfo certificateInfo() const;
 
-protected:
+    /**
+     * Sets certificate details.
+     * @since 23.08
+     */
+    void setCertificateInfo(const CertificateInfo &info);
+
     SignatureInfo();
+    SignatureInfo(const SignatureInfo &other);
+    SignatureInfo(SignatureInfo &&other) noexcept;
+    SignatureInfo &operator=(const SignatureInfo &other);
+    SignatureInfo &operator=(SignatureInfo &&other) noexcept;
 
 private:
-    Q_DISABLE_COPY(SignatureInfo)
+    QSharedDataPointer<SignatureInfoPrivate> d;
 };
 
 /**
@@ -263,8 +460,9 @@ public:
      * Returns list of valid, usable signing certificates.
      *
      * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
+     * @since 23.08
      */
-    virtual QList<CertificateInfo *> signingCertificates(bool *userCancelled) const;
+    virtual QList<CertificateInfo> signingCertificates(bool *userCancelled) const;
 
     /**
      * Returns list of valid, usable signing certificates for current date and time.
@@ -272,8 +470,9 @@ public:
      * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
      *
      * nonDateValidCerts is true if the user has signing certificates but their validity start date is in the future or past their validity end date.
+     * @since 23.08
      */
-    QList<CertificateInfo *> signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const;
+    QList<CertificateInfo> signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const;
 
 protected:
     CertificateStore();

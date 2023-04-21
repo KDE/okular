@@ -70,15 +70,14 @@ bool PDFSettingsWidget::event(QEvent *e)
 
         PopplerCertificateStore st;
         bool userCancelled;
-        const QList<Okular::CertificateInfo *> certs = st.signingCertificates(&userCancelled);
+        const QList<Okular::CertificateInfo> certs = st.signingCertificates(&userCancelled);
 
         m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
 
-        for (auto cert : certs) {
+        for (const auto &cert : certs) {
             new QTreeWidgetItem(m_tree,
-                                {cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert->validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
+                                {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
         }
-        qDeleteAll(certs);
 
         m_pdfsw.defaultLabel->setText(Poppler::getNSSDir());
 

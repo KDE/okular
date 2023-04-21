@@ -474,8 +474,9 @@ public:
 
     /**
      * The signature info
+     * @since 23.08
      */
-    virtual const SignatureInfo &signatureInfo() const = 0;
+    virtual SignatureInfo signatureInfo() const = 0;
 
     /**
       Signs a field of UnsignedSignature type.

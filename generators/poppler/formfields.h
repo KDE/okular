@@ -137,12 +137,12 @@ public:
 
     // inherited from Okular::FormFieldSignature
     SignatureType signatureType() const override;
-    const Okular::SignatureInfo &signatureInfo() const override;
+    Okular::SignatureInfo signatureInfo() const override;
     bool sign(const Okular::NewSignatureData &oData, const QString &newPath) const override;
 
 private:
     std::unique_ptr<Poppler::FormFieldSignature> m_field;
-    Okular::SignatureInfo *m_info;
+    Okular::SignatureInfo m_info;
     Okular::NormalizedRect m_rect;
     int m_id;
 };

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-20 00:46+0000\n"
-"PO-Revision-Date: 2023-04-16 13:53+0200\n"
+"PO-Revision-Date: 2023-04-20 19:39+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -1091,10 +1091,9 @@ msgid "Reason: %1"
 msgstr "Grund: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Ort:"
+msgstr "Ort: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

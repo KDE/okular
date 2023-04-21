@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-20 00:46+0000\n"
-"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"PO-Revision-Date: 2023-04-20 23:30+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -334,7 +334,7 @@ msgstr "Presa konvertiĝo malsukcesis"
 #: core/document.cpp:4649
 #, kde-format
 msgid "Printing process crashed"
-msgstr "Presa procezo kraŝis"
+msgstr "Presa procezo paneis"
 
 #: core/document.cpp:4651
 #, kde-format
@@ -524,7 +524,7 @@ msgstr "redakti kombinan formularan elekton"
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
-msgstr "redakti formularajn butonŝtatojn"
+msgstr "redakti formularajn butonstatojn"
 
 #: core/generator.cpp:761
 #, kde-format
@@ -1080,10 +1080,9 @@ msgid "Reason: %1"
 msgstr "Kialo: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Loko:"
+msgstr "Loko: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1461,14 +1460,14 @@ msgstr "Elekti komentilon el la rapidaj komentarioj"
 #: part/annotationactionhandler.cpp:649
 #, kde-format
 msgid "Quick Annotation Bar"
-msgstr "Rapida Komenca Trinkejo"
+msgstr "Rapid-Prinota breto"
 
 #: part/annotationactionhandler.cpp:663
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "Aldonu al Rapidaj Komentoj"
+msgstr "Aldoni al Rapidaj Prinotoj"
 
 #: part/annotationactionhandler.cpp:666
 #, kde-format
@@ -1667,8 +1666,8 @@ msgstr "Elekti kutiman poŝtmarkan simbolon"
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
-"*.ico *.png *.xpm *.svg *.svgz | Ikonodosieroj (*.ico *.png *.xpm *.svg *."
-"svgz)"
+"*.ico *.png *.xpm *.svg *.svgz | Piktogramodosieroj (*.ico *.png *.xpm *.svg "
+"*.svgz)"
 
 #: part/annotationwidgets.cpp:160
 #, kde-kuit-format
@@ -2795,7 +2794,7 @@ msgstr "Laŭ paĝo"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr "Aŭtomata Fit"
+msgstr "Aŭtomate Ĝisrandigi"
 
 #: part/dlggeneral.cpp:208
 #, kde-format

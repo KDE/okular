@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-20 00:46+0000\n"
-"PO-Revision-Date: 2023-02-03 16:17+0100\n"
+"PO-Revision-Date: 2023-04-21 07:21+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1065,10 +1065,9 @@ msgid "Reason: %1"
 msgstr "მიზეზი: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "მდებარეობა:"
+msgstr "მდებარეობა: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -3266,7 +3265,7 @@ msgstr "&ნახვა..."
 #: part/fileprinterpreview.cpp:115
 #, kde-format
 msgid "Could not load print preview part"
-msgstr ""
+msgstr "ბეჭდვის მინიატურის ნაწილის ჩატვირთვის შეცდომა"
 
 #: part/fileprinterpreview.cpp:127
 #, kde-format
@@ -4087,7 +4086,7 @@ msgstr "&თავიდან ჩატვირთვა"
 #: part/part.cpp:816
 #, kde-format
 msgid "Reload the current document from disk."
-msgstr ""
+msgstr "მონიშნული დოკუმენტის დისკიდან თავიდან ჩატვირთვა."
 
 #: part/part.cpp:822
 #, kde-format

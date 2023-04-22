@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 00:45+0000\n"
+"POT-Creation-Date: 2023-04-20 00:46+0000\n"
 "PO-Revision-Date: 2023-03-30 22:51+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -1064,7 +1064,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Usignert signatur %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:167
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Felt: %1 på side %2"
@@ -1083,6 +1083,11 @@ msgstr "Signeringstidspunkt: %1"
 #, kde-format
 msgid "Reason: %1"
 msgstr "Grunn: %1"
+
+#: gui/signaturemodel.cpp:168
+#, kde-format
+msgid "Location: %1"
+msgstr ""
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format

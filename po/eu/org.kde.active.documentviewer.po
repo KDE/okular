@@ -5,13 +5,13 @@
 # KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>.
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2018, 2019, 2021, 2022.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2018, 2019, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-03 00:44+0000\n"
-"PO-Revision-Date: 2022-08-07 13:31+0200\n"
+"PO-Revision-Date: 2023-04-22 22:04+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -116,11 +116,11 @@ msgstr "Pasahitza behar da"
 
 #: package/contents/ui/MainView.qml:25
 msgid "Remove bookmark"
-msgstr "Kendu liburu-markak"
+msgstr "Kendu laster-marka"
 
 #: package/contents/ui/MainView.qml:25
 msgid "Bookmark this page"
-msgstr "Sortu orri honen liburu-marka"
+msgstr "Sortu orri honen laster-marka"
 
 #: package/contents/ui/MainView.qml:82
 msgid "No document open"

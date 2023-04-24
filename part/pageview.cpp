@@ -4048,7 +4048,7 @@ void PageView::updateZoomText()
         if (localValue.right(1) == QLatin1String("0") && localValue.indexOf(QLocale().decimalPoint()) > -1) {
             localValue.chop(1);
         }
-        translated << i18nc("Zoom value percentage indicator", "%1%", localValue);
+        translated << i18nc("Zoom percentage value %1 will be replaced by the actual zoom factor value, so make sure you include it in your translation in order to not to break anything", "%1%", localValue);
     }
     d->aZoom->setItems(translated);
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-20 00:46+0000\n"
+"POT-Creation-Date: 2023-04-24 00:45+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -5018,7 +5018,7 @@ msgid "&Tools"
 msgstr "उपकरणहरू"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr ""
@@ -5799,42 +5799,36 @@ msgstr ""
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
-msgid "Show Sidebar"
-msgstr "स्क्रोलपट्टी देखाउनुहोस्"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "स्क्रोलपट्टी देखाउनुहोस्"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr ""
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgid "Open Document"
 msgstr "हालको सम्भारकर्ता"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr ""
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5843,7 +5837,7 @@ msgstr ""
 "\"%1\" नाम गरिएको फाइल पहिलेनै अवस्थित छ । के तपाईँ यसमा अधिलेखन गर्ने चाहानामा "
 "निश्चित हुनुहुन्छ?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
@@ -5906,6 +5900,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show scroll&bars"
+#~ msgid "Show Sidebar"
+#~ msgstr "स्क्रोलपट्टी देखाउनुहोस्"
 
 #, fuzzy
 #~| msgid "Format"

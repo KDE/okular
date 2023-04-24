@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-20 00:46+0000\n"
+"POT-Creation-Date: 2023-04-24 00:45+0000\n"
 "PO-Revision-Date: 2020-07-24 12:58+0300\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -5034,7 +5034,7 @@ msgid "&Tools"
 msgstr "&Rīki"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Galvenā rīkjosla "
@@ -5799,46 +5799,40 @@ msgstr "Atsaukt cilnes aizvēršanu"
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
-msgid "Show Sidebar"
-msgstr "Rādīt &sānjoslu"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Rādīt &sānjoslu"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Visas datnes (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Visas atbalstītās datnes (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Atvērt dokumentu"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Apstiprināt aizvēršanu"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Aizvērt cilnes"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Tiks aizvērtas %1 cilnes. Vai tiešām vēlaties turpināt?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Brīdināt mani, kad es mēģinu aizvērt vairākas cilnes"
@@ -5901,6 +5895,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show S&idebar"
+#~ msgid "Show Sidebar"
+#~ msgstr "Rādīt &sānjoslu"
 
 #~ msgctxt "@title:window"
 #~ msgid "Experimental feature"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-20 00:46+0000\n"
+"POT-Creation-Date: 2023-04-24 00:45+0000\n"
 "PO-Revision-Date: 2021-10-04 11:01+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4894,7 +4894,7 @@ msgid "&Tools"
 msgstr "Ερ&γαλεία"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Κύρια γραμμή εργαλείων"
@@ -5658,46 +5658,40 @@ msgstr "Αναίρεση κλεισίματος καρτέλας"
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
-msgid "Show Sidebar"
-msgstr "Εμφάνιση πλευρ&ικής γραμμής"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Εμφάνιση πλευρ&ικής γραμμής"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Όλα τα αρχεία (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Όλα τα υποστηριζόμενα αρχεία (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Άνοιγμα εγγράφου"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Επιβεβαίωση κλεισίματος"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Κλείσιμο καρτελών"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Προτίθεσθε να κλείσετε %1 καρτέλες. Σίγουρα θέλετε να συνεχίσετε;"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Να προειδοποιούμαι όταν επιχειρώ να κλείσω πολλές καρτέλες"
@@ -5761,6 +5755,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show S&idebar"
+#~ msgid "Show Sidebar"
+#~ msgstr "Εμφάνιση πλευρ&ικής γραμμής"
 
 #~ msgctxt "@info"
 #~ msgid ""

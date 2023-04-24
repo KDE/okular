@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-20 00:46+0000\n"
+"POT-Creation-Date: 2023-04-24 00:45+0000\n"
 "PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -4952,7 +4952,7 @@ msgid "&Tools"
 msgstr "Verk&færi"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Aðalverkfæraslá"
@@ -5710,47 +5710,41 @@ msgstr "Afturkalla að loka flipa"
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
-msgid "Show Sidebar"
-msgstr "Birta &blaðsíðustiku"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "Birta &blaðsíðustiku"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Allar skrár (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Allar studdar skrár (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Opna skjal"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Staðfesta lokun"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Loka flipum"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Þú ert að fara að loka %1 flipum. Ertu viss um að þú viljir halda áfram?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Aðvara þegar mörgum flipum er lokað"
@@ -5809,6 +5803,11 @@ msgstr "Gleyma öllu"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Fela upphafsskjá"
+
+#, fuzzy
+#~| msgid "Show &Page Bar"
+#~ msgid "Show Sidebar"
+#~ msgstr "Birta &blaðsíðustiku"
 
 #, fuzzy
 #~| msgid "Experimental"

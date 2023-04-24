@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-20 00:46+0000\n"
+"POT-Creation-Date: 2023-04-24 00:45+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -5106,7 +5106,7 @@ msgid "&Tools"
 msgstr "औजार (&T)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "मुख्य औजार पट्टी"
@@ -5882,43 +5882,37 @@ msgstr ""
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
-msgid "Show Sidebar"
-msgstr "स्क्राल पट्टी मन देखाव (&b)"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "स्क्राल पट्टी मन देखाव (&b)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|सब्बो फाइल"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "कागद खोलव"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "बंद करव"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5926,7 +5920,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "फाइल नाम \"%1\"  पहिली से ही अस्तित्व मं हे. का आप मन एखर ऊपर ही मेटाय के लिखना चाहू?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
@@ -5989,6 +5983,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show scroll&bars"
+#~ msgid "Show Sidebar"
+#~ msgstr "स्क्राल पट्टी मन देखाव (&b)"
 
 #, fuzzy
 #~| msgid "Experimental"

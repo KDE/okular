@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -4894,7 +4894,7 @@ msgid "&Tools"
 msgstr "قوراللار(&T)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "ئاساسىي قورال بالداق"
@@ -5651,47 +5651,42 @@ msgstr ""
 
 #: shell/shell.cpp:543
 #, kde-format
-msgid "Show Sidebar"
-msgstr ""
-
-#: shell/shell.cpp:549
-#, kde-format
 msgid "Lock Sidebar"
 msgstr ""
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|بارلىق ھۆججەتلەر"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "پۈتۈك ئېچىش"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "ياپ"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

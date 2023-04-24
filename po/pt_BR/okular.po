@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2023-01-16 23:04-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -4872,7 +4872,7 @@ msgid "&Tools"
 msgstr "Ferramen&tas"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Barra de ferramentas principal"
@@ -5629,45 +5629,40 @@ msgstr "Reabrir a aba"
 
 #: shell/shell.cpp:543
 #, kde-format
-msgid "Show Sidebar"
-msgstr "Mostrar barra lateral"
-
-#: shell/shell.cpp:549
-#, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloquear Barra lateral"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Todos os arquivos (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Todos os arquivos suportados (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Abrir documento"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar fechamento"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Fechar abas"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Você está prestes a fechar %1 abas. Deseja continuar?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Me avisar quanto eu tentar fechar múltiplas abas"
@@ -5726,6 +5721,9 @@ msgstr "Esquecer todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar tela de boas vindas"
+
+#~ msgid "Show Sidebar"
+#~ msgstr "Mostrar barra lateral"
 
 #~ msgctxt "@info"
 #~ msgid ""

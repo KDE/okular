@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -4868,7 +4868,7 @@ msgid "&Tools"
 msgstr "&Інструменты"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Галоўная панэль інструментаў"
@@ -5623,46 +5623,40 @@ msgstr "Адрабіць закрыццё ўкладкі"
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
-msgid "Show Sidebar"
-msgstr "Паказваць &бакавую панэль"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Паказваць &бакавую панэль"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Усе файлы(*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Усе файлы, якія падтрымліваюцца (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Адкрыць дакумент"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Пацвердзіць закрыццё"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрыць укладкі"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Вы хочаце закрыць %1 укладак. Сапраўды хочаце працягнуць?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Папярэджваць мяне, калі я спрабую закрыць некалькі ўкладак"
@@ -5721,6 +5715,11 @@ msgstr "Забыцца на ўсе"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Схаваць уводную старонку"
+
+#, fuzzy
+#~| msgid "Show S&idebar"
+#~ msgid "Show Sidebar"
+#~ msgstr "Паказваць &бакавую панэль"
 
 #~ msgctxt "@info"
 #~ msgid ""

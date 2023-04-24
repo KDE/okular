@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2022-12-31 15:35+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -4834,7 +4834,7 @@ msgid "&Tools"
 msgstr "&Tools"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Main Toolbar"
@@ -5587,45 +5587,40 @@ msgstr "Undo close tab"
 
 #: shell/shell.cpp:543
 #, kde-format
-msgid "Show Sidebar"
-msgstr "Show Sidebar"
-
-#: shell/shell.cpp:549
-#, kde-format
 msgid "Lock Sidebar"
 msgstr "Lock Sidebar"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "All files (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "All supported files (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Open Document"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirm Close"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Close Tabs"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "You are about to close %1 tabs. Are you sure you want to continue?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Warn me when I attempt to close multiple tabs"
@@ -5684,6 +5679,9 @@ msgstr "Forget All"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Hide welcome screen"
+
+#~ msgid "Show Sidebar"
+#~ msgstr "Show Sidebar"
 
 #~ msgctxt "@info"
 #~ msgid ""

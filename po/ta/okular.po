@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
-"PO-Revision-Date: 2023-04-09 12:26+0530\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
+"PO-Revision-Date: 2023-04-23 16:58+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.03.90\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4844,7 +4844,7 @@ msgid "&Tools"
 msgstr "&கருவிகள்"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "பிரதான கருவிப்பெட்டி"
@@ -5512,6 +5512,9 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"ஏற்கனவே ஓடிக்கொண்டிருக்கும் ஆக்குலர் பணியில் உரைதிருத்திக்கான கட்டளையை அமைக்க முடியாது. "
+"கீற்றுகளை முடக்கி மீண்டும் முயற்சிக்கவும். கட்டளை வரியில் உரைதிருத்திக்கான கட்டளையை "
+"அமைக்கும்போது unique எனும் விருப்பத்தையும் பயன்படுத்த முடியாது.\n"
 
 #: shell/okular_main.cpp:170
 #, kde-format
@@ -5596,45 +5599,40 @@ msgstr "கீற்றை மூடியதை செயல்நீக்க�
 
 #: shell/shell.cpp:543
 #, kde-format
-msgid "Show Sidebar"
-msgstr "ஓரப்பட்டையைக் காட்டு"
-
-#: shell/shell.cpp:549
-#, kde-format
 msgid "Lock Sidebar"
 msgstr "ஓரப்பட்டையைப் பூட்டு"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ஆதரிக்கப்படும் அனைத்து கோப்புகள் (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "ஆவணத்தைத் திறத்தல்"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "மூடுவதை உறுதிசெய்க"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "கீற்றுகளை மூடு"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 கீற்றுகளை மூடப் போகிறீர்கள். உறுதியாக தொடர வேண்டுமா?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "பல கீற்றுகளை மூட முயற்சிக்கும்போது என்னை எச்சரி"
@@ -5693,6 +5691,9 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#~ msgid "Show Sidebar"
+#~ msgstr "ஓரப்பட்டையைக் காட்டு"
 
 #~ msgctxt "@info"
 #~ msgid ""

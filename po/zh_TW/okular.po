@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2020-04-26 13:07+0800\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -4986,7 +4986,7 @@ msgid "&Tools"
 msgstr "工具(&T)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "主工具列"
@@ -5741,46 +5741,40 @@ msgstr "還原關閉分頁"
 #: shell/shell.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
-msgid "Show Sidebar"
-msgstr "顯示頁面列 (&P)"
-
-#: shell/shell.cpp:549
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "顯示頁面列 (&P)"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "所有檔案 (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "所有支援的檔案 (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "開啟文件"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "確認關閉"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "關閉分頁"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "當我嘗試關閉多個分頁時警告我"
@@ -5844,6 +5838,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show &Page Bar"
+#~ msgid "Show Sidebar"
+#~ msgstr "顯示頁面列 (&P)"
 
 #~ msgctxt "@info"
 #~ msgid ""

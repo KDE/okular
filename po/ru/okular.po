@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-06 02:32+0000\n"
+"POT-Creation-Date: 2023-04-24 03:13+0000\n"
 "PO-Revision-Date: 2023-02-20 11:13+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -4884,7 +4884,7 @@ msgid "&Tools"
 msgstr "С&ервис"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:26
+#: part/part.rc:101 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Основная панель инструментов"
@@ -5650,45 +5650,40 @@ msgstr "Восстановить закрытую вкладку"
 
 #: shell/shell.cpp:543
 #, kde-format
-msgid "Show Sidebar"
-msgstr "Показать боковую панель"
-
-#: shell/shell.cpp:549
-#, kde-format
 msgid "Lock Sidebar"
 msgstr "Зафиксировать боковую панель"
 
-#: shell/shell.cpp:646
+#: shell/shell.cpp:640
 #, kde-format
 msgid "All files (*)"
 msgstr "Все файлы (*)"
 
-#: shell/shell.cpp:647
+#: shell/shell.cpp:641
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Все поддерживаемые файлы (%1)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:645
 #, kde-format
 msgid "Open Document"
 msgstr "Открыть документ"
 
-#: shell/shell.cpp:761
+#: shell/shell.cpp:755
 #, kde-format
 msgid "Confirm Close"
 msgstr "Подтверждение выхода"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:759
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрыть вкладки"
 
-#: shell/shell.cpp:772
+#: shell/shell.cpp:766
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Будут закрыты %1 вкладок. Продолжить?"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:768
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Предупреждать при попытке закрытия нескольких вкладок"
@@ -5747,6 +5742,9 @@ msgstr "Очистить список"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Не использовать экран приветствия"
+
+#~ msgid "Show Sidebar"
+#~ msgstr "Показать боковую панель"
 
 #~ msgctxt "@info"
 #~ msgid ""

@@ -69,6 +69,7 @@ public:
     };
 
 private:
+    void doCopyAnnotation(AnnotPagePair pair);
     void doRemovePageAnnotation(AnnotPagePair pair);
     void doOpenAnnotationWindow(AnnotPagePair pair);
     void doOpenPropertiesDialog(AnnotPagePair pair);

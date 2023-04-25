@@ -1102,6 +1102,16 @@ QMimeData *PageView::getTableContents() const
 void PageView::copyTextSelection() const
 {
     switch (d->mouseMode) {
+    case Okular::Settings::EnumMouseMode::Browse: {
+        if (auto *annotation = d->mouseAnnotation->annotation()) {
+            const QString text = annotation->contents();
+            if (!text.isEmpty()) {
+                QClipboard *cb = QApplication::clipboard();
+                cb->setText(text, QClipboard::Clipboard);
+            }
+        }
+    } break;
+
     case Okular::Settings::EnumMouseMode::TableSelect: {
         QClipboard *cb = QApplication::clipboard();
         cb->setMimeData(getTableContents(), QClipboard::Clipboard);

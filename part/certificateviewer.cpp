@@ -146,8 +146,8 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto validityBox = new QGroupBox(i18n("Validity"), generalPage);
     auto validityFormLayout = new QFormLayout(validityBox);
     validityFormLayout->setLabelAlignment(Qt::AlignLeft);
-    validityFormLayout->addRow(i18n("Issued On"), new QLabel(m_certificateInfo.validityStart().toString(Qt::DefaultLocaleLongDate)));
-    validityFormLayout->addRow(i18n("Expires On"), new QLabel(m_certificateInfo.validityEnd().toString(Qt::DefaultLocaleLongDate)));
+    validityFormLayout->addRow(i18n("Issued On"), new QLabel(QLocale().toString(m_certificateInfo.validityStart(), QLocale::LongFormat)));
+    validityFormLayout->addRow(i18n("Expires On"), new QLabel(QLocale().toString(m_certificateInfo.validityEnd(), QLocale::LongFormat)));
 
     auto fingerprintBox = new QGroupBox(i18n("Fingerprints"), generalPage);
     auto fingerprintFormLayout = new QFormLayout(fingerprintBox);

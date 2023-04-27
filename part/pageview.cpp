@@ -2227,7 +2227,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
     }
 
     // if holding mouse mid button, perform zoom
-    if (e->buttons() & Qt::MidButton) {
+    if (e->buttons() & Qt::MiddleButton) {
         int deltaY = d->mouseMidLastY - e->globalPos().y();
         d->mouseMidLastY = e->globalPos().y();
 

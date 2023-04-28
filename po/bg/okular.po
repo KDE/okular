@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:45+0000\n"
+"POT-Creation-Date: 2023-04-28 00:46+0000\n"
 "PO-Revision-Date: 2023-04-21 22:50+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -650,19 +650,19 @@ msgid "Value"
 msgstr "Стойност"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Изскачаща бележка"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
 #, kde-format
 msgid "Typewriter"
 msgstr "Пишеща машина"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
 #, kde-format
 msgid "Inline Note"
 msgstr "Бележка между редовете"
@@ -673,7 +673,7 @@ msgid "Straight Line with Comment"
 msgstr "Права линия с коментар"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Straight Line"
 msgstr "Права линия"
@@ -684,7 +684,7 @@ msgid "Polygon with Comment"
 msgstr "Полигон с коментар"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Polygon"
 msgstr "Многоъгълник"
@@ -715,7 +715,7 @@ msgid "Squiggle with Comment"
 msgstr "Кавгане с коментар"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1322
+#: part/pageviewannotator.cpp:1324
 #, kde-format
 msgid "Squiggle"
 msgstr "Криволичещ"
@@ -726,7 +726,7 @@ msgid "Underline with Comment"
 msgstr "Подчертаване с коментар"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgid "Underline"
 msgstr "Подчертаване"
@@ -747,7 +747,7 @@ msgid "Stamp with Comment"
 msgstr "Печат с коментар"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1326
 #, kde-format
 msgid "Stamp"
 msgstr "Печат"
@@ -758,7 +758,7 @@ msgid "Freehand Line with Comment"
 msgstr "Свободна линия с коментар"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1314
 #, kde-format
 msgid "Freehand Line"
 msgstr "Черта на ръка"
@@ -1952,17 +1952,17 @@ msgstr "Попълване на формата:"
 msgid "Type:"
 msgstr "Тип:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Strike out"
 msgstr "Зачертаване"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Rectangle"
 msgstr "Правоъгълник"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
 #, kde-format
 msgid "Ellipse"
 msgstr "Елипса"
@@ -3868,7 +3868,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Подписване"
 
-#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3876,106 +3876,106 @@ msgstr ""
 "Не може да бъде подписан. Невалидна парола за сертификат или не може да "
 "запише на '%1'"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name"
 msgstr "Име на автор"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Име на автор на анотацията:"
 
-#: part/pageviewannotator.cpp:1227
+#: part/pageviewannotator.cpp:1229
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Начертайте елипса (плъзнете, за да изберете зона)"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1231
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Открояване на текст"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1233
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Начертайте линия от ръка"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1235
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Бележка между редовете (изтеглете за да маркирате област)"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1237
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Поставяне на изскачаща бележка"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1239
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr ""
 "Изчертаване на многоъгълник (щракнете на първата точка, за да го затворите)"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1241
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Чертане на правоъгълник"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1243
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Извиващ се текст"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1245
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Поставяне на печат"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1247
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Чертане на права линия"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1249
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Зачертаване на текст"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1251
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Подчертаване на текст"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1253
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Анотация на пишеща машина (плъзнете, за да изберете зона)"
 
-#: part/pageviewannotator.cpp:1310
+#: part/pageviewannotator.cpp:1312
 #, kde-format
 msgid "Highlighter"
 msgstr "Маркер"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Добавяне на любима анотация"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Име на персонализирано пояснение:"
@@ -4496,7 +4496,7 @@ msgid "Remove this Bookmark"
 msgstr "Премахване на тази отметка"
 
 #: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3447
-#: part/signaturepartutils.cpp:87
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5309,32 +5309,32 @@ msgstr "Свиване на всички елементи"
 msgid "Properties"
 msgstr "Информация"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Select certificate to sign with"
 msgstr "Избиране на сертификат за подписване"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Certificates:"
 msgstr "Сертификати:"
 
-#: part/signaturepartutils.cpp:59
+#: part/signaturepartutils.cpp:61
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Въведете парола (ако има такава), за да отключите сертификат: %1"
 
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:63
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Въведете парола за сертификат"
 
-#: part/signaturepartutils.cpp:71
+#: part/signaturepartutils.cpp:76
 #, kde-format
 msgid "Enter document password"
 msgstr "Въведете парола за документ"
 
-#: part/signaturepartutils.cpp:93
+#: part/signaturepartutils.cpp:101
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5342,7 +5342,7 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:103
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Запазване на подписания файл като"

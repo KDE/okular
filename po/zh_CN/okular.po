@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:45+0000\n"
+"POT-Creation-Date: 2023-04-28 00:46+0000\n"
 "PO-Revision-Date: 2023-04-16 12:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -650,19 +650,19 @@ msgid "Value"
 msgstr "值"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
 #, kde-format
 msgid "Pop-up Note"
 msgstr "弹窗批注"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
 #, kde-format
 msgid "Typewriter"
 msgstr "文字批注"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
 #, kde-format
 msgid "Inline Note"
 msgstr "文本框批注"
@@ -673,7 +673,7 @@ msgid "Straight Line with Comment"
 msgstr "直线 (有注释)"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Straight Line"
 msgstr "直线"
@@ -684,7 +684,7 @@ msgid "Polygon with Comment"
 msgstr "多边形 (有注释)"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Polygon"
 msgstr "多边形"
@@ -715,7 +715,7 @@ msgid "Squiggle with Comment"
 msgstr "波浪下划线 (有注释)"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1322
+#: part/pageviewannotator.cpp:1324
 #, kde-format
 msgid "Squiggle"
 msgstr "波浪下划线"
@@ -726,7 +726,7 @@ msgid "Underline with Comment"
 msgstr "下划线 (有注释)"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgid "Underline"
 msgstr "下划线"
@@ -747,7 +747,7 @@ msgid "Stamp with Comment"
 msgstr "图章 (有注释)"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1326
 #, kde-format
 msgid "Stamp"
 msgstr "图章"
@@ -758,7 +758,7 @@ msgid "Freehand Line with Comment"
 msgstr "手绘线条 (有注释)"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1314
 #, kde-format
 msgid "Freehand Line"
 msgstr "手绘线条"
@@ -1939,17 +1939,17 @@ msgstr "形状填充："
 msgid "Type:"
 msgstr "类型："
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Strike out"
 msgstr "删除线"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Rectangle"
 msgstr "矩形"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
 #, kde-format
 msgid "Ellipse"
 msgstr "椭圆形"
@@ -3828,111 +3828,111 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "签名"
 
-#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr "无法签名。无效的证书密码或者无法写入“%1”"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name"
 msgstr "作者"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "批注的作者："
 
-#: part/pageviewannotator.cpp:1227
+#: part/pageviewannotator.cpp:1229
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "绘制一个椭圆 (拖动选择椭圆区域)"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1231
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "标记需要高亮的文字"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1233
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "绘制手绘线条"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1235
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "文本框批注 (拖动选择批注区域)"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1237
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "添加弹窗批注"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1239
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "绘制一个多边形 (点击起点即可闭合)"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1241
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "绘制一个矩形"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1243
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "标记需要用波浪线标记的文字"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1245
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "请将图章放入页面"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1247
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "绘制一条直线"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1249
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "标记需要用删除线标记的文字"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1251
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "标记需要用下划线标记的文字"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1253
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "文字批注 (拖动选择区域)"
 
-#: part/pageviewannotator.cpp:1310
+#: part/pageviewannotator.cpp:1312
 #, kde-format
 msgid "Highlighter"
 msgstr "高亮"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "添加到快速批注工具栏"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "自定义批注名称："
@@ -4441,7 +4441,7 @@ msgid "Remove this Bookmark"
 msgstr "删除此书签"
 
 #: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3447
-#: part/signaturepartutils.cpp:87
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5228,32 +5228,32 @@ msgstr "折叠所有项目"
 msgid "Properties"
 msgstr "属性"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Select certificate to sign with"
 msgstr "选择用于签名的证书"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Certificates:"
 msgstr "证书："
 
-#: part/signaturepartutils.cpp:59
+#: part/signaturepartutils.cpp:61
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "输入密码 (如果需要) 以解锁证书： %1"
 
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:63
 #, kde-format
 msgid "Enter certificate password"
 msgstr "输入证书密码"
 
-#: part/signaturepartutils.cpp:71
+#: part/signaturepartutils.cpp:76
 #, kde-format
 msgid "Enter document password"
 msgstr "输入文档密码"
 
-#: part/signaturepartutils.cpp:93
+#: part/signaturepartutils.cpp:101
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5261,7 +5261,7 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:103
 #, kde-format
 msgid "Save Signed File As"
 msgstr "另存已签名文件为"

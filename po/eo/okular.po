@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:45+0000\n"
+"POT-Creation-Date: 2023-04-28 00:46+0000\n"
 "PO-Revision-Date: 2023-04-20 23:30+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -651,19 +651,19 @@ msgid "Value"
 msgstr "Valoro"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Pop-up Noto"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
 #, kde-format
 msgid "Typewriter"
 msgstr "Tajpilo"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
 #, kde-format
 msgid "Inline Note"
 msgstr "Surlinia noto"
@@ -674,7 +674,7 @@ msgid "Straight Line with Comment"
 msgstr "Rekta Linio kun Komento"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Straight Line"
 msgstr "Rekta Linio"
@@ -685,7 +685,7 @@ msgid "Polygon with Comment"
 msgstr "Plurangulo kun Komento"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Polygon"
 msgstr "Plurangulo"
@@ -716,7 +716,7 @@ msgid "Squiggle with Comment"
 msgstr "Squiggle kun Komento"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1322
+#: part/pageviewannotator.cpp:1324
 #, kde-format
 msgid "Squiggle"
 msgstr "Squiggle"
@@ -727,7 +727,7 @@ msgid "Underline with Comment"
 msgstr "Substreki per Komento"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgid "Underline"
 msgstr "Substreki"
@@ -748,7 +748,7 @@ msgid "Stamp with Comment"
 msgstr "Stampi kun Komento"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1326
 #, kde-format
 msgid "Stamp"
 msgstr "Stampo"
@@ -759,7 +759,7 @@ msgid "Freehand Line with Comment"
 msgstr "Libermana Linio kun Komento"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1314
 #, kde-format
 msgid "Freehand Line"
 msgstr "Libermana Linio"
@@ -1954,17 +1954,17 @@ msgstr "Formplenigo:"
 msgid "Type:"
 msgstr "Tipo:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Strike out"
 msgstr "Trastreki"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Rectangle"
 msgstr "Rektangulo"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipso"
@@ -3868,112 +3868,112 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signo"
 
-#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "Ne povis subskribi. Nevalida atestila pasvorto aŭ ne povis skribi al '%1'"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name"
 msgstr "Nomo de aŭtoro"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Nomo de aŭtoro por la komentario:"
 
-#: part/pageviewannotator.cpp:1227
+#: part/pageviewannotator.cpp:1229
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Desegnu elipso (trenu por elekti zonon)"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1231
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Marki tekston"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1233
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Desegnu libermanan linion"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1235
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Surlinia teksta komentado (eltiru por elekti zonon)"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1237
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Meti pop-up noton"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1239
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Desegni poligonon (klaku sur la unua punkto por forfermi ĝin)"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1241
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Desegni rektangulon"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1243
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Strekaĉi tekston"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1245
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Almeti stampan simbolon"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1247
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Desegni rektan linion"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1249
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Forstreki tekston"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1251
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Substreki tekston"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1253
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Skriba komentario (trenu por elekti zonon)"
 
-#: part/pageviewannotator.cpp:1310
+#: part/pageviewannotator.cpp:1312
 #, kde-format
 msgid "Highlighter"
 msgstr "Markilo"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Aldoni plej ŝatatan komentarion"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Propra komentario nomo:"
@@ -4495,7 +4495,7 @@ msgid "Remove this Bookmark"
 msgstr "Forigi ĉi tiun legosignon"
 
 #: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3447
-#: part/signaturepartutils.cpp:87
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5299,32 +5299,32 @@ msgstr "Malvastigi ĉiujn elementojn"
 msgid "Properties"
 msgstr "Propraĵoj"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Select certificate to sign with"
 msgstr "Elekti atestilon kun kiu subskribi"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Certificates:"
 msgstr "Atestiloj:"
 
-#: part/signaturepartutils.cpp:59
+#: part/signaturepartutils.cpp:61
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Enigu pasvorton (se ekzistas) por malŝlosi atestilon: %1"
 
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:63
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Enigi atestilpasvorton"
 
-#: part/signaturepartutils.cpp:71
+#: part/signaturepartutils.cpp:76
 #, kde-format
 msgid "Enter document password"
 msgstr "Enigi dokumentan pasvorton"
 
-#: part/signaturepartutils.cpp:93
+#: part/signaturepartutils.cpp:101
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5332,7 +5332,7 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:103
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Konservi Subskribitan Dosieron Kiel"

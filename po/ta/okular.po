@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:45+0000\n"
+"POT-Creation-Date: 2023-04-28 00:46+0000\n"
 "PO-Revision-Date: 2023-04-23 16:58+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -648,19 +648,19 @@ msgid "Value"
 msgstr "மதிப்பு"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
 #, kde-format
 msgid "Pop-up Note"
 msgstr "தெரித்தெழும் குறிப்பு"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
 #, kde-format
 msgid "Typewriter"
 msgstr "தட்டச்சுப்பொறி"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
 #, kde-format
 msgid "Inline Note"
 msgstr "ஒருங்கிணைந்த குறிப்பு"
@@ -671,7 +671,7 @@ msgid "Straight Line with Comment"
 msgstr "குறிப்புடன் கூடிய நேர் கோடு"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1328
 #, kde-format
 msgid "Straight Line"
 msgstr "நேர் கோடு"
@@ -682,7 +682,7 @@ msgid "Polygon with Comment"
 msgstr "குறிப்புடன் கூடிய பலகோணம்"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:1320
 #, kde-format
 msgid "Polygon"
 msgstr "பலகோணம்"
@@ -713,7 +713,7 @@ msgid "Squiggle with Comment"
 msgstr "குறிப்புடன் கூடிய சுருள் கொடு"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1322
+#: part/pageviewannotator.cpp:1324
 #, kde-format
 msgid "Squiggle"
 msgstr "சுருள் கொடு"
@@ -724,7 +724,7 @@ msgid "Underline with Comment"
 msgstr "குறிப்புடன் கூடிய அடிக்கோடு"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgid "Underline"
 msgstr "அடிக்கோடு"
@@ -745,7 +745,7 @@ msgid "Stamp with Comment"
 msgstr "குறிப்புடன் கூடிய முத்திரை"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1326
 #, kde-format
 msgid "Stamp"
 msgstr "முத்திரை"
@@ -756,7 +756,7 @@ msgid "Freehand Line with Comment"
 msgstr "குறிப்புடன் கூடிய கைமுறைக் கோடு"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1314
 #, kde-format
 msgid "Freehand Line"
 msgstr "கைமுறைக் கோடு"
@@ -1945,17 +1945,17 @@ msgstr "வடிவத்தை நிரப்பு:"
 msgid "Type:"
 msgstr "வகை:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1328
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Strike out"
 msgstr "குறுக்குக்கோடு"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1320
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
 #, kde-format
 msgid "Rectangle"
 msgstr "செவ்வகம்"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1308
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
 #, kde-format
 msgid "Ellipse"
 msgstr "நீள்வட்டம்"
@@ -3868,7 +3868,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "கையொப்பம் இடு"
 
-#: part/pageviewannotator.cpp:1037 part/signaturepartutils.cpp:122
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3876,105 +3876,105 @@ msgstr ""
 "கையொப்பமிட முடியவில்லை. சான்றிதழுக்கான கடவுச்சொல் செல்லுபடியாகாதது, அல்லது '%1' "
 "என்பதற்கு எழுத முடியவில்லை"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name"
 msgstr "இயற்றியவரின் பெயர்"
 
-#: part/pageviewannotator.cpp:1166
+#: part/pageviewannotator.cpp:1168
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "குறிப்பை இயற்றியவரின் பெயரை உள்ளிடுங்கள்:"
 
-#: part/pageviewannotator.cpp:1227
+#: part/pageviewannotator.cpp:1229
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "நீள்வட்டத்தை வரை (ஒரு பகுதியை தேர்வு செய்ய இழுக்கவும்)"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1231
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "உரையை முன்னிலைப்படுத்து"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1233
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "கைமுறைக் கோட்டை வரை"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1235
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "ஒருங்கிணைந்த உரைக் குறிப்பு (ஒரு பகுதியைத் தேர்வு செய்ய இழுக்கவும்)"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1237
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "தெரித்தெழும் குறிப்பை இடுங்கள்"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1239
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "பலகோணத்தை வரையுங்கள் (மூட முதல் புள்ளியில் க்ளிக் செய்யுங்கள்)"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1241
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "செவ்வகத்தை வரை"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1243
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "சுருள் உரை"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1245
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "ஒரு சின்னத்தை முத்திரையாக இடு"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1247
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "நேர் கோட்டை வரை"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1249
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "உரையை குறுக்கடி"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1251
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "உரைக்கு அடிக்கோடிடு"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1253
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "தட்டச்சுப்பொறி குறிப்பு (ஒரு பகுதியைத் தேர்வு செய்ய இழுக்கவும்)"
 
-#: part/pageviewannotator.cpp:1310
+#: part/pageviewannotator.cpp:1312
 #, kde-format
 msgid "Highlighter"
 msgstr "எடுப்பாக்கி"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "பிடித்த குறிப்பை சேர்த்தல்"
 
-#: part/pageviewannotator.cpp:1607
+#: part/pageviewannotator.cpp:1609
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "விரும்பும் குறிப்புப் பெயர்:"
@@ -4494,7 +4494,7 @@ msgid "Remove this Bookmark"
 msgstr "இந்த நினைவுக்குறியை நீக்கு"
 
 #: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3447
-#: part/signaturepartutils.cpp:87
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5298,32 +5298,32 @@ msgstr "அனைத்து உருப்படிகளையும் ச�
 msgid "Properties"
 msgstr "பண்புகள்"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Select certificate to sign with"
 msgstr "கையொப்பத்துக்கு பயன்படுத்த வேண்டிய சான்றிதழைத் தேர்ந்தெடுத்தல்"
 
-#: part/signaturepartutils.cpp:46
+#: part/signaturepartutils.cpp:48
 #, kde-format
 msgid "Certificates:"
 msgstr "சான்றிதழ்கள்:"
 
-#: part/signaturepartutils.cpp:59
+#: part/signaturepartutils.cpp:61
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "%1 என்ற சான்றிதழை திறப்பதற்கான கடவுச்சொல்லை (இருந்தால்) உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:63
 #, kde-format
 msgid "Enter certificate password"
 msgstr "சான்றிதழுக்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:71
+#: part/signaturepartutils.cpp:76
 #, kde-format
 msgid "Enter document password"
 msgstr "ஆவணத்திற்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:93
+#: part/signaturepartutils.cpp:101
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5331,7 +5331,7 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:103
 #, kde-format
 msgid "Save Signed File As"
 msgstr "கையொப்பமிட்ட கோப்பை இவ்வாறு சேமி"

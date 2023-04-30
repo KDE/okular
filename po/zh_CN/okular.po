@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-28 00:46+0000\n"
-"PO-Revision-Date: 2023-04-16 12:31\n"
+"PO-Revision-Date: 2023-04-29 08:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1073,10 +1073,9 @@ msgid "Reason: %1"
 msgstr "原因：%1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "位置："
+msgstr "位置：%1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1760,17 +1759,17 @@ msgstr "边框宽度(&W)："
 #: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Approved"
-msgstr "核准"
+msgstr "已批准"
 
 #: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "As Is"
-msgstr "原件"
+msgstr "保持原样"
 
 #: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "Confidential"
-msgstr "密件"
+msgstr "机密"
 
 #: part/annotationwidgets.cpp:419
 #, kde-format
@@ -1810,7 +1809,7 @@ msgstr "公开发布"
 #: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Not Approved"
-msgstr "未核准"
+msgstr "未批准"
 
 #: part/annotationwidgets.cpp:427
 #, kde-format
@@ -5621,6 +5620,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Show Sidebar"
-#~ msgstr "显示侧边栏"

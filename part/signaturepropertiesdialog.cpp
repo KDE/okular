@@ -42,7 +42,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     const QString readableSignatureStatus = SignatureGuiUtils::getReadableSignatureStatus(signatureStatus);
     const QString modificationSummary = SignatureGuiUtils::getReadableModificationSummary(signatureInfo);
     const QString signerName = getValidDisplayString(signatureInfo.signerName());
-    const QString signingTime = getValidDisplayString(signatureInfo.signingTime().toString(Qt::DefaultLocaleLongDate));
+    const QString signingTime = getValidDisplayString(QLocale().toString(signatureInfo.signingTime(), QLocale::LongFormat));
     const QString signingLocation = getValidDisplayString(signatureInfo.location());
     const QString signingReason = signatureInfo.reason();
 

@@ -155,7 +155,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
             childItem1->displayString = SignatureGuiUtils::getReadableSignatureStatus(info.signatureStatus());
 
             auto childItem2 = new SignatureItem(parentItem, nullptr, SignatureItem::SigningTime, pageNumber);
-            childItem2->displayString = i18n("Signing Time: %1", info.signingTime().toString(Qt::DefaultLocaleLongDate));
+            childItem2->displayString = i18n("Signing Time: %1", QLocale().toString(info.signingTime(), QLocale::LongFormat));
 
             const QString reason = info.reason();
             if (!reason.isEmpty()) {

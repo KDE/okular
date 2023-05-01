@@ -75,9 +75,9 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
     case CertificateModel::Issuer:
         return m_certificateInfo.issuerInfo(Okular::CertificateInfo::DistinguishedName);
     case CertificateModel::IssuedOn:
-        return m_certificateInfo.validityStart().toString(Qt::DefaultLocaleLongDate);
+        return QLocale().toString(m_certificateInfo.validityStart(), QLocale::LongFormat);
     case CertificateModel::ExpiresOn:
-        return m_certificateInfo.validityEnd().toString(Qt::DefaultLocaleLongDate);
+        return QLocale().toString(m_certificateInfo.validityEnd(), QLocale::LongFormat);
     case CertificateModel::Subject:
         return m_certificateInfo.subjectInfo(Okular::CertificateInfo::DistinguishedName);
     case CertificateModel::PublicKey:

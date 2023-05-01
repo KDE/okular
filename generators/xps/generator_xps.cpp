@@ -1003,7 +1003,7 @@ void XpsHandler::processPath(XpsRenderNode &node)
     }
     att = node.attributes.value(QStringLiteral("StrokeDashArray"));
     if (!att.isEmpty()) {
-        const QStringList pieces = att.split(QLatin1Char(' '), QString::SkipEmptyParts);
+        const QStringList pieces = att.split(QLatin1Char(' '), Qt::SkipEmptyParts);
         QVector<qreal> dashPattern(pieces.count());
         bool ok = false;
         for (int i = 0; i < pieces.count(); ++i) {
@@ -1165,7 +1165,7 @@ void XpsHandler::processPathFigure(XpsRenderNode &node)
         if (child.name == QLatin1String("PolyLineSegment")) {
             att = child.attributes.value(QStringLiteral("Points"));
             if (!att.isEmpty()) {
-                const QStringList points = att.split(QLatin1Char(' '), QString::SkipEmptyParts);
+                const QStringList points = att.split(QLatin1Char(' '), Qt::SkipEmptyParts);
                 for (const QString &p : points) {
                     QPointF point = getPointFromString(p);
                     path.lineTo(point);
@@ -1176,7 +1176,7 @@ void XpsHandler::processPathFigure(XpsRenderNode &node)
         else if (child.name == QLatin1String("PolyBezierSegment")) {
             att = child.attributes.value(QStringLiteral("Points"));
             if (!att.isEmpty()) {
-                const QStringList points = att.split(QLatin1Char(' '), QString::SkipEmptyParts);
+                const QStringList points = att.split(QLatin1Char(' '), Qt::SkipEmptyParts);
                 if (points.count() % 3 == 0) {
                     for (int i = 0; i < points.count();) {
                         QPointF firstControl = getPointFromString(points.at(i++));
@@ -1191,7 +1191,7 @@ void XpsHandler::processPathFigure(XpsRenderNode &node)
         else if (child.name == QLatin1String("PolyQuadraticBezierSegment")) {
             att = child.attributes.value(QStringLiteral("Points"));
             if (!att.isEmpty()) {
-                const QStringList points = att.split(QLatin1Char(' '), QString::SkipEmptyParts);
+                const QStringList points = att.split(QLatin1Char(' '), Qt::SkipEmptyParts);
                 if (points.count() % 2 == 0) {
                     for (int i = 0; i < points.count();) {
                         QPointF point1 = getPointFromString(points.at(i++));

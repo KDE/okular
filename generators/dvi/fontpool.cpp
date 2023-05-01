@@ -315,7 +315,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     }
 
     // Create a list with all filenames found by the kpsewhich program.
-    const QStringList fileNameList = QString::fromLocal8Bit(kpsewhich_->readAll()).split(QLatin1Char('\n'), QString::SkipEmptyParts);
+    const QStringList fileNameList = QString::fromLocal8Bit(kpsewhich_->readAll()).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
 
     // Now associate the file names found with the fonts
     QList<TeXFontDefinition *>::iterator it_fontp = fontList.begin();

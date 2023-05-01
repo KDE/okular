@@ -206,7 +206,7 @@ MiniBar::MiniBar(QWidget *parent, MiniBarLogic *miniBarLogic)
     resizeForPage(0, QString());
 
     // connect signals from child widgets to internal handlers / signals bouncers
-    connect(m_pageNumberEdit, &PageNumberEdit::returnPressed, this, &MiniBar::slotChangePageFromReturn);
+    connect(m_pageNumberEdit, &PageNumberEdit::returnKeyPressed, this, &MiniBar::slotChangePageFromReturn);
     connect(m_pageLabelEdit, &PageLabelEdit::pageNumberChosen, this, &MiniBar::slotChangePage);
     connect(m_pagesButton, &QAbstractButton::clicked, this, &MiniBar::gotoPage);
     connect(m_prevButton, &QAbstractButton::clicked, this, &MiniBar::prevPage);

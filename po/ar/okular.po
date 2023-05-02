@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:46+0000\n"
+"POT-Creation-Date: 2023-05-02 00:46+0000\n"
 "PO-Revision-Date: 2023-04-27 11:30+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1508,7 +1508,7 @@ msgstr "الشّفافيّة"
 msgid "Page %1"
 msgstr "الصفحة %1"
 
-#: part/annotationpopup.cpp:81
+#: part/annotationpopup.cpp:83
 #, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -1519,23 +1519,36 @@ msgstr[3] "%1 شروح"
 msgstr[4] "%1 شرحاً"
 msgstr[5] "%1 شرح"
 
-#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "افتح &ملاحظة منبثقة"
 
-#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#, fuzzy, kde-format
+#| msgid "Copy to Clipboard"
+msgid "Copy Text to Clipboard"
+msgstr "نسخ إلى الحافظة"
+
+#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
+#: part/pageview.cpp:3051
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "مُنع النسخ من قبل DRM"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
 #, kde-format
 msgid "&Delete"
 msgstr "ا&حذف"
 
-#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:787
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:787
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&خصائص"
 
-#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
@@ -3637,7 +3650,7 @@ msgstr "التمرير لأسفل"
 msgid "Show Forms"
 msgstr "اعرض الاستمارات"
 
-#: part/pageview.cpp:1287
+#: part/pageview.cpp:1297
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3648,18 +3661,12 @@ msgstr[3] "حمل مستند ذو %1 صفحات."
 msgstr[4] "حمل مستند ذو %1 صفحة."
 msgstr[5] "حمل مستند ذو %1 صفحة."
 
-#: part/pageview.cpp:2517
+#: part/pageview.cpp:2527
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "انسخ محتويات الجدول إلى الحافظة"
 
-#: part/pageview.cpp:2522 part/pageview.cpp:2840 part/pageview.cpp:2984
-#: part/pageview.cpp:3041
-#, kde-format
-msgid "Copy forbidden by DRM"
-msgstr "مُنع النسخ من قبل DRM"
-
-#: part/pageview.cpp:2834
+#: part/pageview.cpp:2844
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3670,137 +3677,137 @@ msgstr[3] "نص (%1 محارف)"
 msgstr[4] "نص (%1 محرفا)"
 msgstr[5] "نص (%1 محرف)"
 
-#: part/pageview.cpp:2835 part/pageview.cpp:2853
+#: part/pageview.cpp:2845 part/pageview.cpp:2863
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "نسخ إلى الحافظة"
 
-#: part/pageview.cpp:2844 part/pageview.cpp:3036
+#: part/pageview.cpp:2854 part/pageview.cpp:3046
 #, kde-format
 msgid "Speak Text"
 msgstr "اقرأ النص"
 
-#: part/pageview.cpp:2852
+#: part/pageview.cpp:2862
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "صورة (%1 ب %2 بكسل)"
 
-#: part/pageview.cpp:2854
+#: part/pageview.cpp:2864
 #, kde-format
 msgid "Save to File..."
 msgstr "حفظ إلى ملف.."
 
-#: part/pageview.cpp:2874
+#: part/pageview.cpp:2884
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "الصورة [%1×%2] نسخت إلى الحافظة"
 
-#: part/pageview.cpp:2877
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Save file"
 msgstr "احفظ الملف"
 
-#: part/pageview.cpp:2877
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "الصور (*.png *.jpeg)"
 
-#: part/pageview.cpp:2879
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "File not saved."
 msgstr "الملف لم يحفظ"
 
-#: part/pageview.cpp:2890
+#: part/pageview.cpp:2900
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "الصورة  [%1×%2] حفظة إلى الملف %3."
 
-#: part/pageview.cpp:3032
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy Text"
 msgstr "انسخ نص"
 
-#: part/pageview.cpp:3052
+#: part/pageview.cpp:3062
 #, kde-format
 msgid "Go to '%1'"
 msgstr "اذهب إلى '%1'"
 
-#: part/pageview.cpp:4015 part/part.cpp:3143
+#: part/pageview.cpp:4025 part/part.cpp:3143
 #, kde-format
 msgid "Fit Width"
 msgstr "لائم العرض"
 
-#: part/pageview.cpp:4015
+#: part/pageview.cpp:4025
 #, kde-format
 msgid "Fit Page"
 msgstr "لائم الصفحة"
 
-#: part/pageview.cpp:4015
+#: part/pageview.cpp:4025
 #, kde-format
 msgid "Auto Fit"
 msgstr "لائم آليًّا"
 
-#: part/pageview.cpp:4321
+#: part/pageview.cpp:4331
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ابحث عن '%1' باستخدام"
 
-#: part/pageview.cpp:4335
+#: part/pageview.cpp:4345
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "اضبط اختصارات الوِب..."
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Follow This Link"
 msgstr "اتبع هذه الوصلة"
 
-#: part/pageview.cpp:4364
+#: part/pageview.cpp:4374
 #, kde-format
 msgid "Play this Sound"
 msgstr "شغّل هذا الصوت"
 
-#: part/pageview.cpp:4366
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Stop Sound"
 msgstr "أوقف الصوت"
 
-#: part/pageview.cpp:4372
+#: part/pageview.cpp:4382
 #, kde-format
 msgid "Copy Link Address"
 msgstr "انسخ رابط العنوان"
 
-#: part/pageview.cpp:4393
+#: part/pageview.cpp:4403
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "ابحث عن '%1' في هذا المستند"
 
-#: part/pageview.cpp:4841
+#: part/pageview.cpp:4851
 #, kde-format
 msgid "Welcome"
 msgstr "مرحبا"
 
-#: part/pageview.cpp:4961
+#: part/pageview.cpp:4971
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "اختر منطقة التكبير. نقرة-يمنى للتصغير."
 
-#: part/pageview.cpp:4972
+#: part/pageview.cpp:4982
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "اضغط هنا لرؤية العرض المُكَبَّر"
 
-#: part/pageview.cpp:4985
+#: part/pageview.cpp:4995
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ارسم مربعا حول النص/الصورة المراد نسخه."
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5007
 #, kde-format
 msgid "Select text"
 msgstr "حدد نص"
 
-#: part/pageview.cpp:5009
+#: part/pageview.cpp:5019
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3809,7 +3816,7 @@ msgstr ""
 "ارسم مستطيلاً حول الجدول، ثم انقر بالفأرة بالقرب من الحافة لتُقَسِّم؛ اضغط Esc "
 "للإلغاء."
 
-#: part/pageview.cpp:5019
+#: part/pageview.cpp:5029
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3817,7 +3824,7 @@ msgid ""
 msgstr ""
 "جميع شهادات التوقيع الخاصة بك إما غير صالحة بعد أو تجاوزت تاريخ صلاحيتها."
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5032
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3827,17 +3834,17 @@ msgstr ""
 "لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول "
 "<a href=\"%1\"> إضافة التوقيعات الرقمية </a> في الدليل."
 
-#: part/pageview.cpp:5038
+#: part/pageview.cpp:5048
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "لديك تغيرات غير محفوظة. رجاء احفظ المستند قبل توقيعه."
 
-#: part/pageview.cpp:5054
+#: part/pageview.cpp:5064
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ارسم مستطيل لإدراج حقل التوقيع"
 
-#: part/pageview.cpp:5198
+#: part/pageview.cpp:5208
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ارسم مربعا حول مساحة الصفحة التي تريد أن تجعلها مرئية"

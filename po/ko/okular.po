@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:46+0000\n"
+"POT-Creation-Date: 2023-05-02 00:46+0000\n"
 "PO-Revision-Date: 2023-04-22 00:20+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1509,29 +1509,42 @@ msgstr "불투명도"
 msgid "Page %1"
 msgstr "%1쪽"
 
-#: part/annotationpopup.cpp:81
+#: part/annotationpopup.cpp:83
 #, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "주석 %1개"
 
-#: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
+#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "팝업 노트 열기(&O)"
 
-#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:122
+#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#, fuzzy, kde-format
+#| msgid "Copy to Clipboard"
+msgid "Copy Text to Clipboard"
+msgstr "클립보드에 복사"
+
+#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
+#: part/pageview.cpp:3051
+#, kde-format
+msgid "Copy forbidden by DRM"
+msgstr "DRM 때문에 복사 제한됨"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
 #, kde-format
 msgid "&Delete"
 msgstr "삭제(&D)"
 
-#: part/annotationpopup.cpp:101 part/annotationpopup.cpp:126 part/part.cpp:787
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:787
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "속성(&P)"
 
-#: part/annotationpopup.cpp:108 part/annotationpopup.cpp:132
+#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
@@ -3607,160 +3620,154 @@ msgstr "한 페이지 아래로 스크롤"
 msgid "Show Forms"
 msgstr "양식 표시"
 
-#: part/pageview.cpp:1287
+#: part/pageview.cpp:1297
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " %1쪽 문서를 불러왔습니다."
 
-#: part/pageview.cpp:2517
+#: part/pageview.cpp:2527
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "클립보드에 표 내용 복사"
 
-#: part/pageview.cpp:2522 part/pageview.cpp:2840 part/pageview.cpp:2984
-#: part/pageview.cpp:3041
-#, kde-format
-msgid "Copy forbidden by DRM"
-msgstr "DRM 때문에 복사 제한됨"
-
-#: part/pageview.cpp:2834
+#: part/pageview.cpp:2844
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "텍스트 (%1자)"
 
-#: part/pageview.cpp:2835 part/pageview.cpp:2853
+#: part/pageview.cpp:2845 part/pageview.cpp:2863
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "클립보드에 복사"
 
-#: part/pageview.cpp:2844 part/pageview.cpp:3036
+#: part/pageview.cpp:2854 part/pageview.cpp:3046
 #, kde-format
 msgid "Speak Text"
 msgstr "텍스트 말하기"
 
-#: part/pageview.cpp:2852
+#: part/pageview.cpp:2862
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "그림 (%1 x %2 픽셀)"
 
-#: part/pageview.cpp:2854
+#: part/pageview.cpp:2864
 #, kde-format
 msgid "Save to File..."
 msgstr "파일로 저장..."
 
-#: part/pageview.cpp:2874
+#: part/pageview.cpp:2884
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "그림 [%1x%2] 이(가) 클립보드에 복사되었습니다."
 
-#: part/pageview.cpp:2877
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Save file"
 msgstr "파일 저장"
 
-#: part/pageview.cpp:2877
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "그림 (*.png *.jpeg)"
 
-#: part/pageview.cpp:2879
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "File not saved."
 msgstr "파일이 저장되지 않았습니다."
 
-#: part/pageview.cpp:2890
+#: part/pageview.cpp:2900
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "[%1x%2] 크기 그림이 %3 파일로 저장되었습니다."
 
-#: part/pageview.cpp:3032
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy Text"
 msgstr "텍스트 복사"
 
-#: part/pageview.cpp:3052
+#: part/pageview.cpp:3062
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1'(으)로 가기"
 
-#: part/pageview.cpp:4015 part/part.cpp:3143
+#: part/pageview.cpp:4025 part/part.cpp:3143
 #, kde-format
 msgid "Fit Width"
 msgstr "폭 맞춤"
 
-#: part/pageview.cpp:4015
+#: part/pageview.cpp:4025
 #, kde-format
 msgid "Fit Page"
 msgstr "쪽 맞춤"
 
-#: part/pageview.cpp:4015
+#: part/pageview.cpp:4025
 #, kde-format
 msgid "Auto Fit"
 msgstr "자동 맞춤"
 
-#: part/pageview.cpp:4321
+#: part/pageview.cpp:4331
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "다음으로 '%1' 찾기"
 
-#: part/pageview.cpp:4335
+#: part/pageview.cpp:4345
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "웹 바로가기 설정..."
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Follow This Link"
 msgstr "이 링크 따라가기"
 
-#: part/pageview.cpp:4364
+#: part/pageview.cpp:4374
 #, kde-format
 msgid "Play this Sound"
 msgstr "이 소리 재생"
 
-#: part/pageview.cpp:4366
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Stop Sound"
 msgstr "소리 끄기"
 
-#: part/pageview.cpp:4372
+#: part/pageview.cpp:4382
 #, kde-format
 msgid "Copy Link Address"
 msgstr "링크 주소 복사하기"
 
-#: part/pageview.cpp:4393
+#: part/pageview.cpp:4403
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "현재 문서에서 '%1' 검색"
 
-#: part/pageview.cpp:4841
+#: part/pageview.cpp:4851
 #, kde-format
 msgid "Welcome"
 msgstr "환영합니다"
 
-#: part/pageview.cpp:4961
+#: part/pageview.cpp:4971
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "확대할 구역을 선택하십시오. 오른쪽으로 클릭하면 축소합니다."
 
-#: part/pageview.cpp:4972
+#: part/pageview.cpp:4982
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "확대해서 보려면 클릭하십시오."
 
-#: part/pageview.cpp:4985
+#: part/pageview.cpp:4995
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "복사할 텍스트나 그림 주위로 사각형을 그리십시오."
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5007
 #, kde-format
 msgid "Select text"
 msgstr "텍스트를 선택하십시오"
 
-#: part/pageview.cpp:5009
+#: part/pageview.cpp:5019
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3769,14 +3776,14 @@ msgstr ""
 "복사할 표 주위로 사각형을 그린 다음 경계선을 클릭해서 나누십시오. Esc 키를 누"
 "르면 다시 시작합니다."
 
-#: part/pageview.cpp:5019
+#: part/pageview.cpp:5029
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "모든 서명용 인증서의 유효 기간이 시작되지 않았거나 만료되었습니다."
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5032
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3786,17 +3793,17 @@ msgstr ""
 "서명용 인증서를 사용할 수 없습니다.<br/>자세한 정보를 보려면 도움말의 <a "
 "href=\"%1\">디지털 서명 추가</a>를 참조하십시오."
 
-#: part/pageview.cpp:5038
+#: part/pageview.cpp:5048
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "저장하지 않은 변경 사항이 있습니다. 문서에 서명하기 전에 저장하십시오."
 
-#: part/pageview.cpp:5054
+#: part/pageview.cpp:5064
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "서명 필드를 삽입하려면 직사각형 그리기"
 
-#: part/pageview.cpp:5198
+#: part/pageview.cpp:5208
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "표시할 텍스트나 그림 주위로 사각형을 그리십시오."

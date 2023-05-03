@@ -4036,7 +4036,7 @@ Context menu actions like Rename Bookmarks etc.)
 								<para
 ><guilabel
 >Toc a la banda esquerra/dreta per a anar enrere/endavant</guilabel
->: En tocar la part esquerra (dreta) de la pantalla es farà que la presentació passi a la diapositiva anterior (següent).</para>
+>: En tocar la part esquerra (dreta) de la pantalla es farà que la presentació vagi a la diapositiva anterior (següent).</para>
 							</listitem>
 							<listitem>
 								<para

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 03:13+0000\n"
+"POT-Creation-Date: 2023-05-03 02:52+0000\n"
 "PO-Revision-Date: 2023-02-18 19:12+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1500,7 +1500,7 @@ msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Qeyri-şəffaflıq"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3132
+#: part/annotationmodel.cpp:324 part/part.cpp:3134
 #, kde-format
 msgid "Page %1"
 msgstr "Səhifə %1"
@@ -2119,7 +2119,7 @@ msgstr "Bu əlfəcinə keçmək"
 msgid "Rename Bookmark"
 msgstr "Əlfəcinin adını dəyişmək"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2260 part/part.cpp:3138
+#: part/bookmarklist.cpp:259 part/part.cpp:2260 part/part.cpp:3140
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Əlfəcini silmək"
@@ -3697,7 +3697,7 @@ msgstr "Mətni  Kopyalamaq"
 msgid "Go to '%1'"
 msgstr "'%1-ə(a) keçmək'"
 
-#: part/pageview.cpp:4015 part/part.cpp:3143
+#: part/pageview.cpp:4015 part/part.cpp:3145
 #, kde-format
 msgid "Fit Width"
 msgstr "Eninə Sığışdır"
@@ -4371,7 +4371,7 @@ msgstr ""
 "dəyişdirilib. Sizin dəyişiklikləriniz itiriləcəkdir, çünki fayl "
 "saxlanılmayıb.<br>Faylın açılmasını davam etmək istəyirsiniz?"
 
-#: part/part.cpp:1862 part/part.cpp:1869 part/part.cpp:2649
+#: part/part.cpp:1862 part/part.cpp:1869 part/part.cpp:2651
 #, kde-format
 msgid "File Changed"
 msgstr "Fayl saxlanıldı"
@@ -4476,7 +4476,7 @@ msgstr "Bu əlfəcinin adını dəyişmək"
 msgid "Remove this Bookmark"
 msgstr "Bu əlfəcini silmək"
 
-#: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3447
+#: part/part.cpp:2590 part/part.cpp:2591 part/part.cpp:3449
 #: part/signaturepartutils.cpp:87
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4508,7 +4508,7 @@ msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Yeni ad seçin"
 
-#: part/part.cpp:2649
+#: part/part.cpp:2651
 #, kde-format
 msgid ""
 "The file '%1' has been modified by another program, which means it can no "
@@ -4517,7 +4517,7 @@ msgstr ""
 "'%1' faylı başqa tətbiq tərfindən dəyişdirilib və bu onu göstəriri ki, o "
 "artıq saxlanıla bilməz."
 
-#: part/part.cpp:2657
+#: part/part.cpp:2659
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4528,17 +4528,17 @@ msgstr ""
 "lazımdır. Sizdən yenidən şifrə tələb olunacaq və irəli/geri tarixçəsi "
 "itiriləcəkdir.<br />Davam etmək istəyirsiniz?"
 
-#: part/part.cpp:2658 part/part.cpp:2710
+#: part/part.cpp:2660 part/part.cpp:2712
 #, kde-format
 msgid "Save - Warning"
 msgstr "Saxlayın - Xəbərdarlıq"
 
-#: part/part.cpp:2684
+#: part/part.cpp:2686
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Saxlamaq üçün müvəqqəti faylı açmaq mümkün olmadı."
 
-#: part/part.cpp:2697
+#: part/part.cpp:2699
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4549,7 +4549,7 @@ msgstr ""
 "oxumaq üçündür. Başqa yerdə saxlamağa cəhd edinə və ya fayl icazələrini "
 "dəyişdirin."
 
-#: part/part.cpp:2709
+#: part/part.cpp:2711
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4558,22 +4558,22 @@ msgstr ""
 "Saxlanıldıqdan sonra cari sənəd formatı faylın yenidən açılmasını tələb "
 "edir. İrəli/Geri tarixçəsi itiriləcəkdir. <br />Davam etmək istəyirsiniz?"
 
-#: part/part.cpp:2724 part/part.cpp:2793 part/part.cpp:2814 part/part.cpp:3462
+#: part/part.cpp:2726 part/part.cpp:2795 part/part.cpp:2816 part/part.cpp:3464
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Fayl '%1'-də(a) saxlanılla bilmədi. Başqa yerdə saxlamağa cəhd edin."
 
-#: part/part.cpp:2737
+#: part/part.cpp:2739
 #, kde-format
 msgid "Filled form contents"
 msgstr "Doldurulmuş forma tərkibləri"
 
-#: part/part.cpp:2740
+#: part/part.cpp:2742
 #, kde-format
 msgid "User annotations"
 msgstr "İştifadəçi şərhləri"
 
-#: part/part.cpp:2745
+#: part/part.cpp:2747
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4584,17 +4584,17 @@ msgstr ""
 "elementləri saxlamağı dəstəkləmir. Lütfən, sənədi saxlamaq üçün <i>Okular "
 "document archive</i> formatından istifadə edin."
 
-#: part/part.cpp:2749 part/part.cpp:2771
+#: part/part.cpp:2751 part/part.cpp:2773
 #, kde-format
 msgid "Warning"
 msgstr "Xəbərdarlıq"
 
-#: part/part.cpp:2750 part/part.cpp:2772
+#: part/part.cpp:2752 part/part.cpp:2774
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Okular document archive kimi saxlayın..."
 
-#: part/part.cpp:2762
+#: part/part.cpp:2764
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4607,7 +4607,7 @@ msgstr ""
 "document archive</i> formatından istifadə edin. Sənədi saxlamaq və bu "
 "elementləri ləğv etmək üçün <i>Davam etmək</i> vurun."
 
-#: part/part.cpp:2765
+#: part/part.cpp:2767
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4620,22 +4620,22 @@ msgstr ""
 "document archive</i> formatından istifadə edin. Sənədi saxlamaq üçün "
 "<i>Davam etmək</i> vurun, lakin, İrəli/Geri tarixçəsi itiriləcəkdir."
 
-#: part/part.cpp:2767
+#: part/part.cpp:2769
 #, kde-format
 msgid "Continue"
 msgstr "Davam etmək"
 
-#: part/part.cpp:2767
+#: part/part.cpp:2769
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Dəyişiklikləri itirməklə davam etmək"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Fayl '%1'-də(a) saxlanıla bilmədi.%2"
 
-#: part/part.cpp:2834
+#: part/part.cpp:2836
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4646,7 +4646,7 @@ msgstr ""
 "\n"
 "Bu sənəd artıq mövcud deyil."
 
-#: part/part.cpp:2870
+#: part/part.cpp:2872
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4655,66 +4655,66 @@ msgstr ""
 "Fayl '%1'-də(a) saxlanılla bilmədi. Xəta: '%2' Başqa yerdə saxlamağa cəhd "
 "edin."
 
-#: part/part.cpp:3121
+#: part/part.cpp:3123
 #, kde-format
 msgid "Expand whole section"
 msgstr "Bütün bölməni açmaq"
 
-#: part/part.cpp:3122
+#: part/part.cpp:3124
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Bütün bölməni yığmaq"
 
-#: part/part.cpp:3123
+#: part/part.cpp:3125
 #, kde-format
 msgid "Expand all"
 msgstr "Hamısını açmaq"
 
-#: part/part.cpp:3124
+#: part/part.cpp:3126
 #, kde-format
 msgid "Collapse all"
 msgstr "Hamısını yığmaq"
 
-#: part/part.cpp:3135
+#: part/part.cpp:3137
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Miniatürləri səhifə ilə eyniləşdir"
 
-#: part/part.cpp:3140
+#: part/part.cpp:3142
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Əlfəcin əlavə et"
 
-#: part/part.cpp:3162
+#: part/part.cpp:3164
 #, kde-format
 msgid "Tools"
 msgstr "Alətlər"
 
-#: part/part.cpp:3343
+#: part/part.cpp:3345
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Danışmaq"
 
-#: part/part.cpp:3500
+#: part/part.cpp:3502
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Çap"
 
-#: part/part.cpp:3563
+#: part/part.cpp:3565
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Bu sənədin çapına icazə verilmədi."
 
-#: part/part.cpp:3571
+#: part/part.cpp:3573
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "Sənəd çap edilə bilmədi. Naməlum xəta. Hesabatı bugs.kde.org -a göndərin"
 
-#: part/part.cpp:3573
+#: part/part.cpp:3575
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4723,17 +4723,17 @@ msgstr ""
 "Sənəd çap edilə bilmədi. Xətanın təfərrüatları: \"%1\".Hesabatı bugs.kde.org "
 "-a göndərin"
 
-#: part/part.cpp:3653
+#: part/part.cpp:3655
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Əvvəl olduğunuz mövqeyə qayıdın"
 
-#: part/part.cpp:3657
+#: part/part.cpp:3659
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Sonrakı mövqeyə qayıdın"
 
-#: part/part.cpp:3682
+#: part/part.cpp:3684
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4742,7 +4742,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> <nobr><strong>%1</strong></nobr>müvəqqəti "
 "faylı yaradıla bilmədi.</qt>"
 
-#: part/part.cpp:3694
+#: part/part.cpp:3696
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4751,7 +4751,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> Sıxışdırılmış <nobr><strong>%1</strong></"
 "nobr> faylını açmaq mümkün olmadı. Bu fayl yüklənməyəcək.</qt>"
 
-#: part/part.cpp:3698
+#: part/part.cpp:3700
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4764,7 +4764,7 @@ msgstr ""
 "seçimindəki 'İcazələr' bölməsində faylın sahibini və icazələrini yoxlaya "
 "bilərsiniz.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3722
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4773,7 +4773,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> Sıxlaşdırılmış<nobr><strong>%1</strong></"
 "nobr> faylını açmaq mümkün olmadı. Bu fayl yüklənməyəcək.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3726
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4782,27 +4782,27 @@ msgstr ""
 "<qt>Adətən fayl korlandıqda bu xəta baş verir. Əmin olmaq üçün əmr sətri "
 "vasitəsindən istifadə edərək sıxılmış faylı açmağa cəhd edin.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3752
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Əlfəcinlər yoxdur"
 
-#: part/part.cpp:3821
+#: part/part.cpp:3823
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Bu sənədin paylaşımı zamanı problem yarandı: %1"
 
-#: part/part.cpp:3821 part/part.cpp:3827
+#: part/part.cpp:3823 part/part.cpp:3829
 #, kde-format
 msgid "Share"
 msgstr "Paylaşmaq"
 
-#: part/part.cpp:3825
+#: part/part.cpp:3827
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Sənəd uğurla paylaşıldı"
 
-#: part/part.cpp:3827
+#: part/part.cpp:3829
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Paylaşdığınız sənədi buradan tapa bilərsiniz: <a href=\"%1\">%1</a>"

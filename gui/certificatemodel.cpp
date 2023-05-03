@@ -73,29 +73,29 @@ QString CertificateModel::propertyVisibleValue(CertificateModel::Property p) con
     case CertificateModel::SerialNumber:
         return QString::fromLatin1(m_certificateInfo.serialNumber().toHex(' '));
     case CertificateModel::Issuer:
-        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::DistinguishedName);
+        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::IssuedOn:
         return QLocale().toString(m_certificateInfo.validityStart(), QLocale::LongFormat);
     case CertificateModel::ExpiresOn:
         return QLocale().toString(m_certificateInfo.validityEnd(), QLocale::LongFormat);
     case CertificateModel::Subject:
-        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::DistinguishedName);
+        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::PublicKey:
         return i18n("%1 (%2 bits)", SignatureGuiUtils::getReadablePublicKeyType(m_certificateInfo.publicKeyType()), m_certificateInfo.publicKeyStrength());
     case CertificateModel::KeyUsage:
         return SignatureGuiUtils::getReadableKeyUsageCommaSeparated(m_certificateInfo.keyUsageExtensions());
     case CertificateModel::IssuerName:
-        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::CommonName);
+        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::IssuerEmail:
-        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::EmailAddress);
+        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::IssuerOrganization:
-        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::Organization);
+        return m_certificateInfo.issuerInfo(Okular::CertificateInfo::Organization, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::SubjectName:
-        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName);
+        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::SubjectEmail:
-        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::EmailAddress);
+        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::SubjectOrganization:
-        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::Organization);
+        return m_certificateInfo.subjectInfo(Okular::CertificateInfo::Organization, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
     case CertificateModel::Sha1:
         return QString::fromLatin1(QCryptographicHash::hash(m_certificateInfo.certificateData(), QCryptographicHash::Sha1).toHex(' '));
     case CertificateModel::Sha256:

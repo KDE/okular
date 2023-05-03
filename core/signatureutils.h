@@ -45,6 +45,11 @@ public:
         EmailAddress,
         Organization,
     };
+    /**
+     * How should certain empty strings be treated
+     * @since 23.08
+     */
+    enum class EmptyString { /** Empty strings should just be empty*/ Empty, TranslatedNotAvailable /** Empty strings should be a localized version of "Not available" */ };
 
     /**
      * Destructor
@@ -91,7 +96,7 @@ public:
      * Information about the issuer.
      * @since 23.08
      */
-    QString issuerInfo(EntityInfoKey key) const;
+    QString issuerInfo(EntityInfoKey key, EmptyString empty) const;
 
     /**
      * Sets information about the issuer.
@@ -103,7 +108,7 @@ public:
      * Information about the subject
      * @since 23.08
      */
-    QString subjectInfo(EntityInfoKey key) const;
+    QString subjectInfo(EntityInfoKey key, EmptyString empty) const;
 
     /**
      * Sets information about the subject

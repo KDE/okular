@@ -377,7 +377,7 @@ public:
             documentPassword.clear();
         } else {
             certNicknameToUse = signInfo->certificate->nickName();
-            certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName);
+            certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
             passToUse = signInfo->certificatePassword;
             documentPassword = signInfo->documentPassword;
         }

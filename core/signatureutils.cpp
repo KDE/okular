@@ -5,8 +5,24 @@
 */
 
 #include "signatureutils.h"
+#include <KLocalizedString>
 
 using namespace Okular;
+
+static QString handleEmpty(const QString &string, CertificateInfo::EmptyString empty)
+{
+    if (string.isEmpty()) {
+        switch (empty) {
+        case CertificateInfo::EmptyString::Empty:
+            return {};
+        case CertificateInfo::EmptyString::TranslatedNotAvailable:
+            return i18n("Not Available");
+        }
+        return {};
+    }
+    return string;
+}
+
 class EntityInfo
 {
 public:
@@ -77,17 +93,17 @@ void CertificateInfo::setSerialNumber(const QByteArray &serialNumber)
     d->serialNumber = serialNumber;
 }
 
-QString CertificateInfo::issuerInfo(EntityInfoKey key) const
+QString CertificateInfo::issuerInfo(EntityInfoKey key, EmptyString empty) const
 {
     switch (key) {
     case EntityInfoKey::CommonName:
-        return d->issuerInfo.commonName;
+        return handleEmpty(d->issuerInfo.commonName, empty);
     case EntityInfoKey::DistinguishedName:
-        return d->issuerInfo.distinguishedName;
+        return handleEmpty(d->issuerInfo.distinguishedName, empty);
     case EntityInfoKey::EmailAddress:
-        return d->issuerInfo.emailAddress;
+        return handleEmpty(d->issuerInfo.emailAddress, empty);
     case EntityInfoKey::Organization:
-        return d->issuerInfo.organization;
+        return handleEmpty(d->issuerInfo.organization, empty);
     }
     return QString();
 }
@@ -110,17 +126,17 @@ void CertificateInfo::setIssuerInfo(EntityInfoKey key, const QString &value)
     }
 }
 
-QString CertificateInfo::subjectInfo(EntityInfoKey key) const
+QString CertificateInfo::subjectInfo(EntityInfoKey key, EmptyString empty) const
 {
     switch (key) {
     case EntityInfoKey::CommonName:
-        return d->subjectInfo.commonName;
+        return handleEmpty(d->subjectInfo.commonName, empty);
     case EntityInfoKey::DistinguishedName:
-        return d->subjectInfo.distinguishedName;
+        return handleEmpty(d->subjectInfo.distinguishedName, empty);
     case EntityInfoKey::EmailAddress:
-        return d->subjectInfo.emailAddress;
+        return handleEmpty(d->subjectInfo.emailAddress, empty);
     case EntityInfoKey::Organization:
-        return d->subjectInfo.organization;
+        return handleEmpty(d->subjectInfo.organization, empty);
     }
     return QString();
 }

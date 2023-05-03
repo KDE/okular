@@ -1,5 +1,7 @@
 /*
     SPDX-FileCopyrightText: 2018 Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>
+    SPDX-FileCopyrightText: 2023 g10 Code GmbH
+    SPDX-FileContributor: Sune Stolborg Vuorela <sune@vuorela.dk>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,16 +13,24 @@
 #include "core/page.h"
 #include "pageview.h"
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QInputDialog>
+#include <QLabel>
+#include <QListView>
 #include <QMimeDatabase>
+#include <QPainter>
+#include <QPushButton>
+#include <QStandardItemModel>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <KMessageBox>
 
 namespace SignaturePartUtils
 {
+
 std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc)
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
@@ -37,19 +47,44 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QString password;
     QString documentPassword;
 
-    QStringList items;
+    QStandardItemModel items;
     QHash<QString, Okular::CertificateInfo> nickToCert;
+    int minWidth = -1;
     for (const auto &cert : qAsConst(certs)) {
-        items.append(cert.nickName());
+        auto item = std::make_unique<QStandardItem>();
+        QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
+        item->setData(commonName, Qt::UserRole);
+        QString emailAddress = cert.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::Empty);
+        item->setData(emailAddress, Qt::UserRole + 1);
+
+        minWidth = std::max(minWidth, std::max(cert.nickName().size(), emailAddress.size() + commonName.size()));
+
+        item->setData(cert.nickName(), Qt::DisplayRole);
+        item->setData(cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty), Qt::ToolTipRole);
+        item->setEditable(false);
+        items.appendRow(item.release());
         nickToCert[cert.nickName()] = cert;
     }
 
-    bool resok = false;
-    const QString certNicknameToUse = QInputDialog::getItem(pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+    SelectCertificateDialog dialog(pageView);
+    QFontMetrics fm = dialog.fontMetrics();
+    dialog.list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
+    dialog.list->setModel(&items);
+    dialog.list->setAlternatingRowColors(true);
+    dialog.list->setSelectionMode(QAbstractItemView::SingleSelection);
+    QObject::connect(dialog.list->selectionModel(), &QItemSelectionModel::selectionChanged, &dialog, [dialog = &dialog](auto &&, auto &&) {
+        // One can ctrl-click on the selected item to deselect it, that would
+        // leave the selection empty, so better prevent the OK button
+        // from being usable
+        dialog->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog->list->selectionModel()->hasSelection());
+    });
+    dialog.list->selectionModel()->select(items.index(0, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
+    auto result = dialog.exec();
 
-    if (!resok) {
+    if (result == QDialog::Rejected) {
         return std::nullopt;
     }
+    auto certNicknameToUse = dialog.list->selectionModel()->currentIndex().data(Qt::DisplayRole).toString();
 
     // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
     // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
@@ -107,7 +142,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
 
     Okular::NewSignatureData data;
     data.setCertNickname(signingInfo->certificate->nickName());
-    data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName));
+    data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
     data.setPassword(signingInfo->certificatePassword);
     data.setDocumentPassword(signingInfo->documentPassword);
 
@@ -123,4 +158,57 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
     }
 }
 
+SelectCertificateDialog::SelectCertificateDialog(QWidget *parent)
+    : QDialog(parent)
+{
+    setWindowTitle(i18n("Certificates"));
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    list = new QListView();
+    list->setItemDelegate(new KeyDelegate);
+    auto layout = new QVBoxLayout();
+    layout->addWidget(new QLabel(i18n("Select certificate to sign with:")));
+    layout->addWidget(list);
+    layout->addWidget(buttonBox);
+    setLayout(layout);
+}
+
+QSize KeyDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    auto baseSize = QStyledItemDelegate::sizeHint(option, index);
+    baseSize.setHeight(baseSize.height() * 2);
+    return baseSize;
+}
+
+void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    auto style = option.widget ? option.widget->style() : QApplication::style();
+
+    QStyledItemDelegate::paint(painter, option, QModelIndex()); // paint the background but without any text on it.
+
+    QPalette::ColorGroup cg;
+    if (option.state & QStyle::State_Active) {
+        cg = QPalette::Normal;
+    } else {
+        cg = QPalette::Inactive;
+    }
+
+    if (option.state & QStyle::State_Selected) {
+        painter->setPen(QPen {option.palette.brush(cg, QPalette::HighlightedText), 0});
+    } else {
+        painter->setPen(QPen {option.palette.brush(cg, QPalette::Text), 0});
+    }
+
+    auto textRect = option.rect;
+    int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, &option, option.widget) + 1;
+    textRect.adjust(textMargin, 0, -textMargin, 0);
+
+    QRect topHalf {textRect.x(), textRect.y(), textRect.width(), textRect.height() / 2};
+    QRect bottomHalf {textRect.x(), textRect.y() + textRect.height() / 2, textRect.width(), textRect.height() / 2};
+
+    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::DisplayRole).toString());
+    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(Qt::UserRole + 1).toString());
+    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::UserRole).toString());
+}
 }

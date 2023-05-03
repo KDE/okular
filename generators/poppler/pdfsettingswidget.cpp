@@ -76,7 +76,9 @@ bool PDFSettingsWidget::event(QEvent *e)
 
         for (const auto &cert : certs) {
             new QTreeWidgetItem(m_tree,
-                                {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
+                                {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
+                                 cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
+                                 cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
         }
 
         m_pdfsw.defaultLabel->setText(Poppler::getNSSDir());

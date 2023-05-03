@@ -132,16 +132,16 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto issuerBox = new QGroupBox(i18n("Issued By"), generalPage);
     auto issuerFormLayout = new QFormLayout(issuerBox);
     issuerFormLayout->setLabelAlignment(Qt::AlignLeft);
-    issuerFormLayout->addRow(i18n("Common Name(CN)"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::CommonName)));
-    issuerFormLayout->addRow(i18n("EMail"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::EmailAddress)));
-    issuerFormLayout->addRow(i18n("Organization(O)"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::Organization)));
+    issuerFormLayout->addRow(i18n("Common Name(CN)"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
+    issuerFormLayout->addRow(i18n("EMail"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
+    issuerFormLayout->addRow(i18n("Organization(O)"), new QLabel(m_certificateInfo.issuerInfo(Okular::CertificateInfo::Organization, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
 
     auto subjectBox = new QGroupBox(i18n("Issued To"), generalPage);
     auto subjectFormLayout = new QFormLayout(subjectBox);
     subjectFormLayout->setLabelAlignment(Qt::AlignLeft);
-    subjectFormLayout->addRow(i18n("Common Name(CN)"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName)));
-    subjectFormLayout->addRow(i18n("EMail"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::EmailAddress)));
-    subjectFormLayout->addRow(i18n("Organization(O)"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::Organization)));
+    subjectFormLayout->addRow(i18n("Common Name(CN)"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
+    subjectFormLayout->addRow(i18n("EMail"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
+    subjectFormLayout->addRow(i18n("Organization(O)"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::Organization, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
 
     auto validityBox = new QGroupBox(i18n("Validity"), generalPage);
     auto validityFormLayout = new QFormLayout(validityBox);

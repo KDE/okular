@@ -10,14 +10,6 @@
 #include <QDebug>
 #include <QInputDialog>
 
-static QString notAvailableIfEmpty(const QString &string)
-{
-    if (string.isEmpty()) {
-        return i18n("Not Available");
-    }
-    return string;
-}
-
 static Okular::CertificateInfo::KeyUsageExtensions fromPoppler(Poppler::CertificateInfo::KeyUsageExtensions popplerKu)
 {
     using namespace Okular;
@@ -75,8 +67,8 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setSerialNumber(pInfo.serialNumber());
     for (auto key :
          {Poppler::CertificateInfo::EntityInfoKey::CommonName, Poppler::CertificateInfo::EntityInfoKey::DistinguishedName, Poppler::CertificateInfo::EntityInfoKey::EmailAddress, Poppler::CertificateInfo::EntityInfoKey::Organization}) {
-        oInfo.setIssuerInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), notAvailableIfEmpty(pInfo.issuerInfo(key)));
-        oInfo.setSubjectInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), notAvailableIfEmpty(pInfo.subjectInfo(key)));
+        oInfo.setIssuerInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), pInfo.issuerInfo(key));
+        oInfo.setSubjectInfo(static_cast<Okular::CertificateInfo::EntityInfoKey>(key), pInfo.subjectInfo(key));
     }
     oInfo.setNickName(pInfo.nickName());
     oInfo.setValidityStart(pInfo.validityStart());

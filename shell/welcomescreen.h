@@ -33,6 +33,9 @@ Q_SIGNALS:
     void forgetAllRecents();
     void forgetRecentItem(QUrl const &url);
 
+protected:
+    void showEvent(QShowEvent *e) override;
+
 private Q_SLOTS:
     void recentsItemActivated(QModelIndex const &index);
     void recentListChanged();

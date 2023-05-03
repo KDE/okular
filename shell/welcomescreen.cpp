@@ -113,8 +113,6 @@ WelcomeScreen::WelcomeScreen(QWidget *parent)
 
     setupUi(this);
 
-    appIcon->setPixmap(QIcon::fromTheme(QStringLiteral("okular")).pixmap(KIconLoader::SizeEnormous));
-
     connect(openButton, &QPushButton::clicked, this, &WelcomeScreen::openClicked);
     connect(closeButton, &QPushButton::clicked, this, &WelcomeScreen::closeClicked);
 
@@ -149,6 +147,15 @@ WelcomeScreen::~WelcomeScreen()
 {
     delete m_recentsModel;
     delete m_recentsItemDelegate;
+}
+
+void WelcomeScreen::showEvent(QShowEvent *e)
+{
+    if (appIcon->pixmap(Qt::ReturnByValue).isNull()) {
+        appIcon->setPixmap(QIcon::fromTheme(QStringLiteral("okular")).pixmap(KIconLoader::SizeEnormous));
+    }
+
+    QWidget::showEvent(e);
 }
 
 void WelcomeScreen::loadRecents()

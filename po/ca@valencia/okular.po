@@ -1,7 +1,7 @@
 # Translation of okular.po to Catalan (Valencian)
 # Copyright (C) 2003-2022 This_file_is_part_of_KDE
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 02:52+0000\n"
-"PO-Revision-Date: 2022-12-23 14:39+0100\n"
+"PO-Revision-Date: 2023-05-03 09:34+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2725,7 +2725,7 @@ msgstr "Obeïx les limitacions DRM"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "Actualitza el document en canviar el fitxer"
+msgstr "Torna a carregar el document en canviar el fitxer"
 
 #: part/dlggeneral.cpp:153
 #, kde-format
@@ -4414,7 +4414,7 @@ msgstr "El fitxer ha canviat"
 #: part/part.cpp:1863
 #, kde-format
 msgid "Continue Reloading"
-msgstr "Continua, tornant a carregar"
+msgstr "Continua tornant a carregar"
 
 #: part/part.cpp:1864
 #, kde-format
@@ -4435,7 +4435,7 @@ msgstr ""
 #: part/part.cpp:1870
 #, kde-format
 msgid "Continue Closing"
-msgstr "Continua, tancant"
+msgstr "Continua tancant"
 
 #: part/part.cpp:1871
 #, kde-format
@@ -5733,6 +5733,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Mostra la barra lateral"

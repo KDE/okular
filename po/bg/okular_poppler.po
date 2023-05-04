@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2022-05-21 22:27+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <dict@ludost.net>\n"
@@ -280,28 +280,26 @@ msgstr ""
 "Използвате библиотека на Poppler изградена без поддръжка на NSS.\n"
 "Поради тази причина добавянето на дигитални подписи не е възможно"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "Необходимо е рестартиране"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Трябва да рестартирате Okular след промяна на настройките на папката на NSS"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "Не е наличен"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "Въведете парола"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Въведете паролата за отваряне на %1:"
+
+#~ msgid "Not Available"
+#~ msgstr "Не е наличен"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2021-10-26 13:30-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -282,31 +282,29 @@ msgstr ""
 "Você está usando uma biblioteca Poppler sem suporte a NSS.\n"
 "Adicionar assinaturas digitais não está disponível por este motivo"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "Reinício necessário"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Você precisa reiniciar o Okular após alterar as configurações da pasta NSS"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "Não disponível"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "Digite a senha"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Digite a senha para abrir %1:"
+
+#~ msgid "Not Available"
+#~ msgstr "Não disponível"
 
 #~ msgid "Select rasterization to enable this!"
 #~ msgstr "Selecione a rasterização para ativar isto!"

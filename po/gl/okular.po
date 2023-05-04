@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-04-22 13:50+0200\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 07:16+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -589,6 +589,11 @@ msgstr "Falta o tipo de alerta"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Non volver mostrar esta mensaxe"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Non dispoñíbel"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1546,10 +1551,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Abrir a nota emerxente"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Copiar no portapapeis"
+msgstr "Copiar o texto no portapapeis"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -3890,7 +3894,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Asinar"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4529,7 +4533,7 @@ msgid "Remove this Bookmark"
 msgstr "Retirar este marcador"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5341,32 +5345,22 @@ msgstr "Pregar todos os elementos"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Seleccione o certificado co que asinar"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Certificados:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Introduza o contrasinal (se existe) para desbloquear o certificado: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduza o contrasinal do certificado"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduza o contrasinal do documento"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5374,15 +5368,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_asinado.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gardar o ficheiro asinado como"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Non dispoñíbel"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Certificados:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Seleccione o certificado co que asinar"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

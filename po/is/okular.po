@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -582,6 +582,11 @@ msgstr ""
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ekki sýna þessi skilaboð aftur"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Ekki tiltækt"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3987,7 +3992,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Undirrita"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4614,7 +4619,7 @@ msgid "Remove this Bookmark"
 msgstr "Fjarlægja þetta bókamerki"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5423,32 +5428,22 @@ msgstr ""
 msgid "Properties"
 msgstr "Eiginleikar"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Veldu skilríki til að undirrita með"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Skilríki:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Settu inn lykilorðið að skilríkinu"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Settu inn lykilorð á skjali"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5456,15 +5451,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_undirritað.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Vista undirritaða skrá sem"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Ekki tiltækt"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Skilríki:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Veldu skilríki til að undirrita með"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

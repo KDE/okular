@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -570,6 +570,11 @@ msgstr "Avise de cookie"
 #, fuzzy, kde-format
 msgid "Do not show this message again"
 msgstr "Ne monstrar ti missage denov"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Índisponibil"
 
 #: core/sourcereference.cpp:101
 #, fuzzy, kde-format
@@ -3808,7 +3813,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signar"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4409,7 +4414,7 @@ msgid "Remove this Bookmark"
 msgstr "_Remover"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5169,32 +5174,22 @@ msgstr "_Contraer omni"
 msgid "Properties"
 msgstr "Proprietás"
 
-#: part/signaturepartutils.cpp:48
-#, fuzzy, kde-format
-msgid "Select certificate to sign with"
-msgstr "_Certificate:"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Certificates:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, fuzzy, kde-format
 msgid "Enter certificate password"
 msgstr "Intra li contrasigne por li archive «%s»."
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, fuzzy, kde-format
 msgid "Enter document password"
 msgstr "Contrasigne del document"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5202,15 +5197,21 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signat.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, fuzzy, kde-format
 msgid "Save Signed File As"
 msgstr "Gardar li file quam..."
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Índisponibil"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Certificates:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+msgid "Select certificate to sign with:"
+msgstr "_Certificate:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, fuzzy, kde-format

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2023-04-29 08:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -272,27 +272,25 @@ msgstr ""
 "程序使用的 Poppler 程序库在构建时没有启用 NSS 支持。\n"
 "添加数字签名因此不可用。"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "需要重新启动"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "更改 NSS 目录设置后，您需要重启 Okular"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "不可用"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "输入密码"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "输入密码以打开 %1："
+
+#~ msgid "Not Available"
+#~ msgstr "不可用"

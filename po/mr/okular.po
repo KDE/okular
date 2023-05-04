@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -594,6 +594,12 @@ msgstr ""
 #| msgid "Close this message"
 msgid "Do not show this message again"
 msgstr "हा संदेश बंद करा"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, fuzzy, kde-format
+#| msgid "No description available."
+msgid "Not Available"
+msgstr "वर्णन उपलब्ध नाही"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -4150,7 +4156,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4798,7 +4804,7 @@ msgid "Remove this Bookmark"
 msgstr "या ओळखचिन्हाला नवे नाव द्या"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, fuzzy, kde-format
 #| msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
 #| msgid "%1 (%2)"
@@ -5619,35 +5625,24 @@ msgstr ""
 msgid "Properties"
 msgstr "गुणधर्म (&P)"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr ""
-
-#: part/signaturepartutils.cpp:48
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
-msgid "Certificates:"
-msgstr "वाचकाचे संमिलीकरण"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, fuzzy, kde-format
 #| msgctxt "A document format, Okular-specific"
 #| msgid "Document Archive"
 msgid "Enter document password"
 msgstr "दस्तऐवजाची साठवण"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5655,16 +5650,21 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr ""
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:29
+#: part/signaturepartutils.cpp:164
 #, fuzzy, kde-format
-#| msgid "No description available."
-msgid "Not Available"
-msgstr "वर्णन उपलब्ध नाही"
+#| msgid "Configure Viewer"
+msgid "Certificates"
+msgstr "वाचकाचे संमिलीकरण"
+
+#: part/signaturepartutils.cpp:171
+#, kde-format
+msgid "Select certificate to sign with:"
+msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

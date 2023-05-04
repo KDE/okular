@@ -5,13 +5,13 @@
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-05-02 09:28+0200\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 18:09+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -582,6 +582,11 @@ msgstr "Manca el tipus d'alerta"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "No tornis a mostrar aquest missatge"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "No disponible"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -2741,7 +2746,7 @@ msgstr "Obeeix les limitacions DRM"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "Actualitza el document en canviar el fitxer"
+msgstr "Recarrega el document en canviar el fitxer"
 
 #: part/dlggeneral.cpp:153
 #, kde-format
@@ -3889,7 +3894,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signa"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4405,11 +4410,7 @@ msgid "Could not open %1. %2"
 msgstr "No s'ha pogut obrir %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4417,9 +4418,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Hi ha canvis sense desar, i el fitxer «%1» l'ha modificat un altre programa. "
-"Els vostres canvis es perdran, perquè el fitxer ja no es pot desar.<br>Voleu "
-"continuar recarregant el fitxer?"
+"El fitxer <filename>%1</filename> té canvis sense desar, però l'ha modificat "
+"un altre programa. Recarregar-lo substituirà els canvis sense desar pels "
+"canvis fets en l'altre programa.<nl/><nl/>Voleu continuar recarregant el "
+"fitxer?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4429,7 +4431,7 @@ msgstr "El fitxer ha canviat"
 #: part/part.cpp:1866
 #, kde-format
 msgid "Continue Reloading"
-msgstr "Continua, recarregant"
+msgstr "Continua recarregant"
 
 #: part/part.cpp:1867
 #, kde-format
@@ -4437,11 +4439,7 @@ msgid "Abort Reloading"
 msgstr "Interromp la recàrrega"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4449,14 +4447,14 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Hi ha canvis sense desar, i el fitxer «%1» l'ha modificat un altre programa. "
-"Els vostres canvis es perdran, perquè el fitxer ja no es pot desar.<br>Voleu "
-"continuar tancant el fitxer?"
+"El fitxer <filename>%1</filename> té canvis sense desar, però l'ha modificat "
+"un altre programa. Tancar-lo substituirà els canvis sense desar pels canvis "
+"fets en l'altre programa.<nl/><nl/>Voleu continuar tancant el fitxer?"
 
 #: part/part.cpp:1876
 #, kde-format
 msgid "Continue Closing"
-msgstr "Continua, tancant"
+msgstr "Continua tancant"
 
 #: part/part.cpp:1877
 #, kde-format
@@ -4532,7 +4530,7 @@ msgid "Remove this Bookmark"
 msgstr "Elimina aquest punt"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4571,6 +4569,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"El fitxer <filename>%1</filename> l'ha modificat un altre programa. Si el "
+"deseu ara, es perdrà qualsevol canvi fet en l'altre programa. Segur que "
+"voleu continuar?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4580,7 +4581,7 @@ msgstr "Desar - Avís"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Desa una còpia en un altre lloc"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5344,33 +5345,23 @@ msgstr "Redueix tots els elements"
 msgid "Properties"
 msgstr "Propietats"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Seleccioneu un certificat amb el qual signar"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Certificats:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduïu la contrasenya (si n'hi ha) per a desblocar el certificat: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduïu la contrasenya del certificat"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduïu la contrasenya del document"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5378,15 +5369,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signat.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Desa el fitxer signat com a"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "No disponible"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Certificats:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Seleccioneu un certificat amb el qual signar"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

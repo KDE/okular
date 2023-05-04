@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-04-21 07:21+0200\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 06:02+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -570,6 +570,11 @@ msgstr "გაფრთხილების ტიპის გარეშე"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "მეტჯერ აღარ აჩვენო ეს გაფრთხილება"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "ხელმიუწვდომელია"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1511,10 +1516,9 @@ msgid "&Open Pop-up Note"
 msgstr "მხტუნარა შეტყობინების &გახსნა"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "გაცვლის ბუფერში კოპირება"
+msgstr "ტექსტის კოპირება გაცვლის ბუფერში"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -2360,7 +2364,7 @@ msgstr "ტექსტის ჩასმა"
 #, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Draw border around links"
-msgstr ""
+msgstr "ბმულებს გარშემო საზღვრის დახატვა"
 
 #: part/dlgaccessibility.cpp:48
 #, kde-format
@@ -3394,7 +3398,7 @@ msgstr "ფენები"
 #, kde-format
 msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
-msgstr ""
+msgstr "დან"
 
 #: part/pageview.cpp:532
 #, kde-format
@@ -3431,7 +3435,7 @@ msgstr "მარცხენა"
 #: part/pageview.cpp:565
 #, kde-format
 msgid "Original Orientation"
-msgstr ""
+msgstr "ორიგინალური ორიენტაცია"
 
 #: part/pageview.cpp:571
 #, kde-format
@@ -3811,7 +3815,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "ხელმოწერა"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4290,7 +4294,7 @@ msgstr ""
 #: part/part.cpp:1740
 #, kde-format
 msgid "Enter Presentation Mode"
-msgstr ""
+msgstr "პრეზენტაციის რეჟიმში გადასვლა"
 
 #: part/part.cpp:1741
 #, kde-format
@@ -4374,7 +4378,7 @@ msgstr ""
 #: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
-msgstr ""
+msgstr "დოკუმენტის თავიდან ჩატვირთვა..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
@@ -4412,7 +4416,7 @@ msgid "Remove this Bookmark"
 msgstr "სანიშნის წაშლა"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4572,12 +4576,12 @@ msgstr ""
 #: part/part.cpp:3144
 #, kde-format
 msgid "Expand whole section"
-msgstr ""
+msgstr "მთელი მონაკვეთის ამოკეცვა"
 
 #: part/part.cpp:3145
 #, kde-format
 msgid "Collapse whole section"
-msgstr ""
+msgstr "მთელი მონაკვეთის ჩაკეცვა"
 
 #: part/part.cpp:3146
 #, kde-format
@@ -5116,17 +5120,17 @@ msgstr "დიდი ასოს გმრძნობიარე"
 #: part/searchwidget.cpp:50
 #, kde-format
 msgid "Match Phrase"
-msgstr ""
+msgstr "ფრაზის დამთხვევა"
 
 #: part/searchwidget.cpp:51
 #, kde-format
 msgid "Match All Words"
-msgstr ""
+msgstr "ყველა სიტყვის დამთხვევა"
 
 #: part/searchwidget.cpp:52
 #, kde-format
 msgid "Match Any Word"
-msgstr ""
+msgstr "ნებისმიერი სიტყვის დამთხვევა"
 
 #: part/searchwidget.cpp:71
 #, kde-format
@@ -5143,7 +5147,7 @@ msgstr ""
 #: part/side_reviews.cpp:137
 #, kde-format
 msgid "Group by Page"
-msgstr ""
+msgstr "გვერდით დაჯგუფება"
 
 #: part/side_reviews.cpp:142
 #, kde-format
@@ -5170,32 +5174,22 @@ msgstr ""
 msgid "Properties"
 msgstr "პარამეტრები"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr ""
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "სერტიფიკატები:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "შეიყვანეთ სერტიფიკატის პაროლი"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "შეიყვანეთ დოკუმენტის პაროლი"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5203,15 +5197,21 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr ""
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:29
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "სერტიფიკატები:"
+
+#: part/signaturepartutils.cpp:171
 #, kde-format
-msgid "Not Available"
-msgstr "ხელმიუწვდომელია"
+msgid "Select certificate to sign with:"
+msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

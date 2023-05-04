@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2021-10-10 23:55+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -286,31 +286,29 @@ msgstr ""
 "NSS euskarririk gabe eraikitako Poppler liburutegi bat erabiltzen ari zara.\n"
 "Arrazoi horregatik sinadura digitalak gehitzea ez dago erabilgarri"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "Berrabiatu beharra dago"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Okular berrabiatu behar duzu NSS direktorioaren ezarpenak aldatu ondoren"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "Ez dago eskuragarri"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "Sartu pasahitza"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Sartu %1 irekitzeko pasahitza:"
+
+#~ msgid "Not Available"
+#~ msgstr "Ez dago eskuragarri"
 
 #~ msgid "PDF Backend"
 #~ msgstr "PDF motorra"

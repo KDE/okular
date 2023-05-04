@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-05-02 08:36+0300\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 15:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -584,6 +584,11 @@ msgstr "Пропущений тип сповіщення"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Більше не показувати це повідомлення"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Немає доступу"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3907,7 +3912,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Підписати"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4424,11 +4429,7 @@ msgid "Could not open %1. %2"
 msgstr "Не вдалося відкрити %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4436,10 +4437,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Внесені зміни не було збережено, а до файла «%1» було внесено зміни за "
-"допомогою сторонньої програми. Внесені вами зміни буде втрачено, оскільки "
-"файл надалі зберегти неможливо.<br>Хочете продовжити перезавантаження цього "
-"файла?"
+"У файлі <filename>%1</filename> є незбережені зміни, але його було змінено "
+"сторонньою програмою. Перезавантаження файла призведе до заміни незбережених "
+"змін змінами, які було внесено за допомогою сторонньої програми.<nl/><nl/"
+">Хочете продовжити перезавантаження файла?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4457,11 +4458,7 @@ msgid "Abort Reloading"
 msgstr "Перервати перезавантаження"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4469,9 +4466,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Внесені зміни не було збережено, а до файла «%1» було внесено зміни за "
-"допомогою сторонньої програми. Внесені вами зміни буде втрачено, оскільки "
-"файл надалі зберегти неможливо.<br>Хочете продовжити закриття цього файла?"
+"Внесені до файла <filename>%1</filename> зміни не було збережено, але до "
+"нього було внесено зміни за допомогою сторонньої програми. Закриття файла "
+"призведе до заміни незбережених змін змінами, які було внесено за допомогою "
+"сторонньої програми.<nl/><nl/>Хочете закрити файл попри це?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4552,7 +4550,7 @@ msgid "Remove this Bookmark"
 msgstr "Вилучити цю закладку"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4591,6 +4589,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"До файла <filename>%1</filename> було внесено зміни у сторонній програмі. "
+"Якщо ви збережете його зараз, усі зміни, які було внесено у сторонній "
+"програмі, буде втрачено. Ви справді хочете виконати збереження файла?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4600,7 +4601,7 @@ msgstr "Збереження — Попередження"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Зберегти копію деінде"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5371,32 +5372,22 @@ msgstr "Згорнути усі записи"
 msgid "Properties"
 msgstr "Властивості"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Виберіть сертифікат для підписування"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Сертифікати:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Введіть пароль (якщо такий є) для розблокування сертифіката: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Введіть пароль до сертифіката"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Введіть пароль до документа"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5404,15 +5395,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_підписаний.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Зберегти підписаний файл як"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Немає доступу"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Сертифікати:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Виберіть сертифікат для підписування"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

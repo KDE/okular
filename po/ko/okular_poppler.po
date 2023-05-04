@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2021-11-12 01:34+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -276,30 +276,28 @@ msgstr ""
 "Poppler 라이브러리에서 NSS를 지원하지 않도록 빌드되었습니다.\n"
 "디지털 서명을 추가할 수 없습니다"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "다시 시작 필요함"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "사용할 수 없음"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "암호 입력"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "%1을 열려면 암호를 입력하십시오:"
+
+#~ msgid "Not Available"
+#~ msgstr "사용할 수 없음"
 
 #~ msgid "Select rasterization to enable this!"
 #~ msgstr "이 옵션을 사용하려면 래스터화를 선택하십시오!"

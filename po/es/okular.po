@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-04-20 04:44+0200\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-04 00:14+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.03.90\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -579,6 +579,11 @@ msgstr "Falta el tipo de alerta"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "No volver a mostrar este mensaje"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "No disponible"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1543,10 +1548,9 @@ msgid "&Open Pop-up Note"
 msgstr "Abrir n&ota emergente"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Copiar en el portapapeles"
+msgstr "Copiar texto en el portapapeles"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -3887,7 +3891,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Firmar"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4400,11 +4404,7 @@ msgid "Could not open %1. %2"
 msgstr "No se puede abrir %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4412,9 +4412,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Existen cambios sin guardar y el archivo «%1» ha sido modificado por otro "
-"programa. Perderá los cambios porque ya no se puede guardar el archivo."
-"<br>¿Desea continuar recargando el archivo?"
+"El archivo <filename>%1</filename> contiene cambios sin guardar y ha sido "
+"modificado por otro programa. Si lo vuelve a cargar se sustituirán los "
+"cambios sin guardar con las modificaciones realizadas por el otro programa."
+"<nl/><nl/>¿Desea continuar recargando el archivo?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4432,11 +4433,7 @@ msgid "Abort Reloading"
 msgstr "Interrumpir la recarga"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4444,9 +4441,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Existen cambios sin guardar y el archivo «%1» ha sido modificado por otro "
-"programa. Perderá los cambios porque ya no se puede guardar el archivo."
-"<br>¿Desea continuar cerrando el archivo?"
+"El archivo <filename>%1</filename> contiene cambios sin guardar y ha sido "
+"modificado por otro programa. Si lo cierra se sustituirán los cambios sin "
+"guardar con las modificaciones realizadas por el otro programa.<nl/><nl/"
+">¿Desea continuar cerrando el archivo?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4527,7 +4525,7 @@ msgid "Remove this Bookmark"
 msgstr "Eliminar este marcador"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4566,6 +4564,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"El archivo <filename>%1</filename> ha sido modificado por otro programa. Si "
+"lo guarda ahora, se perderá cualquier cambio realizado por el otro programa. "
+"¿Seguro que quiere continuar?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4575,7 +4576,7 @@ msgstr "Guardar - Advertencia"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Guardar una copia en otra parte"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5344,33 +5345,23 @@ msgstr "Contraer todos los elementos"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Seleccionar certificado con el que firmar"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Certificados:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduzca la contraseña (si existe) para desbloquear el certificado: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduzca la contraseña del certificado"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduzca la contraseña del documento"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5378,15 +5369,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_firmado.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Guardar archivo firmado como"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "No disponible"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Certificados:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Seleccionar certificado con el que firmar"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

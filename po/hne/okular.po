@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -605,6 +605,12 @@ msgstr ""
 #| msgid "Close this message"
 msgid "Do not show this message again"
 msgstr "ये संदेस ल बंद करव"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, fuzzy, kde-format
+#| msgid "No description available."
+msgid "Not Available"
+msgstr "कोई वर्नन नइ मिलत."
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -4133,7 +4139,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4785,7 +4791,7 @@ msgid "Remove this Bookmark"
 msgstr "निसानी ल नवा नाम देव"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5584,34 +5590,23 @@ msgstr ""
 msgid "Properties"
 msgstr "गुन (&P)"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr ""
-
-#: part/signaturepartutils.cpp:48
-#, fuzzy, kde-format
-#| msgid "Configure Viewer..."
-msgid "Certificates:"
-msgstr "प्रदर्सक कान्फिगर करव..."
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Enter document password"
 msgstr "कागद जऊन ल खोलना हे"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5619,16 +5614,21 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr ""
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:29
+#: part/signaturepartutils.cpp:164
 #, fuzzy, kde-format
-#| msgid "No description available."
-msgid "Not Available"
-msgstr "कोई वर्नन नइ मिलत."
+#| msgid "Configure Viewer..."
+msgid "Certificates"
+msgstr "प्रदर्सक कान्फिगर करव..."
+
+#: part/signaturepartutils.cpp:171
+#, kde-format
+msgid "Select certificate to sign with:"
+msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

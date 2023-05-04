@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-16 00:56+0000\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
 "PO-Revision-Date: 2021-10-04 10:59+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -286,32 +286,30 @@ msgstr ""
 "υποστήριξη NSS.\n"
 "Γι' αυτόν το λόγο η προσθήκη ψηφιακών υπογραφών δεν είναι διαθέσιμη"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "Restart needed"
 msgstr "Απαιτείται επανεκκίνηση"
 
-#: pdfsettingswidget.cpp:95
+#: pdfsettingswidget.cpp:96
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Χρειάζεται να επανεκκινήσετε το Okular μετά τη μεταβολή των ρυθμίσεων του "
 "NSS καταλόγου"
 
-#: pdfsignatureutils.cpp:40 pdfsignatureutils.cpp:46
-#, kde-format
-msgid "Not Available"
-msgstr "Μη διαθέσιμο"
-
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter Password"
 msgstr "Εισαγωγή κωδικού πρόσβασης"
 
-#: pdfsignatureutils.cpp:265
+#: pdfsignatureutils.cpp:177
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Εισαγωγή κωδικού για άνοιγμα του %1:"
+
+#~ msgid "Not Available"
+#~ msgstr "Μη διαθέσιμο"
 
 #~ msgid "PDF Backend"
 #~ msgstr "Σύστημα υποστήριξης PDF"

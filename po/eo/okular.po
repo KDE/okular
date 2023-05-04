@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-04-20 23:30+0100\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 21:29+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -577,6 +577,11 @@ msgstr "Mankas atentiga tipo"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ne montri ĉi tiun mesaĝon denove"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Ne disponebla"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1533,10 +1538,9 @@ msgid "&Open Pop-up Note"
 msgstr "Malfermi ŝprucn&oton"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Kopii al la poŝo"
+msgstr "Kopii tekston al tondujo"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -1666,13 +1670,13 @@ msgstr "Ŝanĝita: %1"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
-msgstr "Elekti kutiman stampsimbolon el dosiero"
+msgstr "Elekti propran stampsimbolon el dosiero"
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
-msgstr "Elekti kutiman poŝtmarkan simbolon"
+msgstr "Elekti propran poŝtmarkan simbolon"
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
@@ -2621,7 +2625,7 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Agordu la komandon de kutima tekstredaktilo lanĉota.<br />\n"
+"<qt>Agordu la komandon de propra tekstredaktilo lanĉota.<br />\n"
 "Vi povas ankaŭ meti kelkajn anstataŭaĵojn:\n"
 "<ul>\n"
 "  <li>%f - la dosiernomo</li>\n"
@@ -3875,7 +3879,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signo"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4041,7 +4045,7 @@ msgid ""
 "edit the document."
 msgstr ""
 "Ĉi tiu dokumento enhavas komentadojn aŭ formularajn datumojn, kiuj estis "
-"konservitaj interne de antaŭa Okulara versio. Interna stokado <b>ne plu "
+"konservitaj interne de antaŭa Okulara versio. Interna konservado <b>ne plu "
 "estas subtenata</b>.<br/>Bonvolu konservi en dosieron por movi ilin se vi "
 "volas daŭrigi redakti la dokumenton."
 
@@ -4387,11 +4391,7 @@ msgid "Could not open %1. %2"
 msgstr "Ne eblis malfermi %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4399,9 +4399,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Estas nekonservitaj ŝanĝoj, kaj la dosiero '%1' estis modifita de alia "
-"programo. Viaj ŝanĝoj estos perditaj, ĉar la dosiero ne plu povas esti "
-"konservita.<br>Ĉu vi volas daŭrigi reŝargi la dosieron?"
+"La dosiero <filename>%1</filename> havas nekonservitajn ŝanĝojn sed estis "
+"modifita de alia programo. Ĝia reŝargo anstataŭigos la nekonservitajn "
+"ŝanĝojn per la ŝanĝoj farataj en la alia programo.<nl/><nl/>Ĉu vi volas "
+"daŭrigi reŝargi la dosieron?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4419,11 +4420,7 @@ msgid "Abort Reloading"
 msgstr "Ĉesi Reŝargon"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4431,9 +4428,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Estas nekonservitaj ŝanĝoj, kaj la dosiero '%1' estis modifita de alia "
-"programo. Viaj ŝanĝoj estos perditaj, ĉar la dosiero ne plu povas esti "
-"konservita.<br>Ĉu vi volas daŭrigi fermi la dosieron?"
+"La dosiero <filename>%1</filename> havas nekonservitajn ŝanĝojn sed estis "
+"modifita de alia programo. Ĝia fermado anstataŭigos la nekonservitajn "
+"ŝanĝojn per la ŝanĝoj farataj en la alia programo.<nl/><nl/>Ĉu vi volas "
+"daŭrigi pri fermi la dosieron?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4514,7 +4512,7 @@ msgid "Remove this Bookmark"
 msgstr "Forigi ĉi tiun legosignon"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4553,6 +4551,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"La dosiero <filename>%1</filename> estis modifita per alia programo. Se vi "
+"konservas nun, ajn ŝanĝoj faritaj en alia programo perdiĝos. Ĉu vi certas, "
+"ke vi volas daŭrigi?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4562,7 +4563,7 @@ msgstr "Konservi - Averto"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Konservi kopin aliloke"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5323,32 +5324,22 @@ msgstr "Malvastigi ĉiujn elementojn"
 msgid "Properties"
 msgstr "Propraĵoj"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "Elekti atestilon kun kiu subskribi"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Atestiloj:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Enigu pasvorton (se ekzistas) por malŝlosi atestilon: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Enigi atestilpasvorton"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Enigi dokumentan pasvorton"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5356,15 +5347,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Konservi Subskribitan Dosieron Kiel"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Ne disponebla"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Atestiloj:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Elekti atestilon kun kiu subskribi"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
@@ -5721,13 +5719,3 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
-
-#~ msgid ""
-#~ "The file '%1' has been modified by another program, which means it can no "
-#~ "longer be saved."
-#~ msgstr ""
-#~ "La dosiero '%1' estis modifita de alia programo, kio signifas, ke ĝi ne "
-#~ "plu povas esti konservita."
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Montri Flankbreton"

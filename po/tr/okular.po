@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
-"PO-Revision-Date: 2023-05-02 11:20+0300\n"
+"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"PO-Revision-Date: 2023-05-03 12:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -592,6 +592,11 @@ msgstr "Eksik uyarı türü"
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Bu iletiyi bir daha gösterme"
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
+msgstr "Kullanılamıyor"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3887,7 +3892,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "İmzala"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4398,11 +4403,7 @@ msgid "Could not open %1. %2"
 msgstr "%1 açılamadı. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4410,9 +4411,11 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Kaydedilmemiş değişiklikler var ve '%1' dosyası başka bir program tarafından "
-"değiştirilmiş. Değişiklikleriniz kaybolacak; çünkü dosya artık "
-"kaydedilemiyor.<br>Dosyayı yeniden yüklemeyi sürdürmek istiyor musunuz?"
+"<filename>%1</filename> dosyasında kaydedilmemiş değişiklikler var; ancak  "
+"başka bir program tarafından değiştirilmiş. Onu yeniden yüklemek, "
+"kaydedilmemiş değişiklikleri diğer program tarafından yapılan "
+"değişikliklerle değiştirir.<nl/><nl/>Dosyayı yeniden yüklemeyi sürdürmek "
+"istiyor musunuz?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4430,11 +4433,7 @@ msgid "Abort Reloading"
 msgstr "Yeniden Yüklemeyi İptal Et"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4442,9 +4441,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Kaydedilmemiş değişiklikler var ve '%1' dosyası başka bir program tarafından "
-"değiştirilmiş. Değişiklikleriniz kaybolacak; çünkü dosya artık "
-"kaydedilemiyor.<br>Dosyayı kapatmayı sürdürmek istiyor musunuz?"
+"<filename>%1</filename> dosyasında kaydedilmemiş değişiklikler var; ancak  "
+"başka bir program tarafından değiştirilmiş. Onu kapatmak, kaydedilmemiş "
+"değişiklikleri diğer program tarafından yapılan değişikliklerle değiştirir."
+"<nl/><nl/>Dosyayı kapatmayı sürdürmek istiyor musunuz?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4526,7 +4526,7 @@ msgid "Remove this Bookmark"
 msgstr "Bu Yer İmini Kaldır"
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -4565,6 +4565,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"<filename>%1</filename> dosyası başka bir program tarafından değiştirilmiş. "
+"Şimdi kaydederseniz diğer programda yapılmış tüm değişiklikler kaybolur. "
+"Sürdürmek istediğinize emin misiniz?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4574,7 +4577,7 @@ msgstr "Kaydet - Uyarı"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Başka Bir Yere Bir Kopya Kaydet"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5335,32 +5338,22 @@ msgstr "Tüm Ögeleri Daralt"
 msgid "Properties"
 msgstr "Özellikler"
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr "İmzalama için sertifika seçin"
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr "Sertifikalar:"
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Sertifika kilidini açmak için (varsa) parola girin: %1"
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Sertifika parolasını girin"
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr "Belge parolasını girin"
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5368,15 +5361,22 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_imzalı.%2"
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr "İmzalı Dosyayı Farklı Kaydet"
 
-#: part/signaturepropertiesdialog.cpp:29
-#, kde-format
-msgid "Not Available"
-msgstr "Kullanılamıyor"
+#: part/signaturepartutils.cpp:164
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Sertifikalar:"
+
+#: part/signaturepartutils.cpp:171
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "İmzalama için sertifika seçin"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

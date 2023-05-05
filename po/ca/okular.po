@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-03 18:09+0200\n"
+"PO-Revision-Date: 2023-05-04 09:31+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -5375,16 +5375,14 @@ msgid "Save Signed File As"
 msgstr "Desa el fitxer signat com a"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificats:"
+msgstr "Certificats"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Seleccioneu un certificat amb el qual signar"
+msgstr "Seleccioneu un certificat amb el qual signar:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
@@ -5744,13 +5742,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgid ""
-#~ "The file '%1' has been modified by another program, which means it can no "
-#~ "longer be saved."
-#~ msgstr ""
-#~ "El fitxer «%1» l'ha modificat un altre programa, i per tant, ja no es pot "
-#~ "desar."
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Mostra la barra lateral"

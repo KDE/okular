@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-04-27 11:30+0400\n"
+"PO-Revision-Date: 2023-05-04 10:18+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1530,10 +1530,9 @@ msgid "&Open Pop-up Note"
 msgstr "افتح &ملاحظة منبثقة"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "نسخ إلى الحافظة"
+msgstr "انسخ النص إلى الحافظة"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4396,11 +4395,7 @@ msgid "Could not open %1. %2"
 msgstr "تعذّر فتح %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4408,9 +4403,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"توجد تغييرات لم تحفظ، و كذلك عدل الملف '%1' بواسطة برنامج آخر. ستفقد "
-"تغييراتك ، لأنه لم يعد بالإمكان حفظ الملف.<br> هل تريد متابعة إعادة تحميل "
-"الملف؟ "
+"الملف <filename>%1</filename> به تغييرات غير محفوظة ولكنها عدلت بواسطة "
+"برنامج آخر. ستؤدي إعادة تحميله إلى استبدال بالتغييرات غير المحفوظة التغييرات "
+"التي تم إجراؤها في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إعادة تحميل "
+"الملف؟"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4428,11 +4424,7 @@ msgid "Abort Reloading"
 msgstr "أحبط إعادة التحميل"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4440,8 +4432,9 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"توجد تغييرات لم تحفظ، و كذلك عدل الملف '%1' بواسطة برنامج آخر. ستفقد "
-"تغييراتك ، لأنه لم يعد بالإمكان حفظ الملف.<br> هل تريد متابعة غلق الملف؟ "
+"الملف <filename>%1</filename> به تغييرات غير محفوظة ولكنها عدلت بواسطة "
+"برنامج آخر. سيؤدي إغلاقه إلى استبدال بالتغييرات غير المحفوظة التغييرات التي "
+"تم إجراؤها في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إغلاق الملف؟"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4561,6 +4554,8 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"غُير الملف <filename>%1</filename>  بواسطة برنامج آخر. إذا حفظت الآن ستفقد كل "
+"التغييرات التي جرت في التطبيق الآخر.  هل تريد المتابعة؟"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4570,7 +4565,7 @@ msgstr "تحذير - الحفظ"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "احفظ نسخ في مكان آخر"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5350,16 +5345,14 @@ msgid "Save Signed File As"
 msgstr "حفظ الملف الموقع باسم"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "الشّهادات:"
+msgstr "الشّهادات"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "حدد شهادة للتوقيع معها"
+msgstr "حدد شهادة للتوقيع بها:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

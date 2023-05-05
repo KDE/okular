@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-03 21:29+0100\n"
+"PO-Revision-Date: 2023-05-04 21:10+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -5353,16 +5353,14 @@ msgid "Save Signed File As"
 msgstr "Konservi Subskribitan Dosieron Kiel"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Atestiloj:"
+msgstr "Atestiloj"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Elekti atestilon kun kiu subskribi"
+msgstr "Elektu atestilon kun kiu subskribi:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

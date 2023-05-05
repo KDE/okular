@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-03 16:05+0200\n"
+"PO-Revision-Date: 2023-05-04 10:17+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5387,16 +5387,14 @@ msgid "Save Signed File As"
 msgstr "Ondertekend bestand opslaan als"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificaten:"
+msgstr "Certificaten"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Certificaat selecteren om mee te ondertekenen"
+msgstr "Certificaat selecteren om mee te ondertekenen:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

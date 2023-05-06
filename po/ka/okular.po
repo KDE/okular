@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-03 06:02+0200\n"
+"PO-Revision-Date: 2023-05-05 05:29+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5044,7 +5044,7 @@ msgstr "კი"
 #, kde-format
 msgctxt "Replacing missing font with another one"
 msgid "%1 (substituting with %2)"
-msgstr ""
+msgstr "%1 (ჩანაცვლება %2-ით)"
 
 #: part/propertiesdialog.cpp:372
 #, kde-format
@@ -5203,10 +5203,9 @@ msgid "Save Signed File As"
 msgstr ""
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "სერტიფიკატები:"
+msgstr "სერტიფიკატები"
 
 #: part/signaturepartutils.cpp:171
 #, kde-format

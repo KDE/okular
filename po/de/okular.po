@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-02 23:02+0200\n"
+"PO-Revision-Date: 2023-05-05 19:30+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -4592,7 +4592,7 @@ msgstr "Speichern - Warnung"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Woanders eine Kopie speichern"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5391,16 +5391,14 @@ msgid "Save Signed File As"
 msgstr "Signierte Datei speichern unter"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Zertifikate:"
+msgstr "Zertifikate"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Zertifikat zum Signieren auswählen"
+msgstr "Zertifikat zum Signieren auswählen:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-04 00:14+0200\n"
+"PO-Revision-Date: 2023-05-05 01:20+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -5375,16 +5375,14 @@ msgid "Save Signed File As"
 msgstr "Guardar archivo firmado como"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificados:"
+msgstr "Certificados"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Seleccionar certificado con el que firmar"
+msgstr "Seleccione certificado con el que firmar:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

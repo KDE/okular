@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-04-21 09:03+0200\n"
+"PO-Revision-Date: 2023-05-05 20:41+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -1571,10 +1571,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Ouvrir une note épinglée"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Copier dans le presse-papier"
+msgstr "Copier le texte dans le presse-papier"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4442,11 +4441,7 @@ msgid "Could not open %1. %2"
 msgstr "Impossible d'ouvrir « %1 ». %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4454,9 +4449,11 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Il y a des changements non enregistrés et le fichier « %1 » a été modifié "
-"par un autre programme. Vos changements seront perdus car le fichier ne peut "
-"plus être enregistré.<br/> Voulez-vous vraiment recharger le fichier ?"
+"Le fichier <filename>%1</filename> contient des modifications non "
+"enregistrées mais a été modifié par un autre programme. Son rechargement "
+"remplacera les modifications non enregistrées par les changements réalisés "
+"dans l'autre programme. <nl/> <nl/> Voulez-vous vraiment recharger le "
+"fichier ?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4474,11 +4471,7 @@ msgid "Abort Reloading"
 msgstr "Interrompre le rechargement"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4486,9 +4479,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Il y a des changements non enregistrés et le fichier « %1 » a été modifié "
-"par un autre programme. Vos changements seront perdus car le fichier ne peut "
-"plus être enregistré.<br/> Voulez-vous vraiment fermer le fichier ?"
+"Le fichier <filename>%1</filename> contient des modifications non "
+"enregistrées mais a été modifié par un autre programme. Sa fermeture "
+"remplacera les modifications non enregistrées par les changements réalisés "
+"dans l'autre programme. <nl/> <nl/> Voulez-vous vraiment fermer le fichier ?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4609,6 +4603,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Le fichier <filename>%1</filename> a été modifié par un autre programme. Si "
+"vous faites un enregistrement maintenant, toute modification effectuée dans "
+"l’autre programme sera perdue. Voulez-vous vraiment continuer ?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4618,7 +4615,7 @@ msgstr "Enregistrer - Avertissement"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Enregistrer une copie quelque part ailleurs"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5422,16 +5419,14 @@ msgid "Save Signed File As"
 msgstr "Enregistrer le fichier signé sous"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificats :"
+msgstr "Certificats"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Sélectionner un certificat pour la signature"
+msgstr "Sélectionner un certificat avec lequel signer :"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

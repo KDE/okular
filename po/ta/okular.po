@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-04-23 16:58+0530\n"
+"PO-Revision-Date: 2023-05-07 14:35+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -1529,10 +1529,9 @@ msgid "&Open Pop-up Note"
 msgstr "தெரித்தெழும் குறிப்பைத் &திற"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "பிடிப்புப்பலகைக்கு நகல் எடு"
+msgstr "பிடிப்புப்பலகைக்கு உரையை நகல் எடு"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4389,11 +4388,7 @@ msgid "Could not open %1. %2"
 msgstr "%1 என்பதை திறக்க முடியவில்லை. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4401,9 +4396,9 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"சேமிக்கப்படாத மாற்றங்கள் உள்ளன, ஆனால் '%1' என்ற கோப்பு வேறொரு நிரலால் மாற்றப்பட்டுள்ளது. "
-"இனிமேல் கோப்பை சேமிக்க முடியாததால், உங்கள் மாற்றங்கள் இழக்கப்படும். <br>கோப்பை மீளேற்றுவதை "
-"தொடர வேண்டுமா?"
+"<filename>%1</filename> எனும் கோப்பில் சேமிக்கப்படாத மாற்றங்கள் உள்ளன, ஆனால் அதை "
+"வேறொரு நிரல் மாற்றியுள்ளது. மீளேற்றினால், சேமிக்கப்படா மாற்றங்களை இழப்பீர். <nl/><nl/"
+">கோப்பை மீளேற்றுவதை தொடர வேண்டுமா?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4421,11 +4416,7 @@ msgid "Abort Reloading"
 msgstr "மீளேற்றுவதைக் கைவிடு"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4433,9 +4424,9 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"சேமிக்கப்படாத மாற்றங்கள் உள்ளன, ஆனால் '%1' என்ற கோப்பு வேறொரு நிரலால் மாற்றப்பட்டுள்ளது. "
-"இனிமேல் கோப்பை சேமிக்க முடியாததால், உங்கள் மாற்றங்கள் இழக்கப்படும். <br>கோப்பை மூடுவதை "
-"தொடர வேண்டுமா?"
+"<filename>%1</filename> எனும் கோப்பில் சேமிக்கப்படாத மாற்றங்கள் உள்ளன, ஆனால் அதை "
+"வேறொரு நிரல் மாற்றியுள்ளது. மூடினால், சேமிக்கப்படா மாற்றங்களை இழப்பீர். <nl/><nl/>கோப்பை "
+"மூடுவதை தொடர வேண்டுமா?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4557,6 +4548,8 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"<filename>%1</filename> எனும் கோப்பு, வேறொரு நிரலால் மாற்றப்பட்டுள்ளது. சேமித்தால், "
+"அந்த நிரல் செய்த மாற்றங்களை இழப்பீர். உறுதியாக தொடர வேண்டுமா?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4566,7 +4559,7 @@ msgstr "சேமிப்பு - எச்சரிக்கை"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "வேறிடத்தில் நகலாக சேமி"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5357,16 +5350,14 @@ msgid "Save Signed File As"
 msgstr "கையொப்பமிட்ட கோப்பை இவ்வாறு சேமி"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "சான்றிதழ்கள்:"
+msgstr "சான்றிதழ்கள்"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "கையொப்பத்துக்கு பயன்படுத்த வேண்டிய சான்றிதழைத் தேர்ந்தெடுத்தல்"
+msgstr "கையொப்பத்துக்கு பயன்படுத்த வேண்டிய சான்றிதழைத் தேர்ந்தெடுக்கவும்:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-02 22:34+0200\n"
+"PO-Revision-Date: 2023-05-09 11:50+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4403,11 +4403,7 @@ msgid "Could not open %1. %2"
 msgstr "Non pote aperir %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4415,9 +4411,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Il ha modificationes non salveguardate, e le file '%1' ha essite modificate "
-"per un altere programma. Tu modificationes essera perdite, proque le file "
-"pote non jam esser saveguardate.<br>Tu vole continuar a recarcar iste file?"
+"Le file <filename>%1</filename> ha modificationes non salveguardate, ma ha "
+"essite modificate per un altere programma. Recargar lo reimplacera le "
+"modificationes non salveguardate con le modificationes facite in le altere "
+"programma.<nl/><nl/> Tu vole continuar a recarcar iste file?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4435,11 +4432,7 @@ msgid "Abort Reloading"
 msgstr "Abandona recargar"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4447,9 +4440,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Il ha modificationes non salveguardate, e le file '%1' ha essite modificate "
-"per un altere programma. Tu modificationes essera perdite, proque le file "
-"pote non jam esser salveguardate. <br>Tu vole continuar a clauder le file? "
+"Le file <filename>%1</filename> ha modificationes non salveguardate, ma ha "
+"essite modificate per un altere programma. Clauder lo reimplacera le "
+"modificationes non salveguardate con le modificationes facite in le altere "
+"programma.<nl/><nl/> Tu vole continuar a clauder le file?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4570,6 +4564,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Le file <filename>%1</filename> ha essite modificate per un altere "
+"programma. SiTuu salveguarda nunc, omne modificationes facite in le altere "
+"programma essera perdite. Tu es secur que tu vole continuar?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4579,7 +4576,7 @@ msgstr "Salveguarda - Aviso"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Salveguarda un copia alibi"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5377,16 +5374,14 @@ msgid "Save Signed File As"
 msgstr "Salveguarda file signate como"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificatos:"
+msgstr "Certificatos"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Selige certificato con le qual signar"
+msgstr "Selige certificato con le qual signar:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 00:45+0000\n"
-"PO-Revision-Date: 2023-05-02 23:38+0200\n"
+"PO-Revision-Date: 2023-05-09 19:42+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -4392,11 +4392,7 @@ msgid "Could not open %1. %2"
 msgstr "Не може да се отвори %1. %2"
 
 #: part/part.cpp:1861
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4404,9 +4400,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Има незапазени промени и файлът \"%1\" е модифициран от друга програма. "
-"Промените ви ще бъдат загубени, защото файлът вече не може да бъде запазен. "
-"<br> Искате ли да продължите да презареждате файла?"
+"Файлът <filename>%1</filename> има незаписани промени, но е бил модифициран "
+"от друга програма. Повторното му зареждане ще замени незаписаните промени с "
+"направените промени от другата програма.<nl/><nl/>Искате ли да продължите "
+"презареждането на файла?"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4424,11 +4421,7 @@ msgid "Abort Reloading"
 msgstr "Прекъсване на презареждането"
 
 #: part/part.cpp:1871
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4436,9 +4429,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Има незапазени промени и файлът \"%1\" е модифициран от друга програма. "
-"Промените ви ще бъдат загубени, тъй като файлът вече не може да бъде "
-"запазен. <br> Искате ли да продължите да затваряте файла?"
+"Файлът <filename>%1</filename> има незаписани промени, но е бил модифициран "
+"от друга програма. Затварянето му ще замени незапазените промени с "
+"промените, направени в другата програма.<nl/><nl/>Искате ли да затворите "
+"файла?"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4558,6 +4552,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Файлът <filename>%1</filename> е бил модифициран от друга програма. Ако го "
+"запишете сега, всички промени, направени в другата програма, ще бъдат "
+"загубени. Сигурни ли сте, че искате да продължите?"
 
 #: part/part.cpp:2663 part/part.cpp:2681 part/part.cpp:2733
 #, kde-format
@@ -4567,7 +4564,7 @@ msgstr "Запазване - предупреждение"
 #: part/part.cpp:2665
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Запазване на колие на друго място"
 
 #: part/part.cpp:2680
 #, kde-format
@@ -5366,16 +5363,14 @@ msgid "Save Signed File As"
 msgstr "Запазване на подписания файл като"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Сертификати:"
+msgstr "Сертификати"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Избиране на сертификат за подписване"
+msgstr "Избиране на сертификат за подписване:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

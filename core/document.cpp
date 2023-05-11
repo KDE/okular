@@ -2105,7 +2105,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
     QString line;
     while (!ts.atEnd()) {
         line = ts.readLine();
-        const QStringList tokens = line.split(spaceChar, QString::SkipEmptyParts);
+        const QStringList tokens = line.split(spaceChar, Qt::SkipEmptyParts);
         const int tokenSize = tokens.count();
         if (tokenSize < 1) {
             continue;
@@ -3895,7 +3895,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
     // 4. GOOGLE* - process all document marking pages
     else if (type == GoogleAll || type == GoogleAny) {
         QMap<Page *, QVector<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QMap<Page *, QVector<QPair<RegularAreaRect *, QColor>>>;
-        const QStringList words = text.split(QLatin1Char(' '), QString::SkipEmptyParts);
+        const QStringList words = text.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         // search and highlight every word in 'text' on all pages
         QTimer::singleShot(0, this, [this, pagesToNotify, pageMatches, searchID, words] { d->doContinueGooglesDocumentSearch(pagesToNotify, pageMatches, 0, searchID, words); });

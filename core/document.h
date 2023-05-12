@@ -433,19 +433,9 @@ public:
      * @param viewport The document viewport.
      * @param excludeObserver The observer which shouldn't be effected by this change.
      * @param smoothMove Whether the move shall be animated smoothly.
-     */
-    void setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false);
-
-    /**
-     * Sets the current document viewport to the given @p viewport.
-     * BCI TODO: merge with setViewport, adding a parameter "bool updateHistory = true"
-     *
-     * @param viewport The document viewport.
-     * @param excludeObserver The observer which shouldn't be effected by this change.
-     * @param smoothMove Whether the move shall be animated smoothly.
      * @param updateHistory Whether to consider the change of viewport for the history navigation
      */
-    void setViewportWithHistory(const DocumentViewport &viewport, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false, bool updateHistory = true);
+    void setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false, bool updateHistory = true);
 
     /**
      * Sets the current document viewport to the next viewport in the

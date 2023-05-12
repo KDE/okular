@@ -3686,7 +3686,7 @@ void Document::setPrevPage()
 }
 */
 
-void Document::setViewportWithHistory(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove, bool updateHistory)
+void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove, bool updateHistory)
 {
     if (!viewport.isValid()) {
         qCDebug(OkularCoreDebug) << "invalid viewport:" << viewport.toString();
@@ -3749,12 +3749,6 @@ void Document::setViewportPage(int page, DocumentObserver *excludeObserver, bool
 
     // make a viewport from the page and broadcast it
     setViewport(DocumentViewport(page), excludeObserver, smoothMove);
-}
-
-void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove)
-{
-    // set viewport, updating history
-    setViewportWithHistory(viewport, excludeObserver, smoothMove, true);
 }
 
 void Document::setZoom(int factor, DocumentObserver *excludeObserver)

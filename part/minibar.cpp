@@ -418,7 +418,7 @@ PageLabelEdit::PageLabelEdit(MiniBar *parent)
     : PagesEdit(parent)
 {
     setVisible(false);
-    connect(this, &PageLabelEdit::returnPressed, this, &PageLabelEdit::pageChosen);
+    connect(this, &PageLabelEdit::returnKeyPressed, this, &PageLabelEdit::pageChosen);
 }
 
 void PageLabelEdit::setText(const QString &newText)

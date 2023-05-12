@@ -159,7 +159,7 @@ bool ProtocolMSITS::parseLoadAndLookup(const QUrl &url, QString &abspath)
     chmFile *tmpchm;
 
     if ((tmpchm = chm_open(QFile::encodeName(QDir::toNativeSeparators(filename)).constData())) == nullptr) {
-        error(KIO::ERR_COULD_NOT_READ, url.toString());
+        error(KIO::ERR_CANNOT_READ, url.toString());
         return false;
     }
 

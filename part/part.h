@@ -74,7 +74,7 @@ class DrawingToolActions;
 class Layers;
 class SignaturePanel;
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
 namespace Purpose
 {
 class Menu;
@@ -309,7 +309,7 @@ private:
     void setFileToWatch(const QString &filePath);
     void unsetFileToWatch();
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     void slotShareActionFinished(const QJsonObject &output, int error, const QString &message);
 #endif
 
@@ -405,7 +405,7 @@ private:
     QAction *m_exportAs;
     QAction *m_exportAsText;
     QAction *m_exportAsDocArchive;
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     QAction *m_share;
 #endif
     QAction *m_showPresentation;
@@ -419,7 +419,7 @@ private:
     QAction *m_aboutBackend;
     QAction *m_reload;
     QMenu *m_exportAsMenu;
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     Purpose::Menu *m_shareMenu;
 #endif
     QAction *m_closeFindBar;

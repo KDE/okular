@@ -74,7 +74,7 @@
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
 #include <Purpose/AlternativesModel>
 #include <purpose_version.h>
 #if PURPOSE_VERSION >= QT_VERSION_CHECK(5, 104, 0)
@@ -798,7 +798,7 @@ void Part::setupViewerActions()
     m_exportAsText = nullptr;
     m_exportAsDocArchive = nullptr;
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     m_share = nullptr;
     m_shareMenu = nullptr;
 #endif
@@ -923,7 +923,7 @@ void Part::setupActions()
     m_exportAs->setEnabled(false);
     m_exportAsText->setEnabled(false);
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     m_share = ac->addAction(QStringLiteral("file_share"));
     m_share->setText(i18n("S&hare"));
     m_share->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
@@ -1016,7 +1016,7 @@ Part::~Part()
     qDeleteAll(m_bookmarkActions);
 
     delete m_exportAsMenu;
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     delete m_shareMenu;
 #endif
 
@@ -1672,7 +1672,7 @@ bool Part::openFile()
                 menu->addAction(actionForExportFormat(*it));
             }
         }
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
         if (m_share) {
             m_shareMenu->model()->setInputData(QJsonObject {{QStringLiteral("mimeType"), mime.name()}, {QStringLiteral("urls"), QJsonArray {url().toString()}}});
             m_shareMenu->model()->setPluginType(QStringLiteral("Export"));
@@ -1699,7 +1699,7 @@ bool Part::openFile()
     if (m_exportAs) {
         m_exportAs->setEnabled(ok);
     }
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     if (m_share) {
         m_share->setEnabled(ok);
     }
@@ -1948,7 +1948,7 @@ bool Part::closeUrl(bool promptToSave)
             delete acts.at(i);
         }
     }
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     if (m_share) {
         m_share->setEnabled(false);
         m_shareMenu->clear();
@@ -3336,7 +3336,7 @@ void Part::slotUpdateHamburgerMenu()
     menu->addAction(m_printPreview);
     menu->addAction(m_showProperties);
     menu->addAction(m_openContainingFolder);
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
     menu->addAction(m_share);
 #endif
     menu->addSeparator();
@@ -3837,7 +3837,7 @@ void Part::resetStartArguments()
     m_cliPrintAndExit = false;
 }
 
-#if PURPOSE_FOUND
+#if HAVE_PURPOSE
 void Part::slotShareActionFinished(const QJsonObject &output, int error, const QString &message)
 {
     if (error) {

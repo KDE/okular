@@ -155,9 +155,9 @@ if (BUILD_DESKTOP)
         DESCRIPTION "A framework for services and actions integration"
         PURPOSE "Required for enabling the share menu.")
     if (KF5Purpose_FOUND)
-        set(PURPOSE_FOUND 1)
+        set(HAVE_PURPOSE 1)
     else()
-        set(PURPOSE_FOUND 0)
+        set(HAVE_PURPOSE 0)
     endif()
 
     find_package(Qt5TextToSpeech ${QT_REQUIRED_VERSION} CONFIG)

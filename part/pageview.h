@@ -18,6 +18,7 @@
 #ifndef _OKULAR_PAGEVIEW_H_
 #define _OKULAR_PAGEVIEW_H_
 
+#include "config-okular.h"
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/view.h"
@@ -288,7 +289,7 @@ private Q_SLOTS:
     void slotTrimToSelectionToggled(bool);
     void slotToggleForms();
     void slotRefreshPage();
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     void slotSpeakDocument();
     void slotSpeakCurrentPage();
     void slotStopSpeaks();

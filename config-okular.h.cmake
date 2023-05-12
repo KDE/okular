@@ -4,6 +4,9 @@
 /* Defines if the purpose framework is available */
 #cmakedefine01 HAVE_PURPOSE
 
+/* Defines if qtspeech is available */
+#cmakedefine01 HAVE_SPEECH
+
 /* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM
 

@@ -17,7 +17,7 @@
 #include <QLabel>
 #include <QStackedWidget>
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
 #include <QtTextToSpeech>
 #endif
 
@@ -143,7 +143,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     connect(enableChangeColors, &QCheckBox::toggled, m_colorModeConfigStack, &QWidget::setEnabled);
     // END Change colors section
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     layout->addRow(new QLabel(this));
 
     // BEGIN Text-to-speech section
@@ -169,7 +169,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
 #endif
 }
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
 void DlgAccessibility::slotTTSEngineChanged()
 {
     QString engine = m_ttsEngineBox->currentText();

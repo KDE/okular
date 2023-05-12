@@ -164,7 +164,9 @@ if (BUILD_DESKTOP)
     set_okular_optional_package_properties(Qt5TextToSpeech PROPERTIES
         PURPOSE "Enables speech features.")
     if (Qt5TextToSpeech_FOUND)
-        add_definitions(-DHAVE_SPEECH)
+        set(HAVE_SPEECH 1)
+    else()
+        set(HAVE_SPEECH 0)
     endif()
 endif()
 

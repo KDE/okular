@@ -79,7 +79,7 @@
 #include "pageviewmouseannotation.h"
 #include "pageviewutils.h"
 #include "toggleactionmenu.h"
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
 #include "tts.h"
 #endif
 #include "core/action.h"
@@ -136,7 +136,7 @@ public:
     explicit PageViewPrivate(PageView *qq);
 
     FormWidgetsController *formWidgetsController();
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     OkularTTS *tts();
 #endif
     QString selectedText() const;
@@ -197,7 +197,7 @@ public:
     PageViewMessage *messageWindow; // in pageviewutils.h
     bool m_formsVisible;
     FormWidgetsController *formsWidgetController;
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     OkularTTS *m_tts;
 #endif
     QTimer *refreshTimer;
@@ -267,7 +267,7 @@ public:
 
 PageViewPrivate::PageViewPrivate(PageView *qq)
     : q(qq)
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     , m_tts(nullptr)
 #endif
 {
@@ -284,7 +284,7 @@ FormWidgetsController *PageViewPrivate::formWidgetsController()
     return formsWidgetController;
 }
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
 OkularTTS *PageViewPrivate::tts()
 {
     if (!m_tts) {
@@ -345,7 +345,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
     d->formsWidgetController = nullptr;
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     d->m_tts = nullptr;
 #endif
     d->refreshTimer = nullptr;
@@ -501,7 +501,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
 
 PageView::~PageView()
 {
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     if (d->m_tts) {
         d->m_tts->stopAllSpeechs();
     }
@@ -738,7 +738,7 @@ void PageView::setupActions(KActionCollection *ac)
     connect(d->aSignature, &QAction::triggered, this, &PageView::slotSignature);
 
     // speak actions
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     d->aSpeakDoc = new QAction(QIcon::fromTheme(QStringLiteral("text-speak")), i18n("Speak Whole Document"), this);
     ac->addAction(QStringLiteral("speak_document"), d->aSpeakDoc);
     d->aSpeakDoc->setEnabled(false);
@@ -1367,7 +1367,7 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->aSignature->setEnabled(canSign && haspages);
     }
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     if (d->aSpeakDoc) {
         const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled(enablettsactions);
@@ -2835,7 +2835,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         QMenu menu(this);
         menu.setObjectName(QStringLiteral("PopupMenu"));
         QAction *textToClipboard = nullptr;
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
         QAction *speakText = nullptr;
 #endif
         QAction *imageToClipboard = nullptr;
@@ -2849,7 +2849,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 textToClipboard->setEnabled(false);
                 textToClipboard->setText(i18n("Copy forbidden by DRM"));
             }
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
             if (Okular::Settings::useTTS()) {
                 speakText = menu.addAction(QIcon::fromTheme(QStringLiteral("text-speak")), i18n("Speak Text"));
             }
@@ -2911,7 +2911,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                         cb->setText(selectedText, QClipboard::Selection);
                     }
                 }
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
                 else if (choice == speakText) {
                     // [2] speech selection using TTS
                     d->tts()->say(selectedText);
@@ -3032,7 +3032,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
                 QMenu *menu = createProcessLinkMenu(item, eventPos);
                 const bool mouseClickOverLink = (menu != nullptr);
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
                 QAction *speakText = nullptr;
 #endif
                 if ((page = item->page())->textSelection()) {
@@ -3041,7 +3041,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     }
                     textToClipboard = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text"));
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
                     if (Okular::Settings::useTTS()) {
                         speakText = menu->addAction(QIcon::fromTheme(QStringLiteral("text-speak")), i18n("Speak Text"));
                     }
@@ -3073,7 +3073,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     if (choice) {
                         if (choice == textToClipboard) {
                             copyTextSelection();
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
                         } else if (choice == speakText) {
                             const QString text = d->selectedText();
                             d->tts()->say(text);
@@ -5259,7 +5259,7 @@ void PageView::slotRefreshPage()
     d->refreshPages.clear();
 }
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
 void PageView::slotSpeakDocument()
 {
     QString text;

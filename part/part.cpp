@@ -22,6 +22,8 @@
 
 #include "part.h"
 
+#include "config-okular.h"
+
 // qt/kde includes
 #include <QApplication>
 #include <QContextMenuEvent>
@@ -559,7 +561,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     // keep us informed when the user changes settings
     connect(Okular::Settings::self(), &KCoreConfigSkeleton::configChanged, this, &Part::slotNewConfig);
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     // [SPEECH] check for TTS presence and usability
     Okular::Settings::setUseTTS(true);
     Okular::Settings::self()->save();
@@ -3362,7 +3364,7 @@ void Part::slotUpdateHamburgerMenu()
     curatedViewMenu->addAction(ac->action(QStringLiteral("view_toggle_forms")));
     m_hamburgerMenuAction->hideActionsOf(curatedViewMenu);
 
-#ifdef HAVE_SPEECH
+#if HAVE_SPEECH
     auto speakMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("text-speak")), i18nc("@action:inmenu menu that contains actions to control text to speach", "Speak"));
     speakMenu->addAction(ac->action(QStringLiteral("speak_document")));
     speakMenu->addAction(ac->action(QStringLiteral("speak_current_page")));

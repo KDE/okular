@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-05-13 00:44+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -319,7 +319,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ඉදිරිපත්කිරීම"
 
-#: core/document.cpp:4194 core/document.cpp:4200
+#: core/document.cpp:4188 core/document.cpp:4194
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,145 +328,145 @@ msgstr ""
 "ලේඛනය බාහිර වැඩසටහනක් ක්‍රියාත්මක කරවීමට උත්සාහ දරයි, ඔබේ ආරක්‍ෂාව සඳහා, Okular විසින් එයට "
 "ඉඩ නොදේ."
 
-#: core/document.cpp:4211 core/document.cpp:4221
+#: core/document.cpp:4205 core/document.cpp:4215
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "mimetype %1 හි ගොනුවක් විවෘත කිරීම සඳහා කිසිඳු යෙදුමක් හමු නොවිනි."
 
-#: core/document.cpp:4645
+#: core/document.cpp:4639
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "තාවකාලික ගොනුව විවෘත කල නොහැක"
 
-#: core/document.cpp:4647
+#: core/document.cpp:4641
 #, kde-format
 msgid "Print conversion failed"
 msgstr "සංවාදය මුද්‍රණය අසාර්ථකයි"
 
-#: core/document.cpp:4649
+#: core/document.cpp:4643
 #, kde-format
 msgid "Printing process crashed"
 msgstr "මුද්‍රණ ක්‍රියාවලිය බිඳ වැටිනි"
 
-#: core/document.cpp:4651
+#: core/document.cpp:4645
 #, kde-format
 msgid "Printing process could not start"
 msgstr "මුද්‍රණ ක්‍රියාවලිය ඇරඹිය නොහැකිවිය"
 
-#: core/document.cpp:4653
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ගොනුවට මුද්‍රණය අසාර්ථකයි"
 
-#: core/document.cpp:4655
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "මුද්‍රකය අවලංගු ප්‍රකාරයක පැවතිනි"
 
-#: core/document.cpp:4657
+#: core/document.cpp:4651
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "මුද්‍රණය කල යුතු ගොනුව සොයාගත නොහැක"
 
-#: core/document.cpp:4659
+#: core/document.cpp:4653
 #, kde-format
 msgid "There was no file to print"
 msgstr "මුද්‍රණය සඳහා ගොනුවක් නොමැත"
 
-#: core/document.cpp:4661
+#: core/document.cpp:4655
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "මුද්‍රණයක සඳහා සුදුසු  ද්වීමයක් හමු නොවිනි. CUPS lpr ද්වීමය පවතින බව තහවුරු කරගන්න"
 
-#: core/document.cpp:4663
+#: core/document.cpp:4657
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5328 part/part.cpp:1156
+#: core/document.cpp:5322 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' පිටපත් කල නොහැක. ගොනුව නොපවතී"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5832
 #, kde-format
 msgid "Title"
 msgstr "මාතෘකාව"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5835
 #, kde-format
 msgid "Subject"
 msgstr "තේමාව"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5838
 #, kde-format
 msgid "Description"
 msgstr "විස්තරය"
 
-#: core/document.cpp:5847
+#: core/document.cpp:5841
 #, kde-format
 msgid "Author"
 msgstr "කතෲ"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5844
 #, kde-format
 msgid "Creator"
 msgstr "නිර්මාපක"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5847
 #, kde-format
 msgid "Producer"
 msgstr "නිශ්පාදක"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5850
 #, kde-format
 msgid "Copyright"
 msgstr "හිමිකම්"
 
-#: core/document.cpp:5859
+#: core/document.cpp:5853
 #, kde-format
 msgid "Pages"
 msgstr "පිටු"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5856
 #, kde-format
 msgid "Created"
 msgstr "නිර්මාණය කලේ"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5859
 #, kde-format
 msgid "Modified"
 msgstr "වෙනස් කලේ"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5862
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "මයිම් වර්ගය"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5865
 #, kde-format
 msgid "Category"
 msgstr "ප්‍රවර්ගය"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5868
 #, kde-format
 msgid "Keywords"
 msgstr "යතුරු වදන්"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5871
 #, kde-format
 msgid "File Path"
 msgstr "ගොනු මග"
 
-#: core/document.cpp:5880
+#: core/document.cpp:5874
 #, kde-format
 msgid "File Size"
 msgstr "ගොනු ප්‍රමාණය"
 
-#: core/document.cpp:5883
+#: core/document.cpp:5877
 #, kde-format
 msgid "Page Size"
 msgstr "පිටු ප්‍රමාණය"

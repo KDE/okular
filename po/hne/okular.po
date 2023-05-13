@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-05-13 00:44+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -320,156 +320,156 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "प्रस्तुतीकरन"
 
-#: core/document.cpp:4194 core/document.cpp:4200
+#: core/document.cpp:4188 core/document.cpp:4194
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
 
-#: core/document.cpp:4211 core/document.cpp:4221
+#: core/document.cpp:4205 core/document.cpp:4215
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "माइमकिसिम %1 सहित फाइल ल खोले बर कोनो अनुपरयोग नइ मिलिस."
 
-#: core/document.cpp:4645
+#: core/document.cpp:4639
 #, fuzzy, kde-format
 #| msgid "Could not open the temporary file for saving."
 msgid "Could not open a temporary file"
 msgstr "अस्थायी फाइल ल सहेजे बर खोल नइ सकिस."
 
-#: core/document.cpp:4647
+#: core/document.cpp:4641
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4649
+#: core/document.cpp:4643
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4651
+#: core/document.cpp:4645
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4653
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4655
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4657
+#: core/document.cpp:4651
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find file to print"
 msgstr "ओकुलर अवयव खोज पाय मं अक्छम."
 
-#: core/document.cpp:4659
+#: core/document.cpp:4653
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4661
+#: core/document.cpp:4655
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4663
+#: core/document.cpp:4657
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5328 part/part.cpp:1156
+#: core/document.cpp:5322 part/part.cpp:1156
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "लिखे बर \"%1\" ल खोल नइ सकिस. फाइल सहेजे नइ गे हे."
 
-#: core/document.cpp:5838
+#: core/document.cpp:5832
 #, kde-format
 msgid "Title"
 msgstr "सीर्सक"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5835
 #, kde-format
 msgid "Subject"
 msgstr "विसय"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5838
 #, kde-format
 msgid "Description"
 msgstr "वर्नन"
 
-#: core/document.cpp:5847
+#: core/document.cpp:5841
 #, kde-format
 msgid "Author"
 msgstr "लेखक"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5844
 #, kde-format
 msgid "Creator"
 msgstr "बनइया"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5847
 #, kde-format
 msgid "Producer"
 msgstr "बनइया"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5850
 #, kde-format
 msgid "Copyright"
 msgstr "कापीराइट"
 
-#: core/document.cpp:5859
+#: core/document.cpp:5853
 #, kde-format
 msgid "Pages"
 msgstr "पेज"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5856
 #, kde-format
 msgid "Created"
 msgstr "निर्मित"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5859
 #, kde-format
 msgid "Modified"
 msgstr "परिवर्धित"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5862
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "माइम किसिम"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5865
 #, kde-format
 msgid "Category"
 msgstr "स्रेनी"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5868
 #, kde-format
 msgid "Keywords"
 msgstr "की-वर्डस"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5871
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "फाइल"
 
-#: core/document.cpp:5880
+#: core/document.cpp:5874
 #, kde-format
 msgid "File Size"
 msgstr "फाइल आकार"
 
-#: core/document.cpp:5883
+#: core/document.cpp:5877
 #, kde-format
 msgid "Page Size"
 msgstr "पेज आकार"

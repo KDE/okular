@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-05-13 00:44+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -310,7 +310,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Презентација"
 
-#: core/document.cpp:4194 core/document.cpp:4200
+#: core/document.cpp:4188 core/document.cpp:4194
 #, fuzzy, kde-format
 #| msgid ""
 #| "The pdf file is trying to execute an external application and for your "
@@ -322,151 +322,151 @@ msgstr ""
 "pdf-датотеката се обидува да изврши надворешна апликација и поради Ваша "
 "безбедност kpdf не го дозволува тоа."
 
-#: core/document.cpp:4211 core/document.cpp:4221
+#: core/document.cpp:4205 core/document.cpp:4215
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Нема најдена апликација за отворање на датотека од mime-типот %1."
 
-#: core/document.cpp:4645
+#: core/document.cpp:4639
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open a temporary file"
 msgstr "Не можев да отворам %1"
 
-#: core/document.cpp:4647
+#: core/document.cpp:4641
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4649
+#: core/document.cpp:4643
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4651
+#: core/document.cpp:4645
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4653
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4655
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4657
+#: core/document.cpp:4651
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find file to print"
 msgstr "Не можам да го пронајдам делот kpdf."
 
-#: core/document.cpp:4659
+#: core/document.cpp:4653
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4661
+#: core/document.cpp:4655
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4663
+#: core/document.cpp:4657
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5328 part/part.cpp:1156
+#: core/document.cpp:5322 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:5838
+#: core/document.cpp:5832
 #, kde-format
 msgid "Title"
 msgstr "Наслов"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5835
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5838
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:5847
+#: core/document.cpp:5841
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "Автор"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5844
 #, kde-format
 msgid "Creator"
 msgstr "Креатор"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5847
 #, kde-format
 msgid "Producer"
 msgstr "Производител"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5850
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:5859
+#: core/document.cpp:5853
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "Страници:"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5856
 #, kde-format
 msgid "Created"
 msgstr "Креирано"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5859
 #, kde-format
 msgid "Modified"
 msgstr "Изменето"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5862
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "Тип"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5865
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Category"
 msgstr "Креатор"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5868
 #, kde-format
 msgid "Keywords"
 msgstr "Клучни зборови"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5871
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "Наслов"
 
-#: core/document.cpp:5880
+#: core/document.cpp:5874
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "Страници"
 
-#: core/document.cpp:5883
+#: core/document.cpp:5877
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"

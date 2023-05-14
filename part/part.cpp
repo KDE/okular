@@ -2658,9 +2658,14 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // as to if it can save changes even if the open file has been modified,
     // since we only have poppler as saving backend for now we're skipping that check
 
-    // Don't warn the user about external changes if they're doing a Save As with a different URL, since then there's nothing to warn about
-    // because the original changed document is safe.
-    if (m_fileLastModified != QFileInfo(localFilePath()).lastModified() && saveUrl == realUrl()) {
+    // Don't warn the user about external changes if what actually happened was that
+    // the file on disk was deleted for some reason; in this case just go on normally
+    // to avoid confusion or data loss.
+    // Also don't warn if the file was modified on disk but the user is doing a Save As
+    // with a different URL, since the original changed document is safe so there's
+    // nothing to warn about.
+    const QFileInfo fi(localFilePath());
+    if (fi.exists() && m_fileLastModified != fi.lastModified() && saveUrl == realUrl()) {
         const int res = KMessageBox::warningYesNoCancel(widget(),
                                                         xi18nc("@info",
                                                                "The file <filename>%1</filename> has been modified by another program. If you save now, any "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:44+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -5986,7 +5986,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, fuzzy, kde-format
 #| msgid "Current document only"
 msgctxt "on welcome screen"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:44+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2005-01-14 16:13+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -5786,7 +5786,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, fuzzy, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

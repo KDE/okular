@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:44+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2023-05-04 07:54+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -5700,7 +5700,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "Pozabi to postavko"
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:44+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2006-01-10 22:45+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -5745,7 +5745,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgctxt "on welcome screen"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:44+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2023-05-05 10:36+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -5711,7 +5711,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr "&Esquecer este Item"
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

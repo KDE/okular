@@ -1188,7 +1188,7 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
 "selected)"
 msgstr ""
-"قيد نسبة الشكل إلى ١:١ أو زاوية الخط بـ ١٥ درجة من الخطوات (لم يحدد أي شرح)"
+"قيد نسبة الشكل إلى 1:1 أو زاوية الخط بـ 15 درجة من الخطوات (لم يحدد أي شرح)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1255,13 +1255,13 @@ msgstr "خط الشرح (الشرح الحالي لا يملك خط)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr "قيد زاوية الخط بـ ١٥ درجة من الخطوات"
+msgstr "قيد زاوية الخط بـ 15 درجة من الخطوات"
 
 #: part/annotationactionhandler.cpp:335
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr "قيد نسبة الشكل إلى ١:١ "
+msgstr "قيد نسبة الشكل إلى 1:1 "
 
 #: part/annotationactionhandler.cpp:337
 #, kde-format
@@ -1270,7 +1270,7 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
 "current annotation)"
 msgstr ""
-"قيد نسبة الشكل إلى ١:١ أو زاوية الخط بـ ١٥ درجة من الخطوات (الشرح حالي لا "
+"قيد نسبة الشكل إلى 1:1 أو زاوية الخط بـ 15 درجة من الخطوات (الشرح حالي لا "
 "يدعمه)"
 
 #: part/annotationactionhandler.cpp:340
@@ -2773,7 +2773,7 @@ msgstr "تداخُل مفتاح Page Up/Down:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "١٠٠٪"
+msgstr "100٪"
 
 #: part/dlggeneral.cpp:205
 #, kde-format
@@ -2891,7 +2891,7 @@ msgid ""
 "boost searches. (For systems with 2GB of memory, typically.)"
 msgstr ""
 "جمع جيد بين استعمال الذاكرة و السرعة. تحميل مسبق للصفحة التالية و تسريع "
-"البحث. (للأنظمة ذات ذاكرة ٢ غ.بايت عادة.)"
+"البحث. (للأنظمة ذات ذاكرة 2 غ.بايت عادة.)"
 
 #: part/dlgperformance.cpp:83
 #, kde-format
@@ -2900,7 +2900,7 @@ msgid ""
 "with more than 4GB of memory.)"
 msgstr ""
 "أبق كل شيء في الذاكرة. تحميل مسبق للصفحات التالية. يسرع البحث. (للأنظمة مع "
-"أكثر من ٤غ.بايت من الذاكرة.)"
+"أكثر من 4غ.بايت من الذاكرة.)"
 
 #: part/dlgperformance.cpp:87
 #, no-c-format, kde-format
@@ -3442,7 +3442,7 @@ msgstr "تكبير"
 #: part/pageview.cpp:544
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "قرّب إلى ١٠٠٪"
+msgstr "قرّب إلى 100٪"
 
 #: part/pageview.cpp:555
 #, kde-format
@@ -5074,7 +5074,7 @@ msgstr "تروتايب (OT)"
 #: part/propertiesdialog.cpp:291
 #, kde-format
 msgid "CID Type 0"
-msgstr "نوع CID ٠"
+msgstr "نوع CID 0"
 
 #: part/propertiesdialog.cpp:294
 #, kde-format

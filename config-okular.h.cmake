@@ -7,6 +7,9 @@
 /* Defines if qtspeech is available */
 #cmakedefine01 HAVE_SPEECH
 
+/* Defines if kwallet is available */
+#cmakedefine01 HAVE_KWALLET
+
 /* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM
 

@@ -132,7 +132,9 @@ find_package(KF5Wallet ${KF5_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")
 if(KF5Wallet_FOUND)
-    add_definitions(-DWITH_KWALLET=1)
+    set(HAVE_KWALLET 1)
+else()
+    set(HAVE_KWALLET 0)
 endif()
 
 find_package(KF5DocTools ${KF5_REQUIRED_VERSION})

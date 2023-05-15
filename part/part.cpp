@@ -70,7 +70,7 @@
 #include <KToolBar>
 #include <Kdelibs4ConfigMigrator>
 #include <Kdelibs4Migration>
-#ifdef WITH_KWALLET
+#if HAVE_KWALLET
 #include <KWallet>
 #endif
 #include <KXMLGUIClient>
@@ -1462,7 +1462,7 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
         }
         m_documentOpenWithPassword = false;
 
-#ifdef WITH_KWALLET
+#if HAVE_KWALLET
         // if the file didn't open correctly it might be encrypted, so ask for a pass
         QString walletName, walletFolder, walletKey;
         m_document->walletDataForFile(fileNameToOpen, &walletName, &walletFolder, &walletKey);

@@ -8,6 +8,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "config-okular.h"
+
 #include "generator.h"
 #include "generator_p.h"
 #include "observer.h"
@@ -22,7 +24,7 @@
 #include <QMimeDatabase>
 #include <QTimer>
 
-#ifdef WITH_KWALLET
+#if HAVE_KWALLET
 #include <KWallet>
 #endif
 
@@ -414,7 +416,7 @@ bool Generator::exportTo(const QString &, const ExportFormat &)
 
 void Generator::walletDataForFile(const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey) const
 {
-#ifdef WITH_KWALLET
+#if HAVE_KWALLET
     *walletKey = fileName.section(QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
     *walletFolder = QStringLiteral("KPdf");

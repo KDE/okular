@@ -605,7 +605,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
 
     // View Mode action menu (Single Page, Facing Pages,...(choose), and Continuous (on/off))
     d->aViewModeMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-split-left-right")), i18n("&View Mode"), this);
-    d->aTrimMode->setPopupMode(QToolButton::InstantPopup);
+    d->aViewModeMenu->setPopupMode(QToolButton::InstantPopup);
     ac->addAction(QStringLiteral("view_render_mode"), d->aViewModeMenu);
 
     d->viewModeActionGroup = new QActionGroup(this);

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:46+0000\n"
+"POT-Creation-Date: 2023-05-14 00:45+0000\n"
 "PO-Revision-Date: 2004-12-10 10:29+0100\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -298,151 +298,151 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr ""
 
-#: core/document.cpp:4194 core/document.cpp:4200
+#: core/document.cpp:4188 core/document.cpp:4194
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
 
-#: core/document.cpp:4211 core/document.cpp:4221
+#: core/document.cpp:4205 core/document.cpp:4215
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 
-#: core/document.cpp:4645
+#: core/document.cpp:4639
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr ""
 
-#: core/document.cpp:4647
+#: core/document.cpp:4641
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4649
+#: core/document.cpp:4643
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4651
+#: core/document.cpp:4645
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4653
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4655
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4657
+#: core/document.cpp:4651
 #, kde-format
 msgid "Unable to find file to print"
 msgstr ""
 
-#: core/document.cpp:4659
+#: core/document.cpp:4653
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4661
+#: core/document.cpp:4655
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4663
+#: core/document.cpp:4657
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5328 part/part.cpp:1156
+#: core/document.cpp:5322 part/part.cpp:1156
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:5838
+#: core/document.cpp:5832
 #, kde-format
 msgid "Title"
 msgstr ""
 
-#: core/document.cpp:5841
+#: core/document.cpp:5835
 #, kde-format
 msgid "Subject"
 msgstr ""
 
-#: core/document.cpp:5844
+#: core/document.cpp:5838
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:5847
+#: core/document.cpp:5841
 #, kde-format
 msgid "Author"
 msgstr ""
 
-#: core/document.cpp:5850
+#: core/document.cpp:5844
 #, kde-format
 msgid "Creator"
 msgstr ""
 
-#: core/document.cpp:5853
+#: core/document.cpp:5847
 #, kde-format
 msgid "Producer"
 msgstr ""
 
-#: core/document.cpp:5856
+#: core/document.cpp:5850
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:5859
+#: core/document.cpp:5853
 #, kde-format
 msgid "Pages"
 msgstr ""
 
-#: core/document.cpp:5862
+#: core/document.cpp:5856
 #, kde-format
 msgid "Created"
 msgstr ""
 
-#: core/document.cpp:5865
+#: core/document.cpp:5859
 #, kde-format
 msgid "Modified"
 msgstr ""
 
-#: core/document.cpp:5868
+#: core/document.cpp:5862
 #, kde-format
 msgid "MIME Type"
 msgstr ""
 
-#: core/document.cpp:5871
+#: core/document.cpp:5865
 #, kde-format
 msgid "Category"
 msgstr ""
 
-#: core/document.cpp:5874
+#: core/document.cpp:5868
 #, kde-format
 msgid "Keywords"
 msgstr ""
 
-#: core/document.cpp:5877
+#: core/document.cpp:5871
 #, kde-format
 msgid "File Path"
 msgstr ""
 
-#: core/document.cpp:5880
+#: core/document.cpp:5874
 #, kde-format
 msgid "File Size"
 msgstr ""
 
-#: core/document.cpp:5883
+#: core/document.cpp:5877
 #, kde-format
 msgid "Page Size"
 msgstr ""
@@ -563,6 +563,11 @@ msgstr ""
 #: core/script/kjs_app.cpp:222
 #, kde-format
 msgid "Do not show this message again"
+msgstr ""
+
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#, kde-format
+msgid "Not Available"
 msgstr ""
 
 #: core/sourcereference.cpp:101
@@ -3796,7 +3801,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:127
+#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4397,7 +4402,7 @@ msgid "Remove this Bookmark"
 msgstr ""
 
 #: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3470
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5155,32 +5160,22 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Select certificate to sign with"
-msgstr ""
-
-#: part/signaturepartutils.cpp:48
-#, kde-format
-msgid "Certificates:"
-msgstr ""
-
-#: part/signaturepartutils.cpp:61
+#: part/signaturepartutils.cpp:95
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:63
+#: part/signaturepartutils.cpp:97
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:76
+#: part/signaturepartutils.cpp:110
 #, kde-format
 msgid "Enter document password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:101
+#: part/signaturepartutils.cpp:130
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5188,14 +5183,19 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr ""
 
-#: part/signaturepartutils.cpp:103
+#: part/signaturepartutils.cpp:132
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:29
+#: part/signaturepartutils.cpp:164
 #, kde-format
-msgid "Not Available"
+msgid "Certificates"
+msgstr ""
+
+#: part/signaturepartutils.cpp:171
+#, kde-format
+msgid "Select certificate to sign with:"
 msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:49
@@ -5506,7 +5506,7 @@ msgctxt "recent items context menu"
 msgid "&Forget This Item"
 msgstr ""
 
-#: shell/welcomescreen.cpp:139
+#: shell/welcomescreen.cpp:137
 #, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"

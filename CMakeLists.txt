@@ -145,7 +145,9 @@ find_package(KF5JS ${KF5_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5JS PROPERTIES
     PURPOSE "Required for supporting JavaScript in PDF documents")
 if(KF5JS_FOUND)
-    add_definitions(-DWITH_KJS=1)
+    set(HAVE_KJS 1)
+else()
+    set(HAVE_KJS 0)
 endif()
 
 if (BUILD_DESKTOP)

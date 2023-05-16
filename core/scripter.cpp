@@ -6,6 +6,8 @@
 
 #include "scripter.h"
 
+#include "config-okular.h"
+
 #include <QDebug>
 #include <QFile>
 
@@ -19,7 +21,7 @@ class Okular::ScripterPrivate
 public:
     explicit ScripterPrivate(DocumentPrivate *doc)
         : m_doc(doc)
-#ifdef WITH_KJS
+#if HAVE_KJS
         , m_kjs(nullptr)
 #endif
         , m_event(nullptr)
@@ -27,7 +29,7 @@ public:
     }
 
     DocumentPrivate *m_doc;
-#ifdef WITH_KJS
+#if HAVE_KJS
     QScopedPointer<ExecutorKJS> m_kjs;
 #endif
     Event *m_event;
@@ -46,7 +48,7 @@ Scripter::~Scripter()
 void Scripter::execute(ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;
-#ifdef WITH_KJS
+#if HAVE_KJS
     static QString builtInScript;
     if (builtInScript.isNull()) {
         QFile builtInResource(QStringLiteral(":/script/builtin.js"));

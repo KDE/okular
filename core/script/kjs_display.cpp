@@ -7,56 +7,30 @@
 #include "../form.h"
 #include "kjs_display_p.h"
 
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include <QString>
 
 using namespace Okular;
 
-static KJSPrototype *g_displayProto;
-
 // display.hidden
-static KJSObject displayGetHidden(KJSContext *, void *)
+int JSDisplay::hidden() const
 {
-    return KJSNumber(FormDisplay::FormHidden);
+    return FormDisplay::FormHidden;
 }
 
 // display.visible
-static KJSObject displayGetVisible(KJSContext *, void *)
+int JSDisplay::visible() const
 {
-    return KJSNumber(FormDisplay::FormVisible);
+    return FormDisplay::FormVisible;
 }
 
 // display.noView
-static KJSObject displayGetNoView(KJSContext *, void *)
+int JSDisplay::noView() const
 {
-    return KJSNumber(FormDisplay::FormNoView);
+    return FormDisplay::FormNoView;
 }
 
 // display.noPrint
-static KJSObject displayGetNoPrint(KJSContext *, void *)
+int JSDisplay::noPrint() const
 {
-    return KJSNumber(FormDisplay::FormNoPrint);
-}
-
-void JSDisplay::initType(KJSContext *ctx)
-{
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    g_displayProto = new KJSPrototype();
-
-    g_displayProto->defineProperty(ctx, QStringLiteral("hidden"), displayGetHidden);
-    g_displayProto->defineProperty(ctx, QStringLiteral("visible"), displayGetVisible);
-    g_displayProto->defineProperty(ctx, QStringLiteral("noView"), displayGetNoView);
-    g_displayProto->defineProperty(ctx, QStringLiteral("noPrint"), displayGetNoPrint);
-}
-
-KJSObject JSDisplay::object(KJSContext *ctx)
-{
-    return g_displayProto->constructObject(ctx, nullptr);
+    return FormDisplay::FormNoPrint;
 }

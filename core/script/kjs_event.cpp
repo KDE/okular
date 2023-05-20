@@ -6,155 +6,116 @@
 
 #include "kjs_event_p.h"
 
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsinterpreter.h>
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include "event_p.h"
 #include "kjs_field_p.h"
 
+#include <QJSEngine>
+
 using namespace Okular;
 
-static KJSPrototype *g_eventProto;
-
 // Event.name
-static KJSObject eventGetName(KJSContext *, void *object)
+QString JSEvent::name() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSString(event->name());
+    return m_event->name();
 }
 
 // Event.type
-static KJSObject eventGetType(KJSContext *, void *object)
+QString JSEvent::type() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSString(event->type());
+    return m_event->type();
 }
 
 // Event.targetName (getter)
-static KJSObject eventGetTargetName(KJSContext *, void *object)
+QString JSEvent::targetName() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSString(event->targetName());
+    return m_event->targetName();
 }
 
 // Event.targetName (setter)
-static void eventSetTargetName(KJSContext *ctx, void *object, KJSObject value)
+void JSEvent::setTargetName(const QString &targetName)
 {
-    Event *event = reinterpret_cast<Event *>(object);
-    event->setTargetName(value.toString(ctx));
+    m_event->setTargetName(targetName);
 }
 
 // Event.shift
-static KJSObject eventGetShift(KJSContext *, void *object)
+bool JSEvent::shift() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSBoolean(event->shiftModifier());
+    return m_event->shiftModifier();
 }
 
 // Event.source
-static KJSObject eventGetSource(KJSContext *ctx, void *object)
+QJSValue JSEvent::source() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    if (event->eventType() == Event::FieldCalculate) {
-        FormField *src = event->source();
+    if (m_event->eventType() == Event::FieldCalculate) {
+        FormField *src = m_event->source();
         if (src) {
-            return JSField::wrapField(ctx, src, event->sourcePage());
+            return JSField::wrapField(qjsEngine(this), src, m_event->sourcePage());
         }
     }
-    return KJSUndefined();
+    return QJSValue(QJSValue::UndefinedValue);
 }
 
 // Event.target
-static KJSObject eventGetTarget(KJSContext *ctx, void *object)
+QJSValue JSEvent::target() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    switch (event->eventType()) {
+    switch (m_event->eventType()) {
     case Event::FieldCalculate:
     case Event::FieldFormat:
     case Event::FieldKeystroke:
     case Event::FieldFocus:
     case Event::FieldValidate: {
-        FormField *target = static_cast<FormField *>(event->target());
+        FormField *target = static_cast<FormField *>(m_event->target());
         if (target) {
-            return JSField::wrapField(ctx, target, event->targetPage());
+            return JSField::wrapField(qjsEngine(this), target, m_event->targetPage());
         }
         break;
     }
     default: {
     }
     }
-    return KJSUndefined();
+    return QJSValue(QJSValue::UndefinedValue);
 }
 
 // Event.value (getter)
-static KJSObject eventGetValue(KJSContext *, void *object)
+QJSValue JSEvent::value() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSString(event->value().toString());
+    return m_event->value().toString();
 }
 
 // Event.value (setter)
-static void eventSetValue(KJSContext *ctx, void *object, KJSObject value)
+void JSEvent::setValue(const QJSValue &value)
 {
-    Event *event = reinterpret_cast<Event *>(object);
-    event->setValue(QVariant(value.toString(ctx)));
+    m_event->setValue(QVariant(value.toString()));
 }
 
 // Event.rc (getter)
-static KJSObject eventGetReturnCode(KJSContext *, void *object)
+bool JSEvent::returnCode() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSBoolean(event->returnCode());
+    return m_event->returnCode();
 }
 
 // Event.rc (setter)
-static void eventSetReturnCode(KJSContext *ctx, void *object, KJSObject value)
+void JSEvent::setReturnCode(bool rc)
 {
-    Event *event = reinterpret_cast<Event *>(object);
-    event->setReturnCode(value.toBoolean(ctx));
+    m_event->setReturnCode(rc);
 }
 
 // Event.willCommit (getter)
-static KJSObject eventGetWillCommit(KJSContext *, void *object)
+bool JSEvent::willCommit() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSBoolean(event->willCommit());
+    return m_event->willCommit();
 }
 
 // Event.change (getter)
-static KJSObject eventGetChange(KJSContext *, void *object)
+QString JSEvent::change() const
 {
-    const Event *event = reinterpret_cast<Event *>(object);
-    return KJSString(event->change());
+    return m_event->change();
 }
 
-void JSEvent::initType(KJSContext *ctx)
+JSEvent::JSEvent(Event *event, QObject *parent)
+    : QObject(parent)
+    , m_event(event)
 {
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    if (!g_eventProto) {
-        g_eventProto = new KJSPrototype();
-    }
-
-    g_eventProto->defineProperty(ctx, QStringLiteral("name"), eventGetName);
-    g_eventProto->defineProperty(ctx, QStringLiteral("type"), eventGetType);
-    g_eventProto->defineProperty(ctx, QStringLiteral("targetName"), eventGetTargetName, eventSetTargetName);
-    g_eventProto->defineProperty(ctx, QStringLiteral("shift"), eventGetShift);
-    g_eventProto->defineProperty(ctx, QStringLiteral("source"), eventGetSource);
-    g_eventProto->defineProperty(ctx, QStringLiteral("target"), eventGetTarget);
-    g_eventProto->defineProperty(ctx, QStringLiteral("willCommit"), eventGetWillCommit);
-    g_eventProto->defineProperty(ctx, QStringLiteral("value"), eventGetValue, eventSetValue);
-    g_eventProto->defineProperty(ctx, QStringLiteral("rc"), eventGetReturnCode, eventSetReturnCode);
-    g_eventProto->defineProperty(ctx, QStringLiteral("change"), eventGetChange);
 }
 
-KJSObject JSEvent::wrapEvent(KJSContext *ctx, Event *event)
-{
-    return g_eventProto->constructObject(ctx, event);
-}
+JSEvent::~JSEvent() = default;

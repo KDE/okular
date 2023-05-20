@@ -8,16 +8,16 @@
 #ifndef OKULAR_SCRIPT_KJS_SPELL_P_H
 #define OKULAR_SCRIPT_KJS_SPELL_P_H
 
-class KJSContext;
-class KJSObject;
+#include <QObject>
 
 namespace Okular
 {
-class JSSpell
+class JSSpell : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(bool available READ available CONSTANT)
 public:
-    static void initType(KJSContext *ctx);
-    static KJSObject object(KJSContext *ctx);
+    bool available() const;
 };
 
 }

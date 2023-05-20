@@ -7,17 +7,11 @@
 
 #include "kjs_console_p.h"
 
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include <QDebug>
 
 #include "../debug_p.h"
 
 using namespace Okular;
-
-static KJSPrototype *g_consoleProto;
 
 #ifdef OKULAR_JS_CONSOLE
 
@@ -47,99 +41,42 @@ static void createConsoleWindow()
     QObject::connect(g_jsConsoleWindow, SIGNAL(closeClicked()), g_jsConsoleWindow, SLOT(close()));
     QObject::connect(g_jsConsoleWindow, SIGNAL(user1Clicked()), g_jsConsoleLog, SLOT(clear()));
 }
+#endif
 
-static void showConsole()
+void JSConsole::show()
 {
+#ifdef OKULAR_JS_CONSOLE
     createConsoleWindow();
     g_jsConsoleWindow->show();
+#endif
 }
 
-static void hideConsole()
+void JSConsole::hide()
 {
+#ifdef OKULAR_JS_CONSOLE
     if (!g_jsConsoleWindow.exists())
         return;
 
     g_jsConsoleWindow->hide();
+#endif
 }
 
-static void clearConsole()
+void JSConsole::clear()
 {
+#ifdef OKULAR_JS_CONSOLE
     if (!g_jsConsoleWindow.exists())
         return;
 
     g_jsConsoleLog->clear();
+#endif
 }
 
-static void outputToConsole(const QString &message)
+void JSConsole::println(const QString &cMessage)
 {
+#ifdef OKULAR_JS_CONSOLE
     showConsole();
-    g_jsConsoleLog->appendPlainText(message);
-}
-
-#else /* OKULAR_JS_CONSOLE */
-
-static void showConsole()
-{
-}
-
-static void hideConsole()
-{
-}
-
-static void clearConsole()
-{
-}
-
-static void outputToConsole(const QString &cMessage)
-{
-    qCDebug(OkularCoreDebug) << "CONSOLE:" << cMessage;
-}
-
-#endif /* OKULAR_JS_CONSOLE */
-
-static KJSObject consoleClear(KJSContext *, void *, const KJSArguments &)
-{
-    clearConsole();
-    return KJSUndefined();
-}
-
-static KJSObject consoleHide(KJSContext *, void *, const KJSArguments &)
-{
-    hideConsole();
-    return KJSUndefined();
-}
-
-static KJSObject consolePrintln(KJSContext *ctx, void *, const KJSArguments &arguments)
-{
-    QString cMessage = arguments.at(0).toString(ctx);
-    outputToConsole(cMessage);
-
-    return KJSUndefined();
-}
-
-static KJSObject consoleShow(KJSContext *, void *, const KJSArguments &)
-{
-    showConsole();
-    return KJSUndefined();
-}
-
-void JSConsole::initType(KJSContext *ctx)
-{
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    g_consoleProto = new KJSPrototype();
-
-    g_consoleProto->defineFunction(ctx, QStringLiteral("clear"), consoleClear);
-    g_consoleProto->defineFunction(ctx, QStringLiteral("hide"), consoleHide);
-    g_consoleProto->defineFunction(ctx, QStringLiteral("println"), consolePrintln);
-    g_consoleProto->defineFunction(ctx, QStringLiteral("hide"), consoleShow);
-}
-
-KJSObject JSConsole::object(KJSContext *ctx)
-{
-    return g_consoleProto->constructObject(ctx, nullptr);
+    g_jsConsoleLog->appendPlainText(cMessage);
+#else
+    Q_UNUSED(cMessage);
+#endif
 }

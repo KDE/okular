@@ -7,83 +7,52 @@
 
 #include "kjs_data_p.h"
 
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include <QDateTime>
 
 #include "../document.h"
+#include "kjs_display_p.h"
 
 using namespace Okular;
 
-static KJSPrototype *g_dataProto;
-
-static KJSObject dataGetCreationDate(KJSContext *ctx, void *object)
+QDateTime JSData::creationDate() const
 {
-    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
-
-    return KJSDate(ctx, file->creationDate());
+    return m_file->creationDate();
 }
 
-static KJSObject dataGetDescription(KJSContext *, void *object)
+QString JSData::description() const
 {
-    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
-
-    return KJSString(file->description());
+    return m_file->description();
 }
 
-static KJSObject dataGetMIMEType(KJSContext *, void *)
+QString JSData::MIMEType() const
 {
-    return KJSString("");
+    return QLatin1String("");
 }
 
-static KJSObject dataGetModDate(KJSContext *ctx, void *object)
+QDateTime JSData::modDate() const
 {
-    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
-
-    return KJSDate(ctx, file->modificationDate());
+    return m_file->modificationDate();
 }
 
-static KJSObject dataGetName(KJSContext *, void *object)
+QString JSData::name() const
 {
-    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
-
-    return KJSString(file->name());
+    return m_file->name();
 }
 
-static KJSObject dataGetPath(KJSContext *, void *)
+QString JSData::path() const
 {
-    return KJSString("");
+    return QLatin1String("");
 }
 
-static KJSObject dataGetSize(KJSContext *, void *object)
+int JSData::size() const
 {
-    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
-    return KJSNumber(file->size());
+    return m_file->size();
 }
 
-void JSData::initType(KJSContext *ctx)
+JSData::JSData(EmbeddedFile *f, QObject *parent)
+    : QObject(parent)
+    , m_file(f)
 {
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    if (!g_dataProto) {
-        g_dataProto = new KJSPrototype();
-    }
-
-    g_dataProto->defineProperty(ctx, QStringLiteral("creationDate"), dataGetCreationDate);
-    g_dataProto->defineProperty(ctx, QStringLiteral("description"), dataGetDescription);
-    g_dataProto->defineProperty(ctx, QStringLiteral("MIMEType"), dataGetMIMEType);
-    g_dataProto->defineProperty(ctx, QStringLiteral("modDate"), dataGetModDate);
-    g_dataProto->defineProperty(ctx, QStringLiteral("name"), dataGetName);
-    g_dataProto->defineProperty(ctx, QStringLiteral("path"), dataGetPath);
-    g_dataProto->defineProperty(ctx, QStringLiteral("size"), dataGetSize);
 }
 
-KJSObject JSData::wrapFile(KJSContext *ctx, EmbeddedFile *f)
-{
-    return g_dataProto->constructObject(ctx, f);
-}
+JSData::~JSData() = default;

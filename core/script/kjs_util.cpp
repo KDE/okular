@@ -7,12 +7,9 @@
 
 #include "kjs_util_p.h"
 
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include <QDateTime>
 #include <QDebug>
+#include <QJSEngine>
 #include <QLocale>
 #include <QRegularExpression>
 #include <QUrl>
@@ -21,53 +18,42 @@
 
 using namespace Okular;
 
-static KJSPrototype *g_utilProto;
-
-static KJSObject crackURL(KJSContext *context, void *, const KJSArguments &arguments)
+QJSValue JSUtil::crackURL(const QString &cURL) const
 {
-    if (arguments.count() < 1) {
-        return context->throwException(QStringLiteral("Missing URL argument"));
-    }
-    QString cURL = arguments.at(0).toString(context);
     QUrl url(QUrl::fromLocalFile(cURL));
     if (!url.isValid()) {
-        return context->throwException(QStringLiteral("Invalid URL"));
+        return qjsEngine(this)->newErrorObject(QJSValue::URIError, QStringLiteral("Invalid URL"));
     }
     if (url.scheme() != QLatin1String("file") || url.scheme() != QLatin1String("http") || url.scheme() != QLatin1String("https")) {
-        return context->throwException(QStringLiteral("Protocol not valid: '") + url.scheme() + QLatin1Char('\''));
+        return qjsEngine(this)->newErrorObject(QJSValue::URIError, QStringLiteral("Protocol not valid: '") + url.scheme() + QLatin1Char('\''));
     }
 
-    KJSObject obj;
-    obj.setProperty(context, QStringLiteral("cScheme"), url.scheme());
+    QJSValue obj;
+    obj.setProperty(QStringLiteral("cScheme"), url.scheme());
     if (!url.userName().isEmpty()) {
-        obj.setProperty(context, QStringLiteral("cUser"), url.userName());
+        obj.setProperty(QStringLiteral("cUser"), url.userName());
     }
     if (!url.password().isEmpty()) {
-        obj.setProperty(context, QStringLiteral("cPassword"), url.password());
+        obj.setProperty(QStringLiteral("cPassword"), url.password());
     }
-    obj.setProperty(context, QStringLiteral("cHost"), url.host());
-    obj.setProperty(context, QStringLiteral("nPort"), url.port(80));
+    obj.setProperty(QStringLiteral("cHost"), url.host());
+    obj.setProperty(QStringLiteral("nPort"), url.port(80));
     // TODO cPath       (Optional) The path portion of the URL.
     // TODO cParameters (Optional) The parameter string portion of the URL.
     if (url.hasFragment()) {
-        obj.setProperty(context, QStringLiteral("cFragments"), url.fragment(QUrl::FullyDecoded));
+        obj.setProperty(QStringLiteral("cFragments"), url.fragment(QUrl::FullyDecoded));
     }
 
     return obj;
 }
 
-static KJSObject printd(KJSContext *context, void *, const KJSArguments &arguments)
+QJSValue JSUtil::printd(const QJSValue &oFormat, const QDateTime &oDate) const
 {
-    if (arguments.count() < 2) {
-        return context->throwException(QStringLiteral("Invalid arguments"));
-    }
-
-    KJSObject oFormat = arguments.at(0);
     QString format;
     QLocale defaultLocale;
 
     if (oFormat.isNumber()) {
-        int formatType = oFormat.toInt32(context);
+        int formatType = oFormat.toInt();
         switch (formatType) {
         case 0:
             format = QStringLiteral("D:yyyyMMddHHmmss");
@@ -83,7 +69,7 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
             break;
         }
     } else {
-        format = arguments.at(0).toString(context).replace(QLatin1String("tt"), QLatin1String("ap"));
+        format = oFormat.toString().replace(QLatin1String("tt"), QLatin1String("ap"));
         format.replace(QLatin1Char('t'), QLatin1Char('a'));
         for (QChar &formatChar : format) {
             if (formatChar == QLatin1Char('M')) {
@@ -94,18 +80,7 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
         }
     }
 
-    QLocale locale(QStringLiteral("en_US"));
-    const QStringList str = arguments.at(1).toString(context).split(QRegularExpression(QStringLiteral("\\W")));
-
-    if (str.count() < 7) {
-        qWarning() << "Unexpected printd oDate argument" << arguments.at(1).toString(context);
-        return context->throwException(QStringLiteral("Invalid arguments"));
-    }
-
-    QString myStr = QStringLiteral("%1/%2/%3 %4:%5:%6").arg(str[1], str[2], str[3], str[4], str[5], str[6]);
-    QDateTime date = locale.toDateTime(myStr, QStringLiteral("MMM/d/yyyy H:m:s"));
-
-    return KJSString(defaultLocale.toString(date, format));
+    return defaultLocale.toString(oDate, format);
 }
 
 /** Converts a Number to a String using l10n
@@ -113,51 +88,33 @@ static KJSObject printd(KJSContext *context, void *, const KJSArguments &argumen
  * String numberToString( Number number, String format = 'g', int precision = 6,
  *                        String LocaleName = system )
  */
-static KJSObject numberToString(KJSContext *context, void *, const KJSArguments &arguments)
+QString JSUtil::numberToString(double number, const QString &fmt, int precision, const QString &localeName) const
 {
-    if (arguments.count() < 1) {
-        return context->throwException(QStringLiteral("Invalid arguments"));
-    }
-
-    const double number = arguments.at(0).toNumber(context);
     if (std::isnan(number)) {
-        return KJSString("NaN");
+        return QStringLiteral("NaN");
     }
 
     QChar format = QLatin1Char('g');
-    if (arguments.count() >= 2) {
-        const QString fmt = arguments.at(1).toString(context);
-        if (!fmt.isEmpty()) {
-            format = fmt[0];
-        }
-    }
-
-    int precision = 6;
-    if (arguments.count() >= 3) {
-        precision = arguments.at(2).toInt32(context);
+    if (!fmt.isEmpty()) {
+        format = fmt[0];
     }
 
     QLocale locale;
-    if (arguments.count() == 4) {
-        locale = QLocale(arguments.at(3).toString(context));
+    if (!localeName.isEmpty()) {
+        locale = QLocale(localeName);
     }
 
-    return KJSString(locale.toString(number, format.toLatin1(), precision));
+    return locale.toString(number, format.toLatin1(), precision);
 }
 
 /** Converts a String to a Number trying with the current locale first and
  * if that fails trying with the reverse locale for the decimal separator
  *
  * Number stringToNumber( String number ) */
-static KJSObject stringToNumber(KJSContext *context, void *, const KJSArguments &arguments)
+double JSUtil::stringToNumber(const QString &number) const
 {
-    if (arguments.count() < 1) {
-        return context->throwException(QStringLiteral("Invalid arguments"));
-    }
-
-    const QString number = arguments.at(0).toString(context);
     if (number.isEmpty()) {
-        return KJSNumber(0);
+        return 0;
     }
 
     const QLocale locale;
@@ -168,29 +125,9 @@ static KJSObject stringToNumber(KJSContext *context, void *, const KJSArguments 
         const QLocale locale2(locale.decimalPoint() == QLatin1Char('.') ? QStringLiteral("de") : QStringLiteral("en"));
         converted = locale2.toDouble(number, &ok);
         if (!ok) {
-            return KJSNumber(std::nan(""));
+            return NAN;
         }
     }
 
-    return KJSNumber(converted);
-}
-
-void JSUtil::initType(KJSContext *ctx)
-{
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    g_utilProto = new KJSPrototype();
-    g_utilProto->defineFunction(ctx, QStringLiteral("crackURL"), crackURL);
-    g_utilProto->defineFunction(ctx, QStringLiteral("printd"), printd);
-    g_utilProto->defineFunction(ctx, QStringLiteral("stringToNumber"), stringToNumber);
-    g_utilProto->defineFunction(ctx, QStringLiteral("numberToString"), numberToString);
-}
-
-KJSObject JSUtil::object(KJSContext *ctx)
-{
-    return g_utilProto->constructObject(ctx, nullptr);
+    return converted;
 }

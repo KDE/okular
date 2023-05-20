@@ -7,69 +7,36 @@
 
 #include "kjs_fullscreen_p.h"
 
-#include <assert.h>
-
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include "settings_core.h"
 
 using namespace Okular;
 
-static KJSPrototype *g_fsProto;
-
-static KJSObject fsGetLoop(KJSContext *, void *)
+bool JSFullscreen::loop() const
 {
-    return KJSBoolean(SettingsCore::slidesLoop());
+    return SettingsCore::slidesLoop();
 }
 
-static void fsSetLoop(KJSContext *ctx, void *, KJSObject value)
+void JSFullscreen::setLoop(bool loop)
 {
-    bool loop = value.toBoolean(ctx);
     SettingsCore::setSlidesLoop(loop);
 }
 
-static KJSObject fsGetUseTimer(KJSContext *, void *)
+bool JSFullscreen::useTimer() const
 {
-    return KJSBoolean(SettingsCore::slidesAdvance());
+    return SettingsCore::slidesAdvance();
 }
 
-static void fsSetUseTimer(KJSContext *ctx, void *, KJSObject value)
+void JSFullscreen::setUseTimer(bool use)
 {
-    bool use = value.toBoolean(ctx);
     SettingsCore::setSlidesAdvance(use);
 }
 
-static KJSObject fsGetTimeDelay(KJSContext *, void *)
+int JSFullscreen::timeDelay() const
 {
-    return KJSNumber(SettingsCore::slidesAdvanceTime());
+    return SettingsCore::slidesAdvanceTime();
 }
 
-static void fsSetTimeDelay(KJSContext *ctx, void *, KJSObject value)
+void JSFullscreen::setTimeDelay(int time)
 {
-    int time = static_cast<int>(value.toNumber(ctx));
     SettingsCore::setSlidesAdvanceTime(time);
-}
-
-void JSFullscreen::initType(KJSContext *ctx)
-{
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    if (!g_fsProto) {
-        g_fsProto = new KJSPrototype();
-    }
-
-    g_fsProto->defineProperty(ctx, QStringLiteral("loop"), fsGetLoop, fsSetLoop);
-    g_fsProto->defineProperty(ctx, QStringLiteral("useTimer"), fsGetUseTimer, fsSetUseTimer);
-    g_fsProto->defineProperty(ctx, QStringLiteral("timeDelay"), fsGetTimeDelay, fsSetTimeDelay);
-}
-
-KJSObject JSFullscreen::object(KJSContext *ctx)
-{
-    assert(g_fsProto);
-    return g_fsProto->constructObject(ctx);
 }

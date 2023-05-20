@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;KF5JS;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt5Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -141,10 +141,10 @@ find_package(KF5DocTools ${KF5_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5DocTools PROPERTIES
     PURPOSE "Required for compiling and installing the user documentation.")
 
-find_package(KF5JS ${KF5_REQUIRED_VERSION})
-set_okular_optional_package_properties(KF5JS PROPERTIES
+find_package(Qt5Qml)
+set_okular_optional_package_properties(Qt5Qml PROPERTIES
     PURPOSE "Required for supporting JavaScript in PDF documents")
-if(KF5JS_FOUND)
+if(TARGET Qt5::Qml)
     set(HAVE_KJS 1)
 else()
     set(HAVE_KJS 0)
@@ -468,7 +468,7 @@ endif()
 if (KF5Wallet_FOUND)
     target_link_libraries(okularcore PRIVATE KF5::Wallet)
 endif()
-if (KF5JS_FOUND)
+if (TARGET Qt5::Qml)
     target_sources(okularcore PRIVATE
             core/script/executor_kjs.cpp
             core/script/kjs_app.cpp
@@ -484,7 +484,7 @@ if (KF5JS_FOUND)
             core/script/kjs_event.cpp
             core/script/kjs_ocg.cpp
     )
-    target_link_libraries(okularcore PRIVATE KF5::JS KF5::JSApi)
+    target_link_libraries(okularcore PRIVATE Qt5::Qml)
 endif()
 
 set_target_properties(okularcore PROPERTIES VERSION 10.0.0 SOVERSION 10 OUTPUT_NAME Okular5Core EXPORT_NAME Core)

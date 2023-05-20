@@ -5,20 +5,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "config-okular.h"
 #include "executor_kjs_p.h"
-
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsinterpreter.h>
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-#include <kjs_version.h>
-
-#include <QDebug>
 
 #include "../debug_p.h"
 #include "../document_p.h"
 
-#include "config-okular.h"
 #include "event_p.h"
 #include "kjs_app_p.h"
 #include "kjs_console_p.h"
@@ -32,6 +24,11 @@
 #include "kjs_spell_p.h"
 #include "kjs_util_p.h"
 
+#include <QDebug>
+#include <QJSEngine>
+#include <QThread>
+#include <QTimer>
+
 using namespace Okular;
 
 class Okular::ExecutorKJSPrivate
@@ -44,43 +41,36 @@ public:
     }
     ~ExecutorKJSPrivate()
     {
-        delete m_interpreter;
+        m_watchdogTimer->deleteLater();
+        m_watchdogThread.quit();
+        m_watchdogThread.wait();
     }
 
     void initTypes();
 
     DocumentPrivate *m_doc;
-    KJSInterpreter *m_interpreter;
-    KJSGlobalObject m_docObject;
+    QJSEngine m_interpreter;
+
+    QThread m_watchdogThread;
+    QTimer *m_watchdogTimer = nullptr;
 };
 
 void ExecutorKJSPrivate::initTypes()
 {
-    m_docObject = JSDocument::wrapDocument(m_doc);
-    m_interpreter = new KJSInterpreter(m_docObject);
+    m_watchdogThread.start();
+    m_watchdogTimer = new QTimer;
+    m_watchdogTimer->setInterval(std::chrono::seconds(2)); // max 2 secs allowed
+    m_watchdogTimer->setSingleShot(true);
+    m_watchdogTimer->moveToThread(&m_watchdogThread);
+    QObject::connect(
+        m_watchdogTimer, &QTimer::timeout, &m_interpreter, [this]() { m_interpreter.setInterrupted(true); }, Qt::DirectConnection);
 
-    m_interpreter->setTimeoutTime(2000); // max 2 secs allowed
-    KJSContext *ctx = m_interpreter->globalContext();
-
-    JSApp::initType(ctx);
-    JSFullscreen::initType(ctx);
-    JSConsole::initType(ctx);
-    JSData::initType(ctx);
-    JSDisplay::initType(ctx);
-    JSDocument::initType(ctx);
-    JSEvent::initType(ctx);
-    JSField::initType(ctx);
-    JSOCG::initType(ctx);
-    JSSpell::initType(ctx);
-    JSUtil::initType(ctx);
-
-    m_docObject.setProperty(ctx, QStringLiteral("app"), JSApp::object(ctx, m_doc));
-    m_docObject.setProperty(ctx, QStringLiteral("console"), JSConsole::object(ctx));
-    m_docObject.setProperty(ctx, QStringLiteral("Doc"), m_docObject);
-    m_docObject.setProperty(ctx, QStringLiteral("display"), JSDisplay::object(ctx));
-    m_docObject.setProperty(ctx, QStringLiteral("OCG"), JSOCG::object(ctx));
-    m_docObject.setProperty(ctx, QStringLiteral("spell"), JSSpell::object(ctx));
-    m_docObject.setProperty(ctx, QStringLiteral("util"), JSUtil::object(ctx));
+    m_interpreter.globalObject().setProperty(QStringLiteral("app"), m_interpreter.newQObject(new JSApp(m_doc, m_watchdogTimer)));
+    m_interpreter.globalObject().setProperty(QStringLiteral("console"), m_interpreter.newQObject(new JSConsole));
+    m_interpreter.globalObject().setProperty(QStringLiteral("Doc"), m_interpreter.newQObject(new JSDocument(m_doc)));
+    m_interpreter.globalObject().setProperty(QStringLiteral("display"), m_interpreter.newQObject(new JSDisplay));
+    m_interpreter.globalObject().setProperty(QStringLiteral("spell"), m_interpreter.newQObject(new JSSpell));
+    m_interpreter.globalObject().setProperty(QStringLiteral("util"), m_interpreter.newQObject(new JSUtil));
 }
 
 ExecutorKJS::ExecutorKJS(DocumentPrivate *doc)
@@ -92,24 +82,23 @@ ExecutorKJS::~ExecutorKJS()
 {
     JSField::clearCachedFields();
     JSApp::clearCachedFields();
-    JSOCG::clearCachedFields();
     delete d;
 }
 
 void ExecutorKJS::execute(const QString &script, Event *event)
 {
-    KJSContext *ctx = d->m_interpreter->globalContext();
+    const auto eventVal = event ? d->m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
+    d->m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);
 
-    d->m_docObject.setProperty(ctx, QStringLiteral("event"), event ? JSEvent::wrapEvent(ctx, event) : KJSUndefined());
+    QMetaObject::invokeMethod(d->m_watchdogTimer, qOverload<>(&QTimer::start));
+    d->m_interpreter.setInterrupted(false);
+    auto result = d->m_interpreter.evaluate(script, QStringLiteral("okular.js"));
+    QMetaObject::invokeMethod(d->m_watchdogTimer, qOverload<>(&QTimer::stop));
 
-    d->m_interpreter->startTimeoutCheck();
-    KJSResult result = d->m_interpreter->evaluate(QStringLiteral("okular.js"), 1, script, &d->m_docObject);
-    d->m_interpreter->stopTimeoutCheck();
-
-    if (result.isException() || ctx->hasException()) {
-        qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();
+    if (result.isError()) {
+        qCDebug(OkularCoreDebug) << "JS exception" << result.toString() << "(line " << result.property(QStringLiteral("lineNumber")).toInt() << ")";
     } else {
-        qCDebug(OkularCoreDebug) << "result:" << result.value().toString(ctx);
+        qCDebug(OkularCoreDebug) << "result:" << result.toString();
 
         if (event) {
             qCDebug(OkularCoreDebug) << "Event Result:" << event->name() << event->type() << "value:" << event->value();

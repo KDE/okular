@@ -7,8 +7,7 @@
 #ifndef OKULAR_SCRIPT_KJS_DISPLAY_P_H
 #define OKULAR_SCRIPT_KJS_DISPLAY_P_H
 
-class KJSContext;
-class KJSObject;
+#include <QObject>
 
 namespace Okular
 {
@@ -17,11 +16,18 @@ namespace Okular
  */
 enum FormDisplay { FormVisible, FormHidden, FormNoPrint, FormNoView };
 
-class JSDisplay
+class JSDisplay : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(int hidden READ hidden CONSTANT)
+    Q_PROPERTY(int visible READ visible CONSTANT)
+    Q_PROPERTY(int noView READ noView CONSTANT)
+    Q_PROPERTY(int noPrint READ noPrint CONSTANT)
 public:
-    static void initType(KJSContext *ctx);
-    static KJSObject object(KJSContext *ctx);
+    int hidden() const;
+    int visible() const;
+    int noView() const;
+    int noPrint() const;
 };
 
 }

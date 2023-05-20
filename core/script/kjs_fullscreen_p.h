@@ -8,16 +8,24 @@
 #ifndef OKULAR_SCRIPT_KJS_FULLSCREEN_P_H
 #define OKULAR_SCRIPT_KJS_FULLSCREEN_P_H
 
-class KJSContext;
-class KJSObject;
+#include <QObject>
 
 namespace Okular
 {
-class JSFullscreen
+class JSFullscreen : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(bool loop READ loop WRITE setLoop)               // clazy:exclude=qproperty-without-notify
+    Q_PROPERTY(bool useTimer READ useTimer WRITE setUseTimer)   // clazy:exclude=qproperty-without-notify
+    Q_PROPERTY(int timeDelay READ timeDelay WRITE setTimeDelay) // clazy:exclude=qproperty-without-notify
+
 public:
-    static void initType(KJSContext *ctx);
-    static KJSObject object(KJSContext *ctx);
+    bool loop() const;
+    void setLoop(bool loop);
+    bool useTimer() const;
+    void setUseTimer(bool use);
+    int timeDelay() const;
+    void setTimeDelay(int time);
 };
 
 }

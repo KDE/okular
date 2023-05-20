@@ -7,13 +7,9 @@
 
 #include "kjs_field_p.h"
 
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsinterpreter.h>
-#include <kjs/kjsprototype.h>
-
-#include <QHash>
-
 #include <QDebug>
+#include <QHash>
+#include <QJSEngine>
 #include <QTimer>
 
 #include "../debug_p.h"
@@ -26,8 +22,6 @@
 using namespace Okular;
 
 #define OKULAR_NAME QStringLiteral("okular_name")
-
-static KJSPrototype *g_fieldProto;
 
 typedef QHash<FormField *, Page *> FormCache;
 Q_GLOBAL_STATIC(FormCache, g_fieldCache)
@@ -49,33 +43,29 @@ static void updateField(FormField *field)
 }
 
 // Field.doc
-static KJSObject fieldGetDoc(KJSContext *context, void *)
+QJSValue JSField::doc() const
 {
-    return context->interpreter().globalObject();
+    return qjsEngine(this)->globalObject();
 }
 
 // Field.name
-static KJSObject fieldGetName(KJSContext *, void *object)
+QString JSField::name() const
 {
-    const FormField *field = reinterpret_cast<FormField *>(object);
-    return KJSString(field->fullyQualifiedName());
+    return m_field->fullyQualifiedName();
 }
 
 // Field.readonly (getter)
-static KJSObject fieldGetReadOnly(KJSContext *, void *object)
+bool JSField::readonly() const
 {
-    const FormField *field = reinterpret_cast<FormField *>(object);
-    return KJSBoolean(field->isReadOnly());
+    return m_field->isReadOnly();
 }
 
 // Field.readonly (setter)
-static void fieldSetReadOnly(KJSContext *context, void *object, KJSObject value)
+void JSField::setReadonly(bool readonly)
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-    bool b = value.toBoolean(context);
-    field->setReadOnly(b);
+    m_field->setReadOnly(readonly);
 
-    updateField(field);
+    updateField(m_field);
 }
 
 static QString fieldGetTypeHelper(const FormField *field)
@@ -112,45 +102,42 @@ static QString fieldGetTypeHelper(const FormField *field)
 }
 
 // Field.type
-static KJSObject fieldGetType(KJSContext *, void *object)
+QString JSField::type() const
 {
-    const FormField *field = reinterpret_cast<FormField *>(object);
-
-    return KJSString(fieldGetTypeHelper(field));
+    return fieldGetTypeHelper(m_field);
 }
 
-static KJSObject fieldGetValueCore(KJSContext *context, bool asString, void *object)
+QJSValue JSField::fieldGetValueCore(bool asString) const
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-    KJSObject result = KJSUndefined();
+    QJSValue result(QJSValue::UndefinedValue);
 
-    switch (field->type()) {
+    switch (m_field->type()) {
     case FormField::FormButton: {
-        const FormFieldButton *button = static_cast<const FormFieldButton *>(field);
+        const FormFieldButton *button = static_cast<const FormFieldButton *>(m_field);
         if (button->state()) {
-            result = KJSString(QStringLiteral("Yes"));
+            result = QStringLiteral("Yes");
         } else {
-            result = KJSString(QStringLiteral("Off"));
+            result = QStringLiteral("Off");
         }
         break;
     }
     case FormField::FormText: {
-        const FormFieldText *text = static_cast<const FormFieldText *>(field);
+        const FormFieldText *text = static_cast<const FormFieldText *>(m_field);
         const QLocale locale;
         bool ok;
         const double textAsNumber = locale.toDouble(text->text(), &ok);
         if (ok && !asString) {
-            result = KJSNumber(textAsNumber);
+            result = textAsNumber;
         } else {
-            result = KJSString(text->text());
+            result = text->text();
         }
         break;
     }
     case FormField::FormChoice: {
-        const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(field);
+        const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(m_field);
         const QList<int> currentChoices = choice->currentChoices();
         if (currentChoices.count() == 1) {
-            result = KJSString(choice->exportValueForChoice(choice->choices().at(currentChoices[0])));
+            result = choice->exportValueForChoice(choice->choices().at(currentChoices[0]));
         }
         break;
     }
@@ -160,45 +147,43 @@ static KJSObject fieldGetValueCore(KJSContext *context, bool asString, void *obj
     }
 
     qCDebug(OkularCoreDebug) << "fieldGetValueCore:"
-                             << " Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << result.toString(context) << (result.isString() ? "(as string)" : "");
+                             << " Field: " << m_field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(m_field) << " Value: " << result.toString() << (result.isString() ? "(as string)" : "");
     return result;
 }
 // Field.value (getter)
-static KJSObject fieldGetValue(KJSContext *context, void *object)
+QJSValue JSField::value() const
 {
-    return fieldGetValueCore(context, /*asString*/ false, object);
+    return fieldGetValueCore(/*asString*/ false);
 }
 
 // Field.value (setter)
-static void fieldSetValue(KJSContext *context, void *object, KJSObject value)
+void JSField::setValue(const QJSValue &value)
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-
-    qCDebug(OkularCoreDebug) << "fieldSetValue: Field: " << field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(field) << " Value: " << value.toString(context);
-    switch (field->type()) {
+    qCDebug(OkularCoreDebug) << "fieldSetValue: Field: " << m_field->fullyQualifiedName() << " Type: " << fieldGetTypeHelper(m_field) << " Value: " << value.toString();
+    switch (m_field->type()) {
     case FormField::FormButton: {
-        FormFieldButton *button = static_cast<FormFieldButton *>(field);
-        const QString text = value.toString(context);
+        FormFieldButton *button = static_cast<FormFieldButton *>(m_field);
+        const QString text = value.toString();
         if (text == QStringLiteral("Yes")) {
             button->setState(true);
-            updateField(field);
+            updateField(m_field);
         } else if (text == QStringLiteral("Off")) {
             button->setState(false);
-            updateField(field);
+            updateField(m_field);
         }
         break;
     }
     case FormField::FormText: {
-        FormFieldText *textField = static_cast<FormFieldText *>(field);
-        const QString text = value.toString(context);
+        FormFieldText *textField = static_cast<FormFieldText *>(m_field);
+        const QString text = value.toString();
         if (text != textField->text()) {
             textField->setText(text);
-            updateField(field);
+            updateField(m_field);
         }
         break;
     }
     case FormField::FormChoice: {
-        FormFieldChoice *choice = static_cast<FormFieldChoice *>(field);
+        FormFieldChoice *choice = static_cast<FormFieldChoice *>(m_field);
         Q_UNUSED(choice); // ###
         break;
     }
@@ -209,73 +194,65 @@ static void fieldSetValue(KJSContext *context, void *object, KJSObject value)
 }
 
 // Field.valueAsString (getter)
-static KJSObject fieldGetValueAsString(KJSContext *context, void *object)
+QJSValue JSField::valueAsString() const
 {
-    return fieldGetValueCore(context, /*asString*/ true, object);
+    return fieldGetValueCore(/*asString*/ true);
 }
 
 // Field.hidden (getter)
-static KJSObject fieldGetHidden(KJSContext *, void *object)
+bool JSField::hidden() const
 {
-    const FormField *field = reinterpret_cast<FormField *>(object);
-    return KJSBoolean(!field->isVisible());
+    return !m_field->isVisible();
 }
 
 // Field.hidden (setter)
-static void fieldSetHidden(KJSContext *context, void *object, KJSObject value)
+void JSField::setHidden(bool hidden)
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-    bool b = value.toBoolean(context);
-    field->setVisible(!b);
+    m_field->setVisible(!hidden);
 
-    updateField(field);
+    updateField(m_field);
 }
 
 // Field.display (getter)
-static KJSObject fieldGetDisplay(KJSContext *, void *object)
+int JSField::display() const
 {
-    const FormField *field = reinterpret_cast<FormField *>(object);
-    bool visible = field->isVisible();
+    bool visible = m_field->isVisible();
     if (visible) {
-        return KJSNumber(field->isPrintable() ? FormDisplay::FormVisible : FormDisplay::FormNoPrint);
+        return m_field->isPrintable() ? FormDisplay::FormVisible : FormDisplay::FormNoPrint;
     }
-    return KJSNumber(field->isPrintable() ? FormDisplay::FormNoView : FormDisplay::FormHidden);
+    return m_field->isPrintable() ? FormDisplay::FormNoView : FormDisplay::FormHidden;
 }
 
 // Field.display (setter)
-static void fieldSetDisplay(KJSContext *context, void *object, KJSObject value)
+void JSField::setDisplay(int display)
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-    const unsigned int b = value.toInt32(context);
-    switch (b) {
+    switch (display) {
     case FormDisplay::FormVisible:
-        field->setVisible(true);
-        field->setPrintable(true);
+        m_field->setVisible(true);
+        m_field->setPrintable(true);
         break;
     case FormDisplay::FormHidden:
-        field->setVisible(false);
-        field->setPrintable(false);
+        m_field->setVisible(false);
+        m_field->setPrintable(false);
         break;
     case FormDisplay::FormNoPrint:
-        field->setVisible(true);
-        field->setPrintable(false);
+        m_field->setVisible(true);
+        m_field->setPrintable(false);
         break;
     case FormDisplay::FormNoView:
-        field->setVisible(false);
-        field->setPrintable(true);
+        m_field->setVisible(false);
+        m_field->setPrintable(true);
         break;
     }
-    updateField(field);
+    updateField(m_field);
 }
 
 //  Instead of getting the Icon, we pick the field.
-static KJSObject fieldButtonGetIcon(KJSContext *ctx, void *object, const KJSArguments &)
+QJSValue JSField::buttonGetIcon([[maybe_unused]] int nFace) const
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
-
-    KJSObject fieldObject;
-    fieldObject.setProperty(ctx, OKULAR_NAME, field->fullyQualifiedName());
-    g_buttonCache->insert(field->fullyQualifiedName(), field);
+    QJSValue fieldObject;
+    fieldObject.setProperty(OKULAR_NAME, m_field->fullyQualifiedName());
+    g_buttonCache->insert(m_field->fullyQualifiedName(), m_field);
 
     return fieldObject;
 }
@@ -283,52 +260,31 @@ static KJSObject fieldButtonGetIcon(KJSContext *ctx, void *object, const KJSArgu
 /*
  * Now we send to the button what Icon should be drawn on it
  */
-static KJSObject fieldButtonSetIcon(KJSContext *ctx, void *object, const KJSArguments &arguments)
+void JSField::buttonSetIcon(const QJSValue &oIcon, [[maybe_unused]] int nFace)
 {
-    FormField *field = reinterpret_cast<FormField *>(object);
+    const QString fieldName = oIcon.property(OKULAR_NAME).toString();
 
-    const QString fieldName = arguments.at(0).property(ctx, OKULAR_NAME).toString(ctx);
-
-    if (field->type() == Okular::FormField::FormButton) {
-        FormFieldButton *button = static_cast<FormFieldButton *>(field);
+    if (m_field->type() == Okular::FormField::FormButton) {
+        FormFieldButton *button = static_cast<FormFieldButton *>(m_field);
         button->setIcon(g_buttonCache->value(fieldName));
     }
 
-    updateField(field);
-
-    return KJSUndefined();
+    updateField(m_field);
 }
 
-void JSField::initType(KJSContext *ctx)
+JSField::JSField(FormField *field, QObject *parent)
+    : QObject(parent)
+    , m_field(field)
 {
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    if (!g_fieldProto) {
-        g_fieldProto = new KJSPrototype();
-    }
-
-    g_fieldProto->defineProperty(ctx, QStringLiteral("doc"), fieldGetDoc);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("name"), fieldGetName);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("readonly"), fieldGetReadOnly, fieldSetReadOnly);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("type"), fieldGetType);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("valueAsString"), fieldGetValueAsString);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("hidden"), fieldGetHidden, fieldSetHidden);
-    g_fieldProto->defineProperty(ctx, QStringLiteral("display"), fieldGetDisplay, fieldSetDisplay);
-
-    g_fieldProto->defineFunction(ctx, QStringLiteral("buttonGetIcon"), fieldButtonGetIcon);
-    g_fieldProto->defineFunction(ctx, QStringLiteral("buttonSetIcon"), fieldButtonSetIcon);
 }
 
-KJSObject JSField::wrapField(KJSContext *ctx, FormField *field, Page *page)
+JSField::~JSField() = default;
+
+QJSValue JSField::wrapField(QJSEngine *engine, FormField *field, Page *page)
 {
     // ### cache unique wrapper
-    KJSObject f = g_fieldProto->constructObject(ctx, field);
-    f.setProperty(ctx, QStringLiteral("page"), page->number());
+    QJSValue f = engine->newQObject(new JSField(field));
+    f.setProperty(QStringLiteral("page"), page->number());
     g_fieldCache->insert(field, page);
     return f;
 }

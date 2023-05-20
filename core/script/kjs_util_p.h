@@ -8,16 +8,19 @@
 #ifndef OKULAR_SCRIPT_KJS_UTIL_P_H
 #define OKULAR_SCRIPT_KJS_UTIL_P_H
 
-class KJSContext;
-class KJSObject;
+#include <QJSValue>
+#include <QObject>
 
 namespace Okular
 {
-class JSUtil
+class JSUtil : public QObject
 {
+    Q_OBJECT
 public:
-    static void initType(KJSContext *ctx);
-    static KJSObject object(KJSContext *ctx);
+    Q_INVOKABLE QJSValue crackURL(const QString &cURL) const;
+    Q_INVOKABLE QJSValue printd(const QJSValue &oFormat, const QDateTime &oDate) const;
+    Q_INVOKABLE double stringToNumber(const QString &number) const;
+    Q_INVOKABLE QString numberToString(double number, const QString &fmt = QStringLiteral("g"), int precision = 6, const QString &localeName = {}) const;
 };
 
 }

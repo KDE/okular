@@ -4,6 +4,19 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+/* QJSEngine limits what we can do with the global object in C++, so map Doc into this here. */
+{
+    const props = Object.getOwnPropertyDescriptors(Doc);
+    for (prop in props) {
+        Object.defineProperty(this, prop, props[prop]);
+    }
+    for (const name of Object.getOwnPropertyNames(Doc)) {
+        if (typeof Doc[name] === 'function') {
+            this.__proto__[name] = Doc[name];
+        }
+    }
+}
+
 /* Builtin functions for Okular's PDF JavaScript interpretation. */
 
 /** AFSimple_Calculate

@@ -15,7 +15,6 @@ Dependencies:
 - 'on': ['Linux', 'FreeBSD', 'Windows']
   'require':
     'frameworks/khtml': '@stable'
-    'frameworks/kjs': '@stable'
     'frameworks/purpose': '@stable'
     'graphics/libkexiv2': '@same'
 

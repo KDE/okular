@@ -8,16 +8,18 @@
 #ifndef OKULAR_SCRIPT_KJS_CONSOLE_P_H
 #define OKULAR_SCRIPT_KJS_CONSOLE_P_H
 
-class KJSContext;
-class KJSObject;
+#include <QObject>
 
 namespace Okular
 {
-class JSConsole
+class JSConsole : public QObject
 {
+    Q_OBJECT
 public:
-    static void initType(KJSContext *ctx);
-    static KJSObject object(KJSContext *ctx);
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE void hide();
+    Q_INVOKABLE void println(const QString &cMessage);
+    Q_INVOKABLE void show();
 };
 
 }

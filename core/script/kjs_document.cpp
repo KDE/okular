@@ -9,11 +9,8 @@
 
 #include <qwidget.h>
 
-#include <kjs/kjsarguments.h>
-#include <kjs/kjsobject.h>
-#include <kjs/kjsprototype.h>
-
 #include <QDebug>
+#include <QJSEngine>
 #include <assert.h>
 
 #include "../document_p.h"
@@ -25,133 +22,107 @@
 
 using namespace Okular;
 
-static KJSPrototype *g_docProto;
-
 // Document.numPages
-static KJSObject docGetNumPages(KJSContext *, void *object)
+int JSDocument::numPages() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSNumber(doc->m_pagesVector.count());
+    return m_doc->m_pagesVector.count();
 }
 
 // Document.pageNum (getter)
-static KJSObject docGetPageNum(KJSContext *, void *object)
+int JSDocument::pageNum() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSNumber(doc->m_parent->currentPage());
+    return m_doc->m_parent->currentPage();
 }
 
 // Document.pageNum (setter)
-static void docSetPageNum(KJSContext *ctx, void *object, KJSObject value)
+void JSDocument::setPageNum(int page)
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    int page = value.toInt32(ctx);
-
-    if (page == (int)doc->m_parent->currentPage()) {
+    if (page == (int)m_doc->m_parent->currentPage()) {
         return;
     }
 
-    doc->m_parent->setViewportPage(page);
+    m_doc->m_parent->setViewportPage(page);
 }
 
 // Document.documentFileName
-static KJSObject docGetDocumentFileName(KJSContext *, void *object)
+QString JSDocument::documentFileName() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSString(doc->m_url.fileName());
+    return m_doc->m_url.fileName();
 }
 
 // Document.filesize
-static KJSObject docGetFilesize(KJSContext *, void *object)
+int JSDocument::filesize() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSNumber(doc->m_docSize);
+    return m_doc->m_docSize;
 }
 
 // Document.path
-static KJSObject docGetPath(KJSContext *, void *object)
+QString JSDocument::path() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSString(doc->m_url.toDisplayString(QUrl::PreferLocalFile));
+    return m_doc->m_url.toDisplayString(QUrl::PreferLocalFile);
 }
 
 // Document.URL
-static KJSObject docGetURL(KJSContext *, void *object)
+QString JSDocument::URL() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    return KJSString(doc->m_url.toDisplayString());
+    return m_doc->m_url.toDisplayString();
 }
 
 // Document.permStatusReady
-static KJSObject docGetPermStatusReady(KJSContext *, void *)
+bool JSDocument::permStatusReady() const
 {
-    return KJSBoolean(true);
+    return true;
 }
 
 // Document.dataObjects
-static KJSObject docGetDataObjects(KJSContext *ctx, void *object)
+QJSValue JSDocument::dataObjects() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
+    const QList<EmbeddedFile *> *files = m_doc->m_generator->embeddedFiles();
 
-    const QList<EmbeddedFile *> *files = doc->m_generator->embeddedFiles();
-
-    KJSArray dataObjects(ctx, files ? files->count() : 0);
+    QJSValue dataObjects = qjsEngine(this)->newArray(files ? files->count() : 0);
     if (files) {
         QList<EmbeddedFile *>::ConstIterator it = files->begin(), itEnd = files->end();
         for (int i = 0; it != itEnd; ++it, ++i) {
-            KJSObject newdata = JSData::wrapFile(ctx, *it);
-            dataObjects.setProperty(ctx, QString::number(i), newdata);
+            QJSValue newdata = qjsEngine(this)->newQObject(new JSData(*it));
+            dataObjects.setProperty(i, newdata);
         }
     }
     return dataObjects;
 }
 
 // Document.external
-static KJSObject docGetExternal(KJSContext *, void *object)
+bool JSDocument::external() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    QWidget *widget = doc->m_widget;
+    QWidget *widget = m_doc->m_widget;
 
     const bool isShell = (widget && widget->parentWidget() && widget->parentWidget()->objectName().startsWith(QLatin1String("okular::Shell")));
-    return KJSBoolean(!isShell);
+    return !isShell;
 }
 
 // Document.numFields
-static KJSObject docGetNumFields(KJSContext *, void *object)
+int JSDocument::numFields() const
 {
-    const DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
     unsigned int numFields = 0;
 
-    for (const Page *pIt : qAsConst(doc->m_pagesVector)) {
+    for (const Page *pIt : qAsConst(m_doc->m_pagesVector)) {
         numFields += pIt->formFields().size();
     }
 
-    return KJSNumber(numFields);
+    return numFields;
 }
 
-static KJSObject docGetInfo(KJSContext *ctx, void *object)
+QJSValue JSDocument::info() const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    KJSObject obj;
+    QJSValue obj;
     QSet<DocumentInfo::Key> keys;
     keys << DocumentInfo::Title << DocumentInfo::Author << DocumentInfo::Subject << DocumentInfo::Keywords << DocumentInfo::Creator << DocumentInfo::Producer;
-    const DocumentInfo docinfo = doc->m_parent->documentInfo(keys);
+    const DocumentInfo docinfo = m_doc->m_parent->documentInfo(keys);
 #define KEY_GET(key, property)                                                                                                                                                                                                                 \
     do {                                                                                                                                                                                                                                       \
         const QString data = docinfo.get(key);                                                                                                                                                                                                 \
         if (!data.isEmpty()) {                                                                                                                                                                                                                 \
-            const KJSString newval(data);                                                                                                                                                                                                      \
-            obj.setProperty(ctx, QStringLiteral(property), newval);                                                                                                                                                                            \
-            obj.setProperty(ctx, QStringLiteral(property).toLower(), newval);                                                                                                                                                                  \
+            obj.setProperty(QStringLiteral(property), data);                                                                                                                                                                                   \
+            obj.setProperty(QStringLiteral(property).toLower(), data);                                                                                                                                                                         \
         }                                                                                                                                                                                                                                      \
     } while (0);
     KEY_GET(DocumentInfo::Title, "Title");
@@ -165,170 +136,107 @@ static KJSObject docGetInfo(KJSContext *ctx, void *object)
 }
 
 #define DOCINFO_GET_METHOD(key, name)                                                                                                                                                                                                          \
-    static KJSObject docGet##name(KJSContext *, void *object)                                                                                                                                                                                  \
+    QString JSDocument::name() const                                                                                                                                                                                                           \
     {                                                                                                                                                                                                                                          \
-        DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);                                                                                                                                                                    \
-        const DocumentInfo docinfo = doc->m_parent->documentInfo(QSet<DocumentInfo::Key>() << key);                                                                                                                                            \
-        return KJSString(docinfo.get(key));                                                                                                                                                                                                    \
+        const DocumentInfo docinfo = m_doc->m_parent->documentInfo(QSet<DocumentInfo::Key>() << key);                                                                                                                                          \
+        return docinfo.get(key);                                                                                                                                                                                                               \
     }
 
-DOCINFO_GET_METHOD(DocumentInfo::Author, Author)
-DOCINFO_GET_METHOD(DocumentInfo::Creator, Creator)
-DOCINFO_GET_METHOD(DocumentInfo::Keywords, Keywords)
-DOCINFO_GET_METHOD(DocumentInfo::Producer, Producer)
-DOCINFO_GET_METHOD(DocumentInfo::Title, Title)
-DOCINFO_GET_METHOD(DocumentInfo::Subject, Subject)
+DOCINFO_GET_METHOD(DocumentInfo::Author, author)
+DOCINFO_GET_METHOD(DocumentInfo::Creator, creator)
+DOCINFO_GET_METHOD(DocumentInfo::Keywords, keywords)
+DOCINFO_GET_METHOD(DocumentInfo::Producer, producer)
+DOCINFO_GET_METHOD(DocumentInfo::Title, title)
+DOCINFO_GET_METHOD(DocumentInfo::Subject, subject)
 
 #undef DOCINFO_GET_METHOD
 
 // Document.getField()
-static KJSObject docGetField(KJSContext *context, void *object, const KJSArguments &arguments)
+QJSValue JSDocument::getField(const QString &cName) const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    QString cName = arguments.at(0).toString(context);
-
-    QVector<Page *>::const_iterator pIt = doc->m_pagesVector.constBegin(), pEnd = doc->m_pagesVector.constEnd();
+    QVector<Page *>::const_iterator pIt = m_doc->m_pagesVector.constBegin(), pEnd = m_doc->m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
         const QList<Okular::FormField *> pageFields = (*pIt)->formFields();
         for (FormField *form : pageFields) {
             if (form->fullyQualifiedName() == cName) {
-                return JSField::wrapField(context, form, *pIt);
+                return JSField::wrapField(qjsEngine(this), form, *pIt);
             }
         }
     }
-    return KJSUndefined();
+    return QJSValue(QJSValue::UndefinedValue);
 }
 
 // Document.getPageLabel()
-static KJSObject docGetPageLabel(KJSContext *ctx, void *object, const KJSArguments &arguments)
+QString JSDocument::getPageLabel(int nPage) const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    int nPage = arguments.at(0).toInt32(ctx);
-    Page *p = doc->m_pagesVector.value(nPage);
-    return KJSString(p ? p->label() : QString());
+    Page *p = m_doc->m_pagesVector.value(nPage);
+    return p ? p->label() : QString();
 }
 
 // Document.getPageRotation()
-static KJSObject docGetPageRotation(KJSContext *ctx, void *object, const KJSArguments &arguments)
+int JSDocument::getPageRotation(int nPage) const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-    int nPage = arguments.at(0).toInt32(ctx);
-    Page *p = doc->m_pagesVector.value(nPage);
-    return KJSNumber(p ? p->orientation() * 90 : 0);
+    Page *p = m_doc->m_pagesVector.value(nPage);
+    return p ? p->orientation() * 90 : 0;
 }
 
 // Document.gotoNamedDest()
-static KJSObject docGotoNamedDest(KJSContext *ctx, void *object, const KJSArguments &arguments)
+void JSDocument::gotoNamedDest(const QString &cName) const
 {
-    DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    QString dest = arguments.at(0).toString(ctx);
-
-    DocumentViewport viewport(doc->m_generator->metaData(QStringLiteral("NamedViewport"), dest).toString());
-    if (!viewport.isValid()) {
-        return KJSUndefined();
+    DocumentViewport viewport(m_doc->m_generator->metaData(QStringLiteral("NamedViewport"), cName).toString());
+    if (viewport.isValid()) {
+        m_doc->m_parent->setViewport(viewport);
     }
-
-    doc->m_parent->setViewport(viewport);
-
-    return KJSUndefined();
 }
 
 // Document.syncAnnotScan()
-static KJSObject docSyncAnnotScan(KJSContext *, void *, const KJSArguments &)
+void JSDocument::syncAnnotScan() const
 {
-    return KJSUndefined();
 }
 
 // Document.getNthFieldName
-static KJSObject docGetNthFieldName(KJSContext *ctx, void *object, const KJSArguments &arguments)
+QJSValue JSDocument::getNthFieldName(int nIndex) const
 {
-    const DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
-
-    int numField = arguments.at(0).toInt32(ctx);
-
-    for (const Page *pIt : qAsConst(doc->m_pagesVector)) {
+    for (const Page *pIt : qAsConst(m_doc->m_pagesVector)) {
         const QList<Okular::FormField *> pageFields = pIt->formFields();
 
-        if (numField < pageFields.size()) {
-            const Okular::FormField *form = pageFields[numField];
+        if (nIndex < pageFields.size()) {
+            const Okular::FormField *form = pageFields[nIndex];
 
-            return KJSString(form->fullyQualifiedName());
+            return form->fullyQualifiedName();
         }
 
-        numField -= pageFields.size();
+        nIndex -= pageFields.size();
     }
 
-    return KJSUndefined();
+    return QJSValue(QJSValue::UndefinedValue);
 }
 
-static KJSObject docGetOCGs(KJSContext *ctx, void *object, const KJSArguments &)
+QJSValue JSDocument::getOCGs([[maybe_unused]] int nPage) const
 {
-    const DocumentPrivate *doc = reinterpret_cast<DocumentPrivate *>(object);
+    QAbstractItemModel *model = m_doc->m_parent->layersModel();
 
-    QAbstractItemModel *model = doc->m_parent->layersModel();
-
-    KJSArray array(ctx, model->rowCount());
+    QJSValue array = qjsEngine(this)->newArray(model->rowCount());
 
     for (int i = 0; i < model->rowCount(); ++i) {
         for (int j = 0; j < model->columnCount(); ++j) {
             const QModelIndex index = model->index(i, j);
 
-            KJSObject item = JSOCG::wrapOCGObject(ctx, model, i, j);
-            item.setProperty(ctx, QStringLiteral("name"), model->data(index, Qt::DisplayRole).toString());
-            item.setProperty(ctx, QStringLiteral("initState"), model->data(index, Qt::CheckStateRole).toBool());
+            QJSValue item = qjsEngine(this)->newQObject(new JSOCG(model, i, j));
+            item.setProperty(QStringLiteral("name"), model->data(index, Qt::DisplayRole).toString());
+            item.setProperty(QStringLiteral("initState"), model->data(index, Qt::CheckStateRole).toBool());
 
-            array.setProperty(ctx, QString::number(i), item);
+            array.setProperty(i, item);
         }
     }
 
     return array;
 }
 
-void JSDocument::initType(KJSContext *ctx)
+JSDocument::JSDocument(DocumentPrivate *doc, QObject *parent)
+    : QObject(parent)
+    , m_doc(doc)
 {
-    assert(g_docProto);
-
-    static bool initialized = false;
-    if (initialized) {
-        return;
-    }
-    initialized = true;
-
-    g_docProto->defineProperty(ctx, QStringLiteral("numPages"), docGetNumPages);
-    g_docProto->defineProperty(ctx, QStringLiteral("pageNum"), docGetPageNum, docSetPageNum);
-    g_docProto->defineProperty(ctx, QStringLiteral("documentFileName"), docGetDocumentFileName);
-    g_docProto->defineProperty(ctx, QStringLiteral("filesize"), docGetFilesize);
-    g_docProto->defineProperty(ctx, QStringLiteral("path"), docGetPath);
-    g_docProto->defineProperty(ctx, QStringLiteral("URL"), docGetURL);
-    g_docProto->defineProperty(ctx, QStringLiteral("permStatusReady"), docGetPermStatusReady);
-    g_docProto->defineProperty(ctx, QStringLiteral("dataObjects"), docGetDataObjects);
-    g_docProto->defineProperty(ctx, QStringLiteral("external"), docGetExternal);
-    g_docProto->defineProperty(ctx, QStringLiteral("numFields"), docGetNumFields);
-
-    // info properties
-    g_docProto->defineProperty(ctx, QStringLiteral("info"), docGetInfo);
-    g_docProto->defineProperty(ctx, QStringLiteral("author"), docGetAuthor);
-    g_docProto->defineProperty(ctx, QStringLiteral("creator"), docGetCreator);
-    g_docProto->defineProperty(ctx, QStringLiteral("keywords"), docGetKeywords);
-    g_docProto->defineProperty(ctx, QStringLiteral("producer"), docGetProducer);
-    g_docProto->defineProperty(ctx, QStringLiteral("title"), docGetTitle);
-    g_docProto->defineProperty(ctx, QStringLiteral("subject"), docGetSubject);
-
-    g_docProto->defineFunction(ctx, QStringLiteral("getField"), docGetField);
-    g_docProto->defineFunction(ctx, QStringLiteral("getPageLabel"), docGetPageLabel);
-    g_docProto->defineFunction(ctx, QStringLiteral("getPageRotation"), docGetPageRotation);
-    g_docProto->defineFunction(ctx, QStringLiteral("gotoNamedDest"), docGotoNamedDest);
-    g_docProto->defineFunction(ctx, QStringLiteral("syncAnnotScan"), docSyncAnnotScan);
-    g_docProto->defineFunction(ctx, QStringLiteral("getNthFieldName"), docGetNthFieldName);
-    g_docProto->defineFunction(ctx, QStringLiteral("getOCGs"), docGetOCGs);
 }
 
-KJSGlobalObject JSDocument::wrapDocument(DocumentPrivate *doc)
-{
-    if (!g_docProto) {
-        g_docProto = new KJSPrototype();
-    }
-    return g_docProto->constructGlobalObject(doc);
-}
+JSDocument::~JSDocument() = default;

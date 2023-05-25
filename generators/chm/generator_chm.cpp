@@ -277,7 +277,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node, Okular::TextPage *tp)
         int nodeTextLength = nodeText.length();
         if (nodeTextLength == 1) {
             nodeNormRect = new Okular::NormalizedRect(r, vWidth, vHeight);
-            tp->append(nodeText, nodeNormRect, nodeNormRect->bottom, 0, (nodeText == "\n"));
+            tp->append(nodeText, nodeNormRect /*, nodeNormRect->bottom, 0, (nodeText == "\n")*/);
         } else {
             for (int i = 0; i < nodeTextLength; i++) {
                 node.getCursor(i, x, y, height);
@@ -298,110 +298,111 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node, Okular::TextPage *tp)
                     node.getCursor(i - 1, x_next, y_next, height_next);
                 }
             }
+        }
 #else
         nodeNormRect = new Okular::NormalizedRect(r, vWidth, vHeight);
         tp->append(nodeText, nodeNormRect /*,0*/);
 #endif
-        }
-        DOM::Node child = node.firstChild();
-        while (!child.isNull()) {
-            recursiveExploreNodes(child, tp);
-            child = child.nextSibling();
-        }
     }
+    DOM::Node child = node.firstChild();
+    while (!child.isNull()) {
+        recursiveExploreNodes(child, tp);
+        child = child.nextSibling();
+    }
+}
 
-    void CHMGenerator::additionalRequestData()
-    {
-        Okular::Page *page = m_request->page();
-        const bool genObjectRects = !m_rectsGenerated.at(m_request->page()->number());
-        const bool genTextPage = !m_request->page()->hasTextPage() && genObjectRects;
+void CHMGenerator::additionalRequestData()
+{
+    Okular::Page *page = m_request->page();
+    const bool genObjectRects = !m_rectsGenerated.at(m_request->page()->number());
+    const bool genTextPage = !m_request->page()->hasTextPage() && genObjectRects;
 
-        if (genObjectRects || genTextPage) {
-            DOM::HTMLDocument domDoc = m_syncGen->htmlDocument();
-            // only generate object info when generating a full page not a thumbnail
-            if (genObjectRects) {
-                QList<Okular::ObjectRect *> objRects;
-                int xScale = m_syncGen->view()->width();
-                int yScale = m_syncGen->view()->height();
-                // getting links
-                DOM::HTMLCollection coll = domDoc.links();
-                DOM::Node n;
-                QRect r;
-                if (!coll.isNull()) {
-                    int size = coll.length();
-                    for (int i = 0; i < size; i++) {
-                        n = coll.item(i);
-                        if (!n.isNull()) {
-                            QString url = n.attributes().getNamedItem("href").nodeValue().string();
-                            r = n.getRect();
-                            // there is no way for us to support javascript properly
-                            if (url.startsWith(QLatin1String("JavaScript:")), Qt::CaseInsensitive) {
-                                continue;
-                            } else if (url.contains(QStringLiteral(":"))) {
-                                objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(r, xScale, yScale), false, Okular::ObjectRect::Action, new Okular::BrowseAction(QUrl(url))));
-                            } else {
-                                Okular::DocumentViewport viewport(metaData(QStringLiteral("NamedViewport"), absolutePath(m_chmUrl, url)).toString());
-                                objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(r, xScale, yScale), false, Okular::ObjectRect::Action, new Okular::GotoAction(QString(), viewport)));
-                            }
+    if (genObjectRects || genTextPage) {
+        DOM::HTMLDocument domDoc = m_syncGen->htmlDocument();
+        // only generate object info when generating a full page not a thumbnail
+        if (genObjectRects) {
+            QList<Okular::ObjectRect *> objRects;
+            int xScale = m_syncGen->view()->width();
+            int yScale = m_syncGen->view()->height();
+            // getting links
+            DOM::HTMLCollection coll = domDoc.links();
+            DOM::Node n;
+            QRect r;
+            if (!coll.isNull()) {
+                int size = coll.length();
+                for (int i = 0; i < size; i++) {
+                    n = coll.item(i);
+                    if (!n.isNull()) {
+                        QString url = n.attributes().getNamedItem("href").nodeValue().string();
+                        r = n.getRect();
+                        // there is no way for us to support javascript properly
+                        if (url.startsWith(QLatin1String("JavaScript:")), Qt::CaseInsensitive) {
+                            continue;
+                        } else if (url.contains(QStringLiteral(":"))) {
+                            objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(r, xScale, yScale), false, Okular::ObjectRect::Action, new Okular::BrowseAction(QUrl(url))));
+                        } else {
+                            Okular::DocumentViewport viewport(metaData(QStringLiteral("NamedViewport"), absolutePath(m_chmUrl, url)).toString());
+                            objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(r, xScale, yScale), false, Okular::ObjectRect::Action, new Okular::GotoAction(QString(), viewport)));
                         }
                     }
                 }
+            }
 
-                // getting images
-                coll = domDoc.images();
-                if (!coll.isNull()) {
-                    int size = coll.length();
-                    for (int i = 0; i < size; i++) {
-                        n = coll.item(i);
-                        if (!n.isNull()) {
-                            objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(n.getRect(), xScale, yScale), false, Okular::ObjectRect::Image, nullptr));
-                        }
+            // getting images
+            coll = domDoc.images();
+            if (!coll.isNull()) {
+                int size = coll.length();
+                for (int i = 0; i < size; i++) {
+                    n = coll.item(i);
+                    if (!n.isNull()) {
+                        objRects.push_back(new Okular::ObjectRect(Okular::NormalizedRect(n.getRect(), xScale, yScale), false, Okular::ObjectRect::Image, nullptr));
                     }
                 }
-                m_request->page()->setObjectRects(objRects);
-                m_rectsGenerated[m_request->page()->number()] = true;
             }
+            m_request->page()->setObjectRects(objRects);
+            m_rectsGenerated[m_request->page()->number()] = true;
+        }
 
-            if (genTextPage) {
-                Okular::TextPage *tp = new Okular::TextPage();
-                recursiveExploreNodes(domDoc, tp);
-                page->setTextPage(tp);
-            }
+        if (genTextPage) {
+            Okular::TextPage *tp = new Okular::TextPage();
+            recursiveExploreNodes(domDoc, tp);
+            page->setTextPage(tp);
         }
     }
+}
 
-    Okular::TextPage *CHMGenerator::textPage(Okular::TextRequest * request)
-    {
-        userMutex()->lock();
+Okular::TextPage *CHMGenerator::textPage(Okular::TextRequest *request)
+{
+    userMutex()->lock();
 
-        const Okular::Page *page = request->page();
-        m_syncGen->view()->resize(page->width(), page->height());
+    const Okular::Page *page = request->page();
+    m_syncGen->view()->resize(page->width(), page->height());
 
-        preparePageForSyncOperation(m_pageUrl[page->number()]);
-        Okular::TextPage *tp = new Okular::TextPage();
-        recursiveExploreNodes(m_syncGen->htmlDocument(), tp);
-        userMutex()->unlock();
-        return tp;
-    }
+    preparePageForSyncOperation(m_pageUrl[page->number()]);
+    Okular::TextPage *tp = new Okular::TextPage();
+    recursiveExploreNodes(m_syncGen->htmlDocument(), tp);
+    userMutex()->unlock();
+    return tp;
+}
 
-    QVariant CHMGenerator::metaData(const QString &key, const QVariant &option) const
-    {
-        if (key == QLatin1String("NamedViewport") && !option.toString().isEmpty()) {
-            const int pos = option.toString().indexOf(QLatin1Char('#'));
-            QString tmpUrl = pos == -1 ? option.toString() : option.toString().left(pos);
-            Okular::DocumentViewport viewport;
-            QMap<QString, int>::const_iterator it = m_urlPage.find(tmpUrl);
-            if (it != m_urlPage.end()) {
-                viewport.pageNumber = it.value();
-                return viewport.toString();
-            }
-
-        } else if (key == QLatin1String("DocumentTitle")) {
-            return m_file->title();
+QVariant CHMGenerator::metaData(const QString &key, const QVariant &option) const
+{
+    if (key == QLatin1String("NamedViewport") && !option.toString().isEmpty()) {
+        const int pos = option.toString().indexOf(QLatin1Char('#'));
+        QString tmpUrl = pos == -1 ? option.toString() : option.toString().left(pos);
+        Okular::DocumentViewport viewport;
+        QMap<QString, int>::const_iterator it = m_urlPage.find(tmpUrl);
+        if (it != m_urlPage.end()) {
+            viewport.pageNumber = it.value();
+            return viewport.toString();
         }
-        return QVariant();
-    }
 
-    /* kate: replace-tabs on; tab-width 4; */
+    } else if (key == QLatin1String("DocumentTitle")) {
+        return m_file->title();
+    }
+    return QVariant();
+}
+
+/* kate: replace-tabs on; tab-width 4; */
 
 #include "generator_chm.moc"

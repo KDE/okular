@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
-"PO-Revision-Date: 2023-05-05 19:30+0200\n"
+"PO-Revision-Date: 2023-05-28 10:25+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.07.70\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1371,7 +1371,7 @@ msgstr "Ausblenden"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Weitere Anmerkungs-Werkzeuge anzeigen"
+msgstr "Weitere Anmerkungswerkzeuge anzeigen"
 
 #: part/annotationactionhandler.cpp:555
 #, kde-format
@@ -2523,19 +2523,19 @@ msgstr "Stimme der Sprachausgabe:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Vollständige Anmerkungs-Werkzeugleiste"
+msgstr "Vollständige Anmerkungswerkzeugleiste"
 
 #: part/dlgannotations.cpp:26
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Schnell-Anmerkungs-Werkzeugleiste"
+msgstr "Schnell-Anmerkungswerkzeugleiste"
 
 #: part/dlgannotations.cpp:28
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "Anmerkungs-Werkzeugleiste:"
+msgstr "Anmerkungswerkzeugleiste:"
 
 #: part/dlgannotations.cpp:34
 #, kde-format
@@ -3249,12 +3249,12 @@ msgstr "Geometrische Form"
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "Anmerkungs-Werkzeug erstellen"
+msgstr "Anmerkungswerkzeug erstellen"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "Anmerkungs-Werkzeug bearbeiten"
+msgstr "Anmerkungswerkzeug bearbeiten"
 
 #: part/editdrawingtooldialog.cpp:50
 #, kde-format
@@ -4923,13 +4923,13 @@ msgstr "Haupt-Werkzeugleiste"
 #: part/part.rc:122
 #, kde-format
 msgid "Annotation Toolbar"
-msgstr "Anmerkungs-Werkzeugleiste"
+msgstr "Anmerkungswerkzeugleiste"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:146
 #, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "Schnell-Anmerkungs-Werkzeugleiste"
+msgstr "Schnell-Anmerkungswerkzeugleiste"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format

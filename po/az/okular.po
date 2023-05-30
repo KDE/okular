@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
-"PO-Revision-Date: 2023-04-22 12:00+0400\n"
+"PO-Revision-Date: 2023-05-29 22:06+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1528,10 +1528,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Açılabilən Qeydi açmaq"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Mübadilə buferinə kopyalamaq"
+msgstr "Mətni mübadilə yaddaşına kopyalayın"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4378,11 +4377,7 @@ msgid "Could not open %1. %2"
 msgstr "%1 açıla bilmədi. %2"
 
 #: part/part.cpp:1863
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4390,9 +4385,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Saxlanılmamış dəyişikliklər var, '%1' faylı digər proqram tərəfindən "
-"dəyişdirilib. Sizin dəyişiklikləriniz itiriləcəkdir, çünki fayl "
-"saxlanılmayıb.<br>Faylın açılmasını davam etmək istəyirsiniz?"
+"<filename>%1</filename> faylında saxlanılmamış dəyişikliklər var, lakin bu "
+"dəyişikliklər başqa proqram tərəfindən edilib. Yenidən yükləmək "
+"saxlanılmamış dəyişiklikləri başqa proqram tərəfindən edilmiş dəyişikliklər "
+"ilə əvəz edəcək.<nl/><nl/>Faylı yenidən yükləməyə davam etmək istəyirsiniz?"
 
 #: part/part.cpp:1867 part/part.cpp:1877
 #, kde-format
@@ -4410,11 +4406,7 @@ msgid "Abort Reloading"
 msgstr "Açılmanı ləğv etmək"
 
 #: part/part.cpp:1873
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4422,9 +4414,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Saxlanılmamış dəyişikliklər var, '%1' faylı digər proqram tərəfindən "
-"dəyişdirilib. Sizin dəyişiklikləriniz itiriləcəkdir, çünki fayl "
-"saxlanılmayıb.<br>Faylın bağlanmasını davam etmək istəyirsiniz?"
+"<filename>%1</filename> faylında saxlanılmamış dəyişikliklər var, lakin "
+"onlar başqa proqram tərəfindən dəyişdirilib. Onu bağlamaq saxlanılmamış "
+"dəyişiklikləri başqa proqram tərəfindən edilmiş dəyişikliklər ilə əvəz "
+"edəcək.<nl/><nl/> Bağlamağa davam etmək istəyirsiniz?"
 
 #: part/part.cpp:1878
 #, kde-format
@@ -4545,6 +4538,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"<filename>%1</filename> faylında başqa proqram tərəfindən dəyişiklik edilib. "
+"Əgər indi saxlamış olsanız başqa proqram tərəfindən edilmiş dəyişikliklər "
+"itiriləcəkdir. Davam etmək istədiyinizə əminsiniz?"
 
 #: part/part.cpp:2665 part/part.cpp:2683 part/part.cpp:2735
 #, kde-format
@@ -4554,7 +4550,7 @@ msgstr "Saxlayın - Xəbərdarlıq"
 #: part/part.cpp:2667
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Nüsxəni başqa yerdə saxlayın"
 
 #: part/part.cpp:2682
 #, kde-format
@@ -5343,16 +5339,14 @@ msgid "Save Signed File As"
 msgstr "İmzalanmış faylı belə saxlayın"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Setifikatlar:"
+msgstr "Setifikatlar"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "İmzalamaq üçün sertifikatı seçin"
+msgstr "Bununla imzalamaq üçün sertifikatı seçin:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

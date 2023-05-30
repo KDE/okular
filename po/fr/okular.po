@@ -15,8 +15,8 @@
 # Sebastien Renard <renard@kde.org>, 2014, 2015.
 # Ludovic Grossard <grossard@kde.org>, 2014.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
+# Xavier BESNARD <xavier.besnard@neuf.fr>, 2023.
 #
-# Xavier BESNARD <xavier.besnard]neuf.fr>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"

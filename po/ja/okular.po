@@ -19,7 +19,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 "X-Generator: Lokalize 22.04.1\n"
@@ -1536,8 +1536,7 @@ msgstr "ページ %1"
 #, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "注釈"
-msgstr[1] "%1 個の注釈"
+msgstr[0] "%1 個の注釈"
 
 #: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
 #, kde-format
@@ -2119,10 +2118,6 @@ msgid_plural ""
 "\n"
 "%2 bookmarks"
 msgstr[0] ""
-"%1\n"
-"\n"
-"ブックマーク 1 個"
-msgstr[1] ""
 "%1\n"
 "\n"
 "ブックマーク %2 個"
@@ -2962,7 +2957,6 @@ msgctxt "Advance every %1 seconds"
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " 秒"
-msgstr[1] " 秒"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3683,8 +3677,7 @@ msgstr "フォームを表示(&F)"
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
-msgstr[0] " 1 ページの文書を読み込みました。"
-msgstr[1] " %1 ページの文書を読み込みました。"
+msgstr[0] " %1 ページの文書を読み込みました。"
 
 #: part/pageview.cpp:2517
 #, kde-format
@@ -3701,8 +3694,7 @@ msgstr "コピーは DRM (デジタル著作権管理) によって禁止され�
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
-msgstr[0] "テキスト (1 文字)"
-msgstr[1] "テキスト (%1 文字)"
+msgstr[0] "テキスト (%1 文字)"
 
 #: part/pageview.cpp:2835 part/pageview.cpp:2853
 #, kde-format

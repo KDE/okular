@@ -104,6 +104,14 @@ public:
         m_scaleMode->setToolTip(i18n("Scaling mode for the printed pages"));
         printBackendLayout->addRow(i18n("Scale mode:"), m_scaleMode);
 
+        // Set scale mode to users default
+        m_scaleMode->setCurrentIndex(PDFSettings::printScaleMode());
+
+        // Set rasterizing if scale mode is 1 or 2
+        if (m_scaleMode->currentIndex() != 0) {
+            m_forceRaster->setCheckState(Qt::Checked);
+        }
+
         // If the user selects a scaling mode that requires the use of the
         // "Force rasterization" feature, enable it automatically so they don't
         // have to 1) know this and 2) do it manually

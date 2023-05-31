@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>721</width>
-    <height>431</height>
+    <height>451</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -44,6 +44,49 @@
      </item>
      <item>
       <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Default scaling mode when printing:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="kcfg_PrintScaleMode">
+       <item>
+        <property name="text">
+         <string>Fit to printable area</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fit to full page</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>None; print original size</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

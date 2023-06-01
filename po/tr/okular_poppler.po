@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-06-01 00:44+0000\n"
 "PO-Revision-Date: 2022-02-10 10:59+0100\n"
 "Last-Translator: Volkan Gezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -38,7 +38,7 @@ msgid "Enhance thin lines:"
 msgstr "İnce satırları iyileştir:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:931
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:939
 #, kde-format
 msgid "No"
 msgstr "Hayır"
@@ -55,8 +55,33 @@ msgstr "Katı"
 msgid "Shape"
 msgstr "Şekil"
 
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:65
+#, fuzzy, kde-format
+#| msgid "Scaling mode for the printed pages"
+msgid "Default scaling mode when printing:"
+msgstr "Yazdırılan sayfalar için ölçeklendirme kipi"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Yazdırılabilir alana sığdır"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "Tam sayfaya sığdır"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "Hiçbiri; özgün boyutu yazdır"
+
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:63
+#: conf/pdfsettingswidget.ui:106
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -68,7 +93,7 @@ msgstr ""
 "itibaren yürürlükten kaldırılıp kaldırılmadığını denetlemesine izin verir."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:66
+#: conf/pdfsettingswidget.ui:109
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
@@ -77,31 +102,31 @@ msgstr ""
 "denetle"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:73
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid "Certificate Database"
 msgstr "Sertifika Veritabanı"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:82
+#: conf/pdfsettingswidget.ui:125
 #, kde-format
 msgid "Default:"
 msgstr "Öntanımlı:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:89
+#: conf/pdfsettingswidget.ui:132
 #, kde-format
 msgid "Custom:"
 msgstr "Özel:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:149
 #, kde-format
 msgid "Available Certificates"
 msgstr "Kullanılabilir Sertifikalar"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:114
+#: conf/pdfsettingswidget.ui:157
 #, kde-format
 msgid "&Load Signatures"
 msgstr "İmza &Yükle"
@@ -151,21 +176,6 @@ msgstr ""
 "bir parça kötü sonuçlar doğurur, ancak hatalı olarak yazdırılıyor görünen "
 "belgeleri yazdırırken oldukça yararlıdır."
 
-#: generator_pdf.cpp:101
-#, kde-format
-msgid "Fit to printable area"
-msgstr "Yazdırılabilir alana sığdır"
-
-#: generator_pdf.cpp:102
-#, kde-format
-msgid "Fit to full page"
-msgstr "Tam sayfaya sığdır"
-
-#: generator_pdf.cpp:103
-#, kde-format
-msgid "None; print original size"
-msgstr "Hiçbiri; özgün boyutu yazdır"
-
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
@@ -176,43 +186,43 @@ msgstr "Yazdırılan sayfalar için ölçeklendirme kipi"
 msgid "Scale mode:"
 msgstr "Ölçeklendirme kipi:"
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF s. %1.%2"
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgid "Format"
 msgstr "Biçim"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Encrypted"
 msgstr "Şifrelenmiş"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Unencrypted"
 msgstr "Şifrelenmemiş"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Security"
 msgstr "Güvenlik"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Yes"
 msgstr "Evet"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Optimized"
 msgstr "İyileştirilmiş"
 
-#: generator_pdf.cpp:1362
+#: generator_pdf.cpp:1370
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -223,12 +233,12 @@ msgstr ""
 "\n"
 "Tarih: %2"
 
-#: generator_pdf.cpp:1563
+#: generator_pdf.cpp:1571
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 kullanılıyor"
 
-#: generator_pdf.cpp:1565
+#: generator_pdf.cpp:1573
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -239,17 +249,17 @@ msgstr ""
 "\n"
 "Poppler %2 sürümüne karşın yapılmıştır"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Arka Ucu Yapılandırması"
 
-#: generator_pdf.cpp:2045
+#: generator_pdf.cpp:2053
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

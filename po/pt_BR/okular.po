@@ -15,9 +15,9 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
-"PO-Revision-Date: 2023-01-16 23:04-0300\n"
+"PO-Revision-Date: 2023-05-31 14:35-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
-"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1101,10 +1101,9 @@ msgid "Reason: %1"
 msgstr "Motivo: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Localização:"
+msgstr "Localização: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1559,10 +1558,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Abrir a nota instantânea"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Copiar para a área de transferência"
+msgstr "Copiar texto para a área de transferência"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4589,7 +4587,7 @@ msgstr "Salvar - Aviso"
 #: part/part.cpp:2667
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Salvar uma cópia em outro lugar"
 
 #: part/part.cpp:2682
 #, kde-format
@@ -5385,16 +5383,14 @@ msgid "Save Signed File As"
 msgstr "Salvar arquivo assinado como"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certificados:"
+msgstr "Certificados"
 
 #: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Selecione o certificado para assinar"
+msgstr "Selecione o certificado para assinar:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-06-01 00:44+0000\n"
 "PO-Revision-Date: 2023-02-03 13:46+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -37,7 +37,7 @@ msgid "Enhance thin lines:"
 msgstr "Zvýraznit tenké čáry:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:931
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:939
 #, kde-format
 msgid "No"
 msgstr "Ne"
@@ -54,8 +54,33 @@ msgstr "Plný"
 msgid "Shape"
 msgstr "Tvar"
 
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:65
+#, fuzzy, kde-format
+#| msgid "Scaling mode for the printed pages"
+msgid "Default scaling mode when printing:"
+msgstr "Režim škálování pro vytištěné stránky"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "Vyplnit tisknutelnou oblast"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "Přizpůsobit plné stránce"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "Žádné. Vytisknout v původní velikosti."
+
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:63
+#: conf/pdfsettingswidget.ui:106
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -66,7 +91,7 @@ msgstr ""
 "kontrolu zda nebyly použité certifikáty od jejich vytvoření odvolány."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:66
+#: conf/pdfsettingswidget.ui:109
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
@@ -75,31 +100,31 @@ msgstr ""
 "stran."
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:73
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid "Certificate Database"
 msgstr "Databáze certifikátu"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:82
+#: conf/pdfsettingswidget.ui:125
 #, kde-format
 msgid "Default:"
 msgstr "Výchozí:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:89
+#: conf/pdfsettingswidget.ui:132
 #, kde-format
 msgid "Custom:"
 msgstr "Vlastní:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:149
 #, kde-format
 msgid "Available Certificates"
 msgstr "Dostupné certifikáty"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:114
+#: conf/pdfsettingswidget.ui:157
 #, kde-format
 msgid "&Load Signatures"
 msgstr "Načíst podp&isy"
@@ -149,21 +174,6 @@ msgstr ""
 "k o něco horším výsledkům, ale dá se to použít při tisku dokumentů, které se "
 "netisknou v pořádku."
 
-#: generator_pdf.cpp:101
-#, kde-format
-msgid "Fit to printable area"
-msgstr "Vyplnit tisknutelnou oblast"
-
-#: generator_pdf.cpp:102
-#, kde-format
-msgid "Fit to full page"
-msgstr "Přizpůsobit plné stránce"
-
-#: generator_pdf.cpp:103
-#, kde-format
-msgid "None; print original size"
-msgstr "Žádné. Vytisknout v původní velikosti."
-
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
@@ -174,43 +184,43 @@ msgstr "Režim škálování pro vytištěné stránky"
 msgid "Scale mode:"
 msgstr "Režim škálování:"
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgid "Format"
 msgstr "Formát"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Encrypted"
 msgstr "Zašifrováno"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nezašifrováno"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Security"
 msgstr "Bezpečnost"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Yes"
 msgstr "Ano"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Optimized"
 msgstr "Optimalizováno"
 
-#: generator_pdf.cpp:1362
+#: generator_pdf.cpp:1370
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -221,12 +231,12 @@ msgstr ""
 "\n"
 "Datum: %2"
 
-#: generator_pdf.cpp:1563
+#: generator_pdf.cpp:1571
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Používám Poppler %1"
 
-#: generator_pdf.cpp:1565
+#: generator_pdf.cpp:1573
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -237,17 +247,17 @@ msgstr ""
 "\n"
 "Sestaveno s Poppler %2"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Nastavení podpůrné vrstvy PDF"
 
-#: generator_pdf.cpp:2045
+#: generator_pdf.cpp:2053
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

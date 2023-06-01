@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 00:45+0000\n"
+"POT-Creation-Date: 2023-06-01 00:44+0000\n"
 "PO-Revision-Date: 2023-04-23 17:38+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -40,7 +40,7 @@ msgid "Enhance thin lines:"
 msgstr "加強細線："
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:931
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:939
 #, kde-format
 msgid "No"
 msgstr "否"
@@ -57,8 +57,33 @@ msgstr "實線"
 msgid "Shape"
 msgstr "形狀"
 
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:65
+#, fuzzy, kde-format
+#| msgid "Scaling mode for the printed pages"
+msgid "Default scaling mode when printing:"
+msgstr "列印頁面的比例模式"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
+#, kde-format
+msgid "Fit to printable area"
+msgstr "縮放到可印區塊大小"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:102
+#, kde-format
+msgid "Fit to full page"
+msgstr "縮放到整頁大小"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:103
+#, kde-format
+msgid "None; print original size"
+msgstr "無；列印原始大小"
+
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:63
+#: conf/pdfsettingswidget.ui:106
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -69,38 +94,38 @@ msgstr ""
 "憑證是否在建立以來已被撤回。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:66
+#: conf/pdfsettingswidget.ui:109
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr "利用第三方伺服器檢查數位簽章的憑證是否被撤回"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:73
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid "Certificate Database"
 msgstr "憑證資料庫"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:82
+#: conf/pdfsettingswidget.ui:125
 #, kde-format
 msgid "Default:"
 msgstr "預設："
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:89
+#: conf/pdfsettingswidget.ui:132
 #, kde-format
 msgid "Custom:"
 msgstr "自訂："
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:149
 #, kde-format
 msgid "Available Certificates"
 msgstr "可用的憑證"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:114
+#: conf/pdfsettingswidget.ui:157
 #, kde-format
 msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
@@ -148,21 +173,6 @@ msgstr ""
 "在每一頁的圖片列印前強制光柵化（rasterization）。通常結果會變差，但是若某些文"
 "件列印結果不正確時，此選項可能有用。"
 
-#: generator_pdf.cpp:101
-#, kde-format
-msgid "Fit to printable area"
-msgstr "縮放到可印區塊大小"
-
-#: generator_pdf.cpp:102
-#, kde-format
-msgid "Fit to full page"
-msgstr "縮放到整頁大小"
-
-#: generator_pdf.cpp:103
-#, kde-format
-msgid "None; print original size"
-msgstr "無；列印原始大小"
-
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
@@ -173,43 +183,43 @@ msgstr "列印頁面的比例模式"
 msgid "Scale mode:"
 msgstr "比例模式："
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:929
+#: generator_pdf.cpp:937
 #, kde-format
 msgid "Format"
 msgstr "格式"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Encrypted"
 msgstr "已加密"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Unencrypted"
 msgstr "已解密"
 
-#: generator_pdf.cpp:930
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Security"
 msgstr "安全性"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Yes"
 msgstr "是"
 
-#: generator_pdf.cpp:931
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Optimized"
 msgstr "最佳化"
 
-#: generator_pdf.cpp:1362
+#: generator_pdf.cpp:1370
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -220,12 +230,12 @@ msgstr ""
 "\n"
 "日期：%2"
 
-#: generator_pdf.cpp:1563
+#: generator_pdf.cpp:1571
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "使用 Poppler %1"
 
-#: generator_pdf.cpp:1565
+#: generator_pdf.cpp:1573
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -236,17 +246,17 @@ msgstr ""
 "\n"
 "為 Poppler %2 構建"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1600
+#: generator_pdf.cpp:1608
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF 後端介面設定"
 
-#: generator_pdf.cpp:2045
+#: generator_pdf.cpp:2053
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

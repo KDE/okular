@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-01 00:44+0000\n"
-"PO-Revision-Date: 2021-11-09 18:46+0000\n"
+"PO-Revision-Date: 2023-06-01 09:39+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
 "Language: pt\n"
@@ -54,10 +54,9 @@ msgstr "Forma"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:65
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "Modo de escala das páginas impressas"
+msgstr "Modo de escala predefinido na impressão:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
@@ -311,6 +310,3 @@ msgstr "Indique a Senha"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Indique a senha para abrir o %1:"
-
-#~ msgid "Not Available"
-#~ msgstr "Não Disponível"

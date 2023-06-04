@@ -23,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
 "PO-Revision-Date: 2023-05-05 20:41+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -4605,7 +4605,7 @@ msgid ""
 msgstr ""
 "Le fichier <filename>%1</filename> a été modifié par un autre programme. Si "
 "vous faites un enregistrement maintenant, toute modification effectuée dans "
-"l’autre programme sera perdue. Voulez-vous vraiment continuer ?"
+"l'autre programme sera perdue. Voulez-vous vraiment continuer ?"
 
 #: part/part.cpp:2665 part/part.cpp:2683 part/part.cpp:2735
 #, kde-format

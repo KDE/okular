@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-01 00:44+0000\n"
-"PO-Revision-Date: 2023-02-19 15:20+0100\n"
+"PO-Revision-Date: 2023-06-04 15:09+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -55,10 +55,9 @@ msgstr "Formo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:65
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "Skala reĝimo por la presitaj paĝoj"
+msgstr "Defaŭlta skaladoreĝimo por la presitaj paĝoj"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101

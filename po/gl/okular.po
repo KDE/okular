@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
-"PO-Revision-Date: 2023-05-04 19:48+0200\n"
+"PO-Revision-Date: 2023-06-05 15:19+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2838,8 +2838,8 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 "Define o modo de ampliación predeterminado dos ficheiros que non se abrisen "
-"nunca antes. Para os ficheiros que se abrisen antes emprégase o modo de "
-"ampliación anterior."
+"nunca. Para os ficheiros que se abrisen antes emprégase o modo de ampliación "
+"anterior."
 
 #: part/dlggeneral.cpp:210
 #, kde-format
@@ -3148,13 +3148,13 @@ msgstr "Limpar cara a abaixo"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe right"
-msgstr "Limpar cara a dereita"
+msgstr "Limpar cara á dereita"
 
 #: part/dlgpresentation.cpp:118
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe left"
-msgstr "Limpar cara a esquerda"
+msgstr "Limpar cara á esquerda"
 
 #: part/dlgpresentation.cpp:119
 #, kde-format
@@ -4417,7 +4417,7 @@ msgstr ""
 "O ficheiro <filename>%1</filename> ten cambios sen gardar, pero modificouno "
 "outro programa. Cargalo de novo substituirá os cambios sen gardar polo "
 "cambios feitos nese outro programa.<nl/> <nl/>Quere cargar de novo o "
-"ficheiro de todos xeitos?"
+"ficheiro aínda así?"
 
 #: part/part.cpp:1867 part/part.cpp:1877
 #, kde-format
@@ -4445,8 +4445,7 @@ msgid ""
 msgstr ""
 "O ficheiro <filename>%1</filename> ten cambios sen gardar, pero modificouno "
 "outro programa. Pechalo substituirá os cambios sen gardar polo cambios "
-"feitos nese outro programa.<nl/> <nl/>Quere pechar o ficheiro de todos "
-"xeitos?"
+"feitos nese outro programa.<nl/> <nl/>Quere pechar o ficheiro aínda así?"
 
 #: part/part.cpp:1878
 #, kde-format

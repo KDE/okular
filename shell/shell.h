@@ -19,8 +19,8 @@
 #include <kparts/mainwindow.h>
 #include <kparts/readwritepart.h>
 
+#include <QDBusAbstractAdaptor> // for Q_NOREPLY
 #include <QStackedWidget>
-#include <QtDBus> // krazy:exclude=includes
 
 #include "welcomescreen.h"
 

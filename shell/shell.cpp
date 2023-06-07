@@ -40,7 +40,9 @@
 #include <QDockWidget>
 #include <QDragMoveEvent>
 #include <QFileDialog>
+#include <QJsonArray>
 #include <QMenuBar>
+#include <QMimeData>
 #include <QObject>
 #include <QScreen>
 #include <QTabBar>

@@ -11,10 +11,14 @@
 #include <KConfigGroup>
 #include <KLineEdit>
 #include <KRecentFilesAction>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QPrintDialog>
 #include <QStandardPaths>
 #include <QTabBar>
 #include <QTabWidget>
+#include <QTemporaryFile>
+#include <QTimer>
 #include <qwidget.h>
 
 #include "../core/document_p.h"

@@ -27,18 +27,22 @@
 // qt/kde includes
 #include <QApplication>
 #include <QContextMenuEvent>
+#include <QDBusConnection>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QJsonArray>
 #include <QLabel>
 #include <QLayout>
 #include <QMenu>
 #include <QMenuBar>
+#include <QMimeDatabase>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QScopedValueRollback>
 #include <QScrollBar>
 #include <QSlider>
 #include <QSpinBox>

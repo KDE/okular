@@ -38,7 +38,9 @@
 #include <QScrollBar>
 #include <QTabletEvent>
 #include <QTemporaryDir>
+#include <QTemporaryFile>
 #include <QTextEdit>
+#include <QTimer>
 #include <QToolBar>
 #include <QTreeView>
 #include <QUrl>

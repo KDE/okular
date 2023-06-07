@@ -15,12 +15,12 @@
 #ifndef _PART_H_
 #define _PART_H_
 
+#include <QDBusAbstractAdaptor> // for Q_NOREPLY
 #include <QIcon>
 #include <QList>
 #include <QPointer>
 #include <QProcess>
 #include <QUrl>
-#include <QtDBus> // krazy:exclude=includes
 
 #include <KCompressionDevice>
 #include <KIO/Job>

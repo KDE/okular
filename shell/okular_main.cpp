@@ -16,7 +16,10 @@
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <QApplication>
+#include <QDBusConnectionInterface>
 #include <QDBusInterface>
+#include <QMimeData>
+#include <QTemporaryFile>
 #include <QTextStream>
 
 #include "config-okular.h"

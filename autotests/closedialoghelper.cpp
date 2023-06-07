@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QTest>
+#include <QTimer>
 
 namespace TestingUtils
 {

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-26 00:44+0000\n"
-"PO-Revision-Date: 2023-02-21 09:40+0100\n"
+"PO-Revision-Date: 2023-05-31 11:49+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.04.1\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -1086,10 +1086,9 @@ msgid "Reason: %1"
 msgstr "Příčina: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Umístění:"
+msgstr "Umístění: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1534,10 +1533,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Otevřít vyskakovací poznámku"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Zkopírovat do schránky"
+msgstr "Zkopírovat text do schránky"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4524,6 +4522,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Soubor <filename>%1</filename> byl upraven jiným programem. Pokud jej teď "
+"uložíte, veškeré změny, které ten program provedl, budou ztraceny. Jste si "
+"jisti, že si přejete pokračovat?"
 
 #: part/part.cpp:2665 part/part.cpp:2683 part/part.cpp:2735
 #, kde-format
@@ -4533,7 +4534,7 @@ msgstr "Uložit - varování"
 #: part/part.cpp:2667
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Uložit kopii jinde"
 
 #: part/part.cpp:2682
 #, kde-format
@@ -5298,15 +5299,14 @@ msgid "Save Signed File As"
 msgstr "Uložit podepsaný soubor jako"
 
 #: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certifikáty:"
+msgstr "Certifikáty"
 
 #: part/signaturepartutils.cpp:171
 #, kde-format
 msgid "Select certificate to sign with:"
-msgstr ""
+msgstr "Vyberte certifikát, pro podepisování:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
@@ -5662,6 +5662,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Zobrazit postranní lištu"

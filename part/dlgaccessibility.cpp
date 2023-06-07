@@ -18,7 +18,7 @@
 #include <QStackedWidget>
 
 #if HAVE_SPEECH
-#include <QtTextToSpeech>
+#include <QTextToSpeech>
 #endif
 
 DlgAccessibility::DlgAccessibility(QWidget *parent)

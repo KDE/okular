@@ -4,7 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <QtTest>
+#include <QTest>
 
 #include "../part/toggleactionmenu.h"
 #include <QToolBar>

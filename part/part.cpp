@@ -3345,6 +3345,8 @@ void Part::slotUpdateHamburgerMenu()
 
     menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::Print)));
     menu->addAction(m_printPreview);
+    menu->addSeparator();
+    menu->addAction(ac->action(QStringLiteral("add_digital_signature")));
     menu->addAction(m_showProperties);
     menu->addAction(m_openContainingFolder);
 #if HAVE_PURPOSE

@@ -7,7 +7,7 @@
 #include "documentitem.h"
 
 #include <QMimeDatabase>
-#include <QtQml> // krazy:exclude=includes
+#include <QQmlEngine>
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>

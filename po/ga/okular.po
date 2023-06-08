@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-26 00:44+0000\n"
+"POT-Creation-Date: 2023-06-08 00:44+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -382,7 +382,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5322 part/part.cpp:1158
+#: core/document.cpp:5322 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Níorbh fhéidir '%1' a oscailt. Níl an comhad ann"
@@ -1615,7 +1615,7 @@ msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "&Teimhneacht:"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3157
+#: part/annotationmodel.cpp:324 part/part.cpp:3161
 #, kde-format
 msgid "Page %1"
 msgstr "Leathanach %1"
@@ -1653,7 +1653,7 @@ msgstr "Cóipeáil faoi chosc ag DRM"
 msgid "&Delete"
 msgstr "&Scrios"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:789
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:793
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2253,7 +2253,7 @@ msgstr[4] ""
 "\n"
 "%2 leabharmharc"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:411
+#: part/bookmarklist.cpp:131 part/part.cpp:415
 #, kde-format
 msgid "Bookmarks"
 msgstr "Leabharmharcanna"
@@ -2276,13 +2276,13 @@ msgstr "C&uardaigh:"
 msgid "Go to This Bookmark"
 msgstr "Téigh go dtí an Leabharmharc Seo"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:721
-#: part/part.cpp:2463
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:725
+#: part/part.cpp:2467
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Athainmnigh an Leabharmharc"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2268 part/part.cpp:3163
+#: part/bookmarklist.cpp:259 part/part.cpp:2272 part/part.cpp:3167
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Bain Leabharmharc"
@@ -3660,7 +3660,7 @@ msgstr ""
 msgid "S&earch:"
 msgstr "C&uardaigh:"
 
-#: part/layers.cpp:35 part/part.cpp:2311
+#: part/layers.cpp:35 part/part.cpp:2315
 #, kde-format
 msgid "Layers"
 msgstr ""
@@ -3971,7 +3971,7 @@ msgstr "Cóipeáil Téacs"
 msgid "Go to '%1'"
 msgstr "Téigh go leathanach %1"
 
-#: part/pageview.cpp:4025 part/part.cpp:3168
+#: part/pageview.cpp:4025 part/part.cpp:3172
 #, kde-format
 msgid "Fit Width"
 msgstr "Laghdaigh go leithead leathanaigh"
@@ -4278,19 +4278,19 @@ msgstr "&Leabharmharcanna"
 msgid "Viewer Toolbar"
 msgstr "Barra Uirlisí Amharcán"
 
-#: part/part.cpp:401 part/thumbnaillist.cpp:48
+#: part/part.cpp:405 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "Mionsamhlacha"
 
-#: part/part.cpp:407 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:411 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
 msgid "Annotations"
 msgstr "Anótáil"
 
-#: part/part.cpp:449
+#: part/part.cpp:453
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4299,7 +4299,7 @@ msgid ""
 "edit the document."
 msgstr ""
 
-#: part/part.cpp:456
+#: part/part.cpp:460
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4309,212 +4309,212 @@ msgstr ""
 "\">Cliceáil anseo</a> chun iad a fheiceáil nó téigh go Comhad -> Comhaid "
 "Leabaithe."
 
-#: part/part.cpp:678
+#: part/part.cpp:682
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "An Leathanach Roimhe Seo"
 
-#: part/part.cpp:679
+#: part/part.cpp:683
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "An Leathanach Roimhe Seo"
 
-#: part/part.cpp:680
+#: part/part.cpp:684
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Téigh go dtí an leathanach sa cháipéis roimh an gceann seo"
 
-#: part/part.cpp:690
+#: part/part.cpp:694
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "An Chéad Leathanach Eile"
 
-#: part/part.cpp:691
+#: part/part.cpp:695
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "An Chéad Leathanach Eile"
 
-#: part/part.cpp:692
+#: part/part.cpp:696
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Téigh go dtí an chéad leathanach eile sa cháipéis"
 
-#: part/part.cpp:703
+#: part/part.cpp:707
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Tús na cáipéise"
 
-#: part/part.cpp:704
+#: part/part.cpp:708
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Téigh go dtí tús na cáipéise"
 
-#: part/part.cpp:708
+#: part/part.cpp:712
 #, kde-format
 msgid "End of the document"
 msgstr "Deireadh na cáipéise"
 
-#: part/part.cpp:709
+#: part/part.cpp:713
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Téigh go dtí deireadh na cáipéise"
 
-#: part/part.cpp:723
+#: part/part.cpp:727
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Athainmnigh an leabharmharc reatha"
 
-#: part/part.cpp:727
+#: part/part.cpp:731
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "An Leabharmharc Roimhe Seo"
 
-#: part/part.cpp:729
+#: part/part.cpp:733
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Téigh go dtí an leabharmharc roimhe seo"
 
-#: part/part.cpp:733
+#: part/part.cpp:737
 #, kde-format
 msgid "Next Bookmark"
 msgstr "An Chéad Leabharmharc Eile"
 
-#: part/part.cpp:735
+#: part/part.cpp:739
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Téigh go dtí an chéad leabharmharc eile"
 
-#: part/part.cpp:764
+#: part/part.cpp:768
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Cumraigh Okular..."
 
-#: part/part.cpp:767
+#: part/part.cpp:771
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "Cumraigh an tAmharcán..."
 
-#: part/part.cpp:773
+#: part/part.cpp:777
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "Cumraigh Innill Amharcáin..."
 
-#: part/part.cpp:775
+#: part/part.cpp:779
 #, kde-format
 msgid "Configure Backends..."
 msgstr "Cumraigh Innill..."
 
-#: part/part.cpp:811
+#: part/part.cpp:815
 #, kde-format
 msgid "About Backend"
 msgstr "Maidir leis an Inneall"
 
-#: part/part.cpp:816
+#: part/part.cpp:820
 #, kde-format
 msgid "Reloa&d"
 msgstr "Ath&luchtaigh"
 
-#: part/part.cpp:818
+#: part/part.cpp:822
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Athluchtaigh an cháipéis reatha ón diosca."
 
-#: part/part.cpp:824
+#: part/part.cpp:828
 #, kde-format
 msgid "Close &Find Bar"
 msgstr ""
 
-#: part/part.cpp:829
+#: part/part.cpp:833
 #, kde-format
 msgid "Page Number"
 msgstr "Uimhir an Leathanaigh"
 
-#: part/part.cpp:833
+#: part/part.cpp:837
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "Cumraigh Okular..."
 
-#: part/part.cpp:874
+#: part/part.cpp:878
 #, fuzzy, kde-format
 #| msgid "Speak Current Page"
 msgid "Select All Text on Current Page"
 msgstr "Léigh an Leathanach Reatha"
 
-#: part/part.cpp:887
+#: part/part.cpp:891
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Show S&idebar"
 msgstr "Taispeáin scroll&bharraí"
 
-#: part/part.cpp:896
+#: part/part.cpp:900
 #, kde-format
 msgid "Show &Page Bar"
 msgstr ""
 
-#: part/part.cpp:902
+#: part/part.cpp:906
 #, fuzzy, kde-format
 #| msgid "Show &Navigation Panel"
 msgid "Show &Signatures Panel"
 msgstr "Taispeáin an Painéal &Nascleanúna"
 
-#: part/part.cpp:912
+#: part/part.cpp:916
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&Comhaid Leabaithe"
 
-#: part/part.cpp:918
+#: part/part.cpp:922
 #, kde-format
 msgid "E&xport As"
 msgstr "Ea&spórtáil Mar"
 
-#: part/part.cpp:930
+#: part/part.cpp:934
 #, kde-format
 msgid "S&hare"
 msgstr ""
 
-#: part/part.cpp:939
+#: part/part.cpp:943
 #, kde-format
 msgid "P&resentation"
 msgstr "L&áithreoireacht"
 
-#: part/part.cpp:946
+#: part/part.cpp:950
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr ""
 
-#: part/part.cpp:960
+#: part/part.cpp:964
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "&Iompórtáil PostScript mar PDF..."
 
-#: part/part.cpp:964
+#: part/part.cpp:968
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr ""
 
-#: part/part.cpp:972
+#: part/part.cpp:976
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Erase Drawing"
 msgstr "Láithreoireacht"
 
-#: part/part.cpp:977
+#: part/part.cpp:981
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
 msgid "Configure Annotations..."
 msgstr "Cumraigh Innill..."
 
-#: part/part.cpp:982
+#: part/part.cpp:986
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Play/Pause Presentation"
 msgstr "Láithreoireacht"
 
-#: part/part.cpp:1135
+#: part/part.cpp:1139
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4522,84 +4522,84 @@ msgid ""
 "Any modification will be lost once Okular is closed."
 msgstr ""
 
-#: part/part.cpp:1136
+#: part/part.cpp:1140
 #, fuzzy, kde-format
 #| msgctxt "A document format, Okular-specific"
 #| msgid "Document Archive"
 msgid "Document can't be saved"
 msgstr "Cartlann Cáipéisí"
 
-#: part/part.cpp:1165
+#: part/part.cpp:1169
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open '%1' (%2) "
 msgstr "Níorbh fhéidir %1 a oscailt"
 
-#: part/part.cpp:1219
+#: part/part.cpp:1223
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Cealaíodh luchtú %1."
 
-#: part/part.cpp:1235
+#: part/part.cpp:1239
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Níorbh fhéidir %1 a oscailt. Fáth: %2"
 
-#: part/part.cpp:1263
+#: part/part.cpp:1267
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Cumraigh Innill Amharcáin"
 
-#: part/part.cpp:1265
+#: part/part.cpp:1269
 #, kde-format
 msgid "Configure Backends"
 msgstr "Cumraigh Innill"
 
-#: part/part.cpp:1350
+#: part/part.cpp:1354
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr ""
 
-#: part/part.cpp:1350
+#: part/part.cpp:1354
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf gan aimsiú"
 
-#: part/part.cpp:1355
+#: part/part.cpp:1359
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr ""
 
-#: part/part.cpp:1371
+#: part/part.cpp:1375
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr ""
 
-#: part/part.cpp:1500
+#: part/part.cpp:1504
 #, fuzzy, kde-format
 #| msgid "Moves to the last page of the document"
 msgid "Please enter the password to read the document:"
 msgstr "Téigh go dtí an leathanach deiridh sa cháipéis"
 
-#: part/part.cpp:1502
+#: part/part.cpp:1506
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Focal faire mícheart. Triail arís é:"
 
-#: part/part.cpp:1508
+#: part/part.cpp:1512
 #, fuzzy, kde-format
 #| msgid "Password"
 msgid "Document Password"
 msgstr "Focal Faire"
 
-#: part/part.cpp:1628
+#: part/part.cpp:1632
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 
-#: part/part.cpp:1635
+#: part/part.cpp:1639
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4608,43 +4608,43 @@ msgstr ""
 "Tá foirmeacha sa cháipéis seo. Cliceáil an cnaipe chun idirghníomhú leo, nó "
 "úsáid Amharc -> Taispeáin Foirmeacha."
 
-#: part/part.cpp:1651
+#: part/part.cpp:1655
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
 
-#: part/part.cpp:1739
+#: part/part.cpp:1743
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
 
-#: part/part.cpp:1741
+#: part/part.cpp:1745
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr ""
 
-#: part/part.cpp:1742
+#: part/part.cpp:1746
 #, fuzzy, kde-format
 #| msgid "Presentation Mode"
 msgid "Enter Presentation Mode"
 msgstr "Mód Láithreoireachta"
 
-#: part/part.cpp:1743
+#: part/part.cpp:1747
 #, kde-format
 msgid "Deny Request"
 msgstr ""
 
-#: part/part.cpp:1833
+#: part/part.cpp:1837
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open %1. %2"
 msgstr "Níorbh fhéidir %1 a oscailt"
 
-#: part/part.cpp:1863
+#: part/part.cpp:1867
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4654,23 +4654,23 @@ msgid ""
 "reloading the file?"
 msgstr ""
 
-#: part/part.cpp:1867 part/part.cpp:1877
+#: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
 msgid "File Changed"
 msgstr ""
 
-#: part/part.cpp:1868
+#: part/part.cpp:1872
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Reloading"
 msgstr "&Leanúnach"
 
-#: part/part.cpp:1869
+#: part/part.cpp:1873
 #, kde-format
 msgid "Abort Reloading"
 msgstr ""
 
-#: part/part.cpp:1873
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4680,115 +4680,115 @@ msgid ""
 "the file?"
 msgstr ""
 
-#: part/part.cpp:1878
+#: part/part.cpp:1882
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Closing"
 msgstr "&Leanúnach"
 
-#: part/part.cpp:1879
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Closing"
 msgstr ""
 
-#: part/part.cpp:1886
+#: part/part.cpp:1890
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 
-#: part/part.cpp:1886
+#: part/part.cpp:1890
 #, kde-format
 msgid "Close Document"
 msgstr "Dún an Cháipéis"
 
-#: part/part.cpp:2018
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
 "the embedded viewer."
 msgstr ""
 
-#: part/part.cpp:2024
+#: part/part.cpp:2028
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
 "the embedded viewer."
 msgstr ""
 
-#: part/part.cpp:2116 part/part.cpp:2134
+#: part/part.cpp:2120 part/part.cpp:2138
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Cáipéis á hathluchtú..."
 
-#: part/part.cpp:2291 part/toc.cpp:38
+#: part/part.cpp:2295 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Inneachar"
 
-#: part/part.cpp:2320 part/signaturepanel.cpp:47
+#: part/part.cpp:2324 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr ""
 
-#: part/part.cpp:2347
+#: part/part.cpp:2351
 #, kde-format
 msgid "Go to Page"
 msgstr "Téigh go Leathanach"
 
-#: part/part.cpp:2370
+#: part/part.cpp:2374
 #, kde-format
 msgid "&Page:"
 msgstr "&Leathanach:"
 
-#: part/part.cpp:2463
+#: part/part.cpp:2467
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr ""
 
-#: part/part.cpp:2509
+#: part/part.cpp:2513
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Athainmnigh an Leabharmharc seo"
 
-#: part/part.cpp:2512
+#: part/part.cpp:2516
 #, fuzzy, kde-format
 #| msgid "Rename this Bookmark"
 msgid "Remove this Bookmark"
 msgstr "Athainmnigh an Leabharmharc seo"
 
-#: part/part.cpp:2598 part/part.cpp:2599 part/part.cpp:3472
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3476
 #: part/signaturepartutils.cpp:124
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr ""
 
-#: part/part.cpp:2606 part/revisionviewer.cpp:44
+#: part/part.cpp:2610 part/revisionviewer.cpp:44
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "&Save As..."
 msgid "Save As"
 msgstr "&Sábháil Mar..."
 
-#: part/part.cpp:2623
+#: part/part.cpp:2627
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
 
-#: part/part.cpp:2624
+#: part/part.cpp:2628
 #, kde-format
 msgid "Unsupported extension"
 msgstr ""
 
-#: part/part.cpp:2625
+#: part/part.cpp:2629
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2662
+#: part/part.cpp:2666
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4797,17 +4797,17 @@ msgid ""
 "sure you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2665 part/part.cpp:2683 part/part.cpp:2735
+#: part/part.cpp:2669 part/part.cpp:2687 part/part.cpp:2739
 #, kde-format
 msgid "Save - Warning"
 msgstr ""
 
-#: part/part.cpp:2667
+#: part/part.cpp:2671
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr ""
 
-#: part/part.cpp:2682
+#: part/part.cpp:2686
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4815,12 +4815,12 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2709
+#: part/part.cpp:2713
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr ""
 
-#: part/part.cpp:2722
+#: part/part.cpp:2726
 #, fuzzy, kde-kuit-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgctxt "@info"
@@ -4830,32 +4830,32 @@ msgid ""
 msgstr ""
 "Níorbh fhéidir an comhad a shábháil i '%1'. Bain triail as suíomh eile."
 
-#: part/part.cpp:2734
+#: part/part.cpp:2738
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2749 part/part.cpp:2818 part/part.cpp:2839 part/part.cpp:3487
+#: part/part.cpp:2753 part/part.cpp:2822 part/part.cpp:2843 part/part.cpp:3491
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Níorbh fhéidir an comhad a shábháil i '%1'. Bain triail as suíomh eile."
 
-#: part/part.cpp:2762
+#: part/part.cpp:2766
 #, fuzzy, kde-format
 #| msgid "Annotation improvements"
 msgid "Filled form contents"
 msgstr "Feabhsúcháin ar anótáil"
 
-#: part/part.cpp:2765
+#: part/part.cpp:2769
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "User annotations"
 msgstr "Láithreoireacht"
 
-#: part/part.cpp:2770
+#: part/part.cpp:2774
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4863,17 +4863,17 @@ msgid ""
 "format to preserve them."
 msgstr ""
 
-#: part/part.cpp:2774 part/part.cpp:2796
+#: part/part.cpp:2778 part/part.cpp:2800
 #, kde-format
 msgid "Warning"
 msgstr ""
 
-#: part/part.cpp:2775 part/part.cpp:2797
+#: part/part.cpp:2779 part/part.cpp:2801
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr ""
 
-#: part/part.cpp:2787
+#: part/part.cpp:2791
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4882,7 +4882,7 @@ msgid ""
 "discard these elements."
 msgstr ""
 
-#: part/part.cpp:2790
+#: part/part.cpp:2794
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4891,23 +4891,23 @@ msgid ""
 "these elements as well as the undo/redo history."
 msgstr ""
 
-#: part/part.cpp:2792
+#: part/part.cpp:2796
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue"
 msgstr "&Leanúnach"
 
-#: part/part.cpp:2792
+#: part/part.cpp:2796
 #, kde-format
 msgid "Continue losing changes"
 msgstr ""
 
-#: part/part.cpp:2820
+#: part/part.cpp:2824
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Níorbh fhéidir an comhad a shábháil i '%1'. %2"
 
-#: part/part.cpp:2859
+#: part/part.cpp:2863
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4915,7 +4915,7 @@ msgid ""
 "The document does not exist anymore."
 msgstr ""
 
-#: part/part.cpp:2895
+#: part/part.cpp:2899
 #, fuzzy, kde-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgid ""
@@ -4924,84 +4924,84 @@ msgid ""
 msgstr ""
 "Níorbh fhéidir an comhad a shábháil i '%1'. Bain triail as suíomh eile."
 
-#: part/part.cpp:3146
+#: part/part.cpp:3150
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Expand whole section"
 msgstr "Cuir Deireadh leis an Láithreoireacht"
 
-#: part/part.cpp:3147
+#: part/part.cpp:3151
 #, kde-format
 msgid "Collapse whole section"
 msgstr ""
 
-#: part/part.cpp:3148
+#: part/part.cpp:3152
 #, kde-format
 msgid "Expand all"
 msgstr ""
 
-#: part/part.cpp:3149
+#: part/part.cpp:3153
 #, kde-format
 msgid "Collapse all"
 msgstr ""
 
-#: part/part.cpp:3160
+#: part/part.cpp:3164
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr ""
 
-#: part/part.cpp:3165
+#: part/part.cpp:3169
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Cuir Leabharmharc Leis"
 
-#: part/part.cpp:3187
+#: part/part.cpp:3191
 #, kde-format
 msgid "Tools"
 msgstr "Uirlisí"
 
-#: part/part.cpp:3368
+#: part/part.cpp:3372
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Léigh an Téacs"
 
-#: part/part.cpp:3525
+#: part/part.cpp:3529
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3588
+#: part/part.cpp:3592
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Níl cead agat an cháipéis seo a phriontáil."
 
-#: part/part.cpp:3596
+#: part/part.cpp:3600
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 
-#: part/part.cpp:3598
+#: part/part.cpp:3602
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
 
-#: part/part.cpp:3678
+#: part/part.cpp:3682
 #, kde-format
 msgid "Go to the place you were before"
 msgstr ""
 
-#: part/part.cpp:3682
+#: part/part.cpp:3686
 #, kde-format
 msgid "Go to the place you were after"
 msgstr ""
 
-#: part/part.cpp:3707
+#: part/part.cpp:3711
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5010,14 +5010,14 @@ msgstr ""
 "<qt><strong>Earráid Chomhaid!</strong> Ní féidir comhad sealadach "
 "<nobr><strong>%1</strong></nobr> a chruthú.</qt>"
 
-#: part/part.cpp:3719
+#: part/part.cpp:3723
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
 "strong></nobr> for uncompression. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3723
+#: part/part.cpp:3727
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5026,41 +5026,41 @@ msgid ""
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
 
-#: part/part.cpp:3745
+#: part/part.cpp:3749
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
 "%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3749
+#: part/part.cpp:3753
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
 
-#: part/part.cpp:3775
+#: part/part.cpp:3779
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Gan Leabharmharcanna"
 
-#: part/part.cpp:3846
+#: part/part.cpp:3850
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3846 part/part.cpp:3852
+#: part/part.cpp:3850 part/part.cpp:3856
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3850
+#: part/part.cpp:3854
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3852
+#: part/part.cpp:3856
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
@@ -5772,7 +5772,7 @@ msgstr ""
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 
-#: shell/okular_main.cpp:57 shell/okular_main.cpp:154
+#: shell/okular_main.cpp:60 shell/okular_main.cpp:157
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5780,56 +5780,56 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:170
+#: shell/okular_main.cpp:173
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 
-#: shell/okular_main.cpp:176
+#: shell/okular_main.cpp:179
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 
-#: shell/okular_main.cpp:182
+#: shell/okular_main.cpp:185
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 
-#: shell/okular_main.cpp:188
+#: shell/okular_main.cpp:191
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 
-#: shell/okular_main.cpp:194
+#: shell/okular_main.cpp:197
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:173
+#: shell/shell.cpp:175
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "Ní féidir comhpháirt okular a aimsiú."
 
-#: shell/shell.cpp:214
+#: shell/shell.cpp:216
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Sidebar"
 msgstr "Taispeáin scroll&bharraí"
 
-#: shell/shell.cpp:243
+#: shell/shell.cpp:245
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:266
+#: shell/shell.cpp:268
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Ní féidir comhpháirt okular a aimsiú."
 
-#: shell/shell.cpp:508
+#: shell/shell.cpp:510
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5838,7 +5838,7 @@ msgstr ""
 "Cliceáil chun comhad a oscailt\n"
 "Cliceáil agus coinnigh an cnaipe síos chun comhad le déanaí a oscailt"
 
-#: shell/shell.cpp:509
+#: shell/shell.cpp:511
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5846,57 +5846,57 @@ msgstr ""
 "<b>Cliceáil</b> chun comhad a oscailt nó <b>Cliceáil agus coinnigh an cnaipe "
 "síos</b> chun comhad le déanaí a oscailt"
 
-#: shell/shell.cpp:522
+#: shell/shell.cpp:524
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "An Chéad Leathanach Eile"
 
-#: shell/shell.cpp:528
+#: shell/shell.cpp:530
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "An Leathanach Roimhe Seo"
 
-#: shell/shell.cpp:534
+#: shell/shell.cpp:536
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:543
+#: shell/shell.cpp:545
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "Taispeáin scroll&bharraí"
 
-#: shell/shell.cpp:640
+#: shell/shell.cpp:642
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|Gach Comhad"
 
-#: shell/shell.cpp:641
+#: shell/shell.cpp:643
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:645
+#: shell/shell.cpp:647
 #, kde-format
 msgid "Open Document"
 msgstr "Oscail Cáipéis"
 
-#: shell/shell.cpp:755
+#: shell/shell.cpp:757
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:759
+#: shell/shell.cpp:761
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Dún"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:768
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5905,7 +5905,7 @@ msgstr ""
 "Tá comhad darb ainm \"%1\" ann cheana. An bhfuil tú cinnte gur mian leat "
 "scríobh air?"
 
-#: shell/shell.cpp:768
+#: shell/shell.cpp:770
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

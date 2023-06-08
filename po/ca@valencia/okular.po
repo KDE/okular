@@ -5467,12 +5467,12 @@ msgstr "&Elimina"
 #: part/widgetconfigurationtoolsbase.cpp:39
 #, kde-format
 msgid "Move &Up"
-msgstr "Mou am&unt"
+msgstr "Mou cap am&unt"
 
 #: part/widgetconfigurationtoolsbase.cpp:43
 #, kde-format
 msgid "Move &Down"
-msgstr "Mou a&vall"
+msgstr "Mou cap a&vall"
 
 #: part/widgetdrawingtools.cpp:105
 #, kde-format

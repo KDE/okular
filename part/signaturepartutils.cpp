@@ -216,6 +216,12 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&items);
     dialog.ui->list->selectionModel()->select(items.index(0, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
+    if (items.rowCount() < 3) {
+        QStyleOptionViewItem option;
+        option.initFrom(dialog.ui->list);
+        auto size = dialog.ui->list->itemDelegate()->sizeHint(option, QModelIndex());
+        dialog.ui->list->setFixedHeight(size.height() * items.rowCount());
+    }
     QObject::connect(dialog.ui->list->selectionModel(), &QItemSelectionModel::selectionChanged, &dialog, [dialog = &dialog](auto &&, auto &&) {
         // One can ctrl-click on the selected item to deselect it, that would
         // leave the selection empty, so better prevent the OK button

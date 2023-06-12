@@ -21,6 +21,7 @@
 #include <QInputDialog>
 #include <QLabel>
 #include <QListView>
+#include <QMenu>
 #include <QMimeDatabase>
 #include <QPainter>
 #include <QPushButton>
@@ -159,6 +160,30 @@ public:
             endInsertRows();
         }
     }
+    void clear()
+    {
+        beginResetModel();
+        m_selectedFromFileSystem = {};
+        m_storedElements.clear();
+        endResetModel();
+    }
+    void removeItem(const QString &text)
+    {
+        if (text == m_selectedFromFileSystem) {
+            beginRemoveRows(QModelIndex(), 0, 0);
+            m_selectedFromFileSystem.reset();
+            endRemoveRows();
+            return;
+        }
+        auto elementIndex = m_storedElements.indexOf(text);
+        auto beginRemove = elementIndex;
+        if (m_selectedFromFileSystem) {
+            beginRemove++;
+        }
+        beginRemoveRows(QModelIndex(), beginRemove, beginRemove);
+        m_storedElements.removeAt(elementIndex);
+        endRemoveRows();
+    }
     void saveBack()
     {
         QStringList elementsToStore = m_storedElements;
@@ -243,6 +268,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
         dialog.ui->recentBackgrounds->setViewMode(QListView::IconMode);
         dialog.ui->recentBackgrounds->setDragEnabled(false);
         dialog.ui->recentBackgrounds->setSpacing(3);
+        dialog.ui->recentBackgrounds->setContextMenuPolicy(Qt::CustomContextMenu);
         QObject::connect(dialog.ui->recentBackgrounds, &QListView::activated, &dialog, [&lineEdit = dialog.ui->backgroundInput](const QModelIndex &idx) { lineEdit->setText(idx.data(Qt::DisplayRole).toString()); });
         const bool haveRecent = imagesModel.rowCount(QModelIndex()) != 0;
         if (!haveRecent) {
@@ -274,6 +300,26 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
             const QString imageFormats = i18nc("file types in a file open dialog", "Images (%1)", formats);
             const QString filename = QFileDialog::getOpenFileName(lineEdit, i18n("Select background image"), QDir::homePath(), imageFormats);
             lineEdit->setText(filename);
+        });
+        QObject::connect(dialog.ui->recentBackgrounds, &QWidget::customContextMenuRequested, &dialog, [recentModel = &imagesModel, view = dialog.ui->recentBackgrounds](QPoint pos) {
+            auto current = view->indexAt(pos);
+            QAction currentImage(i18n("Forget image"));
+            QAction allImages(i18n("Forget all images"));
+            QList<QAction *> actions;
+            if (current.isValid()) {
+                actions.append(&currentImage);
+            }
+            if (recentModel->rowCount() > 1 || actions.empty()) {
+                actions.append(&allImages);
+            }
+            QAction *selected = QMenu::exec(actions, view->viewport()->mapToGlobal(pos), nullptr, view);
+            if (selected == &currentImage) {
+                recentModel->removeItem(current.data(Qt::DisplayRole).toString());
+                recentModel->saveBack();
+            } else if (selected == &allImages) {
+                recentModel->clear();
+                recentModel->saveBack();
+            }
         });
     }
     auto result = dialog.exec();

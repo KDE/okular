@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the okular package.
 #
-# Kishore G <kishore96@gmail.com>, 2021.
+# Kishore G <kishore96@gmail.com>, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-16 00:56+0000\n"
-"PO-Revision-Date: 2021-08-08 12:02+0530\n"
+"PO-Revision-Date: 2023-06-11 17:41+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,17 +15,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.07.90\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "கோ. கிஷோர்"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "Kde-l10n-ta@kde.org"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:19
@@ -43,13 +43,13 @@ msgstr "இல்லை"
 #: conf/pdfsettingswidget.ui:35
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "திடப்படுத்து"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:40
 #, kde-format
 msgid "Shape"
-msgstr "வடிவம்"
+msgstr "வடிவப்படுத்து"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:63
@@ -214,7 +214,7 @@ msgstr ""
 #: generator_pdf.cpp:1563
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Poppler %1 பயனிலுள்ளது"
 
 #: generator_pdf.cpp:1565
 #, kde-format
@@ -223,6 +223,9 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Poppler %1 பயனிலுள்ளது\n"
+"\n"
+"நிரல்தொகுக்க Poppler %2 பயன்படுத்தப்பட்டது"
 
 #: generator_pdf.cpp:1600
 #, kde-format
@@ -264,6 +267,8 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"NSS ஆதரவில்லா Poppler நிரலகத்தைப் பயன்படுத்துகிறீர்.\n"
+"அக்காரணத்தால் எண்ம கையொப்பங்களை இட முடியாது"
 
 #: pdfsettingswidget.cpp:95
 #, kde-format

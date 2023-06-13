@@ -274,6 +274,10 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
         if (!haveRecent) {
             dialog.ui->recentBackgrounds->hide();
             dialog.ui->recentLabel->hide();
+            QObject::connect(&imagesModel, &QAbstractItemModel::rowsInserted, &dialog, [&dialog]() {
+                dialog.ui->recentBackgrounds->show();
+                dialog.ui->recentLabel->show();
+            });
         }
 
         QObject::connect(dialog.ui->backgroundInput, &QLineEdit::textChanged, &dialog, [recentModel = &imagesModel, selectionModel = dialog.ui->recentBackgrounds->selectionModel()](const QString &newText) {

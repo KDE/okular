@@ -1549,20 +1549,29 @@ public:
     NormalizedRect boundingRectangle() const;
     void setBoundingRectangle(const NormalizedRect &rect);
 
-    void setReason(const QString &reason);
-    QString reason() const;
-
-    void setLocation(const QString &location);
-    QString location() const;
-
-    void setBackgroundImagePath(const QString &path);
-    QString backgroundImagePath() const;
-
     /// @since 22.04
     QString documentPassword() const;
 
     /// @since 22.04
     void setDocumentPassword(const QString &password);
+
+    /// @since 23.08
+    QString reason() const;
+
+    /// @since 23.08
+    void setReason(const QString &reason);
+
+    /// @since 23.08
+    QString location() const;
+
+    /// @since 23.08
+    void setLocation(const QString &location);
+
+    /// @since 23.08
+    QString backgroundImagePath() const;
+
+    /// @since 23.08
+    void setBackgroundImagePath(const QString &path);
 
 private:
     NewSignatureDataPrivate *const d;

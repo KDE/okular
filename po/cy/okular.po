@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-09 00:45+0000\n"
+"POT-Creation-Date: 2023-06-15 00:44+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -665,20 +665,20 @@ msgid "Value"
 msgstr ""
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1327
 #, kde-format
 msgid "Pop-up Note"
 msgstr ""
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1343
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgid "Typewriter"
 msgstr "Trosysgrifo"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1325
 #, kde-format
 msgid "Inline Note"
 msgstr ""
@@ -689,7 +689,7 @@ msgid "Straight Line with Comment"
 msgstr "&Priodweddau"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1337
 #, kde-format
 msgid "Straight Line"
 msgstr ""
@@ -700,7 +700,7 @@ msgid "Polygon with Comment"
 msgstr "&Priodweddau"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1320
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Polygon"
 msgstr ""
@@ -732,7 +732,7 @@ msgid "Squiggle with Comment"
 msgstr "&Erfyn Dethol"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1333
 #, kde-format
 msgid "Squiggle"
 msgstr ""
@@ -744,7 +744,7 @@ msgid "Underline with Comment"
 msgstr "&Erfyn Dethol"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1341
 #, kde-format
 msgid "Underline"
 msgstr ""
@@ -768,7 +768,7 @@ msgid "Stamp with Comment"
 msgstr "&Erfyn Dethol"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1335
 #, kde-format
 msgid "Stamp"
 msgstr ""
@@ -779,7 +779,7 @@ msgid "Freehand Line with Comment"
 msgstr "&Priodweddau"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:1323
 #, kde-format
 msgid "Freehand Line"
 msgstr ""
@@ -2009,17 +2009,17 @@ msgstr "Cadw i Ffeil..."
 msgid "Type:"
 msgstr "Math"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1339
 #, kde-format
 msgid "Strike out"
 msgstr ""
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1331
 #, kde-format
 msgid "Rectangle"
 msgstr ""
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1319
 #, kde-format
 msgid "Ellipse"
 msgstr ""
@@ -3947,117 +3947,117 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author name"
 msgstr "Awdur"
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Author name for the annotation:"
 msgstr "Cyflwyniad"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1238
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1240
 #, fuzzy, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "&Priodweddau"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1242
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1244
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1246
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1248
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1250
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1252
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "&Erfyn Dethol"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1254
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1256
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1258
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "&Erfyn Dethol"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1260
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "&Erfyn Dethol"
 
-#: part/pageviewannotator.cpp:1253
+#: part/pageviewannotator.cpp:1262
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1321
 #, fuzzy, kde-format
 msgid "Highlighter"
 msgstr "&Priodweddau"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Add favorite annotation"
 msgstr "Cyflwyniad"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Custom annotation name:"
@@ -4575,7 +4575,7 @@ msgid "Remove this Bookmark"
 msgstr "Ychwanegu Tudnod"
 
 #: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
-#: part/signaturepartutils.cpp:124
+#: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5319,6 +5319,60 @@ msgstr ""
 msgid "Filter Options"
 msgstr "Dewisiadau Cyffredinol"
 
+#. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
+#: part/selectcertificatedialog.ui:14
+#, kde-format
+msgid "Certificates"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: part/selectcertificatedialog.ui:20
+#, kde-format
+msgid "Select certificate to sign with:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, reasonLabel)
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr ""
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
+#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
+#: part/selectcertificatedialog.ui:85
+#, fuzzy, kde-format
+msgid "optional"
+msgstr "Dewisiadau Cyffredinol"
+
+#. i18n: ectx: property (text), widget (QLabel, locationLabel)
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#, fuzzy, kde-format
+#| msgid "Presentation"
+msgid "Location:"
+msgstr "Cyflwyniad"
+
+#. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
+#: part/selectcertificatedialog.ui:76
+#, fuzzy, kde-format
+#| msgid "Background color:"
+msgid "Background:"
+msgstr "Lliw'r cefndir:"
+
+#. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
+#: part/selectcertificatedialog.ui:95
+#, kde-format
+msgid "Choose..."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, recentLabel)
+#: part/selectcertificatedialog.ui:107
+#, fuzzy, kde-format
+#| msgid "Background color:"
+msgid "Recent backgrounds:"
+msgstr "Lliw'r cefndir:"
+
 #: part/side_reviews.cpp:65
 #, kde-format
 msgid ""
@@ -5357,23 +5411,45 @@ msgstr ""
 msgid "Properties"
 msgstr "&Priodweddau"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:304
+#, fuzzy, kde-format
+#| msgid "Pages: %1"
+msgctxt "file types in a file open dialog"
+msgid "Images (%1)"
+msgstr "Tudalennau : %1"
+
+#: part/signaturepartutils.cpp:305
+#, kde-format
+msgid "Select background image"
+msgstr ""
+
+#: part/signaturepartutils.cpp:310
+#, kde-format
+msgid "Forget image"
+msgstr ""
+
+#: part/signaturepartutils.cpp:311
+#, kde-format
+msgid "Forget all images"
+msgstr ""
+
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:97
+#: part/signaturepartutils.cpp:354
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:110
+#: part/signaturepartutils.cpp:367
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Enter document password"
 msgstr "Dogfen i'w hagor"
 
-#: part/signaturepartutils.cpp:130
+#: part/signaturepartutils.cpp:387
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5381,19 +5457,9 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr ""
 
-#: part/signaturepartutils.cpp:132
+#: part/signaturepartutils.cpp:389
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
-
-#: part/signaturepartutils.cpp:164
-#, kde-format
-msgid "Certificates"
-msgstr ""
-
-#: part/signaturepartutils.cpp:171
-#, kde-format
-msgid "Select certificate to sign with:"
 msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:49
@@ -5426,17 +5492,6 @@ msgstr ""
 #, kde-format
 msgid "Signing Time:"
 msgstr ""
-
-#: part/signaturepropertiesdialog.cpp:62
-#, kde-format
-msgid "Reason:"
-msgstr ""
-
-#: part/signaturepropertiesdialog.cpp:64
-#, fuzzy, kde-format
-#| msgid "Presentation"
-msgid "Location:"
-msgstr "Cyflwyniad"
 
 #: part/signaturepropertiesdialog.cpp:74
 #, fuzzy, kde-format

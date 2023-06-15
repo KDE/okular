@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-01 00:44+0000\n"
+"POT-Creation-Date: 2023-06-15 00:44+0000\n"
 "PO-Revision-Date: 2023-06-01 09:42+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -39,7 +39,7 @@ msgid "Enhance thin lines:"
 msgstr "حَسِّن الخطوط الرفيعة"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:939
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:941
 #, kde-format
 msgid "No"
 msgstr "لا"
@@ -63,19 +63,19 @@ msgid "Default scaling mode when printing:"
 msgstr "وضع التحجيم المبدئي عند الطباعة:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
 msgstr "لائم المنطقة المطبوعة"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
 msgstr "لائم إلى كامل الصفحة"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
 msgstr "بلا، اطبع الحجم الأصلي"
@@ -129,22 +129,22 @@ msgstr "الشّهادات المتوفرة"
 msgid "&Load Signatures"
 msgstr "&حمّل التوقيعات"
 
-#: generator_pdf.cpp:86
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "PDF Options"
 msgstr "خيارات بي دي اف"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:90
 #, kde-format
 msgid "Print annotations"
 msgstr "اطبع الحواشي"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "ضَمِّن الحواشي في المستند المطبوع"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:92
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -153,17 +153,17 @@ msgstr ""
 "ضمِّن الحواشي في المستند المطبوع. عطِّل هذا الخيار إذا كنت تريد طباعة المستند "
 "الأصلي غير ذي الحواشي."
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:94
 #, kde-format
 msgid "Force rasterization"
 msgstr "أجبر التحويل"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:95
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "حول إلى صورة قبل الطباعة"
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:96
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -173,53 +173,53 @@ msgstr ""
 "أجبر تحويل كل صفحة إلى صورة قبل الطباعة. هذا عادة يعطى نتائج أسوا ولكنه مفيد "
 "فى طباعة الملفات التى تطبع بشكل خاطئ."
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:106
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "وضع التحجيم للصفحات المطبوعة"
 
-#: generator_pdf.cpp:105
+#: generator_pdf.cpp:107
 #, kde-format
 msgid "Scale mode:"
 msgstr "وضع الحجم:"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:939
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Format"
 msgstr "التنسيق"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Encrypted"
 msgstr "مشفّرة"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Unencrypted"
 msgstr "غير مشفّرة"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Security"
 msgstr "الأمن"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:941
 #, kde-format
 msgid "Yes"
 msgstr "نعم"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:941
 #, kde-format
 msgid "Optimized"
 msgstr "محسّن"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1372
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -230,12 +230,12 @@ msgstr ""
 "\n"
 "التاريخ: %2"
 
-#: generator_pdf.cpp:1571
+#: generator_pdf.cpp:1575
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "يستخدم Poppler %1"
 
-#: generator_pdf.cpp:1573
+#: generator_pdf.cpp:1577
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -246,17 +246,17 @@ msgstr ""
 "\n"
 "بني على Poppler %2"
 
-#: generator_pdf.cpp:1608
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF"
 msgstr "بي دي اف"
 
-#: generator_pdf.cpp:1608
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "ضبط خلفية بي دي اف"
 
-#: generator_pdf.cpp:2053
+#: generator_pdf.cpp:2087
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

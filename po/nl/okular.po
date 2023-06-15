@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-09 00:45+0000\n"
+"POT-Creation-Date: 2023-06-15 00:44+0000\n"
 "PO-Revision-Date: 2023-05-04 10:17+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -670,19 +670,19 @@ msgid "Value"
 msgstr "Waarde"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1327
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Pop-up-notitie"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1343
 #, kde-format
 msgid "Typewriter"
 msgstr "Schrijfmachine"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1325
 #, kde-format
 msgid "Inline Note"
 msgstr "Inline-notitie"
@@ -693,7 +693,7 @@ msgid "Straight Line with Comment"
 msgstr "Rechte lijn met opmerking"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1337
 #, kde-format
 msgid "Straight Line"
 msgstr "Rechte lijn"
@@ -704,7 +704,7 @@ msgid "Polygon with Comment"
 msgstr "Polygoon met opmerking"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1320
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Polygon"
 msgstr "Veelhoek"
@@ -735,7 +735,7 @@ msgid "Squiggle with Comment"
 msgstr "Krul met opmerking"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1333
 #, kde-format
 msgid "Squiggle"
 msgstr "Golvend"
@@ -746,7 +746,7 @@ msgid "Underline with Comment"
 msgstr "Onderstreping met opmerking"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1341
 #, kde-format
 msgid "Underline"
 msgstr "Onderstrepen"
@@ -767,7 +767,7 @@ msgid "Stamp with Comment"
 msgstr "Stempel met opmerking"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1335
 #, kde-format
 msgid "Stamp"
 msgstr "Postzegel"
@@ -778,7 +778,7 @@ msgid "Freehand Line with Comment"
 msgstr "Lijn uit de vrije hand met opmerking"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:1323
 #, kde-format
 msgid "Freehand Line"
 msgstr "Lijn uit de vrije hand"
@@ -1988,17 +1988,17 @@ msgstr "Vulling van vorm:"
 msgid "Type:"
 msgstr "Type:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1339
 #, kde-format
 msgid "Strike out"
 msgstr "Doorgehaald"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1331
 #, kde-format
 msgid "Rectangle"
 msgstr "Rechthoek"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1319
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellips"
@@ -3899,7 +3899,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Ondertekenen"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3907,35 +3907,35 @@ msgstr ""
 "Kon niet ondertekenen. Ongeldig certificaat wachtwoord of kon niet schrijven "
 "naar '%1'"
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, kde-format
 msgid "Author name"
 msgstr "Naam van de auteur"
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Naam van de auteur voor de annotatie:"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1238
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Teken een ellips (sleep om een zone te selecteren)"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1240
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Accentueer tekst"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1242
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Teken een lijn uit de vrije hand"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1244
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
@@ -3943,71 +3943,71 @@ msgstr ""
 "Inline-tekst-annotatie (sleep met de muisaanwijzer om een gebied te "
 "selecteren)"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1246
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Popup-notitie invoegen"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1248
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Teken een veelhoek (klik op het eerste punt om het te sluiten)"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1250
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Een rechthoek tekenen"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1252
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Tekst laten golven"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1254
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Plaats een postzegelsymbool"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1256
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Een rechte lijn tekenen"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1258
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Tekst doorhalen"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1260
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Tekst onderstrepen"
 
-#: part/pageviewannotator.cpp:1253
+#: part/pageviewannotator.cpp:1262
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Annotatie van schrijfmachine (sleep om een gebied te selecteren)"
 
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1321
 #, kde-format
 msgid "Highlighter"
 msgstr "Accentuering"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Favoriete annotatie toevoegen"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Eigen annotatienaam:"
@@ -4537,7 +4537,7 @@ msgid "Remove this Bookmark"
 msgstr "Deze bladwijzer verwijderen"
 
 #: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
-#: part/signaturepartutils.cpp:124
+#: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5318,6 +5318,62 @@ msgstr "Overeenkomst met elk woord"
 msgid "Filter Options"
 msgstr "Filteropties"
 
+#. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
+#: part/selectcertificatedialog.ui:14
+#, kde-format
+msgid "Certificates"
+msgstr "Certificaten"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: part/selectcertificatedialog.ui:20
+#, kde-format
+msgid "Select certificate to sign with:"
+msgstr "Certificaat selecteren om mee te ondertekenen:"
+
+#. i18n: ectx: property (text), widget (QLabel, reasonLabel)
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "Reden:"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
+#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
+#: part/selectcertificatedialog.ui:85
+#, fuzzy, kde-format
+#| msgid "Options"
+msgid "optional"
+msgstr "Opties"
+
+#. i18n: ectx: property (text), widget (QLabel, locationLabel)
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "Locatie:"
+
+#. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
+#: part/selectcertificatedialog.ui:76
+#, fuzzy, kde-format
+#| msgctxt "@label:chooser Config dialog, presentation page"
+#| msgid "Background color:"
+msgid "Background:"
+msgstr "Achtergrondkleur:"
+
+#. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
+#: part/selectcertificatedialog.ui:95
+#, kde-format
+msgid "Choose..."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, recentLabel)
+#: part/selectcertificatedialog.ui:107
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox Config dialog, general page"
+#| msgid "Use custom background color:"
+msgid "Recent backgrounds:"
+msgstr "Aangepaste achtergrondkleur gebruiken:"
+
 #: part/side_reviews.cpp:65
 #, kde-format
 msgid ""
@@ -5357,23 +5413,50 @@ msgstr "Alle elementen invouwen"
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:304
+#, fuzzy, kde-format
+#| msgid "Pages: %1"
+msgctxt "file types in a file open dialog"
+msgid "Images (%1)"
+msgstr "Pagina's:%1"
+
+#: part/signaturepartutils.cpp:305
+#, fuzzy, kde-format
+#| msgid "Enable &background generation"
+msgid "Select background image"
+msgstr "Achtergron&dgeneratie inschakelen"
+
+#: part/signaturepartutils.cpp:310
+#, fuzzy, kde-format
+#| msgctxt "on welcome screen (recent document list)"
+#| msgid "Forget All"
+msgid "Forget image"
+msgstr "Alles vergeten"
+
+#: part/signaturepartutils.cpp:311
+#, fuzzy, kde-format
+#| msgctxt "on welcome screen (recent document list)"
+#| msgid "Forget All"
+msgid "Forget all images"
+msgstr "Alles vergeten"
+
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Wachtwoord invoeren (indien aanwezig) om het certificaat te ontgrendelen: %1"
 
-#: part/signaturepartutils.cpp:97
+#: part/signaturepartutils.cpp:354
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Certificaatwachtwoord invoeren"
 
-#: part/signaturepartutils.cpp:110
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Enter document password"
 msgstr "Documentwachtwoord invoeren"
 
-#: part/signaturepartutils.cpp:130
+#: part/signaturepartutils.cpp:387
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5381,20 +5464,10 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:132
+#: part/signaturepartutils.cpp:389
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Ondertekend bestand opslaan als"
-
-#: part/signaturepartutils.cpp:164
-#, kde-format
-msgid "Certificates"
-msgstr "Certificaten"
-
-#: part/signaturepartutils.cpp:171
-#, kde-format
-msgid "Select certificate to sign with:"
-msgstr "Certificaat selecteren om mee te ondertekenen:"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
@@ -5425,16 +5498,6 @@ msgstr "Ondertekend door:"
 #, kde-format
 msgid "Signing Time:"
 msgstr "Tijdstip van ondertekenen: "
-
-#: part/signaturepropertiesdialog.cpp:62
-#, kde-format
-msgid "Reason:"
-msgstr "Reden:"
-
-#: part/signaturepropertiesdialog.cpp:64
-#, kde-format
-msgid "Location:"
-msgstr "Locatie:"
 
 #: part/signaturepropertiesdialog.cpp:74
 #, kde-format
@@ -6404,9 +6467,6 @@ msgstr "Welkomstscherm verbergen"
 
 #~ msgid "Ink"
 #~ msgstr "Inkt"
-
-#~ msgid "Enable &background generation"
-#~ msgstr "Achtergron&dgeneratie inschakelen"
 
 #~ msgid "Reset Forms"
 #~ msgstr "Formulieren resetten"

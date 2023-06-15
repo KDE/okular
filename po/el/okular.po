@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-09 00:45+0000\n"
+"POT-Creation-Date: 2023-06-15 00:44+0000\n"
 "PO-Revision-Date: 2021-10-04 11:01+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -661,19 +661,19 @@ msgid "Value"
 msgstr "Τιμή"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1318
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1327
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Αναδυόμενη σημείωση"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1343
 #, kde-format
 msgid "Typewriter"
 msgstr "Γραφομηχανή"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1316
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1325
 #, kde-format
 msgid "Inline Note"
 msgstr "Εμβόλιμη σημείωση"
@@ -684,7 +684,7 @@ msgid "Straight Line with Comment"
 msgstr "Ευθεία γραμμή με σχόλιο"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1337
 #, kde-format
 msgid "Straight Line"
 msgstr "Ευθεία γραμμή"
@@ -695,7 +695,7 @@ msgid "Polygon with Comment"
 msgstr "Πολύγωνο με σχόλιο"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1320
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Polygon"
 msgstr "Πολύγωνο"
@@ -726,7 +726,7 @@ msgid "Squiggle with Comment"
 msgstr "Μουτζούρα με σχόλιο"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1324
+#: part/pageviewannotator.cpp:1333
 #, kde-format
 msgid "Squiggle"
 msgstr "Μουντζαλιά"
@@ -737,7 +737,7 @@ msgid "Underline with Comment"
 msgstr "Υπογράμμιση με σχόλιο"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1341
 #, kde-format
 msgid "Underline"
 msgstr "Υπογράμμιση"
@@ -758,7 +758,7 @@ msgid "Stamp with Comment"
 msgstr "Σφραγίδα με σχόλιο"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1335
 #, kde-format
 msgid "Stamp"
 msgstr "Σφραγίδα"
@@ -769,7 +769,7 @@ msgid "Freehand Line with Comment"
 msgstr "Ελεύθερη γραμμή με σχόλιο"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1314
+#: part/pageviewannotator.cpp:1323
 #, kde-format
 msgid "Freehand Line"
 msgstr "Ελεύθερη γραμμή"
@@ -1986,17 +1986,17 @@ msgstr "Γέμισμα σχήματος:"
 msgid "Type:"
 msgstr "Τύπος:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1330
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1339
 #, kde-format
 msgid "Strike out"
 msgstr "Επιγράμμιση"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1322
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1331
 #, kde-format
 msgid "Rectangle"
 msgstr "Ορθογώνιο"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1310
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1319
 #, kde-format
 msgid "Ellipse"
 msgstr "Έλλειψη"
@@ -3909,7 +3909,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Υπογραφή"
 
-#: part/pageviewannotator.cpp:1039 part/signaturepartutils.cpp:156
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3917,105 +3917,105 @@ msgstr ""
 "Αδυναμία υπογραφής. Μη έγκυρος κωδικός πιστοποιητικού ή αδυναμία εγγραφής "
 "στο '%1'"
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, kde-format
 msgid "Author name"
 msgstr "Όνομα συγγραφέα"
 
-#: part/pageviewannotator.cpp:1168
+#: part/pageviewannotator.cpp:1177
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Όνομα συγγραφέα για τη σημείωση:"
 
-#: part/pageviewannotator.cpp:1229
+#: part/pageviewannotator.cpp:1238
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Σχεδίαση μιας έλλειψης (σύρετε για την επιλογή μιας ζώνης)"
 
-#: part/pageviewannotator.cpp:1231
+#: part/pageviewannotator.cpp:1240
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Τονισμός κειμένου"
 
-#: part/pageviewannotator.cpp:1233
+#: part/pageviewannotator.cpp:1242
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Σχεδιασμός ελεύθερης γραμμής"
 
-#: part/pageviewannotator.cpp:1235
+#: part/pageviewannotator.cpp:1244
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Σημείωση εμβόλιμου κειμένου (σύρετε για την επιλογή ζώνης)"
 
-#: part/pageviewannotator.cpp:1237
+#: part/pageviewannotator.cpp:1246
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Εισαγωγή αναδυόμενης σημείωσης"
 
-#: part/pageviewannotator.cpp:1239
+#: part/pageviewannotator.cpp:1248
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Σχεδίαση ενός πολυγώνου (κλικ στο πρώτο σημείο για κλείσιμό του)"
 
-#: part/pageviewannotator.cpp:1241
+#: part/pageviewannotator.cpp:1250
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Σχεδίαση παραλληλόγραμμου"
 
-#: part/pageviewannotator.cpp:1243
+#: part/pageviewannotator.cpp:1252
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Μουντζαλιά κειμένου"
 
-#: part/pageviewannotator.cpp:1245
+#: part/pageviewannotator.cpp:1254
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Τοποθέτηση συμβόλου σφραγίδας"
 
-#: part/pageviewannotator.cpp:1247
+#: part/pageviewannotator.cpp:1256
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Σχεδίαση ευθείας γραμμής"
 
-#: part/pageviewannotator.cpp:1249
+#: part/pageviewannotator.cpp:1258
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Επιγράμμιση κειμένου"
 
-#: part/pageviewannotator.cpp:1251
+#: part/pageviewannotator.cpp:1260
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Υπογράμμιση κειμένου"
 
-#: part/pageviewannotator.cpp:1253
+#: part/pageviewannotator.cpp:1262
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Σημείωση γραφομηχανής (σύρετε για την επιλογή ζώνης)"
 
-#: part/pageviewannotator.cpp:1312
+#: part/pageviewannotator.cpp:1321
 #, kde-format
 msgid "Highlighter"
 msgstr "Τονισμός"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Προσθήκη αγαπημένης σημείωσης"
 
-#: part/pageviewannotator.cpp:1609
+#: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Όνομα προσαρμοσμένης σημείωσης:"
@@ -4549,7 +4549,7 @@ msgid "Remove this Bookmark"
 msgstr "Να διαγραφεί αυτός ο σελιδοδείκτης"
 
 #: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
-#: part/signaturepartutils.cpp:124
+#: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5329,6 +5329,64 @@ msgstr "Ταίριασμα οποιασδήποτε λέξης"
 msgid "Filter Options"
 msgstr "Επιλογές φίλτρων"
 
+#. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
+#: part/selectcertificatedialog.ui:14
+#, fuzzy, kde-format
+#| msgid "Certificates:"
+msgid "Certificates"
+msgstr "Πιστοποιητικά:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: part/selectcertificatedialog.ui:20
+#, fuzzy, kde-format
+#| msgid "Select certificate to sign with"
+msgid "Select certificate to sign with:"
+msgstr "Επιλογή πιστοποιητικού για υπογραφή"
+
+#. i18n: ectx: property (text), widget (QLabel, reasonLabel)
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#, kde-format
+msgid "Reason:"
+msgstr "Αιτία:"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
+#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
+#: part/selectcertificatedialog.ui:85
+#, fuzzy, kde-format
+#| msgid "Options"
+msgid "optional"
+msgstr "Επιλογές"
+
+#. i18n: ectx: property (text), widget (QLabel, locationLabel)
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#, kde-format
+msgid "Location:"
+msgstr "Θέση:"
+
+#. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
+#: part/selectcertificatedialog.ui:76
+#, fuzzy, kde-format
+#| msgctxt "@label:chooser Config dialog, presentation page"
+#| msgid "Background color:"
+msgid "Background:"
+msgstr "Χρώμα φόντου:"
+
+#. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
+#: part/selectcertificatedialog.ui:95
+#, kde-format
+msgid "Choose..."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, recentLabel)
+#: part/selectcertificatedialog.ui:107
+#, fuzzy, kde-format
+#| msgctxt "@label:listbox Config dialog, general page"
+#| msgid "Use custom background color:"
+msgid "Recent backgrounds:"
+msgstr "Χρήση προσαρμοσμένου χρώματος φόντου:"
+
 #: part/side_reviews.cpp:65
 #, kde-format
 msgid ""
@@ -5368,25 +5426,48 @@ msgstr "Σύμπτυξη όλων των αντικειμένων"
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: part/signaturepartutils.cpp:95
+#: part/signaturepartutils.cpp:304
+#, fuzzy, kde-format
+#| msgid "Pages: %1"
+msgctxt "file types in a file open dialog"
+msgid "Images (%1)"
+msgstr "Σελίδες: %1"
+
+#: part/signaturepartutils.cpp:305
+#, fuzzy, kde-format
+#| msgid "Enable &background generation"
+msgid "Select background image"
+msgstr "Ενεργοποίηση δημιουργίας &φόντου"
+
+#: part/signaturepartutils.cpp:310
+#, kde-format
+msgid "Forget image"
+msgstr ""
+
+#: part/signaturepartutils.cpp:311
+#, kde-format
+msgid "Forget all images"
+msgstr ""
+
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Εισαγωγή κωδικού πρόσβασης (αν υπάρχει) για να ξεκλειδώσει το πιστοποιητικό: "
 "%1"
 
-#: part/signaturepartutils.cpp:97
+#: part/signaturepartutils.cpp:354
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Εισαγωγή κωδικού για το πιστοποιητικό"
 
-#: part/signaturepartutils.cpp:110
+#: part/signaturepartutils.cpp:367
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter document password"
 msgstr "Κωδικός πρόσβασης εγγράφου"
 
-#: part/signaturepartutils.cpp:130
+#: part/signaturepartutils.cpp:387
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -5394,22 +5475,10 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signed.%2"
 
-#: part/signaturepartutils.cpp:132
+#: part/signaturepartutils.cpp:389
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Αποθήκευση υπογεγγραμμένου αρχείου ως"
-
-#: part/signaturepartutils.cpp:164
-#, fuzzy, kde-format
-#| msgid "Certificates:"
-msgid "Certificates"
-msgstr "Πιστοποιητικά:"
-
-#: part/signaturepartutils.cpp:171
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
-msgid "Select certificate to sign with:"
-msgstr "Επιλογή πιστοποιητικού για υπογραφή"
 
 #: part/signaturepropertiesdialog.cpp:49
 #, kde-format
@@ -5440,16 +5509,6 @@ msgstr "Υπογραφή από:"
 #, kde-format
 msgid "Signing Time:"
 msgstr "Χρόνος υπογραφής:"
-
-#: part/signaturepropertiesdialog.cpp:62
-#, kde-format
-msgid "Reason:"
-msgstr "Αιτία:"
-
-#: part/signaturepropertiesdialog.cpp:64
-#, kde-format
-msgid "Location:"
-msgstr "Θέση:"
 
 #: part/signaturepropertiesdialog.cpp:74
 #, kde-format
@@ -6690,9 +6749,6 @@ msgstr ""
 #~ msgctxt "paper size"
 #~ msgid "πορτρέτο folio"
 #~ msgstr "πορτρέτο folio"
-
-#~ msgid "Enable &background generation"
-#~ msgstr "Ενεργοποίηση δημιουργίας &φόντου"
 
 #~ msgid "Reset Forms"
 #~ msgstr "Επαναφορά φορμών"

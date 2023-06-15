@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-01 00:44+0000\n"
+"POT-Creation-Date: 2023-06-15 00:44+0000\n"
 "PO-Revision-Date: 2023-06-04 15:09+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -36,7 +36,7 @@ msgid "Enhance thin lines:"
 msgstr "Plibonigi maldikajn liniojn:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:939
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:941
 #, kde-format
 msgid "No"
 msgstr "Ne"
@@ -60,19 +60,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Defaŭlta skaladoreĝimo por la presitaj paĝoj"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Kongruas al printebla areo"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
 msgstr "Ĝisrandigi al plena paĝo"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
 msgstr "Neniu; presi originalan grandecon"
@@ -127,22 +127,22 @@ msgstr "Disponeblaj Atestiloj"
 msgid "&Load Signatures"
 msgstr "Ŝargi &Subskribojn"
 
-#: generator_pdf.cpp:86
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF opcioj"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:90
 #, kde-format
 msgid "Print annotations"
 msgstr "Presi prinotojn"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Enmeti komentadojn en la presita dokumento"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:92
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -151,17 +151,17 @@ msgstr ""
 "Inkluzivas komentadojn en la presita dokumento. Vi povas malŝalti ĉi tion se "
 "vi volas presi la originalan nekotitan dokumenton."
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:94
 #, kde-format
 msgid "Force rasterization"
 msgstr "Devigi la rastrumigon"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:95
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Rastrumigi kiel bildon antaŭ ol printi"
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:96
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -172,53 +172,53 @@ msgstr ""
 "ĝenerale donas iel pli malbonaj rezultojn, sed estas utila por printi "
 "dokumentojn kiuj ŝajne ne printiĝas taŭge."
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:106
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Skala reĝimo por la presitaj paĝoj"
 
-#: generator_pdf.cpp:105
+#: generator_pdf.cpp:107
 #, kde-format
 msgid "Scale mode:"
 msgstr "Skala reĝimo:"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:939
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:937
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Format"
 msgstr "Formato"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Encrypted"
 msgstr "Ĉifrita"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Unencrypted"
 msgstr "Malĉifrita"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Security"
 msgstr "Sekureco"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:941
 #, kde-format
 msgid "Yes"
 msgstr "Jes"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:941
 #, kde-format
 msgid "Optimized"
 msgstr "Optimumigita"
 
-#: generator_pdf.cpp:1370
+#: generator_pdf.cpp:1372
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -229,12 +229,12 @@ msgstr ""
 "\n"
 "Dato: %2"
 
-#: generator_pdf.cpp:1571
+#: generator_pdf.cpp:1575
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Uzante Poppler %1"
 
-#: generator_pdf.cpp:1573
+#: generator_pdf.cpp:1577
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -245,17 +245,17 @@ msgstr ""
 "\n"
 "Konstruite kontraŭ Poppler %2"
 
-#: generator_pdf.cpp:1608
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1608
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Backend Agordo"
 
-#: generator_pdf.cpp:2053
+#: generator_pdf.cpp:2087
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

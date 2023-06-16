@@ -40,7 +40,7 @@ public:
     enum Button { None, Left, Right };
     /** To tell the annotator engine about modifier keys and other special wishes */
     struct Modifiers {
-        bool constrainRatioAndAngle; ///< Whether the engine shall snap to certain angles, if supported.
+        bool constrainRatioAndAngle = false; ///< Whether the engine shall snap to certain angles, if supported.
     };
 
     // perform operations

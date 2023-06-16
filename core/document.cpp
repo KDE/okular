@@ -5932,7 +5932,7 @@ struct Okular::NewSignatureDataPrivate {
     QString location;
     QString reason;
     QString backgroundImagePath;
-    int page;
+    int page = -1;
     NormalizedRect boundingRectangle;
 };
 

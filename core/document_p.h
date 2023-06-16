@@ -126,6 +126,7 @@ public:
         , m_fontsCached(false)
         , m_annotationEditingEnabled(true)
         , m_annotationBeingModified(false)
+        , m_undoStack(nullptr)
         , m_docdataMigrationNeeded(false)
         , m_synctex_scanner(nullptr)
     {

@@ -54,6 +54,7 @@ public:
     QList<TOCItem *> currentPage;
     TOCModel *m_oldModel;
     QVector<QModelIndex> m_oldTocExpandedIndexes;
+    Q_DISABLE_COPY(TOCModelPrivate);
 };
 
 TOCItem::TOCItem()
@@ -97,6 +98,7 @@ TOCModelPrivate::TOCModelPrivate(TOCModel *qq)
     : q(qq)
     , root(new TOCItem)
     , dirty(false)
+    , document(nullptr)
     , m_oldModel(nullptr)
 {
     root->model = this;

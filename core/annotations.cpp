@@ -1930,6 +1930,9 @@ class HighlightAnnotation::Quad::Private
 {
 public:
     Private()
+        : m_capStart(false)
+        , m_capEnd(false)
+        , m_feather(0.0)
     {
     }
 

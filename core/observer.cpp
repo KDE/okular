@@ -10,6 +10,7 @@
 using namespace Okular;
 
 DocumentObserver::DocumentObserver()
+    : d(nullptr)
 {
 }
 

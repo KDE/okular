@@ -17,6 +17,7 @@ using namespace Okular;
 FormFieldPrivate::FormFieldPrivate(FormField::FieldType type)
     : m_type(type)
     , m_activateAction(nullptr)
+    , q_ptr(nullptr)
 {
 }
 

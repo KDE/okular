@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-04 06:33+0300\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"PO-Revision-Date: 2023-06-15 08:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -4549,7 +4549,7 @@ msgstr "Перейменувати цю закладку"
 msgid "Remove this Bookmark"
 msgstr "Вилучити цю закладку"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4641,7 +4641,7 @@ msgstr ""
 "файл доведеться перезавантажити. При цьому дані журналу дій з документом "
 "буде втрачено.<br />Хочете зберегти документ?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -4778,24 +4778,24 @@ msgstr "Додати закладку"
 msgid "Tools"
 msgstr "Інструменти"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Читання уголос"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Друк"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Друкувати цей документ не дозволяється."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4803,7 +4803,7 @@ msgstr ""
 "Не вдалося надрукувати документ. Невідома помилка. Будь ласка, повідомте про "
 "неї на bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4812,17 +4812,17 @@ msgstr ""
 "Не вдалося надрукувати документ. Повідомлення про помилку: «%1». Будь ласка, "
 "повідомте про помилку на bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Перейти до місця, де ви були раніше"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Перейти до місця, де ви були пізніше"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4831,7 +4831,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдалося створити тимчасовий файл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4840,7 +4840,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається відкрити файл <nobr><strong>"
 "%1</strong></nobr> для розпаковування. Файл не завантажено.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4854,7 +4854,7 @@ msgstr ""
 "«Властивості» і перейдіть на вкладку «Права доступу» у вікні, яке буде "
 "відкрито.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4863,7 +4863,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається розпакувати файл "
 "<nobr><strong>%1</strong></nobr>. Файл не буде завантажено.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4873,27 +4873,27 @@ msgstr ""
 "його пошкоджено спробуйте розпакувати його вручну за допомогою команди у "
 "командному рядку.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Немає закладок"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Під час спроби оприлюднити документ виникли проблеми: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Оприлюднення"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ успішно оприлюднено"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Оприлюднений документ можна знайти тут: <a href=\"%1\">%1</a>"
@@ -5356,10 +5356,9 @@ msgstr "Причина:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Параметри"
+msgstr "необов'язкове"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5369,25 +5368,21 @@ msgstr "Місце:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Колір тла:"
+msgstr "Тло:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Вибрати…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Нетиповий колір тла:"
+msgstr "Нещодавні зображення тла:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5429,31 +5424,25 @@ msgid "Properties"
 msgstr "Властивості"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Сторінок: %1"
+msgstr "зображення (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "Увімкнути створення у &тлі"
+msgstr "Виберіть зображення тла"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Забути всі"
+msgstr "Забути зображення"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Забути всі"
+msgstr "Забути усі зображення"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

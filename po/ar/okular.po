@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-04 10:18+0400\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"PO-Revision-Date: 2023-06-15 09:32+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4514,7 +4514,7 @@ msgstr "أعد تسمية هذه العلامة"
 msgid "Remove this Bookmark"
 msgstr "أزل هذه العلامة"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4602,7 +4602,7 @@ msgstr ""
 "بعد الحفظ ، يتطلب تنسيق المستند الحالي إعادة تحميل الملف.ستفقد سجل التراجع / "
 "الإعادة الخاص بك. <br /> هل تريد المتابعة؟"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "تعذر حفظ الملف في '%1'. حاول حفظه في مكان آخر."
@@ -4730,30 +4730,30 @@ msgstr "أضف علامة"
 msgid "Tools"
 msgstr "أدوات"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "انطق"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "اطبع"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "لا يسمح بطباعة هذا المستند."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr "تعذرت طباعة المستند. خطأ غير معروف. يُرجى التبليغ عنه إلى bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4761,17 +4761,17 @@ msgid ""
 msgstr ""
 "تعذرت طباعة المستند. الخطأ بالتفصيل هو \"%1\". يُرجى التبليغ إلى bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "اذهب إلى حيث كنت"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "اذهب إلى حيث كنت بعده"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4780,7 +4780,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر إنشاء ملف مؤقّت <nobr><strong>%1</strong></"
 "nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4789,7 +4789,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فتح الملف <nobr><strong>%1</strong></"
 "nobr> لفك الضغط. لن يتم تحميل الملف.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4801,7 +4801,7 @@ msgstr ""
 "الملكية والصلاحيات إذا ضغطت بالزر الأيمن على الملف في مدير الملفات دولفين ثم "
 "قمت باختيار لسان `التصاريح`</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4810,7 +4810,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فك ضغط الملف <nobr><strong>%1</strong></"
 "nobr>. لن يتم تحميل الملف.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4819,27 +4819,27 @@ msgstr ""
 "<qt>يحدث هذا الخطأ عادة إذا كان الملف معطوباً. إذا أردت أن تتأكد ،ا فحاول فك "
 "ضغط الملف يدياً باستخدام أدوات سطر الأوام.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "لا علامات مواقع"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "حدثت مشكلة في مشاركة المستند: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "شارك"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "شُورك المستند بنجاح"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "ستجد المستند المشارك به في: <a href=\"%1\">%1</a>"
@@ -5300,10 +5300,9 @@ msgstr "السبب:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "الخيارات"
+msgstr "اختياري"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5313,25 +5312,21 @@ msgstr "المكان:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "لون الخلفية:"
+msgstr "الخلفية:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "اختر..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "استخدم لون خلفية مخصص:"
+msgstr "خلفيات مستخدمة حديثا:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5373,31 +5368,25 @@ msgid "Properties"
 msgstr "الخصائص"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "الصفحات: %1"
+msgstr "صور (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "مكن ت&وليد الخلفية"
+msgstr "حدد صورة الخلفية"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "انسَ الكلّ"
+msgstr "انسَ صورة"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "انسَ الكلّ"
+msgstr "انسَ كل الصور"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

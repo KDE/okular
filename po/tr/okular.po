@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-15 21:14+0300\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"PO-Revision-Date: 2023-06-15 22:44+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4525,7 +4525,7 @@ msgstr "Bu Yer İmini Yeniden Adlandır"
 msgid "Remove this Bookmark"
 msgstr "Bu Yer İmini Kaldır"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4615,7 +4615,7 @@ msgstr ""
 "gerektiriyor. Geri Al/Yinele geçmişiniz kaybolacak.<br />Sürdürmek istiyor "
 "musunuz?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Dosya '%1' içine kaydedilemedi. Başka bir yere kaydetmeyi deneyin."
@@ -4747,24 +4747,24 @@ msgstr "Yer İmi Ekle"
 msgid "Tools"
 msgstr "Araçlar"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Seslendir"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Yazdır"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Bu belgenin yazdırılmasına izin verilmiyor."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4772,7 +4772,7 @@ msgstr ""
 "Bu belge yazdırılamıyor. Bilinmeyen hata. Lütfen bugs.kde.org adresinden "
 "hatayı raporlayın."
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4781,17 +4781,17 @@ msgstr ""
 "Belge yazdırılamıyor. Ayrıntılı hata \"%1\". Lütfen bugs.kde.org adresinden "
 "hatayı raporlayın."
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Daha önce bulunduğunuz yere gider"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Daha sonra bulunduğunuz yere gider"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4800,7 +4800,7 @@ msgstr ""
 "<qt><strong>Dosya Hatası!</strong> Geçici dosya oluşturulamadı <nobr><strong>"
 "%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4809,7 +4809,7 @@ msgstr ""
 "<qt><strong>Dosya Hatası!</strong> Sıkıştırmasını açmak için <nobr><strong>"
 "%1</strong></nobr> dosyası açılamadı. Dosya yüklenmeycek.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4822,7 +4822,7 @@ msgstr ""
 "'Özellikler' sekmesini seçerseniz sahiplik ve izinleri denetleyebilirsiniz.</"
 "qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4831,7 +4831,7 @@ msgstr ""
 "<qt><strong>Dosya Hatası!</strong> <nobr><strong>%1</strong></nobr> "
 "dosyasının sıkıştırması açılamadı. Dosya yüklenmeyecek.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4840,27 +4840,27 @@ msgstr ""
 "<qt>Bu hata genellikle dosya bozuksa meydana gelir. Emin olmak istiyorsanız, "
 "dosyayı komut satırında elle açmayı deneyin.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Yer İmi Yok"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Belge paylaşılırken bir hata oluştu: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Paylaş"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Belge paylaşımı başarılı"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Paylaşılan belgeyi şurada bulabilirsiniz: <a href=\"%1\">%1</a>"
@@ -5321,10 +5321,9 @@ msgstr "Neden:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Seçenekler"
+msgstr "isteğe bağlı"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5334,25 +5333,21 @@ msgstr "Konum:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Arka plan rengi:"
+msgstr "Arka plan:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Seç..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Özel arka plan rengi kullan:"
+msgstr "Son kullanılan arka planlar:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5395,30 +5390,25 @@ msgid "Properties"
 msgstr "Özellikler"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Sayfa: %1"
+msgstr "Görseller (%1)"
 
 #: part/signaturepartutils.cpp:305
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "Arka plan rengi seç"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Tümünü Unut"
+msgstr "Görseli Unut"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Tümünü Unut"
+msgstr "Tüm Görselleri Unut"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

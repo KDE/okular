@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
 "PO-Revision-Date: 2023-02-21 18:58+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -4532,7 +4532,7 @@ msgstr "Premenovať túto záložku"
 msgid "Remove this Bookmark"
 msgstr "Odstrániť túto záložku"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4618,7 +4618,7 @@ msgstr ""
 "Po uložení aktuálny formát dokumentu vyžaduje opätovné načítanie súboru. "
 "Vaša história vrátenia/opakovania bude stratená. <br/> Chcete pokračovať?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Súbor sa nepodarilo uložiť do '%1'. Skúste iné umiestnenie."
@@ -4749,24 +4749,24 @@ msgstr "Pridať záložku"
 msgid "Tools"
 msgstr "Nástroje"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Čítať"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Tlačiť"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Tlač tohto dokumentu nie je povolená."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4774,7 +4774,7 @@ msgstr ""
 "Nepodarilo sa vytlačiť dokument. Neznáma chyba. Prosím nahláste chybu na "
 "bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4783,17 +4783,17 @@ msgstr ""
 "Nepodarilo sa vytlačiť dokument. Podrobný popis chyby je \"%1\" Prosím "
 "nahláste chybu na bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Prejsť na predchádzajúce miesto"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Prejsť na nasledujúce miesto"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4802,7 +4802,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa vytvoriť dočasný súbor "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4811,7 +4811,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa otvoriť súbor <nobr><strong>"
 "%1</strong></nobr> pre rozbalenie. Súbor nebude načítaný.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4824,7 +4824,7 @@ msgstr ""
 "myši na súbor v správcovi súborov Dolphin a vyberiete položku 'Vlastnosti', "
 "a následne záložku 'Oprávnenia' v okne, ktoré sa otvorí.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4833,7 +4833,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa rozbaliť súbor <nobr> "
 "<strong>%1</strong></nobr>. Súbor nebude načítaný.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4842,27 +4842,27 @@ msgstr ""
 "<qt>Táto chyba sa obvykle vyskytne, ak je súbor poškodený. Ak si chcete byť "
 "istý, skúste rozbaliť súbor ručne pomocou nástrojov príkazového riadku.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Žiadne záložky"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Vyskytol sa problém pri zdieľaní dokumentu: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Zdieľať"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument úspešne zdieľaný"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Zdieľaný dokument môžete nájsť na adrese: <a href=\"%1\">%1</a>"

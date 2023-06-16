@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
 "PO-Revision-Date: 2023-05-07 14:35+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -4508,7 +4508,7 @@ msgstr "இந்த நினைவுக்குறிக்கு மறு�
 msgid "Remove this Bookmark"
 msgstr "இந்த நினைவுக்குறியை நீக்கு"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4597,7 +4597,7 @@ msgstr ""
 "சேமித்த பிறகு, தற்போதைய ஆவணப் படிவம் மீளேற்றலைக் கட்டாயப்படுத்துகிறது. உங்கள் செயல்நீக்கல்/"
 "மீளச்செயல் வரலாறு இழக்கப்படும்.<br />தொடர விரும்புகிறீர்களா?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "கோப்பை '%1' என்பதில் சேமிக்க முடியவில்லை. வேறொரு இடத்தில் சேமிக்க முயற்சியுங்கள்."
@@ -4729,24 +4729,24 @@ msgstr "நினைவுக்குறியை சேர்"
 msgid "Tools"
 msgstr "கருவிகள்"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "உரையைப் பேச்சாக்குதல்"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "அச்சிடு"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "இந்த ஆவணத்தை அச்சிட அனுமதி இல்லை."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4754,7 +4754,7 @@ msgstr ""
 "ஆவணத்தை அச்சிட முடியவில்லை. தெரியாத சிக்கல். bugs.kde.org என்ற இணையதளத்தில் "
 "தெரிவியுங்கள்."
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4763,17 +4763,17 @@ msgstr ""
 "ஆவணத்தை அச்சிட முடியவில்லை. விவரமான பிழை \"%1\" ஆகும். bugs.kde.org என்ற "
 "இணையதளத்தில் தெரிவியுங்கள்."
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "நீங்கள் முன்பிருந்த இடத்திற்கு செல்லும்"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "நீங்கள் பிறகு இருந்த இடத்திற்கு செல்லும்"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4782,7 +4782,7 @@ msgstr ""
 "<qt><strong>கோப்பு சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்ற "
 "தற்காலிக கோப்பை உருவாக்க முடியவில்லை.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4791,7 +4791,7 @@ msgstr ""
 "<qt><strong>கோப்பில் சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்கிற "
 "கோப்பை விரிவாக்கத்திற்கு திறக்க முடியவில்லை. அக்கோப்பு ஏற்றப்படாது.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4804,7 +4804,7 @@ msgstr ""
 "தேர்ந்தெடுத்து, திறக்கப்படும் சாளரத்தில் 'அனுமதிகள்' என்ற கீற்றுக்கு சென்றால், உரிமையாளர் "
 "மற்றும் அனுமதிகளை நீங்கள் பார்க்கலாம்.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4813,7 +4813,7 @@ msgstr ""
 "<qt><strong>கோப்பில் சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்கிற "
 "கோப்பை விரிவாக்க முடியவில்லை. அக்கோப்பு ஏற்றப்படாது.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4822,27 +4822,27 @@ msgstr ""
 "<qt>பெரும்பாலும், கோப்பில் உள்ள பிழையால் இச்சிக்கல் நேரும். அதை உறுதி செய்ய விரும்பினால், "
 "ஏதேனும் முனைய நிரலை கொண்டு கோப்பை விரிவாக்க முயற்சியுங்கள்.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "நினைவுக்குறிகள் இல்லை"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "ஆவணத்தைப் பகிர்வதில் சிக்கல் ஏற்பட்டது: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "பகிர்"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "ஆவணம் வெற்றிகரமாக பகிரப்பட்டது"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "பகிரப்பட்ட ஆவணத்தை நீங்கள் <a href=\"%1\">%1</a> என்ற இடத்தில் பார்க்கலாம்."

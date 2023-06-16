@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-04 21:10+0100\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"PO-Revision-Date: 2023-06-15 20:03+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -4511,7 +4511,7 @@ msgstr "Alinomi ĉi tiun Legomarkon"
 msgid "Remove this Bookmark"
 msgstr "Forigi ĉi tiun legosignon"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4601,7 +4601,7 @@ msgstr ""
 "reŝargita. Via malfari/refari historio estos perdita.<br />Ĉu vi volas "
 "daŭrigi?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Ne eblis konservi la dosieron en '%1'. Provu konservi ĝin aliloke."
@@ -4733,31 +4733,31 @@ msgstr "Aldoni legosignon"
 msgid "Tools"
 msgstr "Iloj"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Paroli"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Presi"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Printado de tiu dokumento ne estas permesita."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "Ne eblis presi la dokumenton. Nekonata eraro. Bonvolu raporti al bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4766,17 +4766,17 @@ msgstr ""
 "Ne eblis presi la dokumenton. Detala eraro estas \"%1\". Bonvolu raporti al "
 "bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Iri al la loko kie vi estis antaŭe"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Iri al la loko kie vi estis poste"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4785,7 +4785,7 @@ msgstr ""
 "<qt><strong>Dosiera eraro!</strong> Ne eblis krei nedaŭran dosieron "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4795,7 +4795,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> por ekstrakti. La dosiero ne estos ŝargita."
 "</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4808,7 +4808,7 @@ msgstr ""
 "la dosieron en la dosiermanaĝero de Dolphin, poste elektas la opcion "
 "'Propertoj' kaj elektu langeton 'Permesoj' en la malfermita fenestro.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4817,7 +4817,7 @@ msgstr ""
 "<qt><strong>Dosiera eraro!</strong> Ne eblis ekstrakti la dosieron "
 "<nobr><strong>%1</strong></nobr>. La dosiero ne estos ŝargita.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4826,27 +4826,27 @@ msgstr ""
 "<qt>Tiu eraro kutime okazas kiam la dosiero estas korupta. Se vi volas "
 "certiĝi, provu ekstrakti la dosieron manume, uzante komandliniajn ilojn.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Neniu legosigno"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Estis problemo kun konigo de la dokumento: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Kunhavigi"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumento kunhavita sukcese"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Vi povas trovi la komunan dokumenton ĉe: <a href=\"%1\">%1</a>"
@@ -5308,10 +5308,9 @@ msgstr "Kialo:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Opcioj"
+msgstr "laŭvola"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5321,25 +5320,21 @@ msgstr "Loko:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Fona koloro:"
+msgstr "Fono:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Elekti..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Uzi propran fonkoloron:"
+msgstr "Lasttempaj fonoj:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5381,8 +5376,7 @@ msgid "Properties"
 msgstr "Propraĵoj"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Paĝoj: %1"
@@ -5390,21 +5384,17 @@ msgstr "Paĝoj: %1"
 #: part/signaturepartutils.cpp:305
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "Elekti fonbildon"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Forgesi Ĉion"
+msgstr "Forgesi bildon"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Forgesi Ĉion"
+msgstr "Forgesi ĉiujn bildojn"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

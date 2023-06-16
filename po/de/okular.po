@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-28 10:25+0200\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"PO-Revision-Date: 2023-06-15 13:54+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -4545,7 +4545,7 @@ msgstr "Diese Lesezeichen umbenennen"
 msgid "Remove this Bookmark"
 msgstr "Dieses Lesezeichen entfernen"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4632,7 +4632,7 @@ msgstr ""
 "geladen werden. Der Verlauf von Zurücknehmen/Wiederherstellen geht verloren."
 "<br />Möchten Sie fortfahren?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -4768,24 +4768,24 @@ msgstr "Lesezeichen hinzufügen"
 msgid "Tools"
 msgstr "Extras"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Vorlesen"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Drucken"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Es ist nicht erlaubt, dieses Dokument zu drucken."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4793,7 +4793,7 @@ msgstr ""
 "Das Dokument kann aufgrund eines unbekannten Fehlers nicht gedruckt werden. "
 "Bitte melden Sie das Problem unter http://bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4802,17 +4802,17 @@ msgstr ""
 "Das Dokument kann nicht gedruckt werden. Die genaue Fehlermeldung lautet: "
 "„%1“. Bitte melden Sie das Problem unter http://bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Geht zurück zur vorher angezeigten Stelle im Dokument"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Geht vor zur nächsten angezeigten Stelle im Dokument"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4821,7 +4821,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> Die temporäre Datei <nobr><strong>%1</"
 "strong></nobr> kann nicht angelegt werden.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4831,7 +4831,7 @@ msgstr ""
 "strong></nobr> kann nicht zum Dekomprimieren geöffnet werden. Die Datei wird "
 "nicht geladen.</qt> "
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4845,7 +4845,7 @@ msgstr ""
 "Maustaste auf die Datei klicken und dann „Eigenschaften“ im Kontextmenü "
 "aufrufen und zur Karteikarte „Berechtigungen“ im Dialog gehen.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4854,7 +4854,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> Die Datei <nobr><strong>%1</strong></nobr> "
 "kann nicht dekomprimiert werden. Sie wird nicht geladen.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4864,27 +4864,27 @@ msgstr ""
 "Wenn Sie sicher sein möchten, versuchen Sie, die Datei mit Hilfe von "
 "Befehlszeilen-Werkzeugen selbst zu dekomprimieren.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Keine Lesezeichen"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Beim Veröffentlichen des Dokuments ist ein Fehler aufgetreten: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Veröffentlichen"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument erfolgreich veröffentlicht"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Sie finden das veröffentlichte Dokument unter: <a href=\"%1\">%1</a>"
@@ -5343,10 +5343,9 @@ msgstr "Grund:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Einstellungen"
+msgstr "optional"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5356,17 +5355,15 @@ msgstr "Ort:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Hintergrundfarbe:"
+msgstr "Hintergrund:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Auswählen ..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
@@ -5417,31 +5414,25 @@ msgid "Properties"
 msgstr "Eigenschaften"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Seiten: %1"
+msgstr "Bilder (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "&Erzeugung im Hintergrund einschalten"
+msgstr "Hintergrundbild auswählen"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Alles vergessen"
+msgstr "Bild vergessen"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Alles vergessen"
+msgstr "Alle Bilder vergessen"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

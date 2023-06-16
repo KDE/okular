@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
 "PO-Revision-Date: 2023-06-05 15:19+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -4525,7 +4525,7 @@ msgstr "Renomear este marcador"
 msgid "Remove this Bookmark"
 msgstr "Retirar este marcador"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4615,7 +4615,7 @@ msgstr ""
 "Tras gardar, o formado do documento actual require recargar o ficheiro. "
 "Perderá o seu historial de desfacer e refacer.<br /> Quere continuar?"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Non se puido gardar o ficheiro en «%1». Inténteo gardar noutro sitio."
@@ -4748,24 +4748,24 @@ msgstr "Engadir un marcador"
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Falar"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Imprimir"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Non se permite imprimir este documento."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4773,7 +4773,7 @@ msgstr ""
 "Non se puido imprimir o documento. Descoñécese este erro. Por favor, envíe "
 "un informe de erro a bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4782,17 +4782,17 @@ msgstr ""
 "Non se puido imprimir o documento. O erro detallado é «%1». Por favor, envíe "
 "un informe de erro a bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ir a onde estaba antes"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ir a onde estivo despois"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4801,7 +4801,7 @@ msgstr ""
 "<qt><strong>Erro de ficheiro!</strong> Non se puido crear o ficheiro "
 "temporal <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4811,7 +4811,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> para descomprimilo. Non se puido cargar o "
 "ficheiro.</qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4824,7 +4824,7 @@ msgstr ""
 "ficheiro en Dolphin, escoller a opción «Propiedades» e seleccionar o "
 "separador «Permisos» na xanela que se abre.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4833,7 +4833,7 @@ msgstr ""
 "<qt><strong>Erro de ficheiro!</strong> Non se puido descomprimir o ficheiro "
 "<nobr><strong>%1</strong></nobr>. Non se puido cargar o ficheiro.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4843,27 +4843,27 @@ msgstr ""
 "asegurarse, probe a descomprimilo manualmente usando ferramentas da liña de "
 "ordes.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Sen marcadores"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Produciuse un problema ao compartir o documento: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Compartir"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Compartiuse o documento."
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Pode atopar o documento compartido en <a href=\"%1\">%1</a>."

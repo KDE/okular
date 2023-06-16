@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-16 00:44+0000\n"
 "PO-Revision-Date: 2021-10-04 11:01+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4548,7 +4548,7 @@ msgstr "Μετονομασία αυτού του σελιδοδείκτη"
 msgid "Remove this Bookmark"
 msgstr "Να διαγραφεί αυτός ο σελιδοδείκτης"
 
-#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3481
+#: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
 #: part/signaturepartutils.cpp:381
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4638,7 +4638,7 @@ msgstr ""
 "αρχείου. Το ιστορικό αναίρεσης / ακυρώσεων αναίρεσης θα χαθεί.<br />Θέλετε "
 "να συνεχίσετε;"
 
-#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3496
+#: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -4776,25 +4776,25 @@ msgstr "Προσθήκη σελιδοδείκτη"
 msgid "Tools"
 msgstr "Εργαλεία"
 
-#: part/part.cpp:3377
+#: part/part.cpp:3379
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Εκφώνηση κειμένου"
 
-#: part/part.cpp:3534
+#: part/part.cpp:3536
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3599
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Η εκτύπωση αυτού του εγγράφου δεν επιτρέπεται."
 
-#: part/part.cpp:3605
+#: part/part.cpp:3607
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4802,7 +4802,7 @@ msgstr ""
 "Αδύνατη η εκτύπωση του εγγράφου. Άγνωστο σφάλμα. Παρακαλώ αναφέρετε το στο "
 "bugs.kde.org"
 
-#: part/part.cpp:3607
+#: part/part.cpp:3609
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4811,17 +4811,17 @@ msgstr ""
 "Αδύνατη η εκτύπωση του εγγράφου. Το λεπτομερές σφάλμα είναι \"%1\". Παρακαλώ "
 "αναφέρετέ το στο bugs.kde.org"
 
-#: part/part.cpp:3687
+#: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Μετάβαση στο σημείο που ήσασταν πριν"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Μετάβαση στο σημείο που ήσασταν μετά"
 
-#: part/part.cpp:3716
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4830,7 +4830,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η δημιουργία του "
 "προσωρινού αρχείου <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4840,7 +4840,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> για αποσυμπίεση. Το αρχείο δε θα φορτωθεί.</"
 "qt>"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4854,7 +4854,7 @@ msgstr ""
 "επιλέγοντας την επιλογή 'Ιδιότητες' και επιλέγοντας την καρτέλα 'Δικαιώματα' "
 "στο ανοιχτό παράθυρο.</qt>"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4863,7 +4863,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η αποσυμπίεση του "
 "αρχείου <nobr><strong>%1</strong></nobr>. Το αρχείο δε θα φορτωθεί.</qt>"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4873,27 +4873,27 @@ msgstr ""
 "Αν θέλετε να σιγουρευτείτε, προσπαθήστε να το αποσυμπιέσετε με χρήση "
 "εργαλείων γραμμής εντολών.</qt>"
 
-#: part/part.cpp:3784
+#: part/part.cpp:3786
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Κανένας σελιδοδείκτης"
 
-#: part/part.cpp:3855
+#: part/part.cpp:3857
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Παρουσιάστηκε πρόβλημα με το διαμοιρασμό του εγγράφου: %1"
 
-#: part/part.cpp:3855 part/part.cpp:3861
+#: part/part.cpp:3857 part/part.cpp:3863
 #, kde-format
 msgid "Share"
 msgstr "Διαμοιρασμός"
 
-#: part/part.cpp:3859
+#: part/part.cpp:3861
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Το έγγραφο μοιράστηκε με επιτυχία"
 
-#: part/part.cpp:3861
+#: part/part.cpp:3863
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Μπορείτε να βρείτε το κοινόχρηστο έγγραφο στο: <a href=\"%1\">%1</a>"

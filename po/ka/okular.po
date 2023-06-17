@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-16 00:44+0000\n"
-"PO-Revision-Date: 2023-05-05 05:29+0200\n"
+"PO-Revision-Date: 2023-06-16 06:42+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5160,10 +5160,9 @@ msgstr "მიზეზი:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "პარამეტრები"
+msgstr "არასავალდებულო"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5173,25 +5172,21 @@ msgstr "მდებარეობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "ფონის ფერი:"
+msgstr "ფონი:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "აირჩიეთ..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "ფონის ფერის მითითება:"
+msgstr "ბოლო ფონი:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5231,11 +5226,10 @@ msgid "Properties"
 msgstr "პარამეტრები"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "გვერდები: %1"
+msgstr "სურათები (%1)"
 
 #: part/signaturepartutils.cpp:305
 #, kde-format
@@ -5243,18 +5237,14 @@ msgid "Select background image"
 msgstr ""
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "ყველას დავიწყება"
+msgstr "გამოსახულების დავიწყება"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "ყველას დავიწყება"
+msgstr "ყველა გამოსახულების დავიწყება"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5529,7 +5519,7 @@ msgstr "ჩანართის დახურვის გაუქმებ�
 #: shell/shell.cpp:545
 #, kde-format
 msgid "Lock Sidebar"
-msgstr ""
+msgstr "გვერდითი პანელის დაბლოკვა"
 
 #: shell/shell.cpp:642
 #, kde-format

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-15 00:44+0000\n"
-"PO-Revision-Date: 2023-05-22 14:01\n"
+"PO-Revision-Date: 2023-06-17 04:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -53,10 +53,9 @@ msgstr "形状"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:65
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "要打印页面的缩放模式"
+msgstr "打印使用的默认缩放模式："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103

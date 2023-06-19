@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 02:52+0000\n"
-"PO-Revision-Date: 2023-04-23 16:58+0530\n"
+"PO-Revision-Date: 2023-06-18 14:11+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2852,18 +2852,16 @@ msgid "Rendering options:"
 msgstr "வரைதல் விருப்பங்கள்:"
 
 #: part/dlgperformance.cpp:59
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable graphics antialias"
-msgstr "முன்னிருப்பு மாற்றம்:"
+msgstr "வரைகலை திரிபுத்திருத்தத்தை இயக்கு"
 
 #: part/dlgperformance.cpp:64
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "முன்னிருப்பு மாற்றம்:"
+msgstr "எழுத்துருக்களை மேம்படுத்து (hinting)"
 
 #: part/dlgperformance.cpp:77
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-16 00:44+0000\n"
-"PO-Revision-Date: 2023-05-07 14:35+0530\n"
+"PO-Revision-Date: 2023-06-18 14:11+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2874,18 +2874,16 @@ msgid "Rendering options:"
 msgstr "வரைதல் விருப்பங்கள்:"
 
 #: part/dlgperformance.cpp:59
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable graphics antialias"
-msgstr "முன்னிருப்பு மாற்றம்:"
+msgstr "வரைகலை திரிபுத்திருத்தத்தை இயக்கு"
 
 #: part/dlgperformance.cpp:64
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "முன்னிருப்பு மாற்றம்:"
+msgstr "எழுத்துருக்களை மேம்படுத்து (hinting)"
 
 #: part/dlgperformance.cpp:77
 #, kde-format
@@ -5307,7 +5305,7 @@ msgstr "காரணம்:"
 #, fuzzy, kde-format
 #| msgid "Options"
 msgid "optional"
-msgstr "விருப்பத்தேர்வுகள்"
+msgstr "கட்டாயமில்லை"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5317,25 +5315,21 @@ msgstr "இடம்:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "பின்னணியின் நிறம்:"
+msgstr "பின்புலம்:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "தேர்ந்தெடு..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "வேறு பின்னணி நிறத்தைப் பயன்படுத்து:"
+msgstr "சமீப பின்புலங்கள்:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5378,31 +5372,25 @@ msgid "Properties"
 msgstr "பண்புகள்"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "பக்கங்கள்: %1"
+msgstr "படங்கள் (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "&பின்னணி உருவாக்கத்தை செயல்படுத்து"
+msgstr "பின்புலப் படத்தை தேர்ந்தெடுத்தல்"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "அனைத்தையும் மற"
+msgstr "படத்தை மற"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "அனைத்தையும் மற"
+msgstr "அனைத்துப் படங்களையும் மற"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format

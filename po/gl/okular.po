@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 02:52+0000\n"
-"PO-Revision-Date: 2023-06-05 15:19+0200\n"
+"PO-Revision-Date: 2023-06-16 08:43+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -325,7 +325,7 @@ msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
-"O documento intenta executar unha aplicación externa e para a súa seguranza "
+"O documento intenta executar unha aplicación externa e para a súa seguridade "
 "Okular non llo permite."
 
 #: core/document.cpp:4211 core/document.cpp:4221
@@ -588,7 +588,7 @@ msgstr "Falta o tipo de alerta"
 #: core/script/kjs_app.cpp:222
 #, kde-format
 msgid "Do not show this message again"
-msgstr "Non volver mostrar esta mensaxe"
+msgstr "Non volver amosar esta mensaxe"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -2067,7 +2067,7 @@ msgid ""
 "Click here to render."
 msgstr ""
 "Esta anotación pode conter texto en LaTeX.\n"
-"Prema aquí para mostralo."
+"Prema aquí para amosalo."
 
 #: part/annotwindow.cpp:415
 #, kde-format
@@ -2123,7 +2123,7 @@ msgstr "Marcadores"
 #: part/bookmarklist.cpp:135
 #, kde-format
 msgid "Show for all documents"
-msgstr "Mostrar para todos os documentos"
+msgstr "Amosar para todos os documentos"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
@@ -2619,7 +2619,7 @@ msgid ""
 "command."
 msgstr ""
 "<qt>Indique a orde do editor de texto personalizado a iniciar.<br />\n"
-"Tamén pode empregar caracteres de substitución:\n"
+"Tamén pode usar caracteres de substitución:\n"
 "<ul>\n"
 "  <li>%f : o nome do ficheiro</li>\n"
 "  <li>%l : a liña a acadar no ficheiro</li>\n"
@@ -2650,7 +2650,7 @@ msgstr "Aparencia:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
-msgstr "Mostrar as barras de desprazamento"
+msgstr "Amosar as barras de desprazamento"
 
 #: part/dlggeneral.cpp:46
 #, kde-format
@@ -2662,7 +2662,7 @@ msgstr "Ligar as miniaturas coa páxina"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
-msgstr "Mostrar os consellos e mensaxes de información"
+msgstr "Amosar os consellos e mensaxes de información"
 
 #: part/dlggeneral.cpp:59
 #, kde-format
@@ -2674,25 +2674,25 @@ msgstr "Avisar de ficheiros incluídos, formularios ou sinaturas"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
-msgstr "Mostrar o título do documento na barra de título de estar dispoñíbel."
+msgstr "Amosar o título do documento na barra de título de estar dispoñíbel."
 
 #: part/dlggeneral.cpp:72
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
-msgstr "Mostrar só o nome do ficheiro"
+msgstr "Amosar só o nome do ficheiro"
 
 #: part/dlggeneral.cpp:73
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
-msgstr "Mostrar a ruta completa ao ficheiro"
+msgstr "Amosar a ruta completa ao ficheiro"
 
 #: part/dlggeneral.cpp:75
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
-msgstr "Cando non se mostre o título do documento:"
+msgstr "Cando non se amose o título do documento:"
 
 #: part/dlggeneral.cpp:90
 #, kde-format
@@ -2734,7 +2734,7 @@ msgstr "Cargar de novo o documento cando o ficheiro cambie"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
-msgstr "Mostrar o diálogo de escolla de infraestrutura"
+msgstr "Amosar o diálogo de escolla de infraestrutura"
 
 #: part/dlggeneral.cpp:160
 #, kde-format
@@ -2816,7 +2816,7 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 "Define o modo de ampliación predeterminado dos ficheiros que non se abrisen "
-"nunca. Para os ficheiros que se abrisen antes emprégase o modo de ampliación "
+"nunca. Para os ficheiros que se abrisen antes úsase o modo de ampliación "
 "anterior."
 
 #: part/dlggeneral.cpp:210
@@ -2925,8 +2925,8 @@ msgid ""
 "Loads and keeps everything in memory. Preload all pages. (Will use at "
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
-"Carga e mantén todo na memoria. Precargar todas as páxinas ñ(emprega un "
-"máximo do 50% da memoria total ou da memoria libre, a que sexa maior)."
+"Carga e mantén todo na memoria. Precargar todas as páxinas ñ(usa un máximo "
+"do 50% da memoria total ou da memoria libre, a que sexa maior)."
 
 #: part/dlgpresentation.cpp:37
 #, kde-format
@@ -3012,13 +3012,13 @@ msgstr "Cursor do rato:"
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show progress indicator"
-msgstr "Mostrar o indicador de progreso"
+msgstr "Amosar o indicador de progreso"
 
 #: part/dlgpresentation.cpp:90
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show summary page"
-msgstr "Mostrar a páxina de resumo"
+msgstr "Amosar a páxina de resumo"
 
 #: part/dlgpresentation.cpp:100
 #, kde-format
@@ -3643,7 +3643,7 @@ msgstr "Desprazarse unha páxina cara baixo"
 #: part/pageview.cpp:793
 #, kde-format
 msgid "Show Forms"
-msgstr "Mostrar os formularios"
+msgstr "Amosar os formularios"
 
 #: part/pageview.cpp:1287
 #, kde-format
@@ -4194,17 +4194,17 @@ msgstr "Seleccionar todo o texto da páxina actual"
 #: part/part.cpp:885
 #, kde-format
 msgid "Show S&idebar"
-msgstr "Mostrar a barra &lateral"
+msgstr "Amosar a barra &lateral"
 
 #: part/part.cpp:894
 #, kde-format
 msgid "Show &Page Bar"
-msgstr "Mostrar a barra de &páxina"
+msgstr "Amosar a barra de &páxina"
 
 #: part/part.cpp:900
 #, kde-format
 msgid "Show &Signatures Panel"
-msgstr "Mostrar o panel das sinaturas"
+msgstr "Amosar o panel das sinaturas"
 
 #: part/part.cpp:910
 #, kde-format
@@ -4349,7 +4349,7 @@ msgid ""
 "View -> Show Forms."
 msgstr ""
 "Este documento ten formularios. Prema o botón para acceder a eles ou use "
-"«Vista → Mostrar os formularios»."
+"«Vista → Amosar os formularios»."
 
 #: part/part.cpp:1649
 #, kde-format
@@ -4366,7 +4366,7 @@ msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
-"Este documento solicita mostrarse a pantalla completa.\n"
+"Este documento solicita amosarse a pantalla completa.\n"
 "Quere saír do modo normal e entrar no modo de presentación?"
 
 #: part/part.cpp:1739
@@ -5295,7 +5295,7 @@ msgstr "Agrupar segundo o autor"
 #: part/side_reviews.cpp:150
 #, kde-format
 msgid "Show annotations for current page only"
-msgstr "Mostrar só as anotacións da páxina actual"
+msgstr "Amosar só as anotacións da páxina actual"
 
 #: part/side_reviews.cpp:160
 #, kde-format
@@ -5419,7 +5419,7 @@ msgstr "Ver o certificado…"
 #: part/thumbnaillist.cpp:1028
 #, kde-format
 msgid "Show bookmarked pages only"
-msgstr "Mostrar só as páxinas marcadas"
+msgstr "Amosar só as páxinas marcadas"
 
 #: part/videowidget.cpp:139
 #, kde-format
@@ -5482,7 +5482,7 @@ msgstr "Nome duplicado"
 #: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr "Páxina a mostrar do documento"
+msgstr "Páxina a amosar do documento"
 
 #: shell/main.cpp:76
 #, kde-format

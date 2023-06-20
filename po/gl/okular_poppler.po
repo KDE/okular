@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-16 00:56+0000\n"
-"PO-Revision-Date: 2023-03-26 18:12+0200\n"
+"PO-Revision-Date: 2023-06-02 08:28+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -206,7 +206,7 @@ msgstr "Descifrado"
 #: generator_pdf.cpp:930
 #, kde-format
 msgid "Security"
-msgstr "Seguranza"
+msgstr "Seguridade"
 
 #: generator_pdf.cpp:931
 #, kde-format
@@ -261,8 +261,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
-"Atopáronse algúns erros no documento, Okular podería non ser capaz de "
-"mostrar o contido correctamente."
+"Atopáronse algúns erros no documento, Okular podería non ser capaz de amosar "
+"o contido correctamente."
 
 #: pdfsettingswidget.cpp:43
 #, kde-format

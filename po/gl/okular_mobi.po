@@ -38,7 +38,7 @@ msgstr "Ocorreu un erro ao abrir o documento Mobipocket."
 msgid ""
 "This book is protected by DRM and can be displayed only on designated device"
 msgstr ""
-"Este libro está protexido por DRM e só se pode mostrar no dispositivo "
+"Este libro está protexido por DRM e só se pode amosar no dispositivo "
 "designado"
 
 #: generator_mobi.cpp:25

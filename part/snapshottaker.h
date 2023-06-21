@@ -6,6 +6,9 @@
 
 #ifndef SNAPSHOTTAKER_H
 #define SNAPSHOTTAKER_H
+#include "config-okular.h"
+
+#if HAVE_PHONON
 
 #include <phonon/videoplayer.h>
 
@@ -31,4 +34,5 @@ private:
     Phonon::VideoPlayer *m_player;
 };
 
+#endif
 #endif

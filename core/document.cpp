@@ -71,7 +71,6 @@
 #include "annotations.h"
 #include "annotations_p.h"
 #include "audioplayer.h"
-#include "audioplayer_p.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog_p.h"
 #include "debug_p.h"
@@ -2576,7 +2575,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
         d->m_nextDocumentDestination = QString();
     }
 
-    AudioPlayer::instance()->d->m_currentDocument = fromFileDescriptor ? QUrl() : d->m_url;
+    AudioPlayer::instance()->setDocument(fromFileDescriptor ? QUrl() : d->m_url, this);
 
     const QStringList docScripts = d->m_generator->metaData(QStringLiteral("DocumentScripts"), QStringLiteral("JavaScript")).toStringList();
     if (!docScripts.isEmpty()) {
@@ -2773,7 +2772,7 @@ void Document::closeDocument()
     d->m_documentInfo = DocumentInfo();
     d->m_documentInfoAskedKeys.clear();
 
-    AudioPlayer::instance()->d->m_currentDocument = QUrl();
+    AudioPlayer::instance()->resetDocument();
 
     d->m_undoStack->clear();
     d->m_docdataMigrationNeeded = false;

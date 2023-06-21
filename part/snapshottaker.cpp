@@ -3,8 +3,9 @@
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
-
 #include "snapshottaker.h"
+
+#if HAVE_PHONON
 
 #include <phonon/mediaobject.h>
 #include <phonon/videowidget.h>
@@ -41,3 +42,4 @@ void SnapshotTaker::stateChanged(Phonon::State newState, Phonon::State)
         deleteLater();
     }
 }
+#endif

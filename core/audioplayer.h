@@ -70,6 +70,8 @@ public:
 
 private:
     AudioPlayer();
+    void resetDocument();
+    void setDocument(const QUrl &url, Document *document);
 
     friend class AudioPlayerPrivate;
     AudioPlayerPrivate *const d;

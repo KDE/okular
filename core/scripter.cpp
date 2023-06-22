@@ -21,7 +21,7 @@ class Okular::ScripterPrivate
 public:
     explicit ScripterPrivate(DocumentPrivate *doc)
         : m_doc(doc)
-#if HAVE_KJS
+#if HAVE_JS
         , m_kjs(nullptr)
 #endif
         , m_event(nullptr)
@@ -29,7 +29,7 @@ public:
     }
 
     DocumentPrivate *m_doc;
-#if HAVE_KJS
+#if HAVE_JS
     QScopedPointer<ExecutorKJS> m_kjs;
 #endif
     Event *m_event;
@@ -48,7 +48,7 @@ Scripter::~Scripter()
 void Scripter::execute(ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;
-#if HAVE_KJS
+#if HAVE_JS
     static QString builtInScript;
     if (builtInScript.isNull()) {
         QFile builtInResource(QStringLiteral(":/script/builtin.js"));

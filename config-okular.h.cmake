@@ -10,8 +10,8 @@
 /* Defines if kwallet is available */
 #cmakedefine01 HAVE_KWALLET
 
-/* Defines if kjs is available*/
-#cmakedefine01 HAVE_KJS
+/* Defines if QJSEngine is available*/
+#cmakedefine01 HAVE_JS
 
 /* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM

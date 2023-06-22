@@ -145,9 +145,9 @@ find_package(Qt5Qml)
 set_okular_optional_package_properties(Qt5Qml PROPERTIES
     PURPOSE "Required for supporting JavaScript in PDF documents")
 if(TARGET Qt5::Qml)
-    set(HAVE_KJS 1)
+    set(HAVE_JS 1)
 else()
-    set(HAVE_KJS 0)
+    set(HAVE_JS 0)
 endif()
 
 if (BUILD_DESKTOP)

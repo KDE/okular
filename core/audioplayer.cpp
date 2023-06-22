@@ -315,7 +315,7 @@ void AudioPlayer::playSound(const Sound *sound, const SoundAction *linksound)
 {
     Q_UNUSED(sound);
     Q_UNUSED(linksound);
-    Q_EMIT d->document->warning(i18n("This Okular is bulit without audio support"), 2000);
+    Q_EMIT d->document->warning(i18n("This Okular is built without audio support"), 2000);
 }
 
 AudioPlayer::State Okular::AudioPlayer::state() const

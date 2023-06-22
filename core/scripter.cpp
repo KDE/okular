@@ -22,7 +22,7 @@ public:
     explicit ScripterPrivate(DocumentPrivate *doc)
         : m_doc(doc)
 #if HAVE_JS
-        , m_kjs(nullptr)
+        , m_js(nullptr)
 #endif
         , m_event(nullptr)
     {
@@ -30,7 +30,7 @@ public:
 
     DocumentPrivate *m_doc;
 #if HAVE_JS
-    QScopedPointer<ExecutorKJS> m_kjs;
+    QScopedPointer<ExecutorJS> m_js;
 #endif
     Event *m_event;
 };
@@ -62,10 +62,10 @@ void Scripter::execute(ScriptType type, const QString &script)
 
     switch (type) {
     case JavaScript:
-        if (!d->m_kjs) {
-            d->m_kjs.reset(new ExecutorKJS(d->m_doc));
+        if (!d->m_js) {
+            d->m_js.reset(new ExecutorJS(d->m_doc));
         }
-        d->m_kjs->execute(builtInScript + script, d->m_event);
+        d->m_js->execute(builtInScript + script, d->m_event);
     }
 #endif
 }

@@ -31,15 +31,15 @@
 
 using namespace Okular;
 
-class Okular::ExecutorKJSPrivate
+class Okular::ExecutorJSPrivate
 {
 public:
-    explicit ExecutorKJSPrivate(DocumentPrivate *doc)
+    explicit ExecutorJSPrivate(DocumentPrivate *doc)
         : m_doc(doc)
     {
         initTypes();
     }
-    ~ExecutorKJSPrivate()
+    ~ExecutorJSPrivate()
     {
         m_watchdogTimer->deleteLater();
         m_watchdogThread.quit();
@@ -55,7 +55,7 @@ public:
     QTimer *m_watchdogTimer = nullptr;
 };
 
-void ExecutorKJSPrivate::initTypes()
+void ExecutorJSPrivate::initTypes()
 {
     m_watchdogThread.start();
     m_watchdogTimer = new QTimer;
@@ -73,19 +73,19 @@ void ExecutorKJSPrivate::initTypes()
     m_interpreter.globalObject().setProperty(QStringLiteral("util"), m_interpreter.newQObject(new JSUtil));
 }
 
-ExecutorKJS::ExecutorKJS(DocumentPrivate *doc)
-    : d(new ExecutorKJSPrivate(doc))
+ExecutorJS::ExecutorJS(DocumentPrivate *doc)
+    : d(new ExecutorJSPrivate(doc))
 {
 }
 
-ExecutorKJS::~ExecutorKJS()
+ExecutorJS::~ExecutorJS()
 {
     JSField::clearCachedFields();
     JSApp::clearCachedFields();
     delete d;
 }
 
-void ExecutorKJS::execute(const QString &script, Event *event)
+void ExecutorJS::execute(const QString &script, Event *event)
 {
     const auto eventVal = event ? d->m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
     d->m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);

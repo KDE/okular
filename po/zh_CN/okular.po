@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"POT-Creation-Date: 2023-06-22 00:46+0000\n"
 "PO-Revision-Date: 2023-06-17 04:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -242,6 +242,11 @@ msgstr "暂停播放影片"
 msgid "Resume movie"
 msgstr "继续播放影片"
 
+#: core/audioplayer.cpp:318
+#, kde-format
+msgid "This Okular is bulit without audio support"
+msgstr ""
+
 #: core/chooseenginedialog.cpp:22
 #, kde-format
 msgid "Backend Selection"
@@ -256,111 +261,111 @@ msgstr ""
 "<qt>找到了多款支持该 MIME 类型的后端程序：<br /><b>%1</b> (%2)。<br /><br />"
 "请选择您要使用哪一款：</qt>"
 
-#: core/document.cpp:209
+#: core/document.cpp:208
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "大部分页面是 %1。"
 
-#: core/document.cpp:230
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "纵向 %1"
 
-#: core/document.cpp:232
+#: core/document.cpp:231
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "横向 %1"
 
-#: core/document.cpp:255
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 英寸 (%3)"
 
-#: core/document.cpp:257
+#: core/document.cpp:256
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 毫米 (%3)"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "正在从文档开头继续搜索"
 
-#: core/document.cpp:1694
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "正在从文档末尾继续搜索"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2453
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "无法找到用于处理所给文档的插件。"
 
-#: core/document.cpp:3604
+#: core/document.cpp:3603
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除批注"
 
-#: core/document.cpp:4188 core/document.cpp:4194
+#: core/document.cpp:4187 core/document.cpp:4193
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文档正在试图执行外部应用程序。出于安全考虑，Okular 不允许这样做。"
 
-#: core/document.cpp:4205 core/document.cpp:4215
+#: core/document.cpp:4204 core/document.cpp:4214
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用于打开 MIME 类型为 %1 的应用程序。"
 
-#: core/document.cpp:4639
+#: core/document.cpp:4638
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "无法打开临时文件"
 
-#: core/document.cpp:4641
+#: core/document.cpp:4640
 #, kde-format
 msgid "Print conversion failed"
 msgstr "打印转换失败"
 
-#: core/document.cpp:4643
+#: core/document.cpp:4642
 #, kde-format
 msgid "Printing process crashed"
 msgstr "打印进程崩溃"
 
-#: core/document.cpp:4645
+#: core/document.cpp:4644
 #, kde-format
 msgid "Printing process could not start"
 msgstr "打印进程无法启动"
 
-#: core/document.cpp:4647
+#: core/document.cpp:4646
 #, kde-format
 msgid "Printing to file failed"
 msgstr "打印到文件失败"
 
-#: core/document.cpp:4649
+#: core/document.cpp:4648
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "打印机状态无效"
 
-#: core/document.cpp:4651
+#: core/document.cpp:4650
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "无法找到要打印的文件"
 
-#: core/document.cpp:4653
+#: core/document.cpp:4652
 #, kde-format
 msgid "There was no file to print"
 msgstr "没有要打印的文件"
 
-#: core/document.cpp:4655
+#: core/document.cpp:4654
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -369,92 +374,92 @@ msgstr ""
 "无法找到打印所需的二进制程序。请检查并确保 CUPS lpr 二进制程序已经安装并可"
 "用。"
 
-#: core/document.cpp:4657
+#: core/document.cpp:4656
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "页面的打印尺寸无效"
 
-#: core/document.cpp:5322 part/part.cpp:1162
+#: core/document.cpp:5321 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "无法打开“%1”。文件不存在"
 
-#: core/document.cpp:5832
+#: core/document.cpp:5831
 #, kde-format
 msgid "Title"
 msgstr "标题"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5834
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5837
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5840
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5843
 #, kde-format
 msgid "Creator"
 msgstr "创建程序"
 
-#: core/document.cpp:5847
+#: core/document.cpp:5846
 #, kde-format
 msgid "Producer"
 msgstr "转换程序"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5849
 #, kde-format
 msgid "Copyright"
 msgstr "版权"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5852
 #, kde-format
 msgid "Pages"
 msgstr "页数"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5855
 #, kde-format
 msgid "Created"
 msgstr "创建时间"
 
-#: core/document.cpp:5859
+#: core/document.cpp:5858
 #, kde-format
 msgid "Modified"
 msgstr "修改时间"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5861
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 类型"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5864
 #, kde-format
 msgid "Category"
 msgstr "类别"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5867
 #, kde-format
 msgid "Keywords"
 msgstr "关键词"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5870
 #, kde-format
 msgid "File Path"
 msgstr "文件路径"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5873
 #, kde-format
 msgid "File Size"
 msgstr "文件大小"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5876
 #, kde-format
 msgid "Page Size"
 msgstr "页面大小"
@@ -567,12 +572,7 @@ msgstr "适合整个页面"
 msgid "Scale mode:"
 msgstr "缩放模式："
 
-#: core/script/kjs_app.cpp:160
-#, kde-format
-msgid "Missing alert type"
-msgstr "缺少警报类型"
-
-#: core/script/kjs_app.cpp:222
+#: core/script/kjs_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "不再显示此消息"
@@ -5409,23 +5409,33 @@ msgstr "查看证书..."
 msgid "Show bookmarked pages only"
 msgstr "只显示有书签的页面"
 
-#: part/videowidget.cpp:139
+#: part/videowidget.cpp:145
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "播放"
 
-#: part/videowidget.cpp:142
+#: part/videowidget.cpp:148
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "暂停"
 
-#: part/videowidget.cpp:248
+#: part/videowidget.cpp:254
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "停止"
+
+#: part/videowidget.cpp:503
+#, kde-format
+msgid "Videos not supported in this okular"
+msgstr ""
+
+#: part/videowidget.cpp:507
+#, kde-format
+msgid "Videos not supported in this Okular"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5693,3 +5703,6 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
+
+#~ msgid "Missing alert type"
+#~ msgstr "缺少警报类型"

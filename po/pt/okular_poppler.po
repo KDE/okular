@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-22 00:46+0000\n"
 "PO-Revision-Date: 2023-06-01 09:39+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -35,7 +35,7 @@ msgid "Enhance thin lines:"
 msgstr "Realçar as linhas finas:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:941
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:947
 #, kde-format
 msgid "No"
 msgstr "Não"
@@ -97,32 +97,38 @@ msgstr ""
 "Verificar a revogação dos certificados de assinaturas digitais, usando "
 "servidores de terceiros"
 
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:131
+#, kde-format
+msgid "Signature backend:"
+msgstr ""
+
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:116
+#: conf/pdfsettingswidget.ui:157
 #, kde-format
 msgid "Certificate Database"
 msgstr "Base de Dados de Certificados"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:125
+#: conf/pdfsettingswidget.ui:166
 #, kde-format
 msgid "Default:"
 msgstr "Predefinição:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:132
+#: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Custom:"
 msgstr "Personalizada:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:149
+#: conf/pdfsettingswidget.ui:190
 #, kde-format
 msgid "Available Certificates"
 msgstr "Certificados Disponíveis"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:157
+#: conf/pdfsettingswidget.ui:198
 #, kde-format
 msgid "&Load Signatures"
 msgstr "&Carregar as Assinaturas"
@@ -182,43 +188,43 @@ msgstr "Modo de escala das páginas impressas"
 msgid "Scale mode:"
 msgstr "Modo de escala:"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:945
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:945
 #, kde-format
 msgid "Format"
 msgstr "Formato"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Encrypted"
 msgstr "Encriptado"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Unencrypted"
 msgstr "Não Encriptado"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Security"
 msgstr "Segurança"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:947
 #, kde-format
 msgid "Yes"
 msgstr "Sim"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:947
 #, kde-format
 msgid "Optimized"
 msgstr "Optimizado"
 
-#: generator_pdf.cpp:1372
+#: generator_pdf.cpp:1378
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -229,12 +235,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1575
+#: generator_pdf.cpp:1581
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "A usar o Poppler %1"
 
-#: generator_pdf.cpp:1577
+#: generator_pdf.cpp:1583
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -245,17 +251,17 @@ msgstr ""
 "\n"
 "Compilado com o Poppler %2"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1618
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1618
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Configuração da Infra-Estrutura de PDF"
 
-#: generator_pdf.cpp:2087
+#: generator_pdf.cpp:2097
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -264,24 +270,24 @@ msgstr ""
 "Foram detectados alguns erros no documento, pelo que o Okular poderá não "
 "conseguir mostrar correctamente o conteúdo"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Emitido para"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Data de validade"
 
-#: pdfsettingswidget.cpp:60
+#: pdfsettingswidget.cpp:141
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -290,23 +296,23 @@ msgstr ""
 "Está a usar uma biblioteca do Poppler compilada sem suporte para o NSS.\n"
 "A adição de Assinaturas Digitais não está disponível por esse motivo"
 
-#: pdfsettingswidget.cpp:96
+#: pdfsettingswidget.cpp:182
 #, kde-format
 msgid "Restart needed"
 msgstr "É necessário reiniciar"
 
-#: pdfsettingswidget.cpp:96
+#: pdfsettingswidget.cpp:182
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Tem de reiniciar o Okular depois de mudar a pasta de configuração do NSS"
 
-#: pdfsignatureutils.cpp:177
+#: pdfsignatureutils.cpp:189
 #, kde-format
 msgid "Enter Password"
 msgstr "Indique a Senha"
 
-#: pdfsignatureutils.cpp:177
+#: pdfsignatureutils.cpp:189
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Indique a senha para abrir o %1:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"POT-Creation-Date: 2023-06-22 00:46+0000\n"
 "PO-Revision-Date: 2023-05-31 11:49+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -248,6 +248,11 @@ msgstr "Pozastavit film"
 msgid "Resume movie"
 msgstr "Pokračovat v přehrávání filmu"
 
+#: core/audioplayer.cpp:318
+#, kde-format
+msgid "This Okular is bulit without audio support"
+msgstr ""
+
 #: core/chooseenginedialog.cpp:22
 #, kde-format
 msgid "Backend Selection"
@@ -262,59 +267,59 @@ msgstr ""
 "<qt>Bylo nalezeno více implementací zpracování MIME typu:<br /><b>%1</b> "
 "(%2).<br /><br />Prosím vyberte, kterou si přejete použít:</qt>"
 
-#: core/document.cpp:209
+#: core/document.cpp:208
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Nejvíc stran je %1"
 
-#: core/document.cpp:230
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Na výšku %1"
 
-#: core/document.cpp:232
+#: core/document.cpp:231
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Na šířku %1"
 
-#: core/document.cpp:255
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:257
+#: core/document.cpp:256
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Pokračovat v hledání od začátku"
 
-#: core/document.cpp:1694
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Pokračovat v hledání zdola"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2453
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nebyl nalezen zásuvný modul vhodný pro zpracování zadaného dokumentu."
 
-#: core/document.cpp:3604
+#: core/document.cpp:3603
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Odstranit poznámky"
 
-#: core/document.cpp:4188 core/document.cpp:4194
+#: core/document.cpp:4187 core/document.cpp:4193
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -323,52 +328,52 @@ msgstr ""
 "Dokument se pokouší spustit externí aplikaci. Pro vaše bezpečí to Okular "
 "nepovolil."
 
-#: core/document.cpp:4205 core/document.cpp:4215
+#: core/document.cpp:4204 core/document.cpp:4214
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nebyla nalezena žádná aplikace pro otevírání typu MIME %1."
 
-#: core/document.cpp:4639
+#: core/document.cpp:4638
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nelze otevřít dočasný soubor"
 
-#: core/document.cpp:4641
+#: core/document.cpp:4640
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Tisková konverze selhala"
 
-#: core/document.cpp:4643
+#: core/document.cpp:4642
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces tisku zhavaroval"
 
-#: core/document.cpp:4645
+#: core/document.cpp:4644
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proces tisku nemohl být zahájen"
 
-#: core/document.cpp:4647
+#: core/document.cpp:4646
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tisk do souboru selhal"
 
-#: core/document.cpp:4649
+#: core/document.cpp:4648
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tiskárna byla v nesprávném stavu"
 
-#: core/document.cpp:4651
+#: core/document.cpp:4650
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nelze najít soubor pro vytištění"
 
-#: core/document.cpp:4653
+#: core/document.cpp:4652
 #, kde-format
 msgid "There was no file to print"
 msgstr "Soubor pro tisk nebyl zadán"
 
-#: core/document.cpp:4655
+#: core/document.cpp:4654
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -377,92 +382,92 @@ msgstr ""
 "Nebyl nalezen vhodný program pro tisk. Ujistěte se, že je program CUPS lpr "
 "dostupný"
 
-#: core/document.cpp:4657
+#: core/document.cpp:4656
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Velikost stránky k tisku je neplatná"
 
-#: core/document.cpp:5322 part/part.cpp:1162
+#: core/document.cpp:5321 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nelze otevřít \"%1\". Soubor neexistuje."
 
-#: core/document.cpp:5832
+#: core/document.cpp:5831
 #, kde-format
 msgid "Title"
 msgstr "Název"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5834
 #, kde-format
 msgid "Subject"
 msgstr "Předmět"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5837
 #, kde-format
 msgid "Description"
 msgstr "Popis"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5840
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5843
 #, kde-format
 msgid "Creator"
 msgstr "Vytvořil"
 
-#: core/document.cpp:5847
+#: core/document.cpp:5846
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5849
 #, kde-format
 msgid "Copyright"
 msgstr "Autorská práva"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5852
 #, kde-format
 msgid "Pages"
 msgstr "Strany"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5855
 #, kde-format
 msgid "Created"
 msgstr "Vytvořeno"
 
-#: core/document.cpp:5859
+#: core/document.cpp:5858
 #, kde-format
 msgid "Modified"
 msgstr "Změněno"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5861
 #, kde-format
 msgid "MIME Type"
 msgstr "Typ MIME"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5864
 #, kde-format
 msgid "Category"
 msgstr "Kategorie"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5867
 #, kde-format
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5870
 #, kde-format
 msgid "File Path"
 msgstr "Cesta k souboru"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5873
 #, kde-format
 msgid "File Size"
 msgstr "Velikost souboru"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5876
 #, kde-format
 msgid "Page Size"
 msgstr "Velikost stran"
@@ -575,12 +580,7 @@ msgstr "Přizpůsobit plné stránce"
 msgid "Scale mode:"
 msgstr "Režim škálování:"
 
-#: core/script/kjs_app.cpp:160
-#, kde-format
-msgid "Missing alert type"
-msgstr "Chybí typ upozornění"
-
-#: core/script/kjs_app.cpp:222
+#: core/script/kjs_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Tuto zprávu již nezobrazovat"
@@ -5436,23 +5436,33 @@ msgstr "Prohlížet certifikát..."
 msgid "Show bookmarked pages only"
 msgstr "Zobrazit pouze stránky se záložkou"
 
-#: part/videowidget.cpp:139
+#: part/videowidget.cpp:145
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "Přehrát"
 
-#: part/videowidget.cpp:142
+#: part/videowidget.cpp:148
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: part/videowidget.cpp:248
+#: part/videowidget.cpp:254
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "Zastavit"
+
+#: part/videowidget.cpp:503
+#, kde-format
+msgid "Videos not supported in this okular"
+msgstr ""
+
+#: part/videowidget.cpp:507
+#, kde-format
+msgid "Videos not supported in this Okular"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5724,3 +5734,6 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
+
+#~ msgid "Missing alert type"
+#~ msgstr "Chybí typ upozornění"

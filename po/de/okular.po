@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-16 00:44+0000\n"
+"POT-Creation-Date: 2023-06-22 00:46+0000\n"
 "PO-Revision-Date: 2023-06-15 13:54+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -243,6 +243,11 @@ msgstr "Film anhalten"
 msgid "Resume movie"
 msgstr "Film wieder abspielen"
 
+#: core/audioplayer.cpp:318
+#, kde-format
+msgid "This Okular is bulit without audio support"
+msgstr ""
+
 #: core/chooseenginedialog.cpp:22
 #, kde-format
 msgid "Backend Selection"
@@ -258,59 +263,59 @@ msgstr ""
 "(%2).<br /><br />Bitte wählen Sie aus, welches Modul benutzt werden soll:</"
 "qt>"
 
-#: core/document.cpp:209
+#: core/document.cpp:208
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Die meisten Seiten haben das Format %1."
 
-#: core/document.cpp:230
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Hochformat %1"
 
-#: core/document.cpp:232
+#: core/document.cpp:231
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Querformat %1"
 
-#: core/document.cpp:255
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 × %2 Zoll (%3)"
 
-#: core/document.cpp:257
+#: core/document.cpp:256
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Suche vom Anfang an fortsetzen"
 
-#: core/document.cpp:1694
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Suche wird vom Ende her fortgesetzt"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2453
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Es ist kein passendes Anzeigemodul für dieses Dokument verfügbar."
 
-#: core/document.cpp:3604
+#: core/document.cpp:3603
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Anmerkungen entfernen"
 
-#: core/document.cpp:4188 core/document.cpp:4194
+#: core/document.cpp:4187 core/document.cpp:4193
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -320,54 +325,54 @@ msgstr ""
 "Programms. Aus Sicherheitsgründen wird diese Anforderung von Okular "
 "ignoriert."
 
-#: core/document.cpp:4205 core/document.cpp:4215
+#: core/document.cpp:4204 core/document.cpp:4214
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Kein Programm zum Öffnen des MIME-Typs %1 gefunden."
 
-#: core/document.cpp:4639
+#: core/document.cpp:4638
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Die temporäre Datei kann nicht geöffnet werden."
 
-#: core/document.cpp:4641
+#: core/document.cpp:4640
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Die Druckumwandlung ist fehlgeschlagen."
 
 # Druckvorgang oder Druckprozess?
-#: core/document.cpp:4643
+#: core/document.cpp:4642
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Der Druckvorgang ist abgestürzt."
 
 # Druckvorgang oder Druckprozess?
-#: core/document.cpp:4645
+#: core/document.cpp:4644
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Der Druckvorgang lässt sich nicht starten."
 
-#: core/document.cpp:4647
+#: core/document.cpp:4646
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Das Drucken in eine Datei ist fehlgeschlagen."
 
-#: core/document.cpp:4649
+#: core/document.cpp:4648
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Der Drucker war in einem ungültigen Zustand."
 
-#: core/document.cpp:4651
+#: core/document.cpp:4650
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Die zu druckende Datei ist nicht auffindbar."
 
-#: core/document.cpp:4653
+#: core/document.cpp:4652
 #, kde-format
 msgid "There was no file to print"
 msgstr "Es gibt keine zu druckende Datei."
 
-#: core/document.cpp:4655
+#: core/document.cpp:4654
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -376,92 +381,92 @@ msgstr ""
 "Es kann keine passende Programmdatei für das Drucken gefunden werden. "
 "Stellen Sie bitte sicher, dass die CUPS-Programmdatei „lpr“ verfügbar ist."
 
-#: core/document.cpp:4657
+#: core/document.cpp:4656
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Die Druckseitengröße ist ungültig"
 
-#: core/document.cpp:5322 part/part.cpp:1162
+#: core/document.cpp:5321 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "„%1“ kann nicht geöffnet werden. Die Datei existiert nicht."
 
-#: core/document.cpp:5832
+#: core/document.cpp:5831
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:5835
+#: core/document.cpp:5834
 #, kde-format
 msgid "Subject"
 msgstr "Thema"
 
-#: core/document.cpp:5838
+#: core/document.cpp:5837
 #, kde-format
 msgid "Description"
 msgstr "Beschreibung"
 
-#: core/document.cpp:5841
+#: core/document.cpp:5840
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5844
+#: core/document.cpp:5843
 #, kde-format
 msgid "Creator"
 msgstr "Erstellt von"
 
-#: core/document.cpp:5847
+#: core/document.cpp:5846
 #, kde-format
 msgid "Producer"
 msgstr "Ersteller"
 
-#: core/document.cpp:5850
+#: core/document.cpp:5849
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5853
+#: core/document.cpp:5852
 #, kde-format
 msgid "Pages"
 msgstr "Seiten"
 
-#: core/document.cpp:5856
+#: core/document.cpp:5855
 #, kde-format
 msgid "Created"
 msgstr "Erstellt am"
 
-#: core/document.cpp:5859
+#: core/document.cpp:5858
 #, kde-format
 msgid "Modified"
 msgstr "Geändert am"
 
-#: core/document.cpp:5862
+#: core/document.cpp:5861
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-Typ"
 
-#: core/document.cpp:5865
+#: core/document.cpp:5864
 #, kde-format
 msgid "Category"
 msgstr "Kategorie"
 
-#: core/document.cpp:5868
+#: core/document.cpp:5867
 #, kde-format
 msgid "Keywords"
 msgstr "Schlüsselwörter"
 
-#: core/document.cpp:5871
+#: core/document.cpp:5870
 #, kde-format
 msgid "File Path"
 msgstr "Dateipfad"
 
-#: core/document.cpp:5874
+#: core/document.cpp:5873
 #, kde-format
 msgid "File Size"
 msgstr "Dateigröße"
 
-#: core/document.cpp:5877
+#: core/document.cpp:5876
 #, kde-format
 msgid "Page Size"
 msgstr "Seitengröße"
@@ -574,12 +579,7 @@ msgstr "Auf ganze Seite anpassen"
 msgid "Scale mode:"
 msgstr "Skalierungsmodus:"
 
-#: core/script/kjs_app.cpp:160
-#, kde-format
-msgid "Missing alert type"
-msgstr "Fehlender Warnungstyp"
-
-#: core/script/kjs_app.cpp:222
+#: core/script/kjs_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Diese Meldung nicht mehr anzeigen"
@@ -5520,23 +5520,33 @@ msgstr "Zertifikat ansehen ..."
 msgid "Show bookmarked pages only"
 msgstr "Nur Lesezeichen-Seiten anzeigen"
 
-#: part/videowidget.cpp:139
+#: part/videowidget.cpp:145
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "Abspielen"
 
-#: part/videowidget.cpp:142
+#: part/videowidget.cpp:148
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "Pause"
 
-#: part/videowidget.cpp:248
+#: part/videowidget.cpp:254
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "Anhalten"
+
+#: part/videowidget.cpp:503
+#, kde-format
+msgid "Videos not supported in this okular"
+msgstr ""
+
+#: part/videowidget.cpp:507
+#, kde-format
+msgid "Videos not supported in this Okular"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5821,6 +5831,9 @@ msgstr "Alles vergessen"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Willkommensbildschirm ausblenden"
+
+#~ msgid "Missing alert type"
+#~ msgstr "Fehlender Warnungstyp"
 
 #~ msgid ""
 #~ "The file '%1' has been modified by another program, which means it can no "

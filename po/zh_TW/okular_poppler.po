@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-15 00:44+0000\n"
+"POT-Creation-Date: 2023-06-22 00:46+0000\n"
 "PO-Revision-Date: 2023-06-15 04:18+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
@@ -40,7 +40,7 @@ msgid "Enhance thin lines:"
 msgstr "加強細線："
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:941
+#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:947
 #, kde-format
 msgid "No"
 msgstr "否"
@@ -99,32 +99,38 @@ msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr "利用第三方伺服器檢查數位簽章的憑證是否被撤回"
 
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:131
+#, kde-format
+msgid "Signature backend:"
+msgstr ""
+
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:116
+#: conf/pdfsettingswidget.ui:157
 #, kde-format
 msgid "Certificate Database"
 msgstr "憑證資料庫"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:125
+#: conf/pdfsettingswidget.ui:166
 #, kde-format
 msgid "Default:"
 msgstr "預設："
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:132
+#: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Custom:"
 msgstr "自訂："
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:149
+#: conf/pdfsettingswidget.ui:190
 #, kde-format
 msgid "Available Certificates"
 msgstr "可用的憑證"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:157
+#: conf/pdfsettingswidget.ui:198
 #, kde-format
 msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
@@ -182,43 +188,43 @@ msgstr "列印頁面的比例模式"
 msgid "Scale mode:"
 msgstr "比例模式："
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:945
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:945
 #, kde-format
 msgid "Format"
 msgstr "格式"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Encrypted"
 msgstr "已加密"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Unencrypted"
 msgstr "已解密"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:946
 #, kde-format
 msgid "Security"
 msgstr "安全性"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:947
 #, kde-format
 msgid "Yes"
 msgstr "是"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:947
 #, kde-format
 msgid "Optimized"
 msgstr "最佳化"
 
-#: generator_pdf.cpp:1372
+#: generator_pdf.cpp:1378
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -229,12 +235,12 @@ msgstr ""
 "\n"
 "日期：%2"
 
-#: generator_pdf.cpp:1575
+#: generator_pdf.cpp:1581
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "使用 Poppler %1"
 
-#: generator_pdf.cpp:1577
+#: generator_pdf.cpp:1583
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -245,41 +251,41 @@ msgstr ""
 "\n"
 "為 Poppler %2 構建"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1618
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1618
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF 後端介面設定"
 
-#: generator_pdf.cpp:2087
+#: generator_pdf.cpp:2097
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "文件中發現了一些錯誤，Okular 可能無法正確顯示其內容"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "簽發給"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgid "E-mail"
 msgstr "電子郵件"
 
-#: pdfsettingswidget.cpp:43
+#: pdfsettingswidget.cpp:124
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "有效日期"
 
-#: pdfsettingswidget.cpp:60
+#: pdfsettingswidget.cpp:141
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -288,22 +294,22 @@ msgstr ""
 "您正使用建置時未包含 NSS 支援的 Poppler 函式庫。\n"
 "由於此原因，加入數位簽章功能不可使用"
 
-#: pdfsettingswidget.cpp:96
+#: pdfsettingswidget.cpp:182
 #, kde-format
 msgid "Restart needed"
 msgstr "需要重新啟動"
 
-#: pdfsettingswidget.cpp:96
+#: pdfsettingswidget.cpp:182
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "修改 NSS 目錄設定後您需要重新啟動 Okular"
 
-#: pdfsignatureutils.cpp:177
+#: pdfsignatureutils.cpp:189
 #, kde-format
 msgid "Enter Password"
 msgstr "輸入密碼"
 
-#: pdfsignatureutils.cpp:177
+#: pdfsignatureutils.cpp:189
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "輸入密碼以開啟 %1："

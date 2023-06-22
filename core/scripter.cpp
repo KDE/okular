@@ -12,7 +12,7 @@
 #include <QFile>
 
 #include "debug_p.h"
-#include "script/executor_kjs_p.h"
+#include "script/executor_js_p.h"
 
 using namespace Okular;
 

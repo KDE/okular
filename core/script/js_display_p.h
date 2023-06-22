@@ -4,8 +4,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef OKULAR_SCRIPT_KJS_DISPLAY_P_H
-#define OKULAR_SCRIPT_KJS_DISPLAY_P_H
+#ifndef OKULAR_SCRIPT_JS_DISPLAY_P_H
+#define OKULAR_SCRIPT_JS_DISPLAY_P_H
 
 #include <QObject>
 

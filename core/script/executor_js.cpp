@@ -6,23 +6,23 @@
 */
 
 #include "config-okular.h"
-#include "executor_kjs_p.h"
+#include "executor_js_p.h"
 
 #include "../debug_p.h"
 #include "../document_p.h"
 
 #include "event_p.h"
-#include "kjs_app_p.h"
-#include "kjs_console_p.h"
-#include "kjs_data_p.h"
-#include "kjs_display_p.h"
-#include "kjs_document_p.h"
-#include "kjs_event_p.h"
-#include "kjs_field_p.h"
-#include "kjs_fullscreen_p.h"
-#include "kjs_ocg_p.h"
-#include "kjs_spell_p.h"
-#include "kjs_util_p.h"
+#include "js_app_p.h"
+#include "js_console_p.h"
+#include "js_data_p.h"
+#include "js_display_p.h"
+#include "js_document_p.h"
+#include "js_event_p.h"
+#include "js_field_p.h"
+#include "js_fullscreen_p.h"
+#include "js_ocg_p.h"
+#include "js_spell_p.h"
+#include "js_util_p.h"
 
 #include <QDebug>
 #include <QJSEngine>

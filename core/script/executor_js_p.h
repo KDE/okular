@@ -4,8 +4,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef OKULAR_SCRIPT_EXECUTOR_KJS_P_H
-#define OKULAR_SCRIPT_EXECUTOR_KJS_P_H
+#ifndef OKULAR_SCRIPT_EXECUTOR_JS_P_H
+#define OKULAR_SCRIPT_EXECUTOR_JS_P_H
 
 class QString;
 

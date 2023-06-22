@@ -5,7 +5,7 @@
 */
 
 #include "../form.h"
-#include "kjs_display_p.h"
+#include "js_display_p.h"
 
 #include <QString>
 

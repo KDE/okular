@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_app_p.h"
+#include "js_app_p.h"
 
 #include <QApplication>
 
@@ -20,7 +20,7 @@
 #include "../document_p.h"
 #include "../scripter.h"
 #include "config-okular.h"
-#include "kjs_fullscreen_p.h"
+#include "js_fullscreen_p.h"
 
 using namespace Okular;
 

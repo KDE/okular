@@ -470,19 +470,19 @@ if (KF5Wallet_FOUND)
 endif()
 if (TARGET Qt5::Qml)
     target_sources(okularcore PRIVATE
-            core/script/executor_kjs.cpp
-            core/script/kjs_app.cpp
-            core/script/kjs_console.cpp
-            core/script/kjs_data.cpp
-            core/script/kjs_display.cpp
-            core/script/kjs_document.cpp
-            core/script/kjs_field.cpp
-            core/script/kjs_fullscreen.cpp
-            core/script/kjs_field.cpp
-            core/script/kjs_spell.cpp
-            core/script/kjs_util.cpp
-            core/script/kjs_event.cpp
-            core/script/kjs_ocg.cpp
+            core/script/executor_js.cpp
+            core/script/js_app.cpp
+            core/script/js_console.cpp
+            core/script/js_data.cpp
+            core/script/js_display.cpp
+            core/script/js_document.cpp
+            core/script/js_field.cpp
+            core/script/js_fullscreen.cpp
+            core/script/js_field.cpp
+            core/script/js_spell.cpp
+            core/script/js_util.cpp
+            core/script/js_event.cpp
+            core/script/js_ocg.cpp
     )
     target_link_libraries(okularcore PRIVATE Qt5::Qml)
 endif()

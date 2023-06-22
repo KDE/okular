@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_spell_p.h"
+#include "js_spell_p.h"
 
 using namespace Okular;
 

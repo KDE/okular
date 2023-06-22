@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_document_p.h"
+#include "js_document_p.h"
 
 #include <qwidget.h>
 
@@ -16,9 +16,9 @@
 #include "../document_p.h"
 #include "../form.h"
 #include "../page.h"
-#include "kjs_data_p.h"
-#include "kjs_field_p.h"
-#include "kjs_ocg_p.h"
+#include "js_data_p.h"
+#include "js_field_p.h"
+#include "js_ocg_p.h"
 
 using namespace Okular;
 

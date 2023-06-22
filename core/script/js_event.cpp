@@ -4,10 +4,10 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_event_p.h"
+#include "js_event_p.h"
 
 #include "event_p.h"
-#include "kjs_field_p.h"
+#include "js_field_p.h"
 
 #include <QJSEngine>
 

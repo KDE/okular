@@ -25,7 +25,7 @@ class Page;
  *
  * The implementation is currently limited. To implement support
  * for a new event create the according data fields / getters
- * and setters and update the handling in kjs_event
+ * and setters and update the handling in js_event
  * accordingly.
  *
  * See Acrobat JavaScript Scripting Reference for the meaning

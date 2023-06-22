@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_console_p.h"
+#include "js_console_p.h"
 
 #include <QDebug>
 

@@ -4,7 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_ocg_p.h"
+#include "js_ocg_p.h"
 
 #include <QAbstractItemModel>
 #include <QDebug>

@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_fullscreen_p.h"
+#include "js_fullscreen_p.h"
 
 #include "settings_core.h"
 

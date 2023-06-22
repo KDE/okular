@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_util_p.h"
+#include "js_util_p.h"
 
 #include <QDateTime>
 #include <QDebug>

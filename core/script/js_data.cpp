@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "kjs_data_p.h"
+#include "js_data_p.h"
 
 #include <QDateTime>
 
 #include "../document.h"
-#include "kjs_display_p.h"
+#include "js_display_p.h"
 
 using namespace Okular;
 

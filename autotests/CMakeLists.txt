@@ -38,8 +38,8 @@ if(Poppler_Qt5_FOUND)
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
     )
 
-    ecm_add_test(kjsfunctionstest.cpp
-        TEST_NAME "kjsfunctionstest"
+    ecm_add_test(jsfunctionstest.cpp
+        TEST_NAME "jsfunctionstest"
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
     )
     

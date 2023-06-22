@@ -75,7 +75,7 @@ private:
     bool m_checkBox;
 };
 
-class KJSFunctionsTest : public QObject
+class JSFunctionsTest : public QObject
 {
     Q_OBJECT
 
@@ -96,9 +96,9 @@ private:
     QMap<QString, Okular::FormField *> m_fields;
 };
 
-void KJSFunctionsTest::initTestCase()
+void JSFunctionsTest::initTestCase()
 {
-    Okular::SettingsCore::instance(QStringLiteral("kjsfunctionstest"));
+    Okular::SettingsCore::instance(QStringLiteral("jsfunctionstest"));
     m_document = new Okular::Document(nullptr);
 
     const QString testFile = QStringLiteral(KDESRCDIR "data/kjsfunctionstest.pdf");
@@ -113,7 +113,7 @@ void KJSFunctionsTest::initTestCase()
     }
 }
 
-void KJSFunctionsTest::testNthFieldName()
+void JSFunctionsTest::testNthFieldName()
 {
     for (int i = 0; i < 21; ++i) {
         Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript,
@@ -127,7 +127,7 @@ void KJSFunctionsTest::testNthFieldName()
     }
 }
 
-void KJSFunctionsTest::testDisplay()
+void JSFunctionsTest::testDisplay()
 {
     Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("field = Doc.getField(\"0.0\");field.display=display.hidden;\
         field = Doc.getField(\"0.10\");field.display=display.visible;"));
@@ -174,7 +174,7 @@ void delay()
     }
 }
 
-void KJSFunctionsTest::testSetClearInterval()
+void JSFunctionsTest::testSetClearInterval()
 {
     Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("obj = new Object();obj.idx=0;\
         obj.inc=function(){field = Doc.getField(Doc.getNthFieldName(obj.idx));\
@@ -193,7 +193,7 @@ void KJSFunctionsTest::testSetClearInterval()
     delete action;
 }
 
-void KJSFunctionsTest::testSetClearTimeOut()
+void JSFunctionsTest::testSetClearTimeOut()
 {
     Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("intv = app.setTimeOut('obj.inc()', 1);obj.idx;"));
     m_document->processAction(action);
@@ -217,7 +217,7 @@ void KJSFunctionsTest::testSetClearTimeOut()
     delete action;
 }
 
-void KJSFunctionsTest::testGetOCGs()
+void JSFunctionsTest::testGetOCGs()
 {
     QAbstractItemModel *model = m_document->layersModel();
 
@@ -263,7 +263,7 @@ void KJSFunctionsTest::testGetOCGs()
     delete action;
 }
 
-void KJSFunctionsTest::testAlert()
+void JSFunctionsTest::testAlert()
 {
     Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("ret = app.alert( \"Random Message\" );"));
     QScopedPointer<MessageBoxHelper> messageBoxHelper;
@@ -313,7 +313,7 @@ private:
     QScopedPointer<MessageBoxHelper> box;
 };
 
-void KJSFunctionsTest::testPrintD_data()
+void JSFunctionsTest::testPrintD_data()
 {
     // Force consistent locale
     QLocale locale(QStringLiteral("en_US"));
@@ -337,7 +337,7 @@ void KJSFunctionsTest::testPrintD_data()
     QTest::newRow("2") << QStringLiteral("ret = app.alert( util.printd( 2, date ) );") << QString(date.toString(locale.dateFormat(QLocale::ShortFormat)) + QStringLiteral(" 11:10:32 AM"));
 }
 
-void KJSFunctionsTest::testPrintD()
+void JSFunctionsTest::testPrintD()
 {
     QFETCH(QString, script);
     QFETCH(QString, result);
@@ -346,11 +346,11 @@ void KJSFunctionsTest::testPrintD()
     PrintDHelper test(m_document, script, result);
 }
 
-void KJSFunctionsTest::cleanupTestCase()
+void JSFunctionsTest::cleanupTestCase()
 {
     m_document->closeDocument();
     delete m_document;
 }
 
-QTEST_MAIN(KJSFunctionsTest)
-#include "kjsfunctionstest.moc"
+QTEST_MAIN(JSFunctionsTest)
+#include "jsfunctionstest.moc"

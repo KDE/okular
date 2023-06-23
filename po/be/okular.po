@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -244,7 +244,7 @@ msgstr "Узнавіць відэа"
 
 #: core/audioplayer.cpp:318
 #, kde-format
-msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
 msgstr ""
 
 #: core/chooseenginedialog.cpp:22
@@ -574,7 +574,7 @@ msgstr "Падладзіць да памераў старонкі"
 msgid "Scale mode:"
 msgstr "Рэжым маштабавання:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Больш не паказваць гэтае паведамленне"

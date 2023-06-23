@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
 "PO-Revision-Date: 2013-10-30 03:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -251,7 +251,7 @@ msgstr "Фильмді жалғастыру"
 
 #: core/audioplayer.cpp:318
 #, kde-format
-msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
 msgstr ""
 
 #: core/chooseenginedialog.cpp:22
@@ -591,7 +591,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr "Түстер режімі:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, fuzzy, kde-format
 #| msgid "Close this message"
 msgid "Do not show this message again"

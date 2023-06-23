@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-05-31 11:49+0200\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"PO-Revision-Date: 2023-06-22 14:46+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -250,7 +250,7 @@ msgstr "Pokračovat v přehrávání filmu"
 
 #: core/audioplayer.cpp:318
 #, kde-format
-msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
 msgstr ""
 
 #: core/chooseenginedialog.cpp:22
@@ -580,7 +580,7 @@ msgstr "Přizpůsobit plné stránce"
 msgid "Scale mode:"
 msgstr "Režim škálování:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Tuto zprávu již nezobrazovat"
@@ -4325,7 +4325,7 @@ msgstr "Heslo dokumentu"
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
-"tento dokument obsahuje formuláře XFA, jenž momentálně <b>nejsou "
+"Tento dokument obsahuje formuláře XFA, jenž momentálně <b>nejsou "
 "podporovány</b>."
 
 #: part/part.cpp:1639
@@ -4970,7 +4970,7 @@ msgid ""
 "top-right corner. Of course you can cycle windows (Alt+TAB by default)"
 msgstr ""
 "Existují dva způsoby, jak opustit prezentační režim. Můžete stisknout "
-"klávesu Esc nebo kliknout na ukončovací tlačítko, které se objeví po "
+"klávesu ESC nebo kliknout na ukončovací tlačítko, které se objeví po "
 "umístění kurzoru myši do pravého horního rohu. Samozřejmě je také možné "
 "použít přepínání oken pomocí Alt + TAB"
 
@@ -5254,10 +5254,9 @@ msgstr "Důvod:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Možnosti"
+msgstr "volitelné"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
@@ -5267,25 +5266,21 @@ msgstr "Umístění:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Barva pozadí:"
+msgstr "Pozadí:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Vybrat..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Používat vlastní barvu pozadí:"
+msgstr ""
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5327,11 +5322,10 @@ msgid "Properties"
 msgstr "Vlastnosti"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Počet stran: %1"
+msgstr ""
 
 #: part/signaturepartutils.cpp:305
 #, kde-format
@@ -5339,18 +5333,14 @@ msgid "Select background image"
 msgstr ""
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Zapomenout všechny"
+msgstr ""
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Zapomenout všechny"
+msgstr ""
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5734,6 +5724,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgid "Missing alert type"
-#~ msgstr "Chybí typ upozornění"

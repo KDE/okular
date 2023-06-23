@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-08 19:28+0200\n"
+"PO-Revision-Date: 2023-06-22 21:01+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -100,7 +100,7 @@ msgstr "Проверка за отменяне на дигитални подп�
 #: conf/pdfsettingswidget.ui:131
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Подпис на бекенд:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:157

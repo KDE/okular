@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
 "PO-Revision-Date: 2022-02-18 11:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -242,7 +242,7 @@ msgstr "Film folytatása"
 
 #: core/audioplayer.cpp:318
 #, kde-format
-msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
 msgstr ""
 
 #: core/chooseenginedialog.cpp:22
@@ -572,7 +572,7 @@ msgstr "Illesztés teljes oldalra"
 msgid "Scale mode:"
 msgstr "Méretezés mód:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ne jelenjen meg többet ez az üzenet"

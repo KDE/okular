@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-15 10:29+0200\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"PO-Revision-Date: 2023-06-22 10:05+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -256,9 +256,10 @@ msgid "Resume movie"
 msgstr "Film hervatten"
 
 #: core/audioplayer.cpp:318
-#, kde-format
-msgid "This Okular is bulit without audio support"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
+msgstr "Deze Okular is gebouwd zonder ondersteuning voor audio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -587,7 +588,7 @@ msgstr "Op volledige pagina laten passen"
 msgid "Scale mode:"
 msgstr "Schaalmodus:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Dit bericht niet meer tonen"
@@ -5535,12 +5536,12 @@ msgstr "Stoppen"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Videos worden in deze okular niet ondersteund"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videos worden in deze Okular niet ondersteund"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

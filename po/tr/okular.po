@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-15 22:44+0300\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"PO-Revision-Date: 2023-06-22 05:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -257,9 +257,10 @@ msgid "Resume movie"
 msgstr "Filmi sürdür"
 
 #: core/audioplayer.cpp:318
-#, kde-format
-msgid "This Okular is bulit without audio support"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
+msgstr "Bu Okular, ses desteği olmadan yapılmış"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -588,7 +589,7 @@ msgstr "Tam sayfaya sığdır"
 msgid "Scale mode:"
 msgstr "Ölçek kipi:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Bu iletiyi bir daha gösterme"
@@ -5515,12 +5516,12 @@ msgstr "Durdur"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Bu Okular'da videolar desteklenmiyor"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Bu Okular'da videolar desteklenmiyor"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

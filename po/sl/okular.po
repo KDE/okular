@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-16 08:21+0200\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"PO-Revision-Date: 2023-06-22 07:40+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
 "X-Generator: Poedit 3.3.1\n"
 
@@ -245,9 +245,10 @@ msgid "Resume movie"
 msgstr "Nadaljuj video"
 
 #: core/audioplayer.cpp:318
-#, kde-format
-msgid "This Okular is bulit without audio support"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
+msgstr "Ta Okular je zgrajen brez podpore za zvok"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -576,7 +577,7 @@ msgstr "Prilagodi celotni strani"
 msgid "Scale mode:"
 msgstr "Način lestvice:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ne kaži tega sporočila več"
@@ -5521,12 +5522,12 @@ msgstr "Zaustavi"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Videi niso podprti v tem Okularju"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videi niso podprti v tem Okularju"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-15 08:33+0300\n"
+"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"PO-Revision-Date: 2023-06-22 09:11+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -247,9 +247,10 @@ msgid "Resume movie"
 msgstr "Поновити відтворення"
 
 #: core/audioplayer.cpp:318
-#, kde-format
-msgid "This Okular is bulit without audio support"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "This Okular is bulit without audio support"
+msgid "This Okular is built without audio support"
+msgstr "Цю версію Okular зібрано без підтримки звуку"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -580,7 +581,7 @@ msgstr "Розмір за усією сторінкою"
 msgid "Scale mode:"
 msgstr "Режим масштабування:"
 
-#: core/script/kjs_app.cpp:202
+#: core/script/js_app.cpp:202
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Більше не показувати це повідомлення"
@@ -5549,12 +5550,12 @@ msgstr "Стоп"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "У цій версії okular не передбачено підтримки відео"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "У цій версії okular не передбачено підтримки відео"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

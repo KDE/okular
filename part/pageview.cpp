@@ -263,6 +263,8 @@ public:
     const Okular::ObjectRect *mouseOverLinkObject;
 
     QScroller *scroller;
+
+    bool pinchZoomActive;
 };
 
 PageViewPrivate::PageViewPrivate(PageView *qq)
@@ -383,6 +385,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aMouseMagnifier = nullptr;
     d->aFitWindowToPage = nullptr;
     d->trimBoundingBox = Okular::NormalizedRect(); // Null box
+    d->pinchZoomActive = false;
 
     switch (Okular::Settings::zoomMode()) {
     case 0: {
@@ -1764,6 +1767,8 @@ bool PageView::gestureEvent(QGestureEvent *event)
 
         if (pinch->state() == Qt::GestureStarted) {
             vanillaZoom = d->zoomFactor;
+            d->pinchZoomActive = true;
+            d->scroller->handleInput(QScroller::InputRelease, QPointF());
         }
 
         const QPinchGesture::ChangeFlags changeFlags = pinch->changeFlags();
@@ -1798,6 +1803,7 @@ bool PageView::gestureEvent(QGestureEvent *event)
 
         if (pinch->state() == Qt::GestureFinished) {
             rotations = 0;
+            d->pinchZoomActive = false;
         }
 
         return true;
@@ -2283,7 +2289,10 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
             else {
                 if (d->scroller->state() == QScroller::Inactive || d->scroller->state() == QScroller::Scrolling) {
                     d->mouseGrabOffset = QPoint(0, 0);
-                    d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp() - 1);
+
+                    if (!d->pinchZoomActive) {
+                        d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp() - 1);
+                    }
                 }
 
                 setCursor(Qt::ClosedHandCursor);
@@ -2299,7 +2308,9 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
                     d->mouseGrabOffset -= CursorWrapHelper::wrapCursor(e->pos(), wrapEdges);
                 }
 
-                d->scroller->handleInput(QScroller::InputMove, e->pos() + d->mouseGrabOffset, e->timestamp());
+                if (!d->pinchZoomActive) {
+                    d->scroller->handleInput(QScroller::InputMove, e->pos() + d->mouseGrabOffset, e->timestamp());
+                }
             }
         } else if (rightButton && !d->mousePressPos.isNull() && d->aMouseSelect) {
             // if mouse moves 5 px away from the press point, switch to 'selection'
@@ -2419,7 +2430,9 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
             if (!d->mouseOnRect) {
                 d->mouseGrabOffset = QPoint(0, 0);
-                d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp());
+                if (!d->pinchZoomActive) {
+                    d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp());
+                }
                 d->leftClickTimer.start(QApplication::doubleClickInterval() + 10);
             }
         }
@@ -2588,7 +2601,9 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
     switch (d->mouseMode) {
     case Okular::Settings::EnumMouseMode::Browse: {
-        d->scroller->handleInput(QScroller::InputRelease, e->pos() + d->mouseGrabOffset, e->timestamp());
+        if (!d->pinchZoomActive) {
+            d->scroller->handleInput(QScroller::InputRelease, e->pos() + d->mouseGrabOffset, e->timestamp());
+        }
 
         // return the cursor to its normal state after dragging
         if (cursor().shape() == Qt::ClosedHandCursor) {

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 02:52+0000\n"
-"PO-Revision-Date: 2023-06-16 08:43+0200\n"
+"PO-Revision-Date: 2023-06-23 08:36+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -224,7 +224,7 @@ msgstr "Reproducir un son…"
 #: core/action.cpp:423 core/action.cpp:539
 #, kde-format
 msgid "JavaScript Script"
-msgstr "Script de JavaScript"
+msgstr "Guión de JavaScript"
 
 #: core/action.cpp:473
 #, kde-format
@@ -254,7 +254,7 @@ msgstr "Continuar o filme"
 #: core/chooseenginedialog.cpp:22
 #, kde-format
 msgid "Backend Selection"
-msgstr "Escolla da infraestrutura"
+msgstr "Escolla de motor"
 
 #: core/chooseenginedialog.cpp:40
 #, kde-format
@@ -262,8 +262,8 @@ msgid ""
 "<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
 "><br />Please select which one to use:</qt>"
 msgstr ""
-"<qt>Atopouse máis dunha infraestrutura para o tipo mime:<br/><b>%1</b> (%2)."
-"<br/><br/>Escolla a que queira usar:</qt>"
+"<qt>Atopouse máis dun motor para o tipo MIME:<br/><b>%1</b> (%2).<br/><br/"
+">Escolla o que queira usar:</qt>"
 
 #: core/document.cpp:209
 #, kde-format
@@ -331,7 +331,7 @@ msgstr ""
 #: core/document.cpp:4211 core/document.cpp:4221
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
-msgstr "Non se atopou unha aplicación para abrir o ficheiro de tipo mime %1."
+msgstr "Non se atopou unha aplicación para abrir o ficheiro de tipo MIME %1."
 
 #: core/document.cpp:4645
 #, kde-format
@@ -1166,31 +1166,31 @@ msgstr "%1%"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr "Anchura da liña de anotación (non se seleccionaron anotacións)"
+msgstr "Anchura da liña de anotación (non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr "Cor da anotación (non se seleccionaron anotacións)"
+msgstr "Cor da anotación (non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr "Cor de recheo da anotación (non se seleccionaron anotacións)"
+msgstr "Cor de recheo da anotación (non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr "Opacidade da anotación (non se seleccionaron anotacións)"
+msgstr "Opacidade da anotación (non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Tipo de letra da anotación (non se seleccionaron anotacións)"
+msgstr "Tipo de letra da anotación (non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
@@ -1200,7 +1200,7 @@ msgid ""
 "selected)"
 msgstr ""
 "Engadir a anotación actual ao menú de anotacións rápidas (non se "
-"seleccionaron anotacións)"
+"seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1210,7 +1210,7 @@ msgid ""
 "selected)"
 msgstr ""
 "Restrinxir a proporción da forma a 1:1 ou o ángulo da liña a pasos de 15° "
-"(non se seleccionaron anotacións)"
+"(non se seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1219,74 +1219,74 @@ msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
 "Configuración avanzada para a ferramenta de anotacións actual (non se "
-"seleccionaron anotacións)"
+"seleccionaron anotacións)."
 
 #: part/annotationactionhandler.cpp:307
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
-msgstr "Anchura da liña de anotación"
+msgstr "Anchura da liña de anotación."
 
 #: part/annotationactionhandler.cpp:309
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
 msgstr ""
-"Anchura da liña de anotación (a anotación actual non ten anchura de liña)"
+"Anchura da liña de anotación (a anotación actual non ten anchura de liña)."
 
 #: part/annotationactionhandler.cpp:313
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
-msgstr "Cor do texto da anotación"
+msgstr "Cor do texto da anotación."
 
 #: part/annotationactionhandler.cpp:315
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "Cor do bordo da anotación"
+msgstr "Cor do bordo da anotación."
 
 #: part/annotationactionhandler.cpp:317
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
-msgstr "Cor da anotación"
+msgstr "Cor da anotación."
 
 #: part/annotationactionhandler.cpp:321
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
-msgstr "Cor de recheo da anotación"
+msgstr "Cor de recheo da anotación."
 
 #: part/annotationactionhandler.cpp:323
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr "Cor de recheo da anotación (a anotación actual non ten cor de recheo)"
+msgstr "Cor de recheo da anotación (a anotación actual non ten cor de recheo)."
 
 #: part/annotationactionhandler.cpp:327
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Tipo de letra da anotación"
+msgstr "Tipo de letra da anotación."
 
 #: part/annotationactionhandler.cpp:329
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr "Tipo de letra da anotación (a anotación actual non ten tipo de letra)"
+msgstr "Tipo de letra da anotación (a anotación actual non ten tipo de letra)."
 
 #: part/annotationactionhandler.cpp:333
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr "Restrinxir o ángulo da liña a pasos de 15°"
+msgstr "Restrinxir o ángulo da liña a pasos de 15°."
 
 #: part/annotationactionhandler.cpp:335
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr "Restrinxir as proporcións da forma a 1:1"
+msgstr "Restrinxir as proporcións da forma a 1:1."
 
 #: part/annotationactionhandler.cpp:337
 #, kde-format
@@ -1296,25 +1296,25 @@ msgid ""
 "current annotation)"
 msgstr ""
 "Restrinxir a proporción da forma a 1:1 ou o ángulo da liña a pasos de 15° (a "
-"anotación actual non o permite)"
+"anotación actual non o permite)."
 
 #: part/annotationactionhandler.cpp:340
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
-msgstr "Opacidade da anotación"
+msgstr "Opacidade da anotación."
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr "Engadir a anotación actual ao menú de anotacións rápidas"
+msgstr "Engadir a anotación actual ao menú de anotacións rápidas."
 
 #: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr "Configuración avanzada para a ferramenta de anotacións actual"
+msgstr "Configuración avanzada para a ferramenta de anotacións actual."
 
 #: part/annotationactionhandler.cpp:431
 #, kde-format
@@ -1361,7 +1361,7 @@ msgstr "Agochar"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Mostras máis ferramentas de anotación"
+msgstr "Amosar máis ferramentas de anotación"
 
 #: part/annotationactionhandler.cpp:555
 #, kde-format
@@ -1463,7 +1463,7 @@ msgstr "Anotacións rápidas"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr "Escolla unha ferramenta de anotación de entre as anotacións rápidas"
+msgstr "Escolla unha ferramenta de anotación de entre as anotacións rápidas."
 
 #: part/annotationactionhandler.cpp:649
 #, kde-format
@@ -1489,7 +1489,7 @@ msgstr "Manter activa"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "Manter a ferramenta de anotación activa tras usala"
+msgstr "Manter a ferramenta de anotación activa tras usala."
 
 #: part/annotationactionhandler.cpp:672
 #, kde-format
@@ -1661,7 +1661,7 @@ msgstr "Modificado: %1"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
-msgstr "Seleccionar un símbolo de selo personalizado dun ficheiro"
+msgstr "Seleccionar un símbolo de selo personalizado dun ficheiro."
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
@@ -2625,8 +2625,7 @@ msgstr ""
 "  <li>%l : a liña a acadar no ficheiro</li>\n"
 "  <li>%c : a columna a acadar no ficheiro</li>\n"
 "</ul>\n"
-"Se non se especifica %f, entón engadirase o nome do ficheiro á orde "
-"fornecida."
+"Se non se indica %f, entón engadirase o nome do ficheiro á orde fornecida."
 
 #: part/dlgeditor.cpp:63
 #, kde-format
@@ -2734,7 +2733,7 @@ msgstr "Cargar de novo o documento cando o ficheiro cambie"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
-msgstr "Amosar o diálogo de escolla de infraestrutura"
+msgstr "Amosar o diálogo de escolla de motor."
 
 #: part/dlggeneral.cpp:160
 #, kde-format
@@ -2835,7 +2834,7 @@ msgstr "Activar os efectos de transparencia"
 #, kde-format
 msgctxt "@label Config dialog, performance page"
 msgid "CPU usage:"
-msgstr "Uso da CPU:"
+msgstr "Uso do procesador:"
 
 #: part/dlgperformance.cpp:35
 #, kde-format
@@ -2897,7 +2896,7 @@ msgid ""
 "Keeps used memory as low as possible. Do not reuse anything. (For systems "
 "with low memory.)"
 msgstr ""
-"Mantén a memoria empregada tan baixa como sexa posíbel. Non reutiliza nada. "
+"Mantén a memoria usada tan baixa como sexa posíbel. Non reutiliza nada. "
 "(Para sistemas con pouca memoria)"
 
 #: part/dlgperformance.cpp:80
@@ -2906,9 +2905,9 @@ msgid ""
 "A good compromise between memory usage and speed gain. Preload next page and "
 "boost searches. (For systems with 2GB of memory, typically.)"
 msgstr ""
-"Un bo compromiso entre a memoria empregada e o aumento de velocidade. "
-"Precargar a seguinte páxina e tamén as buscas. (Tipicamente para sistemas "
-"con 2 GB de memoria)."
+"Un bo compromiso entre a memoria usada e o aumento de velocidade. Precargar "
+"a seguinte páxina e tamén as buscas. (Tipicamente para sistemas con 2 GB de "
+"memoria)."
 
 #: part/dlgperformance.cpp:83
 #, kde-format
@@ -4148,17 +4147,17 @@ msgstr "Configurar o visor…"
 #: part/part.cpp:771
 #, kde-format
 msgid "Configure Viewer Backends..."
-msgstr "Configurar as infraestruturas do visor…"
+msgstr "Configurar os motores do visor…"
 
 #: part/part.cpp:773
 #, kde-format
 msgid "Configure Backends..."
-msgstr "Configurar as infraestruturas…"
+msgstr "Configurar os motores…"
 
 #: part/part.cpp:809
 #, kde-format
 msgid "About Backend"
-msgstr "Sobre a infraestrutura"
+msgstr "Sobre o motor"
 
 #: part/part.cpp:814
 #, kde-format
@@ -4290,12 +4289,12 @@ msgstr "Non se puido abrir %1. Razón: %2"
 #: part/part.cpp:1261
 #, kde-format
 msgid "Configure Viewer Backends"
-msgstr "Configurar as infraestruturas do visor"
+msgstr "Configurar os motores do visor"
 
 #: part/part.cpp:1263
 #, kde-format
 msgid "Configure Backends"
-msgstr "Configurar as infraestruturas"
+msgstr "Configurar os motores"
 
 #: part/part.cpp:1348
 #, kde-format
@@ -4671,7 +4670,7 @@ msgid ""
 "\n"
 "The document does not exist anymore."
 msgstr ""
-"Okular non pode copiar %1 no lugar especificado.\n"
+"Okular non pode copiar %1 no lugar indicado.\n"
 "\n"
 "O documento non existe máis."
 

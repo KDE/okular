@@ -485,6 +485,32 @@ public:
      */
     virtual bool sign(const NewSignatureData &data, const QString &newPath) const = 0;
 
+    using SubscriptionHandle = uint64_t;
+    /**
+     * Subscribes to updates to signatureInfo
+     *
+     * Especially certificate validation can be a slow task and the
+     * underlying infrastructure might offload it to a background job.
+     *
+     * Whenever those background jobs finished, the callback(s) will be invoked
+     *
+     * @return handle to be able to be put back into \ref unsubscribeUpdates
+     *
+     * @since 23.12
+     */
+    virtual SubscriptionHandle subscribeUpdates(const std::function<void()> &callback) const = 0;
+    /**
+     * Unsubscribes a handle for updates. Handle must be acquired by
+     * the \ref subscribeUpdates function
+     *
+     * @return true if subscription succeeded and false if failed.
+     * The most likely reason for for failure is if the handle was
+     * already unsubscribed or for other reasons not existing
+     *
+     * @since 23.12
+     */
+    virtual bool unsubscribeUpdates(const SubscriptionHandle &) const = 0;
+
 protected:
     FormFieldSignature();
 

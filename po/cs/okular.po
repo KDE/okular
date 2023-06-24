@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-23 00:45+0000\n"
-"PO-Revision-Date: 2023-06-22 14:46+0200\n"
+"PO-Revision-Date: 2023-06-23 12:39+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -5280,7 +5280,7 @@ msgstr "Vybrat..."
 #: part/selectcertificatedialog.ui:107
 #, kde-format
 msgid "Recent backgrounds:"
-msgstr ""
+msgstr "Nedávná pozadí:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5325,22 +5325,22 @@ msgstr "Vlastnosti"
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr ""
+msgstr "Obrázky (%1)"
 
 #: part/signaturepartutils.cpp:305
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "Vyberte obrázek na pozadí"
 
 #: part/signaturepartutils.cpp:310
 #, kde-format
 msgid "Forget image"
-msgstr ""
+msgstr "Zapomenout obrázek"
 
 #: part/signaturepartutils.cpp:311
 #, kde-format
 msgid "Forget all images"
-msgstr ""
+msgstr "Zapomenout všechny obrázky"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5447,12 +5447,12 @@ msgstr "Zastavit"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Videa v tomto Okularu nejsou podporována"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videa v tomto Okularu nejsou podporována"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

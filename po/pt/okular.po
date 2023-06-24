@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-23 00:45+0000\n"
-"PO-Revision-Date: 2023-06-15 11:48+0100\n"
+"PO-Revision-Date: 2023-06-24 01:42+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -252,7 +252,7 @@ msgstr "Prosseguir o filme"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Este Okular está compilado sem suporte para áudio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5530,12 +5530,12 @@ msgstr "Parar"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Não existe suporte para vídeos neste Okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Não existe suporte para vídeos neste Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5811,6 +5811,3 @@ msgstr "Esquecer Tudo"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Esconder o ecrã de boas-vindas"
-
-#~ msgid "Missing alert type"
-#~ msgstr "Tipo de alerta em falta"

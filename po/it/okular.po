@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-23 00:45+0000\n"
-"PO-Revision-Date: 2023-06-16 01:22+0200\n"
+"PO-Revision-Date: 2023-06-23 10:35+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -249,7 +249,7 @@ msgstr "Riprendi il filmato"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Questa versione di Okular è compilata senza supporto audio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5517,12 +5517,12 @@ msgstr "Interrompi"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "I video non sono supportati da questa versione di Okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "I video non sono supportati da questa versione di Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

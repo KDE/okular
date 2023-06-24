@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-22 14:46+0200\n"
+"PO-Revision-Date: 2023-06-23 12:39+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -102,7 +102,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:131
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Podpůrná vrstva pro podpisy:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:157

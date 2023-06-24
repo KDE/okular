@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-22 00:46+0000\n"
-"PO-Revision-Date: 2023-06-01 09:39+0100\n"
+"PO-Revision-Date: 2023-06-24 01:42+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
 "Language: pt\n"
@@ -101,7 +101,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:131
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Infra-estrutura de assinatura:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:157

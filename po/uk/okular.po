@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-23 00:45+0000\n"
-"PO-Revision-Date: 2023-06-22 09:11+0300\n"
+"PO-Revision-Date: 2023-06-23 17:31+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -247,8 +247,7 @@ msgid "Resume movie"
 msgstr "Поновити відтворення"
 
 #: core/audioplayer.cpp:318
-#, fuzzy, kde-format
-#| msgid "This Okular is bulit without audio support"
+#, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Цю версію Okular зібрано без підтримки звуку"
 

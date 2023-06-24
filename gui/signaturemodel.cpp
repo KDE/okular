@@ -23,7 +23,7 @@
 #include "core/signatureutils.h"
 
 struct SignatureItem {
-    enum DataType { Root, RevisionInfo, ValidityStatus, SigningTime, Reason, Location, FieldInfo };
+    enum DataType { Root, RevisionInfo, ValidityStatus, CertificateStatus, SigningTime, Reason, Location, FieldInfo };
 
     SignatureItem();
     SignatureItem(SignatureItem *parent, const Okular::FormFieldSignature *form, DataType type, int page);
@@ -153,6 +153,15 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
             auto childItem1 = new SignatureItem(parentItem, nullptr, SignatureItem::ValidityStatus, pageNumber);
             childItem1->displayString = SignatureGuiUtils::getReadableSignatureStatus(info.signatureStatus());
+
+            auto childItem1a = new SignatureItem(parentItem, nullptr, SignatureItem::CertificateStatus, pageNumber);
+            childItem1a->displayString = SignatureGuiUtils::getReadableCertStatus(info.certificateStatus());
+            sf->subscribeUpdates([childItem1a, sf, this]() {
+                const Okular::SignatureInfo &info = sf->signatureInfo();
+                childItem1a->displayString = SignatureGuiUtils::getReadableCertStatus(info.certificateStatus());
+                auto index = indexForItem(childItem1a);
+                q->dataChanged(index, index);
+            });
 
             auto childItem2 = new SignatureItem(parentItem, nullptr, SignatureItem::SigningTime, pageNumber);
             childItem2->displayString = i18n("Signing Time: %1", QLocale().toString(info.signingTime(), QLocale::LongFormat));

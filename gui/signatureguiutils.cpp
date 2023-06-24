@@ -68,6 +68,8 @@ QString getReadableCertStatus(Okular::SignatureInfo::CertificateStatus certStatu
         return i18n("Certificate has Expired.");
     case Okular::SignatureInfo::CertificateNotVerified:
         return i18n("Certificate has not yet been verified.");
+    case Okular::SignatureInfo::CertificateVerificationInProgress:
+        return i18n("Certificate validation in progress");
     default:
         return i18n("Unknown issue with Certificate or corrupted data.");
     }

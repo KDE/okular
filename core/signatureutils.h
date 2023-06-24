@@ -333,14 +333,15 @@ public:
      * The verification result of the certificate.
      */
     enum CertificateStatus {
-        CertificateStatusUnknown,   ///< The certificate status is unknown for some reason.
-        CertificateTrusted,         ///< The certificate is considered trusted.
-        CertificateUntrustedIssuer, ///< The issuer of this certificate has been marked as untrusted by the user.
-        CertificateUnknownIssuer,   ///< The certificate trust chain has not finished in a trusted root certificate.
-        CertificateRevoked,         ///< The certificate was revoked by the issuing certificate authority.
-        CertificateExpired,         ///< The signing time is outside the validity bounds of this certificate.
-        CertificateGenericError,    ///< The certificate could not be verified.
-        CertificateNotVerified      ///< The certificate is not yet verified.
+        CertificateStatusUnknown,          ///< The certificate status is unknown for some reason.
+        CertificateTrusted,                ///< The certificate is considered trusted.
+        CertificateUntrustedIssuer,        ///< The issuer of this certificate has been marked as untrusted by the user.
+        CertificateUnknownIssuer,          ///< The certificate trust chain has not finished in a trusted root certificate.
+        CertificateRevoked,                ///< The certificate was revoked by the issuing certificate authority.
+        CertificateExpired,                ///< The signing time is outside the validity bounds of this certificate.
+        CertificateGenericError,           ///< The certificate could not be verified.
+        CertificateNotVerified,            ///< The certificate is not yet verified.
+        CertificateVerificationInProgress, ///< The certification is not yet verified, but in progress \since 24.08
     };
 
     /**

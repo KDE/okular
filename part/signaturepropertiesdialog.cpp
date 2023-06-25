@@ -13,7 +13,9 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
+#include <QProcess>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QVBoxLayout>
 #include <QVector>
 
@@ -36,6 +38,8 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
 {
     setModal(true);
     setWindowTitle(i18n("Signature Properties"));
+
+    m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
 
     const Okular::SignatureInfo &signatureInfo = form->signatureInfo();
     const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
@@ -85,9 +89,21 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     auto btnBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
     auto certPropBtn = new QPushButton(i18n("View Certificate..."));
     certPropBtn->setEnabled(!signatureInfo.certificateInfo().isNull());
+    auto certManagerBtn = new QPushButton(i18n("View in Certificate Manager"));
+    certManagerBtn->setVisible(signatureInfo.certificateInfo().backend() == Okular::CertificateInfo::Backend::Gpg);
+    certManagerBtn->setEnabled(!m_kleopatraPath.isEmpty());
+    if (m_kleopatraPath.isEmpty()) {
+        certManagerBtn->setToolTip(i18n("KDE Certificate Manager (kleopatra) not found"));
+    }
     btnBox->addButton(certPropBtn, QDialogButtonBox::ActionRole);
+    btnBox->addButton(certManagerBtn, QDialogButtonBox::ActionRole);
     connect(btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject);
     connect(certPropBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::viewCertificateProperties);
+    connect(certManagerBtn, &QPushButton::clicked, this, [this]() {
+        QStringList args;
+        args << QStringLiteral("--parent-windowid") << QString::number(static_cast<qlonglong>(window()->winId())) << QStringLiteral("--query") << m_signatureForm->signatureInfo().certificateInfo().nickName();
+        QProcess::startDetached(m_kleopatraPath, args);
+    });
 
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(signatureStatusBox);

@@ -25,6 +25,21 @@ class CertificateInfoPrivate;
 class OKULARCORE_EXPORT CertificateInfo
 {
 public:
+    /** The certificate backend is mostly
+     important if there is a wish to integrate
+     third party viewers, where some third party
+     viewers only interacts with some and not other
+     backend */
+    enum class Backend {
+        /** The backend is either unknown
+         or known, but not something there is
+         currently supported need for*/
+        Unknown,
+        /** The certificates in question originates
+         in gpg and thus can be queried using e.g.
+         KDE's certificate manager Kleopatra */
+        Gpg
+    };
     /**
      * The algorithm of public key.
      */
@@ -222,6 +237,20 @@ public:
      * @since 23.08
      */
     void setCertificateData(const QByteArray &certificateData);
+
+    /**
+     * The backend where the certificate originates.
+     * see @ref Backend for details
+     * @since 23.08
+     */
+    Backend backend() const;
+
+    /**
+     * Sets the backend for this certificate.
+     * see @ref Backend for details
+     * @since 23.08
+     */
+    void setBackend(Backend backend);
 
     /**
      * Checks if the given password is the correct one for this certificate

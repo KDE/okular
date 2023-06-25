@@ -48,6 +48,7 @@ public:
     int publicKeyStrength = -1;
     bool isSelfSigned = false;
     QByteArray certificateData;
+    CertificateInfo::Backend backend = CertificateInfo::Backend::Unknown;
     std::function<bool(QString)> checkPasswordFunction;
 };
 
@@ -247,6 +248,16 @@ QByteArray CertificateInfo::certificateData() const
 void CertificateInfo::setCertificateData(const QByteArray &certificateData)
 {
     d->certificateData = certificateData;
+}
+
+CertificateInfo::Backend CertificateInfo::backend() const
+{
+    return d->backend;
+}
+
+void CertificateInfo::setBackend(Backend backend)
+{
+    d->backend = backend;
 }
 
 bool CertificateInfo::checkPassword(const QString &password) const

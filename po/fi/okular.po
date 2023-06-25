@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-23 00:45+0000\n"
-"PO-Revision-Date: 2023-04-04 23:04+0300\n"
+"PO-Revision-Date: 2023-06-02 20:40+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:24:13+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1119,10 +1119,9 @@ msgid "Reason: %1"
 msgstr "Syy: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Sijainti:"
+msgstr "Sijainti: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1575,10 +1574,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Avaa ponnahdusmuistiinpano"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Kopioi leikepöydälle"
+msgstr "Kopioi teksti leikepöydälle"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2532 part/pageview.cpp:2850 part/pageview.cpp:2994
@@ -4429,11 +4427,7 @@ msgid "Could not open %1. %2"
 msgstr "Ei voitu avata: ”%1”. (%2)"
 
 #: part/part.cpp:1867
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4441,9 +4435,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Muutoksia on tallentamatta, ja toinen ohjelma on muuttanut tiedostoa ”%1”. "
-"Muutokset menetetään, koska tiedostoa ei enää voi tallentaa.<br>Haluatko "
-"jatkaa tiedoston uudelleenavausta?"
+"Tiedostossa <filename>%1</filename> on tallentamattomia muutoksia, mutta "
+"toinen ohjelma on muuttanut sitä. Uudelleenlataus korvaa tallentamattomat "
+"muutokset toisen ohjelman tekemillä.<nl/><nl/>Haluatko jatkaa tiedoston "
+"lataamista uudelleen?"
 
 #: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
@@ -4461,11 +4456,7 @@ msgid "Abort Reloading"
 msgstr "Keskeytä uudeelleenavaus"
 
 #: part/part.cpp:1877
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4473,9 +4464,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Muutoksia on tallentamatta, ja toinen ohjelma on muuttanut tiedostoa ”%1”. "
-"Muutokset menetetään, koska tiedostoa ei enää voi tallentaa.<br>Haluatko "
-"silti sulkea tiedoston?"
+"Tiedostossa <filename>%1</filename> on tallentamattomia muutoksia, mutta "
+"toinen ohjelma on muuttanut sitä. Sulkeminen korvaa tallentamattomat "
+"muutokset toisen ohjelman tekemillä.<nl/><nl/>Haluatko jatkaa tiedoston "
+"sulkemista?"
 
 #: part/part.cpp:1882
 #, kde-format
@@ -4595,6 +4587,8 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Toinen ohjelma on muuttanut tiedostoa <filename>%1</filename>. Jos tallennat "
+"nyt, toisen ohjelman tekemät muutokset menetetään. Haluatko varmasti jatkaa?"
 
 #: part/part.cpp:2674 part/part.cpp:2692 part/part.cpp:2744
 #, kde-format
@@ -4604,7 +4598,7 @@ msgstr "Tallennus – Varoitus"
 #: part/part.cpp:2676
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Tallenna kopio toisaalle"
 
 #: part/part.cpp:2691
 #, kde-format
@@ -5331,17 +5325,15 @@ msgstr "Hakuasetukset"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Varmenteet:"
+msgstr "Varmenteet"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Valitse varmenne, jolla allekirjoitetaan"
+msgstr "Valitse varmenne, jolla allekirjoitetaan:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62

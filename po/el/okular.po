@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"POT-Creation-Date: 2023-06-26 00:47+0000\n"
 "PO-Revision-Date: 2021-10-04 11:01+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -583,7 +583,7 @@ msgstr "Λειτουργία κλιμάκωσης:"
 msgid "Do not show this message again"
 msgstr "Να μην εμφανιστεί ξανά αυτό το μήνυμα"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
 #, kde-format
 msgid "Not Available"
 msgstr "Μη διαθέσιμη"
@@ -3437,7 +3437,7 @@ msgstr ""
 msgid "&Sign..."
 msgstr "Υπογραφή"
 
-#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Ιδιότητες υπογραφής"
@@ -5344,7 +5344,7 @@ msgid "Select certificate to sign with:"
 msgstr "Επιλογή πιστοποιητικού για υπογραφή"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
 msgstr "Αιτία:"
@@ -5360,7 +5360,7 @@ msgid "optional"
 msgstr "Επιλογές"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
 #, kde-format
 msgid "Location:"
 msgstr "Θέση:"
@@ -5480,56 +5480,67 @@ msgstr "%1_signed.%2"
 msgid "Save Signed File As"
 msgstr "Αποθήκευση υπογεγγραμμένου αρχείου ως"
 
-#: part/signaturepropertiesdialog.cpp:49
+#: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
 msgstr "Κατάσταση επιβεβαίωσης"
 
-#: part/signaturepropertiesdialog.cpp:52
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
 msgstr "Επιβεβαίωση υπογραφής:"
 
-#: part/signaturepropertiesdialog.cpp:53
+#: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
 msgstr "Τροποποιήσεις εγγράφου:"
 
-#: part/signaturepropertiesdialog.cpp:56
+#: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Additional Information"
 msgstr "Πρόσθετες πληροφορίες"
 
-#: part/signaturepropertiesdialog.cpp:59
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
 msgstr "Υπογραφή από:"
 
-#: part/signaturepropertiesdialog.cpp:60
+#: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
 msgstr "Χρόνος υπογραφής:"
 
-#: part/signaturepropertiesdialog.cpp:74
+#: part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Document Version"
 msgstr "Έκδοση εγγράφων"
 
-#: part/signaturepropertiesdialog.cpp:77
+#: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Αναθεώρηση εγγράφου %1 από %2"
 
-#: part/signaturepropertiesdialog.cpp:79
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
 msgstr "Προβολή υπογεγγραμμένης έκδοσης..."
 
-#: part/signaturepropertiesdialog.cpp:86
+#: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
 msgstr "Προβολή πιστοποιητικού..."
+
+#: part/signaturepropertiesdialog.cpp:92
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View in Certificate Manager"
+msgstr "Προβολή πιστοποιητικού..."
+
+#: part/signaturepropertiesdialog.cpp:96
+#, kde-format
+msgid "KDE Certificate Manager (kleopatra) not found"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

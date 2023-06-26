@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"POT-Creation-Date: 2023-06-26 00:47+0000\n"
 "PO-Revision-Date: 2021-12-31 11:00-0800\n"
 "Last-Translator: A S Alam <aalam@satluj.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -577,7 +577,7 @@ msgstr "ਸਕੇਲ ਮੋਡ:"
 msgid "Do not show this message again"
 msgstr "ਇਹ ਸੁਨੇਹਾ ਮੁੜ ਨਾ ਵੇਖਾਓ"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
 #, kde-format
 msgid "Not Available"
 msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
@@ -3426,7 +3426,7 @@ msgstr ""
 msgid "&Sign..."
 msgstr "ਦਸਤਖਤ"
 
-#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "ਦਸਤਖ਼ਤ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
@@ -5272,7 +5272,7 @@ msgid "Select certificate to sign with:"
 msgstr "ਇਸ ਨਾਲ ਦਸਤਖਤ ਕਰਨ ਲਈ ਸਰਟੀਫਿਕੇਟ ਚੁਣੋ"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
 msgstr "ਕਾਰਨ:"
@@ -5288,7 +5288,7 @@ msgid "optional"
 msgstr "ਚੋਣ"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
 #, kde-format
 msgid "Location:"
 msgstr "ਟਿਕਾਣਾ:"
@@ -5409,56 +5409,67 @@ msgstr "%1_ਦਸਤਖਤ.%2"
 msgid "Save Signed File As"
 msgstr "ਦਸਤਖਤ ਕੀਤੀ ਫਾਇਲ ਇੰਝ ਸੰਭਾਲੋ"
 
-#: part/signaturepropertiesdialog.cpp:49
+#: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
 msgstr "ਵੈਧਤਾ ਸਥਿਤੀ"
 
-#: part/signaturepropertiesdialog.cpp:52
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
 msgstr "ਦਸਤਖਤ ਵੈਧਤਾ:"
 
-#: part/signaturepropertiesdialog.cpp:53
+#: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
 msgstr "ਡੌਕੂਮੈਂਟ ਸੋਧਾਂ:"
 
-#: part/signaturepropertiesdialog.cpp:56
+#: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Additional Information"
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ"
 
-#: part/signaturepropertiesdialog.cpp:59
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
 msgstr "ਇਸ ਵਲੋਂ ਦਸਤਖ਼ਤ ਕੀਤੇ:"
 
-#: part/signaturepropertiesdialog.cpp:60
+#: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
 msgstr "ਦਸਤਖ਼ਤ ਦਾ ਵੇਲਾ: "
 
-#: part/signaturepropertiesdialog.cpp:74
+#: part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Document Version"
 msgstr "ਡੌਕੂਮੈਂਟ ਵਰਜ਼ਨ"
 
-#: part/signaturepropertiesdialog.cpp:77
+#: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "%2 ਵਿੱਚੋਂ %1 ਡੌਕੂਮੈਂਟ ਰੀਵਿਜ਼ਨ"
 
-#: part/signaturepropertiesdialog.cpp:79
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
 msgstr "ਦਸਤਖਤ ਕੀਤਾ ਵਰਜ਼ਨ ਵੇਖੋ..."
 
-#: part/signaturepropertiesdialog.cpp:86
+#: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
 msgstr "...ਸਰਟੀਫਿਕੇਟ ਵੇਖੋ"
+
+#: part/signaturepropertiesdialog.cpp:92
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View in Certificate Manager"
+msgstr "...ਸਰਟੀਫਿਕੇਟ ਵੇਖੋ"
+
+#: part/signaturepropertiesdialog.cpp:96
+#, kde-format
+msgid "KDE Certificate Manager (kleopatra) not found"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

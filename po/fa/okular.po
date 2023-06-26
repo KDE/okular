@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"POT-Creation-Date: 2023-06-26 00:47+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -590,7 +590,7 @@ msgstr "حالتهای رنگ"
 msgid "Do not show this message again"
 msgstr "بستن این پیام"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
 #, kde-format
 msgid "Not Available"
 msgstr ""
@@ -3561,7 +3561,7 @@ msgstr ""
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 msgid "Signature Properties"
 msgstr "ویژگیهای FreeText"
@@ -5445,7 +5445,7 @@ msgid "Select certificate to sign with:"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
 msgstr ""
@@ -5461,7 +5461,7 @@ msgid "optional"
 msgstr "گزینه‌ها"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -5579,57 +5579,68 @@ msgstr ""
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:49
+#: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:52
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:53
+#: part/signaturepropertiesdialog.cpp:57
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Document Modifications:"
 msgstr "سند برای باز کردن"
 
-#: part/signaturepropertiesdialog.cpp:56
+#: part/signaturepropertiesdialog.cpp:60
 #, fuzzy, kde-format
 msgid "Additional Information"
 msgstr "حاشیه‌نویسی"
 
-#: part/signaturepropertiesdialog.cpp:59
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:60
+#: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:74
+#: part/signaturepropertiesdialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Document Version"
 msgstr "سند برای باز کردن"
 
-#: part/signaturepropertiesdialog.cpp:77
+#: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:79
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
 msgstr ""
 
-#: part/signaturepropertiesdialog.cpp:86
+#: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
+msgstr ""
+
+#: part/signaturepropertiesdialog.cpp:92
+#, fuzzy, kde-format
+#| msgid "Configure Viewer..."
+msgid "View in Certificate Manager"
+msgstr "پیکربندی مشاهده‌گر..."
+
+#: part/signaturepropertiesdialog.cpp:96
+#, kde-format
+msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
 
 #: part/thumbnaillist.cpp:1028

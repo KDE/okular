@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"POT-Creation-Date: 2023-06-26 00:47+0000\n"
 "PO-Revision-Date: 2023-06-15 04:17+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
@@ -581,7 +581,7 @@ msgstr "縮放模式："
 msgid "Do not show this message again"
 msgstr "請勿再次顯示此訊息"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
 #, kde-format
 msgid "Not Available"
 msgstr "無法使用"
@@ -3388,7 +3388,7 @@ msgstr "未署名的簽名（點擊以署名）"
 msgid "&Sign..."
 msgstr "簽署(&S)…"
 
-#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "簽名屬性"
@@ -5228,7 +5228,7 @@ msgid "Select certificate to sign with:"
 msgstr "選擇簽名用的憑證："
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
 msgstr "原因："
@@ -5244,7 +5244,7 @@ msgid "optional"
 msgstr "選項"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
 #, kde-format
 msgid "Location:"
 msgstr "位置："
@@ -5364,56 +5364,67 @@ msgstr "%1_signed.%2"
 msgid "Save Signed File As"
 msgstr "將已簽名檔案另存為"
 
-#: part/signaturepropertiesdialog.cpp:49
+#: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
 msgstr "有效狀態"
 
-#: part/signaturepropertiesdialog.cpp:52
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
 msgstr "簽名有效性："
 
-#: part/signaturepropertiesdialog.cpp:53
+#: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
 msgstr "文件變更："
 
-#: part/signaturepropertiesdialog.cpp:56
+#: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Additional Information"
 msgstr "額外資訊"
 
-#: part/signaturepropertiesdialog.cpp:59
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
 msgstr "簽署者："
 
-#: part/signaturepropertiesdialog.cpp:60
+#: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
 msgstr "簽署時間："
 
-#: part/signaturepropertiesdialog.cpp:74
+#: part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Document Version"
 msgstr "文件版本"
 
-#: part/signaturepropertiesdialog.cpp:77
+#: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "%2 個文件修訂版中的第 %1 版"
 
-#: part/signaturepropertiesdialog.cpp:79
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
 msgstr "檢視簽名過版本…"
 
-#: part/signaturepropertiesdialog.cpp:86
+#: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
 msgstr "檢視憑證…"
+
+#: part/signaturepropertiesdialog.cpp:92
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View in Certificate Manager"
+msgstr "檢視憑證…"
+
+#: part/signaturepropertiesdialog.cpp:96
+#, kde-format
+msgid "KDE Certificate Manager (kleopatra) not found"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

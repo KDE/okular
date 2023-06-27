@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-23 11:47+0200\n"
+"PO-Revision-Date: 2023-06-26 10:43+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5510,15 +5510,14 @@ msgid "View Certificate..."
 msgstr "Certificaat weergeven..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Certificaat weergeven..."
+msgstr "In certificatenbeheerder bekijken"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Certificatenbeheerder van KDE (kleopatra) niet gevonden"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

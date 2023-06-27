@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-04 15:09+0100\n"
+"PO-Revision-Date: 2023-06-26 07:00+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -101,7 +101,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:131
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Signatura backend:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:157
@@ -316,6 +316,3 @@ msgstr "Enigi Pasvorton"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Enigi pasvorton por malfermi %1:"
-
-#~ msgid "Not Available"
-#~ msgstr "Ne Disponebla"

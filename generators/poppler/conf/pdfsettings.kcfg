@@ -16,6 +16,9 @@
                 <choice name="Shape" />
             </choices>
         </entry>
+        <entry key="OverprintPreviewEnabled" type="Bool">
+            <default>false</default>
+        </entry>
     </group>
     <group name="PDF Printing">
         <entry key="PrintScaleMode" type="UInt" >

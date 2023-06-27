@@ -54,6 +54,10 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 {
     m_pdfsw.setupUi(this);
 
+#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(23, 07, 0)
+    m_pdfsw.kcfg_OverprintPreviewEnabled->hide();
+#endif
+
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     auto backends = Poppler::availableCryptoSignBackends();
     if (!backends.empty()) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:45+0000\n"
+"POT-Creation-Date: 2023-06-26 00:47+0000\n"
 "PO-Revision-Date: 2023-03-30 22:51+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -581,7 +581,7 @@ msgstr "Skalering:"
 msgid "Do not show this message again"
 msgstr "Ikkje vis denne meldinga igjen"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:29
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
 #, kde-format
 msgid "Not Available"
 msgstr "Ikkje tilgjengeleg"
@@ -3417,7 +3417,7 @@ msgstr "Usignert signaturfelt (trykk for å signera)"
 msgid "&Sign..."
 msgstr "&Signer …"
 
-#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:38
+#: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Sertifikateigenskapar"
@@ -5292,7 +5292,7 @@ msgid "Select certificate to sign with:"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:62
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
 msgstr "Grunn:"
@@ -5307,7 +5307,7 @@ msgid "optional"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:64
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
 #, kde-format
 msgid "Location:"
 msgstr "Stad:"
@@ -5418,56 +5418,66 @@ msgstr "%1_signert.%2"
 msgid "Save Signed File As"
 msgstr "Lagra signert fil som"
 
-#: part/signaturepropertiesdialog.cpp:49
+#: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
 msgstr "Validitet"
 
-#: part/signaturepropertiesdialog.cpp:52
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
 msgstr "Signaturvaliditet:"
 
-#: part/signaturepropertiesdialog.cpp:53
+#: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
 msgstr "Dokumentendringar:"
 
-#: part/signaturepropertiesdialog.cpp:56
+#: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
-#: part/signaturepropertiesdialog.cpp:59
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
 msgstr "Signert av:"
 
-#: part/signaturepropertiesdialog.cpp:60
+#: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
 msgstr "Signeringstidspunkt:"
 
-#: part/signaturepropertiesdialog.cpp:74
+#: part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Document Version"
 msgstr "Dokumentversjon"
 
-#: part/signaturepropertiesdialog.cpp:77
+#: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Dokumentrevisjon %1 av %2"
 
-#: part/signaturepropertiesdialog.cpp:79
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
 msgstr "Vis signert versjon …"
 
-#: part/signaturepropertiesdialog.cpp:86
+#: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
 msgstr "Vis sertifikat …"
+
+#: part/signaturepropertiesdialog.cpp:92
+#, kde-format
+msgid "View in Certificate Manager"
+msgstr ""
+
+#: part/signaturepropertiesdialog.cpp:96
+#, kde-format
+msgid "KDE Certificate Manager (kleopatra) not found"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

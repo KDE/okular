@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-26 00:47+0000\n"
+"POT-Creation-Date: 2023-06-29 00:44+0000\n"
 "PO-Revision-Date: 2023-06-11 17:41+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -27,56 +27,62 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
 
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:17
+#, kde-format
+msgid "Enable overprint preview"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: conf/pdfsettingswidget.ui:19
+#: conf/pdfsettingswidget.ui:26
 #, kde-format
 msgid "Enhance thin lines:"
 msgstr "மெல்லிய கோடுகளை மேம்படுத்து:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:947
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:947
 #, kde-format
 msgid "No"
 msgstr "இல்லை"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:35
+#: conf/pdfsettingswidget.ui:42
 #, kde-format
 msgid "Solid"
 msgstr "திடப்படுத்து"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:40
+#: conf/pdfsettingswidget.ui:47
 #, kde-format
 msgid "Shape"
 msgstr "வடிவப்படுத்து"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:65
+#: conf/pdfsettingswidget.ui:72
 #, kde-format
 msgid "Default scaling mode when printing:"
 msgstr "அச்சிடும்போது அளவை மாற்றும் இயல்பிருப்பு முறை:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
 msgstr "அச்சிடக்கூடிய பரப்பளவுக்கு பொருத்தமாக"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:104
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
 msgstr "முழுப் பக்கத்துக்கு பொருத்தமாக"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:105
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
 msgstr "ஏதுமில்லை; உண்மையான அளவிலேயே அச்சிடு"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:113
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -85,44 +91,44 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:109
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:131
+#: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:157
+#: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
 msgstr "சான்றிதழ் தரவுதளம்"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:166
+#: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
 msgstr "இயல்பிருப்பு:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:173
+#: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
 msgstr "விருப்பமானது:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:190
+#: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
 msgstr "உள்ள சான்றிதழ்கள்"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:198
+#: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
 msgstr "சான்றிதழ்களை &ஏற்று:"
@@ -252,31 +258,31 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF பின்நிலை அமைப்பு"
 
-#: generator_pdf.cpp:2097
+#: generator_pdf.cpp:2111
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "ஆவணத்தில் சில பிழைகள் இருப்பதால், ஆக்குலர் அதனை தவறாக காட்டலாம்"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "யாரிடம் வழங்கப்பட்டது"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgid "E-mail"
 msgstr "மின்னஞ்சல் முகவரி"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "காலாவதியாகும் தேதி"
 
-#: pdfsettingswidget.cpp:141
+#: pdfsettingswidget.cpp:145
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -285,12 +291,12 @@ msgstr ""
 "NSS ஆதரவில்லா Poppler நிரலகத்தைப் பயன்படுத்துகிறீர்.\n"
 "அக்காரணத்தால் எண்ம கையொப்பங்களை இட முடியாது"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "Restart needed"
 msgstr "மறுதொடக்கம் தேவை"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS அடைவு அமைப்புகளை மாற்றிய பின் நீங்கள் ஆக்குலரை மீண்டும் தொடக்க வேண்டும்"

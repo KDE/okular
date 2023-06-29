@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-26 00:47+0000\n"
+"POT-Creation-Date: 2023-06-29 00:44+0000\n"
 "PO-Revision-Date: 2022-11-10 14:24\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -31,57 +31,63 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "komzpa@licei2.com, nashtlumach@gmail.com"
 
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:17
+#, kde-format
+msgid "Enable overprint preview"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: conf/pdfsettingswidget.ui:19
+#: conf/pdfsettingswidget.ui:26
 #, kde-format
 msgid "Enhance thin lines:"
 msgstr "Паляпшэнне тонкіх ліній:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:947
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:947
 #, kde-format
 msgid "No"
 msgstr "Не"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:35
+#: conf/pdfsettingswidget.ui:42
 #, kde-format
 msgid "Solid"
 msgstr "Суцэльныя"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:40
+#: conf/pdfsettingswidget.ui:47
 #, kde-format
 msgid "Shape"
 msgstr "Фігуры"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:65
+#: conf/pdfsettingswidget.ui:72
 #, fuzzy, kde-format
 #| msgid "Scaling mode for the printed pages"
 msgid "Default scaling mode when printing:"
 msgstr "Рэжым маштабавання старонак, якія друкуюцца"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Падладжванне да вобласці друкавання"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:104
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
 msgstr "Падладжванне да памераў старонкі"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:105
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
 msgstr "Няма"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:113
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -92,7 +98,7 @@ msgstr ""
 "правяраць сапраўднасць сертыфікатаў."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:109
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
@@ -101,37 +107,37 @@ msgstr ""
 "сервераў"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:131
+#: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:157
+#: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
 msgstr "База даных сертыфікатаў"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:166
+#: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
 msgstr "Прадвызначаны:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:173
+#: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
 msgstr "Адвольны:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:190
+#: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
 msgstr "Даступныя сертыфікаты"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:198
+#: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
 msgstr "&Загрузіць подпісы"
@@ -264,7 +270,7 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Канфігурацыя рухавіка PDF"
 
-#: generator_pdf.cpp:2097
+#: generator_pdf.cpp:2111
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -273,24 +279,24 @@ msgstr ""
 "У дакуменце знойдзены некаторыя памылкі, Okular можа няправільна паказаць "
 "змесціва"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Выдадзена"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgid "E-mail"
 msgstr "Электронная пошта"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Тэрмін дзеяння"
 
-#: pdfsettingswidget.cpp:141
+#: pdfsettingswidget.cpp:145
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -299,12 +305,12 @@ msgstr ""
 "Вы выкарыстоўваеце бібліятэку Poppler, створаную без падтрымкі NSS.\n"
 "З гэтай прычыны даданне лічбавых подпісаў недаступна"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "Restart needed"
 msgstr "Патрэбны перазапуск"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Пасля змены параметраў каталога NSS трэба перазапусціць Okular"

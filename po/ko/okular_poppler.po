@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-26 00:47+0000\n"
+"POT-Creation-Date: 2023-06-29 00:44+0000\n"
 "PO-Revision-Date: 2021-11-12 01:34+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -28,57 +28,63 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde@peremen.name"
 
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:17
+#, kde-format
+msgid "Enable overprint preview"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: conf/pdfsettingswidget.ui:19
+#: conf/pdfsettingswidget.ui:26
 #, kde-format
 msgid "Enhance thin lines:"
 msgstr "얇은 선 강화:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:30 generator_pdf.cpp:947
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:947
 #, kde-format
 msgid "No"
 msgstr "아니요"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:35
+#: conf/pdfsettingswidget.ui:42
 #, kde-format
 msgid "Solid"
 msgstr "단색"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:40
+#: conf/pdfsettingswidget.ui:47
 #, kde-format
 msgid "Shape"
 msgstr "도형"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:65
+#: conf/pdfsettingswidget.ui:72
 #, fuzzy, kde-format
 #| msgid "Scaling mode for the printed pages"
 msgid "Default scaling mode when printing:"
 msgstr "인쇄된 쪽의 크기 조절 모드"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
 msgstr "인쇄 가능한 영역으로 맞춤"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:78 generator_pdf.cpp:104
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
 msgstr "전체 페이지 맞춤"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:83 generator_pdf.cpp:105
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
 msgstr "없음, 원래 크기 인쇄"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:106
+#: conf/pdfsettingswidget.ui:113
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -89,44 +95,44 @@ msgstr ""
 "가 생성 이후 취소되었는지 확인합니다."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:109
+#: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr "제3자 서버를 사용하여 디지털 서명 취소 확인"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:131
+#: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:157
+#: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
 msgstr "인증서 데이터베이스"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:166
+#: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
 msgstr "기본값:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:173
+#: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
 msgstr "사용자 정의:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:190
+#: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
 msgstr "사용 가능한 인증서"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:198
+#: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
 msgstr "서명 불러오기(&L)"
@@ -257,7 +263,7 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF 백엔드 설정"
 
-#: generator_pdf.cpp:2097
+#: generator_pdf.cpp:2111
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -266,24 +272,24 @@ msgstr ""
 "문서에서 일부 오류를 발견했습니다. Okular에서 내용을 올바르게 표시하지 못할 "
 "수도 있습니다"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "발급 대상"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgid "E-mail"
 msgstr "이메일"
 
-#: pdfsettingswidget.cpp:124
+#: pdfsettingswidget.cpp:128
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "만료 날짜"
 
-#: pdfsettingswidget.cpp:141
+#: pdfsettingswidget.cpp:145
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -292,12 +298,12 @@ msgstr ""
 "Poppler 라이브러리에서 NSS를 지원하지 않도록 빌드되었습니다.\n"
 "디지털 서명을 추가할 수 없습니다"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "Restart needed"
 msgstr "다시 시작 필요함"
 
-#: pdfsettingswidget.cpp:182
+#: pdfsettingswidget.cpp:186
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"

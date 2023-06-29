@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-23 12:39+0200\n"
+"PO-Revision-Date: 2023-06-28 14:11+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -251,7 +251,7 @@ msgstr "Pokračovat v přehrávání filmu"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Tato aplikace je sestavena bez podpory zvuku"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5422,15 +5422,14 @@ msgid "View Certificate..."
 msgstr "Prohlížet certifikát..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Prohlížet certifikát..."
+msgstr "Pohled na správce certifikátů"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Správce certifikátů KDE (kleopatra) nebyl nalezen"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

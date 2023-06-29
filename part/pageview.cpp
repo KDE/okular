@@ -3887,6 +3887,26 @@ double PageView::zoomFactorFitMode(ZoomMode mode)
     return 0;
 }
 
+static double parseZoomString(QString z)
+{
+    // kdelibs4 sometimes adds accelerators to actions' text directly :(
+    z.remove(QLatin1Char('&'));
+    z.remove(QLatin1Char('%'));
+    return QLocale().toDouble(z) / 100.0;
+}
+
+static QString makePrettyZoomString(double value)
+{
+    // we do not need to display 2-digit precision
+    QString localValue(QLocale().toString(value * 100.0, 'f', 1));
+    localValue.remove(QLocale().decimalPoint() + QLatin1Char('0'));
+    // remove a trailing zero in numbers like 66.70
+    if (localValue.right(1) == QLatin1String("0") && localValue.indexOf(QLocale().decimalPoint()) > -1) {
+        localValue.chop(1);
+    }
+    return localValue;
+}
+
 void PageView::updateZoom(ZoomMode newZoomMode)
 {
     if (newZoomMode == ZoomFixed) {
@@ -3903,11 +3923,7 @@ void PageView::updateZoom(ZoomMode newZoomMode)
     QAction *checkedZoomAction = nullptr;
     switch (newZoomMode) {
     case ZoomFixed: { // ZoomFixed case
-        QString z = d->aZoom->currentText();
-        // kdelibs4 sometimes adds accelerators to actions' text directly :(
-        z.remove(QLatin1Char('&'));
-        z.remove(QLatin1Char('%'));
-        newFactor = QLocale().toDouble(z) / 100.0;
+        newFactor = parseZoomString(d->aZoom->currentText());
     } break;
     case ZoomIn:
     case ZoomOut: {
@@ -4059,14 +4075,14 @@ void PageView::updateZoomText()
         if (!inserted) {
             selIdx++;
         }
-        // we do not need to display 2-digit precision
-        QString localValue(QLocale().toString(value * 100.0, 'f', 1));
-        localValue.remove(QLocale().decimalPoint() + QLatin1Char('0'));
-        // remove a trailing zero in numbers like 66.70
-        if (localValue.right(1) == QLatin1String("0") && localValue.indexOf(QLocale().decimalPoint()) > -1) {
-            localValue.chop(1);
+        const QString localizedValue = makePrettyZoomString(value);
+        const QString i18nZoomName = i18nc("Zoom percentage value %1 will be replaced by the actual zoom factor value, so make sure you include it in your translation in order to not to break anything", "%1%", localizedValue);
+        if (makePrettyZoomString(parseZoomString(i18nZoomName)) == localizedValue) {
+            translated << i18nZoomName;
+        } else {
+            qWarning() << "Wrong translation of zoom percentage. Please file a bug";
+            translated << QStringLiteral("%1%").arg(localizedValue);
         }
-        translated << QStringLiteral("%1%").arg(localValue);
     }
     d->aZoom->setItems(translated);
 

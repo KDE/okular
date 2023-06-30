@@ -71,6 +71,7 @@ public:
     using QStyledItemDelegate::QStyledItemDelegate;
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const final;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const final;
+    bool showIcon = false;
 };
 
 class SelectCertificateDialog : public QDialog

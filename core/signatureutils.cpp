@@ -49,6 +49,7 @@ public:
     bool isSelfSigned = false;
     QByteArray certificateData;
     CertificateInfo::Backend backend = CertificateInfo::Backend::Unknown;
+    CertificateInfo::KeyLocation keyLocation = CertificateInfo::KeyLocation::Unknown;
     std::function<bool(QString)> checkPasswordFunction;
 };
 
@@ -248,6 +249,16 @@ QByteArray CertificateInfo::certificateData() const
 void CertificateInfo::setCertificateData(const QByteArray &certificateData)
 {
     d->certificateData = certificateData;
+}
+
+CertificateInfo::KeyLocation CertificateInfo::keyLocation() const
+{
+    return d->keyLocation;
+}
+
+void CertificateInfo::setKeyLocation(KeyLocation location)
+{
+    d->keyLocation = location;
 }
 
 CertificateInfo::Backend CertificateInfo::backend() const

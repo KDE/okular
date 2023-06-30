@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2023-06-22 09:53+0200\n"
+"PO-Revision-Date: 2023-06-29 09:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -35,7 +35,7 @@ msgstr "txemaq@gmail.com"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Activa la vista prèvia de sobreimpressió"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26

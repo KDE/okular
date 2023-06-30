@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-21 16:19+0200\n"
+"PO-Revision-Date: 2023-06-29 10:42+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -242,7 +242,7 @@ msgstr "Resume film"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Iste Okular es construite sin supporto audio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5497,15 +5497,16 @@ msgid "View Certificate..."
 msgstr "Vide certificato..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Vide certificato..."
+msgstr "Vide in Gerente de Certificato (Certificate Manager)"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
+"KDE Certificate Manager  - Gestor de Cerificato de KDE (kleopatra) non "
+"trovate"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5533,12 +5534,12 @@ msgstr "Stoppa"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Video non supportate in iste okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Video non supportate in iste okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

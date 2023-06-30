@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2023-06-26 07:00+0100\n"
+"PO-Revision-Date: 2023-06-29 07:50+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -33,7 +33,7 @@ msgstr "pedrotpmx@wanadoo.fr, okellogg@users.sourceforge.net"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Ebligi superpresan antaŭrigardon"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2023-06-22 10:03+0200\n"
+"PO-Revision-Date: 2023-06-29 10:20+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -33,7 +33,7 @@ msgstr "rinsedevries@kde.nl,freekdekruijf@kde.nl"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Vooruitblik op overprint inschakelen"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26

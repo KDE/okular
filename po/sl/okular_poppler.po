@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2023-06-22 07:49+0200\n"
+"PO-Revision-Date: 2023-06-29 07:06+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -36,7 +36,7 @@ msgstr "jlp@holodeck1.com,andrejm@ubuntu.si,matjaz.jeran@amis.net"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Omogoči predogled pretiska"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26

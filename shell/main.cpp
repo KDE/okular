@@ -21,7 +21,6 @@
 #include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
-#include <QDBusInterface>
 #include <QTextStream>
 #include <QtGlobal>
 

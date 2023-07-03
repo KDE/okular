@@ -12,6 +12,7 @@
 #ifndef _OKULAR_SHELL_H_
 #define _OKULAR_SHELL_H_
 
+#include "config-okular.h"
 #include <QAction>
 #include <QList>
 #include <QMimeDatabase>
@@ -19,7 +20,11 @@
 #include <kparts/mainwindow.h>
 #include <kparts/readwritepart.h>
 
+#if HAVE_DBUS
 #include <QDBusAbstractAdaptor> // for Q_NOREPLY
+#else
+#define Q_NOREPLY
+#endif
 #include <QStackedWidget>
 
 #include "welcomescreen.h"

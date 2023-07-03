@@ -36,7 +36,9 @@
 #include <KWindowSystem>
 #include <KXMLGUIFactory>
 #include <QApplication>
+#if HAVE_DBUS
 #include <QDBusConnection>
+#endif // HAVE_DBUS
 #include <QDockWidget>
 #include <QDragMoveEvent>
 #include <QFileDialog>
@@ -239,6 +241,7 @@ Shell::Shell(const QString &serializedOptions)
         readSettings();
 
         m_unique = ShellUtils::unique(serializedOptions);
+#if HAVE_DBUS
         if (m_unique) {
             m_unique = QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.okular"));
             if (!m_unique) {
@@ -260,6 +263,7 @@ Shell::Shell(const QString &serializedOptions)
         }
 
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/okularshell"), this, QDBusConnection::ExportScriptableSlots);
+#endif // HAVE_DBUS
 
         // Make sure that the welcome scren is visible on startup.
         showWelcomeScreen();
@@ -335,9 +339,11 @@ Shell::~Shell()
         }
         m_tabs.clear();
     }
+#if HAVE_DBUS
     if (m_unique) {
         QDBusConnection::sessionBus().unregisterService(QStringLiteral("org.kde.okular"));
     }
+#endif // HAVE_DBUS
 
     delete m_tabWidget;
 }

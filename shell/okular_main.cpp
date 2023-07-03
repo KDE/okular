@@ -16,8 +16,6 @@
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <QApplication>
-#include <QDBusConnectionInterface>
-#include <QDBusInterface>
 #include <QMimeData>
 #include <QTemporaryFile>
 #include <QTextStream>
@@ -26,6 +24,10 @@
 #if HAVE_X11
 #include <QX11Info>
 #endif
+#if HAVE_DBUS
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#endif // HAVE_DBUS
 
 #include <iostream>
 
@@ -46,6 +48,7 @@ static QString startupId()
 
 static bool attachUniqueInstance(const QStringList &paths, const QString &serializedOptions)
 {
+#if HAVE_DBUS
     if (!ShellUtils::unique(serializedOptions) || paths.count() != 1) {
         return false;
     }
@@ -69,11 +72,15 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
     }
 
     return true;
+#else  // HAVE_DBUS
+    return false;
+#endif // HAVE_DBUS
 }
 
 // Ask an existing non-unique instance to open new tabs
 static bool attachExistingInstance(const QStringList &paths, const QString &serializedOptions)
 {
+#if HAVE_DBUS
     if (paths.count() < 1) {
         return false;
     }
@@ -162,6 +169,9 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     bestService->call(QStringLiteral("tryRaise"), startupId());
 
     return true;
+#else  // HAVE_DBUS
+    return false;
+#endif // HAVE_DBUS
 }
 
 namespace Okular

@@ -15,7 +15,13 @@
 #ifndef _PART_H_
 #define _PART_H_
 
+#include <config-okular.h>
+
+#if HAVE_DBUS
 #include <QDBusAbstractAdaptor> // for Q_NOREPLY
+#else                           // HAVE_DBUS
+#define Q_NOREPLY
+#endif // HAVE_DBUS
 #include <QIcon>
 #include <QList>
 #include <QPointer>
@@ -34,8 +40,6 @@
 #include "../kdocumentviewer.h"
 
 #include "okularpart_export.h"
-
-#include <config-okular.h>
 
 class QAction;
 class QWidget;

@@ -5,11 +5,14 @@
 */
 
 #include "presentationwidget.h"
+#include "config-okular.h"
 
 // qt/kde includes
+#if HAVE_DBUS
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusReply>
+#endif
 #include <QLoggingCategory>
 
 #include <KActionCollection>
@@ -39,7 +42,9 @@
 #include <QValidator>
 
 #ifdef Q_OS_LINUX
+#if HAVE_DBUS
 #include <QDBusUnixFileDescriptor>
+#endif
 #include <unistd.h> // For ::close() for sleep inhibition
 #endif
 
@@ -1697,6 +1702,7 @@ void PresentationWidget::setScreen(const QScreen *newScreen)
 
 void PresentationWidget::inhibitPowerManagement()
 {
+#if HAVE_DBUS
 #ifdef Q_OS_LINUX
     QString reason = i18nc("Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation");
 
@@ -1730,11 +1736,13 @@ void PresentationWidget::inhibitPowerManagement()
             qCWarning(OkularUiDebug) << "Unable to inhibit sleep" << reply.error();
         }
     }
-#endif
+#endif // Q_OS_LINUX
+#endif // HAVE_DBUS
 }
 
 void PresentationWidget::allowPowerManagement()
 {
+#if HAVE_DBUS
 #ifdef Q_OS_LINUX
     if (m_sleepInhibitFd != -1) {
         ::close(m_sleepInhibitFd);
@@ -1750,7 +1758,8 @@ void PresentationWidget::allowPowerManagement()
 
         m_screenInhibitCookie = 0;
     }
-#endif
+#endif // Q_OS_LINUX
+#endif // HAVE_DBUS
 }
 
 void PresentationWidget::showTopBar(bool show)

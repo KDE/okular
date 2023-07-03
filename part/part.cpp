@@ -27,7 +27,9 @@
 // qt/kde includes
 #include <QApplication>
 #include <QContextMenuEvent>
+#if HAVE_DBUS
 #include <QDBusConnection>
+#endif // HAVE_DBUS
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFile>
@@ -327,6 +329,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
 
     setupConfigSkeleton(args, componentName());
 
+#if HAVE_DBUS
     numberOfParts++;
     if (numberOfParts == 1) {
         m_registerDbusName = QStringLiteral("/okular");
@@ -334,6 +337,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
         m_registerDbusName = QStringLiteral("/okular%1").arg(numberOfParts);
     }
     QDBusConnection::sessionBus().registerObject(m_registerDbusName, this, QDBusConnection::ExportScriptableSlots);
+#endif // HAVE_DBUS
 
     // connect the started signal to tell the job the mimetypes we like,
     // and get some more information from it
@@ -990,7 +994,9 @@ void Part::setupActions()
 
 Part::~Part()
 {
+#if HAVE_DBUS
     QDBusConnection::sessionBus().unregisterObject(m_registerDbusName);
+#endif // HAVE_DBUS
 
     m_document->removeObserver(this);
 

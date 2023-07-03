@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-18 14:11+0530\n"
+"PO-Revision-Date: 2023-07-02 15:21+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -241,7 +241,7 @@ msgstr "ஒளிக்காட்சியைத் தொடர்"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "இந்த ஆக்குலர், ஒலி ஆதரவு இல்லாமல் தொகுக்கப்பட்டுள்ளது"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -2861,11 +2861,10 @@ msgid "Memory usage:"
 msgstr "நினைவு பயன்பாடு:"
 
 #: part/dlgperformance.cpp:54
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text antialias"
-msgstr "முன்னிருப்பு மாற்றம்:"
+msgstr "உரை திரிபுத்திருத்தத்தை இயக்கு"
 
 #: part/dlgperformance.cpp:56
 #, kde-format
@@ -5302,8 +5301,7 @@ msgstr "காரணம்:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
 msgstr "கட்டாயமில்லை"
 
@@ -5472,15 +5470,14 @@ msgid "View Certificate..."
 msgstr "சான்றிதழைப் பார்..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "சான்றிதழைப் பார்..."
+msgstr "சான்றிதழ் மேலாளியில் காட்டு"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "கே.டீ.யீ. சான்றிதழ் மேலாளி (kleopatra) கண்டுபிடிக்கப்படவில்லை"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5508,12 +5505,12 @@ msgstr "நிறுத்து"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "இந்த ஆக்குலரில் ஒளிக்காட்சிகள் ஆதரிக்கப்படா"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "இந்த ஆக்குலரில் ஒளிக்காட்சிகள் ஆதரிக்கப்படா"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

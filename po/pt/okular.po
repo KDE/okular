@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-24 01:42+0100\n"
+"PO-Revision-Date: 2023-07-03 00:55+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -27,7 +27,7 @@ msgstr ""
 "X-POFile-IgnoreConsistency: Comment\n"
 "X-POFile-IgnoreConsistency: Name\n"
 "X-POFile-IgnoreConsistency: Highlight\n"
-"X-POFile-SpellExtra: luma Poppler cmd Itemc\n"
+"X-POFile-SpellExtra: luma Poppler cmd Itemc kleopatra\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5505,15 +5505,14 @@ msgid "View Certificate..."
 msgstr "Ver o Certificado..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Ver o Certificado..."
+msgstr "Ver no Gestor de Certificados"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "O Gestor de Certificados do KDE (kleopatra) não foi encontrado"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

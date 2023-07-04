@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-06-17 04:11\n"
+"PO-Revision-Date: 2023-07-03 11:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -245,7 +245,7 @@ msgstr "继续播放影片"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "此版本的 Okular 在构建时没有启用音频支持"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5405,15 +5405,14 @@ msgid "View Certificate..."
 msgstr "查看证书..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "查看证书..."
+msgstr "用证书管理器查看"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE 证书管理器 (kleopatra) 没有找到"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5441,12 +5440,12 @@ msgstr "停止"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "此版本的 Okular 不支持视频"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "此版本的 Okular 不支持视频"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5714,6 +5713,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Missing alert type"
-#~ msgstr "缺少警报类型"

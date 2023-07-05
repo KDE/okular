@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1580,6 +1580,7 @@ msgstr "صفحه %1"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "حاشیه‌نویسی"
+msgstr[1] ""
 
 #: part/annotationpopup.cpp:83 part/annotationpopup.cpp:119
 #, kde-format
@@ -2154,7 +2155,7 @@ msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""
 
 #: part/bookmarklist.cpp:115
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "%1 is the file name"
 msgid ""
 "%1\n"
@@ -2168,6 +2169,7 @@ msgstr[0] ""
 "%1\n"
 "\n"
 "%2چوب الف"
+msgstr[1] ""
 
 #: part/bookmarklist.cpp:131 part/part.cpp:409
 #, kde-format
@@ -3022,6 +3024,7 @@ msgctxt "Advance every %1 seconds"
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " ثانیه"
+msgstr[1] ""
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3785,10 +3788,11 @@ msgid "Show Forms"
 msgstr "نمایش &برگه‌ها‌"
 
 #: part/pageview.cpp:1287
-#, kde-format
+#, fuzzy, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " یک سند %1 صفحه‌ای بارگذاری شد."
+msgstr[1] ""
 
 #: part/pageview.cpp:2517
 #, fuzzy, kde-format
@@ -3803,10 +3807,11 @@ msgid "Copy forbidden by DRM"
 msgstr ""
 
 #: part/pageview.cpp:2834
-#, kde-format
+#, fuzzy, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "متن )%1 نویسه("
+msgstr[1] ""
 
 #: part/pageview.cpp:2835 part/pageview.cpp:2853
 #, kde-format

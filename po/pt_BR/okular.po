@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-07-04 15:27-0300\n"
+"PO-Revision-Date: 2023-07-05 17:08-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -4412,11 +4412,7 @@ msgid "Could not open %1. %2"
 msgstr "Não foi possível abrir %1. %2"
 
 #: part/part.cpp:1867
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4424,9 +4420,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Existem alterações que não foram salvas e o arquivo '%1' foi modificado por "
-"outro programa. As suas alterações serão perdidas porque o arquivo não pode "
-"mais ser salvo.<br/>Deseja continuar a recarregar o arquivo?"
+"O arquivo <filename>%1</filename> tem alterações não salvas e foi modificado "
+"por outro programa. Recarregá-lo irá substituir as alterações não salvas com "
+"as alterações feitas em outro programa.<nl/><nl/>Deseja continuar "
+"recarregando o arquivo?"
 
 #: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
@@ -4444,11 +4441,7 @@ msgid "Abort Reloading"
 msgstr "Cancelar o carregamento"
 
 #: part/part.cpp:1877
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4456,9 +4449,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Existem alterações que não foram salvas e o arquivo '%1' foi modificado por "
-"outro programa. As suas alterações serão perdidas porque o arquivo não pode "
-"mais ser salvo.<br/>Deseja continuar a fechar o arquivo?"
+"O arquivo <filename>%1</filename> tem alterações não salvas e foi modificado "
+"por outro programa. Fechá-lo irá substituir as alterações não salvas com as "
+"alterações feitas em outro programa.<nl/><nl/>Deseja continuar fechando o "
+"arquivo?"
 
 #: part/part.cpp:1882
 #, kde-format
@@ -4578,6 +4572,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"O arquivo <filename>%1</filename> foi modificado por outro programa. Se você "
+"salvá-lo agora, qualquer alteração feita em outro programa está perdida. Tem "
+"certeza de que deseja continuar?"
 
 #: part/part.cpp:2674 part/part.cpp:2692 part/part.cpp:2744
 #, kde-format

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:47+0000\n"
-"PO-Revision-Date: 2023-05-29 22:06+0400\n"
+"PO-Revision-Date: 2023-06-30 11:50+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -241,7 +241,7 @@ msgstr "Videoya davam"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Bu Okular audio dəstəyi olmadan yaradılıb"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5294,10 +5294,9 @@ msgstr "Səbəbi:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Seçimlər"
+msgstr "ixtiyari"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5307,25 +5306,21 @@ msgstr "Məkan:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Fon Rəngi:"
+msgstr "Arxa fon:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Seçim..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Başqa arxa fon rəngi:"
+msgstr "Sonuncu arxa fonlar:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5367,30 +5362,25 @@ msgid "Properties"
 msgstr "Xüsusiyyətlər"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Səhifələr: %1"
+msgstr "Şəkillər (%1)"
 
 #: part/signaturepartutils.cpp:305
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "Arxa fon şəklini seçin"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Hamısını unudun"
+msgstr "Şəkili unutmaq"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Hamısını unudun"
+msgstr "Bütün şəkilləri unutmaq"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5472,15 +5462,14 @@ msgid "View Certificate..."
 msgstr "Sertifakata nəzər salmaq..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Sertifakata nəzər salmaq..."
+msgstr "Sertifikat menecerində göstərmək"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE Sertifikat meneceri (kleopatra) tapılmadı"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5508,12 +5497,12 @@ msgstr "Dayandırmaq"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Bu okular-da videolar dəstəklənmir"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Bu Okular-da videolar dəstəklənmir"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

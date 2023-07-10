@@ -287,6 +287,13 @@ set_okular_optional_package_properties(Discount PROPERTIES
         URL "https://www.pell.portland.or.us/~orc/Code/discount/"
         PURPOSE "Support for Markdown documents in Okular.")
 
+if (UNIX AND NOT ANDROID)
+    find_package(KF5Pty CONFIG)
+    set_okular_optional_package_properties(KF5Pty PROPERTIES
+            DESCRIPTION "A library for interfacing with pseudo terminal devices"
+            PURPOSE "Support for Comic Book files in Okular.")
+endif()
+
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050F02)
 add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x055C00)

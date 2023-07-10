@@ -41,7 +41,9 @@ add_subdirectory(xps)
 
 add_subdirectory(fictionbook)
 
-add_subdirectory(comicbook)
+if (KF5Pty_FOUND OR ANDROID OR NOT UNIX)
+  add_subdirectory(comicbook)
+endif()
 
 add_subdirectory(fax)
 

@@ -232,8 +232,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
               <string comment="on welcome screen">Open Document...</string>
              </property>
              <property name="icon">
-              <iconset theme="document-open">
-               <normaloff>.</normaloff>.</iconset>
+              <iconset theme="document-open" />
              </property>
             </widget>
            </item>
@@ -458,8 +457,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
         <string comment="on welcome screen"/>
        </property>
        <property name="icon">
-        <iconset theme="window-close">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="window-close"/>
        </property>
        <property name="flat">
         <bool>true</bool>

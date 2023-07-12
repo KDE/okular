@@ -10,3 +10,4 @@
 15-prevent-leaks-and-segfault.diff
 16-use-windows-ansi-api-path-find.diff
 17-call-va_end-before-return.diff
+18-Include-stdarg.h-for-va_start-and-va_end.diff

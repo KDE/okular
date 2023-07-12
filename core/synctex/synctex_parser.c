@@ -69,6 +69,7 @@
 
 #include <errno.h>
 #include <limits.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8025,7 +8026,6 @@ static int _synctex_updater_print(synctex_updater_p updater, const char *format,
     return result;
 }
 #if defined(_MSC_VER) || defined(__MINGW32__)
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 

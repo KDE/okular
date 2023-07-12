@@ -1,0 +1,37 @@
+From 879adf6f6e3afc421028de4c3fbc912d0ef36542 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ingo=20Kl=C3=B6cker?= <dev@ingo-kloecker.de>
+Date: Mon, 3 Jul 2023 17:36:51 +0200
+Subject: [PATCH] Include stdarg.h for va_start and va_end
+
+Fixes "implicit declaration of function" error with devtoolset-10
+(gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11)) in centos7 Docker image
+used for building an AppImage.
+
+See also `man 3 va_start`.
+---
+ core/synctex/synctex_parser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/synctex/synctex_parser.c b/core/synctex/synctex_parser.c
+index cc97ecc52..9eed566b3 100644
+--- a/core/synctex/synctex_parser.c
++++ b/core/synctex/synctex_parser.c
+@@ -69,6 +69,7 @@
+ 
+ #include <errno.h>
+ #include <limits.h>
++#include <stdarg.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -8025,7 +8026,6 @@ static int _synctex_updater_print(synctex_updater_p updater, const char *format,
+     return result;
+ }
+ #if defined(_MSC_VER) || defined(__MINGW32__)
+-#include <stdarg.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ 
+-- 
+2.41.0
+

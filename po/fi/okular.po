@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-09 00:58+0000\n"
-"PO-Revision-Date: 2023-06-02 20:40+0300\n"
+"PO-Revision-Date: 2023-06-27 16:04+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:24:13+0000\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -264,7 +264,7 @@ msgstr "Jatka elokuvan toistoa"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Tämä Okular on koostettu äänituetta"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5346,10 +5346,9 @@ msgstr "Syy:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Asetukset"
+msgstr "valinnainen"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5359,25 +5358,21 @@ msgstr "Sijainti:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Taustaväri:"
+msgstr "Tausta:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Valitse…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Käytä mukautettua taustaväriä:"
+msgstr "Viimeaikaiset taustat:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5420,31 +5415,25 @@ msgid "Properties"
 msgstr "Ominaisuudet"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Sivuja: %1"
+msgstr "Kuvat (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "Käytä &taustalla luontia"
+msgstr "Valitse taustakuva"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Unohda kaikki"
+msgstr "Unohda kuva"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Unohda kaikki"
+msgstr "Unohda kaikki kuvat"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5562,12 +5551,12 @@ msgstr "Pysäytä"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Tämä Okular ei tue videoita"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Tämä Okular ei tue videoita"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

@@ -6,7 +6,7 @@
 # Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2008.
 # Lasse Liehu <lliehu@kolumbus.fi>, 2011.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2011, 2012, 2013, 2014.
-# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021.
+# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021, 2023.
 #
 # KDE Finnish translation sprint participants:
 # Author: Lliehu
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2021-11-10 18:19+0200\n"
+"PO-Revision-Date: 2023-06-27 16:04+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:24:15+0000\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -69,10 +69,9 @@ msgstr "Muoto"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:72
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "Tulostettujen sivujen skaalaustapa"
+msgstr "Tulostettujen sivujen oletusskaalaustapa:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
@@ -117,7 +116,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Allekirjoitustaustajärjestelmä:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:164

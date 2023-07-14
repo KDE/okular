@@ -3,13 +3,13 @@
 #
 # Translators:
 # Volkan Gezer, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-03 00:44+0000\n"
-"PO-Revision-Date: 2022-08-03 10:34+0300\n"
+"PO-Revision-Date: 2023-07-14 00:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -25,7 +25,7 @@ msgstr "Yer İmleri"
 
 #: package/contents/ui/CertificateViewerDialog.qml:21
 msgid "Certificate Viewer"
-msgstr "Sertifika Görüntüleyici"
+msgstr "Sertifika Görüntüleyicisi"
 
 #: package/contents/ui/CertificateViewerDialog.qml:32
 msgid "Issued By"

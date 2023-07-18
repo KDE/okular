@@ -23,15 +23,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-09 00:58+0000\n"
-"PO-Revision-Date: 2023-06-18 20:55+0200\n"
-"Last-Translator: Thomas Vergnaud <thomas.vergnaud@mailo.eu>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-07-17 22:06+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -267,6 +267,7 @@ msgstr "Reprendre un film"
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""
+"Cette version de Okular a été compilée dans la prise en charge de l'audio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -5543,15 +5544,14 @@ msgid "View Certificate..."
 msgstr "Voir le certificat..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Voir le certificat..."
+msgstr "Afficher dans le gestionnaire de certificats"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Impossible de trouver le gestionnaire de certificats de KDE"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5579,12 +5579,12 @@ msgstr "Arrêt"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Les vidéos ne sont pas prises en charge dans cette version de Okular."
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Les vidéos ne sont pas prises en charge dans cette version de Okular."
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

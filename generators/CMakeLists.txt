@@ -1,7 +1,6 @@
 
 function(okular_add_generator _target)
   kcoreaddons_add_plugin(${_target}
-    JSON "lib${_target}.json"
     INSTALL_NAMESPACE "okular/generators"
     SOURCES ${ARGN}
   )

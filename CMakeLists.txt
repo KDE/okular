@@ -622,17 +622,20 @@ set_target_properties(okularpart PROPERTIES PREFIX "")
 if (Qt5TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt5::TextToSpeech)
 endif()
+
+# TODO: Don't install okular_part.desktop once we are kf6 based
+#instead install the part to this path so it can be found
+#install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/parts/ )
 install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
-endif()
+install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+
+endif()# End of BUILD_DESKTOP if
 
 
 ########### install files ###############
 
 install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
-
-install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( FILES part/part.rc part/part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
-
 install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 ki18n_install(po)

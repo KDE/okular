@@ -174,6 +174,11 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         dragBeyondScreenEdges->setObjectName(QStringLiteral("kcfg_DragBeyondScreenEdges"));
         layout->addRow(programFeaturesLabel(), dragBeyondScreenEdges);
     }
+
+    QCheckBox *useDpi = new QCheckBox(this);
+    useDpi->setText(i18nc("@option:check Config dialog, general page", "Use screen DPI to calculate page size"));
+    useDpi->setObjectName(QStringLiteral("kcfg_UseDPI"));
+    layout->addRow(programFeaturesLabel(), useDpi);
     // END Program features section
 
     // If no Program features section, don’t add a second spacer:

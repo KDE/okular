@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-18 00:46+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -5977,7 +5977,7 @@ msgid "Open Document..."
 msgstr "हालको सम्भारकर्ता"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: shell/welcomescreen.ui:377
+#: shell/welcomescreen.ui:376
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgctxt "on welcome screen"
@@ -5985,14 +5985,14 @@ msgid "Recent documents"
 msgstr "हालको सम्भारकर्ता"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
-#: shell/welcomescreen.ui:387
+#: shell/welcomescreen.ui:386
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
-#: shell/welcomescreen.ui:455
+#: shell/welcomescreen.ui:454
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""

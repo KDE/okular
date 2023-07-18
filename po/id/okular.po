@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-18 00:46+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -5802,21 +5802,21 @@ msgid "Open Document..."
 msgstr "Buka Dokumen..."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: shell/welcomescreen.ui:377
+#: shell/welcomescreen.ui:376
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
 msgstr "Dokumen baru-baru ini"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
-#: shell/welcomescreen.ui:387
+#: shell/welcomescreen.ui:386
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
 msgstr "Lupakan Semuanya"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
-#: shell/welcomescreen.ui:455
+#: shell/welcomescreen.ui:454
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"

@@ -34,24 +34,3 @@ msgstr "txemaq@gmail.com"
 #, kde-format
 msgid "Revision"
 msgstr "Revisió"
-
-#~ msgid "XPS Backend"
-#~ msgstr "Dorsal XPS"
-
-#~ msgid ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-#~ msgstr ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-
-#~ msgid "Brad Hards"
-#~ msgstr "Brad Hards"
-
-#~ msgid "Jiri Klement"
-#~ msgstr "Jiri Klement"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"

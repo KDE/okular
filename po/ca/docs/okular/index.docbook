@@ -3716,13 +3716,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->En usar l'eina Navega, ajusta el cursor a les vores de la pantalla</guilabel
+>En usar l'eina Navega, el cursor continua des del final oposat en arribar a la vora de la pantalla</guilabel
 ></term>
 					<listitem>
 						<para
 >Permet el desplaçament sense fi per tot el document amb l'<link linkend="menutools"
 >eina Navega</link
->. Si està activat, el cursor del ratolí s'ajustarà al final oposat de la pantalla quan toqui les vores mentre arrossegueu el document. Aquesta característica només és compatible amb X11. </para>
+>. Si està activat, el cursor del ratolí continuarà des del final oposat de la pantalla quan toqui les vores mentre arrossegueu el document. Aquesta característica només és compatible amb X11. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

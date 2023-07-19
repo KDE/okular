@@ -49,15 +49,3 @@ msgstr ""
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Format ComicBook desconegut."
-
-#~ msgid "ComicBook Backend"
-#~ msgstr "Dorsal de ComicBook"
-
-#~ msgid "A renderer for various comic book formats"
-#~ msgstr "Un renderitzador per a diversos formats de ComicBook"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

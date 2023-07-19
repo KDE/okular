@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-09 00:58+0000\n"
-"PO-Revision-Date: 2023-06-26 10:07+0200\n"
+"PO-Revision-Date: 2023-07-18 18:45+0300\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2770,7 +2770,9 @@ msgstr "Obre en mode continu de manera predeterminada"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr "En usar l'eina Navega, ajusta el cursor a les vores de la pantalla"
+msgstr ""
+"En usar l'eina Navega, el cursor continua des del final oposat en arribar a "
+"la vora de la pantalla"
 
 #: part/dlggeneral.cpp:190
 #, kde-format

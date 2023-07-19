@@ -45,15 +45,3 @@ msgstr "EPub"
 #, kde-format
 msgid "EPub Backend Configuration"
 msgstr "Configuració del dorsal d'EPub"
-
-#~ msgid "EPub Backend"
-#~ msgstr "Dorsal EPub"
-
-#~ msgid "An EPub backend"
-#~ msgstr "Un dorsal per l'EPub"
-
-#~ msgid "© 2008 Ely Levy"
-#~ msgstr "© 2008 Ely Levy"
-
-#~ msgid "Ely Levy"
-#~ msgstr "Ely Levy"

@@ -4288,8 +4288,13 @@ void Document::processAction(const Action *action)
             }
 
             // handle documents with relative path
+            QUrl realUrl;
             if (d->m_url.isValid()) {
-                const QUrl realUrl = KIO::upUrl(d->m_url).resolved(url);
+                realUrl = KIO::upUrl(d->m_url).resolved(url);
+            } else if (!url.isRelative()) {
+                realUrl = url;
+            }
+            if (realUrl.isValid()) {
                 // KRun autodeletes
                 KRun *r = new KRun(realUrl, d->m_widget);
                 r->setRunExecutables(false);

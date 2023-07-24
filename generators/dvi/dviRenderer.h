@@ -165,7 +165,7 @@ Q_SIGNALS:
     void notice(const QString &message, int duration);
 
 public Q_SLOTS:
-    void exportPS(const QString &fname = QString(), const QStringList &options = QStringList(), QPrinter *printer = nullptr, QPrinter::Orientation orientation = QPrinter::Portrait);
+    void exportPS(const QString &fname = QString(), const QStringList &options = QStringList(), QPrinter *printer = nullptr, QPageLayout::Orientation orientation = QPageLayout::Portrait);
     void exportPDF();
 
     void handleSRCLink(const QString &linkText, const QPoint point, DocumentWidget *widget);

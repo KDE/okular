@@ -3587,7 +3587,7 @@ void Part::slotPrint()
 
 void Part::setupPrint(QPrinter &printer)
 {
-    printer.setOrientation(m_document->orientation());
+    printer.setPageOrientation(m_document->orientation());
 
     // title
     QString title = m_document->metaData(QStringLiteral("DocumentTitle")).toString();

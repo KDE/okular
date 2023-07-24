@@ -144,7 +144,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer &parent, const QString &output_name)
                "find in the File-Menu for a precise error report.</qt>"));
 }
 
-DVIExportToPS::DVIExportToPS(dviRenderer &parent, const QString &output_name, const QStringList &options, QPrinter *printer, bool useFontHinting, QPrinter::Orientation orientation)
+DVIExportToPS::DVIExportToPS(dviRenderer &parent, const QString &output_name, const QStringList &options, QPrinter *printer, bool useFontHinting, QPageLayout::Orientation orientation)
     : DVIExport(parent)
     , printer_(printer)
     , orientation_(orientation)

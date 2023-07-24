@@ -217,14 +217,14 @@ QString DocumentPrivate::pagesSizeString() const
 
 QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) const
 {
-    const QPrinter::Orientation orientation = inchesWidth > inchesHeight ? QPrinter::Landscape : QPrinter::Portrait;
+    const QPageLayout::Orientation orientation = inchesWidth > inchesHeight ? QPageLayout::Landscape : QPageLayout::Portrait;
 
     const QSize pointsSize(inchesWidth * 72.0, inchesHeight * 72.0);
     const QPageSize::PageSizeId paperSize = QPageSize::id(pointsSize, QPageSize::FuzzyOrientationMatch);
 
     const QString paperName = QPageSize::name(paperSize);
 
-    if (orientation == QPrinter::Portrait) {
+    if (orientation == QPageLayout::Portrait) {
         return i18nc("paper type and orientation (eg: Portrait A4)", "Portrait %1", paperName);
     } else {
         return i18nc("paper type and orientation (eg: Portrait A4)", "Landscape %1", paperName);
@@ -5275,7 +5275,7 @@ bool Document::extractArchivedFile(const QString &destFileName)
     return d->m_archiveData->document.copy(destFileName);
 }
 
-QPrinter::Orientation Document::orientation() const
+QPageLayout::Orientation Document::orientation() const
 {
     double width, height;
     int landscape, portrait;
@@ -5298,7 +5298,7 @@ QPrinter::Orientation Document::orientation() const
             portrait++;
         }
     }
-    return (landscape > portrait) ? QPrinter::Landscape : QPrinter::Portrait;
+    return (landscape > portrait) ? QPageLayout::Landscape : QPageLayout::Portrait;
 }
 
 void Document::setAnnotationEditingEnabled(bool enable)

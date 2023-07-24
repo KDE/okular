@@ -123,7 +123,7 @@ public:
      *  @param useFontHinting boolean that defines whether to use font hinting.
      *  @param orientation the original orientation of the document
      */
-    DVIExportToPS(dviRenderer &parent, const QString &output_name, const QStringList &options, QPrinter *printer, bool useFontHinting, QPrinter::Orientation orientation = QPrinter::Portrait);
+    DVIExportToPS(dviRenderer &parent, const QString &output_name, const QStringList &options, QPrinter *printer, bool useFontHinting, QPageLayout::Orientation orientation = QPageLayout::Portrait);
 
 private:
     void abort_process_impl() override;
@@ -132,7 +132,7 @@ private:
     QPrinter *printer_;
     QString output_name_;
     QString tmpfile_name_;
-    QPrinter::Orientation orientation_;
+    QPageLayout::Orientation orientation_;
 };
 
 #endif

@@ -84,7 +84,7 @@ public:
      */
     static Document::PrintError printFile(QPrinter &printer,
                                           const QString &file,
-                                          QPrinter::Orientation documentOrientation,
+                                          QPageLayout::Orientation documentOrientation,
                                           FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
                                           PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
                                           const QString &pageRange = QString(),
@@ -154,7 +154,7 @@ protected:
     bool detectCupsConfig();
 
     Document::PrintError
-    doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPrinter::Orientation documentOrientation, ScaleMode scaleMode);
+    doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPageLayout::Orientation documentOrientation, ScaleMode scaleMode);
 
     /// @since 1.8
     QStringList printArguments(QPrinter &printer,
@@ -163,7 +163,7 @@ protected:
                                bool useCupsOptions,
                                const QString &pageRange,
                                const QString &version,
-                               QPrinter::Orientation documentOrientation,
+                               QPageLayout::Orientation documentOrientation,
                                ScaleMode scaleMode);
 
     QStringList destination(QPrinter &printer, const QString &version);
@@ -173,11 +173,11 @@ protected:
     QStringList pages(QPrinter &printer, PageSelectPolicy pageSelectPolicy, const QString &pageRange, bool useCupsOptions, const QString &version);
 
     /// @since 1.8
-    QStringList cupsOptions(QPrinter &printer, QPrinter::Orientation documentOrientation, ScaleMode scaleMode);
+    QStringList cupsOptions(QPrinter &printer, QPageLayout::Orientation documentOrientation, ScaleMode scaleMode);
     QStringList optionMedia(QPrinter &printer);
     QString mediaPageSize(QPrinter &printer);
     QString mediaPaperSource(QPrinter &printer);
-    QStringList optionOrientation(QPrinter &printer, QPrinter::Orientation documentOrientation);
+    QStringList optionOrientation(QPrinter &printer, QPageLayout::Orientation documentOrientation);
     QStringList optionDoubleSidedPrinting(QPrinter &printer);
     QStringList optionPageOrder(QPrinter &printer);
     QStringList optionCollateCopies(QPrinter &printer);

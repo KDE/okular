@@ -959,7 +959,7 @@ public:
      *
      * @since 0.14 (KDE 4.8)
      */
-    QPrinter::Orientation orientation() const;
+    QPageLayout::Orientation orientation() const;
 
     /**
      * Control annotation editing (creation, modification and removal),

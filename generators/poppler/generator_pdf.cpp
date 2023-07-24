@@ -1462,9 +1462,8 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
     // Get the real page size to pass to the ps generator
     QPrinter dummy(QPrinter::PrinterResolution);
     dummy.setFullPage(true);
-    dummy.setOrientation(printer.orientation());
-    dummy.setPageSize(printer.pageSize());
-    dummy.setPaperSize(printer.paperSize(QPrinter::Millimeter), QPrinter::Millimeter);
+    dummy.setPageOrientation(printer.pageLayout().orientation());
+    dummy.setPageSize(printer.pageLayout().pageSize());
     int width = dummy.width();
     int height = dummy.height();
 #else

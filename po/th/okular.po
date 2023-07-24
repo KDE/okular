@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-24 10:08+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -339,47 +339,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "ไม่พบโปรแกรมสำหรับใช้เปิดแฟ้มประเภท %1"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4643
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "ไม่สามารถเปิดแฟ้มชั่วคราวได้"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4645
 #, kde-format
 msgid "Print conversion failed"
 msgstr "การแปลงการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing process crashed"
 msgstr "โพรเซสการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ไม่สามารถเริ่มโพรเซสการพิมพ์ได้"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing to file failed"
 msgstr "การพิมพ์ไปยังแฟ้มทำงานล้มเหลว"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "เครื่องพิมพ์อยู่ในสถานะที่ใช้งานไม่ได้"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4655
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "ไม่สามารถค้นพบแฟ้มที่จะใช้พิมพ์"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4657
 #, kde-format
 msgid "There was no file to print"
 msgstr "ไม่มีแฟ้มใดที่จะใช้ในการพิมพ์"
 
-#: core/document.cpp:4654
+#: core/document.cpp:4659
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -388,94 +388,94 @@ msgstr ""
 "ไม่สามารถค้นพบแฟ้มโปรแกรมแบบไบนารีที่เหมาะสมสำหรับใช้ในการพิมพ์ โปรดตรวจสอบว่าโปรแกรม "
 "lpr ของแพกเกจ CUPS ได้ถูกติดตั้งไว้อย่างถูกต้องแล้วหรือไม่"
 
-#: core/document.cpp:4656
+#: core/document.cpp:4661
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5321 part/part.cpp:1162
+#: core/document.cpp:5326 part/part.cpp:1162
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "แฟ้มไม่ถูกบันทึก เนื่องจากไม่สามารถเปิดแฟ้ม \"%1\" เพื่อเขียนได้ "
 
-#: core/document.cpp:5831
+#: core/document.cpp:5836
 #, kde-format
 msgid "Title"
 msgstr "ชื่อเรื่อง"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5839
 #, kde-format
 msgid "Subject"
 msgstr "หัวข้อเรื่อง"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5842
 #, kde-format
 msgid "Description"
 msgstr "คำอธิบาย"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5845
 #, kde-format
 msgid "Author"
 msgstr "ผู้เขียน"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5848
 #, kde-format
 msgid "Creator"
 msgstr "ผู้สร้าง"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5851
 #, kde-format
 msgid "Producer"
 msgstr "ผู้ผลิต"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5854
 #, kde-format
 msgid "Copyright"
 msgstr "ลิขสิทธิ์"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5857
 #, kde-format
 msgid "Pages"
 msgstr "จำนวนหน้า"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5860
 #, kde-format
 msgid "Created"
 msgstr "สร้างเมื่อ"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5863
 #, kde-format
 msgid "Modified"
 msgstr "แก้ไขเมื่อ"
 
-#: core/document.cpp:5861
+#: core/document.cpp:5866
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "ประเภท Mime"
 
-#: core/document.cpp:5864
+#: core/document.cpp:5869
 #, kde-format
 msgid "Category"
 msgstr "หมวดหมู่"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5872
 #, kde-format
 msgid "Keywords"
 msgstr "คำค้น/คำสำคัญ"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5875
 #, kde-format
 msgid "File Path"
 msgstr "พาธของแฟ้ม"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5878
 #, kde-format
 msgid "File Size"
 msgstr "ขนาดแฟ้ม"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5881
 #, kde-format
 msgid "Page Size"
 msgstr "ขนาดกระดาษ"
@@ -1621,6 +1621,15 @@ msgstr "เส้น"
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "ความ&ทึบแสง:"
+
+#: part/annotationactionhandler.cpp:694
+#, fuzzy, kde-format
+#| msgid "%1:"
+msgctxt ""
+"@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
+"in your translation"
+msgid "%1%"
+msgstr "%1:"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3166
 #, kde-format
@@ -4000,85 +4009,95 @@ msgstr "คัดลอกข้อความ"
 msgid "Go to '%1'"
 msgstr "ไปยังหน้าที่ %1"
 
-#: part/pageview.cpp:4040 part/part.cpp:3177
+#: part/pageview.cpp:4056 part/part.cpp:3177
 #, kde-format
 msgid "Fit Width"
 msgstr "พอดีกับความกว้าง"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Fit Page"
 msgstr "พอดีกับหน้า"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4346
+#: part/pageview.cpp:4079
+#, fuzzy, kde-format
+#| msgid "%1:"
+msgctxt ""
+"Zoom percentage value %1 will be replaced by the actual zoom factor value, "
+"so make sure you include it in your translation in order to not to break "
+"anything"
+msgid "%1%"
+msgstr "%1:"
+
+#: part/pageview.cpp:4362
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ค้นหา '%1' ด้วย"
 
-#: part/pageview.cpp:4360
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "ปรับแต่งทางลัดเว็บ..."
 
-#: part/pageview.cpp:4386
+#: part/pageview.cpp:4402
 #, kde-format
 msgid "Follow This Link"
 msgstr "เปิดดูตำแหน่งเชื่อมโยงนี้"
 
-#: part/pageview.cpp:4389
+#: part/pageview.cpp:4405
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "เล่นเสียง..."
 
-#: part/pageview.cpp:4391
+#: part/pageview.cpp:4407
 #, fuzzy, kde-format
 #| msgid "Sound"
 msgid "Stop Sound"
 msgstr "เสียง"
 
-#: part/pageview.cpp:4397
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Copy Link Address"
 msgstr "คัดลอกที่อยู่ของตำแหน่งเชื่อมโยง"
 
-#: part/pageview.cpp:4418
+#: part/pageview.cpp:4434
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "ค้นหา '%1' ด้วย"
 
-#: part/pageview.cpp:4866
+#: part/pageview.cpp:4882
 #, kde-format
 msgid "Welcome"
 msgstr "ยินดีต้อนรับ"
 
-#: part/pageview.cpp:4986
+#: part/pageview.cpp:5002
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "เลือกพื้นที่ที่ต้องการย่อ/ขยาย คลิกขวาเพื่อย่อขนาด"
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5013
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:5026
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "วาดสี่เหลี่ยมรอบข้อความ/ภาพกราฟิกที่ต้องการจะคัดลอก"
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5038
 #, kde-format
 msgid "Select text"
 msgstr "เลือกข้อความ"
 
-#: part/pageview.cpp:5034
+#: part/pageview.cpp:5050
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid ""
@@ -4086,14 +4105,14 @@ msgid ""
 "Esc to clear."
 msgstr "วาดสี่เหลี่ยมรอบข้อความ/ภาพกราฟิกที่ต้องการจะคัดลอก"
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5063
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4101,17 +4120,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5063
+#: part/pageview.cpp:5079
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5223
+#: part/pageview.cpp:5239
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

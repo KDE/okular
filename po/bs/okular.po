@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-24 10:08+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -341,47 +341,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nije nađen nijedan program za otvaranje datoteke MIME tipa %1."
 
-#: core/document.cpp:4638
+#: core/document.cpp:4643
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ne mogu da otvorim privremenu datoteku"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4645
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konverzija štampe nije uspjela"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Prekinut proces štampanja"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ne mogu pokrenut proces štampanja"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Štampanje u datoteku nije uspjelo"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Štampanje je u nedozvoljenom stanju"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4655
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ne mogu pronaći datoteku za štampanje"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4657
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nema datoteke za štampanje"
 
-#: core/document.cpp:4654
+#: core/document.cpp:4659
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -390,93 +390,93 @@ msgstr ""
 "Ne mogu da nađem pogodnu naredbu za štampanje. Obezbijedite da <command>lpr</"
 "command> iz CUPS‑a bude dostupna."
 
-#: core/document.cpp:4656
+#: core/document.cpp:4661
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Veličina stranice za štampu neispravna"
 
-#: core/document.cpp:5321 part/part.cpp:1162
+#: core/document.cpp:5326 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ne mogu otvoriti '%1'. Datoteka ne postoji"
 
-#: core/document.cpp:5831
+#: core/document.cpp:5836
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5839
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5842
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5845
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5848
 #, kde-format
 msgid "Creator"
 msgstr "Autor"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5851
 #, kde-format
 msgid "Producer"
 msgstr "Proizvođač"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5854
 #, kde-format
 msgid "Copyright"
 msgstr "Autorska prava"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5857
 #, kde-format
 msgid "Pages"
 msgstr "Stranice"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5860
 #, kde-format
 msgid "Created"
 msgstr "Kreirano"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5863
 #, kde-format
 msgid "Modified"
 msgstr "Izmijenjen"
 
-#: core/document.cpp:5861
+#: core/document.cpp:5866
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "MIME tip"
 
-#: core/document.cpp:5864
+#: core/document.cpp:5869
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5872
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne riječi"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5875
 #, kde-format
 msgid "File Path"
 msgstr "Putanja datoteke"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5878
 #, kde-format
 msgid "File Size"
 msgstr "Veličina datoteke"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5881
 #, kde-format
 msgid "Page Size"
 msgstr "Veličina stranice"
@@ -1605,6 +1605,15 @@ msgstr "Prilagodi po širini"
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "&Neprovidnost:"
+
+#: part/annotationactionhandler.cpp:694
+#, fuzzy, kde-format
+#| msgid "%1:"
+msgctxt ""
+"@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
+"in your translation"
+msgid "%1%"
+msgstr "%1:"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3166
 #, kde-format
@@ -4006,83 +4015,93 @@ msgstr "Kopiraj tekst"
 msgid "Go to '%1'"
 msgstr "Idi na %1"
 
-#: part/pageview.cpp:4040 part/part.cpp:3177
+#: part/pageview.cpp:4056 part/part.cpp:3177
 #, kde-format
 msgid "Fit Width"
 msgstr "Prilagodi po širini"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Fit Page"
 msgstr "Prilagodi po stranici"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatsko uklapanje"
 
-#: part/pageview.cpp:4346
+#: part/pageview.cpp:4079
+#, fuzzy, kde-format
+#| msgid "%1:"
+msgctxt ""
+"Zoom percentage value %1 will be replaced by the actual zoom factor value, "
+"so make sure you include it in your translation in order to not to break "
+"anything"
+msgid "%1%"
+msgstr "%1:"
+
+#: part/pageview.cpp:4362
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Traži „%1“ pomoću"
 
-#: part/pageview.cpp:4360
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Podesi veb prečice..."
 
-#: part/pageview.cpp:4386
+#: part/pageview.cpp:4402
 #, kde-format
 msgid "Follow This Link"
 msgstr "Prati ovaj link"
 
-#: part/pageview.cpp:4389
+#: part/pageview.cpp:4405
 #, kde-format
 msgid "Play this Sound"
 msgstr "Sviraj ovaj zvuk"
 
-#: part/pageview.cpp:4391
+#: part/pageview.cpp:4407
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zaustavi zvuk"
 
-#: part/pageview.cpp:4397
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiraj adresu linka"
 
-#: part/pageview.cpp:4418
+#: part/pageview.cpp:4434
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Traži „%1“ pomoću"
 
-#: part/pageview.cpp:4866
+#: part/pageview.cpp:4882
 #, kde-format
 msgid "Welcome"
 msgstr "Dobrodošli"
 
-#: part/pageview.cpp:4986
+#: part/pageview.cpp:5002
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Izaberite područje za uvećanje. Desni klik za umanjenje."
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5013
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknuti da bi vidjeli uvećani prikaz."
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:5026
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Nacrtaj pravougaonik oko teksta/grafike za kopiranje."
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5038
 #, kde-format
 msgid "Select text"
 msgstr "Označite tekst."
 
-#: part/pageview.cpp:5034
+#: part/pageview.cpp:5050
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4091,14 +4110,14 @@ msgstr ""
 "Nacrtajte pravougaonik oko tabele, kliknite blizu ivica da podijelite, "
 "pritisnite Esc za brisanje."
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5063
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4106,17 +4125,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5063
+#: part/pageview.cpp:5079
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5223
+#: part/pageview.cpp:5239
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

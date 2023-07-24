@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-24 10:08+0000\n"
 "PO-Revision-Date: 2023-07-01 16:04+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
@@ -331,139 +331,139 @@ msgstr "此文件正試著執行外部應用程式，但為了安全起見，oku
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4643
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "無法開啟暫存檔"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4645
 #, kde-format
 msgid "Print conversion failed"
 msgstr "列印轉換失敗"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing process crashed"
 msgstr "列印行程發生錯誤"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process could not start"
 msgstr "列印行程無法啟動"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing to file failed"
 msgstr "列印到檔案失敗"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "印表機的狀態有問題"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4655
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要列印的檔案"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4657
 #, kde-format
 msgid "There was no file to print"
 msgstr "沒有檔案可列印"
 
-#: core/document.cpp:4654
+#: core/document.cpp:4659
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
 
-#: core/document.cpp:4656
+#: core/document.cpp:4661
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "頁面列印大小無效"
 
-#: core/document.cpp:5321 part/part.cpp:1162
+#: core/document.cpp:5326 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "無法開啟 %1。檔案不存在"
 
-#: core/document.cpp:5831
+#: core/document.cpp:5836
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5839
 #, kde-format
 msgid "Subject"
 msgstr "主旨"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5842
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5845
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5848
 #, kde-format
 msgid "Creator"
 msgstr "檔案建立者"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5851
 #, kde-format
 msgid "Producer"
 msgstr "產生者"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5854
 #, kde-format
 msgid "Copyright"
 msgstr "版權"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5857
 #, kde-format
 msgid "Pages"
 msgstr "頁面"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5860
 #, kde-format
 msgid "Created"
 msgstr "已建立"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5863
 #, kde-format
 msgid "Modified"
 msgstr "已修改"
 
-#: core/document.cpp:5861
+#: core/document.cpp:5866
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 類型"
 
-#: core/document.cpp:5864
+#: core/document.cpp:5869
 #, kde-format
 msgid "Category"
 msgstr "類別"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5872
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5875
 #, kde-format
 msgid "File Path"
 msgstr "檔案路徑"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5878
 #, kde-format
 msgid "File Size"
 msgstr "檔案大小"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5881
 #, kde-format
 msgid "Page Size"
 msgstr "頁面大小"
@@ -1509,6 +1509,16 @@ msgstr "行寬："
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "不透明度"
+
+#: part/annotationactionhandler.cpp:694
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt ""
+"@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
+"in your translation"
+msgid "%1%"
+msgstr "%1%"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3166
 #, kde-format
@@ -3696,96 +3706,107 @@ msgstr "複製文字"
 msgid "Go to '%1'"
 msgstr "前往 '%1'"
 
-#: part/pageview.cpp:4040 part/part.cpp:3177
+#: part/pageview.cpp:4056 part/part.cpp:3177
 #, kde-format
 msgid "Fit Width"
 msgstr "符合寬度"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Fit Page"
 msgstr "符合頁面"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Auto Fit"
 msgstr "自動調適"
 
-#: part/pageview.cpp:4346
+#: part/pageview.cpp:4079
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt ""
+"Zoom percentage value %1 will be replaced by the actual zoom factor value, "
+"so make sure you include it in your translation in order to not to break "
+"anything"
+msgid "%1%"
+msgstr "%1%"
+
+#: part/pageview.cpp:4362
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "搜尋 %1 於？"
 
-#: part/pageview.cpp:4360
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "設定網頁捷徑..."
 
-#: part/pageview.cpp:4386
+#: part/pageview.cpp:4402
 #, kde-format
 msgid "Follow This Link"
 msgstr "開啟此連結"
 
-#: part/pageview.cpp:4389
+#: part/pageview.cpp:4405
 #, kde-format
 msgid "Play this Sound"
 msgstr "播放聲音..."
 
-#: part/pageview.cpp:4391
+#: part/pageview.cpp:4407
 #, kde-format
 msgid "Stop Sound"
 msgstr "停止音效"
 
-#: part/pageview.cpp:4397
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Copy Link Address"
 msgstr "複製連結位址"
 
-#: part/pageview.cpp:4418
+#: part/pageview.cpp:4434
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "在這個文件搜尋「%1」"
 
-#: part/pageview.cpp:4866
+#: part/pageview.cpp:4882
 #, kde-format
 msgid "Welcome"
 msgstr "歡迎"
 
-#: part/pageview.cpp:4986
+#: part/pageview.cpp:5002
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "選擇縮放區域。點右鍵以縮小。"
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5013
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "點擊以放大檢視。"
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:5026
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "在文字/圖形周圍畫一個矩形以複製。"
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5038
 #, kde-format
 msgid "Select text"
 msgstr "選擇文字"
 
-#: part/pageview.cpp:5034
+#: part/pageview.cpp:5050
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr "在表格周圍畫一個矩形，然後在邊緣附近點擊以分割。按下 Esc 清除。"
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "您所有的簽名憑證都尚未生效或是已經過期。"
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5063
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3795,17 +3816,17 @@ msgstr ""
 "沒有可用的簽名憑證。<br/>更多資訊請參考說明文件中關於 <a href=\"%1\">加入數位"
 "簽名</a> 的段落。"
 
-#: part/pageview.cpp:5063
+#: part/pageview.cpp:5079
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "您有尚未儲存的變更。請在簽名前先儲存文件。"
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "繪製插入簽名欄位用的矩形"
 
-#: part/pageview.cpp:5223
+#: part/pageview.cpp:5239
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "在您想要保持可見的頁面區域畫一矩形"

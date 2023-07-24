@@ -124,7 +124,7 @@ msgstr "연 문서 없음"
 
 #: package/contents/ui/OkularDrawer.qml:57
 msgid "Thumbnails"
-msgstr "축소판"
+msgstr "섬네일"
 
 #: package/contents/ui/OkularDrawer.qml:71
 msgid "Table of contents"

@@ -5,6 +5,13 @@
             "application/vnd.kde.okular-archive"
         ],
         "Name": "Okular",
+        "Name[ca]": "Okular",
+        "Name[es]": "Okular",
+        "Name[nl]": "Okular",
+        "Name[sl]": "Okular",
+        "Name[tr]": "Okular",
+        "Name[uk]": "Okular",
+        "Name[x-test]": "xxOkularxx",
         "ServiceTypes": [
             "KParts/ReadOnlyPart",
             "KParts/ReadWritePart"

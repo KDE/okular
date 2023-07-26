@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Stefan Asserhäll <stefan.asserhall@bredband.net>, 2007, 2008, 2009, 2010.
-# Stefan Asserhall <stefan.asserhall@bredband.net>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Stefan Asserhall <stefan.asserhall@bredband.net>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-24 10:08+0000\n"
-"PO-Revision-Date: 2022-09-28 16:59+0200\n"
+"PO-Revision-Date: 2023-07-25 11:56+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -244,7 +244,7 @@ msgstr "Återuppta film"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Den här versionen av Okular är byggt utan ljudstöd"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1086,10 +1086,9 @@ msgid "Reason: %1"
 msgstr "Orsak: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Plats:"
+msgstr "Plats: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1523,9 +1522,7 @@ msgid "Opacity"
 msgstr "Ogenomskinlighet"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1550,10 +1547,9 @@ msgid "&Open Pop-up Note"
 msgstr "Ö&ppna anmärkningsruta"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Kopiera till klippbordet"
+msgstr "Kopiera text till klippbordet"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2545 part/pageview.cpp:2865 part/pageview.cpp:3009
@@ -3751,9 +3747,7 @@ msgid "Auto Fit"
 msgstr "Anpassa automatiskt"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -4410,11 +4404,7 @@ msgid "Could not open %1. %2"
 msgstr "Kunde inte öppna %1. %2"
 
 #: part/part.cpp:1867
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4422,9 +4412,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Det finns osparade ändringar, och filen '%1' har ändrats av ett annat "
-"program. Ändringarna kommer att gå förlorade, eftersom filen inte längre går "
-"att spara.<br>Vill du fortsätta läsa in filen?"
+"Filen <filename>%1</filename> har osparade ändringar, men har ändrats av ett "
+"annat program. Att läsa in den igen ersätter de osparade ändringarna med "
+"ändringarna gjorda i det andra programmet.<nl/><nl/>Vill du fortsätta läsa "
+"in filen?"
 
 #: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
@@ -4442,11 +4433,7 @@ msgid "Abort Reloading"
 msgstr "Avbryt inläsning"
 
 #: part/part.cpp:1877
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4454,9 +4441,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Det finns osparade ändringar, och filen '%1' har ändrats av ett annat "
-"program. Ändringarna kommer att gå förlorade, eftersom filen inte längre går "
-"att spara.<br>Vill du fortsätta och stänga filen?"
+"Filen <filename>%1</filename> har osparade ändringar, men har ändrats av ett "
+"annat program. Att stänga den ersätter de osparade ändringarna med "
+"ändringarna gjorda i det andra programmet.<nl/><nl/>Vill du fortsätta stänga "
+"filen?"
 
 #: part/part.cpp:1882
 #, kde-format
@@ -4576,6 +4564,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Filen <filename>%1</filename> har ändrats av ett annat program. Om du sparar "
+"nu, går eventuella ändringar gjorda i det andra programmet förlorade. Är du "
+"säker på att du vill fortsätta?"
 
 #: part/part.cpp:2674 part/part.cpp:2692 part/part.cpp:2744
 #, kde-format
@@ -4585,7 +4576,7 @@ msgstr "Spara - Varning"
 #: part/part.cpp:2676
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Spara en kopia någon annanstans"
 
 #: part/part.cpp:2691
 #, kde-format
@@ -5306,17 +5297,15 @@ msgstr "Filterinställningar"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Certifikat:"
+msgstr "Certifikat"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Välj certifikat att signera med"
+msgstr "Välj certifikat att signera med:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
@@ -5329,10 +5318,9 @@ msgstr "Orsak:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Väljare"
+msgstr "valfri"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5342,25 +5330,21 @@ msgstr "Plats:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Bakgrundsfärg:"
+msgstr "Bakgrund:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Välj..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Använd egen bakgrundsfärg:"
+msgstr "Senaste bakgrunder:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5402,31 +5386,25 @@ msgid "Properties"
 msgstr "Egenskaper"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Sidor: %1"
+msgstr "Bilder (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "Aktivera &skapa i bakgrunden"
+msgstr "Välj bakgrundsbild"
 
 #: part/signaturepartutils.cpp:310
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Glöm alla"
+msgstr "Glöm bild"
 
 #: part/signaturepartutils.cpp:311
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Glöm alla"
+msgstr "Glöm alla bilder"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5508,15 +5486,14 @@ msgid "View Certificate..."
 msgstr "Visa certifikat..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Visa certifikat..."
+msgstr "Visa i certifikathanterare"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE:s certifikathantering (kleopatra) hittades inte"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5544,12 +5521,12 @@ msgstr "Stoppa"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Video stöds inte i den här versionen av Okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Video stöds inte i den här versionen av Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5678,10 +5655,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Kan inte hitta delprogrammet Okular: %1"
 
 #: shell/shell.cpp:216
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Visa s&idorad"
+msgstr "Sidorad"
 
 #: shell/shell.cpp:245
 #, kde-format
@@ -5730,10 +5706,9 @@ msgid "Undo close tab"
 msgstr "Ångra stäng flik"
 
 #: shell/shell.cpp:545
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Visa s&idorad"
+msgstr "Lås sidorad"
 
 #: shell/shell.cpp:642
 #, kde-format

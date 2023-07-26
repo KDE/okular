@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-24 07:29+0000\n"
-"PO-Revision-Date: 2023-06-26 20:04+0100\n"
+"PO-Revision-Date: 2023-07-25 22:32+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -1522,9 +1522,7 @@ msgid "Opacity"
 msgstr "Opakeco"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -3751,9 +3749,7 @@ msgid "Auto Fit"
 msgstr "Aŭtomata Fit"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "

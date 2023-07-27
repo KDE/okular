@@ -5,9 +5,11 @@
             "application/vnd.kde.okular-archive"
         ],
         "Name": "Okular",
+        "Name[ca@valencia]": "Okular",
         "Name[ca]": "Okular",
         "Name[eo]": "Okular",
         "Name[es]": "Okular",
+        "Name[ia]": "Okular",
         "Name[it]": "Okular",
         "Name[ka]": "Okular",
         "Name[ko]": "Okular",

@@ -9,30 +9,31 @@
 # Antonis Geralis <capoiosct@gmail.com>, 2011.
 # Stelios <sstavra@gmail.com>, 2012, 2014, 2017, 2019, 2020, 2021.
 # Dimitris Kardarakos <dimkard@gmail.com>, 2014.
+# Theofilos Intzoglou <int.teo@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-24 07:29+0000\n"
-"PO-Revision-Date: 2021-10-04 11:01+0300\n"
-"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"PO-Revision-Date: 2023-07-24 17:51+0300\n"
+"Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Σπύρος Γεωργαράς, Τούσης Μανώλης"
+msgstr "Σπύρος Γεωργαράς, Τούσης Μανώλης, Θεόφιλος Ιντζόγλου"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sng@hellug.gr, manolis@koppermind.homelinux.org"
+msgstr "sng@hellug.gr, manolis@koppermind.homelinux.org, int.teo@gmail.com"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -249,7 +250,7 @@ msgstr "Συνέχιση ταινίας"
 #: core/audioplayer.cpp:318
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Αυτό το Okular έχει μεταγλωττιστεί χωρίς υποστήριξη ήχου."
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1040,22 +1041,21 @@ msgid "The document integrity verification could not be completed."
 msgstr "Αδυναμία ολοκλήρωσης της επιβεβαίωσης ακεραιότητας του εγγράφου."
 
 #: gui/signatureguiutils.cpp:205
-#, fuzzy, kde-format
-#| msgid "This document is digitally signed."
+#, kde-format
 msgid "This document has unsigned signature fields."
-msgstr "Αυτό το έγγραφο έχει ωηφιακή υπογραφή."
+msgstr "Αυτό το έγγραφο έχει ψηφιακή υπογραφή."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document is digitally signed."
-msgstr "Αυτό το έγγραφο έχει ωηφιακή υπογραφή."
+msgstr "Αυτό το έγγραφο έχει ψηφιακή υπογραφή."
 
 #: gui/signatureguiutils.cpp:210
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr ""
-"Αυτό το έγγραφο έχει ωηφιακή υπογραφή. Έχουν γίνει αλλαγές από την τελευταία "
+"Αυτό το έγγραφο έχει ψηφιακή υπογραφή. Έχουν γίνει αλλαγές από την τελευταία "
 "υπογραφή."
 
 #: gui/signatureguiutils.cpp:213
@@ -1068,10 +1068,9 @@ msgstr ""
 "μπορούν να επαληθευθούν."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Digital Signature"
+#, kde-format
 msgid "Unsigned Signature %1"
-msgstr "Ψηφιακή υπογραφή"
+msgstr ""
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
@@ -1094,10 +1093,9 @@ msgid "Reason: %1"
 msgstr "Αιτία: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Θέση:"
+msgstr "Τοποθεσία: %1"
 
 #: part/annotationactionhandler.cpp:147
 #, kde-format
@@ -1410,8 +1408,7 @@ msgid "Inline Note"
 msgstr "Εμβόλιμη σημείωση"
 
 #: part/annotationactionhandler.cpp:562
-#, fuzzy, kde-format
-#| msgid "Pop-up Note"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Αναδυόμενη σημείωση"
@@ -1535,9 +1532,7 @@ msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1562,8 +1557,7 @@ msgid "&Open Pop-up Note"
 msgstr "Ά&νοιγμα αναδυόμενης σημείωσης"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Αντιγραφή στο πρόχειρο"
 
@@ -2155,10 +2149,9 @@ msgid "Bookmarks"
 msgstr "Σελιδοδείκτες"
 
 #: part/bookmarklist.cpp:135
-#, fuzzy, kde-format
-#| msgid "End of the document"
+#, kde-format
 msgid "Show for all documents"
-msgstr "Τέλος του εγγράφου"
+msgstr "Εμφάνισε για όλα τα έγγραφα"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:37 part/side_reviews.cpp:124
 #: part/toc.cpp:43
@@ -2191,7 +2184,7 @@ msgstr "Άνοιγμα εγγράφου"
 #: part/bookmarklist.cpp:290
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
-msgstr ""
+msgstr "Αφαίρεση όλων των Σελιδοδεικτών του τρέχοντος Εγγράφου"
 
 #: part/certificateviewer.cpp:121
 #, kde-format
@@ -2527,12 +2520,10 @@ msgid "Text-to-speech engine:"
 msgstr "Μηχανή για κείμενο σε ομιλία:"
 
 #: part/dlgaccessibility.cpp:165
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, accessibility page"
-#| msgid "Text-to-speech engine:"
+#, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "Μηχανή για κείμενο σε ομιλία:"
+msgstr "Κείμενο-σε-ομιλία φωνή:"
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -2791,6 +2782,8 @@ msgstr "Προκαθορισμένο άνοιγμα σε συνεχή λειτο
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"Κατά την χρήση του Εργαλείου Πλοήγησης, κάνε αναδίπλωση του δρομέα στα άκρα "
+"της οθόνης"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3439,13 +3432,12 @@ msgstr "*|Όλα τα αρχεία"
 #: part/formwidgets.cpp:1065
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "Ανυπόγραφο Πεδίο Υπογραφής (Πατήστε για Υπογραφή)"
 
 #: part/formwidgets.cpp:1131 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign..."
-msgstr "Υπογραφή"
+msgstr "Υπόγραψε..."
 
 #: part/formwidgets.cpp:1135 part/signaturepropertiesdialog.cpp:40
 #, kde-format
@@ -3623,9 +3615,7 @@ msgid "T&able Selection"
 msgstr "Επιλογή πίν&ακα"
 
 #: part/pageview.cpp:704
-#, fuzzy, kde-format
-#| msgctxt "Magnifier Tool"
-#| msgid "Magnifier"
+#, kde-format
 msgid "&Magnifier"
 msgstr "Μεγεθυντής"
 
@@ -3775,9 +3765,7 @@ msgid "Auto Fit"
 msgstr "Αυτόματη προσαρμογή"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -3917,18 +3905,16 @@ msgstr ""
 "αρχή</interface> και σχεδιάστε ένα μεγαλύτερο ορθογώνιο παραλληλόγραμμο."
 
 #: part/pageviewannotator.cpp:364
-#, fuzzy, kde-format
-#| msgid "Start over"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Από την αρχή"
 
 #: part/pageviewannotator.cpp:365
-#, fuzzy, kde-format
-#| msgid "Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Sign"
-msgstr "Υπογραφή"
+msgstr "Υπόγραψε"
 
 #: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
 #, kde-format
@@ -4316,12 +4302,14 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Έχετε μόλις τροποποιήσει το τρέχον ανοικτό έγγραφο, αλλά αυτός ο τύπος του "
+"εγγράφου δεν μπορεί να αποθηκευτεί.\n"
+"Όλες οι τροποποιήσεις θα χαθούν μόλις κλείσει το Okular."
 
 #: part/part.cpp:1146
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Document can't be saved"
-msgstr "Κωδικός πρόσβασης εγγράφου"
+msgstr "Το έγγραφο δεν μπορεί να αποθηκευτεί"
 
 #: part/part.cpp:1175
 #, kde-format
@@ -4443,11 +4431,7 @@ msgid "Could not open %1. %2"
 msgstr "Αδυναμία ανοίγματος του %1. %2"
 
 #: part/part.cpp:1873
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4455,9 +4439,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Υπάρχουν μη αποθηκευμένες αλλαγές και το αρχείο '%1' έχει τροποποιηθεί από "
-"άλλο πρόγραμμα. Οι αλλαγές σας θα χαθούν, επειδή το αρχείο δεν είναι πλέον "
-"δυνατόν να αποθηκευθεί.<br>Θέλετε να συνεχίσετε την επαναφόρτωση του αρχείου;"
+"Το αρχείο <filename>%1</filename> έχει μη αποθηκευμένες αλλαγές όμως έχει "
+"τροποποιηθεί από άλλο πρόγραμμα. Με την επαναφόρτωση οι μη αποθηκευμένες "
+"αλλαγές θα αντικατασταθούν από τις αλλαγές που έγιναν από το άλλο πρόγραμμα. "
+"<nl/><nl/>Θέλετε να συνεχίσετε με την επαναφόρτωση του αρχείου;"
 
 #: part/part.cpp:1877 part/part.cpp:1887
 #, kde-format
@@ -4475,11 +4460,7 @@ msgid "Abort Reloading"
 msgstr "Εγκατάλειψη επαναφόρτωσης"
 
 #: part/part.cpp:1883
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4487,9 +4468,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Υπάρχουν μη αποθηκευμένες αλλαγές και το αρχείο '%1' έχει τροποποιηθεί από "
-"άλλο πρόγραμμα. Οι αλλαγές σας θα χαθούν, επειδή το αρχείο δεν είναι πλέον "
-"δυνατόν να αποθηκευθεί.<br>Θέλετε να συνεχίσετε το κλείσιμο του αρχείου;"
+"Το αρχείο <filename>%1</filename> έχει μη αποθηκευμένες αλλαγές όμως έχει "
+"τροποποιηθεί από άλλο πρόγραμμα. Κλείνοντάς το θα αντικατασταθούν οι μη "
+"αποθηκευμένες αλλαγές από τις αλλαγές του άλλου προγράμματος. <nl/><nl/"
+">Θέλετε να συνεχίσετε με το κλείσιμο του αρχείου;"
 
 #: part/part.cpp:1888
 #, kde-format
@@ -4587,18 +4569,20 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Έχετε επιλέξει να αποθηκεύσετε ένα Αρχείο Okular χωρίς το όνομά του αρχείου "
+"να έχει την '%1' επέκταση. Αυτό δεν επιτρέπεται, θέλετε να επιλέξετε ένα νέο "
+"όνομα;"
 
 #: part/part.cpp:2634
-#, fuzzy, kde-format
-#| msgid "Line Extensions"
+#, kde-format
 msgid "Unsupported extension"
-msgstr "Επεκτάσεις γραμμής"
+msgstr "Μη υποστηριζόμενη επέκταση"
 
 #: part/part.cpp:2635
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Επιλέξτε Νέο Όνομα"
 
 #: part/part.cpp:2677
 #, kde-kuit-format
@@ -4608,6 +4592,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Το αρχείο <filename>%1</filename> έχει τροποποιηθεί από ένα άλλο πρόγραμμα. "
+"Αν αποθηκεύσετε τώρα, όλες οι αλλαγές που έγιναν από το άλλο πρόγραμμα θα "
+"χαθούν. Είστε σίγουροι ότι θέλετε να συνεχίσετε;"
 
 #: part/part.cpp:2680 part/part.cpp:2698 part/part.cpp:2750
 #, kde-format
@@ -4617,7 +4604,7 @@ msgstr "Αποθήκευση - Προειδοποίηση"
 #: part/part.cpp:2682
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Αποθήκευση Αντιγράφου Αλλού"
 
 #: part/part.cpp:2697
 #, kde-format
@@ -4637,17 +4624,15 @@ msgid "Could not open the temporary file for saving."
 msgstr "Αδυναμία ανοίγματος του προσωρινού αρχείου για αποθήκευση."
 
 #: part/part.cpp:2737
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "File could not be saved in '%1' because it is read only. Save it to "
-#| "another location or change its permissions."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Could not overwrite <filename>%1</filename> because that file is read-only. "
 "Try saving to another location or changing that file's permissions."
 msgstr ""
-"Αδυναμία αποθήκευσης αρχείου στο '%1' επειδή είναι για ανάγνωση μόνο. "
-"Αποθηκεύστε το σε άλλη τοποθεσία ή αλλάξτε τα δικαιώματά του."
+"Αδυναμία αντικατάστασης του <filename>%1</filename> επειδή είναι μόνο για "
+"ανάγνωση. Δοκιμάστε να το αποθηκεύσετε σε άλλη τοποθεσία ή αλλάξτε τα "
+"δικαιώματά του αρχείου."
 
 #: part/part.cpp:2749
 #, kde-format
@@ -4781,11 +4766,9 @@ msgid "Collapse all"
 msgstr "Σύμπτυξη όλων"
 
 #: part/part.cpp:3175
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Link the thumbnails with the page"
+#, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr "Σύνδεση των εικόνων επισκόπησης με τη σελίδα"
+msgstr "Συγχρονισμός εικόνας επισκόπησης με τη σελίδα"
 
 #: part/part.cpp:3180
 #, kde-format
@@ -4798,8 +4781,7 @@ msgid "Tools"
 msgstr "Εργαλεία"
 
 #: part/part.cpp:3385
-#, fuzzy, kde-format
-#| msgid "Speak Text"
+#, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Εκφώνηση κειμένου"
@@ -5009,7 +4991,7 @@ msgstr "Ιδιότητες σημειώσεων"
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
 msgid "Editor"
-msgstr "Επεξεργασία"
+msgstr "Επεξεργαστής"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5026,6 +5008,10 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"Ο επεξεργαστής έχει οριστεί από την γραμμή εντολών σε \n"
+" %1 \n"
+"Αν θέλετε να χρησιμοποιήσετε αυτή τη ρύθμιση, εκκινήστε το okular χωρίς την "
+"επιλογή --editor-cmd"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5352,17 +5338,15 @@ msgstr "Επιλογές φίλτρων"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Πιστοποιητικά:"
+msgstr "Πιστοποιητικά"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Επιλογή πιστοποιητικού για υπογραφή"
+msgstr "Επιλογή πιστοποιητικού για υπογραφή:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
@@ -5375,10 +5359,9 @@ msgstr "Αιτία:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Επιλογές"
+msgstr "προαιρετικό"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5388,9 +5371,7 @@ msgstr "Θέση:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
 msgstr "Χρώμα φόντου:"
 
@@ -5398,7 +5379,7 @@ msgstr "Χρώμα φόντου:"
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Επιλέξτε..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
@@ -5448,27 +5429,25 @@ msgid "Properties"
 msgstr "Ιδιότητες"
 
 #: part/signaturepartutils.cpp:304
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Σελίδες: %1"
+msgstr "Εικόνες (%1)"
 
 #: part/signaturepartutils.cpp:305
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "Ενεργοποίηση δημιουργίας &φόντου"
+msgstr "Επιλογή εικόνας φόντου"
 
 #: part/signaturepartutils.cpp:310
 #, kde-format
 msgid "Forget image"
-msgstr ""
+msgstr "Ξέχασε εικόνα"
 
 #: part/signaturepartutils.cpp:311
 #, kde-format
 msgid "Forget all images"
-msgstr ""
+msgstr "Ξέχασε όλες τις εικόνες"
 
 #: part/signaturepartutils.cpp:352
 #, kde-format
@@ -5483,10 +5462,9 @@ msgid "Enter certificate password"
 msgstr "Εισαγωγή κωδικού για το πιστοποιητικό"
 
 #: part/signaturepartutils.cpp:367
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter document password"
-msgstr "Κωδικός πρόσβασης εγγράφου"
+msgstr "Εισάγετε κωδικό πρόσβασης εγγράφου"
 
 #: part/signaturepartutils.cpp:387
 #, kde-format
@@ -5553,15 +5531,14 @@ msgid "View Certificate..."
 msgstr "Προβολή πιστοποιητικού..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Προβολή πιστοποιητικού..."
+msgstr "Προβολή στον Διαχειριστή Πιστοποιητικών..."
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Ο Διαχειριστής Πιστοποιητικών KDE (kleopatra) δεν βρέθηκε"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5589,12 +5566,12 @@ msgstr "Διακοπή"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Τα βίντεο δεν υποστηρίζονται από αυτό το okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Τα βίντεο δεν υποστηρίζονται από αυτό το Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5675,7 +5652,7 @@ msgstr "Εύρεση συμβολοσειράς στο κείμενο"
 #: shell/main.cpp:81
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "ορίζει την εντολή του εξωτερικού κειμενογράφου"
 
 #: shell/main.cpp:82
 #, kde-format
@@ -5731,10 +5708,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Αδυναμία εύρεσης του συστατικού Okular: %1"
 
 #: shell/shell.cpp:218
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Εμφάνιση πλευρ&ικής γραμμής"
+msgstr "Πλευρική στήλη"
 
 #: shell/shell.cpp:248
 #, kde-format
@@ -5783,10 +5759,9 @@ msgid "Undo close tab"
 msgstr "Αναίρεση κλεισίματος καρτέλας"
 
 #: shell/shell.cpp:551
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Εμφάνιση πλευρ&ικής γραμμής"
+msgstr "Κλείδωμα πλευρικής στήλης"
 
 #: shell/shell.cpp:648
 #, kde-format
@@ -5824,64 +5799,59 @@ msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Να προειδοποιούμαι όταν επιχειρώ να κλείσω πολλές καρτέλες"
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "Αντιγραφή κειμένου"
+msgstr "Αντιγραφή διαδρομής"
 
 #: shell/welcomescreen.cpp:77
-#, fuzzy, kde-format
-#| msgid "Open Con&taining Folder"
+#, kde-format
 msgid "&Open Containing Folder"
-msgstr "Άνοιγμα περιέχον&τος φακέλου"
+msgstr "Άν&οιγμα περιλαμβανόμενου φακέλου"
 
 #: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "Αγνόηση αυτού του αντικειμένου"
 
 #: shell/welcomescreen.cpp:137
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "Μόνο τρέχον έγγραφο"
+msgstr "Δεν υπάρχουν πρόσφατα έγγραφα"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Καλωσορίσατε στο Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
-#, fuzzy, kde-format
-#| msgid "Open Document"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Άνοιγμα εγγράφου"
+msgstr "Άνοιγμα εγγράφου..."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:376
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "Μόνο τρέχον έγγραφο"
+msgstr "Πρόσφατα έγγραφα"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:386
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Να ξεχαστούν όλα"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:454
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Απόκρυψη οθόνης υποδοχής"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Λείπει ο τύπος ειδοποίησης"

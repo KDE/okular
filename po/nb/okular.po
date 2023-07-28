@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-09 00:58+0000\n"
+"POT-Creation-Date: 2023-07-24 10:08+0000\n"
 "PO-Revision-Date: 2014-10-29 17:37+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -323,47 +323,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Fant ingen program som kan åpne filer av Mime-typen %1."
 
-#: core/document.cpp:4638
+#: core/document.cpp:4643
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Klarte ikke åpne en midlertidig fil"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4645
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konvertering for utskrift mislyktes"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4647
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Utskriftsprosessen krasjet"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4649
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Utskriftsprosessen kunne ikke starte"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4651
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Klarte ikke skrive ut til fil"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4653
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Skriveren var i en ugyldig tilstand"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4655
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Klarte ikke finne fil å skrive ut"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4657
 #, kde-format
 msgid "There was no file to print"
 msgstr "Det var ingen fil å skrive ut"
 
-#: core/document.cpp:4654
+#: core/document.cpp:4659
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "Klarte ikke finne et passende program for utskrift. Se etter at CUPS-"
 "programmet lpr er tilgjengelig"
 
-#: core/document.cpp:4656
+#: core/document.cpp:4661
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Utskriftsstørrelsen for sida er ugyldig."
 
-#: core/document.cpp:5321 part/part.cpp:1162
+#: core/document.cpp:5326 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Klarte ikke åpne «%1». Fila finnes ikke."
 
-#: core/document.cpp:5831
+#: core/document.cpp:5836
 #, kde-format
 msgid "Title"
 msgstr "Tittel"
 
-#: core/document.cpp:5834
+#: core/document.cpp:5839
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: core/document.cpp:5837
+#: core/document.cpp:5842
 #, kde-format
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: core/document.cpp:5840
+#: core/document.cpp:5845
 #, kde-format
 msgid "Author"
 msgstr "Forfatter"
 
-#: core/document.cpp:5843
+#: core/document.cpp:5848
 #, kde-format
 msgid "Creator"
 msgstr "Opphavsprogram"
 
-#: core/document.cpp:5846
+#: core/document.cpp:5851
 #, kde-format
 msgid "Producer"
 msgstr "Produsent"
 
-#: core/document.cpp:5849
+#: core/document.cpp:5854
 #, kde-format
 msgid "Copyright"
 msgstr "Opphavsrett"
 
-#: core/document.cpp:5852
+#: core/document.cpp:5857
 #, kde-format
 msgid "Pages"
 msgstr "Sider"
 
-#: core/document.cpp:5855
+#: core/document.cpp:5860
 #, kde-format
 msgid "Created"
 msgstr "Opprettet"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5863
 #, kde-format
 msgid "Modified"
 msgstr "Endret"
 
-#: core/document.cpp:5861
+#: core/document.cpp:5866
 #, kde-format
 msgid "MIME Type"
 msgstr ""
 
-#: core/document.cpp:5864
+#: core/document.cpp:5869
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5872
 #, kde-format
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5875
 #, kde-format
 msgid "File Path"
 msgstr "Filsti"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5878
 #, kde-format
 msgid "File Size"
 msgstr "Filstørrelse"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5881
 #, kde-format
 msgid "Page Size"
 msgstr "Sidestørrelse"
@@ -1500,6 +1500,14 @@ msgstr ""
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
+msgstr ""
+
+#: part/annotationactionhandler.cpp:694
+#, kde-format
+msgctxt ""
+"@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
+"in your translation"
+msgid "%1%"
 msgstr ""
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3166
@@ -3687,82 +3695,91 @@ msgstr "Kopier teksten"
 msgid "Go to '%1'"
 msgstr "Gå til «%1»"
 
-#: part/pageview.cpp:4040 part/part.cpp:3177
+#: part/pageview.cpp:4056 part/part.cpp:3177
 #, kde-format
 msgid "Fit Width"
 msgstr "Tilpass til bredden"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Fit Page"
 msgstr "Tilpass til siden"
 
-#: part/pageview.cpp:4040
+#: part/pageview.cpp:4056
 #, kde-format
 msgid "Auto Fit"
 msgstr "Tilpass automatisk"
 
-#: part/pageview.cpp:4346
+#: part/pageview.cpp:4079
+#, kde-format
+msgctxt ""
+"Zoom percentage value %1 will be replaced by the actual zoom factor value, "
+"so make sure you include it in your translation in order to not to break "
+"anything"
+msgid "%1%"
+msgstr ""
+
+#: part/pageview.cpp:4362
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Søker etter «%1» med"
 
-#: part/pageview.cpp:4360
+#: part/pageview.cpp:4376
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Sett opp nettsnarveier …"
 
-#: part/pageview.cpp:4386
+#: part/pageview.cpp:4402
 #, kde-format
 msgid "Follow This Link"
 msgstr "Følg denne lenka"
 
-#: part/pageview.cpp:4389
+#: part/pageview.cpp:4405
 #, kde-format
 msgid "Play this Sound"
 msgstr ""
 
-#: part/pageview.cpp:4391
+#: part/pageview.cpp:4407
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stopp lyd"
 
-#: part/pageview.cpp:4397
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopier lenkeadresse"
 
-#: part/pageview.cpp:4418
+#: part/pageview.cpp:4434
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr ""
 
-#: part/pageview.cpp:4866
+#: part/pageview.cpp:4882
 #, kde-format
 msgid "Welcome"
 msgstr "Velkommen"
 
-#: part/pageview.cpp:4986
+#: part/pageview.cpp:5002
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Velg visningsområde. Høyreklikk for å vise i mindre størrelse."
 
-#: part/pageview.cpp:4997
+#: part/pageview.cpp:5013
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Trykk for å se den forstørrede visningen."
 
-#: part/pageview.cpp:5010
+#: part/pageview.cpp:5026
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Tegn en firkant rundt teksten/grafikken som skal kopieres."
 
-#: part/pageview.cpp:5022
+#: part/pageview.cpp:5038
 #, kde-format
 msgid "Select text"
 msgstr "Velg tekst"
 
-#: part/pageview.cpp:5034
+#: part/pageview.cpp:5050
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3771,14 +3788,14 @@ msgstr ""
 "Tegn en firkant rundt tabellen, klikk så nær kantene for å dele opp, trykk "
 "Esc for å tømme."
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5060
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5063
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3786,17 +3803,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5063
+#: part/pageview.cpp:5079
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5223
+#: part/pageview.cpp:5239
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

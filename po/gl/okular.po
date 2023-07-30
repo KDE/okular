@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-24 07:29+0000\n"
-"PO-Revision-Date: 2023-06-27 07:33+0200\n"
+"PO-Revision-Date: 2023-07-29 09:36+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -72,7 +72,7 @@ msgstr "Pino Toscano"
 #: aboutdata.h:31
 #, kde-format
 msgid "Former maintainer"
-msgstr "Anterior mantedor"
+msgstr "Mantemento anterior."
 
 #: aboutdata.h:32
 #, kde-format
@@ -94,7 +94,7 @@ msgstr "Albert Astals Cid"
 #: aboutdata.h:33
 #, kde-format
 msgid "Developer"
-msgstr "Desenvolvedor."
+msgstr "Desenvolvemento."
 
 #: aboutdata.h:34
 #, kde-format
@@ -114,7 +114,7 @@ msgstr "Enrico Ros"
 #: aboutdata.h:35
 #, kde-format
 msgid "KPDF developer"
-msgstr "Desenvolvedor de KPDF"
+msgstr "Desenvolvemento de KPDF"
 
 #: aboutdata.h:36
 #, kde-format
@@ -129,7 +129,7 @@ msgstr "Traballo gráfico das anotacións"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "Jiri Baum — NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -415,7 +415,7 @@ msgstr "Descrición"
 #: core/document.cpp:5845
 #, kde-format
 msgid "Author"
-msgstr "Autor"
+msgstr "Autoría"
 
 #: core/document.cpp:5848
 #, kde-format
@@ -828,7 +828,7 @@ msgstr "Descoñecido"
 #: gui/guiutils.cpp:126 part/presentationwidget.cpp:375
 #, kde-format
 msgid "Author: %1"
-msgstr "Autor: %1"
+msgstr "Autoría: %1"
 
 #: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
 #, kde-format
@@ -1036,7 +1036,7 @@ msgstr ""
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
 msgstr ""
-"O documento modificouse dun xeito que o autor dunha sinatura anterior non "
+"O documento modificouse dun xeito que a autoría dunha sinatura anterior non "
 "permite."
 
 #: gui/signatureguiutils.cpp:172
@@ -1534,9 +1534,7 @@ msgid "Opacity"
 msgstr "Opacidade"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1602,7 +1600,7 @@ msgstr "&Xeral"
 #: part/annotationpropertiesdialog.cpp:64
 #, kde-format
 msgid "&Author:"
-msgstr "&Autor:"
+msgstr "&Autoría:"
 
 #: part/annotationpropertiesdialog.cpp:69
 #, kde-format
@@ -2411,13 +2409,13 @@ msgstr "Inserir texto"
 #, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Draw border around links"
-msgstr "Debuxar un bordo arredor das ligazóns"
+msgstr "Debuxar un bordo arredor das ligazóns."
 
 #: part/dlgaccessibility.cpp:48
 #, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Change colors"
-msgstr "Cambiar as cores"
+msgstr "Cambiar as cores."
 
 #: part/dlgaccessibility.cpp:54
 #, kde-format
@@ -2669,7 +2667,7 @@ msgstr "Orde:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
-msgstr "Usar desprazamento suave"
+msgstr "Usar desprazamento suave."
 
 #: part/dlggeneral.cpp:35
 #, kde-format
@@ -2681,25 +2679,25 @@ msgstr "Aparencia:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
-msgstr "Amosar as barras de desprazamento"
+msgstr "Amosar as barras de desprazamento."
 
 #: part/dlggeneral.cpp:46
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
-msgstr "Ligar as miniaturas coa páxina"
+msgstr "Ligar as miniaturas coa páxina."
 
 #: part/dlggeneral.cpp:53
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
-msgstr "Amosar os consellos e mensaxes de información"
+msgstr "Amosar os consellos e mensaxes de información."
 
 #: part/dlggeneral.cpp:59
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr "Avisar de ficheiros incluídos, formularios ou sinaturas"
+msgstr "Avisar de ficheiros incluídos, formularios ou sinaturas."
 
 #: part/dlggeneral.cpp:66
 #, kde-format
@@ -2741,25 +2739,25 @@ msgstr "Funcionalidades do programa:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
-msgstr "Abrir os ficheiros novos en separadores"
+msgstr "Abrir os ficheiros novos en separadores."
 
 #: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr "Ir ao separador existente se o ficheiro xa está aberto"
+msgstr "Ir ao separador existente se o ficheiro xa está aberto."
 
 #: part/dlggeneral.cpp:137
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
-msgstr "Obedecer as limitacións de DRM"
+msgstr "Obedecer as limitacións de DRM."
 
 #: part/dlggeneral.cpp:146
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "Cargar de novo o documento cando o ficheiro cambie"
+msgstr "Cargar de novo o documento cando o ficheiro cambie."
 
 #: part/dlggeneral.cpp:153
 #, kde-format
@@ -2777,7 +2775,7 @@ msgstr "Dirección de lectura de dereita a esquerda."
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr "Abrir no modo continuo de maneira predeterminada"
+msgstr "Abrir no modo continuo de maneira predeterminada."
 
 #: part/dlggeneral.cpp:173
 #, kde-format
@@ -2785,7 +2783,7 @@ msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "Ao usar a ferramenta de exploración, envolver o cursor nos límites da "
-"pantalla"
+"pantalla."
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -2860,7 +2858,7 @@ msgstr "Ampliación predeterminada:"
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable transparency effects"
-msgstr "Activar os efectos de transparencia"
+msgstr "Activar os efectos de transparencia."
 
 #: part/dlgperformance.cpp:28
 #, kde-format
@@ -2902,7 +2900,7 @@ msgstr "Uso da memoria:"
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text antialias"
-msgstr "Activar o suavizado do texto"
+msgstr "Activar o suavizado do texto."
 
 #: part/dlgperformance.cpp:56
 #, kde-format
@@ -2914,13 +2912,13 @@ msgstr "Opcións de debuxado:"
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable graphics antialias"
-msgstr "Activar o suavizado das imaxes"
+msgstr "Activar o suavizado das imaxes."
 
 #: part/dlgperformance.cpp:64
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "Activar o axuste do texto"
+msgstr "Activar o axuste do texto."
 
 #: part/dlgperformance.cpp:77
 #, kde-format
@@ -2983,7 +2981,7 @@ msgstr "Avanzar automaticamente:"
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Loop after last page"
-msgstr "Volver ao principio tras a última páxina"
+msgstr "Volver ao principio tras a última páxina."
 
 #: part/dlgpresentation.cpp:59
 #, kde-format
@@ -3043,13 +3041,13 @@ msgstr "Cursor do rato:"
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show progress indicator"
-msgstr "Amosar o indicador de progreso"
+msgstr "Amosar o indicador de progreso."
 
 #: part/dlgpresentation.cpp:90
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show summary page"
-msgstr "Amosar a páxina de resumo"
+msgstr "Amosar a páxina de resumo."
 
 #: part/dlgpresentation.cpp:100
 #, kde-format
@@ -3766,9 +3764,7 @@ msgid "Auto Fit"
 msgstr "Axuste automático"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -4355,7 +4351,7 @@ msgstr "Ficheiros PostScript (%1)"
 #: part/part.cpp:1381
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
-msgstr "Estase a importar o ficheiro PS como PDF (pode tardar un tempo)…"
+msgstr "Importando o ficheiro PS como PDF (pode tardar un tempo)…"
 
 #: part/part.cpp:1510
 #, kde-format
@@ -4508,7 +4504,7 @@ msgstr ""
 #: part/part.cpp:2126 part/part.cpp:2144
 #, kde-format
 msgid "Reloading the document..."
-msgstr "Estase a recargar o documento…"
+msgstr "Recargando o documento…"
 
 #: part/part.cpp:2301 part/toc.cpp:38
 #, kde-format
@@ -4623,7 +4619,7 @@ msgid ""
 "Try saving to another location or changing that file's permissions."
 msgstr ""
 "Non se puido substituír <filename>%1</filename> por ser un ficheiro de só "
-"lectura. Prove a gardar noutra localización ou a cambiar os permisos do "
+"lectura. Probe a gardar noutra localización ou a cambiar os permisos do "
 "ficheiro."
 
 #: part/part.cpp:2749
@@ -4648,7 +4644,7 @@ msgstr "Campos de formulario completados."
 #: part/part.cpp:2780
 #, kde-format
 msgid "User annotations"
-msgstr "Anotacións de usuario."
+msgstr "Anotacións de persoa usuaria."
 
 #: part/part.cpp:2785
 #, kde-format
@@ -4741,7 +4737,7 @@ msgstr "Expandir toda a sección"
 #: part/part.cpp:3162
 #, kde-format
 msgid "Collapse whole section"
-msgstr "Pregar toda a sección"
+msgstr "Recoller a sección"
 
 #: part/part.cpp:3163
 #, kde-format
@@ -4751,7 +4747,7 @@ msgstr "Expandilas todas"
 #: part/part.cpp:3164
 #, kde-format
 msgid "Collapse all"
-msgstr "Pregalas todas"
+msgstr "Recollelo todo"
 
 #: part/part.cpp:3175
 #, kde-format
@@ -4790,8 +4786,8 @@ msgstr "Non se permite imprimir este documento."
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
-"Non se puido imprimir o documento. Descoñécese este erro. Por favor, envíe "
-"un informe de erro a bugs.kde.org"
+"Non se puido imprimir o documento. Descoñécese este erro. Envíe un informe "
+"de erro a bugs.kde.org"
 
 #: part/part.cpp:3615
 #, kde-format
@@ -4799,8 +4795,8 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Non se puido imprimir o documento. O erro detallado é «%1». Por favor, envíe "
-"un informe de erro a bugs.kde.org"
+"Non se puido imprimir o documento. O erro detallado é «%1». Envíe un informe "
+"de erro a bugs.kde.org"
 
 #: part/part.cpp:3695
 #, kde-format
@@ -5071,7 +5067,7 @@ msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
 "is active"
 msgid "Giving a presentation"
-msgstr "Estase a facer unha presentación"
+msgstr "Nunha presentación"
 
 #: part/propertiesdialog.cpp:49
 #, kde-format
@@ -5380,7 +5376,7 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Sen anotacións</h3>Para crear novas anotacións prema "
-"F6 ou escolla <i>Utilidades -&gt; Anotacións</i> no menú.</div>"
+"F6 ou escolla <i>Utilidades → Anotacións</i> no menú.</div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format
@@ -5390,7 +5386,7 @@ msgstr "Agrupar segundo a páxina"
 #: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Author"
-msgstr "Agrupar segundo o autor"
+msgstr "Agrupar segundo a autoría"
 
 #: part/side_reviews.cpp:150
 #, kde-format
@@ -5400,12 +5396,12 @@ msgstr "Amosar só as anotacións da páxina actual"
 #: part/side_reviews.cpp:160
 #, kde-format
 msgid "Expand all elements"
-msgstr "Despregar todos os elementos"
+msgstr "Expandir todos os elementos"
 
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr "Pregar todos os elementos"
+msgstr "Recoller todos os elementos"
 
 #: part/signaturepanel.cpp:101
 #, kde-format
@@ -5827,7 +5823,7 @@ msgstr "Esquecelo todo"
 #: shell/welcomescreen.ui:454
 #, kde-format
 msgid "Hide welcome screen"
-msgstr "Agochar a pantalla de benvida"
+msgstr "Agochar a pantalla de benvida."
 
 #~ msgid "Missing alert type"
 #~ msgstr "Falta o tipo de alerta"

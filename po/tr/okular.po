@@ -1535,9 +1535,7 @@ msgid "Opacity"
 msgstr "Matlık"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -3761,15 +3759,13 @@ msgid "Auto Fit"
 msgstr "Otomatik Sığdır"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%​%1:"
+msgstr "%%1:"
 
 #: part/pageview.cpp:4362
 #, kde-format
@@ -5798,7 +5794,7 @@ msgstr "Son kullanılan belge yok"
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr "Okular'a Hoş Geldiniz"
+msgstr "Okular'a hoş geldiniz"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
@@ -5825,51 +5821,4 @@ msgstr "Tümünü Unut"
 #: shell/welcomescreen.ui:455
 #, kde-format
 msgid "Hide welcome screen"
-msgstr "Hoş geldiniz ekranını gizle"
-
-#~ msgid "Missing alert type"
-#~ msgstr "Eksik uyarı türü"
-
-#~ msgid ""
-#~ "The file '%1' has been modified by another program, which means it can no "
-#~ "longer be saved."
-#~ msgstr ""
-#~ "'%1' dosyası başka bir program tarafından değiştirilmiş, bu nedenle artık "
-#~ "kaydedilemiyor."
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Kenar Çubuğunu Göster"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
-#~ "not visible in PDF readers other than Okular.</warning>"
-#~ msgstr ""
-#~ "<warning>deneysel özellik.<nl/>PDF belgelerine eklenen damgalar, "
-#~ "Okular'dan başka PDF okuyucularda görüntülenemez.</warning>"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "The version of the Poppler library this Okular was compiled with does not "
-#~ "support signing documents with passwords. Please ask your provider to "
-#~ "update it to 22.02 or later."
-#~ msgstr ""
-#~ "Okular'ın derlendiği bu Poppler sürümü parola ile korunan belgelerin "
-#~ "imzalanmasını desteklemiyor. Lütfen 22.02 veya daha sonrası bir sürüme "
-#~ "güncellenmesi için sağlayıcınızla iletişime geçin."
-
-#~ msgctxt "@title:window"
-#~ msgid "Poppler library is too old"
-#~ msgstr "Poppler kitaplığı pek eski"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
-#~ "than Okular"
-#~ msgstr ""
-#~ "PDF belgelerine eklenen damgalar, Okular'dan başka PDF okuyucularda "
-#~ "görüntülenemez."
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "Deneysel özellik"
+msgstr "Karşılama ekranını gizle"

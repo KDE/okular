@@ -11,6 +11,7 @@
         "Name[cs]": "Okular",
         "Name[eo]": "Okular",
         "Name[es]": "Okular",
+        "Name[eu]": "Okular",
         "Name[gl]": "Okular",
         "Name[ia]": "Okular",
         "Name[it]": "Okular",
@@ -19,9 +20,11 @@
         "Name[nl]": "Okular",
         "Name[pt_BR]": "Okular",
         "Name[sl]": "Okular",
+        "Name[ta]": "ஆக்குலர்",
         "Name[tr]": "Okular",
         "Name[uk]": "Okular",
         "Name[x-test]": "xxOkularxx",
+        "Name[zh_CN]": "Okular 文档查看器",
         "ServiceTypes": [
             "KParts/ReadOnlyPart",
             "KParts/ReadWritePart"

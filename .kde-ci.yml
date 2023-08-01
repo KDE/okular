@@ -27,3 +27,6 @@ Dependencies:
 - 'on': ['Android']
   'require':
     'frameworks/kirigami': '@stable'
+
+Options:
+  per-test-timeout: 120

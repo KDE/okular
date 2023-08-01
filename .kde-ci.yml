@@ -29,6 +29,7 @@ Dependencies:
     'frameworks/kirigami': '@stable'
 
 Options:
+  per-test-timeout: 120
   cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN'
   cppcheck-ignore-files:
     - autotests

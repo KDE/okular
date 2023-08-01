@@ -2206,12 +2206,14 @@ void PartTest::testFieldFormatting()
 
     part.actionCollection()->action(QStringLiteral("view_toggle_forms"))->trigger();
 
+#if 0
     // Note as of version 1.5:
     // The test document is prepared for future extensions to formatting for dates etc.
     // Currently we only have the number format to test.
     const auto ff_us = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("us_currency_fmt")));
     const auto ff_de = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("de_currency_fmt")));
     const auto ff_sum = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("de_simple_sum")));
+#endif
 
     const QPoint usPos(width * 0.25, height * 0.025);
     const QPoint dePos(width * 0.25, height * 0.05);

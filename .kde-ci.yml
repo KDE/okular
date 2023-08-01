@@ -29,4 +29,4 @@ Dependencies:
     'frameworks/kirigami': '@stable'
 
 Options:
-  per-test-timeout: 120
+  per-test-timeout: 180

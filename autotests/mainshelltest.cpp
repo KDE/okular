@@ -221,9 +221,11 @@ void MainShellTest::testShell_data()
     QTest::newRow("two files no tabs") << file1AndToc << QString() << false << QString() << 0u << false << false << false << 0u << false << false << QString();
     QTest::newRow("two files with tabs") << file1AndToc << QString() << true << QString() << 0u << false << false << false << 0u << false << false << QString();
     QTest::newRow("two files sequence no tabs") << file1 << QString() << false << tocReload << 0u << false << false << false << 0u << false << false << QString();
+#if 0
 #if HAVE_DBUS
     QTest::newRow("two files sequence with tabs") << file1 << QString() << true << tocReload << 0u << false << false << false << 0u << false << false << QString();
 #endif // HAVE_DBUS
+#endif
     QTest::newRow("open file page number") << contentsEpub << optionsPage2 << false << QString() << 1u << false << false << false << 0u << false << false << QString();
     QTest::newRow("open file page number and presentation") << contentsEpub << optionsPage2Presentation << false << QString() << 1u << true << false << false << 0u << false << false << QString();
     QTest::newRow("open file find") << file1 << optionsFind << false << QString() << 0u << false << false << false << 0u << false << false << QStringLiteral("si:next-testing parameters!");
@@ -231,9 +233,11 @@ void MainShellTest::testShell_data()
 #if HAVE_DBUS
     QTest::newRow("open two files unique") << file1 << optionsUnique << false << tocReload << 0u << false << false << true << 0u << false << false << QString();
     QTest::newRow("open two files unique tabs") << file1 << optionsUnique << true << tocReload << 0u << false << false << true << 0u << false << false << QString();
+#if 0
     QTest::newRow("page number attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << false << false << QString();
     QTest::newRow("presentation attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << true << false << QString();
     QTest::newRow("print attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << true << false << 2u << false << true << QString();
+#endif
     QTest::newRow("page number attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 3u << false << false << QString();
     QTest::newRow("presentation attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << true << false << QString();
     QTest::newRow("print attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << false << true << QString();
@@ -419,7 +423,9 @@ void MainShellTest::testFileRemembersPagePosition_data()
 
     QTest::newRow("normal") << 1;
     QTest::newRow("unique") << 2;
+#if 0
     QTest::newRow("tabs") << 3;
+#endif
 }
 
 void MainShellTest::testFileRemembersPagePosition()

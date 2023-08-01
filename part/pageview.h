@@ -36,6 +36,7 @@ namespace Okular
 class Action;
 class Document;
 class DocumentViewport;
+class FormField;
 class FormFieldSignature;
 class Annotation;
 class MovieAction;
@@ -130,6 +131,7 @@ public Q_SLOTS:
     void slotSelectPage();
 
     void slotAction(Okular::Action *action);
+    void slotMouseUpAction(Okular::Action *action, Okular::FormField *form);
     void slotFormChanged(int pageNumber);
 
     void externalKeyPressEvent(QKeyEvent *e);

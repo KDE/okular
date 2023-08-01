@@ -361,3 +361,7 @@ function AFPercent_Keystroke( nDec, sepStyle )
         event.rc = !isNaN(event.change) || event.change == "." || event.change == ","
     }
 }
+
+app.popUpMenuEx = function() {
+    return app.okular_popUpMenuEx(arguments);
+}

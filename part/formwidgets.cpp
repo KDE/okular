@@ -73,6 +73,11 @@ void FormWidgetsController::signalAction(Okular::Action *a)
     Q_EMIT action(a);
 }
 
+void FormWidgetsController::signalMouseUpAction(Okular::Action *action, Okular::FormField *form)
+{
+    Q_EMIT mouseUpAction(action, form);
+}
+
 void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type)
 {
     // If it's not a Action Script or if the field is not a FormText, handle it normally
@@ -1211,9 +1216,9 @@ void SignatureEdit::signUnsignedSignature()
         }                                                                                                                                                                                                                                      \
         Okular::Action *act = m_ff->activationAction();                                                                                                                                                                                        \
         if (act && !qobject_cast<CheckBoxEdit *>(this)) {                                                                                                                                                                                      \
-            m_controller->signalAction(act);                                                                                                                                                                                                   \
+            m_controller->signalMouseUpAction(act, m_ff);                                                                                                                                                                                      \
         } else if ((act = m_ff->additionalAction(Okular::Annotation::MouseReleased))) {                                                                                                                                                        \
-            m_controller->signalAction(act);                                                                                                                                                                                                   \
+            m_controller->signalMouseUpAction(act, m_ff);                                                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
         BaseClass::mouseReleaseEvent(event);                                                                                                                                                                                                   \
     }                                                                                                                                                                                                                                          \

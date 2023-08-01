@@ -60,6 +60,7 @@ public:
     ~FormWidgetsController() override;
 
     void signalAction(Okular::Action *action);
+    void signalMouseUpAction(Okular::Action *action, Okular::FormField *form);
 
     void processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type);
 
@@ -93,6 +94,8 @@ Q_SIGNALS:
     void formButtonsChangedByWidget(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates);
 
     void action(Okular::Action *action);
+
+    void mouseUpAction(Okular::Action *action, Okular::FormField *form);
 
     void refreshFormWidget(Okular::FormField *form);
 

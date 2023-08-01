@@ -4509,6 +4509,27 @@ void Document::processValidateAction(const Action *action, Okular::FormFieldText
     returnCode = event->returnCode();
 }
 
+void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)
+{
+    if (!action || action->actionType() != Action::Script) {
+        return;
+    }
+
+    // Lookup the page of the FormFieldText
+    int foundPage = d->findFieldPageNumber(ff);
+
+    if (foundPage == -1) {
+        qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
+        return;
+    }
+
+    std::shared_ptr<Event> event = Event::createFieldMouseUpEvent(ff, d->m_pagesVector[foundPage]);
+
+    const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
+
+    d->executeScriptEvent(event, linkscript);
+}
+
 void Document::processSourceReference(const SourceReference *ref)
 {
     if (!ref) {

@@ -10,6 +10,7 @@
 
 #include <QJSValue>
 #include <QObject>
+#include <QPoint>
 
 class QTimer;
 
@@ -57,6 +58,7 @@ public:
     Q_INVOKABLE void clearInterval(const QJSValue &oInterval);
     Q_INVOKABLE QJSValue setTimeOut(const QString &cExpr, int nMilliseconds);
     Q_INVOKABLE void clearTimeOut(const QJSValue &oTime);
+    Q_INVOKABLE QJSValue okular_popUpMenuEx(const QJSValue &arguments);
 
 private:
     QJSValue wrapTimer(QTimer *timer) const;

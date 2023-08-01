@@ -59,7 +59,7 @@ public:
         FieldMouseDown,  /// < Not implemented.
         FieldMouseEnter, /// < Not implemented.
         FieldMouseExit,  /// < Not implemented.
-        FieldMouseUp,    /// < Not implemented.
+        FieldMouseUp,    /// < This event is the result of a mouse up on a field.
         /* Validates the field after every change is committed
          * (clicked outside or tabbed to another field).
          * The enter event is not handled
@@ -116,6 +116,7 @@ public:
     static std::shared_ptr<Event> createKeystrokeEvent(FormField *target, Page *targetPage);
     static std::shared_ptr<Event> createFormFocusEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
     static std::shared_ptr<Event> createFormValidateEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
+    static std::shared_ptr<Event> createFieldMouseUpEvent(FormField *target, Page *targetPage);
 
 private:
     class Private;

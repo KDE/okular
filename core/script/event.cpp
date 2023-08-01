@@ -57,17 +57,19 @@ Event::EventType Event::eventType() const
 QString Event::name() const
 {
     switch (d->m_eventType) {
-    case (FieldCalculate):
+    case FieldCalculate:
         return QStringLiteral("Calculate");
-    case (FieldFormat):
+    case FieldFormat:
         return QStringLiteral("Format");
-    case (FieldKeystroke):
+    case FieldKeystroke:
         return QStringLiteral("Keystroke");
-    case (FieldFocus):
+    case FieldFocus:
         return QStringLiteral("Focus");
-    case (FieldValidate):
+    case FieldValidate:
         return QStringLiteral("Validate");
-    case (UnknownEvent):
+    case FieldMouseUp:
+        return QStringLiteral("MouseUp");
+    case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
     }
@@ -76,13 +78,14 @@ QString Event::name() const
 QString Event::type() const
 {
     switch (d->m_eventType) {
-    case (FieldCalculate):
-    case (FieldFormat):
-    case (FieldKeystroke):
-    case (FieldFocus):
-    case (FieldValidate):
+    case FieldCalculate:
+    case FieldFormat:
+    case FieldKeystroke:
+    case FieldFocus:
+    case FieldValidate:
+    case FieldMouseUp:
         return QStringLiteral("Field");
-    case (UnknownEvent):
+    case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
     }
@@ -267,5 +270,14 @@ std::shared_ptr<Event> Event::createFormValidateEvent(FormField *target, Page *t
         ret->setValue(QVariant(fft->text()));
         ret->setReturnCode(true);
     }
+    return ret;
+}
+
+std::shared_ptr<Event> Event::createFieldMouseUpEvent(FormField *target, Page *targetPage)
+{
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldMouseUp);
+    ret->setTarget(target);
+    ret->setTargetPage(targetPage);
+    ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
     return ret;
 }

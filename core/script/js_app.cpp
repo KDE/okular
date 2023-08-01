@@ -15,6 +15,7 @@
 #include <KLocalizedString>
 #include <QCheckBox>
 #include <QJSEngine>
+#include <QMenu>
 #include <QMessageBox>
 
 #include "../document_p.h"
@@ -326,6 +327,33 @@ void JSApp::clearTimeOut(const QJSValue &oTime)
         g_timerCache->remove(timerId);
         delete timer;
     }
+}
+
+// app.popUpMenuEx()
+QJSValue JSApp::okular_popUpMenuEx(const QJSValue &arguments)
+{
+    static const char *kResultProperty = "result";
+
+    const int nArgs = arguments.property(QStringLiteral("length")).toInt();
+
+    if (nArgs == 0) {
+        return {};
+    }
+
+    QMenu m;
+    for (int i = 0; i < nArgs; ++i) {
+        const QJSValue item = arguments.property(i);
+        const QString cName = item.property(QStringLiteral("cName")).toString();
+        const QJSValue cResultProperty = item.property(QStringLiteral("cResult"));
+        QAction *a = m.addAction(cName);
+        if (cResultProperty.isUndefined()) {
+            a->setProperty(kResultProperty, cName);
+        } else {
+            a->setProperty(kResultProperty, cResultProperty.toString());
+        }
+    }
+    QAction *result = m.exec(QCursor::pos());
+    return result ? result->property(kResultProperty).toString() : QString();
 }
 
 JSApp::JSApp(DocumentPrivate *doc, QTimer *watchdogTimer, QObject *parent)

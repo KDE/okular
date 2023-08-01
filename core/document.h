@@ -703,6 +703,13 @@ public:
     void processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode);
 
     /**
+     * Processes the mouse up @p action on @p ff.
+     *
+     * @since 23.12
+     */
+    void processFormMouseUpScripAction(const Action *action, Okular::FormField *ff);
+
+    /**
      * Returns a list of the bookmarked.pages
      */
     QList<int> bookmarkedPageList() const;

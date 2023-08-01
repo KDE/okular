@@ -281,6 +281,7 @@ FormWidgetsController *PageViewPrivate::formWidgetsController()
         formsWidgetController = new FormWidgetsController(document);
         QObject::connect(formsWidgetController, &FormWidgetsController::changed, q, &PageView::slotFormChanged);
         QObject::connect(formsWidgetController, &FormWidgetsController::action, q, &PageView::slotAction);
+        QObject::connect(formsWidgetController, &FormWidgetsController::mouseUpAction, q, &PageView::slotMouseUpAction);
     }
 
     return formsWidgetController;
@@ -5339,6 +5340,15 @@ void PageView::slotPauseResumeSpeech()
 void PageView::slotAction(Okular::Action *action)
 {
     d->document->processAction(action);
+}
+
+void PageView::slotMouseUpAction(Okular::Action *action, Okular::FormField *form)
+{
+    if (form && action->actionType() == Okular::Action::Script) {
+        d->document->processFormMouseUpScripAction(action, form);
+    } else {
+        d->document->processAction(action);
+    }
 }
 
 void PageView::externalKeyPressEvent(QKeyEvent *e)

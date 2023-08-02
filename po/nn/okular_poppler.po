@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
-"PO-Revision-Date: 2023-03-30 22:51+0200\n"
+"PO-Revision-Date: 2023-08-01 21:23+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -34,7 +34,7 @@ msgstr "karl@huftis.org"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Slå på førehandsvising av overtrykk"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26
@@ -64,7 +64,7 @@ msgstr "Form"
 #: conf/pdfsettingswidget.ui:72
 #, kde-format
 msgid "Default scaling mode when printing:"
-msgstr ""
+msgstr "Standard skaleringsmodus ved utskrift:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
@@ -92,6 +92,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Viss du kryssar av her, kan Okular kontakta eksterne tredjeparts-OCSP-"
+"tenarar for å kontrollera om sertifikata som er brukte til digital "
+"signering, er tilbakekalla."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116
@@ -99,12 +102,13 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Kontroller om digitale signaturar er tilbakekalla via tredjepartstenarar"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Signatur-motor:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:164
@@ -270,6 +274,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"Fann nokre feil i dokumentet. Det kan vera Okular ikkje klarar å visa "
+"innhaldet skikkeleg."
 
 #: pdfsettingswidget.cpp:128
 #, kde-format

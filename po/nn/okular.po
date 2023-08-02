@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-24 10:08+0000\n"
-"PO-Revision-Date: 2023-07-31 21:20+0200\n"
+"PO-Revision-Date: 2023-08-01 21:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1339,7 +1339,7 @@ msgstr "Gjennomsiktig"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr "Tilpassa farge …"
+msgstr "Sjølvvald farge …"
 
 #: part/annotationactionhandler.cpp:498
 #, kde-format
@@ -2515,7 +2515,7 @@ msgstr "Tekst til tale-motor:"
 #, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "Tekst til tale-motor:"
+msgstr "Tekst til tale-røyst:"
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -2549,9 +2549,9 @@ msgid ""
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
-"<b>Merk</b>: Informasjonen her er berre brukt til kommentarar og "
-"tilbakemeldingar. Informasjonen du legg inn her, vert lagra i dokumentet, og "
-"vil vera tilgjengeleg for dei du sender det til."
+"<b>Merk</b>: Informasjonen du legg inn her, vert berre brukt til kommentarar "
+"og tilbakemeldingar. Han vert lagra i dokumentet og vil vera tilgjengeleg "
+"for dei du sender det til."
 
 #: part/dlgannotations.cpp:48
 #, kde-format
@@ -2686,13 +2686,13 @@ msgstr "Vis hint og infomeldingar"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr "Varsla om innebygde filer, skjema eller signaturar"
+msgstr "Varsla om innebygde filer, skjema og signaturar"
 
 #: part/dlggeneral.cpp:66
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
-msgstr "Vis dokumenttittel i tittellinja viss han finst"
+msgstr "Vis dokumenttittelen i tittellinja viss han finst"
 
 #: part/dlggeneral.cpp:72
 #, kde-format
@@ -2704,7 +2704,7 @@ msgstr "Vis berre filnamnet"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
-msgstr "Viser fullstendig filadresse"
+msgstr "Vis fullstendig filadresse"
 
 #: part/dlggeneral.cpp:75
 #, kde-format
@@ -2716,7 +2716,7 @@ msgstr "Når dokumenttittelen ikkje vert vist:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
-msgstr "Bruk tilpassa bakgrunnsfarge:"
+msgstr "Bruk sjølvvald bakgrunnsfarge:"
 
 #: part/dlggeneral.cpp:112
 #, kde-format
@@ -2734,7 +2734,7 @@ msgstr "Opna nye filer i faner"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr "Byt til filfane viss fila alt er open"
+msgstr "Byt til filfanen viss fila alt er open"
 
 #: part/dlggeneral.cpp:137
 #, kde-format
@@ -2758,7 +2758,7 @@ msgstr "Vis vindauge for val av visingsmotor"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
-msgstr "Leseretning for høgre til venstre"
+msgstr "Bruk høgre-til-venstre-leseretning"
 
 #: part/dlggeneral.cpp:166
 #, kde-format
@@ -2930,7 +2930,7 @@ msgid ""
 "Keeps everything in memory. Preload next pages. Boost searches. (For systems "
 "with more than 4GB of memory.)"
 msgstr ""
-"Held alt i minnet. Lastar inn dei neste sidene og gjev raskare søk. (Passar "
+"Hald alt i minnet. Lastar inn dei neste sidene og gjev raskare søk. (Passar "
 "til system med minst 4 GB minne.)"
 
 #: part/dlgperformance.cpp:87
@@ -4420,6 +4420,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
+"Fila <filename>%1</filename> har ulagra endringar, men har samtidig blitt "
+"endra av eit anna program. Viss du lastar ho inn på nytt, vert endringane "
+"dine bytte ut med endringane gjorde i det andre programmet.<nl/><nl/>Vil du "
+"halda fram med å lasta inn fila på nytt?"
 
 #: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
@@ -4429,7 +4433,7 @@ msgstr "Fil endra"
 #: part/part.cpp:1872
 #, kde-format
 msgid "Continue Reloading"
-msgstr "Hald fram innlasting"
+msgstr "Hald fram å lasta inn"
 
 #: part/part.cpp:1873
 #, kde-format
@@ -4445,6 +4449,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
+"Fila <filename>%1</filename> har ulagra endringar, men har samtidig blitt "
+"endra av eit anna program. Viss du lukkar ho, vert endringane dine bytte ut "
+"med endringane gjorde i det andre programmet.<nl/><nl/>Vil du halda fram med "
+"å lukka av fila?"
 
 #: part/part.cpp:1882
 #, kde-format
@@ -4564,11 +4572,14 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Fila <filename>%1</filename> har blitt endra av eit anna program. Viss du "
+"lagrar ho no, går endringane gjorde i det andre programmet tapt. Er du "
+"sikker på at du vil halda fram med å lagra?"
 
 #: part/part.cpp:2674 part/part.cpp:2692 part/part.cpp:2744
 #, kde-format
 msgid "Save - Warning"
-msgstr "Lagra – åtvaring"
+msgstr "Lagraing – åtvaring"
 
 #: part/part.cpp:2676
 #, kde-format
@@ -5494,7 +5505,7 @@ msgstr "Vis i sertifikathandsamar"
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Fann ikkje sertifikathandsamaren (Kleopatra)"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format
@@ -5522,12 +5533,12 @@ msgstr "Stopp"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Videoar er ikkje støtta i denne Okular-versjonen"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videoar er ikkje støtta i denne Okular-versjonen"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5629,6 +5640,9 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"Du kan ikkje velja skriveprogram-kommando i ein køyrande Okular-instans. Slå "
+"av faner og prøv på nytt. Merk òg at «--unique» ikkje er støtta når du vel "
+"skriveprogram via kommandolinja.\n"
 
 #: shell/okular_main.cpp:173
 #, kde-format

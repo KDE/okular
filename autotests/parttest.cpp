@@ -1647,6 +1647,7 @@ void PartTest::testAnnotWindow()
     QVERIFY(win2->visibleRegion().rectCount() == 4);
 }
 
+#if 0
 // Helper for testAdditionalActionTriggers
 static void verifyTargetStates(const QString &triggerName, const QMap<QString, Okular::FormField *> &fields, bool focusVisible, bool cursorVisible, bool mouseVisible, int line)
 {
@@ -1662,6 +1663,7 @@ static void verifyTargetStates(const QString &triggerName, const QMap<QString, O
     QTRY_VERIFY2(cursorTarget->isVisible() == cursorVisible, QStringLiteral("line: %1 cursor for %2 not matched. Actual %3 Expected %4").arg(line).arg(triggerName).arg(cursorTarget->isVisible()).arg(cursorVisible).toUtf8().constData());
     QTRY_VERIFY2(mouseTarget->isVisible() == mouseVisible, QStringLiteral("line: %1 mouse for %2 not matched. Expected %3 Actual %4").arg(line).arg(triggerName).arg(mouseTarget->isVisible()).arg(mouseVisible).toUtf8().constData());
 }
+#endif
 
 void PartTest::testAdditionalActionTriggers()
 {

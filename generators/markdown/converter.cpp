@@ -110,12 +110,18 @@ QTextDocument *Converter::convertOpenFile()
     MMIOT *markdownHandle = mkd_in(m_markdownFile, nullptr);
 
     mkd_flag_t *flags = mkd_flags();
-    mkd_set_flag_bitmap(flags, MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR);
+    // These flags aren't bitflags, so they can't be | together
+    mkd_set_flag_num(flags, MKD_FENCEDCODE);
+    mkd_set_flag_num(flags, MKD_GITHUBTAGS);
+    mkd_set_flag_num(flags, MKD_AUTOLINK);
+    mkd_set_flag_num(flags, MKD_TOC);
+    mkd_set_flag_num(flags, MKD_IDANCHOR);
     if (!m_isFancyPantsEnabled) {
         mkd_set_flag_num(flags, MKD_NOPANTS);
     }
     if (!mkd_compile(markdownHandle, flags)) {
         Q_EMIT error(i18n("Failed to compile the Markdown document."), -1);
+        mkd_free_flags(flags);
         return nullptr;
     }
     mkd_free_flags(flags);

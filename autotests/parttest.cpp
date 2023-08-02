@@ -348,7 +348,7 @@ void PartTest::testScrollBarAndMouseWheel()
     QTest::mouseClick(scrollBar, Qt::LeftButton);
     QTest::qWait(1000);
 
-#if 0
+#if 1
     // We have scrolled enough to be on the second page now
     QCOMPARE(part.m_document->currentPage(), 1u);
 

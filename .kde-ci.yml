@@ -9,6 +9,7 @@ Dependencies:
     'frameworks/ki18n': '@stable'
     'frameworks/kio': '@stable'
     'frameworks/karchive': '@stable'
+    'frameworks/breeze-icons': '@stable'
     'libraries/phonon': '@stable'
     'graphics/kdegraphics-mobipocket': '@same'
 

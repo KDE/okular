@@ -30,3 +30,6 @@ Dependencies:
 
 Options:
   per-test-timeout: 180
+  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN"
+  cppcheck-ignore-files:
+    - autotests

@@ -54,7 +54,7 @@ public:
     QList<TOCItem *> currentPage;
     TOCModel *m_oldModel;
     QVector<QModelIndex> m_oldTocExpandedIndexes;
-    Q_DISABLE_COPY(TOCModelPrivate);
+    Q_DISABLE_COPY(TOCModelPrivate)
 };
 
 TOCItem::TOCItem()

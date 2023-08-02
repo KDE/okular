@@ -16,6 +16,7 @@ Dependencies:
   'require':
     'frameworks/khtml': '@stable'
     'frameworks/purpose': '@stable'
+    'frameworks/breeze-icons': '@stable'
     'graphics/libkexiv2': '@same'
 
 - 'on': ['Linux', 'FreeBSD']

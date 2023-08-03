@@ -33,6 +33,9 @@ using namespace Okular;
 
 #if HAVE_PHONON
 
+class PlayData;
+class SoundInfo;
+
 namespace Okular
 {
 class AudioPlayerPrivate
@@ -280,13 +283,13 @@ AudioPlayer::State AudioPlayer::state() const
 
 void AudioPlayer::resetDocument()
 {
-    d->currentDocument = {};
+    d->m_currentDocument = {};
 }
 
 void AudioPlayer::setDocument(const QUrl &url, Okular::Document *document)
 {
     Q_UNUSED(document);
-    d->currentDocument = url;
+    d->m_currentDocument = url;
 }
 
 #else

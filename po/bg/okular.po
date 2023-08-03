@@ -5822,16 +5822,3 @@ msgstr "Забравяне на всичко"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Скриване на приветстващия  прозорец"
-
-#~ msgid "Missing alert type"
-#~ msgstr "Липсващ тип предупреждение"
-
-#~ msgid ""
-#~ "The file '%1' has been modified by another program, which means it can no "
-#~ "longer be saved."
-#~ msgstr ""
-#~ "Файлът \"%1\" е модифициран от друга програма, което означава, че вече не "
-#~ "може да бъде запазен."
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Показване на страничния панел"

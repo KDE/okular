@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-10 00:56+0000\n"
+"POT-Creation-Date: 2023-08-03 00:44+0000\n"
 "PO-Revision-Date: 2019-03-31 18:31+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -32,7 +32,7 @@ msgstr "pan93412@gmail.com"
 msgid "Failed to open the document"
 msgstr "無法開啟文件"
 
-#: converter.cpp:105 converter.cpp:118
+#: converter.cpp:105 converter.cpp:123
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "無法編譯 Markdown 文件。"

@@ -344,9 +344,8 @@ void PartTest::testScrollBarAndMouseWheel()
     auto scrollBar = part.m_pageView->verticalScrollBar();
 
     QTest::mouseClick(scrollBar, Qt::LeftButton);
-    QTest::qWait(QApplication::doubleClickInterval() * 3); // Wait a tiny bit
+    QTest::qWait(QApplication::doubleClickInterval() * 2); // Wait a tiny bit
     QTest::mouseClick(scrollBar, Qt::LeftButton);
-    QTest::qWait(1000);
 
 #if 1
     // We have scrolled enough to be on the second page now

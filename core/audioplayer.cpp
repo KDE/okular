@@ -162,13 +162,7 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
         if (!url.isEmpty()) {
             int newid = newId();
             QObject::connect(data->m_mediaobject, &Phonon::MediaObject::finished, q, [this, newid]() { finished(newid); });
-            QUrl newurl;
-            if (QUrl::fromUserInput(url).isRelative()) {
-                newurl = m_currentDocument.adjusted(QUrl::RemoveFilename);
-                newurl.setPath(newurl.path() + url);
-            } else {
-                newurl = QUrl::fromLocalFile(url);
-            }
+            const QUrl newurl = QUrl::fromUserInput(url, m_currentDocument.adjusted(QUrl::RemoveFilename).toLocalFile());
             data->m_mediaobject->setCurrentSource(newurl);
             m_playing.insert(newid, data);
             valid = true;

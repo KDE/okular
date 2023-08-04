@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-10 00:56+0000\n"
+"POT-Creation-Date: 2023-08-04 02:24+0000\n"
 "PO-Revision-Date: 2019-06-24 10:21+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -36,7 +36,7 @@ msgstr "xalba@euskalnet.net"
 msgid "Failed to open the document"
 msgstr "Huts egin du dokumentua irekitzea"
 
-#: converter.cpp:105 converter.cpp:118
+#: converter.cpp:105 converter.cpp:123
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Huts egin du Markdown dokumentua konpilatzea."

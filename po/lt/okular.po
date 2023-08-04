@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-24 10:08+0000\n"
+"POT-Creation-Date: 2023-08-04 02:24+0000\n"
 "PO-Revision-Date: 2022-11-18 18:51+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -243,7 +243,7 @@ msgstr "Pristabdyti filmą"
 msgid "Resume movie"
 msgstr "Pratęsti filmą"
 
-#: core/audioplayer.cpp:318
+#: core/audioplayer.cpp:321
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-10 00:56+0000\n"
+"POT-Creation-Date: 2023-08-04 02:24+0000\n"
 "PO-Revision-Date: 2019-09-27 10:26+0100\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -31,7 +31,7 @@ msgstr "g.sora@tiscali.it"
 msgid "Failed to open the document"
 msgstr "Falleva aperir le documento "
 
-#: converter.cpp:105 converter.cpp:118
+#: converter.cpp:105 converter.cpp:123
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Falleva compilar le documento de Markdown."

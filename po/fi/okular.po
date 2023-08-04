@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-24 07:29+0000\n"
+"POT-Creation-Date: 2023-08-04 00:43+0000\n"
 "PO-Revision-Date: 2023-06-27 16:04+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -261,7 +261,7 @@ msgstr "Tauota elokuva"
 msgid "Resume movie"
 msgstr "Jatka elokuvan toistoa"
 
-#: core/audioplayer.cpp:318
+#: core/audioplayer.cpp:321
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Tämä Okular on koostettu äänituetta"

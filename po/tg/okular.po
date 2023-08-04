@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-24 07:29+0000\n"
+"POT-Creation-Date: 2023-08-04 00:43+0000\n"
 "PO-Revision-Date: 2019-09-15 21:29+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -240,7 +240,7 @@ msgstr "Саҳифа"
 msgid "Resume movie"
 msgstr ""
 
-#: core/audioplayer.cpp:318
+#: core/audioplayer.cpp:321
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""

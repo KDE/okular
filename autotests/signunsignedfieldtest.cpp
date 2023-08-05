@@ -64,7 +64,7 @@ void SignUnsignedFieldTest::initTestCase()
     KConfig cfg(QStringLiteral("okular-generator-popplerrc"));
     KConfigGroup g = cfg.group(QStringLiteral("Signatures"));
     g.writeEntry(QStringLiteral("UseDefaultCertDB"), false);
-    g.writeEntry(QStringLiteral("DBCertificatePath"), "" KDESRCDIR "data/fake_okular_certstore");
+    g.writeEntry(QStringLiteral("DBCertificatePath"), QString::fromUtf8("" KDESRCDIR "data/fake_okular_certstore").replace(QStringLiteral("/"), QStringLiteral("\\")));
     qDebug() << KDESRCDIR << QFile::exists(QString::fromLocal8Bit(KDESRCDIR));
     auto certificatePath = g.readEntry("DBCertificatePath", QString());
     qDebug() << certificatePath << QFile::exists(certificatePath);

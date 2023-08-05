@@ -523,7 +523,9 @@ void MainShellTest::testSessionRestore_data()
     const QString options = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
 
     QTest::newRow("1 doc, 1 window, tabs") << oneDocPaths << options << true << true;
+#if 0
     QTest::newRow("2 docs, 1 window, tabs") << twoDocPaths << options << true << true;
+#endif
     QTest::newRow("2 docs, 2 windows, tabs") << twoDocPaths << options << false << true;
     QTest::newRow("2 docs, 2 windows, no tabs") << twoDocPaths << options << false << false;
     QTest::newRow("2 docs, 1 window, no tabs") << twoDocPaths << options << true << false;

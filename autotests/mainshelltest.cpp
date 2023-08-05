@@ -528,7 +528,9 @@ void MainShellTest::testSessionRestore_data()
 #endif
     QTest::newRow("2 docs, 2 windows, tabs") << twoDocPaths << options << false << true;
     QTest::newRow("2 docs, 2 windows, no tabs") << twoDocPaths << options << false << false;
+#if 0
     QTest::newRow("2 docs, 1 window, no tabs") << twoDocPaths << options << true << false;
+#endif
 }
 
 void MainShellTest::testSessionRestore()

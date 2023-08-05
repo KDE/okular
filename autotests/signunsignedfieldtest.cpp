@@ -65,6 +65,7 @@ void SignUnsignedFieldTest::initTestCase()
     KConfigGroup g = cfg.group(QStringLiteral("Signatures"));
     g.writeEntry(QStringLiteral("UseDefaultCertDB"), false);
     g.writeEntry(QStringLiteral("DBCertificatePath"), "file://" KDESRCDIR "data/fake_okular_certstore");
+    qDebug() << KDESRCDIR << QFile::exists(QString::fromLocal8Bit(KDESRCDIR));
 
     m_document = new Okular::Document(nullptr);
 }

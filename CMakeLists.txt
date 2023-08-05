@@ -494,7 +494,7 @@ if (TARGET Qt5::Qml)
     target_link_libraries(okularcore PRIVATE Qt5::Qml)
 endif()
 
-set_target_properties(okularcore PROPERTIES VERSION 10.0.0 SOVERSION 10 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 11.0.0 SOVERSION 11 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
 install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

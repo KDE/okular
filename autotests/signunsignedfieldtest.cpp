@@ -68,6 +68,8 @@ void SignUnsignedFieldTest::initTestCase()
     qDebug() << KDESRCDIR << QFile::exists(QString::fromLocal8Bit(KDESRCDIR));
     auto certificatePath = g.readEntry("DBCertificatePath", QString());
     qDebug() << certificatePath << QFile::exists(certificatePath);
+    auto certificatePath2 = QString::fromLocal8Bit(KDESRCDIR "data/fake_okular_certstore");
+    qDebug() << certificatePath2 << QFile::exists(certificatePath2);
 
     m_document = new Okular::Document(nullptr);
 }

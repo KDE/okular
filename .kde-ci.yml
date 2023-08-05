@@ -30,6 +30,7 @@ Dependencies:
 
 Options:
   per-test-timeout: 180
+  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
   cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN'
   cppcheck-ignore-files:
     - autotests

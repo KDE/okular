@@ -233,6 +233,7 @@ void PartTest::testForwardPDF()
     QUrl u(QUrl::fromLocalFile(pdfResult));
     // Update this if you regenerate the synctextest.pdf somewhere else
     u.setFragment(QStringLiteral("src:100/home/tsdgeos/devel/kde/okular/autotests/data/synctextest.tex"));
+    qDebug() << u;
     part.openUrl(u);
     QCOMPARE(part.m_document->currentPage(), 1u);
 }

@@ -41,10 +41,10 @@ public:
         const RecentItemsModel *model = static_cast<RecentItemsModel *>(aModel);
         const RecentItemsModel::RecentItem *item = model->getItem(index);
 
-        bool willOpenMenu = false;
         QPoint menuPosition;
 
         if (item != nullptr) {
+            bool willOpenMenu = false;
             if (event->type() == QEvent::ContextMenu) {
                 willOpenMenu = true;
                 menuPosition = static_cast<QContextMenuEvent *>(event)->globalPos();

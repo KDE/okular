@@ -27,3 +27,8 @@ Dependencies:
 - 'on': ['Android']
   'require':
     'frameworks/kirigami': '@stable'
+
+Options:
+  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN'
+  cppcheck-ignore-files:
+    - autotests

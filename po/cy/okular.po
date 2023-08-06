@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-04 02:24+0000\n"
+"POT-Creation-Date: 2023-08-06 02:30+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -234,7 +234,7 @@ msgstr "Tudalennau :"
 msgid "Resume movie"
 msgstr ""
 
-#: core/audioplayer.cpp:321
+#: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-04 02:24+0000\n"
+"POT-Creation-Date: 2023-08-06 02:30+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -242,7 +242,7 @@ msgstr "Прыпыніць відэа"
 msgid "Resume movie"
 msgstr "Узнавіць відэа"
 
-#: core/audioplayer.cpp:321
+#: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""

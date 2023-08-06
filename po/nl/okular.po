@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-04 02:24+0000\n"
+"POT-Creation-Date: 2023-08-06 02:30+0000\n"
 "PO-Revision-Date: 2023-07-26 17:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
@@ -255,7 +255,7 @@ msgstr "Film pauzeren"
 msgid "Resume movie"
 msgstr "Film hervatten"
 
-#: core/audioplayer.cpp:321
+#: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Deze Okular is gebouwd zonder ondersteuning voor audio"

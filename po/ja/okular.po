@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-04 02:24+0000\n"
+"POT-Creation-Date: 2023-08-06 02:30+0000\n"
 "PO-Revision-Date: 2022-08-28 21:16-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -250,7 +250,7 @@ msgstr "動画を一時停止"
 msgid "Resume movie"
 msgstr "動画を再開"
 
-#: core/audioplayer.cpp:321
+#: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""

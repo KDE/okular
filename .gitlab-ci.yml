@@ -22,7 +22,7 @@ build_ubuntu_22_04:
     - apt-get update
     - apt-get install --yes eatmydata
     - eatmydata apt-get build-dep --yes --no-install-recommends okular
-    - eatmydata apt-get install --yes --no-install-recommends ninja-build libqt5x11extras5-dev
+    - eatmydata apt-get install --yes --no-install-recommends ninja-build libqt5x11extras5-dev qtmultimedia5-dev
   script:
     - mkdir -p build && cd build
     - cmake -DOKULAR_UI=desktop -G Ninja ..
@@ -40,7 +40,7 @@ build_clazy_clang_tidy:
     - apt-get update
     - apt-get install --yes eatmydata
     - eatmydata apt-get build-dep --yes --no-install-recommends okular
-    - eatmydata apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy-14 libqt5x11extras5-dev libkf5crash-dev libkf5purpose-dev kirigami2-dev libegl-dev jq
+    - eatmydata apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy-14 libqt5x11extras5-dev libkf5crash-dev libkf5purpose-dev kirigami2-dev libegl-dev jq qtmultimedia5-dev
 
   script:
     - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .

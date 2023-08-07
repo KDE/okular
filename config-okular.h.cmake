@@ -7,6 +7,9 @@
 /* Defines if qtspeech is available */
 #cmakedefine01 HAVE_SPEECH
 
+/* Defines if qtmultimedia is available */
+#cmakedefine01 HAVE_MULTIMEDIA
+
 /* Defines if kwallet is available */
 #cmakedefine01 HAVE_KWALLET
 

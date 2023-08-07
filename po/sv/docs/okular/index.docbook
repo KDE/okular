@@ -132,7 +132,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Öppna filer</title>
 			<para
->För att visa någon fil som stöds i &okular;, välj <menuchoice
+>För att öppna någon fil som stöds i &okular;, välj <menuchoice
 ><guimenu
 >Arkiv</guimenu
 > <guimenuitem
@@ -715,7 +715,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Gul märkpenna</guilabel
 > och <guilabel
 >Svart understrykning</guilabel
-> för filer med text, t.ex. PDF.</para>
+> kan användas med filer som innehåller text (t.ex. &PDF;).</para>
 		      <para
 >Grafikkommentarer som <guilabel
 >Anteckningsruta</guilabel
@@ -735,15 +735,16 @@ Context menu actions like Rename Bookmarks etc.)
 >Ellips</guilabel
 > och <guilabel
 >Skrivmaskinstext</guilabel
-> för alla format som stöds av &okular;.</para>
+>.</para>
+			  <para
+>Grafiska kommentarer är inte bara begränsade till &PDF;-filer. De kan användas för alla format som &okular; stöder.</para>
 			<para
->Genom att använda den sammanhangsberoende menyn antingen i vyn <guilabel
+>Genom att använda menyn <guilabel
 >Kommentarer</guilabel
-> i sidopanelen eller i huvudfönstret, kan en <guilabel
->Anteckning</guilabel
-> visas för alla sorters kommentarer, som kan läggas till eller redigeras.</para>
-			<para
->Kommentarer är inte bara begränsade till PDF-filer. De kan användas för alla format som &okular; stöder.</para>
+> kan du lägga till en <guilabel
+>Anmärkningsruta</guilabel
+> eller vilken annan sorts anteckning som helst för att lägga till eller redigera kommentarer.</para>
+
 			<para
 >&okular; har en funktion för "dokumentarkivering". Det är ett format specifikt för &okular; för att lagra dokumentet samt diverse metadata som hör ihop med det (för närvarande bara kommentarer). Du kan spara ett "dokumentarkiv" från det öppna dokumentet genom att välja <menuchoice
 ><guimenu
@@ -774,21 +775,21 @@ Context menu actions like Rename Bookmarks etc.)
 > för att spara dem i en ny fil. </para>
 				<note>
 					<para
->Beroende på dokumentets rättigheter (typiskt för PDF-dokument), kanske tillägg, redigering av vissa alternativ eller borttagning av kommentarer inte är möjligt. </para>
+>Observera att tillägg, redigering eller borttagning av kommentarer kanske inte är möjligt med DRM-aktiverade filer. </para>
 				</note>
 				<note>
 				  <para
->Alla åtgärder rörande kommentarer (att skapa och ta bort kommentarer,  redigera godtyckliga kommentar egenskaper, flytta om kommentarer med &Ctrl;+drag, och redigera textinnehållet i en kommentar) kan <link linkend="edit-undo"
->ångras</link
+>Det går att <link linkend="edit-undo"
+>ångra</link
 > eller <link linkend="edit-redo"
->göras om</link
-> med motsvarande alternativ i menyn <guimenu
+>göra om</link
+> alla kommentaråtgärder med motsvarande alternativ i menyn <guimenu
 >Redigera</guimenu
 >. Det är också möjligt att ångra åtgärden genom att trycka på <keycombo
 >&Ctrl;<keycap
 >Z</keycap
 ></keycombo
-> och göra om den ångrade åtgärden genom att trycka på <keycombo
+> och göra om en tidigare ångrad åtgärd genom att trycka på <keycombo
 >&Ctrl;&Shift;<keycap
 >Z</keycap
 ></keycombo
@@ -796,13 +797,13 @@ Context menu actions like Rename Bookmarks etc.)
 				</note>
 			<para
 >Det går att anpassa standardegenskaperna och utseende för varje kommentarverktyg. Se <link linkend="configannotations"
->motsvarande avsnitt i den här handboken</link
+>motsvarande avsnitt i den här dokumentationen</link
 >. </para>
 			<sect2 id="annotations-add">
 				<title
 >Lägga till kommentarer</title>
 				<para
->För att lägga till några kommentarer i dokumentet, måste du använda knappen <guilabel
+>För att lägga till kommentarer i dokumentet, kan du använda knappen <guilabel
 >Snabbkommentarer</guilabel
 > i &okular;s huvudverktygsrad eller aktivera kommentarverktygsraden. Det görs genom att antingen välja <menuchoice
 ><guimenu
@@ -816,7 +817,7 @@ Context menu actions like Rename Bookmarks etc.)
 >1</keycap
 > till <keycap
 >9</keycap
->) för att börja skapa kommentaren. </para>
+>) för att använda den kommentaren. </para>
 				<para
 >Kommentarverktygsraden hjälper till att skapa kommentarer med ritverktyg, formverktyg och textmeddelanden. Det går att använda kommentarverktygsraden för att lägga till markeringar i ett dokument (t.ex. linjer, ellipser, polygoner, stämplar, märkningar, understreck, etc.). Tabellen nedan beskriver exakt vad den normala uppsättningen knappar i kommentarverktygsraden gör. </para>
 				<informaltable>
@@ -848,9 +849,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att markera text i dokumentet med en given bakgrundsfärg. </para>
+>Markerar text i dokumentet med en given bakgrundsfärg. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den markerade texten, och dra därefter för att markera den. </para>
+>Klicka på verktygsraden, klicka sedan med vänster musknapp och dra för att markera en textsnutt. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Typ</guilabel
@@ -887,9 +888,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att stryka under text. </para>
+>Stryker under text med en rak linje. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+>Klicka på verktygsraden, klicka sedan med vänster musknapp och dra för att stryka under en textsnutt. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Typ</guilabel
@@ -926,9 +927,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att stryka under text med en vågig linje. </para>
+>Stryker under text med en vågig linje. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+>Klicka på verktygsraden, klicka sedan med vänster musknapp och dra för att stryka under en textsnutt med en vågig linje. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Typ</guilabel
@@ -965,9 +966,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att stryka över text. </para>
+>Stryker över text. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera början av den understrukna texten, och dra därefter för att stryka under den. </para>
+>Klicka på verktygsknappen, klicka sedan med vänster musknapp och dra för att stryka över en textsnutt med en vågig linje. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Typ</guilabel
@@ -1004,15 +1005,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Skrivmaskinstext har ogenomskinliga bokstäver på genomskinlig bakgrund, så att det är användbart för att fylla i icke-interaktiva formulär. </para>
+>Lägger till text på en genomskinlig bakgrund. Det är användbart för att fylla i formulär som saknar integrerade redigerbara textfält. </para>
 					  <para
->Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av kommentaren, dra därefter för att placera det nedre högra hörnet. Ange kommentarens text och klicka därefter på <guibutton
+>Klicka på verktygsknappen, klicka med vänster musknapp där du vill lägga till textens övre vänstra hörn, dra därefter för att placera det nedre högra hörnet. Skriv in lite text, och klicka därefter på <guibutton
 >Ok</guibutton
-> för att spara kommentaren, <guibutton
->Avbryt</guibutton
-> för att avbryta inmatningen av kommentaren, eller <guibutton
+> för att spara den, <guibutton
 >Rensa</guibutton
-> för att rensa kommentaren. </para>
+> för att rensa texten och börja om. eller <guibutton
+>Avbryt</guibutton
+> för att avbryta. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Teckensnitt</guilabel
@@ -1039,15 +1040,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att lägga till fritextkommentar. Kommentaren visas på plats som den är. </para>
+>Rita en fritextanmärkning. Anmärkningen visas på plats som den är. </para>
 					  <para
->Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av kommentaren, dra därefter för att placera det nedre högra hörnet. Ange kommentarens text och klicka därefter på <guibutton
+>Klicka på verktygsknappen, klicka sedan med vänster musknapp där du vill lägga till anmärkningens övre vänstra hörnet, dra därefter för att placera det nedre högra hörnet. Skriv in anmärkningens text och klicka därefter på <guibutton
 >Ok</guibutton
-> för att spara kommentaren, <guibutton
->Avbryt</guibutton
-> för att avbryta inmatningen av kommentaren, eller <guibutton
+> för att spara anmärkningen, <guibutton
 >Rensa</guibutton
-> för att rensa kommentaren. </para>
+> för att rensa anmärkningens text, eller <guibutton
+>Avbryt</guibutton
+> för att avbryta skapa anmärkning. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Färg</guilabel
@@ -1076,11 +1077,11 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Anteckningsruta </para>
+>Anmärkningsruta </para>
 					</entry>
 					<entry>
 					  <para
->För att lägga till en flerraderskommentar. Kommentaren kan visas genom att dubbelklicka på en ikon i dokumentet. </para>
+>Ritar en anmärkning med flera rader. Anmärkningen kan visas genom att dubbelklicka på ikonen som skapas  i dokumentet. </para>
 					  <para
 >Klicka på verktygsknappen, och klicka därefter på platsen i dokumentet där anteckningsrutan ska läggas till. Skriv in texten i anteckningsrutan och klicka på knappen <guilabel
 >Stäng kommentaren</guilabel
@@ -1113,9 +1114,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att rita frihandslinjer. </para>
+>Ritar frihandslinjer. </para>
 					  <para
->Klicka på verktygsknappen, klicka med vänster musknapp och håll nere för att placera linjens början, och dra därefter för att rita linjen. </para>
+>Klicka på verktygsknappen, klicka med vänster musknapp och dra för att rita linjen. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Färg</guilabel
@@ -1144,9 +1145,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att markera med en pil. </para>
+>Ritar en pil mellan två punkter. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera linjens startpunkt, dra därefter dit linjens slutpunkt ska vara och klicka en gång till. </para>
+>Klicka på verktygsknappen, klicka sedan med vänster musknapp för att placera pilens startpunkt, dra därefter för att placera linjens slutpunkt och klicka en gång till. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Färg</guilabel
@@ -1183,9 +1184,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att markera med en linje. </para>
+>Ritar en linje mellan två punkter. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera linjens startpunkt, dra därefter dit linjens slutpunkt ska vara och klicka en gång till. </para>
+>Klicka på verktygsknappen, klicka sedan med vänster musknapp för att placera linjens startpunkt, dra därefter för att placera linjens slutpunkt och klicka en gång till. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Färg</guilabel
@@ -1222,9 +1223,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att rita en rektangel omkring ett valt område. </para>
+>Ritar en rektangel omkring det valda området. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet rektangeln, dra därefter för att placera det nedre högra hörnet. </para>
+>Klicka på verktygsraden, klicka med vänster musknapp för att placera övre vänstra hörnet rektangeln, dra därefter för att placera det nedre högra hörnet. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Typ</guilabel
@@ -1261,7 +1262,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att rita en ellips eller rektangel omkring ett valt område. </para>
+>Ritar en ellips eller rektangel omkring ett valt område. </para>
 					  <para
 >Klicka på verktygsraden, klicka med vänster musknapp och håll nere för att placera övre vänstra hörnet av ellipsens omgivande rektangel, dra därefter för att placera det nedre högra hörnet. </para>
 					  <para
@@ -1300,15 +1301,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att rita en sluten plan figur med tre eller flera segment. Motsvarande kommentar kan visas genom att dubbelklicka inne i polygonen. </para>
+>Ritar en sluten figur med tre eller flera linjesegment. Motsvarande kommentar kan visas genom att dubbelklicka inne i polygonen. </para>
 					  <para
->Klicka på verktygsraden, klicka med vänster musknapp för att placera polygonens första hörn, dra därefter för att placera det andra hörnet. Fortsätt till hela polygonen har ritats till det första hörnet.Klicka två gånger om du vill lägga till en kommentar i polygonen. Skriv in kommentarens text och klicka på <guibutton
+>Klicka på verktygsraden, klicka sedan med vänster musknapp för att placera polygonens första hörn, dra därefter för att placera det andra hörnet. Fortsätt tills hela polygonen har ritats och anslut tillbaka till det första hörnet.Klicka två gånger om du vill lägga till en anmärkning i polygonen. Skriv in anmärkningens text och klicka på <guibutton
 >Ok</guibutton
-> för att spara kommentaren, <guibutton
->Avbryt</guibutton
-> för att avbryta inmatningen av kommentaren, eller <guibutton
+> för att spara anmärkningen, <guibutton
 >Rensa</guibutton
-> för att rensa kommentaren. </para>
+> för att rensa anmärkningen, eller <guibutton
+>Avbryt</guibutton
+> för att avbryta inmatningen av anmärkningen. </para>
 					  <para
 >Det är möjligt att definiera <guilabel
 >Färg</guilabel
@@ -1339,7 +1340,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->För att markera texten eller bilden med en fördefinierad form. </para>
+>Infogar en fördefinierad form i dokumentet. </para>
 					  <para
 >Klicka på verktygsknappen för att välja en stämpel i kombinationslistan, och klicka därefter med vänster musknapp för att placera stämpeln. </para>
 					  <para
@@ -1367,16 +1368,16 @@ Context menu actions like Rename Bookmarks etc.)
 > kan egna kommentarer läggas till, såsom egna stämplar, textmarkeringar, en geometrisk form med inre färg för att markera områden, etc. </para>
                                   <note>
                                       <para
->Det är möjligt att lägga till &latex;-kod i kommentartexten. Lägg till <userinput
+>Det är möjligt att lägga till &latex;-kod i kommentartexten. För att göra det, lägg till <userinput
 >$$<replaceable
 >kod</replaceable
 >$$</userinput
 > i kommentartexten, där <replaceable
 >kod</replaceable
-> är vilken giltig &latex;-ekvation som helst, och följ instruktionerna på skärmen för att återge den med en &latex;-distribution installerad på systemet. </para>
+> är vilken giltig &latex;-ekvation som helst. Följ instruktionerna som visas på skärmen för att återge den med en &latex;-distribution installerad på systemet. </para>
                                   </note>
 				<para
->Det är möjligt att anpassa de nuvarande verktygsalternativen genom att använda själva kommentarverktygsraden. Tabellen nedan beskriver exakt vad den normala uppsättningen knappar på kommentarverktygsraden gör. </para>
+>Det är möjligt att anpassa det valda verktyget genom att använda kommentarverktygsraden själv: </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1406,7 +1407,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att välja bredden i kombinationslistan. </para>
+>Klicka på knappen för att välja bredden i kombinationslistan. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1430,7 +1431,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att välj text- eller kantfärg på kommentaren. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
+>Klicka på knappen för att välja text- eller kantfärg på kommentaren. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
 >Egen färg...</guimenuitem
 > för att visa färgvalsdialogrutan. </para>
 					</entry>
@@ -1451,7 +1452,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att välj fyllnadsfärg på kommentaren. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
+>Klicka på verktygsknappen för att välj kommentarens fyllnadsfärg. Du kan välja en av de fördefinierade färgerna eller klicka på alternativet <guimenuitem
 >Egen färg...</guimenuitem
 > för att visa färgvalsdialogrutan. </para>
 					</entry>
@@ -1472,9 +1473,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att välja kommentarens grad av ogenomskinlighet från kombinationslistan (<guimenuitem
+>Klicka på knappen för att välja kommentarens ogenomskinlighet från kombinationslistan (<guimenuitem
 >100 %</guimenuitem
-> är för ogenomskinliga kommentarer). </para>
+> skapar ogenomskinliga kommentarer). </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1493,7 +1494,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att visa dialogrutan för teckensnittsval. </para>
+>Klicka på knappen för att visa dialogrutan för teckensnittsval. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1512,14 +1513,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicka på verktygsknappen för att visa den allmänna inställningsdialogrutan för kommentaren. </para>
+>Klicka på knappen för att visa den allmänna inställningsdialogrutan för kommentaren. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->Det finns tre ytterligare funktionsknappar på den vanliga kommentarverktygsraden. </para>
+>Det finns tre ytterligare funktionsknappar på kommentarverktygsraden: </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1572,7 +1573,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->När det är markerat behålls det aktuella kommentarverktyget aktivt efter användning. </para>
+>När det är markerat, behålls det aktuella kommentarverktyget aktivt efter användning. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1611,10 +1612,10 @@ Context menu actions like Rename Bookmarks etc.)
 > i den sammanhangsberoende menyn. </para>
 				<note>
 					<para
->Att aktivera kommentarverktygsraden gör att du byter till bläddringsverktyget. </para>
+>Aktivera kommentarverktygsraden byter automatiskt till bläddringsläge. </para>
 				</note>
 				<para
->Du kan avsluta kommentaren när som helst genom att klicka på knappen för kommentaren som håller på att skapas, eller genom att trycka på tangenten <keycap
+>Du kan avsluta kommentaren när som helst genom att klicka på knappen för kommentaren som håller på att skapas igen, eller genom att trycka på tangenten <keycap
 >Esc</keycap
 >. </para>
 				<para
@@ -1622,7 +1623,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guilabel
 >Kommentarer</guilabel
 ></link
-> i &okular;s inställningsdialogruta. Sidan <guilabel
+> i &okular;s inställningsdialogruta som sin författare. Sidan <guilabel
 >Kommentarer</guilabel
 > kan också användas för att anpassa innehållet i kommentarverktygsraden. </para>
 			</sect2>
@@ -1630,23 +1631,31 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Ta bort kommentarer</title>
 				<para
->För att ta bort en kommentar, klicka bara på den med höger musknapp och välj <guimenuitem
+>För att ta bort en kommentar, välj först bläddringsverktyget (<menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Bläddra</guimenuitem
+></menuchoice
+>) och klicka sedan på den med höger musknapp och välj <guimenuitem
 >Ta bort</guimenuitem
 > eller markera en kommentar genom att använda vänster musknapp och tryck på tangenten Delete. </para>
 				<para
 >När kommentaren tas bort kommer dess fönster att stängas om det är öppet. </para>
-				<note>
-					<para
->Alternativet kunde inte aktiveras eftersom dokumentet tillåter inte att kommentarer tas bort. </para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Redigera kommentarer</title>
 				<para
->För att redigera en kommentar, klicka på den med höger musknapp och välj <guimenuitem
+>För att redigera en kommentar, välj först bläddringsverktyget (<menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Bläddra</guimenuitem
+></menuchoice
+>) och klicka sedan på en kommentar med höger musknapp och välj <guimenuitem
 >Egenskaper</guimenuitem
->. En dialogruta visas med allmänna kommentarinställningar (som färg och ogenomskinlighet, upphovsman, etc.) och inställningar specifika för kommentartypen. </para>
+>. En dialogruta dyker upp med allmänna kommentarinställningar (som färg och ogenomskinlighet, upphovsman, etc.) och inställningar specifika för kommentartypen. </para>
 				<screenshot>
 				<screeninfo
 >Dialogruta för kommentaregenskaper</screeninfo>
@@ -1665,11 +1674,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Om du klickar med vänster musknapp på en kommentar markeras den. Grepp för storleksändring visas på markeringsrektangeln. När markören hålls över ett av de åtta greppen för storleksändring ändras markörens form för att ange storleksändringsläget. Klicka på vilket annat ställe som helst i kommentaren för att flytta den. Att trycka på Esc eller klicka på ett område utanför kommentaren avbryter markeringen. </para>
 				<para
->Storleksändring gäller bara för kommentartyperna Fritextkommentar, Skrivmaskinstext, Stämpel och Ellips.</para>
+>Storleksändring är bara tillgänglig för kommentartyperna Fritextkommentar, Skrivmaskinstext, Stämpel och Ellips.</para>
 
 				<note>
 					<para
->Beroende på dokumentets rättigheter (typiskt för PDF-dokument), kanske vissa alternativ är inaktiverade. </para>
+>vissa alternativ kan vara inaktiverade beroende på dokumentets rättigheter (det påverkar typiskt bara vissa PDF-dokument). </para>
 				</note>
 			</sect2>
 		</sect1>

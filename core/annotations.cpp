@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <QApplication>
 #include <QColor>
+#include <QFile>
 #include <QIcon>
 #include <QPainter>
 #include <QStandardPaths>
@@ -192,11 +193,16 @@ QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool kee
     }
 
     // _name is a path (do this before loading as icon name to avoid some rare weirdness )
-    QPixmap pixmap;
-    pixmap.load(nameOrPath);
-    if (!pixmap.isNull()) {
-        pixmap = pixmap.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        return pixmap;
+    // Check that it exists up front. While pixmap.load() fails, if it is
+    // actually an icon from theme, the loader will try all supported
+    // extensions in current workdir before failing
+    if (QFile::exists(nameOrPath)) {
+        QPixmap pixmap;
+        pixmap.load(nameOrPath);
+        if (!pixmap.isNull()) {
+            pixmap = pixmap.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            return pixmap;
+        }
     }
 
     // _name is an icon name

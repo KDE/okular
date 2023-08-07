@@ -42,7 +42,7 @@ if(Poppler_Qt5_FOUND)
         TEST_NAME "jsfunctionstest"
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
     )
-    
+
     ecm_add_test(formattest.cpp
         TEST_NAME "formattest"
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
@@ -58,6 +58,11 @@ if(Poppler_Qt5_FOUND)
         LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
     )
 endif()
+
+ecm_add_test(suggestedfilenametest.cpp
+    TEST_NAME "suggestedfilenametest"
+    LINK_LIBRARIES Qt5::Test okularcore KF5::I18n
+)
 
 ecm_add_test(documenttest.cpp
     TEST_NAME "documenttest"

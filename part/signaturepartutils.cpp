@@ -381,10 +381,8 @@ QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc)
     const QString mimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
 
     const QUrl currentFileUrl = doc->currentDocument();
-    const QFileInfo currentFileInfo(currentFileUrl.fileName());
     const QString localFilePathIfAny = currentFileUrl.isLocalFile() ? QFileInfo(currentFileUrl.path()).canonicalPath() + QLatin1Char('/') : QString();
-    const QString newFileName =
-        localFilePathIfAny + i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", currentFileInfo.baseName(), currentFileInfo.completeSuffix());
+    const QString newFileName = localFilePathIfAny + getSuggestedFileNameForSignedFile(currentFileUrl.fileName(), mimeType.preferredSuffix());
 
     return QFileDialog::getSaveFileName(pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
 }

@@ -10,11 +10,13 @@
 #define OKULAR_SIGNATUREPARTUTILS_H
 
 #include <QDialog>
+#include <QFileInfo>
 #include <QStyledItemDelegate>
 #include <memory>
 #include <optional>
 
 #include "gui/signatureguiutils.h"
+#include <KLocalizedString>
 
 class PageView;
 class Ui_SelectCertificateDialog;
@@ -40,6 +42,26 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(SigningInformationOptions);
 std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, SigningInformationOptions opts);
 
 QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc);
+
+inline QString getSuggestedFileNameForSignedFile(const QString &orig, const QString &suffix)
+{
+    QFileInfo info(orig);
+    QString baseName;
+    if (info.suffix() == suffix) {
+        // we are in a basic plain situation with foo.pdf, or maybe foo-1.2.3.pdf
+        baseName = info.completeBaseName();
+    } else if (auto completeBaseName = info.completeBaseName(); completeBaseName.endsWith(suffix)) {
+        // This could be a case of e.g. pdf.gz; we don't really write those
+        // so chop it off.
+        info = QFileInfo(completeBaseName);
+        baseName = info.completeBaseName();
+    } else {
+        // Unsure what's going on here; maybe a pdf file with a weird or no extension.
+        baseName = info.completeBaseName();
+    }
+
+    return i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", baseName, suffix);
+}
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
 
 class KeyDelegate : public QStyledItemDelegate

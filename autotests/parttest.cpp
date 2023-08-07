@@ -45,6 +45,9 @@
 #include <QToolBar>
 #include <QTreeView>
 #include <QUrl>
+#ifdef Q_OS_WIN
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+#endif
 
 namespace Okular
 {
@@ -151,6 +154,9 @@ bool PartTest::openDocument(Okular::Part *part, const QString &filePath)
 
 void PartTest::init()
 {
+#ifdef Q_OS_WIN
+    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+#endif
     // Default settings for every test
     Okular::Settings::self()->setDefaults();
 

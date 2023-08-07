@@ -1,5 +1,6 @@
 variables:
   DEBIAN_FRONTEND: "noninteractive"
+  QT_QPA_PLATFORM: "offscreen"
 
 include:
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/android.yml

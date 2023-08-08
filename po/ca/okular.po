@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-06 00:44+0000\n"
-"PO-Revision-Date: 2023-07-24 20:03+0300\n"
+"POT-Creation-Date: 2023-08-08 00:44+0000\n"
+"PO-Revision-Date: 2023-08-07 18:00+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2918,6 +2918,7 @@ msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
 msgstr "Activa la correcció de lletres del text"
 
+# skip-rule: punctuation-period-no
 #: part/dlgperformance.cpp:77
 #, kde-format
 msgid ""
@@ -2927,6 +2928,7 @@ msgstr ""
 "Mantén l'ús de la memòria tan baix com sigui possible. No reutilitza res "
 "(per a sistemes amb poca memòria)."
 
+# skip-rule: punctuation-period-no
 #: part/dlgperformance.cpp:80
 #, kde-format
 msgid ""
@@ -2937,6 +2939,7 @@ msgstr ""
 "propera pàgina i accelera les cerques (normalment, per a sistemes amb 2 GB "
 "de memòria)."
 
+# skip-rule: punctuation-period-no
 #: part/dlgperformance.cpp:83
 #, kde-format
 msgid ""
@@ -2946,6 +2949,7 @@ msgstr ""
 "Ho manté tot en memòria. Precarrega les properes pàgines. Accelera les "
 "cerques (per a sistemes amb més de 4 GB de memòria)."
 
+# skip-rule: punctuation-period-no
 #: part/dlgperformance.cpp:87
 #, no-c-format, kde-format
 msgid ""
@@ -3913,7 +3917,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signa"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -5454,16 +5458,16 @@ msgstr "Introduïu la contrasenya del document"
 
 #: part/signaturepartutils.cpp:387
 #, kde-format
+msgid "Save Signed File As"
+msgstr "Desa el fitxer signat com a"
+
+#: part/signaturepartutils.h:63
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
 msgstr "%1_signat.%2"
-
-#: part/signaturepartutils.cpp:389
-#, kde-format
-msgid "Save Signed File As"
-msgstr "Desa el fitxer signat com a"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format

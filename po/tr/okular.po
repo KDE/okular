@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-06 02:30+0000\n"
+"POT-Creation-Date: 2023-08-08 02:35+0000\n"
 "PO-Revision-Date: 2023-08-02 00:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3909,7 +3909,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "İmzala"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -5444,16 +5444,16 @@ msgstr "Belge parolasını girin"
 
 #: part/signaturepartutils.cpp:387
 #, kde-format
+msgid "Save Signed File As"
+msgstr "İmzalı Dosyayı Farklı Kaydet"
+
+#: part/signaturepartutils.h:63
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
 msgstr "%1_imzalı.%2"
-
-#: part/signaturepartutils.cpp:389
-#, kde-format
-msgid "Save Signed File As"
-msgstr "İmzalı Dosyayı Farklı Kaydet"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format

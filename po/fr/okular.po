@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-06 02:30+0000\n"
+"POT-Creation-Date: 2023-08-08 02:35+0000\n"
 "PO-Revision-Date: 2023-07-17 22:06+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
@@ -3944,7 +3944,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signer"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:415
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -5502,16 +5502,16 @@ msgstr "Saisissez le mot de passe du document"
 
 #: part/signaturepartutils.cpp:387
 #, kde-format
+msgid "Save Signed File As"
+msgstr "Enregistrer le fichier signé sous"
+
+#: part/signaturepartutils.h:63
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
 msgstr "%1_signé.%2"
-
-#: part/signaturepartutils.cpp:389
-#, kde-format
-msgid "Save Signed File As"
-msgstr "Enregistrer le fichier signé sous"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format

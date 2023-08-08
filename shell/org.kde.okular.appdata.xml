@@ -70,7 +70,7 @@
   <summary xml:lang="eu">Dokumentu erakuslea</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de documents</summary>
-  <summary xml:lang="gl">Visor de documentos</summary>
+  <summary xml:lang="gl">Visor de documentos.</summary>
   <summary xml:lang="hi">दस्तावेज़ प्रदर्शक</summary>
   <summary xml:lang="hu">Dokumentummegjelenítő</summary>
   <summary xml:lang="ia">Visor de documento</summary>
@@ -364,7 +364,7 @@
       <caption xml:lang="eu">Eskuliburua Okularren irakurtzea</caption>
       <caption xml:lang="fi">Oppaan lukeminen Okularissa</caption>
       <caption xml:lang="fr">Lecture d'un manuel dans Okular</caption>
-      <caption xml:lang="gl">Ler o manual en Okular</caption>
+      <caption xml:lang="gl">Ler o manual en Okular.</caption>
       <caption xml:lang="hi">ओकुलर में सहाय्य पुस्तिका पढ़ना</caption>
       <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>

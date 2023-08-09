@@ -40,6 +40,7 @@ if (ANDROID)
         dialog-close
         document-open
         help-about-symbolic
+        okular
         view-preview
         view-table-of-contents-ltr
     )

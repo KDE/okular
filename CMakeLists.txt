@@ -189,6 +189,12 @@ if (BUILD_MOBILE)
         PURPOSE "Required at runtime by the mobile app"
         TYPE RUNTIME
     )
+    find_package(KF5KirigamiAddons)
+    set_package_properties(KF5KirigamiAddons PROPERTIES
+        DESCRIPTION "A set of widgets for Kirigami along with  code to support them"
+        PURPOSE "Required at runtime by the mobile app"
+        TYPE RUNTIME
+    )
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)

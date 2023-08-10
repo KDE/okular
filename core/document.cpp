@@ -47,7 +47,6 @@
 #include <QUndoCommand>
 #include <QWindow>
 #include <QtAlgorithms>
-#include <private/qstringiterator_p.h>
 
 #include <KApplicationTrader>
 #include <KAuthorized>
@@ -4388,25 +4387,25 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
 
 QString DocumentPrivate::diff(const QString &oldVal, const QString &newVal)
 {
-    QString diff;
+    // We need to consider unicode surrogate pairs and others so working
+    // with QString directly, even with the private QStringIterator is
+    // not that simple to get right
+    // so let's just convert to ucs4
+    // also, given that toUcs4 is either a QList or a QVector depending on
+    // qt version, let's try keep it very auto-typed to ease Qt6 porting
 
-    QStringIterator oldIt(oldVal);
-    QStringIterator newIt(newVal);
+    auto oldUcs4 = oldVal.toUcs4();
+    auto newUcs4 = newVal.toUcs4();
 
-    while (oldIt.hasNext() && newIt.hasNext()) {
-        QChar oldToken = oldIt.next();
-        QChar newToken = newIt.next();
-
-        if (oldToken != newToken) {
-            diff += newToken;
-            break;
+    for (int i = 0; i < std::min(oldUcs4.size(), newUcs4.size()); i++) {
+        if (oldUcs4.at(i) != newUcs4.at(i)) {
+            return QString::fromUcs4(newUcs4.mid(i).constData(), newUcs4.size() - i);
         }
     }
-
-    while (newIt.hasNext()) {
-        diff += newIt.next();
+    if (oldUcs4.size() < newUcs4.size()) {
+        return QString::fromUcs4(newUcs4.mid(oldUcs4.size()).constData(), newUcs4.size() - oldUcs4.size());
     }
-    return diff;
+    return {};
 }
 
 void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue)

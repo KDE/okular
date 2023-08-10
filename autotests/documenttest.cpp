@@ -164,6 +164,12 @@ void DocumentTest::testDiff_data()
     QTest::addRow("unicode") << "☮🤌"
                              << "☮🤌❤️"
                              << "❤️";
+    QTest::addRow("unicode2") << "☮"
+                              << "☮🤌❤️"
+                              << "🤌❤️";
+    QTest::addRow("unicode3") << "🤍"
+                              << "🤌"
+                              << "🤌";
 }
 
 void DocumentTest::testDiff()

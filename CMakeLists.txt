@@ -471,7 +471,6 @@ PUBLIC  # these are included from the installed headers
     KF5::ConfigGui
     Qt5::PrintSupport
     Qt5::Widgets
-    Qt5::CorePrivate
 )
 if (Phonon4Qt5_FOUND)
     target_link_libraries(okularcore PRIVATE Phonon::phonon4qt5)

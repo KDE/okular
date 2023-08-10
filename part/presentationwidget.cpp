@@ -829,8 +829,8 @@ void PresentationWidget::paintEvent(QPaintEvent *pe)
     }
 
     // check painting rect consistency
-    QRect r = pe->rect().intersected(QRect(QPoint(0, 0), geometry().size()));
-    if (r.isNull()) {
+    QRect paintRect = pe->rect().intersected(QRect(QPoint(0, 0), geometry().size()));
+    if (paintRect.isNull()) {
         return;
     }
 
@@ -1819,113 +1819,94 @@ const Okular::PageTransition PresentationWidget::defaultTransition(int type) con
         Okular::PageTransition transition(Okular::PageTransition::Blinds);
         transition.setAlignment(Okular::PageTransition::Horizontal);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::BlindsVertical: {
         Okular::PageTransition transition(Okular::PageTransition::Blinds);
         transition.setAlignment(Okular::PageTransition::Vertical);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::BoxIn: {
         Okular::PageTransition transition(Okular::PageTransition::Box);
         transition.setDirection(Okular::PageTransition::Inward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::BoxOut: {
         Okular::PageTransition transition(Okular::PageTransition::Box);
         transition.setDirection(Okular::PageTransition::Outward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::Dissolve: {
         return Okular::PageTransition(Okular::PageTransition::Dissolve);
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::GlitterDown: {
         Okular::PageTransition transition(Okular::PageTransition::Glitter);
         transition.setAngle(270);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::GlitterRight: {
         Okular::PageTransition transition(Okular::PageTransition::Glitter);
         transition.setAngle(0);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::GlitterRightDown: {
         Okular::PageTransition transition(Okular::PageTransition::Glitter);
         transition.setAngle(315);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::Random: {
         return defaultTransition(QRandomGenerator::global()->bounded(18));
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::SplitHorizontalIn: {
         Okular::PageTransition transition(Okular::PageTransition::Split);
         transition.setAlignment(Okular::PageTransition::Horizontal);
         transition.setDirection(Okular::PageTransition::Inward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::SplitHorizontalOut: {
         Okular::PageTransition transition(Okular::PageTransition::Split);
         transition.setAlignment(Okular::PageTransition::Horizontal);
         transition.setDirection(Okular::PageTransition::Outward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::SplitVerticalIn: {
         Okular::PageTransition transition(Okular::PageTransition::Split);
         transition.setAlignment(Okular::PageTransition::Vertical);
         transition.setDirection(Okular::PageTransition::Inward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::SplitVerticalOut: {
         Okular::PageTransition transition(Okular::PageTransition::Split);
         transition.setAlignment(Okular::PageTransition::Vertical);
         transition.setDirection(Okular::PageTransition::Outward);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::WipeDown: {
         Okular::PageTransition transition(Okular::PageTransition::Wipe);
         transition.setAngle(270);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::WipeRight: {
         Okular::PageTransition transition(Okular::PageTransition::Wipe);
         transition.setAngle(0);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::WipeLeft: {
         Okular::PageTransition transition(Okular::PageTransition::Wipe);
         transition.setAngle(180);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::WipeUp: {
         Okular::PageTransition transition(Okular::PageTransition::Wipe);
         transition.setAngle(90);
         return transition;
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::Fade: {
         return Okular::PageTransition(Okular::PageTransition::Fade);
-        break;
     }
     case Okular::Settings::EnumSlidesTransition::NoTransitions:
     case Okular::Settings::EnumSlidesTransition::Replace:
     default:
         return Okular::PageTransition(Okular::PageTransition::Replace);
-        break;
     }
     // should not happen, just make gcc happy
     return Okular::PageTransition();

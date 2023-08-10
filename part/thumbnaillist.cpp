@@ -202,6 +202,7 @@ ThumbnailListPrivate::ThumbnailListPrivate(ThumbnailList *qq, Okular::Document *
     , m_delayTimer(nullptr)
     , m_bookmarkOverlay(nullptr)
     , m_vectorIndex(0)
+    , m_pageCurrentlyGrabbed(0)
 {
     setMouseTracking(true);
     m_mouseGrabItem = nullptr;
@@ -422,12 +423,11 @@ void ThumbnailList::notifyContentsCleared(int changedFlags)
 
 void ThumbnailList::notifyVisibleRectsChanged()
 {
-    bool found = false;
     const QVector<Okular::VisiblePageRect *> &visibleRects = d->m_document->visiblePageRects();
     QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for (; tIt != tEnd; ++tIt) {
-        found = false;
+        bool found = false;
         QVector<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
         for (; (vIt != vEnd) && !found; ++vIt) {
             if ((*tIt)->pageNumber() == (*vIt)->pageNumber) {
@@ -604,7 +604,7 @@ bool ThumbnailList::viewportEvent(QEvent *e)
 {
     switch (e->type()) {
     case QEvent::Resize: {
-        d->viewportResizeEvent((QResizeEvent *)e);
+        d->viewportResizeEvent(static_cast<QResizeEvent *>(e));
         break;
     }
     default:;
@@ -817,7 +817,7 @@ void ThumbnailListPrivate::mouseReleaseEvent(QMouseEvent *e)
 void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
 {
     if (e->buttons() == Qt::NoButton) {
-        ThumbnailWidget *item = itemFor(e->pos());
+        const ThumbnailWidget *item = itemFor(e->pos());
         if (!item) { // mouse on the spacing between items
             e->ignore();
             return;
@@ -948,7 +948,7 @@ void ThumbnailListPrivate::contextMenuEvent(QContextMenuEvent *e)
 
 void ThumbnailWidget::paint(QPainter &p, const QRect _clipRect)
 {
-    const int width = m_pixmapWidth + m_margin;
+    const int itemWidth = m_pixmapWidth + m_margin;
     QRect clipRect = _clipRect;
     const QPalette pal = m_parent->palette();
 
@@ -956,7 +956,7 @@ void ThumbnailWidget::paint(QPainter &p, const QRect _clipRect)
     const QColor fillColor = m_selected ? pal.color(QPalette::Active, QPalette::Highlight) : pal.color(QPalette::Active, QPalette::Base);
     p.fillRect(clipRect, fillColor);
     p.setPen(m_selected ? pal.color(QPalette::Active, QPalette::HighlightedText) : pal.color(QPalette::Active, QPalette::Text));
-    p.drawText(0, m_pixmapHeight + (m_margin - 3), width, m_labelHeight, Qt::AlignCenter, QString::number(m_labelNumber));
+    p.drawText(0, m_pixmapHeight + (m_margin - 3), itemWidth, m_labelHeight, Qt::AlignCenter, QString::number(m_labelNumber));
 
     // draw page outline and pixmap
     if (clipRect.top() < m_pixmapHeight + m_margin) {

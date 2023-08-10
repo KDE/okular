@@ -66,6 +66,7 @@ public:
     QWidget *failMessage;
 
     KSharedConfig::Ptr config;
+    Q_DISABLE_COPY(FilePrinterPreviewPrivate)
 };
 
 void FilePrinterPreviewPrivate::getPart()

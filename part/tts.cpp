@@ -40,6 +40,7 @@ public:
     // Which speech engine was used when above object was created.
     // When the setting changes, we need to stop speaking and recreate.
     QString speechEngine;
+    Q_DISABLE_COPY(Private)
 };
 
 OkularTTS::OkularTTS(QObject *parent)

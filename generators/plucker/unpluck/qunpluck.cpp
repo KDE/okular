@@ -595,19 +595,17 @@ typedef struct {
     int attributes;
 } ParagraphInfo;
 
-static ParagraphInfo *ParseParagraphInfo(unsigned char *bytes, int *nparas)
+static std::vector<ParagraphInfo> ParseParagraphInfo(unsigned char *bytes)
 {
-    ParagraphInfo *paragraph_info;
-    int j;
-    int n;
+    std::vector<ParagraphInfo> paragraph_info;
 
-    n = (bytes[2] << 8) + bytes[3];
-    paragraph_info = (ParagraphInfo *)malloc(sizeof(ParagraphInfo) * n);
-    for (j = 0; j < n; j++) {
-        paragraph_info[j].size = (bytes[8 + (j * 4) + 0] << 8) + bytes[8 + (j * 4) + 1];
-        paragraph_info[j].attributes = (bytes[8 + (j * 4) + 2] << 8) + bytes[8 + (j * 4) + 3];
+    int n = (bytes[2] << 8) + bytes[3];
+    paragraph_info.reserve(n);
+    for (int j = 0; j < n; j++) {
+        const int size = (bytes[8 + (j * 4) + 0] << 8) + bytes[8 + (j * 4) + 1];
+        const int attributes = (bytes[8 + (j * 4) + 2] << 8) + bytes[8 + (j * 4) + 3];
+        paragraph_info.emplace_back(ParagraphInfo {size, attributes});
     }
-    *nparas = n;
     return paragraph_info;
 }
 
@@ -618,7 +616,6 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
     unsigned char *para_start;
     unsigned char *data;
     unsigned char *start;
-    ParagraphInfo *paragraphs;
     bool first_record_of_page = true;
     bool current_link;
     bool current_italic;
@@ -626,7 +623,7 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
     bool current_underline;
     int fctype;
     int fclen;
-    int para_index;
+    size_t para_index;
     int para_len;
     int textlen;
     int data_len;
@@ -635,38 +632,35 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
     //     int             current_alignment;
     //     int             current_left_margin;
     //     int             current_right_margin;
-    int nparagraphs;
     //     long            current_color;
 
     record_index = id;
 
-    paragraphs = ParseParagraphInfo(bytes, &nparagraphs);
+    std::vector<ParagraphInfo> paragraphs = ParseParagraphInfo(bytes);
     start = bytes + 8 + ((bytes[2] << 8) + bytes[3]) * 4;
 
-    for (para_index = 0, ptr = start, run = start; para_index < nparagraphs; para_index++) {
+    for (para_index = 0, ptr = start, run = start; para_index < paragraphs.size(); para_index++) {
         para_len = paragraphs[para_index].size;
 
         /* If the paragraph is the last in the record, and it consists
            of a link to the next record in the logical page, we trim off
            the paragraph and instead insert the whole page */
 
-        if (((para_index + 1) == nparagraphs) && (para_len == (sizeof("Click here for the next part") + 5)) && (*ptr == 0) && (ptr[1] == ((PLKR_TFC_LINK << 3) + 2)) && (strcmp((char *)(ptr + 4), "Click here for the next part") == 0)) {
+        if (((para_index + 1) == paragraphs.size()) && (para_len == (sizeof("Click here for the next part") + 5)) && (*ptr == 0) && (ptr[1] == ((PLKR_TFC_LINK << 3) + 2)) &&
+            (strcmp((char *)(ptr + 4), "Click here for the next part") == 0)) {
             record_index = (ptr[2] << 8) + ptr[3];
             if ((data = plkr_GetRecordBytes(doc, record_index, &data_len, &type)) == nullptr) {
                 //                ShowWarning ("Can't open record %d!", record_index);
-                free(paragraphs);
                 return false;
             } else if (!(type == PLKR_DRTYPE_TEXT_COMPRESSED || type == PLKR_DRTYPE_TEXT)) {
                 //                ShowWarning ("Bad record type %d in record linked from end of record %d", type, id);
-                free(paragraphs);
                 return false;
             }
             first_record_of_page = false;
             para_index = 0;
             ptr = data + 8 + ((data[2] << 8) + data[3]) * 4;
             run = ptr;
-            free(paragraphs);
-            paragraphs = ParseParagraphInfo(data, &nparagraphs);
+            paragraphs = ParseParagraphInfo(data);
             para_len = paragraphs[para_index].size;
             MarkRecordDone(record_index);
             SetPageID(record_index, id);
@@ -679,11 +673,11 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
             continue;
         }
 
-        QTextCharFormat format(context->cursor->charFormat());
+        QTextCharFormat charFormat(context->cursor->charFormat());
         QTextBlockFormat blockFormat(context->cursor->blockFormat());
         blockFormat.setAlignment(Qt::AlignLeft);
         context->cursor->insertBlock(blockFormat);
-        context->cursor->setCharFormat(format);
+        context->cursor->setCharFormat(charFormat);
 
         mNamedTargets.insert(QStringLiteral("para:%1-%2").arg(record_index).arg(para_index), QPair<int, QTextBlock>(GetPageID(record_index), context->cursor->block()));
 
@@ -988,7 +982,6 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
             context->cursor->setCharFormat(format);
         }
     }
-    free(paragraphs);
     return true;
 }
 

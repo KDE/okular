@@ -55,8 +55,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton,
             QString editStr = i18nc("Give the user a hint, that it enabled the option --editor-cmd together with the current value of the option.",
                                     "The editor was set by the command line to \n %1 \nIf you want to use the setting, start okular without the option --editor-cmd",
                                     editCmd);
-            auto m_editor = new QLabel(editStr, this);
-            addPage(m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
+            auto editor = new QLabel(editStr, this);
+            addPage(editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
         }
     }
 #ifdef OKULAR_DEBUG_CONFIGPAGE

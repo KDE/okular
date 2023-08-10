@@ -148,10 +148,10 @@ void EmbeddedFilesDialog::attachViewContextMenu()
     }
 
     QMenu menu(this);
-    QAction *saveAsAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18nc("@action:inmenu", "&Save As..."));
-    QAction *viewAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@action:inmenu", "&View..."));
+    const QAction *saveAsAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18nc("@action:inmenu", "&Save As..."));
+    const QAction *viewAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@action:inmenu", "&View..."));
 
-    QAction *act = menu.exec(QCursor::pos());
+    const QAction *act = menu.exec(QCursor::pos());
     if (!act) {
         return;
     }

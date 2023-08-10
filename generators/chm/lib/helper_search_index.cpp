@@ -337,13 +337,12 @@ QList<QUrl> Index::query(const QStringList &terms, const QStringList &termSeq, c
 {
     QList<Term> termList;
 
-    QStringList::ConstIterator it = terms.begin();
-    for (it = terms.begin(); it != terms.end(); ++it) {
+    for (const auto &term : terms) {
         Entry *e = nullptr;
 
-        if (dict[*it]) {
-            e = dict[*it];
-            termList.append(Term(*it, e->documents.count(), e->documents));
+        if (dict[term]) {
+            e = dict[term];
+            termList.append(Term(term, e->documents.count(), e->documents));
         } else {
             return QList<QUrl>();
         }

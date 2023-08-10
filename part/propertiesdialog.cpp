@@ -223,7 +223,7 @@ void PropertiesDialog::showFontsMenu(const QPoint pos)
     if (index.data(IsExtractableRole).toBool()) {
         QMenu *menu = new QMenu(this);
         menu->addAction(i18nc("@action:inmenu", "&Extract Font"));
-        QAction *result = menu->exec(view->viewport()->mapToGlobal(pos));
+        const QAction *result = menu->exec(view->viewport()->mapToGlobal(pos));
         if (result) {
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n("Where do you want to save %1?", fi.name());
@@ -370,7 +370,6 @@ QVariant FontsListModel::data(const QModelIndex &index, int role) const
                 return i18nc("Replacing missing font with another one", "%1 (substituting with %2)", fontname, substituteName);
             }
             return fontname.isEmpty() ? i18nc("font name not available (empty)", "[n/a]") : fontname;
-            break;
         }
         case 1:
             return descriptionForFontType(m_fonts.at(index.row()).type());
@@ -392,7 +391,6 @@ QVariant FontsListModel::data(const QModelIndex &index, int role) const
         tooltip += QLatin1String("<br />") + i18n("Embedded: %1", descriptionForEmbedType(m_fonts.at(index.row()).embedType()));
         tooltip += QLatin1String("</html>");
         return tooltip;
-        break;
     }
     case IsExtractableRole: {
         return m_fonts.at(index.row()).canBeExtracted();

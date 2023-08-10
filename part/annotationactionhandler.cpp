@@ -437,9 +437,9 @@ KSelectAction *AnnotationActionHandlerPrivate::colorPickerAction(AnnotationColor
     aColorPicker->setToolBarMode(KSelectAction::MenuMode);
     for (const auto &colorNameValue : colorList) {
         QColor color(colorNameValue.second);
-        QAction *aColor = new QAction(GuiUtils::createColorIcon({color}, QIcon(), GuiUtils::VisualizeTransparent), colorNameValue.first.toString(), q);
-        aColorPicker->addAction(aColor);
-        QObject::connect(aColor, &QAction::triggered, q, [this, colorType, color]() { slotSetColor(colorType, color); });
+        QAction *colorAction = new QAction(GuiUtils::createColorIcon({color}, QIcon(), GuiUtils::VisualizeTransparent), colorNameValue.first.toString(), q);
+        aColorPicker->addAction(colorAction);
+        QObject::connect(colorAction, &QAction::triggered, q, [this, colorType, color]() { slotSetColor(colorType, color); });
     }
     QAction *aCustomColor = new QAction(QIcon::fromTheme(QStringLiteral("color-picker")), i18nc("@item:inlistbox", "Custom Color..."), q);
     aColorPicker->addAction(aCustomColor);

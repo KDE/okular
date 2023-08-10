@@ -186,12 +186,11 @@ void colorizeImage(QImage &grayImage, const QColor &color, unsigned int destAlph
     unsigned int pixels = grayImage.width() * grayImage.height();
     int red = color.red(), green = color.green(), blue = color.blue();
 
-    int source, sourceSat, sourceAlpha;
     for (unsigned int i = 0; i < pixels; ++i) { // optimize this loop keeping byte order into account
-        source = data[i];
-        sourceSat = qRed(source);
+        int source = data[i];
+        int sourceSat = qRed(source);
         int newR = qt_div_255(sourceSat * red), newG = qt_div_255(sourceSat * green), newB = qt_div_255(sourceSat * blue);
-        if ((sourceAlpha = qAlpha(source)) == 255) {
+        if (int sourceAlpha = qAlpha(source); sourceAlpha == 255) {
             // use destAlpha
             data[i] = qRgba(newR, newG, newB, destAlpha);
         } else {

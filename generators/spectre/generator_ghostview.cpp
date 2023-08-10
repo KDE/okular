@@ -117,12 +117,12 @@ Okular::Document::PrintError GSGenerator::print(QPrinter &printer)
 
     spectre_exporter_free(exporter);
 
-    const QString fileName = tf.fileName();
+    const QString printFileName = tf.fileName();
     tf.close();
 
     if (exportStatus == SPECTRE_STATUS_SUCCESS && endStatus == SPECTRE_STATUS_SUCCESS) {
         tf.setAutoRemove(false);
-        return Okular::FilePrinter::printFile(printer, fileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
+        return Okular::FilePrinter::printFile(printer, printFileName, document()->orientation(), Okular::FilePrinter::SystemDeletesFiles, Okular::FilePrinter::ApplicationSelectsPages, document()->bookmarkedPageRange());
     }
 
     return Okular::Document::UnknownPrintError;
@@ -189,7 +189,7 @@ bool GSGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
         }
         spectre_page_free(page);
         if (pageOrientation % 2 == 1) {
-            qSwap(width, height);
+            std::swap(width, height);
         }
         pagesVector[i] = new Okular::Page(i, width, height, orientation(pageOrientation));
     }

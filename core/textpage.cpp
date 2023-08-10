@@ -490,14 +490,13 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
 
     // case 3.a
     if (start == it) {
-        bool flagV = false;
         NormalizedRect rect;
 
         // selection type 01
         if (startC.y <= endC.y) {
             for (; it != itEnd; ++it) {
                 rect = (*it)->area;
-                rect.isBottom(startC) ? flagV = false : flagV = true;
+                bool flagV = !rect.isBottom(startC);
 
                 if (flagV && rect.isRight(startC)) {
                     start = it;
@@ -544,13 +543,12 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         it = tmpIt;
         itEnd = itEnd - 1;
 
-        bool flagV = false;
         NormalizedRect rect;
 
         if (startC.y <= endC.y) {
             for (; itEnd >= it; itEnd--) {
                 rect = (*itEnd)->area;
-                rect.isTop(endC) ? flagV = false : flagV = true;
+                bool flagV = !rect.isTop(endC);
 
                 if (flagV && rect.isLeft(endC)) {
                     end = itEnd;
@@ -1273,8 +1271,6 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
         // for every TinyTextEntity element in the line
         WordsWithCharacters::ConstIterator it = list.begin(), itEnd = list.end();
         QRect max_area1, max_area2;
-        QString before_max, after_max;
-
         // for every line
         for (; it != itEnd; it++) {
             const QRect area1 = (*it).area().roundedGeometry(pageWidth, pageHeight);
@@ -1289,8 +1285,6 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
                 max_area1 = area1;
                 max_area2 = area2;
                 maxSpace = space;
-                before_max = (*it).text();
-                after_max = (*(it + 1)).text();
             }
 
             if (space < minSpace && space != 0) {
@@ -1786,7 +1780,6 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
             break;
         }
     }
-    QString text;
     if (posIt != itEnd) {
         if ((*posIt)->text().simplified().isEmpty()) {
             return nullptr;
@@ -1817,6 +1810,7 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
             }
         }
         RegularAreaRect *ret = new RegularAreaRect();
+        QString foundWord;
         for (; posIt != itEnd; ++posIt) {
             const QString itText = (*posIt)->text();
             if (itText.simplified().isEmpty()) {
@@ -1824,16 +1818,16 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
             }
 
             ret->appendShape((*posIt)->area);
-            text += (*posIt)->text();
+            foundWord += (*posIt)->text();
             if (itText.right(1).at(0).isSpace()) {
-                if (!text.endsWith(QLatin1String("-\n"))) {
+                if (!foundWord.endsWith(QLatin1String("-\n"))) {
                     break;
                 }
             }
         }
 
         if (word) {
-            *word = text;
+            *word = foundWord;
         }
         return ret;
     } else {

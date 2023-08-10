@@ -2112,7 +2112,7 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
         m_wasSidebarVisible = m_sidebar->isSidebarVisible();
 
         // store if presentation view was open
-        m_wasPresentationOpen = ((PresentationWidget *)m_presentationWidget != nullptr);
+        m_wasPresentationOpen = (m_presentationWidget != nullptr);
 
         // preserves the toc state after reload
         m_toc->prepareForReload();
@@ -2550,7 +2550,7 @@ void Part::slotFind()
 {
     // when in presentation mode, there's already a search bar, taking care of
     // the 'find' requests
-    if ((PresentationWidget *)m_presentationWidget != nullptr) {
+    if (m_presentationWidget != nullptr) {
         m_presentationWidget->slotFind();
     } else {
         slotShowFindBar();
@@ -3280,7 +3280,7 @@ void Part::slotShowPresentation()
 void Part::slotHidePresentation()
 {
     if (m_presentationWidget) {
-        delete (PresentationWidget *)m_presentationWidget;
+        delete m_presentationWidget.data();
     }
 }
 
@@ -3402,7 +3402,7 @@ void Part::slotTogglePresentation()
         if (!m_presentationWidget) {
             m_presentationWidget = new PresentationWidget(widget(), m_document, m_presentationDrawingActions, actionCollection());
         } else {
-            delete (PresentationWidget *)m_presentationWidget;
+            delete m_presentationWidget.data();
         }
     }
 }

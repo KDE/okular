@@ -45,11 +45,11 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml(QString &html, const QColo
 
     // this searches for $$formula$$
     QRegularExpression rg(QStringLiteral("\\$\\$.+?\\$\\$"));
-    QRegularExpressionMatchIterator it = rg.globalMatch(html);
+    QRegularExpressionMatchIterator matchIt = rg.globalMatch(html);
 
     QMap<QString, QString> replaceMap;
-    while (it.hasNext()) {
-        QRegularExpressionMatch match = it.next();
+    while (matchIt.hasNext()) {
+        QRegularExpressionMatch match = matchIt.next();
         const QString matchedString = match.captured(0);
 
         QString formul = matchedString;

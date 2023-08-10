@@ -66,7 +66,7 @@ QImage FaxGenerator::image(Okular::PixmapRequest *request)
     int width = request->width();
     int height = request->height();
     if (request->page()->rotation() % 2 == 1) {
-        qSwap(width, height);
+        std::swap(width, height);
     }
 
     return m_img.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);

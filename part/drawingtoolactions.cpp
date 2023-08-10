@@ -133,12 +133,12 @@ void DrawingToolActions::loadTools()
 {
     const QStringList drawingTools = Okular::Settings::drawingTools();
 
-    QDomDocument doc;
-    QDomElement drawingDefinition = doc.createElement(QStringLiteral("drawingTools"));
+    QDomDocument main;
+    QDomElement drawingDefinition = main.createElement(QStringLiteral("drawingTools"));
     for (const QString &drawingXml : drawingTools) {
         QDomDocument entryParser;
         if (entryParser.setContent(drawingXml)) {
-            drawingDefinition.appendChild(doc.importNode(entryParser.documentElement(), true));
+            drawingDefinition.appendChild(main.importNode(entryParser.documentElement(), true));
         } else {
             qCWarning(OkularUiDebug) << "Skipping malformed quick selection XML in QuickSelectionTools setting";
         }
@@ -178,11 +178,11 @@ void DrawingToolActions::loadTools()
                 }
             }
 
-            QDomDocument doc(QStringLiteral("engine"));
-            QDomElement root = doc.createElement(QStringLiteral("engine"));
+            QDomDocument engine(QStringLiteral("engine"));
+            QDomElement root = engine.createElement(QStringLiteral("engine"));
             root.setAttribute(QStringLiteral("color"), colorStr);
-            doc.appendChild(root);
-            QDomElement annElem = doc.createElement(QStringLiteral("annotation"));
+            engine.appendChild(root);
+            QDomElement annElem = engine.createElement(QStringLiteral("annotation"));
             root.appendChild(annElem);
             annElem.setAttribute(QStringLiteral("type"), QStringLiteral("Ink"));
             annElem.setAttribute(QStringLiteral("color"), colorStr);
@@ -198,12 +198,12 @@ void DrawingToolActions::loadTools()
 
     // add erasure action
     {
-        QDomDocument doc(QStringLiteral("engine"));
-        QDomElement root = doc.createElement(QStringLiteral("engine"));
+        QDomDocument engine(QStringLiteral("engine"));
+        QDomElement root = engine.createElement(QStringLiteral("engine"));
         root.setAttribute(QStringLiteral("color"), QStringLiteral("transparent"));
         root.setAttribute(QStringLiteral("compositionMode"), QStringLiteral("clear"));
-        doc.appendChild(root);
-        QDomElement annElem = doc.createElement(QStringLiteral("annotation"));
+        engine.appendChild(root);
+        QDomElement annElem = engine.createElement(QStringLiteral("annotation"));
         root.appendChild(annElem);
         annElem.setAttribute(QStringLiteral("type"), QStringLiteral("Ink"));
         annElem.setAttribute(QStringLiteral("color"), QStringLiteral("transparent"));

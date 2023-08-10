@@ -104,8 +104,8 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             }
         });
 
-        for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
-            if (!mDocument->canRemovePageAnnotation(pair.annotation)) {
+        for (const AnnotPagePair &annot : qAsConst(mAnnotations)) {
+            if (!mDocument->canRemovePageAnnotation(annot.annotation)) {
                 action->setEnabled(false);
             }
         }

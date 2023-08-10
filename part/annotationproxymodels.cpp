@@ -477,7 +477,7 @@ QModelIndex AuthorGroupProxyModel::mapToSource(const QModelIndex &proxyIndex) co
         return QModelIndex();
     }
 
-    AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
+    const AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
 
     return item->index();
 }
@@ -509,7 +509,7 @@ static bool isAuthorItem(const QModelIndex &index)
         return false;
     }
 
-    AuthorGroupItem *item = static_cast<AuthorGroupItem *>(index.internalPointer());
+    const AuthorGroupItem *item = static_cast<AuthorGroupItem *>(index.internalPointer());
     return (item->type() == AuthorGroupItem::Author);
 }
 
@@ -534,7 +534,7 @@ QItemSelection AuthorGroupProxyModel::mapSelectionFromSource(const QItemSelectio
 QVariant AuthorGroupProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
     if (isAuthorItem(proxyIndex)) {
-        AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
+        const AuthorGroupItem *item = static_cast<AuthorGroupItem *>(proxyIndex.internalPointer());
         if (role == Qt::DisplayRole) {
             return item->author();
         } else if (role == Qt::DecorationRole) {
@@ -615,18 +615,18 @@ void AuthorGroupProxyModel::rebuildIndexes()
                 QMap<QString, AuthorGroupItem *> pageAuthorMap;
                 for (int subRow = 0; subRow < sourceModel()->rowCount(idx); ++subRow) {
                     const QModelIndex annIdx = sourceModel()->index(subRow, 0, idx);
-                    const QString author = sourceModel()->data(annIdx, AnnotationModel::AuthorRole).toString();
+                    const QString pageAuthor = sourceModel()->data(annIdx, AnnotationModel::AuthorRole).toString();
 
-                    AuthorGroupItem *authorItem = pageAuthorMap.value(author, nullptr);
+                    AuthorGroupItem *authorItem = pageAuthorMap.value(pageAuthor, nullptr);
                     if (!authorItem) {
                         authorItem = new AuthorGroupItem(pageItem, AuthorGroupItem::Author);
-                        authorItem->setAuthor(author);
+                        authorItem->setAuthor(pageAuthor);
 
                         // Add item to tree
                         pageItem->appendChild(authorItem);
 
                         // Insert to lookup list
-                        pageAuthorMap.insert(author, authorItem);
+                        pageAuthorMap.insert(pageAuthor, authorItem);
                     }
 
                     AuthorGroupItem *item = new AuthorGroupItem(authorItem, AuthorGroupItem::Annotation, annIdx);

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-29 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2023-06-29 05:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -245,12 +245,12 @@ msgstr ""
 "\n"
 "Tarih: %2"
 
-#: generator_pdf.cpp:1581
+#: generator_pdf.cpp:1580
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 kullanılıyor"
 
-#: generator_pdf.cpp:1583
+#: generator_pdf.cpp:1582
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -261,17 +261,17 @@ msgstr ""
 "\n"
 "Poppler %2 sürümüne karşın yapılmıştır"
 
-#: generator_pdf.cpp:1618
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1618
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Arka Ucu Yapılandırması"
 
-#: generator_pdf.cpp:2111
+#: generator_pdf.cpp:2110
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

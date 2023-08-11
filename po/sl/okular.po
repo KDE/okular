@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2023-07-24 19:13+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -263,59 +263,59 @@ msgstr ""
 "<qt>Za to vrsto dokumenta je na voljo več zaledij:<br /><b>%1</b> (%2).<br /"
 "><br />Izberite tisto, ki bi jo radi uporabljali:</qt>"
 
-#: core/document.cpp:208
+#: core/document.cpp:207
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Večina strani so %1."
 
-#: core/document.cpp:229
+#: core/document.cpp:228
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Pokončno %1"
 
-#: core/document.cpp:231
+#: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Ležeče %1"
 
-#: core/document.cpp:254
+#: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 ⨯ %2 in (%3)"
 
-#: core/document.cpp:256
+#: core/document.cpp:255
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 ⨯ %2 mm (%3)"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Nadaljevanje iskanja z vrha"
 
-#: core/document.cpp:1693
+#: core/document.cpp:1692
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Nadaljevanje iskanja z dna"
 
-#: core/document.cpp:2453
+#: core/document.cpp:2452
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ni bilo mogoče najti vstavka, ki bi znal prebrati dani dokument."
 
-#: core/document.cpp:3603
+#: core/document.cpp:3602
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "odstrani zabeležke"
 
-#: core/document.cpp:4187 core/document.cpp:4193
+#: core/document.cpp:4186 core/document.cpp:4192
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -324,52 +324,52 @@ msgstr ""
 "Dokument poskuša izvesti zunanji program, zaradi vaše varnosti pa Okular "
 "tega ne dovoljuje."
 
-#: core/document.cpp:4204 core/document.cpp:4214
+#: core/document.cpp:4203 core/document.cpp:4213
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Ni bilo mogoče najti program za odpiranje datoteke zvrsti MIME %1."
 
-#: core/document.cpp:4664
+#: core/document.cpp:4663
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ni bilo mogoče odpreti začasne datoteke"
 
-#: core/document.cpp:4666
+#: core/document.cpp:4665
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Pretvorba za tiskanje je spodletela"
 
-#: core/document.cpp:4668
+#: core/document.cpp:4667
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces za tiskanje se je sesul"
 
-#: core/document.cpp:4670
+#: core/document.cpp:4669
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesa za tiskanje ni bilo mogoče zagnati"
 
-#: core/document.cpp:4672
+#: core/document.cpp:4671
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tiskanje v datoteko je spodletelo"
 
-#: core/document.cpp:4674
+#: core/document.cpp:4673
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tiskalnik ni bil v veljavnem stanju"
 
-#: core/document.cpp:4676
+#: core/document.cpp:4675
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ni bilo mogoče najti datoteke za tiskanje"
 
-#: core/document.cpp:4678
+#: core/document.cpp:4677
 #, kde-format
 msgid "There was no file to print"
 msgstr "Datoteka za tiskanje ne obstaja"
 
-#: core/document.cpp:4680
+#: core/document.cpp:4679
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -378,92 +378,92 @@ msgstr ""
 "Ni bilo mogoče najti ustreznega programa za tiskanje. Prepričajte se, da je "
 "na voljo CUPS-ov program lpr"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4681
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Velikost strani za tisk ni veljavna"
 
-#: core/document.cpp:5347 part/part.cpp:1168
+#: core/document.cpp:5346 part/part.cpp:1168
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ni bilo mogoče odpreti »%1«. Datoteka ne obstaja"
 
-#: core/document.cpp:5857
+#: core/document.cpp:5856
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:5860
+#: core/document.cpp:5859
 #, kde-format
 msgid "Subject"
 msgstr "Zadeva"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5862
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5865
 #, kde-format
 msgid "Author"
 msgstr "Avtor"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5868
 #, kde-format
 msgid "Creator"
 msgstr "Ustvarjalec"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5871
 #, kde-format
 msgid "Producer"
 msgstr "Izdelovalec"
 
-#: core/document.cpp:5875
+#: core/document.cpp:5874
 #, kde-format
 msgid "Copyright"
 msgstr "Avtorske pravice"
 
-#: core/document.cpp:5878
+#: core/document.cpp:5877
 #, kde-format
 msgid "Pages"
 msgstr "Strani"
 
-#: core/document.cpp:5881
+#: core/document.cpp:5880
 #, kde-format
 msgid "Created"
 msgstr "Ustvarjeno"
 
-#: core/document.cpp:5884
+#: core/document.cpp:5883
 #, kde-format
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: core/document.cpp:5887
+#: core/document.cpp:5886
 #, kde-format
 msgid "MIME Type"
 msgstr "Vrsta MIME"
 
-#: core/document.cpp:5890
+#: core/document.cpp:5889
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:5893
+#: core/document.cpp:5892
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne besede"
 
-#: core/document.cpp:5896
+#: core/document.cpp:5895
 #, kde-format
 msgid "File Path"
 msgstr "Pot do datoteke"
 
-#: core/document.cpp:5899
+#: core/document.cpp:5898
 #, kde-format
 msgid "File Size"
 msgstr "Velikost datoteke"
 
-#: core/document.cpp:5902
+#: core/document.cpp:5901
 #, kde-format
 msgid "Page Size"
 msgstr "Velikost strani"
@@ -3350,12 +3350,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "Pogled..."
 
-#: part/fileprinterpreview.cpp:115
+#: part/fileprinterpreview.cpp:116
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Ni bilo mogoče naložiti dela za predogled tiskanja"
 
-#: part/fileprinterpreview.cpp:127
+#: part/fileprinterpreview.cpp:128
 #, kde-format
 msgid "Print Preview"
 msgstr "Predogled tiskanja"
@@ -3911,7 +3911,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpiši"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:414
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4543,7 +4543,7 @@ msgid "Remove this Bookmark"
 msgstr "Odstrani ta zaznamek"
 
 #: part/part.cpp:2608 part/part.cpp:2609 part/part.cpp:3489
-#: part/signaturepartutils.cpp:381
+#: part/signaturepartutils.cpp:382
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5236,37 +5236,37 @@ msgctxt "font name not available (empty)"
 msgid "[n/a]"
 msgstr "[n/d]"
 
-#: part/propertiesdialog.cpp:386
+#: part/propertiesdialog.cpp:385
 #, kde-format
 msgid "Unknown font"
 msgstr "Neznana pisava"
 
-#: part/propertiesdialog.cpp:392
+#: part/propertiesdialog.cpp:391
 #, kde-format
 msgid "Embedded: %1"
 msgstr "Vgrajeno: %1"
 
-#: part/propertiesdialog.cpp:426
+#: part/propertiesdialog.cpp:424
 #, kde-format
 msgid "Name"
 msgstr "Ime"
 
-#: part/propertiesdialog.cpp:429
+#: part/propertiesdialog.cpp:427
 #, kde-format
 msgid "Type"
 msgstr "Vrsta"
 
-#: part/propertiesdialog.cpp:432
+#: part/propertiesdialog.cpp:430
 #, kde-format
 msgid "File"
 msgstr "Datoteka"
 
-#: part/propertiesdialog.cpp:500
+#: part/propertiesdialog.cpp:498
 #, kde-format
 msgid "Page"
 msgstr "Stran"
 
-#: part/propertiesdialog.cpp:503
+#: part/propertiesdialog.cpp:501
 #, kde-format
 msgid "Size"
 msgstr "Velikost"
@@ -5412,43 +5412,43 @@ msgstr "Skrči vse elemente"
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:305
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Slike (%1)"
 
-#: part/signaturepartutils.cpp:305
+#: part/signaturepartutils.cpp:306
 #, kde-format
 msgid "Select background image"
 msgstr "Izberi sliko ozadja"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:311
 #, kde-format
 msgid "Forget image"
 msgstr "Pozabi sliko"
 
-#: part/signaturepartutils.cpp:311
+#: part/signaturepartutils.cpp:312
 #, kde-format
 msgid "Forget all images"
 msgstr "Pozabi vse slike"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:353
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Vnesite geslo (če obstaja) za odklepanje potrdila: %1"
 
-#: part/signaturepartutils.cpp:354
+#: part/signaturepartutils.cpp:355
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Vnesite geslo za potrdilo"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:368
 #, kde-format
 msgid "Enter document password"
 msgstr "Vnesite geslo za dokument"
 
-#: part/signaturepartutils.cpp:387
+#: part/signaturepartutils.cpp:388
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Shrani podpisano datoteko kot"

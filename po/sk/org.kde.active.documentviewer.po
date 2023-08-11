@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2023-02-19 16:51+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -94,19 +94,19 @@ msgstr "Chyba"
 msgid "Could not export the certificate."
 msgstr "Nepodarilo sa exportovať certifikát."
 
-#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:40
+#: package/contents/ui/main.qml:41
 msgid "Open..."
 msgstr "Otvoriť..."
 
-#: package/contents/ui/main.qml:47
+#: package/contents/ui/main.qml:48
 msgid "About"
 msgstr "O aplikácii"
 
-#: package/contents/ui/main.qml:104
+#: package/contents/ui/main.qml:105
 msgid "Password Needed"
 msgstr "Vyžaduje sa heslo"
 

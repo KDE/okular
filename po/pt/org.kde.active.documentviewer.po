@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2022-08-03 16:36+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -90,19 +90,19 @@ msgstr "Erro"
 msgid "Could not export the certificate."
 msgstr "Não foi possível exportar o certificado."
 
-#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:40
+#: package/contents/ui/main.qml:41
 msgid "Open..."
 msgstr "Abrir..."
 
-#: package/contents/ui/main.qml:47
+#: package/contents/ui/main.qml:48
 msgid "About"
 msgstr "Acerca"
 
-#: package/contents/ui/main.qml:104
+#: package/contents/ui/main.qml:105
 msgid "Password Needed"
 msgstr "Senha Necessária"
 

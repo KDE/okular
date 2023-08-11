@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2023-04-23 18:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -97,19 +97,19 @@ msgstr "錯誤"
 msgid "Could not export the certificate."
 msgstr "無法匯出憑證。"
 
-#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:40
+#: package/contents/ui/main.qml:41
 msgid "Open..."
 msgstr "開啟…"
 
-#: package/contents/ui/main.qml:47
+#: package/contents/ui/main.qml:48
 msgid "About"
 msgstr "關於"
 
-#: package/contents/ui/main.qml:104
+#: package/contents/ui/main.qml:105
 msgid "Password Needed"
 msgstr "需要密碼"
 

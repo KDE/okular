@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-03 00:44+0000\n"
+"POT-Creation-Date: 2023-08-11 00:43+0000\n"
 "PO-Revision-Date: 2022-08-09 13:27+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -94,19 +94,19 @@ msgstr "오류"
 msgid "Could not export the certificate."
 msgstr "인증서를 내보낼 수 없습니다."
 
-#: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
+#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:40
+#: package/contents/ui/main.qml:41
 msgid "Open..."
 msgstr "열기..."
 
-#: package/contents/ui/main.qml:47
+#: package/contents/ui/main.qml:48
 msgid "About"
 msgstr "정보"
 
-#: package/contents/ui/main.qml:104
+#: package/contents/ui/main.qml:105
 msgid "Password Needed"
 msgstr "암호가 필요함"
 

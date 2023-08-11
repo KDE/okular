@@ -114,6 +114,10 @@ ecm_add_test(calculatetexttest.cpp
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
+ecm_add_test(check_distinguished_name_parser.cpp
+    TEST_NAME "distinguishednameparser"
+    LINK_LIBRARIES Qt5::Test)
+
 if(KF5Activities_FOUND AND BUILD_DESKTOP)
 	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../shell/recentitemsmodel.cpp closedialoghelper.cpp
 		TEST_NAME "mainshelltest"

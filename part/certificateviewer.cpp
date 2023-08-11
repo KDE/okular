@@ -24,91 +24,17 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
+#include "DistinguishedNameParser.h"
 #include "gui/signatureguiutils.h"
 
-// DN (DistinguishedName) attributes can be
-//     C Country
-//     CN Common name
-//     DC Domain component
-//     E E-mail address
-//     EMAIL E-mail address (preferred)
-//     EMAILADDRESS E-mail address
-//     L Locality
-//     O Organization name
-//     OU Organizational unit name
-//     PC Postal code
-//     S State or province
-//     SN Family name
-//     SP State or province
-//     ST State or province (preferred)
-//     STREET Street
-//     T Title
-
-// CN=James Hacker,
-//    L=Basingstoke,
-//    O=Widget Inc,
-//    C=GB
-// CN=L. Eagle, O="Sue, Grabbit and Runn", C=GB
-// CN=L. Eagle, O=Sue\, Grabbit and Runn, C=GB
-
-// This is a poor man's attempt at parsing DN, if it fails it is not a problem since it's only for display in a list
-static QString splitDNAttributes(const QStringList &text)
+QString splitDNAttributes(const QString &input)
 {
-    static const QStringList attributes = {QStringLiteral("C"),
-                                           QStringLiteral("CN"),
-                                           QStringLiteral("DC"),
-                                           QStringLiteral("E"),
-                                           QStringLiteral("EMAIL"),
-                                           QStringLiteral("EMAILADDRESS"),
-                                           QStringLiteral("L"),
-                                           QStringLiteral("O"),
-                                           QStringLiteral("OU"),
-                                           QStringLiteral("PC"),
-                                           QStringLiteral("S"),
-                                           QStringLiteral("SN"),
-                                           QStringLiteral("SP"),
-                                           QStringLiteral("ST"),
-                                           QStringLiteral("STREET"),
-                                           QStringLiteral("T")};
-
-    for (const QString &t : text) {
-        for (const QString &attribute : attributes) {
-            const QRegularExpression re(QStringLiteral("(.*),\\s*(%1=.*)").arg(attribute), QRegularExpression::DotMatchesEverythingOption);
-            const QRegularExpressionMatch match = re.match(t);
-            if (match.hasMatch()) {
-                QStringList results = text;
-                const int index = results.indexOf(t);
-                results.removeAt(index);
-                results.insert(index, match.captured(2));
-                results.insert(index, match.captured(1));
-                return splitDNAttributes(results);
-            }
-        }
+    auto parsed = DN::parseString(input.toStdString());
+    QStringList result;
+    for (auto &&[key, value] : parsed) {
+        result.push_back(QString::fromStdString(key) + QLatin1Char('=') + QString::fromStdString(value));
     }
-
-    // Clean escaped commas
-    QStringList result = text;
-    for (QString &t : result) {
-        t.replace(QLatin1String("\\,"), QLatin1String(","));
-    }
-
-    // Clean up quoted attributes
-    for (QString &t : result) {
-        for (const QString &attribute : attributes) {
-            const QRegularExpression re(QStringLiteral("%1=\"(.*)\"").arg(attribute));
-            const QRegularExpressionMatch match = re.match(t);
-            if (match.hasMatch()) {
-                t = attribute + QLatin1Char('=') + match.captured(1);
-            }
-        }
-    }
-
     return result.join(QStringLiteral("\n"));
-}
-
-static QString splitDNAttributes(const QString &text)
-{
-    return splitDNAttributes(QStringList {text});
 }
 
 CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QWidget *parent)

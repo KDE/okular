@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 02:35+0000\n"
-"PO-Revision-Date: 2023-06-27 16:04+0300\n"
+"PO-Revision-Date: 2023-07-27 15:57+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1557,9 +1557,7 @@ msgid "Opacity"
 msgstr "Peittävyys"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -3787,9 +3785,7 @@ msgid "Auto Fit"
 msgstr "Automaattisovitus"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -5536,15 +5532,14 @@ msgid "View Certificate..."
 msgstr "Näytä varmenne…"
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Näytä varmenne…"
+msgstr "Näytä varmenteenhallinnassa"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE:n varmenteenhallintaa (Kleopatra) ei löytynyt"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

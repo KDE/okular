@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:43+0000\n"
+"POT-Creation-Date: 2023-08-12 00:44+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -630,12 +630,12 @@ msgstr "Sietnummer"
 msgid "Issuer"
 msgstr ""
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:149
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:75
 #, kde-format
 msgid "Issued On"
 msgstr ""
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:150
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:76
 #, fuzzy, kde-format
 #| msgid "Expired"
 msgid "Expires On"
@@ -1637,8 +1637,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Na Twischenaflaag koperen"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2546 part/pageview.cpp:2866 part/pageview.cpp:3010
-#: part/pageview.cpp:3067
+#: part/pageview.cpp:2552 part/pageview.cpp:2872 part/pageview.cpp:3016
+#: part/pageview.cpp:3073
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DVP lett keen Kopie to"
@@ -2283,90 +2283,90 @@ msgstr "Dokment opmaken"
 msgid "Remove all Bookmarks for this Document"
 msgstr ""
 
-#: part/certificateviewer.cpp:121
+#: part/certificateviewer.cpp:47
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "Certificate Viewer"
 msgstr "Kieker instellen"
 
-#: part/certificateviewer.cpp:124
+#: part/certificateviewer.cpp:50
 #, fuzzy, kde-format
 #| msgid "E&xport As"
 msgid "Export..."
 msgstr "E&xporteren as"
 
-#: part/certificateviewer.cpp:130 part/preferencesdialog.cpp:41
+#: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
 msgid "General"
 msgstr "Allgemeen"
 
-#: part/certificateviewer.cpp:132
+#: part/certificateviewer.cpp:58
 #, kde-format
 msgid "Issued By"
 msgstr ""
 
-#: part/certificateviewer.cpp:135 part/certificateviewer.cpp:142
+#: part/certificateviewer.cpp:61 part/certificateviewer.cpp:68
 #, kde-format
 msgid "Common Name(CN)"
 msgstr ""
 
-#: part/certificateviewer.cpp:136 part/certificateviewer.cpp:143
+#: part/certificateviewer.cpp:62 part/certificateviewer.cpp:69
 #, kde-format
 msgid "EMail"
 msgstr ""
 
-#: part/certificateviewer.cpp:137 part/certificateviewer.cpp:144
+#: part/certificateviewer.cpp:63 part/certificateviewer.cpp:70
 #, kde-format
 msgid "Organization(O)"
 msgstr ""
 
-#: part/certificateviewer.cpp:139
+#: part/certificateviewer.cpp:65
 #, kde-format
 msgid "Issued To"
 msgstr ""
 
-#: part/certificateviewer.cpp:146
+#: part/certificateviewer.cpp:72
 #, kde-format
 msgid "Validity"
 msgstr ""
 
-#: part/certificateviewer.cpp:152
+#: part/certificateviewer.cpp:78
 #, kde-format
 msgid "Fingerprints"
 msgstr ""
 
-#: part/certificateviewer.cpp:160
+#: part/certificateviewer.cpp:86
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr ""
 
-#: part/certificateviewer.cpp:161
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr ""
 
-#: part/certificateviewer.cpp:179
+#: part/certificateviewer.cpp:105
 #, kde-format
 msgid "Details"
 msgstr ""
 
-#: part/certificateviewer.cpp:180
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Certificate Data:"
 msgstr ""
 
-#: part/certificateviewer.cpp:232
+#: part/certificateviewer.cpp:158
 #, fuzzy, kde-format
 #| msgid "Where do you want to save %1?"
 msgid "Where do you want to save this certificate?"
 msgstr "Woneem wullt Du \"%1\" sekern?"
 
-#: part/certificateviewer.cpp:233
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr ""
 
-#: part/certificateviewer.cpp:236
+#: part/certificateviewer.cpp:162
 #, kde-format
 msgid "Could not export the certificate"
 msgstr ""
@@ -3714,316 +3714,316 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "vun"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:539
 #, kde-format
 msgid "Zoom"
 msgstr "Ansichtgrött"
 
-#: part/pageview.cpp:548
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Zoom to 100%"
 msgstr ""
 
-#: part/pageview.cpp:559
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Na &rechts dreihen"
 
-#: part/pageview.cpp:560
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Na Rechts"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Na &links dreihen"
 
-#: part/pageview.cpp:565
+#: part/pageview.cpp:568
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Na Links"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:572
 #, kde-format
 msgid "Original Orientation"
 msgstr "Orginaal-Utrichten"
 
-#: part/pageview.cpp:575
+#: part/pageview.cpp:578
 #, fuzzy, kde-format
 #| msgid "&View"
 msgid "&Trim View"
 msgstr "&Ansicht"
 
-#: part/pageview.cpp:579
+#: part/pageview.cpp:582
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Ränners &topassen"
 
-#: part/pageview.cpp:586
+#: part/pageview.cpp:589
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "Trim To &Selection"
 msgstr "Textköör"
 
-#: part/pageview.cpp:592
+#: part/pageview.cpp:595
 #, kde-format
 msgid "Fit &Width"
 msgstr "&Breed topassen"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:599
 #, kde-format
 msgid "Fit &Page"
 msgstr "&Siet topassen"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:603
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automaatsch topassen"
 
-#: part/pageview.cpp:604
+#: part/pageview.cpp:607
 #, fuzzy, kde-format
 #| msgid "Fit &Page"
 msgid "Fit Wi&ndow to Page"
 msgstr "&Siet topassen"
 
-#: part/pageview.cpp:611
+#: part/pageview.cpp:614
 #, kde-format
 msgid "&View Mode"
 msgstr "&Ansicht-Bedrief"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:626
 #, fuzzy, kde-format
 #| msgid "Single Page"
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Enkelsiet"
 
-#: part/pageview.cpp:624
+#: part/pageview.cpp:627
 #, fuzzy, kde-format
 #| msgid "Facing Pages"
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Güntsieden"
 
-#: part/pageview.cpp:625
+#: part/pageview.cpp:628
 #, fuzzy, kde-format
 #| msgid "Facing Pages (Center First Page)"
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Güntsieden (Eerst Siet na de Merrn utrichten)"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:631
 #, fuzzy, kde-format
 #| msgid "Overview"
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Översicht"
 
-#: part/pageview.cpp:640
+#: part/pageview.cpp:643
 #, kde-format
 msgid "&Continuous"
 msgstr "&Dörgahn"
 
-#: part/pageview.cpp:647
+#: part/pageview.cpp:650
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr ""
 
-#: part/pageview.cpp:656
+#: part/pageview.cpp:659
 #, fuzzy, kde-format
 #| msgctxt "Browse Tool"
 #| msgid "Browse"
 msgid "&Browse"
 msgstr "Dörkieken"
 
-#: part/pageview.cpp:664
+#: part/pageview.cpp:667
 #, fuzzy, kde-format
 #| msgid "Zoom"
 msgid "&Zoom"
 msgstr "Ansichtgrött"
 
-#: part/pageview.cpp:684
+#: part/pageview.cpp:687
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "Area &Selection"
 msgstr "Textköör"
 
-#: part/pageview.cpp:691
+#: part/pageview.cpp:694
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "&Text Selection"
 msgstr "Textköör"
 
-#: part/pageview.cpp:698
+#: part/pageview.cpp:701
 #, fuzzy, kde-format
 #| msgctxt "Table Selection Tool"
 #| msgid "Table Selection"
 msgid "T&able Selection"
 msgstr "Tabellenköör"
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:708
 #, fuzzy, kde-format
 #| msgctxt "Magnifier Tool"
 #| msgid "Magnifier"
 msgid "&Magnifier"
 msgstr "Kiekglas"
 
-#: part/pageview.cpp:714
+#: part/pageview.cpp:717
 #, fuzzy, kde-format
 #| msgid "Selection Tools"
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Köörwarktüüch"
 
-#: part/pageview.cpp:740
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr ""
 
-#: part/pageview.cpp:746
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Heel Dokment vörlesen"
 
-#: part/pageview.cpp:751
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Aktuelle Siet vörlesen"
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Vörlesen anhollen"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:764
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr ""
 
-#: part/pageview.cpp:773
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Up"
 msgstr "Na baven rullen"
 
-#: part/pageview.cpp:779
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Down"
 msgstr "Na nerrn rullen"
 
-#: part/pageview.cpp:785
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Siet na baven rullen"
 
-#: part/pageview.cpp:791
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Siet na nerrn rullen"
 
-#: part/pageview.cpp:797
+#: part/pageview.cpp:800
 #, kde-format
 msgid "Show Forms"
 msgstr "Formuloren wiesen"
 
-#: part/pageview.cpp:1301
+#: part/pageview.cpp:1304
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] "En Dokment mit een Siet wöör laadt."
 msgstr[1] "En Dokment mit %1 Sieden wöör laadt."
 
-#: part/pageview.cpp:2541
+#: part/pageview.cpp:2547
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "Na Twischenaflaag koperen"
 
-#: part/pageview.cpp:2860
+#: part/pageview.cpp:2866
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Text (1 Bookstaav)"
 msgstr[1] "Text (%1 Bookstaven)"
 
-#: part/pageview.cpp:2861 part/pageview.cpp:2879
+#: part/pageview.cpp:2867 part/pageview.cpp:2885
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Na Twischenaflaag koperen"
 
-#: part/pageview.cpp:2870 part/pageview.cpp:3062
+#: part/pageview.cpp:2876 part/pageview.cpp:3068
 #, kde-format
 msgid "Speak Text"
 msgstr "Text vörlesen"
 
-#: part/pageview.cpp:2878
+#: part/pageview.cpp:2884
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Bild (%1 x %2 Pixels)"
 
-#: part/pageview.cpp:2880
+#: part/pageview.cpp:2886
 #, kde-format
 msgid "Save to File..."
 msgstr "As Datei sekern..."
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2906
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Bild [%1x%2] wöör na de Twischenaflaag kopeert."
 
-#: part/pageview.cpp:2903
+#: part/pageview.cpp:2909
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save file"
 msgstr "As Datei sekern..."
 
-#: part/pageview.cpp:2903
+#: part/pageview.cpp:2909
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr ""
 
-#: part/pageview.cpp:2905
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "File not saved."
 msgstr "Datei nich sekert."
 
-#: part/pageview.cpp:2916
+#: part/pageview.cpp:2922
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Bild [%1x%2] wöör na %3-Datei sekert."
 
-#: part/pageview.cpp:3058
+#: part/pageview.cpp:3064
 #, kde-format
 msgid "Copy Text"
 msgstr "Text koperen"
 
-#: part/pageview.cpp:3078
+#: part/pageview.cpp:3084
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Na \"%1\" gahn"
 
-#: part/pageview.cpp:4057 part/part.cpp:3183
+#: part/pageview.cpp:4063 part/part.cpp:3183
 #, kde-format
 msgid "Fit Width"
 msgstr "Na Breed topassen"
 
-#: part/pageview.cpp:4057
+#: part/pageview.cpp:4063
 #, kde-format
 msgid "Fit Page"
 msgstr "Op Siet topassen"
 
-#: part/pageview.cpp:4057
+#: part/pageview.cpp:4063
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automaatsch topassen"
 
-#: part/pageview.cpp:4080
+#: part/pageview.cpp:4086
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4033,69 +4033,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4363
+#: part/pageview.cpp:4369
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Na \"%1\" söken mit"
 
-#: part/pageview.cpp:4377
+#: part/pageview.cpp:4383
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Nett-Tastkombinatschonen instellen..."
 
-#: part/pageview.cpp:4403
+#: part/pageview.cpp:4409
 #, kde-format
 msgid "Follow This Link"
 msgstr "Dissen Link nagahn"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4412
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "Klang afspelen..."
 
-#: part/pageview.cpp:4408
+#: part/pageview.cpp:4414
 #, kde-format
 msgid "Stop Sound"
 msgstr "Afspelen anhollen"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4420
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Linkadress koperen"
 
-#: part/pageview.cpp:4435
+#: part/pageview.cpp:4441
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Na \"%1\" söken mit"
 
-#: part/pageview.cpp:4883
+#: part/pageview.cpp:4973
 #, kde-format
 msgid "Welcome"
 msgstr "Willkamen"
 
-#: part/pageview.cpp:5003
+#: part/pageview.cpp:5093
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Söök dat Rebeet för't Gröttermaken ut. Lütter mit Rechtsklick."
 
-#: part/pageview.cpp:5014
+#: part/pageview.cpp:5104
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klick hier, wenn Du dat Kiekglas hier bruken wullt."
 
-#: part/pageview.cpp:5027
+#: part/pageview.cpp:5117
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Treck en Rahmen üm den Text oder de Biller to, de(n) Du koperen wullt."
 
-#: part/pageview.cpp:5039
+#: part/pageview.cpp:5129
 #, kde-format
 msgid "Select text"
 msgstr "Text utsöken"
 
-#: part/pageview.cpp:5051
+#: part/pageview.cpp:5141
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4104,14 +4104,14 @@ msgstr ""
 "Treck en Rechteck üm de Tabell to, klick neegst de Kanten, wenn Du ehr "
 "ünnerdelen wullt, drück de Utknieptast, wenn Du de Köör leddigmaken wullt."
 
-#: part/pageview.cpp:5061
+#: part/pageview.cpp:5151
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5064
+#: part/pageview.cpp:5154
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4119,17 +4119,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5080
+#: part/pageview.cpp:5170
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5096
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5240
+#: part/pageview.cpp:5330
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

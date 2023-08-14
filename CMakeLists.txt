@@ -600,7 +600,6 @@ target_link_libraries(okularpart okularcore
     KF5::IconThemes
     KF5::ItemViews
     KF5::KIOCore
-    KF5::KIOFileWidgets
     KF5::KIOWidgets
     KF5::Parts
     KF5::Solid

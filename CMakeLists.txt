@@ -602,7 +602,6 @@ target_link_libraries(okularpart okularcore
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::Parts
-    KF5::Solid
     KF5::WindowSystem
     KF5::TextWidgets
 )

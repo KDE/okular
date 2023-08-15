@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 02:35+0000\n"
-"PO-Revision-Date: 2023-08-13 16:27+0200\n"
+"PO-Revision-Date: 2023-08-14 21:44+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -3765,9 +3765,7 @@ msgid "Auto Fit"
 msgstr "Automatisch einpassen"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -5535,15 +5533,14 @@ msgid "View Certificate..."
 msgstr "Zertifikat ansehen ..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Zertifikat ansehen ..."
+msgstr "In Zertifikatsverwaltung anzeigen"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE-Zertifikatsverwaltung (kleopatra) nicht gefunden"
 
 #: part/thumbnaillist.cpp:1028
 #, kde-format

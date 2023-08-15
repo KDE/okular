@@ -52,7 +52,7 @@ public Q_SLOTS:
 protected:
     bool eventFilter(QObject *object, QEvent *event) override;
     bool event(QEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
+    // void resizeEvent(QResizeEvent *event) override;
 
 private:
     // private storage

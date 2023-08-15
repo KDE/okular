@@ -102,7 +102,7 @@ ecm_setup_version(${PROJECT_VERSION}
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Multimedia MultimediaWidgets)
 
 if(ANDROID)
     find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
@@ -471,6 +471,7 @@ PUBLIC  # these are included from the installed headers
     KF5::CoreAddons
     KF5::XmlGui
     KF5::ConfigGui
+    Qt5::Multimedia
     Qt5::PrintSupport
     Qt5::Widgets
 )
@@ -597,6 +598,8 @@ generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore
     ${MATH_LIB}
+    Qt5::Multimedia
+    Qt5::MultimediaWidgets
     Qt5::Svg
     KF5::Archive
     KF5::Bookmarks

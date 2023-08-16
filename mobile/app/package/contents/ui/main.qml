@@ -9,7 +9,7 @@ import QtQuick.Controls 2.15 as QQC2
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.17 as Kirigami
-import org.kde.kirigamiaddons.labs.mobileform 0.1 as MobileForm
+import org.kde.kirigamiaddons.formcard 1.0 as FormCard
 import org.kde.okular.app 2.0
 
 Kirigami.ApplicationWindow {
@@ -82,7 +82,7 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: aboutPage
-        MobileForm.AboutPage {
+        FormCard.AboutPage {
             aboutData: about
         }
     }

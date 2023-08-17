@@ -22,8 +22,5 @@
 /* Defines whether we are building with X11 support */
 #cmakedefine01 HAVE_X11
 
-/* Defines wheter we are building with Phonon support */
-#cmakedefine01 HAVE_PHONON
-
 /* Defines whether we are building with dbus enabled */
 #cmakedefine01 HAVE_DBUS

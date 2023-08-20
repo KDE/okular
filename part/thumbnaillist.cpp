@@ -701,7 +701,30 @@ void ThumbnailListPrivate::slotDelayTimeout()
     delete m_bookmarkOverlay;
     const int expectedWidth = q->viewport()->width() / 4;
     if (expectedWidth > 10) {
-        m_bookmarkOverlay = new QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(expectedWidth));
+        if(Okular::Settings::enableBookmarkColor()) {
+            m_bookmarkOverlay = new QPixmap(expectedWidth, expectedWidth);
+            m_bookmarkOverlay->fill(Qt::transparent);
+
+            QPainter *painter = new QPainter(m_bookmarkOverlay);
+            painter->setRenderHint(QPainter::Antialiasing);
+            painter->scale(expectedWidth / 16, expectedWidth / 16);
+
+            QPainterPath path;
+            
+            // Path based on KDE breeze bookmark svg: m4 2 v 12 l 4 -1.594 4 1.594 v -12 z
+            // https://github.com/KDE/breeze-icons/blob/master/icons/actions/16/bookmarks.svg
+            path.moveTo(4, 2);
+            path.lineTo(4, 14);
+            path.lineTo(8, 12.406);
+            path.lineTo(12, 14);
+            path.lineTo(12, 2);
+            path.closeSubpath();
+
+            painter->setBrush(Qt::red);
+            painter->fillPath(path, painter->brush());
+        } else {
+            m_bookmarkOverlay = new QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(expectedWidth));
+        }
     } else {
         m_bookmarkOverlay = nullptr;
     }

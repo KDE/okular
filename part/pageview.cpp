@@ -68,6 +68,7 @@
 #include "annotwindow.h"
 #include "colormodemenu.h"
 #include "core/annotations.h"
+#include "core/bookmarkmanager.h"
 #include "cursorwraphelper.h"
 #include "formwidgets.h"
 #include "gui/debug_ui.h"
@@ -1493,7 +1494,9 @@ void PageView::notifyPageChanged(int pageNumber, int changedFlags)
 {
     // only handle pixmap / highlight changes notifies
     if (changedFlags & DocumentObserver::Bookmark) {
-        return;
+        if(!Okular::Settings::showBookmarkOnPage()) {
+            return;
+        }
     }
 
     if (changedFlags & DocumentObserver::Annotations) {
@@ -3523,6 +3526,46 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
         // move the painter to the top-left corner of the real page
         p->save();
         p->translate(itemGeometry.left(), itemGeometry.top());
+        
+        if (Okular::Settings::showBookmarkOnPage()) {
+            const bool isBookmarked = document()->bookmarkManager()->isBookmarked(item->pageNumber());
+
+            if (isBookmarked) {
+                const int expectedWidth = itemGeometry.width();
+                const int bookmarkWidth = expectedWidth / 8;
+
+                QPixmap *bookmarkOverlay;
+
+                if(Okular::Settings::enableBookmarkColor()) {
+                    bookmarkOverlay = new QPixmap(bookmarkWidth, bookmarkWidth);
+                    bookmarkOverlay->fill(Qt::transparent);
+
+                    QPainter *painter = new QPainter(bookmarkOverlay);
+                    painter->setRenderHint(QPainter::Antialiasing);
+                    painter->scale(bookmarkWidth / 16, bookmarkWidth / 16);
+
+                    QPainterPath path;
+
+                    // Path based on KDE breeze bookmark svg: m4 2 v 12 l 4 -1.594 4 1.594 v -12 z
+                    // https://github.com/KDE/breeze-icons/blob/master/icons/actions/16/bookmarks.svg
+                    path.moveTo(4, 2);
+                    path.lineTo(4, 14);
+                    path.lineTo(8, 12.406);
+                    path.lineTo(12, 14);
+                    path.lineTo(12, 2);
+                    path.closeSubpath();
+
+                    painter->setBrush(Qt::red);
+                    painter->fillPath(path, painter->brush());
+                } else {
+                    bookmarkOverlay = new QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(bookmarkWidth));
+                }
+
+                int pixW = bookmarkOverlay->width(), pixH = bookmarkOverlay->height();
+
+                p->drawPixmap(expectedWidth - pixW, -pixH / 8, *bookmarkOverlay);
+            }
+        }
 
         // draw the page outline (black border and bottom-right shadow)
         if (!itemGeometry.contains(contentsRect)) {

@@ -60,6 +60,12 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     showEmbeddedContentMessages->setObjectName(QStringLiteral("kcfg_ShowEmbeddedContentMessages"));
     layout->addRow(QString(), showEmbeddedContentMessages);
 
+    // Checkbox: Show bookmark on pages
+    QCheckBox *showBookmarkOnPage = new QCheckBox(this);
+    showBookmarkOnPage->setText(i18nc("@option:check Config dialog, general page", "Show bookmark on page"));
+    showBookmarkOnPage->setObjectName(QStringLiteral("kcfg_ShowBookmarkOnPage"));
+    layout->addRow(QString(), showBookmarkOnPage);
+
     if (embedMode != Okular::ViewerWidgetMode) {
         // Checkbox: display document title in titlebar
         QCheckBox *showTitle = new QCheckBox(this);

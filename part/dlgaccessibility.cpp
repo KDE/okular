@@ -40,6 +40,11 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     layout->addRow(QString(), highlightLinks);
     // END Checkboxes: draw border around images/links
 
+    QCheckBox *enableBookmarkColor = new QCheckBox(this);
+    enableBookmarkColor->setText(i18nc("@option:check Config dialog, accessibility page", "Enable bookmark color"));
+    enableBookmarkColor->setObjectName(QStringLiteral("kcfg_EnableBookmarkColor"));
+    layout->addRow(QString(), enableBookmarkColor);
+
     layout->addRow(new QLabel(this));
 
     // BEGIN Change colors section

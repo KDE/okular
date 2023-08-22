@@ -56,6 +56,23 @@ static Okular::CertificateInfo::PublicKeyType fromPoppler(Poppler::CertificateIn
     return Okular::CertificateInfo::OtherKey;
 }
 
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(23, 8, 0)
+static Okular::CertificateInfo::KeyLocation fromPoppler(Poppler::CertificateInfo::KeyLocation location)
+{
+    switch (location) {
+    case Poppler::CertificateInfo::KeyLocation::Computer:
+        return Okular::CertificateInfo::KeyLocation::Computer;
+    case Poppler::CertificateInfo::KeyLocation::Unknown:
+        return Okular::CertificateInfo::KeyLocation::Unknown;
+    case Poppler::CertificateInfo::KeyLocation::HardwareToken:
+        return Okular::CertificateInfo::KeyLocation::HardwareToken;
+    case Poppler::CertificateInfo::KeyLocation::Other:
+        return Okular::CertificateInfo::KeyLocation::Other;
+    }
+    return Okular::CertificateInfo::KeyLocation::Unknown;
+}
+#endif
+
 Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
 {
     Okular::CertificateInfo oInfo;
@@ -79,6 +96,9 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setPublicKeyStrength(pInfo.publicKeyStrength());
     oInfo.setSelfSigned(pInfo.isSelfSigned());
     oInfo.setCertificateData(pInfo.certificateData());
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(23, 8, 0)
+    oInfo.setKeyLocation(fromPoppler(pInfo.keyLocation()));
+#endif
     oInfo.setCheckPasswordFunction([pInfo](const QString &password) {
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
         auto backend = Poppler::activeCryptoSignBackend();

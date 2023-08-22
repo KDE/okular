@@ -66,6 +66,21 @@ public:
      */
     enum class EmptyString { /** Empty strings should just be empty*/ Empty, TranslatedNotAvailable /** Empty strings should be a localized version of "Not available" */ };
 
+    /** A signing key can be located in different places
+     * sometimes, for the user, it might be easier to pick
+     * the key located on a card if it have some visual
+     * indicator that it is somehow removable.
+     *
+     * \note a keylocation for a certificate without a private
+     *key (cannot be used for signing) will likely be "Unknown"
+     */
+    enum class KeyLocation {
+        Unknown,      /** We don't know the location */
+        Other,        /** We know the location, but it is somehow not covered by this enum */
+        Computer,     /** The key is on this computer */
+        HardwareToken /** The key is on a dedicated hardware token, either a smartcard or a dedicated usb token (e.g. gnuk, nitrokey or yubikey) */
+    };
+
     /**
      * Destructor
      */
@@ -237,6 +252,20 @@ public:
      * @since 23.08
      */
     void setCertificateData(const QByteArray &certificateData);
+    /*
+     * Sets the location of the certificate
+     *
+     * see \ref KeyLocation enum for details
+     * @since 23.08
+     */
+    void setKeyLocation(KeyLocation location);
+
+    /**
+     * the location of the certificate
+     *
+     * see \ref KeyLocation enum for details
+     */
+    KeyLocation keyLocation() const;
 
     /**
      * The backend where the certificate originates.

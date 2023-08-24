@@ -327,7 +327,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1">
          <property name="spacing">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -352,11 +352,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>36</height>
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
              <number>0</number>
             </property>
             <item>

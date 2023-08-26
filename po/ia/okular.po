@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-12 00:44+0000\n"
+"POT-Creation-Date: 2023-08-26 00:44+0000\n"
 "PO-Revision-Date: 2023-07-26 18:05+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -5818,21 +5818,21 @@ msgid "Open Document..."
 msgstr "Aperi Documento..."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: shell/welcomescreen.ui:376
+#: shell/welcomescreen.ui:382
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
 msgstr "Documentos recente"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
-#: shell/welcomescreen.ui:386
+#: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
 msgstr "Oblida Toto"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
-#: shell/welcomescreen.ui:454
+#: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Cela schermo de benvenite"

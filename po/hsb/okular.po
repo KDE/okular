@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-12 00:44+0000\n"
+"POT-Creation-Date: 2023-08-26 00:44+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -5705,7 +5705,7 @@ msgid "Open Document..."
 msgstr "Wočini wubrany dokument"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: shell/welcomescreen.ui:376
+#: shell/welcomescreen.ui:382
 #, fuzzy, kde-format
 #| msgid "Current document only"
 msgctxt "on welcome screen"
@@ -5713,14 +5713,14 @@ msgid "Recent documents"
 msgstr "Jenož aktualny dokument"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
-#: shell/welcomescreen.ui:386
+#: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
-#: shell/welcomescreen.ui:454
+#: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""

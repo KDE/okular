@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-12 00:44+0000\n"
+"POT-Creation-Date: 2023-08-26 00:44+0000\n"
 "PO-Revision-Date: 2023-07-30 14:30+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -5782,21 +5782,21 @@ msgid "Open Document..."
 msgstr "ஆவணத்தைத் திற"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: shell/welcomescreen.ui:376
+#: shell/welcomescreen.ui:382
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
 msgstr "சமீபத்திய ஆவணங்கள்"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
-#: shell/welcomescreen.ui:386
+#: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
 msgstr "அனைத்தையும் மற"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
-#: shell/welcomescreen.ui:454
+#: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"

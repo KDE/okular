@@ -57,23 +57,21 @@ protected:
         }
         if (!hasAnnotations) {
             QPainter p(viewport());
-            p.setRenderHint(QPainter::Antialiasing, true);
             p.setClipRect(event->rect());
+
+            constexpr int documentPadding = 25;
 
             QTextDocument document;
             document.setHtml(
                 i18n("<div align=center><h3>No annotations</h3>"
                      "To create new annotations press F6 or select <i>Tools -&gt; Annotations</i>"
                      " from the menu.</div>"));
-            document.setTextWidth(width() - 50);
+            document.setTextWidth(width() - documentPadding * 2);
 
-            const uint w = document.size().width() + 20;
-            const uint h = document.size().height() + 20;
+            const uint w = document.size().width() + 2 * (documentPadding - 6);
+            const uint h = document.size().height() + 2 * (documentPadding - 6);
 
-            p.setBrush(palette().window());
-            p.translate(0.5, 0.5);
-            p.drawRoundedRect(15, 15, w, h, 3, 3);
-            p.translate(20, 20);
+            p.translate(documentPadding, documentPadding);
             document.drawContents(&p);
 
         } else {
@@ -91,15 +89,18 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
 {
     // create widgets and layout them vertically
     QVBoxLayout *vLayout = new QVBoxLayout(this);
-    vLayout->setSpacing(6);
+    vLayout->setSpacing(0);
+    vLayout->setContentsMargins({});
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
     titleWidget->setLevel(4);
     titleWidget->setText(i18n("Annotations"));
+    titleWidget->setContentsMargins(0, titleWidget->style()->pixelMetric(QStyle::PM_LayoutTopMargin), 0, titleWidget->style()->pixelMetric(QStyle::PM_LayoutBottomMargin));
 
     m_view = new TreeView(m_document, this);
     m_view->setAlternatingRowColors(true);
     m_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    m_view->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::BottomEdge | Qt::TopEdge}));
     m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar(this);
@@ -120,14 +121,19 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
 
     m_view->setModel(m_authorProxy);
 
-    m_searchLine = new KTreeViewSearchLine(this, m_view);
+    auto lineContainer = new QWidget(this);
+    auto containerLayout = new QVBoxLayout(lineContainer);
+
+    m_searchLine = new KTreeViewSearchLine(lineContainer, m_view);
     m_searchLine->setPlaceholderText(i18n("Search..."));
     m_searchLine->setCaseSensitivity(Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive);
     m_searchLine->setRegularExpression(Okular::Settings::self()->reviewsSearchRegularExpression());
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Reviews::saveSearchOptions);
+    containerLayout->addWidget(m_searchLine);
+
     vLayout->addWidget(titleWidget);
     vLayout->setAlignment(titleWidget, Qt::AlignHCenter);
-    vLayout->addWidget(m_searchLine);
+    vLayout->addWidget(lineContainer);
     vLayout->addWidget(m_view);
     vLayout->addWidget(toolBar);
 

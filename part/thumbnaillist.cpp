@@ -42,10 +42,12 @@ ThumbnailsBox::ThumbnailsBox(QWidget *parent)
 {
     QVBoxLayout *vbox = new QVBoxLayout(this);
     vbox->setSpacing(0);
+    vbox->setContentsMargins({});
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
     titleWidget->setLevel(4);
     titleWidget->setText(i18n("Thumbnails"));
+    titleWidget->setContentsMargins(0, 6, 0, 0);
     vbox->addWidget(titleWidget);
     vbox->setAlignment(titleWidget, Qt::AlignHCenter);
 }
@@ -261,6 +263,8 @@ ThumbnailList::ThumbnailList(QWidget *parent, Okular::Document *document)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     verticalScrollBar()->setEnabled(false);
+
+    setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
 
     setAttribute(Qt::WA_StaticContents);
 

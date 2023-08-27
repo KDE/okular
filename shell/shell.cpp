@@ -216,6 +216,12 @@ Shell::Shell(const QString &serializedOptions)
         m_sidebar->setObjectName(QStringLiteral("okular_sidebar"));
         m_sidebar->setContextMenuPolicy(Qt::ActionsContextMenu);
         m_sidebar->setWindowTitle(i18n("Sidebar"));
+        m_sidebar->setContentsMargins({});
+
+        // HACK: Ensure contents margin keep being 0 even after polish
+        QTimer::singleShot(200, this, [this]() {
+            m_sidebar->setContentsMargins(0, 0, 0, 0);
+        });
         connect(m_sidebar, &QDockWidget::visibilityChanged, this, [this](bool visible) {
             // sync sidebar visibility with the m_showSidebarAction only if welcome screen is hidden
             if (m_showSidebarAction && m_centralStackedWidget->currentWidget() != m_welcomeScreen) {

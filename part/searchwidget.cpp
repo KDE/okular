@@ -28,8 +28,7 @@ SearchWidget::SearchWidget(QWidget *parent, Okular::Document *document)
     setSizePolicy(sp);
 
     QHBoxLayout *mainlay = new QHBoxLayout(this);
-    mainlay->setContentsMargins(0, 0, 0, 0);
-    mainlay->setSpacing(3);
+    mainlay->setSpacing(4);
 
     // 2. text line
     m_lineEdit = new SearchLineEdit(this, document);

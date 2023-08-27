@@ -399,7 +399,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
 
     // [left toolbox: Thumbnails and Bookmarks] | []
     QWidget *thumbsBox = new ThumbnailsBox(nullptr);
-    thumbsBox->layout()->setSpacing(6);
+    thumbsBox->layout()->setSpacing(0);
     m_searchWidget = new SearchWidget(thumbsBox, m_document);
     thumbsBox->layout()->addWidget(m_searchWidget);
     m_thumbnailList = new ThumbnailList(thumbsBox, m_document);

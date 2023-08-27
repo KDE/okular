@@ -53,6 +53,8 @@ Sidebar::Sidebar(QWidget *parent)
     : QWidget(parent)
     , d(new Private)
 {
+    setContentsMargins({});
+
     QHBoxLayout *mainlay = new QHBoxLayout(this);
     mainlay->setContentsMargins(0, 0, 0, 0);
     mainlay->setSpacing(0);

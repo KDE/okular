@@ -25,21 +25,29 @@ Layers::Layers(QWidget *parent, Okular::Document *document)
     : QWidget(parent)
     , m_document(document)
 {
-    QVBoxLayout *const mainlay = new QVBoxLayout(this);
-    mainlay->setSpacing(6);
+    auto mainlay = new QVBoxLayout(this);
+    mainlay->setSpacing(0);
+    mainlay->setContentsMargins({});
 
     m_document->addObserver(this);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
     titleWidget->setLevel(4);
     titleWidget->setText(i18n("Layers"));
+    titleWidget->setContentsMargins(0, titleWidget->style()->pixelMetric(QStyle::PM_LayoutTopMargin), 0, titleWidget->style()->pixelMetric(QStyle::PM_LayoutBottomMargin));
     mainlay->addWidget(titleWidget);
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);
-    m_searchLine = new KTreeViewSearchLine(this);
-    mainlay->addWidget(m_searchLine);
+
+    auto lineContainer = new QWidget(this);
+    auto containerLayout = new QVBoxLayout(lineContainer);
+
+    m_searchLine = new KTreeViewSearchLine(lineContainer);
+    m_searchLine->setPlaceholderText(i18n("Search..."));
     m_searchLine->setCaseSensitivity(Okular::Settings::self()->layersSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive);
     m_searchLine->setRegularExpression(Okular::Settings::self()->layersSearchRegularExpression());
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Layers::saveSearchOptions);
+    containerLayout->addWidget(m_searchLine);
+    mainlay->addWidget(lineContainer);
 
     m_treeView = new QTreeView(this);
     mainlay->addWidget(m_treeView);
@@ -47,6 +55,7 @@ Layers::Layers(QWidget *parent, Okular::Document *document)
     m_treeView->setSortingEnabled(false);
     m_treeView->setRootIsDecorated(true);
     m_treeView->setAlternatingRowColors(true);
+    m_treeView->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::BottomEdge | Qt::TopEdge}));
     m_treeView->header()->hide();
 }
 

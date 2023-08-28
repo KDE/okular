@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 02:35+0000\n"
-"PO-Revision-Date: 2023-07-25 21:45+0200\n"
+"PO-Revision-Date: 2023-08-28 00:10+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -3347,7 +3347,7 @@ msgstr "다음 일치"
 #: part/findbar.cpp:55
 #, kde-format
 msgid "Jump to next match"
-msgstr "다음 일치로 건너뜁니다"
+msgstr "다음 일치로 이동"
 
 #: part/findbar.cpp:58
 #, kde-format
@@ -3358,12 +3358,12 @@ msgstr "이전"
 #: part/findbar.cpp:59
 #, kde-format
 msgid "Jump to previous match"
-msgstr "이전 일치로 건너뜁니다"
+msgstr "이전 일치로 이동"
 
 #: part/findbar.cpp:64
 #, kde-format
 msgid "Modify search behavior"
-msgstr "검색 행동 수정하기"
+msgstr "검색 방식 변경"
 
 #: part/findbar.cpp:66
 #, kde-format

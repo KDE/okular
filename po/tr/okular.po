@@ -1166,13 +1166,13 @@ msgstr "Siyah"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
-msgstr "%1 genişliği"
+msgstr "%1 genişlik"
 
 #: part/annotationactionhandler.cpp:251
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%​%1:"
+msgstr "%%1"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1540,7 +1540,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%​%1:"
+msgstr "%%1"
 
 #: part/annotationmodel.cpp:324 part/part.cpp:3166
 #, kde-format
@@ -3765,7 +3765,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%%1:"
+msgstr "%%1"
 
 #: part/pageview.cpp:4362
 #, kde-format

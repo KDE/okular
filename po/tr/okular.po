@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-26 00:44+0000\n"
-"PO-Revision-Date: 2023-08-26 12:29+0300\n"
+"PO-Revision-Date: 2023-08-30 12:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1819,7 +1819,7 @@ msgstr "Onaylanmış"
 #: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "As Is"
-msgstr "Olduğu Gibi"
+msgstr "Olduğu gibi"
 
 #: part/annotationwidgets.cpp:418
 #, kde-format
@@ -1844,7 +1844,7 @@ msgstr "Deneysel"
 #: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "Expired"
-msgstr "Süresi Dolmuş"
+msgstr "Süresi dolmuş"
 
 #: part/annotationwidgets.cpp:423
 #, kde-format
@@ -1854,22 +1854,22 @@ msgstr "Son"
 #: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "For Comment"
-msgstr "Yorum İçin"
+msgstr "Yorum için"
 
 #: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "For Public Release"
-msgstr "Genel Sürüm İçin"
+msgstr "Genel yayım için"
 
 #: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Not Approved"
-msgstr "İzin Verilmemiş"
+msgstr "Onaylanmadı"
 
 #: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Not For Public Release"
-msgstr "Genel Sürüm için Değil"
+msgstr "Genel yayım için değil"
 
 #: part/annotationwidgets.cpp:428
 #, kde-format
@@ -1879,12 +1879,12 @@ msgstr "Satılmış"
 #: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Top Secret"
-msgstr "Çok Gizli"
+msgstr "Çok gizli"
 
 #: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "Bookmark"
-msgstr "Yer İmlerine Ekle"
+msgstr "Yer imi"
 
 #: part/annotationwidgets.cpp:431
 #, kde-format
@@ -3256,7 +3256,7 @@ msgstr "Bilgi notu aracı oluştur"
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "Bilgi notu aracını düzenle"
+msgstr "Düzenle"
 
 #: part/editdrawingtooldialog.cpp:50
 #, kde-format
@@ -4013,7 +4013,7 @@ msgstr "Vurgulayıcı"
 #: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Add favorite annotation"
-msgstr "Favori bilgi notu ekle"
+msgstr "Favori Ekle"
 
 #: part/pageviewannotator.cpp:1618
 #, kde-format

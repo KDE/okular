@@ -68,7 +68,7 @@ public:
     Okular::Document *m_document;
     ThumbnailWidget *m_selected;
     QTimer *m_delayTimer;
-    QPixmap *m_bookmarkOverlay;
+    QPixmap m_bookmarkOverlay;
     QVector<ThumbnailWidget *> m_thumbnails;
     QList<ThumbnailWidget *> m_visibleThumbnails;
     int m_vectorIndex;
@@ -79,8 +79,6 @@ public:
 
     // resize thumbnails to fit the width
     void viewportResizeEvent(QResizeEvent *);
-    // called by ThumbnailWidgets to get the overlay bookmark pixmap
-    const QPixmap *getBookmarkOverlay() const;
     // called by ThumbnailWidgets to send (forward) the mouse move signals
     ChangePageDirection forwardTrack(const QPoint, const QSize);
 
@@ -200,7 +198,6 @@ ThumbnailListPrivate::ThumbnailListPrivate(ThumbnailList *qq, Okular::Document *
     , m_document(document)
     , m_selected(nullptr)
     , m_delayTimer(nullptr)
-    , m_bookmarkOverlay(nullptr)
     , m_vectorIndex(0)
     , m_pageCurrentlyGrabbed(0)
 {
@@ -278,7 +275,6 @@ ThumbnailList::ThumbnailList(QWidget *parent, Okular::Document *document)
 ThumbnailList::~ThumbnailList()
 {
     d->m_document->removeObserver(this);
-    delete d->m_bookmarkOverlay;
 }
 
 // BEGIN DocumentObserver inherited methods
@@ -540,11 +536,6 @@ ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(con
     return ThumbnailListPrivate::Null;
 }
 
-const QPixmap *ThumbnailListPrivate::getBookmarkOverlay() const
-{
-    return m_bookmarkOverlay;
-}
-
 void ThumbnailList::slotFilterBookmarks(bool filterOn)
 {
     // save state
@@ -651,10 +642,7 @@ void ThumbnailListPrivate::viewportResizeEvent(QResizeEvent *e)
     }
 
     // invalidate the bookmark overlay
-    if (m_bookmarkOverlay) {
-        delete m_bookmarkOverlay;
-        m_bookmarkOverlay = nullptr;
-    }
+    m_bookmarkOverlay = QPixmap {};
 
     // update Thumbnails since width has changed or height has increased
     delayedRequestVisiblePixmaps(500);
@@ -698,12 +686,11 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
 void ThumbnailListPrivate::slotDelayTimeout()
 {
     // resize the bookmark overlay
-    delete m_bookmarkOverlay;
     const int expectedWidth = q->viewport()->width() / 4;
     if (expectedWidth > 10) {
-        m_bookmarkOverlay = new QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(expectedWidth));
+        m_bookmarkOverlay = QPixmap(QIcon::fromTheme(QStringLiteral("bookmarks")).pixmap(expectedWidth));
     } else {
-        m_bookmarkOverlay = nullptr;
+        m_bookmarkOverlay = QPixmap {};
     }
 
     // request pixmaps
@@ -997,12 +984,12 @@ void ThumbnailWidget::paint(QPainter &p, const QRect _clipRect)
         }
 
         // draw the bookmark overlay on the top-right corner
-        const QPixmap *bookmarkPixmap = m_parent->getBookmarkOverlay();
-        if (isBookmarked && bookmarkPixmap) {
-            int pixW = bookmarkPixmap->width(), pixH = bookmarkPixmap->height();
+        const QPixmap bookmarkPixmap = m_parent->m_bookmarkOverlay;
+        if (isBookmarked && !bookmarkPixmap.isNull()) {
+            int pixW = bookmarkPixmap.width(), pixH = bookmarkPixmap.height();
             clipRect = clipRect.intersected(QRect(m_pixmapWidth - pixW, 0, pixW, pixH));
             if (clipRect.isValid()) {
-                p.drawPixmap(m_pixmapWidth - pixW, -pixH / 8, *bookmarkPixmap);
+                p.drawPixmap(m_pixmapWidth - pixW, -pixH / 8, bookmarkPixmap);
             }
         }
     }

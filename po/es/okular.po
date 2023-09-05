@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-26 00:44+0000\n"
+"POT-Creation-Date: 2023-09-05 00:43+0000\n"
 "PO-Revision-Date: 2023-07-25 00:52+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -5524,7 +5524,7 @@ msgstr "Ver en el gestor de certificados"
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "Gestor de certificados de KDE (kleopatra) no encontrado"
 
-#: part/thumbnaillist.cpp:1028
+#: part/thumbnaillist.cpp:1015
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Mostrar solo las páginas marcadas"

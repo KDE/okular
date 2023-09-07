@@ -266,7 +266,10 @@ void JSField::buttonSetIcon(const QJSValue &oIcon, [[maybe_unused]] int nFace)
 
     if (m_field->type() == Okular::FormField::FormButton) {
         FormFieldButton *button = static_cast<FormFieldButton *>(m_field);
-        button->setIcon(g_buttonCache->value(fieldName));
+        const auto formField = g_buttonCache->value(fieldName);
+        if (formField) {
+            button->setIcon(formField);
+        }
     }
 
     updateField(m_field);

@@ -48,8 +48,8 @@ public:
     bool hidden() const;
     void setHidden(bool hidden);
 
-    Q_INVOKABLE QJSValue buttonGetIcon(int nFace) const;
-    Q_INVOKABLE void buttonSetIcon(const QJSValue &oIcon, int nFace);
+    Q_INVOKABLE QJSValue buttonGetIcon(int nFace = 0) const;
+    Q_INVOKABLE void buttonSetIcon(const QJSValue &oIcon, int nFace = 0);
 
 private:
     QJSValue fieldGetValueCore(bool asString) const;

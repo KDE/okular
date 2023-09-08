@@ -113,7 +113,7 @@ int JSDocument::numFields() const
 
 QJSValue JSDocument::info() const
 {
-    QJSValue obj;
+    QJSValue obj = qjsEngine(this)->newObject();
     QSet<DocumentInfo::Key> keys;
     keys << DocumentInfo::Title << DocumentInfo::Author << DocumentInfo::Subject << DocumentInfo::Keywords << DocumentInfo::Creator << DocumentInfo::Producer;
     const DocumentInfo docinfo = m_doc->m_parent->documentInfo(keys);

@@ -250,7 +250,7 @@ void JSField::setDisplay(int display)
 //  Instead of getting the Icon, we pick the field.
 QJSValue JSField::buttonGetIcon([[maybe_unused]] int nFace) const
 {
-    QJSValue fieldObject;
+    QJSValue fieldObject = qjsEngine(this)->newObject();
     fieldObject.setProperty(OKULAR_NAME, m_field->fullyQualifiedName());
     g_buttonCache->insert(m_field->fullyQualifiedName(), m_field);
 

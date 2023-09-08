@@ -106,7 +106,7 @@ QJSValue JSApp::plugIns() const
     QJSValue plugins = qjsEngine(this)->newArray(s_num_fake_plugins);
     for (int i = 0; i < s_num_fake_plugins; ++i) {
         const FakePluginInfo &info = s_fake_plugins[i];
-        QJSValue plugin;
+        QJSValue plugin = qjsEngine(this)->newObject();
         plugin.setProperty(QStringLiteral("certified"), info.certified);
         plugin.setProperty(QStringLiteral("loaded"), info.loaded);
         plugin.setProperty(QStringLiteral("name"), info.name);

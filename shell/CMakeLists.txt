@@ -13,6 +13,8 @@ set(okular_SRCS
    shellutils.cpp
    recentitemsmodel.cpp
    welcomescreen.cpp
+
+   shell.qrc
 )
 
 ki18n_wrap_ui(okular_SRCS
@@ -43,5 +45,4 @@ install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 # okular shell data files
 
 install( PROGRAMS org.kde.okular.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-install( FILES shell.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
 install( FILES org.kde.okular.appdata.xml DESTINATION  ${KDE_INSTALL_METAINFODIR} )

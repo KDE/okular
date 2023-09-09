@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/kxmlgui5/okular">
+        <file>part.rc</file>
+        <file>part-viewermode.rc</file>
+    </qresource>
+</RCC>

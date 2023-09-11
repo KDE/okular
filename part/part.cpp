@@ -74,8 +74,10 @@
 #include <KToggleAction>
 #include <KToggleFullScreenAction>
 #include <KToolBar>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
 #include <Kdelibs4Migration>
+#endif
 #if HAVE_KWALLET
 #include <KWallet>
 #endif
@@ -623,6 +625,7 @@ void Part::setupConfigSkeleton(const QVariantList &args, const QString &componen
         configFilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1Char('/') + configFileName;
     }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // Migrate old config
     if (!QFile::exists(configFilePath)) {
         qCDebug(OkularUiDebug) << "Did not find a config file, attempting to look for old config";
@@ -655,6 +658,7 @@ void Part::setupConfigSkeleton(const QVariantList &args, const QString &componen
             qCDebug(OkularUiDebug) << "Migrated old okular config";
         }
     }
+#endif
 
     KSharedConfigPtr config = KSharedConfig::openConfig(configFilePath);
 

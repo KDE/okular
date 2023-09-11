@@ -58,9 +58,9 @@
 #include <KActionMenu>
 #include <KBookmarkAction>
 #include <KColorSchemeManager>
+#include <KCompressionDevice>
 #include <KDirWatch>
 #include <KFilterBase>
-#include <KFilterDev>
 #include <KHamburgerMenu>
 #include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
@@ -205,12 +205,12 @@ static QString KStandardActionName(KStandardAction::StandardAction id)
     return QString::fromLatin1(KStandardAction::name(id));
 }
 
-static KFilterDev::CompressionType compressionTypeFor(const QString &mime_to_check)
+static KCompressionDevice::CompressionType compressionTypeFor(const QString &mime_to_check)
 {
     // The compressedMimeMap is here in case you have a very old shared mime database
     // that doesn't have inheritance info for things like gzeps, etc
     // Otherwise the "is()" calls below are just good enough
-    static QHash<QString, KFilterDev::CompressionType> compressedMimeMap;
+    static QHash<QString, KCompressionDevice::CompressionType> compressedMimeMap;
     static bool supportBzip = false;
     static bool supportXz = false;
     const QString app_gzip(QStringLiteral("application/x-gzip"));
@@ -218,15 +218,15 @@ static KFilterDev::CompressionType compressionTypeFor(const QString &mime_to_che
     const QString app_xz(QStringLiteral("application/x-xz"));
     if (compressedMimeMap.isEmpty()) {
         std::unique_ptr<KFilterBase> f;
-        compressedMimeMap[QStringLiteral("image/x-gzeps")] = KFilterDev::GZip;
+        compressedMimeMap[QStringLiteral("image/x-gzeps")] = KCompressionDevice::GZip;
         // check we can read bzip2-compressed files
         f.reset(KCompressionDevice::filterForCompressionType(KCompressionDevice::BZip2));
         if (f.get()) {
             supportBzip = true;
-            compressedMimeMap[QStringLiteral("application/x-bzpdf")] = KFilterDev::BZip2;
-            compressedMimeMap[QStringLiteral("application/x-bzpostscript")] = KFilterDev::BZip2;
-            compressedMimeMap[QStringLiteral("application/x-bzdvi")] = KFilterDev::BZip2;
-            compressedMimeMap[QStringLiteral("image/x-bzeps")] = KFilterDev::BZip2;
+            compressedMimeMap[QStringLiteral("application/x-bzpdf")] = KCompressionDevice::BZip2;
+            compressedMimeMap[QStringLiteral("application/x-bzpostscript")] = KCompressionDevice::BZip2;
+            compressedMimeMap[QStringLiteral("application/x-bzdvi")] = KCompressionDevice::BZip2;
+            compressedMimeMap[QStringLiteral("image/x-bzeps")] = KCompressionDevice::BZip2;
         }
         // check if we can read XZ-compressed files
         f.reset(KCompressionDevice::filterForCompressionType(KCompressionDevice::Xz));
@@ -234,7 +234,7 @@ static KFilterDev::CompressionType compressionTypeFor(const QString &mime_to_che
             supportXz = true;
         }
     }
-    QHash<QString, KFilterDev::CompressionType>::const_iterator it = compressedMimeMap.constFind(mime_to_check);
+    QHash<QString, KCompressionDevice::CompressionType>::const_iterator it = compressedMimeMap.constFind(mime_to_check);
     if (it != compressedMimeMap.constEnd()) {
         return it.value();
     }
@@ -243,15 +243,15 @@ static KFilterDev::CompressionType compressionTypeFor(const QString &mime_to_che
     QMimeType mime = db.mimeTypeForName(mime_to_check);
     if (mime.isValid()) {
         if (mime.inherits(app_gzip)) {
-            return KFilterDev::GZip;
+            return KCompressionDevice::GZip;
         } else if (supportBzip && mime.inherits(app_bzip)) {
-            return KFilterDev::BZip2;
+            return KCompressionDevice::BZip2;
         } else if (supportXz && mime.inherits(app_xz)) {
-            return KFilterDev::Xz;
+            return KCompressionDevice::Xz;
         }
     }
 
-    return KFilterDev::None;
+    return KCompressionDevice::None;
 }
 
 static Okular::EmbedMode detectEmbedMode(QWidget *parentWidget, QObject *parent, const QVariantList &args)
@@ -1434,8 +1434,8 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
     bool uncompressOk = true;
     QMimeType mime = mimeA;
     QString fileNameToOpen = fileNameToOpenA;
-    KFilterDev::CompressionType compressionType = compressionTypeFor(mime.name());
-    if (compressionType != KFilterDev::None) {
+    KCompressionDevice::CompressionType compressionType = compressionTypeFor(mime.name());
+    if (compressionType != KCompressionDevice::None) {
         *isCompressedFile = true;
         uncompressOk = handleCompressed(fileNameToOpen, localFilePath(), compressionType);
         mime = db.mimeTypeForFile(fileNameToOpen);
@@ -3714,7 +3714,7 @@ void Part::unsetDummyMode()
     updateViewActions();
 }
 
-bool Part::handleCompressed(QString &destpath, const QString &path, KFilterDev::CompressionType compressionType)
+bool Part::handleCompressed(QString &destpath, const QString &path, KCompressionDevice::CompressionType compressionType)
 {
     m_tempfile = nullptr;
 

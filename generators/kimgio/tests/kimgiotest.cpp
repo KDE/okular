@@ -13,7 +13,7 @@
 
 #include <QTest>
 
-#include <KPluginLoader>
+#include <KPluginMetaData>
 #include <QImage>
 #include <QImageReader>
 #include <QMimeDatabase>
@@ -38,7 +38,7 @@ void KIMGIOTest::initTestCase()
     QStringList libPaths = QCoreApplication::libraryPaths();
     libPaths.prepend(lib.absolutePath());
     QCoreApplication::setLibraryPaths(libPaths);
-    QVERIFY(!KPluginLoader::findPlugin(QStringLiteral("okularGenerator_kimgio")).isEmpty());
+    QVERIFY(KPluginMetaData(QStringLiteral("okularGenerator_kimgio")).isValid());
     // make sure we didn't break the search path for image formats:
     auto availableFormats = QImageReader::supportedImageFormats();
     QVERIFY2(availableFormats.contains("jpeg"), availableFormats.join(", ").constData());

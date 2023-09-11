@@ -19,7 +19,6 @@
 
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KPluginLoader>
 #include <KSharedConfig>
 #include <KWindowConfig>
 #include <QLoggingCategory>
@@ -76,18 +75,12 @@ void FilePrinterPreviewPrivate::getPart()
         return;
     }
 
-    KPluginLoader loader(QStringLiteral("okularpart"));
-    KPluginFactory *factory = loader.factory();
+    auto result = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(KPluginMetaData(QStringLiteral("okularpart")), q, QVariantList() << QStringLiteral("Print/Preview"));
 
-    if (!factory) {
-        qCDebug(OkularUiDebug) << "Loading failed:" << loader.errorString();
-        return;
-    }
-
-    qCDebug(OkularUiDebug) << "Trying to create a part";
-    previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << QStringLiteral("Print/Preview")));
-    if (!previewPart) {
-        qCDebug(OkularUiDebug) << "Part creation failed";
+    if (!result) {
+        qCWarning(OkularUiDebug) << "Part creation failed" << result.errorText;
+    } else {
+        previewPart = result.plugin;
     }
 }
 

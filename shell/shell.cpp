@@ -25,7 +25,6 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <KPluginLoader>
 #include <KRecentFilesAction>
 #include <KSharedConfig>
 #include <KStandardAction>
@@ -168,14 +167,17 @@ Shell::Shell(const QString &serializedOptions)
     // this routine will find and load our Part.  it finds the Part by
     // name which is a bad idea usually.. but it's alright in this
     // case since our Part is made for this Shell
-    KPluginLoader loader(QStringLiteral("okularpart"));
-    m_partFactory = loader.factory();
-    if (!m_partFactory) {
+
+    const auto result = KPluginFactory::loadFactory(KPluginMetaData(QStringLiteral("okularpart")));
+
+    if (!result) {
         // if we couldn't find our Part, we exit since the Shell by
         // itself can't do anything useful
         m_isValid = false;
-        KMessageBox::error(this, i18n("Unable to find the Okular component: %1", loader.errorString()));
+        KMessageBox::error(this, i18n("Unable to find the Okular component: %1", result.errorString));
         return;
+    } else {
+        m_partFactory = result.plugin;
     }
 
     // now that the Part plugin is loaded, create the part

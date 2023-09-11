@@ -5,7 +5,6 @@
 */
 
 #include <KPluginFactory>
-#include <KPluginLoader>
 #include <QDebug>
 #include <QDirIterator>
 #include <QLibrary>
@@ -42,10 +41,7 @@ void GeneratorsTest::testLoadsCorrectly()
     int failures = 0;
     int successful = 0;
     for (const QString &lib : qAsConst(generatorLibs)) {
-        KPluginLoader loader(lib);
-        QVERIFY2(!loader.fileName().isEmpty(), qPrintable(lib));
-        qDebug() << loader.fileName();
-        auto factory = loader.factory();
+        auto factory = KPluginFactory::loadFactory(KPluginMetaData(lib)).plugin;
         if (!factory) {
             qWarning() << "Could not get KPluginFactory for" << lib;
             failures++;

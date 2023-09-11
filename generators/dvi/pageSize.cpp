@@ -14,6 +14,7 @@
 
 #include <KLocalizedString>
 
+#include <QLocale>
 #include <QLoggingCategory>
 
 struct pageSizeItem {

@@ -24,6 +24,7 @@
 
 #include <QMimeType>
 #include <QUrl>
+#include <QVariant>
 
 class KConfigDialog;
 class KPluginMetaData;

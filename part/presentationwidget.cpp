@@ -22,6 +22,7 @@
 #include <KMessageBox>
 #include <KSelectAction>
 #include <QAction>
+#include <QActionGroup>
 #include <QApplication>
 #include <QDialog>
 #include <QEvent>

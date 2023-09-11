@@ -6,6 +6,8 @@
 
 #include "colormodemenu.h"
 
+#include <QActionGroup>
+
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <kwidgetsaddons_version.h> // TODO KF6: Remove, this was needed for KActionMenu::setPopupMode().

@@ -9,6 +9,7 @@
 // qt/kde includes
 #include <KLocalizedString>
 #include <QAction>
+#include <QActionGroup>
 #include <QIcon>
 #include <QLayout>
 #include <QMenu>

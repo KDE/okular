@@ -7,6 +7,8 @@
 #include "testingutils.h"
 #include "core/annotations.h"
 
+#include <QIODevice>
+
 namespace TestingUtils
 {
 QString getAnnotationXml(const Okular::Annotation *annotation)

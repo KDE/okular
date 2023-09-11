@@ -7,6 +7,7 @@
 #include "annotationactionhandler.h"
 
 // qt includes
+#include <QActionGroup>
 #include <QBitmap>
 #include <QColorDialog>
 #include <QFileInfo>

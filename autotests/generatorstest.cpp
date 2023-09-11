@@ -8,6 +8,7 @@
 #include <KPluginLoader>
 #include <QDebug>
 #include <QDirIterator>
+#include <QLibrary>
 #include <QStringList>
 #include <QTest>
 

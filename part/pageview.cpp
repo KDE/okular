@@ -19,6 +19,7 @@
 #include "pageview.h"
 
 // qt/kde includes
+#include <QActionGroup>
 #include <QApplication>
 #include <QClipboard>
 #include <QCursor>

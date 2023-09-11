@@ -9,6 +9,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QApplication> // Because of the HACK
 #include <QFileInfo>
+#include <QRegExp>
 #include <QTextDocument>
 #include <QTextDocumentFragment>
 #include <QTextFrame>

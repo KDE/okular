@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 02:35+0000\n"
+"POT-Creation-Date: 2023-09-12 02:25+0000\n"
 "PO-Revision-Date: 2023-07-29 09:36+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -3910,7 +3910,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Asinar"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:411
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4542,7 +4542,7 @@ msgid "Remove this Bookmark"
 msgstr "Retirar este marcador"
 
 #: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
-#: part/signaturepartutils.cpp:381
+#: part/signaturepartutils.cpp:379
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5408,43 +5408,43 @@ msgstr "Recoller todos os elementos"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:302
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imaxes (%1)"
 
-#: part/signaturepartutils.cpp:305
+#: part/signaturepartutils.cpp:303
 #, kde-format
 msgid "Select background image"
 msgstr "Seleccionar unha imaxe de fondo"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:308
 #, kde-format
 msgid "Forget image"
 msgstr "Esquecelo a imaxe"
 
-#: part/signaturepartutils.cpp:311
+#: part/signaturepartutils.cpp:309
 #, kde-format
 msgid "Forget all images"
 msgstr "Esquecer todas as imaxes"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:350
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Introduza o contrasinal (se existe) para desbloquear o certificado: %1"
 
-#: part/signaturepartutils.cpp:354
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduza o contrasinal do certificado"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:365
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduza o contrasinal do documento"
 
-#: part/signaturepartutils.cpp:387
+#: part/signaturepartutils.cpp:385
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gardar o ficheiro asinado como"

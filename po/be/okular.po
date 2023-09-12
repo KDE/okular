@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 02:35+0000\n"
+"POT-Creation-Date: 2023-09-12 02:25+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -3919,7 +3919,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Падпісаць"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:413
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:411
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4562,7 +4562,7 @@ msgid "Remove this Bookmark"
 msgstr "Выдаліць гэтую закладку"
 
 #: part/part.cpp:2602 part/part.cpp:2603 part/part.cpp:3483
-#: part/signaturepartutils.cpp:381
+#: part/signaturepartutils.cpp:379
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5430,48 +5430,48 @@ msgstr "Згарнуць усе элементы"
 msgid "Properties"
 msgstr "Уласцівасці"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:302
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Старонак: %1"
 
-#: part/signaturepartutils.cpp:305
+#: part/signaturepartutils.cpp:303
 #, fuzzy, kde-format
 msgid "Select background image"
 msgstr "Паказваць &фон"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:308
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Забыцца на ўсе"
 
-#: part/signaturepartutils.cpp:311
+#: part/signaturepartutils.cpp:309
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Забыцца на ўсе"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:350
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Увядзіце пароль (калі ёсць), каб разблакаваць сертыфікат: %1"
 
-#: part/signaturepartutils.cpp:354
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Увядзіце пароль сертыфіката"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:365
 #, kde-format
 msgid "Enter document password"
 msgstr "Увядзіце пароль дакумента"
 
-#: part/signaturepartutils.cpp:387
+#: part/signaturepartutils.cpp:385
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Захаваць падпісаны файл як"

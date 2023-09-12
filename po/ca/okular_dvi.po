@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2021-11-03 18:53+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -346,12 +346,12 @@ msgstr "Generador/Data"
 msgid "Font file not found"
 msgstr "No s'ha trobat el fitxer de tipus de lletra"
 
-#: pageSize.cpp:318
+#: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
 msgstr "vertical"
 
-#: pageSize.cpp:320
+#: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
 msgstr "apaïsat"

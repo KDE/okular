@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -31,7 +31,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "nashtlumach@gmail.com"
 
-#: converter.cpp:163
+#: converter.cpp:164
 #, kde-format
 msgid "Error while opening the EPub document."
 msgstr "Падчас адкрыцця дакумента EPub адбылася памылка."

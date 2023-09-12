@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2010-01-26 16:15+0100\n"
 "Last-Translator: Marko Dimjasevic <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -31,7 +31,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "marko@dimjasevic.net"
 
-#: converter.cpp:163
+#: converter.cpp:164
 #, kde-format
 msgid "Error while opening the EPub document."
 msgstr "Greška pri otvaranju dokumenta vrste EPub"

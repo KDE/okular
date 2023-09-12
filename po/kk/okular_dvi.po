@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2013-06-28 02:44+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -394,12 +394,12 @@ msgstr "Құрушысы/Құрылған кезі"
 msgid "Font file not found"
 msgstr "Қаріптің файлы табылмады"
 
-#: pageSize.cpp:318
+#: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
 msgstr "тік"
 
-#: pageSize.cpp:320
+#: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
 msgstr "жатық"

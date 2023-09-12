@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2023-04-07 10:09+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -337,12 +337,12 @@ msgstr "Generilo/Dato"
 msgid "Font file not found"
 msgstr "Tipara dosiero ne troviĝis"
 
-#: pageSize.cpp:318
+#: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
 msgstr "vertikala formato"
 
-#: pageSize.cpp:320
+#: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
 msgstr "horizontala formato"

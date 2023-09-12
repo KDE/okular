@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2014-03-09 16:17+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -391,12 +391,12 @@ msgstr "Producent/Dato"
 msgid "Font file not found"
 msgstr "Skrifttypefil ikke fundet"
 
-#: pageSize.cpp:318
+#: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
 msgstr "stående"
 
-#: pageSize.cpp:320
+#: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
 msgstr "liggende"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-10 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2013-08-14 17:35+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -24,7 +24,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "lueck@hube-lueck.de"
 
-#: converter.cpp:163
+#: converter.cpp:164
 #, kde-format
 msgid "Error while opening the EPub document."
 msgstr "Fehler beim Öffnen des EPUB-Dokuments."

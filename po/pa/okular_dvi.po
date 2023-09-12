@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-04-09 00:43+0000\n"
+"POT-Creation-Date: 2023-09-12 00:44+0000\n"
 "PO-Revision-Date: 2019-02-09 13:18-0800\n"
 "Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -273,12 +273,12 @@ msgstr "ਨਿਰਮਾਤਾ/ਤਾਰੀਖ"
 msgid "Font file not found"
 msgstr "ਫੋਂਟ ਫਾਇਲ ਨਹੀਂ ਲੱਭੀ"
 
-#: pageSize.cpp:318
+#: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
 msgstr "ਪੋਰਟਰੇਟ"
 
-#: pageSize.cpp:320
+#: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
 msgstr "ਲੈਂਡਸਕੇਪ"

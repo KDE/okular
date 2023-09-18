@@ -2604,7 +2604,7 @@ msgstr "SciTE"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Emacs client"
-msgstr "Client de l'Emacs"
+msgstr "Client d'Emacs"
 
 #: part/dlgeditor.cpp:34
 #, kde-format
@@ -2811,7 +2811,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
-msgstr "Superposició Re/Av Pàg:"
+msgstr "Superposició «Re Pàg»/«Av Pàg»:"
 
 #: part/dlggeneral.cpp:204
 #, kde-format

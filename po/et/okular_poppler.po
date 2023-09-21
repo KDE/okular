@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:43+0000\n"
+"POT-Creation-Date: 2023-09-21 00:42+0000\n"
 "PO-Revision-Date: 2019-11-09 21:13+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -235,12 +235,12 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: generator_pdf.cpp:1580
+#: generator_pdf.cpp:1588
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Kasutusel on Poppler %1"
 
-#: generator_pdf.cpp:1582
+#: generator_pdf.cpp:1590
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -251,17 +251,17 @@ msgstr ""
 "\n"
 "Ehitatud Poppler %2 peale"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1625
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1625
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF-i taustaprogrammi seadistamine"
 
-#: generator_pdf.cpp:2110
+#: generator_pdf.cpp:2118
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

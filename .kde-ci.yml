@@ -11,6 +11,7 @@ Dependencies:
     'frameworks/karchive': '@stable'
     'libraries/phonon': '@stable'
     'graphics/kdegraphics-mobipocket': '@same'
+    'third-party/poppler' : '@latest'
 
 - 'on': ['Linux', 'FreeBSD', 'Windows']
   'require':

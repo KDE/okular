@@ -502,7 +502,6 @@ install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_A
 
 install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
 if(BUILD_DESKTOP)
   # okularpart
@@ -625,11 +624,9 @@ if (Qt6TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt6::TextToSpeech)
 endif()
 
-# TODO: Don't install okular_part.desktop once we are kf6 based
 #instead install the part to this path so it can be found
 #install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/parts/ )
 install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 
 endif()# End of BUILD_DESKTOP if
 

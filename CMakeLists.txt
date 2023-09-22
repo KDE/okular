@@ -375,7 +375,7 @@ set(okularcore_SRCS
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
 )
-qt5_add_resources(okularcore_SRCS
+qt_add_resources(okularcore_SRCS
    core/script/builtin.qrc
 )
 

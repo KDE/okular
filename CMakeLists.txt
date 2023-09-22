@@ -9,7 +9,7 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 project(okular VERSION ${RELEASE_SERVICE_VERSION})
 
 set(QT_REQUIRED_VERSION "5.15.2") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
-set(KF5_REQUIRED_VERSION "5.92.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
+set(KF_REQUIRED_VERSION "5.92.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
@@ -69,7 +69,7 @@ if (BUILD_MOBILE)
     set(QT_REQUIRED_VERSION "5.15.2")
 endif()
 
-find_package(ECM ${KF5_REQUIRED_VERSION} CONFIG REQUIRED)
+find_package(ECM ${KF_REQUIRED_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 include(ECMInstallIcons)
@@ -115,7 +115,7 @@ ecm_setup_qtplugin_macro_names(
         PACKAGE_SETUP_AUTOMOC_VARIABLES
 )
 
-find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks
     Completion
@@ -128,7 +128,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     WindowSystem
 )
 
-find_package(KF5Wallet ${KF5_REQUIRED_VERSION})
+find_package(KF5Wallet ${KF_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")
 if(KF5Wallet_FOUND)
@@ -137,7 +137,7 @@ else()
     set(HAVE_KWALLET 0)
 endif()
 
-find_package(KF5DocTools ${KF5_REQUIRED_VERSION})
+find_package(KF5DocTools ${KF_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5DocTools PROPERTIES
     PURPOSE "Required for compiling and installing the user documentation.")
 
@@ -159,7 +159,7 @@ if (BUILD_DESKTOP)
     else()
         set(HAVE_DBUS 0)
     endif()
-    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
+    find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
 
     find_package(KF5Purpose)
     set_okular_optional_package_properties(KF5Purpose PROPERTIES
@@ -198,7 +198,7 @@ if (BUILD_MOBILE)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
-    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+    find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities
     )
     set_package_properties("KF5Activities" PROPERTIES

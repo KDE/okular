@@ -326,6 +326,3 @@ msgstr "Parola Girin"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "%1 ögesini açmak için parola girin:"
-
-#~ msgid "Not Available"
-#~ msgstr "Kullanılamıyor"

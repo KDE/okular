@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt5Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt${QT_MAJOR_VERSION}Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -102,10 +102,10 @@ ecm_setup_version(${PROJECT_VERSION}
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg)
+find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg)
 
 if(ANDROID)
-    find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
+    find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
 endif()
 
 ecm_setup_qtplugin_macro_names(
@@ -141,20 +141,20 @@ find_package(KF5DocTools ${KF_REQUIRED_VERSION})
 set_okular_optional_package_properties(KF5DocTools PROPERTIES
     PURPOSE "Required for compiling and installing the user documentation.")
 
-find_package(Qt5Qml)
-set_okular_optional_package_properties(Qt5Qml PROPERTIES
+find_package(Qt${QT_MAJOR_VERSION}Qml)
+set_okular_optional_package_properties(Qt${QT_MAJOR_VERSION}Qml PROPERTIES
     PURPOSE "Required for supporting JavaScript in PDF documents")
-if(TARGET Qt5::Qml)
+if(TARGET Qt${QT_MAJOR_VERSION}::Qml)
     set(HAVE_JS 1)
 else()
     set(HAVE_JS 0)
 endif()
 
 if (BUILD_DESKTOP)
-    find_package(Qt5DBus)
-    set_okular_optional_package_properties(Qt5DBus PROPERTIES
+    find_package(Qt${QT_MAJOR_VERSION}DBus)
+    set_okular_optional_package_properties(Qt${QT_MAJOR_VERSION}DBus PROPERTIES
         PURPOSE "Required for interprocess communication, external open in same instance and various presentation related bits.")
-    if(TARGET Qt5::DBus)
+    if(TARGET Qt${QT_MAJOR_VERSION}::DBus)
         set(HAVE_DBUS 1)
     else()
         set(HAVE_DBUS 0)
@@ -171,10 +171,10 @@ if (BUILD_DESKTOP)
         set(HAVE_PURPOSE 0)
     endif()
 
-    find_package(Qt5TextToSpeech ${QT_REQUIRED_VERSION} CONFIG)
-    set_okular_optional_package_properties(Qt5TextToSpeech PROPERTIES
+    find_package(Qt${QT_MAJOR_VERSION}TextToSpeech ${QT_REQUIRED_VERSION} CONFIG)
+    set_okular_optional_package_properties(Qt${QT_MAJOR_VERSION}TextToSpeech PROPERTIES
         PURPOSE "Enables speech features.")
-    if (Qt5TextToSpeech_FOUND)
+    if (Qt${QT_MAJOR_VERSION}TextToSpeech_FOUND)
         set(HAVE_SPEECH 1)
     else()
         set(HAVE_SPEECH 0)
@@ -182,7 +182,7 @@ if (BUILD_DESKTOP)
 endif()
 
 if (BUILD_MOBILE)
-    find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick)
+    find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick)
     find_package(KF5Kirigami2)
     set_package_properties(KF5Kirigami2 PROPERTIES
         DESCRIPTION "A QtQuick based components set"
@@ -206,15 +206,15 @@ if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
         URL "https://api.kde.org/frameworks/kactivities/html/"
         PURPOSE "Required for Activities integration.")
 
-    find_package(Qt5X11Extras REQUIRED)
+    find_package(Qt${QT_MAJOR_VERSION}X11Extras REQUIRED)
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
 endif()
-find_package(Phonon4Qt5 CONFIG)
-set_okular_optional_package_properties(Phonon4Qt5 PROPERTIES
+find_package(Phonon4Qt${QT_MAJOR_VERSION} CONFIG)
+set_okular_optional_package_properties(Phonon4Qt${QT_MAJOR_VERSION} PROPERTIES
     PURPOSE "Required for documents with audio or video elements")
-if (Phonon4Qt5_FOUND)
+if (Phonon4Qt${QT_MAJOR_VERSION}_FOUND)
     set(HAVE_PHONON 1)
 else()
     set(HAVE_PHONON 0)
@@ -224,7 +224,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "22.02.0" COMPONENTS Qt5)
+find_package(Poppler "22.02.0" COMPONENTS Qt${QT_MAJOR_VERSION})
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
@@ -462,25 +462,25 @@ PRIVATE
     KF5::I18n
     KF5::ThreadWeaver
     KF5::Bookmarks
-    Qt5::Svg
+    Qt${QT_MAJOR_VERSION}::Svg
     ${MATH_LIB}
     ZLIB::ZLIB
 PUBLIC  # these are included from the installed headers
     KF5::CoreAddons
     KF5::XmlGui
     KF5::ConfigGui
-    Qt5::PrintSupport
-    Qt5::Widgets
+    Qt${QT_MAJOR_VERSION}::PrintSupport
+    Qt${QT_MAJOR_VERSION}::Widgets
 )
-if (Phonon4Qt5_FOUND)
-    target_link_libraries(okularcore PRIVATE Phonon::phonon4qt5)
+if (Phonon4Qt${QT_MAJOR_VERSION}_FOUND)
+    target_link_libraries(okularcore PRIVATE Phonon::phonon4qt${QT_MAJOR_VERSION})
 endif()
 
 
 if (KF5Wallet_FOUND)
     target_link_libraries(okularcore PRIVATE KF5::Wallet)
 endif()
-if (TARGET Qt5::Qml)
+if (TARGET Qt${QT_MAJOR_VERSION}::Qml)
     target_sources(okularcore PRIVATE
             core/script/executor_js.cpp
             core/script/js_app.cpp
@@ -496,7 +496,7 @@ if (TARGET Qt5::Qml)
             core/script/js_event.cpp
             core/script/js_ocg.cpp
     )
-    target_link_libraries(okularcore PRIVATE Qt5::Qml)
+    target_link_libraries(okularcore PRIVATE Qt${QT_MAJOR_VERSION}::Qml)
 endif()
 
 set_target_properties(okularcore PROPERTIES VERSION 11.0.0 SOVERSION 11 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
@@ -583,7 +583,7 @@ if(BUILD_DESKTOP)
   )
   ki18n_wrap_ui(okularpart_SRCS part/selectcertificatedialog.ui)
 
-if (Qt5TextToSpeech_FOUND)
+if (Qt${QT_MAJOR_VERSION}TextToSpeech_FOUND)
    set(okularpart_SRCS ${okularpart_SRCS}
       part/tts.cpp)
 endif()
@@ -595,7 +595,7 @@ generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore
     ${MATH_LIB}
-    Qt5::Svg
+    Qt${QT_MAJOR_VERSION}::Svg
     KF5::Archive
     KF5::Bookmarks
     KF5::I18n
@@ -607,11 +607,11 @@ target_link_libraries(okularpart okularcore
     KF5::WindowSystem
     KF5::TextWidgets
 )
-if (TARGET Qt5::DBus)
-    target_link_libraries(okularpart Qt5::DBus)
+if (TARGET Qt${QT_MAJOR_VERSION}::DBus)
+    target_link_libraries(okularpart Qt${QT_MAJOR_VERSION}::DBus)
 endif()
-if (Phonon4Qt5_FOUND)
-   target_link_libraries(okularpart Phonon::phonon4qt5)
+if (Phonon4Qt${QT_MAJOR_VERSION}_FOUND)
+   target_link_libraries(okularpart Phonon::phonon4qt${QT_MAJOR_VERSION})
 endif()
 
 if(KF5Wallet_FOUND)
@@ -624,8 +624,8 @@ endif()
 
 set_target_properties(okularpart PROPERTIES PREFIX "")
 
-if (Qt5TextToSpeech_FOUND)
-   target_link_libraries(okularpart Qt5::TextToSpeech)
+if (Qt${QT_MAJOR_VERSION}TextToSpeech_FOUND)
+   target_link_libraries(okularpart Qt${QT_MAJOR_VERSION}::TextToSpeech)
 endif()
 
 # TODO: Don't install okular_part.desktop once we are kf6 based

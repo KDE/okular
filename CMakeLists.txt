@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;KF5KHtml;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -256,16 +256,14 @@ set_okular_optional_package_properties(KF5KExiv2 PROPERTIES
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")
 
-find_package(CHM)
-set_okular_optional_package_properties(CHM PROPERTIES
-        DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
-        URL "http://www.jedrea.com/chmlib"
-        PURPOSE "Support CHM files in okular.")
+if (FALSE ) # Investigate porting at some point
+    find_package(CHM)
+    set_okular_optional_package_properties(CHM PROPERTIES
+            DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
+            URL "http://www.jedrea.com/chmlib"
+            PURPOSE "Support CHM files in okular.")
 
-find_package(KF5KHtml CONFIG)
-set_okular_optional_package_properties(KF5KHtml PROPERTIES
-        DESCRIPTION "HTML rendering library"
-        PURPOSE "Support CHM files in okular.")
+endif()
 
 find_package(LibZip)
 set_okular_optional_package_properties(LibZip PROPERTIES

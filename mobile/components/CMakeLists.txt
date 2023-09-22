@@ -23,9 +23,9 @@ target_link_libraries(okularplugin
         Qt6::Core
         Qt6::Xml
         Qt6::Svg
-        KF5::Bookmarks
-        KF5::I18n
-        KF5::Service
+        KF6::Bookmarks
+        KF6::I18n
+        KF6::Service
         okularcore
         )
 

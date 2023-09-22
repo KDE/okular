@@ -18,7 +18,7 @@ set(okularGenerator_plucker_SRCS
 okular_add_generator(okularGenerator_plucker ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
 
 target_include_directories(okularGenerator_plucker PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/unpluck)
-target_link_libraries(okularGenerator_plucker okularcore KF5::I18n ${MATH_LIB} JPEG::JPEG ZLIB::ZLIB)
+target_link_libraries(okularGenerator_plucker okularcore KF6::I18n ${MATH_LIB} JPEG::JPEG ZLIB::ZLIB)
 
 ########### install files ###############
 install( PROGRAMS okularApplication_plucker.desktop org.kde.mobile.okular_plucker.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

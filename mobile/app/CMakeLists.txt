@@ -5,7 +5,7 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/../../
 )
 add_executable(okularkirigami main.cpp app.qrc)
-target_link_libraries(okularkirigami Qt6::Widgets Qt6::Qml KF5::I18n KF5::CoreAddons)
+target_link_libraries(okularkirigami Qt6::Widgets Qt6::Qml KF6::I18n KF6::CoreAddons)
 if (ANDROID)
     target_sources(okularkirigami PRIVATE android.cpp)
 

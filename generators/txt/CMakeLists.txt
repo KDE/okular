@@ -12,7 +12,7 @@ set(okularGenerator_txt_SRCS
 
 okular_add_generator(okularGenerator_txt ${okularGenerator_txt_SRCS})
 
-target_link_libraries(okularGenerator_txt okularcore Qt6::Core KF5::I18n)
+target_link_libraries(okularGenerator_txt okularcore Qt6::Core KF6::I18n)
 
 ########### install files ###############
 install( PROGRAMS okularApplication_txt.desktop org.kde.mobile.okular_txt.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

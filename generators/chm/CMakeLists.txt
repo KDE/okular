@@ -21,14 +21,14 @@ set(okularGenerator_chmlib_SRCS
 
 okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
 target_include_directories(okularGenerator_chmlib PRIVATE ${CHM_INCLUDE_DIR} ${LIBZIP_INCLUDE_DIR})
-target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${LIBZIP_LIBRARY} KF5::KHtml)
+target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${LIBZIP_LIBRARY} KF6::KHtml)
 
 ########### autotests ###############
 
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 ecm_add_test(autotests/chmgeneratortest.cpp
     TEST_NAME "chmgeneratortest"
-    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore
+    LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore
 )
 
 target_compile_definitions(chmgeneratortest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_chmlib>")

@@ -12,9 +12,9 @@ macro(add_conf_unittest _source)
     Qt6::Test
     Qt6::Widgets
     Qt6::Xml
-    KF5::I18n
-    KF5::Completion
-    KF5::WidgetsAddons
+    KF6::I18n
+    KF6::Completion
+    KF6::WidgetsAddons
   )
 endmacro ()
 
@@ -61,12 +61,12 @@ endif()
 
 ecm_add_test(suggestedfilenametest.cpp
     TEST_NAME "suggestedfilenametest"
-    LINK_LIBRARIES Qt6::Test okularcore KF5::I18n
+    LINK_LIBRARIES Qt6::Test okularcore KF6::I18n
 )
 
 ecm_add_test(documenttest.cpp
     TEST_NAME "documenttest"
-    LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml okularcore KF5::ThreadWeaver
+    LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml okularcore KF6::ThreadWeaver
 )
 
 ecm_add_test(searchtest.cpp
@@ -81,7 +81,7 @@ ecm_add_test(annotationstest.cpp
 
 ecm_add_test(urldetecttest.cpp
     TEST_NAME "urldetecttest"
-    LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml KF5::CoreAddons
+    LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml KF6::CoreAddons
 )
 
 ecm_add_test(editannotationcontentstest.cpp testingutils.cpp
@@ -118,16 +118,15 @@ ecm_add_test(check_distinguished_name_parser.cpp
     TEST_NAME "distinguishednameparser"
     LINK_LIBRARIES Qt6::Test)
 
-if(KF5Activities_FOUND AND BUILD_DESKTOP)
-	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../shell/recentitemsmodel.cpp closedialoghelper.cpp
-		TEST_NAME "mainshelltest"
-		LINK_LIBRARIES Qt6::Test KF5::Activities okularpart okularcore
-	)
-	target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
+if(KF6Activities_FOUND AND BUILD_DESKTOP)
+    ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../shell/recentitemsmodel.cpp closedialoghelper.cpp
+        TEST_NAME "mainshelltest"
+        LINK_LIBRARIES Qt6::Test KF6::Activities okularpart okularcore
+    )
+    target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
 
-	if (HAVE_X11)
-           target_link_libraries(mainshelltest Qt6::GuiPrivate)
-        endif()
+    if (HAVE_X11)
+       target_link_libraries(mainshelltest Qt6::GuiPrivate)
     endif()
 endif()
 
@@ -144,7 +143,7 @@ endif()
 
 ecm_add_test(generatorstest.cpp
     TEST_NAME "generatorstest"
-    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore
+    LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore
 )
 target_compile_definitions(generatorstest PRIVATE GENERATORS_BUILD_DIR="${CMAKE_BINARY_DIR}/generators")
 
@@ -158,11 +157,11 @@ find_package(Discount)
 if(Discount_FOUND)
     ecm_add_test(markdowntest.cpp ../generators/markdown/converter.cpp
         TEST_NAME "markdowntest"
-        LINK_LIBRARIES Qt6::Test okularcore KF5::I18n PkgConfig::Discount
+        LINK_LIBRARIES Qt6::Test okularcore KF6::I18n PkgConfig::Discount
     )
 endif()
 
 ecm_add_test(toggleactionmenutest.cpp ../part/toggleactionmenu.cpp
     TEST_NAME "toggleactionmenutest"
-    LINK_LIBRARIES Qt6::Test KF5::WidgetsAddons
+    LINK_LIBRARIES Qt6::Test KF6::WidgetsAddons
 )

@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF5Wallet;KF5DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KF5KExiv2;CHM;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KF6KExiv2;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -111,7 +111,7 @@ ecm_setup_qtplugin_macro_names(
         PACKAGE_SETUP_AUTOMOC_VARIABLES
 )
 
-find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
+find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks
     Completion
@@ -124,17 +124,17 @@ find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     WindowSystem
 )
 
-find_package(KF5Wallet ${KF_REQUIRED_VERSION})
-set_okular_optional_package_properties(KF5Wallet PROPERTIES
+find_package(KF6Wallet ${KF_REQUIRED_VERSION})
+set_okular_optional_package_properties(KF6Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")
-if(KF5Wallet_FOUND)
+if(KF6Wallet_FOUND)
     set(HAVE_KWALLET 1)
 else()
     set(HAVE_KWALLET 0)
 endif()
 
-find_package(KF5DocTools ${KF_REQUIRED_VERSION})
-set_okular_optional_package_properties(KF5DocTools PROPERTIES
+find_package(KF6DocTools ${KF_REQUIRED_VERSION})
+set_okular_optional_package_properties(KF6DocTools PROPERTIES
     PURPOSE "Required for compiling and installing the user documentation.")
 
 find_package(Qt6Qml)
@@ -155,13 +155,13 @@ if (BUILD_DESKTOP)
     else()
         set(HAVE_DBUS 0)
     endif()
-    find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
+    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
 
-    find_package(KF5Purpose)
-    set_okular_optional_package_properties(KF5Purpose PROPERTIES
+    find_package(KF6Purpose)
+    set_okular_optional_package_properties(KF6Purpose PROPERTIES
         DESCRIPTION "A framework for services and actions integration"
         PURPOSE "Required for enabling the share menu.")
-    if (KF5Purpose_FOUND)
+    if (KF6Purpose_FOUND)
         set(HAVE_PURPOSE 1)
     else()
         set(HAVE_PURPOSE 0)
@@ -179,14 +179,14 @@ endif()
 
 if (BUILD_MOBILE)
     find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick)
-    find_package(KF5Kirigami2)
-    set_package_properties(KF5Kirigami2 PROPERTIES
+    find_package(KF6Kirigami2)
+    set_package_properties(KF6Kirigami2 PROPERTIES
         DESCRIPTION "A QtQuick based components set"
         PURPOSE "Required at runtime by the mobile app"
         TYPE RUNTIME
     )
-    find_package(KF5KirigamiAddons)
-    set_package_properties(KF5KirigamiAddons PROPERTIES
+    find_package(KF6KirigamiAddons)
+    set_package_properties(KF6KirigamiAddons PROPERTIES
         DESCRIPTION "A set of widgets for Kirigami along with  code to support them"
         PURPOSE "Required at runtime by the mobile app"
         TYPE RUNTIME
@@ -194,10 +194,10 @@ if (BUILD_MOBILE)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
-    find_package(KF5 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
+    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities
     )
-    set_package_properties("KF5Activities" PROPERTIES
+    set_package_properties("KF6Activities" PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://api.kde.org/frameworks/kactivities/html/"
         PURPOSE "Required for Activities integration.")
@@ -250,8 +250,8 @@ set_okular_optional_package_properties(LibSpectre PROPERTIES
         URL "https://libspectre.freedesktop.org"
         PURPOSE "Support for PS files in okular.")
 
-find_package(KF5KExiv2 CONFIG)
-set_okular_optional_package_properties(KF5KExiv2 PROPERTIES
+find_package(KF6KExiv2 CONFIG)
+set_okular_optional_package_properties(KF6KExiv2 PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")
@@ -283,8 +283,8 @@ set_okular_optional_package_properties(EPub PROPERTIES
         URL "http://sourceforge.net/projects/ebook-tools"
         PURPOSE "Support for EPub documents in Okular.")
 
-find_package(QMobipocket "2" CONFIG)
-set_okular_optional_package_properties(QMobipocket PROPERTIES
+find_package(QMobipocket6 "2" CONFIG)
+set_okular_optional_package_properties(QMobiPocket6 PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
         URL "https://commits.kde.org/kdegraphics-mobipocket"
         PURPOSE "Support for Mobipocket documents in Okular.")
@@ -323,7 +323,7 @@ if(BUILD_TESTING)
    add_subdirectory( autotests )
 endif()
 
-if(KF5DocTools_FOUND)
+if(KF6DocTools_FOUND)
     add_subdirectory(doc)
 endif()
 
@@ -451,19 +451,19 @@ target_link_libraries(okularcore
 PRIVATE
     ${OKULAR_IOKIT}
     ${SHLWAPI}
-    KF5::Archive
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::I18n
-    KF5::ThreadWeaver
-    KF5::Bookmarks
+    KF6::Archive
+    KF6::KIOCore
+    KF6::KIOWidgets
+    KF6::I18n
+    KF6::ThreadWeaver
+    KF6::Bookmarks
     Qt6::Svg
     ${MATH_LIB}
     ZLIB::ZLIB
 PUBLIC  # these are included from the installed headers
-    KF5::CoreAddons
-    KF5::XmlGui
-    KF5::ConfigGui
+    KF6::CoreAddons
+    KF6::XmlGui
+    KF6::ConfigGui
     Qt6::PrintSupport
     Qt6::Widgets
 )
@@ -472,8 +472,8 @@ if (Phonon4Qt6_FOUND)
 endif()
 
 
-if (KF5Wallet_FOUND)
-    target_link_libraries(okularcore PRIVATE KF5::Wallet)
+if (KF6Wallet_FOUND)
+    target_link_libraries(okularcore PRIVATE KF6::Wallet)
 endif()
 if (TARGET Qt6::Qml)
     target_sources(okularcore PRIVATE
@@ -590,16 +590,16 @@ generate_export_header(okularpart BASE_NAME okularpart)
 target_link_libraries(okularpart okularcore
     ${MATH_LIB}
     Qt6::Svg
-    KF5::Archive
-    KF5::Bookmarks
-    KF5::I18n
-    KF5::IconThemes
-    KF5::ItemViews
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::Parts
-    KF5::WindowSystem
-    KF5::TextWidgets
+    KF6::Archive
+    KF6::Bookmarks
+    KF6::I18n
+    KF6::IconThemes
+    KF6::ItemViews
+    KF6::KIOCore
+    KF6::KIOWidgets
+    KF6::Parts
+    KF6::WindowSystem
+    KF6::TextWidgets
 )
 if (TARGET Qt6::DBus)
     target_link_libraries(okularpart Qt6::DBus)
@@ -608,12 +608,12 @@ if (Phonon4Qt6_FOUND)
    target_link_libraries(okularpart Phonon::phonon4qt6)
 endif()
 
-if(KF5Wallet_FOUND)
-    target_link_libraries(okularpart KF5::Wallet)
+if(KF6Wallet_FOUND)
+    target_link_libraries(okularpart KF6::Wallet)
 endif()
 
-if (KF5Purpose_FOUND)
-    target_link_libraries(okularpart KF5::PurposeWidgets)
+if (KF6Purpose_FOUND)
+    target_link_libraries(okularpart KF6::PurposeWidgets)
 endif()
 
 set_target_properties(okularpart PROPERTIES PREFIX "")
@@ -635,7 +635,7 @@ install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 ki18n_install(po)
-if(KF5DocTools_FOUND)
+if(KF6DocTools_FOUND)
     kdoctools_install(po)
 endif()
 

@@ -11,14 +11,14 @@ set( okularGenerator_comicbook_PART_SRCS
    )
 
 add_library(okular_comicbook STATIC ${okularGenerator_comicbook_PART_SRCS})
-target_link_libraries(okular_comicbook okularcore KF5::I18n KF5::Archive)
+target_link_libraries(okular_comicbook okularcore KF6::I18n KF6::Archive)
 
 okular_add_generator(okularGenerator_comicbook generator_comicbook.cpp)
 target_link_libraries(okularGenerator_comicbook okular_comicbook)
 if (UNIX AND NOT ANDROID)
-   find_package(KF5Pty REQUIRED)
+   find_package(KF6Pty REQUIRED)
    target_compile_definitions(okular_comicbook PRIVATE -DWITH_KPTY=1)
-   target_link_libraries(okular_comicbook KF5::Pty)
+   target_link_libraries(okular_comicbook KF6::Pty)
 endif ()
 
 if (KArchive_HAVE_LZMA)
@@ -30,7 +30,7 @@ endif()
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 ecm_add_test(autotests/comicbooktest.cpp
     TEST_NAME "comicbooktest"
-    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore okular_comicbook
+    LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore okular_comicbook
 )
 
 ########### install files ###############

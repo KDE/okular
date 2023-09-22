@@ -22,7 +22,7 @@ endif(LIBSPECTRE_FOUND)
 
 add_subdirectory( kimgio )
 
-if(CHM_FOUND AND KF5KHtml_FOUND AND LIBZIP_FOUND)
+if(FALSE)
   add_subdirectory( chm )
 endif()
 
@@ -54,7 +54,7 @@ endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
-if(QMobipocket_FOUND)
+if(QMobipocket6_FOUND)
   add_subdirectory(mobipocket)
 endif()
 

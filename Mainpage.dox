@@ -411,13 +411,13 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_magic")
 
 macro_optional_find_package(Okular)
 
-include_directories( ${OKULAR_INCLUDE_DIR} ${KF5_INCLUDE_DIR} ${QT_INCLUDES} )
+include_directories( ${OKULAR_INCLUDE_DIR} ${KF6_INCLUDE_DIR} ${QT_INCLUDES} )
 
 ########### next target ###############
 
 set( okularGenerator_magic_PART_SRCS generator_magic.cpp )
 
-target_link_libraries( okularGenerator_magic PRIVATE okularcore KF5::I18n KF5::KIOCore )
+target_link_libraries( okularGenerator_magic PRIVATE okularcore KF6::I18n KF6::KIOCore )
 
 install( TARGETS okularGenerator_magic DESTINATION ${PLUGIN_INSTALL_DIR} )
 

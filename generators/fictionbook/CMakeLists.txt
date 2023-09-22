@@ -12,7 +12,7 @@ set(okularGenerator_fb_PART_SRCS
 
 okular_add_generator(okularGenerator_fb ${okularGenerator_fb_PART_SRCS})
 
-target_link_libraries(okularGenerator_fb okularcore KF5::Archive KF5::I18n Qt6::Xml)
+target_link_libraries(okularGenerator_fb okularcore KF6::Archive KF6::I18n Qt6::Xml)
 
 ########### install files ###############
 install( PROGRAMS okularApplication_fb.desktop org.kde.mobile.okular_fb.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

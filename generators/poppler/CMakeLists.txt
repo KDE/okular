@@ -28,7 +28,7 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/pdfse
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt6 Qt6::Xml)
+target_link_libraries(okularGenerator_poppler okularcore KF6::I18n KF6::Completion KF6::KIOWidgets Poppler::Qt6 Qt6::Xml)
 
 ########### autotests ###############
 

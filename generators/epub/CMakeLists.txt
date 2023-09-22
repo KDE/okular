@@ -14,7 +14,7 @@ set(okularGenerator_epub_PART_SRCS
 okular_add_generator(okularGenerator_epub ${okularGenerator_epub_PART_SRCS})
 
 target_include_directories(okularGenerator_epub PRIVATE ${EPUB_INCLUDE_DIR})
-target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF5::I18n Qt6::Widgets Qt6::Xml)
+target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF6::I18n Qt6::Widgets Qt6::Xml)
 
 
 ########### autotests ###############
@@ -22,7 +22,7 @@ target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF5::I18
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 ecm_add_test(autotests/epubgeneratortest.cpp
     TEST_NAME "epubgeneratortest"
-    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore
+    LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore
 )
 
 

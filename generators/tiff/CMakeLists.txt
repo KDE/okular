@@ -8,7 +8,7 @@ set(okularGenerator_tiff_SRCS
 )
 
 okular_add_generator(okularGenerator_tiff ${okularGenerator_tiff_SRCS})
-target_link_libraries(okularGenerator_tiff okularcore TIFF::TIFF KF5::I18n)
+target_link_libraries(okularGenerator_tiff okularcore TIFF::TIFF KF6::I18n)
 
 ########### install files ###############
 install( PROGRAMS okularApplication_tiff.desktop org.kde.mobile.okular_tiff.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

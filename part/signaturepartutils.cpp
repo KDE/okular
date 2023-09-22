@@ -60,7 +60,12 @@ class ImageItemDelegate : public QStyledItemDelegate
 public:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override
     {
-        QStyledItemDelegate::paint(painter, option, QModelIndex()); // paint the background but without any text on it.
+        auto style = option.widget ? option.widget->style() : QApplication::style();
+        // This paints the background without initializing the
+        // styleoption from the actual index. Given we want default background
+        // and paint the foreground a bit later
+        // This accomplishes it quite nicely.
+        style->drawControl(QStyle::CE_ItemViewItem, &option, painter, option.widget);
         const auto path = index.data(Qt::DisplayRole).value<QString>();
 
         QImageReader reader(path);
@@ -434,7 +439,11 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 {
     auto style = option.widget ? option.widget->style() : QApplication::style();
 
-    QStyledItemDelegate::paint(painter, option, QModelIndex()); // paint the background but without any text on it.
+    // This paints the background without initializing the
+    // styleoption from the actual index. Given we want default background
+    // and paint the foreground a bit later
+    // This accomplishes it quite nicely.
+    style->drawControl(QStyle::CE_ItemViewItem, &option, painter, option.widget);
 
     QPalette::ColorGroup cg;
     if (option.state & QStyle::State_Active) {

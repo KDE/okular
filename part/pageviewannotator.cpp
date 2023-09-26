@@ -1043,7 +1043,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                 if (!newFilePath.isEmpty()) {
                     const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
                     if (success) {
-                        Q_EMIT requestOpenFile(newFilePath, m_lockedItem->pageNumber() + 1);
+                        Q_EMIT requestOpenNewlySignedFile(newFilePath, m_lockedItem->pageNumber() + 1);
                     } else {
                         KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
                     }

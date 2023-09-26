@@ -375,6 +375,22 @@ bool Shell::openDocument(const QString &urlString, const QString &serializedOpti
     return openDocument(QUrl(urlString), serializedOptions);
 }
 
+void Shell::openNewlySignedFile(const QString &path, int pageNumber)
+{
+    // for now, this function just applies the "replace current document"
+    // strategy for opening.
+    // Given signing is slightly closer to annotating and saving, the over
+    // all user experience should not be that different
+    // The fact that we get a different file out of saving is a bit of a
+    // implementation  detail that shouldn't leak that much onto the users
+    QUrl url = QUrl::fromLocalFile(path);
+    url.setFragment(QStringLiteral("page=%1").arg(pageNumber));
+
+    const int activeTab = m_tabWidget->currentIndex();
+    KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
+    activePart->openUrl(url);
+}
+
 bool Shell::canOpenDocs(int numDocs, int desktop)
 {
     if (m_tabs.size() <= 0 || numDocs <= 0 || m_unique) {
@@ -952,6 +968,7 @@ void Shell::connectPart(const KParts::ReadWritePart *part)
     connect(part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>))); // clazy:exclude=old-style-connect
     // clang-format off
     // Otherwise the QSize,QSize gets turned into QSize, QSize that is not normalized signals and is slightly slower
+    connect(part, SIGNAL(requestOpenNewlySignedFile(QString,int)), this, SLOT(openNewlySignedFile(QString,int))); // clazy:exclude=old-style-connect
     connect(part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)));   // clazy:exclude=old-style-connect
     // clang-format on
 }

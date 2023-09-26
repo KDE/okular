@@ -135,6 +135,18 @@ private Q_SLOTS:
     void setCloseEnabled(bool enabled);
     void setTabIcon(const QMimeType &mimeType);
     void handleDroppedUrls(const QList<QUrl> &urls);
+    /**
+     * Opens of a newly signed file
+     *
+     * This is separated out from the "normal" open url
+     * to be allowed to have different rules for this
+     * (rules could be open in tab, open in new window, replace
+     * current document)
+     *
+     * \param filePath path to signed file
+     * \param pageNumber page to show (1-indexed)
+     */
+    void openNewlySignedFile(const QString &path, int pageNumber);
 
     // Tab event handlers
     void setActiveTab(int tab);

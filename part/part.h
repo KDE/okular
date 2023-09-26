@@ -188,6 +188,12 @@ Q_SIGNALS:
     void mimeTypeChanged(const QMimeType &mimeType);
     void urlsDropped(const QList<QUrl> &urls);
     void fitWindowToPage(const QSize pageViewPortSize, const QSize pageSize);
+    /**
+     * Request to open a newly signed file
+     * \param path file to open
+     * \param pageNumber page to show (1-indexed)
+     */
+    void requestOpenNewlySignedFile(const QString &path, int pageNumber);
 
 protected:
     // reimplemented from KParts::ReadWritePart

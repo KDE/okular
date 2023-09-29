@@ -403,42 +403,40 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
     hideWelcomeScreen();
 
     const int activeTab = m_tabWidget->currentIndex();
-    if (activeTab < m_tabs.size()) {
-        KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
-        if (!activePart->url().isEmpty()) {
-            if (m_unique) {
-                applyOptionsToPart(activePart, serializedOptions);
-                activePart->openUrl(url);
-            } else {
-                if (qobject_cast<Okular::ViewerInterface *>(activePart)->openNewFilesInTabs()) {
-                    openNewTab(url, serializedOptions);
-                } else {
-                    Shell *newShell = new Shell(serializedOptions);
-                    newShell->show();
-                    newShell->openUrl(url, serializedOptions);
-                }
-            }
-        } else {
-            m_tabWidget->setTabText(activeTab, url.fileName());
-            m_tabWidget->setTabToolTip(activeTab, url.fileName());
-
+    KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
+    if (!activePart->url().isEmpty()) {
+        if (m_unique) {
             applyOptionsToPart(activePart, serializedOptions);
-            bool openOk = activePart->openUrl(url);
-            const bool isstdin = url.fileName() == QLatin1String("-") || url.scheme() == QLatin1String("fd");
-            if (!isstdin) {
-                if (openOk) {
-#ifdef WITH_KACTIVITIES
-                    if (!m_activityResource) {
-                        m_activityResource = new KActivities::ResourceInstance(window()->winId(), this);
-                    }
+            activePart->openUrl(url);
+        } else {
+            if (qobject_cast<Okular::ViewerInterface *>(activePart)->openNewFilesInTabs()) {
+                openNewTab(url, serializedOptions);
+            } else {
+                Shell *newShell = new Shell(serializedOptions);
+                newShell->show();
+                newShell->openUrl(url, serializedOptions);
+            }
+        }
+    } else {
+        m_tabWidget->setTabText(activeTab, url.fileName());
+        m_tabWidget->setTabToolTip(activeTab, url.fileName());
 
-                    m_activityResource->setUri(url);
-#endif
-                    m_recent->addUrl(url);
-                } else {
-                    m_recent->removeUrl(url);
-                    closeTab(activeTab);
+        applyOptionsToPart(activePart, serializedOptions);
+        bool openOk = activePart->openUrl(url);
+        const bool isstdin = url.fileName() == QLatin1String("-") || url.scheme() == QLatin1String("fd");
+        if (!isstdin) {
+            if (openOk) {
+#ifdef WITH_KACTIVITIES
+                if (!m_activityResource) {
+                    m_activityResource = new KActivities::ResourceInstance(window()->winId(), this);
                 }
+
+                m_activityResource->setUri(url);
+#endif
+                m_recent->addUrl(url);
+            } else {
+                m_recent->removeUrl(url);
+                closeTab(activeTab);
             }
         }
     }
@@ -691,7 +689,7 @@ void Shell::setCaption(const QString &caption)
     bool modified = false;
 
     const int activeTab = m_tabWidget->currentIndex();
-    if (activeTab >= 0 && activeTab < m_tabs.size()) {
+    if (activeTab != -1) {
         KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
         QString tabCaption = activePart->url().fileName();
         if (activePart->isModified()) {

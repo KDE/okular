@@ -3151,7 +3151,7 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     }
 
     bool reallyShow = false;
-    const bool currentPage = page && page->number() == m_document->viewport().pageNumber;
+    const bool isCurrentPage = page && page->number() == m_document->viewport().pageNumber;
 
     if (!m_showMenuBarAction) {
         m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardActionName(KStandardAction::ShowMenubar));
@@ -3160,12 +3160,12 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
         m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardActionName(KStandardAction::FullScreen));
     }
 
-    QMenu *popup = new QMenu(widget());
+    QMenu popup;
     if (showTOCActions) {
-        popup->addAction(i18n("Expand whole section"), m_toc.data(), &TOC::expandRecursively);
-        popup->addAction(i18n("Collapse whole section"), m_toc.data(), &TOC::collapseRecursively);
-        popup->addAction(i18n("Expand all"), m_toc.data(), &TOC::expandAll);
-        popup->addAction(i18n("Collapse all"), m_toc.data(), &TOC::collapseAll);
+        popup.addAction(i18n("Expand whole section"), m_toc.data(), &TOC::expandRecursively);
+        popup.addAction(i18n("Collapse whole section"), m_toc.data(), &TOC::collapseRecursively);
+        popup.addAction(i18n("Expand all"), m_toc.data(), &TOC::expandAll);
+        popup.addAction(i18n("Collapse all"), m_toc.data(), &TOC::collapseAll);
         reallyShow = true;
     }
 
@@ -3173,45 +3173,45 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     QAction *removeBookmark = nullptr;
     QAction *fitPageWidth = nullptr;
     if (page) {
-        popup->addAction(new OKMenuTitle(popup, i18n("Page %1", page->number() + 1)));
+        popup.addAction(new OKMenuTitle(&popup, i18n("Page %1", page->number() + 1)));
         if (m_thumbnailList->isVisible() && !Okular::Settings::syncThumbnailsViewport()) {
             const QIcon &syncIcon = QIcon::fromTheme(QStringLiteral("emblem-synchronizing"), QIcon::fromTheme(QStringLiteral("view-refresh")));
-            popup->addAction(syncIcon, i18n("Sync Thumbnail with Page"), m_thumbnailList.data(), &ThumbnailList::syncThumbnail);
+            popup.addAction(syncIcon, i18n("Sync Thumbnail with Page"), m_thumbnailList.data(), &ThumbnailList::syncThumbnail);
         }
-        if ((!currentPage && m_document->bookmarkManager()->isBookmarked(page->number())) || (currentPage && m_document->bookmarkManager()->isBookmarked(m_document->viewport()))) {
-            removeBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove Bookmark"));
+        if ((!isCurrentPage && m_document->bookmarkManager()->isBookmarked(page->number())) || (isCurrentPage && m_document->bookmarkManager()->isBookmarked(m_document->viewport()))) {
+            removeBookmark = popup.addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove Bookmark"));
         } else {
-            addBookmark = popup->addAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Bookmark"));
+            addBookmark = popup.addAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Bookmark"));
         }
         if (m_pageView->canFitPageWidth()) {
-            fitPageWidth = popup->addAction(QIcon::fromTheme(QStringLiteral("zoom-fit-best")), i18n("Fit Width"));
+            fitPageWidth = popup.addAction(QIcon::fromTheme(QStringLiteral("zoom-fit-best")), i18n("Fit Width"));
         }
-        popup->addAction(m_prevBookmark);
-        popup->addAction(m_nextBookmark);
+        popup.addAction(m_prevBookmark);
+        popup.addAction(m_nextBookmark);
         reallyShow = true;
     }
 
-    const int amountOfActions = popup->actions().count();
+    const int amountOfActions = popup.actions().count();
     if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) {
         if (m_hamburgerMenuAction) {
-            m_hamburgerMenuAction->addToMenu(popup);
-        } else if (m_showMenuBarAction) {
-            popup->addAction(m_showMenuBarAction);
+            m_hamburgerMenuAction->addToMenu(&popup);
+        } else {
+            popup.addAction(m_showMenuBarAction);
         }
     }
     if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) {
-        popup->addAction(m_showFullScreenAction);
+        popup.addAction(m_showFullScreenAction);
     }
-    if (popup->actions().count() > amountOfActions && popup->actions().constLast()->isVisible()) {
-        popup->insertAction(popup->actions().at(amountOfActions), new OKMenuTitle(popup, i18n("Tools")));
+    if (popup.actions().count() > amountOfActions && popup.actions().constLast()->isVisible()) {
+        popup.insertAction(popup.actions().at(amountOfActions), new OKMenuTitle(&popup, i18n("Tools")));
         reallyShow = true;
     }
 
     if (reallyShow) {
-        QAction *res = popup->exec(point);
+        QAction *res = popup.exec(point);
         if (res) {
             if (res == addBookmark) {
-                if (currentPage && bookmarkTitle.isEmpty()) {
+                if (isCurrentPage && bookmarkTitle.isEmpty()) {
                     m_document->bookmarkManager()->addBookmark(m_document->viewport());
                 } else if (!bookmarkTitle.isEmpty()) {
                     m_document->bookmarkManager()->addBookmark(m_document->currentDocument(), vp, bookmarkTitle);
@@ -3219,7 +3219,7 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
                     m_document->bookmarkManager()->addBookmark(page->number());
                 }
             } else if (res == removeBookmark) {
-                if (currentPage) {
+                if (isCurrentPage) {
                     m_document->bookmarkManager()->removeBookmark(m_document->viewport());
                 } else {
                     m_document->bookmarkManager()->removeBookmark(page->number());
@@ -3229,7 +3229,6 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
             }
         }
     }
-    delete popup;
 }
 
 template<class Action> Action *Part::findActionInKPartHierarchy(const QString &actionName)
@@ -3340,13 +3339,13 @@ void Part::slotUpdateHamburgerMenu()
     menu->addAction(m_saveAs);
     menu->addSeparator();
     menu->addAction(ac->action(QStringLiteral("mouse_drag")));
-    if (!visibleMainToolbar || (visibleMainToolbar && !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("mouse_selecttools"))))) {
+    if (!visibleMainToolbar || !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("mouse_selecttools")))) {
         menu->addAction(ac->action(QStringLiteral("mouse_select")));
     }
     menu->addAction(m_copy);
     menu->addAction(m_find);
     menu->addAction(m_showLeftPanel);
-    if (!visibleMainToolbar || (visibleMainToolbar && !visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites"))))) {
+    if (!visibleMainToolbar || visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites")))) {
         menu->addAction(ac->action(QStringLiteral("mouse_toggle_annotate")));
     }
     menu->addAction(ac->action(KStandardActionName(KStandardAction::Undo)));
@@ -3753,10 +3752,10 @@ bool Part::handleCompressed(QString &destpath, const QString &path, KCompression
     }
 
     char buf[65536];
-    int read = 0, wrtn = 0;
+    int read = 0;
 
     while ((read = dev.read(buf, sizeof(buf))) > 0) {
-        wrtn = newtempfile->write(buf, read);
+        int wrtn = newtempfile->write(buf, read);
         if (read != wrtn) {
             break;
         }

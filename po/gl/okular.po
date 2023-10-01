@@ -315,7 +315,7 @@ msgstr "Continuar a busca desde o final"
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
-"Non se pode atopar un complemento que sexa capaz de xestionar o documento "
+"Non é posíbel atopar un complemento que sexa capaz de xestionar o documento "
 "que se pasou."
 
 #: core/document.cpp:3603
@@ -341,7 +341,7 @@ msgstr "Non se atopou unha aplicación para abrir o ficheiro de tipo MIME %1."
 #: core/document.cpp:4643
 #, kde-format
 msgid "Could not open a temporary file"
-msgstr "Non se puido acceder a un ficheiro temporal"
+msgstr "Non foi posíbel acceder a un ficheiro temporal"
 
 #: core/document.cpp:4645
 #, kde-format
@@ -356,7 +356,7 @@ msgstr "O proceso de impresión quebrou"
 #: core/document.cpp:4649
 #, kde-format
 msgid "Printing process could not start"
-msgstr "Non se puido comezar o proceso de impresión"
+msgstr "Non foi posíbel comezar o proceso de impresión"
 
 #: core/document.cpp:4651
 #, kde-format
@@ -371,7 +371,7 @@ msgstr "A impresora estaba nun estado incorrecto"
 #: core/document.cpp:4655
 #, kde-format
 msgid "Unable to find file to print"
-msgstr "Non se pode atopar o ficheiro que imprimir"
+msgstr "Non é posíbel atopar o ficheiro que imprimir"
 
 #: core/document.cpp:4657
 #, kde-format
@@ -384,7 +384,7 @@ msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
-"Non se puido atopar un binario axeitado para imprimir. Asegúrese de que o "
+"Non foi posíbel atopar un binario axeitado para imprimir. Asegúrese de que o "
 "binario lpr de CUPS estea dispoñíbel"
 
 #: core/document.cpp:4661
@@ -395,7 +395,7 @@ msgstr "O tamaño de impresión da páxina é incorrecto."
 #: core/document.cpp:5326 part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "Non se puido abrir «%1». Non existe ese ficheiro."
+msgstr "Non foi posíbel abrir «%1». Non existe ese ficheiro."
 
 #: core/document.cpp:5836
 #, kde-format
@@ -838,7 +838,7 @@ msgstr "Onde quere gardar %1?"
 #: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
-msgstr "Non se puido abrir «%1» para escritura. Non se gardou o ficheiro."
+msgstr "Non foi posíbel abrir «%1» para escritura. Non se gardou o ficheiro."
 
 #: gui/signatureguiutils.cpp:42
 #, kde-format
@@ -868,7 +868,7 @@ msgstr "A sinatura solicitada non está presente no documento."
 #: gui/signatureguiutils.cpp:52
 #, kde-format
 msgid "The signature could not be verified."
-msgstr "Non se puido verificar a sinatura."
+msgstr "Non foi posíbel verificar a sinatura."
 
 #: gui/signatureguiutils.cpp:60
 #, kde-format
@@ -1711,7 +1711,7 @@ msgstr ""
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
-msgstr "Non se puido cargar o ficheiro <filename>%1</filename>"
+msgstr "Non foi posíbel cargar o ficheiro <filename>%1</filename>"
 
 #: part/annotationwidgets.cpp:160
 #, kde-format
@@ -2102,7 +2102,7 @@ msgstr ""
 #: part/annotwindow.cpp:415
 #, kde-format
 msgid "Cannot find latex executable."
-msgstr "Non se pode atopar o executábel de latex."
+msgstr "Non é posíbel atopar o executábel de latex."
 
 #: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
 #: part/annotwindow.cpp:430
@@ -2113,7 +2113,7 @@ msgstr "Fallou o debuxado de LaTeX"
 #: part/annotwindow.cpp:420
 #, kde-format
 msgid "Cannot find dvipng executable."
-msgstr "Non se pode atopar o executábel de dvipng."
+msgstr "Non é posíbel atopar o executábel de dvipng."
 
 #: part/annotwindow.cpp:425
 #, kde-format
@@ -2271,7 +2271,7 @@ msgstr "Ficheiro de certificado (*.cer)"
 #: part/certificateviewer.cpp:236
 #, kde-format
 msgid "Could not export the certificate"
-msgstr "Non se puido exportar o certificado"
+msgstr "Non foi posíbel exportar o certificado"
 
 #: part/colormodemenu.cpp:17
 #, kde-format
@@ -3358,7 +3358,7 @@ msgstr "&Ver…"
 #: part/fileprinterpreview.cpp:115
 #, kde-format
 msgid "Could not load print preview part"
-msgstr "Non se puido cargar a compoñente de previsualización do impreso"
+msgstr "Non foi posíbel cargar a compoñente de previsualización do impreso"
 
 #: part/fileprinterpreview.cpp:127
 #, kde-format
@@ -3915,8 +3915,8 @@ msgstr "Asinar"
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
-"Non se puido asinar. O contrasinal do certificado non é correcto ou non se "
-"puido escribir en «%1»"
+"Non foi posíbel asinar. O contrasinal do certificado non é correcto ou non "
+"se puido escribir en «%1»"
 
 #: part/pageviewannotator.cpp:1177
 #, kde-format
@@ -4302,12 +4302,12 @@ msgstr ""
 #: part/part.cpp:1140
 #, kde-format
 msgid "Document can't be saved"
-msgstr "Non se pode gardar o documento"
+msgstr "Non é posíbel gardar o documento"
 
 #: part/part.cpp:1169
 #, kde-format
 msgid "Could not open '%1' (%2) "
-msgstr "Non se puido abrir «%1» (%2)"
+msgstr "Non foi posíbel abrir «%1» (%2)"
 
 #: part/part.cpp:1223
 #, kde-format
@@ -4317,7 +4317,7 @@ msgstr "Cancelouse a carga de %1."
 #: part/part.cpp:1239
 #, kde-format
 msgid "Could not open %1. Reason: %2"
-msgstr "Non se puido abrir %1. Razón: %2"
+msgstr "Non foi posíbel abrir %1. Razón: %2"
 
 #: part/part.cpp:1267
 #, kde-format
@@ -4419,7 +4419,7 @@ msgstr "Denegar a solicitude"
 #: part/part.cpp:1837
 #, kde-format
 msgid "Could not open %1. %2"
-msgstr "Non se puido abrir %1. %2"
+msgstr "Non foi posíbel abrir %1. %2"
 
 #: part/part.cpp:1867
 #, kde-kuit-format
@@ -4609,7 +4609,7 @@ msgstr ""
 #: part/part.cpp:2718
 #, kde-format
 msgid "Could not open the temporary file for saving."
-msgstr "Non se puido abrir o ficheiro temporal para gardar."
+msgstr "Non foi posíbel abrir o ficheiro temporal para gardar."
 
 #: part/part.cpp:2731
 #, kde-kuit-format
@@ -4634,7 +4634,8 @@ msgstr ""
 #: part/part.cpp:2758 part/part.cpp:2827 part/part.cpp:2848 part/part.cpp:3498
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
-msgstr "Non se puido gardar o ficheiro en «%1». Inténteo gardar noutro sitio."
+msgstr ""
+"Non foi posíbel gardar o ficheiro en «%1». Inténteo gardar noutro sitio."
 
 #: part/part.cpp:2771
 #, kde-format
@@ -4707,7 +4708,7 @@ msgstr "Continuar perdendo os cambios."
 #: part/part.cpp:2829
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
-msgstr "Non se puido gardar o ficheiro en «%1». %2"
+msgstr "Non foi posíbel gardar o ficheiro en «%1». %2"
 
 #: part/part.cpp:2868
 #, kde-format
@@ -4726,8 +4727,8 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
-"Non se puido gardar o ficheiro en «%1». Erro: «%2». Inténteo gardar noutro "
-"sitio."
+"Non foi posíbel gardar o ficheiro en «%1». Erro: «%2». Inténteo gardar "
+"noutro sitio."
 
 #: part/part.cpp:3155
 #, kde-format
@@ -4786,8 +4787,8 @@ msgstr "Non se permite imprimir este documento."
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
-"Non se puido imprimir o documento. Descoñécese este erro. Envíe un informe "
-"de erro a bugs.kde.org"
+"Non foi posíbel imprimir o documento. Descoñécese este erro. Envíe un "
+"informe de erro a bugs.kde.org"
 
 #: part/part.cpp:3609
 #, kde-format
@@ -4795,8 +4796,8 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Non se puido imprimir o documento. O erro detallado é «%1». Envíe un informe "
-"de erro a bugs.kde.org"
+"Non foi posíbel imprimir o documento. O erro detallado é «%1». Envíe un "
+"informe de erro a bugs.kde.org"
 
 #: part/part.cpp:3689
 #, kde-format
@@ -5281,12 +5282,12 @@ msgstr "Onde quere gardar a revisión?"
 #: part/revisionviewer.cpp:56
 #, kde-format
 msgid "Could not save file %1."
-msgstr "Non se puido gardar o ficheiro %1."
+msgstr "Non foi posíbel gardar o ficheiro %1."
 
 #: part/revisionviewer.cpp:75
 #, kde-format
 msgid "Could not view revision."
-msgstr "Non se puido ver a revisión."
+msgstr "Non foi posíbel ver a revisión."
 
 #: part/searchwidget.cpp:38
 #, kde-format
@@ -5677,7 +5678,7 @@ msgstr "Erro: Non é posíbel abrir máis dun documento coa opción «--find»."
 #: shell/shell.cpp:175
 #, kde-format
 msgid "Unable to find the Okular component: %1"
-msgstr "Non se pode atopar o compoñente de Okular: %1"
+msgstr "Non é posíbel atopar o compoñente de Okular: %1"
 
 #: shell/shell.cpp:216
 #, kde-format
@@ -5696,7 +5697,7 @@ msgstr ""
 #: shell/shell.cpp:268
 #, kde-format
 msgid "Unable to find the Okular component."
-msgstr "Non se pode atopar o compoñente de Okular."
+msgstr "Non é posíbel atopar o compoñente de Okular."
 
 #: shell/shell.cpp:510
 #, kde-format

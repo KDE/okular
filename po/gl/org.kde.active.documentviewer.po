@@ -94,7 +94,7 @@ msgstr "Erro"
 
 #: package/contents/ui/CertificateViewerDialog.qml:166
 msgid "Could not export the certificate."
-msgstr "Non se puido exportar o certificado."
+msgstr "Non foi posíbel exportar o certificado."
 
 #: package/contents/ui/main.qml:23 package/contents/ui/main.qml:64
 msgid "Okular"
@@ -191,7 +191,7 @@ msgstr "Ver o certificado…"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:170
 msgid "Could not save the signature."
-msgstr "Non se puido gardar a sinatura."
+msgstr "Non foi posíbel gardar a sinatura."
 
 #: package/contents/ui/Signatures.qml:27
 msgid "Not Available"

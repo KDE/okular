@@ -34,7 +34,7 @@ msgstr "mvillarino@users.sourceforge.net"
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr ""
-"Non se pode abrir o documento, non se atoparon nin unrar nin unarchiver."
+"Non é posíbel abrir o documento, non se atoparon nin unrar nin unarchiver."
 
 #: document.cpp:101
 #, kde-format

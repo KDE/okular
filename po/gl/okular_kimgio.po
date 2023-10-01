@@ -32,7 +32,7 @@ msgstr "mvillarino@users.sourceforge.net"
 #: generator_kimgio.cpp:55 generator_kimgio.cpp:78
 #, kde-format
 msgid "Unable to load document: %1"
-msgstr "Non se pode cargar o documento: %1"
+msgstr "Non é posíbel cargar o documento: %1"
 
 #: generator_kimgio.cpp:76
 #, kde-format

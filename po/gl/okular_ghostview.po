@@ -44,7 +44,7 @@ msgid ""
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
 "Determina se debe permitírselle a Ghostscript usar as fontes da plataforma. "
-"Se é falso só se permitirá utilizar as fontes incrustadas no documento."
+"Se é falso só se permitirá usar as fontes incrustadas no documento."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: conf/gssettingswidget.ui:28

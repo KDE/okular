@@ -265,7 +265,7 @@ msgstr "Atopouse o código de operación descoñecido %1."
 #: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
-msgstr "Estase a incrustar %1"
+msgstr "Incrustando %1"
 
 #: dviRenderer_prescan.cpp:105
 #, kde-format
@@ -286,7 +286,7 @@ msgstr ""
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "Non se puideron procesar os datos de tamaño de papel «%1»."
+msgstr "Non foi posíbel procesar os datos de tamaño de papel «%1»."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -460,7 +460,7 @@ msgstr ""
 #: TeXFont_PK.cpp:69
 #, kde-format
 msgid "Cannot open font file %1."
-msgstr "Non se pode abrir o ficheiro de fonte %1."
+msgstr "Non é posíbel abrir o ficheiro de fonte %1."
 
 #: TeXFont_PK.cpp:116
 #, kde-format
@@ -495,7 +495,7 @@ msgstr "A fonte ten unhas proporcións non cadradas"
 #: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
-msgstr "Non se pode atopar a fonte %1, ficheiro %2."
+msgstr "Non é posíbel atopar a fonte %1, ficheiro %2."
 
 #: TeXFontDefinition.cpp:123
 #, kde-format
@@ -505,7 +505,7 @@ msgstr "Erro na suma de comprobación do ficheiro de fonte %1"
 #: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr "Non se pode recoñecer o formato do ficheiro de fonte %1"
+msgstr "Non é posíbel recoñecer o formato do ficheiro de fonte %1"
 
 #: util.cpp:58
 #, kde-format

@@ -30,12 +30,12 @@ msgstr "adrian@chaves.io"
 #: converter.cpp:62
 #, kde-format
 msgid "Failed to open the document"
-msgstr "Non se puido compilar o documento"
+msgstr "Non foi posíbel compilar o documento"
 
 #: converter.cpp:105 converter.cpp:123
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr "Non se puido compilar o documento de Markdown."
+msgstr "Non foi posíbel compilar o documento de Markdown."
 
 #: generator_md.cpp:56
 #, kde-format

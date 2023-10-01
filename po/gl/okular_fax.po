@@ -33,7 +33,7 @@ msgstr "mvillarino@kde-espana.es, proxecto@trasno.gal"
 #: generator_fax.cpp:42
 #, kde-format
 msgid "Unable to load document"
-msgstr "Non se pode cargar o documento"
+msgstr "Non é posíbel cargar o documento"
 
 #~ msgid "Fax Backend"
 #~ msgstr "Infraestrutura de fax"

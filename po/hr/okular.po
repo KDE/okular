@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-12 00:44+0000\n"
+"POT-Creation-Date: 2023-10-03 00:40+0000\n"
 "PO-Revision-Date: 2011-08-25 19:25+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -4857,7 +4857,7 @@ msgstr "Preimenuj oznaku"
 msgid "Remove this Bookmark"
 msgstr "Preimenuj oznaku"
 
-#: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3493
+#: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
 #: part/signaturepartutils.cpp:380
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4939,7 +4939,7 @@ msgid ""
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3508
+#: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3507
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5065,25 +5065,25 @@ msgstr "Dodaj oznaku"
 msgid "Tools"
 msgstr "Alati"
 
-#: part/part.cpp:3389
+#: part/part.cpp:3388
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Izgovori tekst"
 
-#: part/part.cpp:3546
+#: part/part.cpp:3545
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3609
+#: part/part.cpp:3608
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Ispisivanje dokumenta nije dozvoljeno."
 
-#: part/part.cpp:3617
+#: part/part.cpp:3616
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5091,7 +5091,7 @@ msgstr ""
 "Ne mogu ispisati dokument. Nepoznata pogreška. Molim prijavite ovo na bugs."
 "kde.org"
 
-#: part/part.cpp:3619
+#: part/part.cpp:3618
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5100,17 +5100,17 @@ msgstr ""
 "Ne mogu ispisati dokument. Detaljna pogreška je \"%1\". Molim prijavite ovo "
 "na bugs.kde.org"
 
-#: part/part.cpp:3699
+#: part/part.cpp:3698
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Idi na mjesto gdje si bio prije"
 
-#: part/part.cpp:3703
+#: part/part.cpp:3702
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Idi na mjesto gdje si bio nakon"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3727
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5119,7 +5119,7 @@ msgstr ""
 "<qt><strong>Pogreška datoteke!</strong> Ne mogu stvoriti privremenu datoteku "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3740
+#: part/part.cpp:3739
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5129,7 +5129,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> za dekompresiju. Datoteka neće biti učitana."
 "</qt>"
 
-#: part/part.cpp:3744
+#: part/part.cpp:3743
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5147,7 +5147,7 @@ msgstr ""
 "datoteku u upravitelju datoteka Dolphin i tada odaberete stavku 'Svojstva'.</"
 "qt>"
 
-#: part/part.cpp:3766
+#: part/part.cpp:3765
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5156,7 +5156,7 @@ msgstr ""
 "<qt><strong>Pogreška datoteke!</strong> Ne mogu dekomprimirati datoteku "
 "<nobr><strong>%1</strong></nobr>. Datoteka neće biti učitana.</qt>"
 
-#: part/part.cpp:3770
+#: part/part.cpp:3769
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5166,27 +5166,27 @@ msgstr ""
 "biti sigurni, pokušajte ručno dekomprimirati datoteku koristeći alate "
 "komandne linije.</qt>"
 
-#: part/part.cpp:3796
+#: part/part.cpp:3795
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nema oznaka"
 
-#: part/part.cpp:3867
+#: part/part.cpp:3866
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3867 part/part.cpp:3873
+#: part/part.cpp:3866 part/part.cpp:3872
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3871
+#: part/part.cpp:3870
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3873
+#: part/part.cpp:3872
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

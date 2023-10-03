@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-12 00:44+0000\n"
+"POT-Creation-Date: 2023-10-03 00:40+0000\n"
 "PO-Revision-Date: 2023-08-07 18:00+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -4554,7 +4554,7 @@ msgstr "Canvia el nom d'este punt"
 msgid "Remove this Bookmark"
 msgstr "Elimina este punt"
 
-#: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3493
+#: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
 #: part/signaturepartutils.cpp:380
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4644,7 +4644,7 @@ msgstr ""
 "Després de guardar, el format actual del document requerix tornar a carregar "
 "el fitxer. Es perdrà l'historial de desfer/refer.<br />Voleu continuar?"
 
-#: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3508
+#: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3507
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -4778,24 +4778,24 @@ msgstr "Afig un punt"
 msgid "Tools"
 msgstr "Eines"
 
-#: part/part.cpp:3389
+#: part/part.cpp:3388
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Llig"
 
-#: part/part.cpp:3546
+#: part/part.cpp:3545
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Imprimix"
 
-#: part/part.cpp:3609
+#: part/part.cpp:3608
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "No es permet imprimir este document."
 
-#: part/part.cpp:3617
+#: part/part.cpp:3616
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4803,7 +4803,7 @@ msgstr ""
 "No s'ha pogut imprimir el document. S'ha produït un error desconegut. "
 "Informeu a bugs.kde.org"
 
-#: part/part.cpp:3619
+#: part/part.cpp:3618
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4812,17 +4812,17 @@ msgstr ""
 "No s'ha pogut imprimir el document. L'error detallat és: «%1». Informeu a "
 "bugs.kde.org"
 
-#: part/part.cpp:3699
+#: part/part.cpp:3698
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Aneu al lloc a on estàveu abans"
 
-#: part/part.cpp:3703
+#: part/part.cpp:3702
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Aneu al lloc a on estàveu després"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3727
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4831,7 +4831,7 @@ msgstr ""
 "<qt><strong>S'ha produït un error de fitxer!</strong> No s'ha pogut crear el "
 "fitxer temporal <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3740
+#: part/part.cpp:3739
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4841,7 +4841,7 @@ msgstr ""
 "fitxer <nobr> <strong>%1</strong></nobr> per a descomprimir-lo. No es "
 "carregarà el fitxer.</qt>"
 
-#: part/part.cpp:3744
+#: part/part.cpp:3743
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4855,7 +4855,7 @@ msgstr ""
 "l'opció «Propietats». i seleccioneu la pestanya «Permisos» en la finestra "
 "oberta.</qt>"
 
-#: part/part.cpp:3766
+#: part/part.cpp:3765
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4865,7 +4865,7 @@ msgstr ""
 "descomprimir el fitxer <nobr><strong>%1</strong></nobr>. No es carregarà el "
 "fitxer.</qt>"
 
-#: part/part.cpp:3770
+#: part/part.cpp:3769
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4875,27 +4875,27 @@ msgstr ""
 "estar segur, proveu de descomprimir a mà el fitxer amb les eines de la línia "
 "d'ordres.</qt>"
 
-#: part/part.cpp:3796
+#: part/part.cpp:3795
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Sense punts"
 
-#: part/part.cpp:3867
+#: part/part.cpp:3866
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "S'ha produït un problema en compartir el document: %1"
 
-#: part/part.cpp:3867 part/part.cpp:3873
+#: part/part.cpp:3866 part/part.cpp:3872
 #, kde-format
 msgid "Share"
 msgstr "Compartix"
 
-#: part/part.cpp:3871
+#: part/part.cpp:3870
 #, kde-format
 msgid "Document shared successfully"
 msgstr "El document s'ha compartit correctament"
 
-#: part/part.cpp:3873
+#: part/part.cpp:3872
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Es pot trobar el document compartit a: <a href=\"%1\">%1</a>"

@@ -21,20 +21,6 @@ extern "C" {
 #include <mkdio.h>
 }
 
-// older versions of discount might not have these flags.
-// defining them to 0 allows us to convert without them
-#ifndef MKD_FENCEDCODE
-#define MKD_FENCEDCODE 0
-#endif
-
-#ifndef MKD_GITHUBTAGS
-#define MKD_GITHUBTAGS 0
-#endif
-
-#ifndef MKD_AUTOLINK
-#define MKD_AUTOLINK 0
-#endif
-
 #define PAGE_WIDTH 980
 #define PAGE_HEIGHT 1307
 #define PAGE_MARGIN 45

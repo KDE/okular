@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-03 00:44+0000\n"
+"POT-Creation-Date: 2023-10-06 00:40+0000\n"
 "PO-Revision-Date: 2023-09-16 10:09\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -28,12 +28,12 @@ msgid "Your emails"
 msgstr ""
 "kde-china@kde.org, i@guoyunhe.me, hunryhu@kde.org, tysontan@tysontan.com"
 
-#: converter.cpp:62
+#: converter.cpp:48
 #, kde-format
 msgid "Failed to open the document"
 msgstr "打开文档失败"
 
-#: converter.cpp:105 converter.cpp:123
+#: converter.cpp:91 converter.cpp:109
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "编译 Markdown 文档失败。"

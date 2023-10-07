@@ -3722,7 +3722,7 @@ msgstr "Guarda en el fitxer..."
 #: part/pageview.cpp:2907
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
-msgstr "La imatge [%1x%2] s'ha copiat al porta-retalls."
+msgstr "La imatge [%1x%2] s'ha copiat a dins del porta-retalls."
 
 #: part/pageview.cpp:2910
 #, kde-format

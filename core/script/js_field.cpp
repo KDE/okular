@@ -18,6 +18,9 @@
 #include "../page.h"
 #include "../page_p.h"
 #include "js_display_p.h"
+#include "js_util_p.h"
+
+#include <cmath>
 
 using namespace Okular;
 
@@ -123,10 +126,8 @@ QJSValue JSField::fieldGetValueCore(bool asString) const
     }
     case FormField::FormText: {
         const FormFieldText *text = static_cast<const FormFieldText *>(m_field);
-        const QLocale locale;
-        bool ok;
-        const double textAsNumber = locale.toDouble(text->text(), &ok);
-        if (ok && !asString) {
+        const double textAsNumber = JSUtil::stringToNumber(text->text());
+        if (!std::isnan(textAsNumber) && !asString) {
             result = textAsNumber;
         } else {
             result = text->text();

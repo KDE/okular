@@ -107,27 +107,19 @@ QString JSUtil::numberToString(double number, const QString &fmt, int precision,
     return locale.toString(number, format.toLatin1(), precision);
 }
 
-/** Converts a String to a Number trying with the current locale first and
- * if that fails trying with the reverse locale for the decimal separator
+/** Converts a String to a Number supporting both '.' and ',' as decimal separators.
+ *  This assumes @p number contains no group separators.
  *
  * Number stringToNumber( String number ) */
-double JSUtil::stringToNumber(const QString &number) const
+double JSUtil::stringToNumber(const QString &number)
 {
     if (number.isEmpty()) {
         return 0;
     }
 
-    const QLocale locale;
+    QString n(number);
+    n.replace(QLatin1Char(','), QLatin1Char('.'));
     bool ok;
-    double converted = locale.toDouble(number, &ok);
-
-    if (!ok) {
-        const QLocale locale2(locale.decimalPoint() == QLatin1Char('.') ? QStringLiteral("de") : QStringLiteral("en"));
-        converted = locale2.toDouble(number, &ok);
-        if (!ok) {
-            return NAN;
-        }
-    }
-
-    return converted;
+    double converted = n.toDouble(&ok);
+    return ok ? converted : NAN;
 }

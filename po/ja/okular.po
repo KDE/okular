@@ -5820,8 +5820,3 @@ msgstr "すべて忘れる"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "ようこそスクリーンを隠す"
-
-#, fuzzy
-#~| msgid "Show S&idebar"
-#~ msgid "Show Sidebar"
-#~ msgstr "サイドバーを表示(&S)"

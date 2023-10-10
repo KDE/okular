@@ -321,6 +321,3 @@ msgstr "Въведете парола"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Въведете паролата за отваряне на %1:"
-
-#~ msgid "Not Available"
-#~ msgstr "Не е наличен"

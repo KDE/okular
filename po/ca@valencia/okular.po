@@ -1350,7 +1350,7 @@ msgstr "Color personalitzat..."
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
-msgstr "Seleccioneu el color"
+msgstr "Seleccioneu un color"
 
 #: part/annotationactionhandler.cpp:550
 #, kde-format

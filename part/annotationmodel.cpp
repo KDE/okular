@@ -321,7 +321,12 @@ QVariant AnnotationModel::data(const QModelIndex &index, int role) const
     AnnItem *item = static_cast<AnnItem *>(index.internalPointer());
     if (!item->annotation) {
         if (role == Qt::DisplayRole) {
-            return i18n("Page %1", item->page + 1);
+            auto *page = d->document->page(item->page);
+            if (page && !page->label().isEmpty() && page->label().toInt() != item->page + 1) {
+                return i18nc("Page label (number)", "Page %1 (%2)", page->label(), item->page + 1);
+            } else {
+                return i18n("Page %1", item->page + 1);
+            }
         } else if (role == Qt::DecorationRole) {
             return QIcon::fromTheme(QStringLiteral("text-plain"));
         } else if (role == PageRole) {

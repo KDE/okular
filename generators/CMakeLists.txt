@@ -4,7 +4,7 @@ function(okular_add_generator _target)
     INSTALL_NAMESPACE "okular/generators"
     SOURCES ${ARGN}
   )
-  set_target_properties(${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/plugins/okular")
+  set_target_properties(${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/plugins/okular/generators")
   get_property(aux_list GLOBAL PROPERTY okular_generator_list)
   list(APPEND aux_list ${_target})
   set_property(GLOBAL PROPERTY okular_generator_list ${aux_list})

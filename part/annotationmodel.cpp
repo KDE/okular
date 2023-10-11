@@ -336,9 +336,15 @@ QVariant AnnotationModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     switch (role) {
-    case Qt::DisplayRole:
-        return GuiUtils::captionForAnnotation(item->annotation);
+    case Qt::DisplayRole: {
+        const QString contents = item->annotation->contents().simplified();
+        if (!contents.isEmpty()) {
+            return i18nc("Annotation type: contents", "%1: %2", GuiUtils::captionForAnnotation(item->annotation), contents);
+        } else {
+            return GuiUtils::captionForAnnotation(item->annotation);
+        }
         break;
+    }
     case Qt::DecorationRole:
         return QIcon::fromTheme(QStringLiteral("okular"));
         break;

@@ -31,7 +31,7 @@ msgstr "mvillarino@users.sourceforge.net"
 #: converter.cpp:163
 #, kde-format
 msgid "Error while opening the EPub document."
-msgstr "Ocorreu un erro ao abrir o documento EPub."
+msgstr "Produciuse un erro ao abrir o documento EPub."
 
 #: generator_epub.cpp:30
 #, kde-format

@@ -31,7 +31,7 @@ msgstr "mvillarino@users.sourceforge.net, xosecalvo@gmail.com"
 #: converter.cpp:59
 #, kde-format
 msgid "Error while opening the Mobipocket document."
-msgstr "Ocorreu un erro ao abrir o documento Mobipocket."
+msgstr "Produciuse un erro ao abrir o documento Mobipocket."
 
 #: converter.cpp:64
 #, kde-format

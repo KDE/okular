@@ -141,7 +141,7 @@ msgstr "Millores a les anotacions"
 #: core/action.cpp:125
 #, kde-format
 msgid "Go to page %1"
-msgstr "Ves a la pàgina %1"
+msgstr "Ves fins a la pàgina %1"
 
 #: core/action.cpp:125
 #, kde-format
@@ -206,7 +206,7 @@ msgstr "Busca..."
 #: core/action.cpp:304
 #, kde-format
 msgid "Go To Page..."
-msgstr "Ves a la pàgina..."
+msgstr "Ves fins a la pàgina..."
 
 #: core/action.cpp:355
 #, kde-format
@@ -2160,7 +2160,7 @@ msgstr "Busca..."
 #: part/bookmarklist.cpp:257
 #, kde-format
 msgid "Go to This Bookmark"
-msgstr "Ves a este punt"
+msgstr "Ves fins a este punt"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:733
 #: part/part.cpp:2477
@@ -2333,13 +2333,13 @@ msgstr "Invertix la luma (&simètrica)"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
-msgstr "Desplaça a un to p&ositiu"
+msgstr "Desplaça cap a un to p&ositiu"
 
 #: part/colormodemenu.cpp:61
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
-msgstr "Desplaça a un to n&egatiu"
+msgstr "Desplaça cap a un to n&egatiu"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:11
@@ -2467,13 +2467,13 @@ msgstr "Invertix la luma (simètrica)"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue positive"
-msgstr "Desplaça a un to positiu"
+msgstr "Desplaça cap a un to positiu"
 
 #: part/dlgaccessibility.cpp:68
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue negative"
-msgstr "Desplaça a un to negatiu"
+msgstr "Desplaça cap a un to negatiu"
 
 #: part/dlgaccessibility.cpp:70
 #, kde-format
@@ -3702,7 +3702,7 @@ msgstr[1] "Text (%1 caràcters)"
 #: part/pageview.cpp:2868 part/pageview.cpp:2886
 #, kde-format
 msgid "Copy to Clipboard"
-msgstr "Copia al porta-retalls"
+msgstr "Copia a dins del porta-retalls"
 
 #: part/pageview.cpp:2877 part/pageview.cpp:3069
 #, kde-format
@@ -3752,7 +3752,7 @@ msgstr "Copia el text"
 #: part/pageview.cpp:3085
 #, kde-format
 msgid "Go to '%1'"
-msgstr "Ves a «%1»"
+msgstr "Ves fins a «%1»"
 
 #: part/pageview.cpp:4064 part/part.cpp:3187
 #, kde-format
@@ -4108,7 +4108,7 @@ msgstr "Anterior"
 #: part/part.cpp:691
 #, kde-format
 msgid "Go back to the Previous Page"
-msgstr "Ves a la pàgina anterior"
+msgstr "Ves fins a la pàgina anterior"
 
 #: part/part.cpp:692
 #, kde-format
@@ -4502,8 +4502,8 @@ msgid ""
 "This link points to a close document action that does not work when using "
 "the embedded viewer."
 msgstr ""
-"Este enllaç apunta a una acció sobre un document tancat que no funciona quan "
-"s'està emprant el visor incrustat."
+"Este enllaç apunta cap a una acció sobre un document tancat que no funciona "
+"quan s'està emprant el visor incrustat."
 
 #: part/part.cpp:2038
 #, kde-format
@@ -4511,8 +4511,8 @@ msgid ""
 "This link points to a quit application action that does not work when using "
 "the embedded viewer."
 msgstr ""
-"Este enllaç apunta a una acció sobre una acció d'eixida d'aplicació que no "
-"funciona quan s'està emprant el visor incrustat."
+"Este enllaç apunta cap a una acció sobre una acció d'eixida d'aplicació que "
+"no funciona quan s'està emprant el visor incrustat."
 
 #: part/part.cpp:2130 part/part.cpp:2148
 #, kde-format
@@ -4532,7 +4532,7 @@ msgstr "Signatures"
 #: part/part.cpp:2361
 #, kde-format
 msgid "Go to Page"
-msgstr "Ves a la pàgina"
+msgstr "Ves fins a la pàgina"
 
 #: part/part.cpp:2384
 #, kde-format

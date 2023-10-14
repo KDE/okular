@@ -77,9 +77,9 @@ msgid ""
 msgstr ""
 "<qt>Este fitxer DVI té referències a fitxers gràfics externs que no estan en "
 "format PostScript, i no es poden manipular amb el programa <em>dvips</em> "
-"que Okular utilitza internament per a imprimir o exportar a PostScript. La "
-"característica que necessiteu no està disponible en esta versió d'Okular.</"
-"qt>"
+"que Okular utilitza internament per a imprimir o exportar cap a PostScript. "
+"La característica que necessiteu no està disponible en esta versió d'Okular."
+"</qt>"
 
 #: dviexport.cpp:176
 #, kde-format

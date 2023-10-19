@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-03 00:40+0000\n"
+"POT-Creation-Date: 2023-10-19 00:41+0000\n"
 "PO-Revision-Date: 2023-07-30 14:30+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1519,10 +1519,23 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3176
+#: part/annotationmodel.cpp:326
+#, fuzzy, kde-format
+#| msgid "Page %1"
+msgctxt "Page label (number)"
+msgid "Page %1 (%2)"
+msgstr "பக்கம் %1"
+
+#: part/annotationmodel.cpp:328 part/part.cpp:3176
 #, kde-format
 msgid "Page %1"
 msgstr "பக்கம் %1"
+
+#: part/annotationmodel.cpp:342
+#, kde-format
+msgctxt "Annotation type: contents"
+msgid "%1: %2"
+msgstr ""
 
 #: part/annotationpopup.cpp:83
 #, kde-format

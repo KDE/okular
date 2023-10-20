@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-19 00:41+0000\n"
-"PO-Revision-Date: 2023-08-07 18:00+0200\n"
+"PO-Revision-Date: 2023-10-19 11:48+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -1538,11 +1538,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Pàgina %1"
+msgstr "Pàgina %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3176
 #, kde-format
@@ -1553,7 +1552,7 @@ msgstr "Pàgina %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -3669,24 +3668,24 @@ msgstr "Fa pausa/reprén la pronunciació"
 #: part/pageview.cpp:777
 #, kde-format
 msgid "Scroll Up"
-msgstr "Desplaçament amunt"
+msgstr "Desplaçament cap amunt"
 
 #: part/pageview.cpp:783
 #, kde-format
 msgid "Scroll Down"
-msgstr "Desplaçament avall"
+msgstr "Desplaçament cap avall"
 
 # skip-rule: k-PageUp-1
 #: part/pageview.cpp:789
 #, kde-format
 msgid "Scroll Page Up"
-msgstr "Desplaça una pàgina amunt"
+msgstr "Desplaça una pàgina cap amunt"
 
 # skip-rule: k-PageDown-1
 #: part/pageview.cpp:795
 #, kde-format
 msgid "Scroll Page Down"
-msgstr "Desplaça una pàgina avall"
+msgstr "Desplaça una pàgina cap avall"
 
 #: part/pageview.cpp:801
 #, kde-format
@@ -4126,7 +4125,7 @@ msgstr "Ves fins a la pàgina anterior"
 #: part/part.cpp:692
 #, kde-format
 msgid "Moves to the previous page of the document"
-msgstr "Va a la pàgina anterior del document"
+msgstr "Va fins a la pàgina anterior del document"
 
 #: part/part.cpp:702
 #, kde-format
@@ -4142,7 +4141,7 @@ msgstr "Avança fins a la pàgina següent"
 #: part/part.cpp:704
 #, kde-format
 msgid "Moves to the next page of the document"
-msgstr "Va a la pàgina següent del document"
+msgstr "Va fins a la pàgina següent del document"
 
 #: part/part.cpp:715
 #, kde-format
@@ -4152,7 +4151,7 @@ msgstr "Començament del document"
 #: part/part.cpp:716
 #, kde-format
 msgid "Moves to the beginning of the document"
-msgstr "Va al començament del document"
+msgstr "Va fins al començament del document"
 
 #: part/part.cpp:720
 #, kde-format
@@ -4162,7 +4161,7 @@ msgstr "Final del document"
 #: part/part.cpp:721
 #, kde-format
 msgid "Moves to the end of the document"
-msgstr "Va al final del document"
+msgstr "Va fins al final del document"
 
 #: part/part.cpp:735
 #, kde-format

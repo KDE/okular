@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-19 00:41+0000\n"
-"PO-Revision-Date: 2017-05-24 08:35-0400\n"
+"PO-Revision-Date: 2023-10-05 15:59+0300\n"
 "Last-Translator: Elkana Bardugo <ttv200@gmail.com>\n"
 "Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
 "Language: he\n"
@@ -20,18 +20,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Zanata 3.9.6\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Koala - גארי לכמן, ,Launchpad Contributions:,Diego Iastrubni,Ofir Klinger"
+"Koala - גארי לכמן, ,Launchpad Contributions:,Diego Iastrubni,Ofir Klinger "
+"וצוות התרגום של KDE ישראל"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "koala@linux.net,garry@nunex.co.il,,,klinger.ofir@gmail.com"
+msgstr ""
+"koala@linux.net,garry@nunex.co.il,klinger.ofir@gmail.com,kde-l10n-he@kde.org"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -44,13 +46,7 @@ msgid "Okular, a universal document viewer"
 msgstr "Okular, מציג מסמכים אוניברסלי"
 
 #: aboutdata.h:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "(C) 2002 Wilco Greven, Christophe Devriese\n"
-#| "(C) 2004-2005 Enrico Ros\n"
-#| "(C) 2005 Piotr Szymanski\n"
-#| "(C) 2004-2009 Albert Astals Cid\n"
-#| "(C) 2006-2009 Pino Toscano"
+#, kde-format
 msgid ""
 "(C) 2002 Wilco Greven, Christophe Devriese\n"
 "(C) 2004-2005 Enrico Ros\n"
@@ -58,16 +54,16 @@ msgid ""
 "(C) 2004-2017 Albert Astals Cid\n"
 "(C) 2006-2009 Pino Toscano"
 msgstr ""
-"(C) 2002 Wilco Greven, Christophe Devriese\n"
-"(C) 2004-2005 Enrico Ros\n"
-"(C) 2005 Piotr Szymanski\n"
-"(C) 2004-2009 Albert Astals Cid\n"
-"(C) 2006-2009 Pino Toscano"
+"(C) 2002 וליקו גריבן, כריסטוף דבריאז\n"
+"(C) 2004-2005 אנריקו רוס\n"
+"(C) 2005 פיוטר ז׳ימנסקי\n"
+"(C) 2004-2017 אלברט אסטלס סיד\n"
+"(C) 2006-2009 פינו טוסקנו"
 
 #: aboutdata.h:31
 #, kde-format
 msgid "Pino Toscano"
-msgstr ""
+msgstr "פינו טוסקנו"
 
 #: aboutdata.h:31
 #, kde-format
@@ -77,18 +73,17 @@ msgstr "מתחזק קודם"
 #: aboutdata.h:32
 #, kde-format
 msgid "Tobias Koenig"
-msgstr ""
+msgstr "טוביאס קניג"
 
 #: aboutdata.h:32
-#, fuzzy, kde-format
-#| msgid "Lots of framework work, ODT and FictionBook backends"
+#, kde-format
 msgid "Lots of framework work, FictionBook backend and former ODT backend"
-msgstr "הרבה עבודה על קוד המסגרת, ומנגנוני ODT ו־FictionBook"
+msgstr "הרבה עבודה על קוד התשתית, ומנגנוני ODT ו־FictionBook"
 
 #: aboutdata.h:33
 #, kde-format
 msgid "Albert Astals Cid"
-msgstr ""
+msgstr "אלברט אסטלס סיד"
 
 #: aboutdata.h:33
 #, kde-format
@@ -98,7 +93,7 @@ msgstr "מפתח"
 #: aboutdata.h:34
 #, kde-format
 msgid "Piotr Szymanski"
-msgstr ""
+msgstr "פיוטר ז׳ימנסקי"
 
 #: aboutdata.h:34
 #, kde-format
@@ -108,7 +103,7 @@ msgstr "ייצר את Okular מקוד הבסיס של KPDF"
 #: aboutdata.h:35
 #, kde-format
 msgid "Enrico Ros"
-msgstr ""
+msgstr "אנריקו רוס"
 
 #: aboutdata.h:35
 #, kde-format
@@ -118,7 +113,7 @@ msgstr "מפתח KPDF"
 #: aboutdata.h:36
 #, kde-format
 msgid "Eugene Trounev"
-msgstr ""
+msgstr "יוג׳ין טרונב"
 
 #: aboutdata.h:36
 #, kde-format
@@ -128,7 +123,7 @@ msgstr "עבודת אומנות של הסברי הצד"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr ""
+msgstr "ג׳ירי באום - NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -138,12 +133,12 @@ msgstr "כלי לבחירת טבלאות"
 #: aboutdata.h:38
 #, kde-format
 msgid "Fabio D'Urso"
-msgstr ""
+msgstr "פאביו ד׳אורסו"
 
 #: aboutdata.h:38
 #, kde-format
 msgid "Annotation improvements"
-msgstr "שיפורי הערות צד"
+msgstr "שיפורי פירושים"
 
 #: core/action.cpp:125
 #, kde-format
@@ -158,7 +153,7 @@ msgstr "פתיחת קובץ חיצוני"
 #: core/action.cpp:185
 #, kde-format
 msgid "Execute '%1'..."
-msgstr "הרץ '%1'..."
+msgstr "הרצת ‚%1’…"
 
 #: core/action.cpp:284
 #, kde-format
@@ -208,17 +203,17 @@ msgstr "סיום המצגת"
 #: core/action.cpp:302
 #, kde-format
 msgid "Find..."
-msgstr "חיפוש..."
+msgstr "חיפוש…"
 
 #: core/action.cpp:304
 #, kde-format
 msgid "Go To Page..."
-msgstr "מעבר לעמוד..."
+msgstr "מעבר לעמוד…"
 
 #: core/action.cpp:355
 #, kde-format
 msgid "Play sound..."
-msgstr "ניגון קטע שמע..."
+msgstr "ניגון קטע שמע…"
 
 #: core/action.cpp:423 core/action.cpp:539
 #, kde-format
@@ -228,32 +223,32 @@ msgstr "סקריפט JavaScript"
 #: core/action.cpp:473
 #, kde-format
 msgid "Play movie..."
-msgstr "ניגון סרט..."
+msgstr "ניגון סרטון…"
 
 #: core/action.cpp:544
-#, fuzzy, kde-format
+#, kde-format
 msgid "Play movie"
-msgstr "ניגון סרט..."
+msgstr "ניגון סרטון"
 
 #: core/action.cpp:546
 #, kde-format
 msgid "Stop movie"
-msgstr ""
+msgstr "עצירת הסרטון"
 
 #: core/action.cpp:548
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pause movie"
-msgstr "ניגון סרט..."
+msgstr "השהיית סרטון"
 
 #: core/action.cpp:550
 #, kde-format
 msgid "Resume movie"
-msgstr ""
+msgstr "המשך צפייה בסרטון"
 
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "ה־Okular הזה נבנה ללא תמיכה בשמע"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -266,49 +261,48 @@ msgid ""
 "<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
 "><br />Please select which one to use:</qt>"
 msgstr ""
-"<qt>קיים יותר ממנגנון אחד לסוג הקובץ:<br /><b>%1</b> (%2).<br /><br />יש "
+"<qt>קיים יותר ממנגנון אחד לסוג הקובץ:<br /><b>%1</b> (%2).<br /><br />נא "
 "לבחור באיזה להשתמש:</qt>"
 
 #: core/document.cpp:209
-#, fuzzy, kde-format
-#| msgid "Go to page %1"
+#, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
-msgstr "מעבר לעמוד %1"
+msgstr "רוב הדפים הם %1."
 
 #: core/document.cpp:230
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
-msgstr ""
+msgstr "לאורך %1"
 
 #: core/document.cpp:232
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
-msgstr ""
+msgstr "לרוחב %1"
 
 #: core/document.cpp:255
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
-msgstr "%1 x %2 אינץ'"
+msgstr "%1 × %2 אינץ׳ (%3)"
 
 #: core/document.cpp:257
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
-msgstr "%1 x %2 מ\"מ"
+msgstr "%1 × %2 מ״מ (%3)"
 
 #: core/document.cpp:1688
 #, kde-format
 msgid "Continuing search from beginning"
-msgstr ""
+msgstr "החיפוש ממשיך מההתחלה"
 
 #: core/document.cpp:1691
 #, kde-format
 msgid "Continuing search from bottom"
-msgstr ""
+msgstr "החיפוש ממשיך מהסוף"
 
 #: core/document.cpp:2454
 #, kde-format
@@ -317,10 +311,10 @@ msgid ""
 msgstr "לא ניתן למצוא תוסף אשר יכול לטפל במסמך שהועבר."
 
 #: core/document.cpp:3604
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
-msgstr "מצגת"
+msgstr "הסרת פירושים"
 
 #: core/document.cpp:4188 core/document.cpp:4194
 #, kde-format
@@ -379,19 +373,17 @@ msgstr "לא היה שום קובץ להדפסה"
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
-msgstr ""
-"לא ניתן למצוא קובץ הפעלה בינארי להדפסה. יש לוודא שהקובץ ה־lpr הבינארי של "
-"CUPS זמין."
+msgstr "לא נמצא קובץ בינרי מתאים להדפסה. נא לוודא שהבינרי של CUPS בשם lpr זמין"
 
 #: core/document.cpp:4683
 #, kde-format
 msgid "The page print size is invalid"
-msgstr ""
+msgstr "גודל הדפסת העמוד שגוי"
 
 #: core/document.cpp:5348 part/part.cpp:1172
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "לא ניתן לפתוח את \"%1\" לכתיבה. הקובץ לא נשמר."
+msgstr "לא ניתן לפתוח את ‚%1’. הקובץ לא קיים"
 
 #: core/document.cpp:5858
 #, kde-format
@@ -444,8 +436,7 @@ msgid "Modified"
 msgstr "שונה"
 
 #: core/document.cpp:5888
-#, fuzzy, kde-format
-#| msgid "Mime Type"
+#, kde-format
 msgid "MIME Type"
 msgstr "טיפוס נתונים"
 
@@ -478,72 +469,72 @@ msgstr "גודל הדף"
 #, kde-format
 msgctxt "Add an annotation to the page"
 msgid "add annotation"
-msgstr "הוסף הערת צד"
+msgstr "הוספת פירוש"
 
 #: core/documentcommands.cpp:108
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Remove an annotation from the page"
 msgid "remove annotation"
-msgstr "מצגת"
+msgstr "הסרת פירוש"
 
 #: core/documentcommands.cpp:155
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
 msgid "modify annotation properties"
-msgstr "מאפייני הערת צד"
+msgstr "שינוי תוכן פירוש"
 
 #: core/documentcommands.cpp:190
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Translate an annotation's position on the page"
 msgid "translate annotation"
-msgstr "הסבר צד עם טקסט"
+msgstr "תרגום פירוש"
 
 #: core/documentcommands.cpp:263
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Change an annotation's size"
 msgid "adjust annotation"
-msgstr "הערת צד"
+msgstr "כוונון פירוש"
 
 #: core/documentcommands.cpp:333
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Generic text edit command"
 msgid "edit text"
-msgstr "בחירת טקסט"
+msgstr "עריכת טקסט"
 
 #: core/documentcommands.cpp:396
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Edit an annotation's text contents"
 msgid "edit annotation contents"
-msgstr "מאפייני הערת צד"
+msgstr "עריכת תוכן פירוש"
 
 #: core/documentcommands.cpp:445
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Edit an form's text contents"
 msgid "edit form contents"
-msgstr "מאפייני הערת צד"
+msgstr "עריכת תוכן טופס"
 
 #: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
-msgstr ""
+msgstr "עריכת רשימת בחירות בטופס"
 
 #: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
-msgstr ""
+msgstr "עריכת ברירות בתיבות משולבות בטופס"
 
 #: core/documentcommands.cpp:600
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
-msgstr ""
+msgstr "עריכת מצבי כפתורים בטופס"
 
 #: core/generator.cpp:763
 #, kde-format
 msgid "Plain &Text..."
-msgstr "טקסט &פשוט..."
+msgstr "טקסט &פשוט…"
 
 #: core/generator.cpp:766
 #, kde-format
@@ -563,37 +554,34 @@ msgid "HTML"
 msgstr "HTML"
 
 #: core/printoptionswidget.cpp:19
-#, fuzzy, kde-format
-#| msgid "Editor Options"
+#, kde-format
 msgid "Print Options"
-msgstr "אפשרויות עורך"
+msgstr "אפשרויות הדפסה"
 
 #: core/printoptionswidget.cpp:23
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "התאמה לאזור ההדפסה"
 
 #: core/printoptionswidget.cpp:24
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "התאמה לעמוד מלא"
 
 #: core/printoptionswidget.cpp:25
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgid "Scale mode:"
-msgstr "מצב צבע:"
+msgstr "מצב קנה מידה:"
 
 #: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
-msgstr ""
+msgstr "לא להציג את ההודעה הזאת שוב"
 
 #: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:31
-#, fuzzy, kde-format
-#| msgid "No description available."
+#, kde-format
 msgid "Not Available"
-msgstr "אין תיאור זמין."
+msgstr "לא זמין"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -602,41 +590,37 @@ msgid "Source: %1"
 msgstr "מקור: %1"
 
 #: core/textdocumentsettings.cpp:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Default Font:"
-msgstr "מעבר ברירת מחדל:"
+msgstr "&גופן ברירת מחדל:"
 
 #: gui/certificatemodel.cpp:39
-#, fuzzy, kde-format
-#| msgctxt "A document format, Okular-specific"
-#| msgid "Document Archive"
+#, kde-format
 msgid "Version"
-msgstr "ארכיון מסמך"
+msgstr "גרסה"
 
 #: gui/certificatemodel.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgid "Serial Number"
-msgstr "גודל הדף"
+msgstr "מספר סידורי"
 
 #: gui/certificatemodel.cpp:43
 #, kde-format
 msgid "Issuer"
-msgstr ""
+msgstr "מנפיק"
 
 #: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:75
 #, kde-format
 msgid "Issued On"
-msgstr ""
+msgstr "הונפק ב־"
 
 #: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:76
-#, fuzzy, kde-format
-#| msgid "Expired"
+#, kde-format
 msgid "Expires On"
-msgstr "פג תוקף"
+msgstr "תפוגת התוקף"
 
 #: gui/certificatemodel.cpp:49
-#, fuzzy, kde-format
-#| msgid "Subject"
+#, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
 msgstr "נושא"
@@ -644,47 +628,44 @@ msgstr "נושא"
 #: gui/certificatemodel.cpp:51
 #, kde-format
 msgid "Public Key"
-msgstr ""
+msgstr "מפתח ציבורי"
 
 #: gui/certificatemodel.cpp:53
-#, fuzzy, kde-format
-#| msgid "Memory Usage"
+#, kde-format
 msgid "Key Usage"
-msgstr "שימוש בזיכרון"
+msgstr "שימוש במפתח"
 
 #: gui/certificatemodel.cpp:72
-#, fuzzy, kde-format
-#| msgid "%1:"
+#, kde-format
 msgid "V%1"
-msgstr "%1:"
+msgstr "גרסה %1"
 
 #: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "%1 (%2 bits)"
-msgstr ""
+msgstr "%1 (%2 סיביות)"
 
 #: gui/certificatemodel.cpp:146
-#, fuzzy, kde-format
-#| msgid "&Properties"
+#, kde-format
 msgid "Property"
-msgstr "מ&אפיינים"
+msgstr "מאפיין"
 
 #: gui/certificatemodel.cpp:148
 #, kde-format
 msgid "Value"
-msgstr ""
+msgstr "ערך"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
 #: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1327
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pop-up Note"
-msgstr "&פתיחת הערה בחלונית"
+msgstr "הערה קופצת"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
 #: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1343
 #, kde-format
 msgid "Typewriter"
-msgstr ""
+msgstr "מכונת כתיבה"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1325
@@ -693,33 +674,31 @@ msgid "Inline Note"
 msgstr "הערה פנימית"
 
 #: gui/guiutils.cpp:48
-#, fuzzy, kde-format
+#, kde-format
 msgid "Straight Line with Comment"
-msgstr "מאפייני קו"
+msgstr "קו ישר עם הערה"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1337
-#, fuzzy, kde-format
+#, kde-format
 msgid "Straight Line"
-msgstr "קו צהוב ישר"
+msgstr "קו ישר"
 
 #: gui/guiutils.cpp:50
-#, fuzzy, kde-format
-#| msgid "For Comment"
+#, kde-format
 msgid "Polygon with Comment"
-msgstr "להערות"
+msgstr "מצולע עם הערה"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1329
-#, fuzzy, kde-format
+#, kde-format
 msgid "Polygon"
-msgstr "מצולע כחול"
+msgstr "מצולע"
 
 #: gui/guiutils.cpp:54
-#, fuzzy, kde-format
-#| msgid "For Comment"
+#, kde-format
 msgid "Geometry with Comment"
-msgstr "להערות"
+msgstr "צורה הנדסית עם הערה"
 
 #: gui/guiutils.cpp:54
 #, kde-format
@@ -727,9 +706,9 @@ msgid "Geometry"
 msgstr "גאומטריה"
 
 #: gui/guiutils.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgid "Highlight with Comment"
-msgstr "הדגשה"
+msgstr "הדגשה עם הערה"
 
 #: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
 #, kde-format
@@ -737,20 +716,20 @@ msgid "Highlight"
 msgstr "הדגשה"
 
 #: gui/guiutils.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Squiggle with Comment"
-msgstr "שרבוט"
+msgstr "שרבוט עם הערה"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
 #: part/pageviewannotator.cpp:1333
-#, fuzzy, kde-format
+#, kde-format
 msgid "Squiggle"
 msgstr "שרבוט"
 
 #: gui/guiutils.cpp:65
-#, fuzzy, kde-format
+#, kde-format
 msgid "Underline with Comment"
-msgstr "קו תחתון"
+msgstr "קו תחתון עם הערה"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1341
@@ -759,19 +738,19 @@ msgid "Underline"
 msgstr "קו תחתון"
 
 #: gui/guiutils.cpp:68
-#, fuzzy, kde-format
+#, kde-format
 msgid "Strike Out with Comment"
-msgstr "קו חוצה"
+msgstr "קו חוצה עם הערה"
 
 #: gui/guiutils.cpp:68
-#, fuzzy, kde-format
+#, kde-format
 msgid "Strike Out"
 msgstr "קו חוצה"
 
 #: gui/guiutils.cpp:73
-#, fuzzy, kde-format
+#, kde-format
 msgid "Stamp with Comment"
-msgstr "קו חוצה"
+msgstr "חותמת עם הערה"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1335
@@ -780,20 +759,20 @@ msgid "Stamp"
 msgstr "חותמת"
 
 #: gui/guiutils.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "Freehand Line with Comment"
-msgstr "מאפייני קו"
+msgstr "ציור ביד חופשית עם הערה"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1323
-#, fuzzy, kde-format
+#, kde-format
 msgid "Freehand Line"
-msgstr "קו ירוק בציור חופשי"
+msgstr "ציור ביד חופשית"
 
 #: gui/guiutils.cpp:79
 #, kde-format
 msgid "Caret"
-msgstr ""
+msgstr "סמן כתיבה"
 
 #: gui/guiutils.cpp:82
 #, kde-format
@@ -808,25 +787,25 @@ msgstr "שמע"
 #: gui/guiutils.cpp:88
 #, kde-format
 msgid "Movie"
-msgstr "סרט"
+msgstr "סרטון"
 
 #: gui/guiutils.cpp:91
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Caption for a screen annotation"
 msgid "Screen"
-msgstr "מסך:"
+msgstr "מסך"
 
 #: gui/guiutils.cpp:94
 #, kde-format
 msgctxt "Caption for a widget annotation"
 msgid "Widget"
-msgstr ""
+msgstr "יישומון"
 
 #: gui/guiutils.cpp:97
 #, kde-format
 msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
-msgstr ""
+msgstr "מדיה עשירה"
 
 #: gui/guiutils.cpp:109
 #, kde-format
@@ -842,200 +821,193 @@ msgstr "מחבר: %1"
 #: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
-msgstr "היכן יש לשמור את %1?"
+msgstr "היכן לשמור את %1?"
 
 #: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
-msgstr "לא ניתן לפתוח את \"%1\" לכתיבה. הקובץ לא נשמר."
+msgstr "לא ניתן לפתוח את „%1” לכתיבה. הקובץ לא נשמר."
 
 #: gui/signatureguiutils.cpp:42
 #, kde-format
 msgid "The signature is cryptographically valid."
-msgstr ""
+msgstr "החתימה תקפה קריפטוגרפית."
 
 #: gui/signatureguiutils.cpp:44
 #, kde-format
 msgid "The signature is cryptographically invalid."
-msgstr ""
+msgstr "החתימה שגויה קריפטוגרפית."
 
 #: gui/signatureguiutils.cpp:46
 #, kde-format
 msgid "Digest Mismatch occurred."
-msgstr ""
+msgstr "אין התאמת תקציר."
 
 #: gui/signatureguiutils.cpp:48
 #, kde-format
 msgid "The signature CMS/PKCS7 structure is malformed."
-msgstr ""
+msgstr "מבנה ה־CMS/PKCS7 של החתימה מעורער."
 
 #: gui/signatureguiutils.cpp:50
 #, kde-format
 msgid "The requested signature is not present in the document."
-msgstr ""
+msgstr "החתימה המבוקשת לא נמצאת במסמך."
 
 #: gui/signatureguiutils.cpp:52
 #, kde-format
 msgid "The signature could not be verified."
-msgstr ""
+msgstr "לא ניתן לאמת את החתימה."
 
 #: gui/signatureguiutils.cpp:60
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificate is Trusted."
-msgstr "הגדרת המציג..."
+msgstr "האישור מהימן."
 
 #: gui/signatureguiutils.cpp:62
 #, kde-format
 msgid "Certificate issuer isn't Trusted."
-msgstr ""
+msgstr "מנפיק האישור לא מהימן."
 
 #: gui/signatureguiutils.cpp:64
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificate issuer is unknown."
-msgstr "הגדרת המציג..."
+msgstr "מנפיק האישור לא מוכר."
 
 #: gui/signatureguiutils.cpp:66
 #, kde-format
 msgid "Certificate has been Revoked."
-msgstr ""
+msgstr "האישור נשלל."
 
 #: gui/signatureguiutils.cpp:68
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificate has Expired."
-msgstr "הגדרת המציג..."
+msgstr "תוקף האישור פג."
 
 #: gui/signatureguiutils.cpp:70
 #, kde-format
 msgid "Certificate has not yet been verified."
-msgstr ""
+msgstr "האישור עדיין לא תוקף."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
-msgstr ""
+msgstr "תקלה לא ידועה באישור או שנתוניו הושחתו."
 
 #: gui/signatureguiutils.cpp:80
 #, kde-format
 msgid "MD2"
-msgstr ""
+msgstr "MD2"
 
 #: gui/signatureguiutils.cpp:82
 #, kde-format
 msgid "MD5"
-msgstr ""
+msgstr "MD5"
 
 #: gui/signatureguiutils.cpp:84
 #, kde-format
 msgid "SHA1"
-msgstr ""
+msgstr "SHA1"
 
 #: gui/signatureguiutils.cpp:86
 #, kde-format
 msgid "SHA256"
-msgstr ""
+msgstr "SHA256"
 
 #: gui/signatureguiutils.cpp:88
 #, kde-format
 msgid "SHA384"
-msgstr ""
+msgstr "SHA384"
 
 #: gui/signatureguiutils.cpp:90
 #, kde-format
 msgid "SHA512"
-msgstr ""
+msgstr "SHA512"
 
 #: gui/signatureguiutils.cpp:92
 #, kde-format
 msgid "SHA224"
-msgstr ""
+msgstr "SHA224"
 
 #: gui/signatureguiutils.cpp:94
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown Algorithm"
-msgstr "גופן לא ידוע"
+msgstr "אלגוריתם לא ידוע"
 
 #: gui/signatureguiutils.cpp:102
 #, kde-format
 msgid "RSA"
-msgstr ""
+msgstr "RSA"
 
 #: gui/signatureguiutils.cpp:104
 #, kde-format
 msgid "DSA"
-msgstr ""
+msgstr "DSA"
 
 #: gui/signatureguiutils.cpp:106
 #, kde-format
 msgid "EC"
-msgstr ""
+msgstr "EC"
 
 #: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown Type"
-msgstr "קובץ לא ידוע"
+msgstr "סוג לא ידוע"
 
 #: gui/signatureguiutils.cpp:118
 #, kde-format
 msgid "Digital Signature"
-msgstr ""
+msgstr "חתימה דיגיטלית"
 
 #: gui/signatureguiutils.cpp:121
 #, kde-format
 msgid "Non-Repudiation"
-msgstr ""
+msgstr "אי־התכחשות"
 
 #: gui/signatureguiutils.cpp:124
 #, kde-format
 msgid "Encrypt Keys"
-msgstr ""
+msgstr "הצפנת מפתחות"
 
 #: gui/signatureguiutils.cpp:127
 #, kde-format
 msgid "Decrypt Keys"
-msgstr ""
+msgstr "פענוח מפתחות"
 
 #: gui/signatureguiutils.cpp:130
 #, kde-format
 msgid "Key Agreement"
-msgstr ""
+msgstr "הסכם מפתח"
 
 #: gui/signatureguiutils.cpp:133
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Sign Certificate"
-msgstr "הגדרת המציג..."
+msgstr "חתימת אישור"
 
 #: gui/signatureguiutils.cpp:136
 #, kde-format
 msgid "Sign CRL"
-msgstr ""
+msgstr "חתימת אישורים בטלים"
 
 #: gui/signatureguiutils.cpp:139
 #, kde-format
 msgid "Encrypt Only"
-msgstr ""
+msgstr "הצפנה בלבד"
 
 #: gui/signatureguiutils.cpp:142
 #, kde-format
 msgid "No Usage Specified"
-msgstr ""
+msgstr "לא צוין שימוש"
 
 #: gui/signatureguiutils.cpp:149
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: gui/signatureguiutils.cpp:163
-#, fuzzy, kde-format
-#| msgid "Printing this document is not allowed."
+#, kde-format
 msgid "The document has not been modified since it was signed."
-msgstr "הדפסת המסמך הזה אסורה."
+msgstr "המסמך לא נערך מאז שנחתם."
 
 #: gui/signatureguiutils.cpp:166
 #, kde-format
@@ -1044,180 +1016,174 @@ msgid ""
 "modified;\n"
 "however there have been subsequent changes to the document."
 msgstr ""
+"מהדורת המסמך שכוסתה על ידי החתימה הזאת לא נערכה,\n"
+"אם זאת היו שינויים למסמך לאחר החתימה."
 
 #: gui/signatureguiutils.cpp:170
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
-msgstr ""
+msgstr "המסמך נערך בדרך שלא מוסכמת על מי שחתם קודם לכן."
 
 #: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid "The document integrity verification could not be completed."
-msgstr ""
+msgstr "אימות שלמות המסמך לא הושלם."
 
 #: gui/signatureguiutils.cpp:205
-#, fuzzy, kde-format
-#| msgid "Printing this document is not allowed."
+#, kde-format
 msgid "This document has unsigned signature fields."
-msgstr "הדפסת המסמך הזה אסורה."
+msgstr "במסמך יש שדות חתימה שלא נחתמו."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "Printing this document is not allowed."
+#, kde-format
 msgid "This document is digitally signed."
-msgstr "הדפסת המסמך הזה אסורה."
+msgstr "המסמך הזה חתום דיגיטלית."
 
 #: gui/signatureguiutils.cpp:210
-#, fuzzy, kde-format
-#| msgid "Printing this document is not allowed."
+#, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
-msgstr "הדפסת המסמך הזה אסורה."
+msgstr "המסמך הזה חתום דיגיטלית. נערכו שינויים מאז החתימה האחרונה."
 
 #: gui/signatureguiutils.cpp:213
-#, fuzzy, kde-format
-#| msgid "Printing this document is not allowed."
+#, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
-msgstr "הדפסת המסמך הזה אסורה."
+msgstr "המסמך הזה חתום דיגיטלית. את חלק מהחתימות לא ניתן לתקף כראוי."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
 msgid "Unsigned Signature %1"
-msgstr ""
+msgstr "חתימה לא חתומה %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Field: %1 on page %2"
-msgstr ""
+msgstr "שדה: %1 בעמוד %2"
 
 #: gui/signaturemodel.cpp:152
 #, kde-format
 msgid "Rev. %1: Signed By %2"
-msgstr ""
+msgstr "מהדורה %1: נחתמה על ידי %2"
 
 #: gui/signaturemodel.cpp:158
 #, kde-format
 msgid "Signing Time: %1"
-msgstr ""
+msgstr "מועד החתימה: %1"
 
 #: gui/signaturemodel.cpp:163
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgid "Reason: %1"
-msgstr "עמודים: %1"
+msgstr "סיבה: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Location: %1"
-msgstr "הערת צד"
+msgstr "מקום: %1"
 
 #: part/annotationactionhandler.cpp:148
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Red"
-msgstr "&טעינה מחדש"
+msgstr "אדום"
 
 #: part/annotationactionhandler.cpp:149
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Orange"
-msgstr ""
+msgstr "כתום"
 
 #: part/annotationactionhandler.cpp:150
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Yellow"
-msgstr "איפשור"
+msgstr "צהוב"
 
 #: part/annotationactionhandler.cpp:151
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Green"
-msgstr "מסך:"
+msgstr "ירוק"
 
 #: part/annotationactionhandler.cpp:152
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Cyan"
-msgstr ""
+msgstr "ציאן"
 
 #: part/annotationactionhandler.cpp:153
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Blue"
-msgstr ""
+msgstr "כחול"
 
 #: part/annotationactionhandler.cpp:154
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Magenta"
-msgstr ""
+msgstr "מג׳נטה"
 
 #: part/annotationactionhandler.cpp:155
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "White"
-msgstr ""
+msgstr "לבן"
 
 #: part/annotationactionhandler.cpp:156
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Gray"
-msgstr ""
+msgstr "אפור"
 
 #: part/annotationactionhandler.cpp:157
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Black"
-msgstr ""
+msgstr "שחור"
 
 #: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:686
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
-msgstr "התאמה לרוחב"
+msgstr "רוחב %1"
 
 #: part/annotationactionhandler.cpp:252
-#, fuzzy, kde-format
-#| msgid "%1:"
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1:"
+msgstr "%1%"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr ""
+msgstr "עובי שורת פירוש (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr ""
+msgstr "צבע פירוש (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr ""
+msgstr "צבע מילוי פירוש (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr ""
+msgstr "אטימות פירוש (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr ""
+msgstr "גופן פירוש (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1225,7 +1191,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
-msgstr ""
+msgstr "הוספת הפירוש הנוכחי לתפריט הפירושים המהירים (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1234,86 +1200,81 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
 "selected)"
 msgstr ""
+"הגבלת יחס גובה־רוחב של הצורה ל־1:1 או זווית קווית בצעדים של 15° (לא נבחר "
+"פירוש)"
 
 #: part/annotationactionhandler.cpp:303
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
-msgstr ""
+msgstr "הגדרות מתקדמות לכלי הפירוש הנוכחי (לא נבחר פירוש)"
 
 #: part/annotationactionhandler.cpp:308
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
-msgstr "מאפייני הערות צד"
+msgstr "עובי קו פירוש"
 
 #: part/annotationactionhandler.cpp:310
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
-msgstr ""
+msgstr "עובי קו פירוש (לפירוש הנוכחי אין עובי קו)"
 
 #: part/annotationactionhandler.cpp:314
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
-msgstr "כלי הערות צד"
+msgstr "צבע טקסט פירוש"
 
 #: part/annotationactionhandler.cpp:316
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "כלי הערות צד"
+msgstr "צבע גבול פירוש"
 
 #: part/annotationactionhandler.cpp:318
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
-msgstr "כלי הערות צד"
+msgstr "צבע פירוש"
 
 #: part/annotationactionhandler.cpp:322
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
-msgstr "כלי הערות צד"
+msgstr "צבע מילוי פירוש"
 
 #: part/annotationactionhandler.cpp:324
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr ""
+msgstr "צבע מילוי פירוש (לפירוש הנוכחי אין צבע מילוי)"
 
 #: part/annotationactionhandler.cpp:328
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "הערת צד"
+msgstr "גופן פירוש"
 
 #: part/annotationactionhandler.cpp:330
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
+msgstr "גופן פירוש (לפירוש הנוכחי אין גופן)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr ""
+msgstr "הגבלת זווית הקו לצעדים של 15°"
 
 #: part/annotationactionhandler.cpp:336
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr ""
+msgstr "הגבלת יחס הצורה ל־1:1"
 
 #: part/annotationactionhandler.cpp:338
 #, kde-format
@@ -1322,199 +1283,186 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
 "current annotation)"
 msgstr ""
+"הגבלת יחס הצורה ל־1:1 או לזווית של בצעדים של 15° (אין תמיכה בפירוש הנוכחי)"
 
 #: part/annotationactionhandler.cpp:341
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
-msgstr "מאפייני הערות צד"
+msgstr "אטימות פירוש"
 
 #: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr ""
+msgstr "הוספת הפירוש הנוכחי לתפריט הפירושים המהירים"
 
 #: part/annotationactionhandler.cpp:343
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr ""
+msgstr "הגדרות מתקדמות לכלי הפירוש הנוכחי"
 
 #: part/annotationactionhandler.cpp:432
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Color"
-msgstr "&צבע:"
+msgstr "צבע"
 
 #: part/annotationactionhandler.cpp:434
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Fill Color"
-msgstr "&צבע:"
+msgstr "צבע מילוי"
 
 #: part/annotationactionhandler.cpp:435
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Transparent"
-msgstr ""
+msgstr "שקוף"
 
 #: part/annotationactionhandler.cpp:445
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr ""
+msgstr "צבע בהתאמה אישית…"
 
 #: part/annotationactionhandler.cpp:499
-#, fuzzy, kde-format
-#| msgid "&Selection Tool"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select color"
-msgstr "כלי &בחירה"
+msgstr "בחירת צבע"
 
 #: part/annotationactionhandler.cpp:551
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgid "&Annotations"
-msgstr "הערות צד"
+msgstr "&פירושים"
 
 #: part/annotationactionhandler.cpp:552
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
-msgstr ""
+msgstr "הסתרה"
 
 #: part/annotationactionhandler.cpp:553
-#, fuzzy, kde-format
-#| msgid "Create annotation tool"
+#, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "צור כלי הערות צד"
+msgstr "הצגת כלי פירוש נוספים"
 
 #: part/annotationactionhandler.cpp:556
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
-msgstr "הדגשה"
+msgstr "מדגיש"
 
 #: part/annotationactionhandler.cpp:557
-#, fuzzy, kde-format
-#| msgid "Underline"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "קו תחתון"
 
 #: part/annotationactionhandler.cpp:558
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "שרבוט"
 
 #: part/annotationactionhandler.cpp:559
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "קו חוצה"
 
 #: part/annotationactionhandler.cpp:561
-#, fuzzy, kde-format
-#| msgid "Movie Properties"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
-msgstr "מאפייני סרט"
+msgstr "מכונת כתיבה"
 
 #: part/annotationactionhandler.cpp:562
-#, fuzzy, kde-format
-#| msgid "Inline Note"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "הערה פנימית"
 
 #: part/annotationactionhandler.cpp:563
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
-msgstr "&פתיחת הערה בחלונית"
+msgstr "הערה קופצת"
 
 #: part/annotationactionhandler.cpp:564
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
-msgstr "קו ירוק בציור חופשי"
+msgstr "ציור ביד חופשית"
 
 #: part/annotationactionhandler.cpp:566
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
-msgstr "קו צהוב ישר"
+msgstr "קו ישר"
 
 #: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
-msgstr ""
+msgstr "חץ"
 
 #: part/annotationactionhandler.cpp:568
-#, fuzzy, kde-format
-#| msgid "Rectangle"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
-msgstr "מלבן"
+msgstr "מרובע"
 
 #: part/annotationactionhandler.cpp:569
-#, fuzzy, kde-format
-#| msgid "Ellipse"
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "אליפסה"
 
 #: part/annotationactionhandler.cpp:570
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
-msgstr "מצולע כחול"
+msgstr "מצולע"
 
 #: part/annotationactionhandler.cpp:571
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
-msgstr ""
+msgstr "צורות הנדסיות"
 
 #: part/annotationactionhandler.cpp:617
-#, fuzzy, kde-format
-#| msgid "Stamp"
+#, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "חותמת"
 
 #: part/annotationactionhandler.cpp:637
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
-msgstr "הערות צד"
+msgstr "פירושים זריזים"
 
 #: part/annotationactionhandler.cpp:640
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr ""
+msgstr "נא לבחור כלי פירוש מהפירושים המהירים"
 
 #: part/annotationactionhandler.cpp:650
-#, fuzzy, kde-format
-#| msgid "Annotations"
+#, kde-format
 msgid "Quick Annotation Bar"
-msgstr "הערות צד"
+msgstr "סרגל פירושים זרירים"
 
 #: part/annotationactionhandler.cpp:664
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "הוסף הערת צד"
+msgstr "הוספה לפירושים הזריזים"
 
 #: part/annotationactionhandler.cpp:667
 #, kde-format
@@ -1522,14 +1470,13 @@ msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
 "use"
 msgid "Keep Active"
-msgstr ""
+msgstr "להשאיר פעיל"
 
 #: part/annotationactionhandler.cpp:668
-#, fuzzy, kde-format
-#| msgid "Create annotation tool"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "צור כלי הערות צד"
+msgstr "לשמור את כלי הפירושים פעיל לאחר השימוש"
 
 #: part/annotationactionhandler.cpp:673
 #, kde-format
@@ -1537,44 +1484,39 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr ""
+msgstr "הגבלת היחס וזווית כלי הפירוש"
 
 #: part/annotationactionhandler.cpp:679
-#, fuzzy, kde-format
-#| msgid "Font:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
-msgstr "גופן:"
+msgstr "גופן"
 
 #: part/annotationactionhandler.cpp:680
-#, fuzzy, kde-format
-#| msgid "Annotation Options"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "מאפייני הערות צד"
+msgstr "הגדרות פירושים"
 
 #: part/annotationactionhandler.cpp:683
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
-msgstr "התאמה לרוחב"
+msgstr "עובי קו"
 
 #: part/annotationactionhandler.cpp:692
-#, fuzzy, kde-format
-#| msgid "&Opacity:"
+#, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
-msgstr "&שקיפות:"
+msgstr "אטימות"
 
 #: part/annotationactionhandler.cpp:695
-#, fuzzy, kde-format
-#| msgid "%1:"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1:"
+msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
 #, fuzzy, kde-format
@@ -1598,8 +1540,8 @@ msgstr ""
 #, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "הערת צד"
-msgstr[1] "%1 הערות צד"
+msgstr[0] "פירוש"
+msgstr[1] "%1 פירושים"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -1607,22 +1549,21 @@ msgid "&Open Pop-up Note"
 msgstr "&פתיחת הערה בחלונית"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "העתקה ללוח הגזירים"
+msgstr "העתקת טקסט ללוח הגזירים"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2553 part/pageview.cpp:2873 part/pageview.cpp:3017
 #: part/pageview.cpp:3074
 #, kde-format
 msgid "Copy forbidden by DRM"
-msgstr "העתקה אסורה על־ידי ה־DRM"
+msgstr "ה־DRM אוסר העתקה"
 
 #: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
 #, kde-format
 msgid "&Delete"
-msgstr "&מחיקה"
+msgstr "מ&חיקה"
 
 #: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:801
 #: part/propertiesdialog.cpp:54
@@ -1634,7 +1575,7 @@ msgstr "מ&אפיינים"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "&שמירת '%1'..."
+msgstr "&שמירת ‚%1’…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -1652,27 +1593,24 @@ msgid "&Author:"
 msgstr "&מחבר:"
 
 #: part/annotationpropertiesdialog.cpp:69
-#, fuzzy, kde-format
-#| msgid "Created"
+#, kde-format
 msgid "Created:"
-msgstr "נוצר"
+msgstr "נוצר:"
 
 #: part/annotationpropertiesdialog.cpp:74
-#, fuzzy, kde-format
-#| msgid "Modified"
+#, kde-format
 msgid "Modified:"
-msgstr "שונה"
+msgstr "נערך:"
 
 #: part/annotationpropertiesdialog.cpp:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pop-up Note Properties"
-msgstr "מאפייני הערה"
+msgstr "מאפייני הערה קופצת"
 
 #: part/annotationpropertiesdialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Movie Properties"
+#, kde-format
 msgid "Typewriter Properties"
-msgstr "מאפייני סרט"
+msgstr "מאפייני מכונת כתיבה"
 
 #: part/annotationpropertiesdialog.cpp:113
 #, kde-format
@@ -1680,14 +1618,14 @@ msgid "Inline Note Properties"
 msgstr "מאפייני הערה פנימית"
 
 #: part/annotationpropertiesdialog.cpp:119
-#, fuzzy, kde-format
+#, kde-format
 msgid "Straight Line Properties"
-msgstr "מאפייני קו"
+msgstr "מאפייני קו ישר"
 
 #: part/annotationpropertiesdialog.cpp:121
-#, fuzzy, kde-format
+#, kde-format
 msgid "Polygon Properties"
-msgstr "מאפייני שמע"
+msgstr "מאפייני מצולע"
 
 #: part/annotationpropertiesdialog.cpp:125
 #, kde-format
@@ -1695,9 +1633,9 @@ msgid "Geometry Properties"
 msgstr "מאפייני גאומטריה"
 
 #: part/annotationpropertiesdialog.cpp:128
-#, fuzzy, kde-format
+#, kde-format
 msgid "Text Markup Properties"
-msgstr "מאפייני חותמת"
+msgstr "מאפייני סימון טקסט"
 
 #: part/annotationpropertiesdialog.cpp:131
 #, kde-format
@@ -1705,14 +1643,14 @@ msgid "Stamp Properties"
 msgstr "מאפייני חותמת"
 
 #: part/annotationpropertiesdialog.cpp:134
-#, fuzzy, kde-format
+#, kde-format
 msgid "Freehand Line Properties"
-msgstr "מאפייני קו"
+msgstr "מאפייני ציור ביד חופשית"
 
 #: part/annotationpropertiesdialog.cpp:137
 #, kde-format
 msgid "Caret Properties"
-msgstr ""
+msgstr "מאפייני סמן כתיבה"
 
 #: part/annotationpropertiesdialog.cpp:140
 #, kde-format
@@ -1727,12 +1665,12 @@ msgstr "מאפייני שמע"
 #: part/annotationpropertiesdialog.cpp:146
 #, kde-format
 msgid "Movie Properties"
-msgstr "מאפייני סרט"
+msgstr "מאפייני סרטון"
 
 #: part/annotationpropertiesdialog.cpp:149
 #, kde-format
 msgid "Annotation Properties"
-msgstr "מאפייני הערת צד"
+msgstr "מאפייני פירוש"
 
 #: part/annotationpropertiesdialog.cpp:175
 #, kde-format
@@ -1743,33 +1681,32 @@ msgstr "שונה: %1"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
-msgstr ""
+msgstr "נא לבחור סמל חותמת מותאם מקובץ"
 
 #: part/annotationwidgets.cpp:156
-#, fuzzy, kde-format
-#| msgctxt "Annotation tool"
-#| msgid "Put a stamp symbol"
+#, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
-msgstr "חותמת"
+msgstr "בחירת סימן חותמת משלך"
 
 #: part/annotationwidgets.cpp:156
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
+"*.ico *.png *.xpm *.svg *.svgz | קובצי סמלים (‎*.ico‏ ‎*.png‏ ‎*.xpm‏ ‎*.svg‏ ‎*.svgz)"
 
 #: part/annotationwidgets.cpp:160
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
-msgstr ""
+msgstr "לא ניתן לטעון את הקובץ <filename>%1</filename>"
 
 #: part/annotationwidgets.cpp:160
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
-msgstr ""
+msgstr "קובץ שגוי"
 
 #: part/annotationwidgets.cpp:267
 #, kde-format
@@ -1777,8 +1714,7 @@ msgid "&Color:"
 msgstr "&צבע:"
 
 #: part/annotationwidgets.cpp:276
-#, fuzzy, kde-format
-#| msgid "%"
+#, kde-format
 msgctxt "Suffix for the opacity level, eg '80%'"
 msgid "%"
 msgstr "%"
@@ -1789,10 +1725,9 @@ msgid "&Opacity:"
 msgstr "&שקיפות:"
 
 #: part/annotationwidgets.cpp:365
-#, fuzzy, kde-format
-#| msgid "Icon"
+#, kde-format
 msgid "Icon:"
-msgstr "סמל"
+msgstr "סמל:"
 
 #: part/annotationwidgets.cpp:366
 #, kde-format
@@ -1815,8 +1750,7 @@ msgid "Key"
 msgstr "מפתח"
 
 #: part/annotationwidgets.cpp:370
-#, fuzzy, kde-format
-#| msgid "New Paragraph"
+#, kde-format
 msgid "New paragraph"
 msgstr "פסקה חדשה"
 
@@ -1836,35 +1770,34 @@ msgid "Font:"
 msgstr "גופן:"
 
 #: part/annotationwidgets.cpp:389
-#, fuzzy, kde-format
-#| msgid "&Color:"
+#, kde-format
 msgid "Text &color:"
-msgstr "&צבע:"
+msgstr "&צבע טקסט:"
 
 #: part/annotationwidgets.cpp:396
 #, kde-format
 msgid "&Align:"
-msgstr ""
+msgstr "יי&שור:"
 
 #: part/annotationwidgets.cpp:397
-#, fuzzy, kde-format
+#, kde-format
 msgid "Left"
-msgstr "שמאלה"
+msgstr "שמאל"
 
 #: part/annotationwidgets.cpp:398
 #, kde-format
 msgid "Center"
-msgstr ""
+msgstr "מרכז"
 
 #: part/annotationwidgets.cpp:399
-#, fuzzy, kde-format
+#, kde-format
 msgid "Right"
-msgstr "ימינה"
+msgstr "ימין"
 
 #: part/annotationwidgets.cpp:407
 #, kde-format
 msgid "Border &width:"
-msgstr ""
+msgstr "&עובי מסגרת:"
 
 #: part/annotationwidgets.cpp:416
 #, kde-format
@@ -1952,99 +1885,96 @@ msgid "KDE"
 msgstr "KDE"
 
 #: part/annotationwidgets.cpp:453
-#, fuzzy, kde-format
-#| msgid "Stamp Symbol"
+#, kde-format
 msgid "Stamp symbol:"
-msgstr "סמל חותמת"
+msgstr "סימן חותמת:"
 
 #: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
 #: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
 #: part/annotationwidgets.cpp:779
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Width:"
-msgstr "התאמה לרוחב"
+msgstr "&רוחב:"
 
 #: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line start:"
-msgstr ""
+msgstr "התחלת שורה:"
 
 #: part/annotationwidgets.cpp:508
 #, kde-format
 msgid "Line end:"
-msgstr ""
+msgstr "סוף שורה:"
 
 #: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Square"
-msgstr ""
+msgstr "ריבוע"
 
 #: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Circle"
-msgstr ""
+msgstr "עיגול"
 
 #: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Diamond"
-msgstr ""
+msgstr "יהלום"
 
 #: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Open Arrow"
-msgstr ""
+msgstr "חץ פתוח"
 
 #: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Closed Arrow"
-msgstr ""
+msgstr "חץ סגור"
 
 #: part/annotationwidgets.cpp:516
-#, fuzzy, kde-format
-#| msgctxt "Symbol for caret annotations"
-#| msgid "None"
+#, kde-format
 msgid "None"
 msgstr "ללא"
 
 #: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Butt"
-msgstr ""
+msgstr "חסום"
 
 #: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Right Open Arrow"
-msgstr ""
+msgstr "חץ פתוח ימני"
 
 #: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Closed Arrow"
-msgstr ""
+msgstr "חץ פתוח שמאלי"
 
 #: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Slash"
-msgstr ""
+msgstr "לוכסן"
 
 #: part/annotationwidgets.cpp:533
-#, fuzzy, kde-format
+#, kde-format
 msgid "Leader line length:"
-msgstr "קו תחתון"
+msgstr "אורך קו מוביל:"
 
 #: part/annotationwidgets.cpp:535
 #, kde-format
 msgid "Leader line extensions length:"
-msgstr ""
+msgstr "אורך הרחבות קו מוביל:"
 
 #: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
 #, kde-format
 msgid "Enabled"
-msgstr ""
+msgstr "פעיל"
 
 #: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
-#, fuzzy, kde-format
+#, kde-format
 msgid "Shape fill:"
-msgstr "שמירה לקובץ..."
+msgstr "מילוי צורה:"
 
 #: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
 #, kde-format
@@ -2067,10 +1997,9 @@ msgid "Ellipse"
 msgstr "אליפסה"
 
 #: part/annotationwidgets.cpp:747
-#, fuzzy, kde-format
-#| msgid "File Attachment Symbol"
+#, kde-format
 msgid "File attachment symbol:"
-msgstr "סמל הקובץ המצורף"
+msgstr "סמל קובץ מצורף:"
 
 #: part/annotationwidgets.cpp:750
 #, kde-format
@@ -2114,9 +2043,9 @@ msgid "No description available."
 msgstr "אין תיאור זמין."
 
 #: part/annotationwidgets.cpp:775
-#, fuzzy, kde-format
+#, kde-format
 msgid "Name:"
-msgstr "שם"
+msgstr "שם:"
 
 #: part/annotationwidgets.cpp:786
 #, kde-format
@@ -2126,7 +2055,7 @@ msgstr "תיאור:"
 #: part/annotationwidgets.cpp:845
 #, kde-format
 msgid "Caret symbol:"
-msgstr ""
+msgstr "סמל סמן כתיבה:"
 
 #: part/annotationwidgets.cpp:847
 #, kde-format
@@ -2156,32 +2085,34 @@ msgid ""
 "This annotation may contain LaTeX code.\n"
 "Click here to render."
 msgstr ""
+"פירוש זה עשוי להכיל קוד LaTeX.\n"
+"לחיצה כאן תעבד אותו."
 
 #: part/annotwindow.cpp:415
 #, kde-format
 msgid "Cannot find latex executable."
-msgstr ""
+msgstr "לא ניתן למצוא את קובץ ההפעלה של latex."
 
 #: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "LaTeX rendering failed"
-msgstr ""
+msgstr "עיבוד ה־LaTeX נכשל"
 
 #: part/annotwindow.cpp:420
 #, kde-format
 msgid "Cannot find dvipng executable."
-msgstr ""
+msgstr "לא ניתן למצוא את קובץ ההפעלה של dvipng."
 
 #: part/annotwindow.cpp:425
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr ""
+msgstr "אירעה שגיאה בהפעלת פקודת ‚latex’."
 
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr ""
+msgstr "אירעה שגיאה בהפעלת פקודת ‚dvipng’."
 
 #: part/bookmarklist.cpp:115
 #, kde-format
@@ -2209,17 +2140,15 @@ msgid "Bookmarks"
 msgstr "סימניות"
 
 #: part/bookmarklist.cpp:135
-#, fuzzy, kde-format
-#| msgid "End of the document"
+#, kde-format
 msgid "Show for all documents"
-msgstr "סוף המסמך"
+msgstr "הצגה לכל המסמכים"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search..."
-msgstr "&חיפוש"
+msgstr "חיפוש…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2246,19 +2175,17 @@ msgstr "פתיחת מסמך"
 #: part/bookmarklist.cpp:290
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
-msgstr ""
+msgstr "הסרת כל הסימניות מהמסמך הזה"
 
 #: part/certificateviewer.cpp:47
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificate Viewer"
-msgstr "הגדרת המציג..."
+msgstr "מציג אישורים"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export..."
-msgstr "ייצ&וא כקובץ"
+msgstr "ייצוא…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2268,333 +2195,309 @@ msgstr "כללי"
 #: part/certificateviewer.cpp:58
 #, kde-format
 msgid "Issued By"
-msgstr ""
+msgstr "הונפק על ידי"
 
 #: part/certificateviewer.cpp:61 part/certificateviewer.cpp:68
 #, kde-format
 msgid "Common Name(CN)"
-msgstr ""
+msgstr "שם נפוץ(CN)"
 
 #: part/certificateviewer.cpp:62 part/certificateviewer.cpp:69
 #, kde-format
 msgid "EMail"
-msgstr ""
+msgstr "דוא״ל"
 
 #: part/certificateviewer.cpp:63 part/certificateviewer.cpp:70
 #, kde-format
 msgid "Organization(O)"
-msgstr ""
+msgstr "ארגון(O)"
 
 #: part/certificateviewer.cpp:65
 #, kde-format
 msgid "Issued To"
-msgstr ""
+msgstr "הונפק לטובת"
 
 #: part/certificateviewer.cpp:72
 #, kde-format
 msgid "Validity"
-msgstr ""
+msgstr "תוקף"
 
 #: part/certificateviewer.cpp:78
 #, kde-format
 msgid "Fingerprints"
-msgstr ""
+msgstr "טביעות אצבע"
 
 #: part/certificateviewer.cpp:86
 #, kde-format
 msgid "SHA-1 Fingerprint"
-msgstr ""
+msgstr "טביעת אצבע SHA-1"
 
 #: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-256 Fingerprint"
-msgstr ""
+msgstr "טביעת אצבע SHA-256"
 
 #: part/certificateviewer.cpp:105
 #, kde-format
 msgid "Details"
-msgstr ""
+msgstr "פרטים"
 
 #: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Certificate Data:"
-msgstr ""
+msgstr "נתוני אישור:"
 
 #: part/certificateviewer.cpp:158
-#, fuzzy, kde-format
-#| msgid "Where do you want to save %1?"
+#, kde-format
 msgid "Where do you want to save this certificate?"
-msgstr "היכן יש לשמור את %1?"
+msgstr "איפה לשמור את האישור הזה?"
 
 #: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "קובץ אישור (‎*.cer)"
 
 #: part/certificateviewer.cpp:162
 #, kde-format
 msgid "Could not export the certificate"
-msgstr ""
+msgstr "לא ניתן לייצא את האישור"
 
 #: part/colormodemenu.cpp:19
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Color Mode"
-msgstr "מצב צבע:"
+msgstr "מצב &צבע"
 
 #: part/colormodemenu.cpp:21
-#, fuzzy, kde-format
-#| msgid "Change &colors"
+#, kde-format
 msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
-msgstr "שינוי &צבעים"
+msgstr "שינוי צבעים"
 
 #: part/colormodemenu.cpp:29
-#, fuzzy, kde-format
-#| msgid "Normal Icons"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
-msgstr "סמלים רגילים"
+msgstr "צבעים &רגילים"
 
 #: part/colormodemenu.cpp:41
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
-msgstr "היפוך צבעים"
+msgstr "הי&פוך צבעים"
 
 #: part/colormodemenu.cpp:42
-#, fuzzy, kde-format
-#| msgid "Change Paper Color"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
-msgstr "שינוי צבע הדף"
+msgstr "החלפת &צבע הדף"
 
 #: part/colormodemenu.cpp:44
-#, fuzzy, kde-format
-#| msgid "Change Dark & Light Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
-msgstr "המרה לצבעים כהים ובהירים"
+msgstr "החלפת צבעים &כהים ובהירים"
 
 #: part/colormodemenu.cpp:46
-#, fuzzy, kde-format
-#| msgid "Convert to Black & White"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
-msgstr "המרה לצבעי שחור ולבן"
+msgstr "המרה לשחור לבן"
 
 #: part/colormodemenu.cpp:49
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
-msgstr "היפוך צבעים"
+msgstr "היפוך &בהירות"
 
 #: part/colormodemenu.cpp:52
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr ""
+msgstr "היפוך &לומה (sRGB קווי)"
 
 #: part/colormodemenu.cpp:55
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr ""
+msgstr "היפוך לומה (&סימטרי)"
 
 #: part/colormodemenu.cpp:58
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
-msgstr ""
+msgstr "העברת הגוון ל&חיוב"
 
 #: part/colormodemenu.cpp:61
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
-msgstr ""
+msgstr "העברת הגוון ל&שלילה"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:11
-#, fuzzy, kde-format
+#, kde-format
 msgid "Red"
-msgstr "&טעינה מחדש"
+msgstr "אדום"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:16
-#, fuzzy, kde-format
+#, kde-format
 msgid "Green"
-msgstr "מסך:"
+msgstr "ירוק"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:21
 #, kde-format
 msgid "Blue"
-msgstr ""
+msgstr "כחול"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:26
-#, fuzzy, kde-format
+#, kde-format
 msgid "Yellow"
-msgstr "איפשור"
+msgstr "צהוב"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:31
 #, kde-format
 msgid "Black"
-msgstr ""
+msgstr "שחור"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:36
 #, kde-format
 msgid "White"
-msgstr ""
+msgstr "לבן"
 
 #. i18n: tag tool attribute name
 #: part/data/tools.xml:103
 #, kde-format
 msgid "Arrow"
-msgstr ""
+msgstr "חץ"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:9
-#, fuzzy, kde-format
+#, kde-format
 msgid "Yellow Highlighter"
-msgstr "הדגשה"
+msgstr "מדגיש צהוב"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Green Highlighter"
-msgstr "הדגשה"
+msgstr "מדגיש ירוק"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:24
-#, fuzzy, kde-format
-#| msgid "Insert"
+#, kde-format
 msgid "Insert Text"
-msgstr "הוספה"
+msgstr "הוספת טקסט"
 
 #: part/dlgaccessibility.cpp:38
-#, fuzzy, kde-format
-#| msgid "Draw border around &Links"
+#, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Draw border around links"
-msgstr "ציור מסגרת מסביב ל&קישורים"
+msgstr "ציור מסגרת מסביב לקישורים"
 
 #: part/dlgaccessibility.cpp:48
-#, fuzzy, kde-format
-#| msgid "Change &colors"
+#, kde-format
 msgctxt "@option:check Config dialog, accessibility page"
 msgid "Change colors"
-msgstr "שינוי &צבעים"
+msgstr "שינוי צבעים"
 
 #: part/dlgaccessibility.cpp:54
-#, fuzzy, kde-format
-#| msgid "Warning: these options can badly affect drawing speed."
+#, kde-format
 msgctxt "@info Config dialog, accessibility page"
 msgid "<b>Warning:</b> these options can badly affect drawing speed."
-msgstr "אזהרה: אפשרויות אלו יכולות לפגוע במהירות הצביעה באופן חמור."
+msgstr "<b>אזהרה:</b> אפשרויות אלו יכולות לפגוע במהירות הציור באופן חמור."
 
 #: part/dlgaccessibility.cpp:60
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert colors"
 msgstr "היפוך צבעים"
 
 #: part/dlgaccessibility.cpp:61
-#, fuzzy, kde-format
-#| msgid "Change Paper Color"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Change paper color"
-msgstr "שינוי צבע הדף"
+msgstr "החלפת צבע הנייר"
 
 #: part/dlgaccessibility.cpp:62
-#, fuzzy, kde-format
-#| msgid "Change Dark & Light Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Change dark & light colors"
-msgstr "המרה לצבעים כהים ובהירים"
+msgstr "החלפת צבעים כהים ובהירים"
 
 #: part/dlgaccessibility.cpp:63
-#, fuzzy, kde-format
-#| msgid "Convert to Black & White"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Convert to black & white"
-msgstr "המרה לצבעי שחור ולבן"
+msgstr "המרה לשחור לבן"
 
 #: part/dlgaccessibility.cpp:64
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "היפוך צבעים"
+msgstr "היפוך בהירות"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (sRGB linear)"
-msgstr ""
+msgstr "היפוך לומה (sRGB קווי)"
 
 #: part/dlgaccessibility.cpp:66
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (symmetric)"
-msgstr ""
+msgstr "היפוך לומה (סימטרי)"
 
 #: part/dlgaccessibility.cpp:67
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue positive"
-msgstr ""
+msgstr "העברת הגוון לחיוב"
 
 #: part/dlgaccessibility.cpp:68
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue negative"
-msgstr ""
+msgstr "העברת הגוון לשלילה"
 
 #: part/dlgaccessibility.cpp:70
-#, fuzzy, kde-format
-#| msgid "Color mode:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Color mode:"
 msgstr "מצב צבע:"
 
 #: part/dlgaccessibility.cpp:87
-#, fuzzy, kde-format
-#| msgid "Paper color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Paper color:"
-msgstr "צבע העמוד:"
+msgstr "צבע הנייר:"
 
 #: part/dlgaccessibility.cpp:99
-#, fuzzy, kde-format
-#| msgid "Dark color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Dark color:"
 msgstr "צבע כהה:"
 
 #: part/dlgaccessibility.cpp:104
-#, fuzzy, kde-format
-#| msgid "Light color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Light color:"
 msgstr "צבע בהיר:"
 
 #: part/dlgaccessibility.cpp:119
-#, fuzzy, kde-format
-#| msgid "Threshold:"
+#, kde-format
 msgctxt "@label:slider Config dialog, accessibility page"
 msgid "Threshold:"
 msgstr "סף:"
 
 #: part/dlgaccessibility.cpp:127
-#, fuzzy, kde-format
-#| msgid "Contrast:"
+#, kde-format
 msgctxt "@label:slider Config dialog, accessibility page"
 msgid "Contrast:"
 msgstr "ניגודיות:"
@@ -2603,121 +2506,96 @@ msgstr "ניגודיות:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr ""
+msgstr "מנוע טקסט לדיבור:"
 
 #: part/dlgaccessibility.cpp:165
-#, fuzzy, kde-format
-#| msgid "Text to search for"
+#, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "טקסט לחיפוש"
+msgstr "קול מקריא טקסט:"
 
 #: part/dlgannotations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "כלי הערות צד"
+msgstr "סרגל כלי פירוש מלא"
 
 #: part/dlgannotations.cpp:26
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "כלי הערות צד"
+msgstr "סרגל כלי פירוש זריז"
 
 #: part/dlgannotations.cpp:28
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "כלי הערות צד"
+msgstr "סרגל כלי פירוש:"
 
 #: part/dlgannotations.cpp:34
-#, fuzzy, kde-format
-#| msgid "&Author:"
+#, kde-format
 msgctxt "@label:textbox Config dialog, annotations page"
 msgid "Author:"
-msgstr "&מחבר:"
+msgstr "יוצר:"
 
 #: part/dlgannotations.cpp:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Note</b>: the information here is used only for comments and reviews. "
-#| "Information inserted here will not be transmitted without your knowledge."
+#, kde-format
 msgctxt "@info Config dialog, annotations page"
 msgid ""
 "<b>Note:</b> the information here is used only for annotations. The "
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
-"<b>יש לשים לב</b>: המידע כאן משמש רק עבור הערות וסקירות. מידע שהוכנס כאן לא "
-"יועבר מבלי לידע אותך."
+"<b>לתשומת לבך:</b> המידע כאן משמש רק את הפירושים. המידע נשמר במסמכים עם "
+"הפירושים ויועבר יחד עם המסמך."
 
 #: part/dlgannotations.cpp:48
-#, fuzzy, kde-format
-#| msgid "Edit annotation tool"
+#, kde-format
 msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
 msgid "<h3>Quick Annotation Tools</h3>"
-msgstr "ערוך גלי הערות צד"
+msgstr "<h3>כלי פירוש זריזים</h3>"
 
 #: part/dlgeditor.cpp:28
-#, fuzzy, kde-format
-#| msgctxt "@info:whatsthis"
-#| msgid ""
-#| "Choose the editor you want to launch when Okular wants to open a source "
-#| "file."
+#, kde-format
 msgctxt "@info:whatsthis Config dialog, editor page"
 msgid ""
 "Choose the editor you want to launch when Okular wants to open a source file."
-msgstr "יש לבחור בעורך שישוגר כאשר Okular רוצה לפתוח קובץ מקור."
+msgstr "נא לבחור את העורך שיופעל כש־Okular רוצה לפתוח קובץ מקור."
 
 #: part/dlgeditor.cpp:29
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Custom Text Editor"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Custom Text Editor"
 msgstr "עורך טקסט מותאם אישית"
 
 #: part/dlgeditor.cpp:30
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Kate"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Kate"
 msgstr "Kate"
 
 #: part/dlgeditor.cpp:31
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Kile"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Kile"
 msgstr "Kile"
 
 #: part/dlgeditor.cpp:32
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "SciTE"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "SciTE"
 msgstr "SciTE"
 
 #: part/dlgeditor.cpp:33
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Emacs client"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Emacs client"
 msgstr "לקוח Emacs"
 
 #: part/dlgeditor.cpp:34
-#, fuzzy, kde-format
-#| msgctxt "Text editor"
-#| msgid "Lyx client"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Lyx client"
 msgstr "לקוח Lyx"
@@ -2726,17 +2604,16 @@ msgstr "לקוח Lyx"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "TeXstudio"
-msgstr ""
+msgstr "TeXstudio"
 
 #: part/dlgeditor.cpp:36
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "TeXiFy IDEA"
-msgstr ""
+msgstr "TeXiFy IDEA"
 
 #: part/dlgeditor.cpp:37
-#, fuzzy, kde-format
-#| msgid "Editor:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, editor page"
 msgid "Editor:"
 msgstr "עורך:"
@@ -2765,8 +2642,7 @@ msgstr ""
 "אם לא צויין שומר המקום %f, שם הקובץ יתווסף לסוף הפקודה שצויינה."
 
 #: part/dlgeditor.cpp:63
-#, fuzzy, kde-format
-#| msgid "Command:"
+#, kde-format
 msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "פקודה:"
@@ -2775,121 +2651,106 @@ msgstr "פקודה:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
-msgstr ""
+msgstr "להשתמש בגלילה חלקה"
 
 #: part/dlggeneral.cpp:35
-#, fuzzy, kde-format
-#| msgid "Appearance"
+#, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
-msgstr "מראה"
+msgstr "מראה:"
 
 #: part/dlggeneral.cpp:39
-#, fuzzy, kde-format
-#| msgid "Show scroll&bars"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
-msgstr "הצגת &פסי גלילה"
+msgstr "הצגת פסי גלילה"
 
 #: part/dlggeneral.cpp:46
-#, fuzzy, kde-format
-#| msgid "Link the &thumbnails with the page"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
-msgstr "קישור התמונות ה&ממוזערות של העמודים עם העמודים"
+msgstr "קישור התמונות הממוזערות עם העמוד"
 
 #: part/dlggeneral.cpp:53
-#, fuzzy, kde-format
-#| msgid "Show &hints and info messages"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
-msgstr "הצגת &רמזים והודעות מידע"
+msgstr "הצגת רמזים והודעות מידע"
 
 #: part/dlggeneral.cpp:59
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr ""
+msgstr "להודיע על קבצים מוטמעים, טפסים או חתימות"
 
 #: part/dlggeneral.cpp:66
-#, fuzzy, kde-format
-#| msgid "Display document title in titlebar if available"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
-msgstr "הצג כותרת מסמך בסרגל הכותרת אם זמין"
+msgstr "הצגת כותרת המסמך בשורת הכותרת אם ניתן"
 
 #: part/dlggeneral.cpp:72
-#, fuzzy, kde-format
-#| msgid "Display file name only"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
-msgstr "הצג את שם הקובץ"
+msgstr "הצגת שם הקובץ בלבד"
 
 #: part/dlggeneral.cpp:73
-#, fuzzy, kde-format
-#| msgid "Display full file path"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
-msgstr "הצג את נתיב הקובץ המלא"
+msgstr "הצגת נתיב הקובץ המלא"
 
 #: part/dlggeneral.cpp:75
-#, fuzzy, kde-format
-#| msgid "When not displaying document title:"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
-msgstr "כשלא מציג את כותרת המסמך:"
+msgstr "כשכותרת המסמך לא מוצגת:"
 
 #: part/dlggeneral.cpp:90
-#, fuzzy, kde-format
-#| msgid "Background color:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
-msgstr "צבע רקע:"
+msgstr "להשתמש בצבע רקע בהתאמה אישית:"
 
 #: part/dlggeneral.cpp:112
-#, fuzzy, kde-format
-#| msgid "Program Features"
+#, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
-msgstr "מאפייני היישום"
+msgstr "יכולות התוכנית:"
 
 #: part/dlggeneral.cpp:119
-#, fuzzy, kde-format
-#| msgid "Open new files in &tabs"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
-msgstr "פתח קבצים חדשים בכרטיסיות"
+msgstr "פתיחת קבצים חדשים בלשוניות"
 
 #: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr ""
+msgstr "מעבר ללשונית הקיימת אם הקובץ כבר פתוח"
 
 #: part/dlggeneral.cpp:137
-#, fuzzy, kde-format
-#| msgid "&Obey DRM limitations"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
-msgstr "&אכיפת הגנות DRM"
+msgstr "ציות למגבלות DRM (ניהול זכויות דיגיטליות)"
 
 #: part/dlggeneral.cpp:146
-#, fuzzy, kde-format
-#| msgid "&Reload document on file change"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "&טעינה מחדש של המסמך כשהקובץ משתנה"
+msgstr "רענון המסמך עם שינוי הקובץ"
 
 #: part/dlggeneral.cpp:153
-#, fuzzy, kde-format
-#| msgid "Show backend selection dialog"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
-msgstr "הצגת דיאלוג בחירת מנגנון"
+msgstr "הצגת חלונית בחירת מנגנון"
 
 #: part/dlggeneral.cpp:160
-#, fuzzy, kde-format
-#| msgid "Right to left reading direction"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "כיוון קריאה מימין לשמאל"
@@ -2898,71 +2759,60 @@ msgstr "כיוון קריאה מימין לשמאל"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr ""
+msgstr "פתיחה במצב רציף כברירת מחדל"
 
 #: part/dlggeneral.cpp:173
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "בעת שימוש בכלי העיון, לגרום לסמן לגלוש בקצוות המסך"
 
 #: part/dlggeneral.cpp:190
-#, fuzzy, kde-format
-#| msgid "Overview &columns:"
+#, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
-msgstr "סקירת עמודות:"
+msgstr "עמודות סקירה:"
 
 #: part/dlggeneral.cpp:197
-#, fuzzy, kde-format
-#| msgid "%"
+#, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
 #: part/dlggeneral.cpp:198
-#, fuzzy, kde-format
-#| msgid ""
-#| "Defines how much of the current viewing area will still be visible when "
-#| "pressing the Page Up/Down keys."
+#, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
 "Defines how much of the current viewing area will still be visible when "
 "pressing the Page Up/Down keys."
-msgstr ""
-"הגדר כמה מאיזור הצפיה הנוכחי יהיה מוצג בעת גלילה באמצעות מקשי Page Up/Down."
+msgstr "מגדיר כמה מאזור התצוגה עדיין יהיה גלוי בלחיצה על המקשים Page Up/Down."
 
 #: part/dlggeneral.cpp:200
-#, fuzzy, kde-format
-#| msgid "&Page Up/Down overlap:"
+#, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
-msgstr "חפיפת Page Up/Down"
+msgstr "חפיפת Page Up/Down:"
 
 #: part/dlggeneral.cpp:204
-#, fuzzy, kde-format
-#| msgid "100%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:205
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "התאמה לרוחב"
 
 #: part/dlggeneral.cpp:206
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "התאמה לעמוד"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "התאמה אוטומטית"
@@ -2974,86 +2824,80 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
+"מגדיר את רמת התקריב כברירת המחדל לקבצים שנפתחים לראשונה. על קבצים שכבר נפתחו "
+"בעבר חלה רמת התקריב מהפעם הקודמת."
 
 #: part/dlggeneral.cpp:210
-#, fuzzy, kde-format
-#| msgid "&Default Zoom:"
+#, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "הגדלה ברירת מחדל"
+msgstr "תקריב אוטומטי:"
 
 #: part/dlgperformance.cpp:26
-#, fuzzy, kde-format
-#| msgid "Enable &transparency effects"
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable transparency effects"
-msgstr "איפשור אפקטי &שקיפות"
+msgstr "הפעלת אפקטי שקיפות"
 
 #: part/dlgperformance.cpp:28
-#, fuzzy, kde-format
-#| msgid "CPU Usage"
+#, kde-format
 msgctxt "@label Config dialog, performance page"
 msgid "CPU usage:"
-msgstr "שימוש במעבד"
+msgstr "ניצולת מעבד:"
 
 #: part/dlgperformance.cpp:35
-#, fuzzy, kde-format
-#| msgid "&Low"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Low"
-msgstr "&נמוך"
+msgstr "נמוכה"
 
 #: part/dlgperformance.cpp:36
-#, fuzzy, kde-format
-#| msgid "Nor&mal (default)"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Normal (default)"
-msgstr "רגיל (ברירת מחדל)"
+msgstr "רגילה (ברירת מחדל)"
 
 #: part/dlgperformance.cpp:37
-#, fuzzy, kde-format
-#| msgid "Aggr&essive"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Aggressive"
-msgstr "&אגרסיבי"
+msgstr "כוחנית"
 
 #: part/dlgperformance.cpp:38
-#, fuzzy, kde-format
-#| msgid "G&reedy"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Greedy"
-msgstr "חמדני"
+msgstr "חמדנית"
 
 #: part/dlgperformance.cpp:40
-#, fuzzy, kde-format
-#| msgid "Memory Usage"
+#, kde-format
 msgctxt "@label:listbox Config dialog, performance page, memory usage"
 msgid "Memory usage:"
-msgstr "שימוש בזיכרון"
+msgstr "שימוש בזיכרון:"
 
 #: part/dlgperformance.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text antialias"
-msgstr "איפשור מעברים"
+msgstr "הפעלת החלקת קצוות גופנים"
 
 #: part/dlgperformance.cpp:56
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "קו תחתון"
+msgstr "אפשרויות עיבוד:"
 
 #: part/dlgperformance.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable graphics antialias"
-msgstr "איפשור מעברים"
+msgstr "הפעלת החלקת קצוות גרפיים"
 
 #: part/dlgperformance.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "איפשור מעברים"
+msgstr "הפעלת רימוז טקסט"
 
 #: part/dlgperformance.cpp:77
 #, kde-format
@@ -3088,12 +2932,14 @@ msgid ""
 "Loads and keeps everything in memory. Preload all pages. (Will use at "
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
+"טוען ושומר הכול בזיכרון. טעינה מראש של כל העמודים. (ישתמש בעד 50% מסך "
+"הזיכרון הכולל או הפנוי שלך, מה שגדול יותר.)"
 
 #: part/dlgpresentation.cpp:37
 #, kde-format
 msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 msgid "every "
-msgstr ""
+msgstr "כל "
 
 #: part/dlgpresentation.cpp:38
 #, kde-format
@@ -3107,140 +2953,124 @@ msgstr[1] " שניות"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr ""
+msgstr "התקדמות אוטומטית:"
 
 #: part/dlgpresentation.cpp:53
-#, fuzzy, kde-format
-#| msgid "Loop after last page"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Loop after last page"
-msgstr "חזרה בלולאה אחרי הדף האחרון"
+msgstr "חזרה בלולאה אחרי העמוד האחרון"
 
 #: part/dlgpresentation.cpp:59
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap left/right side to go back/forward"
-msgstr ""
+msgstr "יש לגעת בצדדים השמאלי/ימני כדי להתקדם/לחזור"
 
 #: part/dlgpresentation.cpp:60
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap anywhere to go forward"
-msgstr ""
+msgstr "נגיעה בכל מיקום תקדם קדימה"
 
 #: part/dlgpresentation.cpp:61
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Disabled"
-msgstr ""
+msgstr "מושבת"
 
 #: part/dlgpresentation.cpp:63
-#, fuzzy, kde-format
-#| msgid "Navigation"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
 msgid "Touch navigation:"
-msgstr "ניווט"
+msgstr "ניווט במגע:"
 
 #: part/dlgpresentation.cpp:72
-#, fuzzy, kde-format
-#| msgid "Background color:"
+#, kde-format
 msgctxt "@label:chooser Config dialog, presentation page"
 msgid "Background color:"
 msgstr "צבע רקע:"
 
 #: part/dlgpresentation.cpp:76
-#, fuzzy, kde-format
-#| msgid "Hidden After Delay"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Hidden after delay"
-msgstr "הסתרה לאחר זמן מסויים"
+msgstr "הסתרה לאחר השהיה"
 
 #: part/dlgpresentation.cpp:77
-#, fuzzy, kde-format
-#| msgid "Always Visible"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Always visible"
-msgstr "תמיד נראה"
+msgstr "תמיד גלוי"
 
 #: part/dlgpresentation.cpp:78
-#, fuzzy, kde-format
-#| msgid "Always Hidden"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Always hidden"
 msgstr "תמיד מוסתר"
 
 #: part/dlgpresentation.cpp:80
-#, fuzzy, kde-format
-#| msgid "Mouse cursor:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
 msgid "Mouse cursor:"
 msgstr "סמן העכבר:"
 
 #: part/dlgpresentation.cpp:84
-#, fuzzy, kde-format
-#| msgid "Show &progress indicator"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show progress indicator"
-msgstr "הצגת פס הת&קדמות"
+msgstr "הצגת מחוון התקדמות"
 
 #: part/dlgpresentation.cpp:90
-#, fuzzy, kde-format
-#| msgid "Show s&ummary page"
+#, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Show summary page"
-msgstr "הצגת דף &סיכום"
+msgstr "הצגת עמוד סיכום"
 
 #: part/dlgpresentation.cpp:100
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Instant (Never use animations)"
-msgstr ""
+msgstr "מיידי (לעולם לא להשתמש בהנפשות)"
 
 #: part/dlgpresentation.cpp:101
-#, fuzzy, kde-format
-#| msgid "Replace"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Replace"
 msgstr "החלפה"
 
 #: part/dlgpresentation.cpp:102
-#, fuzzy, kde-format
-#| msgid "Random Transition"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Random transition"
-msgstr "מעבר אקראי"
+msgstr "מעברון אקראי"
 
 #: part/dlgpresentation.cpp:103
-#, fuzzy, kde-format
-#| msgid "Blinds Vertical"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds vertical"
 msgstr "התמזגות אופקית"
 
 #: part/dlgpresentation.cpp:104
-#, fuzzy, kde-format
-#| msgid "Blinds Horizontal"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds horizontal"
 msgstr "התמזגות אנכית"
 
 #: part/dlgpresentation.cpp:105
-#, fuzzy, kde-format
-#| msgid "Box In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
 msgstr "מסגור פנימה"
 
 #: part/dlgpresentation.cpp:106
-#, fuzzy, kde-format
-#| msgid "Box Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
 msgstr "מסגור החוצה"
 
 #: part/dlgpresentation.cpp:107
-#, fuzzy, kde-format
-#| msgid "Dissolve"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Dissolve"
 msgstr "התמוססות"
@@ -3249,97 +3079,85 @@ msgstr "התמוססות"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Fade"
-msgstr ""
+msgstr "עמעום"
 
 #: part/dlgpresentation.cpp:109
-#, fuzzy, kde-format
-#| msgid "Glitter Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter down"
 msgstr "נצנוץ מטה"
 
 #: part/dlgpresentation.cpp:110
-#, fuzzy, kde-format
-#| msgid "Glitter Right"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter right"
 msgstr "נצנוץ ימינה"
 
 #: part/dlgpresentation.cpp:111
-#, fuzzy, kde-format
-#| msgid "Glitter Right-Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter right-down"
 msgstr "נצנןץ ימינה־מטה"
 
 #: part/dlgpresentation.cpp:112
-#, fuzzy, kde-format
-#| msgid "Split Horizontal In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal in"
-msgstr "פיצול אופקית פנימה"
+msgstr "פיצול אופקי פנימה"
 
 #: part/dlgpresentation.cpp:113
-#, fuzzy, kde-format
-#| msgid "Split Horizontal Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal out"
-msgstr "פיצול אנכית החוצה"
+msgstr "פיצול אנכי החוצה"
 
 #: part/dlgpresentation.cpp:114
-#, fuzzy, kde-format
-#| msgid "Split Vertical In"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical in"
-msgstr "פיצול אנכית פנימה"
+msgstr "פיצול אנכי פנימה"
 
 #: part/dlgpresentation.cpp:115
-#, fuzzy, kde-format
-#| msgid "Split Vertical Out"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical out"
-msgstr "פיצול אופקית החוצה"
+msgstr "פיצול אופקי החוצה"
 
 #: part/dlgpresentation.cpp:116
-#, fuzzy, kde-format
-#| msgid "Wipe Down"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe down"
-msgstr "מחיקה מטה"
+msgstr "ניגוב מטה"
 
 #: part/dlgpresentation.cpp:117
-#, fuzzy, kde-format
-#| msgid "Wipe Right"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe right"
-msgstr "מחיקה ימינה"
+msgstr "ניגוב ימינה"
 
 #: part/dlgpresentation.cpp:118
-#, fuzzy, kde-format
-#| msgid "Wipe Left"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe left"
-msgstr "מחיקה שמאלה"
+msgstr "ניגוב שמאלה"
 
 #: part/dlgpresentation.cpp:119
-#, fuzzy, kde-format
-#| msgid "Wipe Up"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Wipe up"
-msgstr "מחיקה מעלה"
+msgstr "ניגוב מעלה"
 
 #: part/dlgpresentation.cpp:121
-#, fuzzy, kde-format
-#| msgid "Default transition:"
+#, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, transitions"
 msgid "Default transition:"
-msgstr "מעבר ברירת מחדל:"
+msgstr "מעברון ברירת מחדל:"
 
 #: part/dlgpresentation.cpp:130
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
 msgid "Preferred screen:"
-msgstr ""
+msgstr "מסך מועדף:"
 
 #: part/dlgpresentation.cpp:137
 #, kde-format
@@ -3347,34 +3165,28 @@ msgctxt ""
 "@label Config dialog, presentation page, heading line for drawing tool "
 "manager"
 msgid "<h3>Drawing Tools</h3>"
-msgstr ""
+msgstr "<h3>כלי ציור</h3>"
 
 #: part/dlgpresentation.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox The current screen, for the presentation mode"
-#| msgid "Current Screen"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Current Screen"
 msgstr "המסך הנוכחי"
 
 #: part/dlgpresentation.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox The default screen for the presentation mode"
-#| msgid "Default Screen"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
 msgstr "מסך ברירת המחדל"
 
 #: part/dlgpresentation.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox %1 is the screen number (0, 1, ...)"
-#| msgid "Screen %1"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
 "screen model name. %4 is the screen name like DVI-0"
 msgid "Screen %1 (%2 %3 %4)"
-msgstr "מסך %1"
+msgstr "מסך %1 (%2 %3 %4)"
 
 #: part/dlgpresentation.cpp:190
 #, kde-format
@@ -3382,27 +3194,27 @@ msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...), hopefully not 0."
 msgid "Screen %1 (disconnected)"
-msgstr ""
+msgstr "מסך %1 (מנותק)"
 
 #: part/drawingtoolactions.cpp:192
 #, kde-format
 msgid "Drawing Tool: %1"
-msgstr ""
+msgstr "כלי ציור: %1"
 
 #: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
-#, fuzzy, kde-format
+#, kde-format
 msgid "Eraser"
-msgstr "מחיקת ציורים"
+msgstr "מוחק"
 
 #: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Name:"
-msgstr "שם"
+msgstr "&שם:"
 
 #: part/editannottooldialog.cpp:69
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Type:"
-msgstr "סוג:"
+msgstr "&סוג:"
 
 #: part/editannottooldialog.cpp:82
 #, kde-format
@@ -3410,40 +3222,40 @@ msgid "Appearance"
 msgstr "מראה"
 
 #: part/editannottooldialog.cpp:93
-#, fuzzy, kde-format
+#, kde-format
 msgid "Text markup"
-msgstr "הסימנייה הבאה"
+msgstr "סימון טקסט"
 
 #: part/editannottooldialog.cpp:94
 #, kde-format
 msgid "Geometrical shape"
-msgstr ""
+msgstr "צורה הנדסית"
 
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "צור כלי הערות צד"
+msgstr "יצירת כלי פירוש"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "ערוך גלי הערות צד"
+msgstr "עריכת כלי פירוש"
 
 #: part/editdrawingtooldialog.cpp:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "Color:"
-msgstr "&צבע:"
+msgstr "צבע:"
 
 #: part/editdrawingtooldialog.cpp:57
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Pen Width:"
-msgstr "התאמה לרוחב"
+msgstr "עובי &עט:"
 
 #: part/editdrawingtooldialog.cpp:63
 #, kde-format
 msgctxt "Suffix for the pen width, eg '10 px'"
 msgid " px"
-msgstr ""
+msgstr " פיקסלים"
 
 #: part/editdrawingtooldialog.cpp:73
 #, kde-format
@@ -3452,14 +3264,14 @@ msgid " %"
 msgstr " %"
 
 #: part/editdrawingtooldialog.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create drawing tool"
-msgstr "מצגת"
+msgstr "יצירת כלי ציור"
 
 #: part/editdrawingtooldialog.cpp:83
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit drawing tool"
-msgstr "מאפייני הערת צד"
+msgstr "עריכת כלי ציור"
 
 #: part/embeddedfilesdialog.cpp:39
 #, kde-format
@@ -3474,10 +3286,10 @@ msgid "Embedded Files"
 msgstr "קבצים משובצים"
 
 #: part/embeddedfilesdialog.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "View"
-msgstr "&תצוגה"
+msgstr "תצוגה"
 
 #: part/embeddedfilesdialog.cpp:67
 #, kde-format
@@ -3513,13 +3325,13 @@ msgstr "שונה"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
-msgstr "&שמירה בשם..."
+msgstr "&שמירה בשם…"
 
 #: part/embeddedfilesdialog.cpp:152
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
-msgstr "&תצוגה"
+msgstr "&תצוגה…"
 
 #: part/fileprinterpreview.cpp:109
 #, kde-format
@@ -3587,7 +3399,7 @@ msgstr "מהדף הנוכחי"
 #: part/findbar.cpp:70
 #, kde-format
 msgid "Find as you type"
-msgstr ""
+msgstr "איתור בזמן הקלדה"
 
 #: part/formwidgets.cpp:756
 #, kde-format
@@ -3597,17 +3409,17 @@ msgstr "*|כל הקבצים"
 #: part/formwidgets.cpp:1070
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "שדה חתימה לא חתומה (לחיצה לחתימה)"
 
 #: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
-msgstr ""
+msgstr "&חתימה…"
 
 #: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "Signature Properties"
-msgstr "מאפייני קו"
+msgstr "מאפייני חתימה"
 
 #: part/ktreeviewsearchline.cpp:283
 #, kde-format
@@ -3629,12 +3441,12 @@ msgstr "ביטוי רגולרי"
 #: part/ktreeviewsearchline.cpp:386
 #, kde-format
 msgid "S&earch:"
-msgstr "&חיפוש"
+msgstr "&חיפוש:"
 
 #: part/layers.cpp:35 part/part.cpp:2325
 #, kde-format
 msgid "Layers"
-msgstr ""
+msgstr "שכבות"
 
 #: part/minibar.cpp:190
 #, kde-format
@@ -3650,7 +3462,7 @@ msgstr "הגדלה"
 #: part/pageview.cpp:552
 #, kde-format
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "תקריב של 100%"
 
 #: part/pageview.cpp:563
 #, kde-format
@@ -3680,9 +3492,9 @@ msgid "Original Orientation"
 msgstr "כיוון תצוגה מקורי"
 
 #: part/pageview.cpp:579
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Trim View"
-msgstr "&תצוגה"
+msgstr "קיצוץ &תצוגה"
 
 #: part/pageview.cpp:583
 #, kde-format
@@ -3690,9 +3502,9 @@ msgid "&Trim Margins"
 msgstr "&הורדת שוליים"
 
 #: part/pageview.cpp:590
-#, fuzzy, kde-format
+#, kde-format
 msgid "Trim To &Selection"
-msgstr "בחירת טקסט"
+msgstr "קיצוץ ל&בחירה"
 
 #: part/pageview.cpp:596
 #, kde-format
@@ -3707,12 +3519,12 @@ msgstr "התאמה ל&עמוד"
 #: part/pageview.cpp:604
 #, kde-format
 msgid "&Auto Fit"
-msgstr ""
+msgstr "ה&תאמה אוטומטית"
 
 #: part/pageview.cpp:608
-#, fuzzy, kde-format
+#, kde-format
 msgid "Fit Wi&ndow to Page"
-msgstr "התאמה ל&עמוד"
+msgstr "התאמת חלון ל&עמוד"
 
 #: part/pageview.cpp:615
 #, kde-format
@@ -3720,32 +3532,28 @@ msgid "&View Mode"
 msgstr "מצב &תצוגה"
 
 #: part/pageview.cpp:627
-#, fuzzy, kde-format
-#| msgid "Single Page"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
-msgstr "עמוד יחיד"
+msgstr "עמוד י&חיד"
 
 #: part/pageview.cpp:628
-#, fuzzy, kde-format
-#| msgid "Facing Pages"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
-msgstr "עמודים אחד אל מול השני"
+msgstr "עמודים &זה מול זה"
 
 #: part/pageview.cpp:629
-#, fuzzy, kde-format
-#| msgid "Facing Pages (Center First Page)"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
-msgstr "עמודים אחד אל מול השני (מירכוז העמוד הראשון)"
+msgstr "עמודים זה מול זה (&מרכוז העמוד הראשון)"
 
 #: part/pageview.cpp:632
-#, fuzzy, kde-format
-#| msgid "Overview"
+#, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
-msgstr "סקירה כללית"
+msgstr "&סקירה"
 
 #: part/pageview.cpp:644
 #, kde-format
@@ -3753,52 +3561,43 @@ msgid "&Continuous"
 msgstr "&מתמשך"
 
 #: part/pageview.cpp:651
-#, fuzzy, kde-format
-#| msgid "Right to left reading direction"
+#, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
-msgstr "כיוון קריאה מימין לשמאל"
+msgstr "להשתמש בכיוון קריאה מימין לשמאל"
 
 #: part/pageview.cpp:660
-#, fuzzy, kde-format
-#| msgctxt "Browse Tool"
-#| msgid "Browse"
+#, kde-format
 msgid "&Browse"
-msgstr "עיון"
+msgstr "&עיון"
 
 #: part/pageview.cpp:668
-#, fuzzy, kde-format
-#| msgid "Zoom"
+#, kde-format
 msgid "&Zoom"
-msgstr "הגדלה"
+msgstr "&תקריב"
 
 #: part/pageview.cpp:688
-#, fuzzy, kde-format
-#| msgctxt "Text Selection Tool"
-#| msgid "Text Selection"
+#, kde-format
 msgid "Area &Selection"
-msgstr "בחירת טקסט"
+msgstr "בחירת &אזור"
 
 #: part/pageview.cpp:695
-#, fuzzy, kde-format
-#| msgctxt "Text Selection Tool"
-#| msgid "Text Selection"
+#, kde-format
 msgid "&Text Selection"
-msgstr "בחירת טקסט"
+msgstr "בחירת &טקסט"
 
 #: part/pageview.cpp:702
-#, fuzzy, kde-format
+#, kde-format
 msgid "T&able Selection"
-msgstr "בחירת טקסט"
+msgstr "בחירת &טבלה"
 
 #: part/pageview.cpp:709
 #, kde-format
 msgid "&Magnifier"
-msgstr ""
+msgstr "מ&גדיל"
 
 #: part/pageview.cpp:718
-#, fuzzy, kde-format
-#| msgid "Selection Tools"
+#, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "כלי בחירה"
@@ -3806,7 +3605,7 @@ msgstr "כלי בחירה"
 #: part/pageview.cpp:744
 #, kde-format
 msgid "Digitally &Sign..."
-msgstr ""
+msgstr "חתימה &דיגיטלית…"
 
 #: part/pageview.cpp:750
 #, kde-format
@@ -3826,7 +3625,7 @@ msgstr "הפסקת הקראה"
 #: part/pageview.cpp:765
 #, kde-format
 msgid "Pause/Resume Speaking"
-msgstr ""
+msgstr "השהיית/המשך דיבור"
 
 #: part/pageview.cpp:777
 #, kde-format
@@ -3839,14 +3638,14 @@ msgid "Scroll Down"
 msgstr "דפדוף כלפי מטה"
 
 #: part/pageview.cpp:789
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scroll Page Up"
-msgstr "דפדוף כלפי מעלה"
+msgstr "גלילת עמוד מעלה"
 
 #: part/pageview.cpp:795
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scroll Page Down"
-msgstr "דפדוף כלפי מטה"
+msgstr "גלילת עמוד מטה"
 
 #: part/pageview.cpp:801
 #, kde-format
@@ -3861,10 +3660,9 @@ msgstr[0] " נטען מסמך של עמוד אחד."
 msgstr[1] " נטען מסמך של %1 עמודים."
 
 #: part/pageview.cpp:2548
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Table Contents to Clipboard"
-msgstr "העתקה ללוח הגזירים"
+msgstr "העתקת תוכן הטבלה ללוח הגזירים"
 
 #: part/pageview.cpp:2867
 #, kde-format
@@ -3891,7 +3689,7 @@ msgstr "תמונה (%1 על %2 פיקסלים)"
 #: part/pageview.cpp:2887
 #, kde-format
 msgid "Save to File..."
-msgstr "שמירה לקובץ..."
+msgstr "שמירה לקובץ…"
 
 #: part/pageview.cpp:2907
 #, kde-format
@@ -3899,14 +3697,14 @@ msgid "Image [%1x%2] copied to clipboard."
 msgstr "התמונה [%1x%2] הועתקה ללוח הגזירים."
 
 #: part/pageview.cpp:2910
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save file"
-msgstr "שמירה לקובץ..."
+msgstr "שמירת קובץ"
 
 #: part/pageview.cpp:2910
 #, kde-format
 msgid "Images (*.png *.jpeg)"
-msgstr ""
+msgstr "תמונות (‎*.png‏ ‎*.jpeg)"
 
 #: part/pageview.cpp:2912
 #, kde-format
@@ -3924,9 +3722,9 @@ msgid "Copy Text"
 msgstr "העתקת הטקסט"
 
 #: part/pageview.cpp:3085
-#, fuzzy, kde-format
+#, kde-format
 msgid "Go to '%1'"
-msgstr "מעבר לעמוד %1"
+msgstr "מעבר אל ‚%1’"
 
 #: part/pageview.cpp:4064 part/part.cpp:3187
 #, kde-format
@@ -3944,14 +3742,13 @@ msgid "Auto Fit"
 msgstr "התאמה אוטומטית"
 
 #: part/pageview.cpp:4087
-#, fuzzy, kde-format
-#| msgid "%1:"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1:"
+msgstr "%1%"
 
 #: part/pageview.cpp:4370
 #, kde-format
@@ -3961,22 +3758,22 @@ msgstr "חיפוש אחר '%1' בעזרת"
 #: part/pageview.cpp:4384
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr "הגדרת קיצורי רשת..."
+msgstr "הגדרת קיצורי רשת…"
 
 #: part/pageview.cpp:4410
 #, kde-format
 msgid "Follow This Link"
-msgstr "מעקב אחרי הקישור הזה"
+msgstr "מעקב אחר הקישור הזה"
 
 #: part/pageview.cpp:4413
-#, fuzzy, kde-format
+#, kde-format
 msgid "Play this Sound"
-msgstr "ניגון קטע שמע..."
+msgstr "השמעת הצליל הזה"
 
 #: part/pageview.cpp:4415
-#, fuzzy, kde-format
+#, kde-format
 msgid "Stop Sound"
-msgstr "שמע"
+msgstr "עצירת שמע"
 
 #: part/pageview.cpp:4421
 #, kde-format
@@ -3984,25 +3781,24 @@ msgid "Copy Link Address"
 msgstr "העתקת כתובת הקישור"
 
 #: part/pageview.cpp:4442
-#, fuzzy, kde-format
-#| msgid "Search for '%1' with"
+#, kde-format
 msgid "Search for '%1' in this document"
-msgstr "חיפוש אחר '%1' בעזרת"
+msgstr "חיפוש אחר ‚%1’ במסמך הזה"
 
 #: part/pageview.cpp:4974
 #, kde-format
 msgid "Welcome"
-msgstr "ברוכים הבאים"
+msgstr "ברוך בואך"
 
 #: part/pageview.cpp:5094
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
-msgstr "בחירת אזור להגדלה. קליק ימני להקטנה."
+msgstr "בחירת אזור להגדלה. לחיצה ימנית להקטנה."
 
 #: part/pageview.cpp:5105
 #, kde-format
 msgid "Click to see the magnified view."
-msgstr ""
+msgstr "לחיצה תעביר לתצוגה המוגדלת."
 
 #: part/pageview.cpp:5118
 #, kde-format
@@ -4015,18 +3811,20 @@ msgid "Select text"
 msgstr "בחירת טקסט"
 
 #: part/pageview.cpp:5142
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
-msgstr "יש לצייר מלבן סביב הטקסט/הגרפיקה להעתקה."
+msgstr ""
+"יש לצייר מלבן סביב הטבלה, לאחר מכן ללחוץ ליד הקצבות כדי לחלק לחלקים קטנםי "
+"יותר, Esc לפינוי."
 
 #: part/pageview.cpp:5152
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
-msgstr ""
+msgstr "כל אישורי החתימה שלך לא תקפים עדיין או שתאריך התפוגה שלהם חלף."
 
 #: part/pageview.cpp:5155
 #, kde-format
@@ -4035,21 +3833,23 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
+"אין אישורים זמינים לחתימה.<br/>למידע נוסף, נא לקרוא את הסעיף <a href="
+"\"%1\">הוספת חתימות דיגיטליות</a> במדריך."
 
 #: part/pageview.cpp:5171
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
-msgstr ""
+msgstr "יש שינויים שלא שמרת. נא לשמור את המסמך טרם חתימתו."
 
 #: part/pageview.cpp:5187
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr ""
+msgstr "יש לצייר ריבוע כדי להוסיף את שדה החתימה"
 
 #: part/pageview.cpp:5331
-#, fuzzy, kde-format
+#, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
-msgstr "יש לצייר מלבן סביב הטקסט/הגרפיקה להעתקה."
+msgstr "נא לצייר מרובע סביב האזור בעמוד שברצונך להשאיר גלוי"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4069,55 +3869,54 @@ msgid ""
 "create a potentially more readable signature, press <interface>Start over</"
 "interface> and draw a bigger rectangle."
 msgstr ""
+"חתימה בגודל הזה תהיה קטנה מכדי לקרוא. כדי ליצור חתימה שכנראה תהיה קריאה "
+"יותר, יש ללחוץ על <interface>התחלה מחדש</interface> ולצייר מרובע גדול יותר."
 
 #: part/pageviewannotator.cpp:364
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
-msgstr ""
+msgstr "התחלה מחדש"
 
 #: part/pageviewannotator.cpp:365
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
-msgstr ""
+msgstr "חתימה"
 
 #: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:412
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
-msgstr ""
+msgstr "לא ניתן לחתום. סיסמת האישור שגויה או שאי אפשר לכתוב אל ‚%1’"
 
 #: part/pageviewannotator.cpp:1177
-#, fuzzy, kde-format
-#| msgid "Author"
+#, kde-format
 msgid "Author name"
-msgstr "מחבר"
+msgstr "שם היוצר/ת"
 
 #: part/pageviewannotator.cpp:1177
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgid "Author name for the annotation:"
-msgstr "הוסף הערת צד"
+msgstr "שם יוצר/ת הפירוש:"
 
 #: part/pageviewannotator.cpp:1238
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
-msgstr "הסבר צד עם טקסט פנימי (גרירה לבחירת אזור)"
+msgstr "ציור אליפסה (יש לגרור כדי לבחור אזור)"
 
 #: part/pageviewannotator.cpp:1240
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
-msgstr "הדגשה"
+msgstr "הדגשת טקסט"
 
 #: part/pageviewannotator.cpp:1242
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
-msgstr "קו ירוק בציור חופשי"
+msgstr "ציור קו ביד חופשית"
 
 #: part/pageviewannotator.cpp:1244
 #, kde-format
@@ -4129,25 +3928,25 @@ msgstr "הסבר צד עם טקסט פנימי (גרירה לבחירת אזור
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
-msgstr ""
+msgstr "הצגת הערה קופצת"
 
 #: part/pageviewannotator.cpp:1248
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
-msgstr "ציור מצולע (יש ללחוץ על הנקודה הראשונה כדי לסגור אותו)"
+msgstr "ציור מצולע (יש לחזור לנקודה הראשונה כדי לסגור אותו)"
 
 #: part/pageviewannotator.cpp:1250
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
-msgstr "מלבן"
+msgstr "ציור מלבן"
 
 #: part/pageviewannotator.cpp:1252
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
-msgstr "שרבוט"
+msgstr "שרבוט טקסט"
 
 #: part/pageviewannotator.cpp:1254
 #, kde-format
@@ -4156,47 +3955,43 @@ msgid "Put a stamp symbol"
 msgstr "חותמת"
 
 #: part/pageviewannotator.cpp:1256
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
-msgstr "קו צהוב ישר"
+msgstr "ציור קו ישר"
 
 #: part/pageviewannotator.cpp:1258
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
-msgstr "קו חוצה"
+msgstr "חציית טקסט בקו"
 
 #: part/pageviewannotator.cpp:1260
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
-msgstr "קו תחתון"
+msgstr "קו תחתון לטקסט"
 
 #: part/pageviewannotator.cpp:1262
-#, fuzzy, kde-format
-#| msgctxt "Annotation tool"
-#| msgid "Inline Text Annotation (drag to select a zone)"
+#, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "הסבר צד עם טקסט פנימי (גרירה לבחירת אזור)"
+msgstr "פירוש מכונת כתיבה (יש לגרור כדי לבחור אזור)"
 
 #: part/pageviewannotator.cpp:1321
-#, fuzzy, kde-format
+#, kde-format
 msgid "Highlighter"
-msgstr "הדגשה"
+msgstr "מדגיש"
 
 #: part/pageviewannotator.cpp:1618
-#, fuzzy, kde-format
-#| msgctxt "Add an annotation to the page"
-#| msgid "add annotation"
+#, kde-format
 msgid "Add favorite annotation"
-msgstr "הוסף הערת צד"
+msgstr "הוספת פירוש מועדף"
 
 #: part/pageviewannotator.cpp:1618
-#, fuzzy, kde-format
+#, kde-format
 msgid "Custom annotation name:"
-msgstr "הערת צד"
+msgstr "שם פירוש מותאם אישית:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -4208,7 +4003,7 @@ msgstr "&קובץ"
 #: part/part-viewermode.rc:10 part/part.rc:90
 #, kde-format
 msgid "&Settings"
-msgstr "&הגדרות"
+msgstr "ה&גדרות"
 
 #. i18n: ectx: Menu (help)
 #: part/part-viewermode.rc:15 part/part.rc:97
@@ -4231,9 +4026,9 @@ msgstr "&סימניות"
 
 #. i18n: ectx: ToolBar (OkularViewerToolBar)
 #: part/part-viewermode.rc:63
-#, fuzzy, kde-format
+#, kde-format
 msgid "Viewer Toolbar"
-msgstr "סרגל הכלים הראשי"
+msgstr "הצגת סרגל כלים"
 
 #: part/part.cpp:411 part/thumbnaillist.cpp:48
 #, kde-format
@@ -4243,7 +4038,7 @@ msgstr "תמונות ממוזערות"
 #: part/part.cpp:417 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
 #, kde-format
 msgid "Annotations"
-msgstr "הערות צד"
+msgstr "פירושים"
 
 #: part/part.cpp:459
 #, kde-format
@@ -4253,6 +4048,9 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
+"המסמך מכיל פירושים או נתוני טפסים שנשמרו פנימית בגרסה קודמת של Okular. אחסון "
+"פנימי <b>לא נתמך עוד</b>.<br/>נא לשמור לקובץ כדי להעביר אותם אם ברצונך "
+"להמשיך לערוך את המסמך."
 
 #: part/part.cpp:466
 #, kde-format
@@ -4261,7 +4059,7 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "מסמך זה מכיל קבצים משובצים. <a href=\"okular:/embeddedfiles\">ניתן ללחוץ כאן "
-"כדי לראות אותם</a> או ללכת לתפריט קובץ -> קבצים משובצים."
+"כדי לראות אותם</a> או לגשת לתפריט קובץ -> קבצים משובצים."
 
 #: part/part.cpp:690
 #, kde-format
@@ -4316,9 +4114,9 @@ msgid "Moves to the end of the document"
 msgstr "מעבר לסוף המסמך"
 
 #: part/part.cpp:735
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename the current bookmark"
-msgstr "טעינה מחדש של המסמך הנוכחי מהדיסק"
+msgstr "שינוי שם הסימנייה הנוכחית"
 
 #: part/part.cpp:739
 #, kde-format
@@ -4326,9 +4124,9 @@ msgid "Previous Bookmark"
 msgstr "הסימנייה הקודמת"
 
 #: part/part.cpp:741
-#, fuzzy, kde-format
+#, kde-format
 msgid "Go to the previous bookmark"
-msgstr "חזרה לדף הקודם עם סימנייה"
+msgstr "מעבר לסימנייה הקודמת"
 
 #: part/part.cpp:745
 #, kde-format
@@ -4336,34 +4134,34 @@ msgid "Next Bookmark"
 msgstr "הסימנייה הבאה"
 
 #: part/part.cpp:747
-#, fuzzy, kde-format
+#, kde-format
 msgid "Go to the next bookmark"
-msgstr "מעבר לדף הבא עם סימנייה"
+msgstr "מעבר לסימנייה הבאה"
 
 #: part/part.cpp:776
 #, kde-format
 msgid "Configure Okular..."
-msgstr "הגדרת Okular..."
+msgstr "הגדרת Okular…"
 
 #: part/part.cpp:779
 #, kde-format
 msgid "Configure Viewer..."
-msgstr "הגדרת מציג..."
+msgstr "הגדרת מציג…"
 
 #: part/part.cpp:785
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Viewer Backends..."
-msgstr "הגדרת מנגנונים..."
+msgstr "הגדרת מנגנוני הצפייה…"
 
 #: part/part.cpp:787
 #, kde-format
 msgid "Configure Backends..."
-msgstr "הגדרת מנגנונים..."
+msgstr "הגדרת מנגנונים…"
 
 #: part/part.cpp:823
 #, kde-format
 msgid "About Backend"
-msgstr "אודות המנגנון"
+msgstr "על המנגנון"
 
 #: part/part.cpp:828
 #, kde-format
@@ -4373,7 +4171,7 @@ msgstr "&טעינה מחדש"
 #: part/part.cpp:830
 #, kde-format
 msgid "Reload the current document from disk."
-msgstr "טעינה מחדש של המסמך הנוכחי מהדיסק"
+msgstr "רענון המסמך הנוכחי מהכונן."
 
 #: part/part.cpp:836
 #, kde-format
@@ -4381,28 +4179,25 @@ msgid "Close &Find Bar"
 msgstr "סגירת &סרגל החיפוש"
 
 #: part/part.cpp:841
-#, fuzzy, kde-format
+#, kde-format
 msgid "Page Number"
-msgstr "גודל הדף"
+msgstr "מספר העמוד"
 
 #: part/part.cpp:845
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr "הגדרת Okular..."
+msgstr "הגדרת מצבי צבע…"
 
 #: part/part.cpp:886
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Select All Text on Current Page"
-msgstr "הקראת העמוד הנוכחי"
+msgstr "בחירת כל הטקסט בעמוד הנוכחי"
 
 #: part/part.cpp:899
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Show S&idebar"
-msgstr "הצגת סרגל &עמוד"
+msgstr "הצגת סרגל &צד"
 
 #: part/part.cpp:908
 #, kde-format
@@ -4410,10 +4205,9 @@ msgid "Show &Page Bar"
 msgstr "הצגת סרגל &עמוד"
 
 #: part/part.cpp:914
-#, fuzzy, kde-format
-#| msgid "Show &Navigation Panel"
+#, kde-format
 msgid "Show &Signatures Panel"
-msgstr "הצגת סרגל &ניווט"
+msgstr "הצגת לוח &חתימות"
 
 #: part/part.cpp:924
 #, kde-format
@@ -4423,12 +4217,12 @@ msgstr "&קבצים משובצים"
 #: part/part.cpp:930
 #, kde-format
 msgid "E&xport As"
-msgstr "ייצ&וא כקובץ"
+msgstr "יי&צוא כקובץ"
 
 #: part/part.cpp:942
 #, kde-format
 msgid "S&hare"
-msgstr ""
+msgstr "&שיתוף"
 
 #: part/part.cpp:951
 #, kde-format
@@ -4438,12 +4232,12 @@ msgstr "&מצגת"
 #: part/part.cpp:958
 #, kde-format
 msgid "Open Con&taining Folder"
-msgstr ""
+msgstr "&פתיחת התיקייה המכילה"
 
 #: part/part.cpp:972
 #, kde-format
 msgid "&Import PostScript as PDF..."
-msgstr "&ייבוא PostScript כ־PDF..."
+msgstr "יי&בוא PostScript כ־PDF…"
 
 #: part/part.cpp:976
 #, kde-format
@@ -4451,20 +4245,19 @@ msgid "Switch Blackscreen Mode"
 msgstr "החלפת מצב מסך שחור"
 
 #: part/part.cpp:984
-#, fuzzy, kde-format
-#| msgid "Erase Drawings"
+#, kde-format
 msgid "Erase Drawing"
 msgstr "מחיקת ציורים"
 
 #: part/part.cpp:989
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Annotations..."
-msgstr "הגדרת מנגנונים..."
+msgstr "הגדרת פירושים…"
 
 #: part/part.cpp:994
-#, fuzzy, kde-format
+#, kde-format
 msgid "Play/Pause Presentation"
-msgstr "מצגת"
+msgstr "הצגת/השהיית מצגת"
 
 #: part/part.cpp:1149
 #, kde-format
@@ -4473,16 +4266,18 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"ערכת את המסמך הפתוח אך לא ניתן לשמור סוג כזה של מסמך.\n"
+"השינויים ילכו לאיבוד עם סגירת Okular."
 
 #: part/part.cpp:1150
-#, fuzzy, kde-format
+#, kde-format
 msgid "Document can't be saved"
-msgstr "ארכיון מסמך"
+msgstr "אי אפשר לשמור את המסמך"
 
 #: part/part.cpp:1179
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open '%1' (%2) "
-msgstr "לא ניתן לפתוח %1"
+msgstr "לא ניתן לפתוח את ‚%1’ (%2) "
 
 #: part/part.cpp:1233
 #, kde-format
@@ -4495,9 +4290,9 @@ msgid "Could not open %1. Reason: %2"
 msgstr "לא ניתן לפתוח את %1. הסיבה: %2"
 
 #: part/part.cpp:1277
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Viewer Backends"
-msgstr "הגדרת מנגנונים"
+msgstr "הגדרת מנגנוני צפייה"
 
 #: part/part.cpp:1279
 #, kde-format
@@ -4509,7 +4304,7 @@ msgstr "הגדרת מנגנונים"
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
-msgstr "היישום \"ps2pdf\" לא נמצא, ומסיבה זו Okular לא יכול לייבא קבצי PS."
+msgstr "היישום „ps2pdf” לא נמצא, ולכן Okular לא יכול לייבא קובצי PS."
 
 #: part/part.cpp:1364
 #, kde-format
@@ -4519,32 +4314,32 @@ msgstr "ps2pdf לא נמצא"
 #: part/part.cpp:1369
 #, kde-format
 msgid "PostScript files (%1)"
-msgstr ""
+msgstr "קובצי PostScript‏ (%1)"
 
 #: part/part.cpp:1385
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
-msgstr "ייבוא קובץ PS כקובץ PDF (יכול לקחת זמן מה)..."
+msgstr "ייבוא קובץ PS כקובץ PDF (יכול לקחת זמן מה)…"
 
 #: part/part.cpp:1514
-#, fuzzy, kde-format
+#, kde-format
 msgid "Please enter the password to read the document:"
-msgstr "עובר לעמוד האחרון של המסמך"
+msgstr "נא למלא את הסיסמה כדי לקרוא את המסמך:"
 
 #: part/part.cpp:1516
 #, kde-format
 msgid "Incorrect password. Try again:"
-msgstr ""
+msgstr "סיסמה שגויה. נא לנסות שוב:"
 
 #: part/part.cpp:1522
-#, fuzzy, kde-format
+#, kde-format
 msgid "Document Password"
-msgstr "ארכיון מסמך"
+msgstr "סיסמת המסמך"
 
 #: part/part.cpp:1642
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
-msgstr ""
+msgstr "במסמך הזה יש טופסי XFA, כרגע <b>אין תמיכה</b> בהם."
 
 #: part/part.cpp:1649
 #, kde-format
@@ -4561,6 +4356,8 @@ msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
+"כל יכולות העריכה והתפעול של המסמך הזה מושבתות. נא לשמור עותק ולפתוח אותו "
+"מחדש כדי לערוך את המסמך הזה."
 
 #: part/part.cpp:1753
 #, kde-format
@@ -4568,28 +4365,28 @@ msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
+"המסמך רוצה למלא את המסך.\n"
+"לצאת מהמצב הרגיל ולעבור למצב מצגת?"
 
 #: part/part.cpp:1755
 #, kde-format
 msgid "Request to Change Viewing Mode"
-msgstr ""
+msgstr "בקשה לשינוי מצב תצוגה"
 
 #: part/part.cpp:1756
-#, fuzzy, kde-format
-#| msgid "Exit Presentation Mode"
+#, kde-format
 msgid "Enter Presentation Mode"
-msgstr "יציאה ממצב מצגת"
+msgstr "כניסה למצב מצגת"
 
 #: part/part.cpp:1757
 #, kde-format
 msgid "Deny Request"
-msgstr ""
+msgstr "דחיית הבקשה"
 
 #: part/part.cpp:1847
-#, fuzzy, kde-format
-#| msgid "Could not open %1"
+#, kde-format
 msgid "Could not open %1. %2"
-msgstr "לא ניתן לפתוח %1"
+msgstr "לא ניתן לפתוח את %1. %2"
 
 #: part/part.cpp:1877
 #, kde-kuit-format
@@ -4600,22 +4397,24 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
+"בקובץ <filename>%1</filename> יש שינויים שלא נשמרו אבל הוא נערך בתוכנית "
+"אחרת. טעינתו מחדש תחליף את השינויים שלא נשמרו בשינויים שנערכו בתוכנית השנייה."
+"<nl/><nl/>להמשיך לטעון את הקובץ מחדש?"
 
 #: part/part.cpp:1881 part/part.cpp:1891
 #, kde-format
 msgid "File Changed"
-msgstr ""
+msgstr "קובץ נערך"
 
 #: part/part.cpp:1882
-#, fuzzy, kde-format
-#| msgid "&Continuous"
+#, kde-format
 msgid "Continue Reloading"
-msgstr "&מתמשך"
+msgstr "להמשיך לטעון מחדש"
 
 #: part/part.cpp:1883
 #, kde-format
 msgid "Abort Reloading"
-msgstr ""
+msgstr "ביטול טעינה מחדש"
 
 #: part/part.cpp:1887
 #, kde-kuit-format
@@ -4626,27 +4425,29 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
+"בקובץ <filename>%1</filename> יש שינויים שלא נשמרו אבל הוא נערך בתוכנית "
+"אחרת. סגירתו תחליף את השינויים שלא נשמרו בשינויים שנערכו בתוכנית השנייה.<nl/"
+"><nl/>להמשיך לסגור את הקובץ?"
 
 #: part/part.cpp:1892
-#, fuzzy, kde-format
-#| msgid "&Continuous"
+#, kde-format
 msgid "Continue Closing"
-msgstr "&מתמשך"
+msgstr "להמשיך לסגור"
 
 #: part/part.cpp:1893
 #, kde-format
 msgid "Abort Closing"
-msgstr ""
+msgstr "ביטול סגירה"
 
 #: part/part.cpp:1900
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr ""
+msgstr "לשמור את השינויים שנערכו ב־„%1” או להשליך אותם?"
 
 #: part/part.cpp:1900
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close Document"
-msgstr "פתיחת מסמך"
+msgstr "סגירת מסמך"
 
 #: part/part.cpp:2032
 #, kde-format
@@ -4665,7 +4466,7 @@ msgstr "הקישור מצביע על פעולת יציאה מיישום, אשר 
 #: part/part.cpp:2130 part/part.cpp:2148
 #, kde-format
 msgid "Reloading the document..."
-msgstr "המסמך נטען מחדש..."
+msgstr "המסמך נטען מחדש…"
 
 #: part/part.cpp:2305 part/toc.cpp:38
 #, kde-format
@@ -4675,7 +4476,7 @@ msgstr "תכנים"
 #: part/part.cpp:2334 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
-msgstr ""
+msgstr "חתימות"
 
 #: part/part.cpp:2361
 #, kde-format
@@ -4690,31 +4491,29 @@ msgstr "&עמוד:"
 #: part/part.cpp:2477
 #, kde-format
 msgid "Enter the new name of the bookmark:"
-msgstr ""
+msgstr "נא למלא שם לסימנייה:"
 
 #: part/part.cpp:2523
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename this Bookmark"
-msgstr "שינוי שם הסימנייה"
+msgstr "שינוי שם הסימנייה הזאת"
 
 #: part/part.cpp:2526
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove this Bookmark"
-msgstr "שינוי שם הסימנייה"
+msgstr "הסרת הסימנייה"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
 #: part/signaturepartutils.cpp:380
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
-msgstr ""
+msgstr "%1 (%2)"
 
 #: part/part.cpp:2620 part/revisionviewer.cpp:44
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "&Save As..."
+#, kde-format
 msgid "Save As"
-msgstr "&שמירה בשם..."
+msgstr "שמירה בשם"
 
 #: part/part.cpp:2637
 #, kde-format
@@ -4722,17 +4521,18 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"בחרת לשמור ארכיון Okular ללא שם קובץ שמסתיים ב־‚%1’. זה אסור, שנבחר שם חדש?"
 
 #: part/part.cpp:2638
 #, kde-format
 msgid "Unsupported extension"
-msgstr ""
+msgstr "סיומת קובץ לא נתמכת"
 
 #: part/part.cpp:2639
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "בחירת שם חדש"
 
 #: part/part.cpp:2681
 #, kde-kuit-format
@@ -4742,16 +4542,18 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"הקובץ <filename>%1</filename> נערך בתוכנית אחרת. בחירה בשמירה כעת תוביל "
+"לאובדן השינויים שנערכו בתוכנית השנייה. להמשיך?"
 
 #: part/part.cpp:2684 part/part.cpp:2702 part/part.cpp:2754
 #, kde-format
 msgid "Save - Warning"
-msgstr ""
+msgstr "שמירה - אזהרה"
 
 #: part/part.cpp:2686
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "שמירת עותק במקום אחר"
 
 #: part/part.cpp:2701
 #, kde-format
@@ -4760,6 +4562,8 @@ msgid ""
 "the file needs to be reloaded. You will be asked for the password again and "
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
+"המסמך הנוכחי מוגן בסיסמה.<br />כדי לשמור, יש לטעון את הקובץ מחדש. תופיע בקשה "
+"למילוי הסיסמה שוב והיסטוריית הביטול/שחזור שלך תלך לאיבוד.<br />להמשיך?"
 
 #: part/part.cpp:2728
 #, kde-format
@@ -4767,13 +4571,14 @@ msgid "Could not open the temporary file for saving."
 msgstr "לא ניתן לפתוח את הקובץ הזמני לשמירה."
 
 #: part/part.cpp:2741
-#, fuzzy, kde-kuit-format
-#| msgid "File could not be saved in '%1'. Try to save it to another location."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Could not overwrite <filename>%1</filename> because that file is read-only. "
 "Try saving to another location or changing that file's permissions."
-msgstr "לא ניתן לשמור את הקובץ ב־'%1'. ניתן לנסות לשמור אותו במיקום אחר."
+msgstr ""
+"לא ניתן לדרוס את <filename>%1</filename> כיוון שזה קובץ לקריאה בלבד. כדאי "
+"לנסות לשמור למקום אחר או לשנות את הרשאות הקובץ הזה."
 
 #: part/part.cpp:2753
 #, kde-format
@@ -4781,6 +4586,8 @@ msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
+"לאחר שמירה, סוג המסמך הנוכחית דורש את טעינת הקובץ מחדש. היסטוריית "
+"הביטול/שחזור שלך תלך לאיבוד.<br />להמשיך?"
 
 #: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3507
 #, kde-format
@@ -4788,14 +4595,14 @@ msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "לא ניתן לשמור את הקובץ ב־'%1'. ניתן לנסות לשמור אותו במיקום אחר."
 
 #: part/part.cpp:2781
-#, fuzzy, kde-format
+#, kde-format
 msgid "Filled form contents"
-msgstr "מאפייני הערת צד"
+msgstr "תוכני הטופס שמולאו"
 
 #: part/part.cpp:2784
-#, fuzzy, kde-format
+#, kde-format
 msgid "User annotations"
-msgstr "מצגת"
+msgstr "פירושי משתמש"
 
 #: part/part.cpp:2789
 #, kde-format
@@ -4804,16 +4611,18 @@ msgid ""
 "saving the following elements. Please use the <i>Okular document archive</i> "
 "format to preserve them."
 msgstr ""
+"פעולה זו תשמור את השינויים אך סוג הקובץ הנוכחי לא תומך בשמירת הרכיבים הבאים. "
+"נא להשתמש בסוג <i>ארכיון מסמכים של Okular</i> כדי לשמור אותם."
 
 #: part/part.cpp:2793 part/part.cpp:2815
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "אזהרה"
 
 #: part/part.cpp:2794 part/part.cpp:2816
 #, kde-format
 msgid "Save as Okular document archive..."
-msgstr ""
+msgstr "שמירה כארכיון מסמכים של Okular…"
 
 #: part/part.cpp:2806
 #, kde-format
@@ -4823,6 +4632,9 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save the document and "
 "discard these elements."
 msgstr ""
+"פעולה זו תשמור את השינויים אך סוג הקובץ הנוכחי לא תומך בשמירת הרכיבים הבאים. "
+"נא להשתמש בסוג <i>ארכיון מסמכים של Okular</i> כדי לשמור אותם. לחיצה על "
+"<i>המשך</i> תשמור את המסמך ותתעלם מהרכיבים האלה."
 
 #: part/part.cpp:2809
 #, kde-format
@@ -4832,17 +4644,20 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save, but you will lose "
 "these elements as well as the undo/redo history."
 msgstr ""
+"פעולה זו תשמור את השינויים אך סוג הקובץ הנוכחי לא תומך בשמירת הרכיבים הבאים. "
+"נא להשתמש בסוג <i>ארכיון מסמכים של Okular</i> כדי לשמור אותם. לחיצה על "
+"<i>המשך</i> תשמור את הקובץ, אך תגרום לאובדן הרכיבים האלה לרבות היסטוריית "
+"ביטול/שחזור."
 
 #: part/part.cpp:2811
-#, fuzzy, kde-format
-#| msgid "&Continuous"
+#, kde-format
 msgid "Continue"
-msgstr "&מתמשך"
+msgstr "להמשיך"
 
 #: part/part.cpp:2811
 #, kde-format
 msgid "Continue losing changes"
-msgstr ""
+msgstr "להמשיך על אף איבוד השינויים"
 
 #: part/part.cpp:2839
 #, kde-format
@@ -4861,39 +4676,37 @@ msgstr ""
 "המסמך לא קיים יותר."
 
 #: part/part.cpp:2914
-#, fuzzy, kde-format
-#| msgid "File could not be saved in '%1'. Try to save it to another location."
+#, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
-msgstr "לא ניתן לשמור את הקובץ ב־'%1'. ניתן לנסות לשמור אותו במיקום אחר."
+msgstr ""
+"לא ניתן לשמור את הקובץ ב־‚%1’. שגיאה: ‚%2’. ניתן לנסות לשמור אותו במקום אחר."
 
 #: part/part.cpp:3165
-#, fuzzy, kde-format
-#| msgid "End Presentation"
+#, kde-format
 msgid "Expand whole section"
-msgstr "סיום המצגת"
+msgstr "להרחיב את כל המקטע"
 
 #: part/part.cpp:3166
 #, kde-format
 msgid "Collapse whole section"
-msgstr ""
+msgstr "לצמצם את כל המקטע"
 
 #: part/part.cpp:3167
 #, kde-format
 msgid "Expand all"
-msgstr ""
+msgstr "להרחיב הכול"
 
 #: part/part.cpp:3168
 #, kde-format
 msgid "Collapse all"
-msgstr ""
+msgstr "לצמצם הכול"
 
 #: part/part.cpp:3179
-#, fuzzy, kde-format
-#| msgid "Link the &thumbnails with the page"
+#, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr "קישור התמונות ה&ממוזערות של העמודים עם העמודים"
+msgstr "סנכרון תמונה ממוזערת עם העמוד"
 
 #: part/part.cpp:3184
 #, kde-format
@@ -4906,17 +4719,16 @@ msgid "Tools"
 msgstr "כלים"
 
 #: part/part.cpp:3388
-#, fuzzy, kde-format
-#| msgid "Speak Text"
+#, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
-msgstr "הקראת הטקסט"
+msgstr "הקראה"
 
 #: part/part.cpp:3545
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
-msgstr ""
+msgstr "הדפסה"
 
 #: part/part.cpp:3608
 #, kde-format
@@ -4937,8 +4749,8 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"לא ניתן להדפיס את המסמך. השגיאה המפורטת היא \"%1\". מומלץ לדווח זאת לאתר "
-"שבכתובת bugs.kde.org"
+"לא ניתן להדפיס את המסמך. השגיאה המפורטת היא „%1”. מומלץ לדווח על זה מול bugs."
+"kde.org"
 
 #: part/part.cpp:3698
 #, kde-format
@@ -4969,21 +4781,16 @@ msgstr ""
 "strong></nobr> לפריסה. הקובץ לא יטען.</qt>"
 
 #: part/part.cpp:3743
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>This error typically occurs if you do not have enough permissions to "
-#| "read the file. You can check ownership and permissions if you right-click "
-#| "on the file in the Dolphin file manager and then choose the 'Properties' "
-#| "tab.</qt>"
+#, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
 "read the file. You can check ownership and permissions if you right-click on "
 "the file in the Dolphin file manager, then choose the 'Properties' option, "
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
-"<qt>שגיאה זו מתרחשת בדרך כלל אם אין בידך הרשאות מספיקות כדי לקרוא את הקובץ. "
-"ניתן לבדוק בעלות והרשאות על הקובץ דרך מנהל הקבצים דולפין, לחיצה ימנית על "
-"הקובץ ובחירה במאפיינים.</qt>"
+"<qt>שגיאה זו מתרחשת בדרך כלל אם אין לך מספיק הרשאות לקרוא את הקובץ. אפשר "
+"לבדוק את הבעלות ואת ההרשאות בלחיצה ימנית על הקובץ במנהל הקבצים, לאחר מכן "
+"לבחור באפשרות ‚מאפיינים’ ואז בלשונית ‚הרשאות’ בחלון שנפתח.</qt>"
 
 #: part/part.cpp:3765
 #, kde-format
@@ -5011,22 +4818,22 @@ msgstr "אין סימניות"
 #: part/part.cpp:3866
 #, kde-format
 msgid "There was a problem sharing the document: %1"
-msgstr ""
+msgstr "אירעה בעיה בשיתוף המסמך: %1"
 
 #: part/part.cpp:3866 part/part.cpp:3872
 #, kde-format
 msgid "Share"
-msgstr ""
+msgstr "שיתוף"
 
 #: part/part.cpp:3870
 #, kde-format
 msgid "Document shared successfully"
-msgstr ""
+msgstr "המסמך שותף בהצלחה"
 
 #: part/part.cpp:3872
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
-msgstr ""
+msgstr "אפשר למצוא את המסמך המשותף תחת: <a href=\"%1\">%1</a>"
 
 #. i18n: ectx: Menu (edit)
 #: part/part.rc:19
@@ -5060,17 +4867,15 @@ msgstr "סרגל הכלים הראשי"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
 #: part/part.rc:122
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgid "Annotation Toolbar"
-msgstr "כלי הערות צד"
+msgstr "כלי פירוש"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:146
-#, fuzzy, kde-format
-#| msgid "Annotation tools"
+#, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "כלי הערות צד"
+msgstr "כלי פירושים זריזים"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format
@@ -5095,12 +4900,12 @@ msgstr "ביצועים"
 #: part/preferencesdialog.cpp:43
 #, kde-format
 msgid "Performance Tuning"
-msgstr "כיוונון ביצועים"
+msgstr "כוונון ביצועים"
 
 #: part/preferencesdialog.cpp:45
 #, kde-format
 msgid "Configure Viewer"
-msgstr "הגדרת המציג..."
+msgstr "הגדרת המציג"
 
 #: part/preferencesdialog.cpp:49
 #, kde-format
@@ -5115,7 +4920,7 @@ msgstr "אפשרויות עבור מצב מצגת"
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr "מאפייני הערות צד"
+msgstr "אפשרויות פירושים"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5137,6 +4942,9 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"העורך הוגדר על ידי שורת הפקודה לכדי\n"
+"%1 \n"
+"כדי להשתמש בהגדרה הזאת, יש להפעיל את okular בלי האפשרות ‎--editor-cmd"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5178,16 +4986,16 @@ msgstr "עמודים: %1"
 #: part/presentationwidget.cpp:379
 #, kde-format
 msgid "Click to begin"
-msgstr "לחץ להתחלה"
+msgstr "לחיצה להתחלה"
 
 #: part/presentationwidget.cpp:521
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "For Presentation"
 msgid "Pause"
 msgstr "השהייה"
 
 #: part/presentationwidget.cpp:524
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "For Presentation"
 msgid "Play"
 msgstr "ניגון"
@@ -5199,9 +5007,9 @@ msgid ""
 "key or click with the quit button that appears when placing the mouse in the "
 "top-right corner. Of course you can cycle windows (Alt+TAB by default)"
 msgstr ""
-"ישנן שתי דרכים לצאת ממצב מצגת. ניתן ללחוץ על המקש ESC או ללחוץ על הלחצן "
-"יציאה שמופיעה כאשר ממקמים את הסמן של העכבר בקצה הימני־עליון. כמובן שניתן "
-"לעבור בין חלונות (Alt+TAB כברירת מחדל)"
+"ישנן שתי דרכים לצאת ממצב מצגת. לחיצה על ESC או על לחצן היציאה שמופיע כאשר "
+"ממקמים את סמן העכבר בפינה הימנית־עליונה. כמובן שניתן לעבור בין חלונות (Alt"
+"+TAB כברירת מחדל)"
 
 #: part/presentationwidget.cpp:1708
 #, kde-format
@@ -5225,7 +5033,7 @@ msgstr "מאפיינים של %1"
 #, kde-format
 msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
 msgid "%1 (%2)"
-msgstr ""
+msgstr "%1 (%2)"
 
 #: part/propertiesdialog.cpp:117
 #, kde-format
@@ -5240,13 +5048,12 @@ msgstr "&גופנים"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr "מידע אודות הגופן בטעינה..."
+msgstr "מידע על הגופן נטען…"
 
 #: part/propertiesdialog.cpp:158
-#, fuzzy, kde-format
-#| msgid "&Page Size"
+#, kde-format
 msgid "&Page Sizes"
-msgstr "&גודל הדף"
+msgstr "&גודלי הדף"
 
 #: part/propertiesdialog.cpp:225
 #, kde-format
@@ -5342,7 +5149,7 @@ msgstr "לא ידוע"
 #: part/propertiesdialog.cpp:331
 #, kde-format
 msgid "Embedded (subset)"
-msgstr "משובץ (תת־קבוצה)"
+msgstr "משובץ (חלקית)"
 
 #: part/propertiesdialog.cpp:334
 #, kde-format
@@ -5368,7 +5175,7 @@ msgstr "כן"
 #, kde-format
 msgctxt "Replacing missing font with another one"
 msgid "%1 (substituting with %2)"
-msgstr ""
+msgstr "%1 (מוחלף ב־%2)"
 
 #: part/propertiesdialog.cpp:372
 #, kde-format
@@ -5402,41 +5209,34 @@ msgid "File"
 msgstr "קובץ"
 
 #: part/propertiesdialog.cpp:498
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Page"
-msgstr "עמודים"
+msgstr "עמוד"
 
 #: part/propertiesdialog.cpp:501
-#, fuzzy, kde-format
-#| msgctxt "@title:column"
-#| msgid "Size"
+#, kde-format
 msgid "Size"
 msgstr "גודל"
 
 #: part/revisionviewer.cpp:41
-#, fuzzy, kde-format
-#| msgid "Print Preview"
+#, kde-format
 msgid "Revision Preview"
-msgstr "תצוגה מקדימה לפני הדפסה"
+msgstr "תצוגת מהדורה מקדימה"
 
 #: part/revisionviewer.cpp:53
-#, fuzzy, kde-format
-#| msgid "Where do you want to save %1?"
+#, kde-format
 msgid "Where do you want to save this revision?"
-msgstr "היכן יש לשמור את %1?"
+msgstr "איפה לשמור את המהדורה הזאת?"
 
 #: part/revisionviewer.cpp:56
-#, fuzzy, kde-format
-#| msgid "Could not open %1"
+#, kde-format
 msgid "Could not save file %1."
-msgstr "לא ניתן לפתוח %1"
+msgstr "לא ניתן לשמור את הקובץ %1."
 
 #: part/revisionviewer.cpp:75
-#, fuzzy, kde-format
-#| msgid "Could not open %1. Reason: %2"
+#, kde-format
 msgid "Could not view revision."
-msgstr "לא ניתן לפתוח את %1. הסיבה: %2"
+msgstr "לא ניתן להציג מהדורה."
 
 #: part/searchwidget.cpp:39
 #, kde-format
@@ -5470,72 +5270,63 @@ msgstr "אפשרויות סינון"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Certificates"
-msgstr "הגדרת המציג..."
+msgstr "אישורים"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
 #, kde-format
 msgid "Select certificate to sign with:"
-msgstr ""
+msgstr "נא לבחור אישור לחתום איתו:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Reason:"
-msgstr ""
+msgstr "סיבה:"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "אפשרויות"
+msgstr "רשות"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Location:"
-msgstr "הערת צד"
+msgstr "מקום:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "צבע רקע:"
+msgstr "רקע:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "בחירה…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgid "Background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "צבע רקע:"
+msgstr "רקעים אחרונים:"
 
 #: part/side_reviews.cpp:65
-#, fuzzy, kde-format
-#| msgid ""
-#| "<div align=center><h3>No annotations</h3>To create new annotations press "
-#| "F6 or select <i>Tools -&gt; Review</i> from the menu.</div>"
+#, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
-"<div align=center><h3>אין הערות צד</h3>על מנת ליצור הערות צד חדשות יש ללחוץ "
-"על F6 או לבחור בתפריט <i>כלים -&gt; סקירה</i>.</div>"
+"<div align=center><h3>אין פירושים</h3>כדי ליצור פירושים חדשים יש ללחוץ על F6 "
+"או לבחור ב<i>כלים -&gt; פירושים</i> מהתפריט.</div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format
@@ -5548,68 +5339,65 @@ msgid "Group by Author"
 msgstr "קיבוץ על־פי מחבר"
 
 #: part/side_reviews.cpp:150
-#, fuzzy, kde-format
-#| msgid "Show reviews for current page only"
+#, kde-format
 msgid "Show annotations for current page only"
-msgstr "הצגת סקירות עבור הדף הנוכחי בלבד"
+msgstr "הצגת פירושים לעמוד הנוכחי בלבד"
 
 #: part/side_reviews.cpp:160
 #, kde-format
 msgid "Expand all elements"
-msgstr ""
+msgstr "הרחבת כל הרכיבים"
 
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr ""
+msgstr "צמצום כל הרכיבים"
 
 #: part/signaturepanel.cpp:101
-#, fuzzy, kde-format
-#| msgid "&Properties"
+#, kde-format
 msgid "Properties"
-msgstr "מ&אפיינים"
+msgstr "מאפיינים"
 
 #: part/signaturepartutils.cpp:303
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "עמודים: %1"
+msgstr "תמונות (%1)"
 
 #: part/signaturepartutils.cpp:304
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "בחירת תמונת רקע"
 
 #: part/signaturepartutils.cpp:309
 #, kde-format
 msgid "Forget image"
-msgstr ""
+msgstr "לשכוח תמונה"
 
 #: part/signaturepartutils.cpp:310
 #, kde-format
 msgid "Forget all images"
-msgstr ""
+msgstr "לשכוח את כל התמונות"
 
 #: part/signaturepartutils.cpp:351
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "נא למלא סיסמה (אם יש) לשחרור האישור: %1"
 
 #: part/signaturepartutils.cpp:353
 #, kde-format
 msgid "Enter certificate password"
-msgstr ""
+msgstr "מילוי סיסמת האישור"
 
 #: part/signaturepartutils.cpp:366
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enter document password"
-msgstr "ארכיון מסמך"
+msgstr "נא למלא סיסמה למסמך"
 
 #: part/signaturepartutils.cpp:386
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
+msgstr "לשמור את הקובץ החתום בשם"
 
 #: part/signaturepartutils.h:63
 #, kde-format
@@ -5617,72 +5405,68 @@ msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
-msgstr ""
+msgstr "%1_signed.%2"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format
 msgid "Validity Status"
-msgstr ""
+msgstr "מצב תוקף"
 
 #: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
-msgstr ""
+msgstr "תוקף תחימה:"
 
 #: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
-msgstr ""
+msgstr "שינויים במסמך:"
 
 #: part/signaturepropertiesdialog.cpp:60
-#, fuzzy, kde-format
-#| msgid "Information"
+#, kde-format
 msgid "Additional Information"
-msgstr "מידע"
+msgstr "מידע נוסף"
 
 #: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Signed By:"
-msgstr ""
+msgstr "נחתם ע״י:"
 
 #: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
-msgstr ""
+msgstr "מועד החתימה:"
 
 #: part/signaturepropertiesdialog.cpp:78
-#, fuzzy, kde-format
-#| msgctxt "A document format, Okular-specific"
-#| msgid "Document Archive"
+#, kde-format
 msgid "Document Version"
-msgstr "ארכיון מסמך"
+msgstr "גרסת מסמך"
 
 #: part/signaturepropertiesdialog.cpp:81
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "מהדורת מסמך %1 מתוך %2"
 
 #: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
-msgstr ""
+msgstr "הצגת גרסה חתומה…"
 
 #: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
-msgstr ""
+msgstr "הצגת האישור…"
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "הגדרת המציג..."
+msgstr "הצגה במנהל האישורים"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "מנהל האישורים של KDE‏ (kleopatra) לא נמצא"
 
 #: part/thumbnaillist.cpp:1015
 #, kde-format
@@ -5710,57 +5494,57 @@ msgstr "הפסקה"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "ב־okular הזה אין תמיכה בסרטונים"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "ב־Okular הזה אין תמיכה בסרטונים"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add..."
-msgstr ""
+msgstr "הו&ספה…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Edit..."
-msgstr "&עריכה"
+msgstr "&עריכה…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
 msgid "&Remove"
-msgstr ""
+msgstr "הס&רה"
 
 #: part/widgetconfigurationtoolsbase.cpp:39
 #, kde-format
 msgid "Move &Up"
-msgstr ""
+msgstr "העברה למ&עלה"
 
 #: part/widgetconfigurationtoolsbase.cpp:43
-#, fuzzy, kde-format
+#, kde-format
 msgid "Move &Down"
-msgstr "מחיקה מטה"
+msgstr "הו&רדה"
 
 #: part/widgetdrawingtools.cpp:105
 #, kde-format
 msgid "Default Drawing Tool #%1"
-msgstr ""
+msgstr "כלי ציור ברירת המחדל מס׳ %1"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr ""
+msgstr "כבר יש כלי בשם הזה. נעשה שימוש בברירת המחדל"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "Duplicated Name"
-msgstr ""
+msgstr "שם משוכפל"
 
 #: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr "Page of the document to be shown"
+msgstr "עמוד המסמך להצגה"
 
 #: shell/main.cpp:76
 #, kde-format
@@ -5770,37 +5554,37 @@ msgstr "פתיחת המסמך במצב מצגת"
 #: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
-msgstr ""
+msgstr "התחלה בחלונית הדפסה"
 
 #: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
-msgstr ""
+msgstr "התחלה עם חלונית הדפסה ולצאת לאחר ההדפסה"
 
 #: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr "\"Unique instance\" control"
+msgstr "פקד „מופיע ייחודי”"
 
 #: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
-msgstr ""
+msgstr "לא להגביה חלון"
 
 #: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
-msgstr ""
+msgstr "איתור מחרוזת בטקסט"
 
 #: shell/main.cpp:82
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "מגדיר את פקודה העורך החיצוני"
 
 #: shell/main.cpp:83
-#, fuzzy, kde-format
+#, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
-msgstr "Document to open. Specify '-' to read from stdin."
+msgstr "מסמכים לפתיחה. נא לציין ‚-’ כדי לקרוא מקלט שורת הפקודה (stdin)."
 
 #: shell/okular_main.cpp:63 shell/okular_main.cpp:164
 #, kde-format
@@ -5809,49 +5593,51 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"אי אפשר להגדיר את פקודת העורך בעותק של okular שכבר פועל. נא להשבית את "
+"הלשוניות ולנסות שוב. לתשומת ליבך, אין תמיכה בייחודי גם בהגדרת פקודת העורך "
+"בשורת הפקודה.\n"
 
 #: shell/okular_main.cpp:183
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
-msgstr ""
+msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--unique"
 
 #: shell/okular_main.cpp:189
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
-msgstr ""
+msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--presentation"
 
 #: shell/okular_main.cpp:195
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
-msgstr ""
+msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--print"
 
 #: shell/okular_main.cpp:201
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
-msgstr ""
+msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--page"
 
 #: shell/okular_main.cpp:207
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
-msgstr ""
+msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--find"
 
 #: shell/shell.cpp:177
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to find the Okular component: %1"
-msgstr "לא ניתן למצוא את הרכיב Okular."
+msgstr "לא ניתן למצוא את רכיב ה־Okular:‏ %1"
 
 #: shell/shell.cpp:220
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Sidebar"
-msgstr "הצגת סרגל &עמוד"
+msgstr "סרגל צד"
 
 #: shell/shell.cpp:250
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
-msgstr ""
+msgstr "כבר יש עותק ייחודי פעיל של Okular. העותק הזה לא יהיה הייחודי."
 
 #: shell/shell.cpp:274
 #, kde-format
@@ -5875,35 +5661,34 @@ msgstr ""
 "<b>לחיצה</b> לפתיחת קובץ או <b>לחיצה והחזקה</b> לפתיחת קובץ שנפתח לאחרונה"
 
 #: shell/shell.cpp:532
-#, fuzzy, kde-format
+#, kde-format
 msgid "Next Tab"
-msgstr "עמוד הבא"
+msgstr "הלשונית הבאה"
 
 #: shell/shell.cpp:538
-#, fuzzy, kde-format
+#, kde-format
 msgid "Previous Tab"
-msgstr "עמוד קודם"
+msgstr "הלשונית הקודמת"
 
 #: shell/shell.cpp:544
 #, kde-format
 msgid "Undo close tab"
-msgstr ""
+msgstr "ביטול סגירת לשונית"
 
 #: shell/shell.cpp:553
-#, fuzzy, kde-format
-#| msgid "Show &Page Bar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "הצגת סרגל &עמוד"
+msgstr "נעילת סרגל הצד"
 
 #: shell/shell.cpp:650
-#, fuzzy, kde-format
+#, kde-format
 msgid "All files (*)"
-msgstr "*|כל הקבצים"
+msgstr "כל הקבצים (*)"
 
 #: shell/shell.cpp:651
 #, kde-format
 msgid "All supported files (%1)"
-msgstr ""
+msgstr "כל הקבצים הנתמכים (%1)"
 
 #: shell/shell.cpp:655
 #, kde-format
@@ -5913,82 +5698,77 @@ msgstr "פתיחת מסמך"
 #: shell/shell.cpp:765
 #, kde-format
 msgid "Confirm Close"
-msgstr ""
+msgstr "אישור סגירה"
 
 #: shell/shell.cpp:769
-#, fuzzy, kde-format
-#| msgid "Close"
+#, kde-format
 msgid "Close Tabs"
-msgstr "סגירה"
+msgstr "סגירת לשוניות"
 
 #: shell/shell.cpp:776
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr ""
+msgstr "פעולה זו תסגור %1 לשוניות. להמשיך?"
 
 #: shell/shell.cpp:778
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr ""
+msgstr "להזהיר אותי בעת ניסיון לסגור מספר לשוניות יחד"
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "העתקת הטקסט"
+msgstr "ה&עתקת נתיב"
 
 #: shell/welcomescreen.cpp:77
 #, kde-format
 msgid "&Open Containing Folder"
-msgstr ""
+msgstr "&פתיחת התיקייה המכילה"
 
 #: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "ל&שכוח את הפריט הזה"
 
 #: shell/welcomescreen.cpp:137
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "מסמך נוכחי בלבד"
+msgstr "אין מסמכים אחרונים"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "ברוך בואך ל־Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
-#, fuzzy, kde-format
-#| msgid "Open Document"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "פתיחת מסמך"
+msgstr "פתיחת מסמך…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "מסמך נוכחי בלבד"
+msgstr "מסמכים אחרונים"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "לשכוח הכול"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "הסתרת מסך קבלת הפנים"
 
 #, fuzzy
 #~| msgid "Show &Page Bar"

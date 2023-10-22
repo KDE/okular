@@ -9,14 +9,14 @@
 # Miguel Branco <mgl.branco@gmail.com>, 2010, 2013.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
+# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-19 00:41+0000\n"
-"PO-Revision-Date: 2023-07-29 09:36+0200\n"
+"PO-Revision-Date: 2023-10-21 10:57+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -341,7 +341,7 @@ msgstr "Non se atopou unha aplicación para abrir o ficheiro de tipo MIME %1."
 #: core/document.cpp:4665
 #, kde-format
 msgid "Could not open a temporary file"
-msgstr "Non foi posíbel acceder a un ficheiro temporal"
+msgstr "Non foi posíbel abrir un ficheiro temporal."
 
 #: core/document.cpp:4667
 #, kde-format
@@ -361,7 +361,7 @@ msgstr "Non foi posíbel comezar o proceso de impresión"
 #: core/document.cpp:4673
 #, kde-format
 msgid "Printing to file failed"
-msgstr "Fallou a impresión nun ficheiro"
+msgstr "Produciuse un erro ao imprimir nun ficheiro."
 
 #: core/document.cpp:4675
 #, kde-format
@@ -619,12 +619,12 @@ msgstr "Número de serie"
 #: gui/certificatemodel.cpp:43
 #, kde-format
 msgid "Issuer"
-msgstr "Emisor"
+msgstr "Expedidor"
 
 #: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:75
 #, kde-format
 msgid "Issued On"
-msgstr "Emitido o"
+msgstr "Expedido o"
 
 #: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:76
 #, kde-format
@@ -677,13 +677,13 @@ msgstr "Nota emerxente"
 #: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1343
 #, kde-format
 msgid "Typewriter"
-msgstr "Campo para completar"
+msgstr "Escritura"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1325
 #, kde-format
 msgid "Inline Note"
-msgstr "Nota incluída"
+msgstr "Nota in situ"
 
 #: gui/guiutils.cpp:48
 #, kde-format
@@ -878,12 +878,12 @@ msgstr "Confíase no certificado."
 #: gui/signatureguiutils.cpp:62
 #, kde-format
 msgid "Certificate issuer isn't Trusted."
-msgstr "Non se confía no emisor do certificado."
+msgstr "Non se confía no expedidor do certificado."
 
 #: gui/signatureguiutils.cpp:64
 #, kde-format
 msgid "Certificate issuer is unknown."
-msgstr "Descoñécese o emisor do certificado."
+msgstr "Descoñécese o expedidor do certificado."
 
 #: gui/signatureguiutils.cpp:66
 #, kde-format
@@ -903,7 +903,7 @@ msgstr "Aínda non se verificou o certificado."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
-msgstr "Problema descoñecido co emisor ou datos corruptos."
+msgstr "Problema descoñecido co expedidor ou datos corruptos."
 
 #: gui/signatureguiutils.cpp:80
 #, kde-format
@@ -1042,7 +1042,7 @@ msgstr ""
 #: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid "The document integrity verification could not be completed."
-msgstr "Non puido completarse a verificación da integridade do documento."
+msgstr "Non foi posíbel completar a verificación da integridade do documento."
 
 #: gui/signatureguiutils.cpp:205
 #, kde-format
@@ -1067,7 +1067,7 @@ msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
 msgstr ""
-"Este documento está asinado dixitalmente. Non se puideron validar "
+"Este documento está asinado dixitalmente. Non foi posíbel validar "
 "correctamente algunhas das sinaturas."
 
 #: gui/signaturemodel.cpp:141
@@ -1401,7 +1401,7 @@ msgstr "Tachar"
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
-msgstr "Campo para completar"
+msgstr "Escritura"
 
 #: part/annotationactionhandler.cpp:562
 #, kde-format
@@ -1542,11 +1542,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Páxina %1"
+msgstr "Páxina %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3176
 #, kde-format
@@ -1557,7 +1556,7 @@ msgstr "Páxina %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -1633,12 +1632,12 @@ msgstr "Propiedades da nota emerxente"
 #: part/annotationpropertiesdialog.cpp:111
 #, kde-format
 msgid "Typewriter Properties"
-msgstr "Propiedades dos campos para completar"
+msgstr "Propiedades de escritura"
 
 #: part/annotationpropertiesdialog.cpp:113
 #, kde-format
 msgid "Inline Note Properties"
-msgstr "Propiedades da nota incluída"
+msgstr "Propiedades da nota in situ"
 
 #: part/annotationpropertiesdialog.cpp:119
 #, kde-format
@@ -2121,7 +2120,7 @@ msgstr "Non é posíbel atopar o executábel de latex."
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "LaTeX rendering failed"
-msgstr "Fallou o debuxado de LaTeX"
+msgstr "Produciuse un erro ao renderizar LaTeX."
 
 #: part/annotwindow.cpp:420
 #, kde-format
@@ -2219,7 +2218,7 @@ msgstr "Xeral"
 #: part/certificateviewer.cpp:58
 #, kde-format
 msgid "Issued By"
-msgstr "Emitido por"
+msgstr "Expedido por"
 
 #: part/certificateviewer.cpp:61 part/certificateviewer.cpp:68
 #, kde-format
@@ -2239,7 +2238,7 @@ msgstr "Organización (O)"
 #: part/certificateviewer.cpp:65
 #, kde-format
 msgid "Issued To"
-msgstr "Emitido a"
+msgstr "Expedido a"
 
 #: part/certificateviewer.cpp:72
 #, kde-format
@@ -2338,7 +2337,7 @@ msgstr "Inverter o brillo"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr "Inverter o l&uma (sRGB lineal)"
+msgstr "Inverter o l&uma (sRGB linear)"
 
 #: part/colormodemenu.cpp:55
 #, kde-format
@@ -2472,7 +2471,7 @@ msgstr "Inverter o brillo"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (sRGB linear)"
-msgstr "Inverter o luma (sRGB lineal)"
+msgstr "Inverter o luma (sRGB linear)"
 
 #: part/dlgaccessibility.cpp:66
 #, kde-format
@@ -2668,7 +2667,7 @@ msgstr ""
 "  <li>%l : a liña a acadar no ficheiro</li>\n"
 "  <li>%c : a columna a acadar no ficheiro</li>\n"
 "</ul>\n"
-"Se non se indica %f, entón engadirase o nome do ficheiro á orde fornecida."
+"Se non se indica %f, entón engadirase o nome do ficheiro á orde indicada."
 
 #: part/dlgeditor.cpp:63
 #, kde-format
@@ -2710,7 +2709,7 @@ msgstr "Amosar os consellos e mensaxes de información."
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr "Avisar de ficheiros incluídos, formularios ou sinaturas."
+msgstr "Avisar de ficheiros incrustados, formularios ou sinaturas."
 
 #: part/dlggeneral.cpp:66
 #, kde-format
@@ -2752,13 +2751,13 @@ msgstr "Funcionalidades do programa:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
-msgstr "Abrir os ficheiros novos en separadores."
+msgstr "Abrir os ficheiros novos en lapelas."
 
 #: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr "Ir ao separador existente se o ficheiro xa está aberto."
+msgstr "Ir á lapela existente se o ficheiro xa está aberto."
 
 #: part/dlggeneral.cpp:137
 #, kde-format
@@ -3144,7 +3143,7 @@ msgstr "Dividir horizontalmente"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split horizontal out"
-msgstr "Saír da división horizontal"
+msgstr "Sacar a división horizontal"
 
 #: part/dlgpresentation.cpp:114
 #, kde-format
@@ -3156,7 +3155,7 @@ msgstr "Dividir verticalmente"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Split vertical out"
-msgstr "Saír da división vertical"
+msgstr "Sacar a división vertical"
 
 #: part/dlgpresentation.cpp:116
 #, kde-format
@@ -3371,12 +3370,12 @@ msgstr "&Ver…"
 #: part/fileprinterpreview.cpp:109
 #, kde-format
 msgid "Could not load print preview part"
-msgstr "Non foi posíbel cargar a compoñente de previsualización do impreso"
+msgstr "Non foi posíbel cargar a compoñente de vista de impresión."
 
 #: part/fileprinterpreview.cpp:121
 #, kde-format
 msgid "Print Preview"
-msgstr "Vista previa do impreso"
+msgstr "Vista de impresión"
 
 #: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
 #, kde-format
@@ -3529,7 +3528,7 @@ msgstr "Orientación orixinal"
 #: part/pageview.cpp:579
 #, kde-format
 msgid "&Trim View"
-msgstr "Axus&tar a vista"
+msgstr "Recor&tar a vista"
 
 #: part/pageview.cpp:583
 #, kde-format
@@ -3539,7 +3538,7 @@ msgstr "Recor&tar as marxes"
 #: part/pageview.cpp:590
 #, kde-format
 msgid "Trim To &Selection"
-msgstr "Axustar á &selección"
+msgstr "Recortar á &selección"
 
 #: part/pageview.cpp:596
 #, kde-format
@@ -3860,7 +3859,8 @@ msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
-"Todos os seus certificados de sinatura ou non son válidos ou caducaron."
+"Todos os seus certificados de sinatura ou non son válidos ou superaron a súa "
+"data de validez."
 
 #: part/pageview.cpp:5155
 #, kde-format
@@ -3987,7 +3987,7 @@ msgstr "Debuxar un rectángulo"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
-msgstr "Debuxar un borrancho"
+msgstr "Texto de borrancho"
 
 #: part/pageviewannotator.cpp:1254
 #, kde-format
@@ -4017,7 +4017,7 @@ msgstr "Subliñar texto"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "Anotación de campo para completar (arrastre para escoller unha zona)"
+msgstr "Anotación de escritura (arrastre para seleccionar unha zona)"
 
 #: part/pageviewannotator.cpp:1321
 #, kde-format
@@ -4308,8 +4308,8 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
-"Acaba de modificar o documento aberto, pero este tipo de documento non pode "
-"gardarse.\n"
+"Acaba de modificar o documento aberto, pero non é posíbel gardar este tipo "
+"de documento.\n"
 "Calquera modificación perderase ao pechar Okular."
 
 #: part/part.cpp:1150
@@ -4393,8 +4393,8 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"Este documento ten formularios. Prema o botón para acceder a eles ou use "
-"«Vista → Amosar os formularios»."
+"Este documento ten formularios. Prema o botón para interactuar con eles ou "
+"use «Vista → Amosar os formularios»."
 
 #: part/part.cpp:1665
 #, kde-format
@@ -4631,7 +4631,7 @@ msgid ""
 "Could not overwrite <filename>%1</filename> because that file is read-only. "
 "Try saving to another location or changing that file's permissions."
 msgstr ""
-"Non se puido substituír <filename>%1</filename> por ser un ficheiro de só "
+"Non foi posíbel substituír <filename>%1</filename> por ser un ficheiro de só "
 "lectura. Probe a gardar noutra localización ou a cambiar os permisos do "
 "ficheiro."
 
@@ -4653,7 +4653,7 @@ msgstr ""
 #: part/part.cpp:2781
 #, kde-format
 msgid "Filled form contents"
-msgstr "Campos de formulario completados."
+msgstr "Contido de formulario completado."
 
 #: part/part.cpp:2784
 #, kde-format
@@ -4751,7 +4751,7 @@ msgstr "Expandir toda a sección"
 #: part/part.cpp:3166
 #, kde-format
 msgid "Collapse whole section"
-msgstr "Recoller a sección"
+msgstr "Pregar a sección"
 
 #: part/part.cpp:3167
 #, kde-format
@@ -4761,7 +4761,7 @@ msgstr "Expandilas todas"
 #: part/part.cpp:3168
 #, kde-format
 msgid "Collapse all"
-msgstr "Recollelo todo"
+msgstr "Pregalo todo"
 
 #: part/part.cpp:3179
 #, kde-format
@@ -4800,8 +4800,8 @@ msgstr "Non se permite imprimir este documento."
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
-"Non foi posíbel imprimir o documento. Descoñécese este erro. Envíe un "
-"informe de erro a bugs.kde.org"
+"Non foi posíbel imprimir o documento. Descoñécese o erro. Informe del en "
+"bugs.kde.org"
 
 #: part/part.cpp:3618
 #, kde-format
@@ -4809,8 +4809,8 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Non foi posíbel imprimir o documento. O erro detallado é «%1». Envíe un "
-"informe de erro a bugs.kde.org"
+"Non foi posíbel imprimir o documento. O erro detallado é «%1». Informe del "
+"en bugs.kde.org."
 
 #: part/part.cpp:3698
 #, kde-format
@@ -4851,8 +4851,8 @@ msgid ""
 msgstr ""
 "<qt>Este erro ocorre polo xeral se non ten permisos de abondo para ler o "
 "ficheiro. Pode comprobar a propiedade e permisos se fai clic dereito no "
-"ficheiro en Dolphin, escoller a opción «Propiedades» e seleccionar o "
-"separador «Permisos» na xanela que se abre.</qt>"
+"ficheiro en Dolphin, escoller a opción «Propiedades» e seleccionar a lapela "
+"«Permisos» na xanela que se abre.</qt>"
 
 #: part/part.cpp:3765
 #, kde-format
@@ -5415,7 +5415,7 @@ msgstr "Expandir todos os elementos"
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr "Recoller todos os elementos"
+msgstr "Pregar todos os elementos"
 
 #: part/signaturepanel.cpp:101
 #, kde-format
@@ -5658,9 +5658,9 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 "Non pode definir a orde do editor externo nunha instancia de Okular que xa "
-"está en execución. Desactive os separadores e inténteo de novo. Teña en "
-"conta que «unique» tampouco se permite ao definir a orde do editor na liña "
-"de ordes.\n"
+"está en execución. Desactive as lapelas e inténteo de novo. Teña en conta "
+"que «unique» tampouco se permite ao definir a orde do editor na liña de "
+"ordes.\n"
 
 #: shell/okular_main.cpp:183
 #, kde-format
@@ -5732,17 +5732,17 @@ msgstr ""
 #: shell/shell.cpp:532
 #, kde-format
 msgid "Next Tab"
-msgstr "Seguinte separador"
+msgstr "Seguinte lapela"
 
 #: shell/shell.cpp:538
 #, kde-format
 msgid "Previous Tab"
-msgstr "Separador anterior"
+msgstr "Lapela anterior"
 
 #: shell/shell.cpp:544
 #, kde-format
 msgid "Undo close tab"
-msgstr "Desfacer o peche de separador"
+msgstr "Desfacer o peche de lapela"
 
 #: shell/shell.cpp:553
 #, kde-format
@@ -5772,17 +5772,17 @@ msgstr "Confirmar o peche"
 #: shell/shell.cpp:769
 #, kde-format
 msgid "Close Tabs"
-msgstr "Pechar os separadores"
+msgstr "Pechar as lapelas"
 
 #: shell/shell.cpp:776
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr "Está a piques de pechar %1 separadores. Seguro que quere continuar?"
+msgstr "Está a piques de pechar %1 lapelas. Seguro que quere continuar?"
 
 #: shell/shell.cpp:778
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr "Avisarme cando intente pechar varios separadores."
+msgstr "Avisarme cando intente pechar varias lapelas."
 
 #: shell/welcomescreen.cpp:64
 #, kde-format

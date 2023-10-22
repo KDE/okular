@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-19 00:41+0000\n"
-"PO-Revision-Date: 2023-09-14 15:43+0200\n"
+"PO-Revision-Date: 2023-10-20 12:34+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1564,11 +1564,10 @@ msgid "%1%"
 msgstr "%1 %"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Page %1"
+msgstr "Page %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3176
 #, kde-format
@@ -1579,7 +1578,7 @@ msgstr "Page %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1 : %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format

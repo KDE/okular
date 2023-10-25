@@ -38,7 +38,7 @@ msgstr "No s'ha pogut obrir el document"
 #: converter.cpp:91 converter.cpp:109
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr "No s'ha pogut compilar el document Markdown."
+msgstr "No s'ha pogut compilar el document en Markdown."
 
 #: generator_md.cpp:56
 #, kde-format

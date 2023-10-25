@@ -2781,7 +2781,7 @@ msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "En utilitzar l'eina Navega, el cursor continua des del final oposat en "
-"arribar a la vora de la pantalla"
+"arribar fins a la vora de la pantalla"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3652,24 +3652,24 @@ msgstr "Fa pausa/reprén la pronunciació"
 #: part/pageview.cpp:772
 #, kde-format
 msgid "Scroll Up"
-msgstr "Desplaçament amunt"
+msgstr "Desplaçament cap amunt"
 
 #: part/pageview.cpp:778
 #, kde-format
 msgid "Scroll Down"
-msgstr "Desplaçament avall"
+msgstr "Desplaçament cap avall"
 
 # skip-rule: k-PageUp-1
 #: part/pageview.cpp:784
 #, kde-format
 msgid "Scroll Page Up"
-msgstr "Desplaça una pàgina amunt"
+msgstr "Desplaça una pàgina cap amunt"
 
 # skip-rule: k-PageDown-1
 #: part/pageview.cpp:790
 #, kde-format
 msgid "Scroll Page Down"
-msgstr "Desplaça una pàgina avall"
+msgstr "Desplaça una pàgina cap avall"
 
 #: part/pageview.cpp:796
 #, kde-format
@@ -4093,7 +4093,8 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "Este document té fitxers incrustats. <a href=\"okular:/embeddedfiles"
-"\">Cliqueu ací per a veure'ls</a> o aneu a «Fitxer -> Fitxers incrustats»."
+"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer -> Fitxers "
+"incrustats»."
 
 #: part/part.cpp:682
 #, kde-format
@@ -4109,7 +4110,7 @@ msgstr "Ves fins a la pàgina anterior"
 #: part/part.cpp:684
 #, kde-format
 msgid "Moves to the previous page of the document"
-msgstr "Va a la pàgina anterior del document"
+msgstr "Va fins a la pàgina anterior del document"
 
 #: part/part.cpp:694
 #, kde-format
@@ -4125,7 +4126,7 @@ msgstr "Avança fins a la pàgina següent"
 #: part/part.cpp:696
 #, kde-format
 msgid "Moves to the next page of the document"
-msgstr "Va a la pàgina següent del document"
+msgstr "Va fins a la pàgina següent del document"
 
 #: part/part.cpp:707
 #, kde-format
@@ -4135,7 +4136,7 @@ msgstr "Començament del document"
 #: part/part.cpp:708
 #, kde-format
 msgid "Moves to the beginning of the document"
-msgstr "Va al començament del document"
+msgstr "Va fins al començament del document"
 
 #: part/part.cpp:712
 #, kde-format
@@ -4145,7 +4146,7 @@ msgstr "Final del document"
 #: part/part.cpp:713
 #, kde-format
 msgid "Moves to the end of the document"
-msgstr "Va al final del document"
+msgstr "Va fins al final del document"
 
 #: part/part.cpp:727
 #, kde-format
@@ -4811,12 +4812,12 @@ msgstr ""
 #: part/part.cpp:3689
 #, kde-format
 msgid "Go to the place you were before"
-msgstr "Aneu al lloc a on estàveu abans"
+msgstr "Aneu fins al lloc a on estàveu abans"
 
 #: part/part.cpp:3693
 #, kde-format
 msgid "Go to the place you were after"
-msgstr "Aneu al lloc a on estàveu després"
+msgstr "Aneu fins al lloc a on estàveu després"
 
 #: part/part.cpp:3718
 #, kde-format

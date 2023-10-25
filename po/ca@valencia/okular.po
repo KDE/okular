@@ -2792,8 +2792,8 @@ msgstr "Obri en mode continu de manera predeterminada"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
-"En utilitzar l'eina Navega, el cursor continua al final oposat en arribar a "
-"la vora de la pantalla"
+"En utilitzar l'eina Navega, el cursor continua al final oposat en arribar "
+"fins a la vora de la pantalla"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -4109,7 +4109,8 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "Este document té fitxers incrustats. <a href=\"okular:/embeddedfiles"
-"\">Cliqueu ací per a veure'ls</a> o aneu a «Fitxer -> Fitxers incrustats»."
+"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer -> Fitxers "
+"incrustats»."
 
 #: part/part.cpp:690
 #, kde-format
@@ -4827,12 +4828,12 @@ msgstr ""
 #: part/part.cpp:3698
 #, kde-format
 msgid "Go to the place you were before"
-msgstr "Aneu al lloc a on estàveu abans"
+msgstr "Aneu fins al lloc a on estàveu abans"
 
 #: part/part.cpp:3702
 #, kde-format
 msgid "Go to the place you were after"
-msgstr "Aneu al lloc a on estàveu després"
+msgstr "Aneu fins al lloc a on estàveu després"
 
 #: part/part.cpp:3727
 #, kde-format

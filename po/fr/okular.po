@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-12 02:25+0000\n"
-"PO-Revision-Date: 2023-09-14 15:43+0200\n"
+"PO-Revision-Date: 2023-10-24 21:42+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -5467,12 +5467,12 @@ msgstr "Images (%1)"
 #: part/signaturepartutils.cpp:303
 #, kde-format
 msgid "Select background image"
-msgstr "Sélectionnez l’image d’arrière-plan"
+msgstr "Sélectionnez l'image d'arrière-plan"
 
 #: part/signaturepartutils.cpp:308
 #, kde-format
 msgid "Forget image"
-msgstr "Oublier l’image"
+msgstr "Oublier l'image"
 
 #: part/signaturepartutils.cpp:309
 #, kde-format

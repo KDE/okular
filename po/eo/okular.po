@@ -1530,11 +1530,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Paĝo %1"
+msgstr "Paĝo %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3176
 #, kde-format

@@ -2,10 +2,13 @@ variables:
   DEBIAN_FRONTEND: "noninteractive"
 
 include:
-  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/android.yml
-  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux.yml
-  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd.yml
-  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
+  - project: sysadmin/ci-utilities
+    file:
+      - /gitlab-templates/android.yml
+      - /gitlab-templates/linux.yml
+      - /gitlab-templates/freebsd.yml
+      - /gitlab-templates/windows.yml
+      - /gitlab-templates/craft-android-apks.yml
 
 build_ubuntu_22_04:
   stage: build

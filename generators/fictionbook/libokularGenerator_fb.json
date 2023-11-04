@@ -48,7 +48,6 @@
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
                 "Name[vi]": "Tobias Koenig",
-                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -97,7 +96,6 @@
         "Copyright[tr]": "© 2007-2008 Tobias Koenig",
         "Copyright[uk]": "© Tobias Koenig, 2007–2008",
         "Copyright[vi]": "© 2007-2008 Tobias Koenig",
-        "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for FictionBook eBooks",
@@ -141,7 +139,6 @@
         "Description[tr]": "FictionBook e-kitapları için bir sunucu",
         "Description[uk]": "Програма для відображення електронної белетристики",
         "Description[vi]": "Một trình kết xuất cho các sách điện tử FictionBook",
-        "Description[x-test]": "xxA renderer for FictionBook eBooksxx",
         "Description[zh_CN]": "FictionBook 电子书的渲染程序",
         "Description[zh_TW]": "FictionBook 電子書成像器",
         "Id": "okular_fictionbook",
@@ -191,7 +188,6 @@
         "Name[tr]": "Kurgu Kitabı Arka Ucu",
         "Name[uk]": "Модуль FictionBook",
         "Name[vi]": "Hậu phương FictionBook",
-        "Name[x-test]": "xxFiction Book Backendxx",
         "Name[zh_CN]": "Fiction Book 后端程序",
         "Name[zh_TW]": "Fiction Book 後端介面",
         "Version": "0.1.5"

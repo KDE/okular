@@ -46,7 +46,6 @@
                 "Name[tr]": "Jakub Stachowski",
                 "Name[uk]": "Jakub Stachowski",
                 "Name[vi]": "Jakub Stachowski",
-                "Name[x-test]": "xxJakub Stachowskixx",
                 "Name[zh_CN]": "Jakub Stachowski",
                 "Name[zh_TW]": "Jakub Stachowski"
             }
@@ -95,7 +94,6 @@
         "Copyright[tr]": "© 2008-2009 Jakub Stachowski",
         "Copyright[uk]": "© Jakub Stachowski, 2008–2009",
         "Copyright[vi]": "© 2008-2009 Jakub Stachowski",
-        "Copyright[x-test]": "xx© 2008-2009 Jakub Stachowskixx",
         "Copyright[zh_CN]": "© 2008-2009 Jakub Stachowski",
         "Copyright[zh_TW]": "© 2008-2009 Jakub Stachowski",
         "Description": "A mobipocket backend",
@@ -141,7 +139,6 @@
         "Description[tr]": "Bir mobipocket arka ucu",
         "Description[uk]": "Сервер mobipocket",
         "Description[vi]": "Một hậu phương Mobipocket",
-        "Description[x-test]": "xxA mobipocket backendxx",
         "Description[zh_CN]": "Mobipocket 后端程序",
         "Description[zh_TW]": "Mobipocket 後端介面",
         "Id": "okular_mobi",
@@ -192,7 +189,6 @@
         "Name[tr]": "Mobipocket Arka Ucu",
         "Name[uk]": "Модуль Mobipocket",
         "Name[vi]": "Hậu phương Mobipocket",
-        "Name[x-test]": "xxMobipocket Backendxx",
         "Name[zh_CN]": "Mobipocket 后端程序",
         "Name[zh_TW]": "Mobipocket 後端介面",
         "Version": "0.1.1"

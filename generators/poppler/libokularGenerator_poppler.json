@@ -48,7 +48,6 @@
                 "Name[tr]": "Albert Astals Cid",
                 "Name[uk]": "Albert Astals Cid",
                 "Name[vi]": "Albert Astals Cid",
-                "Name[x-test]": "xxAlbert Astals Cidxx",
                 "Name[zh_CN]": "Albert Astals Cid",
                 "Name[zh_TW]": "Albert Astals Cid"
             }
@@ -97,7 +96,6 @@
         "Copyright[tr]": "© 2005-2008 Albert Astals Cid",
         "Copyright[uk]": "© Albert Astals Cid, 2005–2008",
         "Copyright[vi]": "© 2005-2008 Albert Astals Cid",
-        "Copyright[x-test]": "xx© 2005-2008 Albert Astals Cidxx",
         "Copyright[zh_CN]": "© 2005-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2005-2008 Albert Astals Cid",
         "Description": "A PDF file renderer",
@@ -143,7 +141,6 @@
         "Description[tr]": "PDF dosyası sunucu",
         "Description[uk]": "Програма для показу файлів PDF",
         "Description[vi]": "Một trình kết xuất tệp PDF",
-        "Description[x-test]": "xxA PDF file rendererxx",
         "Description[zh_CN]": "PDF 文件渲染程序",
         "Description[zh_TW]": "PDF 檔成像器",
         "Id": "okular_poppler",
@@ -198,7 +195,6 @@
         "Name[tr]": "PDF Arka Ucu",
         "Name[uk]": "Модуль PDF",
         "Name[vi]": "Hậu phương PDF",
-        "Name[x-test]": "xxPDF Backendxx",
         "Name[zh_CN]": "PDF 后端程序",
         "Name[zh_TW]": "PDF 後端介面",
         "Version": "0.6.5"

@@ -62,7 +62,6 @@ Comment[th]=แบ็กเอนด์รูปแบบแฟ้มสำห�
 Comment[tr]=Okular için dosya biçimi arka ucu
 Comment[uk]=Модуль типів файлів для okular
 Comment[vi]=Hậu phương định dạng tệp cho Okular
-Comment[x-test]=xxFile format backend for Okularxx
 Comment[zh_CN]=Okular 的文件格式后端程序
 Comment[zh_TW]=Okular 檔案格式後端
 # Priority of the plugin. 0 - disabled

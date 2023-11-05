@@ -21,7 +21,7 @@ Dependencies:
 
 - 'on': ['Linux', 'FreeBSD']
   'require':
-    'frameworks/kactivities': '@stable'
+    'plasma/kactivities': '@stable'
     'frameworks/kpty': '@stable'
 
 - 'on': ['Android']

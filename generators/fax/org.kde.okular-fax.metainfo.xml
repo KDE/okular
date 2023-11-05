@@ -49,7 +49,6 @@
   <name xml:lang="tr">Faks</name>
   <name xml:lang="uk">факс</name>
   <name xml:lang="vi">Fax</name>
-  <name xml:lang="x-test">xxFaxxx</name>
   <name xml:lang="zh-CN">传真</name>
   <name xml:lang="zh-TW">傳真</name>
   <summary>Adds support for reading Fax documents</summary>
@@ -97,7 +96,6 @@
   <summary xml:lang="tr">Faks belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів факсів</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu Fax</summary>
-  <summary xml:lang="x-test">xxAdds support for reading Fax documentsxx</summary>
   <summary xml:lang="zh-CN">增加对传真文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取傳真文件的支援</summary>
   <provides>

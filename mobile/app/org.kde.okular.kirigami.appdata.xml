@@ -45,7 +45,6 @@
   <name xml:lang="tr">Okular Mobile</name>
   <name xml:lang="uk">Мобільний Okular</name>
   <name xml:lang="vi">Okular Di động</name>
-  <name xml:lang="x-test">xxOkular Mobilexx</name>
   <name xml:lang="zh-CN">Okular 文档查看器手机版</name>
   <name xml:lang="zh-TW">Okular 行動版</name>
   <summary>Document Viewer</summary>
@@ -90,7 +89,6 @@
   <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
   <summary xml:lang="uk">Перегляд документів</summary>
   <summary xml:lang="vi">Trình xem tài liệu</summary>
-  <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
   <summary xml:lang="zh-TW">文件檢視器</summary>
   <description>
@@ -136,7 +134,6 @@
     <p xml:lang="tr">Okular, KDE tarafından geliştirilen çok amaçlı bir dosya görüntüleyicidir. Okular; Linux, Windows, macOS, *BSD gibi birden çok platformda çalışır.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="vi">Okular là một trình xem tài liệu vạn năng do KDE phát triển. Okular hoạt động trên nhiều nền tảng, bao gồm Linux, Windows, Mac OS X, *BSD, v.v.</p>
-    <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p xml:lang="zh-CN">Okular 是一款由 KDE 开发的通用文档查看器。它支持在多种平台上运行，包括且不限于 Linux、Windows、Mac OS X、* BSD 等。</p>
     <p xml:lang="zh-TW">Okular 是個由 KDE 開發的一款通用文件檢視器。Okular 能在多個平台上運作，包含但不限於 Linux、Windows、Mac OS X 以及各個 BSD 等。</p>
     <p>Features:</p>
@@ -181,7 +178,6 @@
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="vi">Tính năng:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能特性：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -224,7 +220,6 @@
       <li xml:lang="tr">Desteklenen Biçimler: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="vi">Hỗ trợ các định dạng: PDF, PS, Tiff, CHM, DjVu, ảnh, DVI, XPS, FictionBook, truyện tranh, Plucker, EPub, Fax</li>
-      <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li xml:lang="zh-CN">支持的格式：PDF、PS、TIFF、CHM、DjVu、图像、DVI、XPS、ODT、FictionBook (FB*)、Comic Book (CB*)、Plucker、EPub、传真</li>
       <li xml:lang="zh-TW">支援的格式：PDF, PS, Tiff, CHM, DjVu, 影像, DVI, XPS, 小說書籍, 漫畫書, Plucker, EPub, 傳真</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
@@ -267,7 +262,6 @@
       <li xml:lang="tr">İçindekiler, küçük görseller, incelemeler ve yer imleri bulunan kenar çubuğu</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="vi">Thanh bên với mục lục, hình nhỏ, nhận xét và dấu nhớ</li>
-      <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li xml:lang="zh-CN">侧栏可以显示目录、页面缩略图、批注和书签</li>
       <li xml:lang="zh-TW">側邊欄包含了內容、縮圖、評論以及書籤</li>
       <li>Annotations support</li>
@@ -311,7 +305,6 @@
       <li xml:lang="tr">Ek açıklamalar desteği</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="vi">Hỗ trợ chú dẫn</li>
-      <li xml:lang="x-test">xxAnnotations supportxx</li>
       <li xml:lang="zh-CN">支持批注功能</li>
       <li xml:lang="zh-TW">支援註釋功能</li>
     </ul>
@@ -359,7 +352,6 @@
       <caption xml:lang="tr">Belgelendirmeyi Okular ile oku</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
-      <caption xml:lang="x-test">xxReading manual in Okularxx</caption>
       <caption xml:lang="zh-CN">使用 Okular 阅读产品说明书</caption>
       <caption xml:lang="zh-TW">在 Okular 中閱讀文件</caption>
       <image>https://cdn.kde.org/screenshots/okular/okular-mobile.png</image>

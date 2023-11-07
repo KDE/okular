@@ -46,6 +46,7 @@
                 "Name[tr]": "Ely Levy",
                 "Name[uk]": "Ely Levy",
                 "Name[vi]": "Ely Levy",
+                "Name[x-test]": "xxEly Levyxx",
                 "Name[zh_CN]": "Ely Levy",
                 "Name[zh_TW]": "Ely Levy"
             }
@@ -93,6 +94,7 @@
         "Copyright[tr]": "© 2008 Ely Levy",
         "Copyright[uk]": "© Ely Levy, 2008",
         "Copyright[vi]": "© 2008 Ely Levy",
+        "Copyright[x-test]": "xx© 2008 Ely Levyxx",
         "Copyright[zh_CN]": "© 2008 Ely Levy",
         "Copyright[zh_TW]": "© 2008 Ely Levy",
         "Description": "An EPub backend",
@@ -139,6 +141,7 @@
         "Description[tr]": "Bir EPub arka ucu",
         "Description[uk]": "Сервер EPub",
         "Description[vi]": "Một hậu phương EPub",
+        "Description[x-test]": "xxAn EPub backendxx",
         "Description[zh_CN]": "EPub 的后端程序",
         "Description[zh_TW]": "EPub 後端介面",
         "Id": "okular_epub",
@@ -191,6 +194,7 @@
         "Name[tr]": "EPub Arka Ucu",
         "Name[uk]": "Модуль EPub",
         "Name[vi]": "Hậu phương EPub",
+        "Name[x-test]": "xxEPub Backendxx",
         "Name[zh_CN]": "EPub 后端程序",
         "Name[zh_TW]": "EPub 後端介面",
         "Version": "0.2.3"

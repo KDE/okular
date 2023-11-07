@@ -47,6 +47,7 @@
                 "Name[tr]": "Piotr Szymański",
                 "Name[uk]": "Piotr Szymański",
                 "Name[vi]": "Piotr Szymański",
+                "Name[x-test]": "xxPiotr Szymańskixx",
                 "Name[zh_CN]": "Piotr Szymański",
                 "Name[zh_TW]": "Piotr Szymański"
             },
@@ -97,6 +98,7 @@
                 "Name[tr]": "Albert Astals Cid",
                 "Name[uk]": "Albert Astals Cid",
                 "Name[vi]": "Albert Astals Cid",
+                "Name[x-test]": "xxAlbert Astals Cidxx",
                 "Name[zh_CN]": "Albert Astals Cid",
                 "Name[zh_TW]": "Albert Astals Cid"
             }
@@ -145,6 +147,7 @@
         "Copyright[tr]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[uk]": "© Piotr Szymański, 2005–2007\n© Albert Astals Cid, 2008",
         "Copyright[vi]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
+        "Copyright[x-test]": "xx© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cidxx",
         "Copyright[zh_CN]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Description": "A Microsoft Windows help file renderer",
@@ -189,6 +192,7 @@
         "Description[tr]": "Microsoft Windows yardım dosyası sunucu",
         "Description[uk]": "Відображення файлів довідки Microsoft Windows",
         "Description[vi]": "Một trình kết xuất tệp trợ giúp Windows Microsoft",
+        "Description[x-test]": "xxA Microsoft Windows help file rendererxx",
         "Description[zh_CN]": "Microsoft Windows 帮助文件的渲染程序",
         "Description[zh_TW]": "Microsoft Windows 說明檔成像器",
         "Id": "okular_chm",
@@ -241,6 +245,7 @@
         "Name[tr]": "CHM Arka Ucu",
         "Name[uk]": "Модуль CHM",
         "Name[vi]": "Hậu phương CHM",
+        "Name[x-test]": "xxCHM Backendxx",
         "Name[zh_CN]": "CHM 后端程序",
         "Name[zh_TW]": "CHM 後端介面",
         "Version": "0.1.4"

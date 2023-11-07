@@ -48,6 +48,7 @@
                 "Name[tr]": "Pino Toscano",
                 "Name[uk]": "Pino Toscano",
                 "Name[vi]": "Pino Toscano",
+                "Name[x-test]": "xxPino Toscanoxx",
                 "Name[zh_CN]": "Pino Toscano",
                 "Name[zh_TW]": "Pino Toscano"
             }
@@ -96,6 +97,7 @@
         "Copyright[tr]": "© 2006-2008 Pino Toscano",
         "Copyright[uk]": "© Pino Toscano, 2006–2008",
         "Copyright[vi]": "© 2006-2008 Pino Toscano",
+        "Copyright[x-test]": "xx© 2006-2008 Pino Toscanoxx",
         "Copyright[zh_CN]": "© 2006-2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2008 Pino Toscano",
         "Description": "A TIFF backend",
@@ -142,6 +144,7 @@
         "Description[tr]": "Bir TIFF arka ucu",
         "Description[uk]": "Програма для TIFF",
         "Description[vi]": "Một hậu phương TIFF",
+        "Description[x-test]": "xxA TIFF backendxx",
         "Description[zh_CN]": "TIFF 后端程序",
         "Description[zh_TW]": "TIFF 後端介面",
         "Id": "okular_tiff",
@@ -194,6 +197,7 @@
         "Name[tr]": "TIFF Arka Ucu",
         "Name[uk]": "Модуль TIFF",
         "Name[vi]": "Hậu phương TIFF",
+        "Name[x-test]": "xxTIFF Backendxx",
         "Name[zh_CN]": "TIFF 后端程序",
         "Name[zh_TW]": "TIFF 後端介面",
         "Version": "0.2.4"

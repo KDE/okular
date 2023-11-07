@@ -48,6 +48,7 @@
   <name xml:lang="tr">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="vi">Plucker</name>
+  <name xml:lang="x-test">xxPluckerxx</name>
   <name xml:lang="zh-CN">Plucker</name>
   <name xml:lang="zh-TW">Plucker</name>
   <summary>Adds support for reading Plucker documents</summary>
@@ -94,6 +95,7 @@
   <summary xml:lang="tr">Plucker belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів Plucker</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu Plucker</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Plucker documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 Plucker 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 Plucker 文件的支援</summary>
   <provides>

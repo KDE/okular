@@ -49,6 +49,7 @@
   <name xml:lang="tr">FictionBook</name>
   <name xml:lang="uk">FictionBook</name>
   <name xml:lang="vi">FictionBook</name>
+  <name xml:lang="x-test">xxFictionBookxx</name>
   <name xml:lang="zh-CN">FictionBook</name>
   <name xml:lang="zh-TW">FictionBook</name>
   <summary>Adds support for reading FictionBooks</summary>
@@ -96,6 +97,7 @@
   <summary xml:lang="tr">FictionBook'ları okumak için destek ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів FictionBook (FB2)</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc FictionBook</summary>
+  <summary xml:lang="x-test">xxAdds support for reading FictionBooksxx</summary>
   <summary xml:lang="zh-CN">增加对 FictionBook 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 FictionBooks 的支援</summary>
   <provides>

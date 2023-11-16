@@ -93,9 +93,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
-"En activar esta opció es permet que Okular contacte amb servidors OCSP de "
-"tercers per a verificar si els certificats emprats per a la signatura "
-"digital s'han revocat des de la seua creació."
+"Quan se selecciona esta opció, es permet que Okular contacte amb servidors "
+"OCSP de tercers per a verificar si els certificats emprats per a la "
+"signatura digital s'han revocat des de la seua creació."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116

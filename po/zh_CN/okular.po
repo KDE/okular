@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-12 02:25+0000\n"
-"PO-Revision-Date: 2023-11-11 07:24\n"
+"PO-Revision-Date: 2023-11-19 03:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3442,24 +3442,24 @@ msgstr "缩放到 100%"
 #: part/pageview.cpp:558
 #, kde-format
 msgid "Rotate &Right"
-msgstr "向右旋转(&R)"
+msgstr "旋转 (向右)(&R)"
 
 #: part/pageview.cpp:559
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
-msgstr "向右旋转"
+msgstr "旋转 (向右)"
 
 #: part/pageview.cpp:563
 #, kde-format
 msgid "Rotate &Left"
-msgstr "向左旋转(&L)"
+msgstr "旋转 (向左)(&L)"
 
 #: part/pageview.cpp:564
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
-msgstr "向左旋转"
+msgstr "旋转 (向左)"
 
 #: part/pageview.cpp:568
 #, kde-format

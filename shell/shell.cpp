@@ -603,6 +603,9 @@ void Shell::fileOpen()
     if (curPart->url().isLocalFile()) {
         startDir = KIO::upUrl(curPart->url());
     }
+    if (startDir.isEmpty() || (startDir == QUrl::fromLocalFile(QDir::rootPath()))) {
+        startDir = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    }
 
     QPointer<QFileDialog> dlg(new QFileDialog(this));
     dlg->setDirectoryUrl(startDir);

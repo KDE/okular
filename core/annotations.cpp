@@ -47,12 +47,11 @@ static bool isLeftOfVector(const NormalizedPoint &a, const NormalizedPoint &b, c
 static double distanceSqr(double x, double y, double xScale, double yScale, const QList<NormalizedPoint> &path)
 {
     double distance = DBL_MAX;
-    double thisDistance;
     QList<NormalizedPoint>::const_iterator i = path.constBegin();
     NormalizedPoint lastPoint = *i;
 
     for (++i; i != path.constEnd(); ++i) {
-        thisDistance = NormalizedPoint::distanceSqr(x, y, xScale, yScale, lastPoint, (*i));
+        double thisDistance = NormalizedPoint::distanceSqr(x, y, xScale, yScale, lastPoint, (*i));
 
         if (thisDistance < distance) {
             distance = thisDistance;
@@ -1608,7 +1607,7 @@ void LineAnnotation::store(QDomNode &node, QDomDocument &document) const
             lineElement.appendChild(pElement);
             pElement.setAttribute(QStringLiteral("x"), QString::number(p.x));
             pElement.setAttribute(QStringLiteral("y"), QString::number(p.y));
-            it++; // to avoid loop
+            ++it; // to avoid loop
         }
     }
 }

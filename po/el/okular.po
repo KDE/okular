@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-11-23 00:40+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3929,7 +3929,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Υπόγραψε"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:412
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:417
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4565,7 +4565,7 @@ msgid "Remove this Bookmark"
 msgstr "Να διαγραφεί αυτός ο σελιδοδείκτης"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:380
+#: part/signaturepartutils.cpp:385
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5441,45 +5441,45 @@ msgstr "Σύμπτυξη όλων των αντικειμένων"
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: part/signaturepartutils.cpp:303
+#: part/signaturepartutils.cpp:308
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Εικόνες (%1)"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:309
 #, kde-format
 msgid "Select background image"
 msgstr "Επιλογή εικόνας φόντου"
 
-#: part/signaturepartutils.cpp:309
+#: part/signaturepartutils.cpp:314
 #, kde-format
 msgid "Forget image"
 msgstr "Ξέχασε εικόνα"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:315
 #, kde-format
 msgid "Forget all images"
 msgstr "Ξέχασε όλες τις εικόνες"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:356
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Εισαγωγή κωδικού πρόσβασης (αν υπάρχει) για να ξεκλειδώσει το πιστοποιητικό: "
 "%1"
 
-#: part/signaturepartutils.cpp:353
+#: part/signaturepartutils.cpp:358
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Εισαγωγή κωδικού για το πιστοποιητικό"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:371
 #, kde-format
 msgid "Enter document password"
 msgstr "Εισάγετε κωδικό πρόσβασης εγγράφου"
 
-#: part/signaturepartutils.cpp:386
+#: part/signaturepartutils.cpp:391
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Αποθήκευση υπογεγγραμμένου αρχείου ως"
@@ -5739,7 +5739,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Αδυναμία εύρεσης του συστατικού Okular."
 
-#: shell/shell.cpp:518
+#: shell/shell.cpp:516
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5748,7 +5748,7 @@ msgstr ""
 "Κάντε κλικ για να ανοίξετε ένα αρχείο.\n"
 "Κλικ και κράτημα για να ανοίξετε ένα πρόσφατο αρχείο"
 
-#: shell/shell.cpp:519
+#: shell/shell.cpp:517
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5756,57 +5756,57 @@ msgstr ""
 "<b>Κλικ</b> για να ανοίξετε ένα αρχείο ή <b>Κλικ και κράτημα</b> για να "
 "επιλέξετε ένα πρόσφατο αρχείο"
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:530
 #, kde-format
 msgid "Next Tab"
 msgstr "Επόμενη καρτέλα"
 
-#: shell/shell.cpp:538
+#: shell/shell.cpp:536
 #, kde-format
 msgid "Previous Tab"
 msgstr "Προηγούμενη καρτέλα"
 
-#: shell/shell.cpp:544
+#: shell/shell.cpp:542
 #, kde-format
 msgid "Undo close tab"
 msgstr "Αναίρεση κλεισίματος καρτέλας"
 
-#: shell/shell.cpp:553
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Κλείδωμα πλευρικής στήλης"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:648
 #, kde-format
 msgid "All files (*)"
 msgstr "Όλα τα αρχεία (*)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:649
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Όλα τα υποστηριζόμενα αρχεία (%1)"
 
-#: shell/shell.cpp:655
+#: shell/shell.cpp:653
 #, kde-format
 msgid "Open Document"
 msgstr "Άνοιγμα εγγράφου"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:763
 #, kde-format
 msgid "Confirm Close"
 msgstr "Επιβεβαίωση κλεισίματος"
 
-#: shell/shell.cpp:769
+#: shell/shell.cpp:767
 #, kde-format
 msgid "Close Tabs"
 msgstr "Κλείσιμο καρτελών"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:774
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Προτίθεσθε να κλείσετε %1 καρτέλες. Σίγουρα θέλετε να συνεχίσετε;"
 
-#: shell/shell.cpp:778
+#: shell/shell.cpp:776
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Να προειδοποιούμαι όταν επιχειρώ να κλείσω πολλές καρτέλες"

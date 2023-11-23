@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-11-23 00:40+0000\n"
 "PO-Revision-Date: 2023-10-23 06:17+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3844,7 +3844,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "ხელმოწერა"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:412
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:417
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4445,7 +4445,7 @@ msgid "Remove this Bookmark"
 msgstr "სანიშნის წაშლა"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:380
+#: part/signaturepartutils.cpp:385
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5254,43 +5254,43 @@ msgstr ""
 msgid "Properties"
 msgstr "პარამეტრები"
 
-#: part/signaturepartutils.cpp:303
+#: part/signaturepartutils.cpp:308
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "სურათები (%1)"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:309
 #, kde-format
 msgid "Select background image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:309
+#: part/signaturepartutils.cpp:314
 #, kde-format
 msgid "Forget image"
 msgstr "გამოსახულების დავიწყება"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:315
 #, kde-format
 msgid "Forget all images"
 msgstr "ყველა გამოსახულების დავიწყება"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:356
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:353
+#: part/signaturepartutils.cpp:358
 #, kde-format
 msgid "Enter certificate password"
 msgstr "შეიყვანეთ სერტიფიკატის პაროლი"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:371
 #, kde-format
 msgid "Enter document password"
 msgstr "შეიყვანეთ დოკუმენტის პაროლი"
 
-#: part/signaturepartutils.cpp:386
+#: part/signaturepartutils.cpp:391
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5537,70 +5537,70 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr ""
 
-#: shell/shell.cpp:518
+#: shell/shell.cpp:516
 #, kde-format
 msgid ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 msgstr ""
 
-#: shell/shell.cpp:519
+#: shell/shell.cpp:517
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:530
 #, kde-format
 msgid "Next Tab"
 msgstr "შემდეგი ჩანართი"
 
-#: shell/shell.cpp:538
+#: shell/shell.cpp:536
 #, kde-format
 msgid "Previous Tab"
 msgstr "წინა ჩანართი"
 
-#: shell/shell.cpp:544
+#: shell/shell.cpp:542
 #, kde-format
 msgid "Undo close tab"
 msgstr "ჩანართის დახურვის გაუქმება"
 
-#: shell/shell.cpp:553
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "გვერდითი პანელის დაბლოკვა"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:648
 #, kde-format
 msgid "All files (*)"
 msgstr "ყველა ფაილი (*)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:649
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ყველა მხარდაჭერილი ფაილი (%1)"
 
-#: shell/shell.cpp:655
+#: shell/shell.cpp:653
 #, kde-format
 msgid "Open Document"
 msgstr "დოკუმენტის გახსნა"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:763
 #, kde-format
 msgid "Confirm Close"
 msgstr "დახურვის დასტური"
 
-#: shell/shell.cpp:769
+#: shell/shell.cpp:767
 #, kde-format
 msgid "Close Tabs"
 msgstr "ჩანართების დახურვა"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:774
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:778
+#: shell/shell.cpp:776
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

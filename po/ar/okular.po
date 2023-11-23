@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-11-23 00:40+0000\n"
 "PO-Revision-Date: 2023-08-19 21:43+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -3917,7 +3917,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "وقّع"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:412
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:417
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4545,7 +4545,7 @@ msgid "Remove this Bookmark"
 msgstr "أزل هذه العلامة"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:380
+#: part/signaturepartutils.cpp:385
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5397,43 +5397,43 @@ msgstr "اطو كل العناصر"
 msgid "Properties"
 msgstr "الخصائص"
 
-#: part/signaturepartutils.cpp:303
+#: part/signaturepartutils.cpp:308
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "صور (%1)"
 
-#: part/signaturepartutils.cpp:304
+#: part/signaturepartutils.cpp:309
 #, kde-format
 msgid "Select background image"
 msgstr "حدد صورة الخلفية"
 
-#: part/signaturepartutils.cpp:309
+#: part/signaturepartutils.cpp:314
 #, kde-format
 msgid "Forget image"
 msgstr "انسَ صورة"
 
-#: part/signaturepartutils.cpp:310
+#: part/signaturepartutils.cpp:315
 #, kde-format
 msgid "Forget all images"
 msgstr "انسَ كل الصور"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:356
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "أدخل كلمة المرور (إن وجدت) لفتح الشهادة: %1"
 
-#: part/signaturepartutils.cpp:353
+#: part/signaturepartutils.cpp:358
 #, kde-format
 msgid "Enter certificate password"
 msgstr "أدخل كلمة مرور الشهادة"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:371
 #, kde-format
 msgid "Enter document password"
 msgstr "أدخل كلمة سر المستند"
 
-#: part/signaturepartutils.cpp:386
+#: part/signaturepartutils.cpp:391
 #, kde-format
 msgid "Save Signed File As"
 msgstr "حفظ الملف الموقع باسم"
@@ -5683,7 +5683,7 @@ msgstr "هناك جلسة أوكلار فريدة مفتوحة بالفعل. ل�
 msgid "Unable to find the Okular component."
 msgstr "عجز عن إيجاد مكون أوكلار."
 
-#: shell/shell.cpp:518
+#: shell/shell.cpp:516
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5692,63 +5692,63 @@ msgstr ""
 "انقر لفتح ملف\n"
 "انقر و أمسك لفتح ملف أخير"
 
-#: shell/shell.cpp:519
+#: shell/shell.cpp:517
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>انقر</b> لفتح ملف <b>انقر وأمسك</b> لتحديد ملف حديث"
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:530
 #, kde-format
 msgid "Next Tab"
 msgstr "اللسان التالي"
 
-#: shell/shell.cpp:538
+#: shell/shell.cpp:536
 #, kde-format
 msgid "Previous Tab"
 msgstr "اللسان السابق"
 
-#: shell/shell.cpp:544
+#: shell/shell.cpp:542
 #, kde-format
 msgid "Undo close tab"
 msgstr "تراجع عن إغلاق اللسان"
 
-#: shell/shell.cpp:553
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "اقفل الشريط الجانبي"
 
-#: shell/shell.cpp:650
+#: shell/shell.cpp:648
 #, kde-format
 msgid "All files (*)"
 msgstr "كلّ الملفّات (*)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:649
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "كلّ الملفّات المدعومة (%1)"
 
-#: shell/shell.cpp:655
+#: shell/shell.cpp:653
 #, kde-format
 msgid "Open Document"
 msgstr "المستند المفتوح"
 
-#: shell/shell.cpp:765
+#: shell/shell.cpp:763
 #, kde-format
 msgid "Confirm Close"
 msgstr "أكد الغلق"
 
-#: shell/shell.cpp:769
+#: shell/shell.cpp:767
 #, kde-format
 msgid "Close Tabs"
 msgstr "أغلق الألسنة"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:774
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "أنت على وشك غلق الألسنة %1. أمتأكد من المتابعة؟"
 
-#: shell/shell.cpp:778
+#: shell/shell.cpp:776
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "حذرني عند محاولة غلق عدة ألسنة"

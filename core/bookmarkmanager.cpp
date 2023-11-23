@@ -279,8 +279,8 @@ KBookmark::List BookmarkManager::bookmarks(const QUrl &documentUrl) const
             continue;
         }
 
-        KBookmarkGroup group = bm.toGroup();
-        for (KBookmark b = group.first(); !b.isNull(); b = group.next(b)) {
+        KBookmarkGroup innerGroup = bm.toGroup();
+        for (KBookmark b = innerGroup.first(); !b.isNull(); b = innerGroup.next(b)) {
             if (b.isSeparator() || b.isGroup()) {
                 continue;
             }
@@ -729,16 +729,16 @@ KBookmark BookmarkManager::nextBookmark(const DocumentViewport &viewport) const
     KBookmark::List bmarks = bookmarks();
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
-    KBookmark bookmark;
+    KBookmark mark;
     for (const KBookmark &bm : qAsConst(bmarks)) {
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (viewport < vp) {
-            bookmark = bm;
+            mark = bm;
             break;
         }
     }
 
-    return bookmark;
+    return mark;
 }
 
 KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) const

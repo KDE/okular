@@ -185,13 +185,12 @@ QString DocumentPrivate::pagesSizeString() const
             }
 
             // Multiple page sizes
-            QString sizeString;
             QHash<QString, int> pageSizeFrequencies;
 
             // Compute frequencies of each page size
             for (int i = 0; i < m_pagesVector.count(); ++i) {
                 const Page *p = m_pagesVector.at(i);
-                sizeString = localizedSize(QSizeF(p->width(), p->height()));
+                QString sizeString = localizedSize(QSizeF(p->width(), p->height()));
                 pageSizeFrequencies[sizeString] = pageSizeFrequencies.value(sizeString, 0) + 1;
             }
 
@@ -1146,7 +1145,7 @@ void DocumentPrivate::performSetAnnotationContents(const QString &newContents, A
     switch (annot->subType()) {
     // If it's an in-place TextAnnotation, set the inplace text
     case Okular::Annotation::AText: {
-        Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(annot);
+        const Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(annot);
         if (txtann->textType() == Okular::TextAnnotation::InPlace) {
             appearanceChanged = true;
         }
@@ -1154,7 +1153,7 @@ void DocumentPrivate::performSetAnnotationContents(const QString &newContents, A
     }
     // If it's a LineAnnotation, check if caption text is visible
     case Okular::Annotation::ALine: {
-        Okular::LineAnnotation *lineann = static_cast<Okular::LineAnnotation *>(annot);
+        const Okular::LineAnnotation *lineann = static_cast<Okular::LineAnnotation *>(annot);
         if (lineann->showCaption()) {
             appearanceChanged = true;
         }
@@ -1183,7 +1182,7 @@ void DocumentPrivate::recalculateForms()
                 const QList<Okular::FormField *> forms = p->formFields();
                 for (FormField *form : forms) {
                     if (form->id() == formId) {
-                        Action *action = form->additionalAction(FormField::CalculateField);
+                        const Action *action = form->additionalAction(FormField::CalculateField);
                         if (action) {
                             FormFieldText *fft = dynamic_cast<FormFieldText *>(form);
                             std::shared_ptr<Event> event;
@@ -1338,7 +1337,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     const int currentViewportPage = (*m_viewportIterator).pageNumber;
     int maxDistance = INT_MAX; // Default: No maximum
     if (memoryToFree) {
-        AllocatedPixmap *pixmapToReplace = searchLowestPriorityPixmap(true);
+        const AllocatedPixmap *pixmapToReplace = searchLowestPriorityPixmap(true);
         if (pixmapToReplace) {
             maxDistance = qAbs(pixmapToReplace->page - currentViewportPage);
         }
@@ -1473,7 +1472,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     if (tm) {
         pixmapBytes = tm->totalMemory();
     } else {
-        pixmapBytes = 4 * request->width() * request->height();
+        pixmapBytes = 4l * request->width() * request->height();
     }
 
     if (pixmapBytes > (1024 * 1024)) {
@@ -1517,9 +1516,9 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     }
 }
 
-void DocumentPrivate::rotationFinished(int page, Okular::Page *okularPage)
+void DocumentPrivate::rotationFinished(int page, const Okular::Page *okularPage)
 {
-    Okular::Page *wantedPage = m_pagesVector.value(page, nullptr);
+    const Okular::Page *wantedPage = m_pagesVector.value(page, nullptr);
     if (!wantedPage || wantedPage != okularPage) {
         return;
     }
@@ -1803,10 +1802,10 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     if (currentPage < m_pagesVector.count()) {
         // get page (from the first to the last)
         Page *page = m_pagesVector.at(currentPage);
-        int pageNumber = page->number(); // redundant? is it == currentPage ?
 
         // request search page if needed
         if (!page->hasTextPage()) {
+            int pageNumber = page->number(); // redundant? is it == currentPage ?
             m_parent->requestTextPage(pageNumber);
         }
 
@@ -1905,10 +1904,10 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     if (currentPage < m_pagesVector.count()) {
         // get page (from the first to the last)
         Page *page = m_pagesVector.at(currentPage);
-        int pageNumber = page->number(); // redundant? is it == currentPage ?
 
         // request search page if needed
         if (!page->hasTextPage()) {
+            int pageNumber = page->number(); // redundant? is it == currentPage ?
             m_parent->requestTextPage(pageNumber);
         }
 
@@ -2661,9 +2660,9 @@ void Document::closeDocument()
         // ideally we would just do that in the BackendOpaqueAction destructor
         // but that's too late in the cleanup process, i.e. the generator has already closed its document
         // and the document generator is nullptr
-        for (Page *p : qAsConst(d->m_pagesVector)) {
+        for (const Page *p : qAsConst(d->m_pagesVector)) {
             const QList<ObjectRect *> &oRects = p->objectRects();
-            for (ObjectRect *oRect : oRects) {
+            for (const ObjectRect *oRect : oRects) {
                 if (oRect->objectType() == ObjectRect::Action) {
                     const Action *a = static_cast<const Action *>(oRect->object());
                     const BackendOpaqueAction *backendAction = dynamic_cast<const BackendOpaqueAction *>(a);
@@ -2872,7 +2871,7 @@ bool Document::isOpened() const
 bool Document::canConfigurePrinter() const
 {
     if (d->m_generator) {
-        Okular::PrintInterface *iface = qobject_cast<Okular::PrintInterface *>(d->m_generator);
+        const Okular::PrintInterface *iface = qobject_cast<Okular::PrintInterface *>(d->m_generator);
         return iface ? true : false;
     } else {
         return false;
@@ -3187,23 +3186,23 @@ QVariant Document::metaData(const QString &key, const QVariant &option) const
             // For now use the first hit. Could possibly be made smarter
             // in case there are multiple hits.
             while ((node = synctex_scanner_next_result(d->m_synctex_scanner))) {
-                Okular::DocumentViewport viewport;
+                Okular::DocumentViewport vp;
 
                 // TeX pages start at 1.
-                viewport.pageNumber = synctex_node_page(node) - 1;
+                vp.pageNumber = synctex_node_page(node) - 1;
 
-                if (viewport.pageNumber >= 0) {
+                if (vp.pageNumber >= 0) {
                     const QSizeF dpi = d->m_generator->dpi();
 
                     // TeX small points ...
                     double px = (synctex_node_visible_h(node) * dpi.width()) / 72.27;
                     double py = (synctex_node_visible_v(node) * dpi.height()) / 72.27;
-                    viewport.rePos.normalizedX = px / page(viewport.pageNumber)->width();
-                    viewport.rePos.normalizedY = (py + 0.5) / page(viewport.pageNumber)->height();
-                    viewport.rePos.enabled = true;
-                    viewport.rePos.pos = Okular::DocumentViewport::Center;
+                    vp.rePos.normalizedX = px / page(vp.pageNumber)->width();
+                    vp.rePos.normalizedY = (py + 0.5) / page(vp.pageNumber)->height();
+                    vp.rePos.enabled = true;
+                    vp.rePos.pos = Okular::DocumentViewport::Center;
 
-                    return viewport.toString();
+                    return vp.toString();
                 }
             }
         }
@@ -3350,7 +3349,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
     QSet<DocumentObserver *> observersPixmapCleared;
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    DocumentObserver *requesterObserver = requests.first()->observer();
+    const DocumentObserver *requesterObserver = requests.first()->observer();
     QSet<int> requestedPages;
     {
         for (PixmapRequest *request : requests) {
@@ -3860,8 +3859,8 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
         const bool forward = type == NextMatch;
         const int viewportPage = (*d->m_viewportIterator).pageNumber;
         const int fromStartSearchPage = forward ? 0 : d->m_pagesVector.count() - 1;
-        int currentPage = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
-        Page *lastPage = fromStart ? nullptr : d->m_pagesVector[currentPage];
+        int currentPageNumber = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        const Page *lastPage = fromStart ? nullptr : d->m_pagesVector[currentPageNumber];
         int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)
@@ -3874,9 +3873,9 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
             }
             if (!match) {
                 if (forward) {
-                    currentPage++;
+                    currentPageNumber++;
                 } else {
-                    currentPage--;
+                    currentPageNumber--;
                 }
                 pagesDone++;
             }
@@ -3887,7 +3886,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
         DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
         searchStruct->pagesToNotify = pagesToNotify;
         searchStruct->match = match;
-        searchStruct->currentPage = currentPage;
+        searchStruct->currentPage = currentPageNumber;
         searchStruct->searchID = searchID;
 
         QTimer::singleShot(0, this, [this, searchStruct] { d->doContinueDirectionMatchSearch(searchStruct); });
@@ -5032,7 +5031,7 @@ void Document::unregisterView(View *view)
         return;
     }
 
-    Document *viewDoc = view->viewDocument();
+    const Document *viewDoc = view->viewDocument();
     if (!viewDoc || viewDoc != this) {
         return;
     }
@@ -5279,19 +5278,15 @@ bool Document::extractArchivedFile(const QString &destFileName)
 
 QPageLayout::Orientation Document::orientation() const
 {
-    double width, height;
-    int landscape, portrait;
-    const Okular::Page *currentPage;
-
     // if some pages are landscape and others are not, the most common wins, as
     // QPrinter does not accept a per-page setting
-    landscape = 0;
-    portrait = 0;
+    int landscape = 0;
+    int portrait = 0;
     for (uint i = 0; i < pages(); i++) {
-        currentPage = page(i);
-        width = currentPage->width();
-        height = currentPage->height();
-        if (currentPage->orientation() == Okular::Rotation90 || currentPage->orientation() == Okular::Rotation270) {
+        const Okular::Page *thisPage = page(i);
+        double width = thisPage->width();
+        double height = thisPage->height();
+        if (thisPage->orientation() == Okular::Rotation90 || thisPage->orientation() == Okular::Rotation270) {
             std::swap(width, height);
         }
         if (width > height) {
@@ -5490,7 +5485,7 @@ void DocumentPrivate::calculateMaxTextPages()
     }
 }
 
-void DocumentPrivate::textGenerationDone(Page *page)
+void DocumentPrivate::textGenerationDone(const Page *page)
 {
     if (!m_pageController) {
         return;

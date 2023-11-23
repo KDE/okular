@@ -39,7 +39,7 @@ EBook_CHM::EBook_CHM()
 
 EBook_CHM::~EBook_CHM()
 {
-    close();
+    EBook_CHM::close();
 }
 
 void EBook_CHM::close()

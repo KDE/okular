@@ -183,7 +183,7 @@ public:
     void saveDocumentInfo() const;
     void slotTimedMemoryCheck();
     void sendGeneratorPixmapRequest();
-    void rotationFinished(int page, Okular::Page *okularPage);
+    void rotationFinished(int page, const Okular::Page *okularPage);
     void slotFontReadingProgress(int page);
     void fontReadingGotFont(const Okular::FontInfo &font);
     void slotGeneratorConfigChanged();
@@ -208,7 +208,7 @@ public:
      * the pixmap generation @p request.
      */
     void requestDone(PixmapRequest *request);
-    void textGenerationDone(Page *page);
+    void textGenerationDone(const Page *page);
     /**
      * Sets the bounding box of the given @p page (in terms of upright orientation, i.e., Rotation0).
      */

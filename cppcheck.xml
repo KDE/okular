@@ -3,11 +3,26 @@
 <suppress>
 <id>unusedPrivateFunction</id>
 <fileName>core/action.h</fileName>
-<symbolName>d_func</symbolName>
+<!-- a d_func per class -->
 </suppress>
 <suppress>
 <id>duplInheritedMember</id>
 <fileName>core/action.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/annotations.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>unusedPrivateFunction</id>
+<fileName>core/annotation.h</fileName>
+<!-- a d_func per class -->
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/form.h</fileName>
 <symbolName>d_func</symbolName>
 </suppress>
 </suppressions>

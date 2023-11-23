@@ -29,6 +29,6 @@ Dependencies:
     'frameworks/kirigami': '@stable'
 
 Options:
-  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN'
+  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck.xml'
   cppcheck-ignore-files:
     - autotests

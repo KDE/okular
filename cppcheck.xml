@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<suppressions>
+<suppress>
+<id>unusedPrivateFunction</id>
+<fileName>core/action.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/action.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+</suppressions>

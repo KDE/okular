@@ -141,14 +141,14 @@ public:
     qulonglong calculateMemoryToFree();
     void cleanupPixmapMemory();
     void cleanupPixmapMemory(qulonglong memoryToFree);
-    AllocatedPixmap *searchLowestPriorityPixmap(bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = nullptr /* any */);
+    AllocatedPixmap *searchLowestPriorityPixmap(bool unloadableOnly = false, bool thenRemoveIt = false, const DocumentObserver *observer = nullptr /* any */);
     void calculateMaxTextPages();
     qulonglong getTotalMemory();
     qulonglong getFreeMemory(qulonglong *freeSwap = nullptr);
     bool loadDocumentInfo(LoadDocumentInfoFlags loadWhat);
     bool loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags loadWhat);
     void loadViewsInfo(View *view, const QDomElement &e);
-    void saveViewsInfo(View *view, QDomElement &e) const;
+    void saveViewsInfo(const View *view, QDomElement &e) const;
     QUrl giveAbsoluteUrl(const QString &fileName) const;
     bool openRelativeFile(const QString &fileName);
     Generator *loadGeneratorLibrary(const KPluginMetaData &service);
@@ -174,7 +174,7 @@ public:
     // Methods that implement functionality needed by undo commands
     void performAddPageAnnotation(int page, Annotation *annotation);
     void performRemovePageAnnotation(int page, Annotation *annotation);
-    void performModifyPageAnnotation(int page, Annotation *annotation, bool appearanceChanged);
+    void performModifyPageAnnotation(int page, const Annotation *annotation, bool appearanceChanged);
     void performSetAnnotationContents(const QString &newContents, Annotation *annot, int pageNumber);
 
     void recalculateForms();

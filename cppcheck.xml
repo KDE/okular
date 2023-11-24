@@ -26,6 +26,11 @@
 <symbolName>d_func</symbolName>
 </suppress>
 <suppress>
+<id>duplInheritedMember</id>
+<fileName>core/form.cpp</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
 <id>useStlAlgorithm</id>
 </suppress>
 </suppressions>

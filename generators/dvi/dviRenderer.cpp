@@ -306,12 +306,8 @@ void dviRenderer::embedPostScript()
     quint16 currPageSav = current_page;
     errorMsg.clear();
     for (current_page = 0; current_page < dviFile->total_pages; current_page++) {
-        if (current_page < dviFile->total_pages) {
-            command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
-            end_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page + 1)];
-        } else {
-            command_pointer = end_pointer = nullptr;
-        }
+        command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
+        end_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page + 1)];
 
         memset((char *)&currinf.data, 0, sizeof(currinf.data));
         currinf.fonttable = &(dviFile->tn_table);

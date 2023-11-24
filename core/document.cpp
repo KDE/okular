@@ -403,7 +403,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
  * thenRemoveIt is set, the pixmap is removed from m_allocatedPixmaps before
  * returning it
  */
-AllocatedPixmap *DocumentPrivate::searchLowestPriorityPixmap(bool unloadableOnly, bool thenRemoveIt, DocumentObserver *observer)
+AllocatedPixmap *DocumentPrivate::searchLowestPriorityPixmap(bool unloadableOnly, bool thenRemoveIt, const DocumentObserver *observer)
 {
     std::list<AllocatedPixmap *>::iterator pIt = m_allocatedPixmaps.begin();
     std::list<AllocatedPixmap *>::iterator pEnd = m_allocatedPixmaps.end();
@@ -747,7 +747,7 @@ void DocumentPrivate::loadViewsInfo(View *view, const QDomElement &e)
     }
 }
 
-void DocumentPrivate::saveViewsInfo(View *view, QDomElement &e) const
+void DocumentPrivate::saveViewsInfo(const View *view, QDomElement &e) const
 {
     if (view->supportsCapability(View::Zoom) && (view->capabilityFlags(View::Zoom) & (View::CapabilityRead | View::CapabilitySerializable)) && view->supportsCapability(View::ZoomModality) &&
         (view->capabilityFlags(View::ZoomModality) & (View::CapabilityRead | View::CapabilitySerializable))) {
@@ -1100,13 +1100,13 @@ void DocumentPrivate::performRemovePageAnnotation(int page, Annotation *annotati
     }
 }
 
-void DocumentPrivate::performModifyPageAnnotation(int page, Annotation *annotation, bool appearanceChanged)
+void DocumentPrivate::performModifyPageAnnotation(int page, const Annotation *annotation, bool appearanceChanged)
 {
     Okular::SaveInterface *iface = qobject_cast<Okular::SaveInterface *>(m_generator);
     AnnotationProxy *proxy = iface ? iface->annotationProxy() : nullptr;
 
     // find out the page
-    Page *kp = m_pagesVector[page];
+    const Page *kp = m_pagesVector[page];
     if (!m_generator || !kp) {
         return;
     }
@@ -1145,7 +1145,7 @@ void DocumentPrivate::performSetAnnotationContents(const QString &newContents, A
     switch (annot->subType()) {
     // If it's an in-place TextAnnotation, set the inplace text
     case Okular::Annotation::AText: {
-        const Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(annot);
+        const Okular::TextAnnotation *txtann = static_cast<const Okular::TextAnnotation *>(annot);
         if (txtann->textType() == Okular::TextAnnotation::InPlace) {
             appearanceChanged = true;
         }
@@ -1694,7 +1694,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
 
     if (doContinue) {
         // get page
-        Page *page = m_pagesVector[searchStruct->currentPage];
+        const Page *page = m_pagesVector[searchStruct->currentPage];
         // request search page if needed
         if (!page->hasTextPage()) {
             m_parent->requestTextPage(page->number());
@@ -2514,7 +2514,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
 
     d->m_generatorName = offer.pluginId();
     d->m_pageController = new PageController();
-    connect(d->m_pageController, &PageController::rotationFinished, this, [this](int p, Okular::Page *op) { d->rotationFinished(p, op); });
+    connect(d->m_pageController, &PageController::rotationFinished, this, [this](int p, const Okular::Page *op) { d->rotationFinished(p, op); });
 
     for (Page *p : qAsConst(d->m_pagesVector)) {
         p->d->m_doc = d;
@@ -5410,7 +5410,7 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
             if (tm) {
                 memoryBytes = tm->totalMemory();
             } else {
-                memoryBytes = 4 * req->width() * req->height();
+                memoryBytes = 4l * req->width() * req->height();
             }
 
             AllocatedPixmap *memoryPage = new AllocatedPixmap(req->observer(), req->pageNumber(), memoryBytes);

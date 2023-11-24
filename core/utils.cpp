@@ -138,9 +138,8 @@ void Okular::copyQIODevice(QIODevice *from, QIODevice *to)
 {
     QByteArray buffer(65536, '\0');
     qint64 read = 0;
-    qint64 written = 0;
     while ((read = from->read(buffer.data(), buffer.size())) > 0) {
-        written = to->write(buffer.constData(), read);
+        qint64 written = to->write(buffer.constData(), read);
         if (read != written) {
             break;
         }

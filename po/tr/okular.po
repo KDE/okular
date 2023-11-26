@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-23 00:40+0000\n"
-"PO-Revision-Date: 2023-10-19 06:04+0300\n"
+"PO-Revision-Date: 2023-11-26 01:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -297,13 +297,13 @@ msgstr "Yatay %1"
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
-msgstr "%1 x %2 inç (%3)"
+msgstr "%1 × %2 inç (%3)"
 
 #: core/document.cpp:257
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1688
 #, kde-format
@@ -3713,7 +3713,7 @@ msgstr "Metni Seslendir"
 #: part/pageview.cpp:2885
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
-msgstr "Görsel (%1 x %2 piksel)"
+msgstr "Görsel (%1 × %2 piksel)"
 
 #: part/pageview.cpp:2887
 #, kde-format
@@ -3723,7 +3723,7 @@ msgstr "Dosyaya Kaydet..."
 #: part/pageview.cpp:2907
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
-msgstr "[%1x%2] görseli panoya kopyalandı."
+msgstr "[%1 × %2] görseli panoya kopyalandı."
 
 #: part/pageview.cpp:2910
 #, kde-format
@@ -3743,7 +3743,7 @@ msgstr "Dosya kaydedilmedi."
 #: part/pageview.cpp:2923
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
-msgstr "[%1x%2] görseli, %3 dosyasına kaydedildi."
+msgstr "[%1 × %2] görseli, %3 dosyasına kaydedildi."
 
 #: part/pageview.cpp:3065
 #, kde-format

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-12 02:25+0000\n"
-"PO-Revision-Date: 2023-11-19 03:44\n"
+"PO-Revision-Date: 2023-11-25 02:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -29,8 +29,8 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "kde-china@kde.org, rainofchaos@gmail.com, i@guoyunhe.me, lilith.ex@gmail."
-"com, mhh@ricetons.com, shuizhuyuanluo@126.com, tysontan@tysontan.com, "
-"wengxt@gmail.com, yahzee@d3eye.com"
+"com, mhh@ricetons.com, shuizhuyuanluo@126.com, tds00@qq.com, wengxt@gmail."
+"com, yahzee@d3eye.com"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -5204,7 +5204,7 @@ msgstr "无法查看修订版本。"
 #: part/searchwidget.cpp:38
 #, kde-format
 msgid "Enter at least 3 letters to filter pages"
-msgstr "请输入至少 3 个字母的筛选条件"
+msgstr "请输入至少 3 个字母的过滤条件"
 
 #: part/searchwidget.cpp:48
 #, kde-format
@@ -5229,7 +5229,7 @@ msgstr "匹配任一单词"
 #: part/searchwidget.cpp:71
 #, kde-format
 msgid "Filter Options"
-msgstr "筛选器选项"
+msgstr "过滤器选项"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14

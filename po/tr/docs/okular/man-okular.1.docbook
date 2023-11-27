@@ -1,0 +1,250 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Turkish "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Okular Kullanıcı Kılavuzu</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular man sayfası.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2022-02-19</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>çok amaçlı bir belge görüntüleyicisi</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Okular seçenekleri</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Açıklama</title>
+<para
+><command
+>okular</command
+>, değişik biçimlerdeki belgeleri göstermeyi amaçlar.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Okular seçenekleri</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>sayı</replaceable
+></option
+></term>
+<listitem>
+<para
+>Belgede verilen bir sayfa numarasını aç.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Belgeyi sunum kipinde başlat.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Yazdırma iletişim kutusuyla başlat.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Yazdırma iletişim kutusuyla başlat ve yazdırma sonrası çık.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Benzersiz örnek denetimi.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Okular penceresinin başlatma sonrası öne gelmesini engelle.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>dizi</replaceable
+></option
+></term>
+<listitem>
+<para
+>Metinde bir dizi bul.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>dizi</replaceable
+></option
+></term>
+<listitem>
+<para
+>Dış düzenleyici komutunu ayarlar. Zaten çalışan bir Okular örneğinde düzenleyici komutunu ayarlayamazsınız. Komut satırında düzenleyici komutunu ayarlarken <option
+>--unique</option
+>'in desteklenmediğini lütfen unutmayın.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Argümanlar</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>URL</option
+></term>
+<listitem>
+<para
+>Açılacak belgenin adresi. PDF için <replaceable
+>belge_adı</replaceable
+>#<replaceable
+>adlı_hedef_konum</replaceable
+> olarak yapılır; burada <replaceable
+>adlı_hedef_konum</replaceable
+>, belgede gömülü özel bir konumdur.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Geri Bildirim</title>
+<para
+>IRC'de irc.libera.chat #okular, e-posta ile okular-devel@kde.org veya web'de &lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Ayrıca</title>
+<simplelist>
+<member
+>Ayrıntılı kullanıcı belgelendirmesine <ulink url="help:/okular"
+>help:/okular</ulink
+> bölümünden ulaşabilirsiniz (ya bu &URL;'yi &konqueror;'a girin ya da <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+> komutunu çalıştırın).</member>
+<member
+>kf5options(7)</member>
+<member
+>qt5options(7)</member>
+<member
+>Ayrıca <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+> adresinde ek bilgiler de bulunabilir</member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Telif Hakkı</title>
+<para
+>Telif hakkı &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Telif hakkı &copy; 2004-2005 Enrico Ros</para>
+<para
+>Telif hakkı &copy; 2005 Piotr Szymanski</para>
+<para
+>Telif hakkı &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Telif hakkı &copy; 2006-2009 Pino Toscano</para>
+<para
+>Lisans: GNU Genel Kamu Lisansı 2. Sürüm &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

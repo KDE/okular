@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-23 00:40+0000\n"
-"PO-Revision-Date: 2023-11-05 17:03+0100\n"
+"PO-Revision-Date: 2023-11-26 20:12+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -319,8 +319,8 @@ msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
-"La dokumento provas ekzekuti eksteran aplikaĵon kaj, por via sekureco, "
-"Okular ne permesas tion."
+"La dokumento provas lanĉi eksteran aplikaĵon kaj, por via sekureco, Okular "
+"ne permesas tion."
 
 #: core/document.cpp:4205 core/document.cpp:4215
 #, kde-format
@@ -2118,12 +2118,12 @@ msgstr "Ne povas trovi dvipng ruleblan."
 #: part/annotwindow.cpp:425
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr "Problemo okazis dum la ekzekuto de la komando 'latekso'."
+msgstr "Problemo okazis dum la efektivigo de la komando 'latekso'."
 
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr "Problemo okazis dum la ekzekuto de la komando 'dvipng'."
+msgstr "Problemo okazis dum la efektivigo de la komando 'dvipng'."
 
 #: part/bookmarklist.cpp:115
 #, kde-format

@@ -37,7 +37,8 @@
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
-    : m_document(nullptr)
+    : q_ptr(nullptr)
+    , m_document(nullptr)
     , mPixmapGenerationThread(nullptr)
     , mTextPageGenerationThread(nullptr)
     , mPixmapReady(true)

@@ -33,6 +33,8 @@ EBook_CHM::EBook_CHM()
     , m_textCodec(nullptr)
     , m_textCodecForSpecialFiles(nullptr)
     , m_currentEncoding(QStringLiteral("UTF-8"))
+    , m_tocAvailable(false)
+    , m_indexAvailable(false)
     , m_envOptions(QString::fromLatin1(qgetenv("KCHMVIEWEROPTS")))
 {
 }

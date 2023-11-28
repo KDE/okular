@@ -48,6 +48,7 @@ Document::Document()
     : mDirectory(nullptr)
     , mUnrar(nullptr)
     , mArchive(nullptr)
+    , mArchiveDir(nullptr)
 {
 }
 

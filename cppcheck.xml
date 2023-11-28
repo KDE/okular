@@ -31,6 +31,16 @@
 <symbolName>d_func</symbolName>
 </suppress>
 <suppress>
+<id>duplInheritedMember</id>
+<fileName>core/textdocumentgenerator_p.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/textdocumentgenerator.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
 <id>useStlAlgorithm</id>
 </suppress>
 </suppressions>

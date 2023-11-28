@@ -20,7 +20,8 @@ public:
      *       must delete it yourself
      */
     explicit TextDocumentSettingsWidgetPrivate(Ui_TextDocumentSettings *ui)
-        : mUi(ui)
+        : mFont(nullptr)
+        , mUi(ui)
     {
     }
 

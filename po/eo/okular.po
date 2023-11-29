@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-12 02:25+0000\n"
-"PO-Revision-Date: 2023-06-26 20:04+0100\n"
+"PO-Revision-Date: 2023-11-26 20:12+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -319,8 +319,8 @@ msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
-"La dokumento provas ekzekuti eksteran aplikaĵon kaj, por via sekureco, "
-"Okular ne permesas tion."
+"La dokumento provas lanĉi eksteran aplikaĵon kaj, por via sekureco, Okular "
+"ne permesas tion."
 
 #: core/document.cpp:4204 core/document.cpp:4214
 #, kde-format
@@ -1476,7 +1476,11 @@ msgid "Add to Quick Annotations"
 msgstr "Aldoni al Rapidaj Prinotoj"
 
 #: part/annotationactionhandler.cpp:666
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@action:intoolbar When checked keep the current annotation tool active "
+#| "after ¦use"
+#| msgid "Keep Active"
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
 "use"
@@ -1490,7 +1494,11 @@ msgid "Keep the annotation tool active after use"
 msgstr "Konservi la komentadan ilon aktiva post uzo"
 
 #: part/annotationactionhandler.cpp:672
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@action When checked, line annotations are constrained to 15° steps, "
+#| "shape ¦annotations to 1:1 ratio"
+#| msgid "Constrain Ratio and Angle of Annotation Tools"
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
@@ -2108,12 +2116,12 @@ msgstr "Ne povas trovi dvipng ruleblan."
 #: part/annotwindow.cpp:425
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr "Problemo okazis dum la ekzekuto de la komando 'latekso'."
+msgstr "Problemo okazis dum la efektivigo de la komando 'latekso'."
 
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr "Problemo okazis dum la ekzekuto de la komando 'dvipng'."
+msgstr "Problemo okazis dum la efektivigo de la komando 'dvipng'."
 
 #: part/bookmarklist.cpp:115
 #, kde-format
@@ -2552,7 +2560,11 @@ msgstr ""
 "transdonitaj kune kun la dokumento."
 
 #: part/dlgannotations.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@label Config dialog, annotations page, heading line for Quick "
+#| "Annotations ¦tool manager"
+#| msgid "<h3>Quick Annotation Tools</h3>"
 msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
@@ -3169,7 +3181,11 @@ msgid "Preferred screen:"
 msgstr "Preferata ekrano:"
 
 #: part/dlgpresentation.cpp:137
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@label Config dialog, presentation page, heading line for drawing tool "
+#| "¦manager"
+#| msgid "<h3>Drawing Tools</h3>"
 msgctxt ""
 "@label Config dialog, presentation page, heading line for drawing tool "
 "manager"
@@ -3189,7 +3205,12 @@ msgid "Default Screen"
 msgstr "Apriora Ekrano"
 
 #: part/dlgpresentation.cpp:178
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+#| "¦the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is "
+#| "the ¦screen model name. %4 is the screen name like DVI-0"
+#| msgid "Screen %1 (%2 %3 %4)"
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
@@ -3198,7 +3219,11 @@ msgid "Screen %1 (%2 %3 %4)"
 msgstr "Ekrano %1 (%2 %3 %4)"
 
 #: part/dlgpresentation.cpp:190
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
+#| "¦the screen number (0, 1, ...), hopefully not 0."
+#| msgid "Screen %1 (disconnected)"
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...), hopefully not 0."
@@ -3748,7 +3773,7 @@ msgstr "Laŭ paĝo"
 #: part/pageview.cpp:4056
 #, kde-format
 msgid "Auto Fit"
-msgstr "Aŭtomata Fit"
+msgstr "Aŭtomate Ĝisrandigi"
 
 #: part/pageview.cpp:4079
 #, fuzzy, kde-format
@@ -4971,7 +4996,15 @@ msgid "Editor Options"
 msgstr "Redaktilaj Opcioj"
 
 #: part/preferencesdialog.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Give the user a hint, that it enabled the option --editor-cmd together "
+#| "with ¦the current value of the option."
+#| msgid ""
+#| "The editor was set by the command line to \n"
+#| " %1 \n"
+#| "If you want to use the setting, start okular without the option --editor-"
+#| "cmd"
 msgctxt ""
 "Give the user a hint, that it enabled the option --editor-cmd together with "
 "the current value of the option."
@@ -5051,7 +5084,11 @@ msgstr ""
 "defaŭlte)"
 
 #: part/presentationwidget.cpp:1701
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Reason for inhibiting the screensaver activation, when the presentation "
+#| "mode ¦is active"
+#| msgid "Giving a presentation"
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
 "is active"
@@ -5439,7 +5476,11 @@ msgid "Save Signed File As"
 msgstr "Konservi Subskribitan Dosieron Kiel"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old ¦file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
@@ -5735,7 +5776,7 @@ msgstr "Ĉiuj subtenataj dosieroj (%1)"
 #: shell/shell.cpp:647
 #, kde-format
 msgid "Open Document"
-msgstr "Malfermi dokumenton"
+msgstr "Malfermi Dokumenton"
 
 #: shell/shell.cpp:757
 #, kde-format
@@ -5811,3 +5852,16 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
+
+#~ msgctxt ""
+#~ "@item:inlistbox Annotation opacity percentage level, make sure to include "
+#~ "%1 ¦in your translation"
+#~ msgid "%1%"
+#~ msgstr "%1%"
+
+#~ msgctxt ""
+#~ "Zoom percentage value %1 will be replaced by the actual zoom factor "
+#~ "value, ¦so make sure you include it in your translation in order to not "
+#~ "to break ¦anything"
+#~ msgid "%1%"
+#~ msgstr "%1%"

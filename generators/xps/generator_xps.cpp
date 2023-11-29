@@ -1419,7 +1419,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
 {
     // qCWarning(OkularXpsDebug) << "font file name: " << absoluteFileName;
 
-    const KArchiveEntry *fontFile = loadEntry(m_xpsArchive, absoluteFileName, Qt::CaseInsensitive);
+    const KArchiveEntry *fontFile = loadEntry(m_xpsArchive.get(), absoluteFileName, Qt::CaseInsensitive);
     if (!fontFile) {
         return -1;
     }
@@ -1458,7 +1458,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
 
 KZip *XpsFile::xpsArchive()
 {
-    return m_xpsArchive;
+    return m_xpsArchive.get();
 }
 
 QImage XpsPage::loadImageFromFile(const QString &fileName)
@@ -1779,6 +1779,7 @@ XpsPage *XpsDocument::page(int pageNum) const
 }
 
 XpsFile::XpsFile()
+    : m_xpsArchive(nullptr)
 {
 }
 
@@ -1791,12 +1792,12 @@ XpsFile::~XpsFile()
 
 bool XpsFile::loadDocument(const QString &filename)
 {
-    m_xpsArchive = new KZip(filename);
+    m_xpsArchive = std::make_unique<KZip>(filename);
     if (m_xpsArchive->open(QIODevice::ReadOnly) == true) {
         qCWarning(OkularXpsDebug) << "Successful open of " << m_xpsArchive->fileName();
     } else {
         qCWarning(OkularXpsDebug) << "Could not open XPS archive: " << m_xpsArchive->fileName();
-        delete m_xpsArchive;
+        m_xpsArchive.reset();
         return false;
     }
 
@@ -1935,8 +1936,6 @@ bool XpsFile::closeDocument()
 {
     qDeleteAll(m_documents);
     m_documents.clear();
-
-    delete m_xpsArchive;
 
     return true;
 }

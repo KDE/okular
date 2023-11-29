@@ -221,6 +221,7 @@ class FaxDocument::Private
 public:
     explicit Private(FaxDocument *parent)
         : mParent(parent)
+        , mType(G3)
     {
         mPageNode.size = QSize(1728, 0);
     }

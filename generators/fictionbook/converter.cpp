@@ -53,6 +53,7 @@ Converter::Converter()
     , mCursor(nullptr)
     , mTitleInfo(nullptr)
     , mDocumentInfo(nullptr)
+    , mSectionCounter(0)
 {
 }
 

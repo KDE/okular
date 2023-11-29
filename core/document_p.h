@@ -106,6 +106,7 @@ class DocumentPrivate
 public:
     explicit DocumentPrivate(Document *parent)
         : m_parent(parent)
+        , m_searchCancelled(false)
         , m_tempFile(nullptr)
         , m_docSize(-1)
         , m_allocatedPixmapsTotalMemory(0)

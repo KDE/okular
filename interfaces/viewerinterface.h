@@ -85,19 +85,6 @@ public:
      * @since 23.04
      */
     virtual QWidget *getSideContainer() const = 0;
-
-    // SIGNALS
-    /**
-     * The signal 'openSourceReference' is emitted whenever the user has triggered a source
-     * reference in the currently displayed document.
-     */
-    void openSourceReference(const QString &absFileName, int line, int column);
-
-    /**
-     * The signal 'viewerMenuStateChange' is emitted whenever the state of the menu
-     * 'menu_okular_part_viewer' defined in 'part-viewermode.rc' has changed.
-     */
-    void viewerMenuStateChange(bool enabled);
 };
 
 }

@@ -609,6 +609,7 @@ QIcon LineAnnotationWidget::endStyleIcon(Okular::LineAnnotation::TermStyle endSt
 
 InkAnnotationWidget::InkAnnotationWidget(Okular::Annotation *ann)
     : AnnotationWidget(ann)
+    , m_spinSize(nullptr)
 {
     m_inkAnn = static_cast<Okular::InkAnnotation *>(ann);
 }
@@ -639,6 +640,7 @@ void InkAnnotationWidget::applyChanges()
 
 HighlightAnnotationWidget::HighlightAnnotationWidget(Okular::Annotation *ann)
     : AnnotationWidget(ann)
+    , m_typeCombo(nullptr)
 {
     m_hlAnn = static_cast<Okular::HighlightAnnotation *>(ann);
 }
@@ -673,6 +675,7 @@ void HighlightAnnotationWidget::applyChanges()
 
 GeomAnnotationWidget::GeomAnnotationWidget(Okular::Annotation *ann)
     : AnnotationWidget(ann)
+    , m_spinSize(nullptr)
 {
     m_geomAnn = static_cast<Okular::GeomAnnotation *>(ann);
 }

@@ -355,7 +355,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
     std::list<AllocatedPixmap *> pixmapsToKeep;
     while (memoryToFree > 0) {
         int clean_hits = 0;
-        for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (const DocumentObserver *observer : qAsConst(m_observers)) {
             AllocatedPixmap *p = searchLowestPriorityPixmap(false, true, observer);
             if (!p) { // No pixmap to remove
                 continue;
@@ -1304,7 +1304,7 @@ void DocumentPrivate::saveDocumentInfo() const
     // create views root node
     QDomElement viewsNode = doc.createElement(QStringLiteral("views"));
     generalInfo.appendChild(viewsNode);
-    for (View *view : qAsConst(m_views)) {
+    for (const View *view : qAsConst(m_views)) {
         QDomElement viewEntry = doc.createElement(QStringLiteral("view"));
         viewEntry.setAttribute(QStringLiteral("name"), view->name());
         viewsNode.appendChild(viewEntry);
@@ -1557,8 +1557,7 @@ void DocumentPrivate::slotGeneratorConfigChanged()
 
     // reparse generator config and if something changed clear Pages
     bool configchanged = false;
-    QHash<QString, GeneratorInfo>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
-    for (; it != itEnd; ++it) {
+    for (QHash<QString, GeneratorInfo>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end(); it != itEnd; ++it) {
         Okular::ConfigInterface *iface = generatorConfig(it.value());
         if (iface) {
             bool it_changed = iface->reparseConfig();
@@ -3352,7 +3351,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
     const DocumentObserver *requesterObserver = requests.first()->observer();
     QSet<int> requestedPages;
     {
-        for (PixmapRequest *request : requests) {
+        for (const PixmapRequest *request : requests) {
             Q_ASSERT(request->observer() == requesterObserver);
             requestedPages.insert(request->pageNumber());
         }

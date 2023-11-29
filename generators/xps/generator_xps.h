@@ -268,7 +268,7 @@ private:
 
     QString m_signatureOrigin;
 
-    KZip *m_xpsArchive;
+    std::unique_ptr<KZip> m_xpsArchive;
 
     QMap<QString, int> m_fontCache;
     QFontDatabase m_fontDatabase;

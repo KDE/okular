@@ -30,6 +30,9 @@ class Link
 public:
     Link()
         : link(nullptr)
+        , page(0)
+        , start(0)
+        , end(0)
     {
     }
 

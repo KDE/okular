@@ -33,6 +33,15 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSharedConfig>
+namespace
+{
+static constexpr char ConfigGroup[] = "Signature";
+static constexpr char ConfigBackgroundKey[] = "RecentBackgrounds";
+static constexpr char ConfigLastReason[] = "Reason";
+static constexpr char ConfigLastLocation[] = "Location";
+static constexpr char ConfigLastKeyNick[] = "KeyNick";
+
+}
 
 namespace SignaturePartUtils
 {
@@ -96,11 +105,9 @@ class RecentImagesModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static constexpr char ConfigGroup[] = "Signature";
-    static constexpr char ConfigKey[] = "RecentBackgrounds";
     RecentImagesModel()
     {
-        const auto recentList = KSharedConfig::openConfig()->group(QLatin1String(ConfigGroup)).readEntry<QStringList>(QLatin1String(ConfigKey), QStringList());
+        const auto recentList = KSharedConfig::openConfig()->group(QLatin1String(ConfigGroup)).readEntry<QStringList>(QLatin1String(ConfigBackgroundKey), QStringList());
         for (const auto &element : recentList) {
             if (QFile::exists(element)) { // maybe the image has been removed from disk since last invocation
                 m_storedElements.push_back(element);
@@ -199,7 +206,7 @@ public:
         while (elementsToStore.size() > 3) {
             elementsToStore.pop_back();
         }
-        KSharedConfig::openConfig()->group(QString::fromUtf8(ConfigGroup)).writeEntry(ConfigKey, elementsToStore);
+        KSharedConfig::openConfig()->group(QString::fromUtf8(ConfigGroup)).writeEntry(ConfigBackgroundKey, elementsToStore);
     }
 
 private:
@@ -226,6 +233,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QStandardItemModel items;
     QHash<QString, Okular::CertificateInfo> nickToCert;
     int minWidth = -1;
+    int selectIndex = 0;
+    auto config = KSharedConfig::openConfig();
+    const QString lastNick = config->group(ConfigGroup).readEntry<QString>(ConfigLastKeyNick, QString());
     for (const auto &cert : qAsConst(certs)) {
         auto item = std::make_unique<QStandardItem>();
         QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
@@ -238,6 +248,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
         item->setData(cert.nickName(), Qt::DisplayRole);
         item->setData(cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty), Qt::ToolTipRole);
         item->setEditable(false);
+        if (cert.nickName() == lastNick) {
+            selectIndex = items.rowCount();
+        }
         items.appendRow(item.release());
         nickToCert[cert.nickName()] = cert;
     }
@@ -246,7 +259,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&items);
-    dialog.ui->list->selectionModel()->select(items.index(0, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
+    dialog.ui->list->selectionModel()->select(items.index(selectIndex, 0), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
     if (items.rowCount() < 3) {
         auto rowHeight = dialog.ui->list->sizeHintForRow(0);
         dialog.ui->list->setFixedHeight(rowHeight * items.rowCount() + (items.rowCount() - 1) * dialog.ui->list->spacing() + dialog.ui->list->contentsMargins().top() + dialog.ui->list->contentsMargins().bottom());
@@ -295,6 +308,10 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
                 }
             }
         });
+        // needs to happen after textChanged connection on backgroundInput
+        if (haveRecent) {
+            dialog.ui->backgroundInput->setText(imagesModel.index(0, 0).data().toString());
+        }
 
         QObject::connect(dialog.ui->backgroundButton, &QPushButton::clicked, &dialog, [lineEdit = dialog.ui->backgroundInput]() {
             const auto supportedFormats = QImageReader::supportedImageFormats();
@@ -330,6 +347,8 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
             }
         });
     }
+    dialog.ui->reasonInput->setText(config->group(ConfigGroup).readEntry(ConfigLastReason, QString()));
+    dialog.ui->locationInput->setText(config->group(ConfigGroup).readEntry(ConfigLastLocation, QString()));
     auto result = dialog.exec();
 
     if (result == QDialog::Rejected) {
@@ -372,6 +391,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     if (passok) {
+        config->group(ConfigGroup).writeEntry(ConfigLastKeyNick, cert.nickName());
+        config->group(ConfigGroup).writeEntry(ConfigLastReason, dialog.ui->reasonInput->text());
+        config->group(ConfigGroup).writeEntry(ConfigLastLocation, dialog.ui->locationInput->text());
         return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword, dialog.ui->reasonInput->text(), dialog.ui->locationInput->text(), backGroundImage};
     }
     return std::nullopt;

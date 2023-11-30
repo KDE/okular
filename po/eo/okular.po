@@ -1476,11 +1476,7 @@ msgid "Add to Quick Annotations"
 msgstr "Aldoni al Rapidaj Prinotoj"
 
 #: part/annotationactionhandler.cpp:666
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@action:intoolbar When checked keep the current annotation tool active "
-#| "after ¦use"
-#| msgid "Keep Active"
+#, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
 "use"
@@ -1494,11 +1490,7 @@ msgid "Keep the annotation tool active after use"
 msgstr "Konservi la komentadan ilon aktiva post uzo"
 
 #: part/annotationactionhandler.cpp:672
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@action When checked, line annotations are constrained to 15° steps, "
-#| "shape ¦annotations to 1:1 ratio"
-#| msgid "Constrain Ratio and Angle of Annotation Tools"
+#, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
@@ -2560,11 +2552,7 @@ msgstr ""
 "transdonitaj kune kun la dokumento."
 
 #: part/dlgannotations.cpp:48
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@label Config dialog, annotations page, heading line for Quick "
-#| "Annotations ¦tool manager"
-#| msgid "<h3>Quick Annotation Tools</h3>"
+#, kde-format
 msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
@@ -3181,11 +3169,7 @@ msgid "Preferred screen:"
 msgstr "Preferata ekrano:"
 
 #: part/dlgpresentation.cpp:137
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@label Config dialog, presentation page, heading line for drawing tool "
-#| "¦manager"
-#| msgid "<h3>Drawing Tools</h3>"
+#, kde-format
 msgctxt ""
 "@label Config dialog, presentation page, heading line for drawing tool "
 "manager"
@@ -3205,12 +3189,7 @@ msgid "Default Screen"
 msgstr "Apriora Ekrano"
 
 #: part/dlgpresentation.cpp:178
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
-#| "¦the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is "
-#| "the ¦screen model name. %4 is the screen name like DVI-0"
-#| msgid "Screen %1 (%2 %3 %4)"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the "
@@ -3219,11 +3198,7 @@ msgid "Screen %1 (%2 %3 %4)"
 msgstr "Ekrano %1 (%2 %3 %4)"
 
 #: part/dlgpresentation.cpp:190
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
-#| "¦the screen number (0, 1, ...), hopefully not 0."
-#| msgid "Screen %1 (disconnected)"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...), hopefully not 0."
@@ -4996,15 +4971,7 @@ msgid "Editor Options"
 msgstr "Redaktilaj Opcioj"
 
 #: part/preferencesdialog.cpp:56
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Give the user a hint, that it enabled the option --editor-cmd together "
-#| "with ¦the current value of the option."
-#| msgid ""
-#| "The editor was set by the command line to \n"
-#| " %1 \n"
-#| "If you want to use the setting, start okular without the option --editor-"
-#| "cmd"
+#, kde-format
 msgctxt ""
 "Give the user a hint, that it enabled the option --editor-cmd together with "
 "the current value of the option."
@@ -5084,11 +5051,7 @@ msgstr ""
 "defaŭlte)"
 
 #: part/presentationwidget.cpp:1701
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Reason for inhibiting the screensaver activation, when the presentation "
-#| "mode ¦is active"
-#| msgid "Giving a presentation"
+#, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
 "is active"
@@ -5476,11 +5439,7 @@ msgid "Save Signed File As"
 msgstr "Konservi Subskribitan Dosieron Kiel"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old ¦file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"

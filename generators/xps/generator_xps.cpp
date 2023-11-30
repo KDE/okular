@@ -1779,7 +1779,9 @@ XpsPage *XpsDocument::page(int pageNum) const
 }
 
 XpsFile::XpsFile()
-    : m_xpsArchive(nullptr)
+    : m_thumbnailMightBeAvailable(false)
+    , m_thumbnailIsLoaded(false)
+    , m_xpsArchive(nullptr)
 {
 }
 

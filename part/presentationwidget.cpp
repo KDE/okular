@@ -108,7 +108,7 @@ struct PresentationFrame {
         }
     }
 
-    const Okular::Page *page;
+    const Okular::Page *page = nullptr;
     QRect geometry;
     QHash<Okular::Movie *, VideoWidget *> videoWidgets;
     std::vector<SmoothPath> drawings;

@@ -48,7 +48,7 @@ struct RadioData {
     }
 
     QList<int> ids;
-    QButtonGroup *group;
+    QButtonGroup *group = nullptr;
 };
 
 class FormWidgetsController : public QObject

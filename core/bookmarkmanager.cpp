@@ -614,8 +614,8 @@ QList<QAction *> BookmarkManager::actionsForUrl(const QUrl &documentUrl) const
 {
     const QUrl url = mostCanonicalUrl(documentUrl);
     QList<QAction *> ret;
-    KBookmarkGroup group = d->manager->root();
-    for (KBookmark bm = group.first(); !bm.isNull(); bm = group.next(bm)) {
+    KBookmarkGroup bmGroup = d->manager->root();
+    for (KBookmark bm = bmGroup.first(); !bm.isNull(); bm = bmGroup.next(bm)) {
         if (!bm.isGroup() || urlForGroup(bm) != url) {
             continue;
         }
@@ -746,17 +746,16 @@ KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) co
     KBookmark::List bmarks = bookmarks();
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
-    KBookmark bookmark;
     for (KBookmark::List::const_iterator it = bmarks.constEnd(); it != bmarks.constBegin(); --it) {
         KBookmark bm = *(it - 1);
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (vp < viewport) {
-            bookmark = bm;
+            return bm;
             break;
         }
     }
 
-    return bookmark;
+    return KBookmark {};
 }
 
 #undef foreachObserver

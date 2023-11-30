@@ -57,6 +57,8 @@ ghostscript_interface::ghostscript_interface()
     knownDevices.append(QStringLiteral("pnn"));
     knownDevices.append(QStringLiteral("pnnraw"));
     gsDevice = knownDevices.begin();
+    pixel_page_h = 0;
+    pixel_page_w = 0;
 }
 
 ghostscript_interface::~ghostscript_interface()

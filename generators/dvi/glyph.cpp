@@ -14,6 +14,9 @@
 
 bitmap::bitmap()
 {
+    w = 0;
+    h = 0;
+    bytes_wide = 0;
     bits = nullptr;
 }
 
@@ -31,6 +34,8 @@ glyph::glyph()
     addr = 0;
     x = 0;
     y = 0;
+    x2 = 0;
+    y2 = 0;
     dvi_advance_in_units_of_design_size_by_2e20 = 0;
 }
 

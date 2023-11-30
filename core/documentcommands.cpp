@@ -588,7 +588,7 @@ bool EditFormComboCommand::mergeWith(const QUndoCommand *uc)
     if (uc->id() != id()) {
         return false;
     }
-    const EditFormComboCommand *euc = (EditFormComboCommand *)uc;
+    const EditFormComboCommand *euc = static_cast<const EditFormComboCommand *>(uc);
     // Only attempt merge of euc into this if they modify the same form
     if (m_form == euc->m_form) {
         bool shouldMerge = EditTextCommand::mergeWith(uc);

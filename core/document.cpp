@@ -1206,9 +1206,9 @@ void DocumentPrivate::recalculateForms()
                                 if (newVal != oldVal) {
                                     fft->setText(newVal);
                                     fft->setAppearanceText(newVal);
-                                    if (const Okular::Action *action = fft->additionalAction(Okular::FormField::FormatField)) {
+                                    if (const Okular::Action *formatAction = fft->additionalAction(Okular::FormField::FormatField)) {
                                         // The format action handles the refresh.
-                                        m_parent->processFormatAction(action, fft);
+                                        m_parent->processFormatAction(formatAction, fft);
                                     } else {
                                         Q_EMIT m_parent->refreshFormWidget(fft);
                                         pageNeedsRefresh = true;

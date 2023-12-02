@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-23 00:40+0000\n"
+"POT-Creation-Date: 2023-12-02 00:40+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -4171,7 +4171,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:417
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:439
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4823,7 +4823,7 @@ msgid "Remove this Bookmark"
 msgstr "निसानी ल नवा नाम देव"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:385
+#: part/signaturepartutils.cpp:407
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5679,46 +5679,46 @@ msgstr ""
 msgid "Properties"
 msgstr "गुन (&P)"
 
-#: part/signaturepartutils.cpp:308
+#: part/signaturepartutils.cpp:325
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "पेज: %1"
 
-#: part/signaturepartutils.cpp:309
+#: part/signaturepartutils.cpp:326
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "पिछोत अंगना बनाना सक्छम करव (&b)"
 
-#: part/signaturepartutils.cpp:314
+#: part/signaturepartutils.cpp:331
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:315
+#: part/signaturepartutils.cpp:332
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:356
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:358
+#: part/signaturepartutils.cpp:377
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:371
+#: part/signaturepartutils.cpp:390
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Enter document password"
 msgstr "कागद जऊन ल खोलना हे"
 
-#: part/signaturepartutils.cpp:391
+#: part/signaturepartutils.cpp:413
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""

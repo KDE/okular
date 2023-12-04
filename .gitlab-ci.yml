@@ -9,6 +9,7 @@ include:
       - /gitlab-templates/freebsd.yml
       - /gitlab-templates/windows.yml
       - /gitlab-templates/craft-android-apks.yml
+      - /gitlab-templates/craft-windows-x86-64.yml
 
 build_ubuntu_22_04:
   stage: build

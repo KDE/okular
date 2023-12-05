@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KF6KExiv2;CHM;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -194,16 +194,13 @@ if (BUILD_MOBILE)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
-    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
-        Activities
-    )
-    set_package_properties("KF6Activities" PROPERTIES
-        DESCRIPTION  "Activities interface library"
-        URL "https://api.kde.org/frameworks/kactivities/html/"
-        PURPOSE "Required for Activities integration.")
-
     find_package(Qt6Gui REQUIRED COMPONENTS Private)
-
+    find_package(PlasmaActivities REQUIRED)
+    set_package_properties("PlasmaActivities" PROPERTIES
+        DESCRIPTION  "Activities interface library"
+        URL "https://invent.kde.org/plasma/plasma-activities"
+        PURPOSE "Required for Activities integration."
+    )
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
@@ -250,8 +247,8 @@ set_okular_optional_package_properties(LibSpectre PROPERTIES
         URL "https://libspectre.freedesktop.org"
         PURPOSE "Support for PS files in okular.")
 
-find_package(KF6KExiv2 CONFIG)
-set_okular_optional_package_properties(KF6KExiv2 PROPERTIES
+find_package(KExiv2Qt6 CONFIG)
+set_okular_optional_package_properties(KExiv2Qt6 PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")

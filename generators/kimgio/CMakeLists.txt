@@ -6,9 +6,9 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_kimgio")
 okular_add_generator(okularGenerator_kimgio generator_kimgio.cpp)
 target_link_libraries(okularGenerator_kimgio okularcore KF6::I18n)
 
-if(KF6KExiv2_FOUND)
+if(TARGET KExiv2Qt6)
     target_compile_definitions(okularGenerator_kimgio PRIVATE -DWITH_KEXIV=1)
-    target_link_libraries(okularGenerator_kimgio KF6::KExiv2)
+    target_link_libraries(okularGenerator_kimgio KExiv2Qt6)
 endif()
 
 if(BUILD_TESTING AND BUILD_DESKTOP AND KF6KExiv2_FOUND)

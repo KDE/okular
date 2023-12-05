@@ -50,7 +50,7 @@
 #include <QTabWidget>
 #include <QTimer>
 #ifdef WITH_KACTIVITIES
-#include <KActivities/ResourceInstance>
+#include <PlasmaActivities/ResourceInstance>
 #endif
 
 #include <kio_version.h>

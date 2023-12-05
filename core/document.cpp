@@ -60,7 +60,6 @@
 #include <KMacroExpander>
 #include <KPluginMetaData>
 #include <KProcess>
-#include <KRun>
 #include <KShell>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4Migration>
@@ -4178,13 +4177,13 @@ void Document::processAction(const Action *action)
         QMimeDatabase db;
         QMimeType mime = db.mimeTypeForUrl(url);
         // Check executables
-        if (KRun::isExecutableFile(url, mime.name())) {
+        if (KIO::OpenUrlJob::isExecutableFile(url, mime.name())) {
             // Don't have any pdf that uses this code path, just a guess on how it should work
             if (!exe->parameters().isEmpty()) {
                 url = d->giveAbsoluteUrl(exe->parameters());
                 mime = db.mimeTypeForUrl(url);
 
-                if (KRun::isExecutableFile(url, mime.name())) {
+                if (KIO::OpenUrlJob::isExecutableFile(url, mime.name())) {
                     // this case is a link pointing to an executable with a parameter
                     // that also is an executable, possibly a hand-crafted pdf
                     Q_EMIT error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
@@ -4198,7 +4197,6 @@ void Document::processAction(const Action *action)
             }
         }
 
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url, mime.name());
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget));
         job->start();
@@ -4207,16 +4205,6 @@ void Document::processAction(const Action *action)
                 Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
             }
         });
-#else
-        KService::Ptr ptr = KApplicationTrader::preferredService(mime.name());
-        if (ptr) {
-            QList<QUrl> lst;
-            lst.append(url);
-            KRun::runService(*ptr, lst, nullptr);
-        } else {
-            Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
-        }
-#endif
     } break;
 
     case Action::DocAction: {
@@ -4299,11 +4287,7 @@ void Document::processAction(const Action *action)
             }
             if (realUrl.isValid()) {
                 auto *job = new KIO::OpenUrlJob(realUrl);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
                 job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget.data()));
-#else
-                job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget.data()));
-#endif
                 job->start();
             }
         }

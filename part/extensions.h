@@ -8,14 +8,16 @@
 #ifndef _EXTENSIONS_H_
 #define _EXTENSIONS_H_
 
-#include <kparts/browserextension.h>
-#include <kparts/liveconnectextension.h>
+#include <QtGlobal>
+
+#include <KParts/NavigationExtension>
+using NavigationExtension = KParts::NavigationExtension;
 
 namespace Okular
 {
 class Part;
 
-class BrowserExtension : public KParts::BrowserExtension
+class BrowserExtension : public NavigationExtension
 {
     Q_OBJECT
 
@@ -28,26 +30,6 @@ public Q_SLOTS:
 
 private:
     Part *m_part;
-};
-
-class OkularLiveConnectExtension : public KParts::LiveConnectExtension
-{
-    Q_OBJECT
-
-public:
-    explicit OkularLiveConnectExtension(Part *parent);
-
-    // from LiveConnectExtension
-    bool get(const unsigned long objid, const QString &field, Type &type, unsigned long &retobjid, QString &value) override;
-    bool put(const unsigned long objid, const QString &field, const QString &value) override;
-    bool call(const unsigned long objid, const QString &func, const QStringList &args, Type &type, unsigned long &retobjid, QString &value) override;
-
-private:
-    QString eval(const QString &script);
-    void postMessage(const QStringList &args);
-
-    bool m_inEval;
-    QString m_evalRes;
 };
 
 }

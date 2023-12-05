@@ -15,6 +15,23 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 
 option(FORCE_NOT_REQUIRED_DEPENDENCIES "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
+find_package(ECM ${KF_REQUIRED_VERSION} CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
+
+include(ECMInstallIcons)
+include(ECMSetupVersion)
+include(ECMOptionalAddSubdirectory)
+include(GenerateExportHeader)
+include(FeatureSummary)
+include(ECMAddAppIcon)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(ECMAddTests)
+include(ECMAddAppIcon)
+include(CMakePackageConfigHelpers)
+include(ECMSetupQtPluginMacroNames)
+
 if (ANDROID AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES) AND (NOT FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
     set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
@@ -68,23 +85,6 @@ endif()
 if (BUILD_MOBILE)
     set(QT_REQUIRED_VERSION "5.15.2")
 endif()
-
-find_package(ECM ${KF_REQUIRED_VERSION} CONFIG REQUIRED)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
-
-include(ECMInstallIcons)
-include(ECMSetupVersion)
-include(ECMOptionalAddSubdirectory)
-include(GenerateExportHeader)
-include(FeatureSummary)
-include(ECMAddAppIcon)
-include(KDECompilerSettings NO_POLICY_SCOPE)
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(ECMAddTests)
-include(ECMAddAppIcon)
-include(CMakePackageConfigHelpers)
-include(ECMSetupQtPluginMacroNames)
 
 # append the plugins from the install tree folder to the QT_PLUGIN_PATH
 if(UNIX)

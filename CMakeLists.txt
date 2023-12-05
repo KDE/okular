@@ -453,6 +453,7 @@ PRIVATE
     KF6::KIOWidgets
     KF6::I18n
     KF6::ThreadWeaver
+    KF6::BookmarksWidgets
     KF6::Bookmarks
     Qt6::Svg
     ${MATH_LIB}

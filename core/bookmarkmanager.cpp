@@ -118,7 +118,8 @@ public:
         : KBookmarkOwner()
         , q(qq)
         , document(nullptr)
-        , manager(nullptr)
+        , file(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/okular/bookmarks.xml"))
+        , manager(KBookmarkManager(file))
     {
     }
 
@@ -147,7 +148,7 @@ public:
     QHash<int, int> urlBookmarks;
     DocumentPrivate *document;
     QString file;
-    KBookmarkManager *manager;
+    KBookmarkManager manager;
     QHash<QUrl, QString> knownFiles;
 };
 
@@ -168,12 +169,8 @@ BookmarkManager::BookmarkManager(DocumentPrivate *document)
 
     d->document = document;
 
-    d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/okular/bookmarks.xml");
-
-    d->manager = KBookmarkManager::managerForFile(d->file, QStringLiteral("okular"));
-    d->manager->setEditorOptions(QGuiApplication::applicationDisplayName(), false);
-    d->manager->setUpdate(true);
-    connect(d->manager, &KBookmarkManager::changed, this, [this](const QString &groupAddress, const QString &caller) { d->_o_changed(groupAddress, caller); });
+    d->manager.setUpdate(true);
+    connect(&d->manager, &KBookmarkManager::changed, this, [this](const QString &groupAddress, const QString &caller) { d->_o_changed(groupAddress, caller); });
 }
 
 BookmarkManager::~BookmarkManager()
@@ -222,7 +219,7 @@ void BookmarkManager::Private::_o_changed(const QString &groupAddress, const QSt
         }
     }
     if (!referurl.isValid()) {
-        const KBookmark bm = manager->findByAddress(groupAddress);
+        const KBookmark bm = manager.findByAddress(groupAddress);
         // better be safe than sorry
         if (bm.isNull()) {
             return;
@@ -258,7 +255,7 @@ void BookmarkManager::Private::_o_changed(const QString &groupAddress, const QSt
 QList<QUrl> BookmarkManager::files() const
 {
     QList<QUrl> ret;
-    KBookmarkGroup group = d->manager->root();
+    KBookmarkGroup group = d->manager.root();
     for (KBookmark bm = group.first(); !bm.isNull(); bm = group.next(bm)) {
         if (bm.isSeparator() || !bm.isGroup()) {
             continue;
@@ -273,7 +270,7 @@ KBookmark::List BookmarkManager::bookmarks(const QUrl &documentUrl) const
 {
     const QUrl url = mostCanonicalUrl(documentUrl);
     KBookmark::List ret;
-    KBookmarkGroup group = d->manager->root();
+    KBookmarkGroup group = d->manager.root();
     for (KBookmark bm = group.first(); !bm.isNull(); bm = group.next(bm)) {
         if (!bm.isGroup() || urlForGroup(bm) != url) {
             continue;
@@ -352,7 +349,7 @@ KBookmark BookmarkManager::bookmark(const DocumentViewport &viewport) const
 
 void BookmarkManager::save() const
 {
-    d->manager->emitChanged();
+    d->manager.emitChanged();
     Q_EMIT const_cast<BookmarkManager *>(this)->saved();
 }
 
@@ -364,7 +361,7 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl
         // known files, then first try to find the file among the top-level
         // "folder" names
         bool found = false;
-        KBookmarkGroup root = manager->root();
+        KBookmarkGroup root = manager.root();
         for (KBookmark bm = root.first(); !found && !bm.isNull(); bm = root.next(bm)) {
             if (bm.isSeparator() || !bm.isGroup()) {
                 continue;
@@ -394,7 +391,7 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl
             }
         }
     } else if (result) {
-        const KBookmark bm = manager->findByAddress(it.value());
+        const KBookmark bm = manager.findByAddress(it.value());
         Q_ASSERT(bm.isGroup());
         *result = bm.toGroup();
     }
@@ -474,7 +471,7 @@ bool BookmarkManager::addBookmark(const QUrl &documentUrl, const Okular::Documen
         d->urlBookmarks[vp.pageNumber]++;
         foreachObserver(notifyPageChanged(vp.pageNumber, DocumentObserver::Bookmark));
     }
-    d->manager->emitChanged(thebg);
+    d->manager.emitChanged(thebg);
     return true;
 }
 
@@ -504,7 +501,7 @@ void BookmarkManager::renameBookmark(KBookmark *bm, const QString &newName)
     }
 
     bm->setFullText(newName);
-    d->manager->emitChanged(thebg);
+    d->manager.emitChanged(thebg);
 }
 
 void BookmarkManager::renameBookmark(const QUrl &documentUrl, const QString &newName)
@@ -523,7 +520,7 @@ void BookmarkManager::renameBookmark(const QUrl &documentUrl, const QString &new
     }
 
     thebg.setFullText(newName);
-    d->manager->emitChanged(thebg);
+    d->manager.emitChanged(thebg);
 }
 
 QString BookmarkManager::titleForUrl(const QUrl &documentUrl) const
@@ -560,7 +557,7 @@ int BookmarkManager::removeBookmark(const QUrl &documentUrl, const KBookmark &bm
         d->urlBookmarks[vp.pageNumber]--;
         foreachObserver(notifyPageChanged(vp.pageNumber, DocumentObserver::Bookmark));
     }
-    d->manager->emitChanged(thebg);
+    d->manager.emitChanged(thebg);
 
     return vp.pageNumber;
 }
@@ -606,7 +603,7 @@ void BookmarkManager::removeBookmarks(const QUrl &documentUrl, const KBookmark::
         }
     }
     if (deletedAny) {
-        d->manager->emitChanged(thebg);
+        d->manager.emitChanged(thebg);
     }
 }
 
@@ -614,7 +611,7 @@ QList<QAction *> BookmarkManager::actionsForUrl(const QUrl &documentUrl) const
 {
     const QUrl url = mostCanonicalUrl(documentUrl);
     QList<QAction *> ret;
-    KBookmarkGroup group = d->manager->root();
+    KBookmarkGroup group = d->manager.root();
     for (KBookmark bm = group.first(); !bm.isNull(); bm = group.next(bm)) {
         if (!bm.isGroup() || urlForGroup(bm) != url) {
             continue;
@@ -682,7 +679,7 @@ bool BookmarkManager::setPageBookmark(int page)
         newurl.setFragment(vp.toString(), QUrl::DecodedMode);
         thebg.addBookmark(QLatin1String("#") + QString::number(vp.pageNumber + 1), newurl, QString());
         added = true;
-        d->manager->emitChanged(thebg);
+        d->manager.emitChanged(thebg);
     }
     return added;
 }
@@ -706,7 +703,7 @@ bool BookmarkManager::removePageBookmark(int page)
             found = true;
             thebg.deleteBookmark(bm);
             d->urlBookmarks[page]--;
-            d->manager->emitChanged(thebg);
+            d->manager.emitChanged(thebg);
         }
     }
     return found;

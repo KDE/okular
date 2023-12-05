@@ -1012,8 +1012,9 @@ bool DocumentPrivate::savePageDocumentInfo(QTemporaryFile *infoFile, int what) c
 
         // 3. Save DOM to XML file
         QString xml = doc.toString();
+
         QTextStream os(infoFile);
-        os.setCodec("UTF-8");
+        os.setEncoding(QStringConverter::Utf8);
         os << xml;
         return true;
     }
@@ -1316,7 +1317,7 @@ void DocumentPrivate::saveDocumentInfo() const
     // 3. Save DOM to XML file
     QString xml = doc.toString();
     QTextStream os(&infoFile);
-    os.setCodec("UTF-8");
+    os.setEncoding(QStringConverter::Utf8);
     os << xml;
     infoFile.close();
 }

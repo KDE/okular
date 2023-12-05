@@ -760,8 +760,8 @@ bool Shell::queryClose()
 {
     if (m_tabs.count() > 1) {
         const QString dontAskAgainName = QStringLiteral("ShowTabWarning");
-        KMessageBox::ButtonCode dummy = KMessageBox::Yes;
-        if (shouldBeShownYesNo(dontAskAgainName, dummy)) {
+        KMessageBox::ButtonCode dummy = KMessageBox::PrimaryAction;
+        if (KMessageBox::shouldBeShownTwoActions(dontAskAgainName, dummy)) {
             QDialog *dialog = new QDialog(this);
             dialog->setWindowTitle(i18n("Confirm Close"));
 
@@ -781,7 +781,7 @@ bool Shell::queryClose()
                                                               KMessageBox::Notify);
 
             if (!checkboxResult) {
-                saveDontShowAgainYesNo(dontAskAgainName, dummy);
+                KMessageBox::saveDontShowAgainTwoActions(dontAskAgainName, dummy);
             }
 
             if (result != QDialogButtonBox::Yes) {

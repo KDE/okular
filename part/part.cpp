@@ -3555,12 +3555,12 @@ void Part::slotPrint()
 
     // If the user has bookmarked pages for printing, then enable Selection
     if (!m_document->bookmarkedPageRange().isEmpty()) {
-        printDialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
+        printDialog.setOption(QAbstractPrintDialog::PrintSelection);
     }
 
     // If the Document type doesn't support print to both PS & PDF then disable the Print Dialog option
-    if (printDialog.isOptionEnabled(QAbstractPrintDialog::PrintToFile) && !m_document->supportsPrintToFile()) {
-        printDialog.setEnabledOptions(printDialog.enabledOptions() ^ QAbstractPrintDialog::PrintToFile);
+    if (printDialog.testOption(QAbstractPrintDialog::PrintToFile) && !m_document->supportsPrintToFile()) {
+        printDialog.setOption(QAbstractPrintDialog::PrintToFile, false);
     }
 
     // Enable the Current Page option in the dialog.

@@ -53,6 +53,7 @@
 #include <KConfigDialog>
 #include <KFormat>
 #include <KIO/Global>
+#include <KIO/JobUiDelegate>
 #include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
@@ -4296,9 +4297,13 @@ void Document::processAction(const Action *action)
                 realUrl = url;
             }
             if (realUrl.isValid()) {
-                // KRun autodeletes
-                KRun *r = new KRun(realUrl, d->m_widget);
-                r->setRunExecutables(false);
+                auto *job = new KIO::OpenUrlJob(realUrl);
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+                job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget.data()));
+#else
+                job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget.data()));
+#endif
+                job->start();
             }
         }
     } break;

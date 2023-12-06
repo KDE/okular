@@ -17,8 +17,10 @@
 
 #include <KConfigGroup>
 #include <KFormat>
+#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
-#include <KRun>
 #include <KStandardGuiItem>
 #include <QDialogButtonBox>
 #include <QIcon>
@@ -26,6 +28,7 @@
 #include <QMimeType>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <kio_version.h>
 
 #include "core/document.h"
 #include "gui/guiutils.h"
@@ -182,7 +185,13 @@ void EmbeddedFilesDialog::viewFile(Okular::EmbeddedFile *ef)
     m_openedFiles.push_back(QSharedPointer<QTemporaryFile>(tmpFile));
 
     // view the temporary file with the default application
-    new KRun(QUrl::fromLocalFile(tmpFile->fileName()), this);
+    auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()));
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+    job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+#else
+    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+#endif
+    job->start();
 }
 
 void EmbeddedFilesDialog::saveFile(Okular::EmbeddedFile *ef)

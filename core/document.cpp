@@ -2941,10 +2941,10 @@ DocumentInfo Document::documentInfo(const QSet<DocumentInfo::Key> &keys) const
             info.set(DocumentInfo::Pages, QString::number(this->pages()));
         }
 
-        d->m_documentInfo.d->values.unite(info.d->values);
-        d->m_documentInfo.d->titles.unite(info.d->titles);
-        result.d->values.unite(info.d->values);
-        result.d->titles.unite(info.d->titles);
+        d->m_documentInfo.d->values.insert(info.d->values);
+        d->m_documentInfo.d->titles.insert(info.d->titles);
+        result.d->values.insert(info.d->values);
+        result.d->titles.insert(info.d->titles);
     }
     d->m_documentInfoAskedKeys += keys;
 

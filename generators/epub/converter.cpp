@@ -9,7 +9,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QApplication> // Because of the HACK
 #include <QFileInfo>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTextDocument>
 #include <QTextDocumentFragment>
 #include <QTextFrame>
@@ -216,8 +216,10 @@ QTextDocument *Converter::convert(const QString &fileName)
         QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
         // as QTextCharFormat::anchorNames() ignores sections, replace it with <p>
-        htmlContent.replace(QRegExp(QStringLiteral("< *section")), QStringLiteral("<p"));
-        htmlContent.replace(QRegExp(QStringLiteral("< */ *section")), QStringLiteral("</p"));
+        static const QRegularExpression sectionStart {QStringLiteral("< *section")};
+        htmlContent.replace(sectionStart, QStringLiteral("<p"));
+        static const QRegularExpression sectionEnd {QStringLiteral("< */ *section")};
+        htmlContent.replace(sectionEnd, QStringLiteral("</p"));
 
         // convert svg tags to img
         const int maxHeight = mTextDocument->maxContentHeight();

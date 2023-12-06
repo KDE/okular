@@ -45,7 +45,7 @@ public:
         : QPushButton(parent)
     {
         setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        QSize size = QSize(14, 14).expandedTo(QApplication::globalStrut());
+        QSize size = QSize(14, 14);
         setFixedSize(size);
         setIcon(style()->standardIcon(QStyle::SP_DockWidgetCloseButton));
         setIconSize(size);

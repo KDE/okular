@@ -4,29 +4,30 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'frameworks/kbookmarks': '@stable'
-    'frameworks/threadweaver': '@stable'
-    'frameworks/ki18n': '@stable'
-    'frameworks/kio': '@stable'
-    'frameworks/karchive': '@stable'
-    'libraries/phonon': '@stable'
+    'frameworks/kbookmarks': '@same'
+    'frameworks/threadweaver': '@same'
+    'frameworks/ki18n': '@same'
+    'frameworks/kio': '@same'
+    'frameworks/karchive': '@same'
+    'frameworks/kparts': '@same'
+    'frameworks/ktextwidgets': '@same'
+    'libraries/phonon': '@same'
     'graphics/kdegraphics-mobipocket': '@same'
 
 - 'on': ['Linux', 'FreeBSD', 'Windows']
   'require':
-    'frameworks/khtml': '@stable'
-    'frameworks/purpose': '@stable'
-    'frameworks/breeze-icons': '@stable'
+    'frameworks/purpose': '@same'
+    'frameworks/breeze-icons': '@same'
     'graphics/libkexiv2': '@same'
 
 - 'on': ['Linux', 'FreeBSD']
   'require':
-    'plasma/plasma-activities': '@stable'
-    'frameworks/kpty': '@stable'
+    'plasma/plasma-activities': '@same'
+    'frameworks/kpty': '@same'
 
 - 'on': ['Android']
   'require':
-    'frameworks/kirigami': '@stable'
+    'frameworks/kirigami': '@same'
 
 Options:
   cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'

@@ -4,11 +4,11 @@ variables:
 include:
   - project: sysadmin/ci-utilities
     file:
-      - /gitlab-templates/android.yml
-      - /gitlab-templates/linux.yml
-      - /gitlab-templates/freebsd.yml
-      - /gitlab-templates/windows.yml
-      - /gitlab-templates/craft-android-apks.yml
+      - /gitlab-templates/android-qt6.yml
+      - /gitlab-templates/linux-qt6.yml
+      - /gitlab-templates/freebsd-qt6.yml
+      - /gitlab-templates/windows-qt6.yml
+      - /gitlab-templates/craft-android-qt6-apks.yml
 
 #build_ubuntu_22_04:
 #  stage: build

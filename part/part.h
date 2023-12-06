@@ -128,7 +128,7 @@ public:
      * which config file should be used by adding a string containing "ConfigFileName=<file name>"
      * to 'args'.
      **/
-    Part(QWidget *parentWidget, QObject *parent, const QVariantList &args);
+    Part(QObject *parent, const QVariantList &args);
 
     // Destructor
     ~Part() override;

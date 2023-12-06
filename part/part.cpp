@@ -304,7 +304,7 @@ int Okular::Part::numberOfParts = 0;
 
 namespace Okular
 {
-Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
+Part::Part(QObject *parent, const QVariantList &args)
     : KParts::ReadWritePart(parent)
     , m_tempfile(nullptr)
     , m_documentOpenWithPassword(false)
@@ -317,7 +317,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     , m_cliPresentation(false)
     , m_cliPrint(false)
     , m_cliPrintAndExit(false)
-    , m_embedMode(detectEmbedMode(parentWidget, parent, args))
+    , m_embedMode(detectEmbedMode(widget(), parent, args))
     , m_generatorGuiClient(nullptr)
     , m_keeper(nullptr)
 {
@@ -351,7 +351,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     const QStringList iconDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics"), QStandardPaths::LocateDirectory);
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << iconDirs);
 
-    m_sidebar = new Sidebar(parentWidget);
+    m_sidebar = new Sidebar(widget());
     setWidget(m_sidebar);
     connect(m_sidebar, &Sidebar::urlsDropped, this, &Part::handleDroppedUrls);
 

@@ -8,10 +8,9 @@
 
 #include <QDataStream>
 #include <QFile>
-#include <QTextCodec>
 
-#include <KEncodingProber>
 #include <QDebug>
+#include <QStringDecoder>
 
 #include "debug_txt.h"
 
@@ -39,34 +38,9 @@ Document::~Document()
 
 QString Document::toUnicode(const QByteArray &array)
 {
-    QByteArray encoding;
-    KEncodingProber prober(KEncodingProber::Universal);
-    int charsFeeded = 0;
-    int chunkSize = 3000; // ~= number of symbols in page.
-
-    // Try to detect encoding.
-    while (encoding.isEmpty() && charsFeeded < array.size()) {
-        prober.feed(array.mid(charsFeeded, chunkSize));
-        charsFeeded += chunkSize;
-
-        // No more data to feed - take what we have
-        if (array.size() <= chunkSize) {
-            encoding = prober.encoding();
-        }
-
-        if (prober.confidence() >= 0.5) {
-            encoding = prober.encoding();
-            break;
-        }
-    }
-
-    if (encoding.isEmpty()) {
-        return QString();
-    }
-
-    qCDebug(OkularTxtDebug) << "Detected" << prober.encoding() << "encoding"
-                            << "based on" << charsFeeded << "chars";
-    return QTextCodec::codecForName(encoding)->toUnicode(array);
+    auto encoding = QStringConverter::encodingForHtml(array);
+    QStringDecoder decoder {encoding.value_or(QStringConverter::Encoding::Utf8)};
+    return decoder.decode(array);
 }
 
 Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt", QtWarningMsg)

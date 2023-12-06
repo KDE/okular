@@ -232,7 +232,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
 
     QStandardItemModel items;
     QHash<QString, Okular::CertificateInfo> nickToCert;
-    int minWidth = -1;
+    qsizetype minWidth = -1;
     bool showIcons = false;
     int selectIndex = 0;
     auto config = KSharedConfig::openConfig();

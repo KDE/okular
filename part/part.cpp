@@ -200,11 +200,6 @@ static QAction *actionForExportFormat(const Okular::ExportFormat &format, QObjec
     return act;
 }
 
-static QString KStandardActionName(KStandardAction::StandardAction id)
-{
-    return QString::fromLatin1(KStandardAction::name(id));
-}
-
 static KCompressionDevice::CompressionType compressionTypeFor(const QString &mime_to_check)
 {
     // The compressedMimeMap is here in case you have a very old shared mime database
@@ -3153,10 +3148,10 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     const bool isCurrentPage = page && page->number() == m_document->viewport().pageNumber;
 
     if (!m_showMenuBarAction) {
-        m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardActionName(KStandardAction::ShowMenubar));
+        m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
     }
     if (!m_showFullScreenAction) {
-        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardActionName(KStandardAction::FullScreen));
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
     }
 
     QMenu popup;
@@ -3295,7 +3290,7 @@ void Part::slotUpdateHamburgerMenu()
         menu = new QMenu(widget());
         m_hamburgerMenuAction->setMenu(menu);
         if (!m_showMenuBarAction) {
-            m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardActionName(KStandardAction::ShowMenubar));
+            m_showMenuBarAction = findActionInKPartHierarchy<KToggleAction>(KStandardAction::name(KStandardAction::ShowMenubar));
         }
         m_hamburgerMenuAction->setShowMenuBarAction(m_showMenuBarAction);
     } else {
@@ -3332,8 +3327,8 @@ void Part::slotUpdateHamburgerMenu()
     // To retrieve an action, it is fastest to use a direct pointer if available (m_action), otherwise use
     // ac->action(actionName) and if the action isn't in the actionCollection() of this part,
     // use findActionInKPartHierarchy(actionName).
-    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::Open)));
-    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::OpenRecent)));
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Open)));
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::OpenRecent)));
     menu->addAction(m_save);
     menu->addAction(m_saveAs);
     menu->addSeparator();
@@ -3347,11 +3342,11 @@ void Part::slotUpdateHamburgerMenu()
     if (!visibleMainToolbar || visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites")))) {
         menu->addAction(ac->action(QStringLiteral("mouse_toggle_annotate")));
     }
-    menu->addAction(ac->action(KStandardActionName(KStandardAction::Undo)));
-    menu->addAction(ac->action(KStandardActionName(KStandardAction::Redo)));
+    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Undo)));
+    menu->addAction(ac->action(KStandardAction::name(KStandardAction::Redo)));
     menu->addSeparator();
 
-    menu->addAction(findActionInKPartHierarchy(KStandardActionName(KStandardAction::Print)));
+    menu->addAction(findActionInKPartHierarchy(KStandardAction::name(KStandardAction::Print)));
     menu->addAction(m_printPreview);
     menu->addSeparator();
     menu->addAction(ac->action(QStringLiteral("add_digital_signature")));
@@ -3369,7 +3364,7 @@ void Part::slotUpdateHamburgerMenu()
     }
     auto curatedViewMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("page-2sides")), menuBar ? menuBar->actions().at(1)->text() : QStringLiteral("View"));
     if (!m_showFullScreenAction) {
-        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardActionName(KStandardAction::FullScreen));
+        m_showFullScreenAction = findActionInKPartHierarchy<KToggleFullScreenAction>(KStandardAction::name(KStandardAction::FullScreen));
     }
     curatedViewMenu->addAction(m_showFullScreenAction);
     curatedViewMenu->addAction(m_showPresentation);

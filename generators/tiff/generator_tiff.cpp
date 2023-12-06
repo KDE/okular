@@ -390,7 +390,7 @@ Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
             printer.newPage();
         }
 
-        QSize targetSize = printer.pageRect().size();
+        QSize targetSize = printer.pageRect(QPrinter::Unit::DevicePixel).size().toSize();
 
         if ((image.width() < targetSize.width()) && (image.height() < targetSize.height())) {
             // draw small images at 100% (don't scale up)

@@ -162,7 +162,7 @@ protected:                                                                      
     virtual void focusInEvent(QFocusEvent *event) override;                                                                                                                                                                                    \
     virtual void focusOutEvent(QFocusEvent *event) override;                                                                                                                                                                                   \
     virtual void leaveEvent(QEvent *event) override;                                                                                                                                                                                           \
-    virtual void enterEvent(QEvent *event) override;
+    virtual void enterEvent(QEnterEvent *event) override;
 
 class PushButtonEdit : public QPushButton, public FormWidgetIface
 {

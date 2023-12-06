@@ -949,12 +949,11 @@ void PresentationWidget::resizeEvent(QResizeEvent *re)
     // END Content area
 }
 
-void PresentationWidget::enterEvent(QEvent *e)
+void PresentationWidget::enterEvent(QEnterEvent *e)
 {
     if (!m_topBar->isHidden()) {
-        QEnterEvent *ee = static_cast<QEnterEvent *>(e);
         // This can happen when we exited the widget via a "tooltip" and the tooltip disappears
-        if (ee->y() > (m_topBar->height() + 1)) {
+        if (e->y() > (m_topBar->height() + 1)) {
             showTopBar(false);
         }
     }

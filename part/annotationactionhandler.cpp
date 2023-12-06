@@ -759,7 +759,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     ac->setDefaultShortcut(aFreehandLine, Qt::ALT + Qt::Key_8);
     ac->setDefaultShortcut(aArrow, Qt::ALT + Qt::Key_9);
     ac->setDefaultShortcut(aRectangle, Qt::ALT + Qt::Key_0);
-    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_B));
+    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence((Qt::CTRL | Qt::SHIFT) + Qt::Key_B));
     d->updateConfigActions();
 
     connect(Okular::Settings::self(), &Okular::Settings::primaryAnnotationToolBarChanged, this, &AnnotationActionHandler::setupAnnotationToolBarVisibilityAction);

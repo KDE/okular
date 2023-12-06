@@ -14,8 +14,8 @@
 
 #include <QLoggingCategory>
 #if defined(WITH_KPTY)
-#include <KPty/kptydevice.h>
-#include <KPty/kptyprocess.h>
+#include <KPtyDevice>
+#include <KPtyProcess>
 #endif
 
 #include "debug_comicbook.h"

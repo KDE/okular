@@ -502,10 +502,10 @@ void PresentationWidget::setupActions()
 {
     addAction(m_ac->action(QStringLiteral("first_page")));
     addAction(m_ac->action(QStringLiteral("last_page")));
-    addAction(m_ac->action(QString::fromLocal8Bit(KStandardAction::name(KStandardAction::Prior))));
-    addAction(m_ac->action(QString::fromLocal8Bit(KStandardAction::name(KStandardAction::Next))));
-    addAction(m_ac->action(QString::fromLocal8Bit(KStandardAction::name(KStandardAction::DocumentBack))));
-    addAction(m_ac->action(QString::fromLocal8Bit(KStandardAction::name(KStandardAction::DocumentForward))));
+    addAction(m_ac->action(KStandardAction::name(KStandardAction::Prior)));
+    addAction(m_ac->action(KStandardAction::name(KStandardAction::Next)));
+    addAction(m_ac->action(KStandardAction::name(KStandardAction::DocumentBack)));
+    addAction(m_ac->action(KStandardAction::name(KStandardAction::DocumentForward)));
 
     QAction *action = m_ac->action(QStringLiteral("switch_blackscreen_mode"));
     connect(action, &QAction::toggled, this, &PresentationWidget::toggleBlackScreenMode);

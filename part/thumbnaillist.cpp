@@ -909,7 +909,7 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
 
 void ThumbnailListPrivate::wheelEvent(QWheelEvent *e)
 {
-    const ThumbnailWidget *item = itemFor(e->pos());
+    const ThumbnailWidget *item = itemFor(e->position().toPoint());
     if (!item) { // wheeling on the spacing between items
         e->ignore();
         return;
@@ -918,7 +918,9 @@ void ThumbnailListPrivate::wheelEvent(QWheelEvent *e)
     const QRect r = item->visibleRect();
     const int margin = ThumbnailWidget::margin();
 
-    if (r.contains(e->pos() - QPoint(margin / 2, margin / 2)) && e->orientation() == Qt::Vertical && e->modifiers() == Qt::ControlModifier) {
+    Qt::Orientation orientation {qAbs(e->angleDelta().x()) > qAbs(e->angleDelta().y()) ? Qt::Horizontal : Qt::Vertical};
+
+    if (r.contains(e->position().toPoint() - QPoint(margin / 2, margin / 2)) && orientation == Qt::Vertical && e->modifiers() == Qt::ControlModifier) {
         m_document->setZoom(e->angleDelta().y());
     } else {
         e->ignore();

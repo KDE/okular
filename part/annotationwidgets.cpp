@@ -73,7 +73,7 @@ PixmapPreviewSelector::PixmapPreviewSelector(QWidget *parent, PreviewPosition po
     setFocusPolicy(Qt::TabFocus);
     setFocusProxy(m_comboItems);
 
-    connect(m_comboItems, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this, &PixmapPreviewSelector::iconComboChanged);
+    connect(m_comboItems, &QComboBox::currentIndexChanged, this, [this](int index) { iconComboChanged(m_comboItems->itemText(index)); });
     connect(m_comboItems, &QComboBox::editTextChanged, this, &PixmapPreviewSelector::iconComboChanged);
     connect(m_stampPushButton, &QPushButton::clicked, this, &PixmapPreviewSelector::selectCustomStamp);
 }

@@ -543,7 +543,7 @@ void PageView::setupBaseActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("zoom_to"), d->aZoom);
     d->aZoom->setEditable(true);
     d->aZoom->setMaxComboViewCount(kZoomValues.size() + 3);
-    connect(d->aZoom, QOverload<QAction *>::of(&KSelectAction::triggered), this, &PageView::slotZoom);
+    connect(d->aZoom, &KSelectAction::triggered, this, &PageView::slotZoom);
     updateZoomText();
 
     d->aZoomIn = KStandardAction::zoomIn(this, SLOT(slotZoomIn()), ac);

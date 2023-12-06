@@ -277,7 +277,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->posterImagePage->setCursor(Qt::PointingHandCursor);
 
     d->pageLayout = new QStackedLayout(this);
-    d->pageLayout->setMargin(0);
+    d->pageLayout->setContentsMargins({});
     d->pageLayout->setSpacing(0);
     d->pageLayout->addWidget(playerPage);
     d->pageLayout->addWidget(d->posterImagePage);
@@ -387,7 +387,7 @@ bool VideoWidget::eventFilter(QObject *object, QEvent *event)
                 QWheelEvent *we = static_cast<QWheelEvent *>(event);
 
                 // forward wheel events to parent widget
-                QWheelEvent *copy = new QWheelEvent(we->pos(), we->globalPos(), we->angleDelta().y(), we->buttons(), we->modifiers(), we->orientation());
+                QWheelEvent *copy = new QWheelEvent(we->position(), we->globalPosition(), we->pixelDelta(), we->angleDelta(), we->buttons(), we->modifiers(), we->phase(), we->inverted(), we->source());
                 QCoreApplication::postEvent(parentWidget(), copy);
             }
             break;

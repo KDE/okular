@@ -13,7 +13,7 @@
 
 //#include "synctex/synctex_parser.h"
 
-#include <poppler-qt5.h>
+#include <poppler-qt6.h>
 #include <poppler-version.h>
 
 #define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
@@ -129,7 +129,7 @@ private:
     // fetch the poppler page form fields
     QList<Okular::FormField *> getFormFields(Poppler::Page *popplerPage);
 
-    Okular::TextPage *abstractTextPage(const QList<Poppler::TextBox *> &text, double height, double width, int rot);
+    Okular::TextPage *abstractTextPage(const std::vector<std::unique_ptr<Poppler::TextBox>> &text, double height, double width, int rot);
 
     void resolveMediaLinkReferences(Okular::Page *page);
     void resolveMediaLinkReference(Okular::Action *action);
@@ -137,7 +137,7 @@ private:
     bool setDocumentRenderHints();
 
     // poppler dependent stuff
-    Poppler::Document *pdfdoc;
+    std::unique_ptr<Poppler::Document> pdfdoc;
 
     void xrefReconstructionHandler();
 

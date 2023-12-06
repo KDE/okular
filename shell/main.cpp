@@ -37,12 +37,6 @@ int main(int argc, char **argv)
 #endif
 
     /**
-     * enable high dpi support
-     */
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-
-    /**
      * allow fractional scaling
      */
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);

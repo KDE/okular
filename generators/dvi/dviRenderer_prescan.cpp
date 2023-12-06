@@ -388,7 +388,7 @@ void dviRenderer::prescan_ParsePSSpecial(const QString &cp)
                 }
                 prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section(QLatin1Char('('), 2, 2).section(QLatin1Char(')'), 0, 0)),
                                                 cp.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0),
-                                                childrenNumberAndMoreStuff.leftRef(indexOfFirstNonDigit).toUInt()));
+                                                QStringView {childrenNumberAndMoreStuff}.left(indexOfFirstNonDigit).toUInt()));
             }
             return;
         }
@@ -513,7 +513,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString &cp)
     return;
 }
 
-void dviRenderer::prescan_ParseSourceSpecial(const QString &cp)
+void dviRenderer::prescan_ParseSourceSpecial(QStringView cp)
 {
     // if no rendering takes place, i.e. when the DVI file is first
     // loaded, generate a DVI_SourceFileAnchor. These anchors are used
@@ -527,9 +527,9 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString &cp)
             break;
         }
     }
-    quint32 sourceLineNumber = cp.leftRef(j).toUInt();
+    quint32 sourceLineNumber = cp.left(j).toUInt();
     QFileInfo fi1(dviFile->filename);
-    QString sourceFileName = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absoluteFilePath();
+    QString sourceFileName = QFileInfo(fi1.dir(), cp.mid(j).trimmed().toString()).absoluteFilePath();
     Length l;
     l.setLength_in_inch(currinf.data.dvi_v / (resolutionInDPI * shrinkfactor));
     DVI_SourceFileAnchor sfa(sourceFileName, sourceLineNumber, current_page + 1, l);

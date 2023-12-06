@@ -50,7 +50,7 @@ public:
 
 /* text comparison functions */
 
-static bool CaseInsensitiveCmpFn(const QStringRef &from, const QStringRef &to)
+static bool CaseInsensitiveCmpFn(QStringView from, QStringView to)
 {
 #ifdef DEBUG_TEXTPAGE
     qDebug(OkularCoreDebug) << from << ":" << to << "(case insensitive)";
@@ -58,7 +58,7 @@ static bool CaseInsensitiveCmpFn(const QStringRef &from, const QStringRef &to)
     return from.compare(to, Qt::CaseInsensitive) == 0;
 }
 
-static bool CaseSensitiveCmpFn(const QStringRef &from, const QStringRef &to)
+static bool CaseSensitiveCmpFn(QStringView from, QStringView to)
 {
 #ifdef DEBUG_TEXTPAGE
     qDebug(OkularCoreDebug) << from << ":" << to << "(case sensitive)";
@@ -766,7 +766,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
             // we have equal (or less than) area of the query left as the length of the current
             // entity
             const int min = qMin(queryLeft, matchingLen - offset);
-            if (comparer(str.midRef(offset, min), query.midRef(j, min))) {
+            if (comparer(QStringView {str}.mid(offset, min), QStringView {query}.mid(j, min))) {
                 matchedLen = min;
                 break;
             }
@@ -873,7 +873,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
         for (int matchingLen = strLen; matchingLen >= adjustedLen; matchingLen--) {
             const int hyphenOffset = (strLen - matchingLen);
             const int min = qMin(queryLeft + hyphenOffset, offset);
-            if (comparer(str.midRef(offset - min, min - hyphenOffset), query.midRef(j - min + hyphenOffset, min - hyphenOffset))) {
+            if (comparer(QStringView {str}.mid(offset - min, min - hyphenOffset), QStringView {query}.mid(j - min + hyphenOffset, min - hyphenOffset))) {
                 matchedLen = min - hyphenOffset;
                 break;
             }

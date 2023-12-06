@@ -337,14 +337,16 @@ EditTextCommand::EditTextCommand(const QString &newContents, int newCursorPos, c
     if (m_prevCursorPos != m_prevAnchorPos) {
         qCDebug(OkularCoreDebug) << "OtherEdit, selection";
         m_editType = OtherEdit;
-    } else if (newContentsRightOfCursor() == oldContentsRightOfCursor() && newContentsLeftOfCursor() == oldContentsLeftOfCursor().left(oldContentsLeftOfCursor().length() - 1) && oldContentsLeftOfCursor().rightRef(1) != QLatin1Char('\n')) {
+    } else if (newContentsRightOfCursor() == oldContentsRightOfCursor() && newContentsLeftOfCursor() == oldContentsLeftOfCursor().left(oldContentsLeftOfCursor().length() - 1) &&
+               QStringView {oldContentsLeftOfCursor()}.right(1) != QLatin1Char('\n')) {
         qCDebug(OkularCoreDebug) << "CharBackspace";
         m_editType = CharBackspace;
     } else if (newContentsLeftOfCursor() == oldContentsLeftOfCursor() && newContentsRightOfCursor() == oldContentsRightOfCursor().right(oldContentsRightOfCursor().length() - 1) &&
-               oldContentsRightOfCursor().leftRef(1) != QLatin1Char('\n')) {
+               QStringView {oldContentsRightOfCursor()}.left(1) != QLatin1Char('\n')) {
         qCDebug(OkularCoreDebug) << "CharDelete";
         m_editType = CharDelete;
-    } else if (newContentsRightOfCursor() == oldContentsRightOfCursor() && newContentsLeftOfCursor().left(newContentsLeftOfCursor().length() - 1) == oldContentsLeftOfCursor() && newContentsLeftOfCursor().rightRef(1) != QLatin1Char('\n')) {
+    } else if (newContentsRightOfCursor() == oldContentsRightOfCursor() && newContentsLeftOfCursor().left(newContentsLeftOfCursor().length() - 1) == oldContentsLeftOfCursor() &&
+               QStringView {newContentsLeftOfCursor()}.right(1) != QLatin1Char('\n')) {
         qCDebug(OkularCoreDebug) << "CharInsert";
         m_editType = CharInsert;
     } else {

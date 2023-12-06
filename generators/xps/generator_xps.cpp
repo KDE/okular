@@ -126,7 +126,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
         while ((*curPos < data.length()) && (!data.at(*curPos).isSpace()) && (data.at(*curPos) != QLatin1Char(',') && (!data.at(*curPos).isLetter() || data.at(*curPos) == QLatin1Char('e')))) {
             (*curPos)++;
         }
-        token->number = data.midRef(start, *curPos - start).toDouble();
+        token->number = QStringView {data}.mid(start, *curPos - start).toDouble();
         token->type = abtNumber;
 
     } else if (ch == QLatin1Char(',')) {
@@ -168,7 +168,7 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
 /**
     Read point (two reals delimited by comma) from string
 */
-static QPointF getPointFromString(const QString &string)
+static QPointF getPointFromString(QStringView string)
 {
     const int commaPos = string.indexOf(QLatin1Char(QLatin1Char(',')));
     if (commaPos == -1 || string.indexOf(QLatin1Char(QLatin1Char(',')), commaPos + 1) != -1) {
@@ -177,14 +177,14 @@ static QPointF getPointFromString(const QString &string)
 
     QPointF result;
     bool ok = false;
-    QStringRef ref = string.midRef(0, commaPos);
-    result.setX(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
+    QStringView ref = string.mid(0, commaPos);
+    result.setX(ref.toDouble(&ok));
     if (!ok) {
         return QPointF();
     }
 
-    ref = string.midRef(commaPos + 1);
-    result.setY(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
+    ref = string.mid(commaPos + 1);
+    result.setY(ref.toDouble(&ok));
     if (!ok) {
         return QPointF();
     }

@@ -1811,7 +1811,7 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
             const QStringList parameters = dest.split(QLatin1Char('&'));
             for (const QString &parameter : parameters) {
                 if (parameter.startsWith(QStringLiteral("page="), Qt::CaseInsensitive)) {
-                    page = dest.midRef(5).toInt(&ok);
+                    page = QStringView {dest}.mid(5).toInt(&ok);
                 }
             }
         }

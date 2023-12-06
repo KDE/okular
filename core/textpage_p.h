@@ -35,7 +35,7 @@ typedef QList<TinyTextEntity *> TextList;
  * Returns whether the two strings match.
  * Satisfies the condition that if two strings match then their lengths are equal.
  */
-typedef bool (*TextComparisonFunction)(const QStringRef &from, const QStringRef &to);
+typedef bool (*TextComparisonFunction)(QStringView from, const QStringView to);
 
 /**
  * A list of RegionText. It keeps a bunch of TextList with their bounding rectangles

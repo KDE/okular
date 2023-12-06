@@ -190,7 +190,7 @@ QString HelperEntityDecoder::decode(const QString &entity) const
         return QLatin1String("");
     } else if (entity[0] == QLatin1Char('#')) {
         bool valid;
-        unsigned int ascode = entity.midRef(1).toUInt(&valid);
+        unsigned int ascode = QStringView {entity}.mid(1).toUInt(&valid);
 
         if (!valid) {
             qWarning("HelperEntityDecoder::decode: could not decode HTML entity '%s'", qPrintable(entity));

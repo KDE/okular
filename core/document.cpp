@@ -2391,7 +2391,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     int fd = -1;
     if (url.scheme() == QLatin1String("fd")) {
         bool ok;
-        fd = url.path().midRef(1).toInt(&ok);
+        fd = QStringView {url.path()}.mid(1).toInt(&ok);
         if (!ok) {
             return OpenError;
         }

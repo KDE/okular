@@ -55,7 +55,7 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
         return QVariant();
     }
     bool ok;
-    quint16 recnum = name.path().midRef(1).toUShort(&ok);
+    quint16 recnum = QStringView {name.path()}.mid(1).toUShort(&ok);
     if (!ok || recnum >= doc->imageCount()) {
         return QVariant();
     }

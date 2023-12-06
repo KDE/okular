@@ -232,7 +232,7 @@ private:
     void prescan_ParsePSQuoteSpecial(const QString &cp);
     void prescan_ParsePSSpecial(const QString &cp);
     void prescan_ParsePSFileSpecial(const QString &cp);
-    void prescan_ParseSourceSpecial(const QString &cp);
+    void prescan_ParseSourceSpecial(QStringView cp);
     void prescan_setChar(unsigned int ch);
 
     /* */

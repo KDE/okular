@@ -187,7 +187,7 @@ bool QUnpluck::open(const QString &fileName)
     for (int i = 0; i < mLinks.count(); ++i) {
         mLinks[i].page = pageHash[mLinks[i].page];
         if (mLinks[i].url.startsWith(QLatin1String("page:"))) {
-            int page = mLinks[i].url.midRef(5).toInt();
+            int page = QStringView {mLinks[i].url}.mid(5).toInt();
             Okular::DocumentViewport viewport(pageHash[page]);
             viewport.rePos.normalizedX = 0;
             viewport.rePos.normalizedY = 0;

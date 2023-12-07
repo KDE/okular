@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<suppressions>
+<suppress>
+<id>unusedPrivateFunction</id>
+<fileName>core/action.h</fileName>
+<!-- a d_func per class -->
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/action.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/annotations.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>unusedPrivateFunction</id>
+<fileName>core/annotations.h</fileName>
+<!-- a d_func per class -->
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/form.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/form.cpp</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/textdocumentgenerator_p.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>duplInheritedMember</id>
+<fileName>core/textdocumentgenerator.h</fileName>
+<symbolName>d_func</symbolName>
+</suppress>
+<suppress>
+<id>useStlAlgorithm</id>
+</suppress>
+</suppressions>

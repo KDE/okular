@@ -143,7 +143,6 @@
         "Description[x-test]": "xxA DVI file rendererxx",
         "Description[zh_CN]": "DVI 文件的渲染程序",
         "Description[zh_TW]": "DVI 檔成像器",
-        "Id": "okular_dvi",
         "License": "GPL",
         "MimeTypes": [
             "application/x-dvi"

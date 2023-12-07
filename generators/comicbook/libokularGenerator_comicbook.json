@@ -144,7 +144,6 @@
         "Description[x-test]": "xxA renderer for various comic book formatsxx",
         "Description[zh_CN]": "支持多种漫画书格式的渲染程序",
         "Description[zh_TW]": "多種漫畫書的成像器",
-        "Id": "okular_comicbook",
         "License": "GPL",
         "MimeTypes": [
             "application/x-cbz",

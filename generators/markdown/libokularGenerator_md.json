@@ -98,7 +98,6 @@
         "Copyright[x-test]": "xx© 2017 Julian Wolffxx",
         "Copyright[zh_CN]": "© 2017 Julian Wolff",
         "Copyright[zh_TW]": "© 2017 Julian Wolff",
-        "Id": "okular_markdown",
         "License": "GPL",
         "MimeTypes": [
             "text/markdown",

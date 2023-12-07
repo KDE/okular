@@ -145,7 +145,6 @@
         "Description[x-test]": "xxA G3/G4 fax document backendxx",
         "Description[zh_CN]": "G3/G4 传真文档的后端程序",
         "Description[zh_TW]": "G3/G4 fax 文件後端介面",
-        "Id": "okular_fax",
         "License": "GPL",
         "MimeTypes": [
             "image/fax-g3",

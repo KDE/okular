@@ -248,7 +248,6 @@
         "Description[x-test]": "xxA simple image backendxx",
         "Description[zh_CN]": "简易图像后端程序",
         "Description[zh_TW]": "簡易的圖片後端介面",
-        "Id": "okular_kimgio",
         "License": "GPL",
         "MimeTypes": [
             "image/bmp",

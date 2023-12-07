@@ -247,7 +247,6 @@
         "Description[x-test]": "xxAn XPS backendxx",
         "Description[zh_CN]": "XPS 后端程序",
         "Description[zh_TW]": "XPS 後端介面",
-        "Id": "okular_xps",
         "License": "GPL",
         "MimeTypes": [
             "application/oxps",

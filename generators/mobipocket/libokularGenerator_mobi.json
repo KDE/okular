@@ -144,7 +144,6 @@
         "Description[x-test]": "xxA mobipocket backendxx",
         "Description[zh_CN]": "Mobipocket 后端程序",
         "Description[zh_TW]": "Mobipocket 後端介面",
-        "Id": "okular_mobi",
         "License": "GPL",
         "MimeTypes": [
             "application/x-mobipocket-ebook"

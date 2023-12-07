@@ -144,7 +144,6 @@
         "Description[x-test]": "xxA renderer for FictionBook eBooksxx",
         "Description[zh_CN]": "FictionBook 电子书的渲染程序",
         "Description[zh_TW]": "FictionBook 電子書成像器",
-        "Id": "okular_fictionbook",
         "License": "GPL",
         "MimeTypes": [
             "application/x-fictionbook+xml"

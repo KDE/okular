@@ -145,7 +145,6 @@
         "Description[x-test]": "xxDjVu backend based on DjVuLibrexx",
         "Description[zh_CN]": "基于 DjVuLibre 的 DjVu 后端程序",
         "Description[zh_TW]": "基於 DjVuLibre 的 DjVu 後端介面",
-        "Id": "okular_djvu",
         "License": "GPL",
         "MimeTypes": [
             "image/vnd.djvu"

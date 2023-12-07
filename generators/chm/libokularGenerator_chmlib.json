@@ -195,7 +195,6 @@
         "Description[x-test]": "xxA Microsoft Windows help file rendererxx",
         "Description[zh_CN]": "Microsoft Windows 帮助文件的渲染程序",
         "Description[zh_TW]": "Microsoft Windows 說明檔成像器",
-        "Id": "okular_chm",
         "License": "GPL",
         "MimeTypes": [
             "application/x-chm"

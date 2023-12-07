@@ -144,7 +144,6 @@
         "Description[x-test]": "xxAn EPub backendxx",
         "Description[zh_CN]": "EPub 的后端程序",
         "Description[zh_TW]": "EPub 後端介面",
-        "Id": "okular_epub",
         "License": "GPL",
         "MimeTypes": [
             "application/epub+zip"

@@ -144,7 +144,6 @@
         "Description[x-test]": "xxA renderer for Plucker eBooksxx",
         "Description[zh_CN]": "Plucker 电子书渲染程序",
         "Description[zh_TW]": "Plucker 電子書成像器",
-        "Id": "okular_plucker",
         "License": "GPL",
         "MimeTypes": [
             "application/prs.plucker"

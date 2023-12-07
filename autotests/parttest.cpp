@@ -2144,6 +2144,10 @@ void PartTest::testLinkWithCrop()
     // Trim the page
     simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
 
+    // We seem to have a trimmed view where we just by sheer luck ends up with mouse over a link at least sometimes
+    // So move the mouse
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, width * 0.1));
+
     // The cursor should be normal again
     QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
 

@@ -46,5 +46,5 @@ endif()
 
 install(TARGETS okularkirigami ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(FILES package/metadata.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} RENAME org.kde.okular.kirigami.desktop)
+install(FILES package/metadata.desktop DESTINATION ${KDE_INSTALL_APPDIR} RENAME org.kde.okular.kirigami.desktop)
 install( FILES org.kde.okular.kirigami.appdata.xml DESTINATION  ${KDE_INSTALL_METAINFODIR} )

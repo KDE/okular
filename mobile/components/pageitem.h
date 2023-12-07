@@ -116,7 +116,7 @@ public:
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);
 
-    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
     QSGNode *updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *) override;
 

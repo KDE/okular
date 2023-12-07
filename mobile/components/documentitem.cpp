@@ -19,8 +19,6 @@
 #include <core/page.h>
 
 #include "gui/signatureguiutils.h"
-#include "gui/signaturemodel.h"
-#include "gui/tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent)

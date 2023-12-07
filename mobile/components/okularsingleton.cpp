@@ -5,27 +5,25 @@
 */
 
 #include "okularsingleton.h"
-#include <KServiceTypeTrader>
+#include <KPluginMetaData>
 #include <QMimeDatabase>
 #include <QMimeType>
 
-OkularSingleton::OkularSingleton()
-{
-}
+OkularSingleton::OkularSingleton() = default;
 
 QStringList OkularSingleton::nameFilters() const
 {
     QStringList supportedPatterns;
 
-    QString constraint(QStringLiteral("(Library == 'okularpart')"));
-    QLatin1String basePartService("KParts/ReadOnlyPart");
-    KService::List offers = KServiceTypeTrader::self()->query(basePartService, constraint);
-    KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
+    const auto plugins = KPluginMetaData::findPlugins(QStringLiteral("okular/generators"));
+    if (plugins.isEmpty()) {
+        qWarning() << "okularpart plugin not found. Required to get nameFilters";
+        return supportedPatterns;
+    }
 
     QMimeDatabase md;
-    for (; it != itEnd; ++it) {
-        KService::Ptr service = *it;
-        const QStringList mimeTypes = service->mimeTypes();
+    for (const auto &plugin : plugins) {
+        const QStringList mimeTypes = plugin.mimeTypes();
 
         for (const auto &mimeName : mimeTypes) {
             const QStringList suffixes = md.mimeTypeForName(mimeName).suffixes();

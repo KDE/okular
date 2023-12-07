@@ -14,6 +14,9 @@
 #include <core/document.h>
 #include <core/observer.h>
 
+#include "gui/signaturemodel.h"
+#include "gui/tocmodel.h"
+
 namespace Okular
 {
 class Document;

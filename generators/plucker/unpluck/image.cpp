@@ -359,6 +359,10 @@ bool TranscribeMultiImageRecord(plkr_Document *doc, QImage &image, unsigned char
     cols = (bytes[8] << 8) + bytes[9];
     rows = (bytes[10] << 8) + bytes[11];
 
+    if (cols == 0 || rows == 0) {
+        return false;
+    }
+
     cells = (PALMPIX *)calloc(cols * rows, sizeof(PALMPIX));
 
     height = 0;

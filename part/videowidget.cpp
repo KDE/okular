@@ -88,12 +88,9 @@ public:
     Okular::NormalizedRect geom;
     QMediaPlayer *player;
     QVideoWidget *videoWidget;
-    // Phonon::SeekSlider *seekSlider;
     QToolBar *controlBar;
     QAction *playPauseAction;
     QAction *stopAction;
-    // QAction *seekSliderAction;
-    // QAction *seekSliderMenuAction;
     QStackedLayout *pageLayout;
     QLabel *posterImagePage;
     bool loaded : 1;
@@ -127,8 +124,6 @@ void VideoWidget::Private::load()
     player->setMedia(urlFromUrlString(movie->url(), document));
 
     connect(player, &QMediaPlayer::stateChanged, q, [this](QMediaPlayer::State s) { stateChanged(s); });
-
-    // seekSlider->setEnabled(true);
 }
 
 void VideoWidget::Private::setupPlayPauseAction(PlayPauseMode mode)
@@ -251,14 +246,6 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->stopAction = d->controlBar->addAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18nc("stop the movie playback", "Stop"), this, SLOT(stop()));
     d->stopAction->setEnabled(false);
     d->controlBar->addSeparator();
-    // d->seekSlider = new Phonon::SeekSlider(d->player->mediaObject(), d->controlBar);
-    // d->seekSliderAction = d->controlBar->addWidget(d->seekSlider);
-    // d->seekSlider->setEnabled(false);
-
-    // Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider(d->player->mediaObject(), nullptr);
-    // verticalSeekSlider->setMaximumHeight(100);
-    // d->seekSliderMenuAction = createToolBarButtonWithWidgetPopup(d->controlBar, verticalSeekSlider, QIcon::fromTheme(QStringLiteral("player-time")));
-    // d->seekSliderMenuAction->setVisible(false);
 
     d->controlBar->setVisible(movie->showControls());
 
@@ -409,20 +396,6 @@ bool VideoWidget::event(QEvent *event)
 
     return QWidget::event(event);
 }
-
-// void VideoWidget::resizeEvent(QResizeEvent *event)
-//{
-//     const QSize &s = event->size();
-//     int usedSpace = d->seekSlider->geometry().left() + d->seekSlider->iconSize().width();
-//  try to give the slider at least 30px of space
-//    if (s.width() < (usedSpace + 30)) {
-//        d->seekSliderAction->setVisible(false);
-//        d->seekSliderMenuAction->setVisible(true);
-//    } else {
-//        d->seekSliderAction->setVisible(true);
-//        d->seekSliderMenuAction->setVisible(false);
-//    }
-//}
 
 #else
 

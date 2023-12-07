@@ -233,6 +233,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QStandardItemModel items;
     QHash<QString, Okular::CertificateInfo> nickToCert;
     int minWidth = -1;
+    bool showIcons = false;
     int selectIndex = 0;
     auto config = KSharedConfig::openConfig();
     const QString lastNick = config->group(ConfigGroup).readEntry<QString>(ConfigLastKeyNick, QString());
@@ -245,6 +246,22 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
 
         minWidth = std::max(minWidth, std::max(cert.nickName().size(), emailAddress.size() + commonName.size()));
 
+        switch (cert.keyLocation()) {
+        case Okular::CertificateInfo::KeyLocation::Computer:
+            item->setData(QIcon::fromTheme(QStringLiteral("view-certificate")), Qt::DecorationRole);
+            showIcons = true;
+            break;
+        case Okular::CertificateInfo::KeyLocation::HardwareToken:
+            /* Better icon requested in https://bugs.kde.org/show_bug.cgi?id=428278*/
+            item->setData(QIcon::fromTheme(QStringLiteral("auth-sim")), Qt::DecorationRole);
+            showIcons = true;
+            break;
+        case Okular::CertificateInfo::KeyLocation::Unknown:; //
+            break;
+        case Okular::CertificateInfo::KeyLocation::Other:
+            break;
+        }
+
         item->setData(cert.nickName(), Qt::DisplayRole);
         item->setData(cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty), Qt::ToolTipRole);
         item->setEditable(false);
@@ -256,6 +273,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     SelectCertificateDialog dialog(pageView);
+    auto keyDelegate = new KeyDelegate(dialog.ui->list);
+    keyDelegate->showIcon = showIcons;
+    dialog.ui->list->setItemDelegate(keyDelegate);
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&items);
@@ -446,7 +466,6 @@ SelectCertificateDialog::SelectCertificateDialog(QWidget *parent)
     , ui {std::make_unique<Ui_SelectCertificateDialog>()}
 {
     ui->setupUi(this);
-    ui->list->setItemDelegate(new KeyDelegate(ui->list));
 }
 SelectCertificateDialog::~SelectCertificateDialog() = default;
 
@@ -482,6 +501,9 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 
     auto textRect = option.rect;
     int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, &option, option.widget) + 1;
+    if (showIcon) {
+        textRect.adjust(textRect.height() + textMargin, 0, 0, 0); // make space for icon
+    }
     textRect.adjust(textMargin, 0, -textMargin, 0);
 
     QRect topHalf {textRect.x(), textRect.y(), textRect.width(), textRect.height() / 2};
@@ -490,6 +512,11 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::DisplayRole).toString());
     style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(Qt::UserRole + 1).toString());
     style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::UserRole).toString());
+    if (showIcon) {
+        if (auto icon = index.data(Qt::DecorationRole).value<QIcon>(); !icon.isNull()) {
+            icon.paint(painter, QRect(option.rect.topLeft(), QSize(textRect.height(), textRect.height())));
+        }
+    }
 }
 }
 

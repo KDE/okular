@@ -116,7 +116,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
             bestService.reset(new QDBusInterface(service, QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular")));
 
             // Find a window that can handle our documents
-            const QDBusReply<bool> reply = bestService->call(QStringLiteral("canOpenDocs"), paths.count(), desktop);
+            const QDBusReply<bool> reply = bestService->call(QStringLiteral("canOpenDocs"), (int)paths.count(), desktop);
             if (reply.isValid() && reply.value()) {
                 break;
             }

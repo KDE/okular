@@ -256,7 +256,7 @@ public:
      * Sets the location of the certificate
      *
      * see \ref KeyLocation enum for details
-     * @since 23.08
+     * @since 24.02
      */
     void setKeyLocation(KeyLocation location);
 
@@ -264,6 +264,7 @@ public:
      * the location of the certificate
      *
      * see \ref KeyLocation enum for details
+     * @since 24.02
      */
     KeyLocation keyLocation() const;
 

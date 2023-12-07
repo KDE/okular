@@ -1419,7 +1419,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
 {
     // qCWarning(OkularXpsDebug) << "font file name: " << absoluteFileName;
 
-    const KArchiveEntry *fontFile = loadEntry(m_xpsArchive, absoluteFileName, Qt::CaseInsensitive);
+    const KArchiveEntry *fontFile = loadEntry(m_xpsArchive.get(), absoluteFileName, Qt::CaseInsensitive);
     if (!fontFile) {
         return -1;
     }
@@ -1458,7 +1458,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
 
 KZip *XpsFile::xpsArchive()
 {
-    return m_xpsArchive;
+    return m_xpsArchive.get();
 }
 
 QImage XpsPage::loadImageFromFile(const QString &fileName)
@@ -1623,7 +1623,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 qCWarning(OkularXpsDebug) << "found DocumentStructure.Outline";
             } else if (xml.name() == QStringLiteral("DocumentOutline")) {
                 qCWarning(OkularXpsDebug) << "found DocumentOutline";
-                m_docStructure = new Okular::DocumentSynopsis;
+                m_docStructure = std::make_unique<Okular::DocumentSynopsis>();
             } else if (xml.name() == QStringLiteral("OutlineEntry")) {
                 m_haveDocumentStructure = true;
                 QXmlStreamAttributes attributes = xml.attributes();
@@ -1670,7 +1670,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
 
 const Okular::DocumentSynopsis *XpsDocument::documentStructure()
 {
-    return m_docStructure;
+    return m_docStructure.get();
 }
 
 bool XpsDocument::hasDocumentStructure()
@@ -1697,14 +1697,14 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName)
             if (docXml.name() == QStringLiteral("PageContent")) {
                 QString pagePath = docXml.attributes().value(QStringLiteral("Source")).toString();
                 qCWarning(OkularXpsDebug) << "Page Path: " << pagePath;
-                XpsPage *page = new XpsPage(file, absolutePath(documentFilePath, pagePath));
-                m_pages.append(page);
+                auto page = std::make_unique<XpsPage>(file, absolutePath(documentFilePath, pagePath));
+                m_pages.push_back(std::move(page));
             } else if (docXml.name() == QStringLiteral("PageContent.LinkTargets")) {
                 // do nothing - wait for the real LinkTarget elements
             } else if (docXml.name() == QStringLiteral("LinkTarget")) {
                 QString targetName = docXml.attributes().value(QStringLiteral("Name")).toString();
                 if (!targetName.isEmpty()) {
-                    m_docStructurePageMap[targetName] = m_pages.count() - 1;
+                    m_docStructurePageMap[targetName] = m_pages.size() - 1;
                 }
             } else if (docXml.name() == QStringLiteral("FixedDocument")) {
                 // we just ignore this - it is just a container
@@ -1760,12 +1760,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName)
 
 XpsDocument::~XpsDocument()
 {
-    qDeleteAll(m_pages);
     m_pages.clear();
-
-    if (m_docStructure) {
-        delete m_docStructure;
-    }
 }
 
 int XpsDocument::numPages() const
@@ -1775,7 +1770,7 @@ int XpsDocument::numPages() const
 
 XpsPage *XpsDocument::page(int pageNum) const
 {
-    return m_pages.at(pageNum);
+    return m_pages.at(pageNum).get();
 }
 
 XpsFile::XpsFile()
@@ -1791,12 +1786,12 @@ XpsFile::~XpsFile()
 
 bool XpsFile::loadDocument(const QString &filename)
 {
-    m_xpsArchive = new KZip(filename);
+    m_xpsArchive = std::make_unique<KZip>(filename);
     if (m_xpsArchive->open(QIODevice::ReadOnly) == true) {
         qCWarning(OkularXpsDebug) << "Successful open of " << m_xpsArchive->fileName();
     } else {
         qCWarning(OkularXpsDebug) << "Could not open XPS archive: " << m_xpsArchive->fileName();
-        delete m_xpsArchive;
+        m_xpsArchive.reset();
         return false;
     }
 
@@ -1858,12 +1853,12 @@ bool XpsFile::loadDocument(const QString &filename)
         if (fixedRepXml.isStartElement()) {
             if (fixedRepXml.name() == QStringLiteral("DocumentReference")) {
                 const QString source = fixedRepXml.attributes().value(QStringLiteral("Source")).toString();
-                XpsDocument *doc = new XpsDocument(this, absolutePath(fixedRepresentationFilePath, source));
+                auto doc = std::make_unique<XpsDocument>(this, absolutePath(fixedRepresentationFilePath, source));
                 for (int lv = 0; lv < doc->numPages(); ++lv) {
                     // our own copy of the pages list
                     m_pages.append(doc->page(lv));
                 }
-                m_documents.append(doc);
+                m_documents.push_back(std::move(doc));
             } else if (fixedRepXml.name() == QStringLiteral("FixedDocumentSequence")) {
                 // we don't do anything here - this is just a container for one or more DocumentReference elements
             } else {
@@ -1933,10 +1928,7 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
 
 bool XpsFile::closeDocument()
 {
-    qDeleteAll(m_documents);
     m_documents.clear();
-
-    delete m_xpsArchive;
 
     return true;
 }
@@ -1953,7 +1945,7 @@ int XpsFile::numDocuments() const
 
 XpsDocument *XpsFile::document(int documentNum) const
 {
-    return m_documents.at(documentNum);
+    return m_documents.at(documentNum).get();
 }
 
 XpsPage *XpsFile::page(int pageNum) const
@@ -1978,9 +1970,13 @@ XpsGenerator::~XpsGenerator()
 
 bool XpsGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
 {
-    m_xpsFile = new XpsFile();
+    m_xpsFile = std::make_unique<XpsFile>();
 
-    m_xpsFile->loadDocument(fileName);
+    bool result = m_xpsFile->loadDocument(fileName);
+    if (!result) {
+        return false;
+    }
+
     pagesVector.resize(m_xpsFile->numPages());
 
     int pagesVectorOffset = 0;
@@ -2000,8 +1996,7 @@ bool XpsGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *>
 bool XpsGenerator::doCloseDocument()
 {
     m_xpsFile->closeDocument();
-    delete m_xpsFile;
-    m_xpsFile = nullptr;
+    m_xpsFile.reset();
 
     return true;
 }

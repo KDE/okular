@@ -191,10 +191,10 @@ public:
 private:
     void parseDocumentStructure(const QString &documentStructureFileName);
 
-    QList<XpsPage *> m_pages;
+    std::vector<std::unique_ptr<XpsPage>> m_pages;
     XpsFile *m_file;
     bool m_haveDocumentStructure;
-    Okular::DocumentSynopsis *m_docStructure;
+    std::unique_ptr<Okular::DocumentSynopsis> m_docStructure;
     QMap<QString, int> m_docStructurePageMap;
 };
 
@@ -256,7 +256,7 @@ public:
 private:
     int loadFontByName(const QString &absoluteFileName);
 
-    QList<XpsDocument *> m_documents;
+    std::vector<std::unique_ptr<XpsDocument>> m_documents;
     QList<XpsPage *> m_pages;
 
     QString m_thumbnailFileName;
@@ -268,7 +268,7 @@ private:
 
     QString m_signatureOrigin;
 
-    KZip *m_xpsArchive;
+    std::unique_ptr<KZip> m_xpsArchive;
 
     QMap<QString, int> m_fontCache;
     QFontDatabase m_fontDatabase;
@@ -298,7 +298,7 @@ protected:
     Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
 private:
-    XpsFile *m_xpsFile;
+    std::unique_ptr<XpsFile> m_xpsFile;
 };
 
 Q_DECLARE_LOGGING_CATEGORY(OkularXpsDebug)

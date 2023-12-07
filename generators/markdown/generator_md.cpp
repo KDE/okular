@@ -38,8 +38,10 @@ bool MarkdownGenerator::reparseConfig()
 
         Markdown::Converter *c = static_cast<Markdown::Converter *>(converter());
         c->setFancyPantsEnabled(m_isFancyPantsConfigEnabled);
-        c->convertAgain();
-        setTextDocument(c->document());
+        if (c->document()) {
+            c->convertAgain();
+            setTextDocument(c->document());
+        }
 
         return true;
     }

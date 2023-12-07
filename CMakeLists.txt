@@ -102,7 +102,7 @@ ecm_setup_version(${PROJECT_VERSION}
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Multimedia MultimediaWidgets)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg)
 
 if(ANDROID)
     find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
@@ -212,11 +212,11 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 
-find_package(Qt5Multimedia ${QT_REQUIRED_VERSION} CONFIG)
-set_okular_optional_package_properties(Qt5::Multimedia PROPERTIES
+find_package(Qt5MultimediaWidgets ${QT_REQUIRED_VERSION} CONFIG)
+set_okular_optional_package_properties(Qt5::MultimediaWidgets PROPERTIES
     PURPOSE "Required for documents with audio or video elements.")
 
-if (TARGET Qt5::Multimedia)
+if (TARGET Qt5::MultimediaWidgets)
     set(HAVE_MULTIMEDIA 1)
 else()
     set(HAVE_MULTIMEDIA 0)
@@ -471,13 +471,12 @@ PUBLIC  # these are included from the installed headers
     KF5::CoreAddons
     KF5::XmlGui
     KF5::ConfigGui
-    Qt5::Multimedia
     Qt5::PrintSupport
     Qt5::Widgets
 )
 
-if (TARGET Qt5::Multimedia)
-    target_link_libraries(okularcore PRIVATE Qt5::Multimedia)
+if (TARGET Qt5::MultimediaWidgets)
+    target_link_libraries(okularcore PRIVATE Qt5::MultimediaWidgets)
 endif()
 
 if (KF5Wallet_FOUND)
@@ -597,8 +596,6 @@ generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore
     ${MATH_LIB}
-    Qt5::Multimedia
-    Qt5::MultimediaWidgets
     Qt5::Svg
     KF5::Archive
     KF5::Bookmarks
@@ -613,6 +610,9 @@ target_link_libraries(okularpart okularcore
 )
 if (TARGET Qt5::DBus)
     target_link_libraries(okularpart Qt5::DBus)
+endif()
+if (TARGET Qt5::MultimediaWidgets) 
+    target_link_libraries(okularpart Qt5::MultimediaWidgets)
 endif()
 
 if(KF5Wallet_FOUND)

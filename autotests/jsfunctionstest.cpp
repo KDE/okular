@@ -334,7 +334,7 @@ void JSFunctionsTest::testPrintD_data()
     QTest::newRow("1") << QStringLiteral("ret = app.alert( util.printd( 1, date ) );") << QStringLiteral("2010.01.05 11:10:32");
 
     QDate date(2010, 1, 5);
-    QTest::newRow("2") << QStringLiteral("ret = app.alert( util.printd( 2, date ) );") << QString(date.toString(locale.dateFormat(QLocale::ShortFormat)) + QStringLiteral(" 11:10:32 AM"));
+    QTest::newRow("2") << QStringLiteral("ret = app.alert( util.printd( 2, date ) );") << QString(date.toString(locale.dateFormat(QLocale::ShortFormat)) + QStringLiteral(" 11:10:32\u202FAM"));
 }
 
 void JSFunctionsTest::testPrintD()

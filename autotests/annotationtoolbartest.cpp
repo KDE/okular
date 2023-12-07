@@ -90,8 +90,8 @@ void AnnotationToolBarTest::initMain()
     QByteArray homePath = QFile::encodeName(homeDir.path());
     qputenv("USERPROFILE", homePath);
     qputenv("HOME", homePath);
-    qputenv("XDG_DATA_HOME", homePath + "/.local");
-    qputenv("XDG_CONFIG_HOME", homePath + "/.kde-unit-test/xdg/config");
+    qputenv("XDG_DATA_HOME", QByteArray(homePath + "/.local"));
+    qputenv("XDG_CONFIG_HOME", QByteArray(homePath + "/.kde-unit-test/xdg/config"));
 }
 
 void AnnotationToolBarTest::initTestCase()

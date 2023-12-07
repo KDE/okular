@@ -235,12 +235,11 @@ bool FilePrinter::cupsAvailable()
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     // Ideally we would have access to the private Qt method
     // QCUPSSupport::cupsAvailable() to do this as it is very complex routine.
-    // However, if CUPS is available then QPrinter::numCopies() will always return 1
-    // whereas if CUPS is not available it will return the real number of copies.
+    // However, if CUPS is available then QPrinter::supportsMultipleCopies() will always return true
+    // whereas if CUPS is not available it will return false.
     // This behaviour is guaranteed never to change, so we can use it as a reliable substitute.
     QPrinter testPrinter;
-    testPrinter.setNumCopies(2);
-    return (testPrinter.numCopies() == 1);
+    return testPrinter.supportsMultipleCopies();
 #else
     return false;
 #endif

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-02 00:40+0000\n"
+"POT-Creation-Date: 2023-12-07 00:40+0000\n"
 "PO-Revision-Date: 2023-10-19 07:46+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -263,59 +263,59 @@ msgstr ""
 "<qt>Za to vrsto dokumenta je na voljo več zaledij:<br /><b>%1</b> (%2).<br /"
 "><br />Izberite tisto, ki bi jo radi uporabljali:</qt>"
 
-#: core/document.cpp:209
+#: core/document.cpp:210
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Večina strani so %1."
 
-#: core/document.cpp:230
+#: core/document.cpp:231
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Pokončno %1"
 
-#: core/document.cpp:232
+#: core/document.cpp:233
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Ležeče %1"
 
-#: core/document.cpp:255
+#: core/document.cpp:256
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 ⨯ %2 in (%3)"
 
-#: core/document.cpp:257
+#: core/document.cpp:258
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 ⨯ %2 mm (%3)"
 
-#: core/document.cpp:1688
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Nadaljevanje iskanja z vrha"
 
-#: core/document.cpp:1691
+#: core/document.cpp:1692
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Nadaljevanje iskanja z dna"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2455
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ni bilo mogoče najti vstavka, ki bi znal prebrati dani dokument."
 
-#: core/document.cpp:3604
+#: core/document.cpp:3605
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "odstrani zabeležke"
 
-#: core/document.cpp:4188 core/document.cpp:4194
+#: core/document.cpp:4189 core/document.cpp:4195
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -324,52 +324,52 @@ msgstr ""
 "Dokument poskuša izvesti zunanji program, zaradi vaše varnosti pa Okular "
 "tega ne dovoljuje."
 
-#: core/document.cpp:4205 core/document.cpp:4215
+#: core/document.cpp:4206 core/document.cpp:4216
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Ni bilo mogoče najti program za odpiranje datoteke zvrsti MIME %1."
 
-#: core/document.cpp:4665
+#: core/document.cpp:4670
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ni bilo mogoče odpreti začasne datoteke"
 
-#: core/document.cpp:4667
+#: core/document.cpp:4672
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Pretvorba za tiskanje je spodletela"
 
-#: core/document.cpp:4669
+#: core/document.cpp:4674
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces za tiskanje se je sesul"
 
-#: core/document.cpp:4671
+#: core/document.cpp:4676
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesa za tiskanje ni bilo mogoče zagnati"
 
-#: core/document.cpp:4673
+#: core/document.cpp:4678
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tiskanje v datoteko je spodletelo"
 
-#: core/document.cpp:4675
+#: core/document.cpp:4680
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tiskalnik ni bil v veljavnem stanju"
 
-#: core/document.cpp:4677
+#: core/document.cpp:4682
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ni bilo mogoče najti datoteke za tiskanje"
 
-#: core/document.cpp:4679
+#: core/document.cpp:4684
 #, kde-format
 msgid "There was no file to print"
 msgstr "Datoteka za tiskanje ne obstaja"
 
-#: core/document.cpp:4681
+#: core/document.cpp:4686
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -378,92 +378,92 @@ msgstr ""
 "Ni bilo mogoče najti ustreznega programa za tiskanje. Prepričajte se, da je "
 "na voljo CUPS-ov program lpr"
 
-#: core/document.cpp:4683
+#: core/document.cpp:4688
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Velikost strani za tisk ni veljavna"
 
-#: core/document.cpp:5348 part/part.cpp:1172
+#: core/document.cpp:5353 part/part.cpp:1172
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ni bilo mogoče odpreti »%1«. Datoteka ne obstaja"
 
-#: core/document.cpp:5858
+#: core/document.cpp:5863
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:5861
+#: core/document.cpp:5866
 #, kde-format
 msgid "Subject"
 msgstr "Zadeva"
 
-#: core/document.cpp:5864
+#: core/document.cpp:5869
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5872
 #, kde-format
 msgid "Author"
 msgstr "Avtor"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5875
 #, kde-format
 msgid "Creator"
 msgstr "Ustvarjalec"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5878
 #, kde-format
 msgid "Producer"
 msgstr "Izdelovalec"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5881
 #, kde-format
 msgid "Copyright"
 msgstr "Avtorske pravice"
 
-#: core/document.cpp:5879
+#: core/document.cpp:5884
 #, kde-format
 msgid "Pages"
 msgstr "Strani"
 
-#: core/document.cpp:5882
+#: core/document.cpp:5887
 #, kde-format
 msgid "Created"
 msgstr "Ustvarjeno"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5890
 #, kde-format
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5893
 #, kde-format
 msgid "MIME Type"
 msgstr "Vrsta MIME"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5896
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5899
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne besede"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5902
 #, kde-format
 msgid "File Path"
 msgstr "Pot do datoteke"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5905
 #, kde-format
 msgid "File Size"
 msgstr "Velikost datoteke"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5908
 #, kde-format
 msgid "Page Size"
 msgstr "Velikost strani"
@@ -504,31 +504,31 @@ msgctxt "Generic text edit command"
 msgid "edit text"
 msgstr "uredi besedilo"
 
-#: core/documentcommands.cpp:396
+#: core/documentcommands.cpp:398
 #, kde-format
 msgctxt "Edit an annotation's text contents"
 msgid "edit annotation contents"
 msgstr "uredi vsebino zabeležke"
 
-#: core/documentcommands.cpp:445
+#: core/documentcommands.cpp:447
 #, kde-format
 msgctxt "Edit an form's text contents"
 msgid "edit form contents"
 msgstr "uredi vsebino obrazca"
 
-#: core/documentcommands.cpp:494
+#: core/documentcommands.cpp:496
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
 msgstr "uredi seznam izbir obrazca"
 
-#: core/documentcommands.cpp:528
+#: core/documentcommands.cpp:530
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
 msgstr "uredi izbor spustnega polja obrazca"
 
-#: core/documentcommands.cpp:600
+#: core/documentcommands.cpp:602
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
@@ -1565,8 +1565,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopiraj besedilo na odložišče"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2553 part/pageview.cpp:2873 part/pageview.cpp:3017
-#: part/pageview.cpp:3074
+#: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
+#: part/pageview.cpp:3076
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM prepoveduje kopiranje"
@@ -2043,7 +2043,7 @@ msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Datoteka"
 
-#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:87
+#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
@@ -3302,61 +3302,61 @@ msgstr "Ustvari orodje za risanje"
 msgid "Edit drawing tool"
 msgstr "Uredi orodje za risanje"
 
-#: part/embeddedfilesdialog.cpp:39
+#: part/embeddedfilesdialog.cpp:42
 #, kde-format
 msgctxt "Unknown date"
 msgid "Unknown"
 msgstr "Neznano"
 
-#: part/embeddedfilesdialog.cpp:45
+#: part/embeddedfilesdialog.cpp:48
 #, kde-format
 msgctxt "@title:window"
 msgid "Embedded Files"
 msgstr "Vgrajene datoteke"
 
-#: part/embeddedfilesdialog.cpp:59
+#: part/embeddedfilesdialog.cpp:62
 #, kde-format
 msgctxt "@action:button"
 msgid "View"
 msgstr "Pogled"
 
-#: part/embeddedfilesdialog.cpp:67
+#: part/embeddedfilesdialog.cpp:70
 #, kde-format
 msgctxt "@title:column"
 msgid "Name"
 msgstr "Ime"
 
-#: part/embeddedfilesdialog.cpp:68
+#: part/embeddedfilesdialog.cpp:71
 #, kde-format
 msgctxt "@title:column"
 msgid "Description"
 msgstr "Opis"
 
-#: part/embeddedfilesdialog.cpp:69
+#: part/embeddedfilesdialog.cpp:72
 #, kde-format
 msgctxt "@title:column"
 msgid "Size"
 msgstr "Velikost"
 
-#: part/embeddedfilesdialog.cpp:70
+#: part/embeddedfilesdialog.cpp:73
 #, kde-format
 msgctxt "@title:column"
 msgid "Created"
 msgstr "Ustvarjena"
 
-#: part/embeddedfilesdialog.cpp:71
+#: part/embeddedfilesdialog.cpp:74
 #, kde-format
 msgctxt "@title:column"
 msgid "Modified"
 msgstr "Spremenjena"
 
-#: part/embeddedfilesdialog.cpp:151
+#: part/embeddedfilesdialog.cpp:154
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
 msgstr "&Shrani kot..."
 
-#: part/embeddedfilesdialog.cpp:152
+#: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
@@ -3483,205 +3483,205 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "od"
 
-#: part/pageview.cpp:540
+#: part/pageview.cpp:542
 #, kde-format
 msgid "Zoom"
 msgstr "Približanje"
 
-#: part/pageview.cpp:552
+#: part/pageview.cpp:554
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Zoom na 100%"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:565
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Zavrti v desno"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:566
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Desno"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:570
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Zavrti v &levo"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:571
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Levo"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:575
 #, kde-format
 msgid "Original Orientation"
 msgstr "Prvotna usmerjenost"
 
-#: part/pageview.cpp:579
+#: part/pageview.cpp:581
 #, kde-format
 msgid "&Trim View"
 msgstr "Obreži pogled"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:585
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Obreži robove"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:592
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Obreži na izbor"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:598
 #, kde-format
 msgid "Fit &Width"
 msgstr "Prilagodi širini"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:602
 #, kde-format
 msgid "Fit &Page"
 msgstr "Prilagodi strani"
 
-#: part/pageview.cpp:604
+#: part/pageview.cpp:606
 #, kde-format
 msgid "&Auto Fit"
 msgstr "S&amodejno prilagodi"
 
-#: part/pageview.cpp:608
+#: part/pageview.cpp:610
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Prilagodi ok&no strani"
 
-#: part/pageview.cpp:615
+#: part/pageview.cpp:617
 #, kde-format
 msgid "&View Mode"
 msgstr "Prikaz strani"
 
-#: part/pageview.cpp:627
+#: part/pageview.cpp:629
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Ena stran"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:630
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Dve strani nasproti"
 
-#: part/pageview.cpp:629
+#: part/pageview.cpp:631
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Dve strani nasproti (prva stran na sredini)"
 
-#: part/pageview.cpp:632
+#: part/pageview.cpp:634
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Pregled"
 
-#: part/pageview.cpp:644
+#: part/pageview.cpp:646
 #, kde-format
 msgid "&Continuous"
 msgstr "Zaporedno"
 
-#: part/pageview.cpp:651
+#: part/pageview.cpp:653
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Uporabi smer branja z desne proti levi"
 
-#: part/pageview.cpp:660
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Browse"
 msgstr "&Brskanje"
 
-#: part/pageview.cpp:668
+#: part/pageview.cpp:670
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:688
+#: part/pageview.cpp:690
 #, kde-format
 msgid "Area &Selection"
 msgstr "Izbira področja"
 
-#: part/pageview.cpp:695
+#: part/pageview.cpp:697
 #, kde-format
 msgid "&Text Selection"
 msgstr "Izbira besedila"
 
-#: part/pageview.cpp:702
+#: part/pageview.cpp:704
 #, kde-format
 msgid "T&able Selection"
 msgstr "Izbira tabele"
 
-#: part/pageview.cpp:709
+#: part/pageview.cpp:711
 #, kde-format
 msgid "&Magnifier"
 msgstr "Povečevalno steklo"
 
-#: part/pageview.cpp:718
+#: part/pageview.cpp:720
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Orodja izbire"
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:746
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Digitalno podpiši..."
 
-#: part/pageview.cpp:750
+#: part/pageview.cpp:752
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Govori celoten dokument"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:757
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Govori trenutno stran"
 
-#: part/pageview.cpp:760
+#: part/pageview.cpp:762
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Zaustavi govor"
 
-#: part/pageview.cpp:765
+#: part/pageview.cpp:767
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Premor/Nadaljevanje govora"
 
-#: part/pageview.cpp:777
+#: part/pageview.cpp:779
 #, kde-format
 msgid "Scroll Up"
 msgstr "Drsenje navzgor"
 
-#: part/pageview.cpp:783
+#: part/pageview.cpp:785
 #, kde-format
 msgid "Scroll Down"
 msgstr "Drsenje navzdol"
 
-#: part/pageview.cpp:789
+#: part/pageview.cpp:791
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Eno stran višje"
 
-#: part/pageview.cpp:795
+#: part/pageview.cpp:797
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Eno stran nižje"
 
-#: part/pageview.cpp:801
+#: part/pageview.cpp:803
 #, kde-format
 msgid "Show Forms"
 msgstr "Pokaži obrazce"
 
-#: part/pageview.cpp:1305
+#: part/pageview.cpp:1307
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3690,12 +3690,12 @@ msgstr[1] " Naložen %1-stranski dokument."
 msgstr[2] " Naložen %1-stranski dokument."
 msgstr[3] " Naložen %1-stranski dokument."
 
-#: part/pageview.cpp:2548
+#: part/pageview.cpp:2550
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiraj vsebino tabele v odložišče"
 
-#: part/pageview.cpp:2867
+#: part/pageview.cpp:2869
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3704,77 +3704,77 @@ msgstr[1] "Besedilo (%1 znaka)"
 msgstr[2] "Besedilo (%1 znaki)"
 msgstr[3] "Besedilo (%1 znakov)"
 
-#: part/pageview.cpp:2868 part/pageview.cpp:2886
+#: part/pageview.cpp:2870 part/pageview.cpp:2888
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiraj v odložišče"
 
-#: part/pageview.cpp:2877 part/pageview.cpp:3069
+#: part/pageview.cpp:2879 part/pageview.cpp:3071
 #, kde-format
 msgid "Speak Text"
 msgstr "Izgovori besedilo"
 
-#: part/pageview.cpp:2885
+#: part/pageview.cpp:2887
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Slika (%1 krat %2 slikovnih točk)"
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "Save to File..."
 msgstr "Shrani v datoteko..."
 
-#: part/pageview.cpp:2907
+#: part/pageview.cpp:2909
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Slika [%1×%2] je bila kopirana v odložišče."
 
-#: part/pageview.cpp:2910
+#: part/pageview.cpp:2912
 #, kde-format
 msgid "Save file"
 msgstr "Shrani datoteko"
 
-#: part/pageview.cpp:2910
+#: part/pageview.cpp:2912
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Slike (*.png *.jpeg)"
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "File not saved."
 msgstr "Datoteka ni bila shranjena."
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Slika [%1×%2] je bila shranjena v datoteko %3."
 
-#: part/pageview.cpp:3065
+#: part/pageview.cpp:3067
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiraj besedilo"
 
-#: part/pageview.cpp:3085
+#: part/pageview.cpp:3087
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Pojdi na '%1'"
 
-#: part/pageview.cpp:4064 part/part.cpp:3187
+#: part/pageview.cpp:4072 part/part.cpp:3187
 #, kde-format
 msgid "Fit Width"
 msgstr "Prilagodi širini"
 
-#: part/pageview.cpp:4064
+#: part/pageview.cpp:4072
 #, kde-format
 msgid "Fit Page"
 msgstr "Prilagodi strani"
 
-#: part/pageview.cpp:4064
+#: part/pageview.cpp:4072
 #, kde-format
 msgid "Auto Fit"
 msgstr "Samodejno prilagodi"
 
-#: part/pageview.cpp:4087
+#: part/pageview.cpp:4095
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3783,69 +3783,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4370
+#: part/pageview.cpp:4378
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Poišči »%1« z"
 
-#: part/pageview.cpp:4384
+#: part/pageview.cpp:4392
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Nastavi spletne bližnjice ..."
 
-#: part/pageview.cpp:4410
+#: part/pageview.cpp:4418
 #, kde-format
 msgid "Follow This Link"
 msgstr "Sledi tej povezavi"
 
-#: part/pageview.cpp:4413
+#: part/pageview.cpp:4421
 #, kde-format
 msgid "Play this Sound"
 msgstr "Zaigraj ta zvok"
 
-#: part/pageview.cpp:4415
+#: part/pageview.cpp:4423
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zaustavi zvok"
 
-#: part/pageview.cpp:4421
+#: part/pageview.cpp:4429
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiraj naslov povezave"
 
-#: part/pageview.cpp:4442
+#: part/pageview.cpp:4450
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Poišči '%1' v tem dokumentu"
 
-#: part/pageview.cpp:4974
+#: part/pageview.cpp:4982
 #, kde-format
 msgid "Welcome"
 msgstr "Dobrodošli"
 
-#: part/pageview.cpp:5094
+#: part/pageview.cpp:5102
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Izberite območje približanja. Kliknite z desnim miškinim gumbom za "
 "oddaljevanje."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5113
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite za povečani prikaz."
 
-#: part/pageview.cpp:5118
+#: part/pageview.cpp:5126
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Narišite pravokotnik okoli besedila ali grafike, da ga kopirate."
 
-#: part/pageview.cpp:5130
+#: part/pageview.cpp:5138
 #, kde-format
 msgid "Select text"
 msgstr "Izberite besedilo"
 
-#: part/pageview.cpp:5142
+#: part/pageview.cpp:5150
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3854,7 +3854,7 @@ msgstr ""
 "Narišite pravokotnik okrog razpredelnice in nato kliknite na bližnje robove, "
 "da jo razdelite: pritisnite Esc, da izbor počistite."
 
-#: part/pageview.cpp:5152
+#: part/pageview.cpp:5160
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3863,7 +3863,7 @@ msgstr ""
 "Za vsa potrdila za podpisovanje velja da ali še niso veljavna ali pa jim je "
 "datum veljavnosti že potekel."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5163
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3874,17 +3874,17 @@ msgstr ""
 "<a href=\"%1\">Adding Digital Signatures - Dodajanje digitalnih podpisov</a> "
 "v priročniku."
 
-#: part/pageview.cpp:5171
+#: part/pageview.cpp:5179
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Imate neshranjene spremembe. Shranite dokument pred podpisom."
 
-#: part/pageview.cpp:5187
+#: part/pageview.cpp:5195
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Narišite pravokotnik za vstavljanje polja podpisa"
 
-#: part/pageview.cpp:5331
+#: part/pageview.cpp:5339
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Narišite pravokotnik okoli območja strani, ki naj ostane vidno"

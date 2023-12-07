@@ -18,7 +18,7 @@ Kirigami.Page {
     rightPadding: 0
     bottomPadding: 0
 
-    actions.main: Kirigami.Action {
+    actions: Kirigami.Action {
         icon.name: pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize"
         checkable: true
         onCheckedChanged: pageArea.page.bookmarked = checked

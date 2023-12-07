@@ -50,7 +50,7 @@ QQC2.ScrollView {
             id: dialogComponent
             SignaturePropertiesDialog {
                 id: dialog
-                onSheetOpenChanged: if(!sheetOpen) {
+                onVisibleChanged: if(!visible) {
                     destroy(1000)
                 }
                 onSaveSignatureSignedVersion: (path) => {

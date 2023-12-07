@@ -4,10 +4,11 @@
  *   SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+import QtCore
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15 as QQC2
-import QtQuick.Dialogs 1.3 as QQD
+import QtQuick.Dialogs as QQD
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.17 as Kirigami
 import org.kde.okular 2.0
@@ -147,10 +148,10 @@ Kirigami.OverlaySheet
         QQD.FileDialog {
             id: fileDialog
             nameFilters: i18n("Certificate File (*.cer)")
-            folder: "file://" + userPaths.documents
-            selectExisting: false
+            currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+            fileMode: QQD.FileDialog.SaveFile
             onAccepted: {
-                if (!certificateModel.exportCertificateTo(fileDialog.fileUrl)) {
+                if (!certificateModel.exportCertificateTo(fileDialog.selectedFile)) {
                     errorDialog.open();
                 }
             }

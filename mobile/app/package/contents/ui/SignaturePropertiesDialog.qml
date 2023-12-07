@@ -4,10 +4,11 @@
  *   SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+import QtCore
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15 as QQC2
-import QtQuick.Dialogs 1.3 as QQD
+import QtQuick.Dialogs as QQD
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.17 as Kirigami
 
@@ -136,7 +137,7 @@ Kirigami.OverlaySheet
                 Component {
                     id: dialogComponent
                     CertificateViewerDialog {
-                        onSheetOpenChanged: if(!sheetOpen) {
+                        onVisibleChanged: if(!visible) {
                             destroy(1000)
                         }
                     }
@@ -153,10 +154,10 @@ Kirigami.OverlaySheet
 
         QQD.FileDialog {
             id: fileDialog
-            folder: "file://" + userPaths.documents
-            selectExisting: false
+            currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+            fileMode: QQD.FileDialog.SaveFile
             onAccepted: {
-                root.saveSignatureSignedVersion(fileDialog.fileUrl);
+                root.saveSignatureSignedVersion(fileDialog.selectedFile);
             }
         }
 

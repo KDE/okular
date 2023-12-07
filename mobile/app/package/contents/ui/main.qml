@@ -4,9 +4,10 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+import QtCore
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as QQC2
-import QtQuick.Dialogs 1.3 as QQD
+import QtQuick.Dialogs as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.17 as Kirigami
 import org.kde.kirigamiaddons.formcard 1.0 as FormCard
@@ -29,9 +30,9 @@ Kirigami.ApplicationWindow {
         QQD.FileDialog {
             id: fileDialog
             nameFilters: Okular.Okular.nameFilters
-            folder: "file://" + userPaths.documents
+            currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
             onAccepted: {
-                documentItem.url = fileDialog.fileUrl
+                documentItem.url = fileDialog.selectedFile
             }
         }
 

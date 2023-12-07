@@ -11,6 +11,7 @@ Dependencies:
     'frameworks/karchive': '@same'
     'frameworks/kparts': '@same'
     'frameworks/ktextwidgets': '@same'
+    'frameworks/kxmlgui': '@same'
     'libraries/phonon': '@same'
     'graphics/kdegraphics-mobipocket': '@same'
 

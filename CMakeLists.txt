@@ -122,6 +122,7 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     KIO
     ThreadWeaver
     WindowSystem
+    XmlGui
 )
 
 if (NOT WIN32)

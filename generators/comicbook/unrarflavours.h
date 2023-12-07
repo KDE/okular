@@ -18,8 +18,6 @@ struct ProcessArgs {
     bool useLsar;
 };
 
-class QStringList;
-
 class UnrarFlavour
 {
 public:

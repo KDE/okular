@@ -10,9 +10,7 @@
 
 #ifndef _OKULAR_MAIN_H_
 #define _OKULAR_MAIN_H_
-
-class QString;
-class QStringList;
+#include <QStringList>
 
 namespace Okular
 {

@@ -26,7 +26,6 @@
 
 class dviRenderer;
 class KProcess;
-class QStringList;
 
 class DVIExport : public QObject, public QSharedData
 {

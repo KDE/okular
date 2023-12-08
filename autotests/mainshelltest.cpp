@@ -573,8 +573,10 @@ void MainShellTest::testSessionRestore()
     QEventLoop eventLoop;
     QTimer::singleShot(100, &eventLoop, &QEventLoop::quit);
     eventLoop.exec(QEventLoop::AllEvents);
+    // Sometimes the event loop is not enough, so try a bit more to get deferred delete happen
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     shells = getShells();
-    QVERIFY(shells.isEmpty());
+    QCOMPARE(shells.size(), 0);
 
     Okular::Settings::self()->setShellOpenFileInTabs(useTabsRestore);
 

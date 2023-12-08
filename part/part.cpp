@@ -652,6 +652,8 @@ void Part::setupConfigSkeleton(const QVariantList &args, const QString &componen
             qCDebug(OkularUiDebug) << "Migrated old okular config";
         }
     }
+#else
+    Q_UNUSED(componentName);
 #endif
 
     KSharedConfigPtr config = KSharedConfig::openConfig(configFilePath);

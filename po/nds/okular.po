@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-07 00:40+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -4179,7 +4179,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:439
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4813,7 +4813,7 @@ msgid "Remove this Bookmark"
 msgstr "Dit Leesteken ümnömen"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:407
+#: part/signaturepartutils.cpp:427
 #, fuzzy, kde-format
 #| msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
 #| msgid "%1 (%2)"
@@ -5695,46 +5695,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&Egenschappen"
 
-#: part/signaturepartutils.cpp:325
+#: part/signaturepartutils.cpp:345
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Sieden: %1"
 
-#: part/signaturepartutils.cpp:326
+#: part/signaturepartutils.cpp:346
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "&Opstellen in Achtergrund anmaken"
 
-#: part/signaturepartutils.cpp:331
+#: part/signaturepartutils.cpp:351
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:332
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:395
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:377
+#: part/signaturepartutils.cpp:397
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:390
+#: part/signaturepartutils.cpp:410
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter document password"
 msgstr "Dokment-Passwoort"
 
-#: part/signaturepartutils.cpp:413
+#: part/signaturepartutils.cpp:433
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -6047,34 +6047,34 @@ msgstr ""
 msgid "Lock Sidebar"
 msgstr "&Siedenbalken wiesen"
 
-#: shell/shell.cpp:648
+#: shell/shell.cpp:651
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|All Dateien"
 
-#: shell/shell.cpp:649
+#: shell/shell.cpp:652
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:653
+#: shell/shell.cpp:656
 #, kde-format
 msgid "Open Document"
 msgstr "Dokment opmaken"
 
-#: shell/shell.cpp:763
+#: shell/shell.cpp:766
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:770
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Tomaken"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:777
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -6082,7 +6082,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Dat gifft al en Datei mit den Naam \"%1\". Wullt Du ehr redig överschrieven?"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:779
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

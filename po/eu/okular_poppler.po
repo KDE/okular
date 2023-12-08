@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2023-07-14 20:32+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -317,12 +317,12 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Okular berrabiatu behar duzu NSS direktorioaren ezarpenak aldatu ondoren"
 
-#: pdfsignatureutils.cpp:194
+#: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter Password"
 msgstr "Sartu pasahitza"
 
-#: pdfsignatureutils.cpp:194
+#: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Sartu %1 irekitzeko pasahitza:"

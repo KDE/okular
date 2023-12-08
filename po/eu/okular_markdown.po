@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2019-06-24 10:21+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -41,17 +41,17 @@ msgstr "Huts egin du dokumentua irekitzea"
 msgid "Failed to compile the Markdown document."
 msgstr "Huts egin du Markdown dokumentua konpilatzea."
 
-#: generator_md.cpp:56
+#: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
 msgstr "Gaitu «SmartyPants» formatua ematea"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
 msgstr "Markdown"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
 msgstr "Markdown bizkarraldekoaren konfigurazioa"

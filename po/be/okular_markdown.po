@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2022-11-10 14:24\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -41,17 +41,17 @@ msgstr "Не ўдалося адкрыць дакумент"
 msgid "Failed to compile the Markdown document."
 msgstr "Не ўдалося скампіляваць дакумент Markdown."
 
-#: generator_md.cpp:56
+#: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
 msgstr "Уключыць фарматаванне SmartyPants"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
 msgstr "Markdown"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
 msgstr "Канфігурацыя рухавіка Markdown"

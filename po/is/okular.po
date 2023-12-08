@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-07 00:40+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -4026,7 +4026,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Undirrita"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:439
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4653,7 +4653,7 @@ msgid "Remove this Bookmark"
 msgstr "Fjarlægja þetta bókamerki"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:407
+#: part/signaturepartutils.cpp:427
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5518,49 +5518,49 @@ msgstr ""
 msgid "Properties"
 msgstr "Eiginleikar"
 
-#: part/signaturepartutils.cpp:325
+#: part/signaturepartutils.cpp:345
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Síður: %1"
 
-#: part/signaturepartutils.cpp:326
+#: part/signaturepartutils.cpp:346
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Leyfa &bakgrunnsvinnslu"
 
-#: part/signaturepartutils.cpp:331
+#: part/signaturepartutils.cpp:351
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Gleyma öllu"
 
-#: part/signaturepartutils.cpp:332
+#: part/signaturepartutils.cpp:352
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Gleyma öllu"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:395
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
-#: part/signaturepartutils.cpp:377
+#: part/signaturepartutils.cpp:397
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Settu inn lykilorðið að skilríkinu"
 
-#: part/signaturepartutils.cpp:390
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter document password"
 msgstr "Settu inn lykilorð á skjali"
 
-#: part/signaturepartutils.cpp:413
+#: part/signaturepartutils.cpp:433
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Vista undirritaða skrá sem"
@@ -5847,38 +5847,38 @@ msgstr "Afturkalla að loka flipa"
 msgid "Lock Sidebar"
 msgstr "Birta &blaðsíðustiku"
 
-#: shell/shell.cpp:648
+#: shell/shell.cpp:651
 #, kde-format
 msgid "All files (*)"
 msgstr "Allar skrár (*)"
 
-#: shell/shell.cpp:649
+#: shell/shell.cpp:652
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Allar studdar skrár (%1)"
 
-#: shell/shell.cpp:653
+#: shell/shell.cpp:656
 #, kde-format
 msgid "Open Document"
 msgstr "Opna skjal"
 
-#: shell/shell.cpp:763
+#: shell/shell.cpp:766
 #, kde-format
 msgid "Confirm Close"
 msgstr "Staðfesta lokun"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:770
 #, kde-format
 msgid "Close Tabs"
 msgstr "Loka flipum"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:777
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Þú ert að fara að loka %1 flipum. Ertu viss um að þú viljir halda áfram?"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:779
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Aðvara þegar mörgum flipum er lokað"

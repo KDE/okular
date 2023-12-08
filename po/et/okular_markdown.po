@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2019-11-09 21:10+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -37,17 +37,17 @@ msgstr "Dokumendi avamine nurjus"
 msgid "Failed to compile the Markdown document."
 msgstr "Markdowni dokumendi kompileerimine nurjus"
 
-#: generator_md.cpp:56
+#: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
 msgstr "SmartyPantsi vorminduse lubamine"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
 msgstr "Markdown"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
 msgstr "Markdowni taustaprogrammi seadistus"

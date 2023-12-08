@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2022-10-27 20:35+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -38,17 +38,17 @@ msgstr "Ne posset aperter li document"
 msgid "Failed to compile the Markdown document."
 msgstr "Ne successat compilar li document markdown."
 
-#: generator_md.cpp:56
+#: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
 msgstr "Usar li formate SmartyPants"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
 msgstr "Markdown"
 
-#: generator_md.cpp:58
+#: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
 msgstr "Configuration del infrastructura Markdown"

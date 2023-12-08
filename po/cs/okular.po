@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-07 00:40+0000\n"
+"POT-Creation-Date: 2023-12-08 00:40+0000\n"
 "PO-Revision-Date: 2023-10-19 14:28+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3900,7 +3900,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podepsat"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:439
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4514,7 +4514,7 @@ msgid "Remove this Bookmark"
 msgstr "Odstranit tuto záložku"
 
 #: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
-#: part/signaturepartutils.cpp:407
+#: part/signaturepartutils.cpp:427
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5350,43 +5350,43 @@ msgstr "Sbalit všechny prvky"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: part/signaturepartutils.cpp:325
+#: part/signaturepartutils.cpp:345
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Obrázky (%1)"
 
-#: part/signaturepartutils.cpp:326
+#: part/signaturepartutils.cpp:346
 #, kde-format
 msgid "Select background image"
 msgstr "Vyberte obrázek na pozadí"
 
-#: part/signaturepartutils.cpp:331
+#: part/signaturepartutils.cpp:351
 #, kde-format
 msgid "Forget image"
 msgstr "Zapomenout obrázek"
 
-#: part/signaturepartutils.cpp:332
+#: part/signaturepartutils.cpp:352
 #, kde-format
 msgid "Forget all images"
 msgstr "Zapomenout všechny obrázky"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:395
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:377
+#: part/signaturepartutils.cpp:397
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Zadejte heslo certifikátu"
 
-#: part/signaturepartutils.cpp:390
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter document password"
 msgstr "Zadejte heslo k dokumentu"
 
-#: part/signaturepartutils.cpp:413
+#: part/signaturepartutils.cpp:433
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Uložit podepsaný soubor jako"
@@ -5673,38 +5673,38 @@ msgstr "Vrátit zpět zavření karty"
 msgid "Lock Sidebar"
 msgstr "Zamknout postranní panel"
 
-#: shell/shell.cpp:648
+#: shell/shell.cpp:651
 #, kde-format
 msgid "All files (*)"
 msgstr "Všechny soubory (*)"
 
-#: shell/shell.cpp:649
+#: shell/shell.cpp:652
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Všechny podporované soubory (%1)"
 
-#: shell/shell.cpp:653
+#: shell/shell.cpp:656
 #, kde-format
 msgid "Open Document"
 msgstr "Otevřít dokument"
 
-#: shell/shell.cpp:763
+#: shell/shell.cpp:766
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potvrdit uzavření"
 
-#: shell/shell.cpp:767
+#: shell/shell.cpp:770
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zavřít karty"
 
-#: shell/shell.cpp:774
+#: shell/shell.cpp:777
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Chystáte se zavřít následující %1 karet. Opravdu si přejete pokračovat?"
 
-#: shell/shell.cpp:776
+#: shell/shell.cpp:779
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Varovat mě při pokusu o uzavření vícero karet"

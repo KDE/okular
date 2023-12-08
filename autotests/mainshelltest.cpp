@@ -151,12 +151,11 @@ void MainShellTest::initTestCase()
     const QString serviceName = QStringLiteral("org.kde.okular-") + myPid;
     QVERIFY(bus->registerService(serviceName) == QDBusConnectionInterface::ServiceRegistered);
 #endif
-
     // Tell the presentationWidget and queryClose to not be annoying
     KSharedConfigPtr c = KSharedConfig::openConfig(QStringLiteral("mainshelltest.kmessagebox"));
     KConfigGroup cg = c->group("General");
     cg.writeEntry("presentationInfo", 4);
-    cg.writeEntry("ShowTabWarning", false);
+    cg.writeEntry("ShowTabWarning", 4);
 }
 
 void MainShellTest::cleanupTestCase()

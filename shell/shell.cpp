@@ -108,6 +108,10 @@ public:
 
         m_stackedWidget = new QStackedWidget;
         setWidget(m_stackedWidget);
+        // It seems that without requesting a specific minimum size, Qt
+        // somehow calculates a (0,-1) minimum size, and then Qt gets angry
+        // that negative sizes is not possible.
+        setMinimumSize(10, 10);
     }
 
     bool isLocked() const
@@ -237,6 +241,12 @@ Shell::Shell(const QString &serializedOptions)
             // sync sidebar visibility with the m_showSidebarAction only if welcome screen is hidden
             if (m_showSidebarAction && m_centralStackedWidget->currentWidget() != m_welcomeScreen) {
                 m_showSidebarAction->setChecked(visible);
+            }
+            if (m_centralStackedWidget->currentWidget() == m_welcomeScreen) {
+                // MainWindow tries hard to make its child dockwidgets shown, but during
+                // welcome screen we don't want to see the sidebar,
+                // so try a bit more to actually hide it.
+                m_sidebar->hide();
             }
         });
         addDockWidget(Qt::LeftDockWidgetArea, m_sidebar);

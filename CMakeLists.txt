@@ -427,6 +427,7 @@ kconfig_add_kcfg_files(okularcore_SRCS GENERATE_MOC conf/settings_core.kcfgc)
 
 add_library(okularcore SHARED ${okularcore_SRCS})
 generate_export_header(okularcore BASE_NAME okularcore EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h")
+target_include_directories(okularcore PUBLIC "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}>")
 
 if (ANDROID)
     set(fileName ${CMAKE_BINARY_DIR}/Okular5Core-android-dependencies.xml)

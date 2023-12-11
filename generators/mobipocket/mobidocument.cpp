@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QPalette> // Because of the HACK
-#include <QRegExp>
+#include <QRegularExpression>
 #include <qmobipocket/mobipocket.h>
 #include <qmobipocket/qfilestream.h>
 
@@ -85,16 +85,16 @@ QString MobiDocument::fixMobiMarkup(const QString &data)
 {
     QString ret = data;
     QMap<int, QString> anchorPositions;
-    static QRegExp anchors(QStringLiteral("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}"), Qt::CaseInsensitive);
-    int pos = 0;
+    static QRegularExpression anchors(QStringLiteral("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}"), QRegularExpression::CaseInsensitiveOption);
 
     // find all link destinations
-    while ((pos = anchors.indexIn(data, pos)) != -1) {
-        int filepos = anchors.cap(1).toUInt();
+    auto matcher = anchors.globalMatch(data);
+    while (matcher.hasNext()) {
+        auto match = matcher.next();
+        int filepos = match.captured(1).toUInt();
         if (filepos) {
-            anchorPositions[filepos] = anchors.cap(1);
+            anchorPositions[filepos] = match.captured(1);
         }
-        pos += anchors.matchedLength();
     }
 
     // put HTML anchors in all link destinations
@@ -116,9 +116,8 @@ QString MobiDocument::fixMobiMarkup(const QString &data)
     ret.replace(anchors, QStringLiteral("<a href=\"#\\1\""));
     // Mobipocket uses strange variang of IMG tags: <img recindex="3232"> where recindex is number of
     // record containing image
-    static QRegExp imgs(QStringLiteral("<img.*recindex=\"([\\d]*)\".*>"), Qt::CaseInsensitive);
+    static QRegularExpression imgs(QStringLiteral("<img.*?recindex=\"([\\d]*)\".*?>"), QRegularExpression::CaseInsensitiveOption);
 
-    imgs.setMinimal(true);
     ret.replace(imgs, QStringLiteral("<img src=\"pdbrec:/\\1\">"));
     ret.replace(QStringLiteral("<mbp:pagebreak/>"), QStringLiteral("<p style=\"page-break-after:always\"></p>"));
 

@@ -48,6 +48,7 @@
 #include <QMenuBar>
 #include <QMimeData>
 #include <QObject>
+#include <QPointer>
 #include <QScreen>
 #include <QTabBar>
 #include <QTabWidget>

@@ -10,8 +10,8 @@
 #include <QQmlEngine>
 
 #ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
-#include <QtAndroid>
+#include <QCoreApplication>
+#include <QJniObject>
 #endif
 
 #include <core/bookmarkmanager.h>
@@ -61,7 +61,8 @@ void DocumentItem::openUrl(const QUrl &url, const QString &password)
     QUrl realUrl = url; // NOLINT(performance-unnecessary-copy-initialization) because of the ifdef below this can't be const &
 
 #ifdef Q_OS_ANDROID
-    realUrl = QUrl(QtAndroid::androidActivity().callObjectMethod("contentUrlToFd", "(Ljava/lang/String;)Ljava/lang/String;", QAndroidJniObject::fromString(url.toString(QUrl::FullyEncoded)).object<jstring>()).toString());
+    realUrl =
+        QUrl(QJniObject(QNativeInterface::QAndroidApplication::context()).callObjectMethod("contentUrlToFd", "(Ljava/lang/String;)Ljava/lang/String;", QJniObject::fromString(url.toString(QUrl::FullyEncoded)).object<jstring>()).toString());
 #endif
 
     const QString path = realUrl.isLocalFile() ? realUrl.toLocalFile() : QStringLiteral("-");

@@ -5,11 +5,11 @@
 */
 
 #include "android.h"
-#include <QAndroidJniEnvironment>
-#include <QAndroidJniObject>
+#include <QCoreApplication>
 #include <QDebug>
+#include <QJniEnvironment>
+#include <QJniObject>
 #include <QStringList>
-#include <QtAndroid>
 
 URIHandler URIHandler::handler;
 static AndroidInstance *s_instance = nullptr;
@@ -17,25 +17,24 @@ static AndroidInstance *s_instance = nullptr;
 void AndroidInstance::openFile(const QString &title, const QStringList &mimes)
 {
     s_instance = this;
-    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;"); // activity is valid
+    QJniObject activity = QJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;"); // activity is valid
     Q_ASSERT(activity.isValid());
 
-    QAndroidJniEnvironment _env;
-    QAndroidJniObject::callStaticMethod<void>("org/kde/something/OpenFileActivity",
-                                              "openFile",
-                                              "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V",
-                                              activity.object<jobject>(),
-                                              QAndroidJniObject::fromString(title).object<jstring>(),
-                                              QAndroidJniObject::fromString(mimes.join(QLatin1Char(';'))).object<jstring>());
-    if (_env->ExceptionCheck()) {
-        _env->ExceptionClear();
+    QJniEnvironment _env;
+    QJniObject::callStaticMethod<void>("org/kde/something/OpenFileActivity",
+                                       "openFile",
+                                       "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)V",
+                                       activity.object<jobject>(),
+                                       QJniObject::fromString(title).object<jstring>(),
+                                       QJniObject::fromString(mimes.join(QLatin1Char(';'))).object<jstring>());
+    if (_env.checkAndClearExceptions()) {
         qWarning() << "couldn't launch intent";
     }
 }
 
 void AndroidInstance::handleViewIntent()
 {
-    QtAndroid::androidActivity().callMethod<void>("handleViewIntent", "()V");
+    QJniObject(QNativeInterface::QAndroidApplication::context()).callMethod<void>("handleViewIntent", "()V");
 }
 
 void Java_org_kde_something_FileClass_openUri(JNIEnv *env, jobject /*obj*/, jstring uri)

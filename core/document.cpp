@@ -397,6 +397,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
     }
 
     m_allocatedPixmaps.splice(m_allocatedPixmaps.end(), pixmapsToKeep);
+    Q_UNUSED(pagesFreed);
     // p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
 }
 
@@ -2764,7 +2765,7 @@ void Document::closeDocument()
     // reset internal variables
 
     d->m_viewportHistory.clear();
-    d->m_viewportHistory.emplace_back(DocumentViewport());
+    d->m_viewportHistory.emplace_back();
     d->m_viewportIterator = d->m_viewportHistory.begin();
     d->m_allocatedPixmapsTotalMemory = 0;
     d->m_allocatedTextPagesFifo.clear();

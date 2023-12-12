@@ -77,7 +77,11 @@ void Converter::convertAgain()
 
 QTextDocument *Converter::convertOpenFile()
 {
-    rewind(m_markdownFile);
+    int result = fseek(m_markdownFile, 0, SEEK_SET);
+    if (result != 0) {
+        Q_EMIT error(i18n("Failed to open the document"), -1);
+        return nullptr;
+    }
 
 #if defined(MKD_NOLINKS)
     // on discount 2 MKD_NOLINKS is a define

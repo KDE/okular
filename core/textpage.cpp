@@ -509,13 +509,11 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         else {
             selection_two_start = true;
             int distance = scaleX + scaleY + 100;
-            int count = 0;
 
             for (; it != itEnd; ++it) {
                 rect = (*it)->area;
 
                 if (rect.isBottomOrLevel(startC) && rect.isRight(startC)) {
-                    count++;
                     QRect entRect = rect.geometry(scaleX, scaleY);
                     int xdist, ydist;
                     xdist = entRect.center().x() - startC.x * scaleX;
@@ -1035,7 +1033,6 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
 
     TextList::ConstIterator it = characters.begin(), itEnd = characters.end(), tmpIt;
     int newLeft, newRight, newTop, newBottom;
-    int index = 0;
 
     for (; it != itEnd; it++) {
         QString textString = (*it)->text();
@@ -1102,8 +1099,6 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
             const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
             TinyTextEntity *word = new TinyTextEntity(newString.normalized(QString::NormalizationForm_KC), newRect);
             wordsWithCharacters.append(WordWithCharacters(word, wordCharacters));
-
-            index++;
         }
 
         if (it == itEnd) {

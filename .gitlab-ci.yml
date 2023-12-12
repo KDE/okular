@@ -30,28 +30,47 @@ include:
 
 build_clazy_clang_tidy:
   stage: build
-  image: debian:unstable
+  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt515:latest
   tags:
     - Linux
+  interruptible: true
+  before_script:
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/repo-metadata.git ci-utilities/repo-metadata/ --depth=1
   only:
     - merge_requests
-  before_script:
-    - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
-    - apt-get update
-    - apt-get install --yes eatmydata
-    - eatmydata apt-get build-dep --yes --no-install-recommends okular
-    - eatmydata apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy-14 libqt5x11extras5-dev libkf5crash-dev libkf5purpose-dev kirigami2-dev libegl-dev jq
-
+  variables:
+    KDECI_CC_CACHE: /mnt/caches/suse-qt5.15/
+    KDECI_CACHE_PATH: /mnt/artifacts/suse-qt5.15/
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt5.15
+    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-no-module-include
+    CXXFLAGS: -Werror -Wno-deprecated-declarations
+    CC: clang
+    CXX: clazy
   script:
-    - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch" ninja
-    - run-clang-tidy-14
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt5/Shared --only-setup-environment
+    # Default UI
+    - mkdir -p /tmp/okular_build
+    - cd /tmp/okular_build
+    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF5DocTools -DKF5DocTools_FOUND=false $CI_PROJECT_DIR
+    - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
+    - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
+    - cp "$CI_PROJECT_DIR/.clang-tidy" .
+    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h" ninja -k 0
+    - run-clang-tidy
     - rm -rf *
+    # Mobile UI
     - echo "Now compiling the mobile UI"
-    - cd "$CI_PROJECT_DIR"
-    - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_mobile.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch" ninja
-    - run-clang-tidy-14
+    - mkdir -p /tmp/okular_build
+    - cd /tmp/okular_build
+    - cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF5DocTools -DKF5DocTools_FOUND=false $CI_PROJECT_DIR
+    - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
+    - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
+    - cp "$CI_PROJECT_DIR/.clang-tidy" .
+    - CLAZY_IGNORE_DIRS="settings_mobile.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" ninja -k 0
+    - run-clang-tidy
 
 clang_format:
   stage: build

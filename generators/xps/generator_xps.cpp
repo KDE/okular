@@ -789,10 +789,10 @@ void XpsPage::processGlyph(QPainter *painter, XpsRenderNode &node)
     att = node.attributes.value(QStringLiteral("Indices")).toString();
     QList<qreal> advanceWidths;
     if (!att.isEmpty()) {
-        QStringList indicesElements = att.split(QLatin1Char(';'));
-        for (int i = 0; i < indicesElements.size(); ++i) {
-            if (indicesElements.at(i).contains(QStringLiteral(","))) {
-                QStringList parts = indicesElements.at(i).split(QLatin1Char(','));
+        const QStringList indicesElements = att.split(QLatin1Char(';'));
+        for (const QString &indicesElement : indicesElements) {
+            if (indicesElements.contains(QStringLiteral(","))) {
+                const QStringList parts = indicesElement.split(QLatin1Char(','));
                 if (parts.size() == 2) {
                     // regular advance case, no offsets
                     advanceWidths.append(parts.at(1).toDouble() * fontSize / 100.0);
@@ -803,7 +803,7 @@ void XpsPage::processGlyph(QPainter *painter, XpsRenderNode &node)
                     advanceWidths.append(AdvanceWidth + uOffset);
                 } else {
                     // has vertical offset, but don't know how to handle that yet
-                    qCWarning(OkularXpsDebug) << "Unhandled Indices element: " << indicesElements.at(i);
+                    qCWarning(OkularXpsDebug) << "Unhandled Indices element: " << indicesElement;
                     advanceWidths.append(-1.0);
                 }
             } else {

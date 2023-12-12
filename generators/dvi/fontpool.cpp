@@ -269,8 +269,8 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     // If PK fonts are generated, the kpsewhich command will re-route
     // the output of MetaFont into its stderr. Here we make sure this
     // output is intercepted and parsed.
-    kpsewhich_ = new QProcess();
-    connect(kpsewhich_, &QProcess::readyReadStandardError, this, &fontPool::mf_output_receiver);
+    kpsewhich_ = std::make_unique<QProcess>();
+    connect(kpsewhich_.get(), &QProcess::readyReadStandardError, this, &fontPool::mf_output_receiver);
 
     // Now run... kpsewhich. In case of error, kick up a fuss.
     // This string is not going to be quoted, as it might be were it
@@ -293,7 +293,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
         // This makes sure the we don't try to run kpsewhich again
         markFontsAsLocated();
-        delete kpsewhich_;
+        kpsewhich_.reset();
         return;
     }
     // We wait here while the external program runs concurrently.
@@ -354,7 +354,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
             }
         } // of if (fontp->filename.isEmpty() == true)
     }
-    delete kpsewhich_;
+    kpsewhich_.reset();
 }
 
 void fontPool::setCMperDVIunit(double _CMperDVI)
@@ -448,10 +448,11 @@ void fontPool::release_fonts()
 
 void fontPool::mf_output_receiver()
 {
-    const QString output_data = QString::fromLocal8Bit(kpsewhich_->readAllStandardError());
-
-    kpsewhichOutput.append(output_data);
-    MetafontOutput.append(output_data);
+    if (kpsewhich_) {
+        const QString output_data = QString::fromLocal8Bit(kpsewhich_->readAllStandardError());
+        kpsewhichOutput.append(output_data);
+        MetafontOutput.append(output_data);
+    }
 
     // We'd like to print only full lines of text.
     int numleft;

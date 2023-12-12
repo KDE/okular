@@ -205,7 +205,7 @@ private:
     QString extraSearchPath;
 
     // The handle on the external process.
-    QProcess *kpsewhich_;
+    std::unique_ptr<QProcess> kpsewhich_;
 
 private Q_SLOTS:
     // This slot is called when MetaFont is run via the kpsewhich program.

@@ -7,6 +7,7 @@
 #ifndef OKULAR_GLOBAL_H
 #define OKULAR_GLOBAL_H
 
+#include <QFlags>
 #include <QGlobalStatic>
 
 /**

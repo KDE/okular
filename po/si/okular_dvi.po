@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2011-08-30 13:30+0530\n"
 "Last-Translator:  Danishka Navin <danishka@gmail.com> \n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -367,7 +367,7 @@ msgstr ""
 "රථිපලයක් ලෙස, ඇතැම් අකුරු ගොනු සොයාගත නොහැකි විය හැකි නිසා ඔබේ ලේඛනය කියවිය නොහැකි විය හැක."
 "</p></qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi..."

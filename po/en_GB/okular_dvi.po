@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2014-06-29 13:08+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -323,7 +323,7 @@ msgstr ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Currently generating %1 at %2 dpi..."

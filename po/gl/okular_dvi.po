@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2023-06-17 12:18+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -326,7 +326,7 @@ msgstr ""
 "de saída %1, erro %2). En consecuencia, non se puideron atopar algúns "
 "ficheiros de fonte e o documento podería ser ilexíbel.</qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Xerando %1 con %2 ppp…"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2014-05-12 18:42+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -322,7 +322,7 @@ msgstr ""
 "%2). På grund av det kunde vissa teckensnittsfiler inte hittas, och "
 "dokumentet kan vara oläsbart.</qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Skapar för närvarande %1 med %2 punkter/tum..."

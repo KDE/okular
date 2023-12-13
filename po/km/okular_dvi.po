@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2009-05-26 10:18+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -369,7 +369,7 @@ msgstr ""
 "<qt><p>ការ​បង្កើត​ពុម្ពអក្សរ​ដោយ <b>kpsewhich</b> ត្រូវ​បានបោះបង់ (កូដ​ចេញ %1កំហុស %2) ។ ជា​"
 "លទ្ធផល ឯកសារ​ពុម្ពអក្សរ​មួយ​ចំនួន​មិនអាច​ត្រូវ​បាន​កំណត់​ទីតាំង​ឯកសារ​របស់អ្នក​ទេ អាច​​អាន​បាន ។</p></qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi..."

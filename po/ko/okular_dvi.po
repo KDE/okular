@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-13 00:40+0000\n"
 "PO-Revision-Date: 2022-05-07 02:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -308,7 +308,7 @@ msgstr ""
 "드 %1, 오류 %2) 일부 글꼴 파일을 찾을 수 없으므로 문서의 일부분을 읽지 못할 "
 "수도 있습니다.</qt>"
 
-#: fontpool.cpp:481
+#: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "%1을(를) %2 dpi로 생성 중..."

@@ -144,11 +144,6 @@ FilePrinter::doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDe
     return ret;
 }
 
-QList<int> FilePrinter::pageList(QPrinter &printer, int lastPage, const QList<int> &selectedPageList)
-{
-    return pageList(printer, lastPage, 0, selectedPageList);
-}
-
 QList<int> FilePrinter::pageList(QPrinter &printer, int lastPage, int currentPage, const QList<int> &selectedPageList)
 {
     if (printer.printRange() == QPrinter::Selection) {
@@ -176,50 +171,6 @@ QList<int> FilePrinter::pageList(QPrinter &printer, int lastPage, int currentPag
     return list;
 }
 
-QString FilePrinter::pageRange(QPrinter &printer, int lastPage, const QList<int> &selectedPageList)
-{
-    if (printer.printRange() == QPrinter::Selection) {
-        return pageListToPageRange(selectedPageList);
-    }
-
-    if (printer.printRange() == QPrinter::PageRange) {
-        return QStringLiteral("%1-%2").arg(printer.fromPage()).arg(printer.toPage());
-    }
-
-    return QStringLiteral("1-%2").arg(lastPage);
-}
-
-QString FilePrinter::pageListToPageRange(const QList<int> &pageList)
-{
-    QString pageRange;
-    int count = pageList.count();
-    int i = 0;
-    int seqStart = i;
-    int seqEnd;
-
-    while (i != count) {
-        if (i + 1 == count || pageList[i] + 1 != pageList[i + 1]) {
-            seqEnd = i;
-
-            if (!pageRange.isEmpty()) {
-                pageRange.append(QLatin1Char(','));
-            }
-
-            if (seqStart == seqEnd) {
-                pageRange.append(pageList[i]);
-            } else {
-                pageRange.append(QStringLiteral("%1-%2").arg(seqStart).arg(seqEnd));
-            }
-
-            seqStart = i + 1;
-        }
-
-        i++;
-    }
-
-    return pageRange;
-}
-
 bool FilePrinter::ps2pdfAvailable()
 {
     return (!QStandardPaths::findExecutable(QStringLiteral("ps2pdf")).isEmpty());
@@ -243,50 +194,6 @@ bool FilePrinter::cupsAvailable()
 #else
     return false;
 #endif
-}
-
-bool FilePrinter::detectCupsService()
-{
-    QTcpSocket qsock;
-    qsock.connectToHost(QStringLiteral("localhost"), 631);
-    bool rtn = qsock.waitForConnected() && qsock.isValid();
-    qsock.abort();
-    return rtn;
-}
-
-bool FilePrinter::detectCupsConfig()
-{
-    if (QFile::exists(QStringLiteral("/etc/cups/cupsd.conf"))) {
-        return true;
-    }
-    if (QFile::exists(QStringLiteral("/usr/etc/cups/cupsd.conf"))) {
-        return true;
-    }
-    if (QFile::exists(QStringLiteral("/usr/local/etc/cups/cupsd.conf"))) {
-        return true;
-    }
-    if (QFile::exists(QStringLiteral("/opt/etc/cups/cupsd.conf"))) {
-        return true;
-    }
-    if (QFile::exists(QStringLiteral("/opt/local/etc/cups/cupsd.conf"))) {
-        return true;
-    }
-    return false;
-}
-
-QSize FilePrinter::psPaperSize(QPrinter &printer)
-{
-    QSize size = printer.pageLayout().pageSize().sizePoints();
-
-    if (printer.pageLayout().pageSize().id() == QPageSize::Custom) {
-        return QSize((int)printer.widthMM() * (25.4 / 72), (int)printer.heightMM() * (25.4 / 72));
-    }
-
-    if (printer.pageLayout().orientation() == QPageLayout::Landscape) {
-        size.transpose();
-    }
-
-    return size;
 }
 
 QStringList FilePrinter::printArguments(QPrinter &printer,

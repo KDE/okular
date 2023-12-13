@@ -100,31 +100,6 @@ public:
      */
     static QList<int> pageList(QPrinter &printer, int lastPage, int currentPage, const QList<int> &selectedPageList);
 
-    /** Return the list of pages selected by the user in the Print Dialog
-     *
-     * @param printer the print settings to use
-     * @param lastPage the last page number, needed if AllPages option is selected
-     * @param selectedPageList list of pages to use if Selection option is selected
-     * @returns Returns list of pages to print
-     */
-    static QList<int> pageList(QPrinter &printer, int lastPage, const QList<int> &selectedPageList);
-
-    /** Return the range of pages selected by the user in the Print Dialog
-     *
-     * @param printer the print settings to use
-     * @param lastPage the last page number, needed if AllPages option is selected
-     * @param selectedPageList list of pages to use if Selection option is selected
-     * @returns Returns range of pages to print
-     */
-    static QString pageRange(QPrinter &printer, int lastPage, const QList<int> &selectedPageList);
-
-    /** convert a Page List into a Page Range
-     *
-     * @param pageList list of pages to convert
-     * @returns Returns equivalent page range
-     */
-    static QString pageListToPageRange(const QList<int> &pageList);
-
     /** Return if Ghostscript ps2pdf is available on this system
      *
      * @returns Returns true if Ghostscript ps2pdf available
@@ -137,21 +112,12 @@ public:
      */
     static bool pdf2psAvailable();
 
+private:
     /** Return if CUPS Print System is available on this system
      *
      * @returns Returns true if CUPS available
      */
     static bool cupsAvailable();
-
-    /** Returns the postscript standard page size
-     *
-     * @returns Returns paper size in ps points
-     */
-    static QSize psPaperSize(QPrinter &printer);
-
-protected:
-    bool detectCupsService();
-    bool detectCupsConfig();
 
     Document::PrintError
     doPrintFiles(QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange, QPageLayout::Orientation documentOrientation, ScaleMode scaleMode);

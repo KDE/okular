@@ -8,15 +8,16 @@
 #define URL_UTILS_H
 
 #include <QRegularExpression>
+#include <QUrl>
 
 namespace UrlUtils
 {
 QString getUrl(QString txt)
 {
     // match the url
-    QRegularExpression reg(QStringLiteral("\\b((https?|ftp)://(www\\d{0,3}[.])?[\\S]+)|((www\\d{0,3}[.])[\\S]+)"));
+    static QRegularExpression reg(QStringLiteral("\\b((https?|ftp)://(www\\d{0,3}[.])?[\\S]+)|((www\\d{0,3}[.])[\\S]+)"));
     // blocks from detecting invalid urls
-    QRegularExpression reg1(QStringLiteral("[\\w'\"\\(\\)]+https?://|[\\w'\"\\(\\)]+ftp://|[\\w'\"\\(\\)]+www\\d{0,3}[.]"));
+    static QRegularExpression reg1(QStringLiteral("[\\w'\"\\(\\)]+https?://|[\\w'\"\\(\\)]+ftp://|[\\w'\"\\(\\)]+www\\d{0,3}[.]"));
     txt = txt.remove(QLatin1Char('\n'));
 
     if (reg1.match(txt).hasMatch()) { // return early if there is a match (url is not valid)

@@ -30,7 +30,7 @@ include:
 
 build_clazy_clang_tidy:
   stage: build
-  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt515:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt66:latest
   tags:
     - Linux
   interruptible: true
@@ -40,10 +40,10 @@ build_clazy_clang_tidy:
   only:
     - merge_requests
   variables:
-    KDECI_CC_CACHE: /mnt/caches/suse-qt5.15/
-    KDECI_CACHE_PATH: /mnt/artifacts/suse-qt5.15/
+    KDECI_CC_CACHE: /mnt/caches/suse-qt6.6/
+    KDECI_CACHE_PATH: /mnt/artifacts/suse-qq6.6/
     KDECI_GITLAB_SERVER: https://invent.kde.org/
-    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt5.15
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt6.6
     CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-no-module-include
     CXXFLAGS: -Werror -Wno-deprecated-declarations
     CC: clang
@@ -54,7 +54,7 @@ build_clazy_clang_tidy:
     # Default UI
     - mkdir -p /tmp/okular_build
     - cd /tmp/okular_build
-    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF5DocTools -DKF5DocTools_FOUND=false $CI_PROJECT_DIR
+    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
     - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
     - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
     - cp "$CI_PROJECT_DIR/.clang-tidy" .
@@ -65,7 +65,7 @@ build_clazy_clang_tidy:
     - echo "Now compiling the mobile UI"
     - mkdir -p /tmp/okular_build
     - cd /tmp/okular_build
-    - cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF5DocTools -DKF5DocTools_FOUND=false $CI_PROJECT_DIR
+    - cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
     - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
     - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
     - cp "$CI_PROJECT_DIR/.clang-tidy" .

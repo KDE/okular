@@ -69,7 +69,7 @@ FreeUnrarFlavour::FreeUnrarFlavour()
 
 QStringList FreeUnrarFlavour::processListing(const QStringList &data)
 {
-    QRegularExpression re(QStringLiteral("^ ([^/]+/([^\\s]+))$"));
+    static const QRegularExpression re(QStringLiteral("^ ([^/]+/([^\\s]+))$"));
 
     QStringList newdata;
     for (const QString &line : data) {

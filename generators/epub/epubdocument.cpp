@@ -69,15 +69,17 @@ QString EpubDocument::checkCSS(const QString &c)
 {
     QString css = c;
     // remove paragraph line-heights
-    css.remove(QRegularExpression(QStringLiteral("line-height\\s*:\\s*[\\w\\.]*;")));
+    static const QRegularExpression lineHeightRegex {QStringLiteral("line-height\\s*:\\s*[\\w\\.]*;")};
+    css.remove(lineHeightRegex);
 
     // HACK transform em and rem notation to px, because QTextDocument doesn't support
     // em and rem.
-    const QStringList cssArray = css.split(QRegularExpression(QStringLiteral("\\s+")));
+    static const QRegularExpression cssSplitRegex {QStringLiteral("\\s+")};
+    const QStringList cssArray = css.split(cssSplitRegex);
     QStringList cssArrayReplaced;
     std::size_t cssArrayCount = cssArray.count();
     std::size_t i = 0;
-    const QRegularExpression re(QStringLiteral("(([0-9]+)(\\.[0-9]+)?)r?em(.*)"));
+    static const QRegularExpression re(QStringLiteral("(([0-9]+)(\\.[0-9]+)?)r?em(.*)"));
     while (i < cssArrayCount) {
         const auto &item = cssArray[i];
         QRegularExpressionMatch match = re.match(item);

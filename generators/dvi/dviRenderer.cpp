@@ -654,17 +654,17 @@ QString dviRenderer::PDFencodingToQString(const QString &_pdfstring)
     pdfstring = pdfstring.replace(QLatin1String("\\\\"), QLatin1String("\\"));
 
     // Now replace octal character codes with the characters they encode
-    QRegularExpression regex(QStringLiteral("(\\\\)(\\d\\d\\d)")); // matches "\xyz" where x,y,z are numbers
+    static const QRegularExpression xyzRegex(QStringLiteral("(\\\\)(\\d\\d\\d)")); // matches "\xyz" where x,y,z are numbers
     QRegularExpressionMatch match;
-    while ((match = regex.match(pdfstring)).hasMatch()) {
+    while ((match = xyzRegex.match(pdfstring)).hasMatch()) {
         pdfstring = pdfstring.replace(match.capturedStart(0), 4, QChar(match.captured(2).toInt(nullptr, 8)));
     }
-    regex.setPattern(QStringLiteral("(\\\\)(\\d\\d)")); // matches "\xy" where x,y are numbers
-    while ((match = regex.match(pdfstring)).hasMatch()) {
+    static const QRegularExpression xyRegex(QStringLiteral("(\\\\)(\\d\\d)")); // matches "\xy" where x,y are numbers
+    while ((match = xyRegex.match(pdfstring)).hasMatch()) {
         pdfstring = pdfstring.replace(match.capturedStart(0), 3, QChar(match.captured(2).toInt(nullptr, 8)));
     }
-    regex.setPattern(QStringLiteral("(\\\\)(\\d)")); // matches "\x" where x is a number
-    while ((match = regex.match(pdfstring)).hasMatch()) {
+    static const QRegularExpression xRegex(QStringLiteral("(\\\\)(\\d)")); // matches "\x" where x is a number
+    while ((match = xRegex.match(pdfstring)).hasMatch()) {
         pdfstring = pdfstring.replace(match.capturedStart(0), 2, QChar(match.captured(2).toInt(nullptr, 8)));
     }
 

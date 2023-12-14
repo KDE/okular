@@ -671,7 +671,7 @@ RegularAreaRect *TextPage::findText(int searchID, const QString &query, SearchDi
 // we have a '-' just followed by a '\n' character
 // check if the string contains a '-' character
 // if the '-' is the last entry
-static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &textListEnd)
+static int stringLengthAdaptedWithHyphen(const QString &str, TextList::ConstIterator it, TextList::ConstIterator textListEnd)
 {
     const int len = str.length();
 
@@ -725,7 +725,7 @@ RegularAreaRect *TextPagePrivate::searchPointToArea(const SearchPoint *sp)
     return ret;
 }
 
-RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QString &_query, TextComparisonFunction comparer, const TextList::ConstIterator &start, int start_offset, const TextList::ConstIterator &end)
+RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QString &_query, TextComparisonFunction comparer, TextList::ConstIterator start, int start_offset, TextList::ConstIterator end)
 {
     // normalize query search all unicode (including glyphs)
     const QString query = _query.normalized(QString::NormalizationForm_KC);
@@ -825,7 +825,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
     return nullptr;
 }
 
-RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const QString &_query, TextComparisonFunction comparer, const TextList::ConstIterator &start, int start_offset, const TextList::ConstIterator &end)
+RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const QString &_query, TextComparisonFunction comparer, TextList::ConstIterator start, int start_offset, TextList::ConstIterator end)
 {
     // normalize query to search all unicode (including glyphs)
     const QString query = _query.normalized(QString::NormalizationForm_KC);

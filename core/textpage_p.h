@@ -29,6 +29,8 @@ class RegionText;
 namespace Okular
 {
 class PagePrivate;
+class RegularAreaRect;
+class Page;
 typedef QList<TinyTextEntity *> TextList;
 
 /**
@@ -48,8 +50,8 @@ public:
     TextPagePrivate();
     ~TextPagePrivate();
 
-    RegularAreaRect *findTextInternalForward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator &start, int start_offset, const TextList::ConstIterator &end);
-    RegularAreaRect *findTextInternalBackward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator &start, int start_offset, const TextList::ConstIterator &end);
+    RegularAreaRect *findTextInternalForward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator start, int start_offset, const TextList::ConstIterator end);
+    RegularAreaRect *findTextInternalBackward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator start, int start_offset, const TextList::ConstIterator end);
 
     /**
      * Copy a TextList to m_words, the pointers of list are adopted

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-02-21 18:58+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -5549,7 +5549,7 @@ msgstr "Zobraziť certifikát..."
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Zobraziť iba stránky v záložkách"

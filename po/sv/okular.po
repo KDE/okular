@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-10-20 20:29+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -5507,7 +5507,7 @@ msgstr "Visa i certifikathanterare"
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDE:s certifikathantering (kleopatra) hittades inte"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Visa bara sidor med bokmärken"

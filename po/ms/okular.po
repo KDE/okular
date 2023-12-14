@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2010-12-13 13:37+0800\n"
 "Last-Translator: Muhammad Najmi bin Ahmad Zabidi <najmi.zabidi@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -5700,7 +5700,7 @@ msgstr "Konfigur KPDF..."
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Papar hanya halaman yang ditanda buku"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-12-02 20:09+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -5444,7 +5444,7 @@ msgstr "在憑證管理員中檢視"
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "找不到 KDE 憑證管理員 (kleopatra)"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "只顯示書籤頁"

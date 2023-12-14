@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2022-11-10 14:23\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -5559,7 +5559,7 @@ msgstr "Праглядзець сертыфікат..."
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Паказваць толькі старонкі закладак"

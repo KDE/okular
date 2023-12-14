@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-10-22 17:03+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -5508,7 +5508,7 @@ msgstr "சான்றிதழ் மேலாளியில் காட்�
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "கே.டீ.யீ. சான்றிதழ் மேலாளி (kleopatra) கண்டுபிடிக்கப்படவில்லை"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "நினைவுக்குறியிட்ட பக்கங்களை மட்டும் காட்டு"

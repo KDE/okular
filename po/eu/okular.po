@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-10-19 07:20+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -5524,7 +5524,7 @@ msgstr "Ikusi ziurtagiri kudeatzailean"
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDEren ziurtagiri kudeatzailea (kleopatra) ez du aurkitu"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Erakutsi laster-marka ipinitako orriak soilik"

@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the kdegraphics package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
+# SPDX-FileCopyrightText: 2023 Agron Selimaj <as9902613@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2009-04-30 21:42+0000\n"
-"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
-"Language-Team: Albanian <sq@li.org>\n"
+"PO-Revision-Date: 2023-12-13 17:28-0500\n"
+"Last-Translator: Agron Selimaj <as9902613@gmail.com>\n"
+"Language-Team: sq\n"
 "Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-04-22 09:40+0000\n"
-"X-Generator: Launchpad (build 12883)\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -27,7 +28,7 @@ msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
+msgstr "kde-i18n-sq@kde.org,vilsongjeci@gmail.com"
 
 #: lib/ebook_epub.cpp:311
 #, kde-format

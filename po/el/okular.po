@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-14 00:40+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -5553,7 +5553,7 @@ msgstr "Προβολή στον Διαχειριστή Πιστοποιητικ�
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "Ο Διαχειριστής Πιστοποιητικών KDE (kleopatra) δεν βρέθηκε"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Εμφάνιση μόνο σελίδων με σελιδοδείκτη"

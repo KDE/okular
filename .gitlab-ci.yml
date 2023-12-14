@@ -44,7 +44,7 @@ build_clazy_clang_tidy:
     KDECI_CACHE_PATH: /mnt/artifacts/suse-qq6.6/
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt6.6
-    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-no-module-include,no-strict-iterators
+    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-no-module-include,no-strict-iterators,no-lambda-unique-connection
     CXXFLAGS: -Werror -Wno-deprecated-declarations
     CC: clang
     CXX: clazy

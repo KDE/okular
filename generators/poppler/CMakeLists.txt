@@ -3,7 +3,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_poppler")
 
 add_subdirectory( conf )
 
-set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt${QT_MAJOR_VERSION} Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Gui)
+set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt6 Qt6::Core Qt6::Gui)
 
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
@@ -28,13 +28,13 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/pdfse
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt${QT_MAJOR_VERSION} Qt${QT_MAJOR_VERSION}::Xml)
+target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion KF5::KIOWidgets Poppler::Qt6 Qt6::Xml)
 
 ########### autotests ###############
 
 ecm_add_test(autotests/testimagescaling.cpp
     TEST_NAME "imageScalingTest"
-    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test Qt${QT_MAJOR_VERSION}::Gui
+    LINK_LIBRARIES Qt6::Test Qt6::Gui
 )
 
 ########### install files ###############

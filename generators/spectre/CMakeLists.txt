@@ -21,7 +21,7 @@ kconfig_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 okular_add_generator(okularGenerator_ghostview ${okularGenerator_ghostview_SRCS})
 
 target_include_directories(okularGenerator_ghostview PRIVATE ${LIBSPECTRE_INCLUDE_DIR})
-target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::I18n Qt${QT_MAJOR_VERSION}::Xml)
+target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::I18n Qt6::Xml)
 
 ########### install files ###############
 

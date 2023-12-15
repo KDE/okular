@@ -28,7 +28,7 @@ target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${LIBZIP
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 ecm_add_test(autotests/chmgeneratortest.cpp
     TEST_NAME "chmgeneratortest"
-    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::CoreAddons okularcore
+    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore
 )
 
 target_compile_definitions(chmgeneratortest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_chmlib>")

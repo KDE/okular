@@ -14,7 +14,7 @@ endif()
 if(BUILD_TESTING AND BUILD_DESKTOP AND KF5KExiv2_FOUND)
     add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
     set( kimgiotest_SRCS tests/kimgiotest.cpp ${CMAKE_SOURCE_DIR}/gui/pagepainter.cpp ${CMAKE_SOURCE_DIR}/gui/guiutils.cpp ${CMAKE_SOURCE_DIR}/gui/debug_ui.cpp )
-    ecm_add_test(${kimgiotest_SRCS} TEST_NAME "kimgiotest" LINK_LIBRARIES okularcore okularpart Qt${QT_MAJOR_VERSION}::Svg Qt${QT_MAJOR_VERSION}::Test)
+    ecm_add_test(${kimgiotest_SRCS} TEST_NAME "kimgiotest" LINK_LIBRARIES okularcore okularpart Qt6::Svg Qt6::Test)
     target_compile_definitions(kimgiotest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_kimgio>")
 endif()
 

@@ -12,9 +12,9 @@ endfunction()
 
 # let's enable the generators properly configured
 
-if(Poppler_Qt${QT_MAJOR_VERSION}_FOUND)
+if(Poppler_Qt6_FOUND)
   add_subdirectory(poppler)
-endif(Poppler_Qt${QT_MAJOR_VERSION}_FOUND)
+endif(Poppler_Qt6_FOUND)
 
 if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)

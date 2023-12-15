@@ -30,7 +30,7 @@ endif()
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 ecm_add_test(autotests/comicbooktest.cpp
     TEST_NAME "comicbooktest"
-    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::CoreAddons okularcore okular_comicbook
+    LINK_LIBRARIES Qt6::Test KF5::CoreAddons okularcore okular_comicbook
 )
 
 ########### install files ###############

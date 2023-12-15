@@ -36,7 +36,7 @@ if(TARGET KF5::Activities)
 endif()
 
 if (HAVE_X11)
-    target_link_libraries(okular Qt6::X11Extras)
+    target_link_libraries(okular Qt6::GuiPrivate)
 endif()
 
 install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

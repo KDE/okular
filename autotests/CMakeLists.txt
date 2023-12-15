@@ -126,7 +126,8 @@ if(KF5Activities_FOUND AND BUILD_DESKTOP)
 	target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
 
 	if (HAVE_X11)
-        target_link_libraries(mainshelltest Qt6::X11Extras)
+           target_link_libraries(mainshelltest Qt6::GuiPrivate)
+        endif()
     endif()
 endif()
 
@@ -137,7 +138,7 @@ if(BUILD_DESKTOP)
     )
 
     if (HAVE_X11)
-        target_link_libraries(annotationtoolbartest Qt6::X11Extras)
+        target_link_libraries(annotationtoolbartest Qt6::GuiPrivate)
     endif()
 endif()
 

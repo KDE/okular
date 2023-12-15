@@ -202,7 +202,8 @@ if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
         URL "https://api.kde.org/frameworks/kactivities/html/"
         PURPOSE "Required for Activities integration.")
 
-    find_package(Qt6X11Extras REQUIRED)
+    find_package(Qt6Gui REQUIRED COMPONENTS Private)
+
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)

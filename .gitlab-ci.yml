@@ -10,6 +10,7 @@ include:
       - /gitlab-templates/windows.yml
       - /gitlab-templates/craft-android-apks.yml
       - /gitlab-templates/craft-windows-x86-64.yml
+      - /gitlab-templates/craft-windows-appx-qt5.yml
 
 build_ubuntu_22_04:
   stage: build

@@ -61,9 +61,6 @@
 #include <KPluginMetaData>
 #include <KProcess>
 #include <KShell>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <Kdelibs4Migration>
-#endif
 #include <kio_version.h>
 #include <kzip.h>
 
@@ -2290,23 +2287,6 @@ QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
     }
     QString newokularfile = docdataDir + QLatin1Char('/') + fn;
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // we don't want to accidentally migrate old files when running unit tests
-    if (!QFile::exists(newokularfile) && !QStandardPaths::isTestModeEnabled()) {
-        // see if an KDE4 file still exists
-        static Kdelibs4Migration k4migration;
-        QString oldfile = k4migration.locateLocal("data", QStringLiteral("okular/docdata/") + fn);
-        if (oldfile.isEmpty()) {
-            oldfile = k4migration.locateLocal("data", QStringLiteral("kpdf/") + fn);
-        }
-        if (!oldfile.isEmpty() && QFile::exists(oldfile)) {
-            // ### copy or move?
-            if (!QFile::copy(oldfile, newokularfile)) {
-                return QString();
-            }
-        }
-    }
-#endif
     return newokularfile;
 }
 

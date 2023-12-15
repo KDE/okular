@@ -186,11 +186,7 @@ void EmbeddedFilesDialog::viewFile(Okular::EmbeddedFile *ef)
 
     // view the temporary file with the default application
     auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()));
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
     job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-    job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
     job->start();
 }
 

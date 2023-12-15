@@ -3105,11 +3105,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 #endif
                         } else if (choice == httpLink) {
                             auto *job = new KIO::OpenUrlJob(QUrl(url));
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
                             job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-                            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
                             job->start();
                         }
                     }

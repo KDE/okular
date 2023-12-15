@@ -75,10 +75,6 @@
 #include <KToggleAction>
 #include <KToggleFullScreenAction>
 #include <KToolBar>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <Kdelibs4ConfigMigrator>
-#include <Kdelibs4Migration>
-#endif
 #if HAVE_KWALLET
 #include <KWallet>
 #endif
@@ -87,12 +83,8 @@
 
 #if HAVE_PURPOSE
 #include <Purpose/AlternativesModel>
-#include <purpose_version.h>
-#if PURPOSE_VERSION >= QT_VERSION_CHECK(5, 104, 0)
 #include <Purpose/Menu>
-#else
-#include <PurposeWidgets/Menu>
-#endif
+#include <purpose_version.h>
 #endif
 
 // local includes
@@ -325,7 +317,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     // when this part is used in an application other than okular (e.g. unit tests)
     setComponentName(QStringLiteral("okular"), QString());
 
-    setupConfigSkeleton(args, componentName());
+    setupConfigSkeleton(args);
 
 #if HAVE_DBUS
     numberOfParts++;
@@ -608,7 +600,7 @@ Part::Part(QObject *parent, const QVariantList &args)
 #endif
 }
 
-void Part::setupConfigSkeleton(const QVariantList &args, const QString &componentName)
+void Part::setupConfigSkeleton(const QVariantList &args)
 {
     const QLatin1String configFileName("okularpartrc");
 
@@ -618,43 +610,6 @@ void Part::setupConfigSkeleton(const QVariantList &args, const QString &componen
     if (configFilePath.isEmpty()) {
         configFilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1Char('/') + configFileName;
     }
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Migrate old config
-    if (!QFile::exists(configFilePath)) {
-        qCDebug(OkularUiDebug) << "Did not find a config file, attempting to look for old config";
-
-        // Migrate old config + UI
-        Kdelibs4ConfigMigrator configMigrator(componentName);
-        // UI file is handled automatically, we only need to specify config name because we're a part
-        configMigrator.setConfigFiles(QStringList(configFileName));
-
-        // If there's no old okular config to migrate, look for kpdf
-        if (!configMigrator.migrate()) {
-            qCDebug(OkularUiDebug) << "Did not find an old okular config file, attempting to look for kpdf config";
-
-            // First try the automatic detection, using $KDEHOME etc.
-            Kdelibs4Migration migration;
-            QString kpdfConfig = migration.locateLocal("config", QStringLiteral("kpdfpartrc"));
-
-            // Fallback just in case it tried e. g. ~/.kde4
-            if (kpdfConfig.isEmpty()) {
-                kpdfConfig = QDir::homePath() + QStringLiteral("/.kde/share/config/kpdfpartrc");
-            }
-
-            if (QFile::exists(kpdfConfig)) {
-                qCDebug(OkularUiDebug) << "Found old kpdf config" << kpdfConfig << "copying to" << configFilePath;
-                QFile::copy(kpdfConfig, configFilePath);
-            } else {
-                qCDebug(OkularUiDebug) << "Did not find an old kpdf config file";
-            }
-        } else {
-            qCDebug(OkularUiDebug) << "Migrated old okular config";
-        }
-    }
-#else
-    Q_UNUSED(componentName);
-#endif
 
     KSharedConfigPtr config = KSharedConfig::openConfig(configFilePath);
 

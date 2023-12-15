@@ -324,9 +324,8 @@ private:
      * Determines the config file path, and performs configuration updates not handled by kconf_update.
      *
      * @param args As passed to Part::Part().
-     * @param componentName As KXMLGUIClient::componentName(), probably "okular".
      */
-    void setupConfigSkeleton(const QVariantList &args, const QString &componentName);
+    void setupConfigSkeleton(const QVariantList &args);
 
     static int numberOfParts;
 

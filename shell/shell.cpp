@@ -169,9 +169,6 @@ Shell::Shell(const QString &serializedOptions)
     : KParts::MainWindow()
     , m_menuBarWasShown(true)
     , m_toolBarWasShown(true)
-#ifndef Q_OS_WIN
-    , m_activityResource(nullptr)
-#endif
     , m_isValid(true)
 {
     setObjectName(QStringLiteral("okular::Shell#"));
@@ -447,11 +444,7 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
         if (!isstdin) {
             if (openOk) {
 #ifdef WITH_KACTIVITIES
-                if (!m_activityResource) {
-                    m_activityResource = new KActivities::ResourceInstance(window()->winId(), this);
-                }
-
-                m_activityResource->setUri(url);
+                KActivities::ResourceInstance::notifyAccessed(url);
 #endif
                 m_recent->addUrl(url);
             } else {

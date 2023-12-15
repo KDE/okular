@@ -35,13 +35,6 @@ class KToggleAction;
 class QTabWidget;
 class KPluginFactory;
 
-#ifndef Q_OS_WIN
-namespace KActivities
-{
-class ResourceInstance;
-}
-#endif
-
 /**
  * This is the application "Shell".  It has a menubar and a toolbar
  * but relies on the "Part" to do all the real work.
@@ -204,9 +197,6 @@ private:
     QAction *m_showSidebarAction = nullptr;
     QAction *m_lockSidebarAction = nullptr;
 
-#ifndef Q_OS_WIN
-    KActivities::ResourceInstance *m_activityResource;
-#endif
     bool m_isValid;
 };
 

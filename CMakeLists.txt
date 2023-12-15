@@ -124,9 +124,11 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     WindowSystem
 )
 
-find_package(KF6Wallet ${KF_REQUIRED_VERSION})
-set_okular_optional_package_properties(KF6Wallet PROPERTIES
+if (NOT WIN32)
+    find_package(KF6Wallet ${KF_REQUIRED_VERSION})
+    set_okular_optional_package_properties(KF6Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")
+endif()
 if(KF6Wallet_FOUND)
     set(HAVE_KWALLET 1)
 else()

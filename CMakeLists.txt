@@ -100,7 +100,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 ecm_setup_version(${PROJECT_VERSION}
                   VARIABLE_PREFIX OKULAR
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
-                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular6ConfigVersion.cmake")
 
 find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Xml)
 
@@ -495,9 +495,9 @@ if (TARGET Qt6::Qml)
     target_link_libraries(okularcore PRIVATE Qt6::Qml)
 endif()
 
-set_target_properties(okularcore PROPERTIES VERSION 11.0.0 SOVERSION 11 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 11.0.0 SOVERSION 11 OUTPUT_NAME Okular6Core EXPORT_NAME Core)
 
-install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS okularcore EXPORT Okular6Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
@@ -642,22 +642,22 @@ endif()
 
 ########### cmake files #################
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular5")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular6")
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Okular5Config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/Okular5Config.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/Okular6Config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular6Config.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
   PATH_VARS  KDE_INSTALL_INCLUDEDIR CMAKE_INSTALL_PREFIX
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/Okular5Config.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular6Config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular6ConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
 
-install(EXPORT Okular5Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okular5Targets.cmake NAMESPACE Okular::)
+install(EXPORT Okular6Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okular6Targets.cmake NAMESPACE Okular::)
 
 install(FILES
    core/stamps.svg

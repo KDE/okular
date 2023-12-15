@@ -14,13 +14,13 @@
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017, 2022.
 # Zerrin Cakmakkaya <zerrin@uludag.org.tr>, 2005.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-14 00:40+0000\n"
-"PO-Revision-Date: 2023-11-26 01:27+0300\n"
+"PO-Revision-Date: 2023-12-14 14:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -702,7 +702,7 @@ msgstr "Düz Çizgi"
 #: gui/guiutils.cpp:50
 #, kde-format
 msgid "Polygon with Comment"
-msgstr "Poligon, Yorum ile"
+msgstr "Çokgen, Yorum ile"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1329
@@ -733,13 +733,13 @@ msgstr "Vurgulama"
 #: gui/guiutils.cpp:62
 #, kde-format
 msgid "Squiggle with Comment"
-msgstr "Kıvrımli Çizgi, Yorum ile"
+msgstr "Dalgalı Çizgili, Yorum ile"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
 #: part/pageviewannotator.cpp:1333
 #, kde-format
 msgid "Squiggle"
-msgstr "Eğri"
+msgstr "Dalgalı Çizgili"
 
 #: gui/guiutils.cpp:65
 #, kde-format
@@ -1390,7 +1390,7 @@ msgstr "Altı Çizili"
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
-msgstr "Eğri Çizgili"
+msgstr "Dalgalı Çizgili"
 
 #: part/annotationactionhandler.cpp:559
 #, kde-format
@@ -1983,12 +1983,12 @@ msgstr "Eğik Çizgi"
 #: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line length:"
-msgstr "Baş satır uzunluğu:"
+msgstr "Lider çizgi uzunluğu:"
 
 #: part/annotationwidgets.cpp:535
 #, kde-format
 msgid "Leader line extensions length:"
-msgstr "Baş satır genişletmeleri uzunluğu:"
+msgstr "Lider çizgi uzantısı uzunluğu:"
 
 #: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
 #, kde-format
@@ -3263,7 +3263,7 @@ msgstr "Geometrik Şekil"
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "Bilgi notu aracı oluştur"
+msgstr "Bilgi Notu Aracı Oluştur"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
@@ -3973,7 +3973,7 @@ msgstr "Bir açılır not koy"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
-msgstr "Birçokgen çiz (kapatmak için ilk noktaya tuklayın)"
+msgstr "Bir çokgen çiz (kapatmak için ilk noktaya tıklayın)"
 
 #: part/pageviewannotator.cpp:1250
 #, kde-format
@@ -3985,7 +3985,7 @@ msgstr "Bir dikdörtgen çiz"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
-msgstr "Kıvrımlı metin"
+msgstr "Metnin altını dalgalı çizgiyle çiz"
 
 #: part/pageviewannotator.cpp:1254
 #, kde-format

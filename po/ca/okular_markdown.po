@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 00:40+0000\n"
+"POT-Creation-Date: 2023-12-16 00:40+0000\n"
 "PO-Revision-Date: 2021-11-11 19:03+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -30,12 +30,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "antonibella5@yahoo.com"
 
-#: converter.cpp:48
+#: converter.cpp:48 converter.cpp:82
 #, kde-format
 msgid "Failed to open the document"
 msgstr "Ha fallat en obrir el document"
 
-#: converter.cpp:91 converter.cpp:109
+#: converter.cpp:95 converter.cpp:113
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Ha fallat en compilar el document Markdown."

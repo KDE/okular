@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-14 00:40+0000\n"
+"POT-Creation-Date: 2023-12-16 00:40+0000\n"
 "PO-Revision-Date: 2023-12-14 14:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -305,29 +305,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1689
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Arama, başlangıçtan sürüyor"
 
-#: core/document.cpp:1692
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Arama, sondan sürüyor"
 
-#: core/document.cpp:2455
+#: core/document.cpp:2456
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Bu belgeyi açmak için bir eklenti bulunamadı."
 
-#: core/document.cpp:3605
+#: core/document.cpp:3606
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "bilgi notlarını kaldır"
 
-#: core/document.cpp:4189 core/document.cpp:4195
+#: core/document.cpp:4190 core/document.cpp:4196
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -336,52 +336,52 @@ msgstr ""
 "Belge, bir dış uygulama çalıştırmak istiyor; güvenliğiniz için Okular buna "
 "izin vermez."
 
-#: core/document.cpp:4206 core/document.cpp:4216
+#: core/document.cpp:4207 core/document.cpp:4217
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 dosya türünü açmak için bir uygulama bulunamadı."
 
-#: core/document.cpp:4670
+#: core/document.cpp:4671
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Geçici dosya açılamadı"
 
-#: core/document.cpp:4672
+#: core/document.cpp:4673
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Yazdırma dönüşümü başarısız"
 
-#: core/document.cpp:4674
+#: core/document.cpp:4675
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Yazdırma süreci çöktü"
 
-#: core/document.cpp:4676
+#: core/document.cpp:4677
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Yazdırma süreci başlatılamadı"
 
-#: core/document.cpp:4678
+#: core/document.cpp:4679
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Dosyaya yazdırma başarısız"
 
-#: core/document.cpp:4680
+#: core/document.cpp:4681
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Yazıcı geçersiz bir durumdaydı"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4683
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Yazdırılacak dosya bulunamadı"
 
-#: core/document.cpp:4684
+#: core/document.cpp:4685
 #, kde-format
 msgid "There was no file to print"
 msgstr "Yazdırılacak dosya yok"
 
-#: core/document.cpp:4686
+#: core/document.cpp:4687
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -390,92 +390,92 @@ msgstr ""
 "Yazdırmak için uygun bir ikili dosya bulunamadı. CUPS lpr ikili dosyasının "
 "kullanılabilir olduğundan emin olun"
 
-#: core/document.cpp:4688
+#: core/document.cpp:4689
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Sayfa yazdırma boyutu geçersiz"
 
-#: core/document.cpp:5353 part/part.cpp:1172
+#: core/document.cpp:5354 part/part.cpp:1172
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' açılamadı. Dosya yok"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5864
 #, kde-format
 msgid "Title"
 msgstr "Başlık"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5867
 #, kde-format
 msgid "Subject"
 msgstr "Konu"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5870
 #, kde-format
 msgid "Description"
 msgstr "Açıklama"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5873
 #, kde-format
 msgid "Author"
 msgstr "Yazar"
 
-#: core/document.cpp:5875
+#: core/document.cpp:5876
 #, kde-format
 msgid "Creator"
 msgstr "Oluşturan"
 
-#: core/document.cpp:5878
+#: core/document.cpp:5879
 #, kde-format
 msgid "Producer"
 msgstr "Üretici"
 
-#: core/document.cpp:5881
+#: core/document.cpp:5882
 #, kde-format
 msgid "Copyright"
 msgstr "Telif Hakkı"
 
-#: core/document.cpp:5884
+#: core/document.cpp:5885
 #, kde-format
 msgid "Pages"
 msgstr "Sayfalar"
 
-#: core/document.cpp:5887
+#: core/document.cpp:5888
 #, kde-format
 msgid "Created"
 msgstr "Oluşturulma"
 
-#: core/document.cpp:5890
+#: core/document.cpp:5891
 #, kde-format
 msgid "Modified"
 msgstr "Değiştirilme"
 
-#: core/document.cpp:5893
+#: core/document.cpp:5894
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME Türü"
 
-#: core/document.cpp:5896
+#: core/document.cpp:5897
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:5899
+#: core/document.cpp:5900
 #, kde-format
 msgid "Keywords"
 msgstr "Anahtar Sözcükler"
 
-#: core/document.cpp:5902
+#: core/document.cpp:5903
 #, kde-format
 msgid "File Path"
 msgstr "Dosya Yolu"
 
-#: core/document.cpp:5905
+#: core/document.cpp:5906
 #, kde-format
 msgid "File Size"
 msgstr "Dosya Boyutu"
 
-#: core/document.cpp:5908
+#: core/document.cpp:5909
 #, kde-format
 msgid "Page Size"
 msgstr "Sayfa Boyutu"

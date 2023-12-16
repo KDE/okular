@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-14 00:40+0000\n"
+"POT-Creation-Date: 2023-12-16 00:40+0000\n"
 "PO-Revision-Date: 2023-02-21 18:58+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -296,29 +296,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1689
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Pokračujem hľadanie od začiatku"
 
-#: core/document.cpp:1692
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Pokračujem hľadanie od konca"
 
-#: core/document.cpp:2455
+#: core/document.cpp:2456
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nie je možné nájsť modul schopný spracovať dokument."
 
-#: core/document.cpp:3605
+#: core/document.cpp:3606
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "odstrániť poznámky"
 
-#: core/document.cpp:4189 core/document.cpp:4195
+#: core/document.cpp:4190 core/document.cpp:4196
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -327,52 +327,52 @@ msgstr ""
 "Dokument sa pokúsil spustiť externú aplikáciu, z dôvodu bezpečnosti to však "
 "Okular nepovolil."
 
-#: core/document.cpp:4206 core/document.cpp:4216
+#: core/document.cpp:4207 core/document.cpp:4217
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "S MIME typom %1 nie je asociovaná žiadna aplikácia."
 
-#: core/document.cpp:4670
+#: core/document.cpp:4671
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nepodarilo sa otvoriť dočasný súbor"
 
-#: core/document.cpp:4672
+#: core/document.cpp:4673
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konverzia tlače zlyhala"
 
-#: core/document.cpp:4674
+#: core/document.cpp:4675
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces tlače spadol"
 
-#: core/document.cpp:4676
+#: core/document.cpp:4677
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proces tlače sa nepodarilo spustiť"
 
-#: core/document.cpp:4678
+#: core/document.cpp:4679
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tlač do súboru zlyhala"
 
-#: core/document.cpp:4680
+#: core/document.cpp:4681
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tlačiareň je v neplatnom stave"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4683
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nepodarilo sa nájsť súbor pre tlač"
 
-#: core/document.cpp:4684
+#: core/document.cpp:4685
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebol nájdený žiadny súbor pre tlač"
 
-#: core/document.cpp:4686
+#: core/document.cpp:4687
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -381,92 +381,92 @@ msgstr ""
 "Nepodarilo sa nájsť vhodný program pre tlač. Uistite sa, že je k dispozícii "
 "CUPS príkaz lpr."
 
-#: core/document.cpp:4688
+#: core/document.cpp:4689
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Veľkosť tlače strany je neplatná"
 
-#: core/document.cpp:5353 part/part.cpp:1172
+#: core/document.cpp:5354 part/part.cpp:1172
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepodarilo sa otvoriť \"%1\". Súbor neexisstuje."
 
-#: core/document.cpp:5863
+#: core/document.cpp:5864
 #, kde-format
 msgid "Title"
 msgstr "Názov"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5867
 #, kde-format
 msgid "Subject"
 msgstr "Predmet"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5870
 #, kde-format
 msgid "Description"
 msgstr "Popis"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5873
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5875
+#: core/document.cpp:5876
 #, kde-format
 msgid "Creator"
 msgstr "Tvorca"
 
-#: core/document.cpp:5878
+#: core/document.cpp:5879
 #, kde-format
 msgid "Producer"
 msgstr "Vyrobil"
 
-#: core/document.cpp:5881
+#: core/document.cpp:5882
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5884
+#: core/document.cpp:5885
 #, kde-format
 msgid "Pages"
 msgstr "Stránok"
 
-#: core/document.cpp:5887
+#: core/document.cpp:5888
 #, kde-format
 msgid "Created"
 msgstr "Vytvorené"
 
-#: core/document.cpp:5890
+#: core/document.cpp:5891
 #, kde-format
 msgid "Modified"
 msgstr "Zmenené"
 
-#: core/document.cpp:5893
+#: core/document.cpp:5894
 #, kde-format
 msgid "MIME Type"
 msgstr "Typ MIME"
 
-#: core/document.cpp:5896
+#: core/document.cpp:5897
 #, kde-format
 msgid "Category"
 msgstr "Kategória"
 
-#: core/document.cpp:5899
+#: core/document.cpp:5900
 #, kde-format
 msgid "Keywords"
 msgstr "Kľúčové slová"
 
-#: core/document.cpp:5902
+#: core/document.cpp:5903
 #, kde-format
 msgid "File Path"
 msgstr "Cesta k súboru"
 
-#: core/document.cpp:5905
+#: core/document.cpp:5906
 #, kde-format
 msgid "File Size"
 msgstr "Veľkosť súboru"
 
-#: core/document.cpp:5908
+#: core/document.cpp:5909
 #, kde-format
 msgid "Page Size"
 msgstr "Veľkosť stránky"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-14 00:40+0000\n"
+"POT-Creation-Date: 2023-12-16 00:40+0000\n"
 "PO-Revision-Date: 2023-10-24 21:42+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
@@ -313,17 +313,17 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1689
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Suite de la recherche à partir du début du fichier"
 
-#: core/document.cpp:1692
+#: core/document.cpp:1693
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Continuer la recherche à partir du bas du fichier ?"
 
-#: core/document.cpp:2455
+#: core/document.cpp:2456
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -331,13 +331,13 @@ msgstr ""
 "Impossible de trouver un module externe capable de traiter le document "
 "indiqué."
 
-#: core/document.cpp:3605
+#: core/document.cpp:3606
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Supprimer des annotations"
 
-#: core/document.cpp:4189 core/document.cpp:4195
+#: core/document.cpp:4190 core/document.cpp:4196
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -346,52 +346,52 @@ msgstr ""
 "Le document tente de lancer une application externe. Pour votre sécurité, "
 "Okular interdit cela."
 
-#: core/document.cpp:4206 core/document.cpp:4216
+#: core/document.cpp:4207 core/document.cpp:4217
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Aucune application trouvée pour ouvrir le fichier de type MIME « %1 »."
 
-#: core/document.cpp:4670
+#: core/document.cpp:4671
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Impossible d'ouvrir un fichier temporaire"
 
-#: core/document.cpp:4672
+#: core/document.cpp:4673
 #, kde-format
 msgid "Print conversion failed"
 msgstr "La conversion d'impression a échoué"
 
-#: core/document.cpp:4674
+#: core/document.cpp:4675
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Le processus d'impression s'est arrêté brutalement"
 
-#: core/document.cpp:4676
+#: core/document.cpp:4677
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Le processus d'impression n'a pas pu démarrer"
 
-#: core/document.cpp:4678
+#: core/document.cpp:4679
 #, kde-format
 msgid "Printing to file failed"
 msgstr "L'impression dans un fichier a échoué"
 
-#: core/document.cpp:4680
+#: core/document.cpp:4681
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "L'imprimante était dans un état non valable"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4683
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Impossible de trouver le fichier à imprimer"
 
-#: core/document.cpp:4684
+#: core/document.cpp:4685
 #, kde-format
 msgid "There was no file to print"
 msgstr "Il n'y avait aucun fichier à imprimer"
 
-#: core/document.cpp:4686
+#: core/document.cpp:4687
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -400,92 +400,92 @@ msgstr ""
 "Impossible de trouver un exécutable adapté à l'impression. Veuillez vérifier "
 "que le binaire CUPS « lpr » est disponible"
 
-#: core/document.cpp:4688
+#: core/document.cpp:4689
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La taille de page pour l'impression est incorrecte"
 
-#: core/document.cpp:5353 part/part.cpp:1172
+#: core/document.cpp:5354 part/part.cpp:1172
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Impossible d'ouvrir « %1 ». Le fichier n'existe pas."
 
-#: core/document.cpp:5863
+#: core/document.cpp:5864
 #, kde-format
 msgid "Title"
 msgstr "Titre"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5867
 #, kde-format
 msgid "Subject"
 msgstr "Objet"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5870
 #, kde-format
 msgid "Description"
 msgstr "Description"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5873
 #, kde-format
 msgid "Author"
 msgstr "Auteur"
 
-#: core/document.cpp:5875
+#: core/document.cpp:5876
 #, kde-format
 msgid "Creator"
 msgstr "Créateur"
 
-#: core/document.cpp:5878
+#: core/document.cpp:5879
 #, kde-format
 msgid "Producer"
 msgstr "Producteur"
 
-#: core/document.cpp:5881
+#: core/document.cpp:5882
 #, kde-format
 msgid "Copyright"
 msgstr "Droit d'auteur"
 
-#: core/document.cpp:5884
+#: core/document.cpp:5885
 #, kde-format
 msgid "Pages"
 msgstr "Pages"
 
-#: core/document.cpp:5887
+#: core/document.cpp:5888
 #, kde-format
 msgid "Created"
 msgstr "Créé"
 
-#: core/document.cpp:5890
+#: core/document.cpp:5891
 #, kde-format
 msgid "Modified"
 msgstr "Modifié"
 
-#: core/document.cpp:5893
+#: core/document.cpp:5894
 #, kde-format
 msgid "MIME Type"
 msgstr "Type « MIME »"
 
-#: core/document.cpp:5896
+#: core/document.cpp:5897
 #, kde-format
 msgid "Category"
 msgstr "Catégorie"
 
-#: core/document.cpp:5899
+#: core/document.cpp:5900
 #, kde-format
 msgid "Keywords"
 msgstr "Mots-clés"
 
-#: core/document.cpp:5902
+#: core/document.cpp:5903
 #, kde-format
 msgid "File Path"
 msgstr "Emplacement du fichier"
 
-#: core/document.cpp:5905
+#: core/document.cpp:5906
 #, kde-format
 msgid "File Size"
 msgstr "Taille du fichier"
 
-#: core/document.cpp:5908
+#: core/document.cpp:5909
 #, kde-format
 msgid "Page Size"
 msgstr "Taille de page"

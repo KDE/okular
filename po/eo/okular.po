@@ -1522,9 +1522,7 @@ msgid "Opacity"
 msgstr "Opakeco"
 
 #: part/annotationactionhandler.cpp:694
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -3751,9 +3749,7 @@ msgid "Auto Fit"
 msgstr "Aŭtomate Ĝisrandigi"
 
 #: part/pageview.cpp:4079
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -5811,16 +5807,3 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
-
-#~ msgctxt ""
-#~ "@item:inlistbox Annotation opacity percentage level, make sure to include "
-#~ "%1 ¦in your translation"
-#~ msgid "%1%"
-#~ msgstr "%1%"
-
-#~ msgctxt ""
-#~ "Zoom percentage value %1 will be replaced by the actual zoom factor "
-#~ "value, ¦so make sure you include it in your translation in order to not "
-#~ "to break ¦anything"
-#~ msgid "%1%"
-#~ msgstr "%1%"

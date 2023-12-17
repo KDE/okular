@@ -74,7 +74,7 @@ build_clazy_clang_tidy:
 
 clang_format:
   stage: build
-  image: debian:testing
+  image: debian:stable
   tags:
     - Linux
   only:

@@ -6,13 +6,13 @@
 # obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013, 2022.
-# Emir SARI <emir_sari@icloud.com>, 2023.
+# SPDX-FileCopyrightText: 2023 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-16 00:40+0000\n"
-"PO-Revision-Date: 2023-06-29 05:30+0300\n"
+"PO-Revision-Date: 2023-12-16 11:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -141,7 +141,7 @@ msgstr "Kullanılabilir Sertifikalar"
 #: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
-msgstr "İmza &Yükle"
+msgstr "İmzalar &Yükle"
 
 #: generator_pdf.cpp:88
 #, kde-format
@@ -170,12 +170,12 @@ msgstr ""
 #: generator_pdf.cpp:94
 #, kde-format
 msgid "Force rasterization"
-msgstr "Hücrelemeye Zorla"
+msgstr "Rasterleştirmeyi zorla"
 
 #: generator_pdf.cpp:95
 #, kde-format
 msgid "Rasterize into an image before printing"
-msgstr "Yazdırmadan önce içeriye bir resim hücrele"
+msgstr "Yazdırma öncesi bir görsele rasterleştir"
 
 #: generator_pdf.cpp:96
 #, kde-format
@@ -184,9 +184,9 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
-"Yazdırmadan önce her sayfanın bir resme hücrelemesini sağlar. Bu, genelde "
-"bir parça kötü sonuçlar doğurur, ancak hatalı olarak yazdırılıyor görünen "
-"belgeleri yazdırırken oldukça yararlıdır."
+"Yazdırmadan önce her sayfanın bir görsele rasterleştirilmesini zorlar. Bu "
+"genellikle biraz daha kötü sonuçlar verir; ancak hatalı yazdırılıyor gibi "
+"görünen belgeleri yazdırırken kullanışlıdır."
 
 #: generator_pdf.cpp:106
 #, kde-format
@@ -320,7 +320,7 @@ msgstr ""
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter Password"
-msgstr "Parola Girin"
+msgstr "Parola Gir"
 
 #: pdfsignatureutils.cpp:214
 #, kde-format

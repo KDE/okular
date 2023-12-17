@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-16 00:40+0000\n"
-"PO-Revision-Date: 2023-12-14 14:09+0300\n"
+"PO-Revision-Date: 2023-12-16 14:06+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -607,7 +607,7 @@ msgstr "Kaynak: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "&Öntanımlı Yazıtipi:"
+msgstr "&Öntanımlı yazıtipi:"
 
 #: gui/certificatemodel.cpp:39
 #, kde-format
@@ -1090,12 +1090,12 @@ msgstr "Revizyon %1: %2 tarafından imzalandı"
 #: gui/signaturemodel.cpp:158
 #, kde-format
 msgid "Signing Time: %1"
-msgstr "İmza Saati: %1"
+msgstr "İmza saati: %1"
 
 #: gui/signaturemodel.cpp:163
 #, kde-format
 msgid "Reason: %1"
-msgstr "Neden: %1"
+msgstr "Gerekçe: %1"
 
 #: gui/signaturemodel.cpp:168
 #, kde-format
@@ -2269,7 +2269,7 @@ msgstr "Ayrıntılar"
 #: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Certificate Data:"
-msgstr "Sertifika Verisi:"
+msgstr "Sertifika verisi:"
 
 #: part/certificateviewer.cpp:158
 #, kde-format
@@ -2798,7 +2798,7 @@ msgstr "Göz At aracını kullanırken, ekran kenarlarında imleci kaydır"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
-msgstr "Genel bakış sütunları:"
+msgstr "Genel görünüm sütunları:"
 
 #: part/dlggeneral.cpp:197
 #, kde-format
@@ -2844,7 +2844,7 @@ msgstr "Sayfayı Sığdır"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr "Otomatik Sığdır"
+msgstr "Kendiliğinden Sığdır"
 
 #: part/dlggeneral.cpp:208
 #, kde-format
@@ -3228,7 +3228,7 @@ msgstr "Ekran %1 (bağlantı kesildi)"
 #: part/drawingtoolactions.cpp:192
 #, kde-format
 msgid "Drawing Tool: %1"
-msgstr "Çizim Aracı: %1"
+msgstr "Çizim aracı: %1"
 
 #: part/drawingtoolactions.cpp:214 part/drawingtoolactions.cpp:215
 #, kde-format
@@ -3278,7 +3278,7 @@ msgstr "Renk:"
 #: part/editdrawingtooldialog.cpp:57
 #, kde-format
 msgid "&Pen Width:"
-msgstr "Ka&lem Genişliği:"
+msgstr "Ka&lem genişliği:"
 
 #: part/editdrawingtooldialog.cpp:63
 #, kde-format
@@ -3518,22 +3518,22 @@ msgstr "Sol"
 #: part/pageview.cpp:575
 #, kde-format
 msgid "Original Orientation"
-msgstr "Asıl Yön"
+msgstr "Özgün Yönelim"
 
 #: part/pageview.cpp:581
 #, kde-format
 msgid "&Trim View"
-msgstr "Kırpılmış Gö&rünüm"
+msgstr "Görünümü &Kırp"
 
 #: part/pageview.cpp:585
 #, kde-format
 msgid "&Trim Margins"
-msgstr "Ke&narları Düzelt"
+msgstr "Kenar Boşluklarını &Kırp"
 
 #: part/pageview.cpp:592
 #, kde-format
 msgid "Trim To &Selection"
-msgstr "Seçimi K&ırp"
+msgstr "&Seçime Kırp"
 
 #: part/pageview.cpp:598
 #, kde-format
@@ -3548,7 +3548,7 @@ msgstr "Say&fayı Sığdır"
 #: part/pageview.cpp:606
 #, kde-format
 msgid "&Auto Fit"
-msgstr "&Otomatik Sığdır"
+msgstr "&Kendiliğinden Sığdır"
 
 #: part/pageview.cpp:610
 #, kde-format
@@ -3582,7 +3582,7 @@ msgstr "Yüzleşen Sayfalar (İlk Sayfayı Orta&la)"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
-msgstr "Genel &Bakış"
+msgstr "Genel &Görünüm"
 
 #: part/pageview.cpp:646
 #, kde-format
@@ -3639,22 +3639,22 @@ msgstr "Sayısal Olarak İm&zala..."
 #: part/pageview.cpp:752
 #, kde-format
 msgid "Speak Whole Document"
-msgstr "Tüm Belgeyi Oku"
+msgstr "Tüm Belgeyi Konuş"
 
 #: part/pageview.cpp:757
 #, kde-format
 msgid "Speak Current Page"
-msgstr "Geçerli Sayfayı Oku"
+msgstr "Geçerli Sayfayı Konuş"
 
 #: part/pageview.cpp:762
 #, kde-format
 msgid "Stop Speaking"
-msgstr "Okumayı Durdur"
+msgstr "Konuşmayı Durdur"
 
 #: part/pageview.cpp:767
 #, kde-format
 msgid "Pause/Resume Speaking"
-msgstr "Seslendirmeyi Duraklat/Sürdür"
+msgstr "Konuşmayı Sürdür/Duraklat"
 
 #: part/pageview.cpp:779
 #, kde-format
@@ -3708,7 +3708,7 @@ msgstr "Panoya Kopyala"
 #: part/pageview.cpp:2879 part/pageview.cpp:3071
 #, kde-format
 msgid "Speak Text"
-msgstr "Metni Seslendir"
+msgstr "Metni Konuş"
 
 #: part/pageview.cpp:2887
 #, kde-format
@@ -3768,7 +3768,7 @@ msgstr "Sayfayı Sığdır"
 #: part/pageview.cpp:4072
 #, kde-format
 msgid "Auto Fit"
-msgstr "Otomatik Sığdır"
+msgstr "Kendiliğinden Sığdır"
 
 #: part/pageview.cpp:4095
 #, kde-format
@@ -4054,7 +4054,7 @@ msgstr "&Yardım"
 #: part/part-viewermode.rc:32 part/part.rc:44
 #, kde-format
 msgid "&Orientation"
-msgstr "&Yön"
+msgstr "&Yönelim"
 
 #. i18n: ectx: Menu (bookmarks)
 #. i18n: ectx: Menu (okular_bookmarks)
@@ -4328,7 +4328,7 @@ msgstr "%1 belgesini yükleme işlemi iptal edildi."
 #: part/part.cpp:1249
 #, kde-format
 msgid "Could not open %1. Reason: %2"
-msgstr "%1 açılamadı. Sebep: %2"
+msgstr "%1 açılamadı. Gerekçe: %2"
 
 #: part/part.cpp:1277
 #, kde-format
@@ -4780,7 +4780,7 @@ msgstr "Araçlar"
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
-msgstr "Seslendir"
+msgstr "Konuş"
 
 #: part/part.cpp:3545
 #, kde-format
@@ -5475,12 +5475,12 @@ msgstr "Geçerlilik Durumu"
 #: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Signature Validity:"
-msgstr "İmza Geçerliliği:"
+msgstr "İmza geçerliliği:"
 
 #: part/signaturepropertiesdialog.cpp:57
 #, kde-format
 msgid "Document Modifications:"
-msgstr "Belge Değişiklikleri:"
+msgstr "Belge değişiklikleri:"
 
 #: part/signaturepropertiesdialog.cpp:60
 #, kde-format
@@ -5495,7 +5495,7 @@ msgstr "İmzalayan:"
 #: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signing Time:"
-msgstr "İmza Saati:"
+msgstr "İmza saati:"
 
 #: part/signaturepropertiesdialog.cpp:78
 #, kde-format

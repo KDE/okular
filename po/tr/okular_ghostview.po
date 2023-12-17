@@ -3,13 +3,13 @@
 #
 # Translators:
 # obsoleteman <tulliana@gmail.com>, 2008-2009.
-# Emir SARI <emir_sari@icloud.com>, 2023.
+# SPDX-FileCopyrightText: 2023 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2023-01-18 22:31+0300\n"
+"PO-Revision-Date: 2023-12-16 14:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -33,7 +33,7 @@ msgstr "tulliana@gmail.com"
 #: conf/gssettings.kcfg:9
 #, kde-format
 msgid "Use Platform Fonts"
-msgstr "Sistem Yazıtiplerini Kullan"
+msgstr "Platform yazıtiplerini kullan"
 
 #. i18n: ectx: whatsthis, entry (PlatformFonts), group (General)
 #: conf/gssettings.kcfg:10
@@ -42,9 +42,9 @@ msgid ""
 "Determines whether Ghostscript should be allowed to use platform fonts, if "
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
-"Ghostscript'in bulunulan platformun yazıtiplerini kullanıp kullanmayacağını "
-"belirler, eğer işaretlenmezse yalnızca belge içerisine gömülü yazıtiplerinin "
-"kullanımına izin verilecek."
+"Ghostscript'in platform yazıtiplerini kullanmasına izin verilip "
+"verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü "
+"yazıtiplerinin kullanımına izin verilir."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: conf/gssettingswidget.ui:28
@@ -56,7 +56,7 @@ msgstr "Genel Ayarlar"
 #: conf/gssettingswidget.ui:37
 #, kde-format
 msgid "&Use platform fonts"
-msgstr "&Sistem yazıtiplerini kullan"
+msgstr "&Platform yazıtiplerini kullan"
 
 #: generator_ghostview.cpp:82
 #, kde-format

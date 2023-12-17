@@ -70,6 +70,21 @@ static const char *const SESSION_TAB_KEY = "ActiveTab";
 static constexpr char SIDEBAR_LOCKED_KEY[] = "LockSidebar";
 static constexpr char SIDEBAR_VISIBLE_KEY[] = "ShowSidebar";
 
+class ResizableStackedWidget : public QStackedWidget
+{
+    Q_OBJECT
+
+public:
+    QSize sizeHint() const override
+    {
+        return currentWidget()->sizeHint();
+    }
+    QSize minimumSizeHint() const override
+    {
+        return currentWidget()->minimumSizeHint();
+    }
+};
+
 /**
  * Groups sidebar containers in a QDockWidget.
  *
@@ -184,7 +199,7 @@ Shell::Shell(const QString &serializedOptions)
     KParts::ReadWritePart *const firstPart = m_partFactory->create<KParts::ReadWritePart>(this);
     if (firstPart) {
         // Setup the central widget
-        m_centralStackedWidget = new QStackedWidget();
+        m_centralStackedWidget = new ResizableStackedWidget();
         setCentralWidget(m_centralStackedWidget);
 
         // Setup the welcome screen

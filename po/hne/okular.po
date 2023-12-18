@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2023-12-18 00:40+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -5949,31 +5949,31 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:177
+#: shell/shell.cpp:192
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "ओकुलर अवयव खोज पाय मं अक्छम."
 
-#: shell/shell.cpp:220
+#: shell/shell.cpp:235
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Sidebar"
 msgstr "स्क्राल पट्टी मन देखाव (&b)"
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:265
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:274
+#: shell/shell.cpp:289
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "ओकुलर अवयव खोज पाय मं अक्छम."
 
-#: shell/shell.cpp:516
+#: shell/shell.cpp:531
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5982,7 +5982,7 @@ msgstr ""
 "कोनो फाइल ल खोले बर किलिक करव\n"
 "कोनो वाले फाइल ल खोले बर किलिक कर दबाए रखव"
 
-#: shell/shell.cpp:517
+#: shell/shell.cpp:532
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5990,57 +5990,57 @@ msgstr ""
 "कोनो फाइल ल खोले बर <b>किलिक</b> करव या फिर कोनो वाले फाइल ल चुने बर <b>किलिक कर "
 "दबाए रखव</b>"
 
-#: shell/shell.cpp:530
+#: shell/shell.cpp:545
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "अगला पेज"
 
-#: shell/shell.cpp:536
+#: shell/shell.cpp:551
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "पिछला पेज"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:557
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:566
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "स्क्राल पट्टी मन देखाव (&b)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:666
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|सब्बो फाइल"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:667
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:656
+#: shell/shell.cpp:671
 #, kde-format
 msgid "Open Document"
 msgstr "कागद खोलव"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:781
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:770
+#: shell/shell.cpp:785
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "बंद करव"
 
-#: shell/shell.cpp:777
+#: shell/shell.cpp:792
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -6048,7 +6048,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "फाइल नाम \"%1\"  पहिली से ही अस्तित्व मं हे. का आप मन एखर ऊपर ही मेटाय के लिखना चाहू?"
 
-#: shell/shell.cpp:779
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

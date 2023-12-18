@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2023-12-18 00:40+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -5984,31 +5984,31 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:177
+#: shell/shell.cpp:192
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "Okular සංරචකය සොයාගැනීම අසාර්ථකයි."
 
-#: shell/shell.cpp:220
+#: shell/shell.cpp:235
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "පිටු තීරුව පෙන්වන්න (&P)"
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:265
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:274
+#: shell/shell.cpp:289
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular සංරචකය සොයාගැනීම අසාර්ථකයි."
 
-#: shell/shell.cpp:516
+#: shell/shell.cpp:531
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6017,7 +6017,7 @@ msgstr ""
 "ගොනුවක් විවෘත කිරීමට ක්ලික් කරන්න\n"
 "මෑත ගොනුවකට ක්ලික් කර අල්ලා සිටින්න"
 
-#: shell/shell.cpp:517
+#: shell/shell.cpp:532
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6025,62 +6025,62 @@ msgstr ""
 "ගොනු විවෘත කිරීමට <b>ක්ලික්</b> හෝ මෑත ගොනුව විවෘත කිරීමට <b>ක්ලික් කර අල්ලාClick and hold</"
 "b> සිටින්න"
 
-#: shell/shell.cpp:530
+#: shell/shell.cpp:545
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "ඊලඟ පිටුව"
 
-#: shell/shell.cpp:536
+#: shell/shell.cpp:551
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "පෙර පිටුව"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:557
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:566
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "පිටු තීරුව පෙන්වන්න (&P)"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:666
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|සියළු ගොනු"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:667
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:656
+#: shell/shell.cpp:671
 #, kde-format
 msgid "Open Document"
 msgstr "ලේඛනය විවෘත කරන්න"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:781
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:770
+#: shell/shell.cpp:785
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "වසන්න"
 
-#: shell/shell.cpp:777
+#: shell/shell.cpp:792
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:779
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

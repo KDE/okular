@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
-"PO-Revision-Date: 2023-12-09 09:27\n"
+"POT-Creation-Date: 2023-12-18 00:40+0000\n"
+"PO-Revision-Date: 2023-12-17 11:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2304,13 +2304,13 @@ msgstr "反转亮度(&L)"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr "反转亮度 (sRGB 线性)(&U)"
+msgstr "反转亮度 (sRGB 线性) (&U)"
 
 #: part/colormodemenu.cpp:55
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr "反转亮度 (对称)(&S)"
+msgstr "反转亮度 (对称) (&S)"
 
 #: part/colormodemenu.cpp:58
 #, kde-format
@@ -3454,7 +3454,7 @@ msgstr "缩放到 100%"
 #: part/pageview.cpp:565
 #, kde-format
 msgid "Rotate &Right"
-msgstr "旋转 (向右)(&R)"
+msgstr "旋转 (向右) (&R)"
 
 #: part/pageview.cpp:566
 #, kde-format
@@ -3465,7 +3465,7 @@ msgstr "旋转 (向右)"
 #: part/pageview.cpp:570
 #, kde-format
 msgid "Rotate &Left"
-msgstr "旋转 (向左)(&L)"
+msgstr "旋转 (向左) (&L)"
 
 #: part/pageview.cpp:571
 #, kde-format
@@ -5596,29 +5596,29 @@ msgstr "错误：无法在使用 --page 选项时打开多个文档"
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "错误：无法在使用 --find 选项时打开多个文档"
 
-#: shell/shell.cpp:177
+#: shell/shell.cpp:192
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "无法找到 Okular 组件：%1"
 
-#: shell/shell.cpp:220
+#: shell/shell.cpp:235
 #, kde-format
 msgid "Sidebar"
 msgstr "侧边栏"
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:265
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "已经有一个 Okular 的唯一实例正在运行，此实例无法成为唯一实例。"
 
-#: shell/shell.cpp:274
+#: shell/shell.cpp:289
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "无法找到 Okular 组件。"
 
-#: shell/shell.cpp:516
+#: shell/shell.cpp:531
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5627,63 +5627,63 @@ msgstr ""
 "点击可打开文件\n"
 "点击并按住可打开最近文件"
 
-#: shell/shell.cpp:517
+#: shell/shell.cpp:532
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>点击</b>可打开文件，<b>点击并按住</b>可打开最近文件"
 
-#: shell/shell.cpp:530
+#: shell/shell.cpp:545
 #, kde-format
 msgid "Next Tab"
 msgstr "下一个标签页"
 
-#: shell/shell.cpp:536
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Previous Tab"
 msgstr "上一个标签页"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:557
 #, kde-format
 msgid "Undo close tab"
 msgstr "撤销关闭标签页"
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:566
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "锁定侧边栏"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:666
 #, kde-format
 msgid "All files (*)"
 msgstr "所有文件 (*)"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:667
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "所有支持的文件 (%1)"
 
-#: shell/shell.cpp:656
+#: shell/shell.cpp:671
 #, kde-format
 msgid "Open Document"
 msgstr "打开文档"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:781
 #, kde-format
 msgid "Confirm Close"
 msgstr "确认关闭"
 
-#: shell/shell.cpp:770
+#: shell/shell.cpp:785
 #, kde-format
 msgid "Close Tabs"
 msgstr "关闭标签页"
 
-#: shell/shell.cpp:777
+#: shell/shell.cpp:792
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "您即将关闭 %1 个标签页。您确定要继续吗？"
 
-#: shell/shell.cpp:779
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "关闭多个标签页时发出警告"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2023-12-18 00:40+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -5526,92 +5526,92 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:177
+#: shell/shell.cpp:192
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr ""
 
-#: shell/shell.cpp:220
+#: shell/shell.cpp:235
 #, fuzzy, kde-format
 msgid "Sidebar"
 msgstr "_Monstrar..."
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:265
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:274
+#: shell/shell.cpp:289
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr ""
 
-#: shell/shell.cpp:516
+#: shell/shell.cpp:531
 #, kde-format
 msgid ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 msgstr ""
 
-#: shell/shell.cpp:517
+#: shell/shell.cpp:532
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
 
-#: shell/shell.cpp:530
+#: shell/shell.cpp:545
 #, kde-format
 msgid "Next Tab"
 msgstr "Sequent carte"
 
-#: shell/shell.cpp:536
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Previous Tab"
 msgstr "Precedent carte"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:557
 #, fuzzy, kde-format
 msgid "Undo close tab"
 msgstr "Defar: Cluder un carte"
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:566
 #, fuzzy, kde-format
 msgid "Lock Sidebar"
 msgstr "_Monstrar..."
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:666
 #, kde-format
 msgid "All files (*)"
 msgstr "Omni files (*)"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:667
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Omni suportat files (%1)"
 
-#: shell/shell.cpp:656
+#: shell/shell.cpp:671
 #, kde-format
 msgid "Open Document"
 msgstr "Aperter un document"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:781
 #, fuzzy, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar clusion"
 
-#: shell/shell.cpp:770
+#: shell/shell.cpp:785
 #, kde-format
 msgid "Close Tabs"
 msgstr "Cluder li cartes"
 
-#: shell/shell.cpp:777
+#: shell/shell.cpp:792
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:779
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

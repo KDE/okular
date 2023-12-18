@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2023-12-18 00:40+0000\n"
 "PO-Revision-Date: 2023-10-20 18:55+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -5695,17 +5695,17 @@ msgstr "Error: no se puede abrir más de un documento con el modificador --page"
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Error: no se puede abrir más de un documento con el modificador --find"
 
-#: shell/shell.cpp:177
+#: shell/shell.cpp:192
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "No se ha podido encontrar el componente Okular: %1"
 
-#: shell/shell.cpp:220
+#: shell/shell.cpp:235
 #, kde-format
 msgid "Sidebar"
 msgstr "Barra lateral"
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:265
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5714,12 +5714,12 @@ msgstr ""
 "Ya hay una única instancia de Okular en ejecución. Esta instancia no será la "
 "única."
 
-#: shell/shell.cpp:274
+#: shell/shell.cpp:289
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "No se ha podido encontrar el componente Okular."
 
-#: shell/shell.cpp:516
+#: shell/shell.cpp:531
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5728,7 +5728,7 @@ msgstr ""
 "Pulse para abrir un archivo\n"
 "Pulse y mantenga pulsado para abrir un archivo reciente"
 
-#: shell/shell.cpp:517
+#: shell/shell.cpp:532
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5736,57 +5736,57 @@ msgstr ""
 "<b>Pulse</b> para abrir un archivo, o <b>pulse y mantenga</b> para "
 "seleccionar un archivo reciente"
 
-#: shell/shell.cpp:530
+#: shell/shell.cpp:545
 #, kde-format
 msgid "Next Tab"
 msgstr "Pestaña siguiente"
 
-#: shell/shell.cpp:536
+#: shell/shell.cpp:551
 #, kde-format
 msgid "Previous Tab"
 msgstr "Pestaña anterior"
 
-#: shell/shell.cpp:542
+#: shell/shell.cpp:557
 #, kde-format
 msgid "Undo close tab"
 msgstr "Deshacer el cierre de pestaña"
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:566
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Fijar la barra lateral"
 
-#: shell/shell.cpp:651
+#: shell/shell.cpp:666
 #, kde-format
 msgid "All files (*)"
 msgstr "Todos los archivos (*)"
 
-#: shell/shell.cpp:652
+#: shell/shell.cpp:667
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Todos los archivos permitidos (%1)"
 
-#: shell/shell.cpp:656
+#: shell/shell.cpp:671
 #, kde-format
 msgid "Open Document"
 msgstr "Abrir documento"
 
-#: shell/shell.cpp:766
+#: shell/shell.cpp:781
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar el cierre"
 
-#: shell/shell.cpp:770
+#: shell/shell.cpp:785
 #, kde-format
 msgid "Close Tabs"
 msgstr "Cerrar pestañas"
 
-#: shell/shell.cpp:777
+#: shell/shell.cpp:792
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Está a punto de cerrar %1 pestañas. ¿Seguro que desea continuar?"
 
-#: shell/shell.cpp:779
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avisarme cuando intente cerrar múltiples pestañas"

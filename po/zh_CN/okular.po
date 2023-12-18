@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-12 02:25+0000\n"
-"PO-Revision-Date: 2023-12-09 09:29\n"
+"PO-Revision-Date: 2023-12-17 11:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2292,13 +2292,13 @@ msgstr "反转亮度(&L)"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr "反转亮度 (sRGB 线性)(&U)"
+msgstr "反转亮度 (sRGB 线性) (&U)"
 
 #: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr "反转亮度 (对称)(&S)"
+msgstr "反转亮度 (对称) (&S)"
 
 #: part/colormodemenu.cpp:56
 #, kde-format
@@ -3442,7 +3442,7 @@ msgstr "缩放到 100%"
 #: part/pageview.cpp:558
 #, kde-format
 msgid "Rotate &Right"
-msgstr "旋转 (向右)(&R)"
+msgstr "旋转 (向右) (&R)"
 
 #: part/pageview.cpp:559
 #, kde-format
@@ -3453,7 +3453,7 @@ msgstr "旋转 (向右)"
 #: part/pageview.cpp:563
 #, kde-format
 msgid "Rotate &Left"
-msgstr "旋转 (向左)(&L)"
+msgstr "旋转 (向左) (&L)"
 
 #: part/pageview.cpp:564
 #, kde-format

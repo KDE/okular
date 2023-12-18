@@ -82,10 +82,6 @@ else()
     set(BUILD_MOBILE OFF)
 endif()
 
-if (BUILD_MOBILE)
-    set(QT_REQUIRED_VERSION "5.15.2")
-endif()
-
 # append the plugins from the install tree folder to the QT_PLUGIN_PATH
 if(UNIX)
     set(ENV{QT_PLUGIN_PATH} "$ENV{QT_PLUGIN_PATH}:${KDE_INSTALL_FULL_QTPLUGINDIR}")
@@ -296,8 +292,8 @@ set_okular_optional_package_properties(Discount PROPERTIES
         PURPOSE "Support for Markdown documents in Okular.")
 
 add_definitions(-DTRANSLATION_DOMAIN="okular")
-add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050F02)
-add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x055C00)
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060600)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x05F000)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 

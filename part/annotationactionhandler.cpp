@@ -774,9 +774,9 @@ AnnotationActionHandler::~AnnotationActionHandler()
 void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
 {
     // find the main window associated to the toggle toolbar action
-    QList<QWidget *> widgets = d->aToolBarVisibility->associatedWidgets();
-    auto itMainWindow = std::find_if(widgets.begin(), widgets.end(), [](const QWidget *widget) { return qobject_cast<const KParts::MainWindow *>(widget) != nullptr; });
-    Q_ASSERT(itMainWindow != widgets.end());
+    QList<QObject *> objects = d->aToolBarVisibility->associatedObjects();
+    auto itMainWindow = std::find_if(objects.begin(), objects.end(), [](const QObject *object) { return qobject_cast<const KParts::MainWindow *>(object) != nullptr; });
+    Q_ASSERT(itMainWindow != objects.end());
     KParts::MainWindow *mw = qobject_cast<KParts::MainWindow *>(*itMainWindow);
 
     // ensure that the annotation toolbars have been created

@@ -1125,7 +1125,7 @@ void Part::openUrlFromDocument(const QUrl &url)
             return;
         }
     } else {
-        KIO::StatJob *statJob = KIO::statDetails(url, KIO::StatJob::SourceSide);
+        KIO::StatJob *statJob = KIO::stat(url, KIO::StatJob::SourceSide);
         KJobWidgets::setWindow(statJob, widget());
         if (!statJob->exec() || statJob->error()) {
             KMessageBox::error(widget(), i18n("Could not open '%1' (%2) ", url.toDisplayString(), statJob->errorString()));

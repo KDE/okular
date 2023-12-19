@@ -4367,16 +4367,16 @@ QString DocumentPrivate::diff(const QString &oldVal, const QString &newVal)
     // also, given that toUcs4 is either a QList or a QVector depending on
     // qt version, let's try keep it very auto-typed to ease Qt6 porting
 
-    auto oldUcs4 = oldVal.toUcs4();
-    auto newUcs4 = newVal.toUcs4();
+    auto oldUcs4 = oldVal.toStdU32String();
+    auto newUcs4 = newVal.toStdU32String();
 
-    for (int i = 0; i < std::min(oldUcs4.size(), newUcs4.size()); i++) {
+    for (size_t i = 0; i < std::min(oldUcs4.size(), newUcs4.size()); i++) {
         if (oldUcs4.at(i) != newUcs4.at(i)) {
-            return QString::fromUcs4(newUcs4.mid(i).constData(), newUcs4.size() - i);
+            return QString::fromUcs4(std::u32string_view {newUcs4}.substr(i).data(), newUcs4.size() - i);
         }
     }
     if (oldUcs4.size() < newUcs4.size()) {
-        return QString::fromUcs4(newUcs4.mid(oldUcs4.size()).constData(), newUcs4.size() - oldUcs4.size());
+        return QString::fromUcs4(std::u32string_view {newUcs4}.substr(oldUcs4.size()).data(), newUcs4.size() - oldUcs4.size());
     }
     return {};
 }

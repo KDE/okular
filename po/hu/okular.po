@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-18 00:40+0000\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
 "PO-Revision-Date: 2022-02-18 11:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -259,59 +259,59 @@ msgstr ""
 "<qt>Egynél több lehetséges megjelenítőmodul található ehhez a MIME-típushoz:"
 "<br /><b>%1</b> (%2).<br /><br />Válasszon ki egyet:</qt>"
 
-#: core/document.cpp:210
+#: core/document.cpp:206
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "A legtöbb oldal mérete %1. "
 
-#: core/document.cpp:231
+#: core/document.cpp:227
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "%1 álló"
 
-#: core/document.cpp:233
+#: core/document.cpp:229
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "%1 fekvő"
 
-#: core/document.cpp:256
+#: core/document.cpp:252
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 hüvelyk (%3)"
 
-#: core/document.cpp:258
+#: core/document.cpp:254
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1687
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Keresés folytatása fentről"
 
-#: core/document.cpp:1693
+#: core/document.cpp:1690
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Keresés folytatása alulról"
 
-#: core/document.cpp:2456
+#: core/document.cpp:2436
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nem található a dokumentum kezelésére alkalmas modul."
 
-#: core/document.cpp:3606
+#: core/document.cpp:3586
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "jegyzetek eltávolítása"
 
-#: core/document.cpp:4190 core/document.cpp:4196
+#: core/document.cpp:4170 core/document.cpp:4176
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -320,52 +320,52 @@ msgstr ""
 "A dokumentum egy külső alkalmazást próbált elindítani, ezt biztonsági "
 "okokból a program nem engedélyezi."
 
-#: core/document.cpp:4207 core/document.cpp:4217
+#: core/document.cpp:4186
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nincs kezelőalkalmazás %1 MIME-típusú fájlokhoz."
 
-#: core/document.cpp:4671
+#: core/document.cpp:4636
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nem sikerült megnyitni egy ideiglenes fájlt"
 
-#: core/document.cpp:4673
+#: core/document.cpp:4638
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A nyomtatáskonverzió nem sikerült"
 
-#: core/document.cpp:4675
+#: core/document.cpp:4640
 #, kde-format
 msgid "Printing process crashed"
 msgstr "A nyomtatási folyamat összeomlott"
 
-#: core/document.cpp:4677
+#: core/document.cpp:4642
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nem sikerült elindítani a nyomtatási folyamatot"
 
-#: core/document.cpp:4679
+#: core/document.cpp:4644
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nem sikerült nyomtatni a fájlba"
 
-#: core/document.cpp:4681
+#: core/document.cpp:4646
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A nyomtató érvénytelen állapotban voltcén"
 
-#: core/document.cpp:4683
+#: core/document.cpp:4648
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nem található nyomtatandó fájlfájl a ny"
 
-#: core/document.cpp:4685
+#: core/document.cpp:4650
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nem volt nyomtatandó fájl"
 
-#: core/document.cpp:4687
+#: core/document.cpp:4652
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -374,92 +374,92 @@ msgstr ""
 "Nem található megfelelő bináris a nyomtatáshoz. Ellenőrizze hogy a CUPS lpr "
 "bináris elérhető-e"
 
-#: core/document.cpp:4689
+#: core/document.cpp:4654
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Az oldal nyomtatási mérete érvénytelen"
 
-#: core/document.cpp:5354 part/part.cpp:1172
+#: core/document.cpp:5319 part/part.cpp:1124
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nem sikerült megnyitni ezt a fájlt: „%1”. A fájl nem létezik"
 
-#: core/document.cpp:5864
+#: core/document.cpp:5829
 #, kde-format
 msgid "Title"
 msgstr "Cím"
 
-#: core/document.cpp:5867
+#: core/document.cpp:5832
 #, kde-format
 msgid "Subject"
 msgstr "Tárgy"
 
-#: core/document.cpp:5870
+#: core/document.cpp:5835
 #, kde-format
 msgid "Description"
 msgstr "Leírás"
 
-#: core/document.cpp:5873
+#: core/document.cpp:5838
 #, kde-format
 msgid "Author"
 msgstr "Szerző"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5841
 #, kde-format
 msgid "Creator"
 msgstr "Létrehozó"
 
-#: core/document.cpp:5879
+#: core/document.cpp:5844
 #, kde-format
 msgid "Producer"
 msgstr "Készítő"
 
-#: core/document.cpp:5882
+#: core/document.cpp:5847
 #, kde-format
 msgid "Copyright"
 msgstr "Szerzői jog"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5850
 #, kde-format
 msgid "Pages"
 msgstr "Oldalszám"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5853
 #, kde-format
 msgid "Created"
 msgstr "Létrehozási dátum"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5856
 #, kde-format
 msgid "Modified"
 msgstr "Utolsó módosítás"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5859
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-típus"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5862
 #, kde-format
 msgid "Category"
 msgstr "Kategória"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5865
 #, kde-format
 msgid "Keywords"
 msgstr "Kulcsszavak"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5868
 #, kde-format
 msgid "File Path"
 msgstr "Fájl útvonalaó"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5871
 #, kde-format
 msgid "File Size"
 msgstr "Fájlméret"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5874
 #, kde-format
 msgid "Page Size"
 msgstr "Oldalméret"
@@ -1538,7 +1538,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1. oldal"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3176
+#: part/annotationmodel.cpp:328 part/part.cpp:3128
 #, kde-format
 msgid "Page %1"
 msgstr "%1. oldal"
@@ -1579,7 +1579,7 @@ msgstr "DRM-korlátozás miatt nem lehet másolni"
 msgid "&Delete"
 msgstr "&Törlés"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:801
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:752
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2148,7 +2148,7 @@ msgstr[1] ""
 "\n"
 "%2 könyvjelző"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:421
+#: part/bookmarklist.cpp:131 part/part.cpp:407
 #, kde-format
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
@@ -2169,13 +2169,13 @@ msgstr "Keresés…"
 msgid "Go to This Bookmark"
 msgstr "Ugrás"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:733
-#: part/part.cpp:2477
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:684
+#: part/part.cpp:2429
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Könyvjelző átnevezése"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2282 part/part.cpp:3182
+#: part/bookmarklist.cpp:259 part/part.cpp:2234 part/part.cpp:3134
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Könyvjelző eltávolítása"
@@ -3463,7 +3463,7 @@ msgstr "Reguláris kifejezés"
 msgid "S&earch:"
 msgstr "K&eresés:"
 
-#: part/layers.cpp:35 part/part.cpp:2325
+#: part/layers.cpp:35 part/part.cpp:2277
 #, kde-format
 msgid "Layers"
 msgstr "Rétegek"
@@ -3746,22 +3746,22 @@ msgstr "Szöveg másolása"
 msgid "Go to '%1'"
 msgstr "Ugrás erre: „%1”"
 
-#: part/pageview.cpp:4072 part/part.cpp:3187
+#: part/pageview.cpp:4068 part/part.cpp:3139
 #, kde-format
 msgid "Fit Width"
 msgstr "Teljes szélességre"
 
-#: part/pageview.cpp:4072
+#: part/pageview.cpp:4068
 #, kde-format
 msgid "Fit Page"
 msgstr "Teljes oldal"
 
-#: part/pageview.cpp:4072
+#: part/pageview.cpp:4068
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatikus igazítás"
 
-#: part/pageview.cpp:4095
+#: part/pageview.cpp:4091
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -3772,67 +3772,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4378
+#: part/pageview.cpp:4374
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "„%1” keresése ezzel:"
 
-#: part/pageview.cpp:4392
+#: part/pageview.cpp:4388
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Keresőazonosítók beállítása…"
 
-#: part/pageview.cpp:4418
+#: part/pageview.cpp:4414
 #, kde-format
 msgid "Follow This Link"
 msgstr "A link követése"
 
-#: part/pageview.cpp:4421
+#: part/pageview.cpp:4417
 #, kde-format
 msgid "Play this Sound"
 msgstr "Hang lejátszása"
 
-#: part/pageview.cpp:4423
+#: part/pageview.cpp:4419
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hang leállítása"
 
-#: part/pageview.cpp:4429
+#: part/pageview.cpp:4425
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Hivatkozás címének másolása"
 
-#: part/pageview.cpp:4450
+#: part/pageview.cpp:4446
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "„%1” keresése a dokumentumban"
 
-#: part/pageview.cpp:4982
+#: part/pageview.cpp:4978
 #, kde-format
 msgid "Welcome"
 msgstr "Üdvözöljük"
 
-#: part/pageview.cpp:5102
+#: part/pageview.cpp:5098
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Válassza ki a kinagyítandó területet. Kicsinyítés: jobb kattintással."
 
-#: part/pageview.cpp:5113
+#: part/pageview.cpp:5109
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kattintson a nagyított nézet megtekintéséhez."
 
-#: part/pageview.cpp:5126
+#: part/pageview.cpp:5122
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Húzzon keretet a másolandó szöveg vagy grafika köré."
 
-#: part/pageview.cpp:5138
+#: part/pageview.cpp:5134
 #, kde-format
 msgid "Select text"
 msgstr "Szöveg kijelölése"
 
-#: part/pageview.cpp:5150
+#: part/pageview.cpp:5146
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3841,14 +3841,14 @@ msgstr ""
 "Rajzoljon egy téglalapot a táblázat köré, majd kattintson a sarkok közelébe "
 "a felosztáshoz; nyomja meg az Esc gombot a törléshez."
 
-#: part/pageview.cpp:5160
+#: part/pageview.cpp:5156
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "Az összes aláíró tanúsítványa lejárt, vagy még nem érvényes."
 
-#: part/pageview.cpp:5163
+#: part/pageview.cpp:5159
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3858,18 +3858,18 @@ msgstr ""
 "Nincsenek aláíró tanúsítványok.<br/>További információkért lásd a kézikönyv "
 "<a href=\"%1\">Digitális aláírások</a> fejezetét."
 
-#: part/pageview.cpp:5179
+#: part/pageview.cpp:5175
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Nem mentett módosításai vannak. Mentse a dokumentumot, mielőtt aláírja."
 
-#: part/pageview.cpp:5195
+#: part/pageview.cpp:5191
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Rajzoljon egy téglalapot aláírásmező beszúrásához"
 
-#: part/pageview.cpp:5339
+#: part/pageview.cpp:5335
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Húzzon egy keretet a láthatóvá tenni kívánt oldalterület köré"
@@ -4059,17 +4059,17 @@ msgstr "&Könyvjelzők"
 msgid "Viewer Toolbar"
 msgstr "Megjelenítő eszköztár"
 
-#: part/part.cpp:411 part/thumbnaillist.cpp:48
+#: part/part.cpp:397 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "Bélyegképek"
 
-#: part/part.cpp:417 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:403 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
 #, kde-format
 msgid "Annotations"
 msgstr "Jegyzetek"
 
-#: part/part.cpp:459
+#: part/part.cpp:445
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4082,7 +4082,7 @@ msgstr ""
 ">Mentse a fájlt az áthelyezésükhöz, ha szeretné folytatni a dokumentum "
 "szerkesztését."
 
-#: part/part.cpp:466
+#: part/part.cpp:452
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4092,205 +4092,205 @@ msgstr ""
 "\">Kattintson ide azok megtekintéséhez</a> vagy válassza a Fájl -> "
 "Beágyazott fájlok menüpontot."
 
-#: part/part.cpp:690
+#: part/part.cpp:641
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Előző"
 
-#: part/part.cpp:691
+#: part/part.cpp:642
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Ugrás az előző oldalra"
 
-#: part/part.cpp:692
+#: part/part.cpp:643
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Visszalépés a dokumentum előző oldalára"
 
-#: part/part.cpp:702
+#: part/part.cpp:653
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Következő"
 
-#: part/part.cpp:703
+#: part/part.cpp:654
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Következő oldal"
 
-#: part/part.cpp:704
+#: part/part.cpp:655
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Előrelépés a dokumentum következő oldalára"
 
-#: part/part.cpp:715
+#: part/part.cpp:666
 #, kde-format
 msgid "Beginning of the document"
 msgstr "A dokumentum eleje"
 
-#: part/part.cpp:716
+#: part/part.cpp:667
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Előrelépés a dokumentum elejére"
 
-#: part/part.cpp:720
+#: part/part.cpp:671
 #, kde-format
 msgid "End of the document"
 msgstr "A dokumentum vége"
 
-#: part/part.cpp:721
+#: part/part.cpp:672
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Előrelépés a dokumentum végére"
 
-#: part/part.cpp:735
+#: part/part.cpp:686
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "A jelenlegi könyvjelző átnevezése"
 
-#: part/part.cpp:739
+#: part/part.cpp:690
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Előző könyvjelző"
 
-#: part/part.cpp:741
+#: part/part.cpp:692
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Ugrás az előző könyvjelzőre"
 
-#: part/part.cpp:745
+#: part/part.cpp:696
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Következő könyvjelző"
 
-#: part/part.cpp:747
+#: part/part.cpp:698
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Ugrás a következő könyvjelzőre"
 
-#: part/part.cpp:776
+#: part/part.cpp:727
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Az Okular beállításai…"
 
-#: part/part.cpp:779
+#: part/part.cpp:730
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "A megjelenítő beállítása…"
 
-#: part/part.cpp:785
+#: part/part.cpp:736
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "A megjelenítő háttérmodul beállításai…"
 
-#: part/part.cpp:787
+#: part/part.cpp:738
 #, kde-format
 msgid "Configure Backends..."
 msgstr "A háttérmodul beállításai…"
 
-#: part/part.cpp:823
+#: part/part.cpp:774
 #, kde-format
 msgid "About Backend"
 msgstr "A háttérmodul névjegye"
 
-#: part/part.cpp:828
+#: part/part.cpp:779
 #, kde-format
 msgid "Reloa&d"
 msgstr "Új&ratöltés"
 
-#: part/part.cpp:830
+#: part/part.cpp:781
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "A dokumentum újratöltése."
 
-#: part/part.cpp:836
+#: part/part.cpp:787
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "A keresősáv be&zárása"
 
-#: part/part.cpp:841
+#: part/part.cpp:792
 #, kde-format
 msgid "Page Number"
 msgstr "Oldalszám"
 
-#: part/part.cpp:845
+#: part/part.cpp:796
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "A színmódok beállítása…"
 
-#: part/part.cpp:886
+#: part/part.cpp:837
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Az összes szöveg kijelölése az aktuális oldalon"
 
-#: part/part.cpp:899
+#: part/part.cpp:850
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: part/part.cpp:908
+#: part/part.cpp:859
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "&Lapsáv megjelenítése"
 
-#: part/part.cpp:914
+#: part/part.cpp:865
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Aláí&ráspanel megjelenítése"
 
-#: part/part.cpp:924
+#: part/part.cpp:876
 #, kde-format
 msgid "&Embedded Files"
 msgstr "Beá&gyazott fájlok"
 
-#: part/part.cpp:930
+#: part/part.cpp:882
 #, kde-format
 msgid "E&xport As"
 msgstr "E&xportálás mint"
 
-#: part/part.cpp:942
+#: part/part.cpp:894
 #, kde-format
 msgid "S&hare"
 msgstr "Me&gosztás"
 
-#: part/part.cpp:951
+#: part/part.cpp:903
 #, kde-format
 msgid "P&resentation"
 msgstr "&Bemutató"
 
-#: part/part.cpp:958
+#: part/part.cpp:910
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Tartal&mazó mappa megnyitása"
 
-#: part/part.cpp:972
+#: part/part.cpp:924
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "Postscript-fájl importálása P&DF formátumban…"
 
-#: part/part.cpp:976
+#: part/part.cpp:928
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Váltás feketeképernyő-módba"
 
-#: part/part.cpp:984
+#: part/part.cpp:936
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Rajz törlése"
 
-#: part/part.cpp:989
+#: part/part.cpp:941
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "Jegyzetek beállítása…"
 
-#: part/part.cpp:994
+#: part/part.cpp:946
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Bemutató indítása/szüneteltetése"
 
-#: part/part.cpp:1149
+#: part/part.cpp:1101
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4298,38 +4298,38 @@ msgid ""
 "Any modification will be lost once Okular is closed."
 msgstr ""
 
-#: part/part.cpp:1150
+#: part/part.cpp:1102
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Document can't be saved"
 msgstr "Dokumentumjelszó"
 
-#: part/part.cpp:1179
+#: part/part.cpp:1131
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Nem sikerült megnyitni: „%1” (%2) "
 
-#: part/part.cpp:1233
+#: part/part.cpp:1185
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "A(z) %1 betöltése meg lett szakítva."
 
-#: part/part.cpp:1249
+#: part/part.cpp:1201
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Nem sikerült megnyitni: %1. A hiba oka: %2"
 
-#: part/part.cpp:1277
+#: part/part.cpp:1229
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Megjelenítő háttérmodul beállítása"
 
-#: part/part.cpp:1279
+#: part/part.cpp:1231
 #, kde-format
 msgid "Configure Backends"
 msgstr "Háttérmodul beállítása"
 
-#: part/part.cpp:1364
+#: part/part.cpp:1316
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4338,44 +4338,44 @@ msgstr ""
 "Nem található a „ps2pdf” programfájl, ezért az Okular nem tud PS-fájlokat "
 "importálni."
 
-#: part/part.cpp:1364
+#: part/part.cpp:1316
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "A ps2pdf nem található"
 
-#: part/part.cpp:1369
+#: part/part.cpp:1321
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript fájlok (%1)"
 
-#: part/part.cpp:1385
+#: part/part.cpp:1337
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "PS-fájl importálása PDF formátumban (sokáig eltarthat)…"
 
-#: part/part.cpp:1514
+#: part/part.cpp:1466
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Adja meg a jelszót a dokumentum olvasásához:"
 
-#: part/part.cpp:1516
+#: part/part.cpp:1468
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Hibás jelszó. Próbálja újra:"
 
-#: part/part.cpp:1522
+#: part/part.cpp:1474
 #, kde-format
 msgid "Document Password"
 msgstr "Dokumentumjelszó"
 
-#: part/part.cpp:1642
+#: part/part.cpp:1594
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Ennek a dokumentumnak XFA űrlapjai vannak, amelyek jelenleg <b>nem "
 "támogatottak</b>."
 
-#: part/part.cpp:1649
+#: part/part.cpp:1601
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4384,7 +4384,7 @@ msgstr ""
 "A dokumentum űrlapot is tartalmaz. A gombra kattintva (vagy a Nézet -> "
 "Űrlapok menüponttal) lehet kezelni azokat."
 
-#: part/part.cpp:1665
+#: part/part.cpp:1617
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4394,7 +4394,7 @@ msgstr ""
 "dokumentumnál. Mentsen egy másolatot, és nyissa meg újra a dokumentum "
 "szerkesztéséhez."
 
-#: part/part.cpp:1753
+#: part/part.cpp:1705
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4403,27 +4403,27 @@ msgstr ""
 "A dokumentum teljes képernyős módban akar megjelenni.\n"
 "Kilép a normál módból, és belép a bemutató módba?"
 
-#: part/part.cpp:1755
+#: part/part.cpp:1707
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Kérés a nézetmód megváltoztatására"
 
-#: part/part.cpp:1756
+#: part/part.cpp:1708
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Belépés bemutató módba"
 
-#: part/part.cpp:1757
+#: part/part.cpp:1709
 #, kde-format
 msgid "Deny Request"
 msgstr "Kérés elutasítása"
 
-#: part/part.cpp:1847
+#: part/part.cpp:1799
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "A(z) %1 nem nyitható meg. %2"
 
-#: part/part.cpp:1877
+#: part/part.cpp:1829
 #, fuzzy, kde-kuit-format
 #| msgid ""
 #| "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4440,22 +4440,22 @@ msgstr ""
 "módosította. A változtatásai elvesznek, mert a fájl többé nem menthető."
 "<br>Szeretné folytatni a fájl újratöltését?"
 
-#: part/part.cpp:1881 part/part.cpp:1891
+#: part/part.cpp:1833 part/part.cpp:1843
 #, kde-format
 msgid "File Changed"
 msgstr "A fájl megváltozott"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1834
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Újratöltés folytatása"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1835
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Újratöltés megszakítása"
 
-#: part/part.cpp:1887
+#: part/part.cpp:1839
 #, fuzzy, kde-kuit-format
 #| msgid ""
 #| "There are unsaved changes, and the file '%1' has been modified by another "
@@ -4472,27 +4472,27 @@ msgstr ""
 "módosította. A változtatásai elvesznek, mert a fájl többé nem menthető."
 "<br>Szeretné folytatni a fájl bezárását?"
 
-#: part/part.cpp:1892
+#: part/part.cpp:1844
 #, kde-format
 msgid "Continue Closing"
 msgstr "Bezárás folytatása"
 
-#: part/part.cpp:1893
+#: part/part.cpp:1845
 #, kde-format
 msgid "Abort Closing"
 msgstr "Bezárás megszakítása"
 
-#: part/part.cpp:1900
+#: part/part.cpp:1852
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Szeretné elmenteni a(z) „%1” változásait vagy elveti azokat?"
 
-#: part/part.cpp:1900
+#: part/part.cpp:1852
 #, kde-format
 msgid "Close Document"
 msgstr "Dokumentum bezárása"
 
-#: part/part.cpp:2032
+#: part/part.cpp:1984
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4501,7 +4501,7 @@ msgstr ""
 "Ez a link dokumentumbezárási műveletre mutat, mely nem működik beágyazott "
 "megjelenítő használatakor."
 
-#: part/part.cpp:2038
+#: part/part.cpp:1990
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4510,59 +4510,59 @@ msgstr ""
 "Ez a link alkalmazáskilépési műveletre mutat, mely nem működik beágyazott "
 "megjelenítő használatakor."
 
-#: part/part.cpp:2130 part/part.cpp:2148
+#: part/part.cpp:2082 part/part.cpp:2100
 #, kde-format
 msgid "Reloading the document..."
 msgstr "A dokumentum újratöltése…"
 
-#: part/part.cpp:2305 part/toc.cpp:38
+#: part/part.cpp:2257 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Tartalomjegyzék"
 
-#: part/part.cpp:2334 part/signaturepanel.cpp:47
+#: part/part.cpp:2286 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Aláírások"
 
-#: part/part.cpp:2361
+#: part/part.cpp:2313
 #, kde-format
 msgid "Go to Page"
 msgstr "Ugrás egy oldalra"
 
-#: part/part.cpp:2384
+#: part/part.cpp:2336
 #, kde-format
 msgid "&Page:"
 msgstr "&Oldalszám:"
 
-#: part/part.cpp:2477
+#: part/part.cpp:2429
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Adja meg a könyvjelző új nevét:"
 
-#: part/part.cpp:2523
+#: part/part.cpp:2475
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Könyvjelző átnevezése"
 
-#: part/part.cpp:2526
+#: part/part.cpp:2478
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Könyvjelző eltávolítása"
 
-#: part/part.cpp:2612 part/part.cpp:2613 part/part.cpp:3492
+#: part/part.cpp:2564 part/part.cpp:2565 part/part.cpp:3444
 #: part/signaturepartutils.cpp:427
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2620 part/revisionviewer.cpp:44
+#: part/part.cpp:2572 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Mentés másként"
 
-#: part/part.cpp:2637
+#: part/part.cpp:2589
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4572,18 +4572,18 @@ msgstr ""
 "kiterjesztésre végződik. Ez nem megengedett, szeretne választani egy új "
 "nevet?"
 
-#: part/part.cpp:2638
+#: part/part.cpp:2590
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Nem támogatott kiterjesztés"
 
-#: part/part.cpp:2639
+#: part/part.cpp:2591
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2681
+#: part/part.cpp:2633
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4592,17 +4592,17 @@ msgid ""
 "sure you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2684 part/part.cpp:2702 part/part.cpp:2754
+#: part/part.cpp:2636 part/part.cpp:2654 part/part.cpp:2706
 #, kde-format
 msgid "Save - Warning"
 msgstr "Mentés - figyelmeztetés"
 
-#: part/part.cpp:2686
+#: part/part.cpp:2638
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr ""
 
-#: part/part.cpp:2701
+#: part/part.cpp:2653
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4613,12 +4613,12 @@ msgstr ""
 "tölteni. A jelszót ismét meg kell adnia, a visszavonás/újra előzmények pedig "
 "elvesznek.<br />Szeretné folytatni?"
 
-#: part/part.cpp:2728
+#: part/part.cpp:2680
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Nem sikerült megnyitni egy ideiglenes fájlt mentésre."
 
-#: part/part.cpp:2741
+#: part/part.cpp:2693
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4628,7 +4628,7 @@ msgstr ""
 "Nem sikerült a(z) <filename>%1</filename> felülírása, mert a fájl csak "
 "olvasható. Próbálja máshová menteni, vagy módosítsa a fájl jogosultságait."
 
-#: part/part.cpp:2753
+#: part/part.cpp:2705
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4637,22 +4637,22 @@ msgstr ""
 "Mentés után a jelenlegi dokumentumformátum a fájl újratöltését igényli. A "
 "visszavonás/újra előzmények elvesznek.<br />Szeretné folytatni?"
 
-#: part/part.cpp:2768 part/part.cpp:2837 part/part.cpp:2858 part/part.cpp:3507
+#: part/part.cpp:2720 part/part.cpp:2789 part/part.cpp:2810 part/part.cpp:3459
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Nem sikerült elmenteni a fájlt ide: „%1”. Próbálja máshová menteni."
 
-#: part/part.cpp:2781
+#: part/part.cpp:2733
 #, kde-format
 msgid "Filled form contents"
 msgstr "Kitöltött űrlapok tartalma"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2736
 #, kde-format
 msgid "User annotations"
 msgstr "Felhasználói jegyzetek"
 
-#: part/part.cpp:2789
+#: part/part.cpp:2741
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4663,17 +4663,17 @@ msgstr ""
 "a következő elemeket Kérjük, használja az <i>Okular dokumentumarchívum</i> "
 "formátumot a megőrzésükhöz."
 
-#: part/part.cpp:2793 part/part.cpp:2815
+#: part/part.cpp:2745 part/part.cpp:2767
 #, kde-format
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: part/part.cpp:2794 part/part.cpp:2816
+#: part/part.cpp:2746 part/part.cpp:2768
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Mentés Okular dokumentumarchívumként…"
 
-#: part/part.cpp:2806
+#: part/part.cpp:2758
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4686,7 +4686,7 @@ msgstr ""
 "formátumot a megőrzésükhöz. Kattintson a <i>Folytatás</i> gombra a "
 "dokumentum mentéséhez és ezen elemek eldobásához."
 
-#: part/part.cpp:2809
+#: part/part.cpp:2761
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4700,22 +4700,22 @@ msgstr ""
 "mentéshez, ekkor azonban elveszíti ezeket az elemeket, és a visszavonás/újra "
 "előzményeket."
 
-#: part/part.cpp:2811
+#: part/part.cpp:2763
 #, kde-format
 msgid "Continue"
 msgstr "Folytatás"
 
-#: part/part.cpp:2811
+#: part/part.cpp:2763
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Folytatás a változtatások elvesztésével"
 
-#: part/part.cpp:2839
+#: part/part.cpp:2791
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Nem sikerült elmenteni a fájlt ide: „%1”. %2"
 
-#: part/part.cpp:2878
+#: part/part.cpp:2830
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4726,7 +4726,7 @@ msgstr ""
 "\n"
 "Nem létezik ilyen nevű dokumentum."
 
-#: part/part.cpp:2914
+#: part/part.cpp:2866
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4735,61 +4735,61 @@ msgstr ""
 "Nem sikerült elmenteni a fájlt ide: „%1”. Hiba: „%2”. Próbálja máshová "
 "menteni."
 
-#: part/part.cpp:3165
+#: part/part.cpp:3117
 #, kde-format
 msgid "Expand whole section"
 msgstr "Teljes szakasz kibontása"
 
-#: part/part.cpp:3166
+#: part/part.cpp:3118
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Teljes szakasz összecsukása"
 
-#: part/part.cpp:3167
+#: part/part.cpp:3119
 #, kde-format
 msgid "Expand all"
 msgstr "Minden kibontása"
 
-#: part/part.cpp:3168
+#: part/part.cpp:3120
 #, kde-format
 msgid "Collapse all"
 msgstr "Minden összecsukása"
 
-#: part/part.cpp:3179
+#: part/part.cpp:3131
 #, fuzzy, kde-format
 #| msgctxt "@option:check Config dialog, general page"
 #| msgid "Link the thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "A bélyegképek kapcsolása az oldalhoz"
 
-#: part/part.cpp:3184
+#: part/part.cpp:3136
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Könyvjelző hozzáadása"
 
-#: part/part.cpp:3206
+#: part/part.cpp:3158
 #, kde-format
 msgid "Tools"
 msgstr "Eszközök"
 
-#: part/part.cpp:3388
+#: part/part.cpp:3340
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Felolvasás"
 
-#: part/part.cpp:3545
+#: part/part.cpp:3497
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3560
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "A dokumentum nyomtatása nincs engedélyezve."
 
-#: part/part.cpp:3616
+#: part/part.cpp:3568
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4797,7 +4797,7 @@ msgstr ""
 "Ismeretlen hiba miatt nem sikerült kinyomtatni a dokumentumot. Kérjük "
 "jelentse be a hibát itt: bugs.kde.org"
 
-#: part/part.cpp:3618
+#: part/part.cpp:3570
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4806,17 +4806,17 @@ msgstr ""
 "A következő hiba miatt nem sikerült kinyomtatni a dokumentumot: „%1”. Kérjük "
 "jelentse be a hibát itt: bugs.kde.org"
 
-#: part/part.cpp:3698
+#: part/part.cpp:3650
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ugrás az előző pozícióra"
 
-#: part/part.cpp:3702
+#: part/part.cpp:3654
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ugrás a következő pozícióra"
 
-#: part/part.cpp:3727
+#: part/part.cpp:3679
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4825,7 +4825,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült létrehozni ezt az ideiglenes "
 "fájlt: <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3739
+#: part/part.cpp:3691
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4835,7 +4835,7 @@ msgstr ""
 "kitömörítésre: <nobr><strong>%1</strong></nobr>. A fájlt nem sikerült "
 "betölteni.</qt>"
 
-#: part/part.cpp:3743
+#: part/part.cpp:3695
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4848,7 +4848,7 @@ msgstr ""
 "kiválasztja a „Tulajdonságok” opciót, és a „Jogosultsáok” fület a megnyitott "
 "ablakban.</qt>"
 
-#: part/part.cpp:3765
+#: part/part.cpp:3717
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4857,7 +4857,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült kitömöríteni a fájlt "
 "<nobr><strong>%1</strong></nobr>. A fájlt nem sikerült betölteni.</qt>"
 
-#: part/part.cpp:3769
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4866,27 +4866,27 @@ msgstr ""
 "<qt>Ez a hiba általában akkor jelentkezik, ha a fájl megsérült. A fájl "
 "integritásának ellenőrzéséhez tömörítse ki azt parancssoros eszközökkel.</qt>"
 
-#: part/part.cpp:3795
+#: part/part.cpp:3747
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nincs könyvjelző"
 
-#: part/part.cpp:3866
+#: part/part.cpp:3818
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Hiba történt a dokumentum megosztásakor: %1"
 
-#: part/part.cpp:3866 part/part.cpp:3872
+#: part/part.cpp:3818 part/part.cpp:3824
 #, kde-format
 msgid "Share"
 msgstr "Megosztás"
 
-#: part/part.cpp:3870
+#: part/part.cpp:3822
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentum sikeresen megosztva"
 
-#: part/part.cpp:3872
+#: part/part.cpp:3824
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "A megosztott dokumentumot itt találhatja meg: <a href=\"%1\">%1</a>"
@@ -5053,7 +5053,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "Indítás"
 
-#: part/presentationwidget.cpp:1625
+#: part/presentationwidget.cpp:1624
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5065,7 +5065,7 @@ msgstr ""
 "meg, ha odaviszi az egérmutatót. Az ablakváltás is használható természetesen "
 "(Alt+Tab alapértelmezés szerint)."
 
-#: part/presentationwidget.cpp:1708
+#: part/presentationwidget.cpp:1707
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -5606,53 +5606,53 @@ msgstr "Már létezik eszköz ezzel a névvel. Helyette egy alapértelmezett les
 msgid "Duplicated Name"
 msgstr "Duplikált név"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:69
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "A megjelenítendő dokumentum egy oldala"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:70
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Bemutató indítása a dokumentummal"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:71
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Kezdés a nyomtatás párbeszédablakkal"
 
-#: shell/main.cpp:78
+#: shell/main.cpp:72
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Kezdés a nyomtatás párbeszédablakkal és kilépés nyomtatás után"
 
-#: shell/main.cpp:79
+#: shell/main.cpp:73
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "„Egyedi példány” kezelése"
 
-#: shell/main.cpp:80
+#: shell/main.cpp:74
 #, kde-format
 msgid "Not raise window"
 msgstr "Ne hozza előre az ablakot"
 
-#: shell/main.cpp:81
+#: shell/main.cpp:75
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Karakterlánc keresése a szövegben"
 
-#: shell/main.cpp:82
+#: shell/main.cpp:76
 #, kde-format
 msgid "sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:83
+#: shell/main.cpp:77
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 "A megnyitandó dokumentumok. '-' megadása esetén a standard bemenetről olvas."
 
-#: shell/okular_main.cpp:63 shell/okular_main.cpp:164
+#: shell/okular_main.cpp:64 shell/okular_main.cpp:169
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5660,61 +5660,61 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:183
+#: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --unique kapcsolóval"
 
-#: shell/okular_main.cpp:189
+#: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --presentation "
 "kapcsolóval"
 
-#: shell/okular_main.cpp:195
+#: shell/okular_main.cpp:200
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --print kapcsolóval"
 
-#: shell/okular_main.cpp:201
+#: shell/okular_main.cpp:206
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --page kapcsolóval"
 
-#: shell/okular_main.cpp:207
+#: shell/okular_main.cpp:212
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --find kapcsolóval"
 
-#: shell/shell.cpp:192
+#: shell/shell.cpp:197
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nem található az Okular objektum: %1"
 
-#: shell/shell.cpp:235
+#: shell/shell.cpp:240
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:265
+#: shell/shell.cpp:276
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "Már fut egy egyedi Okular példány. Ez a példány nem lesz egyedi."
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:300
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nem található az Okular objektum."
 
-#: shell/shell.cpp:531
+#: shell/shell.cpp:540
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5723,7 +5723,7 @@ msgstr ""
 "Kattintson ide fájl megnyitásához\n"
 "Kattintson ide és tartsa lenyomva a gombot nemrég használt fájl megnyitásához"
 
-#: shell/shell.cpp:532
+#: shell/shell.cpp:541
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5731,58 +5731,58 @@ msgstr ""
 "<b>Kattintson ide</b> fájl megnyitásához vagy <b>kattintson ide és tartsa "
 "lenyomva a gombot</b> nemrég használt fájl kiválasztásához"
 
-#: shell/shell.cpp:545
+#: shell/shell.cpp:554
 #, kde-format
 msgid "Next Tab"
 msgstr "Következő lap"
 
-#: shell/shell.cpp:551
+#: shell/shell.cpp:560
 #, kde-format
 msgid "Previous Tab"
 msgstr "Előző lap"
 
-#: shell/shell.cpp:557
+#: shell/shell.cpp:566
 #, kde-format
 msgid "Undo close tab"
 msgstr "Lap bezárásának visszavonása"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:575
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:666
+#: shell/shell.cpp:675
 #, kde-format
 msgid "All files (*)"
 msgstr "Minden fájl (*)"
 
-#: shell/shell.cpp:667
+#: shell/shell.cpp:676
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Minden támogatott fájl (%1)"
 
-#: shell/shell.cpp:671
+#: shell/shell.cpp:680
 #, kde-format
 msgid "Open Document"
 msgstr "Dokumentum megnyitása"
 
-#: shell/shell.cpp:781
+#: shell/shell.cpp:794
 #, kde-format
 msgid "Confirm Close"
 msgstr "Bezárás megerősítése"
 
-#: shell/shell.cpp:785
+#: shell/shell.cpp:798
 #, kde-format
 msgid "Close Tabs"
 msgstr "Lapok bezárása"
 
-#: shell/shell.cpp:792
+#: shell/shell.cpp:805
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 lap bezárására készül. Biztosan szeretné folytatni?"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Figyelmeztetés több lap bezárása előtt"

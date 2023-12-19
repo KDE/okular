@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"POT-Creation-Date: 2023-11-05 12:27+0000\n"
 "PO-Revision-Date: 2013-06-01 14:47+0200\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -30,17 +30,17 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "slsimic@gmail.com"
 
-#: converter.cpp:171
+#: converter.cpp:164
 #, kde-format
 msgid "Error while opening the EPub document."
 msgstr "Грешка при отварању ЕПУБ документа."
 
-#: generator_epub.cpp:33
+#: generator_epub.cpp:30
 #, kde-format
 msgid "EPub"
 msgstr "ЕПУБ"
 
-#: generator_epub.cpp:33
+#: generator_epub.cpp:30
 #, kde-format
 msgid "EPub Backend Configuration"
 msgstr "Постава позадине за ЕПУБ"

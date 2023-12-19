@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_ghostview\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"POT-Creation-Date: 2023-11-05 12:27+0000\n"
 "PO-Revision-Date: 2010-03-16 11:25+0100\n"
 "Last-Translator: Dalibor Djuric <daliborddjuric@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -63,22 +63,22 @@ msgstr "Opšte postavke"
 msgid "&Use platform fonts"
 msgstr "&Koristi sistemske fontove"
 
-#: generator_ghostview.cpp:85
+#: generator_ghostview.cpp:82
 #, kde-format
 msgid "Ghostscript"
 msgstr "GhostScript"
 
-#: generator_ghostview.cpp:85
+#: generator_ghostview.cpp:82
 #, kde-format
 msgid "Ghostscript Backend Configuration"
 msgstr "Postavke pozadine za GhostScript"
 
-#: generator_ghostview.cpp:261
+#: generator_ghostview.cpp:253
 #, kde-format
 msgid "Document version"
 msgstr "Verzija dokumenta"
 
-#: generator_ghostview.cpp:266
+#: generator_ghostview.cpp:259
 #, kde-format
 msgid "Language Level"
 msgstr "Nivo jezika"

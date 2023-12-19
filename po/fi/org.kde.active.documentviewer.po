@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
 "PO-Revision-Date: 2022-08-05 10:30+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -24,92 +24,92 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
-#: package/contents/ui/CertificateViewerDialog.qml:21
+#: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Varmennekatselin"
 
-#: package/contents/ui/CertificateViewerDialog.qml:32
+#: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Myöntäjä"
 
-#: package/contents/ui/CertificateViewerDialog.qml:37
-#: package/contents/ui/CertificateViewerDialog.qml:65
+#: package/contents/ui/CertificateViewerDialog.qml:38
+#: package/contents/ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Yleinen nimi:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:43
-#: package/contents/ui/CertificateViewerDialog.qml:71
+#: package/contents/ui/CertificateViewerDialog.qml:44
+#: package/contents/ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "Sähköposti:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:49
-#: package/contents/ui/CertificateViewerDialog.qml:77
+#: package/contents/ui/CertificateViewerDialog.qml:50
+#: package/contents/ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Organisaatio:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:60
+#: package/contents/ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Kenelle myönnetty:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:88
+#: package/contents/ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Kelpoisuus"
 
-#: package/contents/ui/CertificateViewerDialog.qml:93
+#: package/contents/ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Julkaistu:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:99
+#: package/contents/ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Vanhenee:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:110
+#: package/contents/ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Sormenjäljet"
 
-#: package/contents/ui/CertificateViewerDialog.qml:115
+#: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1-sormenjälki:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:121
+#: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256-sormenjälki:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:135
+#: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "Vie…"
 
-#: package/contents/ui/CertificateViewerDialog.qml:141
-#: package/contents/ui/SignaturePropertiesDialog.qml:148
+#: package/contents/ui/CertificateViewerDialog.qml:142
+#: package/contents/ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Sulje"
 
-#: package/contents/ui/CertificateViewerDialog.qml:149
+#: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Varmennetiedosto (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:164
-#: package/contents/ui/SignaturePropertiesDialog.qml:168
+#: package/contents/ui/CertificateViewerDialog.qml:165
+#: package/contents/ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Virhe"
 
-#: package/contents/ui/CertificateViewerDialog.qml:166
+#: package/contents/ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Varmennetta ei voitu viedä."
 
-#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
+#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:41
+#: package/contents/ui/main.qml:42
 msgid "Open..."
 msgstr "Avaa..."
 
-#: package/contents/ui/main.qml:48
+#: package/contents/ui/main.qml:49
 msgid "About"
 msgstr "Tietoa"
 
-#: package/contents/ui/main.qml:105
+#: package/contents/ui/main.qml:106
 msgid "Password Needed"
 msgstr "Salasana vaaditaan"
 
@@ -137,60 +137,60 @@ msgstr "Sisällysluettelo"
 msgid "Signatures"
 msgstr "Allekirjoitukset"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:30
+#: package/contents/ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "Allekirjoituksen ominaisuudet"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:44
+#: package/contents/ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Kelpoisuuden tila"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:50
+#: package/contents/ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "Allekirjoituksen kelpoisuus:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:56
+#: package/contents/ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Tiedoston muutokset:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:63
+#: package/contents/ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Lisätietoa"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:72
+#: package/contents/ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "Allekirjoittanut:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:78
+#: package/contents/ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "Allekirjoitettu:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:84
+#: package/contents/ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Syy:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:91
+#: package/contents/ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Sijainti:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:100
+#: package/contents/ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Tiedostoversio"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:110
+#: package/contents/ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Tiedoston versio %1/%2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:114
+#: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "Tallenna allekirjoitettu versio…"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:128
+#: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Näytä varmenne…"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:170
+#: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "Allekirjoitusta ei voitu tallentaa."
 

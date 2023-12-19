@@ -18,7 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
 "X-Generator: Poedit 3.3.2\n"
 
@@ -1535,11 +1536,13 @@ msgid "%1: %2"
 msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
-#, kde-format
+#, fuzzy, kde-format
 msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "פירוש"
 msgstr[1] "%1 פירושים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -2113,7 +2116,7 @@ msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "אירעה שגיאה בהפעלת פקודת ‚dvipng’."
 
 #: part/bookmarklist.cpp:115
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "%1 is the file name"
 msgid ""
 "%1\n"
@@ -2131,6 +2134,8 @@ msgstr[1] ""
 "%1\n"
 "\n"
 "%2 סימניות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: part/bookmarklist.cpp:131 part/part.cpp:421
 #, kde-format
@@ -2940,12 +2945,14 @@ msgid "every "
 msgstr "כל "
 
 #: part/dlgpresentation.cpp:38
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "Advance every %1 seconds"
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " שניה"
 msgstr[1] " שניות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3651,11 +3658,13 @@ msgid "Show Forms"
 msgstr "הצגת טפסים"
 
 #: part/pageview.cpp:1307
-#, kde-format
+#, fuzzy, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " נטען מסמך של עמוד אחד."
 msgstr[1] " נטען מסמך של %1 עמודים."
+msgstr[2] ""
+msgstr[3] ""
 
 #: part/pageview.cpp:2550
 #, kde-format
@@ -3663,11 +3672,13 @@ msgid "Copy Table Contents to Clipboard"
 msgstr "העתקת תוכן הטבלה ללוח הגזירים"
 
 #: part/pageview.cpp:2869
-#, kde-format
+#, fuzzy, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "טקסט (תו אחד)"
 msgstr[1] "טקסט (%1 תווים)"
+msgstr[2] ""
+msgstr[3] ""
 
 #: part/pageview.cpp:2870 part/pageview.cpp:2888
 #, kde-format

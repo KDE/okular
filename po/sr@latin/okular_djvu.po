@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"POT-Creation-Date: 2023-11-05 12:27+0000\n"
 "PO-Revision-Date: 2010-10-05 22:02+0200\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -35,68 +35,68 @@ msgid "Your emails"
 msgstr "slsimic@gmail.com"
 
 # skip-rule: t-editor
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:136
 #, kde-format
 msgid "Editor"
 msgstr "Urednik"
 
-#: generator_djvu.cpp:142
+#: generator_djvu.cpp:137
 #, kde-format
 msgid "Publisher"
 msgstr "Izdavač"
 
-#: generator_djvu.cpp:143
+#: generator_djvu.cpp:138
 #, kde-format
 msgid "Volume"
 msgstr "Sveska"
 
-#: generator_djvu.cpp:144
+#: generator_djvu.cpp:139
 #, kde-format
 msgid "Type of document"
 msgstr "Vrsta dokumenta"
 
-#: generator_djvu.cpp:146
+#: generator_djvu.cpp:141
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
 msgstr "nepoznato"
 
-#: generator_djvu.cpp:146
+#: generator_djvu.cpp:141
 #, kde-format
 msgid "Component Files"
 msgstr "Sastavnih fajlova"
 
-#: kdjvu.cpp:697
+#: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
 msgstr "nepoznata"
 
-#: kdjvu.cpp:700
+#: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
 msgstr "jednostrani"
 
-#: kdjvu.cpp:703
+#: kdjvu.cpp:690
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
 msgstr "komplet"
 
-#: kdjvu.cpp:706
+#: kdjvu.cpp:693
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
 msgstr "indirektni"
 
-#: kdjvu.cpp:709
+#: kdjvu.cpp:696
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
 msgstr "komplet (stari)"
 
-#: kdjvu.cpp:712
+#: kdjvu.cpp:699
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
 "PO-Revision-Date: 2022-08-09 13:27+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -21,92 +21,92 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "책갈피"
 
-#: package/contents/ui/CertificateViewerDialog.qml:21
+#: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "인증서 뷰어"
 
-#: package/contents/ui/CertificateViewerDialog.qml:32
+#: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "발급자"
 
-#: package/contents/ui/CertificateViewerDialog.qml:37
-#: package/contents/ui/CertificateViewerDialog.qml:65
+#: package/contents/ui/CertificateViewerDialog.qml:38
+#: package/contents/ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "일반 이름"
 
-#: package/contents/ui/CertificateViewerDialog.qml:43
-#: package/contents/ui/CertificateViewerDialog.qml:71
+#: package/contents/ui/CertificateViewerDialog.qml:44
+#: package/contents/ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "이메일"
 
-#: package/contents/ui/CertificateViewerDialog.qml:49
-#: package/contents/ui/CertificateViewerDialog.qml:77
+#: package/contents/ui/CertificateViewerDialog.qml:50
+#: package/contents/ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "조직:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:60
+#: package/contents/ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "발급 대상:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:88
+#: package/contents/ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "유효성"
 
-#: package/contents/ui/CertificateViewerDialog.qml:93
+#: package/contents/ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "발급 시간:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:99
+#: package/contents/ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "만료 시간:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:110
+#: package/contents/ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "지문"
 
-#: package/contents/ui/CertificateViewerDialog.qml:115
+#: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 지문:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:121
+#: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 지문:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:135
+#: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "내보내기..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:141
-#: package/contents/ui/SignaturePropertiesDialog.qml:148
+#: package/contents/ui/CertificateViewerDialog.qml:142
+#: package/contents/ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "닫기"
 
-#: package/contents/ui/CertificateViewerDialog.qml:149
+#: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "인증서 파일 (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:164
-#: package/contents/ui/SignaturePropertiesDialog.qml:168
+#: package/contents/ui/CertificateViewerDialog.qml:165
+#: package/contents/ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "오류"
 
-#: package/contents/ui/CertificateViewerDialog.qml:166
+#: package/contents/ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "인증서를 내보낼 수 없습니다."
 
-#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
+#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:41
+#: package/contents/ui/main.qml:42
 msgid "Open..."
 msgstr "열기..."
 
-#: package/contents/ui/main.qml:48
+#: package/contents/ui/main.qml:49
 msgid "About"
 msgstr "정보"
 
-#: package/contents/ui/main.qml:105
+#: package/contents/ui/main.qml:106
 msgid "Password Needed"
 msgstr "암호가 필요함"
 
@@ -134,60 +134,60 @@ msgstr "목차"
 msgid "Signatures"
 msgstr "서명"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:30
+#: package/contents/ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "인증서 속성"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:44
+#: package/contents/ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "유효 상태"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:50
+#: package/contents/ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "인증서 유효성:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:56
+#: package/contents/ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "문서 수정:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:63
+#: package/contents/ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "추가 정보"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:72
+#: package/contents/ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "서명한 사람:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:78
+#: package/contents/ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "서명 시간:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:84
+#: package/contents/ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "이유:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:91
+#: package/contents/ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "위치:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:100
+#: package/contents/ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "문서 버전"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:110
+#: package/contents/ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "문서 리비전 %2 중 %1"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:114
+#: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "서명된 버전 저장..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:128
+#: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "인증서 보기..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:170
+#: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "서명을 저장할 수 없습니다."
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
 "PO-Revision-Date: 2023-07-17 21:54+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
@@ -50,7 +50,7 @@ msgid "Enhance thin lines:"
 msgstr "Épaissir les lignes fines :"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:947
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:940
 #, kde-format
 msgid "No"
 msgstr "Non"
@@ -204,43 +204,43 @@ msgstr "Mode de mise à l'échelle pour les pages imprimées"
 msgid "Scale mode:"
 msgstr "Mode de mise à l'échelle :"
 
-#: generator_pdf.cpp:945
+#: generator_pdf.cpp:938
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF version %1.%2"
 
-#: generator_pdf.cpp:945
+#: generator_pdf.cpp:938
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:946
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Encrypted"
 msgstr "Chiffré"
 
-#: generator_pdf.cpp:946
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Unencrypted"
 msgstr "Non chiffré"
 
-#: generator_pdf.cpp:946
+#: generator_pdf.cpp:939
 #, kde-format
 msgid "Security"
 msgstr "Sécurité"
 
-#: generator_pdf.cpp:947
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Yes"
 msgstr "Oui"
 
-#: generator_pdf.cpp:947
+#: generator_pdf.cpp:940
 #, kde-format
 msgid "Optimized"
 msgstr "Optimisé"
 
-#: generator_pdf.cpp:1378
+#: generator_pdf.cpp:1368
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -251,12 +251,12 @@ msgstr ""
 "\n"
 "Date : %2"
 
-#: generator_pdf.cpp:1588
+#: generator_pdf.cpp:1575
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Utilisation de Poppler %1"
 
-#: generator_pdf.cpp:1590
+#: generator_pdf.cpp:1577
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -267,17 +267,17 @@ msgstr ""
 "\n"
 "Construit sur Poppler %2"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1625
+#: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Configuration du moteur PDF"
 
-#: generator_pdf.cpp:2118
+#: generator_pdf.cpp:2100
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

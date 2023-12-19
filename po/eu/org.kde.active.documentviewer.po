@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
 "PO-Revision-Date: 2023-04-22 22:04+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -25,92 +25,92 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "Laster-markak"
 
-#: package/contents/ui/CertificateViewerDialog.qml:21
+#: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Ziurtagiri erakuslea"
 
-#: package/contents/ui/CertificateViewerDialog.qml:32
+#: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Nork jaukia"
 
-#: package/contents/ui/CertificateViewerDialog.qml:37
-#: package/contents/ui/CertificateViewerDialog.qml:65
+#: package/contents/ui/CertificateViewerDialog.qml:38
+#: package/contents/ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Izen arrunta:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:43
-#: package/contents/ui/CertificateViewerDialog.qml:71
+#: package/contents/ui/CertificateViewerDialog.qml:44
+#: package/contents/ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "E-posta:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:49
-#: package/contents/ui/CertificateViewerDialog.qml:77
+#: package/contents/ui/CertificateViewerDialog.qml:50
+#: package/contents/ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Erakundea:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:60
+#: package/contents/ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Nori jaulkia"
 
-#: package/contents/ui/CertificateViewerDialog.qml:88
+#: package/contents/ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Baliozkotasuna"
 
-#: package/contents/ui/CertificateViewerDialog.qml:93
+#: package/contents/ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Jaulkitze Eguna:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:99
+#: package/contents/ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Epemuga:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:110
+#: package/contents/ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Hatz-markak"
 
-#: package/contents/ui/CertificateViewerDialog.qml:115
+#: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 hatz-marka:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:121
+#: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 hatz-marka:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:135
+#: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "Esportatu..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:141
-#: package/contents/ui/SignaturePropertiesDialog.qml:148
+#: package/contents/ui/CertificateViewerDialog.qml:142
+#: package/contents/ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Itxi"
 
-#: package/contents/ui/CertificateViewerDialog.qml:149
+#: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Ziurtagiri fitxategia (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:164
-#: package/contents/ui/SignaturePropertiesDialog.qml:168
+#: package/contents/ui/CertificateViewerDialog.qml:165
+#: package/contents/ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Errorea"
 
-#: package/contents/ui/CertificateViewerDialog.qml:166
+#: package/contents/ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Ezin izan du ziurtagiria esportatu."
 
-#: package/contents/ui/main.qml:24 package/contents/ui/main.qml:65
+#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:41
+#: package/contents/ui/main.qml:42
 msgid "Open..."
 msgstr "Ireki..."
 
-#: package/contents/ui/main.qml:48
+#: package/contents/ui/main.qml:49
 msgid "About"
 msgstr "Honi buruz"
 
-#: package/contents/ui/main.qml:105
+#: package/contents/ui/main.qml:106
 msgid "Password Needed"
 msgstr "Pasahitza behar da"
 
@@ -138,60 +138,60 @@ msgstr "Edukien aurkibidea"
 msgid "Signatures"
 msgstr "Sinadurak"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:30
+#: package/contents/ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "Sinaduraren propietateak"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:44
+#: package/contents/ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Baliozkotasun egoera"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:50
+#: package/contents/ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "Sinaduraren baliozkotasuna:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:56
+#: package/contents/ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Dokumentuaren aldaketak:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:63
+#: package/contents/ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Informazio gehigarria"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:72
+#: package/contents/ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "Nork sinatua:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:78
+#: package/contents/ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "Sinatze ordua:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:84
+#: package/contents/ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Arrazoia:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:91
+#: package/contents/ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Kokalekua:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:100
+#: package/contents/ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Dokumentuaren bertsioa"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:110
+#: package/contents/ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Dokumentuaren berrikuspena %1/%2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:114
+#: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "Gorde sinatutako bertsioa..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:128
+#: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Ikusi ziurtagiria..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:170
+#: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "Ezin izan du sinadura gorde."
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_mobi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2019-05-20 03:08+0200\n"
+"POT-Creation-Date: 2023-11-05 12:27+0000\n"
 "PO-Revision-Date: 2013-06-01 14:47+0200\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -28,24 +28,24 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "caslav.ilic@gmx.net"
 
-#: converter.cpp:53
+#: converter.cpp:59
 #, kde-format
 msgid "Error while opening the Mobipocket document."
 msgstr "Грешка при отварању мобипокет документа."
 
-#: converter.cpp:58
+#: converter.cpp:64
 #, kde-format
 msgid ""
 "This book is protected by DRM and can be displayed only on designated device"
 msgstr ""
 "Ова књига је заштићена ДРМ‑ом и може се приказати само на назначеном уређају."
 
-#: generator_mobi.cpp:28
+#: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket"
 msgstr "Мобипокет"
 
-#: generator_mobi.cpp:28
+#: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket Backend Configuration"
 msgstr "Постава позадине за Мобипокет"

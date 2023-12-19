@@ -51,7 +51,7 @@ QString JSApp::language() const
 {
     QLocale locale;
     QString lang = QLocale::languageToString(locale.language());
-    QString country = QLocale::countryToString(locale.country());
+    QString country = QLocale::territoryToString(locale.territory());
     QString acroLang = QStringLiteral("ENU");
     if (lang == QLatin1String("da")) {
         acroLang = QStringLiteral("DAN"); // Danish

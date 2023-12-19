@@ -52,7 +52,7 @@ public:
             if (event->type() == QEvent::MouseButtonPress) {
                 if (static_cast<QMouseEvent *>(event)->button() == Qt::MouseButton::RightButton) {
                     willOpenMenu = true;
-                    menuPosition = static_cast<QMouseEvent *>(event)->globalPos();
+                    menuPosition = static_cast<QMouseEvent *>(event)->globalPosition().toPoint();
                 }
             }
 

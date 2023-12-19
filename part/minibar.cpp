@@ -359,14 +359,14 @@ void ProgressWidget::slotGotoNormalizedPage(float index)
 void ProgressWidget::mouseMoveEvent(QMouseEvent *e)
 {
     if ((QApplication::mouseButtons() & Qt::LeftButton) && width() > 0) {
-        slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->x() : e->x()) / (float)width());
+        slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->position().x() : e->position().x()) / (float)width());
     }
 }
 
 void ProgressWidget::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton && width() > 0) {
-        slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->x() : e->x()) / (float)width());
+        slotGotoNormalizedPage((float)(QApplication::isRightToLeft() ? width() - e->position().x() : e->position().x()) / (float)width());
     }
 }
 

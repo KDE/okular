@@ -1085,7 +1085,7 @@ QRect PageViewAnnotator::routeMouseEvent(QMouseEvent *e, PageViewItem *item)
     // Constrain angle if action checked XOR shift button pressed.
     modifiers.constrainRatioAndAngle = (bool(constrainRatioAndAngleActive()) != bool(e->modifiers() & Qt::ShiftModifier));
 
-    return performRouteMouseOrTabletEvent(eventType, button, modifiers, e->localPos(), item);
+    return performRouteMouseOrTabletEvent(eventType, button, modifiers, e->position(), item);
 }
 
 QRect PageViewAnnotator::routeTabletEvent(QTabletEvent *e, PageViewItem *item, const QPoint localOriginInGlobal)
@@ -1107,7 +1107,7 @@ QRect PageViewAnnotator::routeTabletEvent(QTabletEvent *e, PageViewItem *item, c
     // Constrain angle if action checked XOR shift button pressed.
     modifiers.constrainRatioAndAngle = (bool(constrainRatioAndAngleActive()) != bool(e->modifiers() & Qt::ShiftModifier));
 
-    const QPointF globalPosF = e->globalPosF();
+    const QPointF globalPosF = e->globalPosition();
     const QPointF localPosF = globalPosF - localOriginInGlobal;
     return performRouteMouseOrTabletEvent(eventType, button, modifiers, localPosF, item);
 }

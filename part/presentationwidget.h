@@ -77,10 +77,10 @@ protected:
     bool eventFilter(QObject *o, QEvent *ev) override;
 
 private:
-    const void *getObjectRect(Okular::ObjectRect::ObjectType type, int x, int y, QRect *geometry = nullptr) const;
-    const Okular::Action *getLink(int x, int y, QRect *geometry = nullptr) const;
-    const Okular::Annotation *getAnnotation(int x, int y, QRect *geometry = nullptr) const;
-    void testCursorOnLink(int x, int y);
+    const void *getObjectRect(Okular::ObjectRect::ObjectType type, QPointF point, QRect *geometry = nullptr) const;
+    const Okular::Action *getLink(QPointF point, QRect *geometry = nullptr) const;
+    const Okular::Annotation *getAnnotation(QPointF point, QRect *geometry = nullptr) const;
+    void testCursorOnLink(QPointF point);
     void overlayClick(const QPoint position);
     void changePage(int newPage);
     void generatePage(bool disableTransition = false);

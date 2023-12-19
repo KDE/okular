@@ -155,10 +155,10 @@ public:
     PageView::ZoomMode zoomMode;
     float zoomFactor;
     QPoint mouseGrabOffset;
-    QPoint mousePressPos;
-    QPoint mouseSelectPos;
-    QPoint previousMouseMovePos;
-    int mouseMidLastY;
+    QPointF mousePressPos;
+    QPointF mouseSelectPos;
+    QPointF previousMouseMovePos;
+    qreal mouseMidLastY;
     bool mouseSelecting;
     QRect mouseSelectionRect;
     QColor mouseSelectionColor;
@@ -2131,7 +2131,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Escape:
         Q_EMIT escPressed();
         selectionClear(d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection);
-        d->mousePressPos = QPoint();
+        d->mousePressPos = QPointF();
         if (d->aPrevAction) {
             d->aPrevAction->trigger();
             d->aPrevAction = nullptr;
@@ -2212,7 +2212,7 @@ void PageView::tabletEvent(QTabletEvent *e)
         // accept the event, otherwise it comes back as a mouse event
         e->accept();
 
-        const QPoint eventPos = contentAreaPoint(e->pos());
+        const QPointF eventPos = contentAreaPoint(e->position());
         PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         const QPoint localOriginInGlobal = mapToGlobal(QPoint(0, 0));
 
@@ -2245,7 +2245,7 @@ void PageView::continuousZoomEnd()
 
 void PageView::mouseMoveEvent(QMouseEvent *e)
 {
-    d->previousMouseMovePos = e->globalPos();
+    d->previousMouseMovePos = e->globalPosition();
 
     // don't perform any mouse action when no document is shown
     if (d->items.isEmpty()) {
@@ -2254,8 +2254,8 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
     // if holding mouse mid button, perform zoom
     if (e->buttons() & Qt::MiddleButton) {
-        int deltaY = d->mouseMidLastY - e->globalPos().y();
-        d->mouseMidLastY = e->globalPos().y();
+        int deltaY = d->mouseMidLastY - e->globalPosition().y();
+        d->mouseMidLastY = e->globalPosition().y();
 
         const float upperZoomLimit = d->document->supportsTiles() ? 99.99 : 3.99;
 
@@ -2265,7 +2265,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
             wrapEdges.setFlag(Qt::TopEdge, d->zoomFactor < upperZoomLimit);
             wrapEdges.setFlag(Qt::BottomEdge, d->zoomFactor > 0.101);
 
-            deltaY += CursorWrapHelper::wrapCursor(e->globalPos(), wrapEdges).y();
+            deltaY += CursorWrapHelper::wrapCursor(e->globalPosition().toPoint(), wrapEdges).y();
         }
 
         // update zoom level, perform zoom and redraw
@@ -2324,7 +2324,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
             }
         } else if (rightButton && !d->mousePressPos.isNull() && d->aMouseSelect) {
             // if mouse moves 5 px away from the press point, switch to 'selection'
-            int deltaX = d->mousePressPos.x() - e->globalPos().x(), deltaY = d->mousePressPos.y() - e->globalPos().y();
+            qreal deltaX = d->mousePressPos.x() - e->globalPosition().x(), deltaY = d->mousePressPos.y() - e->globalPosition().y();
             if (deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5) {
                 d->aPrevAction = d->aMouseNormal;
                 d->aMouseSelect->trigger();
@@ -2391,7 +2391,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
     // if pressing mid mouse button while not doing other things, begin 'continuous zoom' mode
     if (e->button() == Qt::MiddleButton) {
-        d->mouseMidLastY = e->globalPos().y();
+        d->mouseMidLastY = e->globalPosition().y();
         setCursor(Qt::SizeVerCursor);
         CursorWrapHelper::startDrag();
         return;
@@ -2418,7 +2418,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
     }
 
     // update press / 'start drag' mouse position
-    d->mousePressPos = e->globalPos();
+    d->mousePressPos = e->globalPosition();
     CursorWrapHelper::startDrag();
 
     // handle mode dependent mouse press actions
@@ -2555,7 +2555,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
                 copyToClipboard->setText(i18n("Copy forbidden by DRM"));
             }
 
-            QAction *choice = menu.exec(e->globalPos());
+            QAction *choice = menu.exec(e->globalPosition().toPoint());
             if (choice == copyToClipboard) {
                 copyTextSelection();
             }
@@ -2589,7 +2589,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
     if (d->items.isEmpty()) {
         // ..except for right Clicks (emitted even it viewport is empty)
         if (e->button() == Qt::RightButton) {
-            Q_EMIT rightClick(nullptr, e->globalPos());
+            Q_EMIT rightClick(nullptr, e->globalPosition().toPoint());
         }
         return;
     }
@@ -2621,11 +2621,11 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         }
 
         PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
-        const QPoint pressPos = contentAreaPoint(mapFromGlobal(d->mousePressPos));
+        const QPointF pressPos = contentAreaPoint(mapFromGlobal(d->mousePressPos));
         const PageViewItem *pageItemPressPos = pickItemOnPoint(pressPos.x(), pressPos.y());
 
         // if the mouse has not moved since the press, that's a -click-
-        if (leftButton && pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance())) {
+        if (leftButton && pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPosition()).manhattanLength() < QApplication::startDragDistance())) {
             if (!mouseReleaseOverLink(d->mouseOverLinkObject) && (e->modifiers() == Qt::ShiftModifier)) {
                 const double nX = pageItem->absToPageX(eventPos.x());
                 const double nY = pageItem->absToPageY(eventPos.y());
@@ -2656,7 +2656,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 }
             }
         } else if (rightButton && !d->mouseAnnotation->isModified()) {
-            if (pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance())) {
+            if (pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPosition()).manhattanLength() < QApplication::startDragDistance())) {
                 QMenu *menu = createProcessLinkMenu(pageItem, eventPos);
 
                 const QRect &itemRect = pageItem->uncroppedGeometry();
@@ -2684,7 +2684,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 }
 
                 if (menu) {
-                    menu->exec(e->globalPos());
+                    menu->exec(e->globalPosition().toPoint());
                     menu->deleteLater();
                 } else {
                     // a link can move us to another page or even to another document, there's no point in trying to
@@ -2695,13 +2695,13 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     } else {
                         // right click (if not within 5 px of the press point, the mode
                         // had been already changed to 'Selection' instead of 'Normal')
-                        Q_EMIT rightClick(pageItem->page(), e->globalPos());
+                        Q_EMIT rightClick(pageItem->page(), e->globalPosition().toPoint());
                     }
                 }
             } else {
                 // right click (if not within 5 px of the press point, the mode
                 // had been already changed to 'Selection' instead of 'Normal')
-                Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+                Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             }
         }
     } break;
@@ -2809,7 +2809,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
             PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
-            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
 
@@ -2887,7 +2887,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         menu.addAction(new OKMenuTitle(&menu, i18n("Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height())));
         imageToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n("Copy to Clipboard"));
         imageToFile = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save to File..."));
-        QAction *choice = menu.exec(e->globalPos());
+        QAction *choice = menu.exec(e->globalPosition().toPoint());
         // check if the user really selected an action
         if (choice) {
             // IMAGE operation chosen
@@ -2964,7 +2964,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
             PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
-            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPos());
+            Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
 
@@ -3093,7 +3093,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 if (menu) {
                     menu->setObjectName(QStringLiteral("PopupMenu"));
 
-                    QAction *choice = menu->exec(e->globalPos());
+                    QAction *choice = menu->exec(e->globalPosition().toPoint());
                     // check if the user really selected an action
                     if (choice) {
                         if (choice == textToClipboard) {
@@ -3118,7 +3118,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
     }
 
     // reset mouse press / 'drag start' position
-    d->mousePressPos = QPoint();
+    d->mousePressPos = QPointF();
 }
 
 void PageView::guessTableDividers()
@@ -3773,7 +3773,7 @@ void PageView::updateSelection(const QPoint pos)
     } else if (d->mouseTextSelecting) {
         scrollPosIntoView(pos);
         int first = -1;
-        const QList<Okular::RegularAreaRect *> selections = textSelections(pos, d->mouseSelectPos, first);
+        const QList<Okular::RegularAreaRect *> selections = textSelections(pos, d->mouseSelectPos.toPoint(), first);
         QSet<int> pagesWithSelectionSet;
         for (int i = 0; i < selections.count(); ++i) {
             pagesWithSelectionSet.insert(i + first);

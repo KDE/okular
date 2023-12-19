@@ -556,7 +556,7 @@ bool PresentationWidget::event(QEvent *e)
         QHelpEvent *he = (QHelpEvent *)e;
 
         QRect r;
-        const Okular::Action *link = getLink(he->x(), he->y(), &r);
+        const Okular::Action *link = getLink(he->pos(), &r);
 
         if (link) {
             QString tip = link->actionTip();
@@ -673,11 +673,11 @@ void PresentationWidget::mousePressEvent(QMouseEvent *e)
     // pressing left button
     if (e->button() == Qt::LeftButton) {
         // if pressing on a link, skip other checks
-        if ((m_pressedLink = getLink(e->x(), e->y()))) {
+        if ((m_pressedLink = getLink(e->position()))) {
             return;
         }
 
-        const Okular::Annotation *annotation = getAnnotation(e->x(), e->y());
+        const Okular::Annotation *annotation = getAnnotation(e->position());
         if (annotation) {
             if (annotation->subType() == Okular::Annotation::AMovie) {
                 const Okular::MovieAnnotation *movieAnnotation = static_cast<const Okular::MovieAnnotation *>(annotation);
@@ -713,7 +713,7 @@ void PresentationWidget::mousePressEvent(QMouseEvent *e)
         else if (Okular::Settings::slidesTapNavigation() != Okular::Settings::EnumSlidesTapNavigation::Disabled) {
             switch (Okular::Settings::slidesTapNavigation()) {
             case Okular::Settings::EnumSlidesTapNavigation::ForwardBackward: {
-                if (e->x() < (geometry().width() / 2)) {
+                if (e->position().x() < (qreal(geometry().width()) / 2)) {
                     m_goToPreviousPageOnRelease = true;
                 } else {
                     m_goToNextPageOnRelease = true;
@@ -749,7 +749,7 @@ void PresentationWidget::mouseReleaseEvent(QMouseEvent *e)
 
     // if releasing on the same link we pressed over, execute it
     if (m_pressedLink && e->button() == Qt::LeftButton) {
-        const Okular::Action *link = getLink(e->x(), e->y());
+        const Okular::Action *link = getLink(e->position());
         if (link == m_pressedLink) {
             m_document->processAction(link);
         }
@@ -776,12 +776,12 @@ void PresentationWidget::mouseMoveEvent(QMouseEvent *e)
 
     // update cursor and tooltip if hovering a link
     if (!m_drawingEngine && Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden) {
-        testCursorOnLink(e->x(), e->y());
+        testCursorOnLink(e->position());
     }
 
     if (!m_topBar->isHidden()) {
         // hide a shown bar when exiting the area
-        if (e->y() > (m_topBar->height() + 1)) {
+        if (e->position().y() > (m_topBar->height() + 1)) {
             showTopBar(false);
             setFocus(Qt::OtherFocusReason);
         }
@@ -794,7 +794,7 @@ void PresentationWidget::mouseMoveEvent(QMouseEvent *e)
             }
         } else {
             // show the bar if reaching top 2 pixels
-            if (e->y() <= 1) {
+            if (e->position().y() <= 1) {
                 showTopBar(true);
             } else if ((QApplication::mouseButtons() & Qt::LeftButton) && m_overlayGeometry.contains(e->pos())) {
                 // handle "dragging the wheel" if clicking on its geometry
@@ -953,7 +953,7 @@ void PresentationWidget::enterEvent(QEnterEvent *e)
 {
     if (!m_topBar->isHidden()) {
         // This can happen when we exited the widget via a "tooltip" and the tooltip disappears
-        if (e->y() > (m_topBar->height() + 1)) {
+        if (e->position().y() > (m_topBar->height() + 1)) {
             showTopBar(false);
         }
     }
@@ -990,7 +990,7 @@ void PresentationWidget::leaveEvent(QEvent *e)
 }
 // </widget events>
 
-const void *PresentationWidget::getObjectRect(Okular::ObjectRect::ObjectType type, int x, int y, QRect *geometry) const
+const void *PresentationWidget::getObjectRect(Okular::ObjectRect::ObjectType type, QPointF point, QRect *geometry) const
 {
     // no links on invalid pages
     if (geometry && !geometry->isNull()) {
@@ -1006,8 +1006,8 @@ const void *PresentationWidget::getObjectRect(Okular::ObjectRect::ObjectType typ
     const QRect &frameGeometry = frame->geometry;
 
     // compute normalized x and y
-    double nx = (double)(x - frameGeometry.left()) / (double)frameGeometry.width();
-    double ny = (double)(y - frameGeometry.top()) / (double)frameGeometry.height();
+    double nx = (double)(point.x() - frameGeometry.left()) / (double)frameGeometry.width();
+    double ny = (double)(point.y() - frameGeometry.top()) / (double)frameGeometry.height();
 
     // no links outside the pages
     if (nx < 0 || nx > 1 || ny < 0 || ny > 1) {
@@ -1031,20 +1031,20 @@ const void *PresentationWidget::getObjectRect(Okular::ObjectRect::ObjectType typ
     return object->object();
 }
 
-const Okular::Action *PresentationWidget::getLink(int x, int y, QRect *geometry) const
+const Okular::Action *PresentationWidget::getLink(QPointF point, QRect *geometry) const
 {
-    return reinterpret_cast<const Okular::Action *>(getObjectRect(Okular::ObjectRect::Action, x, y, geometry));
+    return reinterpret_cast<const Okular::Action *>(getObjectRect(Okular::ObjectRect::Action, point, geometry));
 }
 
-const Okular::Annotation *PresentationWidget::getAnnotation(int x, int y, QRect *geometry) const
+const Okular::Annotation *PresentationWidget::getAnnotation(QPointF point, QRect *geometry) const
 {
-    return reinterpret_cast<const Okular::Annotation *>(getObjectRect(Okular::ObjectRect::OAnnotation, x, y, geometry));
+    return reinterpret_cast<const Okular::Annotation *>(getObjectRect(Okular::ObjectRect::OAnnotation, point, geometry));
 }
 
-void PresentationWidget::testCursorOnLink(int x, int y)
+void PresentationWidget::testCursorOnLink(QPointF point)
 {
-    const Okular::Action *link = getLink(x, y, nullptr);
-    const Okular::Annotation *annotation = getAnnotation(x, y, nullptr);
+    const Okular::Action *link = getLink(point, nullptr);
+    const Okular::Annotation *annotation = getAnnotation(point, nullptr);
 
     const bool needsHandCursor = ((link != nullptr) || ((annotation != nullptr) && (annotation->subType() == Okular::Annotation::AMovie)) || ((annotation != nullptr) && (annotation->subType() == Okular::Annotation::ARichMedia)) ||
                                   ((annotation != nullptr) && (annotation->subType() == Okular::Annotation::AScreen) && (GuiUtils::renditionMovieFromScreenAnnotation(static_cast<const Okular::ScreenAnnotation *>(annotation)) != nullptr)));
@@ -1143,7 +1143,7 @@ void PresentationWidget::generatePage(bool disableTransition)
     // update cursor + tooltip
     if (!m_drawingEngine && Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden) {
         QPoint p = mapFromGlobal(QCursor::pos());
-        testCursorOnLink(p.x(), p.y());
+        testCursorOnLink(p);
     }
 }
 
@@ -1357,7 +1357,7 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
         hasclicked = true;
     }
 
-    QPointF mousePos = e->localPos();
+    QPointF mousePos = e->position();
     double nX = (mousePos.x() - (double)geom.left()) / (double)geom.width();
     double nY = (mousePos.y() - (double)geom.top()) / (double)geom.height();
     QRect ret;

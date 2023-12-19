@@ -974,7 +974,7 @@ bool Converter::convertCode(const QDomElement &element)
     QTextCharFormat origFormat = mCursor->charFormat();
 
     QTextCharFormat codeFormat(origFormat);
-    codeFormat.setFontFamily(QStringLiteral("monospace"));
+    codeFormat.setFontFamilies({QStringLiteral("monospace")});
     mCursor->setCharFormat(codeFormat);
 
     if (!convertParagraph(element)) {

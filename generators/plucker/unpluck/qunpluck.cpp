@@ -354,7 +354,7 @@ void QUnpluck::DoStyle(Context *context, int style, bool start)
             format.setFontWeight(QFont::Bold);
             break;
         case 8:
-            format.setFontFamily(QStringLiteral("Courier New,courier"));
+            format.setFontFamilies({QStringLiteral("Courier New,courier")});
             break;
         }
         format.setFontPointSize(qMax(pointSize, 1));
@@ -824,7 +824,7 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
                         } else if (*ptr == 7) {
                             format.setFontWeight(QFont::Bold);
                         } else if (*ptr == 8) {
-                            format.setFontFamily(QStringLiteral("Courier New,courier"));
+                            format.setFontFamilies({QStringLiteral("Courier New,courier")});
                         } else if (*ptr == 11) {
                             format.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
                         }
@@ -1011,7 +1011,7 @@ bool QUnpluck::TranscribeRecord(int index)
 
         QTextCharFormat charFormat;
         charFormat.setFontPointSize(10);
-        charFormat.setFontFamily(QStringLiteral("Helvetica"));
+        charFormat.setFontFamilies({QStringLiteral("Helvetica")});
         context->cursor->setCharFormat(charFormat);
 
         status = TranscribeTextRecord(mDocument, index, context, data, type);

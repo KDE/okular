@@ -32,7 +32,7 @@ LatexRenderer::LatexRenderer()
 
 LatexRenderer::~LatexRenderer()
 {
-    for (const QString &file : qAsConst(m_fileList)) {
+    for (const QString &file : std::as_const(m_fileList)) {
         QFile::remove(file);
     }
 }

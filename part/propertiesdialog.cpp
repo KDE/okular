@@ -75,7 +75,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         }
     }
 
-    for (const QString &key : qAsConst(orderedProperties)) {
+    for (const QString &key : std::as_const(orderedProperties)) {
         const QString titleString = info.getKeyTitle(key);
         const QString valueString = info.get(key);
         if (titleString.isNull() || valueString.isNull()) {

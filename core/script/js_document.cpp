@@ -104,7 +104,7 @@ int JSDocument::numFields() const
 {
     unsigned int numFields = 0;
 
-    for (const Page *pIt : qAsConst(m_doc->m_pagesVector)) {
+    for (const Page *pIt : std::as_const(m_doc->m_pagesVector)) {
         numFields += pIt->formFields().size();
     }
 
@@ -197,7 +197,7 @@ void JSDocument::syncAnnotScan() const
 // Document.getNthFieldName
 QJSValue JSDocument::getNthFieldName(int nIndex) const
 {
-    for (const Page *pIt : qAsConst(m_doc->m_pagesVector)) {
+    for (const Page *pIt : std::as_const(m_doc->m_pagesVector)) {
         const QList<Okular::FormField *> pageFields = pIt->formFields();
 
         if (nIndex < pageFields.size()) {

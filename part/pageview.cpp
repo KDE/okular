@@ -879,7 +879,7 @@ void PageView::openAnnotationWindow(Okular::Annotation *annotation, int pageNumb
 
     // find the annot window
     AnnotWindow *existWindow = nullptr;
-    for (AnnotWindow *aw : qAsConst(d->m_annowindows)) {
+    for (AnnotWindow *aw : std::as_const(d->m_annowindows)) {
         if (aw->annotation() == annotation) {
             existWindow = aw;
             break;
@@ -1057,7 +1057,7 @@ QMimeData *PageView::getTableContents() const
                 selText += QLatin1Char('\t');
             }
             QString txt;
-            for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+            for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
                 // first, crop the cell to this part
                 if (!tsp.rectInSelection.intersects(cell)) {
                     continue;
@@ -1139,7 +1139,7 @@ void PageView::copyTextSelection() const
 
 void PageView::selectAll()
 {
-    for (const PageViewItem *item : qAsConst(d->items)) {
+    for (const PageViewItem *item : std::as_const(d->items)) {
         Okular::RegularAreaRect *area = textSelectionForItem(item);
         d->pagesWithTextSelection.insert(item->pageNumber());
         d->document->setPageTextSelection(item->pageNumber(), area, palette().color(QPalette::Active, QPalette::Highlight));
@@ -1204,7 +1204,7 @@ void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlag
                 // around so we can look for the new ones using unique ids, etc
                 d->mouseAnnotation->updateAnnotationPointers();
 
-                for (AnnotWindow *aw : qAsConst(d->m_annowindows)) {
+                for (AnnotWindow *aw : std::as_const(d->m_annowindows)) {
                     Okular::Annotation *newA = d->document->page(aw->pageNumber())->annotation(aw->annotation()->uniqueName());
                     aw->updateAnnotation(newA);
                 }
@@ -1450,7 +1450,7 @@ void PageView::slotRealNotifyViewportChanged(bool smoothMove)
     // find PageViewItem matching the viewport description
     const Okular::DocumentViewport &vp = d->document->viewport();
     const PageViewItem *item = nullptr;
-    for (const PageViewItem *tmpItem : qAsConst(d->items)) {
+    for (const PageViewItem *tmpItem : std::as_const(d->items)) {
         if (tmpItem->pageNumber() == vp.pageNumber) {
             item = tmpItem;
             break;
@@ -1533,7 +1533,7 @@ void PageView::notifyPageChanged(int pageNumber, int changedFlags)
     }
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    for (const PageViewItem *visibleItem : qAsConst(d->visibleItems)) {
+    for (const PageViewItem *visibleItem : std::as_const(d->visibleItems)) {
         if (visibleItem->pageNumber() == pageNumber && visibleItem->isVisible()) {
             // update item's rectangle plus the little outline
             QRect expandedRect = visibleItem->croppedGeometry();
@@ -1575,14 +1575,14 @@ bool PageView::canUnloadPixmap(int pageNumber) const
 {
     if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Low || Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Normal) {
         // if the item is visible, forbid unloading
-        for (const PageViewItem *visibleItem : qAsConst(d->visibleItems)) {
+        for (const PageViewItem *visibleItem : std::as_const(d->visibleItems)) {
             if (visibleItem->pageNumber() == pageNumber) {
                 return false;
             }
         }
     } else {
         // forbid unloading of the visible items, and of the previous and next
-        for (const PageViewItem *visibleItem : qAsConst(d->visibleItems)) {
+        for (const PageViewItem *visibleItem : std::as_const(d->visibleItems)) {
             if (abs(visibleItem->pageNumber() - pageNumber) <= 1) {
                 return false;
             }
@@ -1919,7 +1919,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                 pixmapPainter.drawRect(selectionRect.adjusted(0, 0, -1, -1));
             }
             // 2b) Layer 1b: paint (blend) transparent selection (table)
-            for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+            for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
                 QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                 selectionPartRect.translate(tsp.item->uncroppedGeometry().topLeft());
                 QRect selectionPartRectInternal = selectionPartRect;
@@ -1978,7 +1978,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                 screenPainter.drawRect(selectionRect);
             }
             // 2b) Layer 1b: paint opaque selection (table)
-            for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+            for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
                 QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                 selectionPartRect.translate(tsp.item->uncroppedGeometry().topLeft());
                 QRect selectionPartRectInternal = selectionPartRect;
@@ -2014,19 +2014,19 @@ void PageView::drawTableDividers(QPainter *screenPainter)
             p.setStyle(Qt::DashLine);
             screenPainter->setPen(p);
         }
-        for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+        for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
             QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
             selectionPartRect.translate(tsp.item->uncroppedGeometry().topLeft());
             QRect selectionPartRectInternal = selectionPartRect;
             selectionPartRectInternal.adjust(1, 1, -1, -1);
-            for (double col : qAsConst(d->tableSelectionCols)) {
+            for (double col : std::as_const(d->tableSelectionCols)) {
                 if (col >= tsp.rectInSelection.left && col <= tsp.rectInSelection.right) {
                     col = (col - tsp.rectInSelection.left) / (tsp.rectInSelection.right - tsp.rectInSelection.left);
                     const int x = selectionPartRect.left() + col * selectionPartRect.width() + 0.5;
                     screenPainter->drawLine(x, selectionPartRectInternal.top(), x, selectionPartRectInternal.top() + selectionPartRectInternal.height());
                 }
             }
-            for (double row : qAsConst(d->tableSelectionRows)) {
+            for (double row : std::as_const(d->tableSelectionRows)) {
                 if (row >= tsp.rectInSelection.top && row <= tsp.rectInSelection.bottom) {
                     row = (row - tsp.rectInSelection.top) / (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
                     const int y = selectionPartRect.top() + row * selectionPartRect.height() + 0.5;
@@ -2474,7 +2474,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
                 selectionStart(eventPos, palette().color(QPalette::Active, QPalette::Highlight).lighter(120), false);
             } else {
                 QRect updatedRect;
-                for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+                for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
                     QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                     selectionPartRect.translate(tsp.item->uncroppedGeometry().topLeft());
 
@@ -2833,7 +2833,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         if (d->document->supportsSearching()) {
             // grab text in selection by extracting it from all intersected pages
             const Okular::Page *okularPage = nullptr;
-            for (const PageViewItem *item : qAsConst(d->items)) {
+            for (const PageViewItem *item : std::as_const(d->items)) {
                 if (!item->isVisible()) {
                     continue;
                 }
@@ -2982,7 +2982,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             // break up the selection into page-relative pieces
             d->tableSelectionParts.clear();
             const Okular::Page *okularPage = nullptr;
-            for (PageViewItem *item : qAsConst(d->items)) {
+            for (PageViewItem *item : std::as_const(d->items)) {
                 if (!item->isVisible()) {
                     continue;
                 }
@@ -3125,7 +3125,7 @@ void PageView::guessTableDividers()
 {
     QList<QPair<double, int>> colTicks, rowTicks, colSelectionTicks, rowSelectionTicks;
 
-    for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+    for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
         // add ticks for the edges of this area...
         colSelectionTicks.append(qMakePair(tsp.rectInSelection.left, +1));
         colSelectionTicks.append(qMakePair(tsp.rectInSelection.right, -1));
@@ -3389,7 +3389,7 @@ QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, co
     QList<Okular::RegularAreaRect *> ret;
     QSet<int> affectedItemsSet;
     QRect selectionRect = QRect(start, end).normalized();
-    for (const PageViewItem *item : qAsConst(d->items)) {
+    for (const PageViewItem *item : std::as_const(d->items)) {
         if (item->isVisible() && selectionRect.intersects(item->croppedGeometry())) {
             affectedItemsSet.insert(item->pageNumber());
         }
@@ -3404,7 +3404,7 @@ QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, co
 
         int tmpmin = d->document->pages();
         int tmpmax = 0;
-        for (const int p : qAsConst(affectedItemsSet)) {
+        for (const int p : std::as_const(affectedItemsSet)) {
             if (p < tmpmin) {
                 tmpmin = p;
             }
@@ -3445,7 +3445,7 @@ QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, co
             affectedItemsIds.removeFirst();
             affectedItemsIds.removeLast();
             // item between the two above
-            for (const int page : qAsConst(affectedItemsIds)) {
+            for (const int page : std::as_const(affectedItemsIds)) {
                 ret.append(textSelectionForItem(d->items[page]));
             }
             ret.append(lastArea);
@@ -3469,7 +3469,7 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
 
     // This loop draws the actual pages
     // iterate over all items painting the ones intersecting contentsRect
-    for (const PageViewItem *item : qAsConst(d->items)) {
+    for (const PageViewItem *item : std::as_const(d->items)) {
         // check if a piece of the page intersects the contents rect
         if (!item->isVisible() || !item->croppedGeometry().intersects(contentsRect)) {
             continue;
@@ -3516,7 +3516,7 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
     static const int shadowWidth = 2 * dpr;
 
     // iterate over all items painting a black outline and a simple bottom/right gradient
-    for (const PageViewItem *item : qAsConst(d->items)) {
+    for (const PageViewItem *item : std::as_const(d->items)) {
         // check if a piece of the page intersects the contents rect
         if (!item->isVisible() || !item->croppedGeometry().intersects(checkRect)) {
             continue;
@@ -3664,7 +3664,7 @@ void PageView::updateItemSize(PageViewItem *item, int colWidth, int rowHeight)
 PageViewItem *PageView::pickItemOnPoint(int x, int y)
 {
     PageViewItem *item = nullptr;
-    for (PageViewItem *i : qAsConst(d->visibleItems)) {
+    for (PageViewItem *i : std::as_const(d->visibleItems)) {
         const QRect &r = i->croppedGeometry();
         if (x < r.right() && x > r.left() && y < r.bottom()) {
             if (y > r.top()) {
@@ -3680,7 +3680,7 @@ void PageView::textSelectionClear()
 {
     // something to clear
     if (!d->pagesWithTextSelection.isEmpty()) {
-        for (const int page : qAsConst(d->pagesWithTextSelection)) {
+        for (const int page : std::as_const(d->pagesWithTextSelection)) {
             d->document->setPageTextSelection(page, nullptr, QColor());
         }
         d->pagesWithTextSelection.clear();
@@ -3785,7 +3785,7 @@ void PageView::updateSelection(const QPoint pos)
             d->document->setPageTextSelection(p, nullptr, QColor());
         }
         // set the new selection for the selected pages
-        for (int p : qAsConst(pagesWithSelectionSet)) {
+        for (int p : std::as_const(pagesWithSelectionSet)) {
             d->document->setPageTextSelection(p, selections[p - first], palette().color(QPalette::Active, QPalette::Highlight));
         }
         d->pagesWithTextSelection = pagesWithSelectionSet;
@@ -3848,7 +3848,7 @@ void PageView::selectionClear(const ClearMode mode)
     d->tableSelectionCols.clear();
     d->tableSelectionRows.clear();
     d->tableDividersGuessed = false;
-    for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+    for (const TableSelectionPart &tsp : std::as_const(d->tableSelectionParts)) {
         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
         selectionPartRect.translate(tsp.item->uncroppedGeometry().topLeft());
         // should check whether this is on-screen here?
@@ -4207,7 +4207,7 @@ void PageView::updateCursor(const QPoint p)
 void PageView::reloadForms()
 {
     if (d->m_formsVisible) {
-        for (PageViewItem *item : qAsConst(d->visibleItems)) {
+        for (PageViewItem *item : std::as_const(d->visibleItems)) {
             item->reloadFormWidgetsState();
         }
     }
@@ -4315,7 +4315,7 @@ void PageView::scrollTo(int x, int y, bool smoothMove)
 void PageView::toggleFormWidgets(bool on)
 {
     bool somehadfocus = false;
-    for (PageViewItem *item : qAsConst(d->items)) {
+    for (PageViewItem *item : std::as_const(d->items)) {
         const bool hadfocus = item->setFormWidgetsVisible(on);
         somehadfocus = somehadfocus || hadfocus;
     }
@@ -4605,7 +4605,7 @@ void PageView::slotRelayoutPages()
 
     // 1) find the maximum columns width and rows height for a grid in
     // which each page must well-fit inside a cell
-    for (PageViewItem *item : qAsConst(d->items)) {
+    for (PageViewItem *item : std::as_const(d->items)) {
         // update internal page size (leaving a little margin in case of Fit* modes)
         updateItemSize(item, colWidth[cIdx] - kcolWidthMargin, viewportHeight - krowHeightMargin);
         // find row's maximum height and column's max width
@@ -4648,7 +4648,7 @@ void PageView::slotRelayoutPages()
             insertX += colWidth[i];
         }
     }
-    for (PageViewItem *item : qAsConst(d->items)) {
+    for (PageViewItem *item : std::as_const(d->items)) {
         int cWidth = colWidth[cIdx], rHeight = rowHeight[rIdx];
         if (continuousView || rIdx == pageRowIdx) {
             const bool reallyDoCenterFirst = item->pageNumber() == 0 && centerFirstPage;
@@ -4798,7 +4798,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
     d->visibleItems.clear();
     QList<Okular::PixmapRequest *> requestedPixmaps;
     QVector<Okular::VisiblePageRect *> visibleRects;
-    for (PageViewItem *i : qAsConst(d->items)) {
+    for (PageViewItem *i : std::as_const(d->items)) {
         const QSet<FormWidgetIface *> formWidgetsList = i->formWidgets();
         for (FormWidgetIface *fwi : formWidgetsList) {
             Okular::NormalizedRect r = fwi->rect();
@@ -5380,7 +5380,7 @@ void PageView::slotFormChanged(int pageNumber)
 
 void PageView::slotRefreshPage()
 {
-    for (int req : qAsConst(d->refreshPages)) {
+    for (int req : std::as_const(d->refreshPages)) {
         QTimer::singleShot(0, this, [this, req] { d->document->refreshPixmaps(req); });
     }
     d->refreshPages.clear();
@@ -5390,7 +5390,7 @@ void PageView::slotRefreshPage()
 void PageView::slotSpeakDocument()
 {
     QString text;
-    for (const PageViewItem *item : qAsConst(d->items)) {
+    for (const PageViewItem *item : std::as_const(d->items)) {
         Okular::RegularAreaRect *area = textSelectionForItem(item);
         text.append(item->page()->text(area));
         text.append(QLatin1Char('\n'));
@@ -5542,7 +5542,7 @@ void PageView::slotFitWindowToPage()
 {
     const PageViewItem *currentPageItem = nullptr;
     QSize viewportSize = viewport()->size();
-    for (const PageViewItem *pageItem : qAsConst(d->items)) {
+    for (const PageViewItem *pageItem : std::as_const(d->items)) {
         if (pageItem->isVisible()) {
             currentPageItem = pageItem;
             break;

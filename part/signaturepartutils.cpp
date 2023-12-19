@@ -237,7 +237,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     int selectIndex = 0;
     auto config = KSharedConfig::openConfig();
     const QString lastNick = config->group(ConfigGroup).readEntry<QString>(ConfigLastKeyNick, QString());
-    for (const auto &cert : qAsConst(certs)) {
+    for (const auto &cert : std::as_const(certs)) {
         auto item = std::make_unique<QStandardItem>();
         QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
         item->setData(commonName, Qt::UserRole);

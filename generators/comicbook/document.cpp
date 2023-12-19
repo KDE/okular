@@ -186,7 +186,7 @@ void Document::pages(QVector<Okular::Page *> *pagesVector)
     pagesVector->resize(mEntries.size());
     QImageReader reader;
     reader.setAutoTransform(true);
-    for (const QString &file : qAsConst(mEntries)) {
+    for (const QString &file : std::as_const(mEntries)) {
         if (mArchive) {
             const KArchiveFile *entry = static_cast<const KArchiveFile *>(mArchiveDir->entry(file));
             if (entry) {

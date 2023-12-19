@@ -600,7 +600,7 @@ EditFormButtonsCommand::EditFormButtonsCommand(Okular::DocumentPrivate *docPriv,
     , m_prevButtonStates(QList<bool>())
 {
     setText(i18nc("Edit the state of a group of form buttons", "edit form button states"));
-    for (const FormFieldButton *formButton : qAsConst(m_formButtons)) {
+    for (const FormFieldButton *formButton : std::as_const(m_formButtons)) {
         m_prevButtonStates.append(formButton->state());
     }
 }
@@ -654,7 +654,7 @@ bool EditFormButtonsCommand::refreshInternalPageReferences(const QVector<Okular:
 
 void EditFormButtonsCommand::clearFormButtonStates()
 {
-    for (FormFieldButton *formButton : qAsConst(m_formButtons)) {
+    for (FormFieldButton *formButton : std::as_const(m_formButtons)) {
         formButton->setState(false);
     }
 }

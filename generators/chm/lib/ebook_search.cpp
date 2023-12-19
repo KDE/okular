@@ -101,7 +101,7 @@ bool EBookSearch::generateIndex(EBook *ebookFile, QDataStream &stream)
     connect(m_Index, &QtAs::Index::indexingProgress, this, &EBookSearch::updateProgress);
 
     // Process the list of files in CHM archive and keep only HTML document files from there
-    for (const QUrl &allDocumentsI : qAsConst(alldocuments)) {
+    for (const QUrl &allDocumentsI : std::as_const(alldocuments)) {
         const QString docpath = allDocumentsI.path();
 
         if (docpath.endsWith(QLatin1String(".html"), Qt::CaseInsensitive) || docpath.endsWith(QLatin1String(".htm"), Qt::CaseInsensitive) || docpath.endsWith(QLatin1String(".xhtml"), Qt::CaseInsensitive)) {

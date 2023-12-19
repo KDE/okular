@@ -305,7 +305,7 @@ Shell::Shell(const QString &serializedOptions)
 
 void Shell::reloadAllXML()
 {
-    for (const TabState &tab : qAsConst(m_tabs)) {
+    for (const TabState &tab : std::as_const(m_tabs)) {
         tab.part->reloadXML();
     }
 }
@@ -362,7 +362,7 @@ Shell::~Shell()
 {
     if (!m_tabs.empty()) {
         writeSettings();
-        for (const TabState &tab : qAsConst(m_tabs)) {
+        for (const TabState &tab : std::as_const(m_tabs)) {
             tab.part->closeUrl(false);
         }
         m_tabs.clear();
@@ -585,7 +585,7 @@ void Shell::saveProperties(KConfigGroup &group)
 
     // Gather lists of settings to preserve
     QStringList urls;
-    for (const TabState &tab : qAsConst(m_tabs)) {
+    for (const TabState &tab : std::as_const(m_tabs)) {
         urls.append(tab.part->url().url());
     }
     group.writePathEntry(SESSION_URL_KEY, urls);
@@ -646,7 +646,7 @@ void Shell::fileOpen()
     const bool useMimeTypeFilters = qgetenv("XDG_CURRENT_DESKTOP").toLower() == "kde";
     if (useMimeTypeFilters) {
         QStringList mimetypes;
-        for (const QString &mimeName : qAsConst(m_fileformats)) {
+        for (const QString &mimeName : std::as_const(m_fileformats)) {
             QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
             mimetypes << mimeType.name();
         }
@@ -655,7 +655,7 @@ void Shell::fileOpen()
     } else {
         QSet<QString> globPatterns;
         QMap<QString, QStringList> namedGlobs;
-        for (const QString &mimeName : qAsConst(m_fileformats)) {
+        for (const QString &mimeName : std::as_const(m_fileformats)) {
             QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
             const QStringList globs(mimeType.globPatterns());
             if (globs.isEmpty()) {

@@ -220,20 +220,20 @@ bool EBook_EPUB::parseBookinfo()
     m_title = content_parser.metadata[QStringLiteral("title")];
 
     // Move the manifest entries into the list
-    for (const QString &f : qAsConst(content_parser.manifest)) {
+    for (const QString &f : std::as_const(content_parser.manifest)) {
         m_ebookManifest.push_back(pathToUrl(f));
     }
 
     // Copy the manifest information and fill up the other maps if we have it
     if (!toc_parser.entries.isEmpty()) {
-        for (const EBookTocEntry &e : qAsConst(toc_parser.entries)) {
+        for (const EBookTocEntry &e : std::as_const(toc_parser.entries)) {
             // Add into url-title map
             m_urlTitleMap[e.url] = e.name;
             m_tocEntries.push_back(e);
         }
     } else {
         // Copy them from spine
-        for (QString url : qAsConst(content_parser.spine)) {
+        for (QString url : std::as_const(content_parser.spine)) {
             EBookTocEntry e;
 
             if (content_parser.manifest.contains(url)) {

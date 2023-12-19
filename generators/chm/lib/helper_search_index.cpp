@@ -355,7 +355,7 @@ QList<QUrl> Index::query(const QStringList &terms, const QStringList &termSeq, c
     std::sort(termList.begin(), termList.end());
 
     QVector<Document> minDocs = termList.takeFirst().documents;
-    for (const Term &t : qAsConst(termList)) {
+    for (const Term &t : std::as_const(termList)) {
         const QVector<Document> docs = t.documents;
         for (QVector<Document>::Iterator minDoc_it = minDocs.begin(); minDoc_it != minDocs.end();) {
             bool found = false;
@@ -377,14 +377,14 @@ QList<QUrl> Index::query(const QStringList &terms, const QStringList &termSeq, c
     QList<QUrl> results;
     std::sort(minDocs.begin(), minDocs.end());
     if (termSeq.isEmpty()) {
-        for (const Document &doc : qAsConst(minDocs)) {
+        for (const Document &doc : std::as_const(minDocs)) {
             results << docList.at((int)doc.docNumber);
         }
         return results;
     }
 
     QUrl fileName;
-    for (const Document &doc : qAsConst(minDocs)) {
+    for (const Document &doc : std::as_const(minDocs)) {
         fileName = docList[(int)doc.docNumber];
         if (searchForPhrases(termSeq, seqWords, fileName, chmFile)) {
             results << fileName;

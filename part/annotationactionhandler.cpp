@@ -357,7 +357,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         q->deselectAllAnnotationActions();
     }
 
-    for (QAction *action : qAsConst(quickTools)) {
+    for (QAction *action : std::as_const(quickTools)) {
         aQuickTools->removeAction(action);
         aQuickToolsBar->removeAction(action);
         delete action;
@@ -827,10 +827,10 @@ void AnnotationActionHandler::setToolsEnabled(bool on)
 void AnnotationActionHandler::setTextToolsEnabled(bool on)
 {
     d->textToolsEnabled = on;
-    for (QAction *ann : qAsConst(d->textTools)) {
+    for (QAction *ann : std::as_const(d->textTools)) {
         ann->setEnabled(on);
     }
-    for (QAction *ann : qAsConst(d->textQuickTools)) {
+    for (QAction *ann : std::as_const(d->textQuickTools)) {
         ann->setEnabled(on);
     }
 }

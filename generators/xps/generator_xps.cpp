@@ -474,7 +474,7 @@ static QByteArray readFileOrDirectoryParts(const KArchiveEntry *entry, QString *
         const KArchiveDirectory *relDir = static_cast<const KArchiveDirectory *>(entry);
         QStringList entries = relDir->entries();
         std::sort(entries.begin(), entries.end());
-        for (const QString &entry : qAsConst(entries)) {
+        for (const QString &entry : std::as_const(entries)) {
             const KArchiveEntry *relSubEntry = relDir->entry(entry);
             if (!relSubEntry->isFile()) {
                 continue;
@@ -520,7 +520,7 @@ static const KArchiveEntry *loadEntry(KZip *archive, const QString &fileName, Qt
         const KArchiveDirectory *relDir = static_cast<const KArchiveDirectory *>(newEntry);
         QStringList relEntries = relDir->entries();
         std::sort(relEntries.begin(), relEntries.end());
-        for (const QString &relEntry : qAsConst(relEntries)) {
+        for (const QString &relEntry : std::as_const(relEntries)) {
             if (relEntry.compare(entryName, Qt::CaseInsensitive) == 0) {
                 return relDir->entry(relEntry);
             }
@@ -1027,7 +1027,7 @@ void XpsPage::processPath(QPainter *painter, XpsRenderNode &node)
         painter->setWorldTransform(pathdata->transform, true);
     }
 
-    for (const XpsPathFigure *figure : qAsConst(pathdata->paths)) {
+    for (const XpsPathFigure *figure : std::as_const(pathdata->paths)) {
         painter->setBrush(figure->isFilled ? brush : QBrush());
         painter->drawPath(figure->path);
     }
@@ -1050,7 +1050,7 @@ void XpsPage::processPathGeometry(XpsRenderNode &node)
 {
     XpsPathGeometry *geom = new XpsPathGeometry();
 
-    for (const XpsRenderNode &child : qAsConst(node.children)) {
+    for (const XpsRenderNode &child : std::as_const(node.children)) {
         if (child.data.canConvert<XpsPathFigure *>()) {
             XpsPathFigure *figure = child.data.value<XpsPathFigure *>();
             geom->paths.append(figure);
@@ -1100,7 +1100,7 @@ void XpsPage::processPathFigure(XpsRenderNode &node)
         return;
     }
 
-    for (const XpsRenderNode &child : qAsConst(node.children)) {
+    for (const XpsRenderNode &child : std::as_const(node.children)) {
         bool isStroked = true;
         att = node.attributes.value(QStringLiteral("IsStroked")).toString();
         if (!att.isEmpty()) {
@@ -1251,7 +1251,7 @@ void XpsPage::processEndElement(QPainter *painter, XpsRenderNode &node)
         }
     } else if (node.name == QLatin1String("LinearGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
-        for (const XpsRenderNode &child : qAsConst(node.children)) {
+        for (const XpsRenderNode &child : std::as_const(node.children)) {
             double offset = child.attributes.value(QStringLiteral("Offset")).toDouble();
             QColor color = hexToRgba(child.attributes.value(QStringLiteral("Color")).toLatin1());
             gradients.append(XpsGradient(offset, color));
@@ -1264,7 +1264,7 @@ void XpsPage::processEndElement(QPainter *painter, XpsRenderNode &node)
         }
     } else if (node.name == QLatin1String("RadialGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
-        for (const XpsRenderNode &child : qAsConst(node.children)) {
+        for (const XpsRenderNode &child : std::as_const(node.children)) {
             double offset = child.attributes.value(QStringLiteral("Offset")).toDouble();
             QColor color = hexToRgba(child.attributes.value(QStringLiteral("Color")).toLatin1());
             gradients.append(XpsGradient(offset, color));
@@ -1779,7 +1779,7 @@ XpsFile::XpsFile()
 
 XpsFile::~XpsFile()
 {
-    for (int fontId : qAsConst(m_fontCache)) {
+    for (int fontId : std::as_const(m_fontCache)) {
         m_fontDatabase.removeApplicationFont(fontId);
     }
 }

@@ -340,7 +340,7 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
     d->dirty = true;
     Q_EMIT layoutChanged();
     if (equals(d->m_oldModel)) {
-        for (const QModelIndex &oldIndex : qAsConst(d->m_oldTocExpandedIndexes)) {
+        for (const QModelIndex &oldIndex : std::as_const(d->m_oldTocExpandedIndexes)) {
             const QModelIndex index = indexForIndex(oldIndex, this);
             if (!index.isValid()) {
                 continue;
@@ -350,7 +350,7 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
             QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, index));
         }
     } else {
-        for (TOCItem *item : qAsConst(d->itemsToOpen)) {
+        for (TOCItem *item : std::as_const(d->itemsToOpen)) {
             const QModelIndex index = d->indexForItem(item);
             if (!index.isValid()) {
                 continue;
@@ -382,7 +382,7 @@ void TOCModel::clear()
 
 void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
 {
-    for (TOCItem *item : qAsConst(d->currentPage)) {
+    for (TOCItem *item : std::as_const(d->currentPage)) {
         QModelIndex index = d->indexForItem(item);
         if (!index.isValid()) {
             continue;
@@ -398,7 +398,7 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
 
     d->currentPage = newCurrentPage;
 
-    for (TOCItem *item : qAsConst(d->currentPage)) {
+    for (TOCItem *item : std::as_const(d->currentPage)) {
         QModelIndex index = d->indexForItem(item);
         if (!index.isValid()) {
             continue;

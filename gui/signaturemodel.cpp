@@ -106,7 +106,7 @@ static void updateFormFieldSignaturePointer(SignatureItem *item, const QVector<O
         }
     }
 
-    for (SignatureItem *child : qAsConst(item->children)) {
+    for (SignatureItem *child : std::as_const(item->children)) {
         updateFormFieldSignaturePointer(child, pages);
     }
 }

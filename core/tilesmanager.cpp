@@ -331,7 +331,7 @@ void TilesManager::Private::setPixmap(const QPixmap *pixmap, const NormalizedRec
 bool TilesManager::hasPixmap(const NormalizedRect &rect)
 {
     NormalizedRect rotatedRect = fromRotatedRect(rect, d->rotation);
-    for (const TileNode &tile : qAsConst(d->tiles)) {
+    for (const TileNode &tile : std::as_const(d->tiles)) {
         if (!d->hasPixmap(rotatedRect, tile)) {
             return false;
         }

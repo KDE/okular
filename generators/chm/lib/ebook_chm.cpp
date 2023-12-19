@@ -108,7 +108,7 @@ bool EBook_CHM::getTableOfContents(QList<EBookTocEntry> &toc) const
 
     // Fill up the real toc
     toc.reserve(parsed.size());
-    for (const ParsedEntry &e : qAsConst(parsed)) {
+    for (const ParsedEntry &e : std::as_const(parsed)) {
         if (root_offset == -1) {
             root_offset = e.indent;
         }

@@ -684,7 +684,7 @@ public:
             QColor col = m_engineColor;
             col.setAlphaF(0.5);
             painter->setBrush(col);
-            for (const Okular::NormalizedRect &r : qAsConst(*selection)) {
+            for (const Okular::NormalizedRect &r : std::as_const(*selection)) {
                 painter->drawRect(r.geometry((int)xScale, (int)yScale));
             }
         }
@@ -723,7 +723,7 @@ public:
             Okular::HighlightAnnotation *ha = new Okular::HighlightAnnotation();
             ha->setHighlightType(type);
             ha->setBoundingRectangle(Okular::NormalizedRect(rect, item()->uncroppedWidth(), item()->uncroppedHeight()));
-            for (const Okular::NormalizedRect &r : qAsConst(*selection)) {
+            for (const Okular::NormalizedRect &r : std::as_const(*selection)) {
                 Okular::HighlightAnnotation::Quad q;
                 q.setCapStart(false);
                 q.setCapEnd(false);

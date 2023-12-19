@@ -124,11 +124,11 @@ void PageViewItem::setWHZC(int w, int h, double z, const Okular::NormalizedRect 
     m_crop = c;
     m_uncroppedGeometry.setWidth(qRound(w / (c.right - c.left)));
     m_uncroppedGeometry.setHeight(qRound(h / (c.bottom - c.top)));
-    for (FormWidgetIface *fwi : qAsConst(m_formWidgets)) {
+    for (FormWidgetIface *fwi : std::as_const(m_formWidgets)) {
         Okular::NormalizedRect r = fwi->rect();
         fwi->setWidthHeight(qRound(fabs(r.right - r.left) * m_uncroppedGeometry.width()), qRound(fabs(r.bottom - r.top) * m_uncroppedGeometry.height()));
     }
-    for (VideoWidget *vw : qAsConst(m_videoWidgets)) {
+    for (VideoWidget *vw : std::as_const(m_videoWidgets)) {
         const Okular::NormalizedRect r = vw->normGeometry();
         vw->resize(qRound(fabs(r.right - r.left) * m_uncroppedGeometry.width()), qRound(fabs(r.bottom - r.top) * m_uncroppedGeometry.height()));
     }
@@ -146,7 +146,7 @@ void PageViewItem::moveTo(int x, int y)
         Okular::NormalizedRect r = (*it)->rect();
         (*it)->moveTo(qRound(x + m_uncroppedGeometry.width() * r.left) + 1, qRound(y + m_uncroppedGeometry.height() * r.top) + 1);
     }
-    for (VideoWidget *vw : qAsConst(m_videoWidgets)) {
+    for (VideoWidget *vw : std::as_const(m_videoWidgets)) {
         const Okular::NormalizedRect r = vw->normGeometry();
         vw->move(qRound(x + m_uncroppedGeometry.width() * r.left) + 1, qRound(y + m_uncroppedGeometry.height() * r.top) + 1);
     }
@@ -183,7 +183,7 @@ bool PageViewItem::setFormWidgetsVisible(bool visible)
 
 void PageViewItem::reloadFormWidgetsState()
 {
-    for (FormWidgetIface *fwi : qAsConst(m_formWidgets)) {
+    for (FormWidgetIface *fwi : std::as_const(m_formWidgets)) {
         fwi->setVisibility(fwi->formField()->isVisible() && FormWidgetsController::shouldFormWidgetBeShown(fwi->formField()));
     }
 }

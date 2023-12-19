@@ -99,12 +99,12 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
         action = menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
         action->setEnabled(mDocument->isAllowed(Okular::AllowNotes));
         connect(action, &QAction::triggered, menu, [this] {
-            for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
+            for (const AnnotPagePair &pair : std::as_const(mAnnotations)) {
                 doRemovePageAnnotation(pair);
             }
         });
 
-        for (const AnnotPagePair &annot : qAsConst(mAnnotations)) {
+        for (const AnnotPagePair &annot : std::as_const(mAnnotations)) {
             if (!mDocument->canRemovePageAnnotation(annot.annotation)) {
                 action->setEnabled(false);
             }
@@ -125,7 +125,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             }
         }
     } else {
-        for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
+        for (const AnnotPagePair &pair : std::as_const(mAnnotations)) {
             menu->addAction(new OKMenuTitle(menu, GuiUtils::captionForAnnotation(pair.annotation)));
 
             action = menu->addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));

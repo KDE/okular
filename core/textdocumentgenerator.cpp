@@ -292,11 +292,11 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QStri
 
         // loading failed, cleanup all the stuff eventually gathered from the converter
         d->mTitlePositions.clear();
-        for (const TextDocumentGeneratorPrivate::LinkPosition &linkPos : qAsConst(d->mLinkPositions)) {
+        for (const TextDocumentGeneratorPrivate::LinkPosition &linkPos : std::as_const(d->mLinkPositions)) {
             delete linkPos.link;
         }
         d->mLinkPositions.clear();
-        for (const TextDocumentGeneratorPrivate::AnnotationPosition &annPos : qAsConst(d->mAnnotationPositions)) {
+        for (const TextDocumentGeneratorPrivate::AnnotationPosition &annPos : std::as_const(d->mAnnotationPositions)) {
             delete annPos.annotation;
         }
         d->mAnnotationPositions.clear();
@@ -562,7 +562,7 @@ void TextDocumentGenerator::setTextDocument(QTextDocument *textDocument)
 
     d->mDocument = textDocument;
 
-    for (Page *p : qAsConst(d->m_document->m_pagesVector)) {
+    for (Page *p : std::as_const(d->m_document->m_pagesVector)) {
         p->setTextPage(nullptr);
     }
 }

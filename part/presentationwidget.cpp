@@ -100,7 +100,7 @@ struct PresentationFrame {
         }
         geometry.setRect((width - pageWidth) / 2, (height - pageHeight) / 2, pageWidth, pageHeight);
 
-        for (VideoWidget *vw : qAsConst(videoWidgets)) {
+        for (VideoWidget *vw : std::as_const(videoWidgets)) {
             const Okular::NormalizedRect r = vw->normGeometry();
             QRect vwgeom = r.geometry(geometry.width(), geometry.height());
             vw->resize(vwgeom.size());
@@ -407,7 +407,7 @@ void PresentationWidget::notifyCurrentPageChanged(int previousPage, int currentP
 {
     if (previousPage != -1) {
         // stop video playback
-        for (VideoWidget *vw : qAsConst(m_frames[previousPage]->videoWidgets)) {
+        for (VideoWidget *vw : std::as_const(m_frames[previousPage]->videoWidgets)) {
             vw->stop();
             vw->pageLeft();
         }
@@ -481,7 +481,7 @@ void PresentationWidget::notifyCurrentPageChanged(int previousPage, int currentP
         }
 
         // start autoplay video playback
-        for (VideoWidget *vw : qAsConst(m_frames[m_frameIndex]->videoWidgets)) {
+        for (VideoWidget *vw : std::as_const(m_frames[m_frameIndex]->videoWidgets)) {
             vw->pageEntered();
         }
     }
@@ -927,7 +927,7 @@ void PresentationWidget::resizeEvent(QResizeEvent *re)
     // BEGIN Content area
     // update the frames
     const float screenRatio = (float)m_height / (float)m_width;
-    for (PresentationFrame *frame : qAsConst(m_frames)) {
+    for (PresentationFrame *frame : std::as_const(m_frames)) {
         frame->recalcGeometry(m_width, m_height, screenRatio);
     }
 

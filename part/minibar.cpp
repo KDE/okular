@@ -77,7 +77,7 @@ void MiniBarLogic::notifySetup(const QVector<Okular::Page *> &pageVector, int se
     // if document is closed or has no pages, hide widget
     const int pages = pageVector.count();
     if (pages < 1) {
-        for (MiniBar *miniBar : qAsConst(m_miniBars)) {
+        for (MiniBar *miniBar : std::as_const(m_miniBars)) {
             miniBar->setEnabled(false);
         }
         return;
@@ -107,7 +107,7 @@ void MiniBarLogic::notifySetup(const QVector<Okular::Page *> &pageVector, int se
         }
     }
 
-    for (MiniBar *miniBar : qAsConst(m_miniBars)) {
+    for (MiniBar *miniBar : std::as_const(m_miniBars)) {
         // resize width of widgets
         miniBar->resizeForPage(pages, pagesOrLabelString);
 
@@ -139,7 +139,7 @@ void MiniBarLogic::notifyCurrentPageChanged(int previousPage, int currentPage)
         const QString pageNumber = QString::number(currentPage + 1);
         const QString pageLabel = m_document->page(currentPage)->label();
 
-        for (MiniBar *miniBar : qAsConst(m_miniBars)) {
+        for (MiniBar *miniBar : std::as_const(m_miniBars)) {
             // update prev/next button state
             miniBar->m_prevButton->setEnabled(currentPage > 0);
             miniBar->m_nextButton->setEnabled(currentPage < (pages - 1));

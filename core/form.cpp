@@ -263,7 +263,7 @@ public:
         QList<int> choices = q->currentChoices();
         std::sort(choices.begin(), choices.end());
         QStringList list;
-        for (const int c : qAsConst(choices)) {
+        for (const int c : std::as_const(choices)) {
             list.append(QString::number(c));
         }
         return list.join(QStringLiteral(";"));

@@ -120,7 +120,7 @@ static void updateAnnotationPointer(AnnItem *item, const QVector<Okular::Page *>
         }
     }
 
-    for (AnnItem *child : qAsConst(item->children)) {
+    for (AnnItem *child : std::as_const(item->children)) {
         updateAnnotationPointer(child, pages);
     }
 }

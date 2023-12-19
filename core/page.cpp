@@ -428,12 +428,12 @@ void PagePrivate::rotateAt(Rotation orientation)
      * Rotate the object rects on the page.
      */
     const QTransform matrix = rotationMatrix();
-    for (ObjectRect *objRect : qAsConst(m_page->m_rects)) {
+    for (ObjectRect *objRect : std::as_const(m_page->m_rects)) {
         objRect->transform(matrix);
     }
 
     const QTransform highlightRotationMatrix = Okular::buildRotationMatrix((Rotation)(((int)m_rotation - (int)oldRotation + 4) % 4));
-    for (HighlightAreaRect *hlar : qAsConst(m_page->m_highlights)) {
+    for (HighlightAreaRect *hlar : std::as_const(m_page->m_highlights)) {
         hlar->transform(highlightRotationMatrix);
     }
 }
@@ -749,7 +749,7 @@ void Page::setFormFields(const QList<FormField *> &fields)
 {
     qDeleteAll(d->formfields);
     d->formfields = fields;
-    for (FormField *ff : qAsConst(d->formfields)) {
+    for (FormField *ff : std::as_const(d->formfields)) {
         ff->d_ptr->setDefault();
         ff->d_ptr->m_page = this;
     }
@@ -878,7 +878,7 @@ bool PagePrivate::restoreLocalContents(const QDomNode &pageNode)
             }
 
             QHash<int, FormField *> hashedforms;
-            for (FormField *ff : qAsConst(formfields)) {
+            for (FormField *ff : std::as_const(formfields)) {
                 hashedforms[ff->id()] = ff;
             }
 
@@ -933,7 +933,7 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
         QDomElement annotListElement = document.createElement(QStringLiteral("annotationList"));
 
         // add every annotation to the annotationList
-        for (const Annotation *a : qAsConst(m_page->m_annotations)) {
+        for (const Annotation *a : std::as_const(m_page->m_annotations)) {
             // only save okular annotations (not the embedded in file ones)
             if (!(a->flags() & Annotation::External)) {
                 // append an filled-up element called 'annotation' to the list
@@ -1068,26 +1068,26 @@ FormField *PagePrivate::findEquivalentForm(const Page *p, FormField *oldField)
 {
     // given how id is not very good of id (at least for pdf) we do a few passes
     // same rect, type and id
-    for (FormField *f : qAsConst(p->d->formfields)) {
+    for (FormField *f : std::as_const(p->d->formfields)) {
         if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id()) {
             return f;
         }
     }
     // same rect and type
-    for (FormField *f : qAsConst(p->d->formfields)) {
+    for (FormField *f : std::as_const(p->d->formfields)) {
         if (f->rect() == oldField->rect() && f->type() == oldField->type()) {
             return f;
         }
     }
     // fuzzy rect, same type and id
-    for (FormField *f : qAsConst(p->d->formfields)) {
+    for (FormField *f : std::as_const(p->d->formfields)) {
         if (f->type() == oldField->type() && f->id() == oldField->id() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) &&
             qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom)) {
             return f;
         }
     }
     // fuzzy rect and same type
-    for (FormField *f : qAsConst(p->d->formfields)) {
+    for (FormField *f : std::as_const(p->d->formfields)) {
         if (f->type() == oldField->type() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) &&
             qFuzzyCompare(f->rect().bottom, oldField->rect().bottom)) {
             return f;

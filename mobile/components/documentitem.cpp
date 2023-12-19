@@ -173,7 +173,7 @@ QVariantList DocumentItem::bookmarkedPages() const
     std::sort(list.begin(), list.end());
 
     QVariantList variantList;
-    for (const int page : qAsConst(list)) {
+    for (const int page : std::as_const(list)) {
         variantList << page;
     }
     return variantList;

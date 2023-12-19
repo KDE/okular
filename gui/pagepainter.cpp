@@ -345,7 +345,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         // 4B.3. highlight rects in page
         if (bufferedHighlights) {
             // draw highlights that are inside the 'limits' paint region
-            for (const auto &highlight : qAsConst(*bufferedHighlights)) {
+            for (const auto &highlight : std::as_const(*bufferedHighlights)) {
                 const Okular::NormalizedRect &r = highlight.second;
                 // find out the rect to highlight on pixmap
                 QRect highlightRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).intersected(limits);

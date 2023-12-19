@@ -275,7 +275,7 @@ void ProtocolMSITS::listDir(const QUrl &url)
     UDSEntry entry;
     int striplength = filepath.length();
 
-    for (const QString &iListing : qAsConst(listing)) {
+    for (const QString &iListing : std::as_const(listing)) {
         // Strip the directory name
         const QString ename = iListing.mid(striplength);
 

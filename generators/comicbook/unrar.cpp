@@ -162,7 +162,7 @@ QStringList Unrar::list()
     }
 
     QStringList newList;
-    for (const QString &f : qAsConst(listFiles)) {
+    for (const QString &f : std::as_const(listFiles)) {
         // Extract all the files to mTempDir regardless of their path inside the archive
         // This will break if ever an arvhice with two files with the same name in different subfolders
         QFileInfo fi(f);

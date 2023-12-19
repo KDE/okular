@@ -313,7 +313,7 @@ void MainShellTest::testShell()
             QCOMPARE(partDocument(part2)->currentPage(), expectedPage);
             openUrls << part2->url().url();
 
-            for (const QString &path : qAsConst(paths)) {
+            for (const QString &path : std::as_const(paths)) {
                 QVERIFY(openUrls.contains(QStringLiteral("file://%1").arg(path)));
             }
         }
@@ -539,7 +539,7 @@ void MainShellTest::testSessionRestore()
     QList<Shell *> shells = getShells();
     QVERIFY(!shells.isEmpty());
     int numDocs = 0;
-    for (Shell *shell : qAsConst(shells)) {
+    for (Shell *shell : std::as_const(shells)) {
         QVERIFY(QTest::qWaitForWindowExposed(shell));
         numDocs += shell->m_tabs.size();
     }
@@ -559,7 +559,7 @@ void MainShellTest::testSessionRestore()
     int numWindows = 0;
     { // Scope for config so that we can reconstruct from file
         KConfig config(configFile.fileName(), KConfig::SimpleConfig);
-        for (Shell *shell : qAsConst(shells)) {
+        for (Shell *shell : std::as_const(shells)) {
             shell->savePropertiesInternal(&config, ++numWindows);
             // Windows aren't necessarily closed on shutdown, but we'll use
             // this as a way to trigger the destructor code, which is normally
@@ -594,7 +594,7 @@ void MainShellTest::testSessionRestore()
     shells = getShells();
     QVERIFY(!shells.isEmpty());
     numDocs = 0;
-    for (Shell *shell : qAsConst(shells)) {
+    for (Shell *shell : std::as_const(shells)) {
         QVERIFY(QTest::qWaitForWindowExposed(shell));
         numDocs += shell->m_tabs.size();
     }

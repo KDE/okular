@@ -144,7 +144,7 @@ QList<Okular::ObjectRect *> DviGenerator::generateDviLinks(const dviPageInfo *pa
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
 
-    for (const Hyperlink &dviLink : qAsConst(pageInfo->hyperLinkList)) {
+    for (const Hyperlink &dviLink : std::as_const(pageInfo->hyperLinkList)) {
         QRect boxArea = dviLink.box;
         double nl = (double)boxArea.left() / pageWidth, nt = (double)boxArea.top() / pageHeight, nr = (double)boxArea.right() / pageWidth, nb = (double)boxArea.bottom() / pageHeight;
 

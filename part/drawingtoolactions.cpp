@@ -116,7 +116,7 @@ void DrawingToolActions::actionTriggered()
 
     if (action) {
         if (action->isChecked()) {
-            for (QAction *btn : qAsConst(m_actions)) {
+            for (QAction *btn : std::as_const(m_actions)) {
                 if (action != btn) {
                     btn->setChecked(false);
                 }

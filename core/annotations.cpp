@@ -560,7 +560,7 @@ AnnotationPrivate::~AnnotationPrivate()
         return;
     }
 
-    for (const Annotation::Revision &revision : qAsConst(m_revisions)) {
+    for (const Annotation::Revision &revision : std::as_const(m_revisions)) {
         delete revision.annotation();
     }
 }
@@ -875,7 +875,7 @@ void Annotation::store(QDomNode &annNode, QDomDocument &document) const
     }
 
     // add all revisions as children of revisions element
-    for (const Revision &revision : qAsConst(d->m_revisions)) {
+    for (const Revision &revision : std::as_const(d->m_revisions)) {
         // create revision element
         QDomElement r = document.createElement(QStringLiteral("revision"));
         annNode.appendChild(r);
@@ -1729,7 +1729,7 @@ double LineAnnotationPrivate::distanceSqr(double x, double y, double xScale, dou
 
     if (m_lineInnerColor.isValid()) {
         QPolygonF polygon;
-        for (const NormalizedPoint &p : qAsConst(transformedLinePoints)) {
+        for (const NormalizedPoint &p : std::as_const(transformedLinePoints)) {
             polygon.append(QPointF(p.x, p.y));
         }
 

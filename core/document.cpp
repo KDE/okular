@@ -353,7 +353,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
     std::list<AllocatedPixmap *> pixmapsToKeep;
     while (memoryToFree > 0) {
         int clean_hits = 0;
-        for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (DocumentObserver *observer : std::as_const(m_observers)) {
             AllocatedPixmap *p = searchLowestPriorityPixmap(false, true, observer);
             if (!p) { // No pixmap to remove
                 continue;
@@ -679,7 +679,7 @@ bool DocumentPrivate::loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags lo
                         QDomElement viewElement = viewNode.toElement();
                         if (viewElement.tagName() == QLatin1String("view")) {
                             const QString viewName = viewElement.attribute(QStringLiteral("name"));
-                            for (View *view : qAsConst(m_views)) {
+                            for (View *view : std::as_const(m_views)) {
                                 if (view->name() == viewName) {
                                     loadViewsInfo(view, viewElement);
                                     loadedAnything = true;
@@ -1304,7 +1304,7 @@ void DocumentPrivate::saveDocumentInfo() const
     // create views root node
     QDomElement viewsNode = doc.createElement(QStringLiteral("views"));
     generalInfo.appendChild(viewsNode);
-    for (View *view : qAsConst(m_views)) {
+    for (View *view : std::as_const(m_views)) {
         QDomElement viewEntry = doc.createElement(QStringLiteral("view"));
         viewEntry.setAttribute(QStringLiteral("name"), view->name());
         viewsNode.appendChild(viewEntry);
@@ -1523,7 +1523,7 @@ void DocumentPrivate::rotationFinished(int page, Okular::Page *okularPage)
         return;
     }
 
-    for (DocumentObserver *o : qAsConst(m_observers)) {
+    for (DocumentObserver *o : std::as_const(m_observers)) {
         o->notifyPageChanged(page, DocumentObserver::Pixmap | DocumentObserver::Annotations);
     }
 }
@@ -1607,13 +1607,13 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
 
     // Need to do this ↑↓ in two steps since requestPixmaps can end up calling cancelRenderingBecauseOf
     // which changes m_pixmaps and thus breaks the loop above
-    for (PixmapRequest *pr : qAsConst(pixmapsToRequest)) {
+    for (PixmapRequest *pr : std::as_const(pixmapsToRequest)) {
         QList<Okular::PixmapRequest *> requestedPixmaps;
         requestedPixmaps.push_back(pr);
         m_parent->requestPixmaps(requestedPixmaps, Okular::Document::NoOption);
     }
 
-    for (DocumentObserver *observer : qAsConst(m_observers)) {
+    for (DocumentObserver *observer : std::as_const(m_observers)) {
         QList<Okular::PixmapRequest *> requestedPixmaps;
 
         TilesManager *tilesManager = page->d->tilesManager(observer);
@@ -1760,8 +1760,8 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
     }
 
     // notify observers about highlights changes
-    for (int pageNumber : qAsConst(*pagesToNotify)) {
-        for (DocumentObserver *observer : qAsConst(m_observers)) {
+    for (int pageNumber : std::as_const(*pagesToNotify)) {
+        for (DocumentObserver *observer : std::as_const(m_observers)) {
             observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
         }
     }
@@ -1791,7 +1791,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
-        for (const MatchesVector &mv : qAsConst(*pageMatches)) {
+        for (const MatchesVector &mv : std::as_const(*pageMatches)) {
             qDeleteAll(mv);
         }
         delete pageMatches;
@@ -1846,13 +1846,13 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             pagesToNotify->insert(it.key()->number());
         }
 
-        for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (DocumentObserver *observer : std::as_const(m_observers)) {
             observer->notifySetup(m_pagesVector, 0);
         }
 
         // notify observers about highlights changes
-        for (int pageNumber : qAsConst(*pagesToNotify)) {
-            for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (int pageNumber : std::as_const(*pagesToNotify)) {
+            for (DocumentObserver *observer : std::as_const(m_observers)) {
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
             }
         }
@@ -1886,7 +1886,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
 
-        for (const MatchesVector &mv : qAsConst(*pageMatches)) {
+        for (const MatchesVector &mv : std::as_const(*pageMatches)) {
             for (const MatchColor &mc : mv) {
                 delete mc.first;
             }
@@ -1972,13 +1972,13 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         }
 
         // send page lists to update observers (since some filter on bookmarks)
-        for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (DocumentObserver *observer : std::as_const(m_observers)) {
             observer->notifySetup(m_pagesVector, 0);
         }
 
         // notify observers about highlights changes
-        for (int pageNumber : qAsConst(*pagesToNotify)) {
-            for (DocumentObserver *observer : qAsConst(m_observers)) {
+        for (int pageNumber : std::as_const(*pagesToNotify)) {
+            for (DocumentObserver *observer : std::as_const(m_observers)) {
                 observer->notifyPageChanged(pageNumber, DocumentObserver::Highlights);
             }
         }
@@ -2152,7 +2152,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
     }
 
     QVector<QList<Okular::SourceRefObjectRect *>> refRects(m_pagesVector.size());
-    for (const pdfsyncpoint &pt : qAsConst(points)) {
+    for (const pdfsyncpoint &pt : std::as_const(points)) {
         // drop pdfsync points not completely valid
         if (pt.page < 0 || pt.page >= m_pagesVector.size()) {
             continue;
@@ -2189,7 +2189,7 @@ void DocumentPrivate::clearAndWaitForRequests()
         startEventLoop = !m_executingPixmapRequests.empty();
 
         if (m_generator->hasFeature(Generator::SupportsCancelling)) {
-            for (PixmapRequest *executingRequest : qAsConst(m_executingPixmapRequests)) {
+            for (PixmapRequest *executingRequest : std::as_const(m_executingPixmapRequests)) {
                 executingRequest->d->mShouldAbortRender = 1;
             }
 
@@ -2499,7 +2499,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     d->m_pageController = new PageController();
     connect(d->m_pageController, &PageController::rotationFinished, this, [this](int p, Okular::Page *op) { d->rotationFinished(p, op); });
 
-    for (Page *p : qAsConst(d->m_pagesVector)) {
+    for (Page *p : std::as_const(d->m_pagesVector)) {
         p->d->m_doc = d;
     }
 
@@ -2643,7 +2643,7 @@ void Document::closeDocument()
         // ideally we would just do that in the BackendOpaqueAction destructor
         // but that's too late in the cleanup process, i.e. the generator has already closed its document
         // and the document generator is nullptr
-        for (Page *p : qAsConst(d->m_pagesVector)) {
+        for (Page *p : std::as_const(d->m_pagesVector)) {
             const QList<ObjectRect *> &oRects = p->objectRects();
             for (ObjectRect *oRect : oRects) {
                 if (oRect->objectType() == ObjectRect::Action) {
@@ -2803,7 +2803,7 @@ void Document::removeObserver(DocumentObserver *pObserver)
             }
         }
 
-        for (PixmapRequest *executingRequest : qAsConst(d->m_executingPixmapRequests)) {
+        for (PixmapRequest *executingRequest : std::as_const(d->m_executingPixmapRequests)) {
             if (executingRequest->observer() == pObserver) {
                 d->cancelRenderingBecauseOf(executingRequest, nullptr);
             }
@@ -3013,7 +3013,7 @@ void Document::setVisiblePageRects(const QVector<VisiblePageRect *> &visiblePage
     }
     d->m_pageRects = visiblePageRects;
     // notify change to all other (different from id) observers
-    for (DocumentObserver *o : qAsConst(d->m_observers)) {
+    for (DocumentObserver *o : std::as_const(d->m_observers)) {
         if (o != excludeObserver) {
             o->notifyVisibleRectsChanged();
         }
@@ -3394,7 +3394,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
 
     // 1.C [CANCEL REQUESTS] cancel those requests that are running and should be cancelled because of the new requests coming in
     if (d->m_generator->hasFeature(Generator::SupportsCancelling)) {
-        for (PixmapRequest *executingRequest : qAsConst(d->m_executingPixmapRequests)) {
+        for (PixmapRequest *executingRequest : std::as_const(d->m_executingPixmapRequests)) {
             bool newRequestsContainExecutingRequestPage = false;
             bool requestCancelled = false;
             for (PixmapRequest *newRequest : requests) {
@@ -3443,7 +3443,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
     //    if ( generator->canRequestPixmap() )
     d->sendGeneratorPixmapRequest();
 
-    for (DocumentObserver *o : qAsConst(observersPixmapCleared)) {
+    for (DocumentObserver *o : std::as_const(observersPixmapCleared)) {
         o->notifyContentsCleared(Okular::DocumentObserver::Pixmap);
     }
 }
@@ -3709,7 +3709,7 @@ void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *e
     const bool currentPageChanged = (oldPageNumber != currentViewportPage);
 
     // notify change to all other (different from id) observers
-    for (DocumentObserver *o : qAsConst(d->m_observers)) {
+    for (DocumentObserver *o : std::as_const(d->m_observers)) {
         if (o != excludeObserver) {
             o->notifyViewportChanged(smoothMove);
         }
@@ -3736,7 +3736,7 @@ void Document::setViewportPage(int page, DocumentObserver *excludeObserver, bool
 void Document::setZoom(int factor, DocumentObserver *excludeObserver)
 {
     // notify change to all other (different from id) observers
-    for (DocumentObserver *o : qAsConst(d->m_observers)) {
+    for (DocumentObserver *o : std::as_const(d->m_observers)) {
         if (o != excludeObserver) {
             o->notifyZoom(factor);
         }
@@ -3820,7 +3820,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
 
     // remove highlights from pages and queue them for notifying changes
     *pagesToNotify += s->highlightedPages;
-    for (const int pageNumber : qAsConst(s->highlightedPages)) {
+    for (const int pageNumber : std::as_const(s->highlightedPages)) {
         d->m_pagesVector.at(pageNumber)->d->deleteHighlights(searchID);
     }
     s->highlightedPages.clear();
@@ -3933,7 +3933,7 @@ void Document::resetSearch(int searchID)
     RunningSearch *s = *searchIt;
 
     // unhighlight pages and inform observers about that
-    for (const int pageNumber : qAsConst(s->highlightedPages)) {
+    for (const int pageNumber : std::as_const(s->highlightedPages)) {
         d->m_pagesVector.at(pageNumber)->d->deleteHighlights(searchID);
         foreachObserver(notifyPageChanged(pageNumber, DocumentObserver::Highlights));
     }
@@ -4759,7 +4759,7 @@ QStringList Document::supportedMimeTypes() const
         // Remove duplicate mimetypes represented by different names
         QMimeDatabase mimeDatabase;
         QSet<QMimeType> uniqueMimetypes;
-        for (const QString &mimeName : qAsConst(result)) {
+        for (const QString &mimeName : std::as_const(result)) {
             uniqueMimetypes.insert(mimeDatabase.mimeTypeForName(mimeName));
         }
         result.clear();

@@ -1676,7 +1676,7 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
         }
 
         WordsWithCharacters tmpList;
-        for (const QPair<WordsWithCharacters, QRect> &sortedLine : qAsConst(sortedLines)) {
+        for (const QPair<WordsWithCharacters, QRect> &sortedLine : std::as_const(sortedLines)) {
             tmpList += sortedLine.first;
         }
         tmpRegion.setText(tmpList);
@@ -1684,7 +1684,7 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
 
     // Step 03
     WordsWithCharacters tmp;
-    for (const RegionText &tmpRegion : qAsConst(tree)) {
+    for (const RegionText &tmpRegion : std::as_const(tree)) {
         tmp += tmpRegion.text();
     }
     return tmp;
@@ -1744,7 +1744,7 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
 
     TextEntity::List ret;
     if (area) {
-        for (const TinyTextEntity *te : qAsConst(d->m_words)) {
+        for (const TinyTextEntity *te : std::as_const(d->m_words)) {
             if (b == AnyPixelTextAreaInclusionBehaviour) {
                 if (area->intersects(te->area)) {
                     ret.append(new TextEntity(te->text(), new Okular::NormalizedRect(te->area)));
@@ -1757,7 +1757,7 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
             }
         }
     } else {
-        for (const TinyTextEntity *te : qAsConst(d->m_words)) {
+        for (const TinyTextEntity *te : std::as_const(d->m_words)) {
             ret.append(new TextEntity(te->text(), new Okular::NormalizedRect(te->area)));
         }
     }

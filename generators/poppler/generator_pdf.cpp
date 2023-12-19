@@ -873,7 +873,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
             auto compareSignatureByFullyQualifiedName = [&fullyQualifiedName](const Okular::FormField *off) { return off->fullyQualifiedName() == fullyQualifiedName; };
 
             // See if the signature is in one of the already loaded page (i.e. 1 to end)
-            for (Okular::Page *p : qAsConst(pagesVector)) {
+            for (Okular::Page *p : std::as_const(pagesVector)) {
                 const QList<Okular::FormField *> pageFormFields = p->formFields();
                 if (std::find_if(pageFormFields.begin(), pageFormFields.end(), compareSignatureByFullyQualifiedName) != pageFormFields.end()) {
                     createSignature = false;
@@ -1045,7 +1045,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage(int page)
     }
     userMutex()->unlock();
 
-    for (const Poppler::FontInfo &font : qAsConst(fonts)) {
+    for (const Poppler::FontInfo &font : std::as_const(fonts)) {
         Okular::FontInfo of;
         of.setName(font.name());
         of.setSubstituteName(font.substituteName());

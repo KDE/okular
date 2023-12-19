@@ -40,7 +40,7 @@ void GeneratorsTest::testLoadsCorrectly()
     }
     int failures = 0;
     int successful = 0;
-    for (const QString &lib : qAsConst(generatorLibs)) {
+    for (const QString &lib : std::as_const(generatorLibs)) {
         auto factory = KPluginFactory::loadFactory(KPluginMetaData(lib)).plugin;
         if (!factory) {
             qWarning() << "Could not get KPluginFactory for" << lib;

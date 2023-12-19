@@ -727,7 +727,7 @@ KBookmark BookmarkManager::nextBookmark(const DocumentViewport &viewport) const
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
     KBookmark bookmark;
-    for (const KBookmark &bm : qAsConst(bmarks)) {
+    for (const KBookmark &bm : std::as_const(bmarks)) {
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (viewport < vp) {
             bookmark = bm;

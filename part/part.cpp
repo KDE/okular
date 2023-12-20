@@ -250,10 +250,6 @@ static Okular::EmbedMode detectEmbedMode(QWidget *parentWidget, QObject *parent,
         return Okular::NativeShellMode;
     }
 
-    if (parent && (QByteArray("KHTMLPart") == parent->metaObject()->className())) {
-        return Okular::KHTMLPartMode;
-    }
-
     for (const QVariant &arg : args) {
         if (arg.type() == QVariant::String) {
             if (arg.toString() == QLatin1String("Print/Preview")) {

@@ -99,7 +99,6 @@ enum EmbedMode {
     UnknownEmbedMode,
     NativeShellMode,  // embedded in the native Okular' shell
     PrintPreviewMode, // embedded to show the print preview of a document
-    KHTMLPartMode,    // embedded in KHTML
     ViewerWidgetMode  // the part acts as a widget that can display all kinds of documents
 };
 

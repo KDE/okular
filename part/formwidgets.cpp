@@ -753,7 +753,7 @@ FileEdit::FileEdit(Okular::FormFieldText *text, PageView *pageView)
     , FormWidgetIface(this, text)
 {
     setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-    setFilter(i18n("*|All Files"));
+    setNameFilter(i18n("All Files (*)"));
     setUrl(QUrl::fromUserInput(text->text()));
     lineEdit()->setAlignment(text->textAlignment());
 

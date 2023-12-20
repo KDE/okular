@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2023-10-23 06:17+0200\n"
+"PO-Revision-Date: 2023-12-19 14:46+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -91,7 +91,7 @@ msgstr "Piotr Szymanski"
 #: aboutdata.h:34
 #, kde-format
 msgid "Created Okular from KPDF codebase"
-msgstr ""
+msgstr "შექმნა Okular KPDF-ის კოდისგან"
 
 #: aboutdata.h:35
 #, kde-format
@@ -241,7 +241,7 @@ msgstr "ფილმის გაგრძელება"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Okular-ის ეს ვერსია აუდიოს მხარდაჭერის გარეშეა აგებული"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -302,6 +302,8 @@ msgstr "ძებნის ბოლოდან გაგრძელება"
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
+"დამატება, რომელიც გადმოცემული დოკუმენტის დასამუშავებლადაა საჭირო, აღმოჩენილი "
+"არაა."
 
 #: core/document.cpp:3586
 #, kde-format
@@ -315,11 +317,13 @@ msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
+"დოკუმენტი ცდილობს, გაუშვას გარე აპლიკაცია და თქვენი უსაფრთხოებისთვის Okular "
+"მას ამის უფლებას არ აძლევს."
 
 #: core/document.cpp:4186
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
-msgstr ""
+msgstr "MIME ტიპის, %1 მქონე ფაილის გასახსნელად აპლიკაცია აღმოჩენილი არაა."
 
 #: core/document.cpp:4636
 #, kde-format
@@ -367,6 +371,8 @@ msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
+"დაბეჭდვისთვის საჭირო გამშვები ფაილი აღმოჩენილი არაა. დარწმუნდით, რომ CUPS-ის "
+"lpr გამშვები ფაილი ხელმისაწვდომია"
 
 #: core/document.cpp:4654
 #, kde-format
@@ -1000,7 +1006,7 @@ msgstr ", "
 #: gui/signatureguiutils.cpp:163
 #, kde-format
 msgid "The document has not been modified since it was signed."
-msgstr ""
+msgstr "ხელმოწერის შემდეგ დოკუმენტი არ შეცვლილა."
 
 #: gui/signatureguiutils.cpp:166
 #, kde-format
@@ -1019,12 +1025,12 @@ msgstr ""
 #: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid "The document integrity verification could not be completed."
-msgstr ""
+msgstr "დოკუმენტის მთლიანობის გადამოწმების დასრულება შეუძლებელია."
 
 #: gui/signatureguiutils.cpp:205
 #, kde-format
 msgid "This document has unsigned signature fields."
-msgstr ""
+msgstr "ამ დოკუმენტს ხელმოუწერელი ხელმოწერის ველები გააჩნია."
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
@@ -1036,6 +1042,7 @@ msgstr "დოკუმენტი ციფრულად ხელმოწ�
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr ""
+"ეს დოკუმენტი ციფრულადაა ხელმოწერილი. ის შეცვლილია ბოლო ხელმოწერის შემდეგ."
 
 #: gui/signatureguiutils.cpp:213
 #, kde-format
@@ -1043,6 +1050,8 @@ msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
 msgstr ""
+"ეს დოკუმენტი ციფრულადაა ხელმოწერილი. ზოგიერთი ხელმოწერის სისწორის "
+"გადამოწმება შეუძლებელია."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
@@ -1198,6 +1207,8 @@ msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
+"დამატებითი პარამეტრები მიმდინარე ანოტაციის ხელსაწყოსთვის (ანოტაცია მონიშნული "
+"არაა)"
 
 #: part/annotationactionhandler.cpp:308
 #, kde-format
@@ -1209,7 +1220,7 @@ msgstr "ანოტაციის ხაზის სიგანე"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
-msgstr ""
+msgstr "ანიტაციის ხაზის სიგანე (მიმდინარე ანოტაციას ხაზის სიგანე არ გააჩნია)"
 
 #: part/annotationactionhandler.cpp:314
 #, kde-format
@@ -1239,7 +1250,7 @@ msgstr "ანოტაციის შესავსები ფერი"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr ""
+msgstr "ანოტაციის შევსების ფერი (მიმდინარე ანოტაციას შემვსები ფერი არ გააჩნია)"
 
 #: part/annotationactionhandler.cpp:328
 #, kde-format
@@ -1251,19 +1262,19 @@ msgstr "ანოტაციის ფონტი"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
+msgstr "ანოტაციის ფონტი (მიმდინარე ანოტაციას ფონტი არ გააჩნია)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr ""
+msgstr "ხაზის კუთხის 15° ბიჯებზე შეზღუდვა"
 
 #: part/annotationactionhandler.cpp:336
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr ""
+msgstr "მოხაზულობის ფარდობის 1:1-ზე შეზღუდვა"
 
 #: part/annotationactionhandler.cpp:338
 #, kde-format
@@ -1283,13 +1294,13 @@ msgstr "ანოტაციის გაუმჭვირვალობა"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr ""
+msgstr "მიმდინარე ანოტაციის დამატება სწრაფი ანოტაციების მენიუში"
 
 #: part/annotationactionhandler.cpp:343
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr ""
+msgstr "დამატებითი პარამეტრები მიმდინარე ანოტაციის ხელსაწყოსთვის"
 
 #: part/annotationactionhandler.cpp:432
 #, kde-format
@@ -1438,7 +1449,7 @@ msgstr "სწრაფი ანოტაციები"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr ""
+msgstr "აირჩიეთ ანოტაციის ხელსაწყო სწრაფი ანოტაციებიდან"
 
 #: part/annotationactionhandler.cpp:650
 #, kde-format
@@ -1450,7 +1461,7 @@ msgstr "სწრაფი ანოტაციების ანელი"
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr ""
+msgstr "სწრაფი ანოტაციებისთვის დამატება"
 
 #: part/annotationactionhandler.cpp:667
 #, kde-format
@@ -1464,7 +1475,7 @@ msgstr "აქტიურად დატოვება"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr ""
+msgstr "ანოტაციის ხელსაწყოს აქტიურად შენარჩუნება გამოყენების შემდეგ"
 
 #: part/annotationactionhandler.cpp:673
 #, kde-format
@@ -1472,7 +1483,7 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr ""
+msgstr "ანოტაციის ხელსაწყოების მასშტაბისა და კუთხის შეზღუდვა"
 
 #: part/annotationactionhandler.cpp:679
 #, kde-format
@@ -1521,7 +1532,7 @@ msgstr "გვერდი %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -1545,7 +1556,7 @@ msgstr "ტექსტის კოპირება გაცვლის ბ
 #: part/pageview.cpp:3076
 #, kde-format
 msgid "Copy forbidden by DRM"
-msgstr ""
+msgstr "კოპირება აკრძალულია DRM-ის მიერ"
 
 #: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
 #, kde-format
@@ -2073,6 +2084,8 @@ msgid ""
 "This annotation may contain LaTeX code.\n"
 "Click here to render."
 msgstr ""
+"ანოტაცია, შეიძლება, LaTeX-ის კოდს შეიცავდეს.\n"
+"დასარენდერებლად აქ დააწკაპუნეთ."
 
 #: part/annotwindow.cpp:415
 #, kde-format
@@ -2093,12 +2106,12 @@ msgstr "შეცდომა dvipng პროგრამის გაშვე
 #: part/annotwindow.cpp:425
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr ""
+msgstr "პრობლემა ბრძანება 'latex'-ის შესრულებისას."
 
 #: part/annotwindow.cpp:430
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr ""
+msgstr "პრობლემა ბრძანება 'dvipng'-ის შესრულებისას."
 
 #: part/bookmarklist.cpp:115
 #, kde-format
@@ -2294,31 +2307,31 @@ msgstr "&შავთეთრში გადაყვანა"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
-msgstr ""
+msgstr "&განათების ინვერსია"
 
 #: part/colormodemenu.cpp:52
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr ""
+msgstr "&სიკაშკაშის ინვერსია (წრფივი sRGB)"
 
 #: part/colormodemenu.cpp:55
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr ""
+msgstr "სიკაშკაშის &ინვერსია (სიმეტრიული)"
 
 #: part/colormodemenu.cpp:58
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
-msgstr ""
+msgstr "&ტონის დადებითი წანაცვლება"
 
 #: part/colormodemenu.cpp:61
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
-msgstr ""
+msgstr "ტონის &უარყოფითი წანაცვლება"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:11
@@ -2397,6 +2410,8 @@ msgstr "ფერების შეცვლა"
 msgctxt "@info Config dialog, accessibility page"
 msgid "<b>Warning:</b> these options can badly affect drawing speed."
 msgstr ""
+"<b>გაფრთხილება:</b> ამ პარამეტრებს ხატვის სიჩქარეზე შეიძლება ცუდი გავლენა "
+"ჰქონდეთ."
 
 #: part/dlgaccessibility.cpp:60
 #, kde-format
@@ -2414,43 +2429,43 @@ msgstr "ქაღალდის ფერის შეცვლა"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Change dark & light colors"
-msgstr ""
+msgstr "მუქი და ღია ფერების შეცვლა"
 
 #: part/dlgaccessibility.cpp:63
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Convert to black & white"
-msgstr ""
+msgstr "შავთეთრში გადაყვანა"
 
 #: part/dlgaccessibility.cpp:64
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr ""
+msgstr "განათების ინვერსია"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (sRGB linear)"
-msgstr ""
+msgstr "სიკაშკაშის ინვერსია (წრფივი sRGB)"
 
 #: part/dlgaccessibility.cpp:66
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (symmetric)"
-msgstr ""
+msgstr "სიკაშკაშის ინვერსია (სიმეტრიული)"
 
 #: part/dlgaccessibility.cpp:67
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue positive"
-msgstr ""
+msgstr "ტონის დადებითი წანაცვლება"
 
 #: part/dlgaccessibility.cpp:68
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue negative"
-msgstr ""
+msgstr "ტონის უარყოფითი წანაცვლება"
 
 #: part/dlgaccessibility.cpp:70
 #, kde-format
@@ -2492,13 +2507,13 @@ msgstr "კონტრასტი:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr ""
+msgstr "ტექსტიდან-საუბრამდე ძრავა:"
 
 #: part/dlgaccessibility.cpp:165
 #, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr ""
+msgstr "ტექსტიდან-საუბრამდე ხმა:"
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -2547,6 +2562,8 @@ msgctxt "@info:whatsthis Config dialog, editor page"
 msgid ""
 "Choose the editor you want to launch when Okular wants to open a source file."
 msgstr ""
+"აირჩიეთ რედაქტორი, რომელიც გნებავთ გაუშვათ, როცა Okular კოდის ფაილის გახსნას "
+"შეეცდება."
 
 #: part/dlgeditor.cpp:29
 #, kde-format
@@ -2645,7 +2662,7 @@ msgstr "ჩოჩიების ჩვენება"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
-msgstr ""
+msgstr "მინიატურის მიბმა გვერდზე"
 
 #: part/dlggeneral.cpp:53
 #, kde-format
@@ -2657,13 +2674,13 @@ msgstr "მინიშნებების და ინფორმაცი�
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr ""
+msgstr "გაფრთხილებები ჩაშენებული ფაილების, ფორმებისა და ხელმოწერების შესახებ"
 
 #: part/dlggeneral.cpp:66
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
-msgstr ""
+msgstr "დოკუმენტის სათაურის სათაურის ზოლში ჩვენება, თუ ის ხელმისაწვდომა"
 
 #: part/dlggeneral.cpp:72
 #, kde-format
@@ -2705,43 +2722,43 @@ msgstr "ახალი ფაილების ჩანართებში 
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr ""
+msgstr "გადართვა არსებულ ჩანართზე, თუ ფაილი უკვე ღიაა"
 
 #: part/dlggeneral.cpp:137
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
-msgstr ""
+msgstr "საავტორო უფლებების დაცვა"
 
 #: part/dlggeneral.cpp:146
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr ""
+msgstr "დოკუმენტის თავიდან ჩატვირთვა მისი შეცვლისას"
 
 #: part/dlggeneral.cpp:153
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
-msgstr ""
+msgstr "უკანაბოლოს არჩევის დიალოგის ჩვენება"
 
 #: part/dlggeneral.cpp:160
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
-msgstr ""
+msgstr "მარჯვნიდან-მარცხნივ კითხვის მიმართულება"
 
 #: part/dlggeneral.cpp:166
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr ""
+msgstr "ნაგულისხმევად გახსნა უწყვეტ რეჟიმში"
 
 #: part/dlggeneral.cpp:173
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "ძებნის ხელსაწყოს გამოყენებისას, ეკრანის გადატანა ეკრანის წიბოებთან"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -2762,12 +2779,14 @@ msgid ""
 "Defines how much of the current viewing area will still be visible when "
 "pressing the Page Up/Down keys."
 msgstr ""
+"განსაზღვრავს, მიმდინარე ხედის ფართობიდან რამდენი იქნება ჯერ კიდევ ხილული "
+"Page Up/Down ღილაკებზე დაწოლისას."
 
 #: part/dlggeneral.cpp:200
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
-msgstr ""
+msgstr "Page Up/Down გადაფარვა:"
 
 #: part/dlggeneral.cpp:204
 #, kde-format
@@ -2800,6 +2819,9 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
+"განსაზღვრავს ნაგულისხმევ გადიდების რეჟიმს ფაილებისთვის, რომლებიც აქამდე "
+"არასდროს გახსნილა. ფაილებისთვის, რომლებიც უკვე გახსენით, წინა მასშტაბი "
+"იქნება გამოყენებული."
 
 #: part/dlggeneral.cpp:210
 #, kde-format
@@ -2879,6 +2901,8 @@ msgid ""
 "Keeps used memory as low as possible. Do not reuse anything. (For systems "
 "with low memory.)"
 msgstr ""
+"მინიმალური რაოდენობის მეხსიერების გამოყენება. თავიდან არაფერი იქნება "
+"გამოყენებული. (მცირე რაოდენობის მეხსიერების მქონე სისტემებისთვის.)"
 
 #: part/dlgperformance.cpp:80
 #, kde-format
@@ -2919,25 +2943,26 @@ msgstr[1] " წამი"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr ""
+msgstr "გადაშლა ავტომატურად:"
 
 #: part/dlgpresentation.cpp:53
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Loop after last page"
-msgstr ""
+msgstr "მარყუჟი ბოლო გვერდის შემდეგ"
 
 #: part/dlgpresentation.cpp:59
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap left/right side to go back/forward"
 msgstr ""
+"დაატყაპუნეტ მარცხენა/მარჯვენა მხარეს შესაბამისად უკან/წინ გადასასვლელად"
 
 #: part/dlgpresentation.cpp:60
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, tap navigation"
 msgid "Tap anywhere to go forward"
-msgstr ""
+msgstr "დაატყაპუნეთ სადმე წინა გადასასვლელად"
 
 #: part/dlgpresentation.cpp:61
 #, kde-format
@@ -2949,7 +2974,7 @@ msgstr "გამორთულია"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
 msgid "Touch navigation:"
-msgstr ""
+msgstr "შეხებით მართვა:"
 
 #: part/dlgpresentation.cpp:72
 #, kde-format
@@ -2961,7 +2986,7 @@ msgstr "ფონის ფერი:"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, cursor visibility"
 msgid "Hidden after delay"
-msgstr ""
+msgstr "დამალვა დაყოვნების შემდეგ"
 
 #: part/dlgpresentation.cpp:77
 #, kde-format
@@ -2997,7 +3022,7 @@ msgstr "შემაჯამებელი გვერდის ჩვენ�
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Instant (Never use animations)"
-msgstr ""
+msgstr "მყისი (ანიმაციების გარეშე)"
 
 #: part/dlgpresentation.cpp:101
 #, kde-format
@@ -3009,31 +3034,31 @@ msgstr "ჩანაცვლება"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Random transition"
-msgstr ""
+msgstr "შემთხვევითი გადასვლა"
 
 #: part/dlgpresentation.cpp:103
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds vertical"
-msgstr ""
+msgstr "ვერტიკალური ჟალუზი"
 
 #: part/dlgpresentation.cpp:104
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Blinds horizontal"
-msgstr ""
+msgstr "ჰორიზონტალური ჟალუზი"
 
 #: part/dlgpresentation.cpp:105
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
-msgstr ""
+msgstr "მართკუთხედი შიგნით"
 
 #: part/dlgpresentation.cpp:106
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
-msgstr ""
+msgstr "მართკუთხედი გარეთ"
 
 #: part/dlgpresentation.cpp:107
 #, kde-format
@@ -3375,7 +3400,7 @@ msgstr "*|ყველა ფაილი"
 #: part/formwidgets.cpp:1070
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
-msgstr ""
+msgstr "ხელმოუწერელი ხელმოწერის ველი (დააწკაპუნეთ ხელმოსაწერად)"
 
 #: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
 #, kde-format
@@ -3460,17 +3485,17 @@ msgstr "ორიგინალური ორიენტაცია"
 #: part/pageview.cpp:581
 #, kde-format
 msgid "&Trim View"
-msgstr ""
+msgstr "&წაკვეთა"
 
 #: part/pageview.cpp:585
 #, kde-format
 msgid "&Trim Margins"
-msgstr ""
+msgstr "&ველების წაკვეთა"
 
 #: part/pageview.cpp:592
 #, kde-format
 msgid "Trim To &Selection"
-msgstr ""
+msgstr "&მონიშნულამდე წაკვეთა"
 
 #: part/pageview.cpp:598
 #, kde-format
@@ -3490,7 +3515,7 @@ msgstr "&ავტომატური ჩატევა"
 #: part/pageview.cpp:610
 #, kde-format
 msgid "Fit Wi&ndow to Page"
-msgstr ""
+msgstr "&ფანჯრის ჩატევა გვერდში"
 
 #: part/pageview.cpp:617
 #, kde-format
@@ -3507,7 +3532,7 @@ msgstr "&ერთი გვერდი"
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
-msgstr ""
+msgstr "&გადაბრუნებები"
 
 #: part/pageview.cpp:631
 #, kde-format
@@ -3622,13 +3647,13 @@ msgstr "ფორმების ჩვენება"
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " ჩაიტვირთა ერთგვერდიანი დოკუმენტი."
+msgstr[1] " ჩაიტვირთა %1-გვერდიანი დოკუმენტი."
 
 #: part/pageview.cpp:2550
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
-msgstr ""
+msgstr "ცხრილის შემცველობის კოპირება ბუფერში"
 
 #: part/pageview.cpp:2869
 #, kde-format
@@ -3680,7 +3705,7 @@ msgstr "ფაილი არ შენახულა."
 #: part/pageview.cpp:2925
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
-msgstr ""
+msgstr "გამოსახულება [%1x%2] შენახულია ფაილში %3."
 
 #: part/pageview.cpp:3067
 #, kde-format
@@ -3749,7 +3774,7 @@ msgstr "ბმულის მისამართის კოპირებ�
 #: part/pageview.cpp:4446
 #, kde-format
 msgid "Search for '%1' in this document"
-msgstr ""
+msgstr "'%1'-ის მოძებნა ამ დოკუმენტში"
 
 #: part/pageview.cpp:4978
 #, kde-format
@@ -3759,12 +3784,12 @@ msgstr "კეთილი იყოს თქვენი მობრძან
 #: part/pageview.cpp:5098
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
-msgstr ""
+msgstr "აირჩიეთ გასადიდებელი ადგილი. მარჯვენა წკაპი დასაპატარავებლად."
 
 #: part/pageview.cpp:5109
 #, kde-format
 msgid "Click to see the magnified view."
-msgstr ""
+msgstr "დააწკაპუნეთ გადიდებული ხედის სანახავად."
 
 #: part/pageview.cpp:5122
 #, kde-format
@@ -3806,7 +3831,7 @@ msgstr ""
 #: part/pageview.cpp:5191
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr ""
+msgstr "დახატეთ მართკუთხედი ხელმოწერის ველის ჩასასმელად"
 
 #: part/pageview.cpp:5335
 #, kde-format
@@ -3849,6 +3874,8 @@ msgstr "ხელმოწერა"
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
+"ხელმოწერა შეუძლებელია. სერტიფიკატის პაროლი არასწორია ან '%1'-ში ჩაწერა "
+"შეუძლებელია"
 
 #: part/pageviewannotator.cpp:1177
 #, kde-format
@@ -3858,13 +3885,13 @@ msgstr "ავტორის სახელი"
 #: part/pageviewannotator.cpp:1177
 #, kde-format
 msgid "Author name for the annotation:"
-msgstr ""
+msgstr "ავტორის სახელი ანოტაციისთვის:"
 
 #: part/pageviewannotator.cpp:1238
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
-msgstr ""
+msgstr "ოვალის დახატვა (გადაათრიეთ ზონის მოსანიშნად)"
 
 #: part/pageviewannotator.cpp:1240
 #, kde-format
@@ -3876,25 +3903,25 @@ msgstr "ტექსტის გამოკვეთა"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
-msgstr ""
+msgstr "ხელით დახატული ხაზი"
 
 #: part/pageviewannotator.cpp:1244
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
-msgstr ""
+msgstr "ტექსტის ანოტაცია ხაზშივე (გადაათრიეთ ზონის მოსანიშნად)"
 
 #: part/pageviewannotator.cpp:1246
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
-msgstr ""
+msgstr "ხტუნარა შენიშვნის ჩამატება"
 
 #: part/pageviewannotator.cpp:1248
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
-msgstr ""
+msgstr "მრავალკუთხედის დახატვა (დასახურად დააწკაპუნეთ პირველ წერტილს)"
 
 #: part/pageviewannotator.cpp:1250
 #, kde-format
@@ -3906,13 +3933,13 @@ msgstr "მართკუთხედის დახაზვა"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
-msgstr ""
+msgstr "ტექსტის ხაზგასმა კლაკნილით"
 
 #: part/pageviewannotator.cpp:1254
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
-msgstr ""
+msgstr "შტამპის დასმა"
 
 #: part/pageviewannotator.cpp:1256
 #, kde-format
@@ -3936,7 +3963,7 @@ msgstr "ტექსტის ხაზგასმა"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr ""
+msgstr "საბეჭდი მანქანის ანოტაცია (გადაათრიეთ ზონის მოსანიშნად)"
 
 #: part/pageviewannotator.cpp:1321
 #, kde-format
@@ -3946,12 +3973,12 @@ msgstr "გამომკვეთი"
 #: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Add favorite annotation"
-msgstr ""
+msgstr "რჩეული ანოტაციის დამატება"
 
 #: part/pageviewannotator.cpp:1618
 #, kde-format
 msgid "Custom annotation name:"
-msgstr ""
+msgstr "მომხმარებლის ანოტაციის სახელი:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -3988,7 +4015,7 @@ msgstr "&სანიშნეები"
 #: part/part-viewermode.rc:63
 #, kde-format
 msgid "Viewer Toolbar"
-msgstr ""
+msgstr "დათვალიერების ხელსაწყოთა ზოლი"
 
 #: part/part.cpp:397 part/thumbnaillist.cpp:48
 #, kde-format
@@ -4008,6 +4035,10 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
+"ეს დოკუმენტი შეიცავს ანოტაციებს ან ფორმის მონაცემებს, რომლებიც შიგნით იქნა "
+"შენახული Okular-ის წინა ვერსიის მიერ. შიდა საცავი <b>მხარდაჭერილი აღარაა</b>."
+"<br/>შენახეთ ფაილი იმისთვის, რომ გადააადგილოთ ისინი, თუ გნებავთ, მისი "
+"ჩასწორება გააგრძელოთ."
 
 #: part/part.cpp:452
 #, kde-format
@@ -4025,7 +4056,7 @@ msgstr "წინა"
 #: part/part.cpp:642
 #, kde-format
 msgid "Go back to the Previous Page"
-msgstr ""
+msgstr "წინა გვერდზე დაბრუნება"
 
 #: part/part.cpp:643
 #, kde-format
@@ -4041,7 +4072,7 @@ msgstr "შემდეგი"
 #: part/part.cpp:654
 #, kde-format
 msgid "Advance to the Next Page"
-msgstr ""
+msgstr "შემდეგ გვერდზე გაასვლა"
 
 #: part/part.cpp:655
 #, kde-format
@@ -4051,12 +4082,12 @@ msgstr "დოკუმენტის შემდეგ გვერდზე 
 #: part/part.cpp:666
 #, kde-format
 msgid "Beginning of the document"
-msgstr ""
+msgstr "დოკუმენტის დასაწყისში"
 
 #: part/part.cpp:667
 #, kde-format
 msgid "Moves to the beginning of the document"
-msgstr ""
+msgstr "გადავა დოკუმენტის დასაწყისში"
 
 #: part/part.cpp:671
 #, kde-format
@@ -4066,12 +4097,12 @@ msgstr "დოკუმენტის დასასრული"
 #: part/part.cpp:672
 #, kde-format
 msgid "Moves to the end of the document"
-msgstr ""
+msgstr "გადავა დოკუმენტის ბოლოში"
 
 #: part/part.cpp:686
 #, kde-format
 msgid "Rename the current bookmark"
-msgstr ""
+msgstr "მიმდინარე სანიშნეს სახელის გადარქმევა"
 
 #: part/part.cpp:690
 #, kde-format
@@ -4101,12 +4132,12 @@ msgstr "Okular-ის მორგება..."
 #: part/part.cpp:730
 #, kde-format
 msgid "Configure Viewer..."
-msgstr ""
+msgstr "დამთვალიერებლის მორგება..."
 
 #: part/part.cpp:736
 #, kde-format
 msgid "Configure Viewer Backends..."
-msgstr ""
+msgstr "დამთვალიერებლის უკანაბოლოების მორგება..."
 
 #: part/part.cpp:738
 #, kde-format
@@ -4142,27 +4173,27 @@ msgstr "გვერდის ნომერი"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr ""
+msgstr "ფერის რეჟიმების მორგება..."
 
 #: part/part.cpp:837
 #, kde-format
 msgid "Select All Text on Current Page"
-msgstr ""
+msgstr "მიმდინარე გვერდის ტექსტის სრულად მონშვნა"
 
 #: part/part.cpp:850
 #, kde-format
 msgid "Show S&idebar"
-msgstr ""
+msgstr "&გვერდითი პანელის ჩვენება"
 
 #: part/part.cpp:859
 #, kde-format
 msgid "Show &Page Bar"
-msgstr ""
+msgstr "&გვერდის პანელის ჩვენება"
 
 #: part/part.cpp:865
 #, kde-format
 msgid "Show &Signatures Panel"
-msgstr ""
+msgstr "&ხელმოწერების პაჯნელის ჩვენება"
 
 #: part/part.cpp:876
 #, kde-format
@@ -4187,12 +4218,12 @@ msgstr "&პრეზენტაცია"
 #: part/part.cpp:910
 #, kde-format
 msgid "Open Con&taining Folder"
-msgstr ""
+msgstr "შ&ემცველი საქაღალდის ჩვენება"
 
 #: part/part.cpp:924
 #, kde-format
 msgid "&Import PostScript as PDF..."
-msgstr ""
+msgstr "PostScript-ის შ&ემოტანა PDF-ის სახით..."
 
 #: part/part.cpp:928
 #, kde-format
@@ -4212,7 +4243,7 @@ msgstr "ანოტაციების მორგება..."
 #: part/part.cpp:946
 #, kde-format
 msgid "Play/Pause Presentation"
-msgstr ""
+msgstr "პრეზენტაციის დაკვრა/შეჩერება"
 
 #: part/part.cpp:1101
 #, kde-format
@@ -4225,7 +4256,7 @@ msgstr ""
 #: part/part.cpp:1102
 #, kde-format
 msgid "Document can't be saved"
-msgstr ""
+msgstr "დოკუმენტის შენახვა შეუძლებელია"
 
 #: part/part.cpp:1131
 #, kde-format
@@ -4235,7 +4266,7 @@ msgstr "'%1'-ის გახსნის შეცდომა (%2) "
 #: part/part.cpp:1185
 #, kde-format
 msgid "The loading of %1 has been canceled."
-msgstr ""
+msgstr "%1-ის ჩატვირთვა გაუქმდა."
 
 #: part/part.cpp:1201
 #, kde-format
@@ -4245,7 +4276,7 @@ msgstr "%1-ის გახსნის შეცდომა. მიზეზ�
 #: part/part.cpp:1229
 #, kde-format
 msgid "Configure Viewer Backends"
-msgstr ""
+msgstr "დამთვალიერებლის უკანაბოლოების მორგება"
 
 #: part/part.cpp:1231
 #, kde-format
@@ -4258,6 +4289,8 @@ msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr ""
+"პროგრამა \"ps2pdf\" ვერ ვიპოვე, ასე რომ Okular-ს PS ფაილების შემოტანა მისი "
+"გამოყენებით არ შეუძლია."
 
 #: part/part.cpp:1316
 #, kde-format
@@ -4267,17 +4300,18 @@ msgstr "ps2pdf ვერ ვიპოვე"
 #: part/part.cpp:1321
 #, kde-format
 msgid "PostScript files (%1)"
-msgstr ""
+msgstr "PostScript ფაილები (%1)"
 
 #: part/part.cpp:1337
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr ""
+"PS ფაილის შემოტანა PDF ფაილი სახით (ამას დიდი დრო შეიძლება დასჭირდეს)..."
 
 #: part/part.cpp:1466
 #, kde-format
 msgid "Please enter the password to read the document:"
-msgstr ""
+msgstr "შეიყვანეთ პაროლი დოკუმენტის წასაკითხად:"
 
 #: part/part.cpp:1468
 #, kde-format
@@ -4293,6 +4327,7 @@ msgstr "დოკუმენტის პაროლი"
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
+"ამ დოკუმენტს აქვს XFA ფორმები, რომლებიც ამჟამად <b>მხარდაჭერილი არაა</b>."
 
 #: part/part.cpp:1601
 #, kde-format
@@ -4300,6 +4335,8 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
+"ამ დოკუმენტს ფორმები აქვს. დააწკაპუნეთ ღილაკზე, რათა მათთან ურთიერთობა "
+"იქონიოთ. ან გამოიყენეთ მენიუ ხედი -> ფორმების ჩვენება."
 
 #: part/part.cpp:1617
 #, kde-format
@@ -4307,6 +4344,8 @@ msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
+"ამ დოკუმენტისთვის ყველა ჩასწორებისა და ურთიერთობის ფუნქციები გამორთულია. ამ "
+"დოკუმენტის ჩასასწორებლად შეინახეთ მისი ასლი და თავიდან გახსენით."
 
 #: part/part.cpp:1705
 #, kde-format
@@ -4318,7 +4357,7 @@ msgstr ""
 #: part/part.cpp:1707
 #, kde-format
 msgid "Request to Change Viewing Mode"
-msgstr ""
+msgstr "თვალიერების რეჟიმის შეცვლის მოთხოვნა"
 
 #: part/part.cpp:1708
 #, kde-format
@@ -4358,7 +4397,7 @@ msgstr "თავიდან ჩატვირთვის გაგრძე�
 #: part/part.cpp:1835
 #, kde-format
 msgid "Abort Reloading"
-msgstr ""
+msgstr "თავიდან ჩატვირთვის გაუქმება"
 
 #: part/part.cpp:1839
 #, kde-kuit-format
@@ -4383,7 +4422,7 @@ msgstr "დახურვის შეწყვეტა"
 #: part/part.cpp:1852
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr ""
+msgstr "გნებავთ, შეინახოთ ცვლილებები \"%1\"-ში თუ მოაცილოთ ისინი?"
 
 #: part/part.cpp:1852
 #, kde-format
@@ -4396,6 +4435,8 @@ msgid ""
 "This link points to a close document action that does not work when using "
 "the embedded viewer."
 msgstr ""
+"ეს ბმული მიუთითებს დოკუმენტის დახურვის ქმედებაზე, რომელიც არ მუშაობს, როცა "
+"ჩაშენებულ დამთვალიერებელს იყენებთ."
 
 #: part/part.cpp:1990
 #, kde-format
@@ -4403,6 +4444,8 @@ msgid ""
 "This link points to a quit application action that does not work when using "
 "the embedded viewer."
 msgstr ""
+"ეს ბმული მიუთითებს აპლიკაციიდან გასვლის ქმედებაზე, რომელიც არ მუშაობს, როცა "
+"ჩაშენებულ დამთვალიერებელს იყენებთ."
 
 #: part/part.cpp:2082 part/part.cpp:2100
 #, kde-format
@@ -4432,7 +4475,7 @@ msgstr "&გვერდი:"
 #: part/part.cpp:2429
 #, kde-format
 msgid "Enter the new name of the bookmark:"
-msgstr ""
+msgstr "შეიყვანეთ სანიშნეს ახალი სახელი:"
 
 #: part/part.cpp:2475
 #, kde-format
@@ -4491,7 +4534,7 @@ msgstr "შენახვა - გაფრტხილება"
 #: part/part.cpp:2638
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "ასლის სადმე სხვაგან შენახვა"
 
 #: part/part.cpp:2653
 #, kde-format
@@ -4504,7 +4547,7 @@ msgstr ""
 #: part/part.cpp:2680
 #, kde-format
 msgid "Could not open the temporary file for saving."
-msgstr ""
+msgstr "დროებითი ფაილის შესანახად გახსნა შეუძლებელია."
 
 #: part/part.cpp:2693
 #, kde-kuit-format
@@ -4524,12 +4567,12 @@ msgstr ""
 #: part/part.cpp:2720 part/part.cpp:2789 part/part.cpp:2810 part/part.cpp:3459
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
-msgstr ""
+msgstr "ფაილის შენახვა '%1'-ში შეუძლებელია. სცადეთ, სხვა ადგილას შეინახოთ."
 
 #: part/part.cpp:2733
 #, kde-format
 msgid "Filled form contents"
-msgstr ""
+msgstr "შევსებული ფორმის შემცველობა"
 
 #: part/part.cpp:2736
 #, kde-format
@@ -4552,7 +4595,7 @@ msgstr "გაფრთხილება"
 #: part/part.cpp:2746 part/part.cpp:2768
 #, kde-format
 msgid "Save as Okular document archive..."
-msgstr ""
+msgstr "შენახვა, როგორც Okular-ის დოკუმენტების არქივი..."
 
 #: part/part.cpp:2758
 #, kde-format
@@ -4580,12 +4623,12 @@ msgstr "გაგრძელება"
 #: part/part.cpp:2763
 #, kde-format
 msgid "Continue losing changes"
-msgstr ""
+msgstr "გაგრძელება ცვლილებების დაკარგვით"
 
 #: part/part.cpp:2791
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
-msgstr ""
+msgstr "ფაილი '%1'-ში ვერ შევინახე: %2"
 
 #: part/part.cpp:2830
 #, kde-format
@@ -4601,6 +4644,8 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
+"ფაილის შენახვა '%1'-ში შეუძლებელია. შეცდომა: '%2'. სცადეთ, სხვა ადგილას "
+"შეინახოთ."
 
 #: part/part.cpp:3117
 #, kde-format
@@ -4625,7 +4670,7 @@ msgstr "ყველას ჩაკეცვა"
 #: part/part.cpp:3131
 #, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr ""
+msgstr "მინიატურის სინქრონიზაცია გვერდთან"
 
 #: part/part.cpp:3136
 #, kde-format
@@ -4652,13 +4697,15 @@ msgstr "ამობეჭდვა"
 #: part/part.cpp:3560
 #, kde-format
 msgid "Printing this document is not allowed."
-msgstr ""
+msgstr "ამ დოკუმენტის დაბეჭდვა დაშვებული არაა."
 
 #: part/part.cpp:3568
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
+"დოკუმენტი ვერ დავბეჭდე. უცნობი შეცდომა. მოგვწერეთ შეცდომის შესახებ საიტზე "
+"bugs.kde.org"
 
 #: part/part.cpp:3570
 #, kde-format
@@ -4666,16 +4713,18 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
+"დოკუმენტი ვერ დავბეჭდე. დეტალური შეცდომაა \"%1\". მოგვწერეთ შეცდომის შესახებ "
+"საიტზე bugs.kde.org"
 
 #: part/part.cpp:3650
 #, kde-format
 msgid "Go to the place you were before"
-msgstr ""
+msgstr "გადასვლა ადგილზე, სადაც მანამდე იყავით"
 
 #: part/part.cpp:3654
 #, kde-format
 msgid "Go to the place you were after"
-msgstr ""
+msgstr "გადასვლა ადგილზე, სადაც შემდეგ იყავით"
 
 #: part/part.cpp:3679
 #, kde-format
@@ -4683,6 +4732,8 @@ msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 msgstr ""
+"<qt><strong>ფაილის შეცდომა!</strong> ვერ შევქმენი დროებითი ფაილი "
+"<nobr><strong>%1</strong></nobr>.</qt>"
 
 #: part/part.cpp:3691
 #, kde-format
@@ -4706,6 +4757,8 @@ msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
 "%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
+"<qt><strong>ფაილის შეცდომა!</strong> ვერ გავშალე ფაილი <nobr><strong>%1</"
+"strong></nobr>. ფაილი არ ჩაიტვირთება.</qt>"
 
 #: part/part.cpp:3721
 #, kde-format
@@ -4713,6 +4766,9 @@ msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
+"<qt>ეს შეცდომა, ჩვეულებრივ, ხდება მაშინ, როცა ფაილი დაზიანებულია. თუ "
+"გნებავთ, დარწმუნდეთ, სცადეთ, ფაილი ხელით, ბრძანების სტრიქონის ბრძანებებით "
+"გაშალოთ</qt>"
 
 #: part/part.cpp:3747
 #, kde-format
@@ -4738,6 +4794,7 @@ msgstr "დოკუმენტი წარმატებით გაზი�
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
+"გაზიარებული დოკუმენტის ხილვა შეგიძლიათ მისამართზე: <a href=\"%1\">%1</a>"
 
 #. i18n: ectx: Menu (edit)
 #: part/part.rc:19
@@ -4794,7 +4851,7 @@ msgstr "წვდომადობა"
 #: part/preferencesdialog.cpp:42
 #, kde-format
 msgid "Accessibility Reading Aids"
-msgstr ""
+msgstr "კითხვის დამხმარე შესაძლებლობები"
 
 #: part/preferencesdialog.cpp:43
 #, kde-format
@@ -4809,7 +4866,7 @@ msgstr "წარმადობის მორგება"
 #: part/preferencesdialog.cpp:45
 #, kde-format
 msgid "Configure Viewer"
-msgstr ""
+msgstr "დამთვალიერებლის მორგება"
 
 #: part/preferencesdialog.cpp:49
 #, kde-format
@@ -4819,7 +4876,7 @@ msgstr "პრეზენტაცია"
 #: part/preferencesdialog.cpp:49
 #, kde-format
 msgid "Options for Presentation Mode"
-msgstr ""
+msgstr "პარამეტრები პრეზენტაციის რეჟიმისთვის"
 
 #: part/preferencesdialog.cpp:50
 #, kde-format
@@ -4946,7 +5003,7 @@ msgstr "&ფონტები"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr ""
+msgstr "ფონტის ინფორმაციის წაკითხვა..."
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5036,7 +5093,7 @@ msgstr "TeX ფონტის მეტრიკა"
 #: part/propertiesdialog.cpp:315
 #, kde-format
 msgid "TeX FreeType-handled"
-msgstr ""
+msgstr "FreeType TeX-სთვის"
 
 #: part/propertiesdialog.cpp:318
 #, kde-format
@@ -5047,12 +5104,12 @@ msgstr "უცნობი"
 #: part/propertiesdialog.cpp:331
 #, kde-format
 msgid "Embedded (subset)"
-msgstr ""
+msgstr "ჩაშენებული ქვესიმრავლე"
 
 #: part/propertiesdialog.cpp:334
 #, kde-format
 msgid "Fully embedded"
-msgstr ""
+msgstr "სრულად ჩაშენებული"
 
 #: part/propertiesdialog.cpp:344
 #, kde-format
@@ -5119,27 +5176,27 @@ msgstr "ზომა"
 #: part/revisionviewer.cpp:41
 #, kde-format
 msgid "Revision Preview"
-msgstr ""
+msgstr "რევზიის გადახედვა"
 
 #: part/revisionviewer.cpp:53
 #, kde-format
 msgid "Where do you want to save this revision?"
-msgstr ""
+msgstr "სად გნებავთ, ეს რევიზია შეინახოთ?"
 
 #: part/revisionviewer.cpp:56
 #, kde-format
 msgid "Could not save file %1."
-msgstr ""
+msgstr "ფაილის შენახვა შეუძლებელია: \"%1\"."
 
 #: part/revisionviewer.cpp:75
 #, kde-format
 msgid "Could not view revision."
-msgstr ""
+msgstr "რევიზიის ნახვა შეუძლებელია."
 
 #: part/searchwidget.cpp:39
 #, kde-format
 msgid "Enter at least 3 letters to filter pages"
-msgstr ""
+msgstr "გვერდების გასაფილტრად შეიყვანეთ სულ ცოტა 3 სიმბოლო"
 
 #: part/searchwidget.cpp:49
 #, kde-format
@@ -5176,7 +5233,7 @@ msgstr "სერტიფიკატები"
 #: part/selectcertificatedialog.ui:20
 #, kde-format
 msgid "Select certificate to sign with:"
-msgstr ""
+msgstr "აირჩიეთ ხელმოსაწერი სერტიფიკატი:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
@@ -5237,17 +5294,17 @@ msgstr "ავტორით დაჯგუფება"
 #: part/side_reviews.cpp:150
 #, kde-format
 msgid "Show annotations for current page only"
-msgstr ""
+msgstr "ანოტაციების, მხოლოდ, მიმდინარე გვერდისთვის ჩვენება"
 
 #: part/side_reviews.cpp:160
 #, kde-format
 msgid "Expand all elements"
-msgstr ""
+msgstr "ყველა ელემენტის ამოკეცვა"
 
 #: part/side_reviews.cpp:162
 #, kde-format
 msgid "Collapse all elements"
-msgstr ""
+msgstr "ყველა ელემენტის ჩაკეცვა"
 
 #: part/signaturepanel.cpp:101
 #, kde-format
@@ -5263,7 +5320,7 @@ msgstr "სურათები (%1)"
 #: part/signaturepartutils.cpp:346
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "აირჩიე ფონის გამოსახულება"
 
 #: part/signaturepartutils.cpp:351
 #, kde-format
@@ -5278,7 +5335,7 @@ msgstr "ყველა გამოსახულების დავიწ�
 #: part/signaturepartutils.cpp:395
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "შეიყვანეთ პაროლი (თუ არსებობს) სერტიფიკატის განსაბლოკად: %1"
 
 #: part/signaturepartutils.cpp:397
 #, kde-format
@@ -5293,7 +5350,7 @@ msgstr "შეიყვანეთ დოკუმენტის პარო�
 #: part/signaturepartutils.cpp:433
 #, kde-format
 msgid "Save Signed File As"
-msgstr ""
+msgstr "ხელმოწერილი ფაილის შენახვა, როგორც"
 
 #: part/signaturepartutils.h:63
 #, kde-format
@@ -5301,7 +5358,7 @@ msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 it's extension"
 msgid "%1_signed.%2"
-msgstr ""
+msgstr "%1_signed.%2"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format
@@ -5347,7 +5404,7 @@ msgstr "დოკუმენტის გადასინჯვა %1 %2-დ�
 #: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
-msgstr ""
+msgstr "ხელმოწერილი ვერსიის ნახვა..."
 
 #: part/signaturepropertiesdialog.cpp:90
 #, kde-format
@@ -5362,12 +5419,12 @@ msgstr "სერტიფიკატის მმართველში ნ�
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE-ის სერტიფიკატების მმართველი (kleopatra) აღმოჩენილი არაა"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
 msgid "Show bookmarked pages only"
-msgstr ""
+msgstr "მხოლოდ, სანიშნეებში ჩამატებული გვერდების ჩვენება"
 
 #: part/videowidget.cpp:145
 #, kde-format
@@ -5390,12 +5447,12 @@ msgstr "შეჩერება"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "ამ Okular-ში ვიდეოები მხარდაჭერილი არაა"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "ამ Okular-ში ვიდეოები მხარდაჭერილი არაა"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5425,12 +5482,12 @@ msgstr "ჩამოწევა"
 #: part/widgetdrawingtools.cpp:105
 #, kde-format
 msgid "Default Drawing Tool #%1"
-msgstr ""
+msgstr "ნაგულისხმევი სახატავი პროგრამა #%1"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr ""
+msgstr "პროგრამა ამ სახელით უკვე არსებობს. ვიყენებ ნაგულისხმევს"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
@@ -5440,47 +5497,47 @@ msgstr "დუბლირებული სახელი"
 #: shell/main.cpp:69
 #, kde-format
 msgid "Page of the document to be shown"
-msgstr ""
+msgstr "დოკუმენტის გვერდი საჩვენებლად"
 
 #: shell/main.cpp:70
 #, kde-format
 msgid "Start the document in presentation mode"
-msgstr ""
+msgstr "დოკუმენტის გაშვება პრეზენტაციის რეჟიმში"
 
 #: shell/main.cpp:71
 #, kde-format
 msgid "Start with print dialog"
-msgstr ""
+msgstr "ბეჭდვის დიალოგით გაშვება"
 
 #: shell/main.cpp:72
 #, kde-format
 msgid "Start with print dialog and exit after printing"
-msgstr ""
+msgstr "ბეჭდვის დიალოგით გაშვება და გასვლა დაბეჭდვის შემდეგ"
 
 #: shell/main.cpp:73
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr ""
+msgstr "\"უნიკალური გაშვებული ასლის\" კონტროლი"
 
 #: shell/main.cpp:74
 #, kde-format
 msgid "Not raise window"
-msgstr ""
+msgstr "არ ასწიო ფანჯარა"
 
 #: shell/main.cpp:75
 #, kde-format
 msgid "Find a string on the text"
-msgstr ""
+msgstr "სტრიქონის ძებნა ტექსტში"
 
 #: shell/main.cpp:76
 #, kde-format
 msgid "sets the external editor command"
-msgstr ""
+msgstr "აყენებს გარე რედაქტორის ბრძანებას"
 
 #: shell/main.cpp:77
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
-msgstr ""
+msgstr "გასახსნელი დოკუმენტი. სტანდარტული შეყვანიდან წასაკითხად მიუთითეთ '-'."
 
 #: shell/okular_main.cpp:64 shell/okular_main.cpp:169
 #, kde-format
@@ -5493,32 +5550,32 @@ msgstr ""
 #: shell/okular_main.cpp:188
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
-msgstr ""
+msgstr "შეცდომა: პარამეტრით --unique ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
 #: shell/okular_main.cpp:194
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
-msgstr ""
+msgstr "შეცდომა: პარამეტრით --presentation ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
 #: shell/okular_main.cpp:200
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
-msgstr ""
+msgstr "შეცდომა: პარამეტრით --print ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
 #: shell/okular_main.cpp:206
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
-msgstr ""
+msgstr "შეცდომა: პარამეტრით --page ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
 #: shell/okular_main.cpp:212
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
-msgstr ""
+msgstr "შეცდომა: პარამეტრით --find ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
 #: shell/shell.cpp:197
 #, kde-format
 msgid "Unable to find the Okular component: %1"
-msgstr ""
+msgstr "ვერ ვიპოვე Okular-ის კომპონენტი: %1"
 
 #: shell/shell.cpp:240
 #, kde-format
@@ -5535,7 +5592,7 @@ msgstr ""
 #: shell/shell.cpp:300
 #, kde-format
 msgid "Unable to find the Okular component."
-msgstr ""
+msgstr "Okualar-ის კომპონენტის პოვნა ვერ მოხერხდა."
 
 #: shell/shell.cpp:540
 #, kde-format
@@ -5598,12 +5655,12 @@ msgstr "ჩანართების დახურვა"
 #: shell/shell.cpp:805
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr ""
+msgstr "აპირებთ, დახუროთ %1 ჩანართი. დარწმუნებული ბრძანდებით?"
 
 #: shell/shell.cpp:807
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr ""
+msgstr "გამაფრთხილე, როცა ერთზე მეტი ჩანართის დახურვას დავაპირებ"
 
 #: shell/welcomescreen.cpp:64
 #, kde-format
@@ -5619,7 +5676,7 @@ msgstr "შემცველი საქაღალდის &გახსნ
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "&ამ ელემენტის დავიწყება"
 
 #: shell/welcomescreen.cpp:137
 #, kde-format

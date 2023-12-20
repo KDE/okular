@@ -34,12 +34,3 @@ msgstr "txemaq@gmail.com"
 #, kde-format
 msgid "Name"
 msgstr "Nom"
-
-#~ msgid "A renderer for Plucker eBooks"
-#~ msgstr "Un renderitzador per a llibres electrònics Plucker"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

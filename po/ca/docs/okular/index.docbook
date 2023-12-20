@@ -168,7 +168,7 @@ Context menu actions like Rename Bookmarks etc.)
 > </menuchoice
 > des del menú contextual del gestor de fitxers. </para>
 			<para
->Després de tenir obert un fitxer probablement el voldreu llegir i per tant, navegar a través seu. Aneu a la <link linkend="navigating"
+>Després de tenir obert un fitxer probablement el voldreu llegir i, per tant, navegar a través seu. Aneu a la <link linkend="navigating"
 >següent secció</link
 > per a aprendre més sobre això. </para>
 		</sect1>
@@ -244,9 +244,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 			</itemizedlist>
 			<para
->Alguns documents tenen enllaços. En aquest cas podreu fer clic sobre seu i la vista canviarà a la pàgina que enllaça. Si l'enllaç és a una pàgina web o algun altre document s'invocarà el gestor predeterminat del &kde; per a aquest format. Per exemple, en fer clic a un enllaç que apunta a <quote
->https://www.kde.org</quote
-> s'obrirà la pàgina web al navegador web predeterminat del &kde;. </para>
+>Alguns documents tenen enllaços. En aquest cas podreu fer clic sobre seu i la vista canviarà a la pàgina que enllaça. Si l'enllaç és a una pàgina web o algun altre document s'invocarà el gestor predeterminat del &kde; per a aquest format. Per exemple, en fer clic a un enllaç que apunta a «https://www.kde.org» s'obrirà la pàgina web al navegador web predeterminat del &kde;. </para>
 			<important>
 			  <para
 >Els enllaços interns del document només funcionaran quan s'utilitzi l'<link linkend="menutools"
@@ -310,9 +308,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para
->Podeu tornar a les posicions en el document on heu estat en un ordre cronològic. Considerem &pex; que llegiu la frase <quote
->Com es mostra a [15], …</quote
->, i coneixeu la referència de cerca ràpida [15]. De manera que feu clic sobre seu, i l'&okular; saltarà a la llista de referències. Utilitzant <keycombo
+>Podeu tornar a les posicions en el document on heu estat en un ordre cronològic. Considerem &pex; que llegiu la frase «Com es mostra a [15], …», i coneixeu la referència de cerca ràpida [15]. De manera que feu clic sobre seu, i l'&okular; saltarà a la llista de referències. Utilitzant <keycombo
 >&Alt;&Maj;&Left;</keycombo
 > o <menuchoice
 ><guimenu
@@ -838,7 +834,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Subratlla un text amb una línia recta. </para>
 					  <para
->Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a subratllar un l fragment de text. </para>
+>Feu clic sobre el botó d'eina, després feu clic amb el &BER; i arrossegueu per a subratllar un fragment de text. </para>
 					  <para
 >És possible definir el <guilabel
 >Tipus</guilabel
@@ -963,8 +959,8 @@ Context menu actions like Rename Bookmarks etc.)
 >Cancel·la</guibutton
 > per a cancel·lar. </para>
 					  <para
->És possible definir el <guilabel
->Tipus de lletra</guilabel
+>És possible definir la <guilabel
+>Lletra</guilabel
 > i el <guilabel
 >Color del text</guilabel
 > per al text. Simplement feu clic dret sobre el text escrit i seleccioneu l'element del menú <guimenuitem
@@ -1002,13 +998,13 @@ Context menu actions like Rename Bookmarks etc.)
 >Color</guilabel
 >, l'<guilabel
 >Opacitat</guilabel
->, el <guilabel
->Tipus de lletra</guilabel
+>, la <guilabel
+>Lletra</guilabel
 >, l'<guilabel
 >Alineació</guilabel
 > i l'<guilabel
 >Amplada de la vora</guilabel
-> per a la nota. Simplement feu clic dret sobre la icona de la nota creada i seleccioneu l'element de menú <guimenuitem
+> per a la nota. Simplement, feu clic dret sobre la icona de la nota creada i seleccioneu l'element de menú <guimenuitem
 >Propietats</guimenuitem
 >. </para>
 					</entry>
@@ -1316,7 +1312,7 @@ Context menu actions like Rename Bookmarks etc.)
 > del diàleg de configuració, podeu afegir les vostres pròpies anotacions, com ara segells personalitzats, marcatge de text o una forma geomètrica amb color interior per a destacar les regions, &etc; </para>
                                   <note>
                                       <para
->És possible afegir codi en &latex; dins del text de les anotacions. Per fer-ho, afegiu <userinput
+>És possible afegir codi en &latex; dins del text de les anotacions. Per a fer-ho, afegiu <userinput
 >$$<replaceable
 >codi</replaceable
 >$$</userinput
@@ -1438,11 +1434,11 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Tipus de lletra de l'anotació </para>
+>Lletra de l'anotació </para>
 					</entry>
 					<entry>
 					  <para
->Feu clic sobre aquest botó per a obrir el diàleg de selecció del tipus de lletra. </para>
+>Feu clic sobre aquest botó per a obrir el diàleg de selecció de la lletra. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1686,11 +1682,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Punts</guilabel
 > per a filtrar el contingut de la subfinestra de la llista de punts d'acord amb el text al quadre. </para>
 				<para
->La subfinestra de llista permet veure la llista de punts d'un mode en arbre: cada document a la llista pot ser <quote
->desplegat</quote
-> o <quote
->plegat</quote
-> fent clic sobre la icona <guiicon
+>La subfinestra de llista permet veure la llista de punts d'un mode en arbre: cada document a la llista pot ser «desplegat» o «plegat» fent clic sobre la icona <guiicon
 >&lt;</guiicon
 > o <guiicon
 >v</guiicon
@@ -2166,14 +2158,14 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 ><action
 >Mostra informació bàsica</action
-> sobre el document, com el títol, autor, data de creació, i detalls sobre els tipus de lletra utilitzats. La informació disponible dependrà del tipus de document.</para>
+> sobre el document, com el títol, autor, data de creació, i detalls sobre les lletres utilitzades. La informació disponible dependrà del tipus de document.</para>
 						<note>
 							<para
->Pareu atenció a la informació sobre la substitució de fonts del tipus de lletra a la pestanya <guilabel
->Tipus de lletra</guilabel
+>Pareu atenció a la informació sobre la substitució de fonts de lletres a la pestanya <guilabel
+>Lletres</guilabel
 > del diàleg <guilabel
 >Propietats</guilabel
->. Molts dels problemes amb la representació dels tipus de lletra es poden resoldre instal·lant els tipus de lletra substituïts.</para>
+>. Molts dels problemes amb la representació de les lletres es poden resoldre instal·lant les lletres substituïdes.</para>
 						</note>
 					</listitem>
 				</varlistentry>
@@ -2680,25 +2672,13 @@ Context menu actions like Rename Bookmarks etc.)
 >Retalla a la selecció</guimenuitem
 >). </para>
 						<para
->El mode <quote
->retalla a la selecció</quote
-> permet dibuixar una selecció sobre la pàgina renderitzada per tal de definir un quadre delimitador visible que s'aplicarà a <emphasis
+>El mode «retalla a la selecció» permet dibuixar una selecció sobre la pàgina renderitzada per tal de definir un quadre delimitador visible que s'aplicarà a <emphasis
 >totes les pàgines</emphasis
 > del document. Realitzant la selecció d'un petit quadre delimitador de retall s'imposarà la mida de dimensions mínimes (20% com a percentatge de la mida total de la pàgina). </para>
 						<para
->El mode <quote
->retalla els marges</quote
-> és persistent després de reiniciar l'&okular;. El mode <quote
->retalla a la selecció</quote
-> s'oblida després de reiniciar l'&okular;. </para>
+>El mode «retalla els marges» és persistent després de reiniciar l'&okular;. El mode «retalla a la selecció» s'oblida després de reiniciar l'&okular;. </para>
 						<para
->En canviar l'&okular; des del mode <quote
->retalla els marges</quote
-> al mode <quote
->retalla a la selecció</quote
->, la vista saltarà del mode <quote
->retalla els marges</quote
-> a la interacció d'un quadre delimitador per a la selecció. </para>
+>En canviar l'&okular; des del mode «retalla els marges» al mode «retalla a la selecció», la vista saltarà del mode «retalla els marges» a la interacció d'un quadre delimitador per a la selecció. </para>
 						<para
 >El mode de retall es pot desactivar seleccionant el mateix element del menú una altra vegada. </para>
 					</listitem>
@@ -3060,7 +3040,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Dibuixeu un rectangle al voltant del text per a la taula, a continuació, utilitzeu el clic amb el &BER; per a dividir el bloc de text en files i columnes. Un clic del &BER; sobre una línia existent eliminarà i fusionarà les files o columnes adjacents. Per acabar, feu clic amb el &BDR; per a copiar la taula al porta-retalls. </para>
+>Dibuixeu un rectangle al voltant del text per a la taula, a continuació, utilitzeu el clic amb el &BER; per a dividir el bloc de text en files i columnes. Un clic del &BER; sobre una línia existent eliminarà i fusionarà les files o columnes adjacents. Per a acabar, feu clic amb el &BDR; per a copiar la taula al porta-retalls. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3263,9 +3243,9 @@ Context menu actions like Rename Bookmarks etc.)
 	    </mediaobject>
 	  </screenshot>
 	  <para
->Utilitzant les pàgines de configuració per als dorsals EPub, FictionBook, Mobipocket, Markdown, Txt i Text en OpenDocument podreu definir el tipus de lletra per a representar els documents en els formats corresponents. El botó <guibutton
+>Utilitzant les pàgines de configuració per als dorsals EPub, FictionBook, Mobipocket, Markdown, Txt i Text en OpenDocument podreu definir la lletra per a representar els documents en els formats corresponents. El botó <guibutton
 >Tria...</guibutton
-> en aquestes pàgines obre la finestra de configuració estàndard del &kde; per a tipus de lletres. Per als detalls, vegeu la <ulink url="help:/fundamentals/fonts.html"
+> en aquestes pàgines obre la finestra de configuració estàndard del &kde; de les lletres. Per als detalls, vegeu la <ulink url="help:/fundamentals/fonts.html"
 >documentació Fonaments del &kde;</ulink
 >. </para>
 	  <para
@@ -3312,11 +3292,11 @@ Context menu actions like Rename Bookmarks etc.)
 		<varlistentry>
 		  <term>
 		    <guilabel
->Utilitza els tipus de lletra de la plataforma</guilabel>
+>Utilitza les lletres de la plataforma</guilabel>
 		  </term>
 		  <listitem>
 		    <para
->Aquesta opció determina si el Ghostscript ha de poder utilitzar els tipus de lletra de la plataforma, si està sense marcar, només podrà utilitzar els tipus de lletra incrustats en el document. De manera predeterminada es troba marcada. </para>
+>Aquesta opció determina si el Ghostscript ha de poder utilitzar les lletres de la plataforma, si està sense marcar, només podrà utilitzar les lletres incrustades en el document. De manera predeterminada es troba marcada. </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -3993,7 +3973,7 @@ Context menu actions like Rename Bookmarks etc.)
 > del text i les imatges en el document, segons correspongui. L'element <guilabel
 >Activa la correcció de lletres per text</guilabel
 > està destinat a ser un selector per a <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
->mostrar tipus de lletra</ulink
+>corregir les lletres</ulink
 >. L'antialiàsing i la correcció de lletres canvien quan es visualitzen els documents, molts els voldreu ajustar a les vostres preferències.</para>
 					</listitem>
 				</varlistentry>
@@ -4283,7 +4263,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Escolliu l'editor que voleu llançar quan l'&okular; vulgui obrir un fitxer font. Aquest és el cas quan el document conté referències als diversos punts (usualment nombre de fila i columna) de les fonts des de les quals fou generat. El format &DVI; admet de forma nativa afegir la informació sobre les fonts del document &latex; des del que fou generat. Existeix un sistema similar per als documents &PDF;, anomenat <acronym
+>Escolliu l'editor que voleu llançar quan l'&okular; vulgui obrir un fitxer font. Aquest és el cas quan el document conté referències als diversos punts (usualment número de fila i columna) de les fonts des de les quals fou generat. El format &DVI; admet de forma nativa afegir la informació sobre les fonts del document &latex; des del que fou generat. Existeix un sistema similar per als documents &PDF;, anomenat <acronym
 >pdfsync</acronym
 >, el qual emmagatzema aquesta informació extra en un fitxer extern anomenat després del fitxer &PDF; mateix (per exemple <filename
 >meu_document.pdfsync</filename

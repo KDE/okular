@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2023-10-19 11:48+0200\n"
+"PO-Revision-Date: 2023-12-19 13:42+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -597,7 +597,7 @@ msgstr "Origen: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "Tipus de lletra pre&determinada:"
+msgstr "Lletra pre&determinada:"
 
 #: gui/certificatemodel.cpp:39
 #, kde-format
@@ -1194,7 +1194,7 @@ msgstr "Opacitat de l'anotació (cap anotació seleccionada)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Tipus de lletra de l'anotació (cap anotació seleccionada)"
+msgstr "Lletra de l'anotació (cap anotació seleccionada)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1273,14 +1273,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Tipus de lletra de l'anotació"
+msgstr "Lletra de l'anotació"
 
 #: part/annotationactionhandler.cpp:330
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
-"Tipus de lletra de l'anotació (l'anotació actual no té tipus de lletra)"
+msgstr "Lletra de l'anotació (l'anotació actual no té lletra)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
@@ -1509,7 +1508,7 @@ msgstr "Conserva la relació i l'angle de les eines d'anotació"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
-msgstr "Tipus de lletra"
+msgstr "Lletra"
 
 #: part/annotationactionhandler.cpp:680
 #, kde-format
@@ -1786,7 +1785,7 @@ msgstr "Paràgraf"
 #: part/annotationwidgets.cpp:380
 #, kde-format
 msgid "Font:"
-msgstr "Tipus de lletra:"
+msgstr "Lletra:"
 
 #: part/annotationwidgets.cpp:389
 #, kde-format
@@ -3886,7 +3885,7 @@ msgstr "Hi ha canvis sense desar. Deseu el document abans de signar-lo."
 #: part/pageview.cpp:5191
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr "Dibuixa un rectangle per inserir el camp de signatura"
+msgstr "Dibuixa un rectangle per a inserir el camp de signatura"
 
 #: part/pageview.cpp:5335
 #, kde-format
@@ -5116,12 +5115,12 @@ msgstr "%1:"
 #: part/propertiesdialog.cpp:124
 #, kde-format
 msgid "&Fonts"
-msgstr "&Tipus de lletra"
+msgstr "&Lletres"
 
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr "S'està llegint la informació del tipus de lletra..."
+msgstr "S'està llegint la informació de la lletra..."
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5132,7 +5131,7 @@ msgstr "Mides de les &pàgines"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Extract Font"
-msgstr "&Extreu el tipus de lletra"
+msgstr "&Extreu la lletra"
 
 #: part/propertiesdialog.cpp:273
 #, kde-format
@@ -5206,7 +5205,7 @@ msgstr "TeX virtual"
 #: part/propertiesdialog.cpp:312
 #, kde-format
 msgid "TeX Font Metric"
-msgstr "Mètrica de tipus de lletra del TeX"
+msgstr "Mètrica de lletra del TeX"
 
 #: part/propertiesdialog.cpp:315
 #, kde-format
@@ -5259,7 +5258,7 @@ msgstr "[n/d]"
 #: part/propertiesdialog.cpp:385
 #, kde-format
 msgid "Unknown font"
-msgstr "Tipus de lletra desconegut"
+msgstr "Lletra desconeguda"
 
 #: part/propertiesdialog.cpp:391
 #, kde-format

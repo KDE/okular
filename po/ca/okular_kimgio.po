@@ -43,30 +43,3 @@ msgid ""
 msgstr ""
 "Sembla que aquest document té un format incorrecte. Aquesta és la millor "
 "aproximació de l'aparença proposada."
-
-#~ msgid "Image Backend"
-#~ msgstr "Dorsal d'imatges"
-
-#~ msgid "A simple image backend"
-#~ msgstr "Un dorsal d'imatges senzill"
-
-#~ msgid ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-#~ msgstr ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Main Toolbar"
-#~ msgstr "Barra d'eines principal"

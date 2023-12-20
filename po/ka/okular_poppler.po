@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2023-06-27 09:37+0200\n"
+"PO-Revision-Date: 2023-12-19 03:59+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -32,7 +32,7 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "გადაბეჭდვის მინიატურის ჩართვა"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26
@@ -90,6 +90,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"ამ პარამეტრის ჩართვა საშუალებას მისცემს Okular-ს, დაუკავშირდეს მესამე "
+"პირების მიერ მოწოდებულ OCSP სერვერებს, რათა შეამოწმოს, ხომ არ გაუქმებულა "
+"ციფრული ხელმოწერისთვის გამოყენებული სერტიფიკატები მათი შექმნის შემდეგ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116
@@ -97,6 +100,8 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"ციფრული ხელმოწერის სერტიფიკატების გაუქმების სტატუსის შემოწმება მესამე "
+"პირების სერვერების გამოყენებით"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:138
@@ -175,6 +180,9 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
+"თითოეული გვერდის ნაძალადევი რასტერიზაცია გამოსახულებაში მათ დაბეჭდვამდე. ასე "
+"მიღებული შედეგი ოდნავ უარესია, მაგრამ გამოსადეგია, როცა ბეჭდავთ დოკუმენტს, "
+"რომელიც სხვა ხერხებით არასწორად იბეჭდება."
 
 #: generator_pdf.cpp:106
 #, kde-format
@@ -265,6 +273,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"დოკუმენტში აღმოჩენილია შეცდომები. Okular-მა, შეიძლება, მისი შემცველობა "
+"სწორად ვერ აჩვენოს"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
@@ -289,6 +299,8 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"იყენებთ ბიბლიოთეკას Poppler, რომელიც NSS-ის მხარდაჭერის გარეშეა აგებული.\n"
+"ამ მიზეზით ციფრული ხელმოწერების დამატება ხელმისაწვდომი არაა"
 
 #: pdfsettingswidget.cpp:188
 #, kde-format

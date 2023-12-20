@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-13 00:40+0000\n"
-"PO-Revision-Date: 2022-12-28 05:11+0100\n"
+"PO-Revision-Date: 2023-12-19 05:01+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -49,6 +49,10 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
+"<qt>გარე პროგრამა 'dvipdfm', რომელიც გამოყენებული იყო ფაილის გატანისთვის, "
+"ავარიულად დასრულდა. შეცდომის მეტი დეტალების გასაგებად, შეგიძლიათ, შეხედოთ "
+"<strong>დოკუმენტის ინფორმაციის დიალოგს</strong> რომელიც, შეგიძლიათ, ფაილის "
+"მენიუში იხილოთ.</qt>"
 
 #: dviexport.cpp:168
 #, kde-format
@@ -90,27 +94,31 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
+"DVI ფაილი ამ პროგრამისთვის არასწორ ვერსიას შეიცავს. მინიშნება. თუ იყენებთ "
+"Omega-ს, oxdvi-ის მსგავსი სპეციალური პროგრამა დაგჭირდებათ."
 
 #: dviFile.cpp:134
 #, kde-format
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
 msgstr ""
+"DVI ფაილი სასიკვდილოდაა დაჭრილი და სულს ღაფავს. Okular-მა მისი პოსტამბულაც "
+"კი ვერ იპოვა."
 
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr ""
+msgstr "პოსტამბულა POST ბრძანებით არ იწყება."
 
 #: dviFile.cpp:202
 #, kde-format
 msgid "The postamble contained a command other than FNTDEF."
-msgstr ""
+msgstr "პოსტამბულა FNTDEF-ის გარდა სხვა ბრძანებასაც შეცავდა."
 
 #: dviFile.cpp:240
 #, kde-format
 msgid "The page %1 does not start with the BOP command."
-msgstr ""
+msgstr "გვერდი %1 BOP ბრძანებით არ იწყება."
 
 #: dviFile.cpp:351
 #, kde-format
@@ -146,12 +154,12 @@ msgstr "ფაილი დაზიანებულია: %1"
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr ""
+msgstr "თქვენ დოკუმენტში ყველა PostScript-ის ფაილის ჩასმა შეუძლებელია. %1"
 
 #: dviRenderer.cpp:329
 #, kde-format
 msgid "All external PostScript files were embedded into your document."
-msgstr ""
+msgstr "ყველა გარე PostScript-ის ფაილი ახლა თქვენს დოკუმენტშია ჩაშენებული."
 
 #: dviRenderer.cpp:419
 #, kde-format
@@ -181,22 +189,22 @@ msgstr "DVI კოდის ფონტი უცნობ კოდირე�
 #: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
-msgstr ""
+msgstr "DVI კოდი მიმართავს ფონტს #%1, რომელიც აღწერილი არ ყოფილა."
 
 #: dviRenderer_draw.cpp:353
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr ""
+msgstr "EOP ბრძანების შესრულებისას სტეკი ცარიელი არ იყო."
 
 #: dviRenderer_draw.cpp:365
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr ""
+msgstr "POP ბრძანების შესრულებისას სტეკი ცარიელი იყო."
 
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr ""
+msgstr "DVI კოდი მიმართავს ფონტს, რომელიც აღწერილი არ ყოფილა."
 
 #: dviRenderer_draw.cpp:539
 #, kde-format
@@ -229,7 +237,7 @@ msgstr ""
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr ""
+msgstr "ფურცლის მონაცემების ('%1') დამუშავება შეუძლებელია."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -260,7 +268,7 @@ msgstr ""
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr ""
+msgstr "მიმდინარეობს გენერაცია %1 %2 dpi-ით..."
 
 #: generator_dvi.cpp:293
 #, kde-format
@@ -326,7 +334,7 @@ msgstr ""
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr ""
+msgstr "სპეციალური ბრძანება '%1' ჯერ განხორციელებული არაა."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
@@ -334,11 +342,13 @@ msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
 msgstr ""
+"ფონტის ფაილის %1 გახსნა და წაკითხვა შესაძლებელია, მაგრამ მისი ფონტის ფორმატი "
+"მხარდაჭერილი არაა."
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
 msgid "The font file %1 is broken, or it could not be opened or read."
-msgstr ""
+msgstr "ფონტის ფაილი %1 დაზიანებულია და მისი გახსნა და წაკითხვა შეუძლებელია."
 
 #: TeXFont_PFB.cpp:170
 #, kde-format
@@ -364,7 +374,7 @@ msgstr "გლიფი #%1 ცარიელია."
 #: TeXFont_PFB.cpp:217
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr ""
+msgstr "გლიფი #%1 ფონტის ფაილიდან %2 ცარიელია."
 
 #: TeXFont_PFB.cpp:282
 #, kde-format
@@ -379,27 +389,27 @@ msgstr "ფონტის ფაილის (%1) გახსნის შე�
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr ""
+msgstr "TexFont_PK::operator[]: სიმბოლო %1 არაა აღწერილი ფონტში %2"
 
 #: TeXFont_PK.cpp:418
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
-msgstr ""
+msgstr "მოულოდნელი %1 PK ფაილში %2"
 
 #: TeXFont_PK.cpp:484
 #, kde-format
 msgid "The character %1 is too large in file %2"
-msgstr ""
+msgstr "სიმბოლო %1 ძალიან დიდია ფაილში %2"
 
 #: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr ""
+msgstr "დამახსოვრებული ბიტების რაოდენობა არასწორია:  სიმბოლო. %1, ფონტი %2"
 
 #: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
-msgstr ""
+msgstr "არასწორი PK ფაილი (%1). მეტისმეტად ბევრი ბიტები"
 
 #: TeXFont_PK.cpp:713
 #, kde-format
@@ -446,4 +456,4 @@ msgstr ""
 #: vf.cpp:164
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
-msgstr ""
+msgstr "ნაპოვნია არასწორი ბრძანების ბაიტი VF მაკროების სიაში: %1"

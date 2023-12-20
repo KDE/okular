@@ -1,0 +1,4435 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Turkish "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>&okular; El Kitabı</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Emir</firstname
+><surname
+>SARI</surname
+><affiliation
+><address
+><email
+>emir_sari@icloud.com</email
+></address
+></affiliation
+><contrib
+>Çeviri</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2022-02-19</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular;, &kpdf; kodu üzerine temellendirilmiş &kde;'nin çok amaçlı belge görüntüleyicisidir.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>plucker</keyword>
+			<keyword
+>bilgi notu</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Giriş</title>
+		<para
+>&okular;, &kpdf; uygulamasının kodu üzerine temellindirilmiş, çok amaçlı bir &kde; belge görüntüleyicisidir. &kpdf;'yi temel almış olmasına rağmen; genel görünüm kipi, iyileştirilmiş sunum ve bilgi notu desteği gibi kendine has özellikleri vardır. </para>
+		<para
+>&okular;; &PDF;, &PostScript;, Tiff, CHM, DjVU, Görseller (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax ve Markdown gibi birçok farklı biçimi destekler. Desteklenen tüm biçimleri ve özelliklerini görmek için <ulink url="https://okular.kde.org/formats.php"
+> &okular; Belge Biçimi İşleyicileri</ulink
+> bölümüne bakın. </para>
+		<screenshot>
+		<screeninfo
+>&okular;'ın Ana Penceresi</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>&okular;'ın Ana Penceresi</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Temel Kullanım</title>
+		<sect1 id="opening">
+			<title
+>Belgeler Açmak</title>
+			<para
+>Desteklenen herhangi bir dosyayı &okular;'da açmak için <menuchoice
+><guimenu
+>Dosya</guimenu
+><guimenuitem
+>Aç...</guimenuitem
+> </menuchoice
+> yolunu izleyin, iletişim kutusunda desteklenen bir dosya seçin ve <guibutton
+>Aç</guibutton
+> düğmesine tıklayın. Dosyanız, şu an ana pencerede görüntüleniyor olmalıdır. </para>
+			<important>
+			  <para
+><link linkend="configgeneral"
+>Genel yapılandırma sayfasındaki</link
+> <guilabel
+>Yeni dosyaları sekmelerde aç</guilabel
+> seçeneği işaretliyse yeni belge bir sekmede açılır. </para>
+                          <para
+>Sekmeyi, üzerine &MMB; ile tıklarsanız kapatabilirsiniz. </para>
+                          <para
+>Önceden kapatılan belge, <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Sekme Kapatmayı Geri Al</guimenuitem
+></menuchoice
+> menü ögesine tıklanarak bir sekmede yeniden açılabilir. </para>
+			</important>
+			<para
+>&okular;'da daha önceden dosyalar açtıysanız onlara <menuchoice
+><guimenu
+>Dosya</guimenu
+><guisubmenu
+>Son Kullanılanı Aç</guisubmenu
+></menuchoice
+> menüsünden geri ulaşabilirsiniz. </para>
+			<para
+>&okular;, &PDF; ve &PostScript; dosyaları için öntanımlı &kde; uygulamasıdır. Bu dosyaları açmak için dosya yöneticisinde üzerilerine &LMB; ile tıklamanız yeterlidir. &okular; tarafından desteklenen herhangi başka bir dosyayı açmak için dosya yöneticisinde dosyanın bağlam menüsünden <menuchoice
+><guimenu
+>Birlikte Aç...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+>'ı seçebilirsiniz. </para>
+			<para
+>Bir dosya açtıktan sonra büyük olasılıkla onu okumak istersiniz. Bunun üzerine daha fazla bilgi almak için <link linkend="navigating"
+>bir sonraki bölüme</link
+> bakın. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Dolaşım</title>
+			<para
+>Bu bölüm, &okular;'da bir belge içinde nasıl dolaşacağınızı açıklar.</para>
+			<para
+>Görüntüleme alanında sarma yapmanın birçok yolu vardır. Bunlardan biri, &Up; ve &Down; düğmelerini kullanmaktır. Ayrıca; sarma çubuğunu, fare tekerleğinizi veya &PgUp; ve &PgDn; düğmelerini de kullanabilirsiniz. </para>
+			<para
+>Ek olarak, <application
+>vim</application
+> tarzı dolaşım düğmeleri de kullanılabilir; örneğin, bir önceki sayfanın en üstüne gitmek için <keycap
+>H</keycap
+>, bir sonraki sayfanın en üstüne gitmek için <keycap
+>L</keycap
+>, bir satır aşağı inmek için <keycap
+>J</keycap
+> ve bir satır yukarı çıkmak için <keycap
+>K</keycap
+>. </para>
+			<para
+>Başka bir yol ise &LMB; basılı tutulurken, fareyi gitmek istediğiniz yönün tam tersi yana hareket ettirmektir. Bu prosedür yalnızca Göz At aracı etkinse çalışır. Etkinleştirmek için <menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Göz At</guimenuitem
+></menuchoice
+> yolunu izleyin. </para>
+			<note>
+			  <para
+>Bir belgeyi <link linkend="presentationMode"
+>Sunum Kipi</link
+>'nde görüntülerken sayfalar veya slaytlar arasında geçiş yapmak için &Up; ve &Down; düğmelerini kullanın. Geçerli slaytın numarası ve konumu, ekranın sağ üst köşesindeki bir ekran üzeri görüntüde belirtilir. </para>
+			</note>
+			<para
+>Birkaç sayfadan oluşan bir belgeyi okumak istiyorsanız &okular;'ın kendiliğinden sarma özelliğini kullanın. Kendiliğinden sarma'yı <keycombo action="simul"
+>&Shift;&Down;</keycombo
+> veya <keycombo action="simul"
+>&Shift;&Up;</keycombo
+> kısayollarıyla başlatın. Sonrasında bu düğmeleri kullanarak sarma hızını artırın veya azaltın. Kendiliğinden sarmayı &Shift; düğmesine basarak geçici olarak durdurabilir veya başlatabilirsiniz. Başka herhangi bir düğmeye basmak, bu özelliği kapatır. </para>
+			<para
+>Çok sayfalı bir belgede gezinmenin başka bir yolu da fare işaretçisini kullanmaktır. Sayfayı yukarı veya aşağı sürükleyin, ekranın altına veya üstüne ulaştığınızda bile sürüklemeyi sürdürün ve bakın. Bir sayfanın kenarlığını geçtiğinizde fare imleci yeniden ekranın üstünde veya altında belirir ve sürüklemeyi sürdürebilirsiniz. </para>
+			<para
+>Ekranın sol tarafındaki kenar çubuğu, belgede dolaşmanın iki yolunu daha sağlar: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Bir sayfa küçük görseline tıklarsanız görüntüleme alanı o sayfaya getirilir. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgenin bir içindekiler tablosu varsa, bir içindekiler tablosu ögesine tıklamak, belgeyi o ögeye bağlı sayfaya getirir. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede katmanlar varsa <guilabel
+>Katmanlar</guilabel
+> listesindeki ögeleri işaretleyerek veya işaretlerini kaldırarak gösterilen katmanları denetleyebilirsiniz. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede yer imleri varsa <guilabel
+>Yer İmleri</guilabel
+> görünümünü etkinleştirin ve ilgili sayfaya gitmek için bunlara tıklayın. Yer imleri yalnızca geçerli belge için gösterilmiyorsa yakın zamanda açılan tüm dosyalardaki yer imlerine tez geçiş yapabilirsiniz. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede ek açıklamalar varsa <guilabel
+>Bilgi Notları</guilabel
+> görünümünü etkinleştirip ve ek açıklamalara tıklayın veya bunları &Up; ve &Down; kullanarak seçin ve ilgili sayfaya gitmek için &Enter; düğmesine basın. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Bazı belgelerde bağlantılar bulunur. Bu durumda üzerlerine tıklayabilirsiniz; görünüm, bağlantı verdiği sayfaya dönüşür. Bağlantı bir web sayfasına veya başka bir belgeye ise, o biçim için öntanımlı olan &kde; işleyicisi çağrılacaktır. Örneğin, <quote
+>https://www.kde.org</quote
+> adresine işaret eden bir bağlantıya tıklamak, web sayfasını öntanımlı &kde; web tarayıcısında açacaktır. </para>
+			<important>
+			  <para
+>Belgede bulunan bağlantılar yalnızca <link linkend="menutools"
+>Göz At</link
+> aracı kullanılırken çalışır. </para>
+			</important>
+			<para
+>Ayrıca belgedeki belirli yerlere tez gitmek için aşağıdaki işlevleri kullanabilirsiniz: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Belgenin başına <keycombo action="simul"
+>&Ctrl;<keycap
+>Baş</keycap
+></keycombo
+> veya <menuchoice
+><guimenu
+>Git</guimenu
+> <guimenuitem
+>Belge Başı</guimenuitem
+></menuchoice
+> ögesini kullanarak gidebilirsiniz. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgenin sonuna <keycombo action="simul"
+>&Ctrl;<keycap
+>Son</keycap
+></keycombo
+> veya <menuchoice
+><guimenu
+>Git</guimenu
+> <guimenuitem
+>Belge Sonu</guimenuitem
+></menuchoice
+> ögesini kullanarak gidebilirsiniz. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede &Space; veya &PgDn; kullanarak ileri gidebilirsiniz. Belgedeki sonraki sayfaya gitmek için <guibutton
+>Sonraki Sayfa</guibutton
+> araç çubuğu düğmesini veya <menuchoice
+><guimenu
+>Git</guimenu
+><guimenuitem
+>Sonraki Sayfa</guimenuitem
+> </menuchoice
+> ögesini kullanın. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede &Backspace; veya &PgUp; kullanarak geri gidebilirsiniz. Belgedeki sonraki sayfaya gitmek için <guibutton
+>Önceki Sayfa</guibutton
+> araç çubuğu düğmesini veya <menuchoice
+><guimenu
+>Git</guimenu
+><guimenuitem
+>Önceki Sayfa</guimenuitem
+> </menuchoice
+> ögesini kullanın. </para>
+				</listitem>
+				<listitem>
+					<para
+>Belgede geldiğiniz konumlara kronolojik sırayla geri dönebilirsiniz. Örneğin, <quote
+>As shown in [15], …</quote
+> notunu okuduğunuzu varsayalım ve tez [15] numaralı başvuruyu okumak istiyorsunuz. Bunu yapmak için üzerine tıklayın ve &okular; başvurular listesine atlayacaktır. <keycombo
+>&Alt;&Shift;&Left;</keycombo
+> veya <menuchoice
+> <guimenu
+>Git</guimenu
+><guimenuitem
+>Geri</guimenuitem
+></menuchoice
+> menü ögesini kullanmak, sizi geldiğiniz yere geri götürecektir. </para>
+				</listitem>
+				<listitem>
+					<para
+>Geri atladıktan sonra <keycombo
+>&Alt;&Shift;&Right;</keycombo
+> veya menü çubuğunda <menuchoice
+><guimenu
+>Git</guimenu
+><guimenuitem
+>İleri</guimenuitem
+></menuchoice
+> düğmesini kullanmak sizi ileri götürür. </para>
+				</listitem>
+				<listitem>
+					<para
+>Arama yaparken bir sonraki eşleşmeye <keycap
+>F3</keycap
+>, &Enter; (odak <guilabel
+>Bul</guilabel
+> metin alanındayken) veya <menuchoice
+><guimenu
+>Düzen</guimenu
+><guimenuitem
+>Sonrakini Bul</guimenuitem
+></menuchoice
+> menü ögesi ile gidebilir veya önceki ögeye <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+>, <keycombo
+>&Shift;&Enter;</keycombo
+> (odak <guilabel
+>Bul</guilabel
+> metin alanındayken) veya <menuchoice
+><guimenu
+>Düzen</guimenu
+><guimenuitem
+>Öncekini Bul</guimenuitem
+></menuchoice
+> menü ögesi ile dönebilirsiniz. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Sunum Kipi</title>
+			<para
+>Sunum kipi, &okular;'da belgeleri görüntülemenin başka bir yolunu temsil eder. <menuchoice
+><guimenu
+>Görünüm</guimenu
+><guimenuitem
+>Sunum</guimenuitem
+></menuchoice
+> menü ögesiyle etkinleştirilebilir. Belgeyi sayfa bazında gösterir. Sayfalar sayfaya yakınlaştırılmış olarak gösterilir, yani tüm sayfa görünür. </para>
+			<note>
+				<para
+>&PDF; belgeleri, her zaman sunum kipinde açılacak biçimde yapılandırılabilir. </para>
+			</note>
+			<para
+>Sunum kipindeyken ekranın üst kısmında bir yardım çubuğu bulunur. Görünmesini sağlamak için fare imlecini ekranın üstüne getirmeniz yeterlidir. </para>
+			<screenshot>
+			<screeninfo
+>Sunum Kipinde &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Sunum Kipinde &okular;</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Sayfalar arasında dolaşmak için &LMB; (sonraki sayfa) ve &RMB; (önceki sayfa), fare tekerleği, ok simgeleri veya üst çubuktaki satır düzenleme kutusunu veya <link linkend="navigating"
+>Dolaşım</link
+> bölümünde belirtilen düğmeleri kullanın. </para>
+			<para
+>Sunumu başlatmak/duraklatmak için üst çubuktaki <guilabel
+>Oynat/Duraklat</guilabel
+> düğmesini kullanın. </para>
+			<para
+>Sunum kipinden herhangi bir anda &Esc; düğmesine basarak veya üst çubuktaki <guiicon
+>Çık</guiicon
+> simgesine tıklayarak çıkabilirsiniz. </para>
+			<para
+>Aynı zamanda geçerli sayfada bir kalemle çizim de yapılabilir. Sunum kipinde çizim yapma olanağını etkinleştirmek veya devre dışı bırakmak için üst çubuktaki <guilabel
+>Çizim Kipini Aç/Kapat</guilabel
+> simgesine tıklayın. Sunum kipinden çıkarken yapılan çizimler kendiliğinden temizlenirler. Geçerli sayfadaki çizimleri temizlemek için aynı zamanda <guilabel
+>Çizimi Sil</guilabel
+> simgesini de kullanabilirsiniz. </para>
+			<para
+>Sunum kipi, çoklu monitör yapılandırmasında birden fazla ekranı destekler. Birden fazla ekran olduğunda, üst çubukta bir ekran simgesiyle birlikte yeni bir düğme görünecektir: bu, sunumu diğer kullanılabilir ekranlardan herhangi birine taşımanıza olanak tanıyan bir açılır kutudur. </para>
+			<para
+>Sunum kipinde bazı yapılandırma seçenekleri vardır; bunların açıklamasını <link linkend="configpresentation"
+>&okular;'ı Yapılandırmak</link
+> faslında bulabilirsiniz. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>&latex; Düzenleyicileri ve &okular; Arasında Tersine Arama</title>
+
+		<para
+>Tersine arama, bir &latex; belgesi yazarken çok işe yarar bir özelliktir. Her şey düzgünce ayarlanmışsa &okular;'ın penceresine &Shift; düğmesini basılı tutarken <mousebutton
+>sol</mousebutton
+> fare düğmesi ile tıklayın. Sonrasında düzenleyici, &latex; kaynak dosyasını yükler ve olması gereken paragrafa atlar.</para>
+
+		<para
+>Tersine aramanın çalışması için şunlar tam olmalıdır:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Kaynak dosya düzgünce derlenmeli.</para
+></listitem>
+			<listitem
+><para
+>&okular;'ın hangi düzenleyiciyi kullanmak istediğinizi biliyor olması gerekir.</para
+></listitem>
+			<listitem
+><para
+>Göz At aracının etkin olması gerekir. Etkinleştirmek için <menuchoice
+><guimenu
+>Araçlar</guimenu
+><guimenuitem
+>Göz At</guimenuitem
+></menuchoice
+> yolunu izleyin.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Bu &okular; özelliğiyle, bir &DVI; or &PDF; belgesinde &Shift; düğmesi basılı tutulurken yapılan bir sol fare tıklaması, ilgili &latex; belgesini düzenleyicide açar ve karşılık gelen satıra gider. &okular;'a kullanmak istediğiniz düzenleyiciyi söylemeyi unutmayın; bunu, &okular;'ın <menuchoice
+><guimenu
+>Ayarlar</guimenu
+><guimenuitem
+>Okular Uygulamasını Yapılandır...</guimenuitem
+></menuchoice
+> iletişim kutusunun <guimenuitem
+>Düzenleyici</guimenuitem
+> sayfasında yapabilirsiniz.</para>
+
+		<para
+>Düzenleyici yapılandırması ile ilgili daha ayrıntılı bilgi için <link linkend="configeditor"
+>bu kılavuzun ilgili bölümüne</link
+> gidin.</para>
+
+		<screenshot>
+			<screeninfo
+>&okular;'ı Yapılandırmak</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; içinde düzenleyiciyi yapılandırmak</phrase>
+			</textobject>
+			<caption
+><para
+>&okular; içinde düzenleyiciyi yapılandırmak</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>&okular; Gelişmiş Özellikleri</title>
+		<sect1 id="embedded-files">
+			<title
+>Gömülü Dosyalar</title>
+			<para
+>Geçerli belgede bazı gömülü dosyalar varsa onu açtığınızda sayfa görünümünün üzerinde sizi gömülü dosyalar hakkında bilgilendiren bir çubuk görünecektir. </para>
+			<screenshot>
+				<screeninfo
+>Gömülü dosyalar çubuğu</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Gömülü dosyalar çubuğu</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Bu durumda, ya çubuk metnindeki bağlantıya tıklayabilir ya da gömülü dosyalar iletişim kutusunu açmak için <menuchoice
+><guimenu
+>Dosya</guimenu
+><guimenuitem
+>Gömülü Dosyalar</guimenuitem
+></menuchoice
+> yolunu izleyebilirsiniz. İletişim kutusu, gömülü dosyaları görüntülemenize ve onları çıkarmanıza olanak tanır. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Formlar</title>
+			<para
+>Geçerli belgede formlar varsa açtığınızda sayfa görünümünün üzerinde formları etkinleştirebileceğiniz bir çubuk görünecektir. </para>
+			<screenshot>
+				<screeninfo
+>Formlar çubuğu</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Formlar çubuğu</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Bu durumda, ya çubuktaki <guilabel
+>Formları Göster</guilabel
+> üzerine tıklayabilir ya da veriyi form alanlarına girmek için <menuchoice
+><guimenu
+>Görünüm</guimenu
+><guimenuitem
+>Formları Göster</guimenuitem
+></menuchoice
+> yolunu izleyebilirsiniz. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>İmzalar</title>
+			<para
+>Geçerli belgede imzalar varsa belgeyi açtıktan sonra sayfa görünümünün üstünde bir imzalar çubuğu görünecektir. Bu, <guilabel
+>Signatures</guilabel
+> panelini açmanıza olanak tanır. </para>
+			<screenshot>
+				<screeninfo
+>İmzalar çubuğu</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>İmzalar çubuğu</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+><guilabel
+>İmzalar</guilabel
+> panelini kullanarak belge imzalarını ve sertifikalarını denetleyebilirsiniz. </para>
+			<screenshot>
+				<screeninfo
+>İmzalar paneli</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>İmzalar paneli</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Bu özellik yalnızca &PDF; belgeleri için kullanılabilirdir. Çoğu imza bilgisini alabilmek için <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>'ın en az 0.51 sürümünü, imza konum/gerekçe bilgisini almak için 0.68 sürümünü ve imza sertifikası bilgisini almak için 0.73 sürümünü kurmanız gerekir. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Sayısal İmzalar Eklemek</title>
+				<para
+>Belgelerinize, <menuchoice
+><guimenu
+>Araçlar</guimenu
+></menuchoice
+> menüsündeki ilgili eylemi kullanarak imzalar ekleyebilirsiniz. </para>
+				<para
+>Bir belgeyi imzalayabilmek için sisteminizde doğru bir <acronym
+>PKCS</acronym
+> imzalama sertifikasının kullanılabilir olması gerekir. &okular;'ın böyle sertifikalar oluşturma yeteneği yoktur; çünkü bu tür sertifikalar doğrulama gerektirdiklerinden; ancak yetkili sertifika organları tarafından verilebilirler. </para>
+				<para
+>&PDF; belgelerinin imzalanmasını işlemek için Poppler kitaplığını kullanırız. Poppler da sertifikaları işlemek için NSS kitaplığını kullanır. Bu belgenin yazıldığı tarihte, Poppler sırasıyla aşağıdaki NSS sertifikası depolarını kullanmaya çalışır (ilk var olanı): </para>
+				<itemizedlist>
+					<listitem
+><para
+>Geçerli Firefox kullanıcı sertifikası deposu.</para
+></listitem>
+					<listitem
+><para
+>Sistem geneli <filename
+>/etc/pki/nssdb</filename
+> sertifika deposu.</para
+></listitem>
+					<listitem
+><para
+>Geçerli kullanıcının <filename
+>$HOME/.pki/nssdb</filename
+> deposu</para
+></listitem>
+				</itemizedlist>
+				<para
+>Özel bir sertifika deposu kullanmak istiyorsanız bunu <link linkend="configure-backends"
+>Arka Uçları Yapılandır...</link
+> iletişim kutusunun <link linkend="config-pdf-digital-signatures"
+>&PDF; Arka Ucu Yapılandırması</link
+> bölümünden ayarlayabilirsiniz. </para>
+				<note>
+					<para
+>Bu özellik yalnızca &PDF; belgeleri için kullanılabilirdir. Bir belgeye sayısal imzalar ekleyebilmek için <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> kitaplığının en az 21.01 sürümünün kurulu olması gerekir. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Bilgi Notları</title>
+			<para
+>&okular;, belgelerinizi gözden geçirmenize ve bilgi notları eklemenize olanak tanır. </para>
+			<screenshot>
+			<screeninfo
+>&okular;'ın Bilgi Notları</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular;'ın Bilgi Notları</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>&okular;'da iki tür bilgi notu vardır:</para>
+			<para
+>Metin içeren belgeler için <guilabel
+>Sarı Vurgulayıcı</guilabel
+> ve <guilabel
+>Siyah Altı Çizili</guilabel
+> gibi notlar kullanılabilir (&eg;, &PDF;).</para>
+		      <para
+><guilabel
+>Açılır Not</guilabel
+>, <guilabel
+>İç Not</guilabel
+>, <guilabel
+>Serbest Çizim</guilabel
+>, <guilabel
+>Vurgulayıcı</guilabel
+>, <guilabel
+>Düz Çizgi</guilabel
+>, <guilabel
+>Çokgen</guilabel
+>, <guilabel
+>Damga</guilabel
+>, <guilabel
+>Altı Çizili</guilabel
+>, <guilabel
+>Elips</guilabel
+> ve <guilabel
+>Daktilo</guilabel
+> gibi grafiksel bilgi notları.</para>
+			  <para
+>Grafiksel bilgi notları &PDF; dosyalarıyla sınırlı değildirler; &okular;'ın desteklediği herhangi bir dosyada kullanılabilirler.</para>
+			<para
+><guilabel
+>Bilgi Notları</guilabel
+> menüsünü kullanarak, yorumlar eklemek veya düzenlemek için <guilabel
+>Açılır Not</guilabel
+> veya başka bir tür bilgi notu ekleyebilirsiniz.</para>
+
+			<para
+>&okular;'da bu "belge arşivleme" özelliği vardır. Bu, belgeyi ve belgeyle ilişkili çeşitli üst veriyi taşımak için &okular;'a özel bir biçimdir (şu anda yalnızca bilgi notlarını destekler). <menuchoice
+><guimenu
+>Dosya</guimenu
+><guisubmenu
+>Farklı Kaydet</guisubmenu
+></menuchoice
+> menüsüne gidip <guilabel
+>Süzgeç</guilabel
+> seçicisinde belge türü olarak <guilabel
+>Okular belge arşivi</guilabel
+>'ni seçtiğinizde bir "belge arşivi" kaydedebilirsiniz. Böyle kaydedilen belgeler dosya uzantısı olarak <filename
+>.okular</filename
+> alırlar. Bir &okular; belge arşivini açmak için normal bir &PDF; belgesini açarmışçasına onu &okular; ile açın. </para>
+			<para
+><emphasis
+>Ayrıca</emphasis
+>, bilgi notlarını doğrudan &PDF; dosyalarının içine kaydedebilirsiniz. Geçerli dosyanın üzerine kaydetmek için <menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Kaydet</guimenuitem
+></menuchoice
+> ögesini veya yeni bir dosyaya kaydetmek için <menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Farklı Kaydet...</guimenuitem
+></menuchoice
+> ögesini kullanın. </para>
+				<note>
+					<para
+>DRM kullanan dosyalarda bilgi notu eklenmesi, onların düzenlenmesi veya kaldırılması geçerli olamaz. </para>
+				</note>
+				<note>
+				  <para
+>Bir bilgi notunu, <guimenu
+>Edit</guimenu
+> menüsünden <link linkend="edit-undo"
+>Geri Al</link
+> veya <link linkend="edit-redo"
+>Yinele</link
+> yapabilirsiniz. Son eylemi <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> yaparak geri almak ve <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+> yaparak yinelemek olanaklıdır. </para>
+				</note>
+			<para
+>Her bir bilgi notu aracının öntanımlı özelliklerini ve görünüşünü yapılandırabilirsiniz. Lütfen belgelendirmenin <link linkend="configannotations"
+>ilgili bölümüne</link
+> bir göz atın. </para>
+			<sect2 id="annotations-add">
+				<title
+>Bilgi notları eklemek</title>
+				<para
+>Belgeye bilgi notları eklemek için ana &okular; araç çubuğundaki <guilabel
+>Tez Bilgi Notları</guilabel
+> düğmesini kullanabilir veya bilgi notu araç çubuğunu etkinleştirebilirsiniz. Bu, <menuchoice
+><guimenu
+>Araçlar</guimenu
+><guimenuitem
+>Bilgi Notları</guimenuitem
+></menuchoice
+> yolunu izleyerek veya <keycap
+>F6</keycap
+> düğmesine basılarak yapılır. Bilgi notları araç çubuğu gösterildiğinde herhangi bir notu kullanmak için düğmelerinden birine basın veya klavye kısayollarını kullanın (<keycap
+>1</keycap
+> ile <keycap
+>9</keycap
+> arası düğmeler). </para>
+				<para
+>Bilgi notu araç çubuğu çizimler, şekiller ve metin iletileriyle ek açıklamalar oluşturmanıza yardımcı olur. Bir belgeyi işaretlemek için bilgi notu araç çubuğunu kullanabilirsiniz (örneğin; çizgiler, elipsler, çokgenler, damgalar, vurgular, alt çizgiler vb. eklemek için). Aşağıdaki tablo, öntanımlı bilgi notu araç çubuğu düğmeleri kümesinin tam olarak ne yaptığını açıklamaktadır. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Düğme </entry>
+					<entry
+>Araç Adı </entry>
+					<entry
+>Açıklama </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Vurgulayıcı </para>
+					</entry>
+					<entry>
+					  <para
+>Belgedeki metni belirli bir arka plan rengiyle vurgular. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve bir metin parçacığını vurgulamak için sürükleyin. </para>
+					  <para
+>Vurgulayıcı <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Vurgu</guimenuitem
+>, <guimenuitem
+>Dalgalı Çizgili</guimenuitem
+>, <guimenuitem
+>Altı Çizili</guimenuitem
+> veya <guimenuitem
+>Üzeri Çizili</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini ve <guilabel
+>Matlık</guilabel
+>'ını tanımlamak da olanaklıdır. Yalnızca vurgulanan metnin üzerine sağ tıklayın ve <guimenuitem
+>Properties</guimenuitem
+> menü ögesini kullanın. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Altı Çizili </para>
+					</entry>
+					<entry>
+					  <para
+>Metnin altını düz bir çizgiyle çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve bir metin parçacığının altını çizmek için sürükleyin. </para>
+					  <para
+>Altı çizili metin <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Vurgu</guimenuitem
+>, <guimenuitem
+>Dalgalı Çizgili</guimenuitem
+>, <guimenuitem
+>Altı Çizili</guimenuitem
+> veya <guimenuitem
+>Üzeri Çizili</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini ve <guilabel
+>Matlık</guilabel
+>'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Properties</guimenuitem
+> menü ögesini kullanın. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Dalgalı Çizgili </para>
+					</entry>
+					<entry>
+					  <para
+>Metnin altını dalgalı bir çizgiyle çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve bir metin parçacığının altını dalgayı çizgiyle çizmek için sürükleyin. </para>
+					  <para
+>Altı çizili metin <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Vurgu</guimenuitem
+>, <guimenuitem
+>Dalgalı Çizgili</guimenuitem
+>, <guimenuitem
+>Altı Çizili</guimenuitem
+> veya <guimenuitem
+>Üzeri Çizili</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini ve <guilabel
+>Matlık</guilabel
+>'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Properties</guimenuitem
+> menü ögesini kullanın. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Üzeri Çizili </para>
+					</entry>
+					<entry>
+					  <para
+>Metinlerin üzerini çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve bir metin parçacığının üzerini çizmek için sürükleyin. </para>
+					  <para
+>Altı çizili metin <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Vurgu</guimenuitem
+>, <guimenuitem
+>Dalgalı Çizgili</guimenuitem
+>, <guimenuitem
+>Altı Çizili</guimenuitem
+> veya <guimenuitem
+>Üzeri Çizili</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini ve <guilabel
+>Matlık</guilabel
+>'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Properties</guimenuitem
+> menü ögesini kullanın. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Daktilo </para>
+					</entry>
+					<entry>
+					  <para
+>Saydam bir arka plana metin ekler. Bu, tümleşik düzenlenebilir metin alanlarının bulunmadığı formları doldurmak için kullanışlıdır. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından metnin sol üst köşesini eklemek istediğiniz yere &LMB; ile tıklayın, ardından sağ alt köşeyi yerleştirmek için sürükleyin. Biraz metin yazın, ardından kaydetmek için <guibutton
+>Tamam</guibutton
+>'a, metni temizleyip baştan başlamak için <guibutton
+>Temizle</guibutton
+>'ye veya iptal etmek için <guibutton
+>İptal</guibutton
+>'e tıklayın. </para>
+					  <para
+>Metnin <guilabel
+>Yazıtipi</guilabel
+>'ni ve <guilabel
+>Metin rengi</guilabel
+>'ni tanımlamak olanaklıdır. Oluşturulan metnin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>İç Not </para>
+					</entry>
+					<entry>
+					  <para
+>Satır içi bir not çizer. Not olduğu gibi satır içi olarak gösterilecektir. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından notun sol üst köşesini eklemek istediğiniz yere &LMB; ile tıklayın, ardından sağ alt köşeyi yerleştirmek için sürükleyin. Notunuzu yazın, ardından kaydetmek için <guibutton
+>Tamam</guibutton
+>'a, notu temizleyip baştan başlamak için <guibutton
+>Temizle</guibutton
+>'ye veya iptal etmek için <guibutton
+>İptal</guibutton
+>'e tıklayın. </para>
+					  <para
+>Notun <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını <guilabel
+>Yazıtipi</guilabel
+>'ni, <guilabel
+>Hizalama</guilabel
+>'sını ve <guilabel
+>Kenarlık genişliği</guilabel
+>'ni tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Açılır Not </para>
+					</entry>
+					<entry>
+					  <para
+>Çok satırlı bir not çizer. Not, belgede oluşturulan simgeye çift tıklanarak görüntülenebilir. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından belgede açılır notun eklenmesi gereken yere tıklayın. Açılır notun metnini girin ve ardından açılır pencerenin sağ üst köşesindeki <guilabel
+>Bu notu kapat</guilabel
+> düğmesine tıklayın. </para>
+					  <para
+>Notun <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını ve <guilabel
+>Simge</guilabel
+>'sini tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Serbest Çizim </para>
+					</entry>
+					<entry>
+					  <para
+>Serbest biçimli çizgiler çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve çizgiyi çizmek için sürükleyin. </para>
+					  <para
+>Çizginin <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını ve <guilabel
+>Genişlik</guilabel
+>'ini tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Ok (Açılır Liste) </para>
+					</entry>
+					<entry>
+					  <para
+>İki nokta arasında bir ok çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından okun başlangıç noktasını yerleştirmek için &LMB; ile tıklayın, ardından çizginin bitiş noktasını yerleştirmek için sürükleyin ve bir kez daha tıklayın. </para>
+					  <para
+>Çizginin <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını, <guilabel
+>Genişlik</guilabel
+>'ini, <guilabel
+>Çizgi başı</guilabel
+>'nı, <guilabel
+>Çizgi sonu</guilabel
+>'nu, <guilabel
+>Lider çizgi uzunluğu</guilabel
+>'nu ve <guilabel
+>Lider çizgi uzantısı uzunluğu</guilabel
+>'nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Düz Çizgi (Açılır Liste) </para>
+					</entry>
+					<entry>
+					  <para
+>İki nokta arasında bir çizgi çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından çizginin başlangıç noktasını yerleştirmek için &LMB; ile tıklayın, ardından çizginin bitiş noktasını yerleştirmek için sürükleyin ve bir kez daha tıklayın. </para>
+					  <para
+>Çizginin <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını, <guilabel
+>Genişlik</guilabel
+>'ini, <guilabel
+>Çizgi başı</guilabel
+>'nı, <guilabel
+>Çizgi sonu</guilabel
+>'nu, <guilabel
+>Lider çizgi uzunluğu</guilabel
+>'nu ve <guilabel
+>Lider çizgi uzantısı uzunluğu</guilabel
+>'nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Dörtgen (Açılır Liste) </para>
+					</entry>
+					<entry>
+					  <para
+>Seçili alan çevresinde bir dörtgen çizer. </para>
+					  <para
+>Araç düğmesini tıklayın, ardından dikdörtgenin sol üst köşesini yerleştirmek için &LMB; ile tıklayın, ardından sağ alt köşeyi yerleştirmek için sürükleyin. </para>
+					  <para
+>Kenarlığın <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Dörtgen</guimenuitem
+> veya <guimenuitem
+>Elips</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını, <guilabel
+>Renk dolgusu</guilabel
+>'nu (ve dolgunun rengini) ve <guilabel
+>Genişlik</guilabel
+>'ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Elips (Açılır Liste) </para>
+					</entry>
+					<entry>
+					  <para
+>Seçili bir alanın çevresine bir elips veya dikdörtgen çizer. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından &LMB; ile tıklayın ve elips için çevrelenmiş dikdörtgenin sol üst köşesini yerleştirmek için basılı tutun, ardından sağ alt köşeyi yerleştirmek için sürükleyin. </para>
+					  <para
+>Kenarlığın <guilabel
+>Tür</guilabel
+>'ünü (<guimenuitem
+>Dörtgen</guimenuitem
+> veya <guimenuitem
+>Elips</guimenuitem
+>), <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını, <guilabel
+>Renk dolgusu</guilabel
+>'nu (ve dolgunun rengini) ve <guilabel
+>Genişlik</guilabel
+>'ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Çokgen (Açılır Liste) </para>
+					</entry>
+					<entry>
+					  <para
+>Üç veya daha fazla çizgi parçasından kapalı bir şekil çizer. İlgili not çokgenin içine çift tıklanarak görüntülenebilir. </para>
+					  <para
+>Araç düğmesine tıklayın, ardından çokgenin ilk köşesini yerleştirmek için &LMB; ile tıklayın, ardından ikinci köşenin yerine sürükleyin. Çokgenin tamamını çizip ilk köşeye bağlanana kadar sürdürün. Çokgene bir not eklemek için iki kez tıklayın. Notun metnini girin ve kaydetmek için <guibutton
+>Tamam</guibutton
+> düğmesine, notu temizlemek için <guibutton
+>Temizle</guibutton
+> düğmesine veya not girişini iptal etmek için <guibutton
+>İptal</guibutton
+> düğmesine tıklayın. </para>
+					  <para
+>Çokgenin <guilabel
+>Renk</guilabel
+>'ini, <guilabel
+>Matlık</guilabel
+>'ını, <guilabel
+>Şekil dolgusu</guilabel
+>'nu (ve dolgu rengini) ve <guilabel
+>Genişlik</guilabel
+>'ini tanımlamak olanaklıdır. Oluşturulan çokgenin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Damga </para>
+					</entry>
+					<entry>
+					  <para
+>Belgeye önceden tanımlanmış bir şekil ekler. </para>
+					  <para
+>Açılan listeden damgayı seçmek için araç düğmesine tıklayın ve ardından damgayı yerleştirmek için &LMB; ile tıklayın. </para>
+					  <para
+>Tek bir tıklama yalnızca kare bir damga yerleştirir (simgeler için kullanışlıdır). Dikdörtgen bir damga eklemek için &LMB; ile tıklayıp sol üst noktayı yerleştirmek için basılı tutabilir, ardından sağ alt noktayı yerleştirmek için sürükleyebilirsiniz. </para>
+					  <para
+>Damganın <guilabel
+>Matlık</guilabel
+>'ını ve <guilabel
+>Damga simgesi</guilabel
+>'ni tanımlamak olanaklıdır. Oluşturulan damganın üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+> menü ögesini seçin. </para>
+					  <warning>
+					  	 <para
+>Bu özellik deneyseldir. &PDF; belgelerine eklenen özel damgalar, &okular; dışındaki &PDF; okuyucularında görünmez. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>Bunlar &okular; tarafından sağlanan öntanımlı bilgi notlarıdır. Yapılandırma iletişim kutusunun <link linkend="configannotations"
+>Bilgi Notları</link
+> sayfasını kullanarak, bölgeleri vb. vurgulamak için özel damgalar, metin işaretlemesi veya iç renkli geometrik şekil gibi kendi açıklamalarınızı ekleyebilirsiniz. </para>
+                                  <note>
+                                      <para
+>Bilgi notları metnine &latex; kodları eklemek olanaklıdır. Bunu yapmak için bilgi notu metnine <userinput
+>$$<replaceable
+>kod</replaceable
+>$$</userinput
+> ekleyin. <replaceable
+>kod</replaceable
+> yerine herhangi bir geçerli &latex; denklemini girebilirsiniz. Sisteminizde kurulu bir &latex; dağıtımını kullanarak oluşturmak için ekranda görünecek yönergeleri izleyin. </para>
+                                  </note>
+				<para
+>Bilgi Notları araç çubuğunun kendisini kullanarak seçilen aracı yapılandırmak olanaklıdır: </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Düğme </entry>
+					<entry
+>Seçenek Adı </entry>
+					<entry
+>Açıklama </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Çizgi genişliği </para>
+					</entry>
+					<entry>
+					  <para
+>Açılır listeden genişliği seçmek için bu düğmeye tıklayın. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu rengi </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu metninin veya kenarlığının rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
+>Özel Renk...</guimenuitem
+> ögesine tıklayabilirsiniz. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu dolgu rengi </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu dolgu rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
+>Özel Renk...</guimenuitem
+> ögesine tıklayabilirsiniz. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu matlığı </para>
+					</entry>
+					<entry>
+					  <para
+>Açılır listeden bilgi notu matlığını seçmek için bu düğmeye tıklayın (<guimenuitem
+>%​100</guimenuitem
+>, mat ek açıklamalar oluşturur). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu yazıtipi </para>
+					</entry>
+					<entry>
+					  <para
+>Yazıtipi seçimi iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Geçerli bilgi notu aracı için gelişmiş ayarlar </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu için genel yapılandırma iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>Bilgi notu araç çubuğunda üç adet ek izlence düğmesi vardır: </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Düğme </entry>
+					<entry
+>Açıklama </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Geçerli bilgi notunu ana araç çubuğundaki <guilabel
+>Tez Bilgi Notları</guilabel
+> menüsüne ekleyin. </para>
+					  <note>
+						  <para
+>Bilgi notu araç çubuğu gizli olsa bile <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> ile <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> arasındaki kısayollarla istediğiniz tez bilgi notu aracını seçebilirsiniz. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>İşaretlendiğinde, geçerli bilgi notu aracını kullanım sonrasında etkin tutarsınız. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Bilgi notu araç çubuğunu gizleyin. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>&Shift; düğmesini basılı tutarak, çizgi ve çokgen bilgi notu araçlarının açısını ve şekil bilgi notlarının (örneğin, Dörtgen, Elips) açısını 15° adımlara kısıtlayabilirsiniz. Ayrıca, <ulink url="help:/fundamentals/config.html#toolbars"
+>Araç Çubuklarını Yapılandır...</ulink
+> ile araç çubuğu düğmeleri koyabilirsiniz. </para>
+				  <para
+><guilabel
+>Tez Bilgi Notları</guilabel
+> menüsünün içeriği, <link linkend="configannotations"
+>&okular; yapılandırma iletişim kutusunun bilgi notları sayfası</link
+> kullanılarak yapılandırılabilir. Bu sayfayı açmak için <guilabel
+>Tez Bilgi Notları</guilabel
+> düğmesine basın, sonrasında açılır menüden <guimenuitem
+>Bilgi Notlarını Yapılandır...</guimenuitem
+> ögesini seçin. </para>
+				<note>
+					<para
+>Bilgi notu araç çubuğunu etkinleştirmek, kendiliğinden Göz At kipine geçilmesine neden olur. </para>
+				</note>
+				<para
+>Kullandığınız bilgi notu düğmesine yeniden veya &Esc; düğmesine basarak not eklemeyi istediğiniz zaman durdurabilirsiniz. </para>
+				<para
+>Yeni oluşturulan bilgi notunun yazarı, &okular; yapılandırma iletişim kutusunun <link linkend="configannotations"
+><guilabel
+>Bilgi Notları</guilabel
+> sayfasında</link
+> ayarlanan kişiye (size) ayarlanır. <guilabel
+>Bilgi Notları</guilabel
+> sayfası aynı zamanda, bilgi notları araç çubuğunun içeriğini ayarlamak için de kullanılabilir. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Bilgi notlarını kaldırmak</title>
+				<para
+>Bir bilgi notunu kaldırmak için önce Göz At aracını seçin (<menuchoice
+><guimenu
+>Araçlar</guimenu
+><guimenuitem
+>Göz At</guimenuitem
+></menuchoice
+>), sonrasında &RMB; ile tıklayın ve <guimenuitem
+>Sil</guimenuitem
+>'i seçin veya bir bilgi notunu &LMB; ile seçip klavyede &Del; düğmesine basın. </para>
+				<para
+>Bilgi notunu kaldırırken, penceresi açıksa kapatılır. </para>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Bilgi notlarını düzenlemek</title>
+				<para
+>Bir bilgi notunu düzenlemek için önce Göz At aracını seçin (<menuchoice
+><guimenu
+>Araçlar</guimenu
+><guimenuitem
+>Göz At</guimenuitem
+></menuchoice
+>), sonrasında &RMB; ile bir bilgi notunun üzerine tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
+>'i seçin. Genel bilgi notu ayarlarını (renk, matlık, yazar vb.) ve o bilgi notu türüne özel ayarları içeren bir iletişim kutusu açılacaktır. </para>
+				<screenshot>
+				<screeninfo
+>Bilgi Notu Özellikleri İletişim Kutusu</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Bilgi Notu Özellikleri İletişim Kutusu</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Bir bilgi notunu taşımak için &Ctrl; düğmesini basılı tutun, üzerinde fare işaretçisini hareket ettirin ve &LMB; ile sürüklemeye başlayın. </para>
+				<para
+>Bir bilgi notuna &LMB; ile tıklarsanız seçilir. Seçim dikdörtgeninde yeniden boyutlandırma tutaçları görünür. İmleç köşelerdeki veya kenarlardaki 8 yeniden boyutlandırma tutacından birinin üzerine getirildiğinde, imlecin şekli yeniden boyutlandırma kipini gösterecek şekilde değişir. Notu taşımak için başka bir yere tıklayın. &Esc; düğmesine basmak veya bilgi notunun dışındaki bir alanı tıklatmak seçimi iptal eder. </para>
+				<para
+>Yeniden boyutlandırma yalnızc İç Not, Daktilo, Damga ve Elips bilgi notu türleri için kullanılabilirdir.</para>
+
+				<note>
+					<para
+>Bazı seçenekler, belgenin izinlerine bağlı olarak devre dışı olabilir (bu genellikle yalnızca bazı &PDF; belgelerini etkiler). </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Yer İmi Yönetimi</title>
+			<para
+>&okular; çok esnek bir yer imi sistemine sahiptir. &okular;, sayfadaki konumu yer imine kaydeder ve sayfa başına birden fazla yer imi tanımlamanıza olanak tanır. </para>
+			<para
+>&okular;'da yer imlerini yönetmek için <guilabel
+>Kenar Çubuğu</guilabel
+>'ndan, <link linkend="menubookmarks"
+>Yer İmleri Menüsü</link
+>'nden veya belge görünümünün bağlam menüsünden (&RMB; ile tıklayın) <guilabel
+>Yer İmleri</guilabel
+>'ni kullanabilirsiniz. </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Yer İmleri görünümü</title>
+				<para
+><guilabel
+>Yer İmleri</guilabel
+> görünümünü açmak için <guilabel
+>Kenar Çubuğu</guilabel
+>'ndaki <guilabel
+>Yer İmleri</guilabel
+> sekmesine tıklayın. <guilabel
+>Kenar Çubuğu</guilabel
+> gösterilmiyorsa onu görünür yapmak için araç çubuğundaki <guibutton
+>Kenar Çubuğu'nu Göster</guibutton
+> düğmesine veya menü ögesine veya <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Ayarlar</guimenu
+><guimenuitem
+>Kenar Çubuğunu Göster</guimenuitem
+></menuchoice
+> menü ögesine tıklayın. </para>
+				<screenshot>
+				    <screeninfo
+>Yer İmleri görünümü bağlam menüsü</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Yer İmleri görünümü bağlam menüsü</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Yalnızca geçerli belge için olan yer imlerini göstermek için <guilabel
+>Tüm belgeler için göster</guilabel
+> işaret kutusunun işareti kaldırılabilir. </para>
+				<para
+><guilabel
+>Yer İmleri</guilabel
+> görünümünün üst kısmındaki süzgeç çubuğu, metin kutusundaki metne göre yer imleri listesi panelinin içeriğini süzmek için kullanılabilir. </para>
+				<para
+>Liste paneli, yer imleri listesini bir ağaç tarzında görüntülemeye izin verir; listedeki her bir belge <guiicon
+>&lt;</guiicon
+> veya yanındaki <guiicon
+>v</guiicon
+> simgesine tıklanılarak <quote
+>genişletilebilir</quote
+> veya <quote
+>daraltılabilir</quote
+>. </para>
+				<para
+>Belge ögesinin sağ tık menüsü, belgeyi açmak, ögesini yeniden adlandırmak veya listeden kaldırmak için kullanılabilir. Bir belge ögesinin kaldırılmasının, ilgili belgedeki tüm yer imlerinin de kaldırılmasına yol açacağını unutmayın. </para>
+				<para
+>Bireysel yer imi ögelerinin sağ tık menüleri, yer imine gitmenize, onu yeniden adlandırmanıza veya kaldırmanıza olanak tanır. </para>
+				<para
+>İçindekiler tablosundaki ögelere ilişkin sağ tık menüsü, yer imleri oluşturmak veya sonraki veya önceki yer imlerine gitmek için kullanılabilir. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Komut Satırı Seçenekleri</title>
+		    <para
+>&okular; çoğunlukla &kde; program menüsünden veya bir masaüstü simgesinden başlatılabilse de, bir uçbirim penceresinin komut satırı isteminden de açılabilir. Bunu yaparken kullanılabilecek birkaç yararlı seçenek vardır. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Bir Dosya Belirt</title>
+			<para
+>Kullanıcı, belirli bir dosyanın yolunu ve adını belirterek, &okular;'ın bu dosyayı başlatma sırasında hemen açmasını sağlayabilir. Bu seçenek aşağıdaki gibi görünebilir: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/ben/belgeler/belgem.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>&PDF; belgeleri için ad, <replaceable
+>belge_adı</replaceable
+>#<replaceable
+>konum_adı</replaceable
+> olarak verilebilir. Burada <replaceable
+>konum_adı</replaceable
+>, belgenin içinde gömülü olan belirli bir konum olabilir. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Diğer Komut Satırı Seçenekleri</title>
+			<para
+>Aşağıdaki komut satırı seçenekleri kullanılabilirdir </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>sayı</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Verilen sayfa numarasını belgede aç. Aynı zamanda, <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>sayı</replaceable
+></option
+></userinput
+> olarak da kullanılabilir</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>Belgeyi sunum kipinde başlat.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Yazdırma iletişim kutusuyla başlat.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Yazdırma iletişim kutusuyla başlat ve yazdırma sonrası çık.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Benzersiz örnek denetimi.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Başlangıç sonrası &okular; penceresinin yükseltilmesini önler.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>dizi</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Verilen diziyi belgede bulmayı ve onu vurgulamayı dener. Yalnızca <userinput
+><command
+>okular</command
+></userinput
+> komutuna argüman olarak 1 belge verilmişse çalışır.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>dizi</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Dış düzenleyici komutunu ayarlar. Düzenleyici komutunu halihazırda çalışan bir &okular; örneğinde ayarlayamazsınız. Komut satırında düzenleyici komutunu ayarlarken <option
+>--unique</option
+> seçeneğinin desteklenmediğini unutmayın.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Pencereyi Sayfaya Sığdır</title>
+			<para
+>Pencereyi sayfaya sığdır özelliği, pencereyi, geçerli yakınlaştırma çarpanındaki sayfayla tam olarak aynı boyutta olacak şekilde yeniden boyutlandırır. Sayfa ekrana tam olarak sığmazsa pencere sayfanın olabilen en büyük kısmı gösterilecek şekilde büyütülür. </para>
+			<para
+>Bu özelliğe <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> klavye kısayoluyla erişilebilir. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Menü Çubuğu</title>
+
+		<sect1 id="menufile">
+			<title
+>Dosya Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Aç...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Desteklenen bir dosyayı veya &okular; belge arşivini <action
+>açın</action
+>. Halihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
+>Belgeler Açmak</link
+> ile ilgili bölüme bakın. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guisubmenu
+>Son Kullanılanı Aç</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bir alt menüden daha önce kullanılmış bir dosyayı <action
+>açın</action
+>. Halihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
+>Belgeler Açmak</link
+> ile ilgili bölüme bakın. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>PostScript'i &PDF; Olarak İçe Aktar...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bir &PostScript; dosyasını <action
+>açın</action
+> ve onu &PDF;'ye dönüştürün. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Sekme Kapatmayı Geri Al</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Son kapatılan belgeyi <action
+>yeniden açın</action
+>. Bu seçenek, geçerli oturumda daha önceden bir belge kapatmışsanız etkin olur. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>İçeren Klasörü Aç</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Geçerli belgeyi içeren klasörü yeğlediğiniz dosya yöneticisinde <action
+>açar</action
+>. Bu, özellikle internetten indirdiğiniz ve &okular; ile açılan bir &PDF; dosyasını bulmak için yararlıdır. Dosyanın konumu açık olmayabilir veya bu özellik olmadan bulması zor olabilir. Ancak günümüzde çoğu web tarayıcısı indirmeler için sistem öntanımlısı İndirmeler klasörünü kullanır. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Kaydet</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+>Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (bilgi notları, formlar vb.) <action
+>kaydeder</action
+>. Arka uç bu değişiklikleri desteklemiyorsa bu değişikliklerden vazgeçmek veya belgeyi bir &okular; belge arşivi olarak kaydetmek seçeneği sunulur.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Farklı Kaydet...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+>Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (bilgi notları, formlar vb.) yeni bir adla bir kopyaya <action
+>kaydeder</action
+>. Arka uç bu değişiklikleri desteklemiyorsa bu değişikliklerden vazgeçmek veya belgeyi bir &okular; belge arşivi olarak kaydetmek seçeneği sunulur.</para>
+                                        <note>
+                                        <para
+>Bunun uygulanma biçimi nedeniyle, dosyada herhangi bir değişiklik olmasa bile, yeni dosyanın özgün dosyanın tam bir bit kopyası olması gerekmediğini unutmayın (örneğin, farklı bir SHA-1 sağlaması gibi). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Yeniden Yükle</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Şu anda açık dosyayı <action
+>yeniden yükleyin</action
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Yazdır...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Şu anda görüntülenen belgeyi <action
+>yazdırın</action
+>. &okular;'ın &PDF; yazdırması için çeşitli seçenekler sunduğunu aklınızdan çıkarmayın; bu seçeneklere <guibutton
+>Seçenekler 
+>
+></guibutton
+> ve sonrasında <guilabel
+>&PDF; Seçenekleri</guilabel
+> ile ulaşabilirsiniz. Bazı sembollerin yazdırılmasında sorun yaşıyorsanız veya ölçek kipini değiştirmeniz gerekiyorsa bilgi notlarınızı yazdırmak veya rasterleştirme kipini yapılandırmak için bu seçenekleri kullanın. </para>
+                                                <note>
+                                                    <para
+>Ölçek kipi seçenekleri yalnızca <guilabel
+>Rasterleştirmeyi zorla</guilabel
+> seçeneğini işaretlerseniz kullanılabilir. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Yazdırma Önizlemesi...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Şu anda görüntülenen belgenin öntanımlı seçeneklerle yazdırılması durumunda nasıl görüneceğinin <action
+>bir önizlemesini gösterin</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Dönüş</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Özellikler</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge hakkında; başlığı, yazarı, oluşturulma tarihi ve kullanılan yazıtipleri gibi bilgileri içeren <action
+>bazı temel bilgileri görüntüleyin</action
+>. Kullanılabilir bilgiler, belgenin türüne bağlı olarak değişir.</para>
+						<note>
+							<para
+>Lütfen <guilabel
+>Özellikler</guilabel
+> iletişim kutusunun <guilabel
+>Yazıtipleri</guilabel
+> sekmesindeki yazıtipi değiştirme ile ilgili bilgilere dikkat edin. Yazıtipi sunumu ile ilgili birçok sorun, değiştirilen yazıtiplerini kurarak çözülebilir.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Gömülü Dosyalar...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgede varsa <action
+>gömülü dosyaları gösterin</action
+>. Daha fazla bilgi için <link linkend="embedded-files"
+>Gömülü Dosyalar</link
+> ile ilgili bölüme bakın.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guisubmenu
+>Farklı Dışa Aktar</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu öge, geçerli belgenin dışa aktarılabileceği biçimlerin bir listesini içerir. Her tür belge için ilk girdi her zaman <guimenuitem
+>Düz Metin...</guimenuitem
+> olarak ayarlıdır.</para>
+						<para
+>İkinci girdi ise <guimenuitem
+>Belge Arşivi</guimenuitem
+>'dir. Bu biçim, belgeyi notlarınızla birlikte &okular;'a özel bir arşiv biçimine kaydetmenize olanak tanır. Böylece başka &okular; kullanıcılarıyla özgün belgeyi kolaylıkla paylaşabilir veya üzerinde birlikte çalışabilirsiniz.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Dosya</guimenu
+> <guisubmenu
+>Paylaş</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu öge, geçerli belgeyi diğer kişilerle paylaşmak veya aygıtlarınıza göndermek için kullanılabilecek hizmetleri içerir. Bu alt menüdeki girdiler sistem tarafından denetlenir. Geçerli belge biçimine ve kurulu KPurpose eklentilerine bağlıdırlar.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Çık</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>&okular;'ı <action
+>kapatın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Düzen Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Geri Al</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Son bilgi notu düzenleme komutunu <action
+>geri alın</action
+> (bilgi notlarının oluşturulması ve kaldırılması, isteğe bağlı not özelliklerinin düzenlenmesi, notların &Ctrl;+sürükle ile yeniden konumlandırılması ve metin içeriğinin düzenlenmesi vb.).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Yinele</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+>Bilgi notlarını düzenlerken son geri alma adımını <action
+>yeniden yapın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Kopyala</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><guibutton
+>Metin Seçimi</guibutton
+> kipindeyken seçilen geçerli metni panoya <action
+>kopyalayın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Tümünü Seç</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Tüm metni <action
+>seçer</action
+> (eğer belgede varsa). Bu özellik yalnızca <guibutton
+>Metin Seçimi</guibutton
+> kipindeyken çalışır.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Geçerli Sayfadaki Tüm Metni Seç</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Geçerli sayfadaki tüm metni <action
+>seçer</action
+> (eğer belgede varsa). </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Bul...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Görüntüleme alanının alt kısmında, <action
+>belgede bir dizi aramanıza</action
+> olanak tanıyan bulma çubuğunu gösterin. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Sonrakini Bul</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgede <action
+>daha önce aranan diziyi yeniden bulmaya</action
+> çalışın.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Öncekini Bul</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgede, arama dizisinin <action
+>bir önceki oluşuna</action
+> gider.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Görünüm Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Sunum</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Sunum Kipi'ni <action
+>etkinleştirir</action
+>. Daha fazla bilgi için <link linkend="presentationMode"
+>Sunum Kipi</link
+> ile ilgili bölüme bakın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Tam Ekran Kipi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Tam ekran kipini etkinleştirir</action
+>. Tam ekran kipinin sunum kipinden farklı olduğunu, tam ekran kipinin tek özelliğinin pencere dekorasyonlarını, menü çubuğunu ve araç çubuğunu gizlemesi olduğunu unutmayın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Yakınlaştır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge görünümünün <action
+>büyütmesini artırın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Uzaklaştır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge görünümünün <action
+>büyütmesini azaltın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>%​100'e Yakınlaştır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Belge görselini, belge parametrelerinin öngördüğü şekilde gerçek boyutuna yakınlaştırın</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Genişliğe Sığdır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge görünümünün büyütme oranını, sayfaların genişliğini <action
+>belge görünümünün genişliğine eşit yapacak bir değerle değiştirin</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Sayfayı Sığdır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge görünümünün büyütme oranını, <action
+>en az bir sayfanın tamamını görünür kılacak bir değerle değiştirin</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Kendiliğinden Sığdır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belge görünümünün büyütme oranını, sayfa ve görünüm alanındaki boyut ilişkisine bağlı olarak ya sayfaların genişliğini belge görünümlerinin genişliğine eşit yapacak biçimde (genişliğe sığdır gibi) ya sayfaların yüksekliğini belge görünümlerinin yüksekliğine eşit yapacak biçimde (yüksekliğe sığdır gibi) ya da tüm sayfayı görünür yapacak biçimde (sayfayı sığdır gibi) <action
+>değiştirin</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guisubmenu
+>Görünüm Kipi</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu alt menü, sayfaları için olar görünüm kipini seçmenize olanak tanır. Olası seçenekler: <guimenuitem
+>Tek Sayfa</guimenuitem
+> (satır başına tek sayfa), <guimenuitem
+>Yüzleşen Sayfalar</guimenuitem
+> (satır başına iki sayfa, kitap gibi), <guimenuitem
+>Yüzleşen Sayfalar (İlk Sayfayı Ortala)</guimenuitem
+> ve <guimenuitem
+>Genel Görünüm</guimenuitem
+> (sütun sayısı, <link linkend="configure"
+>&okular; ayarlarında belirtildiği gibidir</link
+>).</para>
+						<para
+>Ayrıca <guimenuitem
+>Sürekli</guimenuitem
+> kipini etkinleştirebilirsiniz. Sürekli kipte belgenin tüm sayfaları gösterilir ve bunlar arasında sorunsuz bir şekilde gezinebilirsiniz. Aksi takdirde, aynı anda yalnızca bir sayfa (veya sayfaların bir satırı) gösterilir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guisubmenu
+>Yönelim</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu alt menü, belgenin sayfalarının <action
+>yönelimini değiştirmenize</action
+> olanak tanır. </para>
+						<note>
+							<para
+>Döndürme, her bir sayfanın yönelimine uygulanır. </para>
+						</note>
+						<para
+>Elle uygulanan tüm döndürmeleri yok sayarak belgenin yönlendirmesini geri yüklemek için <guimenuitem
+>Özgün Yönlendirme</guimenuitem
+>'yi seçebilirsiniz. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guisubmenu
+>Görünümü Kırp</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu alt menü, sayfaları görüntülerken onların beyaz kenarlıklarını kaldırmanıza (<guimenuitem
+>Kenar Boşluklarını Kırp</guimenuitem
+>) veya görüş alanını seçime sınırlamanıza (<guimenuitem
+>Seçime Kırp</guimenuitem
+>) olanak tanır. </para>
+						<para
+><quote
+>Seçime kırpma</quote
+> kipi, belgedeki <emphasis
+>tüm sayfalara</emphasis
+> uygulanacak görünür bir sınırlama kutusu tanımlamak için oluşturulan sayfanın üzerine bir seçim çizmenize olanak tanır. Küçük bir kırpma sınırlama kutusu seçmek, en küçük boyut boyutunu zorunlu kılar (toplam sayfa boyutunun yüzdesi olarak %​20). </para>
+						<para
+><quote
+>Kenar boşluklarını kırpma</quote
+> kipi, &okular; uygulamasının yeniden başlatılması sonrasında anımsanır. <quote
+>Seçime kırpma</quote
+> kipi ise unutulur. </para>
+						<para
+>&okular;'ı <quote
+>kenar boşluklarını kırpma</quote
+> kipinden <quote
+>seçime kırpma</quote
+> kipine geçirirseniz görünüm, <quote
+>kenar boşluklarını kırpma</quote
+> kipinden kutu seçimi etkileşimine geçiş yapar. </para>
+						<para
+>Kırpma kipi, onu bir kez daha etkinleştiren aynı menü ögesi seçilerek devre dışı bırakılabilir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Görünüm</guimenu
+> <guimenuitem
+>Formları Göster/Gizle</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin form alanlarının <action
+>görüntülenmesini açar veya kapatır</action
+>. </para>
+						<note>
+							<para
+>Bu menü ögesi yalnızca geçerli belgede form alanları varsa etkindir. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Git Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Git</guimenu
+> <guimenuitem
+>Önceki Sayfa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>bir önceki sayfasını görüntüler</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Git</guimenu
+> <guimenuitem
+>Sonraki Sayfa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>bir sonraki sayfasını görüntüler</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></shortcut
+> <guimenu
+>Git</guimenu
+> <guimenuitem
+>Belge Başı</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>başına gider</action
+>.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></shortcut
+> <guimenu
+>Git</guimenu
+> <guimenuitem
+>Belge Sonus</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>sonuna gider</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Left;</keycombo
+></shortcut
+> <guimenu
+>Git</guimenu
+> <guimenuitem
+>Geri</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>bir önceki görünümüne gider</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Right;</keycombo
+></shortcut
+> <guimenu
+>Git</guimenu
+> <guimenuitem
+>İleri</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>bir sonraki görünümüne gider</action
+>. Bu, yalnızca oraya daha önce gittiyseniz çalışır.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Git</guimenu
+> <guimenuitem
+>Sayfaya Git...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Belgenin <action
+>herhangi bir sayfasına gitmek</action
+> için kullanabileceğiniz bir iletişim kutusu açar.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Yer İmleri Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Yer İmi Ekle/Yer İmini Kaldır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Geçerli konum için bir yer imi ekleyin veya kaldırın</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Yer İmini Yeniden Adlandır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Geçerli konumdaki yer imini yeniden adlandırın</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Önceki Yer İmi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Önceki yer imine gidin</action
+> veya geçerli yer iminden önce yer imi yoksa hiçbir şey yapmayın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Sonraki Yer İmi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Sonraki yer imine gidin</action
+> veya geçerli yer iminden sonra yer imi yoksa hiçbir şey yapmayın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Yer İmi Yok</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu, yalnızca geçerli belgede yer imi yoksa bu menüde görünen, her zaman devre dışı bırakılan bir eylemdir. Aksi takdirde, tüm yer imlerinin bir listesi burada görüntülenir. Bu yer imlerine tıklamak, doğrudan ilgili konuma gitmenizi sağlar.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Araçlar Menüsü</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Göz At</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Fare normal davranışına sahip olacaktır; belgeyi sürüklemek ve bağlantıları takip etmek için &LMB; ve yer imleri eklemek ve genişliğe sığdırmak için &RMB;.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Yakınlaştır</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Fare yakınlaştırma aracı olarak çalışacaktır. &LMB;'ne tıklayıp sürüklemek, görünümü seçilen alana yakınlaştıracaktır; &RMB;'ne tıklamak ise belgeyi önceki yakınlaştırma durumuna geri getirecektir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Alan Seçimi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Fare dikdörtgen bölge seçim aracı olarak çalışacaktır. Bu kipte, &LMB;'ne tıklamak ve sürüklemek bir seçim kutusu çizer ve seçilen içeriği panoya kopyalama, seçilen metni konuşma veya seçim bölgesini bir görsele dönüştürüp bir dosyaya kaydetme seçeneğini sunar.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Metin Seçimi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Fare bir metin seçim aracı olarak çalışacaktır. Bu kipte &LMB;'ne tıklamak ve sürüklemek, belgenin metnini seçme seçeneğini sunar. Ardından panoya kopyalamak veya geçerli seçimi konuşmak için &RMB; ile tıklamanız yeterlidir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Tablo Seçimi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Tablo metninin çevresine bir dikdörtgen çizin, ardından metin bloğunu satırlara ve sütunlara bölmek için &LMB; ile tıklayın. Var olan bir satıra &LMB; tıklaması onu kaldırır ve bitişik satırları veya sütunları birleştirir. Son olarak tabloyu panoya kopyalamak için &RMB; ile tıklamanız yeterlidir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Büyüteç</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Fare işaretçisi için büyüteç kipini etkinleştirir. Büyüteç araç takımını etkinleştirmek için &LMB;'ni basılı tutun, belgede gezinmek için işaretçiyi hareket ettirin. Büyüteç, belgedeki her pikseli, büyüteç araç takımında 10 piksele ölçeklendirir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Bilgi Notları</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Bilgi notu araç çubuğunu açar</action
+>. Bilgi notu araç çubuğu, okuduğunuz belgeye notlar eklemenize olanak tanır. Daha fazla bilgi için <link linkend="annotations"
+>Bilgi Notları</link
+> ile ilgili bölüme bakın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Sayısal Olarak İmzala...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Sayısal imza oluşturma iş akışını başlatır</action
+>. Sayısal imzaların eklenmesi şu aşamada yalnızca PDF dosyaları için desteklenir. Daha fazla bilgi için <link linkend="adding_digital_signatures"
+>Sayısal İmzalar Eklemek</link
+> bölümüne bakın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Tüm Belgeyi Konuş</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Geçerli Sayfayı Konuş</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Konuşmayı Durdur</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Araçlar</guimenu
+> <guimenuitem
+>Konuşmayı Sürdür/Duraklat</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Bu ögeler, belgenin tamamını veya yalnızca geçerli sayfayı seslendirmenize ve sistemin konuşma hizmetini kullanarak konuşmayı bırakmanıza olanak tanır. Bu hizmet, &Linux;'taki konuşma göndericiyi ve diğer platformlardaki yerel konuşma sistemlerini kapsayan bir &Qt; kitaplığı tarafından sağlanır. Geçerli sesi &okular; <link linkend="configaccessibility"
+>Erişilebilirlik</link
+> yapılandırma sayfasında seçebilirsiniz.</para>
+						<para
+><guilabel
+>Konuş ...</guilabel
+> eylemleri yalnızca sisteminizde bir konuşma hizmeti kullanılabiliyorsa etkinleştirilir.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Ayarlar ve Yardım Menüsü</title>
+			<para
+>&kde; Temelleri belgelendirmesinin <ulink url="help:/fundamentals/menus.html"
+>Menü</ulink
+> bölümünde açıklanan ortak &kde; <guimenu
+>Ayarlar</guimenu
+> ve <guimenu
+>Yardım</guimenu
+> menülerine ek olarak, &okular;'da aşağıdaki uygulamaya özel menü girdileri vardır:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Kenar Çubuğunu Göster</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kenar Çubuğu'nu gösterir veya gizler.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Sayfa Çubuğunu Göster</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>&okular; penceresinde dikey alandan tasarruf etmek için belge alanının alt kısmında bulunan <action
+>sayfa çubuğunu açar/kapatır</action
+>. Sayfa numaraları her halükarda öntanımlı araç çubuğunda gösterileceklerdir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Arka Uçları Yapılandır...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><link linkend="configure-backends"
+>Arka Uç Yapılandırması</link
+> iletişim kutusunu açar.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>&okular; Arka Uçlarını Yapılandırmak</title>
+	  <para
+>&okular; arka uçlarını <menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Arka Uçları Yapılandır...</guimenuitem
+></menuchoice
+> seçimini yaparak yapılandırabilirsiniz. Şu anda yalnızca; EPub, &PostScript;, FictionBook, Txt, OpenDocument Text ve &PDF; arka uçları için yapılandırma seçenekleri sağlanır. </para>
+	  <screenshot>
+	    <screeninfo
+>Arka uçlar yapılandırmasi iletişim kutusu</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Arka uçlar yapılandırması iletişim kutusu</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazıtipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
+>Seç...</guibutton
+> düğmesi, standart &kde; yazıtipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
+>&kde; Temelleri belgelendirmesine</ulink
+> başvurun. </para>
+	  <para
+>Markdown, &PostScript; ve &PDF; arka uçlarının yapılandırma sayfalarının açıklamaları aşağıda bulunabilir. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Markdown arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>Markdown</guilabel
+>'u seçip <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> tabanlı &okular; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>SmartyPants biçimlendirmesini etkinleştir</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Bu seçenek, işaretlendiğinde &okular;'ın <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+> biçimlendirmesini işlemesine olanak tanır. Bu biçimlendirme türü teknik metinlerde sorun yaratabilir; çünkü istenmeyebilecek değişimler yapar (örneğin, <literal
+>(C)</literal
+>'yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>&PostScript; arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>Ghostscript</guilabel
+>'i seçip <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> tabanlı &okular; &PostScript; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Platform yazıtiplerini kullan</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Bu seçenek Ghostscript'in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>&PDF; arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>&PDF;</guilabel
+>'yi seçip <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> tabanlı &okular; &PDF; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>İnce satırları iyileştir</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>&okular;'da çizgi çizmek iki adımda gerçekleştirilir: Kırpma yolunun oluşturulması ve bu kırpma yolunun doldurulması. Özgün belgedeki çizgi bir pikselden küçük olduğunda bu iki aşamalı uygulama sorunlara neden olabilir. Bu çizgiler için kırpma yolu, kırpma alanı içindeki çizgi kısmının kalınlığına bağlı olan dolgu rengiyle doldurulur. Çizginin kırpma alanı içindeki kısmı çok küçülürse şekil ile arka plan rengi arasındaki karşıtlık çizginin tanınamayacağı kadar düşük olabilir. Bu tür çizgilerin ızgaraları daha sonra çok çirkin görünürler. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>İnce çizgi (kırmızı), kırpma yolu (kesikli çizgi) ve piksel sınırları (siyah düz çizgiler)</entry>
+			    <entry
+>Düşük karşıtlıkta gösterilen ince çizgi</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>İnce çizgilerin görünümünü geliştirmek için &okular; iki seçeneği uygular. </para>
+		    <para
+>İlk seçenek <guimenuitem
+>Katı</guimenuitem
+>'dır. Bu seçenekle &okular;, kırpma yolu ve çizgi konumunu, kırpma yolu ve çizgi aynı piksel sınırında olacak şekilde ayarlar; örneğin &okular;, ince çizgileri çıkış aygıtında bir piksele büyütür. Bu kip, <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>'daki <guilabel
+>İnce çizgileri iyileştir</guilabel
+> kipine benzerdir. Bu seçenek seçilirse ince çizgiler her zaman büyütülürler. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+><guimenuitem
+>Katı</guimenuitem
+> iyileştirmeli ince çizgi</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+><guimenuitem
+>Katı</guimenuitem
+> iyileştirmeli ince çizgi</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>İkince seçenek <guimenuitem
+>Şekil</guimenuitem
+>'dir. Bu seçenekte kırpma yolu ve çizgi de piksel sınırına göre ayarlanır; ancak çizgi yoğunluğu genişliğine göre düzeltilir. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+><guimenuitem
+>Şekil</guimenuitem
+> iyileştirmeli ince çizgi</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+><guimenuitem
+>Şekil</guimenuitem
+> iyileştirmeli ince çizgi</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>İnce çizgiler öntanımlı olarak iyileştirilmezler (<guimenuitem
+>Hayır</guimenuitem
+> seçeneği). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Sayısal İmza Sertifikaları</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Bu bölüm, &PDF; dosyalarına Sayısal İmzalar eklerken kullanılacak özel bir Sertifika Veritabanı ayarlamanıza olanak tanır. </para>
+			<para
+>Ayrıca geçerli Sertifika Veritabanında (varsa) bulunan sertifikaları da listeler. </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>&okular;'ı Yapılandırmak</title>
+		<sect1 id="configindex">
+			<title
+>Genel yapılandırma</title>
+			<para
+>&okular;'ı <menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>&okular; Uygulamasını Yapılandır...</guimenuitem
+></menuchoice
+> seçimini yaparak yapılandırabilirsiniz. Yapılandırma iletişim kutusu altı bölüme ayrılmıştır. Bu fasıl, kullanılabilir seçenekleri ayrıntılarıyla açıklar. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Genel</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Erişilebilirlik</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Başarım</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Sunum</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Bilgi Notları</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Düzenleyici</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Yapılandırma iletişim kutusu</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Yapılandırma iletişim kutusu</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Geçerli kurulu arka uçlara bağlı olarak, <menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Arka Uçları Yapılandır...</guimenuitem
+></menuchoice
+> menü ögesi etkin olabilir. Bu yapılandırma iletişim kutusu, yapılandırılabilir olan arka uçların yapılandırmalarını barındırır. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Genel</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Pürüzsüz sarma kullan</guilabel
+></term>
+					<listitem>
+						<para
+>Fare tekerleğini ve klavyeyi kullanarak sarma yaparken canlandırmalı geçişlerin görüntülenip görüntülenmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Sarma çubuklarını göster</guilabel
+></term>
+					<listitem>
+						<para
+>Belge görünümü için sarma çubuklarının gösterilip gösterilmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Küçük görselleri sayfaya bağlantıla</guilabel
+></term>
+					<listitem>
+						<para
+>Küçük görseller görünümünün her zaman geçerli sayfayı gösterip göstermeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>İpuçlarını ve bilgi iletilerini göster</guilabel
+></term>
+					<listitem>
+						<para
+>Başlangıçta, dosya yüklemede vb. bazı bilgilendirici iletilerin gösterilip gösterilmeyeceği</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Gömülü dosyaları, formları veya imzaları bildir</guilabel
+></term>
+					<listitem>
+						<para
+>Gömülü dosyalar, formlar veya imzalar vb. hakkında bilgilendirici panellerin gösterilip gösterilmeyeceği</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Varsa belge başlığını başlık çubuğunda göster</guilabel
+></term>
+					<listitem>
+						<para
+>Geçerli belge başlığının &okular; pencerelerinin başlık çubuğunda gösterilip gösterilmeyeceği. Belgede başlık için üst veri bulunmazsa veya bu öge işaretlenmezse &okular; belgenin dosya adını gösterir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Belge başlığı görüntülenmediği zaman</guilabel
+></term>
+					<listitem>
+					  <para
+>İki seçenekten birini seçebilirsiniz: <guilabel
+>Yalnızca dosya adını görüntüle</guilabel
+> veya <guilabel
+>Tam dosya yolunu görüntüle</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Özel arka plan rengi kullan</guilabel
+></term>
+					<listitem>
+                                            <para
+><ulink url="help:/fundamentals/colors.html"
+>Belge arka plan rengi seçimini</ulink
+> etkinleştirir (görüntülenen sayfa etrafındaki renk). Bu seçenek işaretlenmediğinde öntanımlı olarak &Qt; araç kiti rengi kullanılır. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Yeni dosyaları sekmelerde aç</guilabel
+></term>
+					<listitem>
+						<para
+>Yeni belgelerin sekmelerde açılıp açılmayacağı. Sekmeler öntanımlı olarak devre dışıdır.</para>
+						<para
+>Sekmeler arasında geçiş yapmak için öntanımlı kısayollar: <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Sonraki sekme</guilabel
+>) ve <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>Önceki sekme</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Dosya halihazırda açıksa var olduğu sekmeye geç</guilabel
+></term>
+					<listitem>
+						<para
+>Dosya zaten açıksa yeni bir sekme açmak yerine &okular;'ın var olan bir sekmeye geçip geçmeyeceği. Bu seçenek öntanımlı olarak etkindir. Yalnızca <guilabel
+>Yeni dosyaları sekmelerde aç</guilabel
+> etkinse açılabilir/kapatılabilir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>DRM sınırlamalarına uy</guilabel
+></term>
+					<listitem>
+						<para
+>&okular;'ın <firstterm
+>DRM</firstterm
+> (Sayısal Haklar Yönetimi) kısıtlamalarına uyması gerekip gerekmediği. DRM sınırlamaları, içeriğin panoya kopyalanması gibi &PDF; belgeleriyle belirli eylemlerin gerçekleştirilmesini olanaksızlaştırmak için kullanılır. &okular;'ın bazı yapılandırmalarında bu seçeneğin kullanılabilir olmadığını unutmayın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Dosya değiştirildiğinde belgeyi yeniden yükle</guilabel
+></term>
+					<listitem>
+						<para
+>Açık dosyaların değişiklikler açısından kendiliğinden denetlenip denetlenmeyeceği ve gerekirse güncellenip güncellenmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Arka uç seçimi iletişim kutusunu göster</guilabel
+></term>
+					<listitem>
+						<para
+>&okular;'ın geçerli dosyayı açabilen birden fazla arka uç olması durumunda kullanıcıya hangi arka ucun kullanılacağını sorması gerekip gerekmediği. İşaretlenmezse &okular;, en yüksek önceliğe sahip arka ucu kullanır.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Sağdan sola okuma yönü</guilabel
+></term>
+					<listitem>
+						<para
+>Açık dosyalar için öntanımlı olarak sağdan sola okuma yönünün kullanılıp kullanılmayacağı. <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>Bazı yazma sistemleri</ulink
+> için yararlı olabilir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Öntanımlı olarak sürdürülen kipte aç</guilabel
+></term>
+					<listitem>
+						<para
+>Sürdürülen kipin öntanımlı olarak kullanılıp kullanılmayacağı. Sürdürülen kipte belgenin tüm sayfaları gösterilir ve bunlar arasında sorunsuz bir şekilde gezinebilirsiniz. Aksi takdirde, aynı anda yalnızca bir sayfa (veya sayfaların bir satırı) gösterilir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Göz At aracını kullanırken, ekran kenarlarında imleci kaydır</guilabel
+></term>
+					<listitem>
+						<para
+><link linkend="menutools"
+>Göz At Aracı</link
+> ile belgenin tamamında sonsuz sarma yapılmasına olanak tanır. Etkinleştirilirse belgeyi sürüklerken kenarlara dokunulduğunda fare imleci ekranın diğer ucuna kaydırılır. Bu özellik yalnızca X11'de desteklenir. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Genel görünüm sütunları</guilabel
+></term>
+					<listitem>
+						<para
+>Bu seçenek, genel görünüm kipinde kullanılacak sütun sayısını temsil eder. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Sayfa Yukarı/Aşağı çakışması</guilabel
+></term>
+					<listitem>
+						<para
+>Burada, &PgUp;/&PgDn; düğmelerine bastıktan sonra görünür olması gereken geçerli görüntüleme alanının yüzdesini tanımlayabilirsiniz. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Öntanımlı yakınlaştırma</guilabel
+></term>
+					<listitem>
+						<para
+>Bu seçenek, daha önce hiç açılmamış dosyalar için öntanımlı yakınlaştırma kipini belirtir. Önceki yakınlaştırma kipi uygulanmadan önce açılan dosyalar için. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Erişilebilirlik</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Bağlantıların çevresine kenarlık çiz</guilabel
+></term>
+					<listitem>
+						<para
+>Bağlantıların etrafına kenarlık çizilip çizilmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Renkleri değiştir</guilabel
+></term>
+					<listitem>
+						<para
+>Renk değiştirme seçeneklerini <action
+>etkinleştirir</action
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Renk kipi</guilabel
+></term>
+					<listitem>
+						<para
+>Renk değiştirme kipini <action
+>tanımlar</action
+>.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Renkleri Tersine Çevir</guilabel
+></term>
+							<listitem>
+								<para
+>Görünümdeki renkleri <action
+>tersine çevirir</action
+>; yani, siyah nesneler beyaz olarak gösterilirler.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Kağıt Rengini Değiştir</guilabel
+></term>
+								<listitem>
+									<para
+>Kağıdın rengini; yani, belgenin arka planını <action
+>değiştirir</action
+>.</para>
+                                                                        <para
+>Renk, aşağıdaki <guilabel
+>Kağıt rengi</guilabel
+> örneğini kullanarak seçilebilir. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Koyu ve Açık Renkleri Değiştir</guilabel
+></term>
+							<listitem>
+								<para
+>Koyu ve açık rengi tercihinize göre <action
+>değiştirir</action
+>; bu, siyahın siyah olarak değil, seçilen koyu renk olarak, beyazın ise beyaz olarak değil, seçilen açık renk olarak sunulacağı anlamına gelir.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Siyah-Beyaza Dönüştür</guilabel
+></term>
+							<listitem>
+								<para
+>Belgeyi siyah-beyaza <action
+>dönüştürür</action
+>. Eşiği ve karşıtlığı ayarlayabilirsiniz. Eşiği sağa kaydırarak daha yüksek bir değere ayarlamak, daha açık grilerin kullanılmasına neden olur.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Açıklığı Tersine Çevir</guilabel
+></term>
+							<listitem>
+									<para
+>Tüm renklerin açıklığını <action
+>tersine çevirir</action
+>. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. Görsellerdeki karşıtlık genellikle <guilabel
+>Parlaklığı Tersine Çevir (Doğrusal sRGB)</guilabel
+>'dan daha kötü olacaktır.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Parlaklığı Tersine Çevir (Doğrusal sRGB)</guilabel
+></term>
+							<listitem>
+								<para
+>Tüm renklerin parlaklığını <action
+>tersine çevirir</action
+>. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. Görsellerdeki karşıtlık, <guilabel
+>Açıklığı Tersine Çevir</guilabel
+>'e göre daha iyi korunur; ancak grafikler ve renkli metin işaretlemesi genellikle daha kötü görünür. sRGB parlaklığı katsayılarını kullanır; ancak gama düzeltmesi yapılmaz.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Parlaklığı Tersine Çevir (Simetrik)</guilabel
+></term>
+							<listitem>
+								<para
+>Simetrik parlaklık katsayılarını kullanarak tüm renklerin parlaklığını <action
+>tersine çevirir</action
+>. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. <guilabel
+>Açıklığı Tersine Çevir</guilabel
+>'e çok benzerdir; ancak bazı durumlarda karşıtlığı daha iyidir.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Pozitif Renk Tonunu Kaydır</guilabel
+></term>
+							<listitem>
+								<para
+>Tüm renklerin tonunu 120 derece <action
+>kaydırır</action
+>. Renkli grafiklerdeki bazı karşıtlık sorunlarını azaltabilir.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Negatif Renk Tonunu Kaydır</guilabel
+></term>
+							<listitem>
+								<para
+>Tüm renklerin tonunu 240 derece <action
+>kaydırır</action
+>. Renkli grafiklerdeki bazı karşıtlık sorunlarını azaltabilir.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>&okular;'ın <guimenu
+>Ayarlar</guimenu
+> menüsündeki ilgili menü ögelerini kullanarak renk kiplerini için klavye kısayollarını ve araç çubuğu eylemlerini yapılandırabilirsiniz.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Konuşma işletkesi</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; tarafından kullanılacak konuşma (<abbrev
+>TTS</abbrev
+>) işletkesini <action
+>seçmenize olanak tanır</action
+>. Öntanımlı uygulama, <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+> şeklindedir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Konuşma sesi</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; tarafından kullanılacak konuşma işletkesi için bir ses <action
+>seçmenize</action
+> olanak tanır. Platformunuzdaki kullanılabilir sentezleyicilere bağlı olarak tüm dilleri ve sesleri kullanabilirsiniz. &Linux;'ta, kullanılabilir sesleri belirlemek için öntanımlı olarak speech-dispatcher kullanılır.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Başarım</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Saydamlık efektlerini etkinleştir</guilabel
+></term>
+					<listitem>
+						<para
+>Saydamlık efektlerini kullanarak seçimler ve diğer özel grafikler çizin. Ana hat veya mat dolgu biçemlerini kullanarak bunları çizme seçeneğini devre dışı bırakın ve seçimlerdeki hızı artırın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bellek kullanımı</guilabel
+></term>
+					<listitem>
+						<para
+>&okular;, sisteminize ve zevklerinize göre bellek kullanımını ayarlayarak en iyi başarımı elde edebilir. Ne kadar çok bellek kullanmasına izin verirseniz program o kadar hızlı davranır. Öntanımlı profil her sistem için iyidir; ancak Düşük profilini seçerek &okular;'ın gereğinden fazla bellek kullanmasını önleyebilir veya Yoğun'u kullanarak sisteminizden en iyi şekilde yararlanmasını sağlayabilirsiniz. Sistem belleğinin aşırı dolma riski olmadan tüm sayfaları önceden yüklemek için Çok Yoğun profilini kullanın (toplam belleğin veya boş belleğin yalnızca %​50'si kullanılacaktır).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Sunum seçenekleri</guilabel
+></term>
+					<listitem>
+						<para
+>Bu seçenek grubunu kullanarak &okular;'daki metin ve görsel sunumunu iyileştirebilirsiniz. Sonuç, belgeyi görüntüleyecek aygıta bağlıdır.<guilabel
+>Metin kenar yumuşatmasını etkinleştir</guilabel
+> ve <guilabel
+>Grafik kenar yumuşatmasını etkinleştir</guilabel
+> seçenekleri, belgedeki metin ve görsellerin <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+>uzamsal kenar yumuşatmasını</ulink
+> sırasıyla açıp kapatmak için kullanılabilir. <guilabel
+>Metin düzgünleştirmeyi etkinleştir</guilabel
+> ögesi ise <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>yazıtipi düzgünleştirme</ulink
+> için bir anahtar olarak kullanılır. Kenar yumuşatma ve düzgünleştirme, belgelerin görüntülenme biçimini değiştirir; bunları tercihinize göre ayarlamak isteyebilirsiniz.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Sunum</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Kendiliğinden ilerle</guilabel
+></term>
+					<listitem>
+						<para
+>Belirli bir süre içinde sayfaların kendiliğinden ilerlemesini sağlar.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Son sayfadan sonra başa dön</guilabel
+></term>
+					<listitem>
+						<para
+>Sunum kipinde dolaşımdayken ve son sayfayı geçtikten sonra ilk sayfa gelir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Dokunma dolaşımı</guilabel
+></term>
+					<listitem>
+						<para
+>Aşağıdaki üç olası değeri kullanarak sunumda dokunarak dokunmatik ekranda gezinmeye ince ayar yapmanızı sağlar:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>İleri/Geri gitmek için sağ/sol tarafa dokun</guilabel
+>: Ekranın sol (sağ) yarısına dokunmak sunumun önceki (sonraki) slayda gitmesini sağlar.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>İleri gitmek için herhangi bir yere dokun</guilabel
+> (öntanımlı): Ekrana dokunulduğunda, ekranın neresine dokunulursa dokunulsun sunum bir sonraki slayda geçer.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Devre dışı</guilabel
+>: Ekrana dokunmak hiçbir şey yapmaz.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Arka plan rengi</guilabel
+></term>
+					<listitem>
+						<para
+>Sunum kipindeyken ekranın sayfanın kapsamadığı kısmını dolduracak renk.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Fare imleci</guilabel
+></term>
+					<listitem>
+						<para
+>Farenin her zaman gizlenmesi mi, her zaman gösterilmesi mi yoksa kısa bir süre işlem yapılmadığında gizlenmesi mi gerektiği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>İlerleme göstergesini göster</guilabel
+></term>
+					<listitem>
+						<para
+>Sayfayı her değiştirdiğinizde sunum ekranının sağ üst köşesinde geçerli sayfayı ve toplam sayfa sayısını gösteren bir ilerleme çemberinin gösterilip gösterilmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Özet sayfasını göster</guilabel
+></term>
+					<listitem>
+						<para
+>Sunumun başında belgenin başlığını, yazarını ve sayfa sayısını içeren bir özet sayfasının gösterilip gösterilmeyeceği.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Geçişleri etkinleştir</guilabel
+></term>
+					<listitem>
+						<para
+>Sayfalar arasındaki geçiş efektlerini etkinleştirmek veya devre dışı bırakmak için bu onay kutusunu kullanın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Öntanımlı geçiş</guilabel
+></term>
+					<listitem>
+						<para
+>Belgede belirtilmemişse sayfalar arasındaki geçiş efekti. &okular;'ın kullanılabilir efektlerden birini rastgele seçmesini sağlamak için bunu <guilabel
+>Rastgele Geçiş</guilabel
+> olarak ayarlayın.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Yerleştirme</guilabel
+></term>
+					<listitem>
+						<para
+>Bu bölümde, sunumu görüntülemek için kullanılacak <guilabel
+>ekranı</guilabel
+> seçebilirsiniz.</para>
+						<para
+><guilabel
+>Geçerli Ekran</guilabel
+>, sunum kipini başlatan &okular; penceresinin olduğu ekrandır.</para>
+						<para
+><guilabel
+>Öntanımlı Ekran</guilabel
+>, xinerama yapılandırmasında öntanımlı olarak imlenen ekrandır.</para>
+						<para
+><guilabel
+>Ekran 0</guilabel
+>, <guilabel
+>Ekran 1</guilabel
+> vb. kullanılabilir ekranlardır.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Çizim Aracı Yapılandırması</guilabel
+></term>
+					<listitem>
+						<para
+>Sunum kipinde sayfalarda çizim yaparken kullanılan kalemin renklerini yönetin.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Bilgi Notları</title>
+			<screenshot>
+				<screeninfo
+>Yapılandırma iletişim kutusunun bilgi notları sayfası</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Yapılandırma iletişim kutusunun bilgi notları sayfası</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Bilgi notu araç çubuğu</guilabel
+></term>
+					<listitem>
+                                            <para
+><guimenuitem
+>Tam Bilgi Notu Araç Çubuğu</guimenuitem
+> (&okular; penceresinin üst kısmındaki <link linkend="annotations-add"
+>öntanımlı araç çubuğu</link
+>) ve <guimenuitem
+>Tez Bilgi Notu Araç Çubuğu</guimenuitem
+> (belge bölmesinin sağ kısmında favori araçlarınızın bulunduğu kayan araç çubuğu) arasında geçiş yapılmasına izin verir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Yazar</guilabel
+></term>
+					<listitem>
+						<para
+>Bir belgeye eklenen içeriğin yazarı. Öntanımlı yazar adı, &systemsettings; <guilabel
+>Hesap Ayrıntıları</guilabel
+> modülünün <guilabel
+>Parola ve Kullanıcı Hesabı</guilabel
+> sayfasında belirtilen addır.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bilgi notu araçları</guilabel
+></term>
+					<listitem>
+					  <para
+>Bu bölme, <link linkend="annotations-add"
+>bilgi notu araç çubuğunuzu</link
+> yapılandırmak için kullanılır. </para>
+					  <para
+>Araç çubuğunu yapılandırmak için kullanılan beş adet düğme (<guibutton
+>Ekle</guibutton
+>, <guibutton
+>Düzenle</guibutton
+>, <guibutton
+>Kaldır</guibutton
+>, <guibutton
+>Yukarı Taşı</guibutton
+>, <guibutton
+>Aşağı Taşı</guibutton
+>) ve (geçerli bilgi notu araç çubuğunun içeriğini listeleyen) bir liste kutusu vardır. </para>
+					  <para
+>Araç çubuğuna bir düğme eklemeniz gerekiyorsa <guibutton
+>Ekle</guibutton
+> düğmesine tıklayın. Oluşturulan aracın <guilabel
+>Ad</guilabel
+>, <guilabel
+>Tür</guilabel
+> ve <guilabel
+>Görünüş</guilabel
+> kalemlerini yapılandırabilirsiniz. </para>
+					  <note>
+					    <para
+>&okular;'daki bilgi notu araçlarının son derece yapılandırılabilir olduğunu lütfen unutmayın. Örneğin, aynı aracın farklı renklerde iki düğmesine sahip olabilirsiniz. İş akışınıza tam olarak uyarlanmış düğme kümesini seçmeyi denemekten çekinmeyin. </para>
+					  </note>
+					  <para
+>Liste kutusundaki bir ögeye tıklayın ve ardından ögeyi düzenlemek, kaldırmak, yukarı veya aşağı taşımak için sayfanın sağ kısmındaki ilgili düğmeye tıklayın. Aracın klavye kısayolu (<keycap
+>1</keycap
+> ile <keycap
+>9</keycap
+>), bilgi notu araç çubuğu listesindeki konumuna bağlıdır. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Özel Damgalar Kullanmak</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Kendi damganız için kullanmak istediğiniz simgeyi oluşturun ve &okular; tarafından desteklenen herhangi bir grafik biçiminde kaydedin.</para
+></listitem>
+					<listitem
+><para
+><guibutton
+>Ekle</guibutton
+> düğmesine tıklayın, tür olarak <guilabel
+>Damga</guilabel
+> seçin ve damganız için bir ad girin.</para
+></listitem>
+					<listitem
+><para
+><guilabel
+>Damga Sembolü</guilabel
+> grubundaki açılır kutuya özel simgenizin tam yolunu girin.</para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Düzenleyici</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Düzenleyici</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; bir kaynak dosyasını açmak istediğinde başlatmak istediğiniz düzenleyiciyi seçin. Belgenin oluşturulduğu kaynakların çeşitli noktalarına (genellikle satır ve sütun numaraları) başvuruları olması durumunda bu durum söz konusudur. &DVI; biçimi, &latex; belgelerinin oluşturulduğu kaynaklar hakkındaki bilgilerin eklenmesini doğal olarak destekler. &PDF; belgeleri için <acronym
+>pdfsync</acronym
+> adı verilen benzer bir sistem mevcuttur ve bu ekstra bilgiler, &PDF; dosyasının adını taşıyan dış bir dosyada depolanır (örneğin, <filename
+>belgem.pdf</filename
+> için <filename
+>belgem.pdfsync</filename
+>). </para>
+						<para
+>&okular;, aşağıdaki düzenleyiciler için önceden yapılandırılmış ayarlarla gelir: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs/"
+>&Emacs; client</ulink
+>, <ulink url="https://www.lyx.org/"
+>LyX İstemcisi</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> ve <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>&kile;'deki tersine aramayı kullanmak için &latex; dosyanızı <guilabel
+>Çağdaş</guilabel
+> yapılandırmayla derlemeniz gerekir. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Komut</guilabel
+></term>
+					<listitem>
+						<para
+>Bu, seçili düzenleyiciyi asıl belgenin kaynak dosyasıyla çağırmak için kullanılan komut ve parametreleridir.</para>
+						<para
+>Önceden yapılandırılan düzenleyicilerden birini kullanırsanız bu alan kendiliğinden doldurulur. Aksi takdirde, lütfen <guilabel
+>Düzenleyici</guilabel
+> açılır kutusunda <guimenuitem
+>Özel Metin Düzenleyicisi</guimenuitem
+>'ni seçin ve uygun komutu bulmak için favori düzenleyicinizin belgelerine bakın. </para>
+						<para
+>Aşağıdaki yer tutucuları kullanabilirsiniz:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - dosya adı</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - dosyada erişilecek satırın numarası</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - dosyada erişilecek sütunun numarası</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>%f belirtilmezse belge adı belirtilen komuta eklenir.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Emeği Geçenler ve Lisans</title>
+
+		<itemizedlist>
+			<title
+>Program telif hakkı:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Şu anki bakımcı</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> &kpdf; geliştiricisi</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Belgelendirme telif hakkı:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Yazar</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> Güncellemeler ve eklemeler</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Çeviri: Emir SARI <email
+>emir_sari@icloud.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

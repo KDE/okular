@@ -40,15 +40,3 @@ msgstr "Txt"
 #, kde-format
 msgid "Txt Backend Configuration"
 msgstr "Configuració del dorsal de txt"
-
-#~ msgid "Txt Backend"
-#~ msgstr "Dorsal Txt"
-
-#~ msgid "Txt backend."
-#~ msgstr "Dorsal Txt."
-
-#~ msgid "© 2013 Azat Khuzhin"
-#~ msgstr "© 2013 Azat Khuzhin"
-
-#~ msgid "Azat Khuzhin"
-#~ msgstr "Azat Khuzhin"

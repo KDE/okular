@@ -310,7 +310,7 @@ void PartTest::testClickInternalLink()
     const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
     const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
 
     QCOMPARE(part.m_document->currentPage(), 0u);
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.17, height * 0.05));
@@ -1389,7 +1389,7 @@ void PartTest::test388288()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
 
     auto annot = new Okular::HighlightAnnotation();
     annot->setHighlightType(Okular::HighlightAnnotation::Highlight);
@@ -1566,7 +1566,7 @@ void PartTest::testAnnotWindow()
 
     part.m_document->setViewportPage(0);
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
 
     QCOMPARE(part.m_document->currentPage(), 0u);
 

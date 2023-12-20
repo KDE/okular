@@ -38,6 +38,7 @@ protected:
     void focusOutEvent(QFocusEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     void wheelEvent(QWheelEvent *e) override;
+    bool event(QEvent *e) override;
 
 private Q_SLOTS:
     void updatePalette();

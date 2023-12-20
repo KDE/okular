@@ -38,10 +38,10 @@ bool OKMenuTitle::eventFilter(QObject *object, QEvent *event)
     } else if (event->type() == QEvent::KeyRelease) {
         // If we're receiving the key release event is because we just gained
         // focus though a key event, use the same key to move it to the next action
-        if (static_cast<QMenu *>(parentWidget())->activeAction() == this) {
+        if (static_cast<QMenu *>(parent())->activeAction() == this) {
             QKeyEvent *ke = static_cast<QKeyEvent *>(event);
             QKeyEvent newKe(QEvent::KeyPress, ke->key(), ke->modifiers(), ke->text(), ke->isAutoRepeat(), ke->count());
-            QApplication::sendEvent(parentWidget(), &newKe);
+            QApplication::sendEvent(parent(), &newKe);
         }
 
         // TODO What happens when there's multiple OKMenuTitle or only OKMenuTitle in a menu

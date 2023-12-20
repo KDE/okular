@@ -1673,7 +1673,7 @@ void PresentationWidget::clearDrawings()
 
 void PresentationWidget::chooseScreen(QAction *act)
 {
-    if (!act || act->data().type() != QVariant::Int) {
+    if (!act || act->data().metaType().id() != QMetaType::Int) {
         return;
     }
 

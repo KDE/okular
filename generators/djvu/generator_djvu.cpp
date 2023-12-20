@@ -138,7 +138,7 @@ Okular::DocumentInfo DjVuGenerator::generateDocumentInfo(const QSet<Okular::Docu
             docInfo.set(QStringLiteral("volume"), m_djvu->metaData(QStringLiteral("volume")).toString(), i18n("Volume"));
             docInfo.set(QStringLiteral("documentType"), m_djvu->metaData(QStringLiteral("documentType")).toString(), i18n("Type of document"));
             QVariant numcomponents = m_djvu->metaData(QStringLiteral("componentFile"));
-            docInfo.set(QStringLiteral("componentFile"), numcomponents.type() != QVariant::Int ? i18nc("Unknown number of component files", "Unknown") : numcomponents.toString(), i18n("Component Files"));
+            docInfo.set(QStringLiteral("componentFile"), numcomponents.metaType().id() != QMetaType::Int ? i18nc("Unknown number of component files", "Unknown") : numcomponents.toString(), i18n("Component Files"));
         }
     }
 

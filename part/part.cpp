@@ -248,7 +248,7 @@ static Okular::EmbedMode detectEmbedMode(QWidget *parentWidget, QObject *parent,
     }
 
     for (const QVariant &arg : args) {
-        if (arg.type() == QVariant::String) {
+        if (arg.metaType().id() == QMetaType::QString) {
             if (arg.toString() == QLatin1String("Print/Preview")) {
                 return Okular::PrintPreviewMode;
             } else if (arg.toString() == QLatin1String("ViewerWidget")) {
@@ -263,7 +263,7 @@ static Okular::EmbedMode detectEmbedMode(QWidget *parentWidget, QObject *parent,
 static QString detectConfigFileName(const QVariantList &args)
 {
     for (const QVariant &arg : args) {
-        if (arg.type() == QVariant::String) {
+        if (arg.metaType().id() == QMetaType::QString) {
             QString argString = arg.toString();
             int separatorIndex = argString.indexOf(QStringLiteral("="));
             if (separatorIndex >= 0 && argString.left(separatorIndex) == QLatin1String("ConfigFileName")) {

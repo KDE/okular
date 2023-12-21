@@ -67,7 +67,7 @@ public:
     KSharedConfig::Ptr config;
     Q_DISABLE_COPY(FilePrinterPreviewPrivate)
 };
-static const QString ConfigGroupKey()
+static inline QString ConfigGroupKey()
 {
     return QStringLiteral("Print Preview");
 }

@@ -160,7 +160,7 @@ void WelcomeScreen::showEvent(QShowEvent *e)
 
 void WelcomeScreen::loadRecents()
 {
-    m_recentsModel->loadEntries(KSharedConfig::openConfig()->group("Recent Files"));
+    m_recentsModel->loadEntries(KSharedConfig::openConfig()->group(QStringLiteral("Recent Files")));
 }
 
 int WelcomeScreen::recentsCount()

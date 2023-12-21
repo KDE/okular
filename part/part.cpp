@@ -608,7 +608,7 @@ void Part::setupConfigSkeleton(const QVariantList &args)
 
     // Configuration update: SlidesTransitionsEnabled -> SlidesTransition = NoTransitions.
     // See https://invent.kde.org/graphics/okular/-/merge_requests/357
-    KConfigGroup slidesConfigGroup = config.data()->group("Dlg Presentation");
+    KConfigGroup slidesConfigGroup = config.data()->group(QStringLiteral("Dlg Presentation"));
     if (slidesConfigGroup.readEntry<bool>("SlidesTransitionsEnabled", true) == false) {
         slidesConfigGroup.writeEntry("SlidesTransition", "NoTransitions");
     }

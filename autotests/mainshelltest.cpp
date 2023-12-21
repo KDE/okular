@@ -153,7 +153,7 @@ void MainShellTest::initTestCase()
 #endif
     // Tell the presentationWidget and queryClose to not be annoying
     KSharedConfigPtr c = KSharedConfig::openConfig(QStringLiteral("mainshelltest.kmessagebox"));
-    KConfigGroup cg = c->group("General");
+    KConfigGroup cg = c->group(QStringLiteral("General"));
     cg.writeEntry("presentationInfo", 4);
     cg.writeEntry("ShowTabWarning", 4);
 }

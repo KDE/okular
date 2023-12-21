@@ -74,6 +74,19 @@ static const char *const SESSION_TAB_KEY = "ActiveTab";
 static constexpr char SIDEBAR_LOCKED_KEY[] = "LockSidebar";
 static constexpr char SIDEBAR_VISIBLE_KEY[] = "ShowSidebar";
 
+static inline QString DesktopEntryGroupKey()
+{
+    return QStringLiteral("Desktop Entry");
+}
+static inline QString RecentFilesGroupKey()
+{
+    return QStringLiteral("Recent Files");
+}
+static inline QString GeneralGroupKey()
+{
+    return QStringLiteral("General");
+}
+
 class ResizableStackedWidget : public QStackedWidget
 {
     Q_OBJECT
@@ -485,10 +498,10 @@ void Shell::closeUrl()
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries(KSharedConfig::openConfig()->group("Recent Files"));
+    m_recent->loadEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
     m_recent->setEnabled(true); // force enabling
 
-    const KConfigGroup group = KSharedConfig::openConfig()->group("Desktop Entry");
+    const KConfigGroup group = KSharedConfig::openConfig()->group(DesktopEntryGroupKey());
     bool fullScreen = group.readEntry("FullScreen", false);
     setFullScreen(fullScreen);
 
@@ -497,7 +510,7 @@ void Shell::readSettings()
         m_toolBarWasShown = group.readEntry(shouldShowToolBarComingFromFullScreen, true);
     }
 
-    const KConfigGroup sidebarGroup = KSharedConfig::openConfig()->group("General");
+    const KConfigGroup sidebarGroup = KSharedConfig::openConfig()->group(GeneralGroupKey());
     m_sidebar->setVisible(sidebarGroup.readEntry(SIDEBAR_VISIBLE_KEY, true));
     m_sidebar->setLocked(sidebarGroup.readEntry(SIDEBAR_LOCKED_KEY, true));
 
@@ -509,13 +522,13 @@ void Shell::writeSettings()
 {
     saveRecents();
 
-    KConfigGroup sidebarGroup = KSharedConfig::openConfig()->group("General");
+    KConfigGroup sidebarGroup = KSharedConfig::openConfig()->group(GeneralGroupKey());
     sidebarGroup.writeEntry(SIDEBAR_LOCKED_KEY, m_sidebar->isLocked());
     // NOTE : Consider whether the m_showSidebarAction is checked, because
     // the sidebar can be forcibly hidden if the welcome screen is displayed
     sidebarGroup.writeEntry(SIDEBAR_VISIBLE_KEY, m_sidebar->isVisibleTo(this) || m_showSidebarAction->isChecked());
 
-    KConfigGroup group = KSharedConfig::openConfig()->group("Desktop Entry");
+    KConfigGroup group = KSharedConfig::openConfig()->group(DesktopEntryGroupKey());
     group.writeEntry("FullScreen", m_fullScreenAction->isChecked());
     if (m_fullScreenAction->isChecked()) {
         group.writeEntry(shouldShowMenuBarComingFromFullScreen, m_menuBarWasShown);
@@ -526,7 +539,7 @@ void Shell::writeSettings()
 
 void Shell::saveRecents()
 {
-    m_recent->saveEntries(KSharedConfig::openConfig()->group("Recent Files"));
+    m_recent->saveEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
 }
 
 void Shell::setupActions()

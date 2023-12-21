@@ -35,11 +35,26 @@
 #include <KSharedConfig>
 namespace
 {
-static constexpr char ConfigGroup[] = "Signature";
-static constexpr char ConfigBackgroundKey[] = "RecentBackgrounds";
-static constexpr char ConfigLastReason[] = "Reason";
-static constexpr char ConfigLastLocation[] = "Location";
-static constexpr char ConfigLastKeyNick[] = "KeyNick";
+static inline QString ConfigGroup()
+{
+    return QStringLiteral("Signature");
+}
+static inline QString ConfigBackgroundKey()
+{
+    return QStringLiteral("RecentBackgrounds");
+}
+static inline QString ConfigLastReason()
+{
+    return QStringLiteral("Reason");
+}
+static inline QString ConfigLastLocation()
+{
+    return QStringLiteral("Location");
+}
+static inline QString ConfigLastKeyNick()
+{
+    return QStringLiteral("KeyNick");
+}
 
 }
 
@@ -107,7 +122,7 @@ class RecentImagesModel : public QAbstractListModel
 public:
     RecentImagesModel()
     {
-        const auto recentList = KSharedConfig::openConfig()->group(QLatin1String(ConfigGroup)).readEntry<QStringList>(QLatin1String(ConfigBackgroundKey), QStringList());
+        const auto recentList = KSharedConfig::openConfig()->group(ConfigGroup()).readEntry<QStringList>(ConfigBackgroundKey(), QStringList());
         for (const auto &element : recentList) {
             if (QFile::exists(element)) { // maybe the image has been removed from disk since last invocation
                 m_storedElements.push_back(element);
@@ -206,7 +221,7 @@ public:
         while (elementsToStore.size() > 3) {
             elementsToStore.pop_back();
         }
-        KSharedConfig::openConfig()->group(QString::fromUtf8(ConfigGroup)).writeEntry(ConfigBackgroundKey, elementsToStore);
+        KSharedConfig::openConfig()->group(ConfigGroup()).writeEntry(ConfigBackgroundKey(), elementsToStore);
     }
 
 private:
@@ -236,7 +251,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     bool showIcons = false;
     int selectIndex = 0;
     auto config = KSharedConfig::openConfig();
-    const QString lastNick = config->group(ConfigGroup).readEntry<QString>(ConfigLastKeyNick, QString());
+    const QString lastNick = config->group(ConfigGroup()).readEntry<QString>(ConfigLastKeyNick(), QString());
     for (const auto &cert : std::as_const(certs)) {
         auto item = std::make_unique<QStandardItem>();
         QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
@@ -367,8 +382,8 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
             }
         });
     }
-    dialog.ui->reasonInput->setText(config->group(ConfigGroup).readEntry(ConfigLastReason, QString()));
-    dialog.ui->locationInput->setText(config->group(ConfigGroup).readEntry(ConfigLastLocation, QString()));
+    dialog.ui->reasonInput->setText(config->group(ConfigGroup()).readEntry(ConfigLastReason(), QString()));
+    dialog.ui->locationInput->setText(config->group(ConfigGroup()).readEntry(ConfigLastLocation(), QString()));
     auto result = dialog.exec();
 
     if (result == QDialog::Rejected) {
@@ -411,9 +426,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     if (passok) {
-        config->group(ConfigGroup).writeEntry(ConfigLastKeyNick, cert.nickName());
-        config->group(ConfigGroup).writeEntry(ConfigLastReason, dialog.ui->reasonInput->text());
-        config->group(ConfigGroup).writeEntry(ConfigLastLocation, dialog.ui->locationInput->text());
+        config->group(ConfigGroup()).writeEntry(ConfigLastKeyNick(), cert.nickName());
+        config->group(ConfigGroup()).writeEntry(ConfigLastReason(), dialog.ui->reasonInput->text());
+        config->group(ConfigGroup()).writeEntry(ConfigLastLocation(), dialog.ui->locationInput->text());
         return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword, dialog.ui->reasonInput->text(), dialog.ui->locationInput->text(), backGroundImage};
     }
     return std::nullopt;

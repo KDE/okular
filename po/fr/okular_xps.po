@@ -5,7 +5,7 @@
 # Mickael Sibelle <kimael@gmail.com>, 2008.
 # Guillaume Pujol <guill.p@gmail.com>, 2008.
 # Joëlle Cornavin <jcornavi@club-internet.fr>, 2009.
-# xavier <ktranslator31@yahoo.fr>, 2013.
+# Xavier Besnard <xavier.besnard@kde.org>, 2013.
 #
 msgid ""
 msgstr ""

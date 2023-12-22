@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2023-08-28 00:10+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -3325,12 +3325,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "보기(&V)..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "미리 보기 부분을 불러올 수 없습니다"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "인쇄 미리 보기"
@@ -3394,9 +3394,10 @@ msgid "Find as you type"
 msgstr "입력하는 대로 검색"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|모든 파일"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "모든 파일 (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3874,7 +3875,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "서명"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4497,7 +4498,7 @@ msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5355,43 +5356,43 @@ msgstr "모든 구성 요소 접기"
 msgid "Properties"
 msgstr "속성"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "이미지(%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "배경 이미지 선택"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "이미지 잊기"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "모든 이미지 잊기"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "인증서 잠금을 해제할 암호 입력(존재하는 경우): %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "인증서 암호 입력"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "문서 암호 입력"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "서명된 파일 다른 이름으로 저장"
@@ -5620,17 +5621,17 @@ msgstr "오류: --page 스위치가 있을 때에는 하나 이상의 문서를 
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "오류: --find 스위치가 있을 때에는 하나 이상의 문서를 열 수 없음"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Okular 구성 요소를 찾을 수 없음: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "사이드바"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5639,12 +5640,12 @@ msgstr ""
 "유일한 Okular 인스턴스가 실행 중입니다. 이 인스턴스는 유일한 인스턴스가 될 "
 "수 없습니다."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular 구성 요소를 찾을 수 없습니다."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5653,7 +5654,7 @@ msgstr ""
 "파일을 열려면 클릭하십시오\n"
 "누르고 있으면 최근 파일을 열 수 있습니다"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5661,57 +5662,57 @@ msgstr ""
 "<b>클릭하면</b> 파일을 열 수 있으며 <b>클릭하고 있으면</b> 최근 파일을 열 수 "
 "있습니다"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "다음 탭"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "이전 탭"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "탭 닫기 실행 취소"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "사이드바 잠금"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "모든 파일 (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "모든 지원하는 파일 (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "문서 열기"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "닫기 확인"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "탭 닫기"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "탭 %1개를 닫으려고 합니다. 계속 진행하시겠습니까?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "탭 여러 개를 닫을 때 물어보기"
@@ -5770,6 +5771,9 @@ msgstr "모두 잊기"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "시작 화면 숨기기"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|모든 파일"
 
 #~ msgid "Missing alert type"
 #~ msgstr "경고 형식 없음"

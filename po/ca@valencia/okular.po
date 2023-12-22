@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
-"PO-Revision-Date: 2023-10-19 11:48+0200\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
+"PO-Revision-Date: 2023-12-19 13:42+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -597,7 +597,7 @@ msgstr "Origen: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "Tipus de lletra pre&determinada:"
+msgstr "Lletra pre&determinada:"
 
 #: gui/certificatemodel.cpp:39
 #, kde-format
@@ -1194,7 +1194,7 @@ msgstr "Opacitat de l'anotació (cap anotació seleccionada)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Tipus de lletra de l'anotació (cap anotació seleccionada)"
+msgstr "Lletra de l'anotació (cap anotació seleccionada)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1273,14 +1273,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Tipus de lletra de l'anotació"
+msgstr "Lletra de l'anotació"
 
 #: part/annotationactionhandler.cpp:330
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
-"Tipus de lletra de l'anotació (l'anotació actual no té tipus de lletra)"
+msgstr "Lletra de l'anotació (l'anotació actual no té lletra)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
@@ -1509,7 +1508,7 @@ msgstr "Conserva la relació i l'angle de les eines d'anotació"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
-msgstr "Tipus de lletra"
+msgstr "Lletra"
 
 #: part/annotationactionhandler.cpp:680
 #, kde-format
@@ -1786,7 +1785,7 @@ msgstr "Paràgraf"
 #: part/annotationwidgets.cpp:380
 #, kde-format
 msgid "Font:"
-msgstr "Tipus de lletra:"
+msgstr "Lletra:"
 
 #: part/annotationwidgets.cpp:389
 #, kde-format
@@ -3371,12 +3370,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "Vi&sualitza..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "No s'ha pogut carregar la part de la vista prèvia d'impressió"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Vista prèvia d'impressió"
@@ -3440,9 +3439,10 @@ msgid "Find as you type"
 msgstr "Busca en teclejar"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Tots els fitxers"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Tots els fitxers (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3887,7 +3887,7 @@ msgstr "Hi ha canvis sense guardar. Guardeu el document abans de signar-lo."
 #: part/pageview.cpp:5191
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr "Dibuixa un rectangle per inserir el camp de signatura"
+msgstr "Dibuixa un rectangle per a inserir el camp de signatura"
 
 #: part/pageview.cpp:5335
 #, kde-format
@@ -3930,7 +3930,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signa"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4568,7 +4568,7 @@ msgid "Remove this Bookmark"
 msgstr "Elimina este punt"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5122,12 +5122,12 @@ msgstr "%1:"
 #: part/propertiesdialog.cpp:124
 #, kde-format
 msgid "&Fonts"
-msgstr "&Tipus de lletra"
+msgstr "&Lletres"
 
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr "S'està llegint la informació del tipus de lletra..."
+msgstr "S'està llegint la informació de la lletra..."
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5138,7 +5138,7 @@ msgstr "Mides de les &pàgines"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Extract Font"
-msgstr "E&xtrau el tipus de lletra"
+msgstr "E&xtrau la lletra"
 
 #: part/propertiesdialog.cpp:273
 #, kde-format
@@ -5212,7 +5212,7 @@ msgstr "TeX virtual"
 #: part/propertiesdialog.cpp:312
 #, kde-format
 msgid "TeX Font Metric"
-msgstr "Mètrica de tipus de lletra de TeX"
+msgstr "Mètrica de lletra de TeX"
 
 #: part/propertiesdialog.cpp:315
 #, kde-format
@@ -5265,7 +5265,7 @@ msgstr "[n/d]"
 #: part/propertiesdialog.cpp:385
 #, kde-format
 msgid "Unknown font"
-msgstr "Tipus de lletra desconegut"
+msgstr "Lletra desconeguda"
 
 #: part/propertiesdialog.cpp:391
 #, kde-format
@@ -5405,7 +5405,7 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Sense anotacions</h3>Per a crear anotacions noves "
-"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» al menú.</div>"
+"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» en el menú.</div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format
@@ -5437,44 +5437,44 @@ msgstr "Reduïx tots els elements"
 msgid "Properties"
 msgstr "Propietats"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imatges (%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "Seleccioneu una imatge de fons"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "Oblida la imatge"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "Oblida totes les imatges"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduïu la contrasenya (si n'hi ha) per a desblocar el certificat: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduïu la contrasenya del certificat"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduïu la contrasenya del document"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Guarda el fitxer signat com a"
@@ -5715,17 +5715,17 @@ msgstr ""
 "S'ha produït un error: No es pot obrir més d'un document amb el paràmetre --"
 "find"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "No s'ha pogut trobar el component d'Okular: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "Barra lateral"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5734,12 +5734,12 @@ msgstr ""
 "Ja hi ha una instància única d'Okular executant-se. Esta instància no seria "
 "l'única."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "No s'ha pogut trobar el component d'Okular."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5748,7 +5748,7 @@ msgstr ""
 "Feu un clic per a obrir un fitxer\n"
 "Feu un clic i manteniu-lo premut per a obrir un fitxer recent"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5756,57 +5756,57 @@ msgstr ""
 "<b>Feu un clic</b> per a obrir un fitxer o <b>feu un clic i manteniu-lo "
 "premut</b> per a seleccionar un fitxer recent"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Pestanya següent"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Pestanya anterior"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desfés el tancament de la pestanya"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloca la barra lateral"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Tots els fitxers (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Tots els fitxers admesos (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Obri document"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmació del tancament"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tanca les pestanyes"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Esteu a punt de tancar %1 pestanyes. Segur que voleu continuar?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avisa quan s'intenten tancar múltiples pestanyes"
@@ -5865,3 +5865,6 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Tots els fitxers"

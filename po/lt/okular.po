@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2022-11-18 18:51+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3376,12 +3376,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&Rodinys..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Nepavyko įkelti spaudinio peržiūros dalies"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Spaudinio peržiūra"
@@ -3445,9 +3445,10 @@ msgid "Find as you type"
 msgstr "Paieška renkant tekstą"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Visi failai"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Visi failai (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3943,7 +3944,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Pasirašyti"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4586,7 +4587,7 @@ msgid "Remove this Bookmark"
 msgstr "Šalinti šią žymelę"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5457,48 +5458,48 @@ msgstr "Suskleisti visus elementus"
 msgid "Properties"
 msgstr "Savybės"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Puslapių: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Išvalyti visus"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Išvalyti visus"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Įveskite slaptažodį (jeigu yra), kad atrakintumėte liudijimą: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Įveskite liudijimo slaptažodį"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Įveskite dokumento slaptažodį"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Įrašyti pasirašytą failą kaip"
@@ -5739,18 +5740,18 @@ msgstr ""
 "Klaida: Nepavyksta atverti daugiau kaip vieną dokumentą naudojant --find "
 "perjungiklį"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nepavyko rasti Okular komponento: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5758,12 +5759,12 @@ msgid ""
 msgstr ""
 "Jau veikia unikalus Okular egzempliorius. Šis egzempliorius nebus unikalus."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nepavyko rasti Okular komponento."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5772,7 +5773,7 @@ msgstr ""
 "Spustelėkite norėdami atverti failą\n"
 "Spustelėkite ir laikykite norėdami atverti paskiausią failą"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5780,58 +5781,58 @@ msgstr ""
 "<b>Spustelėkite</b> norėdami atverti failą, arba <b>spustelėkite ir "
 "laikykite</b> norėdami pasirinkti paskiausiai naudotą failą"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Kita kortelė"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Ankstesnė kortelė"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Atšaukti kortelės užvėrimą"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Visi failai (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Visi palaikomi failai (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Atverti dokumentą"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Patvirtinti užvėrimą"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Užverti korteles"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Ketinate užverti %1 korteles. Ar tikrai norite tęsti?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Įspėti mane, kai aš bandau užverti kelias korteles"
@@ -5890,6 +5891,9 @@ msgstr "Išvalyti visus"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Slėpti pasisveikinimo langą"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Visi failai"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Trūksta signalo tipo"

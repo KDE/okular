@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2023-10-26 15:23-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -3371,12 +3371,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "Exibir"
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Não foi possível carregar o componente de visualização de impressão"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Visualizar impressão"
@@ -3440,9 +3440,10 @@ msgid "Find as you type"
 msgstr "Encontrar enquanto digitar"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Todos os arquivos"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Todos os arquivos (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3928,7 +3929,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Assinar"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4562,7 +4563,7 @@ msgid "Remove this Bookmark"
 msgstr "Remover este favorito"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5431,43 +5432,43 @@ msgstr "Recolher todos os elementos"
 msgid "Properties"
 msgstr "Propriedades"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imagens (%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "Selecionar uma imagem de fundo"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "Esquecer imagem"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "Esquecer todas as imagens"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Digite a senha (se tiver) para desbloquear o certificado: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Digite a senha do certificado"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Digite a senha do documento"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Salvar arquivo assinado como"
@@ -5697,17 +5698,17 @@ msgstr "Erro: Não foi possível abrir mais que um documento com a opção --pag
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Erro: Não foi possível abrir mais que um documento com a opção --find"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Não foi possível encontrar o componente do Okular: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "Barra lateral"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5716,12 +5717,12 @@ msgstr ""
 "Já existe uma instância única do Okular em execução. Esta instância deixará "
 "de ser a única."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Não foi possível encontrar o componente do Okular."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5730,7 +5731,7 @@ msgstr ""
 "Clique para abrir um arquivo.\n"
 "Clique e mantenha pressionado para abrir um arquivo recente"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5738,57 +5739,57 @@ msgstr ""
 "<b>Clique</b> para abrir um arquivo ou <b>Clique e mantenha pressionado</b> "
 "para abrir um arquivo recente"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Próxima aba"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Aba anterior"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Reabrir a aba"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloquear Barra lateral"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Todos os arquivos (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Todos os arquivos suportados (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Abrir documento"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar fechamento"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Fechar abas"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Você está prestes a fechar %1 abas. Deseja continuar?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Me avisar quanto eu tentar fechar múltiplas abas"
@@ -5847,6 +5848,9 @@ msgstr "Esquecer todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar tela de boas vindas"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Todos os arquivos"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Tipo de alerta ausente"

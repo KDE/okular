@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -3463,12 +3463,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "S&koða..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Gat ekki opnað prentforskoðunarhlutann"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Forskoða útprentun"
@@ -3532,9 +3532,10 @@ msgid "Find as you type"
 msgstr "Leita að texta meðan þú skrifar"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Allar skrár"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Allar skrár (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -4026,7 +4027,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Undirrita"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4653,7 +4654,7 @@ msgid "Remove this Bookmark"
 msgstr "Fjarlægja þetta bókamerki"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5518,49 +5519,49 @@ msgstr ""
 msgid "Properties"
 msgstr "Eiginleikar"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Síður: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Leyfa &bakgrunnsvinnslu"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Gleyma öllu"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Gleyma öllu"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Settu inn lykilorðið að skilríkinu"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Settu inn lykilorð á skjali"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Vista undirritaða skrá sem"
@@ -5786,30 +5787,30 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Get ekki fundið Okular einingu: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "Birta &blaðsíðustiku"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Get ekki fundið Okular einingu."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5818,7 +5819,7 @@ msgstr ""
 "Smelltu til að opna skrá\n"
 "Smelltu og haltu niðri til að opna nýlega skrá"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5826,59 +5827,59 @@ msgstr ""
 "<b>Smelltu</b> til að opna skrá eða <b>smelltu og haltu niðri</b> til að "
 "velja nýlega opnaða skrá"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Næsti flipi"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Fyrri flipi"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Afturkalla að loka flipa"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "Birta &blaðsíðustiku"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Allar skrár (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Allar studdar skrár (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Opna skjal"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Staðfesta lokun"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Loka flipum"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Þú ert að fara að loka %1 flipum. Ertu viss um að þú viljir halda áfram?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Aðvara þegar mörgum flipum er lokað"
@@ -5937,6 +5938,9 @@ msgstr "Gleyma öllu"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Fela upphafsskjá"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Allar skrár"
 
 #~ msgid ""
 #~ "The file '%1' has been modified by another program, which means it can no "

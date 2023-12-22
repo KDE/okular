@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2023-10-19 07:20+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -3360,12 +3360,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&Ikuspegia..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Ezin izan da zamatu inprimatzeko aurreikuspegiaren zatia"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Inprimatze aurreikuspegia"
@@ -3429,9 +3429,10 @@ msgid "Find as you type"
 msgstr "Aurkitu idatzi ahala"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Fitxategi guztiak"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Fitxategi guztiak (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3916,7 +3917,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Sinatu"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4548,7 +4549,7 @@ msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5414,43 +5415,43 @@ msgstr "Tolestu elementu guztiak"
 msgid "Properties"
 msgstr "Propietateak"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Irudiak (%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "Hautatu atzeko planoko irudia"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "Ahaztu irudia"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "Ahaztu irudi guztiak"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Sartu ziurtagiria desblokeatzeko pasahitza (baldin badago): %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Sartu ziurtagiriaren pasahitza"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Sartu dokumentuaren pasahitza"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gorde sinatutako fitxategia honela"
@@ -5687,17 +5688,17 @@ msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Errorea: Ezin da dokumentu bat baino gehiago ireki  --find  etengailuarekin"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Ezin da aurkitu Okularren osagaia: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "Alboko-barra"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5706,12 +5707,12 @@ msgstr ""
 "Dagoeneko Okularren instantzia bakar bat martxan dago. Instantzia hau ez da "
 "izango 'bakarra'."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Ezin da Okularren osagaia aurkitu."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5720,7 +5721,7 @@ msgstr ""
 "Egin klik fitxategi bat irekitzeko\n"
 "Egin klik eta eutsi oraintsuko fitxategi bat irekitzeko"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5728,57 +5729,57 @@ msgstr ""
 "<b>Klik egin</b> fitxategi bat irekitzeko edo <b>Klik egin eta eutsi</b> "
 "oraintsuko fitxategi bat hautatzeko"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Hurrengo fitxa"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Aurreko fitxa"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desegin fitxa ixtea"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Giltzatu Alboko-barra"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Fitxategi guztiak (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Onartutako fitxategi guztiak (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Ireki dokumentua"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Berretsi ixtea"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Itxi fitxak"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 fitxa ixtera zoaz. Ziur zaude jarraitu nahi duzula?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Abisatu niri fitxa ugari ixten saiatzen naizenean"
@@ -5837,6 +5838,9 @@ msgstr "Ahaztu denak"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ezkutatu ongietorri pantaila"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Fitxategi guztiak"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Alerta mota falta da"

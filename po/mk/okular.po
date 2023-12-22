@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -3521,12 +3521,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr ""
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr ""
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr ""
@@ -3594,7 +3594,7 @@ msgstr "Барањето е запрено."
 
 #: part/formwidgets.cpp:756
 #, kde-format
-msgid "*|All Files"
+msgid "All Files (*)"
 msgstr ""
 
 #: part/formwidgets.cpp:1070
@@ -4102,7 +4102,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4752,7 +4752,7 @@ msgid "Remove this Bookmark"
 msgstr "Отстрани обележувач"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5617,46 +5617,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&Својства"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Страници: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Овозможи генерирање во &заднина"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Enter document password"
 msgstr "Документ за отворање"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5885,32 +5885,32 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find the Okular component: %1"
 msgstr "Не можам да го пронајдам делот kpdf."
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Sidebar"
 msgstr "Прикажи ленти за &движење"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find the Okular component."
 msgstr "Не можам да го пронајдам делот kpdf."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5919,7 +5919,7 @@ msgstr ""
 "Кликнете за да отворите датотека\n"
 "Кликнете и задржете за да отворите неодамнешна датотека"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5927,55 +5927,55 @@ msgstr ""
 "<b>Кликнете</b> за да отворите датотека или <b>кликнете и задржете</b> за да "
 "отворите неодамнешна датотека"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, fuzzy, kde-format
 msgid "Next Tab"
 msgstr "Сразмерно на страница"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, fuzzy, kde-format
 #| msgid "Remove Bookmark"
 msgid "Previous Tab"
 msgstr "Отстрани обележувач"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "Прикажи ленти за &движење"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr ""
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgid "Open Document"
 msgstr "Тековен одржувач"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr ""
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5983,7 +5983,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Веќе постои датотека со име „%1“. Дали навистина сакате да запишете врз неа?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

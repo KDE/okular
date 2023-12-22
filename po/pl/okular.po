@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2023-10-21 11:26+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3364,12 +3364,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&Widok..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Nie można wczytać modułu podglądu wydruku"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Podejrzyj wydruk"
@@ -3433,9 +3433,10 @@ msgid "Find as you type"
 msgstr "Wyszukuj podczas wpisywania"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Wszystkie pliki"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Wszystkie pliki (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3922,7 +3923,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpisz"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4555,7 +4556,7 @@ msgid "Remove this Bookmark"
 msgstr "Usuń tę zakładkę"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5420,43 +5421,43 @@ msgstr "Zwiń wszystkie elementy"
 msgid "Properties"
 msgstr "Właściwości"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Obrazy (%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "Wybierz obraz tła"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "Zapomnij o obrazie"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "Zapomnij o wszystkich obrazach"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Wpisz hasło (jeśli jest), aby odblokować certyfikat: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Wpisz hasło certyfikatu"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Wpisz hasło dokumentu"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Zapisz podpisany plik jako"
@@ -5692,17 +5693,17 @@ msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Błąd: Nie można otworzyć więcej niż jednego dokumentu z przełącznikiem --find"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nie można znaleźć składnika Okulara: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "Pasek boczny"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5711,12 +5712,12 @@ msgstr ""
 "Jedno wystąpienie Okulara już istnieje. To wystąpienie nie będzie "
 "niepowtarzalnym."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nie można znaleźć składnika Okulara."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5725,7 +5726,7 @@ msgstr ""
 "Naciśnij, aby otworzyć plik\n"
 "Naciśnij i przytrzymaj, aby otworzyć ostatni plik"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5733,57 +5734,57 @@ msgstr ""
 "<b>Naciśnij</b>, aby otworzyć plik, albo <b>naciśnij i przytrzymaj</b>, aby "
 "wybrać ostatni plik"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Następna karta"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Poprzednia karta"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Cofnij zamknięcie karty"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Zablokuj pasek boczny"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Wszystkie pliki (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Wszystkie obsługiwane pliki (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Otwórz dokument"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potwierdź zamknięcie"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zamknij karty"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Masz zamiar zamknąć %1 karty. Czy na pewno chcesz kontynuować?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ostrzeż przy zamykaniu wielu kart"
@@ -5842,6 +5843,9 @@ msgstr "Zapomnij o wszystkich"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ukryj ekran powitalny"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Wszystkie pliki"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Brakuje rodzaju alarmu"

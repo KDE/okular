@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2022-02-18 11:21+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3353,12 +3353,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "Né&zet…"
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Nem sikerült betölteni a nyomtatási előnézet objektumát"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Nyomtatási előnézet"
@@ -3422,9 +3422,10 @@ msgid "Find as you type"
 msgstr "Keresés gépelés közben"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Minden fájl"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Minden fájl (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3911,7 +3912,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Aláírás"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4551,7 +4552,7 @@ msgid "Remove this Bookmark"
 msgstr "Könyvjelző eltávolítása"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5420,45 +5421,45 @@ msgstr "Minden elem összecsukása"
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Oldalszám: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "A háttérgenerálás bekap&csolása"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Adja meg a jelszót (ha van) a tanúsítvány feloldásához: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Adja meg a tanúsítvány jelszavát"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "Adja meg a dokumentumjelszót"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Aláírt fájl mentése másként"
@@ -5691,30 +5692,30 @@ msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 "Hiba: Nem lehet egynél több dokumentumot megnyitni a --find kapcsolóval"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Nem található az Okular objektum: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "Már fut egy egyedi Okular példány. Ez a példány nem lesz egyedi."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Nem található az Okular objektum."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5723,7 +5724,7 @@ msgstr ""
 "Kattintson ide fájl megnyitásához\n"
 "Kattintson ide és tartsa lenyomva a gombot nemrég használt fájl megnyitásához"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5731,58 +5732,58 @@ msgstr ""
 "<b>Kattintson ide</b> fájl megnyitásához vagy <b>kattintson ide és tartsa "
 "lenyomva a gombot</b> nemrég használt fájl kiválasztásához"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Következő lap"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Előző lap"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Lap bezárásának visszavonása"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Old&alsáv megjelenítése"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Minden fájl (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Minden támogatott fájl (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Dokumentum megnyitása"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Bezárás megerősítése"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Lapok bezárása"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 lap bezárására készül. Biztosan szeretné folytatni?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Figyelmeztetés több lap bezárása előtt"
@@ -5846,6 +5847,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Minden fájl"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Hiányzó figyelmeztetéstípus"

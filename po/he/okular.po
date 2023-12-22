@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2023-12-19 20:53+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -3345,12 +3345,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&תצוגה…"
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "אין אפשרות לטעון את רכיב התצוגה המקדימה"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "תצוגה מקדימה לפני הדפסה"
@@ -3414,9 +3414,10 @@ msgid "Find as you type"
 msgstr "איתור בזמן הקלדה"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|כל הקבצים"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "כל הקבצים (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -3900,7 +3901,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "חתימה"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4520,7 +4521,7 @@ msgid "Remove this Bookmark"
 msgstr "הסרת הסימנייה"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5374,43 +5375,43 @@ msgstr "צמצום כל הרכיבים"
 msgid "Properties"
 msgstr "מאפיינים"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "תמונות (%1)"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
 msgstr "בחירת תמונת רקע"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr "לשכוח תמונה"
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr "לשכוח את כל התמונות"
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "נא למלא סיסמה (אם יש) לשחרור האישור: %1"
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr "מילוי סיסמת האישור"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, kde-format
 msgid "Enter document password"
 msgstr "נא למלא סיסמה למסמך"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr "לשמור את הקובץ החתום בשם"
@@ -5638,29 +5639,29 @@ msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם ה�
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "שגיאה: אי אפשר לפתוח יותר מקובץ אחד עם הארגומנט ‎--find"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "לא ניתן למצוא את רכיב ה־Okular:‏ %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, kde-format
 msgid "Sidebar"
 msgstr "סרגל צד"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "כבר יש עותק ייחודי פעיל של Okular. העותק הזה לא יהיה הייחודי."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "לא ניתן למצוא את הרכיב Okular."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5669,64 +5670,64 @@ msgstr ""
 "לחיצה לפתיחת קובץ\n"
 "לחיצה והחזקה לפתיחת קובץ שנפתח לאחרונה"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
 "<b>לחיצה</b> לפתיחת קובץ או <b>לחיצה והחזקה</b> לפתיחת קובץ שנפתח לאחרונה"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "הלשונית הבאה"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "הלשונית הקודמת"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "ביטול סגירת לשונית"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "נעילת סרגל הצד"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "כל הקבצים (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "כל הקבצים הנתמכים (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "פתיחת מסמך"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "אישור סגירה"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "סגירת לשוניות"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "פעולה זו תסגור %1 לשוניות. להמשיך?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "להזהיר אותי בעת ניסיון לסגור מספר לשוניות יחד"
@@ -5785,6 +5786,9 @@ msgstr "לשכוח הכול"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "הסתרת מסך קבלת הפנים"
+
+#~ msgid "*|All Files"
+#~ msgstr "*|כל הקבצים"
 
 #, fuzzy
 #~| msgid "Show &Page Bar"

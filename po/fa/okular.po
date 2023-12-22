@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -3502,12 +3502,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&نما‌"
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr ""
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr ""
@@ -3572,7 +3572,7 @@ msgstr ""
 
 #: part/formwidgets.cpp:756
 #, fuzzy, kde-format
-msgid "*|All Files"
+msgid "All Files (*)"
 msgstr "همه پرونده‌ها"
 
 #: part/formwidgets.cpp:1070
@@ -4066,7 +4066,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4710,7 +4710,7 @@ msgid "Remove this Bookmark"
 msgstr "تغییر نام چوب الف"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5562,46 +5562,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&ویژگیها‌"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "صفحه‌‌ها: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "فعال‌‌‌سازی ایجاد &زمینه‌"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, fuzzy, kde-format
 #| msgid "Password"
 msgid "Enter document password"
 msgstr "اسم رمز"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5833,30 +5833,30 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, fuzzy, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Sidebar"
 msgstr "نمایش &میله‌های لغزش‌"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, fuzzy, kde-format
 msgid "Unable to find the Okular component."
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5865,7 +5865,7 @@ msgstr ""
 "فشار دهید تا یک پرونده باز شود\n"
 "فشار دهید و نگه دارید تا پرونده جاری باز شود"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5873,56 +5873,56 @@ msgstr ""
 "<b>فشار دهید</b> تا یک پرونده باز شود، یا <b>فشار دهید و نگه دارید</b> تا "
 "پرونده اخیر گزینش شود"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "صفحه بعدی"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "صفحه قبلی"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "نمایش &میله‌های لغزش‌"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, fuzzy, kde-format
 msgid "All files (*)"
 msgstr "همه پرونده‌ها"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, fuzzy, kde-format
 msgid "Open Document"
 msgstr "باز کردن یک سند"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "بستن"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5931,7 +5931,7 @@ msgstr ""
 "پرونده‌ای با نام »%1« از قبل موجود است. مطمئن هستید می‌خواهید آن را جای‌نوشت "
 "کنید؟"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
@@ -5993,6 +5993,10 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~ msgid "*|All Files"
+#~ msgstr "همه پرونده‌ها"
 
 #, fuzzy
 #~| msgid "Show scroll&bars"

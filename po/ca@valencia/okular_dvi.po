@@ -1,23 +1,23 @@
 # Translation of okular_dvi.po to Catalan (Valencian)
-# Copyright (C) 2007-2021 This_file_is_part_of_KDE
+# Copyright (C) 2007-2023 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2021.
+# Josep M. Ferrer <txemaq@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2021, 2023.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-13 00:40+0000\n"
-"PO-Revision-Date: 2021-11-03 18:53+0100\n"
+"PO-Revision-Date: 2023-12-19 13:30+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -217,7 +217,7 @@ msgid ""
 msgstr ""
 "Heu demanat a Okular que situe el punt en el fitxer DVI que correspon a la "
 "línia %1 del fitxer TeX %2. Tanmateix, pareix que el fitxer DVI no conté la "
-"informació del fitxer font necessària. "
+"informació necessària del fitxer font. "
 
 #: dviRenderer.cpp:604
 #, kde-format
@@ -231,13 +231,13 @@ msgstr ""
 #: dviRenderer_draw.cpp:243
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr "El codi DVI ha configurat un caràcter d'un tipus de lletra desconegut."
+msgstr "El codi DVI ha configurat un caràcter d'una lletra desconeguda."
 
 #: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
-"El codi DVI fa referència al tipus de lletra #%1, el qual no s'ha definit "
+"El codi DVI fa referència a la lletra #%1, la qual no s'ha definit "
 "prèviament."
 
 #: dviRenderer_draw.cpp:353
@@ -253,9 +253,7 @@ msgstr "La pila estava buida quan s'ha trobat l'ordre POP."
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr ""
-"El codi DVI fa referència a un tipus de lletra que no s'ha definit "
-"prèviament."
+msgstr "El codi DVI fa referència a una lletra que no s'ha definit prèviament."
 
 #: dviRenderer_draw.cpp:539
 #, kde-format
@@ -300,9 +298,9 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Okular no ha pogut localitzar tots els fitxers de tipus de lletra "
-"necessaris per a mostrar el fitxer DVI actual. El document pot ser illegible."
-"</p><p><small><b>CAMÍ:</b> %1</small></p><p><small>%2</small></p></qt>"
+"<qt><p>Okular no ha pogut localitzar tots els fitxers de fonts necessaris "
+"per a mostrar el fitxer DVI actual. El document pot ser illegible.</"
+"p><p><small><b>CAMÍ:</b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:284
 #, kde-format
@@ -314,11 +312,11 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 "<qt><p>Hi ha hagut problemes executant el <em>kpsewhich</em>. Com a "
-"resultat, no s'han pogut localitzar alguns fitxers de tipus de lletra, el "
-"document podria ser illegible.<br/>Un possible motiu: El programa "
-"<em>kpsewhich</em> potser no està instal·lat en el sistema, o no s'ha pogut "
-"trobar en el camí de busca actual.</p><p><small><b>CAMÍ:</b> %1</small></"
-"p><p><small>%2</small></p></qt>"
+"resultat, no s'han pogut localitzar alguns fitxers de fonts, el document "
+"podria ser illegible.<br/>Un possible motiu: El programa <em>kpsewhich</em> "
+"potser no està instal·lat en el sistema, o no s'ha pogut trobar en el camí "
+"de busca actual.</p><p><small><b>CAMÍ:</b> %1</small></p><p><small>%2</"
+"small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format
@@ -327,9 +325,9 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt>S'ha interromput la generació dels tipus de lletra per al <em>kpsewhich</"
-"em> (codi d'eixida %1, error %2). Com a resultat, alguns fitxers de tipus de "
-"lletra no es poden localitzar, i el document pot ser illegible.</qt>"
+"<qt>S'ha interromput la generació de les lletres pel <em>kpsewhich</em> "
+"(codi d'eixida %1, error %2). Com a resultat, alguns fitxers de fonts no es "
+"poden localitzar, i el document pot ser illegible.</qt>"
 
 #: fontpool.cpp:482
 #, kde-format
@@ -344,7 +342,7 @@ msgstr "Generador/Data"
 #: generator_dvi.cpp:382
 #, kde-format
 msgid "Font file not found"
-msgstr "No s'ha trobat el fitxer de tipus de lletra"
+msgstr "No s'ha trobat el fitxer de fonts"
 
 #: pageSize.cpp:319
 #, kde-format
@@ -419,14 +417,13 @@ msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
 msgstr ""
-"El fitxer de tipus de lletra %1 s'ha pogut obrir i llegir, però el seu "
-"format de tipus de lletra no està admés."
+"El fitxer de fonts %1 s'ha pogut obrir i llegir, però el seu format de "
+"lletra no està admés."
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
 msgid "The font file %1 is broken, or it could not be opened or read."
-msgstr ""
-"El fitxer de tipus de lletra %1 està fet malbé, o no es pot obrir o llegir."
+msgstr "El fitxer de fonts %1 està fet malbé, o no es pot obrir o llegir."
 
 #: TeXFont_PFB.cpp:170
 #, kde-format
@@ -434,19 +431,17 @@ msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
 "FreeType ha informat d'un error en establir la mida del caràcter per al "
-"fitxer de tipus de lletra %1."
+"fitxer de fonts %1."
 
 #: TeXFont_PFB.cpp:188
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
-msgstr ""
-"FreeType no pot carregar el tipus #%1 del fitxer de tipus de lletra %2."
+msgstr "FreeType no pot carregar el tipus #%1 del fitxer de fonts %2."
 
 #: TeXFont_PFB.cpp:201
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
-msgstr ""
-"FreeType no pot representar el tipus #%1 del fitxer de tipus de lletra %2."
+msgstr "FreeType no pot representar el tipus #%1 del fitxer de fonts %2."
 
 #: TeXFont_PFB.cpp:215
 #, kde-format
@@ -456,25 +451,23 @@ msgstr "El tipus #%1 està buit."
 #: TeXFont_PFB.cpp:217
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr "El tipus #%1 del fitxer de tipus de lletra %2 està buit."
+msgstr "El tipus #%1 del fitxer de fonts %2 està buit."
 
 #: TeXFont_PFB.cpp:282
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
-"FreeType no pot carregar la mètrica del tipus #%1 del fitxer de tipus de "
-"lletra %2."
+"FreeType no pot carregar la mètrica del tipus #%1 del fitxer de fonts %2."
 
 #: TeXFont_PK.cpp:69
 #, kde-format
 msgid "Cannot open font file %1."
-msgstr "No es pot obrir el fitxer de tipus de lletra %1."
+msgstr "No es pot obrir el fitxer de fonts %1."
 
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr ""
-"TexFont_PK::operator[]: El caràcter %1 no està definit al tipus de lletra %2"
+msgstr "TexFont_PK::operator[]: El caràcter %1 no està definit a la lletra %2"
 
 #: TeXFont_PK.cpp:418
 #, kde-format
@@ -489,8 +482,7 @@ msgstr "El caràcter %1 és massa gran, en el fitxer %2"
 #: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr ""
-"S'han emmagatzemat un nombre incorrecte de bits: car. %1, tipus de lletra %2"
+msgstr "S'han emmagatzemat un nombre incorrecte de bits: car. %1, lletra %2"
 
 #: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
 #, kde-format
@@ -500,22 +492,22 @@ msgstr "Fitxer pk incorrecte (%1), massa bits"
 #: TeXFont_PK.cpp:713
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr "El tipus de lletra té una relació d'aspecte no quadrada "
+msgstr "La lletra té una relació d'aspecte no quadrada "
 
 #: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
-msgstr "No s'ha trobat el tipus de lletra %1, en el fitxer %2."
+msgstr "No s'ha trobat la lletra %1, en el fitxer %2."
 
 #: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr "Error a la suma de verificació del fitxer de tipus de lletra %1"
+msgstr "Error a la suma de verificació del fitxer de fonts %1"
 
 #: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr "No es pot reconéixer el format del fitxer de tipus de lletra %1"
+msgstr "No es pot reconéixer el format del fitxer de fonts %1"
 
 #: util.cpp:58
 #, kde-format
@@ -541,10 +533,9 @@ msgstr ""
 "\n"
 "\n"
 "Açò probablement significa que, o bé heu trobat una errada en Okular,\n"
-"o que el fitxer DVI, o els fitxers auxiliars (com ara els fitxers de tipus "
-"de lletra, \n"
-"o els fitxers de tipus de lletra virtuals) estaven fets malbé de mala "
-"manera.\n"
+"o que el fitxer DVI, o els fitxers auxiliars (com ara els fitxers de "
+"fonts, \n"
+"o els fitxers de fonts virtuals) estaven fets malbé de mala manera.\n"
 "Okular es pararà després d'este missatge. Si penseu que heu trobat una \n"
 "errada, o que Okular s'hauria de comportar millor en esta situació,\n"
 "informeu del problema, per favor."

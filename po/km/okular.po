@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -3611,12 +3611,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "មើល"
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "មិនអាច​ផ្ទុក​ផ្នែក​មើល​មុន​បោះពុម្ព​បានទេ"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "មើលមុន​បោះពុម្ព"
@@ -3680,8 +3680,9 @@ msgid "Find as you type"
 msgstr ""
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
+#, fuzzy, kde-format
+#| msgid "*|All Files"
+msgid "All Files (*)"
 msgstr "*|ឯកសារ​ទាំងអស់"
 
 #: part/formwidgets.cpp:1070
@@ -4184,7 +4185,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4830,7 +4831,7 @@ msgid "Remove this Bookmark"
 msgstr "ប្ដូរ​ឈ្មោះ​ចំណាំ​នេះ"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5701,47 +5702,47 @@ msgstr ""
 msgid "Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "ទំព័រ ៖ %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "បិទ​ការ​បង្កើត​ផ្ទៃ​ខាង​ក្រោយ"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, fuzzy, kde-format
 #| msgctxt "A document format, Okular-specific"
 #| msgid "Document Archive"
 msgid "Enter document password"
 msgstr "ប័ណ្ណសារ​ឯកសារ"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5973,31 +5974,31 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "មិនអាច​រក​ឃើញផ្នែក Okular ។"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "បង្ហាញ​របារ​ទំព័រ"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "មិនអាច​រក​ឃើញផ្នែក Okular ។"
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6006,68 +6007,68 @@ msgstr ""
 "ចុច ដើម្បី​បើក​ឯកសារ\n"
 "ចុច​ឲ្យ​ជាប់ ដើម្បី​បើក​ឯកសារ​ថ្មីៗ​នេះ"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>ចុច</b> ដើម្បី​បើក​ឯកសារ ឬ​<b>ចុច​ឲ្យ​ជាប់</b> ដើម្បី​ជ្រើស​ឯកសារ​ថ្មីៗ​នេះ"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "ទំព័រ​បន្ទាប់"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "ទំព័រ​មុន"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "បង្ហាញ​របារ​ទំព័រ"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|ឯកសារ​ទាំងអស់"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "បើក​ឯកសារ"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "បិទ"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""
@@ -6130,6 +6131,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "*|All Files"
+#~ msgstr "*|ឯកសារ​ទាំងអស់"
 
 #, fuzzy
 #~| msgid "Show &Page Bar"

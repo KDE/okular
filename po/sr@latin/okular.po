@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -3649,12 +3649,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&Prikaži..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Ne mogu da učitam deo za pregled pred štampanje"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Pregled pred štampanje"
@@ -3717,10 +3717,12 @@ msgstr "Od tekuće stranice"
 msgid "Find as you type"
 msgstr "Traži dok kucam"
 
+# >> @item
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Svi fajlovi"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "svi fajlovi (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -4222,7 +4224,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4872,7 +4874,7 @@ msgid "Remove this Bookmark"
 msgstr "Ukloni ovaj obeleživač"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5792,46 +5794,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&Svojstva"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Stranice: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Use custom background color"
 msgid "Select background image"
 msgstr "Posebna pozadinska boja"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter document password"
 msgstr "Lozinka dokumenta"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -6063,18 +6065,18 @@ msgstr "Greška: uz opciju --page može da se otvori samo jedan dokument"
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Greška: uz opciju --print može da se otvori samo jedan dokument"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Ne mogu da pronađem komponentu Okulara: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "Prikaži &traku stranica"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -6083,12 +6085,12 @@ msgstr ""
 "Jedinstveni primerak Okulara već je u pogonu. Ovaj primerak neće biti "
 "jedinstveni."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Ne mogu da pronađem deo Okulara."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6097,7 +6099,7 @@ msgstr ""
 "Kliknite da otvorite fajl\n"
 "Kliknite i držite da otvorite nedavni fajl"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6105,58 +6107,58 @@ msgstr ""
 "<b>Kliknite</b> da otvorite fajl ili <b>kliknite i držite</b> da izaberete "
 "nedavni fajl"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Sledeći jezičak"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Prethodni jezičak"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "Prikaži &traku stranica"
 
 # >> @item
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "svi fajlovi (*)"
 
 # >> @item
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "svi podržani fajlovi (%1)"
 
 # >> @title:window
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Otvaranje dokumenta"
 
 # >> @title:window
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potvrda zatvaranja"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zatvori jezičke"
 
 # >! Plurals.
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
@@ -6164,7 +6166,7 @@ msgstr ""
 "zatvoriti %1 $[množ ^1 jezičak jezička jezičaka]. Želite li zaista da "
 "nastavite?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Upozori me na pokušaj zatvaranja više jezičaka"
@@ -6229,6 +6231,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Svi fajlovi"
 
 #~ msgid "Draw border around &Images"
 #~ msgstr "Crtaj ivicu oko s&lika"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 01:59+0000\n"
+"POT-Creation-Date: 2023-12-22 01:38+0000\n"
 "PO-Revision-Date: 2020-10-15 14:19+0200\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3510,12 +3510,12 @@ msgctxt "@action:inmenu"
 msgid "&View..."
 msgstr "&Näita ..."
 
-#: part/fileprinterpreview.cpp:109
+#: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
 msgstr "Trükkimise eelvaatluse komponendi laadimine nurjus"
 
-#: part/fileprinterpreview.cpp:121
+#: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
 msgstr "Trükkimise eelvaatlus"
@@ -3579,9 +3579,10 @@ msgid "Find as you type"
 msgstr "Otsimine kirjutamise ajal"
 
 #: part/formwidgets.cpp:756
-#, kde-format
-msgid "*|All Files"
-msgstr "*|Kõik failid"
+#, fuzzy, kde-format
+#| msgid "All files (*)"
+msgid "All Files (*)"
+msgstr "Kõik failid (*)"
 
 #: part/formwidgets.cpp:1070
 #, kde-format
@@ -4065,7 +4066,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "CRL-i allkirjastamine"
 
-#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:459
+#: part/pageviewannotator.cpp:1048 part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4702,7 +4703,7 @@ msgid "Remove this Bookmark"
 msgstr "Eemalda see järjehoidja"
 
 #: part/part.cpp:2557 part/part.cpp:2558 part/part.cpp:3437
-#: part/signaturepartutils.cpp:427
+#: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5570,47 +5571,47 @@ msgstr "Keri kõik elemendid kokku"
 msgid "Properties"
 msgstr "Omadused"
 
-#: part/signaturepartutils.cpp:345
+#: part/signaturepartutils.cpp:360
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Lehekülgi: %1"
 
-#: part/signaturepartutils.cpp:346
+#: part/signaturepartutils.cpp:361
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Tausta &genereerimise lubamine"
 
-#: part/signaturepartutils.cpp:351
+#: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:352
+#: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:395
+#: part/signaturepartutils.cpp:410
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:397
+#: part/signaturepartutils.cpp:412
 #, fuzzy, kde-format
 #| msgid "Certificate has Expired."
 msgid "Enter certificate password"
 msgstr "Sertifikaat on aegunud."
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:425
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter document password"
 msgstr "Dokumendi parool"
 
-#: part/signaturepartutils.cpp:433
+#: part/signaturepartutils.cpp:448
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5837,18 +5838,18 @@ msgstr "Tõrge: võtit --page kasutades ei saa avada üle ühe dokumendi korraga
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Tõrge: võtit --find kasutades ei saa avada üle ühe dokumendi korraga"
 
-#: shell/shell.cpp:197
+#: shell/shell.cpp:210
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Okulari komponendi leidmine nurjus: %1"
 
-#: shell/shell.cpp:240
+#: shell/shell.cpp:253
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Külgr&iba näitamine"
 
-#: shell/shell.cpp:276
+#: shell/shell.cpp:289
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5856,12 +5857,12 @@ msgid ""
 msgstr ""
 "Okulari unikaalne isend juba töötab. Käesolev isend ei oleks unikaalne."
 
-#: shell/shell.cpp:300
+#: shell/shell.cpp:313
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okulari komponendi leidmine nurjus."
 
-#: shell/shell.cpp:540
+#: shell/shell.cpp:553
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5870,7 +5871,7 @@ msgstr ""
 "Klõpsa faili avamiseks\n"
 "Klõpsa ja hoia nuppu all viimati kasutatud faili avamiseks"
 
-#: shell/shell.cpp:541
+#: shell/shell.cpp:554
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5878,58 +5879,58 @@ msgstr ""
 "<b>Klõpsa</b> faili avamiseks või <b>klõpsa ja hoia nuppu all</b> viimati "
 "kasutatud faili avamiseks"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:567
 #, kde-format
 msgid "Next Tab"
 msgstr "Järgmine kaart"
 
-#: shell/shell.cpp:560
+#: shell/shell.cpp:573
 #, kde-format
 msgid "Previous Tab"
 msgstr "Eelmine kaart"
 
-#: shell/shell.cpp:566
+#: shell/shell.cpp:579
 #, kde-format
 msgid "Undo close tab"
 msgstr "Võta kaardi sulgemine tagasi"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Külgr&iba näitamine"
 
-#: shell/shell.cpp:675
+#: shell/shell.cpp:688
 #, kde-format
 msgid "All files (*)"
 msgstr "Kõik failid (*)"
 
-#: shell/shell.cpp:676
+#: shell/shell.cpp:689
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Kõik toetatud failid (%1)"
 
-#: shell/shell.cpp:680
+#: shell/shell.cpp:693
 #, kde-format
 msgid "Open Document"
 msgstr "Ava dokument"
 
-#: shell/shell.cpp:794
+#: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
 msgstr "Sulgemise kinnitus"
 
-#: shell/shell.cpp:798
+#: shell/shell.cpp:811
 #, kde-format
 msgid "Close Tabs"
 msgstr "Sulge kaardid"
 
-#: shell/shell.cpp:805
+#: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Kavatsed sulgeda %1 kaarti. Kas tõesti jätkata?"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:820
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Hoiatus, kui ma proovin sulgeda palju aknaid"
@@ -5993,6 +5994,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "*|All Files"
+#~ msgstr "*|Kõik failid"
 
 #~ msgid "Missing alert type"
 #~ msgstr "Puuduv hoiatuse tüüp"

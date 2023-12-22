@@ -49,7 +49,7 @@ void PageItemDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem
 {
     QVariant pageVariant = d->index.data(TOCModel::PageRole);
     QVariant labelVariant = d->index.data(TOCModel::PageLabelRole);
-    if ((labelVariant.type() != QVariant::String && !pageVariant.canConvert(QVariant::String)) || !Okular::Settings::tocPageColumn()) {
+    if ((labelVariant.metaType().id() != QMetaType::QString && !pageVariant.canConvert(QMetaType {QMetaType::QString})) || !Okular::Settings::tocPageColumn()) {
         QItemDelegate::drawDisplay(painter, option, rect, text);
         return;
     }

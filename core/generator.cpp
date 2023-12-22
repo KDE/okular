@@ -561,11 +561,6 @@ TextRequestPrivate *TextRequestPrivate::get(const TextRequest *req)
     return req->d;
 }
 
-PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features)
-    : PixmapRequest(observer, pageNumber, width, height, qApp->devicePixelRatio(), priority, features)
-{
-}
-
 PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, qreal dpr, int priority, PixmapRequestFeatures features)
     : d(new PixmapRequestPrivate)
 {

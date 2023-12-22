@@ -313,7 +313,7 @@ void PageItem::requestPixmap()
     // Ideally we would do one or the other but for now this is good enough
     paint();
     {
-        auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::Asynchronous);
+        auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width(), height(), dpr, priority, Okular::PixmapRequest::Asynchronous);
         request->setNormalizedRect(Okular::NormalizedRect(0, 0, 1, 1));
         const Okular::Document::PixmapRequestFlag prf = Okular::Document::NoOption;
         m_documentItem.data()->document()->requestPixmaps({request}, prf);

@@ -5,22 +5,22 @@
 # Mickael Sibelle <kimael@gmail.com>, 2008.
 # Guillaume Pujol <guill.p@gmail.com>, 2008.
 # Joëlle Cornavin <jcornavi@club-internet.fr>, 2009.
-# Xavier Besnard <xavier.besnard@kde.org>, 2013.
+# SPDX-FileCopyrightText: 2013, 2023 Xavier Besnard <xavier.besnard@kde.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_xps\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-03-10 00:43+0000\n"
-"PO-Revision-Date: 2013-06-26 10:39+0200\n"
-"Last-Translator: xavier <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-20 09:49+0100\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 23.08.4\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -34,7 +34,7 @@ msgstr "Xavier Besnard, Thomas Boeglin, Joëlle Cornavin, Mickaël Sibelle"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"xavier.besnard@neuf.fr, thomas.boeglin@gmail.com, jcornavi@club-internet.fr, "
+"xavier.besnard@kde.org, thomas.boeglin@gmail.com, jcornavi@club-internet.fr, "
 "kimael@gmail.com"
 
 #: generator_xps.cpp:1947

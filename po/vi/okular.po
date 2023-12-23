@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-22 01:38+0000\n"
+"POT-Creation-Date: 2023-12-23 01:44+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -528,23 +528,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "sửa các trạng thái nút biểu mẫu"
 
-#: core/generator.cpp:763
+#: core/generator.cpp:758
 #, kde-format
 msgid "Plain &Text..."
 msgstr "&Văn bản thuần..."
 
-#: core/generator.cpp:766
+#: core/generator.cpp:761
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:770
+#: core/generator.cpp:765
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Văn bản OpenDocument"
 
-#: core/generator.cpp:773
+#: core/generator.cpp:768
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

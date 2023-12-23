@@ -15,16 +15,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-22 01:38+0000\n"
-"PO-Revision-Date: 2023-10-21 10:57+0200\n"
+"POT-Creation-Date: 2023-12-23 01:44+0000\n"
+"PO-Revision-Date: 2023-12-22 19:08+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -543,23 +543,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "Editar os estados do botón do formulario"
 
-#: core/generator.cpp:763
+#: core/generator.cpp:758
 #, kde-format
 msgid "Plain &Text..."
 msgstr "Te&xto simple…"
 
-#: core/generator.cpp:766
+#: core/generator.cpp:761
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:770
+#: core/generator.cpp:765
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Texto de OpenDocument"
 
-#: core/generator.cpp:773
+#: core/generator.cpp:768
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -3436,8 +3436,7 @@ msgid "Find as you type"
 msgstr "Atopar a medida que escribe"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Todos os ficheiros (*)"
 

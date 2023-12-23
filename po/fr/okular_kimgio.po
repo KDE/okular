@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Thomas Boeglin <thomas.boeglin@gmail.com>, 2007, 2008.
 # Florian Guillochon <florian.guillochon@gmail.com>, 2009.
-# xavier <xavier.besnard@neuf.fr>, 2013.
+# Xavier Besnard <xavier.besnard@kde.org>, 2013.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2018.
 #
 msgid ""

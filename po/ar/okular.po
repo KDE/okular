@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-22 01:38+0000\n"
+"POT-Creation-Date: 2023-12-23 01:44+0000\n"
 "PO-Revision-Date: 2023-08-19 21:43+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -528,24 +528,24 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "حرِّر حالات زِرّ النموذج"
 
-#: core/generator.cpp:763
+#: core/generator.cpp:758
 #, kde-format
 msgid "Plain &Text..."
 msgstr "نص &صرف..."
 
 # | msgid "KPDF"
-#: core/generator.cpp:766
+#: core/generator.cpp:761
 #, kde-format
 msgid "PDF"
 msgstr "بي دي اف"
 
-#: core/generator.cpp:770
+#: core/generator.cpp:765
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "نص OpenDocument"
 
-#: core/generator.cpp:773
+#: core/generator.cpp:768
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-22 01:38+0000\n"
-"PO-Revision-Date: 2023-11-05 14:03+0100\n"
+"POT-Creation-Date: 2023-12-23 01:44+0000\n"
+"PO-Revision-Date: 2023-12-22 23:10+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -530,23 +530,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "редактиране на състоянията на бутоните на формуляра"
 
-#: core/generator.cpp:763
+#: core/generator.cpp:758
 #, kde-format
 msgid "Plain &Text..."
 msgstr "Неформатиран &текст..."
 
-#: core/generator.cpp:766
+#: core/generator.cpp:761
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:770
+#: core/generator.cpp:765
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "OpenDocument Text"
 
-#: core/generator.cpp:773
+#: core/generator.cpp:768
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -3416,8 +3416,7 @@ msgid "Find as you type"
 msgstr "Намиране, докато пишете"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Всички файлове (*)"
 

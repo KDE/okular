@@ -4,7 +4,7 @@
 # Thomas Boeglin <thomas.boeglin@gmail.com>, 2007, 2008.
 # Guillaume Pujol <guill.p@gmail.com>, 2008.
 # Florian Guillochon <florian.guillochon@gmail.com>, 2009.
-# xavier <xavier.besnard@neuf.fr>, 2012, 2013, 2020, 2021, 2023.
+# Xavier Besnard <xavier.besnard@kde.org>, 2012, 2013, 2020, 2021, 2023.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2018, 2019.
 #
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-29 00:44+0000\n"
 "PO-Revision-Date: 2023-07-17 21:54+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Xavier Besnard, Thomas Boeglin, Florian Guillochon, Peter Potrowl"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"xavier.besnard@neuf.fr, thomas.boeglin@gmail.com, florian.guillochon@gmail."
+"xavier.besnard@kde.org, thomas.boeglin@gmail.com, florian.guillochon@gmail."
 "com, peter.potrowl@gmail.com"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)

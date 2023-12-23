@@ -5,7 +5,7 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008.
 # Alain Rpnpif <rpnpif@free.fr>, 2008.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2013, 2014.
-# xavier <xavier.besnard@neuf.fr>, 2013, 2021.
+# Xavier Besnard <xavier.besnard@kde.org>, 2013, 2021.
 #
 msgid ""
 msgstr ""

@@ -11,11 +11,11 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008, 2009.
 # Alain Rpnpif <rpnpif@free.fr>, 2008, 2009, 2010.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
-# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023 xavier <xavier.besnard@neuf.fr>
+# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023 Xavier Besnard <xavier.besnard@kde.org>
 # Sebastien Renard <renard@kde.org>, 2014, 2015.
 # Ludovic Grossard <grossard@kde.org>, 2014.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
-# Xavier BESNARD <xavier.besnard@neuf.fr>, 2023.
+# Xavier Besnard <xavier.besnard@kde.org>, 2023.
 # Thomas Vergnaud <thomas.vergnaud@mailo.eu>, 2023.
 #
 msgid ""
@@ -24,7 +24,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 02:26+0000\n"
 "PO-Revision-Date: 2023-10-24 21:42+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgid "Your emails"
 msgstr ""
 "cedric.pasteur@free.fr, nicolas.ternisien@gmail.com, rpnpif@free.fr, "
 "kimael@gmail.com, peter.potrowl@gmail.com, sdepiets@gmail.com, xavier."
-"besnard@neuf.fr, thomas.vergnaud@mailo.eu"
+"besnard@kde.org, thomas.vergnaud@mailo.eu"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-23 01:44+0000\n"
-"PO-Revision-Date: 2023-12-20 11:22\n"
+"PO-Revision-Date: 2023-12-23 08:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3389,8 +3389,7 @@ msgid "Find as you type"
 msgstr "在您输入的同时查找"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "所有文件 (*)"
 
@@ -5743,6 +5742,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|所有文件"

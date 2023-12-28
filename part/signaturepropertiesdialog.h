@@ -9,8 +9,6 @@
 
 #include <QDialog>
 
-#include <memory>
-
 namespace Okular
 {
 class Document;

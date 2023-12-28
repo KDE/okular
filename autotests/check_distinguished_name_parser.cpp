@@ -8,8 +8,7 @@
 */
 #include "../part/DistinguishedNameParser.h"
 
-#include <QtTest/QtTest>
-#include <iostream>
+#include <QTest>
 
 class TestDistinguishedNameParser : public QObject
 {

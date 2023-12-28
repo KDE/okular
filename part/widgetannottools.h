@@ -9,8 +9,7 @@
 
 #include "widgetconfigurationtoolsbase.h"
 
-#include <qdom.h>
-#include <qwidget.h>
+#include <QWidget>
 
 class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {

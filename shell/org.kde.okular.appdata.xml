@@ -413,6 +413,7 @@
     <value key="KDE::mailinglist-devel">okular-devel@kde.org</value>
     <value key="KDE::forum">251</value>
   </custom>
+  <launchable type="desktop-id">org.kde.okular.desktop</launchable>
   <releases>
     <release version="23.08.4" date="2023-12-07"/>
     <release version="23.08.3" date="2023-11-09"/>

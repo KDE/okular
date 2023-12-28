@@ -63,7 +63,10 @@
 #include <KDirWatch>
 #include <KFilterBase>
 #include <KHamburgerMenu>
+#include <KIO/FileCopyJob>
+#include <KIO/Global>
 #include <KIO/OpenFileManagerWindowJob>
+#include <KIO/StatJob>
 #include <KJobWidgets>
 #include <KMainWindow>
 #include <KMessageBox>

@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("unique"), i18n("\"Unique instance\" control")));
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("noraise"), i18n("Not raise window")));
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("find"), i18n("Find a string on the text"), QStringLiteral("string")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("editor-cmd"), i18n("sets the external editor command"), QStringLiteral("string")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("editor-cmd"), i18n("Sets the external editor command"), QStringLiteral("string")));
     parser.addPositionalArgument(QStringLiteral("urls"), i18n("Documents to open. Specify '-' to read from stdin."));
 
     parser.process(app);

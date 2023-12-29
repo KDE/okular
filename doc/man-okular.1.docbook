@@ -46,7 +46,7 @@ is aimed to show documents in different formats.</para>
 <varlistentry>
 <term><option>-p, --page <replaceable>number</replaceable></option></term>
 <listitem>
-<para>Open a given page in the document.</para>
+<para>Open a page with a given number in the document.</para>
 </listitem>
 </varlistentry>
 
@@ -88,7 +88,7 @@ is aimed to show documents in different formats.</para>
 <varlistentry>
 <term><option>--find <replaceable>string</replaceable></option></term>
 <listitem>
-<para>Find a string on the text.</para>
+<para>Tries to find and highlight a given string in the document. Only works if just one document is given as an argument of the okular command.</para>
 </listitem>
 </varlistentry>
 

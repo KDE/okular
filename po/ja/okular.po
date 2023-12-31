@@ -5834,6 +5834,3 @@ msgstr "すべて忘れる"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "ようこそスクリーンを隠す"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|すべてのファイル"

@@ -5389,7 +5389,7 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Sense anotacions</h3>Per a crear anotacions noves "
-"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» al menú.</div>"
+"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» en el menú.</div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format

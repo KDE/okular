@@ -3701,7 +3701,7 @@ msgstr[1] " S'ha carregat un document de %1 pàgines."
 #: part/pageview.cpp:2550
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
-msgstr "Copia el contingut de la taula al porta-retalls"
+msgstr "Copia el contingut de la taula a dins del porta-retalls"
 
 #: part/pageview.cpp:2869
 #, kde-format

@@ -2,7 +2,7 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2012, 2018, 2019, 2020, 2021, 2023 A S Alam <aalam@users.sf.net>
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2012, 2018, 2019, 2020, 2021, 2023, 2024 A S Alam <aalam@users.sf.net>
 # AP S Alam <aalam@users.sf.net>, 2007.
 # Amanpreet Singh Alam <apreet.alam@gmail.com>, 2008.
 # Amanpreet Singh <aalam@users.sf.net>, 2008, 2013, 2014, 2015.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-29 01:36+0000\n"
-"PO-Revision-Date: 2023-12-22 20:36-0600\n"
+"PO-Revision-Date: 2024-01-01 12:19-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
 "Language: pa\n"
@@ -5687,11 +5687,9 @@ msgid "Close Tabs"
 msgstr "ਟੈਬਾਂ ਬੰਦ ਕਰੋ"
 
 #: shell/shell.cpp:818
-#, fuzzy, kde-format
-#| msgid ""
-#| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr "ਫਾਇਲ ਨਾਂ \"%1\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+msgstr "ਤੁਸੀਂ %1 ਟੈਬਾਂ ਬੰਦ ਕਰਨ ਵਾਲੇ ਹੋ। ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: shell/shell.cpp:820
 #, kde-format

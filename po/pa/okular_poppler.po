@@ -2,20 +2,20 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# A S Alam <aalam@users.sf.net>, 2007, 2009, 2010, 2012, 2014, 2019.
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2012, 2014, 2019, 2024 A S Alam <aalam@users.sf.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2019-02-09 13:13-0800\n"
-"Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
-"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"PO-Revision-Date: 2024-01-01 12:22-0600\n"
+"Last-Translator: A S Alam <aalam@punlinux.org>\n"
+"Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -68,13 +68,13 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "ਛਾਪਣਯੋਗ ਖੇਤਰ ਲਈ ਫਿੱਟ ਕਰੋ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "ਪੂਰੇ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
@@ -108,25 +108,25 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "ਸਰਟੀਫਿਕੇਟ ਡਾਟਾਬੇਸ"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "ਕਸਟਮ:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "ਮੌਜੂਦ ਸਰਟੀਫਿਕੇਟ"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:205
@@ -267,13 +267,13 @@ msgstr ""
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "ਈ-ਮੇਲ"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "ਮਿਆਦ"
 
 #: pdfsettingswidget.cpp:147
 #, kde-format
@@ -285,7 +285,7 @@ msgstr ""
 #: pdfsettingswidget.cpp:188
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "ਮੁੜ-ਚਾਲੂ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 
 #: pdfsettingswidget.cpp:188
 #, kde-format
@@ -293,15 +293,14 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 
 #: pdfsignatureutils.cpp:214
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "ਡੌਕੂਮੈਂਟ ਪਾਸਵਰਡ"
+msgstr "ਪਾਸਵਰਡ ਦਿਓ"
 
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
+msgstr "%1 ਖੋਲ੍ਹਣ ਲਈ ਪਾਸਵਰਡ ਦਿਓ:"
 
 #~ msgid "Not Available"
 #~ msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"

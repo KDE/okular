@@ -141,7 +141,7 @@ public:
     QHash<QUrl, QString>::iterator bookmarkFind(const QUrl &url, bool doCreate, KBookmarkGroup *result = nullptr);
 
     // slots
-    void _o_changed(const QString &groupAddress, const QString &caller);
+    void _o_changed(const QString &groupAddress);
 
     BookmarkManager *q;
     QUrl url;
@@ -169,7 +169,7 @@ BookmarkManager::BookmarkManager(DocumentPrivate *document)
 
     d->document = document;
 
-    connect(&d->manager, &KBookmarkManager::changed, this, [this](const QString &groupAddress, const QString &caller) { d->_o_changed(groupAddress, caller); });
+    connect(&d->manager, &KBookmarkManager::changed, this, [this](const QString &groupAddress) { d->_o_changed(groupAddress); });
 }
 
 BookmarkManager::~BookmarkManager()
@@ -200,9 +200,8 @@ void BookmarkManager::Private::openBookmark(const KBookmark &bm, Qt::MouseButton
 }
 // END Reimplementations from KBookmarkOwner
 
-void BookmarkManager::Private::_o_changed(const QString &groupAddress, const QString &caller)
+void BookmarkManager::Private::_o_changed(const QString &groupAddress)
 {
-    Q_UNUSED(caller);
     if (groupAddress.isEmpty()) {
         return;
     }

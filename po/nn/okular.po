@@ -5831,6 +5831,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Alle filer"

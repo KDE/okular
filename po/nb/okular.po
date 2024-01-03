@@ -5713,6 +5713,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Alle filer"

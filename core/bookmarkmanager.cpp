@@ -169,7 +169,6 @@ BookmarkManager::BookmarkManager(DocumentPrivate *document)
 
     d->document = document;
 
-    d->manager.setUpdate(true);
     connect(&d->manager, &KBookmarkManager::changed, this, [this](const QString &groupAddress, const QString &caller) { d->_o_changed(groupAddress, caller); });
 }
 

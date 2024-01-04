@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-29 01:36+0000\n"
-"PO-Revision-Date: 2023-12-22 05:51+0100\n"
+"PO-Revision-Date: 2024-01-03 14:52+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -1003,7 +1003,7 @@ msgstr "Neniu Uzado Specifita"
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
-msgstr ","
+msgstr ", "
 
 #: gui/signatureguiutils.cpp:163
 #, kde-format
@@ -2016,7 +2016,7 @@ msgstr "Dosiera kunsila simbolo:"
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
-msgstr "Grafo"
+msgstr "Grafeo"
 
 #: part/annotationwidgets.cpp:751
 #, kde-format
@@ -4230,7 +4230,7 @@ msgstr "Montri S&idbreton"
 #: part/part.cpp:855
 #, kde-format
 msgid "Show &Page Bar"
-msgstr "Montri &Paĝan Baron"
+msgstr "Montri &Paĝan Breton"
 
 #: part/part.cpp:861
 #, kde-format

@@ -621,8 +621,7 @@ if (Qt6TextToSpeech_FOUND)
 endif()
 
 #instead install the part to this path so it can be found
-#install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/parts/ )
-install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/parts/ )
 
 endif()# End of BUILD_DESKTOP if
 

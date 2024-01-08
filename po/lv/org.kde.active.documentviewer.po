@@ -1,0 +1,201 @@
+# Copyright (C) 2023 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2023 Toms Trasūns <toms.trasuns@posteo.net>
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"PO-Revision-Date: 2023-12-30 16:32+0200\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "Grāmatzīmes"
+
+#: package/contents/ui/CertificateViewerDialog.qml:22
+msgid "Certificate Viewer"
+msgstr "Sertifikāta skatītājs"
+
+#: package/contents/ui/CertificateViewerDialog.qml:33
+msgid "Issued By"
+msgstr "Izdevējs"
+
+#: package/contents/ui/CertificateViewerDialog.qml:38
+#: package/contents/ui/CertificateViewerDialog.qml:66
+msgid "Common Name:"
+msgstr "Vispārīgs nosaukums:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:44
+#: package/contents/ui/CertificateViewerDialog.qml:72
+msgid "EMail:"
+msgstr "E-pasts:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:50
+#: package/contents/ui/CertificateViewerDialog.qml:78
+msgid "Organization:"
+msgstr "Organizācija:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:61
+msgid "Issued To"
+msgstr "Izdots:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:89
+msgid "Validity"
+msgstr "Derīgums"
+
+#: package/contents/ui/CertificateViewerDialog.qml:94
+msgid "Issued On:"
+msgstr "Izdošanas datums:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:100
+msgid "Expires On:"
+msgstr "Derīgs līdz:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:111
+msgid "Fingerprints"
+msgstr "Digitālnospiedumi"
+
+#: package/contents/ui/CertificateViewerDialog.qml:116
+msgid "SHA-1 Fingerprint:"
+msgstr "SHA-1 digitālnospiedums:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:122
+msgid "SHA-256 Fingerprint:"
+msgstr "SHA-256 digitālnospiedums:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:136
+msgid "Export..."
+msgstr "Eksportēt..."
+
+#: package/contents/ui/CertificateViewerDialog.qml:142
+#: package/contents/ui/SignaturePropertiesDialog.qml:149
+msgid "Close"
+msgstr "Aizvērt"
+
+#: package/contents/ui/CertificateViewerDialog.qml:150
+msgid "Certificate File (*.cer)"
+msgstr "Sertifikāta datne (*.cer)"
+
+#: package/contents/ui/CertificateViewerDialog.qml:165
+#: package/contents/ui/SignaturePropertiesDialog.qml:169
+msgid "Error"
+msgstr "Kļūda"
+
+#: package/contents/ui/CertificateViewerDialog.qml:167
+msgid "Could not export the certificate."
+msgstr "Neizdevās eksportēt sertifikātu."
+
+#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+msgid "Okular"
+msgstr "Okular"
+
+#: package/contents/ui/main.qml:42
+msgid "Open..."
+msgstr "Atvērt..."
+
+#: package/contents/ui/main.qml:49
+msgid "About"
+msgstr "Par"
+
+#: package/contents/ui/main.qml:106
+msgid "Password Needed"
+msgstr "Nepieciešama parole"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Remove bookmark"
+msgstr "Noņemt grāmatzīmi"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Bookmark this page"
+msgstr "Saglabāt lapu grāmatzīmēs"
+
+#: package/contents/ui/MainView.qml:82
+msgid "No document open"
+msgstr "Nav atvērtu dokumentu"
+
+#: package/contents/ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "Sīktēli"
+
+#: package/contents/ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "Satura rādītājs"
+
+#: package/contents/ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr "Paraksti"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:31
+msgid "Signature Properties"
+msgstr "Paraksta īpašības"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:45
+msgid "Validity Status"
+msgstr "Derīguma statuss"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:51
+msgid "Signature Validity:"
+msgstr "Paraksta derīgums:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:57
+msgid "Document Modifications:"
+msgstr "Dokumenta modifikācijas:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:64
+msgid "Additional Information"
+msgstr "Papildu informācija"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:73
+msgid "Signed By:"
+msgstr "Parakstītājs:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:79
+msgid "Signing Time:"
+msgstr "Parakstīšanas laiks:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:85
+msgid "Reason:"
+msgstr "Iemesls:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:92
+msgid "Location:"
+msgstr "Atrašanās vieta:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:101
+msgid "Document Version"
+msgstr "Dokumenta versija:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:111
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "Dokumenta revīzija %1. no %2"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:115
+msgid "Save Signed Version..."
+msgstr "Saglabāt parakstīto versiju..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:129
+msgid "View Certificate..."
+msgstr "Apskatīt sertifikātu..."
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:171
+msgid "Could not save the signature."
+msgstr "Neizdevās saglabāt parakstu."
+
+#: package/contents/ui/Signatures.qml:27
+msgid "Not Available"
+msgstr "Nav pieejams"
+
+#: package/contents/ui/ThumbnailsBase.qml:43
+msgid "No results found."
+msgstr "Rezultāti nav atrasti."

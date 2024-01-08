@@ -5,37 +5,38 @@
 # Maris Nartiss <maris.kde@gmail.com>, 2007, 2020.
 # Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2008, 2010.
 # Einars Sprugis <einars8@gmail.com>, 2012.
+# SPDX-FileCopyrightText: 2023 Toms Trasuns <toms.trasuns@posteo.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2020-07-24 12:53+0300\n"
-"Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
+"PO-Revision-Date: 2023-12-31 13:42+0200\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Māris Nartišs"
+msgstr "Māris Nartišs, Toms Trasūns"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "maris.kde@gmail.com"
+msgstr "maris.kde@gmail.com, toms.trasuns@posteno.net"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Ieslēgt virsdrukas priekšskatījumu"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26
@@ -63,10 +64,9 @@ msgstr "Forma"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:72
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "Drukājamo lapu mērogošanas metode"
+msgstr "Drukājamo lapu mērogošanas metode:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
@@ -94,6 +94,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Šīs iespējas ieslēgšana ļaus „Okular“ sazināties ar trešo pušu OCSP "
+"serveriem un pārbaudīt, vai digitālajiem parakstiem izmantotie sertifikāti "
+"nav atsaukti kopš to izveidošanas."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116
@@ -101,47 +104,49 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Pārbaudīt digitālo parakstu sertifikātu atsaukšanas statusu, izmantojot "
+"trešo pušu serverus."
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Paraksta aizmugursistēma:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "Sertifikātu datubāze"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "Noklusējuma:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "Pielāgota:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "Pieejamie sertifikāti"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "&Ielādēt parakstus"
 
 #: generator_pdf.cpp:88
 #, kde-format
 msgid "PDF Options"
-msgstr "PDF opcijas"
+msgstr "PDF iespējas"
 
 #: generator_pdf.cpp:90
 #, kde-format
@@ -159,7 +164,7 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
-"Drukāmajā dokumentā iekļauj anotācijas. Varat šo atslēgt, ja vēlaties drukāt "
+"Drukājamā dokumentā iekļauj anotācijas. Varat šo atslēgt, ja vēlaties drukāt "
 "oriģinālo, neanotēto dokumentu."
 
 #: generator_pdf.cpp:94
@@ -179,7 +184,7 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
-"Piespiedu kārtā katru lapu pārvērš par attēlu pirms drukāšanas. Šī opcija "
+"Piespiedu kārtā pirms drukāšanas katru lapu pārvērš par attēlu. Šī opcija "
 "parasti dod sliktāku rezultātu, bet var palīdzēt gadījumos, kad izdruka "
 "izskatās nepareizi."
 
@@ -236,11 +241,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Parakstīja: %1\n"
+"\n"
+"Datums: %2"
 
 #: generator_pdf.cpp:1575
 #, kde-format
 msgid "Using Poppler %1"
-msgstr "Izmanto Poppler %1"
+msgstr "Izmanto „Poppler“ %1"
 
 #: generator_pdf.cpp:1577
 #, kde-format
@@ -249,9 +257,9 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
-"Izmanto Poppler %1\n"
+"Izmanto „Poppler“ %1\n"
 "\n"
-"Būvēts ar Poppler %2"
+"Būvēts ar „Poppler“ %2"
 
 #: generator_pdf.cpp:1612
 #, kde-format
@@ -261,7 +269,7 @@ msgstr "PDF"
 #: generator_pdf.cpp:1612
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr "PDF aizmugures konfigurācija"
+msgstr "PDF aizmugursistēmas pielāgošana"
 
 #: generator_pdf.cpp:2100
 #, kde-format
@@ -269,23 +277,25 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"Dokumentā ir atrastas kļūdas, „Okular“ var rasties grūtības dokumentu "
+"pareizi atveidot"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "Izdots"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "E-pasts"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "Derīgs līdz"
 
 #: pdfsettingswidget.cpp:147
 #, kde-format
@@ -293,27 +303,28 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Jūs izmantojat „Poppler“ bibliotēka, kas ir būvēta bez NSS atbalsta.\n"
+"Šī iemesla dēļ digitālo parakstu pievienošana nav pieejama"
 
 #: pdfsettingswidget.cpp:188
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "Nepieciešams pārstartēt"
 
 #: pdfsettingswidget.cpp:188
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr ""
+msgstr "„Okular“ ir jāpārstartē pēc NSS direktorija iestatījumu izmaiņām"
 
 #: pdfsignatureutils.cpp:214
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "Dokumenta parole"
+msgstr "Ievadiet paroli"
 
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
+msgstr "Ievadiet paroli, lai atvērtu %1:"
 
 #~ msgid "Not Available"
 #~ msgstr "Nav pieejams"

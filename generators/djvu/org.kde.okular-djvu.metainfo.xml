@@ -29,6 +29,7 @@
   <name xml:lang="ka">Djvu დოკუმენტები</name>
   <name xml:lang="ko">DjVu 문서</name>
   <name xml:lang="lt">DjVu dokumentai</name>
+  <name xml:lang="lv">DjVu dokumenti</name>
   <name xml:lang="ml">ഡിജെവിയു പ്രമാണങ്ങൾ</name>
   <name xml:lang="nl">DjVu-documenten</name>
   <name xml:lang="nn">DjVu-dokument</name>
@@ -76,6 +77,7 @@
   <summary xml:lang="ka">DjVu დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">DjVu 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą DjVu dokumentų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu „DjVu“ dokumentu lasīšanai</summary>
   <summary xml:lang="ml">ഡിജെവിയു പ്രമാണങ്ങൾ വായിക്കുവാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van DjVu-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa DjVu-dokument</summary>

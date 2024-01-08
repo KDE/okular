@@ -29,6 +29,7 @@
   <name xml:lang="ka">XPS</name>
   <name xml:lang="ko">XPS</name>
   <name xml:lang="lt">XPS</name>
+  <name xml:lang="lv">XPS</name>
   <name xml:lang="ml">എക്സ് പി എസ്</name>
   <name xml:lang="nl">XPS</name>
   <name xml:lang="nn">XPS</name>
@@ -76,6 +77,7 @@
   <summary xml:lang="ka">XPS დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">XPS 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą XPS dokumentų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu XPS dokumentu lasīšanai</summary>
   <summary xml:lang="ml">എക്‌സ് പി എസ് പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണാ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van XPS-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa XPS-dokument</summary>

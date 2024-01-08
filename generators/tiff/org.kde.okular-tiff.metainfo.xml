@@ -30,6 +30,7 @@
   <name xml:lang="ka">Tiff</name>
   <name xml:lang="ko">TIFF</name>
   <name xml:lang="lt">Tiff</name>
+  <name xml:lang="lv">Tiff</name>
   <name xml:lang="ml">ടിഫ്</name>
   <name xml:lang="nl">Tiff</name>
   <name xml:lang="nn">TIFF</name>
@@ -78,6 +79,7 @@
   <summary xml:lang="ka">TIFF დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">TIFF 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą Tiff dokumentų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu „Tiff“ dokumentu lasīšanai</summary>
   <summary xml:lang="ml">ടിഫ് പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Tiff-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa TIFF-dokument</summary>

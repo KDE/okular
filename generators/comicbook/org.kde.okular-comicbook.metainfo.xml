@@ -29,6 +29,7 @@
   <name xml:lang="ka">კომიქსები</name>
   <name xml:lang="ko">만화책</name>
   <name xml:lang="lt">Komiksų knygos</name>
+  <name xml:lang="lv">Komiksi</name>
   <name xml:lang="ml">കോമിക് പുസ്തകങ്ങള്‍</name>
   <name xml:lang="nl">Stripboeken</name>
   <name xml:lang="nn">Teikneseriar</name>
@@ -76,6 +77,7 @@
   <summary xml:lang="ka">კომიქსების წიგნის კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">만화책 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą komiksų knygų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu komiksu lasīšanai</summary>
   <summary xml:lang="ml">കോമിക്ക് പുസ്തകങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa teikneseriefiler</summary>

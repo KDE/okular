@@ -29,6 +29,7 @@
   <name xml:lang="ka">CHM დოკუმენტები</name>
   <name xml:lang="ko">CHM 문서</name>
   <name xml:lang="lt">CHM dokumentai</name>
+  <name xml:lang="lv">CHM dokumenti</name>
   <name xml:lang="ml">സി എച് എം പ്രമാണങ്ങൾ</name>
   <name xml:lang="nl">CHM-documenten</name>
   <name xml:lang="nn">CHM-dokument</name>
@@ -76,6 +77,7 @@
   <summary xml:lang="ka">CHM დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">CHM 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą CHM dokumentų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu CHM dokumentu lasīšanai</summary>
   <summary xml:lang="ml">സി എം എച് പ്രമാണങ്ങൾ വായിക്കുവാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van CHM-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa CHM-dokument</summary>

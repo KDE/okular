@@ -30,6 +30,7 @@
   <name xml:lang="ka">Markdown</name>
   <name xml:lang="ko">Markdown</name>
   <name xml:lang="lt">Markdown</name>
+  <name xml:lang="lv">Markdown</name>
   <name xml:lang="ml">മാർക്ഡൗൺ</name>
   <name xml:lang="nl">Markdown</name>
   <name xml:lang="nn">Markdown</name>
@@ -78,6 +79,7 @@
   <summary xml:lang="ka">Markdown -ის დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">Markdown 문서 읽기 지원 추가</summary>
   <summary xml:lang="lt">Prideda palaikymą Markdown dokumentų skaitymui</summary>
+  <summary xml:lang="lv">Pievieno atbalstu „Markdown“ dokumentu lasīšanai</summary>
   <summary xml:lang="ml">മാർക്ഡൗൺ പ്രമാണങ്ങൾ വായിക്കുന്നതിനുള്ള പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Markdown-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa Markdown-dokument</summary>

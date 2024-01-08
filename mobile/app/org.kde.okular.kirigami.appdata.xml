@@ -30,6 +30,7 @@
   <name xml:lang="ka">Okular მობილურზე</name>
   <name xml:lang="ko">Okular 모바일</name>
   <name xml:lang="lt">Okular mobilioji</name>
+  <name xml:lang="lv">Okular Mobile</name>
   <name xml:lang="nl">Okular mobiel</name>
   <name xml:lang="nn">Okular mobil</name>
   <name xml:lang="pa">ਓਕਲਾਰ ਮੋਬਾਈਲ</name>
@@ -75,6 +76,7 @@
   <summary xml:lang="ka">დოკუმენტების მნახველი</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="lt">Dokumentų žiūryklė</summary>
+  <summary xml:lang="lv">Dokumentu skatītājs</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="nn">Dokumentvisar</summary>
   <summary xml:lang="pa">ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ</summary>
@@ -121,6 +123,7 @@
     <p xml:lang="ka">Okular დოკუმენტების უნივერსალური დამთვალიერებელია KDE-სგან. Okular ბევრ პლატფორმაზე მუშაობს. მაგ: Linux, Windows, Mac OS X, *BSD და სხვა.</p>
     <p xml:lang="ko">Okular는 KDE에서 개발한 문서 뷰어입니다. 리눅스, Windows, macOS, *BSD 등 다양한 플랫폼에서 사용할 수 있습니다.</p>
     <p xml:lang="lt">Okular yra universali, KDE plėtojama dokumentų žiūryklė. Okular veikia keliose platformose, įskaitant, tačiau neapsiribojant Linux, Windows, Mac OS X, *BSD ir t.t.</p>
+    <p xml:lang="lv">„Okular“ ir universāls dokumentu skatītājs, ko izstrādā KDE. „Okular“ darbojas uz dažādām platformām, tostarp „Linux“, „Windows“, „Mac OS X“, *BSD u.c.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
     <p xml:lang="pa">ਓਕੁਲਾਰ ਕੇਡੀਈ ਵਲੋਂ ਬਣਾਇਆ ਯੂਨੀਵਰਸਲ ਦਸਤਾਵੇਜ਼ ਦਰਸ਼ਕ ਹੈ। ਓਕੁਲਾਰ ਕਈ ਪਲੇਟਫਾਰਮਾਂ ਉੱਤੇ ਕੰਮ ਕਰਦਾ ਹੈ, ਜਿਸ ਵਿੱਚ ਲੀਨਕਸ, ਵਿੰਡੋਜ਼, ਮੈਕ ਓਐਸ ਐਕਸ, *BSD ਆਦਿ ਸ਼ਾਮਲ ਹਨ, ਉਹਨਾਂ ਤੱਕ ਸੀਮਿਤ ਨਹੀਂ ਹੈ।</p>
@@ -166,6 +169,7 @@
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Ypatybės:</p>
+    <p xml:lang="lv">Iespējas:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pa">ਫੀਚਰ:</p>
@@ -209,6 +213,7 @@
       <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, CHM, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
+      <li xml:lang="lv">Atbalstītie formāti: PDF, PS, „Tiff“, CHM, „DjVu“, attēli, DVI, XPS, „Fiction Book“, „Comic Book“, „Plucker“, „EPub“, fakss</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
       <li xml:lang="pa">ਸਹਾਇਕ ਫਾਰਮੈਟ: PDF, PS, Tiff, CHM, DjVu, ਚਿੱਤਰ, DVI, XPS, ਫਿਕਸ਼ਨ ਕਿਤਾਬਾਂ, ਕੌਮਿਕ ਕਿਤਾਬਾਂ, Plucker, EPub, ਫੈਕਸ</li>
@@ -252,6 +257,7 @@
       <li xml:lang="ka">გვერდითი პანელი შემცველობით, მინიატურებით, გადახედვებით და სანიშნებით</li>
       <li xml:lang="ko">목차, 섬네일, 검토 및 책갈피 도구가 있는 사이드바</li>
       <li xml:lang="lt">Šoninė juosta su turiniu, miniatiūromis, atsiliepimais ir žymelėmis</li>
+      <li xml:lang="lv">Sānu josla ar saturu, sīktēliem, pārskatiem un grāmatzīmēm</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
       <li xml:lang="pa">ਸਮੱਗਰੀ, ਥੰਮਨੇਲ, ਪੜਤਾਲਾਂ ਤੇ ਬੁੱਕਮਾਰਕਾਂ ਨਾਲ ਬਾਹੀ</li>
@@ -296,6 +302,7 @@
       <li xml:lang="ka">ანოტაციების მხარდაჭერა</li>
       <li xml:lang="ko">주석 지원</li>
       <li xml:lang="lt">Anotacijų palaikymas</li>
+      <li xml:lang="lv">Anotāciju atbalsts</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
       <li xml:lang="nn">Støtte for merknadar</li>
       <li xml:lang="pa">ਟਿੱਪਣੀਆਂ ਲਈ ਸਹਿਯੋਗ</li>
@@ -344,6 +351,7 @@
       <caption xml:lang="ka">კითხვის სახელმძღვანელო Okular- ში</caption>
       <caption xml:lang="ko">Okular로 설명서 읽기</caption>
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>
+      <caption xml:lang="lv">Rokasgrāmatas lasīšana programmā „Okular“</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
       <caption xml:lang="nn">Lesing av brukarhandbok i Okular</caption>
       <caption xml:lang="pa">ਓਕੁਲਾਰ ਵਿੱਚ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹੋ</caption>

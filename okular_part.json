@@ -40,5 +40,8 @@
             "KParts/ReadOnlyPart",
             "KParts/ReadWritePart"
         ]
+    },
+    "KParts": {
+        "PluginNamespace": "okular_generators"
     }
 }

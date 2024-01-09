@@ -15,7 +15,7 @@ QStringList OkularSingleton::nameFilters() const
 {
     QStringList supportedPatterns;
 
-    const auto plugins = KPluginMetaData::findPlugins(QStringLiteral("okular/generators"));
+    const auto plugins = KPluginMetaData::findPlugins(QStringLiteral("okular_generators"));
     if (plugins.isEmpty()) {
         qWarning() << "okularpart plugin not found. Required to get nameFilters";
         return supportedPatterns;

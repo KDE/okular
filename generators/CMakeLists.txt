@@ -1,10 +1,9 @@
 
 function(okular_add_generator _target)
   kcoreaddons_add_plugin(${_target}
-    INSTALL_NAMESPACE "okular/generators"
+    INSTALL_NAMESPACE "okular_generators"
     SOURCES ${ARGN}
   )
-  set_target_properties(${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/plugins/okular")
   get_property(aux_list GLOBAL PROPERTY okular_generator_list)
   list(APPEND aux_list ${_target})
   set_property(GLOBAL PROPERTY okular_generator_list ${aux_list})

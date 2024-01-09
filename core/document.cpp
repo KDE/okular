@@ -2294,7 +2294,7 @@ QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
 {
     static QVector<KPluginMetaData> result;
     if (result.isEmpty()) {
-        result = KPluginMetaData::findPlugins(QStringLiteral("okular/generators"));
+        result = KPluginMetaData::findPlugins(QStringLiteral("okular_generators"));
     }
     return result;
 }

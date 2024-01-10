@@ -28,7 +28,7 @@
 #include <QTextStream>
 #include <QTimer>
 
-//#define DEBUG_PSGS
+// #define DEBUG_PSGS
 
 // extern char psheader[];
 

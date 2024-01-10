@@ -14,7 +14,7 @@
 #include "dviRenderer.h"
 #include "hyperlink.h"
 #include "psgs.h"
-//#include "renderedDocumentPage.h"
+// #include "renderedDocumentPage.h"
 
 #include <KLocalizedString>
 #include <QMimeDatabase>

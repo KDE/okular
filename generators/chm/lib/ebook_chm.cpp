@@ -21,7 +21,7 @@
 #define TOPICS_ENTRY_LEN 16
 #define URLTBL_ENTRY_LEN 12
 
-//#define DEBUGPARSER(A)	qDebug A
+// #define DEBUGPARSER(A)	qDebug A
 #define DEBUGPARSER(A)
 
 #define URL_SCHEME_CHM QStringLiteral("ms-its")

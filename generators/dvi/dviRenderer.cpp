@@ -16,7 +16,7 @@
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
 #include "psgs.h"
-//#include "renderedDviPagePixmap.h"
+// #include "renderedDviPagePixmap.h"
 
 #include <KConfig>
 #include <KLocalizedString>

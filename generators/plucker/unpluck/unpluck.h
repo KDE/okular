@@ -84,7 +84,7 @@ typedef enum { PLKR_FONT_REGULAR = 0, PLKR_FONT_H1 = 1, PLKR_FONT_H2 = 2, PLKR_F
 typedef struct _plkr_CategoryName {
     char *name;
     struct _plkr_CategoryName *next;
-} * plkr_CategoryList;
+} *plkr_CategoryList;
 
 typedef struct plkr_Document_s plkr_Document;
 

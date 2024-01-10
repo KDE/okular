@@ -449,7 +449,7 @@ static int ParseURLs(plkr_Document *newdoc, plkr_DBHandle handle)
     struct url_index_record {
         int last_url_index;
         int record_id;
-    } * records;
+    } *records;
 
     buf = nullptr;
     urls = nullptr;

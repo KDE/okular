@@ -34,7 +34,7 @@
 extern QPainter foreGroundPaint;
 extern void parse_special_argument(const QString &strg, const char *argument_name, int *variable);
 
-//#define DEBUG_PRESCAN
+// #define DEBUG_PRESCAN
 
 void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 {

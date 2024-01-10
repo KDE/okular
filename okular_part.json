@@ -1,4 +1,7 @@
 {
+    "KParts": {
+        "PluginNamespace": "okular_generators"
+    },
     "KPlugin": {
         "Icon": "okular",
         "MimeTypes": [
@@ -40,8 +43,5 @@
             "KParts/ReadOnlyPart",
             "KParts/ReadWritePart"
         ]
-    },
-    "KParts": {
-        "PluginNamespace": "okular_generators"
     }
 }

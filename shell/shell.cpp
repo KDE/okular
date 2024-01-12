@@ -201,7 +201,7 @@ Shell::Shell(const QString &serializedOptions)
     // name which is a bad idea usually.. but it's alright in this
     // case since our Part is made for this Shell
 
-    const auto result = KPluginFactory::loadFactory(KPluginMetaData(QStringLiteral("okularpart")));
+    const auto result = KPluginFactory::loadFactory(KPluginMetaData(QStringLiteral("kf6/parts/okularpart")));
 
     if (!result) {
         // if we couldn't find our Part, we exit since the Shell by

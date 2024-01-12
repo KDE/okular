@@ -615,6 +615,7 @@ if (KF6Purpose_FOUND)
 endif()
 
 set_target_properties(okularpart PROPERTIES PREFIX "")
+set_target_properties(okularpart PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/kf6/parts)
 
 if (Qt6TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt6::TextToSpeech)

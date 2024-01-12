@@ -94,11 +94,11 @@ void AnnotationTest::testDistance_data()
             square->setGeometricalInnerColor(QColor(0, 0, 0));
         }
         m_document->addPageAnnotation(0, square);
-        QTest::newRow("Square: Base point 1") << (Okular::Annotation *)square << 0.1 << 0.1 << 0;
-        QTest::newRow("Square: On edge 1") << (Okular::Annotation *)square << 0.1 << 0.2 << 0;
-        QTest::newRow("Square: On edge 2") << (Okular::Annotation *)square << 0.2 << 0.1 << 0;
-        QTest::newRow("Square: Inside") << (Okular::Annotation *)square << 0.2 << 0.2 << ((i == 0) ? qRound(pow(0.1 * documentX, 2) - 1 /* stroke width */) : 0);
-        QTest::newRow("Square: Outside") << (Okular::Annotation *)square << 0.0 << 0.0 << qRound(pow(0.1 * documentX, 2) + pow(0.1 * documentY, 2));
+        QTest::addRow("Square: Base point 1 %d", i) << (Okular::Annotation *)square << 0.1 << 0.1 << 0;
+        QTest::addRow("Square: On edge 1 %d", i) << (Okular::Annotation *)square << 0.1 << 0.2 << 0;
+        QTest::addRow("Square: On edge 2 %d", i) << (Okular::Annotation *)square << 0.2 << 0.1 << 0;
+        QTest::addRow("Square: Inside %d", i) << (Okular::Annotation *)square << 0.2 << 0.2 << ((i == 0) ? qRound(pow(0.1 * documentX, 2) - 1 /* stroke width */) : 0);
+        QTest::addRow("Square: Outside %d", i) << (Okular::Annotation *)square << 0.0 << 0.0 << qRound(pow(0.1 * documentX, 2) + pow(0.1 * documentY, 2));
     }
 
     // ellipsis
@@ -110,9 +110,9 @@ void AnnotationTest::testDistance_data()
             ellipse->setGeometricalInnerColor(QColor(0, 0, 0));
         }
         m_document->addPageAnnotation(0, ellipse);
-        QTest::newRow("Ellipse: Base point 1") << (Okular::Annotation *)ellipse << 0.1 << 0.3 << 0;
-        QTest::newRow("Ellipse: Inside") << (Okular::Annotation *)ellipse << 0.2 << 0.3 << qRound((i == 0) ? pow(documentX * 0.1, 2) - 1 /* pen */ : 0);
-        QTest::newRow("Ellipse: Outside") << (Okular::Annotation *)ellipse << 0.0 << 0.3 << qRound(pow(documentX * 0.1, 2));
+        QTest::addRow("Ellipse: Base point 1 %d", i) << (Okular::Annotation *)ellipse << 0.1 << 0.3 << 0;
+        QTest::addRow("Ellipse: Inside %d", i) << (Okular::Annotation *)ellipse << 0.2 << 0.3 << qRound((i == 0) ? pow(documentX * 0.1, 2) - 1 /* pen */ : 0);
+        QTest::addRow("Ellipse: Outside %d", i) << (Okular::Annotation *)ellipse << 0.0 << 0.3 << qRound(pow(documentX * 0.1, 2));
     }
 
     // highlight

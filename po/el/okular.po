@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -5664,8 +5664,9 @@ msgid "Find a string on the text"
 msgstr "Εύρεση συμβολοσειράς στο κείμενο"
 
 #: shell/main.cpp:76
-#, kde-format
-msgid "sets the external editor command"
+#, fuzzy, kde-format
+#| msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr "ορίζει την εντολή του εξωτερικού κειμενογράφου"
 
 #: shell/main.cpp:77

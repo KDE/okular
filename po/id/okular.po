@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -5656,8 +5656,9 @@ msgid "Find a string on the text"
 msgstr "Temukan string pada teks"
 
 #: shell/main.cpp:76
-#, kde-format
-msgid "sets the external editor command"
+#, fuzzy, kde-format
+#| msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr "menetapkan perintah editor eksternal"
 
 #: shell/main.cpp:77

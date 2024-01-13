@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-12-22 09:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -5673,8 +5673,9 @@ msgid "Find a string on the text"
 msgstr "Знайти рядок у тексті"
 
 #: shell/main.cpp:76
-#, kde-format
-msgid "sets the external editor command"
+#, fuzzy, kde-format
+#| msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr "встановлює команду зовнішнього редактора"
 
 #: shell/main.cpp:77

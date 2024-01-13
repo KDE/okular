@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Obre una pàgina determinada en el document.</para>
+>Open a page with a given number in the document.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Cerca una cadena al text.</para>
+>Tries to find and highlight a given string in the document. Only works if just one document is given as an argument of the okular command.</para>
 </listitem>
 </varlistentry>
 

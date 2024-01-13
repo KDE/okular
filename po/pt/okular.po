@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-07-03 00:55+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -5658,8 +5658,9 @@ msgid "Find a string on the text"
 msgstr "Procurar uma dada sequência no texto"
 
 #: shell/main.cpp:76
-#, kde-format
-msgid "sets the external editor command"
+#, fuzzy, kde-format
+#| msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr "define o comando de edição externo"
 
 #: shell/main.cpp:77

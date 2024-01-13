@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2023-08-28 00:10+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -5575,8 +5575,9 @@ msgid "Find a string on the text"
 msgstr "텍스트에서 문자열 찾기"
 
 #: shell/main.cpp:76
-#, kde-format
-msgid "sets the external editor command"
+#, fuzzy, kde-format
+#| msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr "외부 편집기 명령 설정"
 
 #: shell/main.cpp:77

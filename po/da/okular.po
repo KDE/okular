@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-29 01:36+0000\n"
+"POT-Creation-Date: 2024-01-13 00:37+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -5764,7 +5764,7 @@ msgstr "Find en streng i teksten"
 
 #: shell/main.cpp:76
 #, kde-format
-msgid "sets the external editor command"
+msgid "Sets the external editor command"
 msgstr ""
 
 #: shell/main.cpp:77

@@ -807,7 +807,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 > o pulsando <keycap
 >F6</keycap
->. Una vez mostrada la barra de comentarios, solo hay que pulsar uno de sus botones o usar accesos rápidos de teclado (teclas desde <keycap
+>. Una vez mostrada la barra de comentarios, solo hay que pulsar uno de sus botones o usar atajos de teclado (teclas desde <keycap
 >1</keycap
 > a <keycap
 >9</keycap
@@ -1543,7 +1543,7 @@ Context menu actions like Rename Bookmarks etc.)
 > de la barra de herramientas principal. </para>
 					  <note>
 						  <para
->Puede usar los accesos rápidos de teclado de <keycombo action="simul"
+>Puede usar los atajos de teclado de <keycombo action="simul"
 >&Alt;<keycap
 >9</keycap
 ></keycombo
@@ -1926,7 +1926,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >La función «ajustar ventana a la página» cambia el tamaño de la ventana para que tenga exactamente el mismo tamaño que la página con el factor de ampliación actual. Si la página no cabe completamente en la pantalla, se agranda la ventana para que se muestre la mayor parte posible de la página. </para>
 			<para
->Se puede acceder a esta función usando el acceso rápido de teclado <keycombo action="simul"
+>Se puede acceder a esta función usando el atajo de teclado <keycombo action="simul"
 >&Ctrl;<keycap
 >J</keycap
 ></keycombo
@@ -3670,7 +3670,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Indica si se deben abrir en pestañas los documentos nuevos. No se usan pestañas por omisión.</para>
 						<para
->Los accesos rápidos de teclado predeterminados para cambiar entre pestañas son <keycombo
+>Los atajos de teclado predeterminados para cambiar entre pestañas son <keycombo
 >&Ctrl;<keycap
 >.</keycap
 ></keycombo
@@ -3953,7 +3953,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</variablelist>
                                                 <note
 ><para
->Puede configurar los accesos rápidos de teclado y las acciones de la barra de herramientas para los modos de color usando las correspondientes opciones del menú <guimenu
+>Puede configurar los atajos de teclado y las acciones de la barra de herramientas para los modos de color usando las correspondientes opciones del menú <guimenu
 >Preferencias</guimenu
 > de la ventana principal de &okular;.</para
 ></note>
@@ -4275,7 +4275,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Por favor, recuerde que las herramientas de anotaciones en &okular; son altamente configurables. Por ejemplo, usted puede disponer de dos botones de la misma herramienta pero de distintos colores. No vacile en experimentar el elegir el conjunto de botones que se ajusten exactamente a su flujo de trabajo. </para>
 					  </note>
 					  <para
->Pulse sobre algún elemento en el cuadro de lista, a continuación pulse sobre el correspondiente botón en el lado derecho de la página a editar, elimine, mueva hacia arriba o abajo el elemento. El acceso rápido de teclado de la herramienta (teclas desde <keycap
+>Pulse sobre algún elemento en el cuadro de lista, a continuación pulse sobre el correspondiente botón en el lado derecho de la página a editar, elimine, mueva hacia arriba o abajo el elemento. El atajo de teclado de la herramienta (teclas desde <keycap
 >1</keycap
 > a <keycap
 >9</keycap

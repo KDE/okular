@@ -7,7 +7,7 @@
 # Lisiane Sztoltz Teixeira <lisiane@kdemail.net>, 2004.
 # Henrique Pinto <henrique.pinto@kdemail.net>, 2005.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020.
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010, 2011, 2012.
 # Aracele Torres <araceletorres@gmail.com>, 2010.
 msgid ""
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-29 01:36+0000\n"
-"PO-Revision-Date: 2023-10-26 15:23-0300\n"
+"PO-Revision-Date: 2024-01-11 20:39-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -3440,8 +3440,7 @@ msgid "Find as you type"
 msgstr "Encontrar enquanto digitar"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Todos os arquivos (*)"
 

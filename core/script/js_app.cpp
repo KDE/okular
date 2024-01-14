@@ -33,6 +33,9 @@ Q_GLOBAL_STATIC(TimerCache, g_timerCache)
 // the acrobat version we fake
 static const double fake_acroversion = 8.00;
 
+// The property used to hold the value to return from app.popUpMenuEx
+static const char *kResultProperty = "result";
+
 static const struct FakePluginInfo {
     const char *name;
     bool certified;
@@ -330,28 +333,49 @@ void JSApp::clearTimeOut(const QJSValue &oTime)
 }
 
 // app.popUpMenuEx()
-QJSValue JSApp::okular_popUpMenuEx(const QJSValue &arguments)
-{
-    static const char *kResultProperty = "result";
 
+bool JSApp::createPopUpMenuTree(int depth, QMenu *rootMenu, const QJSValue &arguments)
+{
     const int nArgs = arguments.property(QStringLiteral("length")).toInt();
 
-    if (nArgs == 0) {
-        return {};
+    // If no menu to add or if we got too deep in recursion
+    if (nArgs == 0 || depth > 20) {
+        return false;
     }
 
-    QMenu m;
     for (int i = 0; i < nArgs; ++i) {
         const QJSValue item = arguments.property(i);
         const QString cName = item.property(QStringLiteral("cName")).toString();
         const QJSValue cResultProperty = item.property(QStringLiteral("cResult"));
-        QAction *a = m.addAction(cName);
-        if (cResultProperty.isUndefined()) {
-            a->setProperty(kResultProperty, cName);
+        const QJSValue oSubMenu = item.property(QStringLiteral("oSubMenu"));
+
+        if (oSubMenu.isArray()) {
+            QMenu *subMenu = rootMenu->addMenu(cName);
+            createPopUpMenuTree(depth + 1, subMenu, oSubMenu);
         } else {
-            a->setProperty(kResultProperty, cResultProperty.toString());
+            QAction *a = rootMenu->addAction(cName);
+            if (cResultProperty.isUndefined()) {
+                a->setProperty(kResultProperty, cName);
+            } else {
+                a->setProperty(kResultProperty, cResultProperty.toString());
+            }
         }
     }
+
+    return true;
+}
+
+QJSValue JSApp::okular_popUpMenuEx(const QJSValue &arguments)
+{
+    QMenu m;
+
+    // Object name is used for tests.
+    m.setObjectName(QStringLiteral("popUpMenuEx"));
+
+    if (!createPopUpMenuTree(0, &m, arguments)) {
+        return {};
+    }
+
     QAction *result = m.exec(QCursor::pos());
     return result ? result->property(kResultProperty).toString() : QString();
 }

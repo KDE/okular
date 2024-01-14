@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QPoint>
 
+class QMenu;
 class QTimer;
 
 namespace Okular
@@ -62,6 +63,7 @@ public:
 
 private:
     QJSValue wrapTimer(QTimer *timer) const;
+    static bool createPopUpMenuTree(int depth, QMenu *rootMenu, const QJSValue &arguments);
 
     DocumentPrivate *m_doc = nullptr;
     QTimer *m_watchdogTimer = nullptr;

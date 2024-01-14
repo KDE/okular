@@ -4,6 +4,10 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include <QAction>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QMenu>
 #include <QTest>
 #include <QTimer>
 
@@ -88,6 +92,8 @@ private Q_SLOTS:
     void testGetOCGs();
     void cleanupTestCase();
     void testAlert();
+    void testPopUpMenu();
+    void testPopUpMenuEx();
     void testPrintD();
     void testPrintD_data();
 
@@ -290,6 +296,146 @@ void JSFunctionsTest::testAlert()
                                                                             ret = app.alert( \"Cancel\", 3, 3, \"Test Dialog\", 0, oCheckBox );"));
     messageBoxHelper.reset(new MessageBoxHelper(QMessageBox::Cancel, QStringLiteral("Cancel"), QMessageBox::Information, QStringLiteral("Test Dialog"), true));
     m_document->processAction(action);
+    delete action;
+}
+
+class PopupMenuHelper : public QObject
+{
+    Q_OBJECT
+
+public:
+    PopupMenuHelper()
+        : m_menuFound(false)
+    {
+        QTimer::singleShot(0, this, &PopupMenuHelper::closeMenu);
+    }
+
+    ~PopupMenuHelper() override
+    {
+    }
+
+    bool menuFound()
+    {
+        return m_menuFound;
+    }
+
+    const QJsonArray &menuTree()
+    {
+        return m_menuTree;
+    }
+
+private Q_SLOTS:
+    void closeMenu()
+    {
+        const QWidgetList allToplevelWidgets = QApplication::topLevelWidgets();
+        QMenu *menu = nullptr;
+        for (QWidget *w : allToplevelWidgets) {
+            if (w->objectName() == QStringLiteral("popUpMenuEx") && w->inherits("QMenu")) {
+                menu = qobject_cast<QMenu *>(w);
+
+                // Generate an tree of string with all the menu trees
+                processQMenuToJS(menu, m_menuTree);
+
+                menu->close();
+                m_menuFound = true;
+                break;
+            }
+        }
+        if (!menu) {
+            QTimer::singleShot(0, this, &PopupMenuHelper::closeMenu);
+        }
+    }
+
+private:
+    static void processQMenuToJS(QMenu *menu, QJsonArray &array)
+    {
+        QList<QAction *> actions = menu->actions();
+
+        for (QAction *action : actions) {
+            QMenu *itMenu = action->menu();
+
+            if (itMenu != nullptr) {
+                QJsonArray subMenus;
+                subMenus.append(action->text());
+                processQMenuToJS(itMenu, subMenus);
+                array.append(subMenus);
+            } else {
+                array.append(action->text());
+            }
+        }
+    }
+
+private:
+    bool m_menuFound;
+    QJsonArray m_menuTree;
+};
+
+void JSFunctionsTest::testPopUpMenu()
+{
+    Okular::ScriptAction *action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("ret = app.popUpMenu( [\"Fruits\",\"Apples\",\"Oranges\"], \"-\",\"Beans\",\"Corn\" );"));
+
+    QScopedPointer<PopupMenuHelper> popupMenuHelper;
+    popupMenuHelper.reset(new PopupMenuHelper());
+    m_document->processAction(action);
+    QJsonArray expected = {
+        QJsonArray {
+            QJsonValue {QStringLiteral("Fruits")},
+            QJsonValue {QStringLiteral("Apples")},
+            QJsonValue {QStringLiteral("Oranges")},
+        },
+        QJsonValue {QStringLiteral("-")},
+        QJsonValue {QStringLiteral("Beans")},
+        QJsonValue {QStringLiteral("Corn")},
+    };
+
+    QString expectedString = QString::fromUtf8(QJsonDocument(expected).toJson());
+    QString resultString = QString::fromUtf8(QJsonDocument(popupMenuHelper->menuTree()).toJson());
+    QString description = QStringLiteral("Expected:\n") + expectedString + QStringLiteral("But got:\n") + resultString;
+    QVERIFY2(expected == popupMenuHelper->menuTree(), description.toUtf8().constData());
+
+    delete action;
+}
+
+void JSFunctionsTest::testPopUpMenuEx()
+{
+    QScopedPointer<PopupMenuHelper> popupMenuHelper;
+
+    Okular::ScriptAction *action = new Okular::ScriptAction(
+        Okular::JavaScript,
+        QStringLiteral("ret = app.popUpMenuEx( {cName:\"Fruits\", oSubMenu:[{cName:\"Apples\", bMarked:false},{cName:\"Oranges\", bMarked:true}]}, {cName:\"-\"},{cName:\"Beans\", bEnabled:false},{cName:\"Corn\", bEnabled:true} )"));
+
+    popupMenuHelper.reset(new PopupMenuHelper());
+    m_document->processAction(action);
+    QVERIFY(popupMenuHelper->menuFound());
+
+    QJsonArray expected = {
+        QJsonArray {
+            QJsonValue {QStringLiteral("Fruits")},
+            QJsonValue {QStringLiteral("Apples")},
+            QJsonValue {QStringLiteral("Oranges")},
+        },
+        QJsonValue {QStringLiteral("-")},
+        QJsonValue {QStringLiteral("Beans")},
+        QJsonValue {QStringLiteral("Corn")},
+    };
+
+    QString expectedString = QString::fromUtf8(QJsonDocument(expected).toJson());
+    QString resultString = QString::fromUtf8(QJsonDocument(popupMenuHelper->menuTree()).toJson());
+    QString description = QStringLiteral("Expected:\n") + expectedString + QStringLiteral("But got:\n") + resultString;
+    QVERIFY2(expected == popupMenuHelper->menuTree(), description.toUtf8().constData());
+
+    delete action;
+
+    // Test infinite recursion
+    action = new Okular::ScriptAction(Okular::JavaScript, QStringLiteral("\
+        var recursiveMenu = {\"cName\": \"Devil menu\"};\n\
+        recursiveMenu.oSubMenu = [ recursiveMenu ];\n\
+        ret = app.popUpMenuEx( recursiveMenu );"));
+
+    popupMenuHelper.reset(new PopupMenuHelper());
+    m_document->processAction(action);
+    QVERIFY(popupMenuHelper->menuFound());
+    // Must not crash
     delete action;
 }
 

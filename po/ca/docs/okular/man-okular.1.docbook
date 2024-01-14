@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Open a page with a given number in the document.</para>
+>Obre una pàgina amb el número indicat al document. </para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Tries to find and highlight a given string in the document. Only works if just one document is given as an argument of the okular command.</para>
+>Intenta trobar i ressaltar una cadena determinada en el document. Només funciona si sols es proporciona un document com a argument de l'ordre «okular».</para>
 </listitem>
 </varlistentry>
 

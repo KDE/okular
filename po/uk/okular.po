@@ -6,13 +6,13 @@
 # Andriy Rysin <rysin@kde.org>, 2003, 2006.
 # Eugene Onischenko <oneugene@ukr.net>, 2004, 2005.
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2004, 2005, 2006, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008-2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008-2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 09:44+0200\n"
+"PO-Revision-Date: 2024-01-13 09:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -5673,10 +5673,9 @@ msgid "Find a string on the text"
 msgstr "Знайти рядок у тексті"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "встановлює команду зовнішнього редактора"
+msgstr "Встановлює команду зовнішнього редактора"
 
 #: shell/main.cpp:77
 #, kde-format

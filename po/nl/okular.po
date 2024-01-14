@@ -10,7 +10,7 @@
 # Rinse de Vries <rinsedevries@kde.nl>, 2004, 2005, 2007, 2008.
 # Bram Schoenmakers <bramschoenmakers@kde.nl>, 2005, 2006.
 # Kristof Bal <kristof.bal@gmail.com>, 2008.
-# SPDX-FileCopyrightText: 2008, 2023 Freek de Kruijf <freek@opensuse.org>
+# SPDX-FileCopyrightText: 2008, 2023, 2024 Freek de Kruijf <freek@opensuse.org>
 # Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2011, 2012.
 # Freek de Kruijf <f.de.kruijf@gmail.com>, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 10:41+0100\n"
+"PO-Revision-Date: 2024-01-13 13:16+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5657,10 +5657,9 @@ msgid "Find a string on the text"
 msgstr "Een tekenreeks zoeken in de tekst"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "stelt het externe commando voor bewerker in"
+msgstr "Stelt het externe commando voor bewerker in"
 
 #: shell/main.cpp:77
 #, kde-format

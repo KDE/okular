@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Open een gegeven pagina in het document.</para>
+>Open een pagina met een gegeven nummer in het document.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Een tekenreeks zoeken in de tekst.</para>
+>Probeert een gegeven tekenreeks in het document te vinden en te accentueren. Werkt alleen als slechts één document als argument is gegeven in het commando okular.</para>
 </listitem>
 </varlistentry>
 

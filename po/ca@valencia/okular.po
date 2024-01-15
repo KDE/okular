@@ -1,7 +1,7 @@
 # Translation of okular.po to Catalan (Valencian)
-# Copyright (C) 2003-2023 This_file_is_part_of_KDE
+# Copyright (C) 2003-2024 This_file_is_part_of_KDE
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 08:12+0100\n"
+"PO-Revision-Date: 2024-01-13 16:15+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -5656,10 +5656,9 @@ msgid "Find a string on the text"
 msgstr "Busca una cadena al text"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "establix l'ordre de l'editor extern"
+msgstr "Establix l'ordre de l'editor extern"
 
 #: shell/main.cpp:77
 #, kde-format

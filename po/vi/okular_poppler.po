@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-01-16 00:37+0000\n"
 "PO-Revision-Date: 2022-05-12 12:03+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -230,7 +230,7 @@ msgstr "Có"
 msgid "Optimized"
 msgstr "Tối ưu hoá"
 
-#: generator_pdf.cpp:1368
+#: generator_pdf.cpp:1373
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -241,12 +241,12 @@ msgstr ""
 "\n"
 "Ngày: %2"
 
-#: generator_pdf.cpp:1575
+#: generator_pdf.cpp:1580
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Dùng Poppler %1"
 
-#: generator_pdf.cpp:1577
+#: generator_pdf.cpp:1582
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -257,17 +257,17 @@ msgstr ""
 "\n"
 "Xây trên Poppler %2"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Cấu hình hậu phương PDF"
 
-#: generator_pdf.cpp:2100
+#: generator_pdf.cpp:2105
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

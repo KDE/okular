@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-01-16 00:37+0000\n"
 "PO-Revision-Date: 2023-12-19 03:59+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -230,7 +230,7 @@ msgstr "დიახ"
 msgid "Optimized"
 msgstr "ოპტიმიზირებული"
 
-#: generator_pdf.cpp:1368
+#: generator_pdf.cpp:1373
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -241,12 +241,12 @@ msgstr ""
 "\n"
 "თარიღი: %2"
 
-#: generator_pdf.cpp:1575
+#: generator_pdf.cpp:1580
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1-ის გამოყენებით"
 
-#: generator_pdf.cpp:1577
+#: generator_pdf.cpp:1582
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -257,17 +257,17 @@ msgstr ""
 "\n"
 "აგებულია Poppler %2-ით"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1617
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF უკანაბოლოს მორგება"
 
-#: generator_pdf.cpp:2100
+#: generator_pdf.cpp:2105
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

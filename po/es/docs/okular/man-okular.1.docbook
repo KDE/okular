@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Abre la página indicada del documento.</para>
+>Abre la página con el número indicado del documento.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Buscar una cadena en el texto.</para>
+>Intenta buscar y resaltar el texto indicado en el documento. Solo funciona se proporciona un único documento como argumento de la orden okular.</para>
 </listitem>
 </varlistentry>
 

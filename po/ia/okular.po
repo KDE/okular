@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Giovanni Sora <g.sora@tiscali.it>, 2013, 2014, 2016, 2017, 2020, 2021, 2022, 2023.
+# Giovanni Sora <g.sora@tiscali.it>, 2013, 2014, 2016, 2017, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 10:20+0100\n"
+"PO-Revision-Date: 2024-01-15 18:17+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -5646,10 +5646,9 @@ msgid "Find a string on the text"
 msgstr "Trova una catena sur le texto"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "fixa le commando de editor externe"
+msgstr "Assigna le commando de editor externe"
 
 #: shell/main.cpp:77
 #, kde-format

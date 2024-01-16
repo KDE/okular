@@ -3,13 +3,13 @@
 #
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2007, 2008, 2009.
 # Yasen Pramatarov <yasen@lindeas.com>, 2010, 2012, 2013.
-# SPDX-FileCopyrightText: 2022, 2023 Mincho Kondarev <mkondarev@yahoo.de>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 23:10+0100\n"
+"PO-Revision-Date: 2024-01-15 11:02+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -108,7 +108,7 @@ msgstr "KPDF разработка"
 #: aboutdata.h:36
 #, kde-format
 msgid "Eugene Trounev"
-msgstr "ьEugene Trounev"
+msgstr "Eugene Trounev"
 
 #: aboutdata.h:36
 #, kde-format
@@ -5621,7 +5621,7 @@ msgstr "Започване с диалоговия прозорец за печ�
 #: shell/main.cpp:73
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr "Контрол \"Unique instance\""
+msgstr "Контрол \"Единствена инстанция\""
 
 #: shell/main.cpp:74
 #, kde-format
@@ -5634,10 +5634,9 @@ msgid "Find a string on the text"
 msgstr "Намиране на низ в текста"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "задава командите на външния редактор"
+msgstr "Задава командите на външния редактор"
 
 #: shell/main.cpp:77
 #, kde-format

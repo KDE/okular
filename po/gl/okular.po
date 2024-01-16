@@ -9,14 +9,14 @@
 # Miguel Branco <mgl.branco@gmail.com>, 2010, 2013.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-22 19:08+0100\n"
+"PO-Revision-Date: 2024-01-15 19:25+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -5641,10 +5641,9 @@ msgid "Find a string on the text"
 msgstr "Atopar unha cadea no texto"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "define a orde do editor externo"
+msgstr "Define a orde do editor externo"
 
 #: shell/main.cpp:77
 #, kde-format

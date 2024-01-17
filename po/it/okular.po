@@ -6,7 +6,7 @@
 # Andrea Rizzi <rizzi@kde.org>, 2005.
 # Nicola Ruggero <nixprog.adsl@tiscali.it>, 2005, 2006.
 # Nicola Ruggero <nicola@nxnt.org>, 2006, 2007.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Vincenzo Reale <smart2128vr@gmail.com>, 2022.
 #
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-13 00:37+0000\n"
-"PO-Revision-Date: 2023-12-25 19:08+0100\n"
+"PO-Revision-Date: 2024-01-15 22:49+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -5640,10 +5640,9 @@ msgid "Find a string on the text"
 msgstr "Trova una stringa nel testo"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "imposta il comando dell'editor esterno"
+msgstr "Imposta il comando dell'editor esterno"
 
 #: shell/main.cpp:77
 #, kde-format

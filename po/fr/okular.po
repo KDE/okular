@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2023-12-24 15:35+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
@@ -598,7 +598,7 @@ msgstr "Ajuster à la page entière"
 msgid "Scale mode:"
 msgstr "Mode de mise à l'échelle :"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ne plus afficher ce message"

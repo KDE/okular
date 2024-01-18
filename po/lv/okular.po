@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2024-01-07 12:10+0200\n"
 "Last-Translator: Māris Nartišs <maris.kde@gmail.com>\n"
 "Language-Team: \n"
@@ -577,7 +577,7 @@ msgstr "Ietilpināt līdz pilnai lapai"
 msgid "Scale mode:"
 msgstr "Tālummaiņas režīms:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Turpmāk vairs nerādīt šo paziņojumu"

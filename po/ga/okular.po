@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -594,7 +594,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr "Mód datha:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, fuzzy, kde-format
 #| msgid "Close this message"
 msgid "Do not show this message again"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr "रंग पध्दत:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, fuzzy, kde-format
 #| msgid "Close this message"
 msgid "Do not show this message again"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2022-12-11 12:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -578,7 +578,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr "Kvörðunarhamur:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ekki sýna þessi skilaboð aftur"

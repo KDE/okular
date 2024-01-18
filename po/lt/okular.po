@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2024-01-13 18:24+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -576,7 +576,7 @@ msgstr "Talpinti į visą puslapį"
 msgid "Scale mode:"
 msgstr "Mastelio keitimo veiksena:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Daugiau neberodyti šio pranešimo"

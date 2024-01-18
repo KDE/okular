@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2024-01-13 06:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -572,7 +572,7 @@ msgstr "适合整个页面"
 msgid "Scale mode:"
 msgstr "缩放模式："
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, kde-format
 msgid "Do not show this message again"
 msgstr "不再显示此消息"

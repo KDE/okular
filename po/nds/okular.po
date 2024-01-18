@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-13 00:37+0000\n"
+"POT-Creation-Date: 2024-01-18 00:36+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr "Klöörbedrief:"
 
-#: core/script/js_app.cpp:203
+#: core/script/js_app.cpp:206
 #, fuzzy, kde-format
 #| msgid "Close this message"
 msgid "Do not show this message again"

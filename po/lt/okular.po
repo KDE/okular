@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-29 01:36+0000\n"
-"PO-Revision-Date: 2022-11-18 18:51+0200\n"
+"PO-Revision-Date: 2024-01-21 01:07+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -246,7 +246,7 @@ msgstr "Pratęsti filmą"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Šis Okular yra sudarytas be garso įrašų palaikymo"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1088,10 +1088,9 @@ msgid "Reason: %1"
 msgstr "Priežastis: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Vieta:"
+msgstr "Vieta: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1528,9 +1527,7 @@ msgid "Opacity"
 msgstr "Nepermatomumas"
 
 #: part/annotationactionhandler.cpp:695
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1538,11 +1535,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Puslapis %1"
+msgstr "Puslapis %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3124
 #, kde-format
@@ -1553,7 +1549,7 @@ msgstr "Puslapis %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -1570,10 +1566,9 @@ msgid "&Open Pop-up Note"
 msgstr "&Atverti iškylančiąją pastabą"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Kopijuoti į iškarpinę"
+msgstr "Kopijuoti tekstą į iškarpinę"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
@@ -3445,8 +3440,7 @@ msgid "Find as you type"
 msgstr "Paieška renkant tekstą"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Visi failai (*)"
 
@@ -3790,9 +3784,7 @@ msgid "Auto Fit"
 msgstr "Automatiškai talpinti"
 
 #: part/pageview.cpp:4091
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -4460,11 +4452,7 @@ msgid "Could not open %1. %2"
 msgstr "Nepavyko atverti %1. %2"
 
 #: part/part.cpp:1825
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4472,9 +4460,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Yra neįrašytų pakeitimų ir failas \"%1\" buvo modifikuotas kitos programos. "
-"Jūsų pakeitimai bus prarasti, nes failas daugiau nebegali būti įrašytas."
-"<br>Ar norite tęsti failo įkėlimą iš naujo?"
+"Faile <filename>%1</filename> yra neįrašytų pakeitimų, bet jis buvo "
+"modifikuotas kitos programos. Įkėlus failą iš naujo, pakeitimai, kuriuos "
+"atlikote šioje programoje, dings, o atsiras pakeitimai, kuriuos atlikote "
+"kitoje programoje.<nl/><nl/>Ar norite tęsti ir įkelti failą iš naujo?"
 
 #: part/part.cpp:1829 part/part.cpp:1839
 #, kde-format
@@ -4492,11 +4481,7 @@ msgid "Abort Reloading"
 msgstr "Nutraukti įkėlimą iš naujo"
 
 #: part/part.cpp:1835
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4504,9 +4489,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Yra neįrašytų pakeitimų ir failas \"%1\" buvo modifikuotas kitos programos. "
-"Jūsų pakeitimai bus prarasti, nes failas daugiau nebegali būti įrašytas."
-"<br>Ar norite tęsti failo užvėrimą?"
+"Faile <filename>%1</filename> yra neįrašytų pakeitimų, bet jis buvo "
+"modifikuotas kitos programos. Užvėrus failą, pakeitimai, kuriuos atlikote "
+"šioje programoje, dings, o atsiras pakeitimai, kuriuos atlikote kitoje "
+"programoje.<nl/><nl/>Ar norite tęsti ir užverti failą?"
 
 #: part/part.cpp:1840
 #, kde-format
@@ -4626,6 +4612,9 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"Failas <filename>%1</filename> buvo modifikuotas kitos programos. Jei dabar "
+"įrašysite, visi pakeitimai, atlikti kitoje programoje, bus prarasti. Ar "
+"tikrai norite tęsti?"
 
 #: part/part.cpp:2632 part/part.cpp:2650 part/part.cpp:2702
 #, kde-format
@@ -4635,7 +4624,7 @@ msgstr "Įrašyti - Įspėjimas"
 #: part/part.cpp:2634
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Įrašyti kopiją kitur"
 
 #: part/part.cpp:2649
 #, kde-format
@@ -5362,17 +5351,15 @@ msgstr "Filtro parinktys"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Liudijimai:"
+msgstr "Liudijimai"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Pasirinkite liudijimą, kuriuo pasirašyti"
+msgstr "Pasirinkite liudijimą, kuriuo pasirašyti:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
@@ -5385,10 +5372,9 @@ msgstr "Priežastis:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Parinktys"
+msgstr "nebūtina"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5398,25 +5384,21 @@ msgstr "Vieta:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Fono spalva:"
+msgstr "Fonas:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Pasirinkti..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Naudoti tinkintą fono spalvą:"
+msgstr "Paskiausiai naudoti fonai:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5459,30 +5441,25 @@ msgid "Properties"
 msgstr "Savybės"
 
 #: part/signaturepartutils.cpp:360
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Puslapių: %1"
+msgstr "Paveikslai (%1)"
 
 #: part/signaturepartutils.cpp:361
 #, kde-format
 msgid "Select background image"
-msgstr ""
+msgstr "Pasirinkti foninį paveikslą"
 
 #: part/signaturepartutils.cpp:366
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget image"
-msgstr "Išvalyti visus"
+msgstr "Išvalyti paveikslą"
 
 #: part/signaturepartutils.cpp:367
-#, fuzzy, kde-format
-#| msgctxt "on welcome screen (recent document list)"
-#| msgid "Forget All"
+#, kde-format
 msgid "Forget all images"
-msgstr "Išvalyti visus"
+msgstr "Išvalyti visus paveikslus"
 
 #: part/signaturepartutils.cpp:410
 #, kde-format
@@ -5564,15 +5541,14 @@ msgid "View Certificate..."
 msgstr "Rodyti liudijimą..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Rodyti liudijimą..."
+msgstr "Rodyti liudijimų tvarkytuvėje"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE liudijimų tvarkytuvė (kleopatra) nerasta"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5600,12 +5576,12 @@ msgstr "Stabdyti"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Šioje Okular vaizdo įrašai yra nepalaikomi"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Šioje Okular vaizdo įrašai yra nepalaikomi"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5746,10 +5722,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Nepavyko rasti Okular komponento: %1"
 
 #: shell/shell.cpp:253
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Rodyti š&oninę juostą"
+msgstr "Šoninė juosta"
 
 #: shell/shell.cpp:289
 #, kde-format
@@ -5797,10 +5772,9 @@ msgid "Undo close tab"
 msgstr "Atšaukti kortelės užvėrimą"
 
 #: shell/shell.cpp:588
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Rodyti š&oninę juostą"
+msgstr "Užrakinti šoninę juostą"
 
 #: shell/shell.cpp:688
 #, kde-format

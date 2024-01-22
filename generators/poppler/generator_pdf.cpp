@@ -1332,9 +1332,8 @@ Okular::TextPage *PDFGenerator::textPage(Okular::TextRequest *request)
     std::vector<std::unique_ptr<Poppler::TextBox>> textList;
     double pageWidth, pageHeight;
     userMutex()->lock();
-    if (!pdfdoc) {
-        // Someone might have null'ed out the document underneath us,
-        // so better stop here
+    if (request->shouldAbortExtraction()) {
+        userMutex()->unlock();
         return nullptr;
     }
     std::unique_ptr<Poppler::Page> pp = pdfdoc->page(page->number());

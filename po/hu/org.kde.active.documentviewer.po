@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Balázs Úr <urbalazs@gmail.com>, 2012.
-# Kristof Kiszel <kiszel.kristof@gmail.com>, 2021.
+# SPDX-FileCopyrightText: 2021, 2024 Kristof Kiszel <kiszel.kristof@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2021-09-14 13:35+0200\n"
-"Last-Translator: Kristof Kiszel <kiszel.kristof@gmail.com>\n"
+"PO-Revision-Date: 2024-01-24 13:00+0100\n"
+"Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.03.80\n"
+"X-Generator: Lokalize 24.01.90\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -24,76 +24,76 @@ msgstr "Könyvjelzők"
 
 #: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "Tanúsítványmegjelenítő"
 
 #: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
-msgstr ""
+msgstr "Kibocsátó"
 
 #: package/contents/ui/CertificateViewerDialog.qml:38
 #: package/contents/ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
-msgstr ""
+msgstr "Köznapi név:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:44
 #: package/contents/ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
-msgstr ""
+msgstr "E-mail:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:50
 #: package/contents/ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
-msgstr ""
+msgstr "Szervezet:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
-msgstr ""
+msgstr "Kérelmező"
 
 #: package/contents/ui/CertificateViewerDialog.qml:89
 msgid "Validity"
-msgstr ""
+msgstr "Érvényesség"
 
 #: package/contents/ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
-msgstr ""
+msgstr "Kibocsátva:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
-msgstr ""
+msgstr "Lejárat:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
-msgstr ""
+msgstr "Ujjlenyomatok"
 
 #: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
-msgstr ""
+msgstr "SHA-1 ujjlenyomat:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
-msgstr ""
+msgstr "SHA-256 ujjlenyomat:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
-msgstr ""
+msgstr "Exportálás…"
 
 #: package/contents/ui/CertificateViewerDialog.qml:142
 #: package/contents/ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 #: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "Tanúsítványfájl (*.cer)"
 
 #: package/contents/ui/CertificateViewerDialog.qml:165
 #: package/contents/ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: package/contents/ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
-msgstr ""
+msgstr "Nem sikerült exportálni a tanúsítványt."
 
 #: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
 msgid "Okular"
@@ -109,7 +109,7 @@ msgstr "Névjegy"
 
 #: package/contents/ui/main.qml:106
 msgid "Password Needed"
-msgstr ""
+msgstr "Jelszó szükséges"
 
 #: package/contents/ui/MainView.qml:25
 msgid "Remove bookmark"
@@ -133,70 +133,68 @@ msgstr "Tartalomjegyzék"
 
 #: package/contents/ui/OkularDrawer.qml:99
 msgid "Signatures"
-msgstr ""
+msgstr "Aláírások"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
-msgstr ""
+msgstr "Aláírás-tulajdonságok"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
-msgstr ""
+msgstr "Aláírás állapota"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Aláírás érvényessége:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Dokumentum módosításai:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
-msgstr ""
+msgstr "Egyéb jellemzők"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
-msgstr ""
+msgstr "Aláíró:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
-msgstr ""
+msgstr "Aláírás ideje:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
-msgstr ""
+msgstr "Ok:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
-msgstr ""
+msgstr "Hely:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:101
-#, fuzzy
-#| msgid "No document open"
 msgid "Document Version"
-msgstr "Nincs megnyitva dokumentum"
+msgstr "Dokumentumverzió"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "Dokumentumváltozat %1 / %2"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
-msgstr ""
+msgstr "Aláírt verzió mentése…"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
-msgstr ""
+msgstr "Tanúsítvány megtekintése…"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
-msgstr ""
+msgstr "Nem sikerült elmenteni az aláírást."
 
 #: package/contents/ui/Signatures.qml:27
 msgid "Not Available"
-msgstr ""
+msgstr "Nem érhető el"
 
 #: package/contents/ui/ThumbnailsBase.qml:43
 msgid "No results found."

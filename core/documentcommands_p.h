@@ -250,6 +250,7 @@ private:
     Okular::DocumentPrivate *m_docPriv;
     int m_pageNumber;
     QList<FormFieldButton *> m_formButtons;
+    QList<int> m_pageNumbers;
     QList<bool> m_newButtonStates;
     QList<bool> m_prevButtonStates;
 };

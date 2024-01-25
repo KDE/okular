@@ -3,13 +3,13 @@
 # Kiszel Kristóf <ulysses@kubuntu.org>, 2010.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012, 2022.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014, 2015.
-# Kristof Kiszel <kiszel.kristof@gmail.com>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2024 Kristof Kiszel <kiszel.kristof@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-18 00:36+0000\n"
-"PO-Revision-Date: 2022-02-18 11:21+0100\n"
+"PO-Revision-Date: 2024-01-24 12:56+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.07.70\n"
+"X-Generator: Lokalize 24.01.90\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Kiszel Kristóf,Szántó Tamás"
+msgstr "Kiszel Kristóf"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "ulysses@fsf.hu,tszanto@interware.hu"
+msgstr "ulysses@fsf.hu"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -243,7 +243,7 @@ msgstr "Film folytatása"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Ez az Okular csomag hangtámogatás nélkül lett összeállítva"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1085,10 +1085,9 @@ msgid "Reason: %1"
 msgstr "Ok: %1"
 
 #: gui/signaturemodel.cpp:168
-#, fuzzy, kde-format
-#| msgid "Location:"
+#, kde-format
 msgid "Location: %1"
-msgstr "Hely:"
+msgstr "Hely: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1522,9 +1521,7 @@ msgid "Opacity"
 msgstr "Átlátszatlanság"
 
 #: part/annotationactionhandler.cpp:695
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1532,11 +1529,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "%1. oldal"
+msgstr "%1. oldal (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3124
 #, kde-format
@@ -1547,7 +1543,7 @@ msgstr "%1. oldal"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -1562,10 +1558,9 @@ msgid "&Open Pop-up Note"
 msgstr "Megnyitás fel&ugró ablakban"
 
 #: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
-#, fuzzy, kde-format
-#| msgid "Copy to Clipboard"
+#, kde-format
 msgid "Copy Text to Clipboard"
-msgstr "Másolás a vágólapra"
+msgstr "Szöveg másolása a vágólapra"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
 #: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
@@ -2782,6 +2777,7 @@ msgstr "Megnyitás folyamatos módban alapértelmezés szerint"
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
+"A kurzor körbefuttatása a képernyőszéleken a Böngészés eszköz használatakor"
 
 #: part/dlggeneral.cpp:190
 #, kde-format
@@ -3422,8 +3418,7 @@ msgid "Find as you type"
 msgstr "Keresés gépelés közben"
 
 #: part/formwidgets.cpp:756
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Minden fájl (*)"
 
@@ -3763,9 +3758,7 @@ msgid "Auto Fit"
 msgstr "Automatikus igazítás"
 
 #: part/pageview.cpp:4091
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -3899,15 +3892,13 @@ msgstr ""
 "téglalapot."
 
 #: part/pageviewannotator.cpp:364
-#, fuzzy, kde-format
-#| msgid "Start over"
+#, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Újrakezdés"
 
 #: part/pageviewannotator.cpp:365
-#, fuzzy, kde-format
-#| msgid "Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Aláírás"
@@ -4298,12 +4289,14 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Módosította a megnyitott dokumentumot, de ez a dokumentumtípus nem "
+"menthető.\n"
+"Minden módosítás el fog veszni az Okular bezárásakor."
 
 #: part/part.cpp:1098
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Document can't be saved"
-msgstr "Dokumentumjelszó"
+msgstr "A dokumentumot nem lehet menteni"
 
 #: part/part.cpp:1127
 #, kde-format
@@ -4425,11 +4418,7 @@ msgid "Could not open %1. %2"
 msgstr "A(z) %1 nem nyitható meg. %2"
 
 #: part/part.cpp:1825
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue reloading the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4437,9 +4426,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
-"Nem mentett változtatások vannak, a „%1” fájlt pedig egy másik program is "
-"módosította. A változtatásai elvesznek, mert a fájl többé nem menthető."
-"<br>Szeretné folytatni a fájl újratöltését?"
+"A(z) <filename>%1</filename> fájlnak nem mentett módosításai vannak, de egy "
+"másik program módosította. Az újratöltés kicseréli a nem mentett "
+"változtatásokat a másik program módosításaival.<nl/><nl/>Szeretné folytatni "
+"a fájl újratöltését?"
 
 #: part/part.cpp:1829 part/part.cpp:1839
 #, kde-format
@@ -4457,11 +4447,7 @@ msgid "Abort Reloading"
 msgstr "Újratöltés megszakítása"
 
 #: part/part.cpp:1835
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "There are unsaved changes, and the file '%1' has been modified by another "
-#| "program. Your changes will be lost, because the file can no longer be "
-#| "saved.<br>Do you want to continue closing the file?"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "The file <filename>%1</filename> has unsaved changes but has been modified "
@@ -4469,9 +4455,9 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
-"Nem mentett változtatások vannak, a „%1” fájlt pedig egy másik program is "
-"módosította. A változtatásai elvesznek, mert a fájl többé nem menthető."
-"<br>Szeretné folytatni a fájl bezárását?"
+"A(z) <filename>%1</filename> fájlnak nem mentett módosításai vannak, de egy "
+"másik program módosította. A bezárás kicseréli a nem mentett változtatásokat "
+"a másik program módosításaival.<nl/><nl/>Szeretné folytatni a fájl bezárását?"
 
 #: part/part.cpp:1840
 #, kde-format
@@ -4582,7 +4568,7 @@ msgstr "Nem támogatott kiterjesztés"
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr ""
+msgstr "Új név választása"
 
 #: part/part.cpp:2629
 #, kde-kuit-format
@@ -4592,6 +4578,8 @@ msgid ""
 "you save now, any changes made in the other program will be lost. Are you "
 "sure you want to continue?"
 msgstr ""
+"A(z) <filename>%1</filename> fájlt egy másik program módosította. Ha most "
+"menti, a másik program változtatásai elvesznek. Biztosan folytatni szeretné?"
 
 #: part/part.cpp:2632 part/part.cpp:2650 part/part.cpp:2702
 #, kde-format
@@ -4601,7 +4589,7 @@ msgstr "Mentés - figyelmeztetés"
 #: part/part.cpp:2634
 #, kde-format
 msgid "Save a Copy Elsewhere"
-msgstr ""
+msgstr "Másolat mentése máshová"
 
 #: part/part.cpp:2649
 #, kde-format
@@ -4757,11 +4745,9 @@ msgid "Collapse all"
 msgstr "Minden összecsukása"
 
 #: part/part.cpp:3127
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Link the thumbnails with the page"
+#, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr "A bélyegképek kapcsolása az oldalhoz"
+msgstr "Bélyegképek szinkronizálása az oldallal"
 
 #: part/part.cpp:3132
 #, kde-format
@@ -4999,6 +4985,10 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"A szerkesztőt a parancssorban a következőre állították:\n"
+"%1 \n"
+"Ha szeretné ezt a beállítást használni, indítsa az Okulart a --editor-cmd "
+"kapcsolóval"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5325,17 +5315,15 @@ msgstr "Szűrőbeállítások"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SelectCertificateDialog)
 #: part/selectcertificatedialog.ui:14
-#, fuzzy, kde-format
-#| msgid "Certificates:"
+#, kde-format
 msgid "Certificates"
-msgstr "Tanúsítványok:"
+msgstr "Tanúsítványok"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
-#, fuzzy, kde-format
-#| msgid "Select certificate to sign with"
+#, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Válassza ki az aláíró tanúsítványt"
+msgstr "Válassza ki az aláíró tanúsítványt:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
@@ -5348,10 +5336,9 @@ msgstr "Ok:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
 #: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
 #: part/selectcertificatedialog.ui:85
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "optional"
-msgstr "Beállítások"
+msgstr "opcionális"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
 #: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
@@ -5361,25 +5348,21 @@ msgstr "Hely:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:76
-#, fuzzy, kde-format
-#| msgctxt "@label:chooser Config dialog, presentation page"
-#| msgid "Background color:"
+#, kde-format
 msgid "Background:"
-msgstr "Háttérszín:"
+msgstr "Háttér:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr ""
+msgstr "Választás…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
-#, fuzzy, kde-format
-#| msgctxt "@label:listbox Config dialog, general page"
-#| msgid "Use custom background color:"
+#, kde-format
 msgid "Recent backgrounds:"
-msgstr "Egyéni háttérszín használata:"
+msgstr "Legutóbbi hátterek:"
 
 #: part/side_reviews.cpp:65
 #, kde-format
@@ -5422,27 +5405,25 @@ msgid "Properties"
 msgstr "Tulajdonságok"
 
 #: part/signaturepartutils.cpp:360
-#, fuzzy, kde-format
-#| msgid "Pages: %1"
+#, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "Oldalszám: %1"
+msgstr "Képek (%1)"
 
 #: part/signaturepartutils.cpp:361
-#, fuzzy, kde-format
-#| msgid "Enable &background generation"
+#, kde-format
 msgid "Select background image"
-msgstr "A háttérgenerálás bekap&csolása"
+msgstr "Válasszon háttérképet"
 
 #: part/signaturepartutils.cpp:366
 #, kde-format
 msgid "Forget image"
-msgstr ""
+msgstr "Kép elfelejtése"
 
 #: part/signaturepartutils.cpp:367
 #, kde-format
 msgid "Forget all images"
-msgstr ""
+msgstr "Összes kép elfelejtése"
 
 #: part/signaturepartutils.cpp:410
 #, kde-format
@@ -5524,15 +5505,14 @@ msgid "View Certificate..."
 msgstr "Tanúsítvány megtekintése…"
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "Tanúsítvány megtekintése…"
+msgstr "Megtekintés a Tanúsítványkezelőben"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "A KDE Tanúsítványkezelő (kleopatra) nem található"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5560,12 +5540,12 @@ msgstr "Leállítás"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Az Okular ezen összeállítása nem támogatja a videókat"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Az Okular ezen összeállítása nem támogatja a videókat"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5660,6 +5640,9 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"A szerkesztő parancsot nem lehet megadni egy már futó Okular példányban. "
+"Kapcsolja ki a lapokat, és próbálja meg újra. Vegye figyelembe, hogy az "
+"egyedi nem támogatott a szerkesztő parancs parancssorban beállításakor.\n"
 
 #: shell/okular_main.cpp:188
 #, kde-format
@@ -5698,10 +5681,9 @@ msgid "Unable to find the Okular component: %1"
 msgstr "Nem található az Okular objektum: %1"
 
 #: shell/shell.cpp:253
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "Old&alsáv megjelenítése"
+msgstr "Oldalsáv"
 
 #: shell/shell.cpp:289
 #, kde-format
@@ -5748,10 +5730,9 @@ msgid "Undo close tab"
 msgstr "Lap bezárásának visszavonása"
 
 #: shell/shell.cpp:588
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "Old&alsáv megjelenítése"
+msgstr "Oldalsáv zárolása"
 
 #: shell/shell.cpp:688
 #, kde-format
@@ -5789,14 +5770,12 @@ msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Figyelmeztetés több lap bezárása előtt"
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "Szöveg másolása"
+msgstr "Elérési út más&olása"
 
 #: shell/welcomescreen.cpp:77
-#, fuzzy, kde-format
-#| msgid "Open Con&taining Folder"
+#, kde-format
 msgid "&Open Containing Folder"
 msgstr "Tartal&mazó mappa megnyitása"
 
@@ -5804,49 +5783,46 @@ msgstr "Tartal&mazó mappa megnyitása"
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "Elem el&felejtése"
 
 #: shell/welcomescreen.cpp:137
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "Csak az aktuális dokumentum"
+msgstr "Nincsenek legutóbbi dokumentumok"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Üdvözli az Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
-#, fuzzy, kde-format
-#| msgid "Open Document"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Dokumentum megnyitása"
+msgstr "Dokumentum megnyitása…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "Csak az aktuális dokumentum"
+msgstr "Legutóbbi dokumentumok"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Összes elfelejtése"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Kezdőképernyő elrejtése"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Minden fájl"

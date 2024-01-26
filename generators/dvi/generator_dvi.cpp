@@ -229,7 +229,6 @@ Okular::TextPage *DviGenerator::textPage(Okular::TextRequest *request)
 
     qCDebug(OkularDviDebug);
     dviPageInfo *pageInfo = new dviPageInfo();
-    pageSize ps;
 
     pageInfo->width = page->width();
     pageInfo->height = page->height();
@@ -244,7 +243,7 @@ Okular::TextPage *DviGenerator::textPage(Okular::TextRequest *request)
     Okular::TextPage *ktp = nullptr;
     if (m_dviRenderer) {
         SimplePageSize s = m_dviRenderer->sizeOfPage(pageInfo->pageNumber);
-        pageInfo->resolution = (double)(pageInfo->width) / ps.width().getLength_in_inch();
+        pageInfo->resolution = (double)(pageInfo->width) / s.width().getLength_in_inch();
 
         m_dviRenderer->getText(pageInfo);
         lock.unlock();

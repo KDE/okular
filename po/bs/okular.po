@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-18 00:36+0000\n"
+"POT-Creation-Date: 2024-01-26 00:36+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -3678,23 +3678,23 @@ msgstr "Sa trenutne stranice"
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:756
+#: part/formwidgets.cpp:767
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All Files (*)"
 msgstr "*|Sve datoteke"
 
-#: part/formwidgets.cpp:1070
+#: part/formwidgets.cpp:1081
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Caret Properties"
 msgid "Signature Properties"

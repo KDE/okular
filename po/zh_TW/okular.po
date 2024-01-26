@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-18 00:36+0000\n"
+"POT-Creation-Date: 2024-01-26 00:36+0000\n"
 "PO-Revision-Date: 2024-01-14 21:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3393,22 +3393,22 @@ msgstr "從目前的頁面"
 msgid "Find as you type"
 msgstr "輸入時尋找"
 
-#: part/formwidgets.cpp:756
+#: part/formwidgets.cpp:767
 #, kde-format
 msgid "All Files (*)"
 msgstr "所有檔案 (*)"
 
-#: part/formwidgets.cpp:1070
+#: part/formwidgets.cpp:1081
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "未署名的簽名（點擊以署名）"
 
-#: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "簽署(&S)…"
 
-#: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "簽名屬性"

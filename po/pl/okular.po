@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-18 00:36+0000\n"
+"POT-Creation-Date: 2024-01-26 00:36+0000\n"
 "PO-Revision-Date: 2024-01-21 08:06+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3432,22 +3432,22 @@ msgstr "Od bieżącej strony"
 msgid "Find as you type"
 msgstr "Wyszukuj podczas wpisywania"
 
-#: part/formwidgets.cpp:756
+#: part/formwidgets.cpp:767
 #, kde-format
 msgid "All Files (*)"
 msgstr "Wszystkie pliki (*)"
 
-#: part/formwidgets.cpp:1070
+#: part/formwidgets.cpp:1081
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Pole podpisu bez podpisu (naciśnij, aby podpisać)"
 
-#: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "Podpi&sz..."
 
-#: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Właściwości podpisu"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-18 00:36+0000\n"
+"POT-Creation-Date: 2024-01-26 00:36+0000\n"
 "PO-Revision-Date: 2024-01-17 17:16+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -3423,22 +3423,22 @@ msgstr "من الصفحة الحالية"
 msgid "Find as you type"
 msgstr "اعثر وأنت تكتب"
 
-#: part/formwidgets.cpp:756
+#: part/formwidgets.cpp:767
 #, kde-format
 msgid "All Files (*)"
 msgstr "كلّ الملفّات (*)"
 
-#: part/formwidgets.cpp:1070
+#: part/formwidgets.cpp:1081
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "مكان توقيع غير موقع (انقر للتوقيع)"
 
-#: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&وقّع..."
 
-#: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "خصائص التوقيع"

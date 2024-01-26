@@ -11,7 +11,7 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008, 2009.
 # Alain Rpnpif <rpnpif@free.fr>, 2008, 2009, 2010.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
-# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
 # Sebastien Renard <renard@kde.org>, 2014, 2015.
 # Ludovic Grossard <grossard@kde.org>, 2014.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-18 00:36+0000\n"
-"PO-Revision-Date: 2023-12-24 15:35+0100\n"
+"POT-Creation-Date: 2024-01-26 00:36+0000\n"
+"PO-Revision-Date: 2024-01-22 22:00+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -3461,22 +3461,22 @@ msgstr "À partir de la page actuelle"
 msgid "Find as you type"
 msgstr "Rechercher au fur et à mesure de la saisie"
 
-#: part/formwidgets.cpp:756
+#: part/formwidgets.cpp:767
 #, kde-format
 msgid "All Files (*)"
 msgstr "Tous les fichiers (*)"
 
-#: part/formwidgets.cpp:1070
+#: part/formwidgets.cpp:1081
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Champ de signature non signé (cliquez pour signer)"
 
-#: part/formwidgets.cpp:1136 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Signer..."
 
-#: part/formwidgets.cpp:1140 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Propriétés de la signature"
@@ -5693,8 +5693,7 @@ msgid "Find a string on the text"
 msgstr "Chercher une chaîne dans le texte"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
 msgstr "Définit la commande externe de l'éditeur"
 

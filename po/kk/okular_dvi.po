@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-13 00:40+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2013-06-28 02:44+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -384,12 +384,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "%2 н/д айырымдылықты %1 құру"
 
-#: generator_dvi.cpp:293
+#: generator_dvi.cpp:292
 #, kde-format
 msgid "Generator/Date"
 msgstr "Құрушысы/Құрылған кезі"
 
-#: generator_dvi.cpp:382
+#: generator_dvi.cpp:381
 #, kde-format
 msgid "Font file not found"
 msgstr "Қаріптің файлы табылмады"

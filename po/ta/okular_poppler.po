@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-16 00:37+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2023-07-02 15:38+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -228,7 +228,7 @@ msgstr "ஆம்"
 msgid "Optimized"
 msgstr "நேரியல்பாக்கப்பட்டதா"
 
-#: generator_pdf.cpp:1373
+#: generator_pdf.cpp:1372
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -239,12 +239,12 @@ msgstr ""
 "\n"
 "தேதி: %2"
 
-#: generator_pdf.cpp:1580
+#: generator_pdf.cpp:1579
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 பயனிலுள்ளது"
 
-#: generator_pdf.cpp:1582
+#: generator_pdf.cpp:1581
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -255,17 +255,17 @@ msgstr ""
 "\n"
 "நிரல்தொகுக்க Poppler %2 பயன்படுத்தப்பட்டது"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1616
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1616
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF பின்நிலை அமைப்பு"
 
-#: generator_pdf.cpp:2105
+#: generator_pdf.cpp:2104
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

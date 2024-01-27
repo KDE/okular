@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-13 00:40+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2019-08-22 08:11+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -333,12 +333,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "%1 wird mit %2 dpi erzeugt ..."
 
-#: generator_dvi.cpp:293
+#: generator_dvi.cpp:292
 #, kde-format
 msgid "Generator/Date"
 msgstr "Ersteller/Datum"
 
-#: generator_dvi.cpp:382
+#: generator_dvi.cpp:381
 #, kde-format
 msgid "Font file not found"
 msgstr "Schriftdatei nicht gefunden"

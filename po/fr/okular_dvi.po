@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-13 00:40+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2021-01-13 17:30+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -354,12 +354,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Génération en cours de %1 à %2 dpi..."
 
-#: generator_dvi.cpp:293
+#: generator_dvi.cpp:292
 #, kde-format
 msgid "Generator/Date"
 msgstr "Générateur / Date"
 
-#: generator_dvi.cpp:382
+#: generator_dvi.cpp:381
 #, kde-format
 msgid "Font file not found"
 msgstr "Impossible de trouver un fichier de police"

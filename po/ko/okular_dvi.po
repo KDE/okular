@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-13 00:40+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2022-05-07 02:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -313,12 +313,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "%1을(를) %2 dpi로 생성 중..."
 
-#: generator_dvi.cpp:293
+#: generator_dvi.cpp:292
 #, kde-format
 msgid "Generator/Date"
 msgstr "작성자/일자"
 
-#: generator_dvi.cpp:382
+#: generator_dvi.cpp:381
 #, kde-format
 msgid "Font file not found"
 msgstr "글꼴 파일을 찾을 수 없음"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-16 00:37+0000\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
 "PO-Revision-Date: 2023-06-29 07:50+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -230,7 +230,7 @@ msgstr "Jes"
 msgid "Optimized"
 msgstr "Optimumigita"
 
-#: generator_pdf.cpp:1373
+#: generator_pdf.cpp:1372
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -241,12 +241,12 @@ msgstr ""
 "\n"
 "Dato: %2"
 
-#: generator_pdf.cpp:1580
+#: generator_pdf.cpp:1579
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Uzante Poppler %1"
 
-#: generator_pdf.cpp:1582
+#: generator_pdf.cpp:1581
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -257,17 +257,17 @@ msgstr ""
 "\n"
 "Konstruite kontraŭ Poppler %2"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1616
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1617
+#: generator_pdf.cpp:1616
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Backend Agordo"
 
-#: generator_pdf.cpp:2105
+#: generator_pdf.cpp:2104
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Apre una pagina specificata del documento.</para>
+>Apre una pagina del documento con un numero specificato.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Trova una stringa nel testo.</para>
+>Cerca di trovare ed evidenziare una stringa nel documento. Funziona solo viene passato un singolo documento come argomento del comando okular.</para>
 </listitem>
 </varlistentry>
 

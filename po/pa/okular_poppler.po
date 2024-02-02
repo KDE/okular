@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-27 00:36+0000\n"
-"PO-Revision-Date: 2024-01-01 12:22-0600\n"
+"PO-Revision-Date: 2024-02-01 09:11-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
 "Language: pa\n"
@@ -80,7 +80,7 @@ msgstr "ਪੂਰੇ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ"
 #: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "ਕੋਈ ਨਹੀਂ; ਅਸਲ ਆਕਾਰ ਨੂੰ ਛਾਪੋ"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:113
@@ -132,7 +132,7 @@ msgstr "ਮੌਜੂਦ ਸਰਟੀਫਿਕੇਟ"
 #: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "ਦਸਤਖ਼ਤ ਲੋਡ ਕਰੋ(&L)"
 
 #: generator_pdf.cpp:88
 #, kde-format
@@ -142,12 +142,12 @@ msgstr "PDF ਚੋਣਾਂ"
 #: generator_pdf.cpp:90
 #, kde-format
 msgid "Print annotations"
-msgstr "ਟਿੱਪਣੀਆਂ ਪਰਿੰਟ ਕਰੋ"
+msgstr "ਵਿਆਖਿਆਵਾਂ ਪਰਿੰਟ ਕਰੋ"
 
 #: generator_pdf.cpp:91
 #, kde-format
 msgid "Include annotations in the printed document"
-msgstr ""
+msgstr "ਪਰਿੰਟ ਕੀਤੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਵਿਆਖਿਆ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: generator_pdf.cpp:92
 #, kde-format
@@ -155,6 +155,8 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
+"ਪਰਿੰਟ ਕੀਤੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਵਿਆਖਿਆ ਸ਼ਾਮਲ ਕਰੋ। ਜੇ ਤੁਸੀਂ ਅਸਲ ਬਿਨਾਂ-ਵਿਆਖਿਆ ਦੇ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਪਰਿੰਟ "
+"ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ ਅਸਮਰੱਥ ਕਰ ਸਕਦੇ ਹੋ।"
 
 #: generator_pdf.cpp:94
 #, kde-format
@@ -177,12 +179,12 @@ msgstr ""
 #: generator_pdf.cpp:106
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "ਪਰਿੰਟ ਕੀਤੇ ਸਫ਼ਿਆਂ ਲਈ ਸਕੇਲਿੰਗ ਢੰਗ"
 
 #: generator_pdf.cpp:107
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "ਸਕੇਲ ਢੰਗ:"
 
 #: generator_pdf.cpp:938
 #, kde-format
@@ -227,6 +229,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"ਦਸਤਖ਼ਤ ਕੀਤੇ: %1\n"
+"\n"
+"ਤਾਰੀਖ: %2"
 
 #: generator_pdf.cpp:1579
 #, kde-format
@@ -257,12 +262,13 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੁਝ ਗਲਤੀਆਂ ਲੱਭੀਆਂ ਹਨ। ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਓਕੁਲਾਰ ਸਮੱਗਰੀ ਨੂੰ ਠੀਕ ਤਰ੍ਹਾਂ ਨਾ ਦਿਖਾ ਸਕੇ।"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "ਇਸ ਨੂੰ ਜਾਰੀ ਕੀਤਾ"
 
 #: pdfsettingswidget.cpp:130
 #, kde-format
@@ -300,7 +306,7 @@ msgstr "ਪਾਸਵਰਡ ਦਿਓ"
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr "%1 ਖੋਲ੍ਹਣ ਲਈ ਪਾਸਵਰਡ ਦਿਓ:"
+msgstr "%1 ਨੂੰ ਖੋਲ੍ਹਣ ਲਈ ਪਾਸਵਰਡ ਦਿਓ:"
 
 #~ msgid "Not Available"
 #~ msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"

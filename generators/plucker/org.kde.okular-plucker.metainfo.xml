@@ -22,6 +22,7 @@
   <name xml:lang="fi">Plucker</name>
   <name xml:lang="fr">Plucker</name>
   <name xml:lang="gl">Plucker</name>
+  <name xml:lang="he">Plucker</name>
   <name xml:lang="hi">प्लकर</name>
   <name xml:lang="hu">Plucker</name>
   <name xml:lang="ia">Plucker</name>
@@ -70,6 +71,7 @@
   <summary xml:lang="fi">Lisää Plucker-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents Plucker</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos de Plucker.</summary>
+  <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי Plucker</summary>
   <summary xml:lang="hi">प्लकर दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás Plucker dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos Plucker</summary>

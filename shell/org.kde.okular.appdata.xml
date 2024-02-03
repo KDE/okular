@@ -22,6 +22,7 @@
   <name xml:lang="fi">Okular</name>
   <name xml:lang="fr">Okular</name>
   <name xml:lang="gl">Okular</name>
+  <name xml:lang="he">Okular</name>
   <name xml:lang="hi">ऑकुलर</name>
   <name xml:lang="hu">Okular</name>
   <name xml:lang="ia">Okular</name>
@@ -72,6 +73,7 @@
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de documents</summary>
   <summary xml:lang="gl">Visor de documentos.</summary>
+  <summary xml:lang="he">מציג מסמכים</summary>
   <summary xml:lang="hi">दस्तावेज़ प्रदर्शक</summary>
   <summary xml:lang="hu">Dokumentummegjelenítő</summary>
   <summary xml:lang="ia">Visor de documento</summary>
@@ -124,6 +126,7 @@
     <p xml:lang="fi">Okular on KDE:n kehittämä yleiskäyttöinen asiakirjakatselin. Okular toimii useissa ympäristöissä kuten Linuxissa, Windowsissa, Mac OS X:ssä, *BSD:ssä jne.</p>
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="gl">Okular é un visor de documentos universal desenvolvido por KDE. Okular funciona en varias plataformas, entre elas Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="he">Okular הוא מציג מסמכים אוניברסלי שפותח על ידי KDE.‏ Okular תומך במגוון פלטפורמות, כולל לינוקס, Windows,‏ mac OS X, מגוון סוגי BSD ועוד.</p>
     <p xml:lang="hi">ओकुलर केडीई द्वारा विकसित एक सार्वव्यापी दस्तावेज़ दर्शक है। ओकुलर कई प्लेटफार्मों पर काम करता है, जिसमें लिनक्स, विंडोज, मैक ओएस एक्स, *बीएसडी, आदि शामिल हैं, लेकिन इन्हीं तक सीमित नहीं है।</p>
     <p xml:lang="hu">Az Okulat a KDE által fejlesztett univerzális dokumentummegjelenítő. Számos platformon elérhető, többek között Linuxon, Windowson, Mac OS X-en, BSD rendszereken, stb.</p>
     <p xml:lang="ia">Okular es un visor universal de documento disveloppate per KDE. Okular functiona sur platteformas multiple includente sed non limitate a Linux, Windows, MAcOS X, *BSD, etc.</p>
@@ -174,6 +177,7 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="he">יכולות:</p>
     <p xml:lang="hi">विशेषताएँ:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
@@ -224,6 +228,7 @@
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
       <li xml:lang="fr">Formats de fichiers pris en charge : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="gl">Formatos compatíbeis: PDF, PS, Tiff, CHM, DjVu, imaxes, DVI, XPS, Fiction Book, banda deseñada, Plucker, EPub e fax.</li>
+      <li xml:lang="he">תסדירים נתמכים: PDF,‏ PS,‏ Tiff,‏ CHM,‏ DjVu, תמונות, DVI,‏ XPS,‏ Fiction Book,‏ Comic Book,‏ Plucker, ספר אלקטרוני/EPub, פקס</li>
       <li xml:lang="hu">Támogatott formátumok: PDF, PS, Tiff, CHM, DjVu, képek, DVI, XPS, illusztrált könyvek, képregények, Plucker, EPub, Fax</li>
       <li xml:lang="ia">Formtos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Citra, DVI, XPS, Buku Fiksi, Buku Komik, Plucker, EPub, Fax</li>
@@ -268,6 +273,7 @@
       <li xml:lang="fi">Sivupaneeli, jossa sisältö, pienoiskuvat, tarkastelut ja kirjanmerkit</li>
       <li xml:lang="fr">Barre latérale montrant les contenus, vignettes, informations de relecture et signets</li>
       <li xml:lang="gl">Barra lateral con contido, miniaturas, revisións e marcadores.</li>
+      <li xml:lang="he">סרגל צד עם תוכן, תצוגות מוקטנות, סקירות וסימניות</li>
       <li xml:lang="hi">सामग्री, लगुछवी, समीक्षा और पुस्तचिन्ह के साथ बाजुपट्टी</li>
       <li xml:lang="hu">Oldalsáv tartalomjegyzékkel, előnézettel, értékelésekkel és könyvjelzőkkel</li>
       <li xml:lang="ia">Barra lateral con  contentos, miniaturas, revisiones e marcatores de libro</li>
@@ -318,6 +324,7 @@
       <li xml:lang="fi">Merkintöjen tuki</li>
       <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="gl">Funcionalidade de anotacións.</li>
+      <li xml:lang="he">תמיכה בהסברים</li>
       <li xml:lang="hi">टीकाओं का समर्थन</li>
       <li xml:lang="hu">Jegyzetek támogatása</li>
       <li xml:lang="ia">Supporto de annotationes</li>
@@ -372,6 +379,7 @@
       <caption xml:lang="fi">Oppaan lukeminen Okularissa</caption>
       <caption xml:lang="fr">Lecture d'un manuel dans Okular</caption>
       <caption xml:lang="gl">Ler o manual en Okular.</caption>
+      <caption xml:lang="he">קריאת מדריך ב־Okular</caption>
       <caption xml:lang="hi">ओकुलर में सहाय्य पुस्तिका पढ़ना</caption>
       <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>

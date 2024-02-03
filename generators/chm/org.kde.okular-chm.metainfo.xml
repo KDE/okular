@@ -22,6 +22,7 @@
   <name xml:lang="fi">CHM-tiedostot</name>
   <name xml:lang="fr">Documents « CHM »</name>
   <name xml:lang="gl">Documentos CHM</name>
+  <name xml:lang="he">מסמכי CHM</name>
   <name xml:lang="hi">सीएचएम दस्तावेज़</name>
   <name xml:lang="hu">CHM-dokumentumok</name>
   <name xml:lang="ia">Documentos CHM</name>
@@ -70,6 +71,7 @@
   <summary xml:lang="fi">Lisää CHM-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents « CHM »</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos CHM.</summary>
+  <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי CHM (מסמכי עזרה דחוסים)</summary>
   <summary xml:lang="hi">सीएचएम दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás CHM-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos CHM</summary>

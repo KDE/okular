@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-26 00:36+0000\n"
-"PO-Revision-Date: 2024-01-13 18:24+0200\n"
+"PO-Revision-Date: 2024-02-03 00:04+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -306,8 +306,7 @@ msgstr "Tęsiama paiešką nuo apačios"
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
-msgstr ""
-"Nepavyksta rasti papildinio, kuris galėtų apdoroti perduodamą dokumentą."
+msgstr "Nepavyksta rasti įskiepio, kuris galėtų apdoroti perduodamą dokumentą."
 
 #: core/document.cpp:3586
 #, kde-format

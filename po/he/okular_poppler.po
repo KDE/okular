@@ -1,0 +1,316 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-01-27 00:36+0000\n"
+"PO-Revision-Date: 2024-02-02 12:13+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "צוות התרגום של KDE ישראל"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-l10n-he@kde.org"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:17
+#, kde-format
+msgid "Enable overprint preview"
+msgstr "הפעלת תצוגת הדפסת על"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: conf/pdfsettingswidget.ui:26
+#, kde-format
+msgid "Enhance thin lines:"
+msgstr "חידוד קווים דקים:"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:940
+#, kde-format
+msgid "No"
+msgstr "ללא"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:42
+#, kde-format
+msgid "Solid"
+msgstr "אחיד"
+
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
+#: conf/pdfsettingswidget.ui:47
+#, kde-format
+msgid "Shape"
+msgstr "צורה"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:72
+#, kde-format
+msgid "Default scaling mode when printing:"
+msgstr "שיטת שינוי קנה מידה כברירת מחדל בעת הדפסה:"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
+#, kde-format
+msgid "Fit to printable area"
+msgstr "התאמה לאזור המודפס"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
+#, kde-format
+msgid "Fit to full page"
+msgstr "התאמה לעמוד מלא"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
+#, kde-format
+msgid "None; print original size"
+msgstr "ללא, הדפסת הגודל המקורי"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:113
+#, kde-format
+msgid ""
+"Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
+"check if the certificates used for digital signing have been revoked since "
+"their creation."
+msgstr ""
+"הפעלת אפשרות זו תאפשר ל־Okular ליצור קשר עם שרתי OCSP של גורמי צ־שלישי כדי "
+"לבדוק אם האישורים ששימשו לחתימות דיגיטליות נשללו מאז שנוצרו."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
+#: conf/pdfsettingswidget.ui:116
+#, kde-format
+msgid ""
+"Check revocation of digital signatures' certificates using 3rd-party servers"
+msgstr "בדיקת שלילת אישורי חתימות דיגיטליות באמצעות שרתי צד־שלישי"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: conf/pdfsettingswidget.ui:138
+#, kde-format
+msgid "Signature backend:"
+msgstr "מנגנון חתימות:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:164
+#, kde-format
+msgid "Certificate Database"
+msgstr "מסד נתוני אישורים"
+
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
+#: conf/pdfsettingswidget.ui:173
+#, kde-format
+msgid "Default:"
+msgstr "ברירת מחדל:"
+
+#. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
+#: conf/pdfsettingswidget.ui:180
+#, kde-format
+msgid "Custom:"
+msgstr "התאמה אישית:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
+#: conf/pdfsettingswidget.ui:197
+#, kde-format
+msgid "Available Certificates"
+msgstr "אישורים זמינים"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
+#: conf/pdfsettingswidget.ui:205
+#, kde-format
+msgid "&Load Signatures"
+msgstr "&טעינת חתימות"
+
+#: generator_pdf.cpp:88
+#, kde-format
+msgid "PDF Options"
+msgstr "אפשרויות PDF"
+
+#: generator_pdf.cpp:90
+#, kde-format
+msgid "Print annotations"
+msgstr "הדפסת הסברים"
+
+#: generator_pdf.cpp:91
+#, kde-format
+msgid "Include annotations in the printed document"
+msgstr "לכלול הסברים במסמך המודפס"
+
+#: generator_pdf.cpp:92
+#, kde-format
+msgid ""
+"Includes annotations in the printed document. You can disable this if you "
+"want to print the original unannotated document."
+msgstr ""
+"כולל הסברים במסמך המודפס. אפשר להשבית כדי להדפיס את המסמך המקורי ללא ההסברים."
+
+#: generator_pdf.cpp:94
+#, kde-format
+msgid "Force rasterization"
+msgstr "אילוץ המרה לתמונה"
+
+#: generator_pdf.cpp:95
+#, kde-format
+msgid "Rasterize into an image before printing"
+msgstr "המרת וקטורים לתמונה לפני ההדפסה"
+
+#: generator_pdf.cpp:96
+#, kde-format
+msgid ""
+"Forces the rasterization of each page into an image before printing it. This "
+"usually gives somewhat worse results, but is useful when printing documents "
+"that appear to print incorrectly."
+msgstr ""
+"מאלץ המרה של כל עמוד לתמונה לפני ההדפסה שלו. בדרך כלל ההגדרה הזאת מייצרת "
+"תוצאות נחותות אך היא חיונית להדפסת מסמכים שמודפסים לא נכון."
+
+#: generator_pdf.cpp:106
+#, kde-format
+msgid "Scaling mode for the printed pages"
+msgstr "מצב קנה־מידה לעמודים המודפסים"
+
+#: generator_pdf.cpp:107
+#, kde-format
+msgid "Scale mode:"
+msgstr "מצב קנה־מידה:"
+
+#: generator_pdf.cpp:938
+#, kde-format
+msgctxt "PDF v. <version>"
+msgid "PDF v. %1.%2"
+msgstr "PDF בגרסה %1.%2"
+
+#: generator_pdf.cpp:938
+#, kde-format
+msgid "Format"
+msgstr "תסדיר"
+
+#: generator_pdf.cpp:939
+#, kde-format
+msgid "Encrypted"
+msgstr "מוצפן"
+
+#: generator_pdf.cpp:939
+#, kde-format
+msgid "Unencrypted"
+msgstr "גלוי"
+
+#: generator_pdf.cpp:939
+#, kde-format
+msgid "Security"
+msgstr "אבטחה"
+
+#: generator_pdf.cpp:940
+#, kde-format
+msgid "Yes"
+msgstr "כן"
+
+#: generator_pdf.cpp:940
+#, kde-format
+msgid "Optimized"
+msgstr "ממוטבת"
+
+#: generator_pdf.cpp:1372
+#, kde-format
+msgid ""
+"Signed by: %1\n"
+"\n"
+"Date: %2"
+msgstr ""
+"נחתם על ידי: %1\n"
+"\n"
+"תאריך: %2"
+
+#: generator_pdf.cpp:1579
+#, kde-format
+msgid "Using Poppler %1"
+msgstr "נעשה שימוש ב־Poppler %1"
+
+#: generator_pdf.cpp:1581
+#, kde-format
+msgid ""
+"Using Poppler %1\n"
+"\n"
+"Built against Poppler %2"
+msgstr ""
+"נעשה שימוש ב־Poppler %1\n"
+"\n"
+"נבנה כנגד Poppler %2"
+
+#: generator_pdf.cpp:1616
+#, kde-format
+msgid "PDF"
+msgstr "PDF"
+
+#: generator_pdf.cpp:1616
+#, kde-format
+msgid "PDF Backend Configuration"
+msgstr "הגדרות מנגנון PDF"
+
+#: generator_pdf.cpp:2104
+#, kde-format
+msgid ""
+"Some errors were found in the document, Okular might not be able to show the "
+"content correctly"
+msgstr ""
+"נמצאו כל מיני שגיאות במסמך, יכול להיות ש־Okular לא יוכל להציג את התוכן כראוי"
+
+#: pdfsettingswidget.cpp:130
+#, kde-format
+msgctxt "Name of the person to whom the cerficate was issued"
+msgid "Issued to"
+msgstr "הונפק לטובת"
+
+#: pdfsettingswidget.cpp:130
+#, kde-format
+msgid "E-mail"
+msgstr "דוא״ל"
+
+#: pdfsettingswidget.cpp:130
+#, kde-format
+msgctxt "Certificate expiration date"
+msgid "Expiration date"
+msgstr "תאריך תפוגה"
+
+#: pdfsettingswidget.cpp:147
+#, kde-format
+msgid ""
+"You are using a Poppler library built without NSS support.\n"
+"Adding Digital Signatures isn't available for that reason"
+msgstr ""
+"נעשה שימוש בספריית Poppler שנבנתה ללא תמיכה ב־NSS.\n"
+"הוספת חתימות דיגיטליות אינה אפשרית בדיוק מהסיבה הזאת"
+
+#: pdfsettingswidget.cpp:188
+#, kde-format
+msgid "Restart needed"
+msgstr "צריך להפעיל מחדש"
+
+#: pdfsettingswidget.cpp:188
+#, kde-format
+msgid "You need to restart Okular after changing the NSS directory settings"
+msgstr "צריך להפעיל את Okular מחדש לאחר שינוי הגדרות תיקיית ה־NSS"
+
+#: pdfsignatureutils.cpp:214
+#, kde-format
+msgid "Enter Password"
+msgstr "נא למלא סיסמה"
+
+#: pdfsignatureutils.cpp:214
+#, kde-format
+msgid "Enter password to open %1:"
+msgstr "נא למלא סיסמה כדי לפתוח את %1:"

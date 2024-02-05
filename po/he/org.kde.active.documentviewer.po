@@ -1,0 +1,200 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"PO-Revision-Date: 2024-02-04 07:45+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "סימניות"
+
+#: package/contents/ui/CertificateViewerDialog.qml:22
+msgid "Certificate Viewer"
+msgstr "מציג אישורים"
+
+#: package/contents/ui/CertificateViewerDialog.qml:33
+msgid "Issued By"
+msgstr "הונפק על ידי"
+
+#: package/contents/ui/CertificateViewerDialog.qml:38
+#: package/contents/ui/CertificateViewerDialog.qml:66
+msgid "Common Name:"
+msgstr "שם נפוץ:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:44
+#: package/contents/ui/CertificateViewerDialog.qml:72
+msgid "EMail:"
+msgstr "דוא״ל:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:50
+#: package/contents/ui/CertificateViewerDialog.qml:78
+msgid "Organization:"
+msgstr "ארגון:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:61
+msgid "Issued To"
+msgstr "הונפק לטובת"
+
+#: package/contents/ui/CertificateViewerDialog.qml:89
+msgid "Validity"
+msgstr "תוקף"
+
+#: package/contents/ui/CertificateViewerDialog.qml:94
+msgid "Issued On:"
+msgstr "הונפק ב־:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:100
+msgid "Expires On:"
+msgstr "תום התוקף:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:111
+msgid "Fingerprints"
+msgstr "טביעות אצבע"
+
+#: package/contents/ui/CertificateViewerDialog.qml:116
+msgid "SHA-1 Fingerprint:"
+msgstr "טביעת אצבע SHA-1:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:122
+msgid "SHA-256 Fingerprint:"
+msgstr "טביעת אצבע SHA-256:"
+
+#: package/contents/ui/CertificateViewerDialog.qml:136
+msgid "Export..."
+msgstr "ייצוא…"
+
+#: package/contents/ui/CertificateViewerDialog.qml:142
+#: package/contents/ui/SignaturePropertiesDialog.qml:149
+msgid "Close"
+msgstr "סגירה"
+
+#: package/contents/ui/CertificateViewerDialog.qml:150
+msgid "Certificate File (*.cer)"
+msgstr "קובץ אישור (‎*.cer)"
+
+#: package/contents/ui/CertificateViewerDialog.qml:165
+#: package/contents/ui/SignaturePropertiesDialog.qml:169
+msgid "Error"
+msgstr "שגיאה"
+
+#: package/contents/ui/CertificateViewerDialog.qml:167
+msgid "Could not export the certificate."
+msgstr "לא ניתן לייצא את האישור."
+
+#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+msgid "Okular"
+msgstr "Okular"
+
+#: package/contents/ui/main.qml:42
+msgid "Open..."
+msgstr "פתיחה…"
+
+#: package/contents/ui/main.qml:49
+msgid "About"
+msgstr "על אודות"
+
+#: package/contents/ui/main.qml:106
+msgid "Password Needed"
+msgstr "דורש סיסמה"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Remove bookmark"
+msgstr "הסרת סימנייה"
+
+#: package/contents/ui/MainView.qml:25
+msgid "Bookmark this page"
+msgstr "סימון העמוד הזה"
+
+#: package/contents/ui/MainView.qml:82
+msgid "No document open"
+msgstr "אין מסמך פתוח"
+
+#: package/contents/ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "תמונות ממוזערות"
+
+#: package/contents/ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "תוכן עניינים"
+
+#: package/contents/ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr "חתימות"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:31
+msgid "Signature Properties"
+msgstr "מאפייני חתימה"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:45
+msgid "Validity Status"
+msgstr "מצב תוקף"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:51
+msgid "Signature Validity:"
+msgstr "תוקף חתימה:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:57
+msgid "Document Modifications:"
+msgstr "שינויים למסמך:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:64
+msgid "Additional Information"
+msgstr "מידע נוסף"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:73
+msgid "Signed By:"
+msgstr "נחתם על ידי:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:79
+msgid "Signing Time:"
+msgstr "זמן החתימה:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:85
+msgid "Reason:"
+msgstr "סיבה:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:92
+msgid "Location:"
+msgstr "מקום:"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:101
+msgid "Document Version"
+msgstr "גרסת מסמך"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:111
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr "מהדורת מסמך %1 מתוך %2"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:115
+msgid "Save Signed Version..."
+msgstr "שמירת הגרסה החתומה…"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:129
+msgid "View Certificate..."
+msgstr "הצגת אישור…"
+
+#: package/contents/ui/SignaturePropertiesDialog.qml:171
+msgid "Could not save the signature."
+msgstr "לא ניתן לשמור את החתימה."
+
+#: package/contents/ui/Signatures.qml:27
+msgid "Not Available"
+msgstr "לא זמין"
+
+#: package/contents/ui/ThumbnailsBase.qml:43
+msgid "No results found."
+msgstr "לא נמצאה תוצאה."

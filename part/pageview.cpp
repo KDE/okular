@@ -3137,13 +3137,12 @@ void PageView::guessTableDividers()
         rects.append(tsp.rectInItem);
         const Okular::TextEntity::List words = tsp.item->page()->words(&rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
 
-        for (const Okular::TextEntity *te : words) {
-            if (te->text().isEmpty()) {
-                delete te;
+        for (const Okular::TextEntity &te : words) {
+            if (te.text().isEmpty()) {
                 continue;
             }
 
-            Okular::NormalizedRect wordArea = *te->area();
+            Okular::NormalizedRect wordArea = te.area();
 
             // convert it from item coordinates to part coordinates
             wordArea.left -= tsp.rectInItem.left;
@@ -3170,8 +3169,6 @@ void PageView::guessTableDividers()
             colTicks.append(qMakePair(wordArea.right, -1));
             rowTicks.append(qMakePair(wordArea.top, +1));
             rowTicks.append(qMakePair(wordArea.bottom, -1));
-
-            delete te;
         }
     }
 

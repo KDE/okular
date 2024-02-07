@@ -1577,9 +1577,9 @@ Okular::TextPage *XpsPage::textPage()
                 for (int i = 0; i < text.length(); i++) {
                     const int width = metrics.horizontalAdvance(text, i + 1);
 
-                    Okular::NormalizedRect *rect =
-                        new Okular::NormalizedRect((origin.x() + lastWidth) / m_pageSize.width(), (origin.y() - metrics.height()) / m_pageSize.height(), (origin.x() + width) / m_pageSize.width(), origin.y() / m_pageSize.height());
-                    rect->transform(matrix);
+                    Okular::NormalizedRect rect =
+                        Okular::NormalizedRect((origin.x() + lastWidth) / m_pageSize.width(), (origin.y() - metrics.height()) / m_pageSize.height(), (origin.x() + width) / m_pageSize.width(), origin.y() / m_pageSize.height());
+                    rect.transform(matrix);
                     textPage->append(text.mid(i, 1), rect);
 
                     lastWidth = width;

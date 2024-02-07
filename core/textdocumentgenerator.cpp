@@ -106,7 +106,7 @@ Okular::TextPage *TextDocumentGeneratorPrivate::createTextPage(int pageNumber) c
                     text = QStringLiteral("\n");
                 }
 
-                textPage->append(text, new Okular::NormalizedRect(rect.left(), rect.top(), rect.right(), rect.bottom()));
+                textPage->append(text, Okular::NormalizedRect(rect.left(), rect.top(), rect.right(), rect.bottom()));
             }
         }
     }

@@ -206,11 +206,11 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
     userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
-    QList<Okular::TextEntity *> words;
+    QList<Okular::TextEntity> words;
     const KDjVu::Page *djvupage = m_djvu->pages().at(page->number());
     for (; it != itEnd; ++it) {
         const KDjVu::TextEntity &cur = *it;
-        words.append(new Okular::TextEntity(cur.text(), new Okular::NormalizedRect(cur.rect(), djvupage->width(), djvupage->height())));
+        words.append(Okular::TextEntity(cur.text(), Okular::NormalizedRect(cur.rect(), djvupage->width(), djvupage->height())));
     }
     Okular::TextPage *textpage = new Okular::TextPage(words);
     return textpage;

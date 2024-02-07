@@ -1706,7 +1706,7 @@ bool PDFGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
 inline void append(Okular::TextPage *ktp, const QString &s, double l, double b, double r, double t)
 {
     //    qWarning(PDFDebug).nospace() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")";
-    ktp->append(s, new Okular::NormalizedRect(l, t, r, b));
+    ktp->append(s, Okular::NormalizedRect(l, t, r, b));
 }
 
 Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_ptr<Poppler::TextBox>> &text, double height, double width, int rot)

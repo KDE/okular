@@ -57,7 +57,7 @@ private:
     QBitArray m_linkGenerated;
 
     void loadPages(QVector<Okular::Page *> &pagesVector);
-    Okular::TextPage *extractTextFromPage(dviPageInfo *pageInfo);
+    Okular::TextPage *extractTextFromPage(const dviPageInfo &pageInfo);
     void fillViewportFromAnchor(Okular::DocumentViewport &vp, const Anchor anch, int pW, int pH) const;
     void fillViewportFromAnchor(Okular::DocumentViewport &vp, const Anchor anch, const Okular::Page *page) const;
     QList<Okular::ObjectRect *> generateDviLinks(const dviPageInfo *pageInfo);

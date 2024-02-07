@@ -374,9 +374,7 @@ TextEntity::List Page::words(const RegularAreaRect *area, TextPage::TextAreaIncl
     }
 
     for (auto &retI : ret) {
-        const TextEntity *orig = retI;
-        retI = new TextEntity(orig->text(), new Okular::NormalizedRect(orig->transformedArea(d->rotationMatrix())));
-        delete orig;
+        retI = TextEntity(retI.text(), Okular::NormalizedRect(retI.transformedArea(d->rotationMatrix())));
     }
 
     return ret;

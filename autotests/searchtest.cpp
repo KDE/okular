@@ -62,7 +62,7 @@ static void createTextPage(const QVector<QString> &text, const QVector<Okular::N
 {
     tp = new Okular::TextPage();
     for (int i = 0; i < text.size(); i++) {
-        tp->append(text[i], new Okular::NormalizedRect(rect[i]));
+        tp->append(text[i], rect[i]);
     }
 
     // The Page::setTextPage method invokes the layout analysis algorithms tested by some tests here

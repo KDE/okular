@@ -14,6 +14,7 @@
 #include "misc.h"
 #include "page.h"
 #include "page_p.h"
+#include <unordered_set>
 
 #include <cstring>
 
@@ -21,6 +22,30 @@
 #include <QtAlgorithms>
 
 using namespace Okular;
+
+// Many of the strings are being reused; especially
+// those less than 2 letters are very common
+// Use the implicit shared bits from QString to
+// not keep multiple same strings around, but just up the
+// refcount a bit
+// The main reason for '2' is that most calls here happens
+// in auxillary threads that are following a document
+// and keeping the pool thread_local gives quite a bit
+// of advantage here.
+// Some calls though comes from the main thread, so we
+// shouldn't keep all the long strings allocated in the main
+// thread around forever.
+// '2' has been chosen by random testing, and guesswork.
+static QString fromPool(const QString &str)
+{
+    if (str.length() > 2) {
+        return str;
+    }
+
+    thread_local std::unordered_set<QString> pool;
+    auto [iterator, success] = pool.insert(str);
+    return *iterator;
+}
 
 class SearchPoint
 {
@@ -31,11 +56,11 @@ public:
     {
     }
 
-    /** The TinyTextEntity containing the first character of the match. */
-    TextList::ConstIterator it_begin;
+    /** The TextEntity containing the first character of the match. */
+    TextEntity::List::ConstIterator it_begin;
 
-    /** The TinyTextEntity containing the last character of the match. */
-    TextList::ConstIterator it_end;
+    /** The TextEntity containing the last character of the match. */
+    TextEntity::List::ConstIterator it_end;
 
     /** The index of the first character of the match in (*it_begin)->text().
      *  Satisfies 0 <= offset_begin < (*it_begin)->text().length().
@@ -106,105 +131,27 @@ static bool doesConsumeY(const NormalizedRect &first, const NormalizedRect &seco
     return segmentsOverlap(first.top, first.bottom, second.top, second.bottom, threshold);
 }
 
-/*
-  Rationale behind TinyTextEntity:
-
-  instead of storing directly a QString for the text of an entity,
-  we store the UTF-16 data and their length. This way, we save about
-  4 int's wrt a QString, and we can create a new string from that
-  raw data (that's the only penalty of that).
-  Even better, if the string we need to store has at most
-  MaxStaticChars characters, then we store those in place of the QChar*
-  that would be used (with new[] + free[]) for the data.
- */
-class TinyTextEntity
-{
-    static const int MaxStaticChars = sizeof(void *) / sizeof(QChar);
-
-public:
-    TinyTextEntity(const QString &text, const NormalizedRect &rect)
-        : area(rect)
-    {
-        Q_ASSERT_X(!text.isEmpty(), "TinyTextEntity", "empty string");
-        Q_ASSERT_X(sizeof(d) == sizeof(void *), "TinyTextEntity", "internal storage is wider than QChar*, fix it!");
-        length = text.length();
-        switch (length) {
-#if QT_POINTER_SIZE >= 8
-        case 4:
-            d.qc[3] = text.at(3).unicode();
-            // fall through
-        case 3:
-            d.qc[2] = text.at(2).unicode();
-#endif
-            // fall through
-        case 2:
-            d.qc[1] = text.at(1).unicode();
-            // fall through
-        case 1:
-            d.qc[0] = text.at(0).unicode();
-            break;
-        default:
-            d.data = new QChar[length];
-            std::memcpy(d.data, text.constData(), length * sizeof(QChar));
-        }
-    }
-
-    ~TinyTextEntity()
-    {
-        if (length > MaxStaticChars) {
-            delete[] d.data;
-        }
-    }
-
-    inline QString text() const
-    {
-        return length <= MaxStaticChars ? QString::fromRawData((const QChar *)&d.qc[0], length) : QString::fromRawData(d.data, length);
-    }
-
-    inline NormalizedRect transformedArea(const QTransform &matrix) const
-    {
-        NormalizedRect transformed_area = area;
-        transformed_area.transform(matrix);
-        return transformed_area;
-    }
-
-    NormalizedRect area;
-
-private:
-    Q_DISABLE_COPY(TinyTextEntity)
-
-    union {
-        QChar *data;
-        ushort qc[MaxStaticChars];
-    } d;
-    int length;
-};
-
-TextEntity::TextEntity(const QString &text, NormalizedRect *area)
-    : m_text(text)
+TextEntity::TextEntity(const QString &text, const NormalizedRect &area)
+    : m_text(fromPool(text))
     , m_area(area)
-    , d(nullptr)
 {
 }
 
-TextEntity::~TextEntity()
-{
-    delete m_area;
-}
+TextEntity::~TextEntity() = default;
 
 QString TextEntity::text() const
 {
     return m_text;
 }
 
-NormalizedRect *TextEntity::area() const
+NormalizedRect TextEntity::area() const
 {
     return m_area;
 }
 
 NormalizedRect TextEntity::transformedArea(const QTransform &matrix) const
 {
-    NormalizedRect transformed_area = *m_area;
+    NormalizedRect transformed_area = m_area;
     transformed_area.transform(matrix);
     return transformed_area;
 }
@@ -217,7 +164,6 @@ TextPagePrivate::TextPagePrivate()
 TextPagePrivate::~TextPagePrivate()
 {
     qDeleteAll(m_searchPoints);
-    qDeleteAll(m_words);
 }
 
 TextPage::TextPage()
@@ -228,14 +174,7 @@ TextPage::TextPage()
 TextPage::TextPage(const TextEntity::List &words)
     : d(new TextPagePrivate())
 {
-    TextEntity::List::ConstIterator it = words.constBegin(), itEnd = words.constEnd();
-    for (; it != itEnd; ++it) {
-        TextEntity *e = *it;
-        if (!e->text().isEmpty()) {
-            d->m_words.append(new TinyTextEntity(e->text(), *e->area()));
-        }
-        delete e;
-    }
+    d->m_words = words;
 }
 
 TextPage::~TextPage()
@@ -243,30 +182,27 @@ TextPage::~TextPage()
     delete d;
 }
 
-void TextPage::append(const QString &text, NormalizedRect *area)
+void TextPage::append(const QString &text, const NormalizedRect &area)
 {
     if (!text.isEmpty()) {
         if (!d->m_words.isEmpty()) {
-            TinyTextEntity *lastEntity = d->m_words.last();
-            const QString concatText = lastEntity->text() + text.normalized(QString::NormalizationForm_KC);
+            TextEntity &lastEntity = d->m_words.last();
+            const QString concatText = lastEntity.text() + text.normalized(QString::NormalizationForm_KC);
             if (concatText != concatText.normalized(QString::NormalizationForm_KC)) {
                 // If this happens it means that the new text + old one have combined, for example A and ◌̊  form Å
-                NormalizedRect newArea = *area | lastEntity->area;
-                delete area;
-                delete lastEntity;
+                NormalizedRect newArea = area | lastEntity.area();
                 d->m_words.removeLast();
-                d->m_words.append(new TinyTextEntity(concatText.normalized(QString::NormalizationForm_KC), newArea));
+                d->m_words.append(TextEntity(concatText.normalized(QString::NormalizationForm_KC), newArea));
                 return;
             }
         }
 
-        d->m_words.append(new TinyTextEntity(text.normalized(QString::NormalizationForm_KC), *area));
+        d->m_words.append(TextEntity(text.normalized(QString::NormalizationForm_KC), area));
     }
-    delete area;
 }
 
 struct WordWithCharacters {
-    WordWithCharacters(TinyTextEntity *w, const TextList &c)
+    WordWithCharacters(const TextEntity &w, const TextEntity::List &c)
         : word(w)
         , characters(c)
     {
@@ -274,16 +210,16 @@ struct WordWithCharacters {
 
     inline QString text() const
     {
-        return word->text();
+        return word.text();
     }
 
-    inline const NormalizedRect &area() const
+    inline NormalizedRect area() const
     {
-        return word->area;
+        return word.area();
     }
 
-    TinyTextEntity *word;
-    TextList characters;
+    TextEntity word;
+    TextEntity::List characters;
 };
 typedef QList<WordWithCharacters> WordsWithCharacters;
 
@@ -452,14 +388,14 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         }
     }
 
-    TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator start = it, end = itEnd, tmpIt = it; //, tmpItEnd = itEnd;
+    TextEntity::List::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextEntity::List::ConstIterator start = it, end = itEnd, tmpIt = it; //, tmpItEnd = itEnd;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->totalOrientation() : MergeRight;
 
     NormalizedRect tmp;
     // case 2(a)
     for (; it != itEnd; ++it) {
-        tmp = (*it)->area;
+        tmp = it->area();
         if (tmp.contains(startC.x, startC.y)) {
             start = it;
         }
@@ -473,7 +409,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
     if (start == it && end == itEnd) {
         for (; it != itEnd; ++it) {
             // is there any text rectangle within the start_end rect
-            tmp = (*it)->area;
+            tmp = it->area();
             if (start_end.intersects(tmp)) {
                 break;
             }
@@ -495,7 +431,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         // selection type 01
         if (startC.y <= endC.y) {
             for (; it != itEnd; ++it) {
-                rect = (*it)->area;
+                rect = it->area();
                 bool flagV = !rect.isBottom(startC);
 
                 if (flagV && rect.isRight(startC)) {
@@ -511,7 +447,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
             int distance = scaleX + scaleY + 100;
 
             for (; it != itEnd; ++it) {
-                rect = (*it)->area;
+                rect = it->area();
 
                 if (rect.isBottomOrLevel(startC) && rect.isRight(startC)) {
                     QRect entRect = rect.geometry(scaleX, scaleY);
@@ -545,7 +481,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
 
         if (startC.y <= endC.y) {
             for (; itEnd >= it; itEnd--) {
-                rect = (*itEnd)->area;
+                rect = itEnd->area();
                 bool flagV = !rect.isTop(endC);
 
                 if (flagV && rect.isLeft(endC)) {
@@ -558,7 +494,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         else {
             int distance = scaleX + scaleY + 100;
             for (; itEnd >= it; itEnd--) {
-                rect = (*itEnd)->area;
+                rect = itEnd->area();
 
                 if (rect.isTopOrLevel(endC) && rect.isLeft(endC)) {
                     QRect entRect = rect.geometry(scaleX, scaleY);
@@ -606,7 +542,7 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
     }
 
     for (; start <= end; start++) {
-        ret->appendShape((*start)->transformedArea(matrix), side);
+        ret->appendShape(start->transformedArea(matrix), side);
     }
 
     return ret;
@@ -619,9 +555,9 @@ RegularAreaRect *TextPage::findText(int searchID, const QString &query, SearchDi
     if (d->m_words.isEmpty() || query.isEmpty() || (area && area->isNull())) {
         return nullptr;
     }
-    TextList::ConstIterator start;
+    TextEntity::List::ConstIterator start;
     int start_offset = 0;
-    TextList::ConstIterator end;
+    TextEntity::List::ConstIterator end;
     const QMap<int, SearchPoint *>::const_iterator sIt = d->m_searchPoints.constFind(searchID);
     if (sIt == d->m_searchPoints.constEnd()) {
         // if no previous run of this search is found, then set it to start
@@ -671,7 +607,7 @@ RegularAreaRect *TextPage::findText(int searchID, const QString &query, SearchDi
 // we have a '-' just followed by a '\n' character
 // check if the string contains a '-' character
 // if the '-' is the last entry
-static int stringLengthAdaptedWithHyphen(const QString &str, TextList::ConstIterator it, TextList::ConstIterator textListEnd)
+static int stringLengthAdaptedWithHyphen(const QString &str, TextEntity::List::ConstIterator it, TextEntity::List::ConstIterator textListEnd)
 {
     const int len = str.length();
 
@@ -683,14 +619,14 @@ static int stringLengthAdaptedWithHyphen(const QString &str, TextList::ConstIter
         // validity chek of it + 1
         if ((it + 1) != textListEnd) {
             // 1. if the next character is '\n'
-            const QString &lookahedStr = (*(it + 1))->text();
+            const QString &lookahedStr = (it + 1)->text();
             if (lookahedStr.startsWith(QLatin1Char('\n'))) {
                 return len - 1;
             }
 
             // 2. if the next word is in a different line or not
-            const NormalizedRect &hyphenArea = (*it)->area;
-            const NormalizedRect &lookaheadArea = (*(it + 1))->area;
+            const NormalizedRect &hyphenArea = it->area();
+            const NormalizedRect &lookaheadArea = (it + 1)->area();
 
             // lookahead to check whether both the '-' rect and next character rect overlap
             if (!doesConsumeY(hyphenArea, lookaheadArea, 70)) {
@@ -712,9 +648,9 @@ RegularAreaRect *TextPagePrivate::searchPointToArea(const SearchPoint *sp)
     const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
     RegularAreaRect *ret = new RegularAreaRect;
 
-    for (TextList::ConstIterator it = sp->it_begin;; it++) {
-        const TinyTextEntity *curEntity = *it;
-        ret->append(curEntity->transformedArea(matrix));
+    for (TextEntity::List::ConstIterator it = sp->it_begin;; it++) {
+        const TextEntity &curEntity = *it;
+        ret->append(curEntity.transformedArea(matrix));
 
         if (it == sp->it_end) {
             break;
@@ -725,7 +661,7 @@ RegularAreaRect *TextPagePrivate::searchPointToArea(const SearchPoint *sp)
     return ret;
 }
 
-RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QString &_query, TextComparisonFunction comparer, TextList::ConstIterator start, int start_offset, TextList::ConstIterator end)
+RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QString &_query, TextComparisonFunction comparer, TextEntity::List::ConstIterator start, int start_offset, TextEntity::List::ConstIterator end)
 {
     // normalize query search all unicode (including glyphs)
     const QString query = _query.normalized(QString::NormalizationForm_KC);
@@ -734,15 +670,15 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
     // queryLeft is the length of the query we have left to match
     int j = 0, queryLeft = query.length();
 
-    TextList::ConstIterator it = start;
+    TextEntity::List::ConstIterator it = start;
     int offset = start_offset;
 
-    TextList::ConstIterator it_begin = TextList::ConstIterator();
+    TextEntity::List::ConstIterator it_begin = TextEntity::List::ConstIterator();
     int offset_begin = 0; // dummy initial value to suppress compiler warnings
 
     while (it != end) {
-        const TinyTextEntity *curEntity = *it;
-        const QString &str = curEntity->text();
+        const TextEntity &curEntity = *it;
+        const QString &str = curEntity.text();
         const int strLen = str.length();
         const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
         // adjustedLen <= strLen
@@ -753,7 +689,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
             continue;
         }
 
-        if (it_begin == TextList::ConstIterator()) {
+        if (it_begin == TextEntity::List::ConstIterator()) {
             it_begin = it;
             offset_begin = offset;
         }
@@ -782,7 +718,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
             queryLeft = query.length();
             it = it_begin;
             offset = offset_begin + 1;
-            it_begin = TextList::ConstIterator();
+            it_begin = TextEntity::List::ConstIterator();
         } else {
             // we have a match
             // move the current position in the query
@@ -825,7 +761,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
     return nullptr;
 }
 
-RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const QString &_query, TextComparisonFunction comparer, TextList::ConstIterator start, int start_offset, TextList::ConstIterator end)
+RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const QString &_query, TextComparisonFunction comparer, TextEntity::List::ConstIterator start, int start_offset, TextEntity::List::ConstIterator end)
 {
     // normalize query to search all unicode (including glyphs)
     const QString query = _query.normalized(QString::NormalizationForm_KC);
@@ -835,10 +771,10 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
     // queryLeft is the length of the query we have left
     int j = query.length(), queryLeft = query.length();
 
-    TextList::ConstIterator it = start;
+    TextEntity::List::ConstIterator it = start;
     int offset = start_offset;
 
-    TextList::ConstIterator it_begin = TextList::ConstIterator();
+    TextEntity::List::ConstIterator it_begin = TextEntity::List::ConstIterator();
     int offset_begin = 0; // dummy initial value to suppress compiler warnings
 
     while (true) {
@@ -849,8 +785,8 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
             it--;
         }
 
-        const TinyTextEntity *curEntity = *it;
-        const QString &str = curEntity->text();
+        const TextEntity &curEntity = *it;
+        const QString &str = curEntity.text();
         const int strLen = str.length();
         const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
         // adjustedLen <= strLen
@@ -859,7 +795,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
             offset = strLen;
         }
 
-        if (it_begin == TextList::ConstIterator()) {
+        if (it_begin == TextEntity::List::ConstIterator()) {
             it_begin = it;
             offset_begin = offset;
         }
@@ -890,7 +826,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
             queryLeft = query.length();
             it = it_begin;
             offset = offset_begin - 1;
-            it_begin = TextList::ConstIterator();
+            it_begin = TextEntity::List::ConstIterator();
         } else {
             // we have a match
             // move the current position in the query
@@ -943,24 +879,24 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
         return QString();
     }
 
-    TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextEntity::List::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     QString ret;
     if (area) {
         for (; it != itEnd; ++it) {
             if (b == AnyPixelTextAreaInclusionBehaviour) {
-                if (area->intersects((*it)->area)) {
-                    ret += (*it)->text();
+                if (area->intersects(it->area())) {
+                    ret += it->text();
                 }
             } else {
-                NormalizedPoint center = (*it)->area.center();
+                NormalizedPoint center = it->area().center();
                 if (area->contains(center.x, center.y)) {
-                    ret += (*it)->text();
+                    ret += it->text();
                 }
             }
         }
     } else {
         for (; it != itEnd; ++it) {
-            ret += (*it)->text();
+            ret += it->text();
         }
     }
     return ret;
@@ -985,9 +921,8 @@ static bool compareTinyTextEntityY(const WordWithCharacters &first, const WordWi
 /**
  * Sets a new world list. Deleting the contents of the old one
  */
-void TextPagePrivate::setWordList(const TextList &list)
+void TextPagePrivate::setWordList(const TextEntity::List &list)
 {
-    qDeleteAll(m_words);
     m_words = list;
 }
 
@@ -995,13 +930,13 @@ void TextPagePrivate::setWordList(const TextList &list)
  * Remove all the spaces in between texts. It will make all the generators
  * same, whether they save spaces(like pdf) or not(like djvu).
  */
-static void removeSpace(TextList *words)
+static void removeSpace(TextEntity::List *words)
 {
-    TextList::Iterator it = words->begin();
+    TextEntity::List::Iterator it = words->begin();
     const QString str(QLatin1Char(' '));
 
     while (it != words->end()) {
-        if ((*it)->text() == str) {
+        if (it->text() == str) {
             it = words->erase(it);
         } else {
             ++it;
@@ -1016,7 +951,7 @@ static void removeSpace(TextList *words)
  * WordsWithCharacters memory has to be managed by the caller, both the
  * WordWithCharacters::word and WordWithCharacters::characters contents
  */
-static WordsWithCharacters makeWordFromCharacters(const TextList &characters, int pageWidth, int pageHeight)
+static WordsWithCharacters makeWordFromCharacters(const TextEntity::List &characters, int pageWidth, int pageHeight)
 {
     /**
      * We will traverse characters and try to create words from the TinyTextEntities in it.
@@ -1031,14 +966,15 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
      */
     WordsWithCharacters wordsWithCharacters;
 
-    TextList::ConstIterator it = characters.begin(), itEnd = characters.end(), tmpIt;
+    TextEntity::List::ConstIterator it = characters.begin(), itEnd = characters.end(), tmpIt;
     int newLeft, newRight, newTop, newBottom;
 
     for (; it != itEnd; it++) {
-        QString textString = (*it)->text();
+        QString textString = it->text();
         QString newString;
-        QRect lineArea = (*it)->area.roundedGeometry(pageWidth, pageHeight), elementArea;
-        TextList wordCharacters;
+        QRect lineArea = it->area().roundedGeometry(pageWidth, pageHeight);
+        QRect elementArea;
+        TextEntity::List wordCharacters;
         tmpIt = it;
         int space = 0;
 
@@ -1049,10 +985,10 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
                 // when textString is the start of the word
                 if (tmpIt == it) {
                     NormalizedRect newRect(lineArea, pageWidth, pageHeight);
-                    wordCharacters.append(new TinyTextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
+                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
                 } else {
                     NormalizedRect newRect(elementArea, pageWidth, pageHeight);
-                    wordCharacters.append(new TinyTextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
+                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
                 }
             }
 
@@ -1065,7 +1001,7 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
             if (it == itEnd) {
                 break;
             }
-            elementArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
+            elementArea = it->area().roundedGeometry(pageWidth, pageHeight);
             if (!doesConsumeY(elementArea, lineArea, 60)) {
                 --it;
                 break;
@@ -1091,13 +1027,13 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
             lineArea.setWidth(newRight - newLeft);
             lineArea.setHeight(newBottom - newTop);
 
-            textString = (*it)->text();
+            textString = it->text();
         }
 
         // if newString is not empty, save it
         if (!newString.isEmpty()) {
             const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
-            TinyTextEntity *word = new TinyTextEntity(newString.normalized(QString::NormalizationForm_KC), newRect);
+            TextEntity word = TextEntity(newString.normalized(QString::NormalizationForm_KC), newRect);
             wordsWithCharacters.append(WordWithCharacters(word, wordCharacters));
         }
 
@@ -1106,6 +1042,7 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
         }
     }
 
+    wordsWithCharacters.shrink_to_fit();
     return wordsWithCharacters;
 }
 
@@ -1179,9 +1116,7 @@ QList<QPair<WordsWithCharacters, QRect>> makeAndSortLines(const WordsWithCharact
            only one element and append it to the lines
          */
         if (!found) {
-            WordsWithCharacters tmp;
-            tmp.append((*it));
-            lines.append(QPair<WordsWithCharacters, QRect>(tmp, elementArea));
+            lines.append(QPair<WordsWithCharacters, QRect>({*it}, elementArea));
         }
     }
 
@@ -1190,6 +1125,7 @@ QList<QPair<WordsWithCharacters, QRect>> makeAndSortLines(const WordsWithCharact
         WordsWithCharacters &list = line.first;
         std::sort(list.begin(), list.end(), compareTinyTextEntityX);
     }
+    lines.shrink_to_fit();
 
     return lines;
 }
@@ -1425,8 +1361,7 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
 
         // for every text in the region
         for (const WordWithCharacters &wwc : list) {
-            TinyTextEntity *ent = wwc.word;
-            const QRect entRect = ent->area.geometry(pageWidth, pageHeight);
+            const QRect entRect = wwc.area().geometry(pageWidth, pageHeight);
 
             // calculate vertical projection profile proj_on_xaxis1
             for (int k = entRect.left(); k <= entRect.left() + entRect.width(); ++k) {
@@ -1622,13 +1557,14 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         }
     }
 
+    tree.shrink_to_fit();
     return tree;
 }
 
 /**
  * Add spaces in between words in a line. It reuses the pointers passed in tree and might add new ones. You will need to take care of deleting them if needed
  */
-WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pageHeight)
+TextEntity::List addNecessarySpace(RegionTextList tree, int pageWidth, int pageHeight)
 {
     /**
      * 1. Call makeAndSortLines before adding spaces in between words in a line
@@ -1636,10 +1572,12 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
      * 3. Finally, extract all the space separated texts from each region and return it
      */
 
+    TextEntity::List res;
     // Only change the texts under RegionTexts, not the area
-    for (RegionText &tmpRegion : tree) {
+    for (const RegionText &tmpRegion : std::as_const(tree)) {
         // Step 01
         QList<QPair<WordsWithCharacters, QRect>> sortedLines = makeAndSortLines(tmpRegion.text(), pageWidth, pageHeight);
+        int counter = 0;
 
         // Step 02
         for (QPair<WordsWithCharacters, QRect> &sortedLine : sortedLines) {
@@ -1663,9 +1601,8 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
                     const QString spaceStr(QStringLiteral(" "));
                     const QRect rect(QPoint(left, top), QPoint(right, bottom));
                     const NormalizedRect entRect(rect, pageWidth, pageHeight);
-                    TinyTextEntity *ent1 = new TinyTextEntity(spaceStr, entRect);
-                    TinyTextEntity *ent2 = new TinyTextEntity(spaceStr, entRect);
-                    WordWithCharacters word(ent1, QList<TinyTextEntity *>() << ent2);
+                    TextEntity ent1 = TextEntity(spaceStr, entRect);
+                    WordWithCharacters word(ent1, QList<TextEntity>() << ent1);
 
                     list.insert(k + 1, word);
 
@@ -1673,21 +1610,20 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
                     k++;
                 }
             }
+            counter += list.length();
         }
+        res.reserve(res.length() + counter);
 
-        WordsWithCharacters tmpList;
         for (const QPair<WordsWithCharacters, QRect> &sortedLine : std::as_const(sortedLines)) {
-            tmpList += sortedLine.first;
+            for (const WordWithCharacters &word : sortedLine.first) {
+                res += word.characters;
+            }
         }
-        tmpRegion.setText(tmpList);
     }
 
     // Step 03
-    WordsWithCharacters tmp;
-    for (const RegionText &tmpRegion : std::as_const(tree)) {
-        tmp += tmpRegion.text();
-    }
-    return tmp;
+    res.shrink_to_fit();
+    return res;
 }
 
 /**
@@ -1703,7 +1639,7 @@ void TextPagePrivate::correctTextOrder()
     const int pageWidth = (int)(scalingFactor * m_page->width());
     const int pageHeight = (int)(scalingFactor * m_page->height());
 
-    TextList characters = m_words;
+    TextEntity::List characters = m_words;
 
     /**
      * Remove spaces from the text
@@ -1718,21 +1654,13 @@ void TextPagePrivate::correctTextOrder()
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, pageWidth, pageHeight);
+    RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, pageWidth, pageHeight);
 
     /**
      * Add spaces to the word
      */
-    const WordsWithCharacters listWithWordsAndSpaces = addNecessarySpace(tree, pageWidth, pageHeight);
+    const auto listOfCharacters = addNecessarySpace(std::move(tree), pageWidth, pageHeight);
 
-    /**
-     * Break the words into characters
-     */
-    TextList listOfCharacters;
-    for (const WordWithCharacters &word : listWithWordsAndSpaces) {
-        delete word.word;
-        listOfCharacters.append(word.characters);
-    }
     setWordList(listOfCharacters);
 }
 
@@ -1744,21 +1672,21 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
 
     TextEntity::List ret;
     if (area) {
-        for (const TinyTextEntity *te : std::as_const(d->m_words)) {
+        for (const TextEntity &te : std::as_const(d->m_words)) {
             if (b == AnyPixelTextAreaInclusionBehaviour) {
-                if (area->intersects(te->area)) {
-                    ret.append(new TextEntity(te->text(), new Okular::NormalizedRect(te->area)));
+                if (area->intersects(te.area())) {
+                    ret.append(te);
                 }
             } else {
-                const NormalizedPoint center = te->area.center();
+                const NormalizedPoint center = te.area().center();
                 if (area->contains(center.x, center.y)) {
-                    ret.append(new TextEntity(te->text(), new Okular::NormalizedRect(te->area)));
+                    ret.append(te);
                 }
             }
         }
     } else {
-        for (const TinyTextEntity *te : std::as_const(d->m_words)) {
-            ret.append(new TextEntity(te->text(), new Okular::NormalizedRect(te->area)));
+        for (const TextEntity &te : std::as_const(d->m_words)) {
+            ret.append(te);
         }
     }
     return ret;
@@ -1766,23 +1694,23 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
 
 RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
 {
-    TextList::ConstIterator itBegin = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator it = itBegin;
-    TextList::ConstIterator posIt = itEnd;
+    TextEntity::List::ConstIterator itBegin = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextEntity::List::ConstIterator it = itBegin;
+    TextEntity::List::ConstIterator posIt = itEnd;
     for (; it != itEnd; ++it) {
-        if ((*it)->area.contains(p.x, p.y)) {
+        if (it->area().contains(p.x, p.y)) {
             posIt = it;
             break;
         }
     }
     if (posIt != itEnd) {
-        if ((*posIt)->text().simplified().isEmpty()) {
+        if (posIt->text().simplified().isEmpty()) {
             return nullptr;
         }
         // Find the first TinyTextEntity of the word
         while (posIt != itBegin) {
             --posIt;
-            const QString itText = (*posIt)->text();
+            const QString itText = posIt->text();
             if (itText.right(1).at(0).isSpace()) {
                 if (itText.endsWith(QLatin1String("-\n"))) {
                     // Is an hyphenated word
@@ -1792,7 +1720,7 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
 
                 if (itText == QLatin1String("\n") && posIt != itBegin) {
                     --posIt;
-                    if ((*posIt)->text().endsWith(QLatin1String("-"))) {
+                    if (posIt->text().endsWith(QLatin1String("-"))) {
                         // Is an hyphenated word
                         // continue searching the start of the word back
                         continue;
@@ -1807,13 +1735,13 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
         RegularAreaRect *ret = new RegularAreaRect();
         QString foundWord;
         for (; posIt != itEnd; ++posIt) {
-            const QString itText = (*posIt)->text();
+            const QString itText = posIt->text();
             if (itText.simplified().isEmpty()) {
                 break;
             }
 
-            ret->appendShape((*posIt)->area);
-            foundWord += (*posIt)->text();
+            ret->appendShape(posIt->area());
+            foundWord += posIt->text();
             if (itText.right(1).at(0).isSpace()) {
                 if (!foundWord.endsWith(QLatin1String("-\n"))) {
                     break;

@@ -10,6 +10,7 @@
 #include <QList>
 #include <QString>
 
+#include "area.h"
 #include "global.h"
 #include "okularcore_export.h"
 
@@ -51,13 +52,13 @@ class RegularAreaRect;
 class OKULARCORE_EXPORT TextEntity
 {
 public:
-    typedef QList<TextEntity *> List;
+    typedef QList<TextEntity> List;
 
     /**
      * Creates a new text entity with the given @p text and the
      * given @p area.
      */
-    TextEntity(const QString &text, NormalizedRect *area);
+    TextEntity(const QString &text, const NormalizedRect &area);
 
     /**
      * Destroys the text entity.
@@ -72,7 +73,7 @@ public:
     /**
      * Returns the bounding area of the text entity.
      */
-    NormalizedRect *area() const;
+    NormalizedRect area() const;
 
     /**
      * Returns the transformed area of the text entity.
@@ -81,12 +82,7 @@ public:
 
 private:
     QString m_text;
-    NormalizedRect *m_area;
-
-    class Private;
-    const Private *d;
-
-    Q_DISABLE_COPY(TextEntity)
+    NormalizedRect m_area;
 };
 
 /**
@@ -138,7 +134,7 @@ public:
      * Appends the given @p text with the given @p area as new
      * @ref TextEntity to the page.
      */
-    void append(const QString &text, NormalizedRect *area);
+    void append(const QString &text, const NormalizedRect &area);
 
     /**
      * Returns the bounding rect of the text which matches the following criteria

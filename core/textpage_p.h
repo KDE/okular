@@ -8,6 +8,7 @@
 #ifndef _OKULAR_TEXTPAGE_P_H_
 #define _OKULAR_TEXTPAGE_P_H_
 
+#include "textpage.h"
 #include <QList>
 #include <QMap>
 #include <QPair>
@@ -15,15 +16,6 @@
 
 class SearchPoint;
 
-/**
- * Memory-optimized storage of a TextEntity. Stores a string and its bounding box.
- *
- * When a generator adds a TextEntity to a TextPage, it is internally stored as TinyTextEntity.
- * TinyTextEntity is also internally used to get the geometry of text selections and highlight areas.
- *
- * @see TextEntity
- */
-class TinyTextEntity;
 class RegionText;
 
 namespace Okular
@@ -31,7 +23,6 @@ namespace Okular
 class PagePrivate;
 class RegularAreaRect;
 class Page;
-typedef QList<TinyTextEntity *> TextList;
 
 /**
  * Returns whether the two strings match.
@@ -50,13 +41,13 @@ public:
     TextPagePrivate();
     ~TextPagePrivate();
 
-    RegularAreaRect *findTextInternalForward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator start, int start_offset, const TextList::ConstIterator end);
-    RegularAreaRect *findTextInternalBackward(int searchID, const QString &query, TextComparisonFunction comparer, const TextList::ConstIterator start, int start_offset, const TextList::ConstIterator end);
+    RegularAreaRect *findTextInternalForward(int searchID, const QString &query, TextComparisonFunction comparer, const TextEntity::List::ConstIterator start, int start_offset, const TextEntity::List::ConstIterator end);
+    RegularAreaRect *findTextInternalBackward(int searchID, const QString &query, TextComparisonFunction comparer, const TextEntity::List::ConstIterator start, int start_offset, const TextEntity::List::ConstIterator end);
 
     /**
      * Copy a TextList to m_words, the pointers of list are adopted
      */
-    void setWordList(const TextList &list);
+    void setWordList(const TextEntity::List &list);
 
     /**
      * Make necessary modifications in the TextList to make the text order correct, so
@@ -65,7 +56,7 @@ public:
     void correctTextOrder();
 
     // variables those can be accessed directly from TextPage
-    TextList m_words;
+    TextEntity::List m_words;
     QMap<int, SearchPoint *> m_searchPoints;
     Page *m_page;
 

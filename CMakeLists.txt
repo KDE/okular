@@ -33,7 +33,7 @@ include(CMakePackageConfigHelpers)
 include(ECMSetupQtPluginMacroNames)
 
 if (ANDROID AND (FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;JPEG;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -232,12 +232,6 @@ set_okular_optional_package_properties(TIFF PROPERTIES
         DESCRIPTION  "A library for reading and writing TIFF formatted files,"
         URL "http://www.libtiff.org"
         PURPOSE "Support for TIFF files in okular.")
-
-find_package(JPEG)
-set_okular_optional_package_properties(JPEG PROPERTIES
-        DESCRIPTION  "A library for reading and writing JPEG image files."
-        URL "https://www.ijg.org"
-        PURPOSE "Support for PalmDB documents in okular.")
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")

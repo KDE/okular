@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-26 00:36+0000\n"
+"POT-Creation-Date: 2024-02-08 00:37+0000\n"
 "PO-Revision-Date: 2024-01-13 10:18+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -3753,22 +3753,22 @@ msgstr "Kopiatu testua"
 msgid "Go to '%1'"
 msgstr "Joan '%1'(e)ra"
 
-#: part/pageview.cpp:4068 part/part.cpp:3135
+#: part/pageview.cpp:4065 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "Doitu zabalera"
 
-#: part/pageview.cpp:4068
+#: part/pageview.cpp:4065
 #, kde-format
 msgid "Fit Page"
 msgstr "Doitu orrialdea"
 
-#: part/pageview.cpp:4068
+#: part/pageview.cpp:4065
 #, kde-format
 msgid "Auto Fit"
 msgstr "Doitu automatikoki"
 
-#: part/pageview.cpp:4091
+#: part/pageview.cpp:4088
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3777,67 +3777,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%%1"
 
-#: part/pageview.cpp:4374
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Bilatu '%1' honekin"
 
-#: part/pageview.cpp:4388
+#: part/pageview.cpp:4385
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfiguratu web lasterbideak..."
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Follow This Link"
 msgstr "Jarraitu esteka honi"
 
-#: part/pageview.cpp:4417
+#: part/pageview.cpp:4414
 #, kde-format
 msgid "Play this Sound"
 msgstr "Jo soinu hau"
 
-#: part/pageview.cpp:4419
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Stop Sound"
 msgstr "Gelditu soinua"
 
-#: part/pageview.cpp:4425
+#: part/pageview.cpp:4422
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiatu estekaren helbidea"
 
-#: part/pageview.cpp:4446
+#: part/pageview.cpp:4443
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Bilatu '%1' dokumentu honetan"
 
-#: part/pageview.cpp:4978
+#: part/pageview.cpp:4975
 #, kde-format
 msgid "Welcome"
 msgstr "Ongi etorri"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Hautatu zoomaren azalera. Eskuineko-klik zooma urruntzeko."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5106
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik egin handitutako ikuspegia ikusteko."
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5119
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Marraztu laukizuzen bat kopiatu beharreko testuen/grafikoen inguruan."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5131
 #, kde-format
 msgid "Select text"
 msgstr "Hautatu testua"
 
-#: part/pageview.cpp:5146
+#: part/pageview.cpp:5143
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3846,7 +3846,7 @@ msgstr ""
 "Marraztu laukizuzen bat taularen inguruan, ondoren klik egin ertzen ondoan "
 "erdibitzeko; sakatu «Ihes» garbitzeko."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3855,7 +3855,7 @@ msgstr ""
 "Zure sinatzeko ziurtagiri guztiak, edo oraindik ez dira baliozkoak edo "
 "baliozkotasun data gainditu dute."
 
-#: part/pageview.cpp:5159
+#: part/pageview.cpp:5156
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3865,18 +3865,18 @@ msgstr ""
 "Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Informazio gehiagorako, "
 "begiratu eskuliburuko <a href=\"%1\">Sinadura digitala gehitzea</a> atala."
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5172
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Gorde gabeko aldaketak dituzu. Gorde ezazu dokumentua hura sinatu aurretik."
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5188
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Marraztu laukizuzen bat sinaduraren eremua txertatzeko"
 
-#: part/pageview.cpp:5335
+#: part/pageview.cpp:5332
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

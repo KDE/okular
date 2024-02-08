@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-26 00:36+0000\n"
+"POT-Creation-Date: 2024-02-08 00:37+0000\n"
 "PO-Revision-Date: 2024-01-13 09:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -3776,22 +3776,22 @@ msgstr "Скопіювати текст"
 msgid "Go to '%1'"
 msgstr "Перейти до «%1»"
 
-#: part/pageview.cpp:4068 part/part.cpp:3135
+#: part/pageview.cpp:4065 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "Влаштувати ширину"
 
-#: part/pageview.cpp:4068
+#: part/pageview.cpp:4065
 #, kde-format
 msgid "Fit Page"
 msgstr "Влаштувати сторінку"
 
-#: part/pageview.cpp:4068
+#: part/pageview.cpp:4065
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автомасштаб"
 
-#: part/pageview.cpp:4091
+#: part/pageview.cpp:4088
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3800,68 +3800,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4374
+#: part/pageview.cpp:4371
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Шукати «%1» за допомогою"
 
-#: part/pageview.cpp:4388
+#: part/pageview.cpp:4385
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Налаштувати вебскорочення…"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перейти за цим посиланням"
 
-#: part/pageview.cpp:4417
+#: part/pageview.cpp:4414
 #, kde-format
 msgid "Play this Sound"
 msgstr "Відтворити цей звук"
 
-#: part/pageview.cpp:4419
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Stop Sound"
 msgstr "Припинити відтворення звуку"
 
-#: part/pageview.cpp:4425
+#: part/pageview.cpp:4422
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Скопіювати адресу посилання"
 
-#: part/pageview.cpp:4446
+#: part/pageview.cpp:4443
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Шукати «%1» у цьому документі"
 
-#: part/pageview.cpp:4978
+#: part/pageview.cpp:4975
 #, kde-format
 msgid "Welcome"
 msgstr "Ласкаво просимо!"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5095
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Виберіть ділянку масштабування. Щоб зменшити, клацніть правою кнопкою мишки."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5106
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Клацніть, щоб скористатися збільшувальним склом."
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5119
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Намалюйте прямокутник навколо тексту/малюнка для копіювання."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5131
 #, kde-format
 msgid "Select text"
 msgstr "Вибрати текст"
 
-#: part/pageview.cpp:5146
+#: part/pageview.cpp:5143
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3870,7 +3870,7 @@ msgstr ""
 "Намалюйте прямокутник навколо таблиці, потім клацніть поряд з краєм, щоб "
 "поділити текст. Натисніть Esc, щоб скасувати позначення."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3878,7 +3878,7 @@ msgid ""
 msgstr ""
 "Усі ваші сертифікати для підпису або ще не є чинними або вже є простроченими."
 
-#: part/pageview.cpp:5159
+#: part/pageview.cpp:5156
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3889,19 +3889,19 @@ msgstr ""
 "будь ласка, ознайомтеся із розділом <a href=\"%1\">Додавання цифрових "
 "підписів</a> у підручнику."
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5172
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Деякі внесені вами зміни не збережено. Будь ласка, збережіть документ, перш "
 "ніж його підписувати."
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5188
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Намалюйте прямокутник для вставлення поля підпису"
 
-#: part/pageview.cpp:5335
+#: part/pageview.cpp:5332
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-27 00:36+0000\n"
+"POT-Creation-Date: 2024-02-08 00:37+0000\n"
 "PO-Revision-Date: 2011-08-30 13:30+0530\n"
 "Last-Translator:  Danishka Navin <danishka@gmail.com> \n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -373,12 +373,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "%2 dpi මත %1 ජනනය විය"
 
-#: generator_dvi.cpp:292
+#: generator_dvi.cpp:287
 #, kde-format
 msgid "Generator/Date"
 msgstr "ජනකය/දිනය"
 
-#: generator_dvi.cpp:381
+#: generator_dvi.cpp:376
 #, kde-format
 msgid "Font file not found"
 msgstr "අකුරු ගොනු සොයාගත නොහැක"

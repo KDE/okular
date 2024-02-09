@@ -565,11 +565,13 @@ void PageView::setupViewerActions(KActionCollection *ac)
     d->aRotateClockwise = new QAction(QIcon::fromTheme(QStringLiteral("object-rotate-right")), i18n("Rotate &Right"), this);
     d->aRotateClockwise->setIconText(i18nc("Rotate right", "Right"));
     ac->addAction(QStringLiteral("view_orientation_rotate_cw"), d->aRotateClockwise);
+    ac->setDefaultShortcut(d->aRotateClockwise, Qt::CTRL | Qt::Key_R);
     d->aRotateClockwise->setEnabled(false);
     connect(d->aRotateClockwise, &QAction::triggered, this, &PageView::slotRotateClockwise);
     d->aRotateCounterClockwise = new QAction(QIcon::fromTheme(QStringLiteral("object-rotate-left")), i18n("Rotate &Left"), this);
     d->aRotateCounterClockwise->setIconText(i18nc("Rotate left", "Left"));
     ac->addAction(QStringLiteral("view_orientation_rotate_ccw"), d->aRotateCounterClockwise);
+    ac->setDefaultShortcut(d->aRotateCounterClockwise, Qt::CTRL | Qt::SHIFT | Qt::Key_R);
     d->aRotateCounterClockwise->setEnabled(false);
     connect(d->aRotateCounterClockwise, &QAction::triggered, this, &PageView::slotRotateCounterClockwise);
     d->aRotateOriginal = new QAction(i18n("Original Orientation"), this);

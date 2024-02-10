@@ -97,8 +97,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >mobipocket</keyword>
 			<keyword
->plucker</keyword>
-			<keyword
 >bilgi notu</keyword>
 		</keywordset>
 	</bookinfo>
@@ -220,7 +218,7 @@ Context menu actions like Rename Bookmarks etc.)
 >'nde görüntülerken sayfalar veya slaytlar arasında geçiş yapmak için &Up; ve &Down; düğmelerini kullanın. Geçerli slaytın numarası ve konumu, ekranın sağ üst köşesindeki bir ekran üzeri görüntüde belirtilir. </para>
 			</note>
 			<para
->Birkaç sayfadan oluşan bir belgeyi okumak istiyorsanız &okular;'ın kendiliğinden sarma özelliğini kullanın. Kendiliğinden sarma'yı <keycombo action="simul"
+>Birkaç sayfadan oluşan bir belgeyi okumak istiyorsanız &okular;’ın kendiliğinden sarma özelliğini kullanın. Kendiliğinden sarma’yı <keycombo action="simul"
 >&Shift;&Down;</keycombo
 > veya <keycombo action="simul"
 >&Shift;&Up;</keycombo
@@ -1665,12 +1663,12 @@ Context menu actions like Rename Bookmarks etc.)
 >Yer İmleri</guilabel
 > görünümünü açmak için <guilabel
 >Kenar Çubuğu</guilabel
->'ndaki <guilabel
+>’ndaki <guilabel
 >Yer İmleri</guilabel
 > sekmesine tıklayın. <guilabel
 >Kenar Çubuğu</guilabel
 > gösterilmiyorsa onu görünür yapmak için araç çubuğundaki <guibutton
->Kenar Çubuğu'nu Göster</guibutton
+>Kenar Çubuğu’nu Göster</guibutton
 > düğmesine veya menü ögesine veya <menuchoice
 ><shortcut
 ><keycap
@@ -1989,7 +1987,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->PostScript'i &PDF; Olarak İçe Aktar...</guimenuitem
+>PostScript’i &PDF; Olarak İçe Aktar...</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2489,7 +2487,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Sunum Kipi'ni <action
+>Sunum Kipi’ni <action
 >etkinleştirir</action
 >. Daha fazla bilgi için <link linkend="presentationMode"
 >Sunum Kipi</link
@@ -2569,7 +2567,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Görünüm</guimenu
 > <guimenuitem
->%​100'e Yakınlaştır</guimenuitem
+>%​100’e Yakınlaştır</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3214,7 +3212,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 ><action
->Kenar Çubuğu'nu gösterir veya gizler.</action
+>Kenar Çubuğu’nu gösterir veya gizler.</action
 ></para>
 					</listitem>
 				</varlistentry>
@@ -3332,7 +3330,7 @@ Context menu actions like Rename Bookmarks etc.)
 		  </term>
 		  <listitem>
 		    <para
->Bu seçenek Ghostscript'in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
+>Bu seçenek Ghostscript’in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -3738,7 +3736,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 ><link linkend="menutools"
 >Göz At Aracı</link
-> ile belgenin tamamında sonsuz sarma yapılmasına olanak tanır. Etkinleştirilirse belgeyi sürüklerken kenarlara dokunulduğunda fare imleci ekranın diğer ucuna kaydırılır. Bu özellik yalnızca X11'de desteklenir. </para>
+> ile belgenin tamamında sonsuz sarma yapılmasına olanak tanır. Etkinleştirilirse belgeyi sürüklerken kenarlara dokunulduğunda fare imleci ekranın diğer ucuna kaydırılır. Bu özellik yalnızca X11’de desteklenir. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3990,7 +3988,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular;, sisteminize ve zevklerinize göre bellek kullanımını ayarlayarak en iyi başarımı elde edebilir. Ne kadar çok bellek kullanmasına izin verirseniz program o kadar hızlı davranır. Öntanımlı profil her sistem için iyidir; ancak Düşük profilini seçerek &okular;'ın gereğinden fazla bellek kullanmasını önleyebilir veya Yoğun'u kullanarak sisteminizden en iyi şekilde yararlanmasını sağlayabilirsiniz. Sistem belleğinin aşırı dolma riski olmadan tüm sayfaları önceden yüklemek için Çok Yoğun profilini kullanın (toplam belleğin veya boş belleğin yalnızca %​50'si kullanılacaktır).</para>
+>&okular;, sisteminize ve zevklerinize göre bellek kullanımını ayarlayarak en iyi başarımı elde edebilir. Ne kadar çok bellek kullanmasına izin verirseniz program o kadar hızlı davranır. Öntanımlı profil her sistem için iyidir; ancak Düşük profilini seçerek &okular;’ın gereğinden fazla bellek kullanmasını önleyebilir veya Yoğun’u kullanarak sisteminizden en iyi şekilde yararlanmasını sağlayabilirsiniz. Sistem belleğinin aşırı dolma riski olmadan tüm sayfaları önceden yüklemek için Çok Yoğun profilini kullanın (toplam belleğin veya boş belleğin yalnızca %​50’si kullanılacaktır).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

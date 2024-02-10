@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Belgede verilen bir sayfa numarasını aç.</para>
+>Belgede numarası verilen bir sayfayı aç.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Metinde bir dizi bul.</para>
+>Belgede belirli bir diziyi bulmaya ve vurgulamaya çalışır. Yalnızca okular komutunun argümanı olarak tek bir belge verildiğinde çalışır.</para>
 </listitem>
 </varlistentry>
 
@@ -198,7 +198,7 @@
 ><title
 >Geri Bildirim</title>
 <para
->IRC'de irc.libera.chat #okular, e-posta ile okular-devel@kde.org veya web'de &lt;<ulink url="https://okular.kde.org/"
+>IRC’de irc.libera.chat #okular, e-posta ile okular-devel@kde.org veya web’de &lt;<ulink url="https://okular.kde.org/"
 >https://okular.kde.org/</ulink
 >&gt;.</para>
 </refsect1>

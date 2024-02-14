@@ -5,6 +5,7 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <developer_name translate="no">KDE</developer_name>
   <developer_name translate="no" xml:lang="ar">كِيدِي</developer_name>
+  <developer_name translate="no" xml:lang="be">KDE</developer_name>
   <developer_name translate="no" xml:lang="bg">KDE</developer_name>
   <developer_name translate="no" xml:lang="ca">KDE</developer_name>
   <developer_name translate="no" xml:lang="ca-valencia">KDE</developer_name>
@@ -15,6 +16,7 @@
   <developer_name translate="no" xml:lang="fr">KDE</developer_name>
   <developer_name translate="no" xml:lang="he">KDE</developer_name>
   <developer_name translate="no" xml:lang="hu">KDE</developer_name>
+  <developer_name translate="no" xml:lang="ia">KDE</developer_name>
   <developer_name translate="no" xml:lang="it">KDE</developer_name>
   <developer_name translate="no" xml:lang="ka">KDE</developer_name>
   <developer_name translate="no" xml:lang="lt">KDE</developer_name>
@@ -81,7 +83,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ar">عارض المستندات</summary>
   <summary xml:lang="az">Sənədə baxış vasitısi</summary>
-  <summary xml:lang="be">Сродак прагляду дакументаў</summary>
+  <summary xml:lang="be">Сродак для прагляду дакументаў</summary>
   <summary xml:lang="bg">Преглед на документи</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
@@ -135,7 +137,7 @@
   </p>
     <p xml:lang="ar">اوكلار هو عارض مستندات عالمي تم تطويره بواسطة كِيدِي. يعمل اوكلار على أنظمة أساسية متعددة، بما في ذلك على سبيل المثال لا الحصر Linux و Windows و Mac OS X و * BSD وما إلى ذلك.</p>
     <p xml:lang="az">Okular KDE tərəfindən yaradılan sənədlərə universal baxış vasitəsidir. Okular Linux, Windows, Mac OS X, * BSD və s. digər bir çox platformada işləyir.</p>
-    <p xml:lang="be">Okular - універсальны сродак прагляду дакументаў, распрацаваны KDE. Okular працуе на многіх платформах, уключаючы Linux, Windows, Mac OS X, *BSD.</p>
+    <p xml:lang="be">Okular - універсальны сродак для прагляду дакументаў, распрацаваны KDE. Okular працуе на многіх платформах, уключаючы Linux, Windows, Mac OS X, *BSD.</p>
     <p xml:lang="bg">Okular е универсална програма за преглед на документи, разработена от KDE. Okular работи с множество платформи, включително, но не само, Linux, Windows и Mac OS X, *BSD и др.</p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">Okular és un visor universal de documents desenvolupat per KDE. Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>

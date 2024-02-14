@@ -1,10 +1,10 @@
 # Zmicier <zmicerturok@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
+"Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2022-11-10 14:25\n"
+"PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -15,11 +15,12 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || n%10>=5 && n%10<=9 || n"
 "%100>=11 && n%100<=14 ? 2 : 3);\n"
 "X-Generator: Lokalize 22.08.3\n"
-"X-Crowdin-Project: 86ff119b1606fcaa910d6b44fc14b611\n"
-"X-Crowdin-Project-ID: 127\n"
+"X-Crowdin-Project: fc57ad16a28d02dea100ceb1c60de14e\n"
+"X-Crowdin-Project-ID: 136\n"
 "X-Crowdin-Language: be\n"
-"X-Crowdin-File: /main/be/okular/org.kde.active.documentviewer.po\n"
-"X-Crowdin-File-ID: 8716\n"
+"X-Crowdin-File: /[antikruk.KDE] main/KDE6/be/messages/okular/org.kde.active."
+"documentviewer.po\n"
+"X-Crowdin-File-ID: 10538\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -27,7 +28,7 @@ msgstr "Закладкі"
 
 #: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
-msgstr "Сродак прагляду сертыфікатаў"
+msgstr "Сродак для прагляду сертыфікатаў"
 
 #: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"

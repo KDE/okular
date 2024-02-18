@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2013, 2014, 2015.
+# SPDX-FileCopyrightText: 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2015-01-29 09:07+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"PO-Revision-Date: 2024-01-26 20:26+0000\n"
+"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -23,12 +24,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Sveinn í Felli"
+msgstr "Sveinn í Felli,Guðmundur Erlingsson"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sv1@fellsnet.is"
+msgstr "sv1@fellsnet.is,gudmundure@gmail.com"
 
 #: dviexport.cpp:123
 #, kde-format
@@ -42,15 +43,14 @@ msgid ""
 "em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
 "the PATH environment variable when looking for programs.</p></qt>"
 msgstr ""
-"<qt><p>Okular gat ekki fundið <em>dvipdfm</em> forritið á tölvunni. Þetta "
-"forrit er nauðsynlegt til að útflutningur skráa virki sem skyldi. Þú gæti "
-"hinsvegar umbreytt DVI-skránni í PDF með því að nota 'prentun í skrá' skipun "
-"Okular, en það býr hinsvegar til skjöl sem vissulega prentast ágætlega, en "
-"eru ekki í neitt sérstökum gæðum þegar þau eru skoðuð í forriti eins og "
-"Acrobat Reader. Það gæti verið gáfulegt að uppfæra TeX dreifinguna þína, sem "
-"ætti að innihalda <em>dvipdfm</em> forritið.</p><p>Vísbending til ráðvilltra "
-"kerfisstjóra: Okular notar PATH umhverfisbreytuna við að leita að forritum.</"
-"p></qt>"
+"<qt><p>Okular fann ekki <em>dvipdfm</em>-forritið á tölvunni. Þetta forrit "
+"er nauðsynlegt til að útflutningseiginleikinn virki sem skyldi. Þú gætir "
+"hinsvegar umbreytt DVI-skránni í PDF með því að nota prentskipunina í "
+"Okular, en það býr oft til skjöl sem koma vel út í prentun en koma ekki vel "
+"út þegar þau eru skoðuð Acrobat Reader. Það gæti verið gáfulegt að uppfæra "
+"útgáfu þína af TeX-hugbúnaðinum sem ætti að innihalda <em>dvipdfm</em>-"
+"forritið.</p><p>Vísbending til ráðvilltra kerfisstjóra: Okular notar PATH-"
+"umhverfisbreytuna við að leita að forritum.</p></qt>"
 
 #: dviexport.cpp:142
 #, kde-format
@@ -60,9 +60,10 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>Forritið 'dvipdfm' sem var notað til að flytja út DVI skrána skilaði "
-"villu. Þú gætir viljað líta á <strong>upplýsingar um skjal</strong> sem þú "
-"finnur í Skrá-valmyndinnitil að fá nákvæma villumeldingu.</qt> "
+"<qt>Forritið 'dvipdfm', sem var notað til að flytja út DVI-skrána, skilaði "
+"villu. Þú gætir viljað líta á <strong>upplýsingagluggann fyrir skjalið</"
+"strong> sem er að finna í valmyndinni Skrá til að fá nákvæma villumeldingu.</"
+"qt> "
 
 #: dviexport.cpp:168
 #, kde-format
@@ -73,10 +74,10 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
-"<qt>Þessi DVI skrá er með tilvísanir í myndefni sem ekki eru á PostScript "
-"formi, og er því ekki hægt að meðhöndla með <em>dvips</em> forritinu sem "
-"Okular notar til að prenta eða umbreyta myndum í PostScript. Það er á áætlun "
-"að bæta þessari virkni við síðar.</qt>"
+"<qt>Þessi DVI-skrá er með tilvísanir í ytri myndskrár sem ekki eru á "
+"PostScript-sniði og því ekki hægt að meðhöndla með <em>dvips</em>-forritinu "
+"sem Okular notar til að prenta eða flytja út í PostScript. Virknin sem þú "
+"þarft er því ekki í boði í þessari útgáfu af Okular.</qt>"
 
 #: dviexport.cpp:176
 #, kde-format
@@ -86,10 +87,10 @@ msgid ""
 "perplexed system administrator: Okular uses the PATH environment variable "
 "when looking for programs.</p></qt>"
 msgstr ""
-"<qt><p>Okular gat ekki fundið <em>dvips</em> á tölvunni. Þetta forrit er "
-"nauðsynlegt til að útflutningur skráa virki sem skyldi.\n"
-"Vísbending til ráðvilltra kerfisstjóra: Okular notar PATH umhverfisbreytuna "
-"við að leita að forritum.</p></qt>"
+"<qt><p>Okular fann ekki <em>dvips</em>-forritið á tölvunni. Þetta forrit er "
+"nauðsynlegt til að útflutningsaðgerðin virki sem skyldi.\n"
+"Vísbending til ráðvilltra kerfisstjóra: Okular notar PATH-umhverfisbreytuna "
+"við leit að forritum.</p></qt>"
 
 #: dviexport.cpp:270
 #, kde-format
@@ -99,14 +100,14 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>Forritið 'dvips' sem var notað til að flytja út DVI skrána skilaði "
-"villu. Þú gætir viljað líta á <strong>upplýsingar um skjal</strong> sem þú "
-"finnur í Skrá-valmyndinnitil að fá nákvæma villumeldingu.</qt> "
+"<qt>Forritið 'dvips', sem var notað til að flytja út DVI-skrána, skilaði "
+"villu. Þú gætir viljað líta á <strong>upplýsingagluggann um skjalið</strong> "
+"sem þú finnur í valmyndinni Skrá til að fá nákvæma villumeldingu.</qt> "
 
 #: dviFile.cpp:91
 #, kde-format
 msgid "The DVI file does not start with the preamble."
-msgstr "Formála (e. preamble) vantar í DVI skrána."
+msgstr "Formála (e. preamble) vantar í DVI-skrána."
 
 #: dviFile.cpp:97
 #, kde-format
@@ -115,21 +116,21 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
-"DVI skráin inniheldur ranga útgáfu af DVI úttaki fyrir þetta forrit. "
-"Vísbending: Ef þú notar letursetningarkerfið Omega, verðurðu að nota "
-"sérstakt forrit, eins og oxdvi."
+"DVI-skráin inniheldur ranga útgáfu af DVI-úttaki fyrir þetta forrit. "
+"Vísbending: Ef þú notar letursetningarkerfið Omega verðurðu að nota sérstakt "
+"forrit, til dæmis oxdvi."
 
 #: dviFile.cpp:134
 #, kde-format
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
 msgstr ""
-"DVI skráin er illa skemmd. KDVI gat ekki fundið eftirmálann (e. postamble)."
+"DVI-skráin er illa skemmd. Okular gat ekki fundið eftirmálann (e. postamble)."
 
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr "Eftirmáli (e. postamble) byrjar ekki á POST skipun."
+msgstr "Eftirmálinn (e. postamble) byrjar ekki á POST-skipuninni."
 
 #: dviFile.cpp:202
 #, kde-format
@@ -139,7 +140,7 @@ msgstr "Eftirmálinn (e. postamble) innihélt aðra skipun en FNTDEF."
 #: dviFile.cpp:240
 #, kde-format
 msgid "The page %1 does not start with the BOP command."
-msgstr "Síðan %1 hefst ekki með BOP skipun."
+msgstr "Síðan %1 hefst ekki á BOP-skipuninni."
 
 #: dviFile.cpp:351
 #, kde-format
@@ -156,15 +157,15 @@ msgid ""
 "strong> from the command line to check if it really works.</p><p><em>PATH:</"
 "em> %2</p></qt>"
 msgstr ""
-"<qt><p>Ekki tókst að ræsa ytra forrritið <strong>pdf2ps</strong>. Þar af "
-"leiðandi tókst ekki að umbreyta PDF-skránni %1 yfir í PostScript. Sumt af "
-"myndefninu í skjalinu þínu verður því ekki birt.</p><p><b>Hugsanleg ástæða:</"
-"b> Forritið <strong>pdf2ps</strong> er kannski ekki uppsett á kerfinu þínu, "
-"eða að það finnst ekki á gildri leitarslóð.</p><p><b>Það sem þú getur gert:</"
-"b> Forritið <strong>pdf2ps</strong> fylgir venjulega með í helstu dreifingum "
-"ghostscript PostScript túlkunarkerfisins. Ef ghostscipt er ekki uppsett á "
-"kerfinu þínu, þá gætirðu sett það upp núna. Ef þú ert viss um að ghostscript "
-"sé þegar uppsett, reyndu að slá inn <strong>pdf2ps</strong> á skipanalínu "
+"<qt><p>Ekki tókst að ræsa forrritið <strong>pdf2ps</strong>. Þar af leiðandi "
+"tókst ekki að umbreyta PDF-skránni %1 í PostScript. Sumt af myndefninu í "
+"skjalinu þínu verður því ekki birt.</p><p><b>Hugsanleg ástæða:</b> Forritið "
+"<strong>pdf2ps</strong> er kannski ekki uppsett í tölvunni þinni eða það "
+"finnst ekki á núverandi leitarslóð.</p><p><b>Það sem þú getur gert:</b> "
+"Forritið <strong>pdf2ps</strong> fylgir venjulega með í helstu dreifingum á "
+"PostScript-túlkunarkerfinu ghostscript. Ef ghostscript er ekki uppsett í "
+"tölvunni þá gætirðu sett það upp núna. Ef þú ert viss um að ghostscript sé "
+"þegar uppsett skaltu reyna að slá inn <strong>pdf2ps</strong> á skipanalínu "
 "til að athuga hvort það virki í raun og veru.</p><p><em>SLÓÐ:</em> %2</p></"
 "qt>"
 
@@ -177,10 +178,10 @@ msgid ""
 "This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
 "p><p><strong>%2</strong></p></qt>"
 msgstr ""
-"<qt><p>Ekki var hægt að umbreyta PDF-skránni %1 yfir í PostScript. Eitthvað "
-"af myndefni skjalsins verður því ekki birt.</p><p><b>Hugsanleg ástæða:</b> "
-"Skráin %1 gæti verið skemmd, eða er kannski alls ekki PDF-skrá. Þetta er "
-"úttak <strong>pdf2ps</strong> forritsins sem Okular notaði:</p><p><strong>"
+"<qt><p>Ekki var hægt að umbreyta PDF-skránni %1 í PostScript. Eitthvað af "
+"myndefni skjalsins verður því ekki birt.</p><p><b>Hugsanleg ástæða:</b> "
+"Skráin %1 gæti verið skemmd eða er kannski alls ekki PDF-skrá. Þetta er "
+"úttak <strong>pdf2ps</strong>-forritsins sem Okular notaði:</p><p><strong>"
 "%2</strong></p></qt>"
 
 #: dviRenderer.cpp:203 dviRenderer.cpp:435
@@ -191,7 +192,7 @@ msgstr "Skemmd skrá. %1"
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr "Ekki var hægt að ígræða allar PostScript-skrár í skjalið þitt. %1"
+msgstr "Ekki var hægt að fella allar PostScript-skrár inn í skjalið þitt. %1"
 
 #: dviRenderer.cpp:329
 #, kde-format
@@ -210,9 +211,9 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
-"Þú vildir að Okular fyndi staðinn í DVI-skránni sem samsvarar línunni %1 í "
-"TeX-skránni %2. Það lítur hinsvegar út fyrir að DVI-skráin innihaldi ekki "
-"allar nauðsynlegar upplýsingar hvað það varðar. "
+"Þú baðst Okular um að finna staðinn í DVI-skránni sem samsvarar línu %1 í "
+"TeX-skránni %2. DVI-skráin virðist hins vegar ekki innihalda nauðsynlegar "
+"upplýsingar hvað það varðar. "
 
 #: dviRenderer.cpp:604
 #, kde-format
@@ -220,33 +221,33 @@ msgid ""
 "Okular was not able to locate the place in the DVI file which corresponds to "
 "line %1 in the TeX-file %2."
 msgstr ""
-"Okular tókst ekki að finna staðinn í DVI-skránni sem samsvarar línunni %1 í "
-"TeX-skránni %2."
+"Okular tókst ekki að finna staðinn í DVI-skránni sem samsvarar línu %1 í TeX-"
+"skránni %2."
 
 #: dviRenderer_draw.cpp:243
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr "DVI kóði setti tákn af óþekktri leturgerð."
+msgstr "DVI-kóði setti tákn af óþekktri leturgerð."
 
 #: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
-msgstr "DVI kóðinn vísaði í leturgerð #%1, sem hefur ekki verið skilgreind."
+msgstr "DVI kóðinn vísaði í leturgerð #%1 sem hefur ekki verið skilgreind."
 
 #: dviRenderer_draw.cpp:353
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr "Staflinn var ekki tómur þegar komið var að EOP skipuninni."
+msgstr "Staflinn var ekki tómur þegar komið var að EOP-skipuninni."
 
 #: dviRenderer_draw.cpp:365
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr "Staflinn var tómur þegar komið var að POP skipuninni."
+msgstr "Staflinn var tómur þegar komið var að POP-skipuninni."
 
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr "DVI kóðinn vísaði í leturgerð sem hefur ekki verið skilgreind."
+msgstr "DVI-kóðinn vísaði í leturgerð sem hefur ekki verið skilgreind."
 
 #: dviRenderer_draw.cpp:539
 #, kde-format
@@ -261,7 +262,7 @@ msgstr "Óþekkti op-kóðinn %1 fannst."
 #: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
-msgstr "Innfelli %1"
+msgstr "Felli inn %1"
 
 #: dviRenderer_prescan.cpp:105
 #, kde-format
@@ -269,19 +270,19 @@ msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
 msgstr ""
-"Síða %1: Ekki tókst að umbreyta PDF skránni <strong>%2</strong> yfir í "
-"PostScript.<br>"
+"Síða %1: Ekki tókst að umbreyta PDF-skránni <strong>%2</strong> í PostScript."
+"<br>"
 
 #: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
-msgstr "Síða %1: PostScript skráin <strong>%2</strong> fannst ekki.<br>"
+msgstr "Síða %1: PostScript-skráin <strong>%2</strong> fannst ekki.<br>"
 
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "Ekki tókst að þátta pappírsstærð '%1'."
+msgstr "Ekki tókst að þátta pappírsstærðargögnin '%1'."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -290,9 +291,9 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Okular gat ekki fundið allar þær leturskrár sem til þurfti til "
-"birtingar á þessari DVI skrá. Skjalið þitt gæti verið ólesanlegt.</"
-"p><p><small><b>SLÓÐ:</b> %1</small></p><p><small>%2</small></p></qt>"
+"<qt><p>Okular gat ekki fundið allar þær leturskrár sem þarf til að birta "
+"þessa DVI-skrá. Skjalið þitt gæti verið ólesanlegt.</p><p><small><b>SLÓÐ:</"
+"b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:284
 #, kde-format
@@ -303,12 +304,11 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Það voru vandamál við keyrslu <em>kpsewhich</em>. Þar af leiðandi "
-"fundust ekki allar þær leturskrár sem til þurfti, skjalið þitt gæti verið "
-"ólesanlegt.<br/>Hugsanleg ástæða: Kannski er <em>kpsewhich</em> forritið "
-"ekki sett upp á kerfinu þínu, nú eða að það finnst ekki á núverandi "
-"leitarslóð (search path).</p><p><small><b>SLÓÐ:</b> %1</small></p><p><small>"
-"%2</small></p></qt>"
+"<qt><p>Upp komu vandamál við að keyra <em>kpsewhich</em>. Þar af leiðandi "
+"fundust ekki sumar leturskrárnar og skjalið þitt gæti verið ólesanlegt.<br/> "
+"Hugsanleg ástæða: Kannski er <em>kpsewhich</em>-forritið ekki sett upp í "
+"tölvunni eða að það finnst ekki á núverandi leitarslóð.</p><p><small><b>SLÓÐ:"
+"</b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format
@@ -317,19 +317,19 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt>Gerð leturs með <em>kpsewhich</em> var hætt (exit code %1, villa %2). Af "
-"því leiðir að sumar leturskrár fundust ekki og skjalið þitt gæti hugsanlega "
-"verið ólesanlegt.</qt>"
+"<qt>Hætt var við að mynda letur með <em>kpsewhich</em> (lokunarkóði %1, "
+"villa %2). Þar af leiðandi fundust ekki sumar leturskrárnar og skjalið "
+"þittgæti verið ólesanlegt.</qt>"
 
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr "Bý nú til %1 í %2 pát..."
+msgstr "Bý nú til %1 í %2 pát (dpi)..."
 
 #: generator_dvi.cpp:287
 #, kde-format
 msgid "Generator/Date"
-msgstr "Höfundur/dagsetning"
+msgstr "Myndunarforrit/dagsetning"
 
 #: generator_dvi.cpp:376
 #, kde-format
@@ -339,12 +339,12 @@ msgstr "Leturskrá fannst ekki"
 #: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
-msgstr "lóðrétt"
+msgstr "skammsnið"
 
 #: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
-msgstr "lárétt"
+msgstr "langsnið"
 
 #: psgs.cpp:284
 #, kde-format
@@ -353,9 +353,9 @@ msgid ""
 "any of the Ghostview device drivers that are known to Okular. PostScript "
 "support has therefore been turned off in Okular."
 msgstr ""
-"Útgáfan af Ghostview sem er uppsett á tölvunni er ekki með neinum Ghostview "
-"tækjareklum (device drivers) sem Okular þekkir. Þess vegna hefur PostScript "
-"stuðningur verið gerður óvirkur í Okular."
+"Útgáfan af Ghostview sem er uppsett í tölvunni er ekki með neina Ghostview-"
+"tækjarekla sem Okular þekkir. Þess vegna er búið að slökkva á PostScript-"
+"stuðningi í Okular."
 
 #: special.cpp:36
 #, kde-format
@@ -368,8 +368,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"Villa í DVI skrá '%1', síða %2. Skipun um að tína lit af stafla þegar "
-"litastafli er tómur."
+"Villa í DVI-skrá '%1', síðu %2. 'Color pop'-skipun gefin þegar litastafli er "
+"tómur."
 
 #: special.cpp:318
 #, kde-format
@@ -377,7 +377,7 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
-"Gallað viðfang í epsf-sérskipuninni.\n"
+"Gallað viðfang í 'special'-skipuninni epsf.\n"
 "Átti von á tölu á eftir %1 í %2"
 
 #: special.cpp:446
@@ -395,13 +395,13 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
-"Villa í DVI skrá '%1', síða %2. Gat ekki túlkað horn í sérstökum "
-"textasnúningi."
+"Villa í DVI-skrá '%1', síða %2. Gat ekki túlkað horn í 'special'-skipun "
+"fyrir textasnúning."
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "Sérskipunin '%1' er ekki studd."
+msgstr "'Special'-skipunin '%1' er ekki studd."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
@@ -409,8 +409,8 @@ msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
 msgstr ""
-"Leturgerðaskráin %1 var opnuð og lesin, en enginn stuðningur er fyrir sniðið "
-"á henni."
+"Leturgerðarskráin %1 var opnuð og lesin, en enginn stuðningur er fyrir "
+"letursnið hennar."
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
@@ -422,7 +422,7 @@ msgstr "Leturgerðarskráin %1 er biluð eða ekki hægt að opna hana eða lesa
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
-"FreeType tilkynnti villu við að setja táknastærð fyrir leturgerðaskrá %1."
+"FreeType tilkynnti villu við að setja stafastærð fyrir leturgerðarskrá %1."
 
 #: TeXFont_PFB.cpp:188
 #, kde-format
@@ -432,24 +432,24 @@ msgstr "FreeType getur ekki hlaðið inn stafbrigði #%1 úr leturskrá %2."
 #: TeXFont_PFB.cpp:201
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
-msgstr "FreeType getur ekki gengið frá stafbrigði #%1 úr leturskrá %2."
+msgstr "FreeType getur ekki myndað stafbrigði #%1 úr leturskrá %2."
 
 #: TeXFont_PFB.cpp:215
 #, kde-format
 msgid "Glyph #%1 is empty."
-msgstr "Stafbrigðið #%1 er tómt."
+msgstr "Stafbrigði #%1 er tómt."
 
 #: TeXFont_PFB.cpp:217
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr "Stafbrigðið #%1 úr leturgerðaskrá %2 er tóm."
+msgstr "Stafbrigði #%1 úr leturgerðarskrá %2 er tómt."
 
 #: TeXFont_PFB.cpp:282
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
 "FreeType getur ekki hlaðið inn leturmálum fyrir stafbrigði #%1 úr "
-"leturgerðaskrá %2."
+"leturgerðarskrá %2."
 
 #: TeXFont_PK.cpp:69
 #, kde-format
@@ -459,22 +459,22 @@ msgstr "Get ekki opnað leturskrá %1."
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr "TexFont_PK::operator[]: Táknið %1 er ekki til í letri %2"
+msgstr "TexFont_PK::operator[]: Staftáknið %1 er ekki skilgreint í letri %2"
 
 #: TeXFont_PK.cpp:418
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
-msgstr "Óvænt %1 í PK skránni %2"
+msgstr "Óvænt %1 í PK-skránni %2"
 
 #: TeXFont_PK.cpp:484
 #, kde-format
 msgid "The character %1 is too large in file %2"
-msgstr "Táknið %1 er of stórt í skránni %2"
+msgstr "Staftáknið %1 er of stórt í skránni %2"
 
 #: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr "Rangur fjöldi bita:  stafur %1, letur %2"
+msgstr "Rangur fjöldi bita vistaður:  stafur %1, letur %2"
 
 #: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
 #, kde-format
@@ -484,7 +484,7 @@ msgstr "Gölluð PK-skrá (%1), of margir bitar"
 #: TeXFont_PK.cpp:713
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr "Letrið er ekki í fernings-hlutföllum "
+msgstr "Letrið er ekki í ferningshlutföllum "
 
 #: TeXFontDefinition.cpp:106
 #, kde-format
@@ -524,13 +524,12 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Þetta þýðir að öllum líkindum að annaðhvort hefur þú fundið galla í Okular,\n"
-"eða þá að DVI skráin, eða aukaskrár (svo sem leturskrár, \n"
-"eða sýndarletur) eru verulega skemmdar.\n"
-"Okular mun slökkva á sér eftir þessi skilaboð. Ef þú heldur að þú \n"
-"hafir vundið galla, eða að Okular ætti að haga sér öðruvísi við þessar "
-"aðstæður\n"
-"þá ættirðu að senda villuskýrslu."
+"Þetta þýðir líklega að annaðhvort hefur þú fundið galla í Okular,\n"
+"eða þá að DVI-skráin, eða aukaskrár (svo sem leturskrár, \n"
+"eða sýndarleturskrár) eru verulega skemmdar.\n"
+"Okular mun lokast eftir þessi skilaboð. Ef þú heldur að þú \n"
+"hafir fundið galla eða að Okular ætti að haga sér öðruvísi við\n"
+"þessar aðstæður ættirðu að senda villuskýrslu."
 
 #: vf.cpp:164
 #, kde-format

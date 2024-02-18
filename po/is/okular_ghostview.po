@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2015.
+# SPDX-FileCopyrightText: 2023 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_ghostview\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2015-01-29 09:07+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"PO-Revision-Date: 2023-12-20 22:07+0000\n"
+"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -23,12 +24,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Sveinn í Felli"
+msgstr "Sveinn í Felli,Guðmundur Erlingsson"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sv1@fellsnet.is"
+msgstr "sv1@fellsnet.is,gudmundure@gmail.com"
 
 #. i18n: ectx: label, entry (PlatformFonts), group (General)
 #: conf/gssettings.kcfg:9
@@ -43,14 +44,14 @@ msgid ""
 "Determines whether Ghostscript should be allowed to use platform fonts, if "
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
-"Skilgreinir hvort Ghostscript eigi að fá að nota letur kerfisins, ef ekki er "
-"eingöngu notast við það letur sem er ígrætt í viðkomandi skrá."
+"Skilgreinir hvort leyfa eigi Ghostscript að nota letur kerfisins. Ef ekki, "
+"er eingöngu notast við það letur sem er innfellt í viðkomandi skrá."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: conf/gssettingswidget.ui:28
 #, kde-format
 msgid "General Settings"
-msgstr "Almennar stillinga"
+msgstr "Almennar stillingar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_PlatformFonts)
 #: conf/gssettingswidget.ui:37
@@ -66,7 +67,7 @@ msgstr "Ghostscript"
 #: generator_ghostview.cpp:82
 #, kde-format
 msgid "Ghostscript Backend Configuration"
-msgstr "Stillingar Ghostscript bakenda"
+msgstr "Grunnstillingar Ghostscript-bakenda"
 
 #: generator_ghostview.cpp:253
 #, kde-format

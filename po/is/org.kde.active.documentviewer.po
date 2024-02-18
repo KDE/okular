@@ -2,19 +2,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sveinn í Felli <sveinki@nett.is>, 2013.
+# SPDX-FileCopyrightText: 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-19 01:33+0000\n"
-"PO-Revision-Date: 2013-04-24 21:32+0000\n"
-"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
-"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"PO-Revision-Date: 2024-01-26 20:36+0000\n"
+"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
@@ -23,106 +24,104 @@ msgstr "Bókamerki"
 
 #: package/contents/ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "Vottorðaskoðari"
 
 #: package/contents/ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
-msgstr ""
+msgstr "Útgefandi"
 
 #: package/contents/ui/CertificateViewerDialog.qml:38
 #: package/contents/ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
-msgstr ""
+msgstr "Almennt heiti:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:44
 #: package/contents/ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
-msgstr ""
+msgstr "Netfang:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:50
 #: package/contents/ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
-msgstr ""
+msgstr "Fyrirtæki/stofnun:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
-msgstr ""
+msgstr "Handhafi"
 
 #: package/contents/ui/CertificateViewerDialog.qml:89
 msgid "Validity"
-msgstr ""
+msgstr "Gildi"
 
 #: package/contents/ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
-msgstr ""
+msgstr "Gefið út:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
-msgstr ""
+msgstr "Gildir til:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
-msgstr ""
+msgstr "Fingraför"
 
 #: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
-msgstr ""
+msgstr "SHA-1 fingrafar:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
-msgstr ""
+msgstr "SHA-256 fingrafar:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
-msgstr ""
+msgstr "Flytja út..."
 
 #: package/contents/ui/CertificateViewerDialog.qml:142
 #: package/contents/ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
-msgstr ""
+msgstr "Loka"
 
 #: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "Vottorðaskrá (*.cer)"
 
 #: package/contents/ui/CertificateViewerDialog.qml:165
 #: package/contents/ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
-msgstr ""
+msgstr "Villa"
 
 #: package/contents/ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
-msgstr ""
+msgstr "Gat ekki flutt út vottorðið."
 
 #: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
 msgid "Okular"
-msgstr ""
+msgstr "Okular"
 
 #: package/contents/ui/main.qml:42
 msgid "Open..."
-msgstr ""
+msgstr "Opna..."
 
 #: package/contents/ui/main.qml:49
 msgid "About"
-msgstr ""
+msgstr "Um hugbúnaðinn"
 
 #: package/contents/ui/main.qml:106
 msgid "Password Needed"
-msgstr ""
+msgstr "Lykilorðs er krafist"
 
 #: package/contents/ui/MainView.qml:25
 msgid "Remove bookmark"
-msgstr ""
+msgstr "Fjarlægja bókamerki"
 
 #: package/contents/ui/MainView.qml:25
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Bookmark this page"
-msgstr "Bókamerki"
+msgstr "Bókamerkja þessa síðu"
 
 #: package/contents/ui/MainView.qml:82
 msgid "No document open"
-msgstr ""
+msgstr "Ekkert skjal opið"
 
 #: package/contents/ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -134,68 +133,68 @@ msgstr "Efnisyfirlit"
 
 #: package/contents/ui/OkularDrawer.qml:99
 msgid "Signatures"
-msgstr ""
+msgstr "Undirskriftir"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
-msgstr ""
+msgstr "Eiginleikar undirskrifta"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
-msgstr ""
+msgstr "Gildisstaða"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Lögmæti undirskriftar:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Breytingar á skjali:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
-msgstr ""
+msgstr "Viðbótarupplýsingar"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
-msgstr ""
+msgstr "Undirritari:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
-msgstr ""
+msgstr "Tími undirritunar:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
-msgstr ""
+msgstr "Ástæða:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
-msgstr ""
+msgstr "Staðsetning:"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
-msgstr ""
+msgstr "Útgáfa skjals"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "%1. endurskoðuð útgáfa skjals af %2"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
-msgstr ""
+msgstr "Vista undirritaða útgáfu..."
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
-msgstr ""
+msgstr "Skoða vottorð..."
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
-msgstr ""
+msgstr "Gat ekki vistað undirskriftina."
 
 #: package/contents/ui/Signatures.qml:27
 msgid "Not Available"
-msgstr ""
+msgstr "Ekki tiltækt"
 
 #: package/contents/ui/ThumbnailsBase.qml:43
 msgid "No results found."

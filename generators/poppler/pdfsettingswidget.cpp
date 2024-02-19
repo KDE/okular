@@ -33,10 +33,15 @@ QString PDFSettingsWidget::popplerEnumToSettingString(Poppler::CryptoSignBackend
 
 static QString popplerEnumToUserString(Poppler::CryptoSignBackend backend)
 {
-    // I'm unsure if we want these translatable, but if so
-    // we sholud do something here rather than forward directly to the
-    // technical popplerEnumToSettingString
-    return PDFSettingsWidget::popplerEnumToSettingString(backend);
+    switch (backend) {
+        // I'm not sure it makes sense to translate these
+        // Should the translators ask for it, it should be quite simple.
+    case Poppler::CryptoSignBackend::NSS:
+        return QStringLiteral("NSS");
+    case Poppler::CryptoSignBackend::GPG:
+        return QStringLiteral("GnuPG (S/MIME)");
+    }
+    return {};
 }
 
 std::optional<Poppler::CryptoSignBackend> PDFSettingsWidget::settingStringToPopplerEnum(QStringView backend)

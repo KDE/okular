@@ -548,6 +548,11 @@ bool PresentationWidget::eventFilter(QObject *o, QEvent *e)
 // <widget events>
 bool PresentationWidget::event(QEvent *e)
 {
+    if (e->type() == QEvent::DevicePixelRatioChange) {
+        invalidatePixmaps();
+        return QWidget::event(e);
+    }
+
     if (e->type() == QEvent::Gesture) {
         return gestureEvent(static_cast<QGestureEvent *>(e));
     }
@@ -931,15 +936,7 @@ void PresentationWidget::resizeEvent(QResizeEvent *re)
         frame->recalcGeometry(m_width, m_height, screenRatio);
     }
 
-    if (m_frameIndex != -1) {
-        // ugliness alarm!
-        const_cast<Okular::Page *>(m_frames[m_frameIndex]->page)->deletePixmap(this);
-        // force the regeneration of the pixmap
-        m_lastRenderedPixmap = QPixmap();
-        m_blockNotifications = true;
-        requestPixmaps();
-        m_blockNotifications = false;
-    }
+    invalidatePixmaps();
 
     if (m_transitionTimer->isActive()) {
         m_transitionTimer->stop();
@@ -1099,7 +1096,6 @@ void PresentationWidget::generatePage(bool disableTransition)
         qreal dpr = devicePixelRatioF();
         m_lastRenderedPixmap = QPixmap(m_width * dpr, m_height * dpr);
         m_lastRenderedPixmap.setDevicePixelRatio(dpr);
-
         m_previousPagePixmap = QPixmap();
     } else {
         m_previousPagePixmap = m_lastRenderedPixmap;
@@ -1669,6 +1665,19 @@ void PresentationWidget::clearDrawings()
         m_frames[m_frameIndex]->drawings.clear();
     }
     update();
+}
+
+void PresentationWidget::invalidatePixmaps()
+{
+    // force the regeneration of the pixmap
+    m_lastRenderedPixmap = QPixmap();
+    if (m_frameIndex != -1) {
+        // ugliness alarm!
+        const_cast<Okular::Page *>(m_frames[m_frameIndex]->page)->deletePixmap(this);
+        m_blockNotifications = true;
+        requestPixmaps();
+        m_blockNotifications = false;
+    }
 }
 
 void PresentationWidget::chooseScreen(QAction *act)

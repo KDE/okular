@@ -88,6 +88,7 @@ private:
     void generateContentsPage(int page, QPainter &p);
     void generateOverlay();
     void initTransition(const Okular::PageTransition *transition);
+    void invalidatePixmaps();
     const Okular::PageTransition defaultTransition() const;
     const Okular::PageTransition defaultTransition(int) const;
     QRect routeMouseDrawingEvent(QMouseEvent *);

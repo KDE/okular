@@ -73,9 +73,9 @@ static QColor hexToRgba(const QByteArray &name)
     return QColor(r, g, b, a);
 }
 
-static QRectF stringToRectF(const QString &data)
+static QRectF stringToRectF(QStringView data)
 {
-    QStringList numbers = data.split(QLatin1Char(','));
+    const QList<QStringView> numbers = data.split(QLatin1Char(','));
     QPointF origin(numbers.at(0).toDouble(), numbers.at(1).toDouble());
     QSizeF size(numbers.at(2).toDouble(), numbers.at(3).toDouble());
     return QRectF(origin, size);
@@ -864,8 +864,8 @@ void XpsPage::processImageBrush(XpsRenderNode &node)
     QString att;
     QBrush brush;
 
-    QRectF viewport = stringToRectF(node.attributes.value(QStringLiteral("Viewport")).toString());
-    QRectF viewbox = stringToRectF(node.attributes.value(QStringLiteral("Viewbox")).toString());
+    QRectF viewport = stringToRectF(node.attributes.value(QStringLiteral("Viewport")));
+    QRectF viewbox = stringToRectF(node.attributes.value(QStringLiteral("Viewbox")));
     QImage image = loadImageFromFile(node.attributes.value(QStringLiteral("ImageSource")).toString());
 
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewbox

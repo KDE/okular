@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-27 00:36+0000\n"
+"POT-Creation-Date: 2024-02-20 00:37+0000\n"
 "PO-Revision-Date: 2023-07-02 15:38+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -272,24 +272,24 @@ msgid ""
 "content correctly"
 msgstr "ஆவணத்தில் சில பிழைகள் இருப்பதால், ஆக்குலர் அதனை தவறாக காட்டலாம்"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "யாரிடம் வழங்கப்பட்டது"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgid "E-mail"
 msgstr "மின்னஞ்சல் முகவரி"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "காலாவதியாகும் தேதி"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:152
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -298,12 +298,12 @@ msgstr ""
 "NSS ஆதரவில்லா Poppler நிரலகத்தைப் பயன்படுத்துகிறீர்.\n"
 "அக்காரணத்தால் எண்ம கையொப்பங்களை இட முடியாது"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "Restart needed"
 msgstr "மறுதொடக்கம் தேவை"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS அடைவு அமைப்புகளை மாற்றிய பின் நீங்கள் ஆக்குலரை மீண்டும் தொடக்க வேண்டும்"

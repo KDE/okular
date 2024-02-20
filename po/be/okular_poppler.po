@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-27 00:36+0000\n"
+"POT-Creation-Date: 2024-02-20 00:37+0000\n"
 "PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -279,24 +279,24 @@ msgstr ""
 "У дакуменце знойдзены некаторыя памылкі, Okular можа няправільна паказаць "
 "змесціва"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Выдадзена"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgid "E-mail"
 msgstr "Электронная пошта"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Тэрмін дзеяння"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:152
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -305,12 +305,12 @@ msgstr ""
 "Вы выкарыстоўваеце бібліятэку Poppler, створаную без падтрымкі NSS.\n"
 "З гэтай прычыны даданне лічбавых подпісаў недаступна"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "Restart needed"
 msgstr "Патрэбны перазапуск"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Пасля змены параметраў каталога NSS трэба перазапусціць Okular"

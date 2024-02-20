@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-27 00:36+0000\n"
+"POT-Creation-Date: 2024-02-20 00:37+0000\n"
 "PO-Revision-Date: 2023-06-17 12:16+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -277,24 +277,24 @@ msgstr ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Issued to"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:130
+#: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Expiration date"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:152
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -303,12 +303,12 @@ msgstr ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "Restart needed"
 msgstr "Restart needed"
 
-#: pdfsettingswidget.cpp:188
+#: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "You need to restart Okular after changing the NSS directory settings"

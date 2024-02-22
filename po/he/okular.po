@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2024-01-26 10:27+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -5017,7 +5017,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "ניגון"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5028,7 +5028,7 @@ msgstr ""
 "ממקמים את סמן העכבר בפינה הימנית־עליונה. כמובן שניתן לעבור בין חלונות (Alt"
 "+TAB כברירת מחדל)"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

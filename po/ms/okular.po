@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2010-12-13 13:37+0800\n"
 "Last-Translator: Muhammad Najmi bin Ahmad Zabidi <najmi.zabidi@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -5204,7 +5204,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr ""
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5216,7 +5216,7 @@ msgstr ""
 "tetikus di sudut kanan atas. Sudah tentu anda boleh kitar tetingkap (Alt+TAB "
 "menurut piawai)"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt ""

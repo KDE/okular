@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2024-02-18 16:55+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -5039,7 +5039,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "தானாக முன்னே செல்"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5050,7 +5050,7 @@ msgstr ""
 "அழுத்தலாம், அல்லது மேல்-வலது ஓரத்தில் சுட்டிக்குறியை வைக்கும்போது தோன்றும் 'வெளியேறு' "
 "பட்டனை அழுத்துலாம்.வேறு சாளரங்களுக்கும் நீங்கள் செல்லலாம் (இயல்பாக Alt+TAB)."
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2024-01-13 17:24+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -5065,7 +5065,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "Reproducir"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5077,7 +5077,7 @@ msgstr ""
 "ratón en la esquina superior derecha. En todo momento puede navegar a través "
 "de las ventanas abiertas (Alt+Tab de forma predeterminada)"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

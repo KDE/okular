@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -5336,7 +5336,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "ධාවනය"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5347,7 +5347,7 @@ msgstr ""
 "තබන විට මතුවන පිටවීම් බොත්තම ක්ලික් කිරීමට හැක. ඔව් ඔබට කවුළු අතර මාරුවීමටද (පෙරනිමියෙන් Alt-"
 "TAB) හැක."
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

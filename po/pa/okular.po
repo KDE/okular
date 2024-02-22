@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2024-02-01 09:06-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -4957,7 +4957,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "ਚਲਾਓ"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -4968,7 +4968,7 @@ msgstr ""
 "ਬਟਨ ਨੂੰ ਕਲਿੱਕ ਕਰ ਸਕਦੇ ਹੋ, ਜੋ ਕਿ ਵਿਖਾਈ ਦਿੰਦਾ ਹੈ, ਜਦੋਂ ਤੁਸੀਂ ਉੱਤੇ ਸੱਜੇ ਕੋਨੇ ਵਿੱਚ ਮਾਊਂਸ ਲੈ ਕੇ ਜਾਂਦੇ ਹੋ। "
 "ਬੇਸ਼ੱਕ ਤੁਸੀਂ ਵਿੰਡੋਜ਼ ਦੇ ਵਿੱਚ ਵੀ ਜਾ ਸਕਦੇ ਹੋ (ਡਿਫਾਲਟ Alt+TAB)"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

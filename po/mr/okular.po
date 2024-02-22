@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -5338,7 +5338,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "सुरु करा"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5349,7 +5349,7 @@ msgstr ""
 "वरच्या उजव्या कोपऱ्यात माऊस ठेवून क्विट बटन आल्यावर क्लिक करू शकता. अर्थातच नेहमीच्या "
 "चौकट सायकल पध्दतीनुसार(अल्ट+टॅब)चाही वापर करू शकता"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

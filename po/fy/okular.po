@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-02-22 00:36+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -5261,7 +5261,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr ""
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5273,7 +5273,7 @@ msgstr ""
 "boppehoeke sette. Jo kinne fansels ek troch de finsters blêdzje (standert "
 "middels Alt+Tab)."
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgctxt ""

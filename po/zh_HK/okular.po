@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-26 02:27+0000\n"
+"POT-Creation-Date: 2024-02-22 02:23+0000\n"
 "PO-Revision-Date: 2006-01-10 22:45+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -5100,7 +5100,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr ""
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5110,7 +5110,7 @@ msgstr ""
 "離開簡報模式有兩個方法：按 ESC 鍵、或將滑鼠移至右上角，當「離開」按鈕出現時按"
 "下。當然你亦可將視窗循環展示（預設是 Alt+TAB）。"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt ""

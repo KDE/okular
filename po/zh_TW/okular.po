@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-26 02:27+0000\n"
+"POT-Creation-Date: 2024-02-22 02:23+0000\n"
 "PO-Revision-Date: 2023-12-02 20:09+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -4978,7 +4978,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "播放"
 
-#: part/presentationwidget.cpp:1624
+#: part/presentationwidget.cpp:1620
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -4988,7 +4988,7 @@ msgstr ""
 "有兩個方法離開展示模式。您可以按下 ESC 鍵，或是將滑鼠移到右下角然後點選「離"
 "開」。當然您也可以用 ALT+TAB 切換視窗。"
 
-#: part/presentationwidget.cpp:1707
+#: part/presentationwidget.cpp:1716
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

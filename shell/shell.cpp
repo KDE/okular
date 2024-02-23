@@ -28,7 +28,7 @@
 #include <KRecentFilesAction>
 #include <KSharedConfig>
 #include <KStandardAction>
-#ifndef Q_OS_WIN
+#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
 #include <KStartupInfo>
 #include <KWindowInfo>
 #endif
@@ -429,7 +429,7 @@ bool Shell::canOpenDocs(int numDocs, int desktop)
         return false;
     }
 
-#ifndef Q_OS_WIN
+#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
     const KWindowInfo winfo(window()->effectiveWinId(), NET::WMDesktop);
     if (winfo.desktop() != desktop) {
         return false;
@@ -705,7 +705,7 @@ void Shell::fileOpen()
 
 void Shell::tryRaise(const QString &startupId)
 {
-#ifndef Q_OS_WIN
+#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
     if (KWindowSystem::isPlatformWayland()) {
         KWindowSystem::setCurrentXdgActivationToken(startupId);
     } else if (KWindowSystem::isPlatformX11()) {

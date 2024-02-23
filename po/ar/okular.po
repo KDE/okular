@@ -4,23 +4,23 @@
 # Mohamed Aser(محمد عَصَر) <aser@arabeyes.org>,2002-10-04 11:50+0200.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Usama Akkad <uak@aya.sy>, 2008.
-# zayed <zayed.alsaidi@gmail.com>, 2008, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2008, 2021, 2022, 2023, 2024 zayed <zayed.alsaidi@gmail.com>
 # Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 02:23+0000\n"
-"PO-Revision-Date: 2023-08-19 21:43+0400\n"
+"PO-Revision-Date: 2024-02-22 14:04+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
-"Language-Team: ar\n"
+"Language-Team: Arabic <kde-i18n-ar@kde.org>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1517,11 +1517,10 @@ msgid "%1%"
 msgstr "%1٪"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "الصفحة %1"
+msgstr "الصفحة %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3124
 #, kde-format
@@ -1532,7 +1531,7 @@ msgstr "الصفحة %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -3425,8 +3424,7 @@ msgid "Find as you type"
 msgstr "اعثر وأنت تكتب"
 
 #: part/formwidgets.cpp:767
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "كلّ الملفّات (*)"
 

@@ -3214,7 +3214,27 @@ void PageView::wheelEvent(QWheelEvent *e)
 
     if ((e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier) {
         // Ctrl key is pressed, perform zoom instead of scroll
-        continuousZoom(delta);
+
+        // If left click is pressed while doing Ctrl+Wheel, we must temporarily fake a release else
+        // QScroller will ignore scrollTo calls which are are required to properly center
+        // the view on the mouse pointer instead of the middle of the viewport.
+        bool isDragging = d->scroller->state() == QScroller::Pressed || d->scroller->state() == QScroller::Dragging;
+
+        if (isDragging) {
+            d->scroller->handleInput(QScroller::InputRelease, e->position(), e->timestamp() - 1);
+        }
+
+        float newZoom = d->zoomFactor * (1.0 + (delta / 500.0));
+        zoomWithFixedCenter(ZoomRefreshCurrent, e->position(), newZoom);
+
+        if (isDragging) {
+            d->scroller->handleInput(QScroller::InputPress, e->position(), e->timestamp());
+        }
+
+        // remainingScroll is tracking the distance between where we wanted to zoom in and the real center.
+        // This error can exist because of trying to zoom out near the border of a page.
+        // With Ctrl + wheel, there is no start or end of zooming, so always reset remaningScroll.
+        d->remainingScroll = QPointF(0.0, 0.0);
         return;
     }
 

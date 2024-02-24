@@ -3211,52 +3211,56 @@ void PageView::wheelEvent(QWheelEvent *e)
 
     int delta = e->angleDelta().y(), vScroll = verticalScrollBar()->value();
     e->accept();
+
     if ((e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier) {
+        // Ctrl key is pressed, perform zoom instead of scroll
         continuousZoom(delta);
-    } else {
-        if (delta <= -QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->maximum()) {
-            // go to next page
-            if ((int)d->document->currentPage() < d->items.count() - 1) {
-                // more optimized than document->setNextPage and then move view to top
-                Okular::DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber += viewColumns();
-                if (newViewport.pageNumber >= (int)d->items.count()) {
-                    newViewport.pageNumber = d->items.count() - 1;
-                }
-                newViewport.rePos.enabled = true;
-                newViewport.rePos.normalizedY = 0.0;
-                d->document->setViewport(newViewport);
-                d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
+        return;
+    }
+
+    // Perform scroll
+    if (delta <= -QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->maximum()) {
+        // go to next page
+        if ((int)d->document->currentPage() < d->items.count() - 1) {
+            // more optimized than document->setNextPage and then move view to top
+            Okular::DocumentViewport newViewport = d->document->viewport();
+            newViewport.pageNumber += viewColumns();
+            if (newViewport.pageNumber >= (int)d->items.count()) {
+                newViewport.pageNumber = d->items.count() - 1;
             }
-        } else if (delta >= QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->minimum()) {
-            // go to prev page
-            if (d->document->currentPage() > 0) {
-                // more optimized than document->setPrevPage and then move view to bottom
-                Okular::DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber -= viewColumns();
-                if (newViewport.pageNumber < 0) {
-                    newViewport.pageNumber = 0;
-                }
-                newViewport.rePos.enabled = true;
-                newViewport.rePos.normalizedY = 1.0;
-                d->document->setViewport(newViewport);
-                d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
+            newViewport.rePos.enabled = true;
+            newViewport.rePos.normalizedY = 0.0;
+            d->document->setViewport(newViewport);
+            d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
+        }
+    } else if (delta >= QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->minimum()) {
+        // go to prev page
+        if (d->document->currentPage() > 0) {
+            // more optimized than document->setPrevPage and then move view to bottom
+            Okular::DocumentViewport newViewport = d->document->viewport();
+            newViewport.pageNumber -= viewColumns();
+            if (newViewport.pageNumber < 0) {
+                newViewport.pageNumber = 0;
+            }
+            newViewport.rePos.enabled = true;
+            newViewport.rePos.normalizedY = 1.0;
+            d->document->setViewport(newViewport);
+            d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
+        }
+    } else {
+        // When the shift key is held down, scroll ten times faster
+        int multiplier = (e->modifiers() & Qt::ShiftModifier) ? 10 : 1;
+
+        if (delta != 0 && delta % QWheelEvent::DefaultDeltasPerStep == 0) {
+            // number of scroll wheel steps Qt gives to us at the same time
+            int count = abs(delta / QWheelEvent::DefaultDeltasPerStep) * multiplier;
+            if (delta < 0) {
+                slotScrollDown(count);
+            } else {
+                slotScrollUp(count);
             }
         } else {
-            // When the shift key is held down, scroll ten times faster
-            int multiplier = (e->modifiers() & Qt::ShiftModifier) ? 10 : 1;
-
-            if (delta != 0 && delta % QWheelEvent::DefaultDeltasPerStep == 0) {
-                // number of scroll wheel steps Qt gives to us at the same time
-                int count = abs(delta / QWheelEvent::DefaultDeltasPerStep) * multiplier;
-                if (delta < 0) {
-                    slotScrollDown(count);
-                } else {
-                    slotScrollUp(count);
-                }
-            } else {
-                d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() * multiplier, 0);
-            }
+            d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() * multiplier, 0);
         }
     }
 }

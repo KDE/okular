@@ -5,13 +5,13 @@
 # obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2023-03-09 13:35+0300\n"
+"PO-Revision-Date: 2024-02-24 22:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -45,9 +45,9 @@ msgid ""
 msgstr ""
 "<qt><p>Okular bilgisayarınızda <em>dvipdfm</em> programının yerini "
 "belirleyemedi. Bu program dışa aktarım işlevinin çalışması için önemlidir. "
-"Yine de, Okular'ın yazdırma işlevini kullanarak DVI dosyasını PDF biçimine "
+"Yine de, Okular’ın yazdırma işlevini kullanarak DVI dosyasını PDF biçimine "
 "dönüştürebilirsiniz. Bu genelde yazdırıldığında makul ancak Acrobat "
-"Reader'da görüntülendiğinde oldukça kalitesiz olan belgeler üretecektir. TeX "
+"Reader’da görüntülendiğinde oldukça kalitesiz olan belgeler üretecektir. TeX "
 "dağıtımınızı <em>dvipdfm</em> programını içeren daha güncel bir sürüme "
 "güncellemeniz akıllıca olabilir.</p><p>Kafası karışık sistem yöneticisi için "
 "ip ucu: Okular, programları ararken PATH çevre değişkenini kullanır.</p></qt>"
@@ -60,9 +60,9 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>Dosyayı dışa aktarmak için kullanıla harici 'dvipdfm' programıbir hata "
+"<qt>Dosyayı dışa aktarmak için kullanıla harici ‘dvipdfm’ programı bir hata "
 "bildirdi. Dosya menüsünde belirli bir hata raporu bulacağınız <strong>belge "
-"bilgi diyaloguna</strong> bakmak isteyebilirsiniz.</qt>"
+"bilgisi iletişim kutusuna</strong> bakmak isteyebilirsiniz.</qt>"
 
 #: dviexport.cpp:168
 #, kde-format
@@ -73,10 +73,10 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
-"<qt>Bu DVI dosyası, PostScript biçiminde olmayan ve Okular'ın dahili olarak "
+"<qt>Bu DVI dosyası, PostScript biçiminde olmayan ve Okular’ın dahili olarak "
 "yazdırma veya PostScript olarak dışa aktarma için kullandığı <em>dvips</em> "
-"programı tarafından ele alınamayan harici grafik dosyalarına atıfta bulunur. "
-"Gereksinim duyduğunuz işlevsellik bu nedenle Okular'ın bu sürümünde mevcut "
+"programı tarafından ele alınamayan dış grafik dosyalarına atıfta bulunur. "
+"Gereksinim duyduğunuz işlevsellik bu nedenle Okular’ın bu sürümünde mevcut "
 "değildir.</qt>"
 
 #: dviexport.cpp:176
@@ -100,9 +100,9 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>Dosyayı dışa aktaracak 'dvips' dış programı bir hata bildirdi. Daha "
-"kesin bilgi için Dosya Menüsünden <strong>belge bilgileri</strong> "
-"penceresine bakabilirsiniz.</qt>"
+"<qt>Dosyayı dışa aktaracak ‘dvips’ dış programı bir hata bildirdi. Daha "
+"kesin bilgi için Dosya Menüsünden <strong>belge bilgisi iletişim kutusuna</"
+"strong> bakabilirsiniz.</qt>"
 
 #: dviFile.cpp:91
 #, kde-format
@@ -158,15 +158,15 @@ msgid ""
 "em> %2</p></qt>"
 msgstr ""
 "<qt><p><strong>pdf2ps</strong> dış programı başlatılamadı. Sonuç olarak, %1 "
-"PDF dosyası PostScript'e dönüştürülemedi. Belgenizdeki bazı grafik ögeleri "
+"PDF dosyası PostScript’e dönüştürülemedi. Belgenizdeki bazı grafik ögeleri "
 "bu nedenle görüntülenmeyecek.</p><p><b>Olası neden:</b> <strong>pdf2ps</"
 "strong> programı sisteminizde kurulu olmayabilir veya geçerli arama yolunda "
 "bulunmayabilir.</p><p><b>Ne yapabilirsiniz:</b><strong>pdf2ps</strong> "
-"programı normalde ghostscript PostScript yorumlayıcı sistemi dağıtımlarına "
-"dahil edilir. Eğer ghostscript sisteminizde kurulu değilse şimdi "
-"kurabilirsiniz. Eğer ghostscript'in kurulu olduğundan eminseniz gerçekten "
-"çalışıp çalışmadığını denetlemek için <strong>pdf2ps</strong>programını "
-"komut satırından kullanmayı deneyin.</p><p><em>YOL:</em> %2</p></qt>"
+"programı normalde ghostscript PostScript yorumlayıcı sistemi dağıtımlarında "
+"içerilir. Eğer ghostscript sisteminizde kurulu değilse şimdi kurabilirsiniz. "
+"Eğer ghostscript’in kurulu olduğundan eminseniz gerçekten çalışıp "
+"çalışmadığını denetlemek için <strong>pdf2ps</strong>programını komut "
+"satırından kullanmayı deneyin.</p><p><em>YOL:</em> %2</p></qt>"
 
 #: dviFile.cpp:410
 #, kde-format
@@ -177,9 +177,9 @@ msgid ""
 "This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
 "p><p><strong>%2</strong></p></qt>"
 msgstr ""
-"<qt><p>%1 PDF dosyası PostScript'e dönüştülemedi. Belgenizdeki bazı grafik "
+"<qt><p>%1 PDF dosyası PostScript’e dönüştülemedi. Belgenizdeki bazı grafik "
 "unsurları bu nedenle görüntülenemeyecek.</p><p><b>Olası neden:</b>%1 dosyası "
-"bozuk olabilir veya bir PDF dosyası olmayabilir. Bu, Okular'ın kullandığı "
+"bozuk olabilir veya bir PDF dosyası olmayabilir. Bu, Okular’ın kullandığı "
 "<strong>pdf2ps</strong> programının çıktısıdır:</p><p><strong>%2</strong></"
 "p></qt>"
 
@@ -201,7 +201,7 @@ msgstr "Tüm harici PostScript dosyaları belgenize gömüldü."
 #: dviRenderer.cpp:419
 #, kde-format
 msgid "The specified file '%1' does not exist."
-msgstr "Belirtilen '%1' dosyası mevcut değil."
+msgstr "Belirtilen ‘%1’ dosyası yok."
 
 #: dviRenderer.cpp:565
 #, kde-format
@@ -210,7 +210,7 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
-"Okular'ın TeX dosyası %2 içindeki %1 satırına ait DVI dosyasındaki konumu "
+"Okular’ın TeX dosyası %2 içindeki %1 satırına ait DVI dosyasındaki konumu "
 "bulmasını istediniz. Görünüyor ki bu DVI dosyası gerekli kaynak dosyası "
 "bilgisini içermiyor. "
 
@@ -269,7 +269,7 @@ msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
 msgstr ""
-"Sayfa %1: PDF dosyası <strong>%2</strong> PostScript'e dönüştürülemedi.<br>"
+"Sayfa %1: PDF dosyası <strong>%2</strong> PostScript’e dönüştürülemedi.<br>"
 
 #: dviRenderer_prescan.cpp:107
 #, kde-format
@@ -280,7 +280,7 @@ msgstr "Sayfa %1: PostScript dosyası <strong>%2</strong> bulunamadı.<br>"
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "Kağıt büyüklüğü verisi '%1' ayrıştırılamadı."
+msgstr "Kağıt büyüklüğü verisi ‘%1’ ayrıştırılamadı."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -322,7 +322,7 @@ msgstr ""
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr "Şimdi %1 yazıtipi %2 dpi ile oluşturuluyor..."
+msgstr "Şu anda %1 yazıtipi %2 DPI ile üretiliyor…"
 
 #: generator_dvi.cpp:287
 #, kde-format
@@ -351,7 +351,7 @@ msgid ""
 "any of the Ghostview device drivers that are known to Okular. PostScript "
 "support has therefore been turned off in Okular."
 msgstr ""
-"Bu bilgisayarda kurulu olan Ghostview sürümü, Okular'ın tanıdığı Ghostview "
+"Bu bilgisayarda kurulu olan Ghostview sürümü, Okular’ın tanıdığı Ghostview "
 "aygıt sürücülerinden hiçbirini içermiyor. PostScript desteği bu nedenle "
 "Okular içerisinde kapatılmıştır."
 
@@ -366,8 +366,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"'%1' DVI dosyası Sayfa %2 konumunda hata. Renkli pop komutu renk yığını "
-"boşken kullanıldı."
+"‘%1’ DVI dosyası %2. sayfasında hata. Renk çıkar komutu renk yığını boşken "
+"kullanıldı."
 
 #: special.cpp:318
 #, kde-format
@@ -393,13 +393,13 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
-"Sayfa %2, '%1' DVI dosyasında hata. Metin döndürme özelliğinde açı "
+"‘%1’ DVI dosyası %2. sayfasında hata. Metin döndürme özelliğinde açı "
 "yorumlanamadı."
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "Özel komut %1 henüz yazılmadı."
+msgstr "‘%1’ özel komutu henüz gerçeklenmedi."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
@@ -525,8 +525,8 @@ msgstr ""
 "ya da DVI dosyasının veya destek dosyalarının (yazıtipi dosyaları, \n"
 "veya sanal yazıtipi dosyaları gibi) gerçekten kötü bir şekilde\n"
 "bozuk oldukları anlamına gelir. Okular bu iletiden sonra durdurulacaktır. \n"
-"Eğer bir hata bulduğunuza veya Okular'ın bu durumda daha iyi davranması\n"
-"gerektiğine sinanıyorsanız lütfen sorunu bildirin."
+"Eğer bir hata bulduğunuza veya Okular’ın bu durumda daha iyi davranması\n"
+"gerektiğine inanıyorsanız lütfen sorunu bildirin."
 
 #: vf.cpp:164
 #, kde-format

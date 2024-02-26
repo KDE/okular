@@ -154,7 +154,7 @@ if (BUILD_DESKTOP)
     else()
         set(HAVE_DBUS 0)
     endif()
-    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts Crash IconThemes TextWidgets)
+    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes ItemViews TextWidgets WidgetsAddons)
 
     find_package(KF6Purpose)
     set_okular_optional_package_properties(KF6Purpose PROPERTIES

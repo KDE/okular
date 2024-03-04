@@ -258,16 +258,16 @@ bool Page::hasTextPage() const
     return d->m_text != nullptr;
 }
 
-RegularAreaRect *Page::wordAt(const NormalizedPoint &p, QString *word) const
+std::unique_ptr<RegularAreaRect> Page::wordAt(const NormalizedPoint &p) const
 {
     if (d->m_text) {
-        return d->m_text->wordAt(p, word);
+        return d->m_text->wordAt(p);
     }
 
     return nullptr;
 }
 
-RegularAreaRect *Page::textArea(TextSelection *selection) const
+std::unique_ptr<RegularAreaRect> Page::textArea(const TextSelection &selection) const
 {
     if (d->m_text) {
         return d->m_text->textArea(selection);
@@ -626,16 +626,13 @@ void PagePrivate::setHighlight(int s_id, RegularAreaRect *rect, const QColor &co
     m_page->m_highlights.append(hr);
 }
 
-void PagePrivate::setTextSelections(RegularAreaRect *r, const QColor &color)
+void PagePrivate::setTextSelections(const RegularAreaRect &r, const QColor &color)
 {
     deleteTextSelections();
-    if (r) {
-        HighlightAreaRect *hr = new HighlightAreaRect(r);
-        hr->s_id = -1;
-        hr->color = color;
-        m_textSelections = hr;
-        delete r;
-    }
+    HighlightAreaRect *hr = new HighlightAreaRect(&r);
+    hr->s_id = -1;
+    hr->color = color;
+    m_textSelections = hr;
 }
 
 void Page::setSourceReferences(const QList<SourceRefObjectRect *> &refRects)

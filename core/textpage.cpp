@@ -273,10 +273,10 @@ private:
     QRect m_area;
 };
 
-RegularAreaRect *TextPage::textArea(TextSelection *sel) const
+std::unique_ptr<RegularAreaRect> TextPage::textArea(const TextSelection &sel) const
 {
     if (d->m_words.isEmpty()) {
-        return new RegularAreaRect();
+        return std::make_unique<RegularAreaRect>();
     }
 
     /**
@@ -293,15 +293,15 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
         To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
         or that has a left border >= cx and bottom border >= cy.
     */
-    RegularAreaRect *ret = new RegularAreaRect;
+    auto ret = std::make_unique<RegularAreaRect>();
 
     PagePrivate *pagePrivate = PagePrivate::get(d->m_page);
     const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
     const double scaleX = d->m_page->width();
     const double scaleY = d->m_page->height();
 
-    NormalizedPoint startC = sel->start();
-    NormalizedPoint endC = sel->end();
+    NormalizedPoint startC = sel.start();
+    NormalizedPoint endC = sel.end();
 
     // if startPoint is right to endPoint swap them
     if (startC.x > endC.x) {
@@ -1689,7 +1689,7 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
     return ret;
 }
 
-RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
+std::unique_ptr<RegularAreaRect> TextPage::wordAt(const NormalizedPoint &p) const
 {
     TextEntity::List::ConstIterator itBegin = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     TextEntity::List::ConstIterator it = itBegin;
@@ -1729,7 +1729,7 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
                 break;
             }
         }
-        RegularAreaRect *ret = new RegularAreaRect();
+        auto ret = std::make_unique<RegularAreaRect>();
         QString foundWord;
         for (; posIt != itEnd; ++posIt) {
             const QString itText = posIt->text();
@@ -1746,9 +1746,6 @@ RegularAreaRect *TextPage::wordAt(const NormalizedPoint &p, QString *word) const
             }
         }
 
-        if (word) {
-            *word = foundWord;
-        }
         return ret;
     } else {
         return nullptr;

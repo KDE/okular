@@ -93,8 +93,8 @@ public:
     QVariant capability(ViewCapability capability) const override;
     void setCapability(ViewCapability capability, const QVariant &option) override;
 
-    QList<Okular::RegularAreaRect *> textSelections(const QPoint start, const QPoint end, int &firstpage);
-    Okular::RegularAreaRect *textSelectionForItem(const PageViewItem *item, const QPoint startPoint = QPoint(), const QPoint endPoint = QPoint());
+    std::vector<std::unique_ptr<Okular::RegularAreaRect>> textSelections(const QPoint start, const QPoint end, int &firstpage);
+    std::unique_ptr<Okular::RegularAreaRect> textSelectionForItem(const PageViewItem *item, const QPoint startPoint = QPoint(), const QPoint endPoint = QPoint());
 
     void reparseConfig();
 

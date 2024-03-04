@@ -215,12 +215,12 @@ public:
      * @see TextPage::wordAt()
      * @since 0.15 (KDE 4.9)
      */
-    RegularAreaRect *wordAt(const NormalizedPoint &p, QString *word = nullptr) const;
+    std::unique_ptr<RegularAreaRect> wordAt(const NormalizedPoint &p) const;
 
     /**
      * Returns the rectangular area of the given @p selection.
      */
-    RegularAreaRect *textArea(TextSelection *selection) const;
+    std::unique_ptr<RegularAreaRect> textArea(const TextSelection &selection) const;
 
     /**
      * Returns the object rect of the given @p type which is at point (@p x, @p y) at scale (@p xScale, @p yScale).

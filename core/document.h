@@ -592,7 +592,7 @@ public:
      * @param rect The rectangle of the selection.
      * @param color The color of the selection.
      */
-    void setPageTextSelection(int page, RegularAreaRect *rect, const QColor &color);
+    void setPageTextSelection(int page, std::unique_ptr<RegularAreaRect> &&rect, const QColor &color);
 
     /**
      * Returns true if there is an undo command available; otherwise returns false.

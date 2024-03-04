@@ -1140,9 +1140,9 @@ void PageView::copyTextSelection() const
 void PageView::selectAll()
 {
     for (const PageViewItem *item : std::as_const(d->items)) {
-        Okular::RegularAreaRect *area = textSelectionForItem(item);
+        std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
         d->pagesWithTextSelection.insert(item->pageNumber());
-        d->document->setPageTextSelection(item->pageNumber(), area, palette().color(QPalette::Active, QPalette::Highlight));
+        d->document->setPageTextSelection(item->pageNumber(), std::move(area), palette().color(QPalette::Active, QPalette::Highlight));
     }
 }
 
@@ -3230,10 +3230,10 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
             if (d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect) {
                 textSelectionClear();
 
-                Okular::RegularAreaRect *wordRect = pageItem->page()->wordAt(Okular::NormalizedPoint(nX, nY));
+                std::unique_ptr<Okular::RegularAreaRect> wordRect = pageItem->page()->wordAt(Okular::NormalizedPoint(nX, nY));
                 if (wordRect) {
                     // TODO words with hyphens across pages
-                    d->document->setPageTextSelection(pageItem->pageNumber(), wordRect, palette().color(QPalette::Active, QPalette::Highlight));
+                    d->document->setPageTextSelection(pageItem->pageNumber(), std::move(wordRect), palette().color(QPalette::Active, QPalette::Highlight));
                     d->pagesWithTextSelection << pageItem->pageNumber();
                     if (d->document->isAllowed(Okular::AllowCopy)) {
                         const QString text = d->selectedText();
@@ -3380,10 +3380,10 @@ void PageView::scrollContentsBy(int dx, int dy)
 }
 // END widget events
 
-QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, const QPoint end, int &firstpage)
+std::vector<std::unique_ptr<Okular::RegularAreaRect>> PageView::textSelections(const QPoint start, const QPoint end, int &firstpage)
 {
     firstpage = -1;
-    QList<Okular::RegularAreaRect *> ret;
+    std::vector<std::unique_ptr<Okular::RegularAreaRect>> ret;
     QSet<int> affectedItemsSet;
     QRect selectionRect = QRect::span(start, end);
     for (const PageViewItem *item : std::as_const(d->items)) {
@@ -3427,25 +3427,25 @@ QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, co
         if (affectedItemsIds.count() == 1) {
             PageViewItem *item = d->items[affectedItemsIds.first()];
             selectionRect.translate(-item->uncroppedGeometry().topLeft());
-            ret.append(textSelectionForItem(item, direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(), direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight()));
+            ret.push_back(textSelectionForItem(item, direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(), direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight()));
         } else if (affectedItemsIds.count() > 1) {
             // first item
             PageViewItem *first = d->items[affectedItemsIds.first()];
             QRect geom = first->croppedGeometry().intersected(selectionRect).translated(-first->uncroppedGeometry().topLeft());
-            ret.append(textSelectionForItem(first, selectionRect.bottom() > geom.height() ? (direction_ne_sw ? geom.topRight() : geom.topLeft()) : (direction_ne_sw ? geom.bottomRight() : geom.bottomLeft()), QPoint()));
+            ret.push_back(textSelectionForItem(first, selectionRect.bottom() > geom.height() ? (direction_ne_sw ? geom.topRight() : geom.topLeft()) : (direction_ne_sw ? geom.bottomRight() : geom.bottomLeft()), QPoint()));
             // last item
             PageViewItem *last = d->items[affectedItemsIds.last()];
             geom = last->croppedGeometry().intersected(selectionRect).translated(-last->uncroppedGeometry().topLeft());
             // the last item needs to appended at last...
-            Okular::RegularAreaRect *lastArea =
+            std::unique_ptr<Okular::RegularAreaRect> lastArea =
                 textSelectionForItem(last, QPoint(), selectionRect.bottom() > geom.height() ? (direction_ne_sw ? geom.bottomLeft() : geom.bottomRight()) : (direction_ne_sw ? geom.topLeft() : geom.topRight()));
             affectedItemsIds.removeFirst();
             affectedItemsIds.removeLast();
             // item between the two above
             for (const int page : std::as_const(affectedItemsIds)) {
-                ret.append(textSelectionForItem(d->items[page]));
+                ret.push_back(textSelectionForItem(d->items[page]));
             }
-            ret.append(lastArea);
+            ret.push_back(std::move(lastArea));
         }
     }
     return ret;
@@ -3770,9 +3770,9 @@ void PageView::updateSelection(const QPoint pos)
     } else if (d->mouseTextSelecting) {
         scrollPosIntoView(pos);
         int first = -1;
-        const QList<Okular::RegularAreaRect *> selections = textSelections(pos, d->mouseSelectPos.toPoint(), first);
+        std::vector<std::unique_ptr<Okular::RegularAreaRect>> selections = textSelections(pos, d->mouseSelectPos.toPoint(), first);
         QSet<int> pagesWithSelectionSet;
-        for (int i = 0; i < selections.count(); ++i) {
+        for (size_t i = 0; i < selections.size(); ++i) {
             pagesWithSelectionSet.insert(i + first);
         }
 
@@ -3783,7 +3783,7 @@ void PageView::updateSelection(const QPoint pos)
         }
         // set the new selection for the selected pages
         for (int p : std::as_const(pagesWithSelectionSet)) {
-            d->document->setPageTextSelection(p, selections[p - first], palette().color(QPalette::Active, QPalette::Highlight));
+            d->document->setPageTextSelection(p, std::move(selections[p - first]), palette().color(QPalette::Active, QPalette::Highlight));
         }
         d->pagesWithTextSelection = pagesWithSelectionSet;
     }
@@ -3811,7 +3811,7 @@ static Okular::NormalizedPoint rotateInNormRect(const QPoint rotated, const QRec
     return ret;
 }
 
-Okular::RegularAreaRect *PageView::textSelectionForItem(const PageViewItem *item, const QPoint startPoint, const QPoint endPoint)
+std::unique_ptr<Okular::RegularAreaRect> PageView::textSelectionForItem(const PageViewItem *item, const QPoint startPoint, const QPoint endPoint)
 {
     const QRect &geometry = item->uncroppedGeometry();
     Okular::NormalizedPoint startCursor(0.0, 0.0);
@@ -3830,7 +3830,7 @@ Okular::RegularAreaRect *PageView::textSelectionForItem(const PageViewItem *item
         d->document->requestTextPage(okularPage->number());
     }
 
-    Okular::RegularAreaRect *selectionArea = okularPage->textArea(&mouseTextSelectionInfo);
+    std::unique_ptr<Okular::RegularAreaRect> selectionArea = okularPage->textArea(mouseTextSelectionInfo);
 #ifdef PAGEVIEW_DEBUG
     qCDebug(OkularUiDebug).nospace() << "text areas (" << okularPage->number() << "): " << (selectionArea ? QString::number(selectionArea->count()) : QStringLiteral("(none)"));
 #endif
@@ -5400,10 +5400,9 @@ void PageView::slotSpeakDocument()
 {
     QString text;
     for (const PageViewItem *item : std::as_const(d->items)) {
-        Okular::RegularAreaRect *area = textSelectionForItem(item);
-        text.append(item->page()->text(area));
+        std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
+        text.append(item->page()->text(area.get()));
         text.append(QLatin1Char('\n'));
-        delete area;
     }
 
     d->tts()->say(text);
@@ -5414,9 +5413,8 @@ void PageView::slotSpeakCurrentPage()
     const int currentPage = d->document->viewport().pageNumber;
 
     PageViewItem *item = d->items.at(currentPage);
-    Okular::RegularAreaRect *area = textSelectionForItem(item);
-    const QString text = item->page()->text(area);
-    delete area;
+    std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
+    const QString text = item->page()->text(area.get());
 
     d->tts()->say(text);
 }
@@ -5579,9 +5577,9 @@ void PageView::slotSelectPage()
     PageViewItem *item = d->items.at(currentPage);
 
     if (item) {
-        Okular::RegularAreaRect *area = textSelectionForItem(item);
+        std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
         d->pagesWithTextSelection.insert(currentPage);
-        d->document->setPageTextSelection(currentPage, area, palette().color(QPalette::Active, QPalette::Highlight));
+        d->document->setPageTextSelection(currentPage, std::move(area), palette().color(QPalette::Active, QPalette::Highlight));
     }
 }
 

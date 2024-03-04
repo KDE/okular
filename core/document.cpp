@@ -3624,7 +3624,7 @@ bool DocumentPrivate::canRemoveExternalAnnotations() const
     return false;
 }
 
-void Document::setPageTextSelection(int page, RegularAreaRect *rect, const QColor &color)
+void Document::setPageTextSelection(int page, std::unique_ptr<RegularAreaRect> &&rect, const QColor &color)
 {
     Page *kp = d->m_pagesVector[page];
     if (!d->m_generator || !kp) {
@@ -3633,7 +3633,7 @@ void Document::setPageTextSelection(int page, RegularAreaRect *rect, const QColo
 
     // add or remove the selection basing whether rect is null or not
     if (rect) {
-        kp->d->setTextSelections(rect, color);
+        kp->d->setTextSelections(*rect, color);
     } else {
         kp->d->deleteTextSelections();
     }

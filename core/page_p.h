@@ -95,7 +95,7 @@ public:
      * @param r Areas of new text selections.
      * @param color Color of new text selections.
      */
-    void setTextSelections(RegularAreaRect *r, const QColor &color);
+    void setTextSelections(const RegularAreaRect &r, const QColor &color);
 
     /**
      * Sets the @p color and @p rect of the highlight for the observer with

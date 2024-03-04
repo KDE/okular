@@ -186,12 +186,12 @@ public:
      * Note that ownership of the returned area belongs to the caller.
      * @since 0.15 (KDE 4.9)
      */
-    RegularAreaRect *wordAt(const NormalizedPoint &p, QString *word = nullptr) const;
+    std::unique_ptr<RegularAreaRect> wordAt(const NormalizedPoint &p) const;
 
     /**
      * Returns the rectangular area of the given @p selection.
      */
-    RegularAreaRect *textArea(TextSelection *selection) const;
+    std::unique_ptr<RegularAreaRect> textArea(const TextSelection &selection) const;
 
 private:
     TextPagePrivate *const d;

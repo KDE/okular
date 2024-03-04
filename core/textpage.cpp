@@ -302,13 +302,10 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
 
     NormalizedPoint startC = sel->start();
     NormalizedPoint endC = sel->end();
-    NormalizedPoint temp;
 
     // if startPoint is right to endPoint swap them
     if (startC.x > endC.x) {
-        temp = startC;
-        startC = endC;
-        endC = temp;
+        std::swap(startC, endC);
     }
 
     // minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document

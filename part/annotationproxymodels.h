@@ -84,7 +84,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void rebuildIndexes();
-    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
+    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles);
 
 private:
     bool mGroupByPage;
@@ -134,7 +134,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void rebuildIndexes();
-    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
+    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles);
 
 private:
     class Private;

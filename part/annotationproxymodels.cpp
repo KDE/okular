@@ -259,7 +259,7 @@ void PageGroupProxyModel::rebuildIndexes()
     endResetModel();
 }
 
-void PageGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+void PageGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles)
 {
     Q_EMIT dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
@@ -660,7 +660,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
     endResetModel();
 }
 
-void AuthorGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+void AuthorGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles)
 {
     Q_EMIT dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }

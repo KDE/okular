@@ -238,7 +238,7 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
         }
     }
     Q_EMIT changed(pageNumber);
-    for (auto page : extraPages) {
+    for (auto page : std::as_const(extraPages)) {
         Q_EMIT changed(page);
     }
 }

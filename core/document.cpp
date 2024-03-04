@@ -2342,7 +2342,7 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType &type, QWi
         // sort the offers: the offers with an higher priority come before
         auto cmp = [](const KPluginMetaData &s1, const KPluginMetaData &s2) {
             const QString property = QStringLiteral("X-KDE-Priority");
-            return s1.rawData()[property].toInt() > s2.rawData()[property].toInt();
+            return s1.rawData().value(property).toInt() > s2.rawData().value(property).toInt();
         };
         std::stable_sort(offers.begin(), offers.end(), cmp);
 
@@ -4723,7 +4723,7 @@ QVector<KPluginMetaData> DocumentPrivate::configurableGenerators()
     const QVector<KPluginMetaData> available = availableGenerators();
     QVector<KPluginMetaData> result;
     for (const KPluginMetaData &md : available) {
-        if (md.rawData()[QStringLiteral("X-KDE-okularHasInternalSettings")].toBool()) {
+        if (md.rawData().value(QStringLiteral("X-KDE-okularHasInternalSettings")).toBool()) {
             result << md;
         }
     }

@@ -155,6 +155,11 @@ public:
         return prebookmarks;
     }
 
+    const QVector<DVI_SourceFileAnchor> &sourceAnchors()
+    {
+        return sourceHyperLinkAnchors;
+    }
+
 Q_SIGNALS:
     /**
      * The following three signals are modeleed on the corresponding signals
@@ -176,11 +181,6 @@ public Q_SLOTS:
     virtual void getText(RenderedDocumentPagePixmap *page);
 
     SimplePageSize sizeOfPage(const PageNumber page);
-
-    const QVector<DVI_SourceFileAnchor> &sourceAnchors()
-    {
-        return sourceHyperLinkAnchors;
-    }
 
 private Q_SLOTS:
     /** This method shows a dialog that tells the user that source

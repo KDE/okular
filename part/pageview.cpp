@@ -3832,7 +3832,7 @@ Okular::RegularAreaRect *PageView::textSelectionForItem(const PageViewItem *item
 
     Okular::RegularAreaRect *selectionArea = okularPage->textArea(&mouseTextSelectionInfo);
 #ifdef PAGEVIEW_DEBUG
-    qCDebug(OkularUiDebug).nospace() << "text areas (" << okularPage->number() << "): " << (selectionArea ? QString::number(selectionArea->count()) : "(none)");
+    qCDebug(OkularUiDebug).nospace() << "text areas (" << okularPage->number() << "): " << (selectionArea ? QString::number(selectionArea->count()) : QStringLiteral("(none)"));
 #endif
     return selectionArea;
 }

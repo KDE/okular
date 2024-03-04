@@ -85,7 +85,7 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             }
         }
         int selected = -1;
-        for (auto backend : backends) {
+        for (auto backend : std::as_const(backends)) {
             if (backend == currentBackend) {
                 selected = m_pdfsw.kcfg_SignatureBackend->count();
             }

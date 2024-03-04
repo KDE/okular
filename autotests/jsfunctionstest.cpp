@@ -349,7 +349,7 @@ private Q_SLOTS:
 private:
     static void processQMenuToJS(QMenu *menu, QJsonArray &array)
     {
-        QList<QAction *> actions = menu->actions();
+        const QList<QAction *> actions = menu->actions();
 
         for (QAction *action : actions) {
             QMenu *itMenu = action->menu();

@@ -180,7 +180,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     m_topBar->setObjectName(QStringLiteral("presentationBar"));
     m_topBar->setMovable(false);
     m_topBar->layout()->setContentsMargins(0, 0, 0, 0);
-    m_topBar->addAction(QIcon::fromTheme(layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-next") : QStringLiteral("go-previous")), i18n("Previous Page"), this, SLOT(slotPrevPage()));
+    m_topBar->addAction(QIcon::fromTheme(layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-next") : QStringLiteral("go-previous")), i18n("Previous Page"), this, &PresentationWidget::slotPrevPage);
     m_pagesEdit = new KLineEdit(m_topBar);
     QSizePolicy sp = m_pagesEdit->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Minimum);
@@ -197,7 +197,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     pagesLabel->setText(QLatin1String(" / ") + QString::number(m_document->pages()) + QLatin1String(" "));
     m_topBar->addWidget(pagesLabel);
     connect(m_pagesEdit, &QLineEdit::returnPressed, this, &PresentationWidget::slotPageChanged);
-    m_topBar->addAction(QIcon::fromTheme(layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-previous") : QStringLiteral("go-next")), i18n("Next Page"), this, SLOT(slotNextPage()));
+    m_topBar->addAction(QIcon::fromTheme(layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-previous") : QStringLiteral("go-next")), i18n("Next Page"), this, &PresentationWidget::slotNextPage);
     m_topBar->addSeparator();
     QAction *playPauseAct = collection->action(QStringLiteral("presentation_play_pause"));
     playPauseAct->setEnabled(true);
@@ -236,7 +236,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     QWidget *spacer = new QWidget(m_topBar);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
     m_topBar->addWidget(spacer);
-    m_topBar->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Exit Presentation Mode"), this, SLOT(close()));
+    m_topBar->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Exit Presentation Mode"), this, &PresentationWidget::close);
     m_topBar->setAutoFillBackground(true);
     showTopBar(false);
     // change topbar background color

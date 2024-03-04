@@ -251,7 +251,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->playPauseAction = new QAction(d->controlBar);
     d->controlBar->addAction(d->playPauseAction);
     d->setupPlayPauseAction(Private::PlayMode);
-    d->stopAction = d->controlBar->addAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18nc("stop the movie playback", "Stop"), this, SLOT(stop()));
+    d->stopAction = d->controlBar->addAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18nc("stop the movie playback", "Stop"), this, &VideoWidget::stop);
     d->stopAction->setEnabled(false);
     d->controlBar->addSeparator();
     d->seekSlider = new Phonon::SeekSlider(d->player->mediaObject(), d->controlBar);

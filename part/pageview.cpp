@@ -3385,7 +3385,7 @@ QList<Okular::RegularAreaRect *> PageView::textSelections(const QPoint start, co
     firstpage = -1;
     QList<Okular::RegularAreaRect *> ret;
     QSet<int> affectedItemsSet;
-    QRect selectionRect = QRect(start, end).normalized();
+    QRect selectionRect = QRect::span(start, end);
     for (const PageViewItem *item : std::as_const(d->items)) {
         if (item->isVisible() && selectionRect.intersects(item->croppedGeometry())) {
             affectedItemsSet.insert(item->pageNumber());

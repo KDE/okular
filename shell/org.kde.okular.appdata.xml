@@ -57,56 +57,6 @@
   <name xml:lang="zh-CN">Okular 文档查看器</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>View and annotate documents</summary>
-  <summary xml:lang="ar">عارض المستندات</summary>
-  <summary xml:lang="az">Sənədə baxış vasitısi</summary>
-  <summary xml:lang="be">Сродак для прагляду дакументаў</summary>
-  <summary xml:lang="bg">Преглед на документи</summary>
-  <summary xml:lang="ca">Visualitzador de documents</summary>
-  <summary xml:lang="ca-valencia">Visor de documents</summary>
-  <summary xml:lang="cs">Prohlížeč dokumentů</summary>
-  <summary xml:lang="de">Dokumentenbetrachter</summary>
-  <summary xml:lang="el">Πρόγραμμα προβολής εγγράφων</summary>
-  <summary xml:lang="en-GB">Document Viewer</summary>
-  <summary xml:lang="eo">Dokumentrigardilo</summary>
-  <summary xml:lang="es">Visor de documentos</summary>
-  <summary xml:lang="et">Dokumendinäitaja</summary>
-  <summary xml:lang="eu">Dokumentu erakuslea</summary>
-  <summary xml:lang="fi">Asiakirjakatselin</summary>
-  <summary xml:lang="fr">Afficheur de documents</summary>
-  <summary xml:lang="gl">Visor de documentos.</summary>
-  <summary xml:lang="he">מציג מסמכים</summary>
-  <summary xml:lang="hi">दस्तावेज़ प्रदर्शक</summary>
-  <summary xml:lang="hu">Dokumentummegjelenítő</summary>
-  <summary xml:lang="ia">Visor de documento</summary>
-  <summary xml:lang="id">Penampil Dokumen</summary>
-  <summary xml:lang="ie">Visor de documentes</summary>
-  <summary xml:lang="it">Visore di documenti</summary>
-  <summary xml:lang="ka">დოკუმენტების მნახველი</summary>
-  <summary xml:lang="ko">문서 뷰어</summary>
-  <summary xml:lang="lt">Dokumentų žiūryklė</summary>
-  <summary xml:lang="lv">Dokumentu skatītājs</summary>
-  <summary xml:lang="nl">Documentenviewer</summary>
-  <summary xml:lang="nn">Dokumentvisar</summary>
-  <summary xml:lang="pa">ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ</summary>
-  <summary xml:lang="pl">Przeglądarka dokumentów</summary>
-  <summary xml:lang="pt">Visualizador do Documento</summary>
-  <summary xml:lang="pt-BR">Visualizador de documentos</summary>
-  <summary xml:lang="ro">Vizualizor de documente</summary>
-  <summary xml:lang="ru">Просмотр документов</summary>
-  <summary xml:lang="sk">Prehliadač dokumentov</summary>
-  <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
-  <summary xml:lang="sr">Приказивач докумената</summary>
-  <summary xml:lang="sr-Latn">Prikazivač dokumenata</summary>
-  <summary xml:lang="sr-ijekavian">Приказивач докумената</summary>
-  <summary xml:lang="sr-ijekavianlatin">Prikazivač dokumenata</summary>
-  <summary xml:lang="sv">Dokumentvisare</summary>
-  <summary xml:lang="ta">ஆவணங் காட்டி</summary>
-  <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
-  <summary xml:lang="uk">Програма для перегляду документів</summary>
-  <summary xml:lang="vi">Trình xem tài liệu</summary>
-  <summary xml:lang="x-test">xxDocument Viewerxx</summary>
-  <summary xml:lang="zh-CN">文档查看器</summary>
-  <summary xml:lang="zh-TW">文件檢視器</summary>
   <description>
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.

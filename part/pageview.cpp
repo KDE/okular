@@ -5084,7 +5084,9 @@ void PageView::slotSetMouseNormal()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseZoom()
@@ -5096,7 +5098,9 @@ void PageView::slotSetMouseZoom()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseMagnifier()
@@ -5108,7 +5112,9 @@ void PageView::slotSetMouseMagnifier()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseSelect()
@@ -5120,7 +5126,9 @@ void PageView::slotSetMouseSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseTextSelect()
@@ -5132,7 +5140,9 @@ void PageView::slotSetMouseTextSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseTableSelect()
@@ -5144,7 +5154,9 @@ void PageView::slotSetMouseTableSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-    d->annotator->detachAnnotation();
+    if (d->annotator) {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::showNoSigningCertificatesDialog(bool nonDateValidCerts)

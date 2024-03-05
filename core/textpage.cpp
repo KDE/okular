@@ -187,17 +187,18 @@ void TextPage::append(const QString &text, const NormalizedRect &area)
     if (!text.isEmpty()) {
         if (!d->m_words.isEmpty()) {
             TextEntity &lastEntity = d->m_words.last();
-            const QString concatText = lastEntity.text() + text.normalized(QString::NormalizationForm_KC);
-            if (concatText != concatText.normalized(QString::NormalizationForm_KC)) {
+            // Unicode Normalization Form KC (NFKC) may alter characters, for example ⑥ to 6, so we use NFC
+            const QString concatText = lastEntity.text() + text.normalized(QString::NormalizationForm_C);
+            if (concatText != concatText.normalized(QString::NormalizationForm_C)) {
                 // If this happens it means that the new text + old one have combined, for example A and ◌̊  form Å
                 NormalizedRect newArea = area | lastEntity.area();
                 d->m_words.removeLast();
-                d->m_words.append(TextEntity(concatText.normalized(QString::NormalizationForm_KC), newArea));
+                d->m_words.append(TextEntity(concatText.normalized(QString::NormalizationForm_C), newArea));
                 return;
             }
         }
 
-        d->m_words.append(TextEntity(text.normalized(QString::NormalizationForm_KC), area));
+        d->m_words.append(TextEntity(text.normalized(QString::NormalizationForm_C), area));
     }
 }
 
@@ -661,6 +662,7 @@ RegularAreaRect *TextPagePrivate::searchPointToArea(const SearchPoint *sp)
 RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QString &_query, TextComparisonFunction comparer, TextEntity::List::ConstIterator start, int start_offset, TextEntity::List::ConstIterator end)
 {
     // normalize query search all unicode (including glyphs)
+    // Use NFKC for search operations. Use NFC for copy, makeWord, and export operations.
     const QString query = _query.normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
@@ -675,7 +677,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
 
     while (it != end) {
         const TextEntity &curEntity = *it;
-        const QString &str = curEntity.text();
+        const QString &str = curEntity.text().normalized(QString::NormalizationForm_KC);
         const int strLen = str.length();
         const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
         // adjustedLen <= strLen
@@ -761,6 +763,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalForward(int searchID, const QS
 RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const QString &_query, TextComparisonFunction comparer, TextEntity::List::ConstIterator start, int start_offset, TextEntity::List::ConstIterator end)
 {
     // normalize query to search all unicode (including glyphs)
+    // Use NFKC for search operations. Use NFC for copy, makeWord, and export operations.
     const QString query = _query.normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
@@ -783,7 +786,7 @@ RegularAreaRect *TextPagePrivate::findTextInternalBackward(int searchID, const Q
         }
 
         const TextEntity &curEntity = *it;
-        const QString &str = curEntity.text();
+        const QString &str = curEntity.text().normalized(QString::NormalizationForm_KC);
         const int strLen = str.length();
         const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
         // adjustedLen <= strLen
@@ -982,10 +985,10 @@ static WordsWithCharacters makeWordFromCharacters(const TextEntity::List &charac
                 // when textString is the start of the word
                 if (tmpIt == it) {
                     NormalizedRect newRect(lineArea, pageWidth, pageHeight);
-                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
+                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_C), newRect));
                 } else {
                     NormalizedRect newRect(elementArea, pageWidth, pageHeight);
-                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_KC), newRect));
+                    wordCharacters.append(TextEntity(textString.normalized(QString::NormalizationForm_C), newRect));
                 }
             }
 
@@ -1030,7 +1033,7 @@ static WordsWithCharacters makeWordFromCharacters(const TextEntity::List &charac
         // if newString is not empty, save it
         if (!newString.isEmpty()) {
             const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
-            TextEntity word = TextEntity(newString.normalized(QString::NormalizationForm_KC), newRect);
+            TextEntity word = TextEntity(newString.normalized(QString::NormalizationForm_C), newRect);
             wordsWithCharacters.append(WordWithCharacters(word, wordCharacters));
         }
 

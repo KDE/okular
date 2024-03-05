@@ -1691,7 +1691,7 @@ bool PDFGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
             userMutex()->lock();
             std::unique_ptr<Poppler::Page> pp = pdfdoc->page(i);
             if (pp) {
-                text = pp->text(QRect()).normalized(QString::NormalizationForm_KC);
+                text = pp->text(QRect()).normalized(QString::NormalizationForm_C);
             }
             userMutex()->unlock();
             ts << text;

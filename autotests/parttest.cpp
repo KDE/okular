@@ -68,6 +68,7 @@ private Q_SLOTS:
     void testForwardPDF_data();
     void testGeneratorPreferences();
     void testSelectText();
+    void testSelectTextMultiline();
     void testClickInternalLink();
     void testScrollBarAndMouseWheel();
     void testOpenUrlArguments();
@@ -292,6 +293,67 @@ void PartTest::testSelectText()
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
 
     QCOMPARE(QApplication::clipboard()->text(), QStringLiteral("Hola que tal"));
+}
+
+void PartTest::testSelectTextMultiline()
+{
+    // This test tests a specific variation of multiline selection
+    // Select from middle to end of line, then continue to select next line
+    // then move selection back on next line past the point of the first line
+    // https://bugs.kde.org/show_bug.cgi?id=482249 has a nice animation.
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.m_document->setViewportPage(1);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const int startY = height * 0.052;
+    const int startX = width * 0.22;
+    const int endY = height * 0.072;
+    const int endX = width * 0.6;
+
+    const int steps = 5;
+    const double diffX = endX - startX;
+    const double diffXStep = diffX / steps;
+
+    QTestEventList events;
+    events.addMouseMove(QPoint(startX, startY));
+    events.addMousePress(Qt::LeftButton, Qt::NoModifier, QPoint(startX, startY));
+    for (int i = 0; i < steps - 1; ++i) {
+        events.addMouseMove(QPoint(startX + i * diffXStep, startY));
+        events.addDelay(100);
+    }
+    events.addMouseMove(QPoint(endX, startY));
+    events.addDelay(100);
+    events.addMouseMove(QPoint(endX, endY));
+    events.addDelay(100);
+    for (int i = 0; i < (steps); i++) {
+        events.addMouseMove(QPoint(endX - (i * diffXStep), endY));
+        events.addDelay(100);
+    }
+    events.addMouseMove(QPoint(endX - (diffXStep * (steps)), endY));
+    events.addDelay(100);
+    events.addMouseMove(QPoint(endX - (diffXStep * (steps + 0.5)), endY));
+    events.addDelay(100);
+
+    events.addMouseRelease(Qt::LeftButton, Qt::NoModifier, QPoint(endX - (diffXStep * (steps + 0.5)), endY));
+
+    events.simulate(part.m_pageView->viewport());
+
+    QApplication::clipboard()->clear();
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
+
+    QCOMPARE(QApplication::clipboard()->text(), QStringLiteral("cks!\nOf c"));
 }
 
 void PartTest::testClickInternalLink()

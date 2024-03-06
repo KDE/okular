@@ -43,6 +43,9 @@ Converter::~Converter()
 
 QTextDocument *Converter::convert(const QString &fileName)
 {
+    if (m_markdownFile) {
+        fclose(m_markdownFile);
+    }
     m_markdownFile = fopen(fileName.toLocal8Bit().constData(), "rb");
     if (!m_markdownFile) {
         Q_EMIT error(i18n("Failed to open the document"), -1);

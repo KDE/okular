@@ -39,3 +39,4 @@ Options:
   cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'
   cppcheck-ignore-files:
     - autotests
+    - core/synctex/synctex_parser.c

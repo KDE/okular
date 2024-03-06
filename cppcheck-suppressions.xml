@@ -40,7 +40,9 @@
 <fileName>core/textdocumentgenerator.h</fileName>
 <symbolName>d_func</symbolName>
 </suppress>
+<!-- generic -->
 <suppress>
 <id>useStlAlgorithm</id>
 </suppress>
+<!-- embedded 3rdparty -->
 </suppressions>

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:36+0000\n"
+"POT-Creation-Date: 2024-03-06 00:37+0000\n"
 "PO-Revision-Date: 2024-01-26 10:27+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -3807,27 +3807,27 @@ msgstr "חיפוש אחר ‚%1’ במסמך הזה"
 msgid "Welcome"
 msgstr "ברוך בואך"
 
-#: part/pageview.cpp:5095
+#: part/pageview.cpp:5097
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "בחירת אזור להגדלה. לחיצה ימנית להקטנה."
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "לחיצה תעביר לתצוגה המוגדלת."
 
-#: part/pageview.cpp:5119
+#: part/pageview.cpp:5125
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "יש לצייר מלבן סביב הטקסט/הגרפיקה להעתקה."
 
-#: part/pageview.cpp:5131
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select text"
 msgstr "בחירת טקסט"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3836,14 +3836,14 @@ msgstr ""
 "יש לצייר מלבן סביב הטבלה, לאחר מכן ללחוץ ליד הקצבות כדי לחלק לחלקים קטנםי "
 "יותר, Esc לפינוי."
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5165
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "כל אישורי החתימה שלך לא תקפים עדיין או שתאריך התפוגה שלהם חלף."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3853,17 +3853,17 @@ msgstr ""
 "אין אישורים זמינים לחתימה.<br/>למידע נוסף, נא לקרוא את הסעיף <a href="
 "\"%1\">הוספת חתימות דיגיטליות</a> במדריך."
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5184
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "יש שינויים שלא שמרת. נא לשמור את המסמך טרם חתימתו."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5200
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "יש לצייר ריבוע כדי להוסיף את שדה החתימה"
 
-#: part/pageview.cpp:5332
+#: part/pageview.cpp:5344
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "נא לצייר מרובע סביב האזור בעמוד שברצונך להשאיר גלוי"

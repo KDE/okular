@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:36+0000\n"
+"POT-Creation-Date: 2024-03-06 00:37+0000\n"
 "PO-Revision-Date: 2023-02-21 18:58+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -3830,28 +3830,28 @@ msgstr "Hľadať '%1' v tomto dokumente"
 msgid "Welcome"
 msgstr "Vitajte"
 
-#: part/pageview.cpp:5095
+#: part/pageview.cpp:5097
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Vyberte oblasť, ktorú chcete zväčšiť. Pravým kliknutím oblasť zmenšíte."
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite na zobrazenie zväčšenia zobrazenia."
 
-#: part/pageview.cpp:5119
+#: part/pageview.cpp:5125
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Okolo kopírovaného textu/grafiky urobte myšou obdĺžnik."
 
-#: part/pageview.cpp:5131
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select text"
 msgstr "Vyberte text"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3860,7 +3860,7 @@ msgstr ""
 "Nakreslite obdĺžnik okolo tabuľky, potom kliknite vedľa okrajov na "
 "rozdelenie; Esc na vyčistenie."
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5165
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3869,7 +3869,7 @@ msgstr ""
 "Všetky vaše podpisové certifikáty buď ešte nie sú platné, alebo sú po dátume "
 "ich platnosti."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3880,17 +3880,17 @@ msgstr ""
 "nájdete v časti o <a href=\"%1\">Pridávaní digitálnych podpisov</a> v "
 "príručke."
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5184
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Máte neuložené zmeny. Pred podpísaním dokument uložte."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5200
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Nakresliť obdĺžnik na vloženie pola podpisu"
 
-#: part/pageview.cpp:5332
+#: part/pageview.cpp:5344
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

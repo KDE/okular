@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:36+0000\n"
+"POT-Creation-Date: 2024-03-06 00:37+0000\n"
 "PO-Revision-Date: 2024-01-13 22:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3818,29 +3818,29 @@ msgstr "'%1' İfadesini Bu Belgede Ara"
 msgid "Welcome"
 msgstr "Hoş Geldiniz"
 
-#: part/pageview.cpp:5095
+#: part/pageview.cpp:5097
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Yakınlaştırılacak alanı seçin. Uzaklaşmak için farenin sağ düğmesine "
 "tıklayın."
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Büyütülmüş görünümü görmek için tıklayın."
 
-#: part/pageview.cpp:5119
+#: part/pageview.cpp:5125
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Kopyalamak için metnin/grafiğin etrafına bir dikdörtgen çizin."
 
-#: part/pageview.cpp:5131
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select text"
 msgstr "Metin seç"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3849,7 +3849,7 @@ msgstr ""
 "Tablonun etrafına bir dikdörtgen çizin, kenarlıkların yanına tıklayarak "
 "ayırın, temizlemek için Esc düğmesine basın."
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5165
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3858,7 +3858,7 @@ msgstr ""
 "Tüm imza sertifikalarınız ya henüz geçerli değil ya da geçerlilik tarihleri "
 "geçmiş."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3868,18 +3868,18 @@ msgstr ""
 "Kullanılabilir bir imza sertifikası yok.<br/>Ek bilgi için kullanım "
 "kılavuzundaki <a href=\"%1\">Sayısal İmza Ekleme</a> bölümüne bakın."
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5184
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Kaydedilmemiş değişiklikleriniz var. Belgeyi imzalamadan önce kaydedin."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5200
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "İmza alanını eklemek için bir dikdörtgen çizin"
 
-#: part/pageview.cpp:5332
+#: part/pageview.cpp:5344
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

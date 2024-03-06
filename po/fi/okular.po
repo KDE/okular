@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:36+0000\n"
+"POT-Creation-Date: 2024-03-06 00:37+0000\n"
 "PO-Revision-Date: 2024-02-14 19:07+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3845,27 +3845,27 @@ msgstr "Etsi ”%1” tästä tiedostosta"
 msgid "Welcome"
 msgstr "Tervetuloa"
 
-#: part/pageview.cpp:5095
+#: part/pageview.cpp:5097
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Valitse lähennysalue. Loitonna hiiren oikealla painikkeella."
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Napsauta nähdäksesi suurennetun alueen."
 
-#: part/pageview.cpp:5119
+#: part/pageview.cpp:5125
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Kopioi tekstiä tai grafiikkaa valitsemalla ne."
 
-#: part/pageview.cpp:5131
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select text"
 msgstr "Valitse teksti"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3874,7 +3874,7 @@ msgstr ""
 "Piirrä suorakulmio taulukon ympärille, ja jaa se sitten sarakkeisiin "
 "napsauttamalla lähellä reunoja. Poista valinta painamalla Esc."
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5165
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3883,7 +3883,7 @@ msgstr ""
 "Kaikki allekirjoitusvarmenteet eivät joko ole vielä voimassa tai ovat jo "
 "vanhentuneet."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3894,18 +3894,18 @@ msgstr ""
 "käyttöoppaan osiosta <a href=\"%1\">Digitaalisten allekirjoitusten "
 "lisääminen</a>."
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5184
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Muutoksia on tallentamatta. Tallenna tiedosto ennen sen allekirjoitusta."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5200
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Piirrä nelikulmio allekirjoituskenttää varten"
 
-#: part/pageview.cpp:5332
+#: part/pageview.cpp:5344
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Piirrä suorakaide sivualueen ympärille, jonka haluat pitää näkyvissä"

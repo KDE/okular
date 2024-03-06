@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:36+0000\n"
+"POT-Creation-Date: 2024-03-06 00:37+0000\n"
 "PO-Revision-Date: 2024-02-01 09:06-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -3772,41 +3772,41 @@ msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ '%1' ਲੱਭੋ"
 msgid "Welcome"
 msgstr "ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: part/pageview.cpp:5095
+#: part/pageview.cpp:5097
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "ਜ਼ੂਮ ਕਰਨ ਖੇਤਰ ਚੁਣੋ। ਜ਼ੂਮ ਕਰਨ ਸੱਜਾ ਬਟਨ ਦਬਾਉ।"
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "ਵੱਡਦਰਸ਼ੀ ਝਲਕ ਵੇਖਣ ਲਈ ਕਲਿੱਕ ਕਰੋ।"
 
-#: part/pageview.cpp:5119
+#: part/pageview.cpp:5125
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ਲਿਖਤ/ਗਰਾਫਿਕਸ ਦੀ ਕਾਪੀ ਕਰਨ ਲਈ ਆਇਤ ਬਣਾਓ।"
 
-#: part/pageview.cpp:5131
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select text"
 msgstr "ਲਿਖਤ ਚੁਣੋ"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5153
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr "ਟੇਬਲ ਦੁਆਲੇ ਆਇਤ ਬਣਾਓ, ਵੰਡਣ ਲਈ ਕੋਨੇ ਦੇ ਨੇੜੇ ਕਲਿੱਕ ਕਰੋ; ਸਾਫ਼ ਕਰਨ ਲਈ Esc ਦੱਬੋ।"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5165
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3814,18 +3814,18 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5184
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "ਤੁਹਾਡੇ ਕੋਲ ਕੁਝ ਨਾ-ਸੰਭਾਲੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ। ਇਸ ਉੱਤੇ ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਭਾਲੋ।"
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5200
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ਦਸਤਖ਼ਤ ਖੇਤਰ ਜੋੜਨ ਲਈ ਚੌਰਸ ਖਾਨਾ ਵਾਹੋ"
 
-#: part/pageview.cpp:5332
+#: part/pageview.cpp:5344
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ਸਫ਼ੇ ਦੇ ਖੇਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਦਿਖਾਈ ਦਿੰਦਾ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਦੁਆਲੇ ਆਇਤ ਵਾਹੋ"

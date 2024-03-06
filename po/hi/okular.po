@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 02:23+0000\n"
+"POT-Creation-Date: 2024-03-06 02:17+0000\n"
 "PO-Revision-Date: 2021-08-22 12:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -3989,27 +3989,27 @@ msgstr "इस दस्तावेज़ में %1 को ढूंढे�
 msgid "Welcome"
 msgstr "सुस्वागतम"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5100
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "जूमिंग क्षेत्र चुनें. ज़ूम-आउट होने के लिए क्लिक करें."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5113
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5128
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "नक़ल करने के लिए पाठ/चित्र के चारों ओर एक आयताकार बनाएँ."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5142
 #, kde-format
 msgid "Select text"
 msgstr "पाठ चुनें"
 
-#: part/pageview.cpp:5146
+#: part/pageview.cpp:5156
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid ""
@@ -4017,14 +4017,14 @@ msgid ""
 "Esc to clear."
 msgstr "नक़ल करने के लिए पाठ/चित्र के चारों ओर एक आयताकार बनाएँ."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5159
+#: part/pageview.cpp:5171
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4032,17 +4032,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5203
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5335
+#: part/pageview.cpp:5347
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

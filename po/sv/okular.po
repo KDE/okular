@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 02:23+0000\n"
+"POT-Creation-Date: 2024-03-06 02:17+0000\n"
 "PO-Revision-Date: 2023-10-20 20:29+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -3808,27 +3808,27 @@ msgstr "Sök efter '%1' i det här dokument"
 msgid "Welcome"
 msgstr "Välkommen"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5100
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Välj zoomområde. Högerklicka för att zooma ut."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5113
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klicka för att se den förstorade vyn."
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5128
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Rita en rektangel omkring text eller grafik att kopiera."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5142
 #, kde-format
 msgid "Select text"
 msgstr "Markera text"
 
-#: part/pageview.cpp:5146
+#: part/pageview.cpp:5156
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3837,7 +3837,7 @@ msgstr ""
 "Rita en rektangel omkring tabellen, klicka därefter nära kanter för att dela "
 "upp. Tryck på Esc för att rensa."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3846,7 +3846,7 @@ msgstr ""
 "Alla dina signeringscertifikat är antingen inte giltiga ännu eller har "
 "passerat sina giltighetsdatum."
 
-#: part/pageview.cpp:5159
+#: part/pageview.cpp:5171
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3857,17 +3857,17 @@ msgstr ""
 "information, se avsnittet <a href=\"%1\">Lägga till digitala signaturer</a> "
 "i handboken."
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Du har osparade ändringar. Spara dokumentet innan det signeras."
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5203
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Rita en rektangel för att infoga signaturfältet"
 
-#: part/pageview.cpp:5335
+#: part/pageview.cpp:5347
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Rita en rektangel omkring området på sidan som ska förbli synligt"

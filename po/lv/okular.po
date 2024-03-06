@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 02:23+0000\n"
+"POT-Creation-Date: 2024-03-06 02:17+0000\n"
 "PO-Revision-Date: 2024-01-07 12:10+0200\n"
 "Last-Translator: Māris Nartišs <maris.kde@gmail.com>\n"
 "Language-Team: \n"
@@ -3819,29 +3819,29 @@ msgstr "Meklēt „%1“ šajā dokumentā"
 msgid "Welcome"
 msgstr "Laipni lūdzam"
 
-#: part/pageview.cpp:5098
+#: part/pageview.cpp:5100
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Izvēlieties tālummaiņas apgabalu. Ar peles labās pogas klikšķi varat "
 "attālināt (samazināt)."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5113
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klikšķiniet, lai skatītu palielinātu skatu."
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5128
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Apvelciet taisnstūri ap tekstu/grafiku, ko vēlaties nokopēt."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5142
 #, kde-format
 msgid "Select text"
 msgstr "Iezīmēt tekstu"
 
-#: part/pageview.cpp:5146
+#: part/pageview.cpp:5156
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3850,7 +3850,7 @@ msgstr ""
 "Apvelciet taisnstūri ap tabulu, tad noklikšķiniet netālu no malām, lai "
 "veiktu sadalīšanu; nospiediet „Esc“, lai notīrītu."
 
-#: part/pageview.cpp:5156
+#: part/pageview.cpp:5168
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3859,7 +3859,7 @@ msgstr ""
 "Atļaut parakstīt sertifikātus, kas vai nu nav derīgi, vai arī ar izbeigušos "
 "derīguma termiņu."
 
-#: part/pageview.cpp:5159
+#: part/pageview.cpp:5171
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3869,18 +3869,18 @@ msgstr ""
 "Nav pieejami paraksta sertifikāti<br/>Lai iegūtu vairāk informācijas, lasiet "
 "rokasgrāmatas sadaļu <a href=\"%1\">Digitālo parakstu pievienošana</a>"
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Jums ir nesaglabātas izmaiņas. Pirms parakstīšanas dokuments ir jāsaglabā."
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5203
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Iezīmējiet četrstūri, lai ievietotu paraksta lauciņu"
 
-#: part/pageview.cpp:5335
+#: part/pageview.cpp:5347
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Apvelciet taisnstūri ap vietu lapā, kuru vēlaties paturēt redzamu"

@@ -57,6 +57,17 @@
   <name xml:lang="zh-CN">Okular 文档查看器</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>View and annotate documents</summary>
+  <summary xml:lang="ca">Visualitzeu i anoteu documents</summary>
+  <summary xml:lang="es">Ver y anotar documentos</summary>
+  <summary xml:lang="eu">Dokumentuak ikusi eta idatzoarrak gehitu</summary>
+  <summary xml:lang="he">הצגה והוספת הסברים על מסמכים</summary>
+  <summary xml:lang="ia">Vide e annota documentos</summary>
+  <summary xml:lang="ka">დოკუმენტების დათვალიერება და ანოტაცია</summary>
+  <summary xml:lang="nl">Documenten bekijken en annoteren</summary>
+  <summary xml:lang="sl">Oglejte si in označite dokumente</summary>
+  <summary xml:lang="tr">Belgeleri görüntüle ve not ekle</summary>
+  <summary xml:lang="uk">Перегляд і анотування документів</summary>
+  <summary xml:lang="x-test">xxView and annotate documentsxx</summary>
   <description>
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.

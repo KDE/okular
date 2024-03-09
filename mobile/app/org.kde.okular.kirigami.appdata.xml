@@ -27,6 +27,7 @@
   <name xml:lang="hu">Okular Mobile</name>
   <name xml:lang="ia">Okular Mobile</name>
   <name xml:lang="id">Okular Mobile</name>
+  <name xml:lang="is">Okular fyrir farsíma</name>
   <name xml:lang="it">Okular Mobile</name>
   <name xml:lang="ka">Okular მობილურზე</name>
   <name xml:lang="ko">Okular 모바일</name>
@@ -74,6 +75,7 @@
   <summary xml:lang="hu">Dokumentummegjelenítő</summary>
   <summary xml:lang="ia">Visor de documento</summary>
   <summary xml:lang="id">Penampil Dokumen</summary>
+  <summary xml:lang="is">Skjalaskoðari</summary>
   <summary xml:lang="it">Visore di documenti</summary>
   <summary xml:lang="ka">დოკუმენტების მნახველი</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
@@ -122,6 +124,7 @@
     <p xml:lang="hu">Az Okulat a KDE által fejlesztett univerzális dokumentummegjelenítő. Számos platformon elérhető, többek között Linuxon, Windowson, Mac OS X-en, BSD rendszereken, stb.</p>
     <p xml:lang="ia">Okular es un visor universal de documento disveloppate per KDE. Okular functiona sur platteformas multiple includente sed non limitate a Linux,Windows, MacOS X, *BSD, etc.</p>
     <p xml:lang="id">Okular adalah penampil dokumen universal yang dikembangkan oleh KDE. Okular bekerja pada banyak platform, termasuk tetapi tidak terbatas pada Linux, Windows, Mac OS X, *BSD, dll.</p>
+    <p xml:lang="is">Okular er skjalaskoðari frá KDE. Okular er til fyrir ýmis stýrikerfi, þ.á m. (en ekki bara) Linux, Windows, Mac OS X, *BSD, o.fl.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
     <p xml:lang="ka">Okular დოკუმენტების უნივერსალური დამთვალიერებელია KDE-სგან. Okular ბევრ პლატფორმაზე მუშაობს. მაგ: Linux, Windows, Mac OS X, *BSD და სხვა.</p>
     <p xml:lang="ko">Okular는 KDE에서 개발한 문서 뷰어입니다. 리눅스, Windows, macOS, *BSD 등 다양한 플랫폼에서 사용할 수 있습니다.</p>
@@ -169,6 +172,7 @@
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
+    <p xml:lang="is">Eiginleikar:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
@@ -214,6 +218,7 @@
       <li xml:lang="hu">Támogatott formátumok: PDF, PS, Tiff, CHM, DjVu, képek, DVI, XPS, FictionBook, képregények, Plucker, EPub, Fax</li>
       <li xml:lang="ia">Formtos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Citra, DVI, XPS, Buku Fiksi, Buku Komik, Plucker, EPub, Fax</li>
+      <li xml:lang="is">Studd snið: PDF, PS, Tiff, CHM, DjVu, myndir, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, CHM, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
@@ -259,6 +264,7 @@
       <li xml:lang="hu">Oldalsáv tartalomjegyzékkel, előnézettel, értékelésekkel és könyvjelzőkkel</li>
       <li xml:lang="ia">Barra lateral con  contentos, miniaturas, revisiones e marcatores de libro</li>
       <li xml:lang="id">Bilah sisi dengan konten, gambar-mini, ulasan, dan markah</li>
+      <li xml:lang="is">Hliðarstika með innihaldi skjala, smámyndum, ummælum og bókamerkjum</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
       <li xml:lang="ka">გვერდითი პანელი შემცველობით, მინიატურებით, გადახედვებით და სანიშნებით</li>
       <li xml:lang="ko">목차, 섬네일, 검토 및 책갈피 도구가 있는 사이드바</li>
@@ -305,6 +311,7 @@
       <li xml:lang="hu">Jegyzetek támogatása</li>
       <li xml:lang="ia">Supporto de annotationes</li>
       <li xml:lang="id">Dukungan anotasi</li>
+      <li xml:lang="is">Glósur</li>
       <li xml:lang="it">Supporto per annotazioni</li>
       <li xml:lang="ka">ანოტაციების მხარდაჭერა</li>
       <li xml:lang="ko">주석 지원</li>
@@ -355,6 +362,7 @@
       <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>
       <caption xml:lang="id">Petunjuk di Okular</caption>
+      <caption xml:lang="is">Handbókin lesin í Okular</caption>
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>
       <caption xml:lang="ka">კითხვის სახელმძღვანელო Okular- ში</caption>
       <caption xml:lang="ko">Okular로 설명서 읽기</caption>

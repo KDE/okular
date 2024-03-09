@@ -27,6 +27,7 @@
   <name xml:lang="hu">EPub</name>
   <name xml:lang="ia">EPub</name>
   <name xml:lang="ie">EPub</name>
+  <name xml:lang="is">EPub</name>
   <name xml:lang="it">EPub</name>
   <name xml:lang="ka">EPub</name>
   <name xml:lang="ko">EPub</name>
@@ -77,6 +78,7 @@
   <summary xml:lang="hu">Támogatás e-könyvek olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger E-libros</summary>
   <summary xml:lang="ie">Adjunte li supporte de letion de e-libres</summary>
+  <summary xml:lang="is">Bætir við stuðningi til að lesa rafbækur</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato EPub</summary>
   <summary xml:lang="ka">ელწიგნის კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">전자책 읽기 지원 추가</summary>

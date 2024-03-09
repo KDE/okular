@@ -27,6 +27,7 @@
   <name xml:lang="hu">FictionBook</name>
   <name xml:lang="ia">Fiction Book</name>
   <name xml:lang="ie">FictionBook</name>
+  <name xml:lang="is">FictionBook</name>
   <name xml:lang="it">FictionBook</name>
   <name xml:lang="ka">FictionBook</name>
   <name xml:lang="ko">FictionBook</name>
@@ -77,6 +78,7 @@
   <summary xml:lang="hu">Támogatás FictionBookok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger FictionBooks</summary>
   <summary xml:lang="ie">Adjunter li supporte de letion de libres FictionBook</summary>
+  <summary xml:lang="is">Bætir við stuðningi til að lesa FictionBook-snið</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in formato FictionBooks</summary>
   <summary xml:lang="ka">FictionBooks-ის კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">FictionBook 읽기 지원 추가</summary>

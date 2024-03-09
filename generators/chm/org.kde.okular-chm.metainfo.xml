@@ -26,6 +26,7 @@
   <name xml:lang="hi">सीएचएम दस्तावेज़</name>
   <name xml:lang="hu">CHM-dokumentumok</name>
   <name xml:lang="ia">Documentos CHM</name>
+  <name xml:lang="is">CHM-skjöl</name>
   <name xml:lang="it">Documenti CHM</name>
   <name xml:lang="ka">CHM დოკუმენტები</name>
   <name xml:lang="ko">CHM 문서</name>
@@ -75,6 +76,7 @@
   <summary xml:lang="hi">सीएचएम दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás CHM-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos CHM</summary>
+  <summary xml:lang="is">Bætir við stuðningi til að lesa CHM-skjöl</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti CHM</summary>
   <summary xml:lang="ka">CHM დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">CHM 문서 읽기 지원 추가</summary>

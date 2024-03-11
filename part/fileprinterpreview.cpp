@@ -79,7 +79,7 @@ void FilePrinterPreviewPrivate::getPart()
         return;
     }
 
-    auto result = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(KPluginMetaData(QStringLiteral("okularpart")), q, QVariantList() << QStringLiteral("Print/Preview"));
+    auto result = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(KPluginMetaData(QStringLiteral("kf6/parts/okularpart")), q, QVariantList() << QStringLiteral("Print/Preview"));
 
     if (!result) {
         qCWarning(OkularUiDebug) << "Part creation failed" << result.errorText;

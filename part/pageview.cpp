@@ -2088,10 +2088,12 @@ void PageView::keyPressEvent(QKeyEvent *e)
     }
 
     // move/scroll page by using keys
+    // When the shift key is held down, scroll ten times faster
+    int stepsize = e->modifiers() & Qt::ShiftModifier ? 10 : 1;
     switch (e->key()) {
     case Qt::Key_J:
     case Qt::Key_Down:
-        slotScrollDown(1 /* go down 1 step */);
+        slotScrollDown(stepsize /* go down 1 step */);
         break;
 
     case Qt::Key_PageDown:
@@ -2100,7 +2102,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
 
     case Qt::Key_K:
     case Qt::Key_Up:
-        slotScrollUp(1 /* go up 1 step */);
+        slotScrollUp(stepsize /* go up 1 step */);
         break;
 
     case Qt::Key_PageUp:
@@ -2115,7 +2117,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
             int next_page = d->document->currentPage() - viewColumns();
             d->document->setViewportPage(next_page);
         } else {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(-horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(-stepsize * horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
         }
         break;
     case Qt::Key_Right:
@@ -2125,7 +2127,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
             int next_page = d->document->currentPage() + viewColumns();
             d->document->setViewportPage(next_page);
         } else {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(stepsize * horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
         }
         break;
     case Qt::Key_Escape:

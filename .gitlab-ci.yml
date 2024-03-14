@@ -47,32 +47,20 @@ build_clazy_clang_tidy:
     KDECI_CACHE_PATH: /mnt/artifacts/suse-qq6.6/
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt6.6
-    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch,no-no-module-include,no-strict-iterators,no-lambda-unique-connection
+    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,
     CXXFLAGS: -Werror -Wno-deprecated-declarations
     CC: clang
     CXX: clazy
   script:
     - git config --global --add safe.directory $CI_PROJECT_DIR
     - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt5/Shared --only-setup-environment
-    # Default UI
     - mkdir -p /tmp/okular_build
     - cd /tmp/okular_build
-    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
+    - cmake -DOKULAR_UI=both -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
     - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
     - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
     - cp "$CI_PROJECT_DIR/.clang-tidy" .
     - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h" ninja -k 0
-    - run-clang-tidy
-    - rm -rf *
-    # Mobile UI
-    - echo "Now compiling the mobile UI"
-    - mkdir -p /tmp/okular_build
-    - cd /tmp/okular_build
-    - cmake -DOKULAR_UI=mobile -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
-    - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
-    - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
-    - cp "$CI_PROJECT_DIR/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_mobile.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h" ninja -k 0
     - run-clang-tidy
 
 clang_format:

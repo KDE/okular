@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 00:37+0000\n"
+"POT-Creation-Date: 2024-03-15 00:37+0000\n"
 "PO-Revision-Date: 2023-08-01 21:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -1567,8 +1567,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopier til utklippstavla"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
-#: part/pageview.cpp:3076
+#: part/pageview.cpp:2557 part/pageview.cpp:2877 part/pageview.cpp:3021
+#: part/pageview.cpp:3078
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM forbyr kopiering"
@@ -3681,90 +3681,90 @@ msgid_plural " Loaded a %1-page document."
 msgstr[0] " Lasta inn eit éisides dokument."
 msgstr[1] " Lasta inn eit %1-sides dokument."
 
-#: part/pageview.cpp:2550
+#: part/pageview.cpp:2552
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopier tabellinhald til utklippstavla"
 
-#: part/pageview.cpp:2869
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Tekst (1 teikn)"
 msgstr[1] "Tekst (%1 teikn)"
 
-#: part/pageview.cpp:2870 part/pageview.cpp:2888
+#: part/pageview.cpp:2872 part/pageview.cpp:2890
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopier til utklippstavla"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3071
+#: part/pageview.cpp:2881 part/pageview.cpp:3073
 #, kde-format
 msgid "Speak Text"
 msgstr "Les opp teksten"
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Bilete (%1 × %2 pikslar)"
 
-#: part/pageview.cpp:2889
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Save to File..."
 msgstr "Lagra til fil …"
 
-#: part/pageview.cpp:2909
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Biletet (%1 × %2) vart kopiert til utklippstavla."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Save file"
 msgstr "Lagra fil"
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Bilete (*.png *.jpeg)"
 
 # skip-rule: passiv
-#: part/pageview.cpp:2914
+#: part/pageview.cpp:2916
 #, kde-format
 msgid "File not saved."
 msgstr "Fila vart ikkje lagra."
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Biletet (%1 × %2) vart lagra til fila %3."
 
-#: part/pageview.cpp:3067
+#: part/pageview.cpp:3069
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopier tekst"
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3089
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Gå til «%1»"
 
-#: part/pageview.cpp:4065 part/part.cpp:3135
+#: part/pageview.cpp:4067 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "Tilpass til breidda"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Fit Page"
 msgstr "Tilpass til sida"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Auto Fit"
 msgstr "Autotilpassa"
 
-#: part/pageview.cpp:4088
+#: part/pageview.cpp:4090
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3773,67 +3773,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 %"
 
-#: part/pageview.cpp:4371
+#: part/pageview.cpp:4373
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Søk etter «%1» med"
 
-#: part/pageview.cpp:4385
+#: part/pageview.cpp:4387
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Set opp vevsnarvegar …"
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Follow This Link"
 msgstr "Følg denne lenkja"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Play this Sound"
 msgstr "Spel denne lyden"
 
-#: part/pageview.cpp:4416
+#: part/pageview.cpp:4418
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stopp lyd"
 
-#: part/pageview.cpp:4422
+#: part/pageview.cpp:4424
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopier lenkjeadresse"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4445
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Søk etter «%1» i dokumentet"
 
-#: part/pageview.cpp:4975
+#: part/pageview.cpp:4977
 #, kde-format
 msgid "Welcome"
 msgstr "Velkommen"
 
-#: part/pageview.cpp:5097
+#: part/pageview.cpp:5099
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Vel visingsområde. Høgreklikk for å visa i mindre storleik."
 
-#: part/pageview.cpp:5110
+#: part/pageview.cpp:5112
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Trykk for å sjå den forstørra visinga."
 
-#: part/pageview.cpp:5125
+#: part/pageview.cpp:5127
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Teikn ein firkant rundt teksten/grafikken du vil kopiera."
 
-#: part/pageview.cpp:5139
+#: part/pageview.cpp:5141
 #, kde-format
 msgid "Select text"
 msgstr "Merk tekst"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5155
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3842,7 +3842,7 @@ msgstr ""
 "Teikn ein firkant rundt tabellen. Trykk så nær kantane for å dela opp. Trykk "
 "«Escape» for å nullstilla."
 
-#: part/pageview.cpp:5165
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3851,7 +3851,7 @@ msgstr ""
 "Alle signerings­sertifikata dine er anten ikkje enno gyldige eller har "
 "passert utløpsdatoen."
 
-#: part/pageview.cpp:5168
+#: part/pageview.cpp:5170
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3862,18 +3862,18 @@ msgstr ""
 "informasjon under avsnittet <a href=\"%1\">Adding Digital Signatures</a> i "
 "brukarhandboka."
 
-#: part/pageview.cpp:5184
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Du har ulagra endringar. Du må lagra dokumentet før du kan signera det."
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5202
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Teikn ein firkant for å setja inn signaturfeltet"
 
-#: part/pageview.cpp:5344
+#: part/pageview.cpp:5346
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Teikn ein firkant rundt sideområdet som skal vera synleg"

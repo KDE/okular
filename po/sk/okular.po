@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 00:37+0000\n"
+"POT-Creation-Date: 2024-03-15 00:37+0000\n"
 "PO-Revision-Date: 2023-02-21 18:58+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -1576,8 +1576,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopírovať do schránky"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
-#: part/pageview.cpp:3076
+#: part/pageview.cpp:2557 part/pageview.cpp:2877 part/pageview.cpp:3021
+#: part/pageview.cpp:3078
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Kopírovanie zakázané kvôli DRM"
@@ -3696,12 +3696,12 @@ msgstr[0] " Načítaný jednostránkový dokument."
 msgstr[1] " Načítaný %1-stránkový dokument."
 msgstr[2] " Načítaný %1-stránkový dokument."
 
-#: part/pageview.cpp:2550
+#: part/pageview.cpp:2552
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopírovať obsah tabuľky do schránky"
 
-#: part/pageview.cpp:2869
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3709,77 +3709,77 @@ msgstr[0] "Text (1 znak)"
 msgstr[1] "Text (%1 znaky)"
 msgstr[2] "Text (%1 znakov)"
 
-#: part/pageview.cpp:2870 part/pageview.cpp:2888
+#: part/pageview.cpp:2872 part/pageview.cpp:2890
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopírovať do schránky"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3071
+#: part/pageview.cpp:2881 part/pageview.cpp:3073
 #, kde-format
 msgid "Speak Text"
 msgstr "Prečítať text"
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Obrázok (%1 x %2 pixelov)"
 
-#: part/pageview.cpp:2889
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Save to File..."
 msgstr "Uložiť do súboru..."
 
-#: part/pageview.cpp:2909
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Obrázok [%1x%2] skopírovaný do schránky."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Save file"
 msgstr "Uložiť súbor"
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Obrázky (*.png *.jpeg)"
 
-#: part/pageview.cpp:2914
+#: part/pageview.cpp:2916
 #, kde-format
 msgid "File not saved."
 msgstr "Súbor nebol uložený."
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Obrázok [%1x%2] bol uložený do súboru %3."
 
-#: part/pageview.cpp:3067
+#: part/pageview.cpp:3069
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopírovať text"
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3089
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Prejsť na '%1'"
 
-#: part/pageview.cpp:4065 part/part.cpp:3135
+#: part/pageview.cpp:4067 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "Prispôsobiť šírke"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Fit Page"
 msgstr "Prispôsobiť stránke"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automaticky prispôsobiť"
 
-#: part/pageview.cpp:4088
+#: part/pageview.cpp:4090
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -3790,68 +3790,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4371
+#: part/pageview.cpp:4373
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Hľadať '%1' pomocou"
 
-#: part/pageview.cpp:4385
+#: part/pageview.cpp:4387
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Nastaviť webové skratky..."
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Follow This Link"
 msgstr "Nasledovať tento odkaz"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Play this Sound"
 msgstr "Prehrať tento zvuk"
 
-#: part/pageview.cpp:4416
+#: part/pageview.cpp:4418
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zastaviť zvuk"
 
-#: part/pageview.cpp:4422
+#: part/pageview.cpp:4424
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopírovať adresu odkazu"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4445
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Hľadať '%1' v tomto dokumente"
 
-#: part/pageview.cpp:4975
+#: part/pageview.cpp:4977
 #, kde-format
 msgid "Welcome"
 msgstr "Vitajte"
 
-#: part/pageview.cpp:5097
+#: part/pageview.cpp:5099
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Vyberte oblasť, ktorú chcete zväčšiť. Pravým kliknutím oblasť zmenšíte."
 
-#: part/pageview.cpp:5110
+#: part/pageview.cpp:5112
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite na zobrazenie zväčšenia zobrazenia."
 
-#: part/pageview.cpp:5125
+#: part/pageview.cpp:5127
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Okolo kopírovaného textu/grafiky urobte myšou obdĺžnik."
 
-#: part/pageview.cpp:5139
+#: part/pageview.cpp:5141
 #, kde-format
 msgid "Select text"
 msgstr "Vyberte text"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5155
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3860,7 +3860,7 @@ msgstr ""
 "Nakreslite obdĺžnik okolo tabuľky, potom kliknite vedľa okrajov na "
 "rozdelenie; Esc na vyčistenie."
 
-#: part/pageview.cpp:5165
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3869,7 +3869,7 @@ msgstr ""
 "Všetky vaše podpisové certifikáty buď ešte nie sú platné, alebo sú po dátume "
 "ich platnosti."
 
-#: part/pageview.cpp:5168
+#: part/pageview.cpp:5170
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3880,17 +3880,17 @@ msgstr ""
 "nájdete v časti o <a href=\"%1\">Pridávaní digitálnych podpisov</a> v "
 "príručke."
 
-#: part/pageview.cpp:5184
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Máte neuložené zmeny. Pred podpísaním dokument uložte."
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5202
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Nakresliť obdĺžnik na vloženie pola podpisu"
 
-#: part/pageview.cpp:5344
+#: part/pageview.cpp:5346
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

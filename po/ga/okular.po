@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 00:37+0000\n"
+"POT-Creation-Date: 2024-03-15 00:37+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1664,8 +1664,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Cóipeáil go dtí an Ghearrthaisce"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
-#: part/pageview.cpp:3076
+#: part/pageview.cpp:2557 part/pageview.cpp:2877 part/pageview.cpp:3021
+#: part/pageview.cpp:3078
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Cóipeáil faoi chosc ag DRM"
@@ -3921,13 +3921,13 @@ msgstr[2] " Luchtaíodh cáipéis le %1 leathanach."
 msgstr[3] " Luchtaíodh cáipéis le %1 leathanach."
 msgstr[4] " Luchtaíodh cáipéis le %1 leathanach."
 
-#: part/pageview.cpp:2550
+#: part/pageview.cpp:2552
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "Cóipeáil go dtí an Ghearrthaisce"
 
-#: part/pageview.cpp:2869
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3937,79 +3937,79 @@ msgstr[2] "Téacs (%1 charachtar)"
 msgstr[3] "Téacs (%1 gcarachtar)"
 msgstr[4] "Téacs (%1 carachtar)"
 
-#: part/pageview.cpp:2870 part/pageview.cpp:2888
+#: part/pageview.cpp:2872 part/pageview.cpp:2890
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Cóipeáil go dtí an Ghearrthaisce"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3071
+#: part/pageview.cpp:2881 part/pageview.cpp:3073
 #, kde-format
 msgid "Speak Text"
 msgstr "Léigh an Téacs"
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "Íomhá (%1×%2 picteilíní)"
 
-#: part/pageview.cpp:2889
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Save to File..."
 msgstr "Sábháil go Comhad..."
 
-#: part/pageview.cpp:2909
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "Cóipeáladh íomhá [%1×%2] go dtí an ghearrthaisce."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save file"
 msgstr "Sábháil go Comhad..."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr ""
 
-#: part/pageview.cpp:2914
+#: part/pageview.cpp:2916
 #, kde-format
 msgid "File not saved."
 msgstr "Níor sábháladh an comhad."
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "Sábháladh íomhá [%1×%2] i gcomhad %3."
 
-#: part/pageview.cpp:3067
+#: part/pageview.cpp:3069
 #, kde-format
 msgid "Copy Text"
 msgstr "Cóipeáil Téacs"
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3089
 #, fuzzy, kde-format
 #| msgid "Go to page %1"
 msgid "Go to '%1'"
 msgstr "Téigh go leathanach %1"
 
-#: part/pageview.cpp:4065 part/part.cpp:3135
+#: part/pageview.cpp:4067 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "Laghdaigh go leithead leathanaigh"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Fit Page"
 msgstr "Laghdaigh go dtí an Leathanach"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4088
+#: part/pageview.cpp:4090
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4019,84 +4019,84 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4371
+#: part/pageview.cpp:4373
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Déan cuardach ar '%1' le"
 
-#: part/pageview.cpp:4385
+#: part/pageview.cpp:4387
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Cumraigh Aicearraí Gréasáin..."
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Follow This Link"
 msgstr "Lean an Nasc Seo"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4416
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "Seinn fuaim..."
 
-#: part/pageview.cpp:4416
+#: part/pageview.cpp:4418
 #, fuzzy, kde-format
 #| msgid "Sound"
 msgid "Stop Sound"
 msgstr "Fuaim"
 
-#: part/pageview.cpp:4422
+#: part/pageview.cpp:4424
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Cóipeáil Seoladh an Naisc"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4445
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Déan cuardach ar '%1' le"
 
-#: part/pageview.cpp:4975
+#: part/pageview.cpp:4977
 #, kde-format
 msgid "Welcome"
 msgstr "Fáilte"
 
-#: part/pageview.cpp:5097
+#: part/pageview.cpp:5099
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Roghnaigh limistéar súmála. Deaschliceáil le súmáil amach."
 
-#: part/pageview.cpp:5110
+#: part/pageview.cpp:5112
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5125
+#: part/pageview.cpp:5127
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dear dronuilleog timpeall an téacs/grafaic is mian leat cóipeáil."
 
-#: part/pageview.cpp:5139
+#: part/pageview.cpp:5141
 #, kde-format
 msgid "Select text"
 msgstr "Roghnaigh téacs"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5155
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr ""
 
-#: part/pageview.cpp:5165
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5168
+#: part/pageview.cpp:5170
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4104,17 +4104,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5184
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5202
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5344
+#: part/pageview.cpp:5346
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

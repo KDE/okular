@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 00:37+0000\n"
+"POT-Creation-Date: 2024-03-15 00:37+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1666,8 +1666,8 @@ msgid "Copy Text to Clipboard"
 msgstr "क्लिपबोर्ड मं नकल बनाव"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2555 part/pageview.cpp:2875 part/pageview.cpp:3019
-#: part/pageview.cpp:3076
+#: part/pageview.cpp:2557 part/pageview.cpp:2877 part/pageview.cpp:3021
+#: part/pageview.cpp:3078
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "डीआरएम से नकल करे जाना प्रतिबंधित हे"
@@ -3942,92 +3942,92 @@ msgid_plural " Loaded a %1-page document."
 msgstr[0] "%1 पेज के कागद लोड करिस."
 msgstr[1] "%1 पेज के कागद लोड करिस."
 
-#: part/pageview.cpp:2550
+#: part/pageview.cpp:2552
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "क्लिपबोर्ड मं नकल बनाव"
 
-#: part/pageview.cpp:2869
+#: part/pageview.cpp:2871
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "पाठ (%1 अक्छर)"
 msgstr[1] "पाठ (%1 अक्छर)"
 
-#: part/pageview.cpp:2870 part/pageview.cpp:2888
+#: part/pageview.cpp:2872 part/pageview.cpp:2890
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "क्लिपबोर्ड मं नकल बनाव"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3071
+#: part/pageview.cpp:2881 part/pageview.cpp:3073
 #, kde-format
 msgid "Speak Text"
 msgstr "पाठ बोलव"
 
-#: part/pageview.cpp:2887
+#: part/pageview.cpp:2889
 #, kde-format
 msgid "Image (%1 by %2 pixels)"
 msgstr "फोटू (%1 x %2 पिक्सेल्स)"
 
-#: part/pageview.cpp:2889
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Save to File..."
 msgstr "फाइल मं सहेजव..."
 
-#: part/pageview.cpp:2909
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Image [%1x%2] copied to clipboard."
 msgstr "फोटू [%1x%2] क्लिपबोर्ड मं नकल करिस."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save file"
 msgstr "फाइल मं सहेजव..."
 
-#: part/pageview.cpp:2912
+#: part/pageview.cpp:2914
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr ""
 
-#: part/pageview.cpp:2914
+#: part/pageview.cpp:2916
 #, kde-format
 msgid "File not saved."
 msgstr "फाइल ल सहेजे नइ गिस."
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Image [%1x%2] saved to %3 file."
 msgstr "फोटू [%1x%2] ल %3 फाइल मं सहेजिस."
 
-#: part/pageview.cpp:3067
+#: part/pageview.cpp:3069
 #, kde-format
 msgid "Copy Text"
 msgstr "पाठ के नकल बनाव"
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3089
 #, fuzzy, kde-format
 #| msgid "Go to page %1"
 msgid "Go to '%1'"
 msgstr "पेज %1 मं जाव"
 
-#: part/pageview.cpp:4065 part/part.cpp:3135
+#: part/pageview.cpp:4067 part/part.cpp:3135
 #, kde-format
 msgid "Fit Width"
 msgstr "चौड़ाई जमाव"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Fit Page"
 msgstr "पेज मं जमाव"
 
-#: part/pageview.cpp:4065
+#: part/pageview.cpp:4067
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4088
+#: part/pageview.cpp:4090
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4037,72 +4037,72 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4371
+#: part/pageview.cpp:4373
 #, fuzzy, kde-format
 #| msgid "Searching for %1"
 msgid "Search for '%1' with"
 msgstr "%1 बर खोजत हे"
 
-#: part/pageview.cpp:4385
+#: part/pageview.cpp:4387
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "Configure Web Shortcuts..."
 msgstr "प्रदर्सक कान्फिगर करव..."
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Follow This Link"
 msgstr "ये संकली मं जाव"
 
-#: part/pageview.cpp:4414
+#: part/pageview.cpp:4416
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "अवाज बजाव..."
 
-#: part/pageview.cpp:4416
+#: part/pageview.cpp:4418
 #, fuzzy, kde-format
 #| msgid "Sound"
 msgid "Stop Sound"
 msgstr "अवाज"
 
-#: part/pageview.cpp:4422
+#: part/pageview.cpp:4424
 #, kde-format
 msgid "Copy Link Address"
 msgstr "संकली पता नकल करव"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4445
 #, fuzzy, kde-format
 #| msgid "Searching for %1"
 msgid "Search for '%1' in this document"
 msgstr "%1 बर खोजत हे"
 
-#: part/pageview.cpp:4975
+#: part/pageview.cpp:4977
 #, kde-format
 msgid "Welcome"
 msgstr "सुस्वागतम"
 
-#: part/pageview.cpp:5097
+#: part/pageview.cpp:5099
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "जूमिंग छेत्र चुनव. जूम-आउट होए बर किलिक करव."
 
-#: part/pageview.cpp:5110
+#: part/pageview.cpp:5112
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5125
+#: part/pageview.cpp:5127
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "नकल करे बर पाठ/चित्र के चारों तरफ एक आयताकार बनाव."
 
-#: part/pageview.cpp:5139
+#: part/pageview.cpp:5141
 #, kde-format
 msgid "Select text"
 msgstr "पाठ चुनव"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5155
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid ""
@@ -4110,14 +4110,14 @@ msgid ""
 "Esc to clear."
 msgstr "नकल करे बर पाठ/चित्र के चारों तरफ एक आयताकार बनाव."
 
-#: part/pageview.cpp:5165
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5168
+#: part/pageview.cpp:5170
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4125,17 +4125,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5184
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5202
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5344
+#: part/pageview.cpp:5346
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

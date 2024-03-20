@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2024-03-20 00:37+0000\n"
 "PO-Revision-Date: 2019-12-12 21:11+0000\n"
 "Last-Translator: Vivek KJ Pazhedath <vivekkj2004@gmail.com>\n"
 "Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
@@ -28,12 +28,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "shijualexonline@gmail.com,snalledam@dataone.in,vivekkj2004@gmail.com"
 
-#: converter.cpp:48 converter.cpp:82
+#: converter.cpp:51 converter.cpp:85
 #, kde-format
 msgid "Failed to open the document"
 msgstr ""
 
-#: converter.cpp:95 converter.cpp:113
+#: converter.cpp:98 converter.cpp:116
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr ""

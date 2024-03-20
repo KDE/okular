@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 00:40+0000\n"
+"POT-Creation-Date: 2024-03-20 00:37+0000\n"
 "PO-Revision-Date: 2021-06-01 19:32+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
-#: converter.cpp:48 converter.cpp:82
+#: converter.cpp:51 converter.cpp:85
 #, kde-format
 msgid "Failed to open the document"
 msgstr "ஆவணத்தை திறக்க முடியவில்லை"
 
-#: converter.cpp:95 converter.cpp:113
+#: converter.cpp:98 converter.cpp:116
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Markdown ஆவணத்தை தொகுத்தல் தோல்வியடைந்தது"

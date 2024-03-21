@@ -269,6 +269,7 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
 AnnotWindow::~AnnotWindow()
 {
     delete m_latexRenderer;
+    delete textEdit;
 }
 
 Okular::Annotation *AnnotWindow::annotation() const

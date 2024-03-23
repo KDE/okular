@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-15 00:37+0000\n"
+"POT-Creation-Date: 2024-03-23 00:37+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -2077,28 +2077,28 @@ msgid ""
 "Click here to render."
 msgstr ""
 
-#: part/annotwindow.cpp:415
+#: part/annotwindow.cpp:416
 #, fuzzy, kde-format
 msgid "Cannot find latex executable."
 msgstr "Ne successat trovar li file lsof in PATH:"
 
-#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
+#: part/annotwindow.cpp:431
 #, fuzzy, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Presentation"
 
-#: part/annotwindow.cpp:420
+#: part/annotwindow.cpp:421
 #, fuzzy, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Ne successat trovar li file lsof in PATH:"
 
-#: part/annotwindow.cpp:425
+#: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr ""
 
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""

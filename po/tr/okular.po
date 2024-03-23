@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-15 00:37+0000\n"
-"PO-Revision-Date: 2024-03-22 01:13+0300\n"
+"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"PO-Revision-Date: 2024-03-22 16:14+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2111,28 +2111,28 @@ msgstr ""
 "Bu bilgi notu LaTeX kodu içeriyor olabilir.\n"
 "Sunmak için buraya tıklayın."
 
-#: part/annotwindow.cpp:415
+#: part/annotwindow.cpp:416
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Latex çalıştırılabilir dosyası bulunamadı."
 
-#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX sunumu başarısız oldu"
 
-#: part/annotwindow.cpp:420
+#: part/annotwindow.cpp:421
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Dvipng çalıştırılabilir dosyası bulunamadı."
 
-#: part/annotwindow.cpp:425
+#: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "'latex' komutu çalıştırılırken bir hata oluştu."
 
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "'dvipng' komutu çalıştırılırken bir hata oluştu."
@@ -4595,7 +4595,7 @@ msgid ""
 msgstr ""
 "<filename>%1</filename> dosyası başka bir program tarafından değiştirilmiş. "
 "Şimdi kaydederseniz diğer programda yapılmış tüm değişiklikler kaybolur. "
-"Sürdürmek istediğinize emin misiniz?"
+"Sürdürmek istediğinizden emin misiniz?"
 
 #: part/part.cpp:2632 part/part.cpp:2650 part/part.cpp:2702
 #, kde-format
@@ -5772,7 +5772,7 @@ msgstr "Sekmeleri Kapat"
 #: shell/shell.cpp:818
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr "%1 sekmeyi kapatmak üzeresiniz. Sürdürmek istediğinize emin misiniz?"
+msgstr "%1 sekmeyi kapatmak üzeresiniz. Sürdürmek istediğinizden emin misiniz?"
 
 #: shell/shell.cpp:820
 #, kde-format

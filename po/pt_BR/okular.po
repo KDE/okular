@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 02:17+0000\n"
+"POT-Creation-Date: 2024-03-23 02:25+0000\n"
 "PO-Revision-Date: 2024-01-11 20:39-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -2118,28 +2118,28 @@ msgstr ""
 "Esta anotação pode conter código em LaTeX.\n"
 "Clique aqui para renderizá-la."
 
-#: part/annotwindow.cpp:415
+#: part/annotwindow.cpp:416
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Não foi possível encontrar o executável 'latex'."
 
-#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Erro na renderização do LaTeX"
 
-#: part/annotwindow.cpp:420
+#: part/annotwindow.cpp:421
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Não foi possível encontrar o executável 'dvipng'."
 
-#: part/annotwindow.cpp:425
+#: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Ocorreu um problema durante a execução do comando 'latex'."
 
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Ocorreu um problema durante a execução do comando 'dvipng'."

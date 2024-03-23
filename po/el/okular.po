@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 02:17+0000\n"
+"POT-Creation-Date: 2024-03-23 02:25+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -2110,28 +2110,28 @@ msgstr ""
 "Αυτή η σημείωση μπορεί να περιέχει κώδικα LaTeX.\n"
 "Κάντε κλικ εδώ για την αποτύπωση."
 
-#: part/annotwindow.cpp:415
+#: part/annotwindow.cpp:416
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Δεν ήταν δυνατό να βρεθεί το εκτελέσιμο latex."
 
-#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Αποτυχία αποτύπωσης LaTeX"
 
-#: part/annotwindow.cpp:420
+#: part/annotwindow.cpp:421
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Δεν ήταν δυνατό να βρεθεί το εκτελέσιμο dvipng."
 
-#: part/annotwindow.cpp:425
+#: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Ένα πρόβλημα εμφανίστηκε κατά την εκτέλεση της εντολής 'latex'."
 
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Ένα πρόβλημα εμφανίστηκε κατά την εκτέλεση της εντολής 'dvipng'."

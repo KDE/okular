@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-06 02:17+0000\n"
+"POT-Creation-Date: 2024-03-23 02:25+0000\n"
 "PO-Revision-Date: 2023-08-01 21:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -2101,28 +2101,28 @@ msgstr ""
 "Denne merknaden kan innehalda LaTeX-kode.\n"
 "Trykk her for å visa LaTeX-resultatet."
 
-#: part/annotwindow.cpp:415
+#: part/annotwindow.cpp:416
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Fann ikkje programfila «latex»."
 
-#: part/annotwindow.cpp:415 part/annotwindow.cpp:420 part/annotwindow.cpp:425
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Feil ved LaTeX-oppteikning"
 
-#: part/annotwindow.cpp:420
+#: part/annotwindow.cpp:421
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Fann ikkje programfila «dvipng»."
 
-#: part/annotwindow.cpp:425
+#: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Det oppstod eit problem då kommandoen «latex» vart køyrd."
 
-#: part/annotwindow.cpp:430
+#: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Det oppstod eit problem då kommandoen «dvipng» vart køyrd."

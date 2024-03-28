@@ -1,95 +1,95 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2024-03-27 19:45\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-27 23:38+0100\n"
+"Last-Translator: Enol P. <enolp@softastur.org>\n"
+"Language-Team: Asturian <alministradores@softastur.org>\n"
+"Language: ast_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_djvu.pot\n"
-"X-Crowdin-File-ID: 48884\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Guo Yunhe, Tyson Tan"
+msgstr "Softastur"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, i@guoyunhe.me, tds00@qq.com"
+msgstr "alministradores@softastur.org"
 
 #: generator_djvu.cpp:136
 #, kde-format
 msgid "Editor"
-msgstr "编辑"
+msgstr ""
 
 #: generator_djvu.cpp:137
 #, kde-format
 msgid "Publisher"
-msgstr "出版社"
+msgstr ""
 
 #: generator_djvu.cpp:138
 #, kde-format
 msgid "Volume"
-msgstr "册数"
+msgstr ""
 
 #: generator_djvu.cpp:139
 #, kde-format
 msgid "Type of document"
-msgstr "文档类型"
+msgstr ""
 
 #: generator_djvu.cpp:141
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
-msgstr "未知"
+msgstr ""
 
 #: generator_djvu.cpp:141
 #, kde-format
 msgid "Component Files"
-msgstr "组件文件"
+msgstr ""
 
 #: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
-msgstr "未知"
+msgstr ""
 
 #: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
-msgstr "单页型"
+msgstr ""
 
 #: kdjvu.cpp:690
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
-msgstr "打包型"
+msgstr ""
 
 #: kdjvu.cpp:693
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
-msgstr "间隔型"
+msgstr ""
 
 #: kdjvu.cpp:696
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
-msgstr "打包型 (旧式)"
+msgstr ""
 
 #: kdjvu.cpp:699
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"
-msgstr "索引型 (旧式)"
+msgstr ""

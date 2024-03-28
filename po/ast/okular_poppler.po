@@ -1,85 +1,85 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-20 00:37+0000\n"
-"PO-Revision-Date: 2024-03-27 19:45\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-27 23:53+0100\n"
+"Last-Translator: Enol P. <enolp@softastur.org>\n"
+"Language-Team: Asturian <alministradores@softastur.org>\n"
+"Language: ast_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_poppler.pot\n"
-"X-Crowdin-File-ID: 48902\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Guo Yunhe, Tyson Tan"
+msgstr ""
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "i@guoyunhe.me, tds00@qq.com"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr "显示叠印预览"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26
 #, kde-format
 msgid "Enhance thin lines:"
-msgstr "增强细线："
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:940
 #, kde-format
 msgid "No"
-msgstr "无"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:42
 #, kde-format
 msgid "Solid"
-msgstr "实心"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:47
 #, kde-format
 msgid "Shape"
-msgstr "形状"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:72
 #, kde-format
 msgid "Default scaling mode when printing:"
-msgstr "打印使用的默认缩放模式："
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
 #, kde-format
 msgid "Fit to printable area"
-msgstr "适合可打印区域"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to full page"
-msgstr "适合整页"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
 #, kde-format
 msgid "None; print original size"
-msgstr "不缩放，打印原始大小"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:113
@@ -89,83 +89,81 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
-"启用此选项后将允许 Okular 访问第三方 OCSP 服务器，以检查用于数字签名的证书是"
-"否已被吊销。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
-msgstr "使用第三方服务器检查数字签名证书的吊销情况"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
-msgstr "签名后端程序："
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:164
 #, kde-format
 msgid "Certificate Database"
-msgstr "证书数据库"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:173
 #, kde-format
 msgid "Default:"
-msgstr "默认："
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:180
 #, kde-format
 msgid "Custom:"
-msgstr "自定义："
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:197
 #, kde-format
 msgid "Available Certificates"
-msgstr "可用证书"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:205
 #, kde-format
 msgid "&Load Signatures"
-msgstr "加载签名(&L)"
+msgstr ""
 
 #: generator_pdf.cpp:88
 #, kde-format
 msgid "PDF Options"
-msgstr "PDF 选项"
+msgstr ""
 
 #: generator_pdf.cpp:90
 #, kde-format
 msgid "Print annotations"
-msgstr "打印批注"
+msgstr ""
 
 #: generator_pdf.cpp:91
 #, kde-format
 msgid "Include annotations in the printed document"
-msgstr "在打印的文档中包含批注"
+msgstr ""
 
 #: generator_pdf.cpp:92
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
-msgstr "在打印的文档中包含批注。如果您需要打印原始的无批注文档，请禁用此项。"
+msgstr ""
 
 #: generator_pdf.cpp:94
 #, kde-format
 msgid "Force rasterization"
-msgstr "强制光栅化"
+msgstr ""
 
 #: generator_pdf.cpp:95
 #, kde-format
 msgid "Rasterize into an image before printing"
-msgstr "打印前将文档光栅化为图像"
+msgstr ""
 
 #: generator_pdf.cpp:96
 #, kde-format
@@ -174,54 +172,52 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
-"强制将每个页面光栅化成图像之后打印。这通常会造成一定的画质劣化，但可以用来应"
-"对某些文档打印结果不正确的情况。"
 
 #: generator_pdf.cpp:106
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr "要打印页面的缩放模式"
+msgstr ""
 
 #: generator_pdf.cpp:107
 #, kde-format
 msgid "Scale mode:"
-msgstr "缩放模式："
+msgstr ""
 
 #: generator_pdf.cpp:938
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr "PDF v. %1.%2"
+msgstr ""
 
 #: generator_pdf.cpp:938
 #, kde-format
 msgid "Format"
-msgstr "格式"
+msgstr ""
 
 #: generator_pdf.cpp:939
 #, kde-format
 msgid "Encrypted"
-msgstr "已加密"
+msgstr ""
 
 #: generator_pdf.cpp:939
 #, kde-format
 msgid "Unencrypted"
-msgstr "未加密"
+msgstr ""
 
 #: generator_pdf.cpp:939
 #, kde-format
 msgid "Security"
-msgstr "安全性"
+msgstr ""
 
 #: generator_pdf.cpp:940
 #, kde-format
 msgid "Yes"
-msgstr "是"
+msgstr ""
 
 #: generator_pdf.cpp:940
 #, kde-format
 msgid "Optimized"
-msgstr "优化"
+msgstr ""
 
 #: generator_pdf.cpp:1372
 #, kde-format
@@ -230,14 +226,11 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
-"签名者：%1\n"
-"\n"
-"签名日期：%2"
 
 #: generator_pdf.cpp:1579
 #, kde-format
 msgid "Using Poppler %1"
-msgstr "使用 Poppler %1"
+msgstr ""
 
 #: generator_pdf.cpp:1581
 #, kde-format
@@ -246,9 +239,6 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
-"使用 Poppler %1\n"
-"\n"
-"使用 Poppler %2 构建"
 
 #: generator_pdf.cpp:1616
 #, kde-format
@@ -258,31 +248,31 @@ msgstr "PDF"
 #: generator_pdf.cpp:1616
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr "PDF 后端程序配置"
+msgstr ""
 
 #: generator_pdf.cpp:2104
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
-msgstr "文档中发现了错误，Okular 可能无法正确显示其内容"
+msgstr ""
 
 #: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr "颁发给"
+msgstr ""
 
 #: pdfsettingswidget.cpp:135
 #, kde-format
 msgid "E-mail"
-msgstr "电子邮件"
+msgstr ""
 
 #: pdfsettingswidget.cpp:135
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr "过期日期"
+msgstr ""
 
 #: pdfsettingswidget.cpp:152
 #, kde-format
@@ -290,25 +280,23 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
-"程序使用的 Poppler 程序库在构建时没有启用 NSS 支持。\n"
-"添加数字签名因此不可用。"
 
 #: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "Restart needed"
-msgstr "需要重新启动"
+msgstr ""
 
 #: pdfsettingswidget.cpp:193
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr "更改 NSS 目录设置后，您需要重启 Okular"
+msgstr ""
 
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter Password"
-msgstr "输入密码"
+msgstr ""
 
 #: pdfsignatureutils.cpp:214
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr "输入密码以打开 %1："
+msgstr ""

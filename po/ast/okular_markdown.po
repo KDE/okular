@@ -1,53 +1,53 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-20 00:37+0000\n"
-"PO-Revision-Date: 2024-03-27 19:45\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-27 23:53+0100\n"
+"Last-Translator: Enol P. <enolp@softastur.org>\n"
+"Language-Team: Asturian <alministradores@softastur.org>\n"
+"Language: ast_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_markdown.pot\n"
-"X-Crowdin-File-ID: 48936\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Guo Yunhe, Henry Hu, Tyson Tan"
+msgstr "Softastur"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, i@guoyunhe.me, hunryhu@kde.org, tds00@qq.com"
+msgstr "alministradores@softastur.org"
 
 #: converter.cpp:51 converter.cpp:85
 #, kde-format
 msgid "Failed to open the document"
-msgstr "打开文档失败"
+msgstr ""
 
 #: converter.cpp:98 converter.cpp:116
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr "编译 Markdown 文档失败。"
+msgstr ""
 
 #: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
-msgstr "启用 SmartyPants 格式"
+msgstr ""
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
-msgstr "Markdown"
+msgstr ""
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
-msgstr "Markdown 后端程序配置"
+msgstr ""

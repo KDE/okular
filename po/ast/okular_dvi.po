@@ -1,31 +1,31 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+#
+# SPDX-FileCopyrightText: 2024 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2024-03-27 19:45\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-03-27 23:40+0100\n"
+"Last-Translator: Enol P. <enolp@softastur.org>\n"
+"Language-Team: Asturian <alministradores@softastur.org>\n"
+"Language: ast_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_dvi.pot\n"
-"X-Crowdin-File-ID: 48926\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Guo Yunhe, Tyson Tan"
+msgstr "Softastur"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "i@guoyunhe.me, tds00@qq.com"
+msgstr "alministradores@softastur.org"
 
 #: dviexport.cpp:123
 #, kde-format
@@ -39,12 +39,6 @@ msgid ""
 "em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
 "the PATH environment variable when looking for programs.</p></qt>"
 msgstr ""
-"<qt><p>Okular 无法在本机系统中找到 <em>dvipdfm</em> 程序，此程序是文档导出特"
-"性所必须的。作为替代方案，您可以通过 Okular 的打印功能将 DVI 文件转换为 PDF，"
-"只是生成的文档虽然打印效果还行，但是在 Acrobat Reader 中的显示效果不太好。我"
-"们建议您将本机系统安装的 TeX 升级到包含 <em>dvipdfm</em> 程序的最新版。</"
-"p><p>特别为系统管理员准备的温馨提示：Okular 使用 PATH 环境变量来查找程序。</"
-"p></qt>"
 
 #: dviexport.cpp:142
 #, kde-format
@@ -54,8 +48,6 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>用于导出文件的外部程序“dvipdfm”报告了一个错误。您可以在菜单栏的文件菜单中"
-"打开<strong>文档信息</strong>对话框，查看详细的错误报告。</qt>"
 
 #: dviexport.cpp:168
 #, kde-format
@@ -66,9 +58,6 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
-"<qt>此 DVI 文件引用了一个非 PostScript 格式的外部图像文件，此版本的 Okular 不"
-"支持此格式，因为 Okular 在程序内部用于打印或者导出到 PostScript 格式的 "
-"<em>dvips</em> 程序无法处理此格式。</qt>"
 
 #: dviexport.cpp:176
 #, kde-format
@@ -78,9 +67,6 @@ msgid ""
 "perplexed system administrator: Okular uses the PATH environment variable "
 "when looking for programs.</p></qt>"
 msgstr ""
-"<qt><p>Okular 在本机系统中找不到 <em>dvips</em> 程序，此程序是文档导出功能所"
-"必须的。</p><p>特别为系统管理员准备的温馨提示：Okular 使用 PATH 环境变量来查"
-"找程序。</p></qt>"
 
 #: dviexport.cpp:270
 #, kde-format
@@ -90,13 +76,11 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>用于导出文件的外部程序“dvips”报告了一个错误。您可以在菜单栏的文件菜单中打"
-"开<strong>文档信息</strong>对话框，查看详细的错误报告。</qt>"
 
 #: dviFile.cpp:91
 #, kde-format
 msgid "The DVI file does not start with the preamble."
-msgstr "此 DVI 文件头没有前文。"
+msgstr ""
 
 #: dviFile.cpp:97
 #, kde-format
@@ -105,29 +89,27 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
-"此 DVI 文件包含对于此程序而言不正确的 DVI 输出版本。提示：如果您使用的是 "
-"Omega 排版系统，您必须使用例如 oxdvi 这样的特殊程序打开此文档。"
 
 #: dviFile.cpp:134
 #, kde-format
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
-msgstr "此 DVI 文件已严重损坏，Okular 无法找到它的后文。"
+msgstr ""
 
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr "后文部分未以 POST 指令开头。"
+msgstr ""
 
 #: dviFile.cpp:202
 #, kde-format
 msgid "The postamble contained a command other than FNTDEF."
-msgstr "后文部分包含了 FNTDEF 之外的指令。"
+msgstr ""
 
 #: dviFile.cpp:240
 #, kde-format
 msgid "The page %1 does not start with the BOP command."
-msgstr "第 %1 页未以 BOP 指令开头。"
+msgstr ""
 
 #: dviFile.cpp:351
 #, kde-format
@@ -144,14 +126,6 @@ msgid ""
 "strong> from the command line to check if it really works.</p><p><em>PATH:</"
 "em> %2</p></qt>"
 msgstr ""
-"<qt><p>无法启动外部程序 <strong>pdf2ps</strong>，这导致 PDF 文件 %1 无法被转"
-"换为 PostScript 格式，您的文档中有部分图像元素将因此无法显示。</p><p><b>可能"
-"的原因：</b>本机系统可能没有安装 <strong>pdf2ps</strong> 程序，或者在当前的程"
-"序搜索路径中找不到它。</p><p><b>可能的解决方法：</b><strong>pdf2ps</strong> "
-"程序一般会被包含在 ghostscript PostScript 解释器中一同发行。如果您的系统中没"
-"有安装 ghostscript，可以现在安装。如果您确定系统中已经安装了 ghostscript，请"
-"尝试在命令行中运行 <strong>pdf2ps</strong> 程序，检查它是否可以正常工作。</"
-"p><p><em>PATH：</em> %2</p></qt>"
 
 #: dviFile.cpp:410
 #, kde-format
@@ -162,30 +136,26 @@ msgid ""
 "This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
 "p><p><strong>%2</strong></p></qt>"
 msgstr ""
-"<qt><p>无法将 PDF 文件 %1 转换为 PostScript 格式。您的文档中有部分图像元素将"
-"因此无法显示。</p><p><b>可能的原因：</b>文件 %1 已经损坏，或者它本来就不是 "
-"PDF 文件。这是 Okular 调用 <strong>pdf2ps</strong> 程序时的输出：</"
-"p><p><strong>%2</strong></p></qt>"
 
 #: dviRenderer.cpp:203 dviRenderer.cpp:435
 #, kde-format
 msgid "File corruption. %1"
-msgstr "文件损坏。%1"
+msgstr ""
 
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr "不是所有的 PostScript 文件都被嵌入了您的文档。%1"
+msgstr ""
 
 #: dviRenderer.cpp:329
 #, kde-format
 msgid "All external PostScript files were embedded into your document."
-msgstr "所有的外部 PostScript 文件均已嵌入了您的文档。"
+msgstr ""
 
 #: dviRenderer.cpp:419
 #, kde-format
 msgid "The specified file '%1' does not exist."
-msgstr "指定的文件“%1”不存在。"
+msgstr ""
 
 #: dviRenderer.cpp:565
 #, kde-format
@@ -194,73 +164,71 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
-"您命令 Okular 在此 DVI 文件中定位到与 TeX 文件 %2 中第 %1 行对应的位置。然而"
-"此 DVI 文件不包含所需的源文件信息。"
 
 #: dviRenderer.cpp:604
 #, kde-format
 msgid ""
 "Okular was not able to locate the place in the DVI file which corresponds to "
 "line %1 in the TeX-file %2."
-msgstr "Okular 无法在此 DVI 文件中定位到与 TeX 文件 %2 中第 %1 行对应的位置。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:243
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr "DVI 代码指定了一款未知字体中的字符。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
-msgstr "DVI 代码指定了字体 #%1，但是该字体并没有在此前进行过定义。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:353
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr "遇到 EOP 指令时，堆栈非空。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:365
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr "遇到 POP 指令时，堆栈非空。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr "DVI 代码指定了一个此前没有定义过的字体。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:539
 #, kde-format
 msgid "An illegal command was encountered."
-msgstr "遇到非法指令。"
+msgstr ""
 
 #: dviRenderer_draw.cpp:544
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
-msgstr "遇到未知的 op 代码 %1。"
+msgstr ""
 
 #: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
-msgstr "正在嵌入 %1"
+msgstr ""
 
 #: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
-msgstr "第 %1 页：PDF 文件 <strong>%2</strong> 无法转换为 PostScript。<br>"
+msgstr ""
 
 #: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
-msgstr "第 %1 页：无法找到 PostScript 文件 <strong>%2</strong>。<br>"
+msgstr ""
 
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "无法解析纸张尺寸数据“%1”"
+msgstr ""
 
 #: fontpool.cpp:209
 #, kde-format
@@ -269,8 +237,6 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Okular 无法找到当前 DVI 文件所需的所有字体文件。此文档可能无法正确显"
-"示。</p><p><small><b>PATH：</b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:284
 #, kde-format
@@ -281,10 +247,6 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>运行 <em>kpsewhich</em> 时发生了问题，某些字体文件因此无法找到。此文档"
-"可能无法正确显示。<br/>可能的原因：本机系统中可能没有安装 <em>kpsewhich</em> "
-"程序，或者在当前的搜索路径中找不到它。</p><p><small><b>PATH：</b> %1</"
-"small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format
@@ -293,33 +255,31 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt><em>kpsewhich</em> 提供的字体生成操作已被中止 (退出代码 %1，错误 %2)。某"
-"些字体文件因此无法找到。此文档可能无法正确显示。</qt>"
 
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr "正在生成 %1，分辨率为 %2 dpi..."
+msgstr ""
 
 #: generator_dvi.cpp:287
 #, kde-format
 msgid "Generator/Date"
-msgstr "生成器/日期"
+msgstr ""
 
 #: generator_dvi.cpp:376
 #, kde-format
 msgid "Font file not found"
-msgstr "字体文件未找到"
+msgstr ""
 
 #: pageSize.cpp:319
 #, kde-format
 msgid "portrait"
-msgstr "纵向"
+msgstr ""
 
 #: pageSize.cpp:321
 #, kde-format
 msgid "landscape"
-msgstr "横向"
+msgstr ""
 
 #: psgs.cpp:284
 #, kde-format
@@ -328,13 +288,11 @@ msgid ""
 "any of the Ghostview device drivers that are known to Okular. PostScript "
 "support has therefore been turned off in Okular."
 msgstr ""
-"本机系统中安装的 Ghostview 版本没有包含任何 Okular 支持的 Ghostview 设备驱"
-"动。Okular 的 PostScript 支持因此已被关闭。"
 
 #: special.cpp:36
 #, kde-format
 msgid "That makes 25 errors. Further error messages will not be printed."
-msgstr "已经发生了 25 个错误，程序将不会输出更多错误信息。"
+msgstr ""
 
 #: special.cpp:232
 #, kde-format
@@ -342,7 +300,6 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"在 DVI 文件“%1”的第 %2 页发生错误。在颜色堆栈为空时发出了颜色 pop 指令。"
 
 #: special.cpp:318
 #, kde-format
@@ -350,8 +307,6 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
-"epsf 特殊指令的参数格式不正确。\n"
-"在 %2 中的 %1 后面应该是浮点数。"
 
 #: special.cpp:446
 #, kde-format
@@ -359,8 +314,6 @@ msgid ""
 "File not found: \n"
 " %1"
 msgstr ""
-"找不到文件：\n"
-" %1"
 
 #: special.cpp:695
 #, kde-format
@@ -368,105 +321,104 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
-"在 DVI 文件“%1”的第 %2 页发生错误，无法解析文本旋转特殊指令的角度参数。"
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "特殊指令“%1”尚未实现。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
 msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
-msgstr "字体文件 %1 可以打开和读取，但程序不支持这种字体格式。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
 msgid "The font file %1 is broken, or it could not be opened or read."
-msgstr "字体文件 %1 已经损坏，或者是无法打开、读取。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:170
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
-msgstr "FreeType 在给字体文件 %1 设置字符大小时报告了一个错误。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:188
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
-msgstr "FreeType 无法加载字体文件 %2 中的字形 #%1。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:201
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
-msgstr "FreeType 无法渲染字体文件 %2 中的字形 #%1。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:215
 #, kde-format
 msgid "Glyph #%1 is empty."
-msgstr "字形 #%1 为空。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:217
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr "字体文件 %2 中的字形 #%1 为空。"
+msgstr ""
 
 #: TeXFont_PFB.cpp:282
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
-msgstr "FreeType 无法加载字体文件 %2 中字形 #%1 的尺寸信息。"
+msgstr ""
 
 #: TeXFont_PK.cpp:69
 #, kde-format
 msgid "Cannot open font file %1."
-msgstr "无法打开字体文件 %1。"
+msgstr ""
 
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr "TexFont_PK::operator[]：在字体 %2 中没有字符 %1 的定义"
+msgstr ""
 
 #: TeXFont_PK.cpp:418
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
-msgstr "PK 文件 %2 中出现了意外的 %1"
+msgstr ""
 
 #: TeXFont_PK.cpp:484
 #, kde-format
 msgid "The character %1 is too large in file %2"
-msgstr "文件 %2 中的字符 %1 过大"
+msgstr ""
 
 #: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr "字符存储的位数错误：字符 %1，字体 %2"
+msgstr ""
 
 #: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
-msgstr "PK 文件异常 (%1)，位数过多。"
+msgstr ""
 
 #: TeXFont_PK.cpp:713
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr "字体的宽高比不是正方形"
+msgstr ""
 
 #: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
-msgstr "无法找到字体 %1，文件 %2。"
+msgstr ""
 
 #: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr "字体文件 %1 的校验和不一致"
+msgstr ""
 
 #: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr "无法识别字体文件 %1 的格式"
+msgstr ""
 
 #: util.cpp:58
 #, kde-format
@@ -474,8 +426,6 @@ msgid ""
 "Fatal error.\n"
 "\n"
 msgstr ""
-"严重错误。\n"
-"\n"
 
 #: util.cpp:58
 #, kde-format
@@ -489,16 +439,8 @@ msgid ""
 "found a bug, or that Okular should behave better in this situation\n"
 "please report the problem."
 msgstr ""
-"\n"
-"\n"
-"您可能遇到了 Okular 的一个程序缺陷，\n"
-"也有可能是此 DVI 文件、辅助文件 (例如字体文件、虚拟字体文件等) 严重损坏。\n"
-"Okular 将在这条消息关闭后退出。\n"
-"如果您认为这是 Okular 的一个程序缺陷，\n"
-"或者认为 Okular 应该改进这种情况下的行为方式，\n"
-"请向我们提交一个程序缺陷报告。"
 
 #: vf.cpp:164
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
-msgstr "在 VF 宏列表中发现错误的指令字节：%1"
+msgstr ""

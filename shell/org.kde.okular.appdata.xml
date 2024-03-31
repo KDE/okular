@@ -59,6 +59,7 @@
   <name xml:lang="zh-CN">Okular 文档查看器</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>View and annotate documents</summary>
+  <summary xml:lang="ar">يعرض المستندات و يستطيع وضع الشروح عليها</summary>
   <summary xml:lang="bg">Преглед на документи и поставяне на бележки</summary>
   <summary xml:lang="ca">Visualitzeu i anoteu documents</summary>
   <summary xml:lang="ca-valencia">Visualitzeu i anoteu documents</summary>

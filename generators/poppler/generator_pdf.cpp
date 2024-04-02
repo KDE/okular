@@ -709,6 +709,8 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
                 return Okular::Document::OpenNeedsPassword;
             }
         }
+    } else {
+        documentHasPassword = false;
     }
 
     xrefReconstructed = false;

@@ -4431,10 +4431,9 @@ void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFi
     d->executeScriptEvent(event, linkscript);
 
     if (event->returnCode()) {
-        fft->setPendingText(event->value().toString());
-        fft->commitValue();
+        fft->setText(event->value().toString());
     } else {
-        fft->resetToCommittedValue();
+        fft->setPendingText(QString());
         Q_EMIT refreshFormWidget(fft);
     }
 }

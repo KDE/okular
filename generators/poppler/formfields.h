@@ -78,8 +78,6 @@ public:
     Qt::Alignment textAlignment() const override;
     bool canBeSpellChecked() const override;
     void setPendingText(const QString &text) override;
-    void commitValue() override;
-    void resetToCommittedValue() override;
 
 private:
     std::unique_ptr<Poppler::FormFieldText> m_field;

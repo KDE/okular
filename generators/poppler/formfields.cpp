@@ -270,16 +270,6 @@ void PopplerFormFieldText::setPendingText(const QString &text)
     m_pendingText = text;
 }
 
-void PopplerFormFieldText::commitValue()
-{
-    setText(m_pendingText);
-}
-
-void PopplerFormFieldText::resetToCommittedValue()
-{
-    m_pendingText = QString();
-}
-
 PopplerFormFieldChoice::PopplerFormFieldChoice(std::unique_ptr<Poppler::FormFieldChoice> field)
     : Okular::FormFieldChoice()
     , m_field(std::move(field))

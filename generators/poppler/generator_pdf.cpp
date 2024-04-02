@@ -699,6 +699,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
 
     if (pdfdoc->isLocked()) {
         pdfdoc->unlock(password.toLatin1(), password.toLatin1());
+        documentHasPassword = !password.isEmpty();
 
         if (pdfdoc->isLocked()) {
             pdfdoc->unlock(password.toUtf8(), password.toUtf8());
@@ -1577,7 +1578,7 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), QStringLiteral(POPPLER_VERSION));
         }
     } else if (key == QLatin1String("DocumentHasPassword")) {
-        return pdfdoc->isEncrypted() ? QStringLiteral("yes") : QStringLiteral("no");
+        return documentHasPassword ? QStringLiteral("yes") : QStringLiteral("no");
     }
     return QVariant();
 }

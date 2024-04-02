@@ -157,6 +157,8 @@ private:
     QBitArray rectsGenerated;
 
     QPointer<PDFOptionsPage> pdfOptionsPage;
+
+    bool documentHasPassword = false;
 };
 
 #endif

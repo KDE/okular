@@ -546,6 +546,14 @@ private:
     Q_DISABLE_COPY(CertificateStore)
 };
 
+/**
+ * \since 24.12
+ */
+enum SigningResult {
+    SigningSuccess,
+    FieldAlreadySigned,
+    GenericSigningError,
+};
 }
 
 #endif

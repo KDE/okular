@@ -3526,6 +3526,7 @@ bool Document::canModifyPageAnnotation(const Annotation *annotation) const
     case Annotation::AHighlight:
     case Annotation::AStamp:
     case Annotation::AInk:
+    case Annotation::AWidget:
         return true;
     default:
         return false;
@@ -5138,6 +5139,11 @@ void Document::setHistoryClean(bool clean)
 bool Document::isHistoryClean() const
 {
     return d->m_undoStack->isClean();
+}
+
+void Document::clearHistory()
+{
+    d->m_undoStack->clear();
 }
 
 bool Document::canSaveChanges() const

@@ -429,6 +429,7 @@ void Shell::openNewlySignedFile(const QString &path, int pageNumber)
 
     const int activeTab = m_tabWidget->currentIndex();
     KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
+    activePart->closeUrl(false);
     activePart->openUrl(url);
 }
 

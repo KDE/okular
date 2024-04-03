@@ -476,6 +476,17 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signatureMessage->setVisible(false);
     m_signatureMessage->setWordWrap(true);
     rightLayout->addWidget(m_signatureMessage);
+#if HAVE_NEW_SIGNATURE_API
+    m_signatureInProgressMessage = new KMessageWidget(rightContainer);
+    m_signatureInProgressMessage->setCloseButtonVisible(false);
+    m_signatureInProgressMessage->setVisible(false);
+    m_signatureInProgressMessage->setWordWrap(true);
+    m_signatureInProgressMessage->setText(i18n("Signing in progress. You can adjust the position and size of the signature"));
+    QAction *finishSigningAction = new QAction(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18n("Finish Signing"), this);
+    connect(finishSigningAction, &QAction::triggered, this, &Part::finishSigning);
+    m_signatureInProgressMessage->addAction(finishSigningAction);
+    rightLayout->addWidget(m_signatureInProgressMessage);
+#endif
     m_pageView = new PageView(rightContainer, m_document);
     rightContainer->setFocusProxy(m_pageView);
     QMetaObject::invokeMethod(m_pageView, "setFocus", Qt::QueuedConnection); // usability setting
@@ -515,6 +526,9 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(m_pageView.data(), &PageView::escPressed, m_findBar, &FindBar::resetSearch);
     connect(m_pageNumberTool, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
     connect(m_pageView.data(), &PageView::requestOpenNewlySignedFile, this, &Part::requestOpenNewlySignedFile);
+#if HAVE_NEW_SIGNATURE_API
+    connect(m_pageView.data(), &PageView::signingStarted, this, [this] { m_signatureInProgressMessage->setVisible(true); });
+#endif
 
     connect(m_reviewsWidget.data(), &Reviews::openAnnotationWindow, m_pageView.data(), &PageView::openAnnotationWindow);
 
@@ -840,6 +854,7 @@ void Part::setupActions()
 
     m_save = KStandardAction::save(
         this, [this] { saveFile(); }, ac);
+
     m_save->setEnabled(false);
 
     m_saveAs = KStandardAction::saveAs(this, SLOT(slotSaveFileAs()), ac);
@@ -3637,6 +3652,14 @@ void Part::moveSplitter(int sideWidgetSize)
 {
     m_sidebar->moveSplitter(sideWidgetSize);
 }
+
+#if HAVE_NEW_SIGNATURE_API
+void Part::finishSigning()
+{
+    m_signatureInProgressMessage->setVisible(false);
+    m_pageView->finishSigning();
+}
+#endif
 
 void Part::unsetDummyMode()
 {

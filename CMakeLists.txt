@@ -294,6 +294,12 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060600)
 add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x05F000)
 
+if (Poppler_VERSION VERSION_LESS 24.10.0)
+    add_definitions(-DHAVE_NEW_SIGNATURE_API=0)
+else()
+    add_definitions(-DHAVE_NEW_SIGNATURE_API=1)
+endif()
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)

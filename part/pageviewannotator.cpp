@@ -327,16 +327,96 @@ private:
     bool center;
 };
 
+#if HAVE_NEW_SIGNATURE_API
 class PickPointEngineSignature : public PickPointEngine
 {
 public:
-    PickPointEngineSignature(Okular::Document *document, PageView *pageView)
+    PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
+        : PickPointEngine({})
+        , m_page(nullptr)
+        , m_aborted(false)
+        , m_signingInformation(info)
+    {
+        m_block = true;
+    }
+
+    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
+    {
+        m_page = page;
+        return PickPointEngine::event(type, button, modifiers, nX, nY, xScale, yScale, page);
+    }
+
+    QList<Okular::Annotation *> end() override
+    {
+        rect.left = qMin(startpoint.x, point.x);
+        rect.top = qMin(startpoint.y, point.y);
+        rect.right = qMax(startpoint.x, point.x);
+        rect.bottom = qMax(startpoint.y, point.y);
+
+        clicked = false;
+
+        // find out annotation's type
+        Okular::SignatureAnnotation *ann = new Okular::SignatureAnnotation();
+
+        const QString certSubjectCommonName = m_signingInformation->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
+        const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
+        const QString signatureText = i18n("Signed by: %1\n\nDate: %2", certSubjectCommonName, datetime);
+
+        ann->setLeftText(certSubjectCommonName);
+        ann->setText(signatureText);
+        ann->setImagePath(m_signingInformation->backgroundImagePath);
+
+        m_creationCompleted = false;
+        clicked = false;
+
+        // safety check
+        if (!ann) {
+            return QList<Okular::Annotation *>();
+        }
+
+        // set the bounding rectangle, and make sure that the newly created
+        // annotation lies within the page by translating it if necessary
+        if (rect.right > 1) {
+            rect.left -= rect.right - 1;
+            rect.right = 1;
+        }
+        if (rect.bottom > 1) {
+            rect.top -= rect.bottom - 1;
+            rect.bottom = 1;
+        }
+        ann->setBoundingRectangle(rect);
+
+        return QList<Okular::Annotation *>() << ann;
+    }
+
+    bool isAccepted() const
+    {
+        return !m_aborted && !m_signingInformation->certificate->nickName().isEmpty();
+    }
+
+    bool isAborted() const
+    {
+        return m_aborted;
+    }
+
+private:
+    const Okular::Page *m_page;
+
+    bool m_aborted;
+    SignaturePartUtils::SigningInformation *m_signingInformation;
+};
+#else
+class PickPointEngineSignature : public PickPointEngine
+{
+public:
+    PickPointEngineSignature(Okular::Document *document, PageView *pageView, SignaturePartUtils::SigningInformation *info)
         : PickPointEngine({})
         , m_document(document)
         , m_page(nullptr)
         , m_pageView(pageView)
         , m_startOver(false)
         , m_aborted(false)
+        , m_signingInformation(info)
     {
         m_block = true;
     }
@@ -369,22 +449,6 @@ public:
                 return {};
             }
         }
-
-        const auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, SignaturePartUtils::SigningInformationOption::BackgroundImage);
-        if (!signInfo) {
-            m_aborted = true;
-            passToUse.clear();
-            documentPassword.clear();
-        } else {
-            certNicknameToUse = signInfo->certificate->nickName();
-            certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
-            passToUse = signInfo->certificatePassword;
-            documentPassword = signInfo->documentPassword;
-            reason = signInfo->reason;
-            location = signInfo->location;
-            backgroundImagePath = signInfo->backgroundImagePath;
-        }
-
         m_creationCompleted = false;
         clicked = false;
 
@@ -393,7 +457,7 @@ public:
 
     bool isAccepted() const
     {
-        return !m_aborted && !certNicknameToUse.isEmpty();
+        return !m_aborted && !m_signingInformation->certificate->nickName().isEmpty();
     }
 
     bool userWantsToStartOver() const
@@ -409,36 +473,33 @@ public:
     bool sign(const QString &newFilePath)
     {
         Okular::NewSignatureData data;
-        data.setCertNickname(certNicknameToUse);
-        data.setCertSubjectCommonName(certCommonName);
-        data.setPassword(passToUse);
-        data.setDocumentPassword(documentPassword);
+        data.setCertNickname(m_signingInformation->certificate->nickName());
+        data.setCertSubjectCommonName(m_signingInformation->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
+        data.setPassword(m_signingInformation->certificatePassword);
+        data.setDocumentPassword(m_signingInformation->documentPassword);
         data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
-        data.setReason(reason);
-        data.setLocation(location);
-        data.setBackgroundImagePath(backgroundImagePath);
-        passToUse.clear();
-        documentPassword.clear();
+        data.setReason(m_signingInformation->reason);
+        data.setLocation(m_signingInformation->location);
+        data.setBackgroundImagePath(m_signingInformation->backgroundImagePath);
         return m_document->sign(data, newFilePath);
     }
 
-private:
-    QString certNicknameToUse;
-    QString certCommonName;
-    QString passToUse;
-    QString documentPassword;
-    QString location;
-    QString backgroundImagePath;
-    QString reason;
+    SignaturePartUtils::SigningInformation *signingInformation() const
+    {
+        return m_signingInformation;
+    }
 
+private:
     Okular::Document *m_document;
     const Okular::Page *m_page;
     PageView *m_pageView;
 
     bool m_startOver;
     bool m_aborted;
+    SignaturePartUtils::SigningInformation *m_signingInformation;
 };
+#endif
 
 /** @short PolyLineEngine */
 class PolyLineEngine : public AnnotatorEngine
@@ -942,6 +1003,16 @@ bool PageViewAnnotator::signatureMode() const
     return m_signatureMode;
 }
 
+void PageViewAnnotator::startSigning(SignaturePartUtils::SigningInformation *info)
+{
+    m_signatureMode = true;
+#if HAVE_NEW_SIGNATURE_API
+    m_engine = new PickPointEngineSignature(info);
+#else
+    m_engine = new PickPointEngineSignature(m_document, m_pageView, info);
+#endif
+}
+
 bool PageViewAnnotator::active() const
 {
     return (m_engine != nullptr) || m_signatureMode;
@@ -974,10 +1045,6 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     } else if (button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Release) {
         detachAnnotation();
         return QRect();
-    }
-
-    if (signatureMode() && eventType == AnnotatorEngine::Press) {
-        m_engine = new PickPointEngineSignature(m_document, m_pageView);
     }
 
     // 1. lock engine to current item
@@ -1030,6 +1097,15 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             annotation->setAuthor(Okular::Settings::identityAuthor());
             m_document->addPageAnnotation(m_lockedItem->pageNumber(), annotation);
 
+#if HAVE_NEW_SIGNATURE_API
+            if (auto signatureAnnotation = dynamic_cast<Okular::SignatureAnnotation *>(annotation)) {
+                m_pageView->startSigning(signatureAnnotation);
+                // We cannot undo adding a signature annotation
+                // clear the undo stack so we don't offer it to the user
+                m_document->clearHistory();
+            }
+#endif
+
             if (annotation->openDialogAfterCreation()) {
                 m_pageView->openAnnotationWindow(annotation, m_lockedItem->pageNumber());
             }
@@ -1037,7 +1113,14 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
 
         if (signatureMode()) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
-            if (signEngine->isAccepted()) {
+
+#if !HAVE_NEW_SIGNATURE_API
+            if (signEngine->userWantsToStartOver()) {
+                auto singingInfo = signEngine->signingInformation();
+                delete m_engine;
+                m_engine = new PickPointEngineSignature(m_document, m_pageView, singingInfo);
+                return {};
+            } else if (signEngine->isAccepted()) {
                 const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(m_pageView, m_document);
 
                 if (!newFilePath.isEmpty()) {
@@ -1051,11 +1134,16 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                 // Exit the signature mode.
                 setSignatureMode(false);
                 selectBuiltinTool(-1, ShowTip::No);
-            } else if (signEngine->userWantsToStartOver()) {
-                delete m_engine;
-                m_engine = new PickPointEngineSignature(m_document, m_pageView);
-                return {};
-            } else if (signEngine->isAborted()) {
+            }
+#else
+            if (signEngine->isAccepted()) {
+                // Exit the signature mode.
+                setSignatureMode(false);
+                selectBuiltinTool(-1, ShowTip::No);
+            }
+#endif
+
+            else if (signEngine->isAborted()) {
                 // Exit the signature mode.
                 setSignatureMode(false);
                 selectBuiltinTool(-1, ShowTip::No);

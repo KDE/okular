@@ -421,6 +421,43 @@ static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Ok
     return pStampAnnotation;
 }
 
+#if HAVE_NEW_SIGNATURE_API
+static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::SigningResult pResult)
+{
+    switch (pResult) {
+    case Poppler::SignatureAnnotation::SigningSuccess:
+        return Okular::SigningSuccess;
+    case Poppler::SignatureAnnotation::FieldAlreadySigned:
+        return Okular::FieldAlreadySigned;
+    case Poppler::SignatureAnnotation::GenericSigningError:
+        return Okular::GenericSigningError;
+    }
+    Q_UNREACHABLE_RETURN(Okular::GenericSigningError);
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(Okular::SignatureAnnotation *oSignatureAnnotation)
+{
+    Poppler::SignatureAnnotation *pSignatureAnnotation = new Poppler::SignatureAnnotation();
+
+    pSignatureAnnotation->setBorderColor(QColor(0, 0, 0));
+    pSignatureAnnotation->setFontColor(QColor(0, 0, 0));
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oSignatureAnnotation, pSignatureAnnotation);
+    pSignatureAnnotation->setLeftText(oSignatureAnnotation->leftText());
+    pSignatureAnnotation->setText(oSignatureAnnotation->text());
+    pSignatureAnnotation->setImagePath(oSignatureAnnotation->imagePath());
+    pSignatureAnnotation->setFieldPartialName(oSignatureAnnotation->fieldPartialName());
+
+    oSignatureAnnotation->setSignFunction([pSignatureAnnotation](const Okular::NewSignatureData &oData, const QString &fileName) {
+        Poppler::PDFConverter::NewSignatureData pData;
+        PDFGenerator::okularToPoppler(oData, &pData);
+        return popperToOkular(pSignatureAnnotation->sign(fileName, pData));
+    });
+
+    return pSignatureAnnotation;
+}
+#endif
+
 static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation)
 {
     Poppler::InkAnnotation *pInkAnnotation = new Poppler::InkAnnotation();
@@ -484,6 +521,19 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
     case Okular::Annotation::ACaret:
         ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::CaretAnnotation *>(okl_ann));
         break;
+#if HAVE_NEW_SIGNATURE_API
+    case Okular::Annotation::AWidget: {
+        if (auto signatureAnnt = dynamic_cast<Okular::SignatureAnnotation *>(okl_ann)) {
+            signatureAnnt->setPage(page);
+            ppl_ann = createPopplerAnnotationFromOkularAnnotation(signatureAnnt);
+        } else {
+            qWarning() << "Unsupported annotation type" << okl_ann->subType();
+        }
+
+        break;
+    }
+#endif
+
     default:
         qWarning() << "Unsupported annotation type" << okl_ann->subType();
         return;

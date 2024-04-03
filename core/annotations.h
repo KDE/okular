@@ -16,6 +16,7 @@
 
 #include "area.h"
 #include "okularcore_export.h"
+#include "signatureutils.h"
 
 namespace Okular
 {
@@ -34,6 +35,7 @@ class LineAnnotationPrivate;
 class GeomAnnotationPrivate;
 class HighlightAnnotationPrivate;
 class StampAnnotationPrivate;
+class SignatureAnnotationPrivate;
 class InkAnnotationPrivate;
 class CaretAnnotationPrivate;
 class FileAttachmentAnnotationPrivate;
@@ -42,6 +44,7 @@ class MovieAnnotationPrivate;
 class ScreenAnnotationPrivate;
 class WidgetAnnotationPrivate;
 class RichMediaAnnotationPrivate;
+class NewSignatureData;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -1320,6 +1323,59 @@ private:
     Q_DECLARE_PRIVATE(StampAnnotation)
     Q_DISABLE_COPY(StampAnnotation)
 };
+
+#if HAVE_NEW_SIGNATURE_API
+/**
+ * \since 24.12
+ */
+class OKULARCORE_EXPORT SignatureAnnotation : public Annotation
+{
+public:
+    /**
+     * Creates a new signature annotation.
+     */
+    SignatureAnnotation();
+
+    /**
+     * Destroys the signature annotation.
+     */
+    ~SignatureAnnotation() override;
+
+    QString text() const;
+    void setText(const QString &text);
+
+    QString leftText() const;
+    void setLeftText(const QString &text);
+
+    QString imagePath() const;
+    void setImagePath(const QString &imagePath);
+
+    QString fieldPartialName() const;
+    void setFieldPartialName(const QString &fieldPartialName);
+
+    int page() const;
+    void setPage(int page);
+
+    void setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func);
+
+    SigningResult sign(const Okular::NewSignatureData &data, const QString &fileName);
+
+    /**
+     * Returns the sub type of the stamp annotation.
+     */
+    SubType subType() const override;
+
+    /**
+     * Stores the stamp annotation as xml in @p document
+     * under the given parent @p node.
+     */
+    void store(QDomNode &node, QDomDocument &document) const override;
+
+private:
+    Q_DECLARE_PRIVATE(SignatureAnnotation)
+    Q_DISABLE_COPY(SignatureAnnotation)
+};
+#endif
 
 class OKULARCORE_EXPORT InkAnnotation : public Annotation
 {

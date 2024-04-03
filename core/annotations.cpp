@@ -27,6 +27,8 @@
 #include "page_p.h"
 #include "sound.h"
 
+#include <functional>
+
 using namespace Okular;
 
 /**
@@ -2339,6 +2341,137 @@ AnnotationPrivate *StampAnnotationPrivate::getNewAnnotationPrivate()
 {
     return new StampAnnotationPrivate();
 }
+
+#if HAVE_NEW_SIGNATURE_API
+/** SignatureAnnotation [Annotation] */
+
+class Okular::SignatureAnnotationPrivate : public Okular::AnnotationPrivate
+{
+public:
+    SignatureAnnotationPrivate()
+        : AnnotationPrivate()
+    {
+    }
+
+    void setAnnotationProperties(const QDomNode &node) override;
+    bool canBeResized() const override;
+    AnnotationPrivate *getNewAnnotationPrivate() override;
+
+    QString m_text;
+    QString m_leftText;
+    QString m_imagePath;
+    QString m_fieldPartialName;
+    int m_page;
+    std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> m_signFunction;
+};
+
+SignatureAnnotation::SignatureAnnotation()
+    : Annotation(*new SignatureAnnotationPrivate())
+{
+}
+
+SignatureAnnotation::~SignatureAnnotation()
+{
+}
+
+Annotation::SubType SignatureAnnotation::subType() const
+{
+    return AWidget;
+}
+
+QString SignatureAnnotation::text() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_text;
+}
+
+void SignatureAnnotation::setText(const QString &text)
+{
+    Q_D(SignatureAnnotation);
+    d->m_text = text;
+}
+
+QString SignatureAnnotation::leftText() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_leftText;
+}
+
+void SignatureAnnotation::setLeftText(const QString &text)
+{
+    Q_D(SignatureAnnotation);
+    d->m_leftText = text;
+}
+
+QString SignatureAnnotation::imagePath() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_imagePath;
+}
+
+void SignatureAnnotation::setImagePath(const QString &imagePath)
+{
+    Q_D(SignatureAnnotation);
+    d->m_imagePath = imagePath;
+}
+
+QString SignatureAnnotation::fieldPartialName() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_fieldPartialName;
+}
+void SignatureAnnotation::setFieldPartialName(const QString &fieldPartialName)
+{
+    Q_D(SignatureAnnotation);
+    d->m_fieldPartialName = fieldPartialName;
+}
+
+void SignatureAnnotation::setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func)
+{
+    Q_D(SignatureAnnotation);
+    d->m_signFunction = func;
+}
+
+SigningResult SignatureAnnotation::sign(const Okular::NewSignatureData &data, const QString &fileName)
+{
+    Q_D(SignatureAnnotation);
+    return d->m_signFunction(data, fileName);
+}
+
+int SignatureAnnotation::page() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_page;
+}
+
+void SignatureAnnotation::setPage(int page)
+{
+    Q_D(SignatureAnnotation);
+    d->m_page = page;
+}
+
+void SignatureAnnotation::store(QDomNode &node, QDomDocument &document) const
+{
+    // TODO is this relevant?
+}
+
+void SignatureAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
+{
+    Okular::AnnotationPrivate::setAnnotationProperties(node);
+
+    // TODO is this relevant?
+}
+
+bool SignatureAnnotationPrivate::canBeResized() const
+{
+    return true;
+}
+
+AnnotationPrivate *SignatureAnnotationPrivate::getNewAnnotationPrivate()
+{
+    return new SignatureAnnotationPrivate();
+}
+#endif
 
 /** InkAnnotation [Annotation] */
 

@@ -463,5 +463,10 @@ bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, cons
 {
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 03, 0)
+    // 0 means "Chose an appropriate size"
+    pData.setFontSize(0);
+    pData.setLeftFontSize(0);
+#endif
     return m_field->sign(newPath, pData) == Poppler::FormFieldSignature::SigningSuccess;
 }

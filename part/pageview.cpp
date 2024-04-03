@@ -99,6 +99,7 @@
 #include "magnifierview.h"
 #include "settings.h"
 #include "settings_core.h"
+#include "signaturepartutils.h"
 #include "url_utils.h"
 #include "videowidget.h"
 
@@ -5199,9 +5200,13 @@ void PageView::slotSignature()
         return;
     }
 
+    auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(this, d->document, SignaturePartUtils::SigningInformationOption::BackgroundImage);
+    if (!signInfo) {
+        return;
+    }
     d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
 
-    d->annotator->setSignatureMode(true);
+    d->annotator->startSigning(std::move(*signInfo));
 
     // force an update of the cursor
     updateCursor();

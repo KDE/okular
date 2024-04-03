@@ -139,6 +139,7 @@ public:
                 painter->setPen(pen);
                 const Okular::NormalizedRect tmprect(qMin(startpoint.x, point.x), qMin(startpoint.y, point.y), qMax(startpoint.x, point.x), qMax(startpoint.y, point.y));
                 const QRect realrect = tmprect.geometry((int)xScale, (int)yScale);
+
                 painter->drawRect(realrect);
                 painter->setPen(origpen);
             }
@@ -330,13 +331,13 @@ private:
 class PickPointEngineSignature : public PickPointEngine
 {
 public:
-    PickPointEngineSignature(Okular::Document *document, PageView *pageView)
+    PickPointEngineSignature(Okular::Document *document, PageView *pageView, SignaturePartUtils::SigningInformation &&info)
         : PickPointEngine({})
         , m_document(document)
         , m_page(nullptr)
         , m_pageView(pageView)
-        , m_startOver(false)
         , m_aborted(false)
+        , m_signingInformation(std::move(info))
     {
         m_block = true;
     }
@@ -349,41 +350,10 @@ public:
 
     QList<Okular::Annotation *> end() override
     {
-        m_startOver = false;
         rect.left = qMin(startpoint.x, point.x);
         rect.top = qMin(startpoint.y, point.y);
         rect.right = qMax(startpoint.x, point.x);
         rect.bottom = qMax(startpoint.y, point.y);
-
-        // FIXME this is a bit arbitrary, try to figure out a better rule, potentially based in cm and not pixels?
-        if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
-            const KMessageBox::ButtonCode answer = KMessageBox::questionTwoActions(
-                m_pageView,
-                xi18nc("@info", "A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press <interface>Start over</interface> and draw a bigger rectangle."),
-                QString(),
-                KGuiItem(i18nc("@action:button", "Start Over")),
-                KGuiItem(i18nc("@action:button", "Sign")),
-                QStringLiteral("TooSmallDigitalSignatureQuestion"));
-            if (answer == KMessageBox::PrimaryAction) {
-                m_startOver = true;
-                return {};
-            }
-        }
-
-        const auto signInfo = SignaturePartUtils::getCertificateAndPasswordForSigning(m_pageView, m_document, SignaturePartUtils::SigningInformationOption::BackgroundImage);
-        if (!signInfo) {
-            m_aborted = true;
-            passToUse.clear();
-            documentPassword.clear();
-        } else {
-            certNicknameToUse = signInfo->certificate->nickName();
-            certCommonName = signInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
-            passToUse = signInfo->certificatePassword;
-            documentPassword = signInfo->documentPassword;
-            reason = signInfo->reason;
-            location = signInfo->location;
-            backgroundImagePath = signInfo->backgroundImagePath;
-        }
 
         m_creationCompleted = false;
         clicked = false;
@@ -391,14 +361,45 @@ public:
         return {};
     }
 
-    bool isAccepted() const
+    void paint(QPainter *painter, double xScale, double yScale, const QRect &clipRect) override
     {
-        return !m_aborted && !certNicknameToUse.isEmpty();
+        if (clicked) {
+            if (m_block) {
+                const QPen origpen = painter->pen();
+                const Okular::NormalizedRect boundingRect(qMin(startpoint.x, point.x), qMin(startpoint.y, point.y), qMax(startpoint.x, point.x), qMax(startpoint.y, point.y));
+
+                const Okular::NormalizedRect leftTextNormalized(boundingRect.left, boundingRect.top, boundingRect.left + (boundingRect.width() / 2.0), boundingRect.bottom);
+                const QRect leftTextRect = leftTextNormalized.geometry((int)xScale, (int)yScale);
+
+                double scaleFactor = m_pageView->capability(PageView::Zoom).toDouble();
+
+                QFont leftFont(QStringLiteral("Helvetica"), 20 * scaleFactor);
+                painter->setFont(leftFont);
+
+                const QString certSubjectCommonName = m_signingInformation.certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
+
+                painter->drawText(leftTextRect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap, certSubjectCommonName);
+
+                const Okular::NormalizedRect textNormalized(boundingRect.left + (boundingRect.width() / 2.0), boundingRect.top, boundingRect.right, boundingRect.bottom);
+                const QRect textRect = textNormalized.geometry((int)xScale, (int)yScale);
+
+                QFont f(QStringLiteral("Helvetica"), 10 * scaleFactor);
+                painter->setFont(f);
+
+                const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
+                const QString signatureText = i18n("Signed by: %1\n\nDate: %2", certSubjectCommonName, datetime);
+
+                painter->drawText(textRect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap, signatureText);
+
+                painter->setPen(origpen);
+            }
+            PickPointEngine::paint(painter, xscale, yScale, clipRect);
+        }
     }
 
-    bool userWantsToStartOver() const
+    bool isAccepted() const
     {
-        return m_startOver;
+        return !m_aborted && !m_signingInformation.certificate->nickName().isEmpty();
     }
 
     bool isAborted() const
@@ -409,35 +410,25 @@ public:
     bool sign(const QString &newFilePath)
     {
         Okular::NewSignatureData data;
-        data.setCertNickname(certNicknameToUse);
-        data.setCertSubjectCommonName(certCommonName);
-        data.setPassword(passToUse);
-        data.setDocumentPassword(documentPassword);
+        data.setCertNickname(m_signingInformation.certificate->nickName());
+        data.setCertSubjectCommonName(m_signingInformation.certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
+        data.setPassword(m_signingInformation.certificatePassword);
+        data.setDocumentPassword(m_signingInformation.documentPassword);
         data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
-        data.setReason(reason);
-        data.setLocation(location);
-        data.setBackgroundImagePath(backgroundImagePath);
-        passToUse.clear();
-        documentPassword.clear();
+        data.setReason(m_signingInformation.reason);
+        data.setLocation(m_signingInformation.location);
+        data.setBackgroundImagePath(m_signingInformation.backgroundImagePath);
         return m_document->sign(data, newFilePath);
     }
 
 private:
-    QString certNicknameToUse;
-    QString certCommonName;
-    QString passToUse;
-    QString documentPassword;
-    QString location;
-    QString backgroundImagePath;
-    QString reason;
-
     Okular::Document *m_document;
     const Okular::Page *m_page;
     PageView *m_pageView;
 
-    bool m_startOver;
     bool m_aborted;
+    SignaturePartUtils::SigningInformation m_signingInformation;
 };
 
 /** @short PolyLineEngine */
@@ -932,14 +923,10 @@ PageViewAnnotator::~PageViewAnnotator()
     delete m_quickToolsDefinition;
 }
 
-void PageViewAnnotator::setSignatureMode(bool enabled)
+void PageViewAnnotator::startSigning(SignaturePartUtils::SigningInformation &&info)
 {
-    m_signatureMode = enabled;
-}
-
-bool PageViewAnnotator::signatureMode() const
-{
-    return m_signatureMode;
+    m_signatureMode = true;
+    m_engine = new PickPointEngineSignature(m_document, m_pageView, std::move(info));
 }
 
 bool PageViewAnnotator::active() const
@@ -974,10 +961,6 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     } else if (button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Release) {
         detachAnnotation();
         return QRect();
-    }
-
-    if (signatureMode() && eventType == AnnotatorEngine::Press) {
-        m_engine = new PickPointEngineSignature(m_document, m_pageView);
     }
 
     // 1. lock engine to current item
@@ -1035,7 +1018,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             }
         }
 
-        if (signatureMode()) {
+        if (m_signatureMode) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
             if (signEngine->isAccepted()) {
                 const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(m_pageView, m_document);
@@ -1049,15 +1032,11 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                     }
                 }
                 // Exit the signature mode.
-                setSignatureMode(false);
+                m_signatureMode = false;
                 selectBuiltinTool(-1, ShowTip::No);
-            } else if (signEngine->userWantsToStartOver()) {
-                delete m_engine;
-                m_engine = new PickPointEngineSignature(m_document, m_pageView);
-                return {};
             } else if (signEngine->isAborted()) {
                 // Exit the signature mode.
-                setSignatureMode(false);
+                m_signatureMode = false;
                 selectBuiltinTool(-1, ShowTip::No);
             }
             m_continuousMode = false;
@@ -1301,13 +1280,13 @@ void PageViewAnnotator::detachAnnotation()
         return;
     }
     selectBuiltinTool(-1, ShowTip::No);
-    if (!signatureMode()) {
+    if (!m_signatureMode) {
         if (m_actionHandler) {
             m_actionHandler->deselectAllAnnotationActions();
         }
     } else {
         m_pageView->displayMessage(QString());
-        setSignatureMode(false);
+        m_signatureMode = false;
     }
 }
 

@@ -14,6 +14,7 @@
 
 #include "annotationtools.h"
 #include "pageviewutils.h"
+#include "signaturepartutils.h"
 
 class QKeyEvent;
 class QMouseEvent;
@@ -66,8 +67,7 @@ public:
     // @return Are we currently annotating (using the selected tool)?
     bool annotating() const;
 
-    void setSignatureMode(bool enabled);
-    bool signatureMode() const;
+    void startSigning(SignaturePartUtils::SigningInformation &&info);
 
     // returns the preferred cursor for the current tool. call this only
     // if active() == true

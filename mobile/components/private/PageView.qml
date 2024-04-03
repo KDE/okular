@@ -4,8 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.15
-import Qt5Compat.GraphicalEffects
+import QtQuick
 import org.kde.okular 2.0
 import org.kde.kirigami 2.17 as Kirigami
 
@@ -42,16 +41,15 @@ Item {
         z: -1
         color: "white"
 
-        LinearGradient {
+        Rectangle {
             width: Kirigami.Units.gridUnit
             anchors {
                 right: parent.left
                 top: parent.top
                 bottom: parent.bottom
             }
-            start: Qt.point(0, 0)
-            end: Qt.point(Kirigami.Units.gridUnit, 0)
             gradient: Gradient {
+                orientation: Gradient.Horizontal
                 GradientStop {
                     position: 0.0
                     color: "transparent"
@@ -67,16 +65,15 @@ Item {
             }
         }
 
-        LinearGradient {
+        Rectangle {
             width: Kirigami.Units.gridUnit
             anchors {
                 left: parent.right
                 top: parent.top
                 bottom: parent.bottom
             }
-            start: Qt.point(0, 0)
-            end: Qt.point(Kirigami.Units.gridUnit, 0)
             gradient: Gradient {
+                orientation: Gradient.Horizontal
                 GradientStop {
                     position: 0.0
                     color: Qt.rgba(0, 0, 0, 0.2)

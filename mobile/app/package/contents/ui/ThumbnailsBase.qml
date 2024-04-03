@@ -7,7 +7,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
-import Qt5Compat.GraphicalEffects
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.17 as Kirigami
 

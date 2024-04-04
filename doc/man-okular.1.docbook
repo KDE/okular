@@ -124,8 +124,8 @@ url="help:/okular">help:/okular</ulink>
 (either enter this <acronym>URL</acronym> into &konqueror;, or run
 <userinput><command>khelpcenter</command>
 <parameter>help:/okular</parameter></userinput>).</member>
-<member>kf5options(7)</member>
-<member>qt5options(7)</member>
+<member>kf6options(7)</member>
+<member>qt6options(7)</member>
 <member>There is also further information available at
 <ulink url="https://okular.kde.org/">https://okular.kde.org/</ulink></member>
 </simplelist>

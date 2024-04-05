@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-21 02:23+0000\n"
+"POT-Creation-Date: 2024-04-05 02:41+0000\n"
 "PO-Revision-Date: 2023-07-02 15:38+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -40,7 +40,7 @@ msgid "Enhance thin lines:"
 msgstr "மெல்லிய கோடுகளை மேம்படுத்து:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:940
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:943
 #, kde-format
 msgid "No"
 msgstr "இல்லை"
@@ -192,43 +192,43 @@ msgstr "அச்சிடப்படும் பக்கங்களின�
 msgid "Scale mode:"
 msgstr "அளவுமாற்ற முறை:"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:941
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:938
+#: generator_pdf.cpp:941
 #, kde-format
 msgid "Format"
 msgstr "படிவம்"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:942
 #, kde-format
 msgid "Encrypted"
 msgstr "மறையாக்கம் செய்யப்பட்டது"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:942
 #, kde-format
 msgid "Unencrypted"
 msgstr "மறையாக்கம் செய்யப்படாதது"
 
-#: generator_pdf.cpp:939
+#: generator_pdf.cpp:942
 #, kde-format
 msgid "Security"
 msgstr "பாதுகாப்பு"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:943
 #, kde-format
 msgid "Yes"
 msgstr "ஆம்"
 
-#: generator_pdf.cpp:940
+#: generator_pdf.cpp:943
 #, kde-format
 msgid "Optimized"
 msgstr "நேரியல்பாக்கப்பட்டதா"
 
-#: generator_pdf.cpp:1368
+#: generator_pdf.cpp:1371
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -239,12 +239,12 @@ msgstr ""
 "\n"
 "தேதி: %2"
 
-#: generator_pdf.cpp:1575
+#: generator_pdf.cpp:1578
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 பயனிலுள்ளது"
 
-#: generator_pdf.cpp:1577
+#: generator_pdf.cpp:1580
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -255,17 +255,17 @@ msgstr ""
 "\n"
 "நிரல்தொகுக்க Poppler %2 பயன்படுத்தப்பட்டது"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1615
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1612
+#: generator_pdf.cpp:1615
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF பின்நிலை அமைப்பு"
 
-#: generator_pdf.cpp:2100
+#: generator_pdf.cpp:2103
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

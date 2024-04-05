@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"POT-Creation-Date: 2024-04-05 00:36+0000\n"
 "PO-Revision-Date: 2024-01-13 13:16+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -1048,17 +1048,17 @@ msgid "The document integrity verification could not be completed."
 msgstr ""
 "De verificatie van de integriteit van het document kon niet worden voltooid."
 
-#: gui/signatureguiutils.cpp:205
+#: gui/signatureguiutils.cpp:206
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "Dit document heeft een niet ondertekend veld voor ondertekening."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:209
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Dit document is digitaal ondertekend."
 
-#: gui/signatureguiutils.cpp:210
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1066,7 +1066,7 @@ msgstr ""
 "Dit document is digitaal ondertekend. Er zijn wijzigingen sinds de laatste "
 "ondertekening."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:214
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"POT-Creation-Date: 2024-04-05 00:36+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -1084,26 +1084,26 @@ msgstr ""
 msgid "The document integrity verification could not be completed."
 msgstr ""
 
-#: gui/signatureguiutils.cpp:205
+#: gui/signatureguiutils.cpp:206
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid "This document has unsigned signature fields."
 msgstr "It útprintsjen fan dit dokumint is net tastien."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:209
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid "This document is digitally signed."
 msgstr "It útprintsjen fan dit dokumint is net tastien."
 
-#: gui/signatureguiutils.cpp:210
+#: gui/signatureguiutils.cpp:211
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr "It útprintsjen fan dit dokumint is net tastien."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:214
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid ""

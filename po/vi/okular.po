@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"POT-Creation-Date: 2024-04-05 00:36+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -1029,23 +1029,23 @@ msgstr ""
 msgid "The document integrity verification could not be completed."
 msgstr "Không hoàn tất được việc xác minh tính toàn vẹn của tài liệu."
 
-#: gui/signatureguiutils.cpp:205
+#: gui/signatureguiutils.cpp:206
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "Tài liệu này có các trường chữ kí chưa được kí."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:209
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Tài liệu này đã được kí số."
 
-#: gui/signatureguiutils.cpp:210
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr "Tài liệu này đã được kí số. Đã có thay đổi từ lần kí cuối."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:214
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"POT-Creation-Date: 2024-04-05 00:36+0000\n"
 "PO-Revision-Date: 2024-02-06 00:39+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1026,17 +1026,17 @@ msgstr "이전에 서명한 사람이 허용하지 않은 형태로 문서가 �
 msgid "The document integrity verification could not be completed."
 msgstr "문서 무결성 검사를 완료할 수 없습니다."
 
-#: gui/signatureguiutils.cpp:205
+#: gui/signatureguiutils.cpp:206
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "이 문서에 서명되지 않은 서명 필드가 있습니다."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:209
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "이 문서가 디지털 서명되어 있습니다."
 
-#: gui/signatureguiutils.cpp:210
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1044,7 +1044,7 @@ msgstr ""
 "이 문서가 디지털 서명되어 있습니다. 마지막으로 서명된 후 변경 사항이 있습니"
 "다."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:214
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "

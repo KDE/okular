@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-23 00:37+0000\n"
+"POT-Creation-Date: 2024-04-05 00:36+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1040,17 +1040,17 @@ msgstr ""
 msgid "The document integrity verification could not be completed."
 msgstr "Αδυναμία ολοκλήρωσης της επιβεβαίωσης ακεραιότητας του εγγράφου."
 
-#: gui/signatureguiutils.cpp:205
+#: gui/signatureguiutils.cpp:206
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "Αυτό το έγγραφο έχει ψηφιακή υπογραφή."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:209
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Αυτό το έγγραφο έχει ψηφιακή υπογραφή."
 
-#: gui/signatureguiutils.cpp:210
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1058,7 +1058,7 @@ msgstr ""
 "Αυτό το έγγραφο έχει ψηφιακή υπογραφή. Έχουν γίνει αλλαγές από την τελευταία "
 "υπογραφή."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:214
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "

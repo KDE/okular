@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-04-08 00:37+0000\n"
 "PO-Revision-Date: 2023-02-19 16:51+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -195,7 +195,7 @@ msgstr "Podpis sa nepodarilo uložiť."
 msgid "Not Available"
 msgstr "Nedostupné"
 
-#: package/contents/ui/ThumbnailsBase.qml:43
+#: package/contents/ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nenájdené žiadne výsledky."
 

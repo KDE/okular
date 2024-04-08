@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-04-08 00:37+0000\n"
 "PO-Revision-Date: 2019-12-12 21:14+0000\n"
 "Last-Translator: Sabu Siyad <ssiyad@tuta.io>\n"
 "Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Not Available"
 msgstr ""
 
-#: package/contents/ui/ThumbnailsBase.qml:43
+#: package/contents/ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr ""
 

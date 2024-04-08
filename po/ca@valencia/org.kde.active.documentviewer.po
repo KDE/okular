@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-04-08 00:37+0000\n"
 "PO-Revision-Date: 2022-09-07 18:33+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -199,6 +199,6 @@ msgstr "No s'ha pogut guardar la signatura."
 msgid "Not Available"
 msgstr "No disponible"
 
-#: package/contents/ui/ThumbnailsBase.qml:43
+#: package/contents/ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "No s'ha trobat cap resultat."

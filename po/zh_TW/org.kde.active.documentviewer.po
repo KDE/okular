@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-04-08 00:37+0000\n"
 "PO-Revision-Date: 2023-04-23 18:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -198,7 +198,7 @@ msgstr "無法儲存簽名。"
 msgid "Not Available"
 msgstr "不可用"
 
-#: package/contents/ui/ThumbnailsBase.qml:43
+#: package/contents/ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "找不到資料。"
 

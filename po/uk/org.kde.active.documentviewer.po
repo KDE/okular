@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-19 01:33+0000\n"
+"POT-Creation-Date: 2024-04-08 00:37+0000\n"
 "PO-Revision-Date: 2022-08-03 08:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -198,7 +198,7 @@ msgstr "Не вдалося зберегти підпис."
 msgid "Not Available"
 msgstr "Недоступний"
 
-#: package/contents/ui/ThumbnailsBase.qml:43
+#: package/contents/ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Нічого не знайдено."
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-08 00:37+0000\n"
-"PO-Revision-Date: 2022-09-17 18:19+0200\n"
+"PO-Revision-Date: 2024-04-08 04:34+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -190,7 +190,7 @@ msgstr "სერტიფიკატის ნახვა..."
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
-msgstr "ხელმოწერის შენახვის შეცდომა"
+msgstr "ხელმოწერის შენახვის შეცდომა."
 
 #: package/contents/ui/Signatures.qml:27
 msgid "Not Available"

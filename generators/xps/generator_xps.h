@@ -122,10 +122,10 @@ public:
 
 private:
     // Methods for processing of different xml elements
-    void processStartElement(QPainter *painter, XpsRenderNode &node);
+    void processStartElement(QPainter *painter, const XpsRenderNode &node);
     void processEndElement(QPainter *painter, XpsRenderNode &node);
-    void processGlyph(QPainter *painter, XpsRenderNode &node);
-    void processPath(QPainter *painter, XpsRenderNode &node);
+    void processGlyph(QPainter *painter, const XpsRenderNode &node);
+    void processPath(QPainter *painter, const XpsRenderNode &node);
     void processPathData(XpsRenderNode &node);
     void processFill(XpsRenderNode &node);
     void processStroke(XpsRenderNode &node);
@@ -142,7 +142,6 @@ private:
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
     QImage m_thumbnail;
-    bool m_thumbnailIsLoaded;
 
     QImage *m_pageImage;
     bool m_pageIsRendered;

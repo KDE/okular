@@ -226,7 +226,7 @@ QVariant TOCModel::data(const QModelIndex &index, int role) const
             QFont font;
             font.setBold(true);
 
-            TOCItem *lastHighlighted = d->currentPage.last();
+            const TOCItem *lastHighlighted = d->currentPage.last();
 
             // in the mobile version our parent is not a QTreeView; embolden the last highlighted item
             // TODO misusing parent() here, fix
@@ -449,7 +449,7 @@ QString TOCModel::externalFileNameForIndex(const QModelIndex &index) const
         return QString();
     }
 
-    TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
+    const TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->extFileName;
 }
 
@@ -459,7 +459,7 @@ Okular::DocumentViewport TOCModel::viewportForIndex(const QModelIndex &index) co
         return Okular::DocumentViewport();
     }
 
-    TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
+    const TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->viewport;
 }
 
@@ -469,7 +469,7 @@ QString TOCModel::urlForIndex(const QModelIndex &index) const
         return QString();
     }
 
-    TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
+    const TOCItem *item = static_cast<TOCItem *>(index.internalPointer());
     return item->url;
 }
 

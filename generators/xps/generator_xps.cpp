@@ -686,7 +686,7 @@ static QString unicodeString(const QString &raw)
     return ret;
 }
 
-void XpsPage::processGlyph(QPainter *painter, XpsRenderNode &node)
+void XpsPage::processGlyph(QPainter *painter, const XpsRenderNode &node)
 {
     // TODO Currently ignored attributes: CaretStops, DeviceFontName, IsSideways, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
     // TODO Indices is only partially implemented
@@ -893,7 +893,7 @@ void XpsPage::processImageBrush(XpsRenderNode &node)
     node.data = QVariant::fromValue(brush);
 }
 
-void XpsPage::processPath(QPainter *painter, XpsRenderNode &node)
+void XpsPage::processPath(QPainter *painter, const XpsRenderNode &node)
 {
     // TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
     // TODO Ignored child elements: RenderTransform, Clip, OpacityMask
@@ -1172,7 +1172,7 @@ void XpsPage::processPathFigure(XpsRenderNode &node)
     }
 }
 
-void XpsPage::processStartElement(QPainter *painter, XpsRenderNode &node)
+void XpsPage::processStartElement(QPainter *painter, const XpsRenderNode &node)
 {
     if (node.name == QLatin1String("Canvas")) {
         painter->save();
@@ -1982,7 +1982,7 @@ bool XpsGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *>
     int pagesVectorOffset = 0;
 
     for (int docNum = 0; docNum < m_xpsFile->numDocuments(); ++docNum) {
-        XpsDocument *doc = m_xpsFile->document(docNum);
+        const XpsDocument *doc = m_xpsFile->document(docNum);
         for (int pageNum = 0; pageNum < doc->numPages(); ++pageNum) {
             QSizeF pageSize = doc->page(pageNum)->size();
             pagesVector[pagesVectorOffset] = new Okular::Page(pagesVectorOffset, pageSize.width(), pageSize.height(), Okular::Rotation0);

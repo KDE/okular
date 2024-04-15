@@ -78,7 +78,8 @@
 // a frame contains a pointer to the page object, its geometry and the
 // transition effect to the next frame
 struct PresentationFrame {
-    PresentationFrame() = default;
+    explicit PresentationFrame(const Okular::Page *_page)
+        : page(_page) {};
 
     ~PresentationFrame()
     {
@@ -335,8 +336,7 @@ void PresentationWidget::notifySetup(const QVector<Okular::Page *> &pageSet, int
     // create the new frames
     float screenRatio = (float)m_height / (float)m_width;
     for (const Okular::Page *page : pageSet) {
-        PresentationFrame *frame = new PresentationFrame();
-        frame->page = page;
+        PresentationFrame *frame = new PresentationFrame(page);
         const QList<Okular::Annotation *> annotations = page->annotations();
         for (Okular::Annotation *a : annotations) {
             if (a->subType() == Okular::Annotation::AMovie) {

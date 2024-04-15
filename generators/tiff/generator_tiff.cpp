@@ -258,7 +258,7 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
             int reqwidth = request->width();
             int reqheight = request->height();
             if (rotation % 2 == 1) {
-                qSwap(reqwidth, reqheight);
+                std::swap(reqwidth, reqheight);
             }
             img = image.scaled(reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 

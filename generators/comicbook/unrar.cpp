@@ -107,6 +107,7 @@ UnrarHelper::~UnrarHelper()
 
 Unrar::Unrar()
     : QObject(nullptr)
+    , mProcess(nullptr)
     , mLoop(nullptr)
     , mTempDir(nullptr)
 {

@@ -542,7 +542,7 @@ void KDjVu::Private::fillBookmarksRecurse(QDomDocument &maindoc, QDomNode &curno
                 if (dest.at(0) == QLatin1Char('#')) {
                     dest.remove(0, 1);
                     bool isNumber = false;
-                    dest.toInt(&isNumber);
+                    (void)dest.toInt(&isNumber);
                     if (isNumber) {
                         // it might be an actual page number, but could also be a page label
                         // so resolve the number, and get the real page number

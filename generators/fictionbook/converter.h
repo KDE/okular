@@ -71,7 +71,7 @@ private:
     class DocumentInfo;
     DocumentInfo *mDocumentInfo;
 
-    int mSectionCounter;
+    int mSectionCounter = 0;
 
     QMap<QString, QTextBlock> mSectionMap;
     QMap<QString, QPair<int, int>> mLocalLinks;

@@ -21,10 +21,6 @@ endif(LIBSPECTRE_FOUND)
 
 add_subdirectory( kimgio )
 
-if(FALSE)
-  add_subdirectory( chm )
-endif()
-
 if(DJVULIBRE_FOUND)
   add_subdirectory(djvu)
 endif(DJVULIBRE_FOUND)

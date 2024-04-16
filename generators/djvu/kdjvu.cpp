@@ -623,11 +623,7 @@ KDjVu::KDjVu()
     // creating the djvu context
     d->m_djvu_cxt = ddjvu_context_create("KDjVu");
     // creating the rendering format
-#if DDJVUAPI_VERSION >= 18
     d->m_format = ddjvu_format_create(DDJVU_FORMAT_RGBMASK32, 4, Private::s_formatmask);
-#else
-    d->m_format = ddjvu_format_create(DDJVU_FORMAT_RGBMASK32, 3, Private::s_formatmask);
-#endif
     ddjvu_format_set_row_order(d->m_format, 1);
     ddjvu_format_set_y_direction(d->m_format, 1);
 }
@@ -713,11 +709,7 @@ bool KDjVu::openFile(const QString &fileName)
         p.m_width = info.width;
         p.m_height = info.height;
         p.m_dpi = info.dpi;
-#if DDJVUAPI_VERSION >= 18
         p.m_orientation = flipRotation(info.rotation);
-#else
-        p->m_orientation = 0;
-#endif
         d->m_pages[i] = p;
     }
 

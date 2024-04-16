@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2022-05-12 12:03+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -27,13 +27,13 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "phu.nguyen@kdemail.net"
 
-#: document.cpp:96
+#: document.cpp:97
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr ""
 "Không thể mở tài liệu, không tìm thấy trình giải rar lẫn trình mở kho trữ."
 
-#: document.cpp:101
+#: document.cpp:102
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
@@ -41,7 +41,7 @@ msgstr ""
 "Phiên bản trình giải rar trong hệ thống của bạn không phù hợp để mở truyện "
 "tranh."
 
-#: document.cpp:130
+#: document.cpp:131
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Định dạng ComicBook không rõ."

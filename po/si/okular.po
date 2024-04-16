@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -162,12 +162,12 @@ msgstr "'%1' ක්‍රියාත්මක කරන්න..."
 msgid "First Page"
 msgstr "ප්‍රථම පිටුව"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "පෙර පිටුව"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "ඊලඟ පිටුව"
@@ -5283,24 +5283,24 @@ msgstr ""
 msgid "Find Next"
 msgstr "ඊළඟ සොයන්න"
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, kde-format
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "%1 – ඉදිරිපත් කිරීම"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr "තිරය මාරු කරන්න"
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, kde-format
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "තිරය %1"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, kde-format
 msgid "Exit Presentation Mode"
 msgstr "ඉදිරිපත්කිරීම් ප්‍රකාරයෙන් පිටවෙන්න"

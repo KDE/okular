@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2023-12-20 22:02+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -31,19 +31,19 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "sv1@fellsnet.is,gudmundure@gmail.com"
 
-#: document.cpp:96
+#: document.cpp:97
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr "Get ekki opnað skjalið, hvorki unrar né unarchiver fundust."
 
-#: document.cpp:101
+#: document.cpp:102
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
 msgstr ""
 "Útgáfan af unrar í tölvunni þinni er ekki nothæf til að opna myndasöguskrár."
 
-#: document.cpp:130
+#: document.cpp:131
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Óþekkt ComicBook-snið."

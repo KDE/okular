@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2010-07-23 20:30+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -27,19 +27,19 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "sairan@computer.org"
 
-#: document.cpp:96
+#: document.cpp:97
 #, fuzzy, kde-format
 #| msgid "Cannot open document, unrar was not found."
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr "unrar бағдарламасы табылмай, құжат ашылмады,  "
 
-#: document.cpp:101
+#: document.cpp:102
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
 msgstr "Жүйеңіздегі unrar нұсқасы комикс файлдарын ашуға жарамайды"
 
-#: document.cpp:130
+#: document.cpp:131
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Беймәлім комикс пішімі"

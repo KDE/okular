@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2021-08-22 12:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -156,12 +156,12 @@ msgstr "चलाएँ '%1'..."
 msgid "First Page"
 msgstr "प्रथम पृष्ठ"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "पिछला पृष्ठ"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "अगला पृष्ठ"
@@ -5130,25 +5130,25 @@ msgstr ""
 msgid "Find Next"
 msgstr "अगला ढूंढें"
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "प्रस्तुतीकरण"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr ""
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, kde-format
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "स्क्रीन %1"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, kde-format
 msgid "Exit Presentation Mode"
 msgstr "प्रस्तुतीकरण मोड से बाहर हों"

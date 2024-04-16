@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2024-01-13 09:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -161,12 +161,12 @@ msgstr "Виконати «%1»…"
 msgid "First Page"
 msgstr "Перша сторінка"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Попередня сторінка"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Наступна сторінка"
@@ -5044,24 +5044,24 @@ msgstr ""
 msgid "Find Next"
 msgstr "Знайти далі"
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, kde-format
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "%1 — Презентація"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr "Перемкнути екран"
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, kde-format
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "Екран %1"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, kde-format
 msgid "Exit Presentation Mode"
 msgstr "Вийти з режиму презентації"

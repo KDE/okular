@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2009-04-30 21:47+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -29,13 +29,13 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
 
-#: document.cpp:96
+#: document.cpp:97
 #, fuzzy, kde-format
 #| msgid "Cannot open document, unrar was not found."
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr "Nuk mund ta hap dokumentin, unrar nuk u gjet."
 
-#: document.cpp:101
+#: document.cpp:102
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
@@ -43,7 +43,7 @@ msgstr ""
 "Versioni i unrar në sistemin tuaj nuk është i përshtatshëm për të hapur "
 "librat komikë."
 
-#: document.cpp:130
+#: document.cpp:131
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Format i panjohur i librave komikë."

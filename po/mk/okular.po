@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -154,12 +154,12 @@ msgstr ""
 msgid "First Page"
 msgstr "Сразмерно на страница"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr ""
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, fuzzy, kde-format
 msgid "Next Page"
 msgstr "Сразмерно на страница"
@@ -5186,26 +5186,26 @@ msgstr ""
 msgid "Find Next"
 msgstr ""
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "Презентација"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr ""
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, fuzzy, kde-format
 #| msgid "Created"
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "Креирано"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, fuzzy, kde-format
 msgid "Exit Presentation Mode"
 msgstr "Опции за режимот Презентација"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2023-07-03 00:55+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -164,12 +164,12 @@ msgstr "Executar o '%1'..."
 msgid "First Page"
 msgstr "Primeira Página"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Página Anterior"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Página Seguinte"
@@ -5031,24 +5031,24 @@ msgstr ""
 msgid "Find Next"
 msgstr "Procurar o Seguinte"
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, kde-format
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "%1 - Apresentação"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr "Mudar de Ecrã"
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, kde-format
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "Ecrã %1"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, kde-format
 msgid "Exit Presentation Mode"
 msgstr "Sair do Modo de Apresentação"

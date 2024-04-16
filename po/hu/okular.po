@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-05 00:36+0000\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
 "PO-Revision-Date: 2024-01-25 11:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -155,12 +155,12 @@ msgstr "Végrehajtás: „%1”…"
 msgid "First Page"
 msgstr "Első oldal"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:183
+#: core/action.cpp:286 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Előző oldal"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:200
+#: core/action.cpp:288 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Következő oldal"
@@ -4995,24 +4995,24 @@ msgstr ""
 msgid "Find Next"
 msgstr "Következő találat"
 
-#: part/presentationwidget.cpp:173
+#: part/presentationwidget.cpp:174
 #, kde-format
 msgctxt "[document title/filename] – Presentation"
 msgid "%1 – Presentation"
 msgstr "%1 - bemutató"
 
-#: part/presentationwidget.cpp:227
+#: part/presentationwidget.cpp:228
 #, kde-format
 msgid "Switch Screen"
 msgstr "Képernyőváltás"
 
-#: part/presentationwidget.cpp:232
+#: part/presentationwidget.cpp:233
 #, kde-format
 msgctxt "%1 is the screen number (0, 1, ...)"
 msgid "Screen %1"
 msgstr "%1. képernyő"
 
-#: part/presentationwidget.cpp:239
+#: part/presentationwidget.cpp:240
 #, kde-format
 msgid "Exit Presentation Mode"
 msgstr "Kilépés bemutató módból"

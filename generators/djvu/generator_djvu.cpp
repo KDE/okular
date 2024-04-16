@@ -207,10 +207,10 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
     QList<Okular::TextEntity> words;
-    const KDjVu::Page *djvupage = m_djvu->pages().at(page->number());
+    const KDjVu::Page &djvupage = m_djvu->pages().at(page->number());
     for (; it != itEnd; ++it) {
         const KDjVu::TextEntity &cur = *it;
-        words.append(Okular::TextEntity(cur.text(), Okular::NormalizedRect(cur.rect(), djvupage->width(), djvupage->height())));
+        words.append(Okular::TextEntity(cur.text(), Okular::NormalizedRect(cur.rect(), djvupage.width(), djvupage.height())));
     }
     Okular::TextPage *textpage = new Okular::TextPage(words);
     return textpage;
@@ -218,21 +218,21 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
 
 void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation)
 {
-    const QVector<KDjVu::Page *> &djvu_pages = m_djvu->pages();
+    const QVector<KDjVu::Page> &djvu_pages = m_djvu->pages();
     int numofpages = djvu_pages.count();
     pagesVector.resize(numofpages);
 
     for (int i = 0; i < numofpages; ++i) {
-        const KDjVu::Page *p = djvu_pages.at(i);
+        const KDjVu::Page &p = djvu_pages.at(i);
         if (pagesVector[i]) {
             delete pagesVector[i];
         }
-        int w = p->width();
-        int h = p->height();
+        int w = p.width();
+        int h = p.height();
         if (rotation % 2 == 1) {
             qSwap(w, h);
         }
-        Okular::Page *page = new Okular::Page(i, w, h, (Okular::Rotation)(p->orientation() + rotation));
+        Okular::Page *page = new Okular::Page(i, w, h, (Okular::Rotation)(p.orientation() + rotation));
         pagesVector[i] = page;
 
         QList<KDjVu::Annotation *> annots;
@@ -303,9 +303,9 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
     }
     }
     if (newlink) {
-        const KDjVu::Page *p = m_djvu->pages().at(page);
-        int width = p->width();
-        int height = p->height();
+        const KDjVu::Page &p = m_djvu->pages().at(page);
+        int width = p.width();
+        int height = p.height();
         bool scape_orientation = false; // hack by tokoe, should always create default page
         if (scape_orientation) {
             qSwap(width, height);
@@ -313,7 +313,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         switch (link->areaType()) {
         case KDjVu::Link::RectArea:
         case KDjVu::Link::EllipseArea: {
-            QRect r(QPoint(link->point().x(), p->height() - link->point().y() - link->size().height()), link->size());
+            QRect r(QPoint(link->point().x(), p.height() - link->point().y() - link->size().height()), link->size());
             bool ellipse = (link->areaType() == KDjVu::Link::EllipseArea);
             newrect = new Okular::ObjectRect(Okular::NormalizedRect(Okular::Utils::rotateRect(r, width, height, 0), width, height), ellipse, Okular::ObjectRect::Action, newlink);
             break;

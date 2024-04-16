@@ -42,20 +42,16 @@ public:
         friend class KDjVu;
 
     public:
-        ~Page();
-
         int width() const;
         int height() const;
         int dpi() const;
         int orientation() const;
 
     private:
-        Page();
-
-        int m_width;
-        int m_height;
-        int m_dpi;
-        int m_orientation;
+        int m_width = 0;
+        int m_height = 0;
+        int m_dpi = 0;
+        int m_orientation = 0;
     };
 
     /**
@@ -81,7 +77,7 @@ public:
         QPolygon polygon() const;
 
     private:
-        LinkArea m_area;
+        LinkArea m_area = UnknownArea;
         QPoint m_point;
         QSize m_size;
         QPolygon m_poly;
@@ -221,10 +217,9 @@ public:
 
     /**
      * The pages of the current document, or an empty vector otherwise.
-     * \note KDjVu handles the pages, so you don't need to delete them manually
      * \return a vector with the pages of the current document
      */
-    const QVector<KDjVu::Page *> &pages() const;
+    const QVector<KDjVu::Page> &pages() const;
 
     /**
      * Get the metadata for the specified \p key, or a null variant otherwise.

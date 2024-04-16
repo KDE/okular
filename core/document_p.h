@@ -106,6 +106,7 @@ class DocumentPrivate
 public:
     explicit DocumentPrivate(Document *parent)
         : m_parent(parent)
+        , m_searchCancelled(false)
         , m_tempFile(nullptr)
         , m_docSize(-1)
         , m_allocatedPixmapsTotalMemory(0)
@@ -327,7 +328,6 @@ public:
 
     bool m_annotationEditingEnabled;
     bool m_annotationBeingModified; // is an annotation currently being moved or resized?
-    bool m_metadataLoadingCompleted;
 
     QUndoStack *m_undoStack;
     QDomNode m_prevPropsOfAnnotBeingModified;

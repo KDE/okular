@@ -146,64 +146,64 @@ public:
 
     // the document, pageviewItems and the 'visible cache'
     PageView *q;
-    Okular::Document *document;
+    Okular::Document *document = nullptr;
     QVector<PageViewItem *> items;
     QList<PageViewItem *> visibleItems;
     MagnifierView *magnifierView;
 
     // view layout (columns in Settings), zoom and mouse
-    PageView::ZoomMode zoomMode;
-    float zoomFactor;
+    PageView::ZoomMode zoomMode = PageView::ZoomFitWidth;
+    float zoomFactor = 1.0;
     QPoint mouseGrabOffset;
     QPointF mousePressPos;
     QPointF mouseSelectPos;
     QPointF previousMouseMovePos;
     qreal mouseMidLastY;
-    bool mouseSelecting;
+    bool mouseSelecting = false;
     QRect mouseSelectionRect;
     QColor mouseSelectionColor;
-    bool mouseTextSelecting;
+    bool mouseTextSelecting = false;
     QSet<int> pagesWithTextSelection;
-    bool mouseOnRect;
-    int mouseMode;
-    MouseAnnotation *mouseAnnotation;
+    bool mouseOnRect = false;
+    int mouseMode = 0;
+    MouseAnnotation *mouseAnnotation = nullptr;
 
     // table selection
     QList<double> tableSelectionCols;
     QList<double> tableSelectionRows;
     QList<TableSelectionPart> tableSelectionParts;
-    bool tableDividersGuessed;
+    bool tableDividersGuessed = false;
 
-    int lastSourceLocationViewportPageNumber;
-    double lastSourceLocationViewportNormalizedX;
-    double lastSourceLocationViewportNormalizedY;
+    int lastSourceLocationViewportPageNumber = -1;
+    double lastSourceLocationViewportNormalizedX = 0.0;
+    double lastSourceLocationViewportNormalizedY = 0.0;
 
     // for everything except PgUp/PgDn and scroll to arbitrary locations
     const int baseShortScrollDuration = 100;
-    int currentShortScrollDuration;
+    int currentShortScrollDuration = baseShortScrollDuration;
     // for PgUp/PgDn and scroll to arbitrary locations
     const int baseLongScrollDuration = baseShortScrollDuration * 2;
-    int currentLongScrollDuration;
+    int currentLongScrollDuration = baseLongScrollDuration;
 
     // auto scroll
-    int scrollIncrement;
-    QTimer *autoScrollTimer;
+    int scrollIncrement = 0;
+    QTimer *autoScrollTimer = nullptr;
     // annotations
-    PageViewAnnotator *annotator;
+    PageViewAnnotator *annotator = nullptr;
     // text annotation dialogs list
     QSet<AnnotWindow *> m_annowindows;
     // other stuff
-    QTimer *delayResizeEventTimer;
-    bool dirtyLayout;
-    bool blockViewport;             // prevents changes to viewport
-    bool blockPixmapsRequest;       // prevent pixmap requests
-    PageViewMessage *messageWindow; // in pageviewutils.h
-    bool m_formsVisible;
-    FormWidgetsController *formsWidgetController;
+    QTimer *delayResizeEventTimer = nullptr;
+    bool dirtyLayout = false;
+    bool blockViewport = false;               // prevents changes to viewport
+    bool blockPixmapsRequest = false;         // prevent pixmap requests
+    PageViewMessage *messageWindow = nullptr; // in pageviewutils.h
+    bool m_formsVisible = false;
+    FormWidgetsController *formsWidgetController = nullptr;
 #if HAVE_SPEECH
-    OkularTTS *m_tts;
+    OkularTTS *m_tts = nullptr;
 #endif
-    QTimer *refreshTimer;
+    QTimer *refreshTimer = nullptr;
     QSet<int> refreshPages;
 
     // bbox state for Trim to Selection mode
@@ -221,62 +221,59 @@ public:
     QTimer leftClickTimer;
 
     // actions
-    QAction *aRotateClockwise;
-    QAction *aRotateCounterClockwise;
-    QAction *aRotateOriginal;
-    KActionMenu *aTrimMode;
-    KToggleAction *aTrimMargins;
-    KToggleAction *aReadingDirection;
-    QAction *aMouseNormal;
-    QAction *aMouseZoom;
-    QAction *aMouseSelect;
-    QAction *aMouseTextSelect;
-    QAction *aMouseTableSelect;
-    QAction *aMouseMagnifier;
-    KToggleAction *aTrimToSelection;
-    QAction *aSignature;
-    KSelectAction *aZoom;
-    QAction *aZoomIn;
-    QAction *aZoomOut;
-    QAction *aZoomActual;
-    KToggleAction *aZoomFitWidth;
-    KToggleAction *aZoomFitPage;
-    KToggleAction *aZoomAutoFit;
-    KActionMenu *aViewModeMenu;
-    QActionGroup *viewModeActionGroup;
-    ColorModeMenu *aColorModeMenu;
-    KToggleAction *aViewContinuous;
-    QAction *aPrevAction;
-    KToggleAction *aToggleForms;
-    QAction *aSpeakDoc;
-    QAction *aSpeakPage;
-    QAction *aSpeakStop;
-    QAction *aSpeakPauseResume;
-    KActionCollection *actionCollection;
-    QActionGroup *mouseModeActionGroup;
-    ToggleActionMenu *aMouseModeMenu;
-    QAction *aFitWindowToPage;
+    QAction *aRotateClockwise = nullptr;
+    QAction *aRotateCounterClockwise = nullptr;
+    QAction *aRotateOriginal = nullptr;
+    KActionMenu *aTrimMode = nullptr;
+    KToggleAction *aTrimMargins = nullptr;
+    KToggleAction *aReadingDirection = nullptr;
+    QAction *aMouseNormal = nullptr;
+    QAction *aMouseZoom = nullptr;
+    QAction *aMouseSelect = nullptr;
+    QAction *aMouseTextSelect = nullptr;
+    QAction *aMouseTableSelect = nullptr;
+    QAction *aMouseMagnifier = nullptr;
+    KToggleAction *aTrimToSelection = nullptr;
+    QAction *aSignature = nullptr;
+    KSelectAction *aZoom = nullptr;
+    QAction *aZoomIn = nullptr;
+    QAction *aZoomOut = nullptr;
+    QAction *aZoomActual = nullptr;
+    KToggleAction *aZoomFitWidth = nullptr;
+    KToggleAction *aZoomFitPage = nullptr;
+    KToggleAction *aZoomAutoFit = nullptr;
+    KActionMenu *aViewModeMenu = nullptr;
+    QActionGroup *viewModeActionGroup = nullptr;
+    ColorModeMenu *aColorModeMenu = nullptr;
+    KToggleAction *aViewContinuous = nullptr;
+    QAction *aPrevAction = nullptr;
+    KToggleAction *aToggleForms = nullptr;
+    QAction *aSpeakDoc = nullptr;
+    QAction *aSpeakPage = nullptr;
+    QAction *aSpeakStop = nullptr;
+    QAction *aSpeakPauseResume = nullptr;
+    KActionCollection *actionCollection = nullptr;
+    QActionGroup *mouseModeActionGroup = nullptr;
+    ToggleActionMenu *aMouseModeMenu = nullptr;
+    QAction *aFitWindowToPage = nullptr;
 
-    int setting_viewCols;
-    bool rtl_Mode;
+    int setting_viewCols = 0;
+    bool rtl_Mode = false;
     // Keep track of whether tablet pen is currently pressed down
-    bool penDown;
+    bool penDown = false;
 
     // Keep track of mouse over link object
-    const Okular::ObjectRect *mouseOverLinkObject;
+    const Okular::ObjectRect *mouseOverLinkObject = nullptr;
 
-    QScroller *scroller;
+    QScroller *scroller = nullptr;
 
-    bool pinchZoomActive;
+    bool pinchZoomActive = false;
     // The remaining scroll from the previous zoom event
     QPointF remainingScroll;
 };
 
 PageViewPrivate::PageViewPrivate(PageView *qq)
     : q(qq)
-#if HAVE_SPEECH
-    , m_tts(nullptr)
-#endif
 {
 }
 
@@ -327,72 +324,13 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     // create and initialize private storage structure
     d = new PageViewPrivate(this);
     d->document = document;
-    d->aRotateClockwise = nullptr;
-    d->aRotateCounterClockwise = nullptr;
-    d->aRotateOriginal = nullptr;
-    d->aViewModeMenu = nullptr;
-    d->zoomMode = PageView::ZoomFitWidth;
-    d->zoomFactor = 1.0;
-    d->mouseSelecting = false;
-    d->mouseTextSelecting = false;
-    d->mouseOnRect = false;
     d->mouseMode = Okular::Settings::mouseMode();
     d->mouseAnnotation = new MouseAnnotation(this, document);
-    d->tableDividersGuessed = false;
-    d->lastSourceLocationViewportPageNumber = -1;
-    d->lastSourceLocationViewportNormalizedX = 0.0;
-    d->lastSourceLocationViewportNormalizedY = 0.0;
-    d->currentShortScrollDuration = d->baseShortScrollDuration;
-    d->currentLongScrollDuration = d->baseLongScrollDuration;
-    d->scrollIncrement = 0;
-    d->autoScrollTimer = nullptr;
-    d->annotator = nullptr;
-    d->dirtyLayout = false;
-    d->blockViewport = false;
-    d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
-    d->m_formsVisible = false;
-    d->formsWidgetController = nullptr;
-#if HAVE_SPEECH
-    d->m_tts = nullptr;
-#endif
-    d->refreshTimer = nullptr;
-    d->aRotateClockwise = nullptr;
-    d->aRotateCounterClockwise = nullptr;
-    d->aRotateOriginal = nullptr;
-    d->aTrimMode = nullptr;
-    d->aTrimMargins = nullptr;
-    d->aTrimToSelection = nullptr;
-    d->aReadingDirection = nullptr;
-    d->aMouseNormal = nullptr;
-    d->aMouseZoom = nullptr;
-    d->aMouseSelect = nullptr;
-    d->aMouseTextSelect = nullptr;
-    d->aSignature = nullptr;
-    d->aZoomFitWidth = nullptr;
-    d->aZoomFitPage = nullptr;
-    d->aZoomAutoFit = nullptr;
-    d->aViewModeMenu = nullptr;
-    d->aViewContinuous = nullptr;
-    d->viewModeActionGroup = nullptr;
-    d->aColorModeMenu = nullptr;
-    d->aPrevAction = nullptr;
-    d->aToggleForms = nullptr;
-    d->aSpeakDoc = nullptr;
-    d->aSpeakPage = nullptr;
-    d->aSpeakStop = nullptr;
-    d->aSpeakPauseResume = nullptr;
-    d->actionCollection = nullptr;
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->rtl_Mode = Okular::Settings::rtlReadingDirection();
-    d->mouseModeActionGroup = nullptr;
-    d->aMouseModeMenu = nullptr;
-    d->penDown = false;
-    d->aMouseMagnifier = nullptr;
-    d->aFitWindowToPage = nullptr;
+
     d->trimBoundingBox = Okular::NormalizedRect(); // Null box
-    d->pinchZoomActive = false;
-    d->remainingScroll = QPointF(0.0, 0.0);
 
     switch (Okular::Settings::zoomMode()) {
     case 0: {

@@ -47,12 +47,11 @@ static bool isLeftOfVector(const NormalizedPoint &a, const NormalizedPoint &b, c
 static double distanceSqr(double x, double y, double xScale, double yScale, const QList<NormalizedPoint> &path)
 {
     double distance = DBL_MAX;
-    double thisDistance;
     QList<NormalizedPoint>::const_iterator i = path.constBegin();
     NormalizedPoint lastPoint = *i;
 
     for (++i; i != path.constEnd(); ++i) {
-        thisDistance = NormalizedPoint::distanceSqr(x, y, xScale, yScale, lastPoint, (*i));
+        double thisDistance = NormalizedPoint::distanceSqr(x, y, xScale, yScale, lastPoint, (*i));
 
         if (thisDistance < distance) {
             distance = thisDistance;
@@ -155,7 +154,7 @@ QDomElement AnnotationUtils::findChildElement(const QDomNode &parentNode, const 
 QRect AnnotationUtils::annotationGeometry(const Annotation *annotation, double scaleX, double scaleY)
 {
     const QRect rect = annotation->transformedBoundingRectangle().geometry((int)scaleX, (int)scaleY);
-    if (annotation->subType() == Annotation::AText && (((TextAnnotation *)annotation)->textType() == TextAnnotation::Linked)) {
+    if (annotation->subType() == Annotation::AText && (static_cast<const TextAnnotation *>(annotation)->textType() == TextAnnotation::Linked)) {
         // To be honest i have no clue of why the 24,24 is here, maybe to make sure it's not too small?
         // But why only for linked text?
         const QRect rect24 = QRect((int)(annotation->transformedBoundingRectangle().left * scaleX), (int)(annotation->transformedBoundingRectangle().top * scaleY), 24, 24);
@@ -1608,7 +1607,7 @@ void LineAnnotation::store(QDomNode &node, QDomDocument &document) const
             lineElement.appendChild(pElement);
             pElement.setAttribute(QStringLiteral("x"), QString::number(p.x));
             pElement.setAttribute(QStringLiteral("y"), QString::number(p.y));
-            it++; // to avoid loop
+            ++it; // to avoid loop
         }
     }
 }

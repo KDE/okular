@@ -7,6 +7,9 @@
 #ifndef _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
 #define _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
 
+#include <QFont>
+#include <QObject>
+
 class KFontRequester;
 class Ui_TextDocumentSettings;
 
@@ -20,7 +23,8 @@ public:
      *       must delete it yourself
      */
     explicit TextDocumentSettingsWidgetPrivate(Ui_TextDocumentSettings *ui)
-        : mUi(ui)
+        : mFont(nullptr)
+        , mUi(ui)
     {
     }
 

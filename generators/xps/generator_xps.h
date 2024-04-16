@@ -259,9 +259,7 @@ private:
     QList<XpsPage *> m_pages;
 
     QString m_thumbnailFileName;
-    bool m_thumbnailMightBeAvailable;
     QImage m_thumbnail;
-    bool m_thumbnailIsLoaded;
 
     QString m_corePropertiesFileName;
 

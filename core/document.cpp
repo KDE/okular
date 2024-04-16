@@ -2503,7 +2503,6 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
         p->d->m_doc = d;
     }
 
-    d->m_metadataLoadingCompleted = false;
     d->m_docdataMigrationNeeded = false;
 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
@@ -2519,7 +2518,6 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
         d->loadDocumentInfo(LoadGeneralInfo);
     }
 
-    d->m_metadataLoadingCompleted = true;
     d->m_bookmarkManager->setUrl(d->m_url);
 
     // 3. setup observers internal lists and data

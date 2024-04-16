@@ -158,6 +158,7 @@ class TextDocumentConverterPrivate
 public:
     TextDocumentConverterPrivate()
         : mParent(nullptr)
+        , mDocument(nullptr)
     {
     }
 

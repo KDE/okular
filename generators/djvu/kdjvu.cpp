@@ -710,7 +710,6 @@ bool KDjVu::openFile(const QString &fileName)
         }
 
         KDjVu::Page p;
-        ;
         p.m_width = info.width;
         p.m_height = info.height;
         p.m_dpi = info.dpi;

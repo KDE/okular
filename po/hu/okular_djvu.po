@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.2\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-17 00:37+0000\n"
 "PO-Revision-Date: 2020-12-30 11:16+0100\n"
 "Last-Translator: Kristóf Kiszel <kiszel.kristof@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -59,37 +59,37 @@ msgstr "Ismeretlen"
 msgid "Component Files"
 msgstr "Összetett fájlok"
 
-#: kdjvu.cpp:684
+#: kdjvu.cpp:672
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: kdjvu.cpp:687
+#: kdjvu.cpp:675
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
 msgstr "Egy oldal"
 
-#: kdjvu.cpp:690
+#: kdjvu.cpp:678
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
 msgstr "Kötegelt"
 
-#: kdjvu.cpp:693
+#: kdjvu.cpp:681
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
 msgstr "Közvetett"
 
-#: kdjvu.cpp:696
+#: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
 msgstr "Kötegelt (régi)"
 
-#: kdjvu.cpp:699
+#: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"

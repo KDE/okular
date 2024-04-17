@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-17 00:37+0000\n"
 "PO-Revision-Date: 2023-02-19 15:20+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -61,37 +61,37 @@ msgstr "Nekonata"
 msgid "Component Files"
 msgstr "Enhavaj dosieroj"
 
-#: kdjvu.cpp:684
+#: kdjvu.cpp:672
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
 msgstr "Nekonata"
 
-#: kdjvu.cpp:687
+#: kdjvu.cpp:675
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
 msgstr "Simpla paĝo"
 
-#: kdjvu.cpp:690
+#: kdjvu.cpp:678
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
 msgstr "Faska"
 
-#: kdjvu.cpp:693
+#: kdjvu.cpp:681
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
 msgstr "Nerekta"
 
-#: kdjvu.cpp:696
+#: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
 msgstr "Faska (malnova)"
 
-#: kdjvu.cpp:699
+#: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"

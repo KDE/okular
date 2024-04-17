@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2024-04-17 00:37+0000\n"
 "PO-Revision-Date: 2023-04-06 21:45+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -61,37 +61,37 @@ msgstr "Descoñecido"
 msgid "Component Files"
 msgstr "Ficheiros compoñentes"
 
-#: kdjvu.cpp:684
+#: kdjvu.cpp:672
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
 msgstr "Descoñecido"
 
-#: kdjvu.cpp:687
+#: kdjvu.cpp:675
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
 msgstr "Páxina única"
 
-#: kdjvu.cpp:690
+#: kdjvu.cpp:678
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
 msgstr "Feixe"
 
-#: kdjvu.cpp:693
+#: kdjvu.cpp:681
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
 msgstr "Indirecto"
 
-#: kdjvu.cpp:696
+#: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
 msgstr "Feixe (vello)"
 
-#: kdjvu.cpp:699
+#: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"

@@ -160,23 +160,29 @@ bool PDFSettingsWidget::event(QEvent *e)
     if (m_tree && e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
 
-        PopplerCertificateStore st;
-        bool userCancelled;
-        const QList<Okular::CertificateInfo> certs = st.signingCertificates(&userCancelled);
+        // Calling st.signingCertificates(&userCancelled) from the paint event handler results
+        // in "QWidget::repaint: Recursive repaint detected" warning and a crash when the
+        // certificate password dialog is closed. Delay the calling to avoid it.
+        auto loadCertificatesDelayed = [this]() {
+            PopplerCertificateStore st;
+            bool userCancelled;
+            const QList<Okular::CertificateInfo> certs = st.signingCertificates(&userCancelled);
 
-        m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
+            m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
 
-        for (const auto &cert : certs) {
-            new QTreeWidgetItem(m_tree,
-                                {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
-                                 cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
-                                 cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
-        }
+            for (const auto &cert : certs) {
+                new QTreeWidgetItem(m_tree,
+                                    {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
+                                     cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
+                                     cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
+            }
 
-        m_pdfsw.defaultLabel->setText(Poppler::getNSSDir());
+            m_pdfsw.defaultLabel->setText(Poppler::getNSSDir());
 
-        m_tree->resizeColumnToContents(1);
-        m_tree->resizeColumnToContents(0);
+            m_tree->resizeColumnToContents(1);
+            m_tree->resizeColumnToContents(0);
+        };
+        QMetaObject::invokeMethod(this, loadCertificatesDelayed, Qt::QueuedConnection);
     }
     return QWidget::event(e);
 }

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-04-21 00:37+0000\n"
 "PO-Revision-Date: 2023-06-30 11:51+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -301,12 +301,12 @@ msgstr ""
 "NSS dəstəklənməsi olmadan bir Poppler kitabxanası istifadə edirsiniz.\n"
 "Bu səbəbdən Elektron İmza əlavə etmək mümkündeyildir"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "Restart needed"
 msgstr "Yenidən başlatmaq lazımdır"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

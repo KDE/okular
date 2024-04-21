@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-04-21 00:37+0000\n"
 "PO-Revision-Date: 2013-07-10 20:18+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -289,12 +289,12 @@ msgid ""
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "Restart needed"
 msgstr ""
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

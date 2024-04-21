@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-04-21 00:37+0000\n"
 "PO-Revision-Date: 2023-07-27 15:57+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -310,12 +310,12 @@ msgstr ""
 "Käytössä oleva Poppler-kirjasto on koostettu NSS-tuetta,\n"
 "joten digitaalisia allekirjoituksia ei voi lisätä"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "Restart needed"
 msgstr "Uudelleenkäynnistys vaaditaan"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Okular on käynnistettävä uudelleen NSS-hakemistoasetusten muututtua"

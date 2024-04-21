@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-03 00:37+0000\n"
+"POT-Creation-Date: 2024-04-21 00:37+0000\n"
 "PO-Revision-Date: 2023-06-23 12:39+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -301,12 +301,12 @@ msgstr ""
 "Používáte knihovnu Poppler sestavenou bez podpory NSS.\n"
 "Přidání digitálních podpisů z tohoto důvodu není možné"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "Restart needed"
 msgstr "Vyžadován restart"
 
-#: pdfsettingswidget.cpp:193
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Pro změnu nastavení adresáře NSS potřebujete restartovat Okular"

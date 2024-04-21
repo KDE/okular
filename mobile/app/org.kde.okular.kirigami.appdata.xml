@@ -99,6 +99,10 @@
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
   <summary xml:lang="zh-TW">文件檢視器</summary>
+  <developer id="org.kde">
+    <name>KDE</name>
+    <url>https://kde.org</url>
+  </developer>
   <description>
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
@@ -390,8 +394,15 @@
       <image>https://cdn.kde.org/screenshots/okular/okular-mobile.png</image>
     </screenshot>
   </screenshots>
+  <categories>
+    <category>Qt</category>
+    <category>KDE</category>
+    <category>Office</category>
+    <category>Viewer</category>
+  </categories>
   <url type="homepage">https://okular.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
+  <url type="vcs-browser">https://invent.kde.org/graphics/okular</url>
   <project_group>KDE</project_group>
   <provides>
     <binary>okularkirigami</binary>

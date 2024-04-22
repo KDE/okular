@@ -22,12 +22,10 @@
   <name xml:lang="fi">DVI-tiedostot</name>
   <name xml:lang="fr">Documents « DVI »</name>
   <name xml:lang="gl">Documentos DVI</name>
-  <name xml:lang="he">מסמכי DVI</name>
   <name xml:lang="hi">डीवीआइ दस्तावेज़</name>
   <name xml:lang="hu">DVI-dokumentumok</name>
   <name xml:lang="ia">Documentos DVI</name>
   <name xml:lang="ie">Documentes DVI</name>
-  <name xml:lang="is">DVI skjöl</name>
   <name xml:lang="it">Documenti DVI</name>
   <name xml:lang="ka">DVI დოკუმენტები</name>
   <name xml:lang="ko">DVI 문서</name>
@@ -73,12 +71,10 @@
   <summary xml:lang="fi">Lisää DVI-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents DVI</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos DVI.</summary>
-  <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי DVI (ללא תלות במכשיר)</summary>
   <summary xml:lang="hi">डीवीआइ दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás DVI-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos DVI</summary>
   <summary xml:lang="ie">Adjunte li supporte de letion de documentes DVI</summary>
-  <summary xml:lang="is">Bætir við stuðningi til að lesa DVI-skjöl</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti DVI</summary>
   <summary xml:lang="ka">DVI დოკუმენტების კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">DVI 문서 읽기 지원 추가</summary>

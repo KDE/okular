@@ -6,7 +6,6 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>FictionBook</name>
   <name xml:lang="ar">كتب FictionBook</name>
-  <name xml:lang="ast">FictionBook</name>
   <name xml:lang="az">FictionBook</name>
   <name xml:lang="be">FictionBook</name>
   <name xml:lang="bg">FictionBook</name>
@@ -23,12 +22,10 @@
   <name xml:lang="fi">FictionBook</name>
   <name xml:lang="fr">FictionBook</name>
   <name xml:lang="gl">FictionBook</name>
-  <name xml:lang="he">FictionBook</name>
   <name xml:lang="hi">फिक्शनबुक</name>
   <name xml:lang="hu">FictionBook</name>
   <name xml:lang="ia">Fiction Book</name>
   <name xml:lang="ie">FictionBook</name>
-  <name xml:lang="is">FictionBook</name>
   <name xml:lang="it">FictionBook</name>
   <name xml:lang="ka">FictionBook</name>
   <name xml:lang="ko">FictionBook</name>
@@ -74,12 +71,10 @@
   <summary xml:lang="fi">Lisää FictionBook-lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers au format « FictionBooks »</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros FictionBook.</summary>
-  <summary xml:lang="he">הוספה תמיכה בקריאת FictionBooks (סיפורת)</summary>
   <summary xml:lang="hi">फिक्शनबुक पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás FictionBookok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger FictionBooks</summary>
   <summary xml:lang="ie">Adjunter li supporte de letion de libres FictionBook</summary>
-  <summary xml:lang="is">Bætir við stuðningi til að lesa FictionBook-snið</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in formato FictionBooks</summary>
   <summary xml:lang="ka">FictionBooks-ის კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">FictionBook 읽기 지원 추가</summary>

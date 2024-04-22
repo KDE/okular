@@ -6,7 +6,6 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>EPub</name>
   <name xml:lang="ar">EPub</name>
-  <name xml:lang="ast">EPub</name>
   <name xml:lang="az">EPub</name>
   <name xml:lang="be">EPub</name>
   <name xml:lang="bg">EPub</name>
@@ -23,12 +22,10 @@
   <name xml:lang="fi">EPub</name>
   <name xml:lang="fr">EPub</name>
   <name xml:lang="gl">EPub</name>
-  <name xml:lang="he">EPub</name>
   <name xml:lang="hi">ईपब</name>
   <name xml:lang="hu">EPub</name>
   <name xml:lang="ia">EPub</name>
   <name xml:lang="ie">EPub</name>
-  <name xml:lang="is">EPub</name>
   <name xml:lang="it">EPub</name>
   <name xml:lang="ka">EPub</name>
   <name xml:lang="ko">EPub</name>
@@ -74,12 +71,10 @@
   <summary xml:lang="fi">Lisää e-kirjojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des E-Books</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros electrónicos.</summary>
-  <summary xml:lang="he">מוסיף תמיכה בקריאת ספרים אלקטרוניים (E-Books)</summary>
   <summary xml:lang="hi">ई-पुस्तक पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="hu">Támogatás e-könyvek olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger E-libros</summary>
   <summary xml:lang="ie">Adjunte li supporte de letion de e-libres</summary>
-  <summary xml:lang="is">Bætir við stuðningi til að lesa rafbækur</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato EPub</summary>
   <summary xml:lang="ka">ელწიგნის კითხვის მხარდაჭერის დამატება</summary>
   <summary xml:lang="ko">전자책 읽기 지원 추가</summary>

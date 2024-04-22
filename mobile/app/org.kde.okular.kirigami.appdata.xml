@@ -22,12 +22,10 @@
   <name xml:lang="fi">Okular Mobile</name>
   <name xml:lang="fr">Okular Mobile</name>
   <name xml:lang="gl">Okular Mobile</name>
-  <name xml:lang="he">Okular לניידים</name>
   <name xml:lang="hi">ऑकुलर मोबाइल</name>
   <name xml:lang="hu">Okular Mobile</name>
   <name xml:lang="ia">Okular Mobile</name>
   <name xml:lang="id">Okular Mobile</name>
-  <name xml:lang="is">Okular fyrir farsíma</name>
   <name xml:lang="it">Okular Mobile</name>
   <name xml:lang="ka">Okular მობილურზე</name>
   <name xml:lang="ko">Okular 모바일</name>
@@ -54,7 +52,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ar">عارض المستندات</summary>
   <summary xml:lang="az">Sənədə baxış vasitısi</summary>
-  <summary xml:lang="be">Сродак для прагляду дакументаў</summary>
+  <summary xml:lang="be">Сродак прагляду дакументаў</summary>
   <summary xml:lang="bg">Преглед на документи</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
@@ -70,12 +68,10 @@
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de document</summary>
   <summary xml:lang="gl">Visor de documentos.</summary>
-  <summary xml:lang="he">מציג מסמכים</summary>
   <summary xml:lang="hi">दस्तावेज़ प्रदर्शक</summary>
   <summary xml:lang="hu">Dokumentummegjelenítő</summary>
   <summary xml:lang="ia">Visor de documento</summary>
   <summary xml:lang="id">Penampil Dokumen</summary>
-  <summary xml:lang="is">Skjalaskoðari</summary>
   <summary xml:lang="it">Visore di documenti</summary>
   <summary xml:lang="ka">დოკუმენტების მნახველი</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
@@ -105,7 +101,7 @@
   </p>
     <p xml:lang="ar">اوكلار هو عارض مستندات عالمي تم تطويره بواسطة كِيدِي. يعمل اوكلار على أنظمة أساسية متعددة، بما في ذلك على سبيل المثال لا الحصر Linux و Windows و Mac OS X و * BSD وما إلى ذلك.</p>
     <p xml:lang="az">Okular KDE tərəfindən yaradılan sənədlərə universal baxış vasitəsidir. Okular Linux, Windows, Mac OS X, * BSD və s. digər bir çox platformada işləyir.</p>
-    <p xml:lang="be">Okular - універсальны сродак для прагляду дакументаў, распрацаваны KDE. Okular працуе на многіх платформах, уключаючы Linux, Windows, Mac OS X, *BSD.</p>
+    <p xml:lang="be">Okular - універсальны сродак прагляду дакументаў, распрацаваны KDE. Okular працуе на многіх платформах, уключаючы Linux, Windows, Mac OS X, *BSD.</p>
     <p xml:lang="bg">Okular е универсална програма за преглед на документи, разработена от KDE. Okular работи с множество платформи, включително, но не само, Linux, Windows и Mac OS X, *BSD и др.</p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">Okular és un visor universal de documents desenvolupat per KDE. Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -119,12 +115,10 @@
     <p xml:lang="fi">Okular on KDE:n kehittämä yleinen tiedostokatselin. Okular toimii monella alustalla kuten Linuxissa, Windowsissa, macOSissa, BSD:ssä jne.</p>
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="gl">Okular é un visor de documentos universal desenvolvido por KDE. Okular funciona en varias plataformas, entre elas Linux, Windows, Mac OS X, *BSD, etc.</p>
-    <p xml:lang="he">Okular הוא מציג מסמכים אוניברסלי שפותח על ידי KDE.‏ Okular תומך במגוון פלטפורמות, כולל לינוקס, Windows,‏ mac OS X, מגוון סוגי BSD ועוד.</p>
     <p xml:lang="hi">ओकुलर केडीई द्वारा विकसित एक सार्वव्यापी दस्तावेज़ दर्शक है। ओकुलर कई प्लेटफार्मों पर काम करता है, जिसमें लिनक्स, विंडोज, मैक ओएस एक्स, *बीएसडी, आदि शामिल हैं, लेकिन इन्हीं तक सीमित नहीं है।</p>
     <p xml:lang="hu">Az Okulat a KDE által fejlesztett univerzális dokumentummegjelenítő. Számos platformon elérhető, többek között Linuxon, Windowson, Mac OS X-en, BSD rendszereken, stb.</p>
     <p xml:lang="ia">Okular es un visor universal de documento disveloppate per KDE. Okular functiona sur platteformas multiple includente sed non limitate a Linux,Windows, MacOS X, *BSD, etc.</p>
     <p xml:lang="id">Okular adalah penampil dokumen universal yang dikembangkan oleh KDE. Okular bekerja pada banyak platform, termasuk tetapi tidak terbatas pada Linux, Windows, Mac OS X, *BSD, dll.</p>
-    <p xml:lang="is">Okular er skjalaskoðari frá KDE. Okular er til fyrir ýmis stýrikerfi, þ.á m. (en ekki bara) Linux, Windows, Mac OS X, *BSD, o.fl.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
     <p xml:lang="ka">Okular დოკუმენტების უნივერსალური დამთვალიერებელია KDE-სგან. Okular ბევრ პლატფორმაზე მუშაობს. მაგ: Linux, Windows, Mac OS X, *BSD და სხვა.</p>
     <p xml:lang="ko">Okular는 KDE에서 개발한 문서 뷰어입니다. 리눅스, Windows, macOS, *BSD 등 다양한 플랫폼에서 사용할 수 있습니다.</p>
@@ -150,7 +144,6 @@
     <p xml:lang="zh-TW">Okular 是個由 KDE 開發的一款通用文件檢視器。Okular 能在多個平台上運作，包含但不限於 Linux、Windows、Mac OS X 以及各個 BSD 等。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
-    <p xml:lang="ast">Funciones:</p>
     <p xml:lang="az">İmkanlar:</p>
     <p xml:lang="be">Магчымасці:</p>
     <p xml:lang="bg">Функции:</p>
@@ -168,12 +161,10 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
-    <p xml:lang="he">יכולות:</p>
     <p xml:lang="hi">विशेषताएँ:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
-    <p xml:lang="is">Eiginleikar:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
@@ -215,11 +206,9 @@
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, Postscript, TIFF, CHM, DjVu, kuvat, DVI, XPS, Fiction Book, sarjakuvakirja, Plucker, EPub, faksi</li>
       <li xml:lang="fr">Formats de fichiers pris en charge : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="gl">Formatos compatíbeis: PDF, PS, Tiff, CHM, DjVu, imaxes, DVI, XPS, Fiction Book, banda deseñada, Plucker, EPub e fax.</li>
-      <li xml:lang="he">תסדירים נתמכים: PDF,‏ PS,‏ Tiff,‏ CHM,‏ DjVu, תמונות, DVI,‏ XPS,‏ Fiction Book,‏ Comic Book,‏ Plucker, ספר אלקטרוני/EPub, פקס</li>
       <li xml:lang="hu">Támogatott formátumok: PDF, PS, Tiff, CHM, DjVu, képek, DVI, XPS, FictionBook, képregények, Plucker, EPub, Fax</li>
       <li xml:lang="ia">Formtos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Citra, DVI, XPS, Buku Fiksi, Buku Komik, Plucker, EPub, Fax</li>
-      <li xml:lang="is">Studd snið: PDF, PS, Tiff, CHM, DjVu, myndir, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, CHM, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
@@ -260,12 +249,10 @@
       <li xml:lang="fi">Sivupaneeli, jossa sisällys, pienoiskuvat, arvostelut ja kirjanmerkit</li>
       <li xml:lang="fr">Barre latérale montrant les contenus, vignettes, informations de relecture et signets</li>
       <li xml:lang="gl">Barra lateral con contido, miniaturas, revisións e marcadores.</li>
-      <li xml:lang="he">סרגל צד עם תוכן, תצוגות מוקטנות, סקירות וסימניות</li>
       <li xml:lang="hi">सामग्री, लगुछवी, समीक्षा और पुस्तचिन्ह के साथ बाजुपट्टी</li>
       <li xml:lang="hu">Oldalsáv tartalomjegyzékkel, előnézettel, értékelésekkel és könyvjelzőkkel</li>
       <li xml:lang="ia">Barra lateral con  contentos, miniaturas, revisiones e marcatores de libro</li>
       <li xml:lang="id">Bilah sisi dengan konten, gambar-mini, ulasan, dan markah</li>
-      <li xml:lang="is">Hliðarstika með innihaldi skjala, smámyndum, ummælum og bókamerkjum</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
       <li xml:lang="ka">გვერდითი პანელი შემცველობით, მინიატურებით, გადახედვებით და სანიშნებით</li>
       <li xml:lang="ko">목차, 섬네일, 검토 및 책갈피 도구가 있는 사이드바</li>
@@ -307,12 +294,10 @@
       <li xml:lang="fi">Merkintöjen tuki</li>
       <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="gl">Funcionalidade de anotacións.</li>
-      <li xml:lang="he">תמיכה בהסברים</li>
       <li xml:lang="hi">टीकाओं का समर्थन</li>
       <li xml:lang="hu">Jegyzetek támogatása</li>
       <li xml:lang="ia">Supporto de annotationes</li>
       <li xml:lang="id">Dukungan anotasi</li>
-      <li xml:lang="is">Glósur</li>
       <li xml:lang="it">Supporto per annotazioni</li>
       <li xml:lang="ka">ანოტაციების მხარდაჭერა</li>
       <li xml:lang="ko">주석 지원</li>
@@ -358,12 +343,10 @@
       <caption xml:lang="fi">Oppaan lukeminen Okularissa</caption>
       <caption xml:lang="fr">Lecture d'un manuel dans Okular</caption>
       <caption xml:lang="gl">Ler o manual en Okular.</caption>
-      <caption xml:lang="he">קריאת מדריך ב־Okular</caption>
       <caption xml:lang="hi">ओकुलर में सहाय्य पुस्तिका पढ़ना</caption>
       <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>
       <caption xml:lang="id">Petunjuk di Okular</caption>
-      <caption xml:lang="is">Handbókin lesin í Okular</caption>
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>
       <caption xml:lang="ka">კითხვის სახელმძღვანელო Okular- ში</caption>
       <caption xml:lang="ko">Okular로 설명서 읽기</caption>

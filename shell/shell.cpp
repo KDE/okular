@@ -1113,8 +1113,8 @@ void Shell::slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize)
 
 void Shell::hideWelcomeScreen()
 {
-    m_sidebar->setVisible(m_showSidebarAction->isChecked());
     m_centralStackedWidget->setCurrentWidget(m_tabWidget);
+    m_sidebar->setVisible(m_showSidebarAction->isChecked());
     m_showSidebarAction->setEnabled(true);
 }
 

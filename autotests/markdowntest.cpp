@@ -12,6 +12,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QTextDocument>
+#include <memory>
 
 class MarkdownTest : public QObject
 {
@@ -24,6 +25,8 @@ private Q_SLOTS:
     void testFancyPantsDisabled();
     void testImageSizes();
     void testSpecialCharsInImageFileName();
+    void testStrikeThrough();
+    void testHtmlTagFixup();
 
 private:
     void findImages(QTextFrame *parent, QVector<QTextImageFormat> &images);
@@ -39,7 +42,7 @@ void MarkdownTest::testFancyPantsEnabled()
 {
     Markdown::Converter converter;
     converter.setFancyPantsEnabled(true);
-    QTextDocument *document = converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md"));
+    std::unique_ptr<QTextDocument> document(converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md")));
 
     QTextFrame::iterator secondFrame = ++(document->rootFrame()->begin());
     QVERIFY(secondFrame.currentBlock().text().startsWith(QStringLiteral("©")));
@@ -49,7 +52,7 @@ void MarkdownTest::testFancyPantsDisabled()
 {
     Markdown::Converter converter;
     converter.setFancyPantsEnabled(false);
-    QTextDocument *document = converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md"));
+    std::unique_ptr<QTextDocument> document(converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md")));
 
     QTextFrame::iterator secondFrame = ++(document->rootFrame()->begin());
     QVERIFY(secondFrame.currentBlock().text().startsWith(QStringLiteral("(c)")));
@@ -58,7 +61,7 @@ void MarkdownTest::testFancyPantsDisabled()
 void MarkdownTest::testImageSizes()
 {
     Markdown::Converter converter;
-    QTextDocument *document = converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md"));
+    std::unique_ptr<QTextDocument> document(converter.convert(QStringLiteral(KDESRCDIR "data/imageSizes.md")));
 
     QTextFrame *parent = document->rootFrame();
 
@@ -125,7 +128,7 @@ void MarkdownTest::findImages(const QTextBlock &parent, QVector<QTextImageFormat
 void MarkdownTest::testSpecialCharsInImageFileName()
 {
     Markdown::Converter converter;
-    QTextDocument *document = converter.convert(QStringLiteral(KDESRCDIR "data/imageUrlsWithSpecialChars.md"));
+    std::unique_ptr<QTextDocument> document(converter.convert(QStringLiteral(KDESRCDIR "data/imageUrlsWithSpecialChars.md")));
 
     QTextFrame *parent = document->rootFrame();
 
@@ -135,6 +138,88 @@ void MarkdownTest::testSpecialCharsInImageFileName()
     QCOMPARE(images.size(), 1);
     QVERIFY(images[0].name().endsWith(QStringLiteral("kartöffelchen.jpg")));
     QVERIFY(!images[0].name().contains(QStringLiteral("kart%C3%B6ffelchen.jpg")));
+}
+
+void MarkdownTest::testStrikeThrough()
+{
+    Markdown::Converter converter;
+    converter.setFancyPantsEnabled(true);
+    std::unique_ptr<QTextDocument> document(converter.convert(QStringLiteral(KDESRCDIR "data/strikethrough.md")));
+
+    const QTextFrame *rootFrame = document->rootFrame();
+    auto frameIter = rootFrame->begin();
+
+    // Header line.
+    QCOMPARE_NE(frameIter, rootFrame->end());
+    QCOMPARE(frameIter.currentBlock().text(), QStringLiteral("Test for strikethrough tag workaround"));
+
+    // Ordinary line.
+    {
+        ++frameIter;
+        QCOMPARE_NE(frameIter, rootFrame->end());
+        auto block = frameIter.currentBlock();
+        QCOMPARE(block.text(), QStringLiteral("Line without strikethrough"));
+        // Single format for the entire line.
+        auto formats = block.textFormats();
+        QCOMPARE(formats.size(), 1);
+        QVERIFY(!formats[0].format.fontStrikeOut());
+    }
+
+    // Part of the line has a strikethrough.
+    {
+        ++frameIter;
+        QCOMPARE_NE(frameIter, rootFrame->end());
+        auto block = frameIter.currentBlock();
+        QCOMPARE(block.text(), QStringLiteral("Line with strikethrough"));
+        // The "with" should be the only thing striked out.
+        auto formats = block.textFormats();
+        QCOMPARE(formats.size(), 3);
+        QCOMPARE(block.text().sliced(formats[0].start, formats[0].length), QStringLiteral("Line "));
+        QVERIFY(!formats[0].format.fontStrikeOut());
+        QCOMPARE(block.text().sliced(formats[1].start, formats[1].length), QStringLiteral("with"));
+        QVERIFY(formats[1].format.fontStrikeOut());
+        QCOMPARE(block.text().sliced(formats[2].start, formats[2].length), QStringLiteral(" strikethrough"));
+        QVERIFY(!formats[2].format.fontStrikeOut());
+    }
+
+    // Code block shouldn't have leading spaces, or be modified by our fixup.
+    {
+        ++frameIter;
+        QCOMPARE_NE(frameIter, rootFrame->end());
+        auto block = frameIter.currentBlock();
+        QCOMPARE(block.text(), QStringLiteral("~~Strikethrough~~ should be <del>ignored</del> in a <s>code block</s>"));
+    }
+}
+
+void MarkdownTest::testHtmlTagFixup()
+{
+    const QString wrapperTag = QStringLiteral("ignored_by_qt");
+    const QString wrapperTagBegin = QStringLiteral("<ignored_by_qt>");
+    const QString wrapperTagEnd = QStringLiteral("</ignored_by_qt>");
+
+    // These should passthrough unchanged.
+    const QString testCases[] = {
+        QStringLiteral("basic test"),
+        QStringLiteral("<p>test with tag</p>"),
+        QStringLiteral("line with <em>combined <strong>tags</strong></em>"),
+    };
+    for (const QString &inputHtml : testCases) {
+        const QString outputHtml = Markdown::detail::fixupHtmlTags(QString(inputHtml));
+        QCOMPARE(outputHtml, wrapperTagBegin + inputHtml + wrapperTagEnd);
+    }
+
+    // <del> should become <s>.
+    {
+        const QString outputHtml = Markdown::detail::fixupHtmlTags(QStringLiteral("<del>test</del>"));
+        QCOMPARE(outputHtml, wrapperTagBegin + QStringLiteral("<s>test</s>") + wrapperTagEnd);
+    }
+
+    // Check that the wrapper is ignored by Qt.
+    {
+        QTextDocument dom;
+        dom.setHtml(wrapperTagBegin + QStringLiteral("basic test") + wrapperTagEnd);
+        QVERIFY(!dom.toHtml().contains(wrapperTag));
+    }
 }
 
 QTEST_MAIN(MarkdownTest)

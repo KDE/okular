@@ -8,6 +8,7 @@
 
 #include <KLocalizedString>
 
+#include <QDomDocument>
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QTextFrame>
@@ -27,6 +28,37 @@ extern "C" {
 #define CONTENT_WIDTH (PAGE_WIDTH - 2 * PAGE_MARGIN)
 
 using namespace Markdown;
+
+static void recursiveRenameTags(QDomElement &elem)
+{
+    for (QDomNode node = elem.firstChild(); !node.isNull(); node = node.nextSibling()) {
+        QDomElement child = node.toElement();
+        if (!child.isNull()) {
+            // Discount emits <del> tags for ~~ but Qt doesn't understand them and
+            // removes them. Instead replace them with <s> tags which Qt does
+            // understand.
+            if (child.nodeName() == QStringLiteral("del")) {
+                child.setTagName(QStringLiteral("s"));
+            }
+            recursiveRenameTags(child);
+        }
+    }
+}
+
+QString detail::fixupHtmlTags(QString &&html)
+{
+    QDomDocument dom;
+    // Discount emits simplified HTML but QDomDocument will barf if everything isn't
+    // inside a "root" node. Luckily QTextDocument ignores unknown tags so we can just
+    // wrap the original HTML with a fake tag that'll be stripped off later.
+    if (!dom.setContent(QStringLiteral("<ignored_by_qt>") + html + QStringLiteral("</ignored_by_qt>"))) {
+        return std::move(html);
+    }
+    QDomElement elem = dom.documentElement();
+    recursiveRenameTags(elem);
+    // Don't add any indentation otherwise code blocks can gain indents.
+    return dom.toString(-1);
+}
 
 Converter::Converter()
     : m_markdownFile(nullptr)
@@ -123,7 +155,7 @@ QTextDocument *Converter::convertOpenFile()
     char *htmlDocument;
     const int size = mkd_document(markdownHandle, &htmlDocument);
 
-    const QString html = QString::fromUtf8(htmlDocument, size);
+    const QString html = detail::fixupHtmlTags(QString::fromUtf8(htmlDocument, size));
 
     QTextDocument *textDocument = new QTextDocument;
     textDocument->setPageSize(QSizeF(PAGE_WIDTH, PAGE_HEIGHT));

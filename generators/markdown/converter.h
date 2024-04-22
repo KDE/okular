@@ -52,6 +52,11 @@ private:
     bool m_isFancyPantsEnabled;
 };
 
+namespace detail
+{
+QString fixupHtmlTags(QString &&html);
+}
+
 }
 
 #endif

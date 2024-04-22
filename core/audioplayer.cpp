@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QRandomGenerator>
+#include <QtProcessorDetection>
 
 #include "config-okular.h"
 
@@ -28,6 +29,9 @@
 #include "document.h"
 #include "sound.h"
 #include <stdlib.h>
+
+#include <QAudioFormat>
+#include <QAudioSink>
 
 using namespace Okular;
 
@@ -100,14 +104,24 @@ public:
         if (m_buffer) {
             m_buffer->open(QIODevice::ReadOnly);
         }
-        m_mediaobject->play();
+        if (m_mediaobject) {
+            m_mediaobject->play();
+        } else {
+            m_sink->start(m_buffer);
+        }
     }
 
     ~PlayData()
     {
-        m_mediaobject->stop();
+        if (m_mediaobject) {
+            m_mediaobject->stop();
+        }
+        if (m_sink) {
+            m_sink->stop();
+        }
         delete m_mediaobject;
         delete m_output;
+        delete m_sink;
         delete m_buffer;
     }
 
@@ -116,6 +130,7 @@ public:
 
     Phonon::MediaObject *m_mediaobject;
     Phonon::AudioOutput *m_output;
+    QAudioSink *m_sink;
     QBuffer *m_buffer;
     SoundInfo m_info;
 };
@@ -172,13 +187,56 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
     case Sound::Embedded: {
         QByteArray filedata = si.sound->data();
         qCDebug(OkularCoreDebug) << "Embedded," << filedata.length();
+
+        if (si.sound->soundEncoding() == Sound::Raw || si.sound->soundEncoding() == Sound::Signed) {
+            QAudioFormat audioFormat;
+            audioFormat.setChannelCount(si.sound->channels());
+            audioFormat.setSampleRate(si.sound->samplingRate());
+            if (si.sound->bitsPerSample() == 8) {
+                audioFormat.setSampleFormat(QAudioFormat::UInt8);
+            } else if (si.sound->bitsPerSample() == 16) {
+                audioFormat.setSampleFormat(QAudioFormat::Int16);
+            } else {
+                qWarning() << "Unsupported sound please share the file with us";
+            }
+
+            delete data->m_output;
+            delete data->m_mediaobject;
+            data->m_output = nullptr;
+            data->m_mediaobject = nullptr;
+            data->m_sink = new QAudioSink(audioFormat);
+
+            // QAudioSink expects data in host platform endianness, PDF sound data is big endian
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+            if (si.sound->bitsPerSample() == 16) {
+                for (int i = 0; i < filedata.length(); i += 2) {
+                    qSwap(filedata[i], filedata[i + 1]);
+                }
+            }
+#endif
+        }
+
         if (!filedata.isEmpty()) {
-            qCDebug(OkularCoreDebug) << "Mediaobject:" << data->m_mediaobject;
             int newid = newId();
-            QObject::connect(data->m_mediaobject, &Phonon::MediaObject::finished, q, [this, newid]() { finished(newid); });
             data->m_buffer = new QBuffer();
             data->m_buffer->setData(filedata);
-            data->m_mediaobject->setCurrentSource(Phonon::MediaSource(data->m_buffer));
+            if (data->m_mediaobject) {
+                qCDebug(OkularCoreDebug) << "Mediaobject:" << data->m_mediaobject;
+                QObject::connect(data->m_mediaobject, &Phonon::MediaObject::finished, q, [this, newid]() { finished(newid); });
+                data->m_mediaobject->setCurrentSource(Phonon::MediaSource(data->m_buffer));
+            } else {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 7, 0))
+                QObject::connect(data->m_sink, &QAudioSink::stateChanged, q, [this, newid](QtAudio::State state) {
+                    if (state == QtAudio::IdleState)
+                        finished(newid);
+                });
+#else
+                QObject::connect(data->m_sink, &QAudioSink::stateChanged, q, [this, newid](QAudio::State state) {
+                    if (state == QAudio::IdleState)
+                        finished(newid);
+                });
+#endif
+            }
             m_playing.insert(newid, data);
             valid = true;
         }

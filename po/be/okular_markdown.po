@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-20 00:37+0000\n"
+"POT-Creation-Date: 2024-04-23 00:37+0000\n"
 "PO-Revision-Date: 2024-02-11 18:55\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -32,12 +32,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "nashtlumach@gmail.com"
 
-#: converter.cpp:51 converter.cpp:85
+#: converter.cpp:83 converter.cpp:117
 #, kde-format
 msgid "Failed to open the document"
 msgstr "Не ўдалося адкрыць дакумент"
 
-#: converter.cpp:98 converter.cpp:116
+#: converter.cpp:130 converter.cpp:148
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Не ўдалося скампіляваць дакумент Markdown."

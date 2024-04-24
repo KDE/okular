@@ -47,7 +47,8 @@ codespell:
   before_script:
     - git clone --branch work/nico/codespell https://invent.kde.org/nicolasfella/ci-utilities.git --depth=1
   script:
-    - codespell -i 0 --skip "*.json,*.po,*.desktop,*.docbook,*.xml,*.desktop.in,*.pdf" --ignore-regex "SPDX-FileCopyrightText.*" | ./ci-utilities/codespell-to-codeclimate.py
+    - ls -l ./ci-utilities/*
+    - codespell -i 0 --skip "*.json,*.po,*.desktop,*.docbook,*.xml,*.desktop.in,*.pdf" --ignore-regex "SPDX-FileCopyrightText.*" | python3 ./ci-utilities/codespell-to-codeclimate.py
   artifacts:
     expire_in: 1 week
     when: on_success

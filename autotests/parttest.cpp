@@ -794,7 +794,7 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
         QAction *processLink = qobject_cast<QAction *>(menu->findChild<QAction *>(QStringLiteral("ProcessLinkAction")));
         QVERIFY(processLink);
 
-        // chek if the menu contains  "Copy Link Address" action
+        // check if the menu contains  "Copy Link Address" action
         QAction *actCopyLinkLocation = qobject_cast<QAction *>(menu->findChild<QAction *>(QStringLiteral("CopyLinkLocationAction")));
         QVERIFY(actCopyLinkLocation);
 

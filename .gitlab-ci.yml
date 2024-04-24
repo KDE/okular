@@ -2,8 +2,7 @@ variables:
   DEBIAN_FRONTEND: "noninteractive"
 
 include:
-  - project: nicolasfella/ci-utilities
-    ref: work/nico/codespell
+  - project: sysadmin/ci-utilities
     file:
       - /gitlab-templates/android-qt6.yml
       - /gitlab-templates/flatpak.yml
@@ -12,8 +11,8 @@ include:
       - /gitlab-templates/freebsd-qt6.yml
       - /gitlab-templates/windows-qt6.yml
       - /gitlab-templates/cppcheck.yml
-#      - /gitlab-templates/xml-lint.yml
-      - /gitlab-templates/codespell.yml
+      - /gitlab-templates/xml-lint.yml
+#      - /gitlab-templates/codespell.yml
       - /gitlab-templates/craft-windows-x86-64-qt6.yml
       - /gitlab-templates/craft-windows-appx-qt6.yml
       - /gitlab-templates/craft-android-qt6-apks.yml
@@ -38,6 +37,24 @@ build_ubuntu_24_10:
    - mkdir -p build && cd build
    - cmake -DOKULAR_UI=both -G Ninja ..
    - ninja
+
+codespell:
+  stage: build
+  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt67:latest
+  tags:
+    - Linux
+  interruptible: true
+  before_script:
+    - git clone --branch work/nico/codespell https://invent.kde.org/nicolasfella/ci-utilities.git --depth=1
+  script:
+    - codespell -i 0 --skip "*.json,*.po,*.desktop,*.docbook,*.xml,*.desktop.in" --ignore-regex "SPDX-FileCopyrightText.*" | ./ci-utilities/codespell-to-codeclimate.py
+  artifacts:
+    expire_in: 1 week
+    when: on_success
+    reports:
+      codequality: codespell.json
+
+
 
 build_clazy_clang_tidy:
   extends: .suse_tumbleweed_qt6stable

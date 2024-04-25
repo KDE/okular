@@ -40,3 +40,7 @@ Options:
   cppcheck-ignore-files:
     - autotests
     - core/synctex/synctex_parser.c
+  xml-validate-include:
+    - shell/shell.rc
+    - part/part-viewermode.rc
+    - part/part.rc

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2010, 2024 Johannes Obermayr <johannesobermayr@gmx.de>
 # Stephan Johach <hunsum@gmx.de>, 2003, 2005.
 # Stefan Winter <swinter@kde.org>, 2004, 2005, 2006.
 # Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2007, 2008, 2009, 2010.
@@ -5,22 +6,21 @@
 # Stephan Johach <lucardus@onlinehome.de>, 2006.
 # Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022, 2023.
 # Panagiotis Papadopoulos <pano_90@gmx.net>, 2010, 2011.
-# Johannes Obermayr <johannesobermayr@gmx.de>, 2010.
 # Michael Weghorn <m.weghorn@posteo.de>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2023-08-14 21:44+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2024-04-23 23:32+0200\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -246,7 +246,7 @@ msgstr "Film wieder abspielen"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Diese Version von Okular wurde ohne Audio-Unterstützung gebaut."
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1542,11 +1542,10 @@ msgid "%1%"
 msgstr "%1 %"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Seite %1"
+msgstr "Seite %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3124
 #, kde-format
@@ -1557,7 +1556,7 @@ msgstr "Seite %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -3438,8 +3437,7 @@ msgid "Find as you type"
 msgstr "Beim Eintippen suchen"
 
 #: part/formwidgets.cpp:767
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
 msgstr "Alle Dateien (*)"
 
@@ -5582,12 +5580,12 @@ msgstr "Anhalten"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Diese Version von Okular unterstützt keine Videos"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videos werden in dieser Version von Okular nicht unterstützt"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format

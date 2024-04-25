@@ -93,7 +93,7 @@ void TranslateAnnotationTest::init()
     const QMimeType mime = db.mimeTypeForFile(testFile);
     QCOMPARE(m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess);
 
-    // Undo and Redo should be unavailable when docuemnt is first opened.
+    // Undo and Redo should be unavailable when document is first opened.
     QVERIFY(!m_document->canUndo());
     QVERIFY(!m_document->canRedo());
 

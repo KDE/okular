@@ -24,6 +24,8 @@ endif ()
 
 if (KArchive_HAVE_LZMA)
     target_compile_definitions(okular_comicbook PRIVATE -DWITH_K7ZIP=1)
+else()
+    target_compile_definitions(okular_comicbook PRIVATE -DWITH_K7ZIP=0)
 endif()
 
 ########### autotests ###############

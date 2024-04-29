@@ -31,6 +31,7 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(CMakePackageConfigHelpers)
 include(ECMSetupQtPluginMacroNames)
+include(ECMAddAndroidApk)
 
 if (ANDROID AND (FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
     set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")

@@ -42,6 +42,8 @@ if (ANDROID)
         view-preview
         view-table-of-contents-ltr
     )
+
+    ecm_add_android_apk(okularkirigami ANDROID_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../android)
 endif()
 
 install(TARGETS okularkirigami ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

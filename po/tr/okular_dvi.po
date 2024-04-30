@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2024-02-24 22:26+0300\n"
+"PO-Revision-Date: 2024-04-30 00:20+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -201,7 +201,7 @@ msgstr "Tüm harici PostScript dosyaları belgenize gömüldü."
 #: dviRenderer.cpp:419
 #, kde-format
 msgid "The specified file '%1' does not exist."
-msgstr "Belirtilen ‘%1’ dosyası yok."
+msgstr "Belirtilen “%1” dosyası yok."
 
 #: dviRenderer.cpp:565
 #, kde-format
@@ -280,7 +280,7 @@ msgstr "Sayfa %1: PostScript dosyası <strong>%2</strong> bulunamadı.<br>"
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "Kağıt büyüklüğü verisi ‘%1’ ayrıştırılamadı."
+msgstr "Kağıt büyüklüğü verisi “%1” ayrıştırılamadı."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -366,7 +366,7 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"‘%1’ DVI dosyası %2. sayfasında hata. Renk çıkar komutu renk yığını boşken "
+"“%1” DVI dosyası %2. sayfasında hata. Renk çıkar komutu renk yığını boşken "
 "kullanıldı."
 
 #: special.cpp:318
@@ -393,13 +393,13 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
-"‘%1’ DVI dosyası %2. sayfasında hata. Metin döndürme özelliğinde açı "
+"“%1” DVI dosyası %2. sayfasında hata. Metin döndürme özelliğinde açı "
 "yorumlanamadı."
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "‘%1’ özel komutu henüz gerçeklenmedi."
+msgstr "“%1” özel komutu henüz gerçeklenmedi."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format

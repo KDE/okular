@@ -350,6 +350,60 @@ function AFSpecial_Keystroke( psf )
     }
 }
 
+/** AFPercent_Format
+ *
+ * Formats event.value in the correct percentage format as per the given parameters
+ *
+ * Parameter description based on Adobe's documentation and observed behavior in Adobe Reader
+ *
+ * nDec is the number of places after the decimal point.
+ *
+ * sepStyle is an integer denoting separator style
+ *          0 => . as decimal separator     , as thousand separators => 1,234.56%
+ *          1 => . as decimal separator       no thousand separators => 1234.56%
+ *          2 => , as decimal separator     . as thousand separators => 1.234,56%
+ *          3 => , as decimal separator     no thousand separators => 1234,56
+ *          4 => . as decimal separator     ’ as thousand separators => 1’234.56%
+ */
+function AFPercent_Format( nDec, sepStyle )
+{
+    if ( !event.value )
+    {
+        return;
+    }
+
+    var ret;
+    var percentValue = util.stringToNumber( event.value ) * 100;
+    if ( sepStyle === 2 || sepStyle === 3 )
+    {
+        // Use de_DE as the locale for the dot separator format
+        ret = util.numberToString( percentValue, "f", nDec, 'de_DE' );
+
+        if ( sepStyle === 3 )
+        {
+            // No thousands separators. Remove all dots from the DE format.
+            ret = ret.replace( /\./g, '' );
+        }
+    }
+    else if ( sepStyle === 0 || sepStyle === 1 )
+    {
+        // Otherwise US
+        ret = util.numberToString( percentValue, "f", nDec, 'en_US' );
+
+        if ( sepStyle === 1 )
+        {
+            // No thousands separators. Remove all commas from the US format.
+            ret = ret.replace( /,/g, '' );
+        }
+    }
+    else if ( sepStyle === 4 )
+    {
+        ret = util.numberToString( percentValue, "f", nDec, 'de_CH');
+    }
+    ret += "%";
+    event.value = ret;
+}
+
 function AFPercent_Keystroke( nDec, sepStyle )
 {
     if (event.willCommit) {

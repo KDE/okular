@@ -32,6 +32,8 @@ private Q_SLOTS:
     void testValidateAction_data();
     void testNumberFormat();
     void testNumberFormat_data();
+    void testPercentFormat();
+    void testPercentFormat_data();
 
 private:
     Okular::Document *m_document;
@@ -198,6 +200,38 @@ void FormatTest::testNumberFormat_data()
     QTest::newRow("EUR on left using comma sep and thousands with dot") << QStringLiteral("number3") << QStringLiteral("1234,20") << QStringLiteral("€ 1.234,20");
     QTest::newRow("EUR on right with comma") << QStringLiteral("number4") << QStringLiteral("1,20") << /*true <<*/ QStringLiteral("1,20 €");
     QTest::newRow("EUR on right with dot sep without thousands sep") << QStringLiteral("number4") << QStringLiteral("1234,20") << QStringLiteral("1234,20 €");
+}
+
+void FormatTest::testPercentFormat()
+{
+    m_formattedText = QString();
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    fft->setText(text);
+    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+
+    QCOMPARE(m_formattedText, result);
+}
+
+void FormatTest::testPercentFormat_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow(". as decimal; , as thousand with 6 digits") << QStringLiteral("pct1") << QStringLiteral("1") << QStringLiteral("100.00%");
+    QTest::newRow(". as decimal; , as thousand with 4 digits") << QStringLiteral("pct1") << QStringLiteral("12.34") << QStringLiteral("1,234.00%");
+    QTest::newRow(". as decimal; no thousand sep with 6 digits") << QStringLiteral("pct2") << QStringLiteral("1") << QStringLiteral("100.00%");
+    QTest::newRow(". as decimal; no thousand sep with 4 digits") << QStringLiteral("pct2") << QStringLiteral("12.34") << QStringLiteral("1234.00%");
+    QTest::newRow(", as decimal; . as thousand sep with 6 digits") << QStringLiteral("pct3") << QStringLiteral("1") << QStringLiteral("100,00%");
+    QTest::newRow(", as decimal; . as thousand sep with 4 digits") << QStringLiteral("pct3") << QStringLiteral("12,34") << QStringLiteral("1.234,00%");
+    QTest::newRow(", as decimal; no thousand sep with 6 digits") << QStringLiteral("pct4") << QStringLiteral("1") << QStringLiteral("100,00%");
+    QTest::newRow(", as decimal; no thousand sep with 4 digits") << QStringLiteral("pct4") << QStringLiteral("12,34") << QStringLiteral("1234,00%");
+    QTest::newRow(". as decimal; ’ as thousand sep with 6 digits") << QStringLiteral("pct5") << QStringLiteral("1") << QStringLiteral("100.00%");
+    QTest::newRow(". as decimal; ’ as thousand sep with 4 digits") << QStringLiteral("pct5") << QStringLiteral("12,34") << QStringLiteral("1’234.00%"); // The thousand separator is an apostrophe symbol not single quote
 }
 
 void FormatTest::cleanupTestCase()

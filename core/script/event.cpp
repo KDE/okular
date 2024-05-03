@@ -23,6 +23,8 @@ public:
         , m_returnCode(false)
         , m_shiftModifier(false)
         , m_willCommit(false)
+        , m_selStart(-1)
+        , m_selEnd(-1)
     {
     }
 
@@ -37,6 +39,8 @@ public:
     bool m_shiftModifier;
     bool m_willCommit;
     QString m_change;
+    int m_selStart;
+    int m_selEnd;
 };
 
 Event::Event()
@@ -193,6 +197,26 @@ QString Event::change() const
 void Event::setChange(const QString &change)
 {
     d->m_change = change;
+}
+
+int Event::selStart() const
+{
+    return d->m_selStart;
+}
+
+void Event::setSelStart(const int selStart)
+{
+    d->m_selStart = selStart;
+}
+
+int Event::selEnd() const
+{
+    return d->m_selEnd;
+}
+
+void Event::setSelEnd(const int selEnd)
+{
+    d->m_selEnd = selEnd;
 }
 
 // static

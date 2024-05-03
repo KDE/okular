@@ -74,23 +74,23 @@ void KeystrokeTest::testKeystroke()
     Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[QStringLiteral("field3")]);
 
     // accept
-    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("hello"));
+    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("hello"), 0, 0);
     QCOMPARE(fft->text(), QStringLiteral("hello"));
 
     // accept
-    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("e"));
+    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("e"), 0, 5);
     QCOMPARE(fft->text(), QStringLiteral("e"));
 
     // accept
-    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("ee"));
+    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("ee"), 1, 1);
     QCOMPARE(fft->text(), QStringLiteral("ee"));
 
     // accept
-    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("eee"));
+    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("eee"), 2, 2);
     QCOMPARE(fft->text(), QStringLiteral("eee"));
 
     // reject
-    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("eeef"));
+    m_document->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, QStringLiteral("eeef"), 3, 3);
     QCOMPARE(fft->text(), QStringLiteral("eee"));
 }
 

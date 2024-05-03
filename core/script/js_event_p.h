@@ -27,6 +27,8 @@ class JSEvent : public QObject
     Q_PROPERTY(QJSValue value READ value WRITE setValue)    // clazy:exclude=qproperty-without-notify
     Q_PROPERTY(bool rc READ returnCode WRITE setReturnCode) // clazy:exclude=qproperty-without-notify
     Q_PROPERTY(QString change READ change CONSTANT)
+    Q_PROPERTY(int selStart READ selStart CONSTANT)
+    Q_PROPERTY(int selEnd READ selEnd CONSTANT)
 
 public:
     explicit JSEvent(Event *event, QObject *parent = nullptr);
@@ -45,6 +47,8 @@ public:
     bool returnCode() const;
     void setReturnCode(bool rc);
     QString change() const;
+    int selStart() const;
+    int selEnd() const;
 
 private:
     Event *m_event = nullptr;

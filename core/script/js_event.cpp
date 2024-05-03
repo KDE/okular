@@ -113,6 +113,18 @@ QString JSEvent::change() const
     return m_event->change();
 }
 
+// Event.selStart (getter)
+int JSEvent::selStart() const
+{
+    return m_event->selStart();
+}
+
+// Event.selEnd (getter)
+int JSEvent::selEnd() const
+{
+    return m_event->selEnd();
+}
+
 JSEvent::JSEvent(Event *event, QObject *parent)
     : QObject(parent)
     , m_event(event)

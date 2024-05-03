@@ -678,8 +678,17 @@ public:
      * Processes the given keystroke @p action on @p fft.
      *
      * @since 1.9
+     * @deprecated
      */
     void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue);
+
+    /**
+     * Processes the given keystroke @p action on @p fft between the two positions @p prevCursorPos and @p prevAnchorPos
+     * @p prevCursorPos and @p prevAnchorPos are used to set the selStart and selEnd event properties.
+     *
+     * @since 24.08
+     */
+    void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue, int prevCursorPos, int prevAnchorPos);
 
     /**
      * Processes the given keystroke @p action on @p fft.

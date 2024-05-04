@@ -2,22 +2,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Mickael Sibelle <kimael@gmail.com>, 2008.
-# Xavier Besnard <xavier.besnard@kde.org>, 2013.
+# SPDX-FileCopyrightText: 2013, 2024 Xavier Besnard <xavier.besnard@kde.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2013-06-26 10:44+0200\n"
-"Last-Translator: xavier <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2024-04-27 14:49+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -35,17 +35,17 @@ msgstr "kimael@gmail.com"
 #: converter.cpp:164
 #, kde-format
 msgid "Error while opening the EPub document."
-msgstr "Erreur lors de l'ouverture du document « EPub »"
+msgstr "Erreur lors de l'ouverture du document « ePub »"
 
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub"
-msgstr "EPub"
+msgstr "ePub"
 
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub Backend Configuration"
-msgstr "Configuration du moteur EPub"
+msgstr "Configuration du moteur « ePub »"
 
 #~ msgid "EPub Backend"
 #~ msgstr "Moteur EPub"

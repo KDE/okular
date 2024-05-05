@@ -256,7 +256,6 @@ void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
         return;
     }
 
-    Q_EMIT q->layoutAboutToBeChanged();
     for (int i = 0; i < pages.count(); ++i) {
         const QList<Okular::Annotation *> annots = filterOutWidgetAnnotations(pages.at(i)->annotations());
         if (annots.isEmpty()) {
@@ -268,7 +267,6 @@ void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
             new AnnItem(annItem, annot);
         }
     }
-    Q_EMIT q->layoutChanged();
 }
 
 AnnItem *AnnotationModelPrivate::findItem(int page, int *index) const

@@ -359,4 +359,9 @@ void Reviews::restoreTreeState()
     saver.restoreExpanded(m_expansionKeys);
 }
 
+QAbstractItemModel *Reviews::annotationsModel() const
+{
+    return m_model;
+}
+
 #include "side_reviews.moc"

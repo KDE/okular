@@ -155,6 +155,12 @@ public:
 
     void setModified(bool modified) override;
 
+    /** Accessor for the underlying annotations model
+     * \note: this is primarily meant for tests, if you need it elsewhere
+     * please reconsider or at least update this comment.
+     */
+    QAbstractItemModel *annotationsModel() const;
+
 public Q_SLOTS: // dbus
     Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;
     Q_SCRIPTABLE Q_NOREPLY void openDocument(const QString &doc);

@@ -3844,6 +3844,11 @@ void Part::slotOpenContainingFolder()
     KIO::highlightInFileManager({QUrl(localFilePath())});
 }
 
+QAbstractItemModel *Part::annotationsModel() const
+{
+    return m_reviewsWidget ? m_reviewsWidget->annotationsModel() : nullptr;
+}
+
 } // namespace Okular
 
 #include "part.moc"

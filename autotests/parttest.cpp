@@ -21,14 +21,15 @@
 #include "../part/presentationwidget.h"
 #include "../part/sidebar.h"
 #include "../part/toc.h"
-#include "../part/toggleactionmenu.h"
 #include "../settings.h"
 #include "closedialoghelper.h"
 
 #include <KActionCollection>
+#include <KActionMenu>
 #include <KConfigDialog>
 #include <KParts/OpenUrlArguments>
 
+#include <QAbstractItemModelTester>
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
@@ -993,6 +994,7 @@ void PartTest::testSaveAs()
     qDebug() << "Open file, add annotation and save both natively and to .okular";
     {
         Okular::Part part(nullptr, {});
+        new QAbstractItemModelTester(part.annotationsModel(), &part);
         part.openDocument(file);
         part.m_document->documentInfo();
 
@@ -1033,6 +1035,7 @@ void PartTest::testSaveAs()
     qDebug() << "Open the .okular, check that the annotation is present and save to native";
     {
         Okular::Part part(nullptr, {});
+        new QAbstractItemModelTester(part.annotationsModel(), &part);
         part.openDocument(archiveSave.fileName());
         part.m_document->documentInfo();
 
@@ -1059,6 +1062,7 @@ void PartTest::testSaveAs()
              << "is there iff we expect it";
     {
         Okular::Part part(nullptr, {});
+        new QAbstractItemModelTester(part.annotationsModel(), &part);
         part.openDocument(nativeDirectSave.fileName());
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), nativelySupportsAnnotations ? 1 : 0);
@@ -1171,6 +1175,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     Okular::Part part(nullptr, {});
     part.openDocument(file);
+    new QAbstractItemModelTester(part.annotationsModel(), &part);
 
     QCOMPARE(part.m_document->canSwapBackingFile(), canSwapBackingFile);
 
@@ -1447,6 +1452,7 @@ void PartTest::test388288()
     Okular::Part part(nullptr, {});
 
     part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
+    new QAbstractItemModelTester(part.annotationsModel(), &part);
 
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
@@ -1624,6 +1630,7 @@ void PartTest::testAnnotWindow()
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
     part.widget()->show();
     part.widget()->resize(800, 600);
+    new QAbstractItemModelTester(part.annotationsModel(), &part);
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);

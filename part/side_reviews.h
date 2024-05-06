@@ -43,6 +43,8 @@ public:
 
     void reparseConfig();
 
+    QAbstractItemModel *annotationsModel() const;
+
 public Q_SLOTS:
     void slotPageEnabled(bool);
     void slotAuthorEnabled(bool);

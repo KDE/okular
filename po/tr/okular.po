@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-05-07 00:38+0000\n"
 "PO-Revision-Date: 2024-03-22 16:14+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1541,18 +1541,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%%1"
 
-#: part/annotationmodel.cpp:326
+#: part/annotationmodel.cpp:324
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Sayfa %1 (%2)"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3124
+#: part/annotationmodel.cpp:326 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Sayfa %1"
 
-#: part/annotationmodel.cpp:342
+#: part/annotationmodel.cpp:340
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"

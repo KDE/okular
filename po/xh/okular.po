@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-05-07 00:38+0000\n"
 "PO-Revision-Date: 2002-11-14 17:05SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1508,18 +1508,18 @@ msgctxt ""
 msgid "%1%"
 msgstr ""
 
-#: part/annotationmodel.cpp:326
+#: part/annotationmodel.cpp:324
 #, fuzzy, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "&Iyonela Kububanzi Bephepha"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3124
+#: part/annotationmodel.cpp:326 part/part.cpp:3124
 #, fuzzy, kde-format
 msgid "Page %1"
 msgstr "&Iyonela Kububanzi Bephepha"
 
-#: part/annotationmodel.cpp:342
+#: part/annotationmodel.cpp:340
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"

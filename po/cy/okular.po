@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-05-07 00:38+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -1555,19 +1555,19 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 :"
 
-#: part/annotationmodel.cpp:326
+#: part/annotationmodel.cpp:324
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Tudalen %1"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3124
+#: part/annotationmodel.cpp:326 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Tudalen %1"
 
-#: part/annotationmodel.cpp:342
+#: part/annotationmodel.cpp:340
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"

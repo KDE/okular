@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-05-07 00:38+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -1633,19 +1633,19 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/annotationmodel.cpp:326
+#: part/annotationmodel.cpp:324
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Pådje %1"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3124
+#: part/annotationmodel.cpp:326 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Pådje %1"
 
-#: part/annotationmodel.cpp:342
+#: part/annotationmodel.cpp:340
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2024-04-08 18:45+0300\n"
+"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"PO-Revision-Date: 2024-05-05 11:53+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1520,18 +1520,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:326
+#: part/annotationmodel.cpp:324
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "עמוד %1 (%2)"
 
-#: part/annotationmodel.cpp:328 part/part.cpp:3124
+#: part/annotationmodel.cpp:326 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "עמוד %1"
 
-#: part/annotationmodel.cpp:342
+#: part/annotationmodel.cpp:340
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -3866,7 +3866,7 @@ msgstr "יש לצייר ריבוע כדי להוסיף את שדה החתימה"
 #: part/pageview.cpp:5284
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
-msgstr "נא לצייר מרובע סביב האזור בעמוד שברצונך להשאיר גלוי"
+msgstr "נא לצייר מרובע סביב האזור בעמוד שאמור להישאר גלוי"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4066,8 +4066,8 @@ msgid ""
 "edit the document."
 msgstr ""
 "המסמך מכיל פירושים או נתוני טפסים שנשמרו פנימית בגרסה קודמת של Okular. אחסון "
-"פנימי <b>לא נתמך עוד</b>.<br/>נא לשמור לקובץ כדי להעביר אותם אם ברצונך "
-"להמשיך לערוך את המסמך."
+"פנימי <b>לא נתמך עוד</b>.<br/>נא לשמור לקובץ כדי להעביר אותם ולהמשיך לערוך "
+"את המסמך."
 
 #: part/part.cpp:448
 #, kde-format

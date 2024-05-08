@@ -16,14 +16,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-07 00:38+0000\n"
-"PO-Revision-Date: 2024-01-14 21:14+0900\n"
+"PO-Revision-Date: 2024-05-08 02:42+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.01.90\n"
+"X-Generator: Lokalize 24.04.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -696,7 +696,7 @@ msgstr "含備註的多邊形"
 #: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Polygon"
-msgstr "五角形"
+msgstr "多邊形"
 
 #: gui/guiutils.cpp:54
 #, kde-format

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2024-05-08 02:42+0900\n"
+"PO-Revision-Date: 2024-05-09 06:45+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4426,7 +4426,7 @@ msgstr "取消關閉"
 #: part/part.cpp:1848
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr "您要儲存你的變更至 %1 還是丟棄它們？"
+msgstr "您要儲存你的變更至 %1 還是捨棄它們？"
 
 #: part/part.cpp:1848
 #, kde-format

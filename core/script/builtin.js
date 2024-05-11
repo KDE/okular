@@ -19,6 +19,19 @@
 
 /* Builtin functions for Okular's PDF JavaScript interpretation. */
 
+/**
+ * Merge the last change (of a text field) with the uncommitted change
+ */
+function AFMergeChange( event )
+{
+    var start, end;
+    if ( event.willCommit ) return event.value;
+    start = (event.selStart >= 0) ? event.value.substring(0, event.selStart) : "";
+    end = (event.selEnd >= 0 && event.selEnd <= event.value.length) ? event.value.substring(event.selEnd, event.value.length) : "";
+    return start + event.change + end;
+}
+
+
 /** AFSimple_Calculate
  *
  * cFunction is a string that identifies the operation.

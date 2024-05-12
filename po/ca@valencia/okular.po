@@ -151,7 +151,7 @@ msgstr "Obri un fitxer extern"
 #: core/action.cpp:185
 #, kde-format
 msgid "Execute '%1'..."
-msgstr "Executa «%1»..."
+msgstr "Executa «%1»…"
 
 #: core/action.cpp:284
 #, kde-format
@@ -201,17 +201,17 @@ msgstr "Acaba la presentació"
 #: core/action.cpp:302
 #, kde-format
 msgid "Find..."
-msgstr "Busca..."
+msgstr "Busca…"
 
 #: core/action.cpp:304
 #, kde-format
 msgid "Go To Page..."
-msgstr "Ves fins a la pàgina..."
+msgstr "Ves fins a la pàgina…"
 
 #: core/action.cpp:355
 #, kde-format
 msgid "Play sound..."
-msgstr "Reproduïx un so..."
+msgstr "Reproduïx un so…"
 
 #: core/action.cpp:423 core/action.cpp:539
 #, kde-format
@@ -221,7 +221,7 @@ msgstr "Script JavaScript"
 #: core/action.cpp:473
 #, kde-format
 msgid "Play movie..."
-msgstr "Reproduïx una pel·lícula..."
+msgstr "Reproduïx una pel·lícula…"
 
 #: core/action.cpp:544
 #, kde-format
@@ -539,7 +539,7 @@ msgstr "Edita els estats de botó de formulari"
 #: core/generator.cpp:759
 #, kde-format
 msgid "Plain &Text..."
-msgstr "&Text net..."
+msgstr "&Text net…"
 
 #: core/generator.cpp:762
 #, kde-format
@@ -1343,7 +1343,7 @@ msgstr "Transparent"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr "Color personalitzat..."
+msgstr "Color personalitzat…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1592,7 +1592,7 @@ msgstr "&Propietats"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "Guar&da «%1»..."
+msgstr "Guar&da «%1»…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2166,7 +2166,7 @@ msgstr "Mostra per a tots els documents"
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
-msgstr "Busca..."
+msgstr "Busca…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2203,7 +2203,7 @@ msgstr "Visor de certificats"
 #: part/certificateviewer.cpp:50
 #, kde-format
 msgid "Export..."
-msgstr "Exporta..."
+msgstr "Exporta…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -3362,13 +3362,13 @@ msgstr "Modificat"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
-msgstr "Anomena i gu&arda..."
+msgstr "Anomena i gu&arda…"
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
-msgstr "Vi&sualitza..."
+msgstr "Vi&sualitza…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3451,7 +3451,7 @@ msgstr "Camp de signatura sense signar (clic per a signar)"
 #: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
-msgstr "&Signa..."
+msgstr "&Signa…"
 
 #: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
 #, kde-format
@@ -3642,7 +3642,7 @@ msgstr "Eines de selecció"
 #: part/pageview.cpp:684
 #, kde-format
 msgid "Digitally &Sign..."
-msgstr "&Signa digitalment..."
+msgstr "&Signa digitalment…"
 
 #: part/pageview.cpp:690
 #, kde-format
@@ -3728,7 +3728,7 @@ msgstr "Imatge (%1 per %2 píxels)"
 #: part/pageview.cpp:2829
 #, kde-format
 msgid "Save to File..."
-msgstr "Guarda en el fitxer..."
+msgstr "Guarda en el fitxer…"
 
 #: part/pageview.cpp:2849
 #, kde-format
@@ -3797,7 +3797,7 @@ msgstr "Busca «%1» amb"
 #: part/pageview.cpp:4325
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr "Configura les dreceres web..."
+msgstr "Configura les dreceres web…"
 
 #: part/pageview.cpp:4351
 #, kde-format
@@ -4191,22 +4191,22 @@ msgstr "Va cap al punt següent"
 #: part/part.cpp:723
 #, kde-format
 msgid "Configure Okular..."
-msgstr "Configura Okular..."
+msgstr "Configura Okular…"
 
 #: part/part.cpp:726
 #, kde-format
 msgid "Configure Viewer..."
-msgstr "Configura el visor..."
+msgstr "Configura el visor…"
 
 #: part/part.cpp:732
 #, kde-format
 msgid "Configure Viewer Backends..."
-msgstr "Configura els dorsals de visualització..."
+msgstr "Configura els dorsals de visualització…"
 
 #: part/part.cpp:734
 #, kde-format
 msgid "Configure Backends..."
-msgstr "Configura els dorsals..."
+msgstr "Configura els dorsals…"
 
 #: part/part.cpp:770
 #, kde-format
@@ -4237,7 +4237,7 @@ msgstr "Número de pàgina"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr "Configura els modes de color..."
+msgstr "Configura els modes de color…"
 
 #: part/part.cpp:833
 #, kde-format
@@ -4287,7 +4287,7 @@ msgstr "Obri la carpeta con&tenidora"
 #: part/part.cpp:920
 #, kde-format
 msgid "&Import PostScript as PDF..."
-msgstr "&Importa un PostScript com a PDF..."
+msgstr "&Importa un PostScript com a PDF…"
 
 #: part/part.cpp:924
 #, kde-format
@@ -4302,7 +4302,7 @@ msgstr "Esborra el dibuix"
 #: part/part.cpp:937
 #, kde-format
 msgid "Configure Annotations..."
-msgstr "Configura les anotacions..."
+msgstr "Configura les anotacions…"
 
 #: part/part.cpp:942
 #, kde-format
@@ -4372,7 +4372,7 @@ msgstr "Fitxers PostScript (%1)"
 #: part/part.cpp:1333
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
-msgstr "S'està important el fitxer PS com a PDF (pot tardar una estona)..."
+msgstr "S'està important el fitxer PS com a PDF (pot tardar una estona)…"
 
 #: part/part.cpp:1462
 #, kde-format
@@ -4529,7 +4529,7 @@ msgstr ""
 #: part/part.cpp:2078 part/part.cpp:2096
 #, kde-format
 msgid "Reloading the document..."
-msgstr "S'està tornant a carregar el document..."
+msgstr "S'està tornant a carregar el document…"
 
 #: part/part.cpp:2253 part/toc.cpp:38
 #, kde-format
@@ -4691,7 +4691,7 @@ msgstr "Avís"
 #: part/part.cpp:2742 part/part.cpp:2764
 #, kde-format
 msgid "Save as Okular document archive..."
-msgstr "Anomena i guarda arxiu de document d'Okular..."
+msgstr "Anomena i guarda arxiu de document d'Okular…"
 
 #: part/part.cpp:2754
 #, kde-format
@@ -5126,7 +5126,7 @@ msgstr "&Lletres"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr "S'està llegint la informació de la lletra..."
+msgstr "S'està llegint la informació de la lletra…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5389,7 +5389,7 @@ msgstr "Fons:"
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr "Escolliu..."
+msgstr "Escolliu…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
@@ -5530,12 +5530,12 @@ msgstr "Revisió %1 de %2 del document"
 #: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
-msgstr "Visualitza la versió signada..."
+msgstr "Visualitza la versió signada…"
 
 #: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
-msgstr "Visualitza el certificat..."
+msgstr "Visualitza el certificat…"
 
 #: part/signaturepropertiesdialog.cpp:92
 #, kde-format
@@ -5583,12 +5583,12 @@ msgstr "En este Okular no s'han implementat els vídeos"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add..."
-msgstr "Afi&g..."
+msgstr "Afi&g…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
 msgid "&Edit..."
-msgstr "&Edita..."
+msgstr "&Edita…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -5793,7 +5793,7 @@ msgstr "Obri document"
 #: shell/shell.cpp:807
 #, kde-format
 msgid "Confirm Close"
-msgstr "Confirmació del tancament"
+msgstr "Confirmeu el tancament"
 
 #: shell/shell.cpp:811
 #, kde-format
@@ -5843,7 +5843,7 @@ msgstr " Us donem la benvinguda a Okular"
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Obri un document..."
+msgstr "Obri un document…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382

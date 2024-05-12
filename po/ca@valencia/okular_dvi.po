@@ -332,7 +332,7 @@ msgstr ""
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr "Actualment s'està generant %1 a %2 ppp..."
+msgstr "Actualment s'està generant %1 a %2 ppp…"
 
 #: generator_dvi.cpp:287
 #, kde-format

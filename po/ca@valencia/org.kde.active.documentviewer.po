@@ -78,7 +78,7 @@ msgstr "Empremta digital SHA-256:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."
-msgstr "Exporta..."
+msgstr "Exporta…"
 
 #: package/contents/ui/CertificateViewerDialog.qml:142
 #: package/contents/ui/SignaturePropertiesDialog.qml:149
@@ -104,7 +104,7 @@ msgstr "Okular"
 
 #: package/contents/ui/main.qml:42
 msgid "Open..."
-msgstr "Obri..."
+msgstr "Obri…"
 
 #: package/contents/ui/main.qml:49
 msgid "About"
@@ -185,11 +185,11 @@ msgstr "Revisió %1 de %2 del document"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
-msgstr "Guarda la versió signada..."
+msgstr "Guarda la versió signada…"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
-msgstr "Visualitza el certificat..."
+msgstr "Visualitza el certificat…"
 
 #: package/contents/ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."

@@ -671,32 +671,50 @@ public:
      * Processes the given format @p action on @p fft.
      *
      * @since 1.9
+     * @deprecated use processFormatAction(const Action *, Okular::FormField *).
      */
-    void processFormatAction(const Action *action, Okular::FormFieldText *fft);
+    OKULARCORE_DEPRECATED void processFormatAction(const Action *action, Okular::FormFieldText *fft);
+
+    /**
+     * Processes the given format @p action on a Form Field @p ff.
+     *
+     * @since 24.08
+     */
+    void processFormatAction(const Action *action, Okular::FormField *ff);
 
     /**
      * Processes the given keystroke @p action on @p fft.
      *
      * @since 1.9
-     * @deprecated use processKeystrokeAction(const Action *, Okular::FormFieldText *, const QVariant &, int, int)
+     * @deprecated use processKeystrokeAction(const Action *, Okular::FormField *, const QVariant &, int, int)
      */
     OKULARCORE_DEPRECATED void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue);
 
     /**
-     * Processes the given keystroke @p action on @p fft between the two positions @p prevCursorPos and @p prevAnchorPos
+     * Processes the given keystroke @p action on @p ff between the two positions @p prevCursorPos and @p prevAnchorPos
      * @p prevCursorPos and @p prevAnchorPos are used to set the selStart and selEnd event properties.
      *
      * @since 24.08
      */
-    void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue, int prevCursorPos, int prevAnchorPos);
+    void processKeystrokeAction(const Action *action, Okular::FormField *ff, const QVariant &newValue, int prevCursorPos, int prevAnchorPos);
 
     /**
      * Processes the given keystroke @p action on @p fft.
      * This will set event.willCommit=true
      *
      * @since 22.04
+     * @deprecated use processKeystrokeCommitAction(const Action *, Okular::FormField *, bool &).
      */
-    void processKeystrokeCommitAction(const Action *action, Okular::FormFieldText *fft);
+    OKULARCORE_DEPRECATED void processKeystrokeCommitAction(const Action *action, Okular::FormFieldText *fft);
+
+    /**
+     * Processes the given keystroke @p action on FormField @p ff.
+     * This will set event.willCommit=true.
+     * The return code parameter is set if the value is to be committed.
+     *
+     * @since 24.08
+     */
+    void processKeystrokeCommitAction(const Action *action, Okular::FormField *ff, bool &returnCode);
 
     /**
      * Processes the given focus action on the field.
@@ -709,8 +727,23 @@ public:
      * Processes the given keystroke @p action on @p fft.
      *
      * @since 1.9
+     * @deprecated use processValidateAction(const Action *, Okular::FormField *, bool &).
      */
-    void processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode);
+    OKULARCORE_DEPRECATED void processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode);
+
+    /**
+     * Validates the input value in the FormField @p ff and sets the @p returnCode for a given validate @p action.
+     *
+     * @since 24.08
+     */
+    void processValidateAction(const Action *action, Okular::FormField *ff, bool &returnCode);
+
+    /**
+     * A method that executes the relevant keystroke, validate, calculate and format actions on a FormField @p ff.
+     *
+     * @since 24.08
+     */
+    void processKVCFActions(Okular::FormField *ff);
 
     /**
      * Processes the mouse up @p action on @p ff.

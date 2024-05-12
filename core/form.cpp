@@ -77,6 +77,19 @@ void FormField::setPrintable(bool)
 {
 }
 
+void FormField::setValue(const QVariant &)
+{
+}
+
+void FormField::setAppearanceValue(const QVariant &)
+{
+}
+
+QVariant FormField::value() const
+{
+    return QVariant(QString());
+}
+
 Action *FormField::activationAction() const
 {
     Q_D(const FormField);
@@ -127,6 +140,30 @@ Page *FormField::page() const
 {
     Q_D(const FormField);
     return d->m_page;
+}
+
+QString FormField::committedValue() const
+{
+    Q_D(const FormField);
+    return d->m_committedValue;
+}
+
+void FormField::commitValue(const QString &value)
+{
+    Q_D(FormField);
+    d->m_committedValue = value;
+}
+
+QString FormField::committedFormattedValue() const
+{
+    Q_D(const FormField);
+    return d->m_committedFormattedValue;
+}
+
+void FormField::commitFormattedValue(const QString &value)
+{
+    Q_D(FormField);
+    d->m_committedFormattedValue = value;
 }
 
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
@@ -228,6 +265,21 @@ Qt::Alignment FormFieldText::textAlignment() const
 bool FormFieldText::canBeSpellChecked() const
 {
     return false;
+}
+
+void FormFieldText::setValue(const QVariant &value)
+{
+    setText(value.toString());
+}
+
+void FormFieldText::setAppearanceValue(const QVariant &value)
+{
+    setAppearanceText(value.toString());
+}
+
+QVariant FormFieldText::value() const
+{
+    return QVariant(text());
 }
 
 class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate

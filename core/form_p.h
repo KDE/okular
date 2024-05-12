@@ -36,6 +36,8 @@ public:
     QHash<int, Action *> m_additionalActions;
     QHash<int, Action *> m_additionalAnnotActions;
     Page *m_page = nullptr;
+    QString m_committedValue;
+    QString m_committedFormattedValue;
 
     Q_DECLARE_PUBLIC(FormField)
     FormField *q_ptr;

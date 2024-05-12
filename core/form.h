@@ -129,6 +129,27 @@ public:
     */
     virtual void setPrintable(bool value);
 
+    /**
+      Sets the @p value associated with the form field.
+
+      @since 24.08
+     */
+    virtual void setValue(const QVariant &value);
+
+    /**
+      Sets the appearance @p value associated with the form field.
+
+      @since 24.08
+     */
+    virtual void setAppearanceValue(const QVariant &value);
+
+    /**
+      Returns the value associated wit the form field.
+
+      @since 24.08
+     */
+    virtual QVariant value() const;
+
     Action *activationAction() const;
 
     /**
@@ -170,6 +191,34 @@ public:
      * @since 21.12.2
      */
     Page *page() const;
+
+    /**
+     * Returns the value that was last committed in this form field.
+     *
+     * @since 24.08
+     */
+    QString committedValue() const;
+
+    /**
+     * Updates the value that was last committed in this form field.
+     *
+     * @since 24.08
+     */
+    void commitValue(const QString &value);
+
+    /**
+     * Returns the formatted value that was last committed in this form field.
+     *
+     * @since 24.08
+     */
+    QString committedFormattedValue() const;
+
+    /**
+     * Updates the value that was last committed in this form field.
+     *
+     * @since 24.08
+     */
+    void commitFormattedValue(const QString &value);
 
 protected:
     /// @cond PRIVATE
@@ -328,6 +377,30 @@ public:
      * @since 1.9
      */
     virtual void setAppearanceText(const QString &text) = 0;
+
+    /**
+     * Sets the @p value associated with the text form field.
+     * The value is of type string and this function internally @ref setText(const QString &text)
+     *
+     * @since 24.08
+     */
+    void setValue(const QVariant &value) override;
+
+    /**
+     * Returns the value associated with the text form field.
+     * Internally calls @ref text() method.
+     *
+     * @since 24.08
+     */
+    QVariant value() const override;
+
+    /**
+     * Sets the appearance value associated with the text form field.
+     * Internally calls @ref setAppearanceText(const QString &text) method.
+     *
+     * @since 24.08
+     */
+    void setAppearanceValue(const QVariant &value) override;
 
 protected:
     FormFieldText();

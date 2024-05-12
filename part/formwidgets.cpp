@@ -90,7 +90,7 @@ void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormF
         return;
     }
     switch (type) {
-    // These cases are to be handled by the FormField text, so we let it happen.
+    // These cases are to be handled by the FormFields themselves, so we let it happen.
     case Okular::Annotation::FocusIn:
     case Okular::Annotation::FocusOut:
         return;
@@ -595,18 +595,7 @@ bool FormLineEdit::event(QEvent *e)
             return true;
         }
 
-        if (m_ff->additionalAction(Okular::FormField::FieldModified) && !m_ff->isReadOnly()) {
-            Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
-            m_controller->document()->processKeystrokeCommitAction(m_ff->additionalAction(Okular::FormField::FieldModified), form);
-        }
-
-        if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::ValidateField)) {
-            bool ok = false;
-            m_controller->document()->processValidateAction(action, static_cast<Okular::FormFieldText *>(m_ff), ok);
-        }
-        if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::FormatField)) {
-            m_controller->document()->processFormatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
-        }
+        m_controller->document()->processKVCFActions(m_ff);
 
         if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
             m_controller->document()->processFocusAction(action, static_cast<Okular::FormFieldText *>(m_ff));
@@ -754,12 +743,10 @@ bool TextAreaEdit::event(QEvent *e)
     } else if (e->type() == QEvent::FocusOut) {
         m_editing = false;
 
-        if (m_ff->additionalAction(Okular::FormField::FieldModified) && !m_ff->isReadOnly()) {
-            m_controller->document()->processKeystrokeCommitAction(m_ff->additionalAction(Okular::FormField::FieldModified), static_cast<Okular::FormFieldText *>(m_ff));
-        }
+        m_controller->document()->processKVCFActions(m_ff);
 
-        if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::FormatField)) {
-            m_controller->document()->processFormatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
+        if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
+            m_controller->document()->processFocusAction(action, static_cast<Okular::FormFieldText *>(m_ff));
         }
     }
     return KTextEdit::event(e);

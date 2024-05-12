@@ -248,10 +248,7 @@ std::shared_ptr<Event> Event::createFormatEvent(FormField *target, Page *targetP
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
 
-    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
-    if (fft) {
-        ret->setValue(QVariant(fft->text()));
-    }
+    ret->setValue(target->value());
     return ret;
 }
 
@@ -262,11 +259,8 @@ std::shared_ptr<Event> Event::createKeystrokeEvent(FormField *target, Page *targ
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
 
-    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
-    if (fft) {
-        ret->setReturnCode(true);
-        ret->setValue(QVariant(fft->text()));
-    }
+    ret->setReturnCode(true);
+    ret->setValue(target->value());
     return ret;
 }
 
@@ -278,10 +272,7 @@ std::shared_ptr<Event> Event::createFormFocusEvent(FormField *target, Page *targ
     ret->setTargetName(targetName);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
-    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
-    if (fft) {
-        ret->setValue(QVariant(fft->text()));
-    }
+    ret->setValue(target->value());
     return ret;
 }
 
@@ -293,11 +284,8 @@ std::shared_ptr<Event> Event::createFormValidateEvent(FormField *target, Page *t
     ret->setTargetName(targetName);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
-    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
-    if (fft) {
-        ret->setValue(QVariant(fft->text()));
-        ret->setReturnCode(true);
-    }
+    ret->setValue(target->value());
+    ret->setReturnCode(true);
     return ret;
 }
 

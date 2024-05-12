@@ -84,17 +84,20 @@ void KeystrokeTest::initTestCase()
 
 void KeystrokeTest::testCommit()
 {
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_genericTestsFields[QStringLiteral("field2")]);
+    Okular::FormField *ff = m_genericTestsFields[QStringLiteral("field2")];
+    // Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_genericTestsFields[QStringLiteral("field2")]);
 
     // text that will be accepted
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(QStringLiteral("Lorem ipsum"));
-    m_genericTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    bool ok = false;
+    m_genericTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
     QCOMPARE(fft->text(), QStringLiteral("Lorem ipsum"));
-
+    fft->commitValue(QStringLiteral("Lorem ipsum"));
     // text that will be rejected
     fft->setText(QStringLiteral("foo"));
-    m_genericTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
-    QEXPECT_FAIL("", "reset to commited value not implemented", Continue);
+    m_genericTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
+    // compare it with a blank string since the committing action now takes place after validate event and so ff->committedValue() would return "".
     QCOMPARE(fft->text(), QStringLiteral("Lorem ipsum"));
 }
 
@@ -161,9 +164,11 @@ void KeystrokeTest::testTimeKeystrokeCommit()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    Okular::FormField *ff = m_AFMethodsTestsFields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    bool ok = false;
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
 
     QCOMPARE(fft->text(), result);
 }
@@ -241,9 +246,11 @@ void KeystrokeTest::testSpecialKeystrokeCommit()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    Okular::FormField *ff = m_AFMethodsTestsFields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    bool ok = false;
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
 
     QCOMPARE(fft->text(), result);
 }
@@ -319,9 +326,11 @@ void KeystrokeTest::testPercentKeystrokeCommit()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    Okular::FormField *ff = m_AFMethodsTestsFields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    bool ok = false;
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
 
     QCOMPARE(fft->text(), result);
 }
@@ -381,9 +390,11 @@ void KeystrokeTest::testNumberKeystrokeCommit()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    Okular::FormField *ff = m_AFMethodsTestsFields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    bool ok = false;
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, ok);
 
     QCOMPARE(fft->text(), result);
 }

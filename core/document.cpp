@@ -1207,7 +1207,7 @@ void DocumentPrivate::recalculateForms()
                                     fft->setAppearanceText(newVal);
                                     if (const Okular::Action *action = fft->additionalAction(Okular::FormField::FormatField)) {
                                         // The format action handles the refresh.
-                                        m_parent->processFormatAction(action, fft);
+                                        m_parent->processFormatAction(action, form);
                                     } else {
                                         Q_EMIT m_parent->refreshFormWidget(fft);
                                         pageNeedsRefresh = true;
@@ -4321,44 +4321,50 @@ void Document::processAction(const Action *action)
 
 void Document::processFormatAction(const Action *action, Okular::FormFieldText *fft)
 {
+    processFormatAction(action, static_cast<FormField *>(fft));
+}
+
+void Document::processFormatAction(const Action *action, Okular::FormField *ff)
+{
     if (action->actionType() != Action::Script) {
         qCDebug(OkularCoreDebug) << "Unsupported action type" << action->actionType() << "for formatting.";
         return;
     }
 
     // Lookup the page of the FormFieldText
-    int foundPage = d->findFieldPageNumber(fft);
+    int foundPage = d->findFieldPageNumber(ff);
 
     if (foundPage == -1) {
         qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
         return;
     }
 
-    const QString unformattedText = fft->text();
+    const QString unformattedText = ff->value().toString();
 
-    std::shared_ptr<Event> event = Event::createFormatEvent(fft, d->m_pagesVector[foundPage]);
+    std::shared_ptr<Event> event = Event::createFormatEvent(ff, d->m_pagesVector[foundPage]);
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);
 
     const QString formattedText = event->value().toString();
+    ff->commitFormattedValue(formattedText);
     if (formattedText != unformattedText) {
         // We set the formattedText, because when we call refreshFormWidget
         // It will set the QLineEdit to this formattedText
-        fft->setText(formattedText);
-        fft->setAppearanceText(formattedText);
-        Q_EMIT refreshFormWidget(fft);
+        ff->setValue(QVariant(formattedText));
+        ff->setAppearanceValue(QVariant(formattedText));
+        Q_EMIT refreshFormWidget(ff);
         d->refreshPixmaps(foundPage);
         // Then we make the form have the unformatted text, to use
-        // in calculations and other things.
-        fft->setText(unformattedText);
-    } else if (fft->additionalAction(FormField::CalculateField)) {
+        // in calculations and other things
+        ff->setValue(QVariant(unformattedText));
+    } else if (ff->additionalAction(FormField::CalculateField)) {
         // When the field was calculated we need to refresh even
         // if the format script changed nothing. e.g. on error.
         // This is because the recalculateForms function delegated
         // the responsiblity for the refresh to us.
-        Q_EMIT refreshFormWidget(fft);
+        Q_EMIT refreshFormWidget(ff);
         d->refreshPixmaps(foundPage);
     }
 }
@@ -4387,21 +4393,21 @@ QString DocumentPrivate::evaluateKeystrokeEventChange(const QString &oldVal, con
     return QString::fromUcs4(subview.data(), changeLength);
 }
 
-void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue, int prevCursorPos, int prevAnchorPos)
+void Document::processKeystrokeAction(const Action *action, Okular::FormField *ff, const QVariant &newValue, int prevCursorPos, int prevAnchorPos)
 {
     if (action->actionType() != Action::Script) {
         qCDebug(OkularCoreDebug) << "Unsupported action type" << action->actionType() << "for keystroke.";
         return;
     }
     // Lookup the page of the FormFieldText
-    int foundPage = d->findFieldPageNumber(fft);
+    int foundPage = d->findFieldPageNumber(ff);
 
     if (foundPage == -1) {
         qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
         return;
     }
 
-    std::shared_ptr<Event> event = Event::createKeystrokeEvent(fft, d->m_pagesVector[foundPage]);
+    std::shared_ptr<Event> event = Event::createKeystrokeEvent(ff, d->m_pagesVector[foundPage]);
 
     /* Set the selStart and selEnd event properties
 
@@ -4421,22 +4427,23 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     int codeUnit;
     int initialSelStart = selStart;
     int initialSelEnd = selEnd;
-    for (codeUnit = 0; codeUnit < initialSelStart && codeUnit < fft->text().size(); codeUnit++) {
-        if (fft->text().at(codeUnit).isHighSurrogate()) {
+    QString inputString = ff->value().toString();
+    for (codeUnit = 0; codeUnit < initialSelStart && codeUnit < inputString.size(); codeUnit++) {
+        if (inputString.at(codeUnit).isHighSurrogate()) {
             // skip the low surrogate and decrement selStart and selEnd
             codeUnit++;
             selStart--;
             selEnd--;
         }
     }
-    for (; codeUnit < initialSelEnd && codeUnit < fft->text().size(); codeUnit++) {
-        if (fft->text().at(codeUnit).isHighSurrogate()) {
+    for (; codeUnit < initialSelEnd && codeUnit < inputString.size(); codeUnit++) {
+        if (inputString.at(codeUnit).isHighSurrogate()) {
             // skip the low surrogate and decrement selEnd
             codeUnit++;
             selEnd--;
         }
     }
-    std::u32string oldUcs4 = fft->text().toStdU32String();
+    std::u32string oldUcs4 = inputString.toStdU32String();
     std::u32string newUcs4 = newValue.toString().toStdU32String();
     // It is necessary to count size in terms of code points rather than code units for deletion.
     if (oldUcs4.size() - newUcs4.size() == 1 && selStart == selEnd) {
@@ -4446,15 +4453,15 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     event->setSelStart(selStart);
     event->setSelEnd(selEnd);
     // Use the corrected selStart and selEnd for evaluating the change.
-    event->setChange(DocumentPrivate::evaluateKeystrokeEventChange(fft->text(), newValue.toString(), selStart, selEnd));
+    event->setChange(DocumentPrivate::evaluateKeystrokeEventChange(inputString, newValue.toString(), selStart, selEnd));
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);
 
     if (event->returnCode()) {
-        fft->setText(newValue.toString());
+        ff->setValue(newValue);
     } else {
-        Q_EMIT refreshFormWidget(fft);
+        Q_EMIT refreshFormWidget(ff);
     }
 }
 
@@ -4466,31 +4473,40 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
 
 void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFieldText *fft)
 {
+    bool returnCode = false;
+    processKeystrokeCommitAction(action, fft, returnCode);
+}
+
+void Document::processKeystrokeCommitAction(const Action *action, Okular::FormField *ff, bool &returnCode)
+{
     if (action->actionType() != Action::Script) {
         qCDebug(OkularCoreDebug) << "Unsupported action type" << action->actionType() << "for keystroke.";
         return;
     }
     // Lookup the page of the FormFieldText
-    int foundPage = d->findFieldPageNumber(fft);
+    int foundPage = d->findFieldPageNumber(ff);
 
     if (foundPage == -1) {
         qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
         return;
     }
 
-    std::shared_ptr<Event> event = Event::createKeystrokeEvent(fft, d->m_pagesVector[foundPage]);
+    std::shared_ptr<Event> event = Event::createKeystrokeEvent(ff, d->m_pagesVector[foundPage]);
     event->setWillCommit(true);
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);
 
-    if (event->returnCode()) {
-        fft->setText(event->value().toString());
-        // TODO commit value
+    if (!event->returnCode()) {
+        ff->setValue(QVariant(ff->committedFormattedValue()));
+        Q_EMIT refreshFormWidget(ff);
+        ff->setValue(QVariant(ff->committedValue()));
     } else {
-        // TODO reset to committed value
+        ff->setValue(QVariant(event->value().toString()));
+        Q_EMIT refreshFormWidget(ff);
     }
+    returnCode = event->returnCode();
 }
 
 void Document::processFocusAction(const Action *action, Okular::FormField *field)
@@ -4516,24 +4532,70 @@ void Document::processFocusAction(const Action *action, Okular::FormField *field
 
 void Document::processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode)
 {
+    processValidateAction(action, static_cast<FormField *>(fft), returnCode);
+}
+
+void Document::processValidateAction(const Action *action, Okular::FormField *ff, bool &returnCode)
+{
     if (!action || action->actionType() != Action::Script) {
         return;
     }
 
     // Lookup the page of the FormFieldText
-    int foundPage = d->findFieldPageNumber(fft);
+    int foundPage = d->findFieldPageNumber(ff);
 
     if (foundPage == -1) {
         qCDebug(OkularCoreDebug) << "Could not find page for formfield!";
         return;
     }
 
-    std::shared_ptr<Event> event = Event::createFormValidateEvent(fft, d->m_pagesVector[foundPage]);
+    std::shared_ptr<Event> event = Event::createFormValidateEvent(ff, d->m_pagesVector[foundPage]);
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);
+    if (!event->returnCode()) {
+        ff->setValue(QVariant(ff->committedFormattedValue()));
+        Q_EMIT refreshFormWidget(ff);
+        ff->setValue(QVariant(ff->committedValue()));
+    } else {
+        ff->setValue(QVariant(event->value().toString()));
+        Q_EMIT refreshFormWidget(ff);
+    }
     returnCode = event->returnCode();
+}
+
+void Document::processKVCFActions(Okular::FormField *ff)
+{
+    if (ff->value().toString() == ff->committedValue()) {
+        ff->setValue(QVariant(ff->committedFormattedValue()));
+        Q_EMIT refreshFormWidget(ff);
+        ff->setValue(QVariant(ff->committedValue()));
+        return;
+    }
+
+    bool returnCode = true;
+    if (ff->additionalAction(Okular::FormField::FieldModified) && !ff->isReadOnly()) {
+        processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, returnCode);
+    }
+
+    if (const Okular::Action *action = ff->additionalAction(Okular::FormField::ValidateField)) {
+        if (returnCode) {
+            processValidateAction(action, ff, returnCode);
+        }
+    }
+
+    if (!returnCode) {
+        return;
+    } else {
+        ff->commitValue(ff->value().toString());
+    }
+
+    // TODO add calculation script here
+
+    if (const Okular::Action *action = ff->additionalAction(Okular::FormField::FormatField)) {
+        processFormatAction(action, ff);
+    }
 }
 
 void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)

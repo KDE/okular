@@ -26,10 +26,10 @@ private Q_SLOTS:
     void testTimeFormat_data();
     void testSpecialFormat();
     void testSpecialFormat_data();
-    void testFocusAction();
-    void testFocusAction_data();
-    void testValidateAction();
-    void testValidateAction_data();
+    void testFocusInAction();
+    void testFocusInAction_data();
+    void testFocusOutAction();
+    void testFocusOutAction_data();
     void testNumberFormat();
     void testNumberFormat_data();
     void testPercentFormat();
@@ -75,9 +75,10 @@ void FormatTest::testTimeFormat()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    Okular::FormField *ff = m_fields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+    m_document->processFormatAction(ff->additionalAction(Okular::FormField::FormatField), ff);
 
     QCOMPARE(m_formattedText, result);
 }
@@ -110,9 +111,10 @@ void FormatTest::testSpecialFormat()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    Okular::FormField *ff = m_fields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+    m_document->processFormatAction(ff->additionalAction(Okular::FormField::FormatField), ff);
 
     QCOMPARE(m_formattedText, result);
 }
@@ -134,7 +136,7 @@ void FormatTest::testSpecialFormat_data()
     QTest::newRow("field invalid SSN") << QStringLiteral("CPF") << QStringLiteral("1234567890") << QStringLiteral("123-45-6789");
 }
 
-void FormatTest::testFocusAction()
+void FormatTest::testFocusInAction()
 {
     QFETCH(QString, result);
     Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[QStringLiteral("Validate/Focus")]);
@@ -143,27 +145,25 @@ void FormatTest::testFocusAction()
     QCOMPARE(fft->text(), result);
 }
 
-void FormatTest::testFocusAction_data()
+void FormatTest::testFocusInAction_data()
 {
     QTest::addColumn<QString>("result");
 
     QTest::newRow("when focuses") << QStringLiteral("No");
 }
 
-void FormatTest::testValidateAction()
+void FormatTest::testFocusOutAction()
 {
     QFETCH(QString, text);
     QFETCH(QString, result);
     Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[QStringLiteral("Validate/Focus")]);
 
     fft->setText(text);
-    bool ok = false;
-    m_document->processValidateAction(fft->additionalAction(Okular::Annotation::FocusOut), fft, ok);
+    m_document->processFocusAction(fft->additionalAction(Okular::Annotation::FocusOut), fft);
     QCOMPARE(fft->text(), result);
-    QVERIFY(ok);
 }
 
-void FormatTest::testValidateAction_data()
+void FormatTest::testFocusOutAction_data()
 {
     QTest::addColumn<QString>("text");
     QTest::addColumn<QString>("result");
@@ -179,9 +179,10 @@ void FormatTest::testNumberFormat()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    Okular::FormField *ff = m_fields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+    m_document->processFormatAction(ff->additionalAction(Okular::FormField::FormatField), ff);
 
     QCOMPARE(m_formattedText, result);
 }
@@ -209,9 +210,10 @@ void FormatTest::testPercentFormat()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    Okular::FormField *ff = m_fields[fieldName];
+    Okular::FormFieldText *fft = static_cast<Okular::FormFieldText *>(ff);
     fft->setText(text);
-    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+    m_document->processFormatAction(ff->additionalAction(Okular::FormField::FormatField), ff);
 
     QCOMPARE(m_formattedText, result);
 }

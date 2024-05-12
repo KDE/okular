@@ -150,16 +150,16 @@ public:
      */
     Action *additionalAction(AdditionalActionType type) const;
 
-    /* Returns the additional action of the given @p type or @c nullptr if no action has been defined.
-     *
+    /**
+     * Returns the additional action of the given @p type or @c nullptr if no action has been defined.
      * This is for actions of annotation widgets associated with the FormField
      *
      * @since 1.5
      */
     Action *additionalAction(Annotation::AdditionalActionType type) const;
 
-    /* Returns all the additional actions for this form
-     *
+    /**
+     * Returns all the additional actions for this form
      * @since 22.04
      */
     QList<Action *> additionalActions() const;

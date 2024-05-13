@@ -56,7 +56,7 @@ build_clazy_clang_tidy:
     CXX: clazy
   script:
     - git config --global --add safe.directory $CI_PROJECT_DIR
-    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt5/Shared --only-setup-environment
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --only-setup-environment
     - mkdir -p /tmp/okular_build
     - cd /tmp/okular_build
     - cmake -DOKULAR_UI=both -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR

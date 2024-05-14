@@ -267,11 +267,32 @@ function AFTime_Format( ptf )
 
 /** AFTime_Keystroke
  *
- * Checks if the string in event.value is valid. Not used.
+ * Checks if the string in event.value is valid.
  */
 function AFTime_Keystroke( ptf )
 {
-    return;
+    var completeValue = AFMergeChange(event);
+    if ( !completeValue )
+    {
+        return;
+    }
+    if ( event.willCommit )
+    {
+        const COMMIT_TIME_RE = /^(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[1-5][0-9])(:(0?[0-9]|[1-5][0-9]))?(\s*(pm|am))?$/i;
+        // HH:MM is required at minimum
+        // the seconds are optional to have HH:MM:SS
+        // the AM/PM are optional as well
+        // Any number of spaces are allowed between the time and AM/PM to allow for compatibility with other pdf viewers.
+        event.rc = COMMIT_TIME_RE.test(completeValue);
+    }
+    else
+    {
+        // during value entry, check if entry contains only allowed characters.
+        const ALLOWED_CHARS = "0-9:ampAMP\\s";
+        const ALLOWED_CHARS_TIME_RE = new RegExp(`[^${ALLOWED_CHARS}]`); // match any character not in the character set
+
+        event.rc = !ALLOWED_CHARS_TIME_RE.test(completeValue);
+    }
 }
 
 /** AFSpecial_Format

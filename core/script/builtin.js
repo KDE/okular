@@ -162,8 +162,33 @@ function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCur
 
 function AFNumber_Keystroke(nDec, sepStyle, negStyle, currStyle, strCurrency, bCurrencyPrepend)
 {
-    // TODO
-    return;
+    const completeValue = AFMergeChange(event);
+
+    if (!completeValue)
+    {
+        return;
+    }
+
+    var decSep = "\\.";
+    if (2 <= sepStyle && sepStyle <= 4)
+    {
+        decSep = ",";
+    }
+    if (event.willCommit)
+    {
+        const COMMIT_NUMBER_KEYSTROKE_RE_STR = "(\\+|\\-)?\\d*" + decSep + "?\\d+$";
+        // Check if it is a valid number with a correct decimal separator
+        const COMMIT_NUMBER_KEYSTROKE_RE = new RegExp(COMMIT_NUMBER_KEYSTROKE_RE_STR);
+
+        event.rc = COMMIT_NUMBER_KEYSTROKE_RE.test(completeValue);
+    }
+    else
+    {
+        const NOCOMMIT_NUMBER_KEYSTROKE_RE_STR = "^((\\+|\\-)?\\d*" + decSep + "?\\d*)$";
+        // Allow some flexibility while typing to allow only the decimal separator
+        const NOCOMMIT_NUMBER_KEYSTROKE_RE = new RegExp(NOCOMMIT_NUMBER_KEYSTROKE_RE_STR);
+        event.rc = NOCOMMIT_NUMBER_KEYSTROKE_RE.test(completeValue);
+    }
 }
 
 function AFMakeNumber(string)
@@ -442,14 +467,7 @@ function AFPercent_Format( nDec, sepStyle )
 
 function AFPercent_Keystroke( nDec, sepStyle )
 {
-    if (event.willCommit) {
-        event.rc = true
-    } else {
-        // Allow only numbers plus possible separators
-        // TODO disallow too many separators
-        // TODO Make separator locale-dependen/use sepStyle properly
-        event.rc = !isNaN(event.change) || event.change == "." || event.change == ","
-    }
+    AFNumber_Keystroke(nDec, sepStyle);
 }
 
 app.popUpMenuEx = function() {

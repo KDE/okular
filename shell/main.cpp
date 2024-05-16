@@ -15,6 +15,7 @@
 #include "shellutils.h"
 #include <KAboutData>
 #include <KCrash>
+#include <KIconTheme>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KWindowSystem>
@@ -25,8 +26,20 @@
 #include <QTextStream>
 #include <QtGlobal>
 
+#define HAVE_STYLE_MANAGER __has_include(<KStyleManager>)
+#if HAVE_STYLE_MANAGER
+#include <KStyleManager>
+#endif
+
 int main(int argc, char **argv)
 {
+    /**
+     * trigger initialisation of proper icon theme
+     */
+#if KICONTHEMES_VERSION >= QT_VERSION_CHECK(6, 3, 0)
+    KIconTheme::initTheme();
+#endif
+
     /**
      * enable dark mode for title bar on Windows
      */
@@ -46,12 +59,19 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("okular");
 
+#if HAVE_STYLE_MANAGER
+    /**
+     * trigger initialisation of proper application style
+     */
+    KStyleManager::initStyle();
+#else
     /**
      * For Windows and macOS: use Breeze if available
      * Of all tested styles that works the best for us
      */
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     QApplication::setStyle(QStringLiteral("breeze"));
+#endif
 #endif
 
     KAboutData aboutData = okularAboutData();

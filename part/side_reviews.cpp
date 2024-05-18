@@ -7,7 +7,9 @@
 #include "side_reviews.h"
 
 // qt/kde includes
+#include <QAction>
 #include <QHeaderView>
+#include <QIcon>
 #include <QLayout>
 #include <QPaintEvent>
 #include <QPainter>
@@ -19,8 +21,7 @@
 
 #include <KLocalizedString>
 #include <KTitleWidget>
-#include <QAction>
-#include <QIcon>
+#include <KViewStateSerializer>
 
 #include <kwidgetsaddons_version.h>
 
@@ -119,6 +120,10 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
     m_authorProxy->setSourceModel(m_groupProxy);
 
     m_view->setModel(m_authorProxy);
+
+    connect(m_authorProxy, &QAbstractItemModel::modelAboutToBeReset, this, &Reviews::saveTreeState);
+    // Must be after setModel() so that we restore after QTreeView::reset cleared expanded items, not the other way around
+    connect(m_authorProxy, &QAbstractItemModel::modelReset, this, &Reviews::restoreTreeState);
 
     m_searchLine = new KTreeViewSearchLine(this, m_view);
     m_searchLine->setPlaceholderText(i18n("Search..."));
@@ -302,6 +307,56 @@ void Reviews::saveSearchOptions()
     Okular::Settings::setReviewsSearchRegularExpression(m_searchLine->regularExpression());
     Okular::Settings::setReviewsSearchCaseSensitive(m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false);
     Okular::Settings::self()->save();
+}
+
+class AnnotationStateSaver : public KViewStateSerializer
+{
+    Q_OBJECT
+public:
+    explicit AnnotationStateSaver(QTreeView *view)
+        : KViewStateSerializer()
+    {
+        setView(view);
+    }
+    QString indexToConfigString(const QModelIndex &index) const override
+    {
+        // Store the display text, with parent if any, e.g. "Page 4 / David Faure"
+        QString key = index.data().toString();
+        if (auto parent = index.parent(); parent.isValid())
+            key.prepend(parent.data().toString() + QLatin1String(" / "));
+        return key;
+    }
+    QModelIndex indexFromConfigString(const QAbstractItemModel *model, const QString &key) const override
+    {
+        const auto matchFirst = [model](const QModelIndex &startIndex, const QString &text) {
+            const QModelIndexList list = model->match(startIndex, Qt::DisplayRole, text, 1, Qt::MatchRecursive);
+            if (list.isEmpty()) {
+                return QModelIndex();
+            }
+            return list.first();
+        };
+
+        const QStringList subKeys = key.split(QStringLiteral(" / "));
+        QModelIndex index = model->index(0, 0);
+        for (const QString &subKey : subKeys) {
+            index = matchFirst(index, subKey);
+            if (!index.isValid())
+                break;
+        }
+        return index;
+    }
+};
+
+void Reviews::saveTreeState()
+{
+    AnnotationStateSaver saver(m_view);
+    m_expansionKeys = saver.expansionKeys();
+}
+
+void Reviews::restoreTreeState()
+{
+    AnnotationStateSaver saver(m_view);
+    saver.restoreExpanded(m_expansionKeys);
 }
 
 #include "side_reviews.moc"

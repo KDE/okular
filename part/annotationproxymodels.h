@@ -84,6 +84,9 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void rebuildIndexes();
+    void doRebuildIndexes();
+    void aboutToRebuild();
+    void rebuild();
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles);
 
 private:
@@ -134,6 +137,9 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void rebuildIndexes();
+    void doRebuildIndexes();
+    void aboutToRebuild();
+    void rebuild();
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles);
 
 private:

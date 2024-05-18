@@ -180,14 +180,10 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
         annItem->parent = root;
         q->beginInsertRows(indexForItem(root), i, i);
         annItem->parent->children.insert(i, annItem);
-        q->endInsertRows();
-        int newid = 0;
         for (Okular::Annotation *annot : annots) {
-            q->beginInsertRows(indexForItem(annItem), newid, newid);
             new AnnItem(annItem, annot);
-            q->endInsertRows();
-            ++newid;
         }
+        q->endInsertRows();
         return;
     }
     // case 3: existing branch, less annotations than items

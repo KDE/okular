@@ -57,6 +57,8 @@ private Q_SLOTS:
     void activated(const QModelIndex &);
     void contextMenuRequested(const QPoint);
     void saveSearchOptions();
+    void saveTreeState();
+    void restoreTreeState();
 
 private:
     QModelIndexList retrieveAnnotations(const QModelIndex &idx) const;
@@ -64,6 +66,7 @@ private:
     // data fields (GUI)
     KTreeViewSearchLine *m_searchLine;
     TreeView *m_view;
+    QStringList m_expansionKeys;
     // internal storage
     Okular::Document *m_document;
     AnnotationModel *m_model;

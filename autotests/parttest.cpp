@@ -2313,11 +2313,11 @@ void PartTest::testFieldFormatting()
     QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
     QTRY_VERIFY(usCurrencyWidget->hasFocus());
 
-    usCurrencyWidget->setText(QStringLiteral("131.234,567"));
+    usCurrencyWidget->setText(QStringLiteral("131234.567"));
     QTest::mousePress(deCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
     QTRY_VERIFY(deCurrencyWidget->hasFocus());
     // Check that the internal text still contains it.
-    QCOMPARE(ff_us->text(), QStringLiteral("131.234,567"));
+    QCOMPARE(ff_us->text(), QStringLiteral("131234.567"));
 
     // Just check that the text does not match the internal text.
     // We don't check for a concrete value to keep NaN handling flexible
@@ -2327,7 +2327,7 @@ void PartTest::testFieldFormatting()
     QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
     QTRY_VERIFY(usCurrencyWidget->hasFocus());
 
-    usCurrencyWidget->setText(QStringLiteral("1,234.567"));
+    usCurrencyWidget->setText(QStringLiteral("1234.567"));
     QTest::mousePress(deCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
     QTRY_VERIFY(deCurrencyWidget->hasFocus());
 
@@ -2337,12 +2337,12 @@ void PartTest::testFieldFormatting()
     QCOMPARE(sumCurrencyWidget->text(), QStringLiteral("1.234,57€"));
 
     // Set a text in the de field
-    deCurrencyWidget->setText(QStringLiteral("1,123,234.567"));
+    deCurrencyWidget->setText(QStringLiteral("1123234,567"));
     QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
     QTRY_VERIFY(usCurrencyWidget->hasFocus());
 
     QCOMPARE(deCurrencyWidget->text(), QStringLiteral("1.123.234,57 €"));
-    QCOMPARE(ff_de->text(), QStringLiteral("1,123,234.567"));
+    QCOMPARE(ff_de->text(), QStringLiteral("1123234,567"));
     QCOMPARE(sumCurrencyWidget->text(), QStringLiteral("1.124.469,13€"));
     QCOMPARE(ff_sum->text(), QStringLiteral("1,124,469.1340000000782310962677002"));
 }

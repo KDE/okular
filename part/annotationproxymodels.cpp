@@ -14,11 +14,6 @@
 #include "annotationmodel.h"
 #include "gui/debug_ui.h"
 
-static quint32 mixIndex(int row, int column)
-{
-    return (row << 4) | column;
-}
-
 PageFilterProxyModel::PageFilterProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , mGroupByCurrentPage(false)
@@ -137,8 +132,9 @@ QModelIndex PageGroupProxyModel::index(int row, int column, const QModelIndex &p
             }
         }
     } else {
-        if (row < mIndexes.count()) {
-            return createIndex(row, column, mixIndex(parentIndex.row(), parentIndex.column()));
+        // We have only top-level items
+        if (!parentIndex.isValid() && row < mIndexes.count()) {
+            return createIndex(row, column);
         } else {
             return QModelIndex();
         }
@@ -254,6 +250,7 @@ void PageGroupProxyModel::doRebuildIndexes()
     } else {
         mIndexes.clear();
 
+        // Flatten the source model
         for (int row = 0; row < sourceModel()->rowCount(); ++row) {
             const QModelIndex pageIndex = sourceModel()->index(row, 0);
             for (int subRow = 0; subRow < sourceModel()->rowCount(pageIndex); ++subRow) {

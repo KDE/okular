@@ -38,6 +38,10 @@ private Q_SLOTS:
     void testPercentKeystrokeNoCommit_data();
     void testPercentKeystrokeCommit();
     void testPercentKeystrokeCommit_data();
+    void testNumberKeystrokeNoCommit();
+    void testNumberKeystrokeNoCommit_data();
+    void testNumberKeystrokeCommit();
+    void testNumberKeystrokeCommit_data();
 
 private:
     Okular::Document *m_genericTestsDocument;
@@ -333,6 +337,68 @@ void KeystrokeTest::testPercentKeystrokeCommit_data()
     QTest::newRow(", used as decimal separator/accept") << QStringLiteral("pct3") << QStringLiteral("1,21") << QStringLiteral("1,21");
     QTest::newRow("+ sign used as prefix/accept") << QStringLiteral("pct1") << QStringLiteral("+1.21") << QStringLiteral("+1.21");
     QTest::newRow("- sign used as prefix/accept") << QStringLiteral("pct1") << QStringLiteral("-1.2") << QStringLiteral("-1.2");
+
+    // TODO add more tests for rejecting strings
+}
+
+void KeystrokeTest::testNumberKeystrokeNoCommit()
+{
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(int, selStart);
+    QFETCH(int, selEnd);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    m_AFMethodsTestsDocument->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, text, selStart, selEnd);
+
+    QCOMPARE(fft->text(), result);
+}
+
+void KeystrokeTest::testNumberKeystrokeNoCommit_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<int>("selStart");
+    QTest::addColumn<int>("selEnd");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow("no decimal separator/accept") << QStringLiteral("number1") << QStringLiteral("123") << 0 << 0 << QStringLiteral("123");
+    QTest::newRow(". used as decimal separator/accept") << QStringLiteral("number1") << QStringLiteral("1.21") << 1 << 3 << QStringLiteral("1.21");
+    QTest::newRow(", used as decimal separator/accept") << QStringLiteral("number3") << QStringLiteral("1,21") << 0 << 0 << QStringLiteral("1,21");
+    QTest::newRow("+ sign used as prefix/accept") << QStringLiteral("number1") << QStringLiteral("+1.21") << 0 << 4 << QStringLiteral("+1.21");
+    QTest::newRow("- sign used as prefix/accept") << QStringLiteral("number1") << QStringLiteral("-1.2") << 0 << 5 << QStringLiteral("-1.2");
+    QTest::newRow("use multiple decimal separator/reject") << QStringLiteral("number1") << QStringLiteral("-1.2.1") << 4 << 4 << QStringLiteral("-1.2");
+    QTest::newRow("use alphabets/reject") << QStringLiteral("number1") << QStringLiteral("-1.2abc") << 4 << 4 << QStringLiteral("-1.2");
+    QTest::newRow("use multiple - sign/reject") << QStringLiteral("number1") << QStringLiteral("-1.2-1") << 4 << 4 << QStringLiteral("-1.2");
+    QTest::newRow("use , in pct1/reject") << QStringLiteral("number1") << QStringLiteral("-1,2") << 0 << 4 << QStringLiteral("-1.2");
+    QTest::newRow("use . in pct3/reject") << QStringLiteral("number3") << QStringLiteral("1.2") << 0 << 4 << QStringLiteral("1,21");
+}
+
+void KeystrokeTest::testNumberKeystrokeCommit()
+{
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    fft->setText(text);
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+
+    QCOMPARE(fft->text(), result);
+}
+
+void KeystrokeTest::testNumberKeystrokeCommit_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow("no decimal separator/accept") << QStringLiteral("number1") << QStringLiteral("123") << QStringLiteral("123");
+    QTest::newRow(". used as decimal separator/accept") << QStringLiteral("number1") << QStringLiteral("1.21") << QStringLiteral("1.21");
+    QTest::newRow(", used as decimal separator/accept") << QStringLiteral("number3") << QStringLiteral("1,21") << QStringLiteral("1,21");
+    QTest::newRow("+ sign used as prefix/accept") << QStringLiteral("number1") << QStringLiteral("+1.21") << QStringLiteral("+1.21");
+    QTest::newRow("- sign used as prefix/accept") << QStringLiteral("number1") << QStringLiteral("-1.2") << QStringLiteral("-1.2");
 
     // TODO add more tests for rejecting strings
 }

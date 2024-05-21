@@ -4647,10 +4647,27 @@ void Document::processDocumentAction(const Action *action, DocumentAdditionalAct
     d->executeScriptEvent(event, linkScript);
 }
 
-void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)
+void Document::processFormMouseScriptAction(const Action *action, Okular::FormField *ff, MouseEventType fieldMouseEventType)
 {
     if (!action || action->actionType() != Action::Script) {
         return;
+    }
+
+    Okular::Event::EventType eventType = Okular::Event::UnknownEvent;
+
+    switch (fieldMouseEventType) {
+    case Document::FieldMouseDown:
+        eventType = Okular::Event::FieldMouseDown;
+        break;
+    case Document::FieldMouseEnter:
+        eventType = Okular::Event::FieldMouseEnter;
+        break;
+    case Document::FieldMouseExit:
+        eventType = Okular::Event::FieldMouseExit;
+        break;
+    case Document::FieldMouseUp:
+        eventType = Okular::Event::FieldMouseUp;
+        break;
     }
 
     // Lookup the page of the FormFieldText
@@ -4661,11 +4678,16 @@ void Document::processFormMouseUpScripAction(const Action *action, Okular::FormF
         return;
     }
 
-    std::shared_ptr<Event> event = Event::createFieldMouseUpEvent(ff, d->m_pagesVector[foundPage]);
+    std::shared_ptr<Event> event = Event::createFieldMouseEvent(ff, d->m_pagesVector[foundPage], eventType);
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);
+}
+
+void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)
+{
+    processFormMouseScriptAction(action, ff, FieldMouseUp);
 }
 
 void Document::processSourceReference(const SourceReference *ref)

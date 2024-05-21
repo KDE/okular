@@ -20,6 +20,7 @@
 
 #include "config-okular.h"
 #include "core/area.h"
+#include "core/document.h"
 #include "core/observer.h"
 #include "core/view.h"
 #include "pageviewutils.h"
@@ -131,7 +132,7 @@ public Q_SLOTS:
     void slotSelectPage();
 
     void slotAction(Okular::Action *action);
-    void slotMouseUpAction(Okular::Action *action, Okular::FormField *form);
+    void slotMouseAction(Okular::Action *action, Okular::FormField *form, Okular::Document::MouseEventType fieldMouseEventType);
     void slotFormChanged(int pageNumber);
 
     void externalKeyPressEvent(QKeyEvent *e);

@@ -77,9 +77,9 @@ void FormWidgetsController::signalAction(Okular::Action *a)
     Q_EMIT action(a);
 }
 
-void FormWidgetsController::signalMouseUpAction(Okular::Action *action, Okular::FormField *form)
+void FormWidgetsController::signalMouseAction(Okular::Action *action, Okular::FormField *form, Okular::Document::MouseEventType fieldMouseEventType)
 {
-    Q_EMIT mouseUpAction(action, form);
+    Q_EMIT mouseAction(action, form, fieldMouseEventType);
 }
 
 void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type)
@@ -1345,7 +1345,7 @@ void SignatureEdit::signUnsignedSignature()
     {                                                                                                                                                                                                                                          \
         Okular::Action *act = m_ff->additionalAction(Okular::Annotation::MousePressed);                                                                                                                                                        \
         if (act) {                                                                                                                                                                                                                             \
-            m_controller->signalAction(act);                                                                                                                                                                                                   \
+            m_controller->signalMouseAction(act, m_ff, Okular::Document::FieldMouseDown);                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
         BaseClass::mousePressEvent(event);                                                                                                                                                                                                     \
     }                                                                                                                                                                                                                                          \
@@ -1357,9 +1357,9 @@ void SignatureEdit::signUnsignedSignature()
         }                                                                                                                                                                                                                                      \
         Okular::Action *act = m_ff->activationAction();                                                                                                                                                                                        \
         if (act && !qobject_cast<CheckBoxEdit *>(this)) {                                                                                                                                                                                      \
-            m_controller->signalMouseUpAction(act, m_ff);                                                                                                                                                                                      \
+            m_controller->signalMouseAction(act, m_ff, Okular::Document::FieldMouseUp);                                                                                                                                                        \
         } else if ((act = m_ff->additionalAction(Okular::Annotation::MouseReleased))) {                                                                                                                                                        \
-            m_controller->signalMouseUpAction(act, m_ff);                                                                                                                                                                                      \
+            m_controller->signalMouseAction(act, m_ff, Okular::Document::FieldMouseUp);                                                                                                                                                        \
         }                                                                                                                                                                                                                                      \
         BaseClass::mouseReleaseEvent(event);                                                                                                                                                                                                   \
     }                                                                                                                                                                                                                                          \
@@ -1383,7 +1383,7 @@ void SignatureEdit::signUnsignedSignature()
     {                                                                                                                                                                                                                                          \
         Okular::Action *act = m_ff->additionalAction(Okular::Annotation::CursorLeaving);                                                                                                                                                       \
         if (act) {                                                                                                                                                                                                                             \
-            m_controller->signalAction(act);                                                                                                                                                                                                   \
+            m_controller->signalMouseAction(act, m_ff, Okular::Document::FieldMouseExit);                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
         BaseClass::leaveEvent(event);                                                                                                                                                                                                          \
     }                                                                                                                                                                                                                                          \
@@ -1391,7 +1391,7 @@ void SignatureEdit::signUnsignedSignature()
     {                                                                                                                                                                                                                                          \
         Okular::Action *act = m_ff->additionalAction(Okular::Annotation::CursorEntering);                                                                                                                                                      \
         if (act) {                                                                                                                                                                                                                             \
-            m_controller->signalAction(act);                                                                                                                                                                                                   \
+            m_controller->signalMouseAction(act, m_ff, Okular::Document::FieldMouseEnter);                                                                                                                                                     \
         }                                                                                                                                                                                                                                      \
         BaseClass::enterEvent(event);                                                                                                                                                                                                          \
     }

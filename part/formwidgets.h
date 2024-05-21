@@ -60,7 +60,7 @@ public:
     ~FormWidgetsController() override;
 
     void signalAction(Okular::Action *action);
-    void signalMouseUpAction(Okular::Action *action, Okular::FormField *form);
+    void signalMouseAction(Okular::Action *action, Okular::FormField *form, Okular::Document::MouseEventType fieldMouseEventType);
 
     void processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type);
 
@@ -95,7 +95,7 @@ Q_SIGNALS:
 
     void action(Okular::Action *action);
 
-    void mouseUpAction(Okular::Action *action, Okular::FormField *form);
+    void mouseAction(Okular::Action *action, Okular::FormField *form, Okular::Document::MouseEventType fieldMouseEventType);
 
     void refreshFormWidget(Okular::FormField *form);
 

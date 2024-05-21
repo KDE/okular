@@ -71,8 +71,6 @@ QString Event::name() const
         return QStringLiteral("Focus");
     case FieldValidate:
         return QStringLiteral("Validate");
-    case FieldMouseUp:
-        return QStringLiteral("MouseUp");
     case DocOpen:
         return QStringLiteral("Open");
     case DocWillClose:
@@ -85,6 +83,14 @@ QString Event::name() const
         return QStringLiteral("DidSave");
     case DocDidPrint:
         return QStringLiteral("DidPrint");
+    case FieldMouseUp:
+        return QStringLiteral("MouseUp");
+    case FieldMouseDown:
+        return QStringLiteral("MouseDown");
+    case FieldMouseEnter:
+        return QStringLiteral("MouseEnter");
+    case FieldMouseExit:
+        return QStringLiteral("MouseExit");
     case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
@@ -100,6 +106,9 @@ QString Event::type() const
     case FieldFocus:
     case FieldValidate:
     case FieldMouseUp:
+    case FieldMouseDown:
+    case FieldMouseEnter:
+    case FieldMouseExit:
         return QStringLiteral("Field");
     case DocOpen:
     case DocWillClose:
@@ -304,9 +313,10 @@ std::shared_ptr<Event> Event::createFormValidateEvent(FormField *target, Page *t
     return ret;
 }
 
-std::shared_ptr<Event> Event::createFieldMouseUpEvent(FormField *target, Page *targetPage)
+std::shared_ptr<Event> Event::createFieldMouseEvent(FormField *target, Page *targetPage, Event::EventType fieldMouseEventType)
 {
-    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldMouseUp);
+    Q_ASSERT(fieldMouseEventType >= Okular::Event::FieldMouseDown && fieldMouseEventType <= Okular::Event::FieldMouseUp);
+    std::shared_ptr<Event> ret = std::make_shared<Event>(fieldMouseEventType);
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);

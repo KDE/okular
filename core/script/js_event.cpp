@@ -64,7 +64,10 @@ QJSValue JSEvent::target() const
     case Event::FieldKeystroke:
     case Event::FieldFocus:
     case Event::FieldValidate:
-    case Event::FieldMouseUp: {
+    case Event::FieldMouseUp:
+    case Event::FieldMouseDown:
+    case Event::FieldMouseEnter:
+    case Event::FieldMouseExit: {
         FormField *target = static_cast<FormField *>(m_event->target());
         if (target) {
             return JSField::wrapField(qjsEngine(this), target, m_event->targetPage());

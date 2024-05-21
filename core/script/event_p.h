@@ -56,9 +56,9 @@ public:
         FieldFocus,      /// < This event is defined when the field gains or loses focus.
         FieldFormat,     /// < When a format action is executed
         FieldKeystroke,  /// < Checks if the entered value is valid.
-        FieldMouseDown,  /// < Not implemented.
-        FieldMouseEnter, /// < Not implemented.
-        FieldMouseExit,  /// < Not implemented.
+        FieldMouseDown,  /// < This event is the result of a mouse down on a field.
+        FieldMouseEnter, /// < This event is the result of mouse entering in a field.
+        FieldMouseExit,  /// < This event is the result of mouse exiting from a field.
         FieldMouseUp,    /// < This event is the result of a mouse up on a field.
         /* Validates the field after every change is committed
          * (clicked outside or tabbed to another field).
@@ -122,7 +122,7 @@ public:
     static std::shared_ptr<Event> createKeystrokeEvent(FormField *target, Page *targetPage);
     static std::shared_ptr<Event> createFormFocusEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
     static std::shared_ptr<Event> createFormValidateEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
-    static std::shared_ptr<Event> createFieldMouseUpEvent(FormField *target, Page *targetPage);
+    static std::shared_ptr<Event> createFieldMouseEvent(FormField *target, Page *targetPage, Event::EventType fieldMouseEventType);
     static std::shared_ptr<Event> createDocEvent(Event::EventType type);
 
 private:

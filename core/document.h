@@ -748,9 +748,24 @@ public:
     /**
      * Processes the mouse up @p action on @p ff.
      *
+     * @deprecated use @ref processFormMouseScriptAction
      * @since 23.12
      */
-    void processFormMouseUpScripAction(const Action *action, Okular::FormField *ff);
+    OKULARCORE_DEPRECATED void processFormMouseUpScripAction(const Action *action, Okular::FormField *ff);
+
+    enum MouseEventType {
+        FieldMouseDown,  /// < This event is the result of a mouse down on a field.
+        FieldMouseEnter, /// < This event is the result of mouse exiting from a field.
+        FieldMouseExit,  /// < This event is the result of mouse exiting from a field.
+        FieldMouseUp,    /// < This event is the result of a mouse up on a field.
+    };
+
+    /**
+     * Processes the mouse @p action of type @p fieldMouseEventType on @p ff.
+     *
+     * @since 24.12
+     */
+    void processFormMouseScriptAction(const Action *action, Okular::FormField *ff, MouseEventType fieldMouseEventType);
 
     /**
      * Describes the additional actions available in the Document.

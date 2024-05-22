@@ -398,10 +398,13 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl
 
 void BookmarkManager::addBookmark(int page)
 {
-    if (page >= 0 && page < (int)d->document->m_pagesVector.count()) {
-        if (setPageBookmark(page))
-            foreachObserver(notifyPageChanged(page, DocumentObserver::Bookmark));
+    if (isBookmarked(page)) {
+        return;
     }
+
+    DocumentViewport vp;
+    vp.pageNumber = page;
+    addBookmark(vp);
 }
 
 void BookmarkManager::addBookmark(const DocumentViewport &vp)
@@ -649,37 +652,6 @@ void BookmarkManager::setUrl(const QUrl &url)
             d->urlBookmarks[vp.pageNumber]++;
         }
     }
-}
-
-bool BookmarkManager::setPageBookmark(int page)
-{
-    KBookmarkGroup thebg;
-    QHash<QUrl, QString>::iterator it = d->bookmarkFind(d->url, true, &thebg);
-    Q_ASSERT(it != d->knownFiles.end());
-
-    bool found = false;
-    bool added = false;
-    for (KBookmark bm = thebg.first(); !found && !bm.isNull(); bm = thebg.next(bm)) {
-        if (bm.isSeparator() || bm.isGroup()) {
-            continue;
-        }
-
-        DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
-        if (vp.isValid() && vp.pageNumber == page) {
-            found = true;
-        }
-    }
-    if (!found) {
-        d->urlBookmarks[page]++;
-        DocumentViewport vp;
-        vp.pageNumber = page;
-        QUrl newurl = d->url;
-        newurl.setFragment(vp.toString(), QUrl::DecodedMode);
-        thebg.addBookmark(QLatin1String("#") + QString::number(vp.pageNumber + 1), newurl, QString());
-        added = true;
-        d->manager.emitChanged(thebg);
-    }
-    return added;
 }
 
 bool BookmarkManager::removePageBookmark(int page)

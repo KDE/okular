@@ -197,7 +197,6 @@ private:
     explicit BookmarkManager(DocumentPrivate *document);
 
     void setUrl(const QUrl &url);
-    bool setPageBookmark(int page);
     bool removePageBookmark(int page);
 
     Q_DISABLE_COPY(BookmarkManager)

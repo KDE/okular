@@ -136,6 +136,7 @@ Okular::SignatureInfo::CertificateStatus fromPoppler(Poppler::SignatureValidatio
     case Poppler::SignatureValidationInfo::CertificateGenericError:
         return Okular::SignatureInfo::CertificateGenericError;
     case Poppler::SignatureValidationInfo::CertificateNotVerified:
+    case Poppler::SignatureValidationInfo::CertificateVerificationInProgress:
         return Okular::SignatureInfo::CertificateNotVerified;
     default:
         return Okular::SignatureInfo::CertificateStatusUnknown;

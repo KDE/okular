@@ -403,7 +403,7 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
     m_info = fromPoppler(result.first);
     m_asyncObject = result.second;
     QObject::connect(m_asyncObject.get(), &Poppler::AsyncObject::done, m_asyncObject.get(), [this]() {
-        m_info = fromPoppler(m_field->validateResult());
+        m_info.setCertificateStatus(fromPoppler(m_field->validateResult()));
         for (auto [_, callback] : m_updateSubscriptions) {
             callback();
         }

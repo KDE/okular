@@ -22,6 +22,7 @@
 // local includes
 #include "document_p.h"
 #include "observer.h"
+#include "page.h"
 
 using namespace Okular;
 
@@ -456,10 +457,15 @@ bool BookmarkManager::addBookmark(const QUrl &documentUrl, const Okular::Documen
         // name '#p' where p is the page number where the bookmark is located.
         // if there's more than one bookmark per page, give the name '#p-n'
         // where n is the index of this bookmark among the ones of its page.
-        if (count > 0) {
-            newtitle = QStringLiteral("#%1-%2").arg(vp.pageNumber + 1).arg(count);
+        const QString pageLabel = d->document->m_parent->page(vp.pageNumber)->label();
+        newtitle = QStringLiteral("#");
+        if (pageLabel.isNull()) {
+            newtitle += QString::number(vp.pageNumber + 1);
         } else {
-            newtitle = QStringLiteral("#%1").arg(vp.pageNumber + 1);
+            newtitle += pageLabel;
+        }
+        if (count > 0) {
+            newtitle += QStringLiteral("-") + QString::number(count);
         }
     } else {
         newtitle = title;

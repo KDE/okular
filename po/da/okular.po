@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -1553,19 +1553,19 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Side %1"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Side %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2185,7 +2185,7 @@ msgstr "Bogmærker"
 msgid "Show for all documents"
 msgstr "Dokumentets slutning"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
@@ -4224,7 +4224,7 @@ msgstr "Fremviserværktøjslinje"
 msgid "Thumbnails"
 msgstr "Miniaturer"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Annotationer"
@@ -5500,7 +5500,7 @@ msgstr ""
 msgid "Recent backgrounds:"
 msgstr "Anvend brugertilpasset baggrundsfarve"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5509,27 +5509,27 @@ msgstr ""
 "<div align=center><h3>Ingen kommentarer</h3>For at oprette nye annotationer, "
 "tryk på F6 eller vælg <i>Værktøjer -&gt; annotationer</i> fra menuen.</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "Gruppér efter side"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "Gruppér efter forfatter"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "Vis kun annotationer for den aktuelle side"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr "Fold alle elementer ud"
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr "Fold alle elementer sammen"

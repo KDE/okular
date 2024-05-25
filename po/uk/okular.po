@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2024-01-13 09:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -1540,18 +1540,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Сторінка %1 (%2)"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Сторінка %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2177,7 +2177,7 @@ msgstr "Закладки"
 msgid "Show for all documents"
 msgstr "Показати для усіх документів"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
@@ -4096,7 +4096,7 @@ msgstr "Панель переглядача"
 msgid "Thumbnails"
 msgstr "Мініатюри"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Анотації"
@@ -5413,7 +5413,7 @@ msgstr "Вибрати…"
 msgid "Recent backgrounds:"
 msgstr "Нещодавні зображення тла:"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5422,27 +5422,27 @@ msgstr ""
 "<div align=center><h3>Немає анотацій</h3>Щоб створити нові анотації, "
 "натисніть F6 або виберіть в меню пункт <i>Інструменти → Анотації</i>.</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "Групувати за сторінками"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "Групувати за автором"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "Показувати анотації лише для поточної сторінки"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr "Розгорнути усі записи"
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr "Згорнути усі записи"

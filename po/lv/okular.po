@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2024-04-03 11:58+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -1533,18 +1533,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1. lapa (%2)"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "%1. lapa"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2164,7 +2164,7 @@ msgstr "Grāmatzīmes"
 msgid "Show for all documents"
 msgstr "Parādīt visiem dokumentiem"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
@@ -4072,7 +4072,7 @@ msgstr "Skatītāja rīkjosla"
 msgid "Thumbnails"
 msgstr "Sīktēli"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Anotācijas"
@@ -5376,7 +5376,7 @@ msgstr "Izvēlēties..."
 msgid "Recent backgrounds:"
 msgstr "Pēdējie foni:"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5385,27 +5385,27 @@ msgstr ""
 "<div align=center><h3>Nav anotāciju</h3>Lai izveidotu jaunu anotāciju, "
 "spiediet F6 vai izvēlnē <i>Rīki -&gt; Anotācijas</i>.</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "Grupēt pēc lapas"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "Grupēt pēc autora"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "Rādīt tikai aktīvās lapas anotācijas"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr "Izvērst visus elementus"
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr "Sakļaut visus elementus"

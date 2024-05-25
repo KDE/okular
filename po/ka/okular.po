@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2024-01-13 05:05+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1528,18 +1528,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "გვერდი %1 (%2)"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "გვერდი %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2154,7 +2154,7 @@ msgstr "სანიშნები"
 msgid "Show for all documents"
 msgstr "ყველა დოკუმენტისთვის ჩვენება"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
@@ -4061,7 +4061,7 @@ msgstr "დათვალიერების ხელსაწყოთა �
 msgid "Thumbnails"
 msgstr "ესკიზები"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "ანოტაციები"
@@ -5369,7 +5369,7 @@ msgstr "აირჩიეთ..."
 msgid "Recent backgrounds:"
 msgstr "ბოლო ფონი:"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5379,27 +5379,27 @@ msgstr ""
 "დააწექით ღილაკს F6, ან აირჩიეთ მენიუდან <i>ხელსაწყოები -&gt; ანოტაციები</i>."
 "</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "გვერდით დაჯგუფება"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "ავტორით დაჯგუფება"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "ანოტაციების, მხოლოდ, მიმდინარე გვერდისთვის ჩვენება"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr "ყველა ელემენტის ამოკეცვა"
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr "ყველა ელემენტის ჩაკეცვა"

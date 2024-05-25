@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2024-02-03 00:04+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -1533,18 +1533,18 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Puslapis %1 (%2)"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Puslapis %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2169,7 +2169,7 @@ msgstr "Žymelės"
 msgid "Show for all documents"
 msgstr "Rodyti visiems dokumentams"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
@@ -4090,7 +4090,7 @@ msgstr "Žiūryklės įrankių juosta"
 msgid "Thumbnails"
 msgstr "Miniatiūros"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Anotacijos"
@@ -5399,7 +5399,7 @@ msgstr "Pasirinkti..."
 msgid "Recent backgrounds:"
 msgstr "Paskiausiai naudoti fonai:"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5409,27 +5409,27 @@ msgstr ""
 "paspauskite klavišą F6 arba meniu pasirinkite <i>Įrankiai -&gt; Anotacijos</"
 "i>.</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "Grupuoti pagal puslapį"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "Grupuoti pagal autorių"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "Rodyti tik šiam puslapiui sukurtas anotacijas"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr "Išskleisti visus elementus"
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr "Suskleisti visus elementus"

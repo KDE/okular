@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1625,19 +1625,19 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 ៖"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "ទំព័រ %1"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "ទំព័រ %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2277,7 +2277,7 @@ msgstr "ចំណាំ"
 msgid "Show for all documents"
 msgstr "ចុង​ឯកសារ"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
@@ -4355,7 +4355,7 @@ msgstr "របារឧបករណ៍​កម្មវិធី​មើល"
 msgid "Thumbnails"
 msgstr "រូបភាព​តូចៗ"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -5658,7 +5658,7 @@ msgstr ""
 msgid "Recent backgrounds:"
 msgstr "ពណ៌​ផ្ទៃ​ខាង​ក្រោយ ៖"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, fuzzy, kde-format
 #| msgid ""
 #| "<div align=center><h3>No annotations</h3>To create new annotations press "
@@ -5670,28 +5670,28 @@ msgstr ""
 "<div align=center><h3>គ្មាន​ចំណារ​ពន្យល់</h3>ដើម្បី​បង្កើត​ចំណារ​ពន្យល់​ថ្មី ត្រូវ​សង្កត់ F6 ឬ​ជ្រើស "
 "<i>ឧបករណ៍ -&gt; ពិនិត្យ​ឡើងវិញ</i> ពី​ម៉ឺនុយ ។</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "ដាក់​ក្រុម​តាម​ទំព័រ"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "ដាក់ក្រុម​តាម​អ្នក​និពន្ធ"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, fuzzy, kde-format
 #| msgid "Show reviews for current page only"
 msgid "Show annotations for current page only"
 msgstr "បង្ហាញ​ការ​ពិនិត្យ​មើល​ជាមុន​សម្រាប់​តែ​ទំព័រ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr ""
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-07 00:38+0000\n"
+"POT-Creation-Date: 2024-05-25 00:38+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1624,19 +1624,19 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/annotationmodel.cpp:324
+#: part/annotationmodel.cpp:320
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Leathanach %1"
 
-#: part/annotationmodel.cpp:326 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3124
 #, kde-format
 msgid "Page %1"
 msgstr "Leathanach %1"
 
-#: part/annotationmodel.cpp:340
+#: part/annotationmodel.cpp:336
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
@@ -2286,7 +2286,7 @@ msgstr "Leabharmharcanna"
 msgid "Show for all documents"
 msgstr "Deireadh na cáipéise"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:124
+#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
@@ -4316,7 +4316,7 @@ msgstr "Barra Uirlisí Amharcán"
 msgid "Thumbnails"
 msgstr "Mionsamhlacha"
 
-#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:98
+#: part/part.cpp:399 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -5602,7 +5602,7 @@ msgstr ""
 msgid "Recent backgrounds:"
 msgstr "Dath an chúlra:"
 
-#: part/side_reviews.cpp:65
+#: part/side_reviews.cpp:66
 #, fuzzy, kde-format
 #| msgid ""
 #| "<div align=center><h3>No annotations</h3>To create new annotations press "
@@ -5614,28 +5614,28 @@ msgstr ""
 "<div align=center><h3>Gan anótáil</h3>Le hanótáil, brúigh F6 nó roghnaigh "
 "<i>Uirlisí -&gt; Anótáil</i> ón roghchlár.</div>"
 
-#: part/side_reviews.cpp:137
+#: part/side_reviews.cpp:142
 #, kde-format
 msgid "Group by Page"
 msgstr "Grúpáil de réir leathanaigh"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:147
 #, kde-format
 msgid "Group by Author"
 msgstr "Grúpáil de réir údair"
 
-#: part/side_reviews.cpp:150
+#: part/side_reviews.cpp:155
 #, fuzzy, kde-format
 #| msgid "Show reviews for current page only"
 msgid "Show annotations for current page only"
 msgstr "Taispeáin anótáil ar an leathanach reatha amháin"
 
-#: part/side_reviews.cpp:160
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
 msgstr ""
 
-#: part/side_reviews.cpp:162
+#: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
 msgstr ""

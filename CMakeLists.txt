@@ -147,14 +147,15 @@ else()
 endif()
 
 if (BUILD_DESKTOP)
-    find_package(Qt6DBus)
-    set_okular_optional_package_properties(Qt6DBus PROPERTIES
-        PURPOSE "Required for interprocess communication, external open in same instance and various presentation related bits.")
-    if(TARGET Qt6::DBus)
-        set(HAVE_DBUS 1)
+    if(UNIX AND NOT APPLE AND NOT ANDROID)
+        find_package(Qt6DBus)
+        set_okular_optional_package_properties(Qt6DBus PROPERTIES
+            PURPOSE "Required for interprocess communication, external open in same instance and various presentation related bits.")
+        set(HAVE_DBUS ${Qt6DBus_FOUND})
     else()
         set(HAVE_DBUS 0)
     endif()
+
     find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes ItemViews TextWidgets WidgetsAddons)
 
     find_package(KF6Purpose)

@@ -30,6 +30,10 @@ private Q_SLOTS:
     void testTimeKeystrokeNoCommit_data();
     void testTimeKeystrokeCommit();
     void testTimeKeystrokeCommit_data();
+    void testSpecialKeystrokeNoCommit();
+    void testSpecialKeystrokeNoCommit_data();
+    void testSpecialKeystrokeCommit();
+    void testSpecialKeystrokeCommit_data();
 
 private:
     Okular::Document *m_genericTestsDocument;
@@ -166,6 +170,105 @@ void KeystrokeTest::testTimeKeystrokeCommit_data()
     QTest::newRow("hh:mm:ss") << QStringLiteral("time1") << QStringLiteral("20:08:12") << QStringLiteral("20:08:12");
     QTest::newRow("hh:m:s") << QStringLiteral("time1") << QStringLiteral("20:0:1") << QStringLiteral("20:0:1");
     QTest::newRow("hh:mm:ss am") << QStringLiteral("time1") << QStringLiteral("20:08:12 am") << QStringLiteral("20:08:12 am");
+}
+
+void KeystrokeTest::testSpecialKeystrokeNoCommit()
+{
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(int, selStart);
+    QFETCH(int, selEnd);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    m_AFMethodsTestsDocument->processKeystrokeAction(fft->additionalAction(Okular::FormField::FieldModified), fft, text, selStart, selEnd);
+
+    QCOMPARE(fft->text(), result);
+}
+
+void KeystrokeTest::testSpecialKeystrokeNoCommit_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<int>("selStart");
+    QTest::addColumn<int>("selEnd");
+    QTest::addColumn<QString>("result");
+
+    // zip code
+    QTest::newRow("zip accept") << QStringLiteral("CEP") << QStringLiteral("12345") << 0 << 0 << QStringLiteral("12345");
+    QTest::newRow("zip reject/extra length") << QStringLiteral("CEP") << QStringLiteral("123456") << 5 << 5 << QStringLiteral("12345");
+    QTest::newRow("zip reject/invalid char") << QStringLiteral("CEP") << QStringLiteral("abcd") << 0 << 5 << QStringLiteral("12345");
+
+    // zip+4 code
+    QTest::newRow("zip+4 accept/all nums") << QStringLiteral("8Digits") << QStringLiteral("123456789") << 0 << 0 << QStringLiteral("123456789");
+    QTest::newRow("zip+4 accept/. as sep") << QStringLiteral("8Digits") << QStringLiteral("12345.67") << 0 << 9 << QStringLiteral("12345.67");
+    QTest::newRow("zip+4 accept/- as separator") << QStringLiteral("8Digits") << QStringLiteral("12345-67") << 0 << 8 << QStringLiteral("12345-67");
+    QTest::newRow("zip+4 accept/' ' as separator partial") << QStringLiteral("8Digits") << QStringLiteral("123 6789") << 0 << 8 << QStringLiteral("123 6789");
+    QTest::newRow("zip+4 reject/more chars after separator") << QStringLiteral("8Digits") << QStringLiteral("123 67890") << 8 << 8 << QStringLiteral("123 6789");
+    QTest::newRow("zip+4 reject/invalid char") << QStringLiteral("8Digits") << QStringLiteral("123 6789abcd") << 8 << 8 << QStringLiteral("123 6789");
+
+    // phone
+    QTest::newRow("phone accept/all nums") << QStringLiteral("telefone") << QStringLiteral("1234567890") << 0 << 0 << QStringLiteral("1234567890");
+    QTest::newRow("phone accept/parenthesis") << QStringLiteral("telefone") << QStringLiteral("(123 45") << 0 << 10 << QStringLiteral("(123 45");
+    QTest::newRow("phone accept/' ' and hyphen both") << QStringLiteral("telefone") << QStringLiteral("123-456 7890") << 0 << 7 << QStringLiteral("123-456 7890");
+    QTest::newRow("phone accept/. as sep") << QStringLiteral("telefone") << QStringLiteral("123.456.7890") << 0 << 12 << QStringLiteral("123.456.7890");
+    QTest::newRow("phone reject/many sep") << QStringLiteral("telefone") << QStringLiteral("1-23-45-67") << 0 << 12 << QStringLiteral("123.456.7890");
+    QTest::newRow("phone reject/incorrect parenthesis") << QStringLiteral("telefone") << QStringLiteral("(1234)") << 0 << 12 << QStringLiteral("123.456.7890");
+    QTest::newRow("phone reject/incorrect spaces") << QStringLiteral("telefone") << QStringLiteral("123   56") << 0 << 12 << QStringLiteral("123.456.7890");
+    QTest::newRow("phone reject/invalid chars") << QStringLiteral("telefone") << QStringLiteral("abcd") << 0 << 12 << QStringLiteral("123.456.7890");
+    QTest::newRow("phone reject/exceeding length") << QStringLiteral("telefone") << QStringLiteral("123.456.78901") << 12 << 12 << QStringLiteral("123.456.7890");
+
+    // ssn
+    QTest::newRow("ssn accept/all nums") << QStringLiteral("CPF") << QStringLiteral("123456789") << 0 << 0 << QStringLiteral("123456789");
+    QTest::newRow("ssn accept/' ' and - as sep") << QStringLiteral("CPF") << QStringLiteral("123 45-6789") << 0 << 9 << QStringLiteral("123 45-6789");
+    QTest::newRow("ssn accept/. as sep") << QStringLiteral("CPF") << QStringLiteral("123.45.6789") << 0 << 11 << QStringLiteral("123.45.6789");
+    QTest::newRow("ssn reject/too many seps") << QStringLiteral("CPF") << QStringLiteral("123.45..6789") << 0 << 11 << QStringLiteral("123.45.6789");
+    QTest::newRow("ssn reject/exceeding length") << QStringLiteral("CPF") << QStringLiteral("123.45.67890") << 11 << 11 << QStringLiteral("123.45.6789");
+    QTest::newRow("ssn reject/invalid chars") << QStringLiteral("CPF") << QStringLiteral("abcd") << 0 << 11 << QStringLiteral("123.45.6789");
+}
+
+void KeystrokeTest::testSpecialKeystrokeCommit()
+{
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    fft->setText(text);
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+
+    QCOMPARE(fft->text(), result);
+}
+
+void KeystrokeTest::testSpecialKeystrokeCommit_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("result");
+
+    // zip
+    QTest::newRow("zip accept") << QStringLiteral("CEP") << QStringLiteral("12345") << QStringLiteral("12345");
+
+    // zip+4
+    QTest::newRow("zip+4 accept/all nums") << QStringLiteral("8Digits") << QStringLiteral("123456789") << QStringLiteral("123456789");
+    QTest::newRow("zip+4 accept/hyphen as sep") << QStringLiteral("8Digits") << QStringLiteral("12345-6789") << QStringLiteral("12345-6789");
+    QTest::newRow("zip+4 accept/. as sep") << QStringLiteral("8Digits") << QStringLiteral("12345.6789") << QStringLiteral("12345.6789");
+    QTest::newRow("zip+4 accept/' ' as sep") << QStringLiteral("8Digits") << QStringLiteral("12345 6789") << QStringLiteral("12345 6789");
+
+    // phone
+    QTest::newRow("phone accept/all nums") << QStringLiteral("telefone") << QStringLiteral("1234567890") << QStringLiteral("1234567890");
+    QTest::newRow("phone accept/with parenthesis") << QStringLiteral("telefone") << QStringLiteral("(123)4567890") << QStringLiteral("(123)4567890");
+    QTest::newRow("phone accept/hyphen, spaces and parenthesis") << QStringLiteral("telefone") << QStringLiteral("(123) 456-7890") << QStringLiteral("(123) 456-7890");
+    QTest::newRow("phone accept/only hyphens") << QStringLiteral("telefone") << QStringLiteral("123-456-7890") << QStringLiteral("123-456-7890");
+    QTest::newRow("phone accept/only dots") << QStringLiteral("telefone") << QStringLiteral("123.456.7890") << QStringLiteral("123.456.7890");
+
+    // ssn
+    QTest::newRow("ssn accept/all nums") << QStringLiteral("CPF") << QStringLiteral("123456789") << QStringLiteral("123456789");
+    QTest::newRow("ssn accept/hyphens") << QStringLiteral("CPF") << QStringLiteral("123-45-6789") << QStringLiteral("123-45-6789");
+    QTest::newRow("ssn accept/hyphens and dots") << QStringLiteral("CPF") << QStringLiteral("123-45.6789") << QStringLiteral("123-45.6789");
+    QTest::newRow("ssn accept/spaces") << QStringLiteral("CPF") << QStringLiteral("123 45 6789") << QStringLiteral("123 45 6789");
+
+    // TODO: Add more tests for rejecting strings when feature to restore committed values is implemented.
 }
 
 void KeystrokeTest::cleanupTestCase()

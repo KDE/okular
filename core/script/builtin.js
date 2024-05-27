@@ -312,7 +312,7 @@ function AFSpecial_Format( psf )
     }
 
     var ret = event.value;
-
+    ret = ret.replace(/\D/g, '');
     if( psf === 1 )
         ret = ret.substr( 0, 5 ) + '-' + ret.substr( 5, 4 );
 
@@ -341,47 +341,49 @@ function AFSpecial_Format( psf )
 */
 function AFSpecial_Keystroke( psf )
 {
-    if ( !event.value )
+    var completeValue = AFMergeChange( event );
+    if ( !completeValue )
     {
         return;
     }
 
-    var str = event.value;
-    if( psf === 0 )
-    {
-        if( str.length > 5 )
-        {
-            event.rc = false;
-            return;
-        }
-    }
+    const ZIP_NOCOMMIT_RE = /^\d{0,5}$/;
+    const ZIP4_NOCOMMIT_RE = /^\d{0,5}?( |\.|-)?\d{0,4}$/;
+    const PHONE_NOCOMMIT_RE = /^\(?\d{0,3}\)?( |\.|-)?\d{0,3}( |\.|-)?\d{0,4}$/; // optional "()", ".", "-" and " " are allowed during keystroke for ease of data entry
+    const SSN_NOCOMMIT_RE = /^\d{0,3}( |\.|-)?\d{0,2}( |\.|-)?\d{0,4}$/; // optional separators allowed during keystroke
+    const ZIP_COMMIT_RE = /^\d{5}$/;    // 12345
+    const ZIP4_COMMIT_RE = /^\d{5}( |\.|-)?\d{4}$/; // 12345-6789, 12345 6789, 12345.6789
+    const PHONE_COMMIT_RE = /^(\d{3}|\(\d{3}\))( |\.|-)?\d{3}( |\.|-)?\d{4}$/;  // 123 456 7890, (123) 456-7890, 1234567890, 123-456-7890, 123.456-7890, etc
+    const SSN_COMMIT_RE = /^\d{3}( |\.|-)?\d{2}( |\.|-)?\d{4}$/;    // 123-45.6789, 123 45 6789, 123456789, 123-45-6789, etc
 
-    else if( psf === 1 || psf === 3 )
+    var verifyingRe;
+    switch( psf )
     {
-        if( str.length > 9 )
+        // zip code
+        case 0:
         {
-            event.rc = false;
-            return;
+            verifyingRe = event.willCommit ? ZIP_COMMIT_RE : ZIP_NOCOMMIT_RE;
+            break;
+        }
+        // zip + 4
+        case 1:
+        {
+            verifyingRe = event.willCommit ? ZIP4_COMMIT_RE : ZIP4_NOCOMMIT_RE;
+            break;
+        }
+        // phone
+        case 2:
+        {
+            verifyingRe = event.willCommit ? PHONE_COMMIT_RE : PHONE_NOCOMMIT_RE;
+            break;
+        }
+        // SSN
+        case 3:
+        {
+            verifyingRe = event.willCommit ? SSN_COMMIT_RE : SSN_NOCOMMIT_RE;
         }
     }
-
-    else if( psf === 2 )
-    {
-        if( str.length > 10 )
-        {
-            event.rc = false;
-            return;
-        }
-    }
-
-    for( i = 0 ; i < str.length ; ++i )
-    {
-        if( !( str[i] <= '9' && str[i] >= '0' ) )
-        {
-            event.rc = false;
-            return;
-        }
-    }
+    event.rc = verifyingRe.test(completeValue);
 }
 
 /** AFPercent_Format

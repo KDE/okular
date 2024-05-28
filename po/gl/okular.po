@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2024-01-15 19:25+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -5605,47 +5605,47 @@ msgstr "Xa hai unha ferramenta con ese nome. Usarase un nome predeterminado."
 msgid "Duplicated Name"
 msgstr "Nome duplicado"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Páxina a amosar do documento"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Iniciar o documento no modo presentación"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Iniciar co diálogo de impresión"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Iniciar co diálogo de impresión e saír tras imprimir."
 
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Control de «sesión única»"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "Non elevar a xanela"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Atopar unha cadea no texto"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Define a orde do editor externo"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Os documentos para abrir. Indique «-» para ler da entrada estándar."

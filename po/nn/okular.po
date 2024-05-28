@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2023-08-01 21:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -5593,55 +5593,55 @@ msgid "Duplicated Name"
 msgstr "Namneduplikat"
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Dokumentside som skal visast."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Start dokumentet i presentasjonsmodus."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Start med utskriftsvindauge."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Start med utskriftsvindauge og avslutt etter utskrift."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "«Unik instans»-kontroll."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "Ikkje hev vindauget."
 
 # Kommandolinjeval, så skal ha avsluttande punktum.
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Finn søkjeteksten i dokumentet."
 
 # Kommandolinjeval, så skal ha stor forbokstav og avsluttande punktum.
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, fuzzy, kde-format
 #| msgid "sets the external editor command"
 msgid "Sets the external editor command"
 msgstr "Definer eksternt skriveprogram."
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokument som skal opnast. Bruk «-» for å lesa frå standard-inn."

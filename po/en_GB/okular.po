@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2024-05-21 19:34+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -5574,47 +5574,47 @@ msgstr "There's already a tool with that name. Using a default one"
 msgid "Duplicated Name"
 msgstr "Duplicated Name"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Page of the document to be shown"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Start the document in presentation mode"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Start with print dialogue"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Start with print dialogue and exit after printing"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "\"Unique instance\" control"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "Not raise window"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Find a string on the text"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Sets the external editor command"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Documents to open. Specify '-' to read from stdin."

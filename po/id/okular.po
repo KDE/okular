@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -5620,48 +5620,48 @@ msgstr "Sudah ada alat dengan nama itu. Gunakanlah bakunya"
 msgid "Duplicated Name"
 msgstr "Nama Terduplikat"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Halaman dokumen untuk ditampilkan"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Mulai dokumen dalam mode presentasi"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Mulai dengan dialog cetak"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Jalankan dengan dialog cetak dan keluarkan sesudah pencetakan"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Kontrol \"instansi unik\""
 
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "Tidak angkat jendela"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Temukan string pada teks"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, fuzzy, kde-format
 #| msgid "sets the external editor command"
 msgid "Sets the external editor command"
 msgstr "menetapkan perintah editor eksternal"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokumen kebuka. Tentukan '-' untuk membaca dari stdin."

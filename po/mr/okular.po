@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -5907,48 +5907,48 @@ msgstr ""
 msgid "Duplicated Name"
 msgstr ""
 
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "दस्तऐवजाचे पान दाखविणे"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "सादरीकरण पध्दतीने दस्तऐवजास सुरुवात करा"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "छपाई संवादाने सुरवात करा"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, fuzzy, kde-format
 #| msgid "Start with print dialog"
 msgid "Start with print dialog and exit after printing"
 msgstr "छपाई संवादाने सुरवात करा"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "\"असामान्य प्रसंग\" नियंत्रण"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "चौकट वर आणू नका"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr ""
 
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, kde-format
 msgid "Sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, fuzzy, kde-format
 #| msgid "Document to open. Specify '-' to read from stdin."
 msgid "Documents to open. Specify '-' to read from stdin."

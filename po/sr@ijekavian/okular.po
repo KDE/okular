@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-25 00:38+0000\n"
+"POT-Creation-Date: 2024-05-28 00:37+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -5986,48 +5986,48 @@ msgstr "Већ постоји алатка са таквим именом, уз�
 msgid "Duplicated Name"
 msgstr "Дупликат имена"
 
-#: shell/main.cpp:69
+#: shell/main.cpp:89
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Страница документа за приказивање"
 
-#: shell/main.cpp:70
+#: shell/main.cpp:90
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Отвори документ у режиму презентације"
 
-#: shell/main.cpp:71
+#: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Покрени на дијалогу за штампање"
 
-#: shell/main.cpp:72
+#: shell/main.cpp:92
 #, fuzzy, kde-format
 #| msgid "Start with print dialog"
 msgid "Start with print dialog and exit after printing"
 msgstr "Покрени на дијалогу за штампање"
 
-#: shell/main.cpp:73
+#: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Контрола „јединственог примерка“"
 
-#: shell/main.cpp:74
+#: shell/main.cpp:94
 #, kde-format
 msgid "Not raise window"
 msgstr "Не подижи прозор"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
 msgstr ""
 
-#: shell/main.cpp:76
+#: shell/main.cpp:96
 #, kde-format
 msgid "Sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:77
+#: shell/main.cpp:97
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Документи за отварање. Задајте ‘-’ за читање са стдул."

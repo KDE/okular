@@ -3375,7 +3375,7 @@ void Part::enableExitAfterPrint()
     m_cliPrintAndExit = true;
 }
 
-#define kKPlugin QStringLiteral("KPlugin")
+constexpr QLatin1String kPlugin("KPlugin");
 
 void Part::slotAboutBackend()
 {
@@ -3399,9 +3399,9 @@ void Part::slotAboutBackend()
             QMimeDatabase db;
             QMimeType type = db.mimeTypeForName(mimeTypeName);
             if (type.isValid()) {
-                QJsonObject kplugin = rawData[kKPlugin].toObject();
+                QJsonObject kplugin = rawData[kPlugin].toObject();
                 kplugin[QStringLiteral("Icon")] = type.iconName();
-                rawData[kKPlugin] = kplugin;
+                rawData[kPlugin] = kplugin;
             }
         }
     }
@@ -3410,9 +3410,9 @@ void Part::slotAboutBackend()
 
     if (!extraDescription.isEmpty()) {
         const QString descriptionAndLang = QStringLiteral("Description[%1]").arg(QLocale().name());
-        QJsonObject kplugin = rawData[kKPlugin].toObject();
+        QJsonObject kplugin = rawData[kPlugin].toObject();
         kplugin[descriptionAndLang] = QStringLiteral("%1\n\n%2").arg(data.description(), extraDescription);
-        rawData[kKPlugin] = kplugin;
+        rawData[kPlugin] = kplugin;
     }
 
     KAboutPluginDialog dlg(KPluginMetaData(rawData, data.fileName()), widget());

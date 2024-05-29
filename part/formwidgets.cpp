@@ -535,12 +535,16 @@ bool FormLineEdit::event(QEvent *e)
             m_controller->document()->processKeystrokeCommitAction(m_ff->additionalAction(Okular::FormField::FieldModified), form);
         }
 
-        if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
+        if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::ValidateField)) {
             bool ok = false;
             m_controller->document()->processValidateAction(action, static_cast<Okular::FormFieldText *>(m_ff), ok);
         }
         if (const Okular::Action *action = m_ff->additionalAction(Okular::FormField::FormatField)) {
             m_controller->document()->processFormatAction(action, static_cast<Okular::FormFieldText *>(m_ff));
+        }
+
+        if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
+            m_controller->document()->processFocusAction(action, static_cast<Okular::FormFieldText *>(m_ff));
         }
     }
     return QLineEdit::event(e);

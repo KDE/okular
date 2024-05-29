@@ -304,8 +304,6 @@ where libokularGenerator_magic.json has the following content something like thi
                 "Name": "Proud Author",
             }
         ],
-        "Copyright": "© 2042 Proud Author",
-        "Id": "okular_magic",
         "License": "GPL",
         "MimeTypes": [
             "text/magic",

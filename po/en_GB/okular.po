@@ -3,13 +3,13 @@
 #
 # Malcolm Hunter <malcolm.hunter@gmx.co.uk>, 2003, 2004, 2005, 2006, 2008.
 # Andrew Coles <andrew_coles@yahoo.co.uk>, 2004, 2005, 2009, 2010.
-# Steve Allewell <steve.allewell@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Steve Allewell <steve.allewell@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2023-06-17 12:16+0100\n"
+"PO-Revision-Date: 2024-05-30 19:39+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -242,7 +242,7 @@ msgstr "Resume movie"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "This Okular is built without audio support"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -1519,9 +1519,7 @@ msgid "Opacity"
 msgstr "Opacity"
 
 #: part/annotationactionhandler.cpp:695
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
@@ -1529,11 +1527,10 @@ msgid "%1%"
 msgstr "%1%"
 
 #: part/annotationmodel.cpp:326
-#, fuzzy, kde-format
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
-msgstr "Page %1"
+msgstr "Page %1 (%2)"
 
 #: part/annotationmodel.cpp:328 part/part.cpp:3124
 #, kde-format
@@ -1544,7 +1541,7 @@ msgstr "Page %1"
 #, kde-format
 msgctxt "Annotation type: contents"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: part/annotationpopup.cpp:83
 #, kde-format
@@ -3417,10 +3414,9 @@ msgid "Find as you type"
 msgstr "Find as you type"
 
 #: part/formwidgets.cpp:767
-#, fuzzy, kde-format
-#| msgid "All files (*)"
+#, kde-format
 msgid "All Files (*)"
-msgstr "All files (*)"
+msgstr "All Files (*)"
 
 #: part/formwidgets.cpp:1081
 #, kde-format
@@ -3758,9 +3754,7 @@ msgid "Auto Fit"
 msgstr "Auto Fit"
 
 #: part/pageview.cpp:4028
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
 "so make sure you include it in your translation in order to not to break "
@@ -5498,15 +5492,14 @@ msgid "View Certificate..."
 msgstr "View Certificate..."
 
 #: part/signaturepropertiesdialog.cpp:92
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View in Certificate Manager"
-msgstr "View Certificate..."
+msgstr "View in Certificate Manager"
 
 #: part/signaturepropertiesdialog.cpp:96
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "KDE Certificate Manager (kleopatra) not found"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5534,12 +5527,12 @@ msgstr "Stop"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Videos not supported in this okular"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Videos not supported in this Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
@@ -5617,10 +5610,9 @@ msgid "Find a string on the text"
 msgstr "Find a string on the text"
 
 #: shell/main.cpp:76
-#, fuzzy, kde-format
-#| msgid "sets the external editor command"
+#, kde-format
 msgid "Sets the external editor command"
-msgstr "sets the external editor command"
+msgstr "Sets the external editor command"
 
 #: shell/main.cpp:77
 #, kde-format

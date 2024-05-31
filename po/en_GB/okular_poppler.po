@@ -4,13 +4,13 @@
 #
 # Malcolm Hunter <malcolm.hunter@gmx.co.uk>, 2008.
 # Andrew Coles <andrew_coles@yahoo.co.uk>, 2009, 2010.
-# Steve Allewell <steve.allewell@gmail.com>, 2014, 2019, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2014, 2019, 2020, 2021, 2023, 2024 Steve Allewell <steve.allewell@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-21 00:37+0000\n"
-"PO-Revision-Date: 2023-06-17 12:16+0100\n"
+"PO-Revision-Date: 2024-05-30 19:47+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,7 +34,7 @@ msgstr "malcolm.hunter@gmx.co.uk, steve.allewell@gmail.com"
 #: conf/pdfsettingswidget.ui:17
 #, kde-format
 msgid "Enable overprint preview"
-msgstr ""
+msgstr "Enable overprint preview"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:26
@@ -108,7 +108,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:138
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Signature backend:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:164

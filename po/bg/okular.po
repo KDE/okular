@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2024-01-15 11:02+0100\n"
+"PO-Revision-Date: 2024-05-30 18:39+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.05.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -28,7 +28,9 @@ msgstr "Радостин Раднев,Красимир Арнаудов,Злат
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "radnev@yahoo.com,krasi.arnaudov@gmail.com,zlatkopopov@fsa-bg.org"
+msgstr ""
+"radnev@yahoo.com,krasi.arnaudov@gmail.com,zlatkopopov@fsa-bg.org,"
+"mkondarev@yahoo.de"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -5380,9 +5382,9 @@ msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
-"<div align = center> <h3> Без пояснения </h3> За да създадете нови "
-"пояснения, натиснете F6 или изберете <i> Инструменти - &gt; Бележки </i> от "
-"менюто. </div>"
+"<div align = center><h3> Без пояснения </h3> За да създадете нови пояснения, "
+"натиснете F6 или изберете <i> Инструменти - &gt; Бележки </i> от менюто. </"
+"div>"
 
 #: part/side_reviews.cpp:137
 #, kde-format

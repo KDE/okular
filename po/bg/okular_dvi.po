@@ -3,20 +3,20 @@
 #
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2007.
 # Yasen Pramatarov <yasen@lindeas.com>, 2009.
-# Mincho Kondarev <mkondarev@yahoo.de>, 2022.
+# SPDX-FileCopyrightText: 2022, 2024 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2022-05-21 22:25+0200\n"
+"PO-Revision-Date: 2024-05-30 20:46+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
-"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.04.0\n"
+"X-Generator: Lokalize 24.05.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -41,15 +41,15 @@ msgid ""
 "em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
 "the PATH environment variable when looking for programs.</p></qt>"
 msgstr ""
-"<qt> <p> Okular не можа да намери програмата <em> dvipdfm </em> на вашия "
+"<qt><p> Okular не можа да намери програмата <em> dvipdfm </em> на вашия "
 "компютър. Тази програма е от съществено значение за работата на функцията за "
 "експортиране. Можете обаче да конвертирате DVI-файла в PDF с помощта на "
 "функция за печат на Okular, но това често води до документи, които се "
 "отпечатват добре, но са с по-ниско качество, ако се гледат в Acrobat Reader. "
 "Може да е разумно да надстроите до по-нова версия на вашата TeX дистрибуция, "
-"която включва <em> dvipdfm </ em> program. </p> <p> Съвет за недоумения "
+"която включва <em> dvipdfm </em> program.</p><p> Съвет за недоумения "
 "системен администратор: Okular използва променливата на средата PATH, когато "
-"търси програми. </p> </qt>"
+"търси програми.</p></qt>"
 
 #: dviexport.cpp:142
 #, kde-format
@@ -73,11 +73,11 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
-"<qt> Този DVI файл се отнася до външни графични файлове, които не са във "
+"<qt>Този DVI файл се отнася до външни графични файлове, които не са във "
 "формат PostScript и не могат да бъдат обработвани от програмата <em> dvips </"
 "em>, която Okular използва вътрешно за отпечатване или експортиране в "
 "PostScript. Функционалността, която използвате следователно не е налице в "
-"тази версия на Okular. </qt>"
+"тази версия на Okular.</qt>"
 
 #: dviexport.cpp:176
 #, kde-format
@@ -87,10 +87,10 @@ msgid ""
 "perplexed system administrator: Okular uses the PATH environment variable "
 "when looking for programs.</p></qt>"
 msgstr ""
-"<qt> <p> Okular не можа да намери програмата <em> dvips </em> на вашия "
+"<qt><p> Okular не можа да намери програмата <em> dvips </em> на вашия "
 "компютър. Тази програма е от съществено значение за работата на функцията за "
-"експортиране. </p> <p> Съвет за недоумения системен администратор: Okular "
-"използва променливата на средата PATH, когато търси програми. </p> </qt>"
+"експортиране.</p><p> Съвет за недоумения системен администратор: Okular "
+"използва променливата на средата PATH, когато търси програми.</p></qt>"
 
 #: dviexport.cpp:270
 #, kde-format
@@ -157,18 +157,18 @@ msgid ""
 "strong> from the command line to check if it really works.</p><p><em>PATH:</"
 "em> %2</p></qt>"
 msgstr ""
-"<qt> <p> Външната програма <strong> pdf2ps </strong> не може да бъде "
+"<qt><p> Външната програма <strong> pdf2ps </strong> не може да бъде "
 "стартирана. В резултат PDF файлът %1 не може да бъде преобразуван в "
 "PostScript. Следователно някои графични елементи във вашия документ няма да "
-"бъдат показва се. </p> <p> <b> Възможна причина: </b> Програмата <strong> "
+"бъдат показва се.</p><p><b> Възможна причина: </b> Програмата <strong> "
 "pdf2ps </strong> може да не е инсталирана на вашата система или да не бъде "
-"намерена в текущата пътека за търсене. </p> > <p> <b> Какво можете да "
-"направите: </b> Програмата <strong> pdf2ps </strong> обикновено се съдържа в "
+"намерена в текущата пътека за търсене.</p>><p><b> Какво можете да направите: "
+"</b> Програмата <strong> pdf2ps </strong> обикновено се съдържа в "
 "дистрибуциите на системата за тълкуване на ghostscript PostScript. Ако "
 "ghostscript не е инсталиран на вашата система, можете да инсталирате го "
 "сега. Ако сте сигурни, че ghostscript е инсталиран, опитайте да използвате "
 "<strong> pdf2ps </strong> от командния ред, за да проверите дали наистина "
-"работи. </p> <p> <em> PATH: </em>  %2 </p> </qt>"
+"работи.</p><p><em> PATH: </em>  %2</p></qt>"
 
 #: dviFile.cpp:410
 #, kde-format
@@ -293,10 +293,9 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt> <p> Okular не успя да намери всички файлове с шрифтове, които са "
-"необходими за показване на текущия DVI файл. Документът ви може да е "
-"нечетим. </p> <p> <small> <b> PATH: </ b> %1 </small> </p> <p> <small> %2 </"
-"small> </p> </qt>"
+"<qt><p> Okular не успя да намери всички файлове с шрифтове, които са "
+"необходими за показване на текущия DVI файл. Документът ви може да е нечетим."
+"</p><p><small><b> PATH: </b> %1 </small></p><p><small> %2 </small></p></qt>"
 
 #: fontpool.cpp:284
 #, kde-format
@@ -307,12 +306,12 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt> <p> Имаше проблеми при изпълнението на <em> kpsewhich </em>. В резултат "
+"<qt><p> Имаше проблеми при изпълнението на <em> kpsewhich </em>. В резултат "
 "на това някои шрифтови файлове не можаха да бъдат намерени и вашият документ "
 "може да е нечетим. <br/> Възможна причина: <em> kpsewhich </em> програмата "
 "може би не е инсталирана на вашата система или не може да бъде намерена в "
-"текущата пътека за търсене. </p> <p> <small> <b> PATH: </b> %1 </small> </"
-"p><p><small>%2</small></p> </qt>"
+"текущата пътека за търсене.</p><p><small><b> PATH: </b> %1 </small></"
+"p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format
@@ -321,9 +320,9 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt> Генерирането на шрифта от <em> kpsewhich </em> бе прекъснато (изходен "
+"<qt>Генерирането на шрифта от <em> kpsewhich </em> бе прекъснато (изходен "
 "код %1, грешка %2). В резултат на това някои шрифтови файлове не можаха да "
-"бъдат намерени и документът ви може да бъде нечетим. </ qt>"
+"бъдат намерени и документът ви може да бъде нечетим.</qt>"
 
 #: fontpool.cpp:482
 #, kde-format

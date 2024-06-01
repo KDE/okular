@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:37+0000\n"
+"POT-Creation-Date: 2024-06-01 00:38+0000\n"
 "PO-Revision-Date: 2024-02-06 00:39+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -322,47 +322,47 @@ msgstr "이 문서는 외부 앱을 실행하려고 하며, 안전을 위해서 
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME 형식이 %1인 파일에 필요한 앱을 찾을 수 없습니다."
 
-#: core/document.cpp:4634
+#: core/document.cpp:4650
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "임시 파일을 열 수 없습니다"
 
-#: core/document.cpp:4636
+#: core/document.cpp:4652
 #, kde-format
 msgid "Print conversion failed"
 msgstr "인쇄 변환 실패"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4654
 #, kde-format
 msgid "Printing process crashed"
 msgstr "인쇄 프로세스 충돌함"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4656
 #, kde-format
 msgid "Printing process could not start"
 msgstr "인쇄 프로세스를 시작할 수 없음"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4658
 #, kde-format
 msgid "Printing to file failed"
 msgstr "파일로 인쇄할 수 없음"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4660
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "프린터 상태가 올바르지 않음"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4662
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "인쇄할 파일을 찾을 수 없음"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4664
 #, kde-format
 msgid "There was no file to print"
 msgstr "인쇄할 파일이 없음"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4666
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -371,92 +371,92 @@ msgstr ""
 "인쇄할 수 있는 실행 파일을 찾을 수 없습니다. CUPS lpr 실행 파일이 있는지 확인"
 "하십시오"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4668
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5317 part/part.cpp:1120
+#: core/document.cpp:5333 part/part.cpp:1120
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
 
-#: core/document.cpp:5827
+#: core/document.cpp:5843
 #, kde-format
 msgid "Title"
 msgstr "제목"
 
-#: core/document.cpp:5830
+#: core/document.cpp:5846
 #, kde-format
 msgid "Subject"
 msgstr "주제"
 
-#: core/document.cpp:5833
+#: core/document.cpp:5849
 #, kde-format
 msgid "Description"
 msgstr "설명"
 
-#: core/document.cpp:5836
+#: core/document.cpp:5852
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: core/document.cpp:5839
+#: core/document.cpp:5855
 #, kde-format
 msgid "Creator"
 msgstr "제작 도구"
 
-#: core/document.cpp:5842
+#: core/document.cpp:5858
 #, kde-format
 msgid "Producer"
 msgstr "생성 도구"
 
-#: core/document.cpp:5845
+#: core/document.cpp:5861
 #, kde-format
 msgid "Copyright"
 msgstr "저작권자"
 
-#: core/document.cpp:5848
+#: core/document.cpp:5864
 #, kde-format
 msgid "Pages"
 msgstr "쪽 수"
 
-#: core/document.cpp:5851
+#: core/document.cpp:5867
 #, kde-format
 msgid "Created"
 msgstr "만든 날짜"
 
-#: core/document.cpp:5854
+#: core/document.cpp:5870
 #, kde-format
 msgid "Modified"
 msgstr "수정한 날짜"
 
-#: core/document.cpp:5857
+#: core/document.cpp:5873
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 형식"
 
-#: core/document.cpp:5860
+#: core/document.cpp:5876
 #, kde-format
 msgid "Category"
 msgstr "분류"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5879
 #, kde-format
 msgid "Keywords"
 msgstr "키워드"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5882
 #, kde-format
 msgid "File Path"
 msgstr "파일 경로"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5885
 #, kde-format
 msgid "File Size"
 msgstr "파일 크기"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5888
 #, kde-format
 msgid "Page Size"
 msgstr "쪽 크기"

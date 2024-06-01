@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:37+0000\n"
+"POT-Creation-Date: 2024-06-01 00:38+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -332,146 +332,146 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 माइमप्रकारको खुला फाइलका लागि कुनै अनुप्रयोग फेला परेन ।"
 
-#: core/document.cpp:4634
+#: core/document.cpp:4650
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open a temporary file"
 msgstr "%1 खोल्न सकेन"
 
-#: core/document.cpp:4636
+#: core/document.cpp:4652
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4638
+#: core/document.cpp:4654
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4640
+#: core/document.cpp:4656
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4642
+#: core/document.cpp:4658
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4644
+#: core/document.cpp:4660
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4646
+#: core/document.cpp:4662
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find file to print"
 msgstr "केपीडीएफ भाग फेला पार्न अक्षम भयो ।"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4664
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4650
+#: core/document.cpp:4666
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4652
+#: core/document.cpp:4668
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5317 part/part.cpp:1120
+#: core/document.cpp:5333 part/part.cpp:1120
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:5827
+#: core/document.cpp:5843
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
 
-#: core/document.cpp:5830
+#: core/document.cpp:5846
 #, kde-format
 msgid "Subject"
 msgstr "विषय"
 
-#: core/document.cpp:5833
+#: core/document.cpp:5849
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:5836
+#: core/document.cpp:5852
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "लेखक"
 
-#: core/document.cpp:5839
+#: core/document.cpp:5855
 #, kde-format
 msgid "Creator"
 msgstr "सर्जक"
 
-#: core/document.cpp:5842
+#: core/document.cpp:5858
 #, kde-format
 msgid "Producer"
 msgstr "निर्माता"
 
-#: core/document.cpp:5845
+#: core/document.cpp:5861
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:5848
+#: core/document.cpp:5864
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "पृष्ठहरू:"
 
-#: core/document.cpp:5851
+#: core/document.cpp:5867
 #, kde-format
 msgid "Created"
 msgstr "सिर्जित"
 
-#: core/document.cpp:5854
+#: core/document.cpp:5870
 #, kde-format
 msgid "Modified"
 msgstr "परिमार्जित"
 
-#: core/document.cpp:5857
+#: core/document.cpp:5873
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "प्रकार"
 
-#: core/document.cpp:5860
+#: core/document.cpp:5876
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Category"
 msgstr "सर्जक"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5879
 #, kde-format
 msgid "Keywords"
 msgstr "शब्दकुञ्जी"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5882
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "शीर्षक"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5885
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "पृष्ठहरू"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5888
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"

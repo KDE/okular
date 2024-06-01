@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:37+0000\n"
+"POT-Creation-Date: 2024-06-01 00:38+0000\n"
 "PO-Revision-Date: 2024-05-30 17:35+0400\n"
 "Last-Translator: Xəyyam Qocayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -323,47 +323,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 mime növü faylını açmaq üçün tətbiq tapılmadı."
 
-#: core/document.cpp:4634
+#: core/document.cpp:4650
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Müvəqqəti fayl açıla bilmədi"
 
-#: core/document.cpp:4636
+#: core/document.cpp:4652
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Söhbəti çap etmək baş tutmadı"
 
-#: core/document.cpp:4638
+#: core/document.cpp:4654
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Çap prosesi çökdü"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4656
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Çap prosesi başladıla bilmədi"
 
-#: core/document.cpp:4642
+#: core/document.cpp:4658
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Fayla çap etmək alınmadı"
 
-#: core/document.cpp:4644
+#: core/document.cpp:4660
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer lazımi vəziyyətdə deyil"
 
-#: core/document.cpp:4646
+#: core/document.cpp:4662
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Çap etmək üçün fayl tapılmadı"
 
-#: core/document.cpp:4648
+#: core/document.cpp:4664
 #, kde-format
 msgid "There was no file to print"
 msgstr "Çap etmək üçün fayl yoxdur"
 
-#: core/document.cpp:4650
+#: core/document.cpp:4666
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "Çap üçün uyğun proqramı tapmaq mümkün olmadı. CUPS paketindən lpr "
 "vasitəsinin mövcud olduğuna əmin olun"
 
-#: core/document.cpp:4652
+#: core/document.cpp:4668
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Səhifənin çap ölçüsü düzgün deyil"
 
-#: core/document.cpp:5317 part/part.cpp:1120
+#: core/document.cpp:5333 part/part.cpp:1120
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' açıla bilmədi. Fayl mövcud deyil"
 
-#: core/document.cpp:5827
+#: core/document.cpp:5843
 #, kde-format
 msgid "Title"
 msgstr "Başlıq"
 
-#: core/document.cpp:5830
+#: core/document.cpp:5846
 #, kde-format
 msgid "Subject"
 msgstr "Mövzu"
 
-#: core/document.cpp:5833
+#: core/document.cpp:5849
 #, kde-format
 msgid "Description"
 msgstr "Təsviri"
 
-#: core/document.cpp:5836
+#: core/document.cpp:5852
 #, kde-format
 msgid "Author"
 msgstr "Müəllif"
 
-#: core/document.cpp:5839
+#: core/document.cpp:5855
 #, kde-format
 msgid "Creator"
 msgstr "Yaradıcı"
 
-#: core/document.cpp:5842
+#: core/document.cpp:5858
 #, kde-format
 msgid "Producer"
 msgstr "İstehsalçı"
 
-#: core/document.cpp:5845
+#: core/document.cpp:5861
 #, kde-format
 msgid "Copyright"
 msgstr "Müəllif Hüquqları"
 
-#: core/document.cpp:5848
+#: core/document.cpp:5864
 #, kde-format
 msgid "Pages"
 msgstr "Səhifələr"
 
-#: core/document.cpp:5851
+#: core/document.cpp:5867
 #, kde-format
 msgid "Created"
 msgstr "Yaradıldı"
 
-#: core/document.cpp:5854
+#: core/document.cpp:5870
 #, kde-format
 msgid "Modified"
 msgstr "Dəyişdirildi"
 
-#: core/document.cpp:5857
+#: core/document.cpp:5873
 #, kde-format
 msgid "MIME Type"
 msgstr "MİME növü"
 
-#: core/document.cpp:5860
+#: core/document.cpp:5876
 #, kde-format
 msgid "Category"
 msgstr "Kateqoriya"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5879
 #, kde-format
 msgid "Keywords"
 msgstr "Açar sözlər"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5882
 #, kde-format
 msgid "File Path"
 msgstr "Fayl yolu"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5885
 #, kde-format
 msgid "File Size"
 msgstr "Faylın ölçüsü"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5888
 #, kde-format
 msgid "Page Size"
 msgstr "Səhifənin Ölçüsü"

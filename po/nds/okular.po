@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:37+0000\n"
+"POT-Creation-Date: 2024-06-01 00:38+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -337,47 +337,47 @@ msgstr ""
 "För't Opmaken vun en Datei mit den MIME-Typ \"%1\" lett sik keen Programm "
 "finnen."
 
-#: core/document.cpp:4634
+#: core/document.cpp:4650
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Temporeerdatei lett sik nich opmaken."
 
-#: core/document.cpp:4636
+#: core/document.cpp:4652
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Ümwanneln för't Drucken is fehlslaan."
 
-#: core/document.cpp:4638
+#: core/document.cpp:4654
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Druckperzess is afstört"
 
-#: core/document.cpp:4640
+#: core/document.cpp:4656
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Druckperzess lett sik nich starten."
 
-#: core/document.cpp:4642
+#: core/document.cpp:4658
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Drucken na Datei fehlslaan."
 
-#: core/document.cpp:4644
+#: core/document.cpp:4660
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Druckertostand is leeg."
 
-#: core/document.cpp:4646
+#: core/document.cpp:4662
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Datei för't Drucken lett sik nich finnen."
 
-#: core/document.cpp:4648
+#: core/document.cpp:4664
 #, kde-format
 msgid "There was no file to print"
 msgstr "Dat gifft keen Datei för't Drucken."
 
-#: core/document.cpp:4650
+#: core/document.cpp:4666
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,93 +386,93 @@ msgstr ""
 "Keen bruukbor Druckprogramm to finnen. Bitte kiek, wat dat CUPS-Programm "
 "\"lpr\" vörhannen is."
 
-#: core/document.cpp:4652
+#: core/document.cpp:4668
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "De Sieden-Druckgrött is leeg"
 
-#: core/document.cpp:5317 part/part.cpp:1120
+#: core/document.cpp:5333 part/part.cpp:1120
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Datei \"%1\" lett sik nich opmaken. De Datei gifft dat nich."
 
-#: core/document.cpp:5827
+#: core/document.cpp:5843
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:5830
+#: core/document.cpp:5846
 #, kde-format
 msgid "Subject"
 msgstr "Thema"
 
-#: core/document.cpp:5833
+#: core/document.cpp:5849
 #, kde-format
 msgid "Description"
 msgstr "Beschrieven"
 
-#: core/document.cpp:5836
+#: core/document.cpp:5852
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5839
+#: core/document.cpp:5855
 #, kde-format
 msgid "Creator"
 msgstr "Opsteller"
 
-#: core/document.cpp:5842
+#: core/document.cpp:5858
 #, kde-format
 msgid "Producer"
 msgstr "Maker"
 
-#: core/document.cpp:5845
+#: core/document.cpp:5861
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5848
+#: core/document.cpp:5864
 #, kde-format
 msgid "Pages"
 msgstr "Sieden"
 
-#: core/document.cpp:5851
+#: core/document.cpp:5867
 #, kde-format
 msgid "Created"
 msgstr "Opstellt"
 
-#: core/document.cpp:5854
+#: core/document.cpp:5870
 #, kde-format
 msgid "Modified"
 msgstr "Ännert"
 
-#: core/document.cpp:5857
+#: core/document.cpp:5873
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "MIME-Typ"
 
-#: core/document.cpp:5860
+#: core/document.cpp:5876
 #, kde-format
 msgid "Category"
 msgstr "Kategorie"
 
-#: core/document.cpp:5863
+#: core/document.cpp:5879
 #, kde-format
 msgid "Keywords"
 msgstr "Slötelwöör"
 
-#: core/document.cpp:5866
+#: core/document.cpp:5882
 #, kde-format
 msgid "File Path"
 msgstr "Dateipadd"
 
-#: core/document.cpp:5869
+#: core/document.cpp:5885
 #, kde-format
 msgid "File Size"
 msgstr "Dateigrött"
 
-#: core/document.cpp:5872
+#: core/document.cpp:5888
 #, kde-format
 msgid "Page Size"
 msgstr "Siedengrött"

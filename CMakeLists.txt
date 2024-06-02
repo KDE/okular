@@ -147,13 +147,16 @@ else()
 endif()
 
 if (BUILD_DESKTOP)
-    if(UNIX AND NOT APPLE AND NOT ANDROID)
-        find_package(Qt6DBus)
-        set_okular_optional_package_properties(Qt6DBus PROPERTIES
-            PURPOSE "Required for interprocess communication, external open in same instance and various presentation related bits.")
-        set(HAVE_DBUS ${Qt6DBus_FOUND})
-    else()
-        set(HAVE_DBUS 0)
+    # shall we use DBus?
+    # enabled per default on Linux & BSD systems
+    set(USE_DBUS_DEFAULT OFF)
+    if(UNIX AND NOT APPLE AND NOT ANDROID AND NOT HAIKU)
+        set(USE_DBUS_DEFAULT ON)
+    endif()
+    option(USE_DBUS "Build components using DBus (used for interprocess communication, external open in same instance and various presentation related bits)" ${USE_DBUS_DEFAULT})
+    if(USE_DBUS)
+        find_package(Qt6DBus REQUIRED)
+        set(HAVE_DBUS 1)
     endif()
 
     find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes ItemViews TextWidgets WidgetsAddons)

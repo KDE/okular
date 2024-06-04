@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-01 00:38+0000\n"
+"POT-Creation-Date: 2024-06-04 00:38+0000\n"
 "PO-Revision-Date: 2024-02-06 00:39+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -3392,22 +3392,22 @@ msgstr "현재 쪽부터"
 msgid "Find as you type"
 msgstr "입력하는 대로 검색"
 
-#: part/formwidgets.cpp:767
+#: part/formwidgets.cpp:771
 #, kde-format
 msgid "All Files (*)"
 msgstr "모든 파일 (*)"
 
-#: part/formwidgets.cpp:1081
+#: part/formwidgets.cpp:1085
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "서명되지 않은 서명 필드(클릭하여 서명)"
 
-#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "서명(&S)..."
 
-#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "인증서 속성"

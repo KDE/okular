@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-01 00:38+0000\n"
+"POT-Creation-Date: 2024-06-04 00:38+0000\n"
 "PO-Revision-Date: 2024-04-23 23:32+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3436,22 +3436,22 @@ msgstr "Von aktueller Seite"
 msgid "Find as you type"
 msgstr "Beim Eintippen suchen"
 
-#: part/formwidgets.cpp:767
+#: part/formwidgets.cpp:771
 #, kde-format
 msgid "All Files (*)"
 msgstr "Alle Dateien (*)"
 
-#: part/formwidgets.cpp:1081
+#: part/formwidgets.cpp:1085
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Unsigniertes Signaturfeld (zum Signieren klicken)"
 
-#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Signieren ..."
 
-#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Signatur-Eigenschaften"

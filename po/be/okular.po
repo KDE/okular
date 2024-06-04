@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-01 00:38+0000\n"
+"POT-Creation-Date: 2024-06-04 00:38+0000\n"
 "PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -3433,22 +3433,22 @@ msgstr "З бягучай старонкі"
 msgid "Find as you type"
 msgstr "Шукаць па меры ўводу"
 
-#: part/formwidgets.cpp:767
+#: part/formwidgets.cpp:771
 #, kde-format
 msgid "All Files (*)"
 msgstr "Усе файлы (*)"
 
-#: part/formwidgets.cpp:1081
+#: part/formwidgets.cpp:1085
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Пустое поле подпісу (пстрыкніце, каб падпісаць)"
 
-#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Падпісаць..."
 
-#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Уласцівасці подпісу"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-01 00:38+0000\n"
+"POT-Creation-Date: 2024-06-04 00:38+0000\n"
 "PO-Revision-Date: 2024-02-01 09:06-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -3383,22 +3383,22 @@ msgstr "ਮੌਜੂਦਾ ਸਫ਼ੇ ਤੋਂ"
 msgid "Find as you type"
 msgstr "ਜਿਵੇਂ ਤੁਸੀਂ ਲਿਖੋ ਤਿਵੇਂ ਖੋਜੋ"
 
-#: part/formwidgets.cpp:767
+#: part/formwidgets.cpp:771
 #, kde-format
 msgid "All Files (*)"
 msgstr "ਸਭ ਫਾਇਲਾਂ (*)"
 
-#: part/formwidgets.cpp:1081
+#: part/formwidgets.cpp:1085
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1147 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "ਦਸਤਖ਼ਤ(&S)..."
 
-#: part/formwidgets.cpp:1151 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "ਦਸਤਖ਼ਤ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"

@@ -46,7 +46,7 @@ public:
         ConsoleExec,     /// < Not implemented.
         DocDidPrint,     /// < Not implemented.
         DocDidSave,      /// < Not implemented.
-        DocOpen,         /// < Not implemented.
+        DocOpen,         /// < This event is triggered when a document is opened. The document level script functions are scanned and any exposed scripts are executed
         DocWillClose,    /// < Not implemented.
         DocWillPrint,    /// < Not implemented.
         DocWillSave,     /// < Not implemented.
@@ -123,6 +123,7 @@ public:
     static std::shared_ptr<Event> createFormFocusEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
     static std::shared_ptr<Event> createFormValidateEvent(FormField *target, Page *targetPage, const QString &targetName = QString());
     static std::shared_ptr<Event> createFieldMouseUpEvent(FormField *target, Page *targetPage);
+    static std::shared_ptr<Event> createDocEvent(Event::EventType type);
 
 private:
     class Private;

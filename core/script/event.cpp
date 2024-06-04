@@ -73,6 +73,8 @@ QString Event::name() const
         return QStringLiteral("Validate");
     case FieldMouseUp:
         return QStringLiteral("MouseUp");
+    case DocOpen:
+        return QStringLiteral("Open");
     case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
@@ -89,6 +91,8 @@ QString Event::type() const
     case FieldValidate:
     case FieldMouseUp:
         return QStringLiteral("Field");
+    case DocOpen:
+        return QStringLiteral("Doc");
     case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
@@ -303,5 +307,12 @@ std::shared_ptr<Event> Event::createFieldMouseUpEvent(FormField *target, Page *t
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    return ret;
+}
+
+std::shared_ptr<Event> Event::createDocEvent(Event::EventType type)
+{
+    std::shared_ptr<Event> ret = std::make_shared<Event>(type);
+    // TODO set target name.
     return ret;
 }

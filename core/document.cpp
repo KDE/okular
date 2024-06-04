@@ -2562,7 +2562,9 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     if (!docScripts.isEmpty()) {
         d->m_scripter = new Scripter(d);
         for (const QString &docscript : docScripts) {
-            d->m_scripter->execute(JavaScript, docscript);
+            const Okular::ScriptAction *linkScript = new Okular::ScriptAction(Okular::JavaScript, docscript);
+            std::shared_ptr<Event> event = Event::createDocEvent(Event::DocOpen);
+            d->executeScriptEvent(event, linkScript);
         }
     }
 

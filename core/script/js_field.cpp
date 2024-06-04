@@ -45,7 +45,7 @@ static void updateField(FormField *field)
 // Field.doc
 QJSValue JSField::doc() const
 {
-    return qjsEngine(this)->globalObject();
+    return qjsEngine(this)->globalObject().property(QStringLiteral("Doc"));
 }
 
 // Field.name

@@ -734,6 +734,11 @@ void TeXFont_PK::read_PK_index()
             ch = one(file);
         }
 
+        if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
+            qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): ch is out of bounds" << ch;
+            return;
+        }
+
         glyphtable[ch].addr = ftell(file);
         glyphtable[ch].x2 = PK_flag_byte;
         fseek(file, (long)bytes_left, SEEK_CUR);

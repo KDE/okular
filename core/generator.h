@@ -458,6 +458,13 @@ public:
      */
     virtual void freeOpaqueActionContents(const BackendOpaqueAction &action);
 
+    /**
+     * Retrieves the additional document action for the specified @p type .
+     *
+     * @since 24.08
+     */
+    virtual Okular::Action *additionalDocumentAction(Document::DocumentAdditionalActionType type);
+
 Q_SIGNALS:
     /**
      * This signal should be emitted whenever an error occurred in the generator.

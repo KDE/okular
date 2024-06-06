@@ -693,6 +693,9 @@ PDFGenerator::~PDFGenerator()
 {
     delete pdfOptionsPage;
     delete certStore;
+    for (auto it = m_additionalDocumentActions.begin(); it != m_additionalDocumentActions.end(); it++) {
+        delete it.value();
+    }
 }
 
 // BEGIN Generator inherited functions
@@ -771,8 +774,31 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
     // create annotation proxy
     annotProxy = new PopplerAnnotationProxy(pdfdoc.get(), userMutex(), &annotationsOnOpenHash);
 
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
+    setAdditionalDocumentAction(Okular::Document::CloseDocument, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::CloseDocument)));
+    setAdditionalDocumentAction(Okular::Document::SaveDocumentStart, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::SaveDocumentStart)));
+    setAdditionalDocumentAction(Okular::Document::SaveDocumentFinish, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::SaveDocumentFinish)));
+    setAdditionalDocumentAction(Okular::Document::PrintDocumentStart, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::PrintDocumentStart)));
+    setAdditionalDocumentAction(Okular::Document::PrintDocumentFinish, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::PrintDocumentFinish)));
+#endif
     // the file has been loaded correctly
     return Okular::Document::OpenSuccess;
+}
+
+void PDFGenerator::setAdditionalDocumentAction(Okular::Document::DocumentAdditionalActionType type, Okular::Action *action)
+{
+    if (m_additionalDocumentActions.contains(type)) {
+        delete m_additionalDocumentActions.value(type);
+    }
+    m_additionalDocumentActions.insert(type, action);
+}
+
+Okular::Action *PDFGenerator::additionalDocumentAction(Okular::Document::DocumentAdditionalActionType type)
+{
+    if (m_additionalDocumentActions.contains(type)) {
+        return m_additionalDocumentActions.value(type);
+    }
+    return nullptr;
 }
 
 PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector)

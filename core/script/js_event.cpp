@@ -71,7 +71,12 @@ QJSValue JSEvent::target() const
         }
         break;
     }
-    case Event::DocOpen: {
+    case Event::DocOpen:
+    case Event::DocWillClose:
+    case Event::DocWillSave:
+    case Event::DocWillPrint:
+    case Event::DocDidSave:
+    case Event::DocDidPrint: {
         return qjsEngine(this)->globalObject().property(QStringLiteral("Doc"));
     }
     default: {

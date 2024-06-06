@@ -2611,6 +2611,10 @@ void Document::closeDocument()
         return;
     }
 
+    if (const Okular::Action *action = d->m_generator->additionalDocumentAction(CloseDocument)) {
+        processDocumentAction(action, CloseDocument);
+    }
+
     Q_EMIT aboutToClose();
 
     delete d->m_pageController;
@@ -4598,6 +4602,39 @@ void Document::processKVCFActions(Okular::FormField *ff)
     }
 }
 
+void Document::processDocumentAction(const Action *action, DocumentAdditionalActionType type)
+{
+    if (!action || action->actionType() != Action::Script) {
+        return;
+    }
+
+    Event::EventType eventType = Okular::Event::UnknownEvent;
+
+    switch (type) {
+    case Document::CloseDocument:
+        eventType = Okular::Event::DocWillClose;
+        break;
+    case Document::SaveDocumentStart:
+        eventType = Okular::Event::DocWillSave;
+        break;
+    case Document::SaveDocumentFinish:
+        eventType = Okular::Event::DocDidSave;
+        break;
+    case Document::PrintDocumentStart:
+        eventType = Okular::Event::DocWillPrint;
+        break;
+    case Document::PrintDocumentFinish:
+        eventType = Okular::Event::DocDidPrint;
+        break;
+    }
+
+    std::shared_ptr<Event> event = Event::createDocEvent(eventType);
+
+    const ScriptAction *linkScript = static_cast<const ScriptAction *>(action);
+
+    d->executeScriptEvent(event, linkScript);
+}
+
 void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)
 {
     if (!action || action->actionType() != Action::Script) {
@@ -4743,7 +4780,16 @@ bool Document::supportsPrintToFile() const
 
 Document::PrintError Document::print(QPrinter &printer)
 {
-    return d->m_generator ? d->m_generator->print(printer) : Document::UnknownPrintError;
+    if (const Okular::Action *action = d->m_generator->additionalDocumentAction(PrintDocumentStart)) {
+        processDocumentAction(action, PrintDocumentStart);
+    }
+    const Document::PrintError printError = d->m_generator ? d->m_generator->print(printer) : Document::UnknownPrintError;
+    if (printError == Document::NoPrintError) {
+        if (const Okular::Action *action = d->m_generator->additionalDocumentAction(PrintDocumentFinish)) {
+            processDocumentAction(action, PrintDocumentFinish);
+        }
+    }
+    return printError;
 }
 
 QString Document::printErrorString(PrintError error)
@@ -5091,7 +5137,17 @@ bool Document::saveChanges(const QString &fileName, QString *errorText)
         return false;
     }
 
-    return saveIface->save(fileName, SaveInterface::SaveChanges, errorText);
+    if (const Okular::Action *action = d->m_generator->additionalDocumentAction(SaveDocumentStart)) {
+        processDocumentAction(action, SaveDocumentStart);
+    }
+
+    bool success = saveIface->save(fileName, SaveInterface::SaveChanges, errorText);
+    if (success) {
+        if (const Okular::Action *action = d->m_generator->additionalDocumentAction(SaveDocumentFinish)) {
+            processDocumentAction(action, SaveDocumentFinish);
+        }
+    }
+    return success;
 }
 
 void Document::registerView(View *view)

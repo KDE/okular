@@ -111,6 +111,15 @@ public:
 
     static void okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData);
 
+    enum DocumentAdditionalActionType {
+        CloseDocument,
+        SaveDocumentStart,
+        SaveDocumentFinish,
+        PrintDocumentStart,
+        PrintDocumentFinish,
+    };
+    Okular::Action *additionalDocumentAction(Okular::Document::DocumentAdditionalActionType type) override;
+
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
     bool doCloseDocument() override;
@@ -158,6 +167,8 @@ private:
     QPointer<PDFOptionsPage> pdfOptionsPage;
 
     bool documentHasPassword = false;
+    QHash<int, Okular::Action *> m_additionalDocumentActions;
+    void setAdditionalDocumentAction(Okular::Document::DocumentAdditionalActionType type, Okular::Action *action);
 };
 
 #endif

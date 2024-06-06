@@ -44,12 +44,12 @@ public:
         BatchExec,       /// < Not implemented.
         BookmarkMouseUp, /// < Not implemented.
         ConsoleExec,     /// < Not implemented.
-        DocDidPrint,     /// < Not implemented.
-        DocDidSave,      /// < Not implemented.
+        DocDidPrint,     /// < When a document is printed.
+        DocDidSave,      /// < When a document is saved.
         DocOpen,         /// < This event is triggered when a document is opened. The document level script functions are scanned and any exposed scripts are executed
-        DocWillClose,    /// < Not implemented.
-        DocWillPrint,    /// < Not implemented.
-        DocWillSave,     /// < Not implemented.
+        DocWillClose,    /// < When a document is about to be closed.
+        DocWillPrint,    /// < When a document is about to be printed.
+        DocWillSave,     /// < When a document is about to be saved.
         ExternalExec,    /// < Not implemented.
         FieldBlur,       /// < Not implemented.
         FieldCalculate,  /// < This event is defined in a field re-calculation.

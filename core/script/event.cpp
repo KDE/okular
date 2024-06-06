@@ -75,6 +75,16 @@ QString Event::name() const
         return QStringLiteral("MouseUp");
     case DocOpen:
         return QStringLiteral("Open");
+    case DocWillClose:
+        return QStringLiteral("WillClose");
+    case DocWillSave:
+        return QStringLiteral("WillSave");
+    case DocWillPrint:
+        return QStringLiteral("WillPrint");
+    case DocDidSave:
+        return QStringLiteral("DidSave");
+    case DocDidPrint:
+        return QStringLiteral("DidPrint");
     case UnknownEvent:
     default:
         return QStringLiteral("Unknown");
@@ -92,6 +102,11 @@ QString Event::type() const
     case FieldMouseUp:
         return QStringLiteral("Field");
     case DocOpen:
+    case DocWillClose:
+    case DocWillSave:
+    case DocWillPrint:
+    case DocDidSave:
+    case DocDidPrint:
         return QStringLiteral("Doc");
     case UnknownEvent:
     default:
@@ -301,6 +316,6 @@ std::shared_ptr<Event> Event::createFieldMouseUpEvent(FormField *target, Page *t
 std::shared_ptr<Event> Event::createDocEvent(Event::EventType type)
 {
     std::shared_ptr<Event> ret = std::make_shared<Event>(type);
-    // TODO set target name.
+    // TODO set target name for DocOpen event only.
     return ret;
 }

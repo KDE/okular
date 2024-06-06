@@ -753,6 +753,26 @@ public:
     void processFormMouseUpScripAction(const Action *action, Okular::FormField *ff);
 
     /**
+     * Describes the additional actions available in the Document.
+     *
+     * @since 24.08
+     */
+    enum DocumentAdditionalActionType {
+        CloseDocument,
+        SaveDocumentStart,
+        SaveDocumentFinish,
+        PrintDocumentStart,
+        PrintDocumentFinish,
+    };
+
+    /**
+     * Processes the given document additional @p action of specified @p type.
+     *
+     * @since 24.08
+     */
+    void processDocumentAction(const Action *action, DocumentAdditionalActionType type);
+
+    /**
      * Returns a list of the bookmarked.pages
      */
     QList<int> bookmarkedPageList() const;

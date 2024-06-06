@@ -472,6 +472,11 @@ const Document *Generator::document() const
     return nullptr;
 }
 
+Okular::Action *Generator::additionalDocumentAction(Okular::Document::DocumentAdditionalActionType)
+{
+    return nullptr;
+}
+
 void Generator::setFeature(GeneratorFeature feature, bool on)
 {
     Q_D(Generator);

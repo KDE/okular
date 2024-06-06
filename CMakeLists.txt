@@ -13,8 +13,6 @@ set(KF_REQUIRED_VERSION "5.240.0") # Remember to update the KF_DEPRECATED_WARNIN
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
-set(FORCE_NOT_REQUIRED_DEPENDENCIES "" CACHE STRING "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
-
 find_package(ECM ${KF_REQUIRED_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
@@ -32,37 +30,11 @@ include(ECMAddAppIcon)
 include(CMakePackageConfigHelpers)
 include(ECMSetupQtPluginMacroNames)
 include(ECMAddAndroidApk)
+include(ECMOptionalPackageProperties)
 
-if (ANDROID AND (FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
+if (ANDROID AND (ECM_FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
+    set(ECM_FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
 endif()
-
-function(set_okular_optional_package_properties _name _props)
-    if(NOT "${_props}" STREQUAL "PROPERTIES")
-        message(FATAL_ERROR "PROPERTIES keyword is missing in set_okular_optional_package_properties() call.")
-    endif()
-
-    set(options) # none
-    set(oneValueArgs DESCRIPTION URL PURPOSE)
-    set(multiValueArgs) # none
-
-    CMAKE_PARSE_ARGUMENTS(_SPP "${options}" "${oneValueArgs}" "${multiValueArgs}"  ${ARGN})
-
-    if(_SPP_UNPARSED_ARGUMENTS)
-        message(FATAL_ERROR "Unknown keywords given to set_okular_optional_package_properties(): \"${_SPP_UNPARSED_ARGUMENTS}\"")
-    endif()
-
-    set(DEPENDENCY_TYPE "REQUIRED")
-    if (${_name} IN_LIST FORCE_NOT_REQUIRED_DEPENDENCIES)
-        set(DEPENDENCY_TYPE "RECOMMENDED")
-    endif()
-    set_package_properties(${_name} PROPERTIES
-        TYPE ${DEPENDENCY_TYPE}
-        DESCRIPTION ${_SPP_DESCRIPTION}
-        URL ${_SPP_URL}
-        PURPOSE "${_SPP_PURPOSE} You can make the dependency optional adding ${_name} to the FORCE_NOT_REQUIRED_DEPENDENCIES cmake option"
-    )
-endfunction()
 
 if(OKULAR_UI STREQUAL "")
     if(ANDROID)
@@ -124,7 +96,7 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
 
 if (NOT WIN32)
     find_package(KF6Wallet ${KF_REQUIRED_VERSION})
-    set_okular_optional_package_properties(KF6Wallet PROPERTIES
+    ecm_set_optional_package_properties(KF6Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")
 endif()
 if(KF6Wallet_FOUND)
@@ -134,11 +106,11 @@ else()
 endif()
 
 find_package(KF6DocTools ${KF_REQUIRED_VERSION})
-set_okular_optional_package_properties(KF6DocTools PROPERTIES
+ecm_set_optional_package_properties(KF6DocTools PROPERTIES
     PURPOSE "Required for compiling and installing the user documentation.")
 
 find_package(Qt6Qml)
-set_okular_optional_package_properties(Qt6Qml PROPERTIES
+ecm_set_optional_package_properties(Qt6Qml PROPERTIES
     PURPOSE "Required for supporting JavaScript in PDF documents")
 if(TARGET Qt6::Qml)
     set(HAVE_JS 1)
@@ -162,7 +134,7 @@ if (BUILD_DESKTOP)
     find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes ItemViews TextWidgets WidgetsAddons)
 
     find_package(KF6Purpose)
-    set_okular_optional_package_properties(KF6Purpose PROPERTIES
+    ecm_set_optional_package_properties(KF6Purpose PROPERTIES
         DESCRIPTION "A framework for services and actions integration"
         PURPOSE "Required for enabling the share menu.")
     if (KF6Purpose_FOUND)
@@ -172,7 +144,7 @@ if (BUILD_DESKTOP)
     endif()
 
     find_package(Qt6TextToSpeech ${QT_REQUIRED_VERSION} CONFIG)
-    set_okular_optional_package_properties(Qt6TextToSpeech PROPERTIES
+    ecm_set_optional_package_properties(Qt6TextToSpeech PROPERTIES
         PURPOSE "Enables speech features.")
     if (Qt6TextToSpeech_FOUND)
         set(HAVE_SPEECH 1)
@@ -210,7 +182,7 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 find_package(Phonon4Qt6 CONFIG)
-set_okular_optional_package_properties(Phonon4Qt6 PROPERTIES
+ecm_set_optional_package_properties(Phonon4Qt6 PROPERTIES
     PURPOSE "Required for documents with audio or video elements")
 if (Phonon4Qt6_FOUND)
     set(HAVE_PHONON 1)
@@ -223,37 +195,37 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 find_package(ZLIB REQUIRED)
 
 find_package(Poppler "22.02.0" COMPONENTS Qt6)
-set_okular_optional_package_properties(Poppler PROPERTIES
+ecm_set_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
 find_package(Freetype)
-set_okular_optional_package_properties(Freetype PROPERTIES
+ecm_set_optional_package_properties(Freetype PROPERTIES
         DESCRIPTION  "A font rendering engine"
         URL "https://www.freetype.org"
         PURPOSE "Provides freetype font support in the okular DVI generator.")
 
 find_package(TIFF)
-set_okular_optional_package_properties(TIFF PROPERTIES
+ecm_set_optional_package_properties(TIFF PROPERTIES
         DESCRIPTION  "A library for reading and writing TIFF formatted files,"
         URL "http://www.libtiff.org"
         PURPOSE "Support for TIFF files in okular.")
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
-set_okular_optional_package_properties(LibSpectre PROPERTIES
+ecm_set_optional_package_properties(LibSpectre PROPERTIES
         DESCRIPTION  "A PostScript rendering library"
         URL "https://libspectre.freedesktop.org"
         PURPOSE "Support for PS files in okular.")
 
 find_package(KExiv2Qt6 CONFIG)
-set_okular_optional_package_properties(KExiv2Qt6 PROPERTIES
+ecm_set_optional_package_properties(KExiv2Qt6 PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")
 
 if (FALSE ) # Investigate porting at some point
     find_package(CHM)
-    set_okular_optional_package_properties(CHM PROPERTIES
+    ecm_set_optional_package_properties(CHM PROPERTIES
             DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
             URL "http://www.jedrea.com/chmlib"
             PURPOSE "Support CHM files in okular.")
@@ -261,31 +233,31 @@ if (FALSE ) # Investigate porting at some point
 endif()
 
 find_package(LibZip)
-set_okular_optional_package_properties(LibZip PROPERTIES
+ecm_set_optional_package_properties(LibZip PROPERTIES
         DESCRIPTION  "A library for reading, creating, and modifying zip archives"
         URL "https://libzip.org/"
         PURPOSE "Support CHM files in okular.")
 
 find_package(DjVuLibre "3.5.28")
-set_okular_optional_package_properties(DjVuLibre PROPERTIES
+ecm_set_optional_package_properties(DjVuLibre PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
         URL "https://djvulibre.djvuzone.org"
         PURPOSE "Support for DjVu files in okular.")
 
 find_package(EPub)
-set_okular_optional_package_properties(EPub PROPERTIES
+ecm_set_optional_package_properties(EPub PROPERTIES
         DESCRIPTION  "A library for reading EPub documents"
         URL "http://sourceforge.net/projects/ebook-tools"
         PURPOSE "Support for EPub documents in Okular.")
 
 find_package(QMobipocket6 "2" CONFIG)
-set_okular_optional_package_properties(QMobiPocket6 PROPERTIES
+ecm_set_optional_package_properties(QMobiPocket6 PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
         URL "https://commits.kde.org/kdegraphics-mobipocket"
         PURPOSE "Support for Mobipocket documents in Okular.")
 
 find_package(Discount)
-set_okular_optional_package_properties(Discount PROPERTIES
+ecm_set_optional_package_properties(Discount PROPERTIES
         DESCRIPTION "A library that gives you formatting functions suitable for marking down entire documents or lines of text"
         URL "https://www.pell.portland.or.us/~orc/Code/discount/"
         PURPOSE "Support for Markdown documents in Okular.")

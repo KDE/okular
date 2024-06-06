@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-04 00:38+0000\n"
-"PO-Revision-Date: 2024-02-12 20:00\n"
+"PO-Revision-Date: 2024-06-05 07:04\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -2118,12 +2118,12 @@ msgstr "Не ўдалося знайсці выканальны файл dvipng.
 #: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr "Падчас выканання загаду \"latex\" паўстала праблема."
+msgstr "Падчас выканання каманды \"latex\" паўстала праблема."
 
 #: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr "Падчас выканання загаду \"dvipng\" паўстала праблема."
+msgstr "Падчас выканання каманды \"dvipng\" паўстала праблема."
 
 #: part/bookmarklist.cpp:115
 #, kde-format
@@ -2656,20 +2656,20 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Вызначце загад для запуску адвольнага тэкставага рэдактара.<br />\n"
+"<qt>Вызначце каманду для запуску адвольнага тэкставага рэдактара.<br />\n"
 "Вы можаце размясціць некалькі запаўняльнікаў:\n"
 "<ul>\n"
 "  <li>%f - назва файла</li>\n"
 "  <li>%l - радок файла, да якога трэба перайсці</li>\n"
 "  <li>%c - слупок файла, да якога трэба перайсці</li>\n"
 "</ul>\n"
-"Калі %f не вызначаны, назву файла трэба дадаць у загад."
+"Калі %f не вызначаны, назву файла трэба дадаць у каманду."
 
 #: part/dlgeditor.cpp:63
 #, kde-format
 msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
-msgstr "Загад:"
+msgstr "Каманда:"
 
 #: part/dlggeneral.cpp:33
 #, kde-format
@@ -4873,8 +4873,8 @@ msgid ""
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
 "<qt>Такая памылка звычайна ўзнікае, калі файл пашкоджаны. Калі вы хочаце "
-"быць праверыць файл, паспрабуйце распакаваць яго уласнаручна з дапамогай "
-"інструментаў загаднага радка.</qt>"
+"быць праверыць файл, паспрабуйце распакаваць яго ўласнаручна з дапамогай "
+"інструментаў каманднага радка.</qt>"
 
 #: part/part.cpp:3743
 #, kde-format
@@ -5008,7 +5008,7 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
-"Рэдактар ​​быў вызначаны ў загадным радку\n"
+"Рэдактар ​​быў вызначаны ў камандным радку\n"
 " %1\n"
 "Калі вы хочаце выкарыстоўваць гэта параметр, запусціце okular без параметра "
 "--editor-cmd"
@@ -5646,7 +5646,7 @@ msgstr "Пошук радка ў тэксце"
 #: shell/main.cpp:96
 #, kde-format
 msgid "Sets the external editor command"
-msgstr "Вызначэнне загаду вонкавага рэдактара"
+msgstr "Вызначэнне каманды вонкавага рэдактара"
 
 #: shell/main.cpp:97
 #, kde-format
@@ -5660,10 +5660,10 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
-"Вы не можаце вызначыць загад рэдактара для ўжо запушчанага асобніка okular. "
-"Закрыйце ўкладкі і паўтарыце спробу. Звярніце ўвагу, што унікальнасць "
-"таксама не падтрымліваецца пры вызначэнні загаду рэдактара праз загадны "
-"радок.\n"
+"Вы не можаце вызначыць каманду рэдактара для ўжо запушчанага асобніка "
+"okular. Закрыйце ўкладкі і паўтарыце спробу. Звярніце ўвагу, што "
+"унікальнасць таксама не падтрымліваецца пры вызначэнні каманды рэдактара "
+"праз камандны радок.\n"
 
 #: shell/okular_main.cpp:188
 #, kde-format

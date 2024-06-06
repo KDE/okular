@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-08 00:37+0000\n"
-"PO-Revision-Date: 2024-02-11 18:55\n"
+"PO-Revision-Date: 2024-06-03 19:40\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -130,17 +130,17 @@ msgstr "Файл DVI моцна пашкоджаны. Okular не змог зн�
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr "Заключная частка не пачынаецца з загаду POST."
+msgstr "Заключная частка не пачынаецца з каманды POST."
 
 #: dviFile.cpp:202
 #, kde-format
 msgid "The postamble contained a command other than FNTDEF."
-msgstr "Заключная частка змяшчае загад, адрозны ад FNTDEF."
+msgstr "Заключная частка змяшчае каманду, адрозную ад FNTDEF."
 
 #: dviFile.cpp:240
 #, kde-format
 msgid "The page %1 does not start with the BOP command."
-msgstr "Старонка %1 не пачынаецца з загаду BOP."
+msgstr "Старонка %1 не пачынаецца з каманды BOP."
 
 #: dviFile.cpp:351
 #, kde-format
@@ -166,7 +166,7 @@ msgstr ""
 "дыстрыбутывах сістэмы інтэрпрэтатара PostScript ghostscript. Калі праграма "
 "ghostscript не ўсталяваная ў вашай сістэме, вы можаце ўсталяваць яе. Калі вы "
 "ўпэўнены, што праграма ghostscript усталяваная, паспрабуйце выкарыстаць "
-"<strong>pdf2ps</strong> у загадным радку, каб праверыць, ці сапраўды яна "
+"<strong>pdf2ps</strong> у камандным радку, каб праверыць, ці сапраўды яна "
 "працуе.</p><p><em>PATH:</em> %2</p></qt>"
 
 #: dviFile.cpp:410
@@ -237,12 +237,12 @@ msgstr "Код DVI спасылаецца на шрыфт #%1, які раней
 #: dviRenderer_draw.cpp:353
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr "Набор не быў пустым, калі быў атрыманы загад EOP."
+msgstr "Набор не быў пустым, калі была атрымана каманда EOP."
 
 #: dviRenderer_draw.cpp:365
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr "Набор быў пустым, калі быў атрыманы загад EOP."
+msgstr "Набор быў пустым, калі была атрымана каманда EOP."
 
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
@@ -252,7 +252,7 @@ msgstr "Код DVI спасылаецца на шрыфт, які раней н�
 #: dviRenderer_draw.cpp:539
 #, kde-format
 msgid "An illegal command was encountered."
-msgstr "Быў атрымана забаронены загад."
+msgstr "Была атрымана забароненая каманда."
 
 #: dviRenderer_draw.cpp:544
 #, kde-format
@@ -369,8 +369,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"Памылка ў файле DVI \"%1\", старонка %2. Выплыўны загад колеру выводзіцца, "
-"калі набор колераў пусты."
+"Памылка ў файле DVI \"%1\", старонка %2. Выплыўная каманда колеру "
+"выводзіцца, калі набор колераў пусты."
 
 #: special.cpp:318
 #, kde-format
@@ -378,7 +378,7 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
-"Няправільны параметр у адмысловым загадзе epsf.\n"
+"Няправільны параметр у адмысловай камандзе epsf.\n"
 "Чакаецца, што лік будзе пасля %1 у %2"
 
 #: special.cpp:446
@@ -402,7 +402,7 @@ msgstr ""
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "Адмысловы загад \"%1\" не выкананы."
+msgstr "Адмысловая каманда \"%1\" не выканана."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
@@ -534,7 +534,7 @@ msgstr ""
 #: vf.cpp:164
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
-msgstr "У спісе макрасаў VF знойдзены няправільны загадны байт: %1"
+msgstr "У спісе макрасаў VF знойдзены няправільны камандны байт: %1"
 
 #, fuzzy
 #~ msgid "Abort"

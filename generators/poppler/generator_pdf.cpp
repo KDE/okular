@@ -592,8 +592,17 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
         break;
     }
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
-    case Poppler::Link::ResetForm:
-        break;
+    case Poppler::Link::ResetForm: {
+        if (!std::holds_alternative<std::unique_ptr<Poppler::Link>>(popplerLink)) {
+            // See comment above in Link::Rendition
+            qCDebug(OkularPdfDebug) << "ResetForm link without taking ownership is not supported. Action chain might be broken.";
+            break;
+        }
+        link = new Okular::BackendOpaqueAction();
+        auto uniquePopplerLink = std::get<std::unique_ptr<Poppler::Link>>(std::move(popplerLink));
+        auto popplerLinkResetForm = toSharedPointer<const Poppler::LinkResetForm>(std::move(uniquePopplerLink));
+        link->setNativeHandle(popplerLinkResetForm);
+    } break;
 #endif
     }
 
@@ -1147,10 +1156,20 @@ QAbstractItemModel *PDFGenerator::layersModel() const
     return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : nullptr;
 }
 
-void PDFGenerator::opaqueAction(const Okular::BackendOpaqueAction *action)
+Okular::BackendOpaqueAction::OpaqueActionResult PDFGenerator::opaqueAction(const Okular::BackendOpaqueAction *action)
 {
-    const Poppler::LinkOCGState *popplerLink = static_cast<const Poppler::LinkOCGState *>(action->nativeHandle());
-    pdfdoc->optionalContentModel()->applyLink(const_cast<Poppler::LinkOCGState *>(popplerLink));
+    const Poppler::Link *popplerLink = static_cast<const Poppler::Link *>(action->nativeHandle());
+    if (const Poppler::LinkOCGState *ocgLink = dynamic_cast<const Poppler::LinkOCGState *>(popplerLink)) {
+        pdfdoc->optionalContentModel()->applyLink(const_cast<Poppler::LinkOCGState *>(ocgLink));
+        return Okular::BackendOpaqueAction::DoNothing;
+    }
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
+    else if (const Poppler::LinkResetForm *resetFormLink = dynamic_cast<const Poppler::LinkResetForm *>(popplerLink)) {
+        pdfdoc->applyResetFormsLink(*resetFormLink);
+        return Okular::BackendOpaqueAction::RefreshForms;
+    }
+#endif
+    return Okular::BackendOpaqueAction::DoNothing;
 }
 
 bool PDFGenerator::isAllowed(Okular::Permission permission) const

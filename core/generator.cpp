@@ -391,8 +391,9 @@ Document::PrintError Generator::print(QPrinter &)
     return Document::UnknownPrintError;
 }
 
-void Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
+BackendOpaqueAction::OpaqueActionResult Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
 {
+    return BackendOpaqueAction::DoNothing;
 }
 
 void Generator::freeOpaqueActionContents(const BackendOpaqueAction & /*action*/)

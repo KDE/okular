@@ -12,6 +12,7 @@
 #ifndef _OKULAR_GENERATOR_H_
 #define _OKULAR_GENERATOR_H_
 
+#include "action.h"
 #include "document.h"
 #include "fontinfo.h"
 #include "global.h"
@@ -447,9 +448,9 @@ public:
     virtual QAbstractItemModel *layersModel() const;
 
     /**
-     * Calls the backend to execute an BackendOpaqueAction
+     * Calls the backend to execute a BackendOpaqueAction @p action and returns BackendOpaqueAction result
      */
-    virtual void opaqueAction(const BackendOpaqueAction *action);
+    virtual BackendOpaqueAction::OpaqueActionResult opaqueAction(const BackendOpaqueAction *action);
 
     /**
      * Frees the contents of the opaque action (if any);

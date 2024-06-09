@@ -72,7 +72,7 @@ public:
         return Pixels;
     }
     QAbstractItemModel *layersModel() const override;
-    void opaqueAction(const Okular::BackendOpaqueAction *action) override;
+    Okular::BackendOpaqueAction::OpaqueActionResult opaqueAction(const Okular::BackendOpaqueAction *action) override;
 
     // [INHERITED] document information
     bool isAllowed(Okular::Permission permission) const override;

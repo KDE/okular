@@ -4311,7 +4311,19 @@ void Document::processAction(const Action *action)
         Q_EMIT processRenditionAction(static_cast<const RenditionAction *>(action));
     } break;
     case Action::BackendOpaque: {
-        d->m_generator->opaqueAction(static_cast<const BackendOpaqueAction *>(action));
+        const BackendOpaqueAction *backendOpaqueAction = static_cast<const BackendOpaqueAction *>(action);
+        Okular::BackendOpaqueAction::OpaqueActionResult res = d->m_generator->opaqueAction(backendOpaqueAction);
+        if (res & Okular::BackendOpaqueAction::RefreshForms) {
+            for (const Page *p : std::as_const(d->m_pagesVector)) {
+                if (p) {
+                    const QList<Okular::FormField *> forms = p->formFields();
+                    for (FormField *form : forms) {
+                        Q_EMIT refreshFormWidget(form);
+                    }
+                }
+                d->refreshPixmaps(p->number());
+            }
+        }
     } break;
     }
 

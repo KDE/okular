@@ -14,6 +14,7 @@
 #include <QDataStream>
 #include <QFile>
 #include <QLoggingCategory>
+#include <array>
 
 //#define DEBUG_TFM
 
@@ -38,7 +39,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 #ifdef DEBUG_TFM
     qCDebug(OkularDviDebug) << "lf= " << lf << "lh= " << lh << "\nbc= " << bc << "\nec= " << ec << "\nnw= " << nw << "\nnh= " << nh << "\nnd= " << nd;
 #endif
-    if ((bc > ec) || (ec >= TeXFontDefinition::max_num_of_chars_in_font)) {
+    if ((bc > ec) || (ec >= TeXFontDefinition::max_num_of_chars_in_font) || (nw >= TeXFontDefinition::max_num_of_chars_in_font) || (nh >= 16)) {
         qCCritical(OkularDviDebug) << "TeXFont_TFM::TeXFont_TFM( filename=" << parent->filename << " ): The font has an invalid bc and ec entries.";
         file.close();
         return;
@@ -53,10 +54,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 #endif
 
     // Width table
-    fix_word widthTable_in_units_of_design_size[TeXFontDefinition::max_num_of_chars_in_font];
-    for (fix_word &fw : widthTable_in_units_of_design_size) {
-        fw.value = 0;
-    }
+    std::array<fix_word, TeXFontDefinition::max_num_of_chars_in_font> widthTable_in_units_of_design_size = {};
 
     file.seek(24 + 4 * lh + 4 * (ec - bc));
     for (unsigned int i = 0; i < nw; i++) {
@@ -72,10 +70,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
     }
 
     // Height table
-    fix_word heightTable_in_units_of_design_size[16];
-    for (fix_word &fw : heightTable_in_units_of_design_size) {
-        fw.value = 0;
-    }
+    std::array<fix_word, 16> heightTable_in_units_of_design_size = {};
     for (unsigned int i = 0; i < nh; i++) {
         stream >> heightTable_in_units_of_design_size[i].value;
     }

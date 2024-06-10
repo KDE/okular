@@ -27,7 +27,7 @@ public:
         return (double(value)) / (double(1 << 20));
     }
 
-    qint32 value;
+    qint32 value = 0;
 };
 
 class TeXFont_TFM : public TeXFont

@@ -49,15 +49,11 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
     QString command = QString::fromLocal8Bit(cp + 7);
 
-    QString include_command = command.simplified();
+    QString include_command = command.trimmed();
 
     // The line is supposed to start with "..ile=", and then comes the
     // filename. Figure out what the filename is and stow it away. Of
-    // course, this does not work if the filename contains spaces
-    // (already the simplified() above is wrong). If you have
-    // files like this, go away.
     QString EPSfilename = include_command;
-    EPSfilename.truncate(EPSfilename.indexOf(QLatin1Char(' ')));
 
     // Strip enclosing quotation marks which are included by some LaTeX
     // macro packages (but not by others). This probably means that
@@ -420,15 +416,11 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString &cp)
     qCDebug(OkularDviDebug) << "epsf-special: psfile=" << cp;
 #endif
 
-    QString include_command = cp.simplified();
+    QString include_command = cp.trimmed();
 
     // The line is supposed to start with "..ile=", and then comes the
-    // filename. Figure out what the filename is and stow it away. Of
-    // course, this does not work if the filename contains spaces
-    // (already the simplified() above is wrong). If you have
-    // files like this, go away.
+    // filename. Figure out what the filename is and stow it away.
     QString EPSfilename = include_command;
-    EPSfilename.truncate(EPSfilename.indexOf(QLatin1Char(' ')));
 
     // Strip enclosing quotation marks which are included by some LaTeX
     // macro packages (but not by others). This probably means that

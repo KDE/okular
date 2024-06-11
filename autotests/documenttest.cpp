@@ -29,8 +29,8 @@ class DocumentTest : public QObject
 private Q_SLOTS:
     void testCloseDuringRotationJob();
     void testDocdataMigration();
-    void testDiff_data();
-    void testDiff();
+    void testEvaluateKeystrokeEventChange_data();
+    void testEvaluateKeystrokeEventChange();
 };
 
 // Test that we don't crash if the document is closed while a RotationJob
@@ -128,57 +128,53 @@ void DocumentTest::testDocdataMigration()
     delete m_document;
 }
 
-void DocumentTest::testDiff_data()
+void DocumentTest::testEvaluateKeystrokeEventChange_data()
 {
     QTest::addColumn<QString>("oldVal");
     QTest::addColumn<QString>("newVal");
+    QTest::addColumn<int>("selStart");
+    QTest::addColumn<int>("selEnd");
     QTest::addColumn<QString>("expectedDiff");
 
     QTest::addRow("empty") << ""
-                           << ""
-                           << "";
+                           << "" << 0 << 0 << "";
     QTest::addRow("a") << ""
-                       << "a"
-                       << "a";
+                       << "a" << 0 << 0 << "a";
     QTest::addRow("ab") << "a"
-                        << "b"
-                        << "b";
+                        << "b" << 0 << 1 << "b";
     QTest::addRow("ab2") << "a"
-                         << "ab"
-                         << "b";
+                         << "ab" << 1 << 1 << "b";
     QTest::addRow("kaesekuchen") << "Käse"
-                                 << "Käsekuchen"
-                                 << "kuchen";
+                                 << "Käsekuchen" << 4 << 4 << "kuchen";
     QTest::addRow("replace") << "kuchen"
-                             << "wurst"
-                             << "wurst";
+                             << "wurst" << 0 << 6 << "wurst";
     QTest::addRow("okular") << "Oku"
-                            << "Okular"
-                            << "lar";
+                            << "Okular" << 3 << 3 << "lar";
+    QTest::addRow("okular2") << "Oku"
+                             << "Okular" << 0 << 3 << "Okular";
     QTest::addRow("removal1") << "a"
-                              << ""
-                              << "";
+                              << "" << 0 << 1 << "";
     QTest::addRow("removal2") << "ab"
-                              << "a"
-                              << "";
+                              << "a" << 1 << 2 << "";
+    QTest::addRow("overlapping chang") << "abcd"
+                                       << "abclmnopd" << 1 << 3 << "bclmnop";
     QTest::addRow("unicode") << "☮🤌"
-                             << "☮🤌❤️"
-                             << "❤️";
+                             << "☮🤌❤️" << 2 << 2 << "❤️";
     QTest::addRow("unicode2") << "☮"
-                              << "☮🤌❤️"
-                              << "🤌❤️";
+                              << "☮🤌❤️" << 1 << 1 << "🤌❤️";
     QTest::addRow("unicode3") << "🤍"
-                              << "🤌"
-                              << "🤌";
+                              << "🤌" << 0 << 1 << "🤌";
 }
 
-void DocumentTest::testDiff()
+void DocumentTest::testEvaluateKeystrokeEventChange()
 {
     QFETCH(QString, oldVal);
     QFETCH(QString, newVal);
+    QFETCH(int, selStart);
+    QFETCH(int, selEnd);
     QFETCH(QString, expectedDiff);
 
-    QCOMPARE(Okular::DocumentPrivate::diff(oldVal, newVal), expectedDiff);
+    QCOMPARE(Okular::DocumentPrivate::evaluateKeystrokeEventChange(oldVal, newVal, selStart, selEnd), expectedDiff);
 }
 
 QTEST_MAIN(DocumentTest)

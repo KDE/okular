@@ -4358,27 +4358,22 @@ void Document::processFormatAction(const Action *action, Okular::FormFieldText *
     }
 }
 
-QString DocumentPrivate::diff(const QString &oldVal, const QString &newVal)
+QString DocumentPrivate::evaluateKeystrokeEventChange(const QString &oldVal, const QString &newVal, int selStart, int selEnd)
 {
-    // We need to consider unicode surrogate pairs and others so working
-    // with QString directly, even with the private QStringIterator is
-    // not that simple to get right
-    // so let's just convert to ucs4
-    // also, given that toUcs4 is either a QList or a QVector depending on
-    // qt version, let's try keep it very auto-typed to ease Qt6 porting
+    /*
+        The change needs to be evaluated here in accordance with code points.
+        selStart and selEnd parameters passed to this method should be been adjusted accordingly.
 
-    auto oldUcs4 = oldVal.toStdU32String();
-    auto newUcs4 = newVal.toStdU32String();
-
-    for (size_t i = 0; i < std::min(oldUcs4.size(), newUcs4.size()); i++) {
-        if (oldUcs4.at(i) != newUcs4.at(i)) {
-            return QString::fromUcs4(std::u32string_view {newUcs4}.substr(i).data(), newUcs4.size() - i);
-        }
+        Since QString methods work in terms of code units, we convert the strings to UTF-32.
+    */
+    std::u32string oldUcs4 = oldVal.toStdU32String();
+    std::u32string newUcs4 = newVal.toStdU32String();
+    if (selStart < 0 || selEnd < 0 || (selEnd - selStart) + (static_cast<int>(newUcs4.size()) - static_cast<int>(oldUcs4.size())) < 0) {
+        // Prevent Okular from crashing if incorrect parameters are passed or some bug causes incorrect calculation
+        return {};
     }
-    if (oldUcs4.size() < newUcs4.size()) {
-        return QString::fromUcs4(std::u32string_view {newUcs4}.substr(oldUcs4.size()).data(), newUcs4.size() - oldUcs4.size());
-    }
-    return {};
+    const size_t changeLength = (selEnd - selStart) + (newUcs4.size() - oldUcs4.size());
+    return QString::fromUcs4(std::u32string_view {newUcs4}.substr(selStart, changeLength).data(), changeLength);
 }
 
 void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue, int prevCursorPos, int prevAnchorPos)
@@ -4396,18 +4391,51 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormFieldTex
     }
 
     std::shared_ptr<Event> event = Event::createKeystrokeEvent(fft, d->m_pagesVector[foundPage]);
-    event->setChange(DocumentPrivate::diff(fft->text(), newValue.toString()));
-    int selStart;
-    if (fft->text().size() - newValue.toString().size() == 1 && prevCursorPos == prevAnchorPos) {
-        // consider a one character removal as selection of that character and then its removal.
-        selStart = prevCursorPos - 1;
-    } else {
-        selStart = std::min(prevCursorPos, prevAnchorPos);
-    }
+
+    /* Set the selStart and selEnd event properties
+
+       QString using UTF-16 counts a code point as made up of 1 or 2 16-bit code units.
+
+       When encoded using 2 code units, the units are referred to as surrogate pairs.
+       selectionStart() and selectionEnd() methods evaluate prevCursorPos and prevAnchorPos based on code units during selection.
+
+       While this unit-based evaulation is suitable for detecting changes, for providing consistency with Adobe Reader for values of selStart and selEnd,
+       it would be best to evaluate in terms of code points rather than the code units.
+
+       To correct the values of selStart and selEnd accordingly, we iterate over the code units. If a surrogate pair is encountered, then selStart and
+       selEnd are accordingly decremented.
+    */
+    int selStart = std::min(prevCursorPos, prevAnchorPos);
     int selEnd = std::max(prevCursorPos, prevAnchorPos);
+    int codeUnit;
+    int initialSelStart = selStart;
+    int initialSelEnd = selEnd;
+    for (codeUnit = 0; codeUnit < initialSelStart && codeUnit < fft->text().size(); codeUnit++) {
+        if (fft->text().at(codeUnit).isHighSurrogate()) {
+            // skip the low surrogate and decrement selStart and selEnd
+            codeUnit++;
+            selStart--;
+            selEnd--;
+        }
+    }
+    for (; codeUnit < initialSelEnd && codeUnit < fft->text().size(); codeUnit++) {
+        if (fft->text().at(codeUnit).isHighSurrogate()) {
+            // skip the low surrogate and decrement selEnd
+            codeUnit++;
+            selEnd--;
+        }
+    }
+    std::u32string oldUcs4 = fft->text().toStdU32String();
+    std::u32string newUcs4 = newValue.toString().toStdU32String();
+    // It is necessary to count size in terms of code points rather than code units for deletion.
+    if (oldUcs4.size() - newUcs4.size() == 1 && selStart == selEnd) {
+        // consider a one character removal as selection of that character and then its removal.
+        selStart--;
+    }
     event->setSelStart(selStart);
     event->setSelEnd(selEnd);
-
+    // Use the corrected selStart and selEnd for evaluating the change.
+    event->setChange(DocumentPrivate::evaluateKeystrokeEventChange(fft->text(), newValue.toString(), selStart, selEnd));
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, linkscript);

@@ -232,7 +232,7 @@ public:
 
     void clearAndWaitForRequests();
 
-    OKULARCORE_EXPORT static QString diff(const QString &oldVal, const QString &newVal);
+    OKULARCORE_EXPORT static QString evaluateKeystrokeEventChange(const QString &oldVal, const QString &newVal, int selStart, int selEnd);
 
     /*
      * Executes a ScriptAction with the event passed as parameter.

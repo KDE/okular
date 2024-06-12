@@ -158,7 +158,7 @@ public:
     QPointF mousePressPos;
     QPointF mouseSelectPos;
     QPointF previousMouseMovePos;
-    qreal mouseMidLastY;
+    qreal mouseMidLastY = 0.0;
     bool mouseSelecting = false;
     QRect mouseSelectionRect;
     QColor mouseSelectionColor;

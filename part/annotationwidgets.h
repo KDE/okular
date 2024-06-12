@@ -205,7 +205,7 @@ protected:
 
 private:
     Okular::HighlightAnnotation *m_hlAnn;
-    QComboBox *m_typeCombo;
+    QComboBox *m_typeCombo = nullptr;
 };
 
 class GeomAnnotationWidget : public AnnotationWidget
@@ -222,10 +222,10 @@ protected:
 
 private:
     Okular::GeomAnnotation *m_geomAnn;
-    QComboBox *m_typeCombo;
-    QCheckBox *m_useColor;
-    KColorButton *m_innerColor;
-    QDoubleSpinBox *m_spinSize;
+    QComboBox *m_typeCombo = nullptr;
+    QCheckBox *m_useColor = nullptr;
+    KColorButton *m_innerColor = nullptr;
+    QDoubleSpinBox *m_spinSize = nullptr;
 };
 
 class FileAttachmentAnnotationWidget : public AnnotationWidget
@@ -277,7 +277,7 @@ protected:
 
 private:
     Okular::InkAnnotation *m_inkAnn;
-    QDoubleSpinBox *m_spinSize;
+    QDoubleSpinBox *m_spinSize = nullptr;
 };
 
 #endif

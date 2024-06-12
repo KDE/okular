@@ -2034,7 +2034,7 @@ msgstr "大小不可用"
 #: part/annotationwidgets.cpp:767
 #, kde-format
 msgid "No description available."
-msgstr "没有可用描述。"
+msgstr "没有可用的描述。"
 
 #: part/annotationwidgets.cpp:775
 #, kde-format

@@ -466,6 +466,24 @@ void RadioButtonEdit::setFormWidgetsController(FormWidgetsController *controller
     setChecked(form->state());
 }
 
+void RadioButtonEdit::slotRefresh(Okular::FormField *form)
+{
+    if (form != m_ff) {
+        return;
+    }
+    FormWidgetIface::slotRefresh(form);
+
+    Okular::FormFieldButton *button = static_cast<Okular::FormFieldButton *>(m_ff);
+    bool oldState = isChecked();
+    bool newState = button->state();
+    if (oldState != newState) {
+        setChecked(button->state());
+        if (form->activationAction()) {
+            m_controller->signalAction(form->activationAction());
+        }
+    }
+}
+
 FormLineEdit::FormLineEdit(Okular::FormFieldText *text, PageView *pageView)
     : QLineEdit(pageView->viewport())
     , FormWidgetIface(this, text)
@@ -936,6 +954,31 @@ void ListEdit::slotHandleFormListChangedByUndoRedo(int pageNumber, Okular::FormF
     setFocus();
 }
 
+void ListEdit::slotRefresh(Okular::FormField *form)
+{
+    if (m_ff != form) {
+        return;
+    }
+    FormWidgetIface::slotRefresh(form);
+
+    Okular::FormFieldChoice *ffc = static_cast<Okular::FormFieldChoice *>(m_ff);
+    const QList<int> selectedItems = ffc->currentChoices();
+    disconnect(this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged);
+    if (ffc->multiSelect()) {
+        for (const int index : selectedItems) {
+            if (index >= 0 && index < count()) {
+                item(index)->setSelected(true);
+            }
+        }
+    } else {
+        if (selectedItems.count() == 1 && selectedItems.at(0) >= 0 && selectedItems.at(0) < count()) {
+            setCurrentRow(selectedItems.at(0));
+            scrollToItem(item(selectedItems.at(0)));
+        }
+    }
+    connect(this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged);
+}
+
 ComboEdit::ComboEdit(Okular::FormFieldChoice *choice, PageView *pageView)
     : QComboBox(pageView->viewport())
     , FormWidgetIface(this, choice)
@@ -1071,6 +1114,28 @@ bool ComboEdit::event(QEvent *e)
         }
     }
     return QComboBox::event(e);
+}
+
+void ComboEdit::slotRefresh(Okular::FormField *form)
+{
+    if (form != m_ff) {
+        return;
+    }
+    FormWidgetIface::slotRefresh(form);
+
+    disconnect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ComboEdit::slotValueChanged);
+    disconnect(this, &QComboBox::editTextChanged, this, &ComboEdit::slotValueChanged);
+    Okular::FormFieldChoice *ffc = static_cast<Okular::FormFieldChoice *>(m_ff);
+    const QList<int> selectedItems = ffc->currentChoices();
+    if (selectedItems.count() == 1 && selectedItems.at(0) >= 0 && selectedItems.at(0) < count()) {
+        setCurrentIndex(selectedItems.at(0));
+    }
+
+    if (ffc->isEditable() && !ffc->editChoice().isEmpty()) {
+        lineEdit()->setText(ffc->editChoice());
+    }
+    connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ComboEdit::slotValueChanged);
+    connect(this, &QComboBox::editTextChanged, this, &ComboEdit::slotValueChanged);
 }
 
 SignatureEdit::SignatureEdit(Okular::FormFieldSignature *signature, PageView *pageView)

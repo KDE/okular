@@ -200,6 +200,9 @@ public:
 
     // reimplemented from FormWidgetIface
     void setFormWidgetsController(FormWidgetsController *controller) override;
+
+protected:
+    void slotRefresh(Okular::FormField *form) override;
     DECLARE_ADDITIONAL_ACTIONS
 };
 
@@ -287,6 +290,9 @@ public:
 private Q_SLOTS:
     void slotSelectionChanged();
     void slotHandleFormListChangedByUndoRedo(int pageNumber, Okular::FormFieldChoice *listForm, const QList<int> &choices);
+
+protected:
+    void slotRefresh(Okular::FormField *form) override;
     DECLARE_ADDITIONAL_ACTIONS
 };
 
@@ -308,6 +314,9 @@ private:
     int m_prevCursorPos;
     int m_prevAnchorPos;
     DECLARE_ADDITIONAL_ACTIONS
+
+protected:
+    void slotRefresh(Okular::FormField *form) override;
 };
 
 class SignatureEdit : public QAbstractButton, public FormWidgetIface

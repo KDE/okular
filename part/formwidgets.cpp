@@ -42,7 +42,9 @@ FormWidgetsController::FormWidgetsController(Okular::Document *doc)
     connect(this, &FormWidgetsController::formComboChangedByUndoRedo, this, &FormWidgetsController::changed);
 
     // connect form modification signals to and from document
-    connect(this, &FormWidgetsController::formTextChangedByWidget, doc, &Okular::Document::editFormText);
+    // connect to the newer editFormText method and not the deprecated one
+    using EditFormTextType = void (Okular::Document::*)(int, Okular::FormFieldText *, const QString &, int, int, int, const QString &);
+    connect(this, &FormWidgetsController::formTextChangedByWidget, doc, static_cast<EditFormTextType>(&Okular::Document::editFormText));
     connect(doc, &Okular::Document::formTextChangedByUndoRedo, this, &FormWidgetsController::formTextChangedByUndoRedo);
 
     connect(this, &FormWidgetsController::formListChangedByWidget, doc, &Okular::Document::editFormList);
@@ -599,14 +601,23 @@ void FormLineEdit::contextMenuEvent(QContextMenuEvent *event)
 void FormLineEdit::slotChanged()
 {
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
-    int cursorPos = cursorPosition();
+    QString newWidgetValueBeforeKeystroke = text();
+    QString oldContents = form->text();
+    int cursorPos;
 
-    if (text() != form->text()) {
+    if (newWidgetValueBeforeKeystroke != oldContents) {
         if (form->additionalAction(Okular::FormField::FieldModified) && m_editing && !form->isReadOnly()) {
             m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, text(), m_prevCursorPos, m_prevAnchorPos);
         }
-
-        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, text(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        // calculate cursor position after keystroke action since it is possible that the change was not accepted and widget was refreshed.
+        cursorPos = cursorPosition();
+        if (newWidgetValueBeforeKeystroke == text()) {
+            // if widget was not refreshed then emit this signal.
+            Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, text(), cursorPos, m_prevCursorPos, m_prevAnchorPos, oldContents);
+        }
+    } else {
+        // we still evaluate the cursor position if no change occurs in widget contents.
+        cursorPos = cursorPosition();
     }
 
     m_prevCursorPos = cursorPos;
@@ -633,7 +644,11 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo(int pageNumber, Okular::FormF
     connect(this, &QLineEdit::cursorPositionChanged, this, &FormLineEdit::slotChanged);
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
-    setFocus();
+
+    // If the contents of the box have already lost focus, we need to run all the keystroke, validation, formatting scripts again.
+    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing was still retain the focus and these scripts would execute when focus is lost.
+        // TODO handle the keystroke, validate, calculate, format events here.
+    }
 }
 
 void FormLineEdit::slotRefresh(Okular::FormField *form)
@@ -751,20 +766,33 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo(int pageNumber, Okular::FormF
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
     setTextCursor(c);
-    setFocus();
+
+    // If the contents of the box have already lost focus, we need to run all the keystroke, validation, formatting scripts again.
+    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing was still retain the focus and these scripts would execute when focus is lost.
+        // TODO handle the keystroke, validate, calculate, format events here.
+    }
 }
 
 void TextAreaEdit::slotChanged()
 {
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
-    int cursorPos = textCursor().position();
+    QString newWidgetValueBeforeKeystroke = toPlainText();
+    QString oldContents = form->text();
+    int cursorPos;
 
-    if (toPlainText() != form->text()) {
+    if (newWidgetValueBeforeKeystroke != oldContents) {
         if (form->additionalAction(Okular::FormField::FieldModified) && m_editing && !form->isReadOnly()) {
             m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, toPlainText(), m_prevCursorPos, m_prevAnchorPos);
         }
-
-        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, toPlainText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        // calculate cursor position after keystroke action since it is possible that the change was not accepted and widget was refreshed.
+        cursorPos = textCursor().position();
+        if (newWidgetValueBeforeKeystroke == toPlainText()) {
+            // if widget was not refreshed then emit this signal.
+            Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, toPlainText(), cursorPos, m_prevCursorPos, m_prevAnchorPos, oldContents);
+        }
+    } else {
+        // we still evaluate the cursor position if no change occurs in widget contents.
+        cursorPos = textCursor().position();
     }
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = textCursor().anchor();
@@ -859,9 +887,10 @@ void FileEdit::slotChanged()
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
 
     QString contents = text();
+    QString oldContents = form->text();
     int cursorPos = lineEdit()->cursorPosition();
-    if (contents != form->text()) {
-        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
+    if (contents != oldContents) {
+        Q_EMIT m_controller->formTextChangedByWidget(pageItem()->pageNumber(), form, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos, oldContents);
     }
 
     m_prevCursorPos = cursorPos;

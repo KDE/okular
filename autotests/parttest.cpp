@@ -1366,7 +1366,7 @@ void PartTest::testSaveAsUndoStackForms()
         if (ff->id() == 65537) {
             QCOMPARE(ff->type(), FormField::FormText);
             FormFieldText *fft = static_cast<FormFieldText *>(ff);
-            part.m_document->editFormText(0, fft, QStringLiteral("BlaBla"), 6, 0, 0);
+            part.m_document->editFormText(0, fft, QStringLiteral("BlaBla"), 6, 0, 0, QString());
         } else if (ff->id() == 65538) {
             QCOMPARE(ff->type(), FormField::FormButton);
             FormFieldButton *ffb = static_cast<FormFieldButton *>(ff);

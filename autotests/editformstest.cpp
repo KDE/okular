@@ -376,7 +376,7 @@ void EditFormsTest::verifyTextForm(Okular::FormFieldText *form)
     QCOMPARE(form->text(), QLatin1String(""));
 
     // Insert the string "Hello" into the form
-    m_document->editFormText(0, form, QStringLiteral("Hello"), 5, 0, 0);
+    m_document->editFormText(0, form, QStringLiteral("Hello"), 5, 0, 0, QString());
     QCOMPARE(form->text(), QStringLiteral("Hello"));
     QVERIFY(m_document->canUndo());
     QVERIFY(!m_document->canRedo());
@@ -394,12 +394,12 @@ void EditFormsTest::verifyTextForm(Okular::FormFieldText *form)
     QVERIFY(!m_document->canRedo());
 
     // Type "_World" after "Hello"
-    m_document->editFormText(0, form, QStringLiteral("Hello_"), 6, 5, 5);
-    m_document->editFormText(0, form, QStringLiteral("Hello_W"), 7, 6, 6);
-    m_document->editFormText(0, form, QStringLiteral("Hello_Wo"), 8, 7, 7);
-    m_document->editFormText(0, form, QStringLiteral("Hello_Wor"), 9, 8, 8);
-    m_document->editFormText(0, form, QStringLiteral("Hello_Worl"), 10, 9, 9);
-    m_document->editFormText(0, form, QStringLiteral("Hello_World"), 11, 10, 10);
+    m_document->editFormText(0, form, QStringLiteral("Hello_"), 6, 5, 5, QStringLiteral("Hello"));
+    m_document->editFormText(0, form, QStringLiteral("Hello_W"), 7, 6, 6, QStringLiteral("Hello_"));
+    m_document->editFormText(0, form, QStringLiteral("Hello_Wo"), 8, 7, 7, QStringLiteral("Hello_W"));
+    m_document->editFormText(0, form, QStringLiteral("Hello_Wor"), 9, 8, 8, QStringLiteral("Hello_Wo"));
+    m_document->editFormText(0, form, QStringLiteral("Hello_Worl"), 10, 9, 9, QStringLiteral("Hello_Wor"));
+    m_document->editFormText(0, form, QStringLiteral("Hello_World"), 11, 10, 10, QStringLiteral("Hello_Worl"));
 
     // Verify that character insertion operations were merged together into a single undo command
     m_document->undo();

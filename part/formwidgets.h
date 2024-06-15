@@ -79,7 +79,7 @@ Q_SIGNALS:
     void requestRedo();
     void canUndoChanged(bool undoAvailable);
     void canRedoChanged(bool redoAvailable);
-    void formTextChangedByWidget(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos);
+    void formTextChangedByWidget(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos, const QString &oldContents);
 
     void formTextChangedByUndoRedo(int pageNumber, Okular::FormFieldText *form, const QString &contents, int cursorPos, int anchorPos);
 

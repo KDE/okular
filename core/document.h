@@ -678,9 +678,9 @@ public:
      * Processes the given keystroke @p action on @p fft.
      *
      * @since 1.9
-     * @deprecated
+     * @deprecated use processKeystrokeAction(const Action *, Okular::FormFieldText *, const QVariant &, int, int)
      */
-    void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue);
+    OKULARCORE_DEPRECATED void processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue);
 
     /**
      * Processes the given keystroke @p action on @p fft between the two positions @p prevCursorPos and @p prevAnchorPos
@@ -1083,8 +1083,19 @@ public Q_SLOTS:
      * The new text cursor position (@p newCursorPos), previous text cursor position (@p prevCursorPos),
      * and previous cursor anchor position will be restored by the undo / redo commands.
      * @since 0.17 (KDE 4.11)
+     *
+     * @deprecated use editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents,
+     *                          int newCursorPos, int prevCursorPos, int prevAnchorPos, const QString &oldContents)
      */
-    void editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos);
+    OKULARCORE_DEPRECATED void editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos);
+
+    /**
+     * Edit the text contents of the specified @p form on page @p page to be @p newContents where
+     * previous contents are @p oldContents for undo/redo commands. The new text cursor position (@p newCursorPos),
+     * previous text cursor position (@p prevCursorPos), and previous cursor anchor position will be restored by the undo / redo commands.
+     * @since 24.08
+     */
+    void editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos, const QString &oldContents);
 
     /**
      * Edit the selected list entries in @p form on page @p page to be @p newChoices.

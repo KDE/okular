@@ -69,15 +69,15 @@ void CalculateTextTest::testSimpleCalculate()
     // Set some values and do calculation
     Okular::FormFieldText *field1 = fields[QStringLiteral("field1")];
     QVERIFY(field1);
-    m_document->editFormText(0, field1, QStringLiteral("10"), 0, 0, 0);
+    m_document->editFormText(0, field1, QStringLiteral("10"), 0, 0, 0, QString());
 
     Okular::FormFieldText *field2 = fields[QStringLiteral("field2")];
     QVERIFY(field2);
-    m_document->editFormText(0, field2, QStringLiteral("20"), 0, 0, 0);
+    m_document->editFormText(0, field2, QStringLiteral("20"), 0, 0, 0, QString());
 
     Okular::FormFieldText *field3 = fields[QStringLiteral("field3")];
     QVERIFY(field3);
-    m_document->editFormText(0, field3, QStringLiteral("30"), 0, 0, 0);
+    m_document->editFormText(0, field3, QStringLiteral("30"), 0, 0, 0, QString());
 
     // Verify the results
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("60"));
@@ -90,7 +90,7 @@ void CalculateTextTest::testSimpleCalculate()
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("60"));
 
     // Test that multiplication with zero works
-    m_document->editFormText(0, field2, QStringLiteral("0"), 0, 0, 0);
+    m_document->editFormText(0, field2, QStringLiteral("0"), 0, 0, 0, QStringLiteral("20"));
     QCOMPARE(fields[QStringLiteral("Prod")]->text(), QStringLiteral("0"));
 
     // Test that updating the field also worked with sum

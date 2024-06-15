@@ -3967,6 +3967,12 @@ void Document::editFormText(int pageNumber, Okular::FormFieldText *form, const Q
     d->m_undoStack->push(uc);
 }
 
+void Document::editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos, const QString &oldContents)
+{
+    QUndoCommand *uc = new EditFormTextCommand(this->d, form, pageNumber, newContents, newCursorPos, oldContents, prevCursorPos, prevAnchorPos);
+    d->m_undoStack->push(uc);
+}
+
 void Document::editFormList(int pageNumber, FormFieldChoice *form, const QList<int> &newChoices)
 {
     const QList<int> prevChoices = form->currentChoices();
@@ -4373,7 +4379,13 @@ QString DocumentPrivate::evaluateKeystrokeEventChange(const QString &oldVal, con
         return {};
     }
     const size_t changeLength = (selEnd - selStart) + (newUcs4.size() - oldUcs4.size());
-    return QString::fromUcs4(std::u32string_view {newUcs4}.substr(selStart, changeLength).data(), changeLength);
+    auto subview = std::u32string_view {newUcs4}.substr(selStart, changeLength);
+    if (subview.empty()) {
+        // If subview is empty (in scenarios when selStart is at end and changeLength is non-zero) fromUcs4 returns \u0000.
+        // This should not happen, but just a guard.
+        return {};
+    }
+    return QString::fromUcs4(subview.data(), changeLength);
 }
 
 void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue, int prevCursorPos, int prevAnchorPos)

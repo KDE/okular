@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2009-05-26 10:18+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -258,7 +258,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "កូដ DVI កំណត់​តួអក្សរ​នៃ​ពុម្ពអក្សរ​ដែល​មិន​ស្គាល់ ។"
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "កូដ DVI យោង​តាម​ពុម្ពអក្សរ #%1 ដែល​មិន​ត្រូវ​បាន​កំណត់​ពីមុន ។"
@@ -288,12 +288,12 @@ msgstr "បានជួប​ប្រទះ​ពាក្យ​បញ្ជា
 msgid "The unknown op-code %1 was encountered."
 msgstr "មិនស្គាល់​កូដ​ op- %1 ត្រូវ​បាន​ជួប​ប្រទះ​ ។​"
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:83
 #, kde-format
 msgid "Embedding %1"
 msgstr "បង្កប់​ %1"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:101
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -301,13 +301,13 @@ msgid ""
 msgstr ""
 "ទំព័រ %1 ៖ ឯកសារ PDF <strong>%2</strong> មិន​អាច​ត្រូវ​បាន​បម្លែង​ទៅ PostScript ។<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:103
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "ទំព័រ​ %1 ៖ ឯកសារ​ PostScript <strong>%2</strong> មិន​អាច​រក​ឃើញ​ឡើយ​ ​។​<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:257
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "ទំហំ​ក្រដាស​ទិន្នន័យ​ '%1' មិន​អាច​ញែក​បាន​ឡើយ​ ។​"
@@ -432,7 +432,7 @@ msgstr ""
 "ប៉ារ៉ាម៉ែត្រ Malformed នៅ​ក្នុង​ពាក្យ​បញ្ជា epsf ជា​ពិសេស ។\n"
 "សង្ឃឹម​ថា​ចំនួន​ពិត​នឹង​តាម %1 នៅ​ក្នុង %2"
 
-#: special.cpp:446
+#: special.cpp:442
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -441,14 +441,14 @@ msgstr ""
 "រក​មិន​ឃើញ​ឯកសារ ៖ \n"
 " %1"
 
-#: special.cpp:695
+#: special.cpp:691
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr "កំហុស​នៅ​ក្នុង DVIfile '%1' ទំព័រ %2 ។ មិន​អាច​បកប្រែ​មុំ​នៅ​ក្នុង​ទិស​អត្ថបទ​ពិសេស ។"
 
-#: special.cpp:714
+#: special.cpp:710
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "ពាក្យ​បញ្ជា​ពិសេស '%1' មិន​ត្រូវ​បាន​អនុវត្ត ។"

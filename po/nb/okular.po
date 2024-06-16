@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-12 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2014-10-29 17:37+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -309,7 +309,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "fjern merknader"
 
-#: core/document.cpp:4170 core/document.cpp:4176
+#: core/document.cpp:4176 core/document.cpp:4182
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -318,52 +318,52 @@ msgstr ""
 "Dokumentet prøver å kjøre et eksternt program, men av sikkerhetsgrunner "
 "tillater ikke Okular det."
 
-#: core/document.cpp:4186
+#: core/document.cpp:4192
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Fant ingen program som kan åpne filer av Mime-typen %1."
 
-#: core/document.cpp:4680
+#: core/document.cpp:4692
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Klarte ikke åpne en midlertidig fil"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4694
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konvertering for utskrift mislyktes"
 
-#: core/document.cpp:4684
+#: core/document.cpp:4696
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Utskriftsprosessen krasjet"
 
-#: core/document.cpp:4686
+#: core/document.cpp:4698
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Utskriftsprosessen kunne ikke starte"
 
-#: core/document.cpp:4688
+#: core/document.cpp:4700
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Klarte ikke skrive ut til fil"
 
-#: core/document.cpp:4690
+#: core/document.cpp:4702
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Skriveren var i en ugyldig tilstand"
 
-#: core/document.cpp:4692
+#: core/document.cpp:4704
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Klarte ikke finne fil å skrive ut"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4706
 #, kde-format
 msgid "There was no file to print"
 msgstr "Det var ingen fil å skrive ut"
 
-#: core/document.cpp:4696
+#: core/document.cpp:4708
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "Klarte ikke finne et passende program for utskrift. Se etter at CUPS-"
 "programmet lpr er tilgjengelig"
 
-#: core/document.cpp:4698
+#: core/document.cpp:4710
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Utskriftsstørrelsen for sida er ugyldig."
 
-#: core/document.cpp:5363 part/part.cpp:1120
+#: core/document.cpp:5375 part/part.cpp:1120
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Klarte ikke åpne «%1». Fila finnes ikke."
 
-#: core/document.cpp:5873
+#: core/document.cpp:5885
 #, kde-format
 msgid "Title"
 msgstr "Tittel"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5888
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: core/document.cpp:5879
+#: core/document.cpp:5891
 #, kde-format
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: core/document.cpp:5882
+#: core/document.cpp:5894
 #, kde-format
 msgid "Author"
 msgstr "Forfatter"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5897
 #, kde-format
 msgid "Creator"
 msgstr "Opphavsprogram"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5900
 #, kde-format
 msgid "Producer"
 msgstr "Produsent"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5903
 #, kde-format
 msgid "Copyright"
 msgstr "Opphavsrett"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5906
 #, kde-format
 msgid "Pages"
 msgstr "Sider"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5909
 #, kde-format
 msgid "Created"
 msgstr "Opprettet"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5912
 #, kde-format
 msgid "Modified"
 msgstr "Endret"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5915
 #, kde-format
 msgid "MIME Type"
 msgstr ""
 
-#: core/document.cpp:5906
+#: core/document.cpp:5918
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5921
 #, kde-format
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Path"
 msgstr "Filsti"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5927
 #, kde-format
 msgid "File Size"
 msgstr "Filstørrelse"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5930
 #, kde-format
 msgid "Page Size"
 msgstr "Sidestørrelse"
@@ -3382,23 +3382,23 @@ msgstr "Fra gjeldende side"
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:771
+#: part/formwidgets.cpp:817
 #, fuzzy, kde-format
 #| msgid "All files (*)"
 msgid "All Files (*)"
 msgstr "Alle filer (*)"
 
-#: part/formwidgets.cpp:1085
+#: part/formwidgets.cpp:1179
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr ""

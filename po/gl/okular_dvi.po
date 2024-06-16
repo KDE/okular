@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2023-06-17 12:18+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -231,7 +231,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "O código DVI definiu un carácter dunha fonte descoñecida."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
@@ -262,12 +262,12 @@ msgstr "Atopouse unha orde inaceptábel."
 msgid "The unknown op-code %1 was encountered."
 msgstr "Atopouse o código de operación descoñecido %1."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:83
 #, kde-format
 msgid "Embedding %1"
 msgstr "Incrustando %1"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:101
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -276,14 +276,14 @@ msgstr ""
 "Páxina %1: Non se puido converter o ficheiro PDF <strong>%2</strong> en "
 "PostScript.<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:103
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr ""
 "Páxina %1: Non se puido atopar o ficheiro PostScript <strong>%2</strong>.<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:257
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Non foi posíbel procesar os datos de tamaño de papel «%1»."
@@ -386,7 +386,7 @@ msgstr ""
 "Parámetro mal formado na orde especial «epsf».\n"
 "Agardábase un valor de coma flotante tras %1 en %2"
 
-#: special.cpp:446
+#: special.cpp:442
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -395,7 +395,7 @@ msgstr ""
 "Ficheiro non atopado: \n"
 " %1"
 
-#: special.cpp:695
+#: special.cpp:691
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -404,7 +404,7 @@ msgstr ""
 "Erro no ficheiro DVI «%1», páxina %2. Non se puido interpretar o ángulo na "
 "rotación do texto especial."
 
-#: special.cpp:714
+#: special.cpp:710
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "A orde especial «%1» non está realizada."

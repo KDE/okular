@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-12 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -307,153 +307,153 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Null anotationes"
 
-#: core/document.cpp:4170 core/document.cpp:4176
+#: core/document.cpp:4176 core/document.cpp:4182
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
 
-#: core/document.cpp:4186
+#: core/document.cpp:4192
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 
-#: core/document.cpp:4680
+#: core/document.cpp:4692
 #, fuzzy, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ne successat remover li temporari file"
 
-#: core/document.cpp:4682
+#: core/document.cpp:4694
 #, fuzzy, kde-format
 msgid "Print conversion failed"
 msgstr "Ne successat converter caracteres por «%s»"
 
-#: core/document.cpp:4684
+#: core/document.cpp:4696
 #, fuzzy, kde-format
 msgid "Printing process crashed"
 msgstr "Processe"
 
-#: core/document.cpp:4686
+#: core/document.cpp:4698
 #, fuzzy, kde-format
 msgid "Printing process could not start"
 msgstr "Ne successat lansar li processu %1."
 
-#: core/document.cpp:4688
+#: core/document.cpp:4700
 #, fuzzy, kde-format
 msgid "Printing to file failed"
 msgstr ""
 "Un errore evenit  printante li file:\n"
 "%s"
 
-#: core/document.cpp:4690
+#: core/document.cpp:4702
 #, fuzzy, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printator"
 
-#: core/document.cpp:4692
+#: core/document.cpp:4704
 #, fuzzy, kde-format
 msgid "Unable to find file to print"
 msgstr "&Trovar un file"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4706
 #, fuzzy, kde-format
 msgid "There was no file to print"
 msgstr "Printar a file..."
 
-#: core/document.cpp:4696
+#: core/document.cpp:4708
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4698
+#: core/document.cpp:4710
 #, fuzzy, kde-format
 msgid "The page print size is invalid"
 msgstr "Printar numerós de págines"
 
-#: core/document.cpp:5363 part/part.cpp:1120
+#: core/document.cpp:5375 part/part.cpp:1120
 #, fuzzy, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Li file o fólder %1 ne existe."
 
-#: core/document.cpp:5873
+#: core/document.cpp:5885
 #, kde-format
 msgid "Title"
 msgstr "Titul"
 
-#: core/document.cpp:5876
+#: core/document.cpp:5888
 #, kde-format
 msgid "Subject"
 msgstr "Subjecte"
 
-#: core/document.cpp:5879
+#: core/document.cpp:5891
 #, kde-format
 msgid "Description"
 msgstr "Descrition"
 
-#: core/document.cpp:5882
+#: core/document.cpp:5894
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5897
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5900
 #, kde-format
 msgid "Producer"
 msgstr "Productor"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5903
 #, kde-format
 msgid "Copyright"
 msgstr "Jure editorial"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5906
 #, kde-format
 msgid "Pages"
 msgstr "Págines"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5909
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5912
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5915
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-tip"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5918
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5921
 #, kde-format
 msgid "Keywords"
 msgstr "Clav-paroles"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Path"
 msgstr "Rute de file"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5927
 #, kde-format
 msgid "File Size"
 msgstr "Grandore de file"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5930
 #, kde-format
 msgid "Page Size"
 msgstr "Dimension de págine"
@@ -3368,23 +3368,23 @@ msgstr "Págine actual"
 msgid "Find as you type"
 msgstr "_Trovar"
 
-#: part/formwidgets.cpp:771
+#: part/formwidgets.cpp:817
 #, fuzzy, kde-format
 #| msgid "All files (*)"
 msgid "All Files (*)"
 msgstr "Omni files (*)"
 
-#: part/formwidgets.cpp:1085
+#: part/formwidgets.cpp:1179
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1151 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Signar..."
 
-#: part/formwidgets.cpp:1155 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Proprietás del signatura"

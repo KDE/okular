@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2024-01-26 20:26+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -229,7 +229,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI-kóði setti tákn af óþekktri leturgerð."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI kóðinn vísaði í leturgerð #%1 sem hefur ekki verið skilgreind."
@@ -259,12 +259,12 @@ msgstr "Ólögleg skipun fundin."
 msgid "The unknown op-code %1 was encountered."
 msgstr "Óþekkti op-kóðinn %1 fannst."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:83
 #, kde-format
 msgid "Embedding %1"
 msgstr "Felli inn %1"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:101
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -273,13 +273,13 @@ msgstr ""
 "Síða %1: Ekki tókst að umbreyta PDF-skránni <strong>%2</strong> í PostScript."
 "<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:103
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "Síða %1: PostScript-skráin <strong>%2</strong> fannst ekki.<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:257
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Ekki tókst að þátta pappírsstærðargögnin '%1'."
@@ -380,7 +380,7 @@ msgstr ""
 "Gallað viðfang í 'special'-skipuninni epsf.\n"
 "Átti von á tölu á eftir %1 í %2"
 
-#: special.cpp:446
+#: special.cpp:442
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -389,7 +389,7 @@ msgstr ""
 "Skráin fannst ekki:\n"
 " %1"
 
-#: special.cpp:695
+#: special.cpp:691
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -398,7 +398,7 @@ msgstr ""
 "Villa í DVI-skrá '%1', síða %2. Gat ekki túlkað horn í 'special'-skipun "
 "fyrir textasnúning."
 
-#: special.cpp:714
+#: special.cpp:710
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "'Special'-skipunin '%1' er ekki studd."

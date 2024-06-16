@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-08 00:37+0000\n"
+"POT-Creation-Date: 2024-06-16 00:37+0000\n"
 "PO-Revision-Date: 2011-08-30 13:30+0530\n"
 "Last-Translator:  Danishka Navin <danishka@gmail.com> \n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -257,7 +257,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI කේතය නොදන්නා අකුරක අක්‍ෂරයක් පිහිටුවයි."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:668
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI කේතය #%1 අකුර වෙත යොමුවෙයි, එය පෙරදී නිවේශනය කර නොමැත."
@@ -287,25 +287,25 @@ msgstr "නීතිවිරෝධී විධානයක් හමුවී 
 msgid "The unknown op-code %1 was encountered."
 msgstr "නොදන්නා op-code %1 හමුවී ඇත."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:83
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1 තිළැලෙමින්"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:101
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
 msgstr "%1 පිටුව: <strong>%2</strong> PDF ගොනුව පසුවිධානාවලි වෙත හැරවිය නොහැකි විය.<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:103
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "%1 පිටුව: <strong>%2</strong> පසුවිධාවලි ගොනුව සොයාගත නොහැක.<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:257
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "'%1' පිටු ප්‍රමාණ දත්තය විග්‍රහ කල නොහැක."
@@ -428,7 +428,7 @@ msgstr ""
 "epsf විශේෂිත විධානයේ දෝශ සහිත පරාමිතියක්.\n"
 "%2 හි  %1 වෙත පාවීමක් බලාපොරොත්තු වේ"
 
-#: special.cpp:446
+#: special.cpp:442
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -437,14 +437,14 @@ msgstr ""
 "ගොනුව හමු නොවිනි: \n"
 " %1"
 
-#: special.cpp:695
+#: special.cpp:691
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr "%2 පිටුවේ DVIfile '%1' හි දෝශයක්. පෙළ භ්‍රමණ විශේෂයේ කෝණය අනුවර්තනය කල නොහැක."
 
-#: special.cpp:714
+#: special.cpp:710
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "'%1' විශේෂිත විධානය වැඩිදියුණු කර නොමැත."

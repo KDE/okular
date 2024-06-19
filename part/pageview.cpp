@@ -783,7 +783,7 @@ void PageView::setupActions(KActionCollection *ac)
         }
     });
     connect(d->annotator, &PageViewAnnotator::toolActive, d->mouseAnnotation, &MouseAnnotation::reset);
-    connect(d->annotator, &PageViewAnnotator::requestOpenFile, this, &PageView::requestOpenFile);
+    connect(d->annotator, &PageViewAnnotator::requestOpenNewlySignedFile, this, &PageView::requestOpenNewlySignedFile);
     d->annotator->setupActions(ac);
 }
 

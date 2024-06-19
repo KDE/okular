@@ -140,7 +140,12 @@ Q_SIGNALS:
      * This signal is emitted whenever an annotation tool is activated or all the tools get deactivated
      */
     void toolActive(bool active);
-    void requestOpenFile(const QString &filePath, int pageNumber);
+    /**
+     * Requests opening of a newly signed file
+     * \param filePath path to signed file
+     * \param pageNumber page to show (1-indexed)
+     */
+    void requestOpenNewlySignedFile(const QString &filePath, int pageNumber);
 
 private:
     void reparseBuiltinToolsConfig();

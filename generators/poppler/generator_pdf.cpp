@@ -66,9 +66,6 @@
 
 Q_DECLARE_METATYPE(Poppler::Annotation *)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
-Q_DECLARE_METATYPE(const Poppler::LinkMovie *)
-Q_DECLARE_METATYPE(const Poppler::LinkRendition *)
-Q_DECLARE_METATYPE(const Poppler::LinkOCGState *)
 
 #define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
 
@@ -407,32 +404,51 @@ static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkA
     return Okular::DocumentAction::PageFirst;
 }
 
-/**
- * Note: the function will take ownership of the popplerLink object.
- */
-Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink)
+// helper for using std::visit to get a dependent false for static_asserts
+// to help get compile errors if one ever extends variants
+template<class> inline constexpr bool always_false_v = false;
+
+const Poppler::Link *rawPtr(std::variant<const Poppler::Link *, std::unique_ptr<Poppler::Link>> &link)
 {
-    if (!popplerLink) {
+    return std::visit(
+        [](auto &&item) {
+            using T = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<T, const Poppler::Link *>) {
+                return item;
+            } else if constexpr (std::is_same_v<T, std::unique_ptr<Poppler::Link>>) {
+                return const_cast<const Poppler::Link *>(item.get());
+            } else {
+                static_assert(always_false_v<T>, "non-exhaustive visitor");
+            }
+        },
+        link);
+}
+
+template<typename T> auto toSharedPointer(std::unique_ptr<Poppler::Link> link)
+{
+    std::shared_ptr<Poppler::Link> sharedLink = std::move(link);
+    return std::static_pointer_cast<T>(sharedLink);
+}
+
+/**
+ * Note: the function will take ownership of the popplerLink if the popplerlink object is in a unique ptr
+ */
+Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, std::unique_ptr<Poppler::Link>> popplerLink)
+{
+    auto rawPopplerLink = rawPtr(popplerLink);
+    if (!rawPopplerLink) {
         return nullptr;
     }
 
     Okular::Action *link = nullptr;
-    const Poppler::LinkGoto *popplerLinkGoto;
-    const Poppler::LinkExecute *popplerLinkExecute;
-    const Poppler::LinkBrowse *popplerLinkBrowse;
-    const Poppler::LinkAction *popplerLinkAction;
-    const Poppler::LinkSound *popplerLinkSound;
-    const Poppler::LinkJavaScript *popplerLinkJS;
-    const Poppler::LinkMovie *popplerLinkMovie;
-    const Poppler::LinkRendition *popplerLinkRendition;
     Okular::DocumentViewport viewport;
 
-    switch (popplerLink->linkType()) {
+    switch (rawPopplerLink->linkType()) {
     case Poppler::Link::None:
         break;
 
     case Poppler::Link::Goto: {
-        popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
+        auto popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(rawPopplerLink);
         const Poppler::LinkDestination dest = popplerLinkGoto->destination();
         const QString destName = dest.destinationName();
         if (destName.isEmpty()) {
@@ -443,47 +459,55 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         }
     } break;
 
-    case Poppler::Link::Execute:
-        popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
+    case Poppler::Link::Execute: {
+        auto popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(rawPopplerLink);
         link = new Okular::ExecuteAction(popplerLinkExecute->fileName(), popplerLinkExecute->parameters());
         break;
+    }
 
-    case Poppler::Link::Browse:
-        popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
+    case Poppler::Link::Browse: {
+        auto popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(rawPopplerLink);
         link = new Okular::BrowseAction(QUrl(popplerLinkBrowse->url()));
         break;
+    }
 
-    case Poppler::Link::Action:
-        popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
+    case Poppler::Link::Action: {
+        auto popplerLinkAction = static_cast<const Poppler::LinkAction *>(rawPopplerLink);
         link = new Okular::DocumentAction(popplerToOkular(popplerLinkAction->actionType()));
         break;
+    }
 
     case Poppler::Link::Sound: {
-        popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
+        auto popplerLinkSound = static_cast<const Poppler::LinkSound *>(rawPopplerLink);
         Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
         Okular::Sound *sound = createSoundFromPopplerSound(popplerSound);
         link = new Okular::SoundAction(popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound);
     } break;
 
     case Poppler::Link::JavaScript: {
-        popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
+        auto popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(rawPopplerLink);
         link = new Okular::ScriptAction(Okular::JavaScript, popplerLinkJS->script());
     } break;
 
     case Poppler::Link::Rendition: {
-        if (!deletePopplerLink) {
-            // If links should not be deleted it probably means that they
-            // are part of a nextActions chain. There is no support
-            // to resolveMediaLinkReferences on nextActions. It would also
-            // be necessary to ensure that resolveMediaLinkReferences does
-            // not delete the Links which are part of a nextActions list
-            // to avoid a double deletion.
-            qCDebug(OkularPdfDebug) << "parsing rendition link without deletion is not supported. Action chain might be broken.";
-            break;
+        /* This gets weird. Depending on which parts of Poppler gives us a
+         * rendition link, it might be owned by us; it might be owned by poppler
+         * Luckily we can count on the return types being correct from poppler.
+         * If it is owned by poppler, we get a raw pointer
+         * if ownership is transferred, we get a unique ptr.
+         *
+         * So for that reason, put the owned one in a normal shared_ptr for later usage
+         * and cleanup
+         *
+         * and put the non-owned in a special shared_ptr with a nondeleter as deleter
+         */
+        std::shared_ptr<const Poppler::LinkRendition> popplerLinkRendition;
+        if (std::holds_alternative<std::unique_ptr<Poppler::Link>>(popplerLink)) {
+            auto uniquePopplerLink = std::get<std::unique_ptr<Poppler::Link>>(std::move(popplerLink));
+            popplerLinkRendition = toSharedPointer<const Poppler::LinkRendition>(std::move(uniquePopplerLink));
+        } else {
+            popplerLinkRendition = std::shared_ptr<const Poppler::LinkRendition>(static_cast<const Poppler::LinkRendition *>(rawPopplerLink), [](auto *) { /*don't delete this*/ });
         }
-        deletePopplerLink = false; // we'll delete it inside resolveMediaLinkReferences() after we have resolved all references
-
-        popplerLinkRendition = static_cast<const Poppler::LinkRendition *>(popplerLink);
 
         Okular::RenditionAction::OperationType operation = Okular::RenditionAction::None;
         switch (popplerLinkRendition->action()) {
@@ -506,23 +530,23 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
 
         Okular::Movie *movie = nullptr;
         if (popplerLinkRendition->rendition()) {
-            movie = createMovieFromPopplerScreen(popplerLinkRendition);
+            movie = createMovieFromPopplerScreen(popplerLinkRendition.get());
         }
 
         Okular::RenditionAction *renditionAction = new Okular::RenditionAction(operation, movie, Okular::JavaScript, popplerLinkRendition->script());
-        renditionAction->setNativeId(QVariant::fromValue(popplerLinkRendition));
+        renditionAction->setNativeHandle(popplerLinkRendition);
         link = renditionAction;
     } break;
 
     case Poppler::Link::Movie: {
-        if (!deletePopplerLink) {
+        if (!std::holds_alternative<std::unique_ptr<Poppler::Link>>(popplerLink)) {
             // See comment above in Link::Rendition
-            qCDebug(OkularPdfDebug) << "parsing movie link without deletion is not supported. Action chain might be broken.";
+            qCDebug(OkularPdfDebug) << "parsing movie link without taking ownership is not supported. Action chain might be broken.";
             break;
         }
-        deletePopplerLink = false; // we'll delete it inside resolveMediaLinkReferences() after we have resolved all references
 
-        popplerLinkMovie = static_cast<const Poppler::LinkMovie *>(popplerLink);
+        auto uniquePopplerLink = std::get<std::unique_ptr<Poppler::Link>>(std::move(popplerLink));
+        auto popplerLinkMovie = toSharedPointer<const Poppler::LinkMovie>(std::move(uniquePopplerLink));
 
         Okular::MovieAction::OperationType operation = Okular::MovieAction::Play;
         switch (popplerLinkMovie->operation()) {
@@ -541,12 +565,12 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         };
 
         Okular::MovieAction *movieAction = new Okular::MovieAction(operation);
-        movieAction->setNativeId(QVariant::fromValue(popplerLinkMovie));
+        movieAction->setNativeHandle(popplerLinkMovie);
         link = movieAction;
     } break;
 
     case Poppler::Link::Hide: {
-        const Poppler::LinkHide *l = static_cast<const Poppler::LinkHide *>(popplerLink);
+        const Poppler::LinkHide *l = static_cast<const Poppler::LinkHide *>(rawPopplerLink);
         QStringList scripts;
         const QVector<QString> targets = l->targets();
         for (const QString &target : targets) {
@@ -555,24 +579,27 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         link = new Okular::ScriptAction(Okular::JavaScript, scripts.join(QLatin1Char('\n')));
     } break;
 
-    case Poppler::Link::OCGState:
+    case Poppler::Link::OCGState: {
+        if (!std::holds_alternative<std::unique_ptr<Poppler::Link>>(popplerLink)) {
+            // See comment above in Link::Rendition
+            qCDebug(OkularPdfDebug) << "ocg link without taking ownership is not supported. Action chain might be broken.";
+            break;
+        }
         link = new Okular::BackendOpaqueAction();
-        link->setNativeId(QVariant::fromValue(static_cast<const Poppler::LinkOCGState *>(popplerLink)));
-        deletePopplerLink = false;
+        auto uniquePopplerLink = std::get<std::unique_ptr<Poppler::Link>>(std::move(popplerLink));
+        auto popplerLinkOCG = toSharedPointer<const Poppler::LinkOCGState>(std::move(uniquePopplerLink));
+        link->setNativeHandle(popplerLinkOCG);
         break;
+    }
     }
 
     if (link) {
         QVector<Okular::Action *> nextActions;
-        const QVector<Poppler::Link *> nextLinks = popplerLink->nextLinks();
+        const QVector<Poppler::Link *> nextLinks = rawPopplerLink->nextLinks();
         for (const Poppler::Link *nl : nextLinks) {
-            nextActions << createLinkFromPopplerLink(nl, false);
+            nextActions << createLinkFromPopplerLink(nl);
         }
         link->setNextActions(nextActions);
-    }
-
-    if (deletePopplerLink) {
-        delete popplerLink;
     }
 
     return link;
@@ -584,11 +611,11 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
 static QList<Okular::ObjectRect *> generateLinks(std::vector<std::unique_ptr<Poppler::Link>> &&popplerLinks)
 {
     QList<Okular::ObjectRect *> links;
-    for (const auto &popplerLink : popplerLinks) {
+    for (auto &popplerLink : popplerLinks) {
         QRectF linkArea = popplerLink->linkArea();
         double nl = linkArea.left(), nt = linkArea.top(), nr = linkArea.right(), nb = linkArea.bottom();
         // create the rect using normalized coords and attach the Okular::Link to it
-        Okular::ObjectRect *rect = new Okular::ObjectRect(nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink.get(), false));
+        Okular::ObjectRect *rect = new Okular::ObjectRect(nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(std::move(popplerLink)));
         // add the ObjectRect to the container
         links.push_front(rect);
     }
@@ -832,11 +859,11 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
             }
             std::unique_ptr<Poppler::Link> tmplink = p->action(Poppler::Page::Opening);
             if (tmplink) {
-                page->setPageAction(Okular::Page::Opening, createLinkFromPopplerLink(tmplink.get(), false));
+                page->setPageAction(Okular::Page::Opening, createLinkFromPopplerLink(std::move(tmplink)));
             }
             tmplink = p->action(Poppler::Page::Closing);
             if (tmplink) {
-                page->setPageAction(Okular::Page::Closing, createLinkFromPopplerLink(tmplink.get(), false));
+                page->setPageAction(Okular::Page::Closing, createLinkFromPopplerLink(std::move(tmplink.get())));
             }
             page->setDuration(p->duration());
             page->setLabel(p->label());
@@ -1092,13 +1119,8 @@ QAbstractItemModel *PDFGenerator::layersModel() const
 
 void PDFGenerator::opaqueAction(const Okular::BackendOpaqueAction *action)
 {
-    const Poppler::LinkOCGState *popplerLink = action->nativeId().value<const Poppler::LinkOCGState *>();
+    const Poppler::LinkOCGState *popplerLink = static_cast<const Poppler::LinkOCGState *>(action->nativeHandle());
     pdfdoc->optionalContentModel()->applyLink(const_cast<Poppler::LinkOCGState *>(popplerLink));
-}
-
-void PDFGenerator::freeOpaqueActionContents(const Okular::BackendOpaqueAction &action)
-{
-    delete action.nativeId().value<const Poppler::LinkOCGState *>();
 }
 
 bool PDFGenerator::isAllowed(Okular::Permission permission) const
@@ -1250,7 +1272,7 @@ void resolveMediaLinks(Okular::Action *action, enum Okular::Annotation::SubType 
 {
     OkularLinkType *okularAction = static_cast<OkularLinkType *>(action);
 
-    const PopplerLinkType *popplerLink = action->nativeId().value<const PopplerLinkType *>();
+    const PopplerLinkType *popplerLink = static_cast<const PopplerLinkType *>(action->nativeHandle());
 
     QHashIterator<Okular::Annotation *, Poppler::Annotation *> it(annotationsHash);
     while (it.hasNext()) {
@@ -1261,8 +1283,7 @@ void resolveMediaLinks(Okular::Action *action, enum Okular::Annotation::SubType 
 
             if (popplerLink->isReferencedAnnotation(popplerAnnotation)) {
                 okularAction->setAnnotation(static_cast<OkularAnnotationType *>(it.key()));
-                okularAction->setNativeId(QVariant());
-                delete popplerLink; // delete the associated Poppler::LinkMovie object, it's not needed anymore
+                okularAction->setNativeHandle({});
                 break;
             }
         }
@@ -1807,21 +1828,18 @@ void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page
                 // The activation action
                 Poppler::Link *actionLink = annotScreen->action();
                 if (actionLink) {
-                    screenAnnotation->setAction(createLinkFromPopplerLink(actionLink, true /*The function doesn't delete this kind*/));
-                    /* The actionLink is still owned by the poppler annotation, but createLinkFromPopplerLink specialcases this and
-                     * insists on on being passed 'true' to tell them we know what we are doing
-                     * At some point in the future, there is probably stuff to be cleaned up here */
+                    screenAnnotation->setAction(createLinkFromPopplerLink(actionLink));
                 }
 
                 // The additional actions
                 std::unique_ptr<Poppler::Link> pageOpeningLink = annotScreen->additionalAction(Poppler::Annotation::PageOpeningAction);
                 if (pageOpeningLink) {
-                    screenAnnotation->setAdditionalAction(Okular::Annotation::PageOpening, createLinkFromPopplerLink(pageOpeningLink.get(), false));
+                    screenAnnotation->setAdditionalAction(Okular::Annotation::PageOpening, createLinkFromPopplerLink(std::move(pageOpeningLink)));
                 }
 
                 std::unique_ptr<Poppler::Link> pageClosingLink = annotScreen->additionalAction(Poppler::Annotation::PageClosingAction);
                 if (pageClosingLink) {
-                    screenAnnotation->setAdditionalAction(Okular::Annotation::PageClosing, createLinkFromPopplerLink(pageClosingLink.get(), false));
+                    screenAnnotation->setAdditionalAction(Okular::Annotation::PageClosing, createLinkFromPopplerLink(std::move(pageClosingLink)));
                 }
             }
 
@@ -1832,12 +1850,12 @@ void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page
                 // The additional actions
                 std::unique_ptr<Poppler::Link> pageOpeningLink = annotWidget->additionalAction(Poppler::Annotation::PageOpeningAction);
                 if (pageOpeningLink) {
-                    widgetAnnotation->setAdditionalAction(Okular::Annotation::PageOpening, createLinkFromPopplerLink(pageOpeningLink.get(), false));
+                    widgetAnnotation->setAdditionalAction(Okular::Annotation::PageOpening, createLinkFromPopplerLink(std::move(pageOpeningLink)));
                 }
 
                 std::unique_ptr<Poppler::Link> pageClosingLink = annotWidget->additionalAction(Poppler::Annotation::PageClosingAction);
                 if (pageClosingLink) {
-                    widgetAnnotation->setAdditionalAction(Okular::Annotation::PageClosing, createLinkFromPopplerLink(pageClosingLink.get(), false));
+                    widgetAnnotation->setAdditionalAction(Okular::Annotation::PageClosing, createLinkFromPopplerLink(std::move(pageClosingLink)));
                 }
             }
 

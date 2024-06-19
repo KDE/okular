@@ -82,17 +82,40 @@ public:
      * object, if any.
      *
      * @note Okular makes no use of this
-     *
+     * @deprecated use @ref setNativeHandle
      * @since 0.15 (KDE 4.9)
      */
-    void setNativeId(const QVariant &id);
+    OKULARCORE_DEPRECATED void setNativeId(const QVariant &id);
 
     /**
      * Returns the "native" id of the action.
      *
      * @since 0.15 (KDE 4.9)
+     *
      */
-    QVariant nativeId() const;
+    OKULARCORE_DEPRECATED QVariant nativeId() const;
+
+    /**
+     * Sets "native" handle for the action
+     *
+     * This is a opaque datapointer used for the action by the
+     * Generator. The generator is responsible for setting it
+     * to something sensible and also for interpreting it.
+     *
+     * The handle is deleted according to rules of the
+     * shared pointer.
+     *
+     * @note Okular (core/part/shell/...) itself makes no use of this
+     * @since 24.05.2
+     */
+    void setNativeHandle(std::shared_ptr<const void> handle);
+
+    /**
+     * @returns the native handle pointer
+     *
+     * @since 24.05.2
+     */
+    const void *nativeHandle() const;
 
     /**
      * Returns the next actions to be executed after.

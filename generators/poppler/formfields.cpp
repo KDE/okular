@@ -16,21 +16,21 @@
 
 #include <poppler-qt6.h>
 
-extern Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink);
+extern Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, std::unique_ptr<Poppler::Link>> popplerLink);
 #define SET_ANNOT_ACTIONS                                                                                                                                                                                                                      \
-    setAdditionalAction(Okular::Annotation::CursorEntering, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorEnteringAction).get(), false));                                                                     \
-    setAdditionalAction(Okular::Annotation::CursorLeaving, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorLeavingAction).get(), false));                                                                       \
-    setAdditionalAction(Okular::Annotation::MousePressed, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::MousePressedAction).get(), false));                                                                         \
-    setAdditionalAction(Okular::Annotation::MouseReleased, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::MouseReleasedAction).get(), false));                                                                       \
-    setAdditionalAction(Okular::Annotation::FocusIn, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusInAction).get(), false));                                                                                   \
-    setAdditionalAction(Okular::Annotation::FocusOut, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusOutAction).get(), false));
+    setAdditionalAction(Okular::Annotation::CursorEntering, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorEnteringAction)));                                                                                  \
+    setAdditionalAction(Okular::Annotation::CursorLeaving, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorLeavingAction)));                                                                                    \
+    setAdditionalAction(Okular::Annotation::MousePressed, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::MousePressedAction)));                                                                                      \
+    setAdditionalAction(Okular::Annotation::MouseReleased, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::MouseReleasedAction)));                                                                                    \
+    setAdditionalAction(Okular::Annotation::FocusIn, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusInAction)));                                                                                                \
+    setAdditionalAction(Okular::Annotation::FocusOut, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusOutAction)));
 
 #define SET_ACTIONS                                                                                                                                                                                                                            \
-    setActivationAction(createLinkFromPopplerLink(m_field->activationAction().get(), false));                                                                                                                                                  \
-    setAdditionalAction(Okular::FormField::FieldModified, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::FieldModified).get(), false));                                                                               \
-    setAdditionalAction(Okular::FormField::FormatField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::FormatField).get(), false));                                                                                   \
-    setAdditionalAction(Okular::FormField::ValidateField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::ValidateField).get(), false));                                                                               \
-    setAdditionalAction(Okular::FormField::CalculateField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::CalculateField).get(), false));                                                                             \
+    setActivationAction(createLinkFromPopplerLink(m_field->activationAction()));                                                                                                                                                               \
+    setAdditionalAction(Okular::FormField::FieldModified, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::FieldModified)));                                                                                            \
+    setAdditionalAction(Okular::FormField::FormatField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::FormatField)));                                                                                                \
+    setAdditionalAction(Okular::FormField::ValidateField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::ValidateField)));                                                                                            \
+    setAdditionalAction(Okular::FormField::CalculateField, createLinkFromPopplerLink(m_field->additionalAction(Poppler::FormField::CalculateField)));                                                                                          \
     SET_ANNOT_ACTIONS
 
 PopplerFormFieldButton::PopplerFormFieldButton(std::unique_ptr<Poppler::FormFieldButton> field)

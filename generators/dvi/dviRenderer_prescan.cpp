@@ -603,13 +603,13 @@ void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
 
 void dviRenderer::prescan_setChar(unsigned int ch)
 {
-    TeXFontDefinition *fontp = currinf.fontp;
+    const TeXFontDefinition *fontp = currinf.fontp;
     if (fontp == nullptr) {
         return;
     }
 
     if (currinf.set_char_p == &dviRenderer::set_char) {
-        glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
+        const glyph *g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
         if (g == nullptr) {
             return;
         }
@@ -618,7 +618,7 @@ void dviRenderer::prescan_setChar(unsigned int ch)
     }
 
     if (currinf.set_char_p == &dviRenderer::set_vf_char) {
-        macro *m = &currinf.fontp->macrotable[ch];
+        const macro *m = &currinf.fontp->macrotable[ch];
         if (m->pos == nullptr) {
             return;
         }
@@ -638,7 +638,6 @@ void dviRenderer::prescan(parseSpecials specialParser)
     }
 
     qint32 RRtmp = 0, WWtmp = 0, XXtmp = 0, YYtmp = 0, ZZtmp = 0;
-    quint8 ch;
     double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0 / 2.54;
 
     stack.clear();
@@ -647,7 +646,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
     currinf.set_char_p = &dviRenderer::set_no_char;
 
     for (;;) {
-        ch = readUINT8();
+        quint8 ch = readUINT8();
 
         if (ch <= (unsigned char)(SETCHAR0 + 127)) {
             prescan_setChar(ch);

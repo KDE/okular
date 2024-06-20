@@ -169,14 +169,14 @@ QJSValue JSDocument::getField(const QString &cName) const
 // Document.getPageLabel()
 QString JSDocument::getPageLabel(int nPage) const
 {
-    Page *p = m_doc->m_pagesVector.value(nPage);
+    const Page *p = m_doc->m_pagesVector.value(nPage);
     return p ? p->label() : QString();
 }
 
 // Document.getPageRotation()
 int JSDocument::getPageRotation(int nPage) const
 {
-    Page *p = m_doc->m_pagesVector.value(nPage);
+    const Page *p = m_doc->m_pagesVector.value(nPage);
     return p ? p->orientation() * 90 : 0;
 }
 

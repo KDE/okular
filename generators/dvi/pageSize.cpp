@@ -60,9 +60,8 @@ pageSize::pageSize(const SimplePageSize &s)
 bool pageSize::setPageSize(const QString &name)
 {
     // See if we can recognize the string
-    QString currentName;
     for (int i = 0; staticList[i].name != nullptr; i++) {
-        currentName = QString::fromLocal8Bit(staticList[i].name);
+        QString currentName = QString::fromLocal8Bit(staticList[i].name);
         if (currentName == name) {
             currentSize = i;
             // Set page width/height accordingly

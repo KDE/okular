@@ -63,9 +63,9 @@ public:
     QPoint dpi;           /* DPI horz/vert */
     void (*expander)(class pagenode *, drawfunc);
     unsigned int bytes_per_line;
-    QString filename; /* The name of the file to be opened */
-    QImage image;     /* The final image */
-    uchar *imageData; /* The temporary raw image data */
+    QString filename;           /* The name of the file to be opened */
+    QImage image;               /* The final image */
+    uchar *imageData = nullptr; /* The temporary raw image data */
 };
 
 /* page orientation flags */

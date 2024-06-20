@@ -187,7 +187,7 @@ void FormWidgetsController::slotButtonClicked(QAbstractButton *button)
             button->group()->setExclusive(wasExclusive);
         }
         pageNumber = check->pageItem()->pageNumber();
-    } else if (RadioButtonEdit *radio = qobject_cast<RadioButtonEdit *>(button)) {
+    } else if (const RadioButtonEdit *radio = qobject_cast<RadioButtonEdit *>(button)) {
         pageNumber = radio->pageItem()->pageNumber();
     }
 
@@ -220,10 +220,10 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo(int pageNumber, con
         int id = formButton->id();
         QAbstractButton *button = m_buttons[id];
         int itemPageNumber = -1;
-        if (CheckBoxEdit *check = qobject_cast<CheckBoxEdit *>(button)) {
+        if (const CheckBoxEdit *check = qobject_cast<CheckBoxEdit *>(button)) {
             itemPageNumber = check->pageItem()->pageNumber();
             Q_EMIT refreshFormWidget(check->formField());
-        } else if (RadioButtonEdit *radio = qobject_cast<RadioButtonEdit *>(button)) {
+        } else if (const RadioButtonEdit *radio = qobject_cast<RadioButtonEdit *>(button)) {
             itemPageNumber = radio->pageItem()->pageNumber();
         }
         // temporarily disable exclusiveness of the button group
@@ -1058,7 +1058,6 @@ void ComboEdit::slotValueChanged()
     if (text != prevText) {
         Q_EMIT m_controller->formComboChangedByWidget(pageItem()->pageNumber(), form, currentText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
     }
-    prevText = text;
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = cursorPos;
     if (lineEdit()->hasSelectedText()) {
@@ -1291,7 +1290,7 @@ void SignatureEdit::signUnsignedSignature()
         return;
     }
 
-    Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
+    const Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
     PageView *pageView = static_cast<PageView *>(parent()->parent());
     SignaturePartUtils::signUnsignedSignature(formSignature, pageView, pageView->document());
 }

@@ -162,7 +162,7 @@ bool fontPool::areFontsLocated()
     // Is there a font whose name we did not try to find out yet?
     QList<TeXFontDefinition *>::const_iterator cit_fontp = fontList.constBegin();
     for (; cit_fontp != fontList.constEnd(); ++cit_fontp) {
-        TeXFontDefinition *fontp = *cit_fontp;
+        const TeXFontDefinition *fontp = *cit_fontp;
         if (!fontp->isLocated()) {
             return false;
         }

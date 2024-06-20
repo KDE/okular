@@ -166,9 +166,7 @@ QList<TextDocumentGeneratorPrivate::LinkInfo> TextDocumentGeneratorPrivate::gene
 {
     QList<LinkInfo> result;
 
-    for (int i = 0; i < mLinkPositions.count(); ++i) {
-        const LinkPosition &linkPosition = mLinkPositions[i];
-
+    for (const LinkPosition &linkPosition : mLinkPositions) {
         const QVector<QRectF> rects = TextDocumentUtils::calculateBoundingRects(mDocument, linkPosition.startPosition, linkPosition.endPosition);
 
         for (int i = 0; i < rects.count(); ++i) {

@@ -18,7 +18,6 @@ public:
     explicit TeXFont(TeXFontDefinition *_parent)
     {
         parent = _parent;
-        errorMessage.clear();
     }
 
     virtual ~TeXFont();
@@ -38,7 +37,7 @@ public:
     // Checksum of the font. Used e.g. by PK fonts. This field is filled
     // in by the constructor, or set to 0.0, if the font format does not
     // contain checksums.
-    quint32 checksum;
+    quint32 checksum = 0;
 
     // If the font or if some glyphs could not be loaded, error messages
     // will be put here.

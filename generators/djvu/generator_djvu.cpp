@@ -196,10 +196,7 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
 {
     userMutex()->lock();
     const Okular::Page *page = request->page();
-    QList<KDjVu::TextEntity> te;
-    if (te.isEmpty()) {
-        te = m_djvu->textEntities(page->number(), QStringLiteral("word"));
-    }
+    QList<KDjVu::TextEntity> te = m_djvu->textEntities(page->number(), QStringLiteral("word"));
     if (te.isEmpty()) {
         te = m_djvu->textEntities(page->number(), QStringLiteral("line"));
     }
@@ -230,7 +227,7 @@ void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation
         int w = p.width();
         int h = p.height();
         if (rotation % 2 == 1) {
-            qSwap(w, h);
+            std::swap(w, h);
         }
         Okular::Page *page = new Okular::Page(i, w, h, (Okular::Rotation)(p.orientation() + rotation));
         pagesVector[i] = page;
@@ -279,7 +276,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
     Okular::ObjectRect *newrect = nullptr;
     switch (link->type()) {
     case KDjVu::Link::PageLink: {
-        KDjVu::PageLink *l = static_cast<KDjVu::PageLink *>(link);
+        const KDjVu::PageLink *l = static_cast<KDjVu::PageLink *>(link);
         bool ok = true;
         QString target = l->page();
         if ((target.length() > 0) && target.at(0) == QLatin1Char('#')) {
@@ -296,7 +293,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         break;
     }
     case KDjVu::Link::UrlLink: {
-        KDjVu::UrlLink *l = static_cast<KDjVu::UrlLink *>(link);
+        const KDjVu::UrlLink *l = static_cast<KDjVu::UrlLink *>(link);
         QString url = l->url();
         newlink = new Okular::BrowseAction(QUrl(url));
         break;
@@ -308,7 +305,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         int height = p.height();
         bool scape_orientation = false; // hack by tokoe, should always create default page
         if (scape_orientation) {
-            qSwap(width, height);
+            std::swap(width, height);
         }
         switch (link->areaType()) {
         case KDjVu::Link::RectArea:
@@ -325,7 +322,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
                 int x = poly.at(i).x();
                 int y = poly.at(i).y();
                 if (scape_orientation) {
-                    qSwap(x, y);
+                    std::swap(x, y);
                 } else {
                     y = height - y;
                 }
@@ -365,7 +362,7 @@ Okular::Annotation *DjVuGenerator::convertKDjVuAnnotation(int w, int h, KDjVu::A
         break;
     }
     case KDjVu::Annotation::LineAnnotation: {
-        KDjVu::LineAnnotation *lineann = static_cast<KDjVu::LineAnnotation *>(ann);
+        const KDjVu::LineAnnotation *lineann = static_cast<KDjVu::LineAnnotation *>(ann);
         Okular::LineAnnotation *newlineann = new Okular::LineAnnotation();
         // boundary
         QPoint a(lineann->point().x(), h - lineann->point().y());

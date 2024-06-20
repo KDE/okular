@@ -186,7 +186,7 @@ void TextPage::append(const QString &text, const NormalizedRect &area)
 {
     if (!text.isEmpty()) {
         if (!d->m_words.isEmpty()) {
-            TextEntity &lastEntity = d->m_words.last();
+            const TextEntity &lastEntity = d->m_words.last();
             // Unicode Normalization Form KC (NFKC) may alter characters, for example ⑥ to 6, so we use NFC
             const QString concatText = lastEntity.text() + text.normalized(QString::NormalizationForm_C);
             if (concatText != concatText.normalized(QString::NormalizationForm_C)) {
@@ -296,7 +296,7 @@ std::unique_ptr<RegularAreaRect> TextPage::textArea(const TextSelection &sel) co
     */
     auto ret = std::make_unique<RegularAreaRect>();
 
-    PagePrivate *pagePrivate = PagePrivate::get(d->m_page);
+    const PagePrivate *pagePrivate = PagePrivate::get(d->m_page);
     const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
     const double scaleX = d->m_page->width();
     const double scaleY = d->m_page->height();
@@ -642,7 +642,7 @@ static int stringLengthAdaptedWithHyphen(const QString &str, TextEntity::List::C
 
 RegularAreaRect *TextPagePrivate::searchPointToArea(const SearchPoint *sp)
 {
-    PagePrivate *pagePrivate = PagePrivate::get(m_page);
+    const PagePrivate *pagePrivate = PagePrivate::get(m_page);
     const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
     RegularAreaRect *ret = new RegularAreaRect;
 

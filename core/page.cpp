@@ -282,7 +282,7 @@ bool Page::hasObjectRect(double x, double y, double xScale, double yScale) const
         return false;
     }
 
-    for (ObjectRect *rect : m_rects) {
+    for (const ObjectRect *rect : m_rects) {
         if (rect->distanceSqr(x, y, xScale, yScale) < distanceConsideredEqual) {
             return true;
         }
@@ -302,7 +302,7 @@ bool Page::hasHighlights(int s_id) const
         return true;
     }
     // iterate on the highlights list to find an entry by id
-    for (HighlightAreaRect *highlight : m_highlights) {
+    for (const HighlightAreaRect *highlight : m_highlights) {
         if (highlight->s_id == s_id) {
             return true;
         }

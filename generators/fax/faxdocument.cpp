@@ -142,7 +142,6 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
     t32bits acc;     /* pixel accumulator */
     int nacc;        /* number of valid bits in acc */
     int tot;         /* total pixels in line */
-    int n;
 
     lineNum += pn->stripnum * pn->rowsperstrip;
     if (lineNum >= pn->size.height()) {
@@ -158,7 +157,7 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
     pix = pn->inverse ? ~0 : 0;
     tot = 0;
     while (tot < pn->size.width()) {
-        n = *r++;
+        int n = *r++;
         tot += n;
         /* Watch out for buffer overruns, e.g. when n == 65535.  */
         if (tot > pn->size.width()) {
@@ -202,7 +201,7 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
 
 static bool get_image(pagenode *pn)
 {
-    unsigned char *data = getstrip(pn, 0);
+    const unsigned char *data = getstrip(pn, 0);
     if (!data) {
         return false;
     }
@@ -219,8 +218,9 @@ static bool get_image(pagenode *pn)
 class FaxDocument::Private
 {
 public:
-    explicit Private(FaxDocument *parent)
+    explicit Private(FaxDocument *parent, FaxDocument::DocumentType type)
         : mParent(parent)
+        , mType(type)
     {
         mPageNode.size = QSize(1728, 0);
     }
@@ -231,7 +231,7 @@ public:
 };
 
 FaxDocument::FaxDocument(const QString &fileName, DocumentType type)
-    : d(new Private(this))
+    : d(new Private(this, type))
 {
     d->mPageNode.filename = fileName;
     d->mPageNode.strips = nullptr;
@@ -242,7 +242,6 @@ FaxDocument::FaxDocument(const QString &fileName, DocumentType type)
     d->mPageNode.data = nullptr;
     d->mPageNode.dataOrig = nullptr;
     d->mPageNode.imageData = nullptr;
-    d->mType = type;
 
     if (d->mType == G3) {
         d->mPageNode.expander = g31expand; // or g32expand?!?

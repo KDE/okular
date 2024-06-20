@@ -2027,7 +2027,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
 
     // move/scroll page by using keys
     // When the shift key is held down, scroll ten times faster
-    int stepsize = e->modifiers() & Qt::ShiftModifier ? 10 : 1;
+    int stepsize = (e->modifiers() & Qt::ShiftModifier) ? 10 : 1;
     switch (e->key()) {
     case Qt::Key_J:
     case Qt::Key_Down:
@@ -2495,7 +2495,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
                 copyToClipboard->setText(i18n("Copy forbidden by DRM"));
             }
 
-            QAction *choice = menu.exec(e->globalPosition().toPoint());
+            const QAction *choice = menu.exec(e->globalPosition().toPoint());
             if (choice == copyToClipboard) {
                 copyTextSelection();
             }
@@ -2692,7 +2692,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         if (rightButton && !d->mouseSelecting) {
             break;
         }
-        PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+        const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         // ensure end point rests within a page, or ignore
         if (!pageItem) {
             break;
@@ -2748,7 +2748,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
-            PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
             Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
@@ -2827,7 +2827,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         menu.addAction(new OKMenuTitle(&menu, i18n("Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height())));
         imageToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n("Copy to Clipboard"));
         imageToFile = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save to File..."));
-        QAction *choice = menu.exec(e->globalPosition().toPoint());
+        const QAction *choice = menu.exec(e->globalPosition().toPoint());
         // check if the user really selected an action
         if (choice) {
             // IMAGE operation chosen
@@ -2903,7 +2903,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
-            PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
             Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
@@ -3033,7 +3033,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 if (menu) {
                     menu->setObjectName(QStringLiteral("PopupMenu"));
 
-                    QAction *choice = menu->exec(e->globalPosition().toPoint());
+                    const QAction *choice = menu->exec(e->globalPosition().toPoint());
                     // check if the user really selected an action
                     if (choice) {
                         if (choice == textToClipboard) {
@@ -3161,7 +3161,7 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton) {
         const QPoint eventPos = contentAreaPoint(e->pos());
-        PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+        const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         if (pageItem) {
             // find out normalized mouse coords inside current item
             double nX = pageItem->absToPageX(eventPos.x());
@@ -3244,7 +3244,7 @@ void PageView::wheelEvent(QWheelEvent *e)
             }
         } else {
             // When the shift key is held down, scroll ten times faster
-            int multiplier = e->modifiers() & Qt::ShiftModifier ? 10 : 1;
+            int multiplier = (e->modifiers() & Qt::ShiftModifier) ? 10 : 1;
 
             if (delta != 0 && delta % QWheelEvent::DefaultDeltasPerStep == 0) {
                 // number of scroll wheel steps Qt gives to us at the same time
@@ -3273,7 +3273,7 @@ bool PageView::viewportEvent(QEvent *e)
             d->mouseAnnotation->routeTooltipEvent(he);
         } else {
             const QPoint eventPos = contentAreaPoint(he->pos());
-            PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
             const Okular::ObjectRect *rect = nullptr;
             const Okular::Action *link = nullptr;
             if (pageItem) {
@@ -3350,9 +3350,9 @@ std::vector<std::unique_ptr<Okular::RegularAreaRect>> PageView::textSelections(c
             }
         }
 
-        PageViewItem *a = pickItemOnPoint((int)(direction_ne_sw ? selectionRect.right() : selectionRect.left()), (int)selectionRect.top());
+        const PageViewItem *a = pickItemOnPoint((int)(direction_ne_sw ? selectionRect.right() : selectionRect.left()), (int)selectionRect.top());
         int min = a && (a->pageNumber() != tmpmax) ? a->pageNumber() : tmpmin;
-        PageViewItem *b = pickItemOnPoint((int)(direction_ne_sw ? selectionRect.left() : selectionRect.right()), (int)selectionRect.bottom());
+        const PageViewItem *b = pickItemOnPoint((int)(direction_ne_sw ? selectionRect.left() : selectionRect.right()), (int)selectionRect.bottom());
         int max = b && (b->pageNumber() != tmpmin) ? b->pageNumber() : tmpmax;
 
         QList<int> affectedItemsIds;
@@ -3365,16 +3365,16 @@ std::vector<std::unique_ptr<Okular::RegularAreaRect>> PageView::textSelections(c
         firstpage = affectedItemsIds.first();
 
         if (affectedItemsIds.count() == 1) {
-            PageViewItem *item = d->items[affectedItemsIds.first()];
+            const PageViewItem *item = d->items[affectedItemsIds.first()];
             selectionRect.translate(-item->uncroppedGeometry().topLeft());
             ret.push_back(textSelectionForItem(item, direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(), direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight()));
         } else if (affectedItemsIds.count() > 1) {
             // first item
-            PageViewItem *first = d->items[affectedItemsIds.first()];
+            const PageViewItem *first = d->items[affectedItemsIds.first()];
             QRect geom = first->croppedGeometry().intersected(selectionRect).translated(-first->uncroppedGeometry().topLeft());
             ret.push_back(textSelectionForItem(first, selectionRect.bottom() > geom.height() ? (direction_ne_sw ? geom.topRight() : geom.topLeft()) : (direction_ne_sw ? geom.bottomRight() : geom.bottomLeft()), QPoint()));
             // last item
-            PageViewItem *last = d->items[affectedItemsIds.last()];
+            const PageViewItem *last = d->items[affectedItemsIds.last()];
             geom = last->croppedGeometry().intersected(selectionRect).translated(-last->uncroppedGeometry().topLeft());
             // the last item needs to appended at last...
             std::unique_ptr<Okular::RegularAreaRect> lastArea =
@@ -4522,7 +4522,7 @@ void PageView::slotRelayoutPages()
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
-    PageViewItem *currentItem = d->items[qMax(0, (int)d->document->currentPage())];
+    const PageViewItem *currentItem = d->items[qMax(0, (int)d->document->currentPage())];
 
     // Here we find out column's width and row's height to compute a table
     // so we can place widgets 'centered in virtual cells'.

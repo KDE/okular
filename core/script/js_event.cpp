@@ -73,7 +73,6 @@ QJSValue JSEvent::target() const
     }
     case Event::DocOpen: {
         return qjsEngine(this)->globalObject().property(QStringLiteral("Doc"));
-        break;
     }
     default: {
     }

@@ -597,7 +597,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         // that is, big endian. Since XWindows needs little endian, we
         // need to change the bit order now.
         unsigned char *bitmapData = (unsigned char *)characterBitmaps[ch]->bits;
-        unsigned char *endOfData = bitmapData + characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
+        const unsigned char *endOfData = bitmapData + characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
         while (bitmapData < endOfData) {
             *bitmapData = bitflip[*bitmapData];
             bitmapData++;

@@ -411,7 +411,7 @@ static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Ok
     return pHighlightAnnotation;
 }
 
-static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation, Poppler::Page *page)
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation, const Poppler::Page *page)
 {
     Poppler::StampAnnotation *pStampAnnotation = new Poppler::StampAnnotation();
 
@@ -969,7 +969,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         break;
     }
     case Poppler::Annotation::ARichMedia: {
-        Poppler::RichMediaAnnotation *richmediaann = static_cast<Poppler::RichMediaAnnotation *>(popplerAnnotation);
+        const Poppler::RichMediaAnnotation *richmediaann = static_cast<Poppler::RichMediaAnnotation *>(popplerAnnotation);
         const QPair<Okular::Movie *, Okular::EmbeddedFile *> result = createMovieFromPopplerRichMedia(richmediaann);
 
         if (result.first) {

@@ -849,7 +849,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
                 break;
             }
             if (rotation % 2 == 1) {
-                qSwap(w, h);
+                std::swap(w, h);
             }
             // init a Okular::page, add transition and annotation information
             page = new Okular::Page(i, w, h, orientation);
@@ -1203,7 +1203,7 @@ QImage PDFGenerator::image(Okular::PixmapRequest *request)
     double pageWidth = page->width(), pageHeight = page->height();
 
     if (page->rotation() % 2) {
-        qSwap(pageWidth, pageHeight);
+        std::swap(pageWidth, pageHeight);
     }
 
     qreal fakeDpiX = request->width() / pageWidth * dpi().width();

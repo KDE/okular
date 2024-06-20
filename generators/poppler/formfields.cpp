@@ -138,7 +138,7 @@ Poppler::FormFieldIcon PopplerFormFieldButton::icon() const
 void PopplerFormFieldButton::setIcon(Okular::FormField *field)
 {
     if (field->type() == Okular::FormField::FormButton) {
-        PopplerFormFieldButton *button = static_cast<PopplerFormFieldButton *>(field);
+        const PopplerFormFieldButton *button = static_cast<PopplerFormFieldButton *>(field);
         m_field->setIcon(button->icon());
     }
 }

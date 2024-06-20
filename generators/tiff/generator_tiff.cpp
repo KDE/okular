@@ -67,7 +67,7 @@ int okular_tiffCloseProc(thandle_t handle)
 
 toff_t okular_tiffSizeProc(thandle_t handle)
 {
-    QIODevice *device = static_cast<QIODevice *>(handle);
+    const QIODevice *device = static_cast<QIODevice *>(handle);
     return device->size();
 }
 

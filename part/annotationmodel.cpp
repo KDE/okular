@@ -190,9 +190,9 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
     //         => lookup and remove the annotations
     if (annItem->children.count() > annots.count()) {
         for (int i = annItem->children.count(); i > 0; --i) {
-            Okular::Annotation *ref = annItem->children.at(i - 1)->annotation;
+            const Okular::Annotation *ref = annItem->children.at(i - 1)->annotation;
             bool found = false;
-            for (Okular::Annotation *annot : annots) {
+            for (const Okular::Annotation *annot : annots) {
                 if (annot == ref) {
                     found = true;
                     break;
@@ -419,7 +419,7 @@ Okular::Annotation *AnnotationModel::annotationForIndex(const QModelIndex &index
         return nullptr;
     }
 
-    AnnItem *item = static_cast<AnnItem *>(index.internalPointer());
+    const AnnItem *item = static_cast<AnnItem *>(index.internalPointer());
     return item->annotation;
 }
 

@@ -376,7 +376,7 @@ QJSValue JSApp::okular_popUpMenuEx(const QJSValue &arguments)
         return {};
     }
 
-    QAction *result = m.exec(QCursor::pos());
+    const QAction *result = m.exec(QCursor::pos());
     return result ? result->property(kResultProperty).toString() : QString();
 }
 

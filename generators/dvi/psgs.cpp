@@ -268,10 +268,9 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
 
         // No. Check is the reason is that the device is not compiled into
         // ghostscript. If so, try again with another device.
-        QString GSoutput;
         proc.setReadChannel(QProcess::StandardOutput);
         while (proc.canReadLine()) {
-            GSoutput = QString::fromLocal8Bit(proc.readLine());
+            QString GSoutput = QString::fromLocal8Bit(proc.readLine());
             if (GSoutput.contains(QStringLiteral("Unknown device"))) {
                 qCDebug(OkularDviDebug) << QString::fromLatin1(
                                                "The version of ghostview installed on this computer does not support "

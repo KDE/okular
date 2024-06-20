@@ -1302,7 +1302,9 @@ void PresentationWidget::generateOverlay()
     color = pal.color(QPalette::Active, QPalette::Highlight);
     int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
     // pointers
-    unsigned int *data = reinterpret_cast<unsigned int *>(image.bits()), *shadowData = reinterpret_cast<unsigned int *>(shadow.bits()), pixels = image.width() * image.height();
+    unsigned int *data = reinterpret_cast<unsigned int *>(image.bits());
+    const unsigned int *shadowData = reinterpret_cast<unsigned int *>(shadow.bits());
+    unsigned int pixels = image.width() * image.height();
     // cache data (reduce computation time to 26%!)
     int c1 = -1, c2 = -1, cR = 0, cG = 0, cB = 0, cA = 0;
     // foreach pixel
@@ -1649,7 +1651,7 @@ void PresentationWidget::slotChangeDrawingToolEngine(const QDomElement &element)
 
 void PresentationWidget::slotAddDrawingToolActions()
 {
-    DrawingToolActions *drawingToolActions = qobject_cast<DrawingToolActions *>(sender());
+    const DrawingToolActions *drawingToolActions = qobject_cast<DrawingToolActions *>(sender());
 
     const QList<QAction *> actionsList = drawingToolActions->actions();
     for (QAction *action : actionsList) {
@@ -2262,7 +2264,7 @@ void PresentationWidget::slotProcessMovieAction(const Okular::MovieAction *actio
         return;
     }
 
-    Okular::Movie *movie = movieAnnotation->movie();
+    const Okular::Movie *movie = movieAnnotation->movie();
     if (!movie) {
         return;
     }

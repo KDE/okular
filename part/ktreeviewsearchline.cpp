@@ -61,7 +61,7 @@ public:
 
 void KTreeViewSearchLine::Private::rowsInserted(const QModelIndex &parentIndex, int start, int end) const
 {
-    QAbstractItemModel *model = qobject_cast<QAbstractItemModel *>(parent->sender());
+    const QAbstractItemModel *model = qobject_cast<QAbstractItemModel *>(parent->sender());
     if (!model) {
         return;
     }

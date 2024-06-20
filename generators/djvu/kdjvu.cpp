@@ -124,7 +124,7 @@ static bool find_replace_or_add_second_in_pair(miniexp_t theexp, const char *whi
         if (id == QLatin1String(which)) {
             miniexp_t reversed = miniexp_reverse(cur);
             miniexp_rplaca(reversed, replacement);
-            cur = miniexp_reverse(reversed);
+            miniexp_reverse(reversed);
             return true;
         }
         exp = miniexp_cdr(exp);
@@ -865,7 +865,7 @@ QImage KDjVu::image(int page, int width, int height, int rotation)
         bool found = false;
         QList<ImageCacheItem *>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
         for (; (it != itEnd) && !found; ++it) {
-            ImageCacheItem *cur = *it;
+            const ImageCacheItem *cur = *it;
             if ((cur->page == page) && (rotation % 2 == 0 ? cur->width == width && cur->height == height : cur->width == height && cur->height == width)) {
                 found = true;
             }

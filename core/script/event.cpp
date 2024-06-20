@@ -233,7 +233,7 @@ std::shared_ptr<Event> Event::createFormCalculateEvent(FormField *target, Page *
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
 
-    FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
+    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
     if (fft) {
         ret->setValue(QVariant(fft->text()));
     }
@@ -248,7 +248,7 @@ std::shared_ptr<Event> Event::createFormatEvent(FormField *target, Page *targetP
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
 
-    FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
+    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
     if (fft) {
         ret->setValue(QVariant(fft->text()));
     }
@@ -262,7 +262,7 @@ std::shared_ptr<Event> Event::createKeystrokeEvent(FormField *target, Page *targ
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
 
-    FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
+    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
     if (fft) {
         ret->setReturnCode(true);
         ret->setValue(QVariant(fft->text()));
@@ -278,7 +278,7 @@ std::shared_ptr<Event> Event::createFormFocusEvent(FormField *target, Page *targ
     ret->setTargetName(targetName);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
-    FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
+    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
     if (fft) {
         ret->setValue(QVariant(fft->text()));
     }
@@ -293,7 +293,7 @@ std::shared_ptr<Event> Event::createFormValidateEvent(FormField *target, Page *t
     ret->setTargetName(targetName);
     ret->setShiftModifier(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
-    FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
+    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
     if (fft) {
         ret->setValue(QVariant(fft->text()));
         ret->setReturnCode(true);

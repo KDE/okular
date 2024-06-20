@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 02:32+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -133,107 +133,107 @@ msgstr "Fabio D'Urso"
 msgid "Annotation improvements"
 msgstr "Ameliorationes de anotationes"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Go to page %1"
 msgstr "Ear a págine %1"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Open external file"
 msgstr "Aperter un extern file"
 
-#: core/action.cpp:185
+#: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
 msgstr "Executer «%1»..."
 
-#: core/action.cpp:284
+#: core/action.cpp:296
 #, kde-format
 msgid "First Page"
 msgstr "Prim págine"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:184
+#: core/action.cpp:298 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Sequent linea"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:201
+#: core/action.cpp:300 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Sequent págine"
 
-#: core/action.cpp:290
+#: core/action.cpp:302
 #, kde-format
 msgid "Last Page"
 msgstr "Ultim págine"
 
-#: core/action.cpp:292
+#: core/action.cpp:304
 #, kde-format
 msgid "Back"
 msgstr "Retro"
 
-#: core/action.cpp:294
+#: core/action.cpp:306
 #, kde-format
 msgid "Forward"
 msgstr "Avan"
 
-#: core/action.cpp:296
+#: core/action.cpp:308
 #, kde-format
 msgid "Quit"
 msgstr "Surtir"
 
-#: core/action.cpp:298
+#: core/action.cpp:310
 #, kde-format
 msgid "Start Presentation"
 msgstr "Iniciar un presentation"
 
-#: core/action.cpp:300
+#: core/action.cpp:312
 #, fuzzy, kde-format
 msgid "End Presentation"
 msgstr "Li presentation es finit. Clicca por salir."
 
-#: core/action.cpp:302
+#: core/action.cpp:314
 #, kde-format
 msgid "Find..."
 msgstr "Trovar..."
 
-#: core/action.cpp:304
+#: core/action.cpp:316
 #, fuzzy, kde-format
 msgid "Go To Page..."
 msgstr "Ear a págine"
 
-#: core/action.cpp:355
+#: core/action.cpp:367
 #, kde-format
 msgid "Play sound..."
 msgstr "Reproducter un son..."
 
-#: core/action.cpp:423 core/action.cpp:539
+#: core/action.cpp:435 core/action.cpp:551
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Scripte JavaScript"
 
-#: core/action.cpp:473
+#: core/action.cpp:485
 #, fuzzy, kde-format
 msgid "Play movie..."
 msgstr "Reproducter o pausar li film"
 
-#: core/action.cpp:544
+#: core/action.cpp:556
 #, fuzzy, kde-format
 msgid "Play movie"
 msgstr "Reproducter o pausar li film"
 
-#: core/action.cpp:546
+#: core/action.cpp:558
 #, fuzzy, kde-format
 msgid "Stop movie"
 msgstr "_Film"
 
-#: core/action.cpp:548
+#: core/action.cpp:560
 #, fuzzy, kde-format
 msgid "Pause movie"
 msgstr "Reproducter o pausar li film"
 
-#: core/action.cpp:550
+#: core/action.cpp:562
 #, fuzzy, kde-format
 msgid "Resume movie"
 msgstr "&Reprender"

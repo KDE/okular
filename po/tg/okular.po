@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 02:32+0000\n"
 "PO-Revision-Date: 2019-09-15 21:29+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -133,109 +133,109 @@ msgstr ""
 msgid "Annotation improvements"
 msgstr ""
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go to page %1"
 msgstr "Ба саҳифа гузаштан"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Open external file"
 msgstr ""
 
-#: core/action.cpp:185
+#: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
 msgstr ""
 
-#: core/action.cpp:284
+#: core/action.cpp:296
 #, fuzzy, kde-format
 msgid "First Page"
 msgstr "Ба саҳифа гузаштан"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:184
+#: core/action.cpp:298 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr ""
 
-#: core/action.cpp:288 part/presentationwidget.cpp:201
+#: core/action.cpp:300 part/presentationwidget.cpp:201
 #, fuzzy, kde-format
 msgid "Next Page"
 msgstr "Ба саҳифа гузаштан"
 
-#: core/action.cpp:290
+#: core/action.cpp:302
 #, fuzzy, kde-format
 msgid "Last Page"
 msgstr "Ба саҳифа гузаштан"
 
-#: core/action.cpp:292
+#: core/action.cpp:304
 #, kde-format
 msgid "Back"
 msgstr ""
 
-#: core/action.cpp:294
+#: core/action.cpp:306
 #, kde-format
 msgid "Forward"
 msgstr ""
 
-#: core/action.cpp:296
+#: core/action.cpp:308
 #, kde-format
 msgid "Quit"
 msgstr ""
 
-#: core/action.cpp:298
+#: core/action.cpp:310
 #, kde-format
 msgid "Start Presentation"
 msgstr ""
 
-#: core/action.cpp:300
+#: core/action.cpp:312
 #, kde-format
 msgid "End Presentation"
 msgstr ""
 
-#: core/action.cpp:302
+#: core/action.cpp:314
 #, kde-format
 msgid "Find..."
 msgstr ""
 
-#: core/action.cpp:304
+#: core/action.cpp:316
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page..."
 msgstr "Ба саҳифа гузаштан"
 
-#: core/action.cpp:355
+#: core/action.cpp:367
 #, kde-format
 msgid "Play sound..."
 msgstr ""
 
-#: core/action.cpp:423 core/action.cpp:539
+#: core/action.cpp:435 core/action.cpp:551
 #, kde-format
 msgid "JavaScript Script"
 msgstr ""
 
-#: core/action.cpp:473
+#: core/action.cpp:485
 #, kde-format
 msgid "Play movie..."
 msgstr ""
 
-#: core/action.cpp:544
+#: core/action.cpp:556
 #, kde-format
 msgid "Play movie"
 msgstr ""
 
-#: core/action.cpp:546
+#: core/action.cpp:558
 #, kde-format
 msgid "Stop movie"
 msgstr ""
 
-#: core/action.cpp:548
+#: core/action.cpp:560
 #, fuzzy, kde-format
 msgid "Pause movie"
 msgstr "Саҳифа"
 
-#: core/action.cpp:550
+#: core/action.cpp:562
 #, kde-format
 msgid "Resume movie"
 msgstr ""

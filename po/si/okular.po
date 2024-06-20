@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-17 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 02:32+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -142,109 +142,109 @@ msgstr ""
 msgid "Annotation improvements"
 msgstr "අනුසටහන් වත්කම්"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Go to page %1"
 msgstr "%1 පිටුවට යන්න"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Open external file"
 msgstr "බාහිර ගොනුවක් විවෘත කරන්න"
 
-#: core/action.cpp:185
+#: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
 msgstr "'%1' ක්‍රියාත්මක කරන්න..."
 
-#: core/action.cpp:284
+#: core/action.cpp:296
 #, kde-format
 msgid "First Page"
 msgstr "ප්‍රථම පිටුව"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:184
+#: core/action.cpp:298 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "පෙර පිටුව"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:201
+#: core/action.cpp:300 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "ඊලඟ පිටුව"
 
-#: core/action.cpp:290
+#: core/action.cpp:302
 #, kde-format
 msgid "Last Page"
 msgstr "අවසන් පිටුව"
 
-#: core/action.cpp:292
+#: core/action.cpp:304
 #, kde-format
 msgid "Back"
 msgstr "ආපසු"
 
-#: core/action.cpp:294
+#: core/action.cpp:306
 #, kde-format
 msgid "Forward"
 msgstr "ඉදිරියට"
 
-#: core/action.cpp:296
+#: core/action.cpp:308
 #, kde-format
 msgid "Quit"
 msgstr "ඉවත්"
 
-#: core/action.cpp:298
+#: core/action.cpp:310
 #, kde-format
 msgid "Start Presentation"
 msgstr "ඉදිරිපත්කිරීම අරඹන්න"
 
-#: core/action.cpp:300
+#: core/action.cpp:312
 #, kde-format
 msgid "End Presentation"
 msgstr "ඉදිරිපත්කිරීම අවසන් කරන්න"
 
-#: core/action.cpp:302
+#: core/action.cpp:314
 #, kde-format
 msgid "Find..."
 msgstr "සොයන්න..."
 
-#: core/action.cpp:304
+#: core/action.cpp:316
 #, kde-format
 msgid "Go To Page..."
 msgstr "පිටුවට යන්න..."
 
-#: core/action.cpp:355
+#: core/action.cpp:367
 #, kde-format
 msgid "Play sound..."
 msgstr "ශබ්දය වාදනය කරන්න..."
 
-#: core/action.cpp:423 core/action.cpp:539
+#: core/action.cpp:435 core/action.cpp:551
 #, kde-format
 msgid "JavaScript Script"
 msgstr "ජාවාස්ක්‍රිප්ට් විධානාවලිය"
 
-#: core/action.cpp:473
+#: core/action.cpp:485
 #, kde-format
 msgid "Play movie..."
 msgstr "චිත්‍රපටය ධාවනය..."
 
-#: core/action.cpp:544
+#: core/action.cpp:556
 #, fuzzy, kde-format
 #| msgid "Play movie..."
 msgid "Play movie"
 msgstr "චිත්‍රපටය ධාවනය..."
 
-#: core/action.cpp:546
+#: core/action.cpp:558
 #, kde-format
 msgid "Stop movie"
 msgstr ""
 
-#: core/action.cpp:548
+#: core/action.cpp:560
 #, fuzzy, kde-format
 #| msgid "Play movie..."
 msgid "Pause movie"
 msgstr "චිත්‍රපටය ධාවනය..."
 
-#: core/action.cpp:550
+#: core/action.cpp:562
 #, kde-format
 msgid "Resume movie"
 msgstr ""

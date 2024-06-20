@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-21 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 02:32+0000\n"
 "PO-Revision-Date: 2023-12-31 13:42+0200\n"
 "Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -45,7 +45,7 @@ msgid "Enhance thin lines:"
 msgstr "Uzlabot tievas līnijas:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:943
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:970
 #, kde-format
 msgid "No"
 msgstr "Nē"
@@ -69,19 +69,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Drukājamo lapu mērogošanas metode:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:100
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Ietilpināt drukas apgabalā"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to full page"
 msgstr "Ietilpināt visā lapā"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:102
 #, kde-format
 msgid "None; print original size"
 msgstr "Nav; drukāt oriģinālo izmēru"
@@ -143,22 +143,22 @@ msgstr "Pieejamie sertifikāti"
 msgid "&Load Signatures"
 msgstr "&Ielādēt parakstus"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF iespējas"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:87
 #, kde-format
 msgid "Print annotations"
 msgstr "Drukāt anotācijas"
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Drukājamā dokumentā iekļaut anotācijas"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:89
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -167,17 +167,17 @@ msgstr ""
 "Drukājamā dokumentā iekļauj anotācijas. Varat šo atslēgt, ja vēlaties drukāt "
 "oriģinālo, neanotēto dokumentu."
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Force rasterization"
 msgstr "Piespiedu pārvēršana par rastru"
 
-#: generator_pdf.cpp:95
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Pirms drukāšanas pārvērst par rastru piespiedu kārtā"
 
-#: generator_pdf.cpp:96
+#: generator_pdf.cpp:93
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -188,53 +188,53 @@ msgstr ""
 "parasti dod sliktāku rezultātu, bet var palīdzēt gadījumos, kad izdruka "
 "izskatās nepareizi."
 
-#: generator_pdf.cpp:106
+#: generator_pdf.cpp:103
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Drukājamo lapu mērogošanas metode"
 
-#: generator_pdf.cpp:107
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scale mode:"
 msgstr "Mērogošanas režīms:"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:968
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:968
 #, kde-format
 msgid "Format"
 msgstr "Formāts"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Encrypted"
 msgstr "Šifrēts"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nešifrēts"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Security"
 msgstr "Drošība"
 
-#: generator_pdf.cpp:943
+#: generator_pdf.cpp:970
 #, kde-format
 msgid "Yes"
 msgstr "Jā"
 
-#: generator_pdf.cpp:943
+#: generator_pdf.cpp:970
 #, kde-format
 msgid "Optimized"
 msgstr "Optimizēts"
 
-#: generator_pdf.cpp:1375
+#: generator_pdf.cpp:1396
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -245,12 +245,12 @@ msgstr ""
 "\n"
 "Datums: %2"
 
-#: generator_pdf.cpp:1582
+#: generator_pdf.cpp:1603
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Izmanto „Poppler“ %1"
 
-#: generator_pdf.cpp:1584
+#: generator_pdf.cpp:1605
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -261,17 +261,17 @@ msgstr ""
 "\n"
 "Būvēts ar „Poppler“ %2"
 
-#: generator_pdf.cpp:1619
+#: generator_pdf.cpp:1640
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1619
+#: generator_pdf.cpp:1640
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF aizmugursistēmas pielāgošana"
 
-#: generator_pdf.cpp:2107
+#: generator_pdf.cpp:2125
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

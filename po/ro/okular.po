@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-16 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 00:38+0000\n"
 "PO-Revision-Date: 2024-06-09 14:16+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -135,107 +135,107 @@ msgstr "Fabio D'Urso"
 msgid "Annotation improvements"
 msgstr "Îmbunătățiri adnotare"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Go to page %1"
 msgstr "Mergi la pagina %1"
 
-#: core/action.cpp:125
+#: core/action.cpp:137
 #, kde-format
 msgid "Open external file"
 msgstr "Deschide un fișier extern"
 
-#: core/action.cpp:185
+#: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
 msgstr "Execută „%1”…"
 
-#: core/action.cpp:284
+#: core/action.cpp:296
 #, kde-format
 msgid "First Page"
 msgstr "Prima pagină"
 
-#: core/action.cpp:286 part/presentationwidget.cpp:184
+#: core/action.cpp:298 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Pagina precedentă"
 
-#: core/action.cpp:288 part/presentationwidget.cpp:201
+#: core/action.cpp:300 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Pagina următoare"
 
-#: core/action.cpp:290
+#: core/action.cpp:302
 #, kde-format
 msgid "Last Page"
 msgstr "Ultima pagină"
 
-#: core/action.cpp:292
+#: core/action.cpp:304
 #, kde-format
 msgid "Back"
 msgstr "Înapoi"
 
-#: core/action.cpp:294
+#: core/action.cpp:306
 #, kde-format
 msgid "Forward"
 msgstr "Înainte"
 
-#: core/action.cpp:296
+#: core/action.cpp:308
 #, kde-format
 msgid "Quit"
 msgstr "Ieșire"
 
-#: core/action.cpp:298
+#: core/action.cpp:310
 #, kde-format
 msgid "Start Presentation"
 msgstr "Începe prezentarea"
 
-#: core/action.cpp:300
+#: core/action.cpp:312
 #, kde-format
 msgid "End Presentation"
 msgstr "Încheie prezentarea"
 
-#: core/action.cpp:302
+#: core/action.cpp:314
 #, kde-format
 msgid "Find..."
 msgstr "Găsește…"
 
-#: core/action.cpp:304
+#: core/action.cpp:316
 #, kde-format
 msgid "Go To Page..."
 msgstr "Mergi la pagina…"
 
-#: core/action.cpp:355
+#: core/action.cpp:367
 #, kde-format
 msgid "Play sound..."
 msgstr "Redă sunet…"
 
-#: core/action.cpp:423 core/action.cpp:539
+#: core/action.cpp:435 core/action.cpp:551
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Script JavaScript"
 
-#: core/action.cpp:473
+#: core/action.cpp:485
 #, kde-format
 msgid "Play movie..."
 msgstr "Redă film…"
 
-#: core/action.cpp:544
+#: core/action.cpp:556
 #, kde-format
 msgid "Play movie"
 msgstr "Redă filmul"
 
-#: core/action.cpp:546
+#: core/action.cpp:558
 #, kde-format
 msgid "Stop movie"
 msgstr "Oprește filmul"
 
-#: core/action.cpp:548
+#: core/action.cpp:560
 #, kde-format
 msgid "Pause movie"
 msgstr "Întrerupe filmul"
 
-#: core/action.cpp:550
+#: core/action.cpp:562
 #, kde-format
 msgid "Resume movie"
 msgstr "Reia filmul"
@@ -379,7 +379,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Dimensiunea de tipar a paginii nu e validă"
 
-#: core/document.cpp:5375 part/part.cpp:1120
+#: core/document.cpp:5375 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nu s-a putut deschide „%1”. Fișierul nu există"
@@ -1531,7 +1531,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Pagina %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3124
+#: part/annotationmodel.cpp:322 part/part.cpp:3118
 #, kde-format
 msgid "Page %1"
 msgstr "Pagina %1"
@@ -1572,7 +1572,7 @@ msgstr "Copiere interzisă de DRM"
 msgid "&Delete"
 msgstr "Ș&terge"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:748
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:742
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2168,13 +2168,13 @@ msgstr "Caută…"
 msgid "Go to This Bookmark"
 msgstr "Mergi la acest semn de carte"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:680
-#: part/part.cpp:2425
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:674
+#: part/part.cpp:2419
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Redenumește semnul de carte"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2230 part/part.cpp:3130
+#: part/bookmarklist.cpp:259 part/part.cpp:2224 part/part.cpp:3124
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Elimină semnul de carte"
@@ -3461,7 +3461,7 @@ msgstr "Expresie regulată"
 msgid "S&earch:"
 msgstr "C&aută:"
 
-#: part/layers.cpp:35 part/part.cpp:2273
+#: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
 msgstr "Straturi"
@@ -3746,7 +3746,7 @@ msgstr "Copiază textul"
 msgid "Go to '%1'"
 msgstr "Mergi la „%1”"
 
-#: part/pageview.cpp:4005 part/part.cpp:3135
+#: part/pageview.cpp:4005 part/part.cpp:3129
 #, kde-format
 msgid "Fit Width"
 msgstr "Potrivire lățime"
@@ -4082,205 +4082,205 @@ msgstr ""
 "\">Apăsați aici pentru a le vedea</a> sau mergeți la Fișier -> Fișiere "
 "încorporate."
 
-#: part/part.cpp:637
+#: part/part.cpp:631
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Precedentă"
 
-#: part/part.cpp:638
+#: part/part.cpp:632
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Mergi înapoi la pagina precedentă"
 
-#: part/part.cpp:639
+#: part/part.cpp:633
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Trece la pagina precedentă a documentului"
 
-#: part/part.cpp:649
+#: part/part.cpp:643
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Următoare"
 
-#: part/part.cpp:650
+#: part/part.cpp:644
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Avansează la pagina următoare"
 
-#: part/part.cpp:651
+#: part/part.cpp:645
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Trece la pagina următoare a documentului"
 
-#: part/part.cpp:662
+#: part/part.cpp:656
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Începutul documentului"
 
-#: part/part.cpp:663
+#: part/part.cpp:657
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Trece la începutul documentului"
 
-#: part/part.cpp:667
+#: part/part.cpp:661
 #, kde-format
 msgid "End of the document"
 msgstr "Sfârșitul documentului"
 
-#: part/part.cpp:668
+#: part/part.cpp:662
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Trece la sfârșitul documentului"
 
-#: part/part.cpp:682
+#: part/part.cpp:676
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Redenumește semnul de carte actual"
 
-#: part/part.cpp:686
+#: part/part.cpp:680
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Semnul de carte precedent"
 
-#: part/part.cpp:688
+#: part/part.cpp:682
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Mergi la semnul de carte precedent"
 
-#: part/part.cpp:692
+#: part/part.cpp:686
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Semnul de carte următor"
 
-#: part/part.cpp:694
+#: part/part.cpp:688
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Mergi la semnul de carte următor"
 
-#: part/part.cpp:723
+#: part/part.cpp:717
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Configurează Okular…"
 
-#: part/part.cpp:726
+#: part/part.cpp:720
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "Configurare vizualizor…"
 
-#: part/part.cpp:732
+#: part/part.cpp:726
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "Configurare platforme vizualizor…"
 
-#: part/part.cpp:734
+#: part/part.cpp:728
 #, kde-format
 msgid "Configure Backends..."
 msgstr "Configurare platforme…"
 
-#: part/part.cpp:770
+#: part/part.cpp:764
 #, kde-format
 msgid "About Backend"
 msgstr "Despre platformă"
 
-#: part/part.cpp:775
+#: part/part.cpp:769
 #, kde-format
 msgid "Reloa&d"
 msgstr "&Reîncarcă"
 
-#: part/part.cpp:777
+#: part/part.cpp:771
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Reîncarcă documentul actual de pe disc."
 
-#: part/part.cpp:783
+#: part/part.cpp:777
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Închide &bara de căutare"
 
-#: part/part.cpp:788
+#: part/part.cpp:782
 #, kde-format
 msgid "Page Number"
 msgstr "Număr pagină"
 
-#: part/part.cpp:792
+#: part/part.cpp:786
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "Configurează regimuri de culoare…"
 
-#: part/part.cpp:833
+#: part/part.cpp:827
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Selectează tot textul de pe pagina actuală"
 
-#: part/part.cpp:846
+#: part/part.cpp:840
 #, kde-format
 msgid "Show S&idebar"
 msgstr "&Arată bara laterală"
 
-#: part/part.cpp:855
+#: part/part.cpp:849
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Arată &bara cu pagini"
 
-#: part/part.cpp:861
+#: part/part.cpp:855
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Arată panoul cu &semnături"
 
-#: part/part.cpp:872
+#: part/part.cpp:866
 #, kde-format
 msgid "&Embedded Files"
 msgstr "Fișier&e încorporate"
 
-#: part/part.cpp:878
+#: part/part.cpp:872
 #, kde-format
 msgid "E&xport As"
 msgstr "E&xportă ca"
 
-#: part/part.cpp:890
+#: part/part.cpp:884
 #, kde-format
 msgid "S&hare"
 msgstr "Parta&jează"
 
-#: part/part.cpp:899
+#: part/part.cpp:893
 #, kde-format
 msgid "P&resentation"
 msgstr "P&rezentare"
 
-#: part/part.cpp:906
+#: part/part.cpp:900
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Deschide dosarul conțină&tor"
 
-#: part/part.cpp:920
+#: part/part.cpp:914
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "&Importă PostScript ca PDF…"
 
-#: part/part.cpp:924
+#: part/part.cpp:918
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr ""
 
-#: part/part.cpp:932
+#: part/part.cpp:926
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Șterge desenul"
 
-#: part/part.cpp:937
+#: part/part.cpp:931
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "Configurează adnotările…"
 
-#: part/part.cpp:942
+#: part/part.cpp:936
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Redă/întrerupe prezentarea"
 
-#: part/part.cpp:1097
+#: part/part.cpp:1091
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4288,38 +4288,38 @@ msgid ""
 "Any modification will be lost once Okular is closed."
 msgstr ""
 
-#: part/part.cpp:1098
+#: part/part.cpp:1092
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Document can't be saved"
 msgstr "Parola documentului"
 
-#: part/part.cpp:1127
+#: part/part.cpp:1121
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Nu s-a putut deschide „%1” (%2) "
 
-#: part/part.cpp:1181
+#: part/part.cpp:1175
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Încărcarea %1 a fost anulată."
 
-#: part/part.cpp:1197
+#: part/part.cpp:1191
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Nu s-a putut deschide %1. Motivul: %2"
 
-#: part/part.cpp:1225
+#: part/part.cpp:1219
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Configurează platformele vizualizorului"
 
-#: part/part.cpp:1227
+#: part/part.cpp:1221
 #, kde-format
 msgid "Configure Backends"
 msgstr "Configurează platformele"
 
-#: part/part.cpp:1312
+#: part/part.cpp:1306
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4328,43 +4328,43 @@ msgstr ""
 "Programul „ps2pdf” nu a fost găsit, astfel încît Okular nu poate importa "
 "fișiere PS utilizîndu-l."
 
-#: part/part.cpp:1312
+#: part/part.cpp:1306
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf nu a fost găsit"
 
-#: part/part.cpp:1317
+#: part/part.cpp:1311
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "Fișiere PostScript (%1)"
 
-#: part/part.cpp:1333
+#: part/part.cpp:1327
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "Import fișier PS ca PDF (poate dura ceva timp)…"
 
-#: part/part.cpp:1462
+#: part/part.cpp:1456
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Introduceți parola pentru a citi documentul:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1458
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Parolă greșită. Reîncercați:"
 
-#: part/part.cpp:1470
+#: part/part.cpp:1464
 #, kde-format
 msgid "Document Password"
 msgstr "Parola documentului"
 
-#: part/part.cpp:1590
+#: part/part.cpp:1584
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Acest document conține formulare XFA, care <b>nu sunt susținute</b> momentan."
 
-#: part/part.cpp:1597
+#: part/part.cpp:1591
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4373,7 +4373,7 @@ msgstr ""
 "Acest document conține formulare. Apăsați butonul pentru a interacționa cu "
 "acestea sau utilizați Vizualizare -> Arată formularele."
 
-#: part/part.cpp:1613
+#: part/part.cpp:1607
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4383,7 +4383,7 @@ msgstr ""
 "acest document. Salvați o copie și redeschideți documentul pentru a-l "
 "redacta."
 
-#: part/part.cpp:1701
+#: part/part.cpp:1695
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4392,27 +4392,27 @@ msgstr ""
 "Acest document vrea să fie afișat pe tot ecranul.\n"
 "Părăsiți regimul normal și întrați în regim de prezentare?"
 
-#: part/part.cpp:1703
+#: part/part.cpp:1697
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Cerere de schimbare a regimului de vizualizare"
 
-#: part/part.cpp:1704
+#: part/part.cpp:1698
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Intră în regim de prezentare"
 
-#: part/part.cpp:1705
+#: part/part.cpp:1699
 #, kde-format
 msgid "Deny Request"
 msgstr "Refuză cererea"
 
-#: part/part.cpp:1795
+#: part/part.cpp:1789
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Nu s-a putut deschide %1. %2"
 
-#: part/part.cpp:1825
+#: part/part.cpp:1819
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4422,22 +4422,22 @@ msgid ""
 "reloading the file?"
 msgstr ""
 
-#: part/part.cpp:1829 part/part.cpp:1839
+#: part/part.cpp:1823 part/part.cpp:1833
 #, kde-format
 msgid "File Changed"
 msgstr "Fișier modificat"
 
-#: part/part.cpp:1830
+#: part/part.cpp:1824
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Continuă reîncărcarea"
 
-#: part/part.cpp:1831
+#: part/part.cpp:1825
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Abandonează reîncărcarea"
 
-#: part/part.cpp:1835
+#: part/part.cpp:1829
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4447,27 +4447,27 @@ msgid ""
 "the file?"
 msgstr ""
 
-#: part/part.cpp:1840
+#: part/part.cpp:1834
 #, kde-format
 msgid "Continue Closing"
 msgstr "Continuă închiderea"
 
-#: part/part.cpp:1841
+#: part/part.cpp:1835
 #, kde-format
 msgid "Abort Closing"
 msgstr "Abandonează închiderea"
 
-#: part/part.cpp:1848
+#: part/part.cpp:1842
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Doriți să salvați modificările pentru „%1” sau le aruncați?"
 
-#: part/part.cpp:1848
+#: part/part.cpp:1842
 #, kde-format
 msgid "Close Document"
 msgstr "Închide documentul"
 
-#: part/part.cpp:1980
+#: part/part.cpp:1974
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4476,7 +4476,7 @@ msgstr ""
 "Această legătură indică spre o acțiune de închidere a documentului care nu "
 "funcționează în cazul folosirii vizualizorului înglobat."
 
-#: part/part.cpp:1986
+#: part/part.cpp:1980
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4485,77 +4485,77 @@ msgstr ""
 "Această legătură indică spre o acțiune de terminare a programului care nu "
 "funcționează în cazul folosirii vizualizorului înglobat."
 
-#: part/part.cpp:2078 part/part.cpp:2096
+#: part/part.cpp:2072 part/part.cpp:2090
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Se reîncarcă documentul…"
 
-#: part/part.cpp:2253 part/toc.cpp:38
+#: part/part.cpp:2247 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Conținut"
 
-#: part/part.cpp:2282 part/signaturepanel.cpp:47
+#: part/part.cpp:2276 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Semnături"
 
-#: part/part.cpp:2309
+#: part/part.cpp:2303
 #, kde-format
 msgid "Go to Page"
 msgstr "Mergi la pagina"
 
-#: part/part.cpp:2332
+#: part/part.cpp:2326
 #, kde-format
 msgid "&Page:"
 msgstr "&Pagina:"
 
-#: part/part.cpp:2425
+#: part/part.cpp:2419
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Introduceți noua denumire a semnului de carte:"
 
-#: part/part.cpp:2471
+#: part/part.cpp:2465
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Redenumește acest semn de carte"
 
-#: part/part.cpp:2474
+#: part/part.cpp:2468
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Elimină acest semn de carte"
 
-#: part/part.cpp:2560 part/part.cpp:2561 part/part.cpp:3440
+#: part/part.cpp:2554 part/part.cpp:2555 part/part.cpp:3434
 #: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2568 part/revisionviewer.cpp:44
+#: part/part.cpp:2562 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Salvează ca"
 
-#: part/part.cpp:2585
+#: part/part.cpp:2579
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
 
-#: part/part.cpp:2586
+#: part/part.cpp:2580
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Extensie nesusținută"
 
-#: part/part.cpp:2587
+#: part/part.cpp:2581
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Alege denumire nouă"
 
-#: part/part.cpp:2629
+#: part/part.cpp:2623
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4564,17 +4564,17 @@ msgid ""
 "sure you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2632 part/part.cpp:2650 part/part.cpp:2702
+#: part/part.cpp:2626 part/part.cpp:2644 part/part.cpp:2696
 #, kde-format
 msgid "Save - Warning"
 msgstr "Salvează - Avertisment"
 
-#: part/part.cpp:2634
+#: part/part.cpp:2628
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Salvează copie în altă parte"
 
-#: part/part.cpp:2649
+#: part/part.cpp:2643
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4582,12 +4582,12 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2676
+#: part/part.cpp:2670
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Fișierul temporar nu a putut fi deschis pentru salvare."
 
-#: part/part.cpp:2689
+#: part/part.cpp:2683
 #, fuzzy, kde-kuit-format
 #| msgid "File not saved."
 msgctxt "@info"
@@ -4596,30 +4596,30 @@ msgid ""
 "Try saving to another location or changing that file's permissions."
 msgstr "Fișier nesalvat."
 
-#: part/part.cpp:2701
+#: part/part.cpp:2695
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2716 part/part.cpp:2785 part/part.cpp:2806 part/part.cpp:3455
+#: part/part.cpp:2710 part/part.cpp:2779 part/part.cpp:2800 part/part.cpp:3449
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Fișierul nu a putut fi salvat la „%1”. Încercați să-l salvați în altă parte."
 
-#: part/part.cpp:2729
+#: part/part.cpp:2723
 #, kde-format
 msgid "Filled form contents"
 msgstr "Conținutul formularului completat"
 
-#: part/part.cpp:2732
+#: part/part.cpp:2726
 #, kde-format
 msgid "User annotations"
 msgstr "Adnotările utilizatorului"
 
-#: part/part.cpp:2737
+#: part/part.cpp:2731
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4627,17 +4627,17 @@ msgid ""
 "format to preserve them."
 msgstr ""
 
-#: part/part.cpp:2741 part/part.cpp:2763
+#: part/part.cpp:2735 part/part.cpp:2757
 #, kde-format
 msgid "Warning"
 msgstr "Avertisment"
 
-#: part/part.cpp:2742 part/part.cpp:2764
+#: part/part.cpp:2736 part/part.cpp:2758
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Salvează ca arhivă de documente Okular…"
 
-#: part/part.cpp:2754
+#: part/part.cpp:2748
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4646,7 +4646,7 @@ msgid ""
 "discard these elements."
 msgstr ""
 
-#: part/part.cpp:2757
+#: part/part.cpp:2751
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4655,22 +4655,22 @@ msgid ""
 "these elements as well as the undo/redo history."
 msgstr ""
 
-#: part/part.cpp:2759
+#: part/part.cpp:2753
 #, kde-format
 msgid "Continue"
 msgstr "Continuă"
 
-#: part/part.cpp:2759
+#: part/part.cpp:2753
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Continuă cu pierderea modificărilor"
 
-#: part/part.cpp:2787
+#: part/part.cpp:2781
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Fișierul nu a putut fi salvat la „%1”. %2"
 
-#: part/part.cpp:2826
+#: part/part.cpp:2820
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4681,7 +4681,7 @@ msgstr ""
 "\n"
 "Documentul nu mai există."
 
-#: part/part.cpp:2862
+#: part/part.cpp:2856
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4690,96 +4690,96 @@ msgstr ""
 "Fișierul nu a putut fi salvat la „%1”. Eroare: „%2”. Încercați să-l salvați "
 "în altă parte."
 
-#: part/part.cpp:3113
+#: part/part.cpp:3107
 #, kde-format
 msgid "Expand whole section"
 msgstr "Desfășoară toată secțiunea"
 
-#: part/part.cpp:3114
+#: part/part.cpp:3108
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Restrânge toată secțiunea"
 
-#: part/part.cpp:3115
+#: part/part.cpp:3109
 #, kde-format
 msgid "Expand all"
 msgstr "Desfășoară tot"
 
-#: part/part.cpp:3116
+#: part/part.cpp:3110
 #, kde-format
 msgid "Collapse all"
 msgstr "Restrânge tot"
 
-#: part/part.cpp:3127
+#: part/part.cpp:3121
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sincronizează miniatura cu pagina"
 
-#: part/part.cpp:3132
+#: part/part.cpp:3126
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Adaugă semn de carte"
 
-#: part/part.cpp:3154
+#: part/part.cpp:3148
 #, kde-format
 msgid "Tools"
 msgstr "Unelte"
 
-#: part/part.cpp:3336
+#: part/part.cpp:3330
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Vorbește"
 
-#: part/part.cpp:3493
+#: part/part.cpp:3487
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Tipărește"
 
-#: part/part.cpp:3556
+#: part/part.cpp:3550
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Tipărirea acestui document nu este permisă."
 
-#: part/part.cpp:3564
+#: part/part.cpp:3558
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 
-#: part/part.cpp:3566
+#: part/part.cpp:3560
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
 
-#: part/part.cpp:3646
+#: part/part.cpp:3640
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Mergi la locul precedent"
 
-#: part/part.cpp:3650
+#: part/part.cpp:3644
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Mergi la locul următor"
 
-#: part/part.cpp:3675
+#: part/part.cpp:3669
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 msgstr ""
 
-#: part/part.cpp:3687
+#: part/part.cpp:3681
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
 "strong></nobr> for uncompression. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3691
+#: part/part.cpp:3685
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4788,41 +4788,41 @@ msgid ""
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
 
-#: part/part.cpp:3713
+#: part/part.cpp:3707
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
 "%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3717
+#: part/part.cpp:3711
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
 
-#: part/part.cpp:3743
+#: part/part.cpp:3737
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Niciun semn de carte"
 
-#: part/part.cpp:3814
+#: part/part.cpp:3808
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "A fost o problemă cu partajarea documentului: %1"
 
-#: part/part.cpp:3814 part/part.cpp:3820
+#: part/part.cpp:3808 part/part.cpp:3814
 #, kde-format
 msgid "Share"
 msgstr "Partajează"
 
-#: part/part.cpp:3818
+#: part/part.cpp:3812
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Document partajat cu succes"
 
-#: part/part.cpp:3820
+#: part/part.cpp:3814
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Puteți găsi documentul partajat la: <a href=\"%1\">%1</a>"
@@ -5629,7 +5629,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Componenta Okular nu poate fi găsită."
 
-#: shell/shell.cpp:553
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5638,7 +5638,7 @@ msgstr ""
 "Apăsați pentru a deschide un fișier\n"
 "Țineți apăsat pentru a deschide un fișier recent"
 
-#: shell/shell.cpp:554
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5646,57 +5646,57 @@ msgstr ""
 "<b>Apăsați</b> pentru a deschide un fișier sau <b>țineți apăsat</b> pentru a "
 "alege un fișier recent"
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:583
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "Pagina următoare"
 
-#: shell/shell.cpp:573
+#: shell/shell.cpp:589
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "Pagina precedentă"
 
-#: shell/shell.cpp:579
+#: shell/shell.cpp:595
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:604
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "&Arată bara laterală"
 
-#: shell/shell.cpp:688
+#: shell/shell.cpp:704
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|Toate fișierele"
 
-#: shell/shell.cpp:689
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:693
+#: shell/shell.cpp:709
 #, kde-format
 msgid "Open Document"
 msgstr "Deschide documentul"
 
-#: shell/shell.cpp:807
+#: shell/shell.cpp:823
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:811
+#: shell/shell.cpp:827
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Închide"
 
-#: shell/shell.cpp:818
+#: shell/shell.cpp:834
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -5704,7 +5704,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Există deja un fișier cu denumirea „%1”. Sigur doriți să îl suprascrieți?"
 
-#: shell/shell.cpp:820
+#: shell/shell.cpp:836
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

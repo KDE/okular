@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-21 00:37+0000\n"
+"POT-Creation-Date: 2024-06-20 00:38+0000\n"
 "PO-Revision-Date: 2024-02-01 09:11-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -41,7 +41,7 @@ msgid "Enhance thin lines:"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:943
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:970
 #, kde-format
 msgid "No"
 msgstr "ਨਹੀਂ"
@@ -65,19 +65,19 @@ msgid "Default scaling mode when printing:"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:100
 #, kde-format
 msgid "Fit to printable area"
 msgstr "ਛਾਪਣਯੋਗ ਖੇਤਰ ਲਈ ਫਿੱਟ ਕਰੋ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:104
+#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to full page"
 msgstr "ਪੂਰੇ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:105
+#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:102
 #, kde-format
 msgid "None; print original size"
 msgstr "ਕੋਈ ਨਹੀਂ; ਅਸਲ ਆਕਾਰ ਨੂੰ ਛਾਪੋ"
@@ -134,22 +134,22 @@ msgstr "ਮੌਜੂਦ ਸਰਟੀਫਿਕੇਟ"
 msgid "&Load Signatures"
 msgstr "ਦਸਤਖ਼ਤ ਲੋਡ ਕਰੋ(&L)"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF ਚੋਣਾਂ"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:87
 #, kde-format
 msgid "Print annotations"
 msgstr "ਵਿਆਖਿਆਵਾਂ ਪਰਿੰਟ ਕਰੋ"
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "ਪਰਿੰਟ ਕੀਤੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਵਿਆਖਿਆ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:89
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -158,17 +158,17 @@ msgstr ""
 "ਪਰਿੰਟ ਕੀਤੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਵਿਆਖਿਆ ਸ਼ਾਮਲ ਕਰੋ। ਜੇ ਤੁਸੀਂ ਅਸਲ ਬਿਨਾਂ-ਵਿਆਖਿਆ ਦੇ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਪਰਿੰਟ "
 "ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ ਅਸਮਰੱਥ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Force rasterization"
 msgstr "ਧੱਕੇ ਨਾਲ ਰਾਸਟਰੀਜ਼ੇਸ਼ਨ"
 
-#: generator_pdf.cpp:95
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "ਪਰਿੰਟਿੰਗ ਤੋਂ ਪਹਿਲਾਂ ਇੱਕ ਚਿੱਤਰ ਦੇ ਰੂਪ 'ਚ ਰਾਸਟਰੀਜ਼ ਕਰੋ"
 
-#: generator_pdf.cpp:96
+#: generator_pdf.cpp:93
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -176,53 +176,53 @@ msgid ""
 "that appear to print incorrectly."
 msgstr ""
 
-#: generator_pdf.cpp:106
+#: generator_pdf.cpp:103
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "ਪਰਿੰਟ ਕੀਤੇ ਸਫ਼ਿਆਂ ਲਈ ਸਕੇਲਿੰਗ ਢੰਗ"
 
-#: generator_pdf.cpp:107
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scale mode:"
 msgstr "ਸਕੇਲ ਢੰਗ:"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:968
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF ਵਰਜ਼ਨ %1.%2"
 
-#: generator_pdf.cpp:941
+#: generator_pdf.cpp:968
 #, kde-format
 msgid "Format"
 msgstr "ਫਾਰਮੈਟ"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Encrypted"
 msgstr "ਇਕ੍ਰਿਪਟਡ"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Unencrypted"
 msgstr "ਅਣ-ਇਕ੍ਰਿਪਟਡ"
 
-#: generator_pdf.cpp:942
+#: generator_pdf.cpp:969
 #, kde-format
 msgid "Security"
 msgstr "ਸੁਰੱਖਿਆ"
 
-#: generator_pdf.cpp:943
+#: generator_pdf.cpp:970
 #, kde-format
 msgid "Yes"
 msgstr "ਹਾਂ"
 
-#: generator_pdf.cpp:943
+#: generator_pdf.cpp:970
 #, kde-format
 msgid "Optimized"
 msgstr "ਅਨੁਕੂਲ ਕੀਤਾ"
 
-#: generator_pdf.cpp:1375
+#: generator_pdf.cpp:1396
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -233,12 +233,12 @@ msgstr ""
 "\n"
 "ਤਾਰੀਖ: %2"
 
-#: generator_pdf.cpp:1582
+#: generator_pdf.cpp:1603
 #, kde-format
 msgid "Using Poppler %1"
 msgstr ""
 
-#: generator_pdf.cpp:1584
+#: generator_pdf.cpp:1605
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -246,17 +246,17 @@ msgid ""
 "Built against Poppler %2"
 msgstr ""
 
-#: generator_pdf.cpp:1619
+#: generator_pdf.cpp:1640
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1619
+#: generator_pdf.cpp:1640
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF ਬੈਕਐਂਡ ਸੰਰਚਨਾ"
 
-#: generator_pdf.cpp:2107
+#: generator_pdf.cpp:2125
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

@@ -2887,7 +2887,7 @@ msgstr "启用图像抗锯齿"
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "启用文字微调"
+msgstr "启用字体轮廓微调"
 
 #: part/dlgperformance.cpp:77
 #, kde-format

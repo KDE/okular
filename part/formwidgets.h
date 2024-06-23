@@ -188,6 +188,8 @@ public:
 
 protected:
     void slotRefresh(Okular::FormField *form) override;
+    void paintEvent(QPaintEvent *event) override;
+    bool hitButton(const QPoint &pos) const override;
     DECLARE_ADDITIONAL_ACTIONS
 };
 
@@ -203,6 +205,8 @@ public:
 
 protected:
     void slotRefresh(Okular::FormField *form) override;
+    void paintEvent(QPaintEvent *event) override;
+    bool hitButton(const QPoint &pos) const override;
     DECLARE_ADDITIONAL_ACTIONS
 };
 

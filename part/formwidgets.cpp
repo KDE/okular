@@ -25,6 +25,7 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QPainter>
+#include <QStylePainter>
 #include <QUrl>
 
 // local includes
@@ -412,8 +413,6 @@ CheckBoxEdit::CheckBoxEdit(Okular::FormFieldButton *button, PageView *pageView)
     : QCheckBox(pageView->viewport())
     , FormWidgetIface(this, button)
 {
-    setText(button->caption());
-
     setVisible(button->isVisible());
     setCursor(Qt::ArrowCursor);
 }
@@ -450,12 +449,34 @@ void CheckBoxEdit::slotRefresh(Okular::FormField *form)
     }
 }
 
+void CheckBoxEdit::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QStylePainter p(this);
+    QStyleOptionButton opt;
+    initStyleOption(&opt);
+
+    int indicatorSize = qMin(width(), height());
+    QRect indicatorRect = style()->subElementRect(QStyle::SE_CheckBoxIndicator, &opt, this);
+    indicatorRect.setSize(QSize(indicatorSize, indicatorSize));
+    indicatorRect.moveCenter(opt.rect.center());
+
+    opt.rect = indicatorRect;
+
+    // TODO draw different shapes of check boxes depending upon their style.
+    p.drawPrimitive(QStyle::PE_IndicatorCheckBox, opt);
+}
+
+bool CheckBoxEdit::hitButton(const QPoint &pos) const
+{
+    return QWidget::rect().contains(pos);
+}
+
 RadioButtonEdit::RadioButtonEdit(Okular::FormFieldButton *button, PageView *pageView)
     : QRadioButton(pageView->viewport())
     , FormWidgetIface(this, button)
 {
-    setText(button->caption());
-
     setVisible(button->isVisible());
     setCursor(Qt::ArrowCursor);
 }
@@ -484,6 +505,30 @@ void RadioButtonEdit::slotRefresh(Okular::FormField *form)
             m_controller->signalAction(form->activationAction());
         }
     }
+}
+
+void RadioButtonEdit::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QStylePainter p(this);
+    QStyleOptionButton opt;
+    initStyleOption(&opt);
+
+    int indicatorSize = qMin(width(), height());
+    QRect indicatorRect = style()->subElementRect(QStyle::SE_RadioButtonIndicator, &opt, this);
+    indicatorRect.setSize(QSize(indicatorSize, indicatorSize));
+    indicatorRect.moveCenter(opt.rect.center());
+
+    opt.rect = indicatorRect;
+
+    // TODO draw different shapes of radio buttons depending upon their style.
+    p.drawPrimitive(QStyle::PE_IndicatorRadioButton, opt);
+}
+
+bool RadioButtonEdit::hitButton(const QPoint &pos) const
+{
+    return QWidget::rect().contains(pos);
 }
 
 FormLineEdit::FormLineEdit(Okular::FormFieldText *text, PageView *pageView)

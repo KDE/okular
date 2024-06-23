@@ -20,6 +20,7 @@
 #include "js_event_p.h"
 #include "js_field_p.h"
 #include "js_fullscreen_p.h"
+#include "js_global_p.h"
 #include "js_ocg_p.h"
 #include "js_spell_p.h"
 #include "js_util_p.h"
@@ -71,6 +72,7 @@ void ExecutorJSPrivate::initTypes()
     m_interpreter.globalObject().setProperty(QStringLiteral("display"), m_interpreter.newQObject(new JSDisplay));
     m_interpreter.globalObject().setProperty(QStringLiteral("spell"), m_interpreter.newQObject(new JSSpell));
     m_interpreter.globalObject().setProperty(QStringLiteral("util"), m_interpreter.newQObject(new JSUtil));
+    m_interpreter.globalObject().setProperty(QStringLiteral("global"), m_interpreter.newQObject(new JSGlobal));
 }
 
 ExecutorJS::ExecutorJS(DocumentPrivate *doc)

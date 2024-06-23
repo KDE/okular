@@ -487,6 +487,7 @@ if (TARGET Qt6::Qml)
             core/script/js_util.cpp
             core/script/js_event.cpp
             core/script/js_ocg.cpp
+            core/script/js_global.cpp
     )
     target_link_libraries(okularcore PRIVATE Qt6::Qml)
 endif()

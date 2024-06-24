@@ -131,3 +131,20 @@ double JSUtil::stringToNumber(const QString &number) const
 
     return converted;
 }
+
+/*
+ * Get locale dependent month names
+ *
+ * A method not present in the Adobe Javascript APIs reference. We add it here for our convenience. Not to be used externally.
+ */
+QStringList JSUtil::getMonths() const
+{
+    QLocale defaultLocale;
+    QStringList monthNames;
+    // add both long and short format dates for processing in parseDate method.
+    for (int i = 1; i <= 12; i++) {
+        monthNames << defaultLocale.monthName(i, QLocale::LongFormat).toUpper();
+        monthNames << defaultLocale.monthName(i, QLocale::ShortFormat).toUpper();
+    }
+    return monthNames;
+}

@@ -474,6 +474,132 @@ function AFPercent_Keystroke( nDec, sepStyle )
     AFNumber_Keystroke(nDec, sepStyle);
 }
 
+function parseDate( inputString, cFormat )
+{
+    // Remove any time information. We can add this later on
+    const TIME_RE = /\b(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?.*?\s*([ap]m)?\b/;
+    var timeMatches = inputString.match(TIME_RE) || [];
+    var [hh = "", mm = "", ss = "", ampm = ""] = timeMatches.slice(1);
+    var timeCleanedValue = inputString.replace(TIME_RE, '');
+
+    // Get the month if present in words in the input. Ex. : 13 August 2024
+    const monthList = util.getMonths();
+    const matchedMonth = monthList.find(
+        month => (timeCleanedValue.toUpperCase().includes(month))
+    ) || "";
+
+    // Clean cFormat for generating Date Component Order (DCO). A user input should be in same order as required format.
+    // Remove days of week from format
+    var cleanedFormatForDCO = cFormat.replace(/d{3,}/g, '');
+    // If month name (in words) is already matched, then remove it
+    if ( matchedMonth !== "" )
+    {
+        cleanedFormatForDCO = cleanedFormatForDCO.replace(/m+/g, '');
+    }
+
+    // Generate Date Component Order
+    const formattingCharacters = "dmy"; // These are all possible characters that could be present
+    var dateComponentOrder = "";
+    for ( var i = 0; i < cleanedFormatForDCO.length; i++ )
+    {
+        if ( formattingCharacters.includes(cleanedFormatForDCO[i]) && (!dateComponentOrder.includes(cleanedFormatForDCO[i])) )
+        {
+            dateComponentOrder += cleanedFormatForDCO[i];
+        }
+    }
+
+    // Get all the numerical tokens from the input
+    var tokens = timeCleanedValue.match(/(\d+)/g) || [];
+    if ( tokens.length < dateComponentOrder.length )
+    {
+        return null;
+    }
+
+    const y_count = ( cFormat.match(/y/g) || [] ).length;
+    var componentItemMapping = {};
+
+    for ( var i = 0; i < dateComponentOrder.length; i++ )
+    {
+        // Date cannot be completely described if format requires yyyy and user inputs yy or y.
+        // If this is the case, automatically a bad input.
+        if ( dateComponentOrder[i] === 'y' && tokens[i].length < y_count )
+        {
+            return null;
+        }
+        componentItemMapping[dateComponentOrder[i]] = tokens[i];
+    }
+
+    var today = new Date();
+    var d = componentItemMapping["d"] ?? "01";  // Default date is the first of whatever month
+    var m = componentItemMapping["m"] ?? "01";  // Let's take January as default. If not required in cFormat, then we don't care.
+    var y = componentItemMapping["y"] ?? String(today.getFullYear());
+
+    if ( matchedMonth !== "" )
+    {
+        m = String(parseInt(monthList.indexOf(matchedMonth)/2) + 1);    // divide by 2 to get actual month cardinality from month list array => [JANUARY, JAN, FEBRUARY, FEB, ...]
+    }
+
+    // Use current century if no details are provided for calculation of day of the week (dddd).
+    var dateString = y.padStart(4, '2000') + "/" + m.padStart(2, '0') + "/" + d.padStart(2, '0');
+
+    if ( hh && mm )
+    {
+        if ( ampm.toUpperCase() === "PM" && parseInt(hh) < 12 )
+        {
+            hh = String(parseInt(hh)+12);
+        }
+        if ( ampm.toUpperCase() === "AM" && parseInt(hh) === 12 )
+        {
+            hh = "0";
+        }
+        dateString += " " + hh.padStart(2, '0') + ":" + mm.padStart(2, '0');
+    }
+    if ( ss )
+    {
+        dateString += ":" + ss.padStart(2, '0');
+    }
+    var date = new Date(dateString);
+    if ( isNaN(date.getTime()) )
+    {
+        return null;
+    }
+    return date;
+}
+
+function AFDate_FormatEx( cFormat )
+{
+    if ( !event.value )
+    {
+        return;
+    }
+    var date = parseDate(event.value, cFormat);
+    if ( date === null )
+    {
+        return;
+    }
+    else
+    {
+        event.value = util.printd(cFormat, date);
+    }
+}
+
+function AFDate_KeystrokeEx( cFormat )
+{
+    var completeValue = AFMergeChange( event );
+    if ( !completeValue ){
+        return;
+    }
+
+    if ( event.willCommit ) {
+
+        var date = parseDate(completeValue, cFormat);
+        if ( date === null )
+        {
+            event.rc = false;
+        }
+    }
+}
+
 app.popUpMenuEx = function() {
     return app.okular_popUpMenuEx(arguments);
 }

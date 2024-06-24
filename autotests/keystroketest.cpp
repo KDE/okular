@@ -42,6 +42,9 @@ private Q_SLOTS:
     void testNumberKeystrokeNoCommit_data();
     void testNumberKeystrokeCommit();
     void testNumberKeystrokeCommit_data();
+    // No need to test for noCommit case of Date Keystroke. Everything is allowed.
+    void testDateKeystrokeCommit();
+    void testDateKeystrokeCommit_data();
 
 private:
     Okular::Document *m_genericTestsDocument;
@@ -412,6 +415,65 @@ void KeystrokeTest::testNumberKeystrokeCommit_data()
     QTest::newRow("- sign used as prefix/accept") << QStringLiteral("number1") << QStringLiteral("-1.2") << QStringLiteral("-1.2");
 
     // TODO add more tests for rejecting strings
+}
+
+void KeystrokeTest::testDateKeystrokeCommit()
+{
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
+    fft->setText(text);
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+
+    QCOMPARE(fft->text(), result);
+}
+
+void KeystrokeTest::testDateKeystrokeCommit_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow("d/m with full date") << QStringLiteral("data1") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("d/m with month in words") << QStringLiteral("data1") << QStringLiteral("25th June 2024") << QStringLiteral("25th June 2024");
+    QTest::newRow("d/m with random characters at end") << QStringLiteral("data1") << QStringLiteral("25 - 06 - 24 bleh bleh") << QStringLiteral("25 - 06 - 24 bleh bleh");
+    QTest::newRow("d/m with input in same format") << QStringLiteral("data1") << QStringLiteral("25/6") << QStringLiteral("25/6");
+    QTest::newRow("dd-mmm-yy wtih time info") << QStringLiteral("data2") << QStringLiteral("25/06/2003 20:08 am") << QStringLiteral("25/06/2003 20:08 am");
+    QTest::newRow("dd-mmm-yy with spaces") << QStringLiteral("data2") << QStringLiteral("25 06 2003") << QStringLiteral("25 06 2003");
+    QTest::newRow("d/m/yyyy with padding in months") << QStringLiteral("data3") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("dd-mm-yy with leap date") << QStringLiteral("data4") << QStringLiteral("29/2/2024") << QStringLiteral("29/2/2024");
+    QTest::newRow("dd/mm/yyyy with random characters in between") << QStringLiteral("data5") << QStringLiteral("25 abc 06 def 2024") << QStringLiteral("25 abc 06 def 2024");
+    QTest::newRow("dd/mm/yyyy with input in same format") << QStringLiteral("data5") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("mm/yy with month name and year") << QStringLiteral("data6") << QStringLiteral("June 2024") << QStringLiteral("June 2024");
+    QTest::newRow("mm/yy with month and year in nums") << QStringLiteral("data6") << QStringLiteral("6/24") << QStringLiteral("6/24");
+    QTest::newRow("mm/yyyy with short month name and year") << QStringLiteral("data7") << QStringLiteral("Aug 2024") << QStringLiteral("Aug 2024");
+    QTest::newRow("mm/yyyy with date in words") << QStringLiteral("data7") << QStringLiteral("6/2024") << QStringLiteral("6/2024");
+    QTest::newRow("d-mmm with date and month name") << QStringLiteral("data8") << QStringLiteral("13 June") << QStringLiteral("13 June");
+    QTest::newRow("d-mmm with date, month and year") << QStringLiteral("data8") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("d-mmm with half month name") << QStringLiteral("data8") << QStringLiteral("Dec 13") << QStringLiteral("Dec 13");
+    QTest::newRow("d-mmm-yy with input in dd/mm/yy") << QStringLiteral("data9") << QStringLiteral("13/08/2010") << QStringLiteral("13/08/2010");
+    QTest::newRow("d-mmm-yy with month name") << QStringLiteral("data9") << QStringLiteral("25th of June 2024") << QStringLiteral("25th of June 2024");
+    QTest::newRow("d mmm, yyyy with input in dd/mm/yy") << QStringLiteral("data19") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("d/m/yy h:MM tt with complete date and time") << QStringLiteral("data21") << QStringLiteral("25/06/2024 20:08") << QStringLiteral("25/06/2024 20:08");
+    QTest::newRow("d/m/yy h:MM tt with only date") << QStringLiteral("data21") << QStringLiteral("25/06/2024") << QStringLiteral("25/06/2024");
+    QTest::newRow("d-mmm-yyyy with padding in input date") << QStringLiteral("data10") << QStringLiteral("06/12/1921") << QStringLiteral("06/12/1921");
+    QTest::newRow("d-mmm-yyyy with input in d/m/yyyy") << QStringLiteral("data10") << QStringLiteral("1/8/2010") << QStringLiteral("1/8/2010");
+    QTest::newRow("d-mmm-yy with input in d/m/yyyy") << QStringLiteral("data11") << QStringLiteral("13/6/2024") << QStringLiteral("13/6/2024");
+    QTest::newRow("dd-mmm-yyyy with input in d/m/yyyy") << QStringLiteral("data12") << QStringLiteral("1/1/2011") << QStringLiteral("1/1/2011");
+    // Skip data13, same input already done in data4
+    QTest::newRow("dd-mm-yyyy with input in d/m/yyyy") << QStringLiteral("data14") << QStringLiteral("1/1/2011") << QStringLiteral("1/1/2011");
+    QTest::newRow("mmm-yy full month name") << QStringLiteral("data15") << QStringLiteral("October 2018") << QStringLiteral("October 2018");
+    QTest::newRow("mmmm-yy partial month name") << QStringLiteral("data16") << QStringLiteral("Oct 2018") << QStringLiteral("Oct 2018");
+    QTest::newRow("mmmm-yy input format : mm/yy") << QStringLiteral("data16") << QStringLiteral("09/17") << QStringLiteral("09/17");
+    QTest::newRow("d mmm, yyyy with input in dd/mm/yyyy") << QStringLiteral("data18") << QStringLiteral("13/08/2002") << QStringLiteral("13/08/2002");
+    QTest::newRow("d/m/yy h:MM tt with complete datetime as input") << QStringLiteral("data20") << QStringLiteral("7/2/1991 20:08") << QStringLiteral("7/2/1991 20:08");
+    QTest::newRow("d/m/yy h:MM tt with complete datetime as input2") << QStringLiteral("data20") << QStringLiteral("15/3/2018 5:10 am") << QStringLiteral("15/3/2018 5:10 am");
+    QTest::newRow("d/m/yy HH:MM with datetime including seconds") << QStringLiteral("data22") << QStringLiteral("25/02/2020 13:13:13") << QStringLiteral("25/02/2020 13:13:13");
+    QTest::newRow("d/m/yyyy HH:MM with datetime including seconds") << QStringLiteral("data24") << QStringLiteral("13/10/1966 13:13:13") << QStringLiteral("13/10/1966 13:13:13");
+
+    // TODO add more tests for rejecting strings.
 }
 
 void KeystrokeTest::cleanupTestCase()

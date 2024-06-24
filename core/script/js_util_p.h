@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE QJSValue printd(const QJSValue &oFormat, const QDateTime &oDate) const;
     Q_INVOKABLE double stringToNumber(const QString &number) const;
     Q_INVOKABLE QString numberToString(double number, const QString &fmt = QStringLiteral("g"), int precision = 6, const QString &localeName = {}) const;
+    Q_INVOKABLE QStringList getMonths() const;
 };
 
 }

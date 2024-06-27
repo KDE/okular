@@ -6,13 +6,13 @@
 # obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013, 2022.
-# SPDX-FileCopyrightText: 2023 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-20 02:32+0000\n"
-"PO-Revision-Date: 2023-12-16 11:01+0300\n"
+"PO-Revision-Date: 2024-06-27 01:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -94,7 +94,7 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
-"Bu seçeneği etkinleştirmek, Okular'ın OCSP sunucuları ile iletişim kurarak "
+"Bu seçeneği etkinleştirmek, Okular’ın OCSP sunucuları ile iletişim kurarak "
 "sayısal imzalama için kullanılan sertifikaların oluşturulduğu tarihten "
 "itibaren yürürlükten kaldırılıp kaldırılmadığını denetlemesine izin verir."
 
@@ -315,7 +315,7 @@ msgstr "Yeniden başlatma gerekli"
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
-"NSS dizin ayarlarını değiştirdikten sonra Okular'ı yeniden başlatmalısınız"
+"NSS dizin ayarlarını değiştirdikten sonra Okular’ı yeniden başlatmalısınız"
 
 #: pdfsignatureutils.cpp:214
 #, kde-format

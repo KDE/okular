@@ -3,13 +3,13 @@
 #
 # Translators:
 # Volkan Gezer, 2013.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-08 00:37+0000\n"
-"PO-Revision-Date: 2023-07-14 00:33+0300\n"
+"PO-Revision-Date: 2024-06-27 01:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -68,11 +68,11 @@ msgstr "Parmak İzleri"
 
 #: package/contents/ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
-msgstr "SHA-1 Parmak İzi:"
+msgstr "SHA-1 parmak izi:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
-msgstr "SHA-256 Parmak İzi:"
+msgstr "SHA-256 parmak izi:"
 
 #: package/contents/ui/CertificateViewerDialog.qml:136
 msgid "Export..."

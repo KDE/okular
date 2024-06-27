@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-20 00:38+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2023-06-29 07:06+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -316,12 +316,12 @@ msgstr "Potreben ponovni zagon"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Po spremembi nastavitev imenika NSS morate ponovno zagnati Okular"
 
-#: pdfsignatureutils.cpp:214
+#: pdfsignatureutils.cpp:218
 #, kde-format
 msgid "Enter Password"
 msgstr "Vnesite geslo"
 
-#: pdfsignatureutils.cpp:214
+#: pdfsignatureutils.cpp:218
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Vnesite geslo za odprtje %1:"

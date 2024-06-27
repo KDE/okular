@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-16 00:37+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2024-01-26 20:26+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -229,7 +229,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI-kóði setti tákn af óþekktri leturgerð."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI kóðinn vísaði í leturgerð #%1 sem hefur ekki verið skilgreind."
@@ -336,17 +336,17 @@ msgstr "Myndunarforrit/dagsetning"
 msgid "Font file not found"
 msgstr "Leturskrá fannst ekki"
 
-#: pageSize.cpp:319
+#: pageSize.cpp:318
 #, kde-format
 msgid "portrait"
 msgstr "skammsnið"
 
-#: pageSize.cpp:321
+#: pageSize.cpp:320
 #, kde-format
 msgid "landscape"
 msgstr "langsnið"
 
-#: psgs.cpp:284
+#: psgs.cpp:283
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-20 00:38+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2024-01-17 17:16+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -260,203 +260,203 @@ msgstr ""
 "<qt>أكثر من نهاية خلفية وجدت لنوع التنسيق :<br /><b>%1</b> (%2).<br /><br /"
 ">أختر أيها سيستعمل:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:205
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "أغلب الصفحات %1"
 
-#: core/document.cpp:227
+#: core/document.cpp:226
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "بالطّول %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:228
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "بالعرض %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 في (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 مم (%3)"
 
-#: core/document.cpp:1687
+#: core/document.cpp:1686
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "تابع البحث من البداية"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "تابع البحث من الأسفل"
 
-#: core/document.cpp:2436
+#: core/document.cpp:2435
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "تعذر إيجاد ملحق للتعامل مع المستند المطلوب."
 
-#: core/document.cpp:3586
+#: core/document.cpp:3585
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "أزِل الشروح"
 
-#: core/document.cpp:4176 core/document.cpp:4182
+#: core/document.cpp:4175 core/document.cpp:4181
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "المستند يحاول تشغيل تطبيق خارجي ؛ و لأمانك أوكلار لا يسمح بذلك."
 
-#: core/document.cpp:4192
+#: core/document.cpp:4191
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "لم يجد تطبيق لفتح الملف من نوع التنسيق %1."
 
-#: core/document.cpp:4692
+#: core/document.cpp:4691
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "تعذر فتح الملف المؤقت"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4693
 #, kde-format
 msgid "Print conversion failed"
 msgstr "فشل تحويل الطباعة"
 
-#: core/document.cpp:4696
+#: core/document.cpp:4695
 #, kde-format
 msgid "Printing process crashed"
 msgstr "انهارت عملية الطباعة"
 
-#: core/document.cpp:4698
+#: core/document.cpp:4697
 #, kde-format
 msgid "Printing process could not start"
 msgstr "لا يمكن بدء عملية الطباعة"
 
-#: core/document.cpp:4700
+#: core/document.cpp:4699
 #, kde-format
 msgid "Printing to file failed"
 msgstr "فشلت الطباعة لملف"
 
-#: core/document.cpp:4702
+#: core/document.cpp:4701
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "الطابعة في حالة غير صالحة"
 
-#: core/document.cpp:4704
+#: core/document.cpp:4703
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "تعذر العثور على الملف للطباعة"
 
-#: core/document.cpp:4706
+#: core/document.cpp:4705
 #, kde-format
 msgid "There was no file to print"
 msgstr "لا يوجد ملف للطباعة"
 
-#: core/document.cpp:4708
+#: core/document.cpp:4707
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "لم يعثر على برنامج مناسب للطباعة. تأكد أن CUPS lpr موجود."
 
-#: core/document.cpp:4710
+#: core/document.cpp:4709
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "حجم صفحة الطباعة غير صالح"
 
-#: core/document.cpp:5375 part/part.cpp:1114
+#: core/document.cpp:5372 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "تعذر فتح '%1'. الملف غير موجود"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5882
 #, kde-format
 msgid "Title"
 msgstr "العنوان"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5885
 #, kde-format
 msgid "Subject"
 msgstr "الموضوع"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5888
 #, kde-format
 msgid "Description"
 msgstr "الوصف"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5891
 #, kde-format
 msgid "Author"
 msgstr "المؤلف"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5894
 #, kde-format
 msgid "Creator"
 msgstr "المُنشئ"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5897
 #, kde-format
 msgid "Producer"
 msgstr "المُنتج"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5900
 #, kde-format
 msgid "Copyright"
 msgstr "حقوق النسخ"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5903
 #, kde-format
 msgid "Pages"
 msgstr "الصفحات"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5906
 #, kde-format
 msgid "Created"
 msgstr "أنشئ"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5909
 #, kde-format
 msgid "Modified"
 msgstr "عُدل"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5912
 #, kde-format
 msgid "MIME Type"
 msgstr "نوع تنسيق الملف"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5915
 #, kde-format
 msgid "Category"
 msgstr "التصنيف"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5918
 #, kde-format
 msgid "Keywords"
 msgstr "الكلمات المفتاحية"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5921
 #, kde-format
 msgid "File Path"
 msgstr "مسار الملف"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Size"
 msgstr "حجم الملف"
 
-#: core/document.cpp:5930
+#: core/document.cpp:5927
 #, kde-format
 msgid "Page Size"
 msgstr "حجم الصفحة"
@@ -887,126 +887,131 @@ msgstr "لم يتحقق من الشهادة بعد."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
+msgid "Certificate validation in progress"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:74
+#, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
 msgstr "مشكلة مجهول في الشهادة أو البيانات معطوبة."
 
-#: gui/signatureguiutils.cpp:80
+#: gui/signatureguiutils.cpp:82
 #, kde-format
 msgid "MD2"
 msgstr "MD2"
 
-#: gui/signatureguiutils.cpp:82
+#: gui/signatureguiutils.cpp:84
 #, kde-format
 msgid "MD5"
 msgstr "MD5"
 
-#: gui/signatureguiutils.cpp:84
+#: gui/signatureguiutils.cpp:86
 #, kde-format
 msgid "SHA1"
 msgstr "SHA1"
 
-#: gui/signatureguiutils.cpp:86
+#: gui/signatureguiutils.cpp:88
 #, kde-format
 msgid "SHA256"
 msgstr "SHA256"
 
-#: gui/signatureguiutils.cpp:88
+#: gui/signatureguiutils.cpp:90
 #, kde-format
 msgid "SHA384"
 msgstr "SHA384"
 
-#: gui/signatureguiutils.cpp:90
+#: gui/signatureguiutils.cpp:92
 #, kde-format
 msgid "SHA512"
 msgstr "SHA512"
 
-#: gui/signatureguiutils.cpp:92
+#: gui/signatureguiutils.cpp:94
 #, kde-format
 msgid "SHA224"
 msgstr "SHA224"
 
-#: gui/signatureguiutils.cpp:94
+#: gui/signatureguiutils.cpp:96
 #, kde-format
 msgid "Unknown Algorithm"
 msgstr "خوارزمية مجهولة"
 
-#: gui/signatureguiutils.cpp:102
+#: gui/signatureguiutils.cpp:104
 #, kde-format
 msgid "RSA"
 msgstr "RSA"
 
-#: gui/signatureguiutils.cpp:104
+#: gui/signatureguiutils.cpp:106
 #, kde-format
 msgid "DSA"
 msgstr "DSA"
 
-#: gui/signatureguiutils.cpp:106
+#: gui/signatureguiutils.cpp:108
 #, kde-format
 msgid "EC"
 msgstr "الكُهَيرِب"
 
-#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#: gui/signatureguiutils.cpp:110 gui/signatureguiutils.cpp:113
 #, kde-format
 msgid "Unknown Type"
 msgstr "نوع غير معروف"
 
-#: gui/signatureguiutils.cpp:118
+#: gui/signatureguiutils.cpp:120
 #, kde-format
 msgid "Digital Signature"
 msgstr "التوقيع الرقمي"
 
-#: gui/signatureguiutils.cpp:121
+#: gui/signatureguiutils.cpp:123
 #, kde-format
 msgid "Non-Repudiation"
 msgstr "عدم التنصل"
 
-#: gui/signatureguiutils.cpp:124
+#: gui/signatureguiutils.cpp:126
 #, kde-format
 msgid "Encrypt Keys"
 msgstr "مفاتيح التشفير"
 
-#: gui/signatureguiutils.cpp:127
+#: gui/signatureguiutils.cpp:129
 #, kde-format
 msgid "Decrypt Keys"
 msgstr "مفاتيح فك التشفير"
 
-#: gui/signatureguiutils.cpp:130
+#: gui/signatureguiutils.cpp:132
 #, kde-format
 msgid "Key Agreement"
 msgstr "اتفاقية المفتاح"
 
-#: gui/signatureguiutils.cpp:133
+#: gui/signatureguiutils.cpp:135
 #, kde-format
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
-#: gui/signatureguiutils.cpp:136
+#: gui/signatureguiutils.cpp:138
 #, kde-format
 msgid "Sign CRL"
 msgstr "وقع CRL"
 
-#: gui/signatureguiutils.cpp:139
+#: gui/signatureguiutils.cpp:141
 #, kde-format
 msgid "Encrypt Only"
 msgstr "التشفير فقط"
 
-#: gui/signatureguiutils.cpp:142
+#: gui/signatureguiutils.cpp:144
 #, kde-format
 msgid "No Usage Specified"
 msgstr "لم يحدد الاستعمال"
 
-#: gui/signatureguiutils.cpp:149
+#: gui/signatureguiutils.cpp:151
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
 msgstr "، "
 
-#: gui/signatureguiutils.cpp:163
+#: gui/signatureguiutils.cpp:165
 #, kde-format
 msgid "The document has not been modified since it was signed."
 msgstr "لم يعدل المستند منذ توقيعه."
 
-#: gui/signatureguiutils.cpp:166
+#: gui/signatureguiutils.cpp:168
 #, kde-format
 msgid ""
 "The revision of the document that was covered by this signature has not been "
@@ -1016,34 +1021,34 @@ msgstr ""
 "لم تعدل مراجعة الوثيقة التي يغطيها هذا التوقيع ؛ \n"
 "ومع ذلك كانت هناك تغييرات لاحقة على المستند."
 
-#: gui/signatureguiutils.cpp:170
+#: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
 msgstr "عدلت الوثيقة بطريقة لا يسمح بها الموقّع السابق."
 
-#: gui/signatureguiutils.cpp:172
+#: gui/signatureguiutils.cpp:174
 #, kde-format
 msgid "The document integrity verification could not be completed."
 msgstr "تعذر إكمال التحقق من سلامة المستند."
 
-#: gui/signatureguiutils.cpp:206
+#: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "هذا المستند يحوي أماكن توقيع غير موقعة."
 
-#: gui/signatureguiutils.cpp:209
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "هذا المستند موقع رقمياً."
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:213
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr "هذا المستند موقع رقمياً. حصلت تغييرات عليه منذ أخر توقيع."
 
-#: gui/signatureguiutils.cpp:214
+#: gui/signatureguiutils.cpp:216
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
@@ -1055,7 +1060,7 @@ msgstr "هذا المستند موقع رقمياً. لا يمكن التحقق 
 msgid "Unsigned Signature %1"
 msgstr "توقيع غير موقع %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "الحقل: %1 على الصفحة %2"
@@ -1065,17 +1070,17 @@ msgstr "الحقل: %1 على الصفحة %2"
 msgid "Rev. %1: Signed By %2"
 msgstr "المراجعة %1: وقعت بواسطة %2"
 
-#: gui/signaturemodel.cpp:158
+#: gui/signaturemodel.cpp:167
 #, kde-format
 msgid "Signing Time: %1"
 msgstr "وقت التوقيع: %1"
 
-#: gui/signaturemodel.cpp:163
+#: gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Reason: %1"
 msgstr "السّبب: %1"
 
-#: gui/signaturemodel.cpp:168
+#: gui/signaturemodel.cpp:177
 #, kde-format
 msgid "Location: %1"
 msgstr "المكان: %1"
@@ -3427,17 +3432,17 @@ msgstr "اعثر وأنت تكتب"
 msgid "All Files (*)"
 msgstr "كلّ الملفّات (*)"
 
-#: part/formwidgets.cpp:1179
+#: part/formwidgets.cpp:1178
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "مكان توقيع غير موقع (انقر للتوقيع)"
 
-#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&وقّع..."
 
-#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "خصائص التوقيع"
@@ -5037,7 +5042,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "شغّل"
 
-#: part/presentationwidget.cpp:1620
+#: part/presentationwidget.cpp:1622
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5048,7 +5053,7 @@ msgstr ""
 "خروج الذي يظهر عند وضع الفأرة على الزاوية العلوية اليسارية. بلا شك يمكنك "
 "تدوير النوافذ (Alt+TAB بشكل افتراضي)"
 
-#: part/presentationwidget.cpp:1716
+#: part/presentationwidget.cpp:1718
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

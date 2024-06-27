@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-16 00:37+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2021-08-22 14:18+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -187,7 +187,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "अज्ञात फ़ॉन्ट का डीवीआई कोड सेट अक्षर."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:660
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
@@ -284,17 +284,17 @@ msgstr "जेनरेटर/तारीख़"
 msgid "Font file not found"
 msgstr "फ़ॉन्ट फ़ाइल नहीं मिला"
 
-#: pageSize.cpp:319
+#: pageSize.cpp:318
 #, kde-format
 msgid "portrait"
 msgstr "खड़ा"
 
-#: pageSize.cpp:321
+#: pageSize.cpp:320
 #, kde-format
 msgid "landscape"
 msgstr "आड़ा"
 
-#: psgs.cpp:284
+#: psgs.cpp:283
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

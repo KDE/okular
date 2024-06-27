@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-20 00:38+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2024-01-13 13:16+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -274,59 +274,59 @@ msgstr ""
 "<qt>Er is meer dan één backend gevonden voor het MIME-bestandstype:<br /><b>"
 "%1</b> (%2).<br /> <br />Selecteer degene die u wilt gebruiken:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:205
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "de meeste pagina's zijn %1."
 
-#: core/document.cpp:227
+#: core/document.cpp:226
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Portret %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:228
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Landschap %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1687
+#: core/document.cpp:1686
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Doorgaan met zoeken vanaf het begin"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Doorgaan met zoeken vanaf het einde"
 
-#: core/document.cpp:2436
+#: core/document.cpp:2435
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Kon geen plugin vinden voor het openen van het  aangeleverde document."
 
-#: core/document.cpp:3586
+#: core/document.cpp:3585
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "annotaties verwijderen"
 
-#: core/document.cpp:4176 core/document.cpp:4182
+#: core/document.cpp:4175 core/document.cpp:4181
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -335,52 +335,52 @@ msgstr ""
 "Het document probeert een extern programma uit te voeren. Voor de veiligheid "
 "van uw systeem laat Okular dit niet toe."
 
-#: core/document.cpp:4192
+#: core/document.cpp:4191
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Geen programma gevonden voor het openen van bestanden van het type %1."
 
-#: core/document.cpp:4692
+#: core/document.cpp:4691
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Kon geen tijdelijk bestand openen"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4693
 #, kde-format
 msgid "Print conversion failed"
 msgstr "De afdrukconversie is mislukt"
 
-#: core/document.cpp:4696
+#: core/document.cpp:4695
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Afdrukproces is onverwacht beëindigd"
 
-#: core/document.cpp:4698
+#: core/document.cpp:4697
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Afdrukproces kon niet beginnen"
 
-#: core/document.cpp:4700
+#: core/document.cpp:4699
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Afdrukken naar bestand is mislukt"
 
-#: core/document.cpp:4702
+#: core/document.cpp:4701
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer was in een ongeldige status"
 
-#: core/document.cpp:4704
+#: core/document.cpp:4703
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Af te drukken bestand is niet gevonden"
 
-#: core/document.cpp:4706
+#: core/document.cpp:4705
 #, kde-format
 msgid "There was no file to print"
 msgstr "Er was geen bestand om af te drukken"
 
-#: core/document.cpp:4708
+#: core/document.cpp:4707
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -389,92 +389,92 @@ msgstr ""
 "Een geschikt programma voor afdrukken is niet gevonden. Verzeker u ervan dat "
 "het CUPS-programma lpr beschikbaar is"
 
-#: core/document.cpp:4710
+#: core/document.cpp:4709
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "De afdrukgrootte van de pagina is ongeldig"
 
-#: core/document.cpp:5375 part/part.cpp:1114
+#: core/document.cpp:5372 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Kon '%1' niet openen. Bestand bestaat niet"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5882
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5885
 #, kde-format
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5888
 #, kde-format
 msgid "Description"
 msgstr "Beschrijving"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5891
 #, kde-format
 msgid "Author"
 msgstr "Auteur"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5894
 #, kde-format
 msgid "Creator"
 msgstr "Aangemaakt door"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5897
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5900
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5903
 #, kde-format
 msgid "Pages"
 msgstr "Pagina's"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5906
 #, kde-format
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5909
 #, kde-format
 msgid "Modified"
 msgstr "Gewijzigd"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5912
 #, kde-format
 msgid "MIME Type"
 msgstr "Mime-type"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5915
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5918
 #, kde-format
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5921
 #, kde-format
 msgid "File Path"
 msgstr "Bestandspad"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Size"
 msgstr "Bestandsgrootte"
 
-#: core/document.cpp:5930
+#: core/document.cpp:5927
 #, kde-format
 msgid "Page Size"
 msgstr "Paginagrootte"
@@ -904,126 +904,131 @@ msgstr "Certificaat is niet geverifieerd."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
+msgid "Certificate validation in progress"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:74
+#, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
 msgstr "Onbekend probleem met certificaat of beschadigde gegevens."
 
-#: gui/signatureguiutils.cpp:80
+#: gui/signatureguiutils.cpp:82
 #, kde-format
 msgid "MD2"
 msgstr "MD2"
 
-#: gui/signatureguiutils.cpp:82
+#: gui/signatureguiutils.cpp:84
 #, kde-format
 msgid "MD5"
 msgstr "MD5"
 
-#: gui/signatureguiutils.cpp:84
+#: gui/signatureguiutils.cpp:86
 #, kde-format
 msgid "SHA1"
 msgstr "SHA1"
 
-#: gui/signatureguiutils.cpp:86
+#: gui/signatureguiutils.cpp:88
 #, kde-format
 msgid "SHA256"
 msgstr "SHA256"
 
-#: gui/signatureguiutils.cpp:88
+#: gui/signatureguiutils.cpp:90
 #, kde-format
 msgid "SHA384"
 msgstr "SHA384"
 
-#: gui/signatureguiutils.cpp:90
+#: gui/signatureguiutils.cpp:92
 #, kde-format
 msgid "SHA512"
 msgstr "SHA512"
 
-#: gui/signatureguiutils.cpp:92
+#: gui/signatureguiutils.cpp:94
 #, kde-format
 msgid "SHA224"
 msgstr "SHA224"
 
-#: gui/signatureguiutils.cpp:94
+#: gui/signatureguiutils.cpp:96
 #, kde-format
 msgid "Unknown Algorithm"
 msgstr "Onbekend algoritme"
 
-#: gui/signatureguiutils.cpp:102
+#: gui/signatureguiutils.cpp:104
 #, kde-format
 msgid "RSA"
 msgstr "RSA"
 
-#: gui/signatureguiutils.cpp:104
+#: gui/signatureguiutils.cpp:106
 #, kde-format
 msgid "DSA"
 msgstr "DSA"
 
-#: gui/signatureguiutils.cpp:106
+#: gui/signatureguiutils.cpp:108
 #, kde-format
 msgid "EC"
 msgstr "EC"
 
-#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#: gui/signatureguiutils.cpp:110 gui/signatureguiutils.cpp:113
 #, kde-format
 msgid "Unknown Type"
 msgstr "Onbekend type"
 
-#: gui/signatureguiutils.cpp:118
+#: gui/signatureguiutils.cpp:120
 #, kde-format
 msgid "Digital Signature"
 msgstr "Digitale ondertekening"
 
-#: gui/signatureguiutils.cpp:121
+#: gui/signatureguiutils.cpp:123
 #, kde-format
 msgid "Non-Repudiation"
 msgstr "Kan-niet-ingetrokken-worden"
 
-#: gui/signatureguiutils.cpp:124
+#: gui/signatureguiutils.cpp:126
 #, kde-format
 msgid "Encrypt Keys"
 msgstr "Sleutels versleutelen"
 
-#: gui/signatureguiutils.cpp:127
+#: gui/signatureguiutils.cpp:129
 #, kde-format
 msgid "Decrypt Keys"
 msgstr "Sleutels ontcijferen"
 
-#: gui/signatureguiutils.cpp:130
+#: gui/signatureguiutils.cpp:132
 #, kde-format
 msgid "Key Agreement"
 msgstr "Sleutelovereenkomst"
 
-#: gui/signatureguiutils.cpp:133
+#: gui/signatureguiutils.cpp:135
 #, kde-format
 msgid "Sign Certificate"
 msgstr "Certificaat ondertekenen"
 
-#: gui/signatureguiutils.cpp:136
+#: gui/signatureguiutils.cpp:138
 #, kde-format
 msgid "Sign CRL"
 msgstr "CRL ondertekenen"
 
-#: gui/signatureguiutils.cpp:139
+#: gui/signatureguiutils.cpp:141
 #, kde-format
 msgid "Encrypt Only"
 msgstr "Alleen versleutelen"
 
-#: gui/signatureguiutils.cpp:142
+#: gui/signatureguiutils.cpp:144
 #, kde-format
 msgid "No Usage Specified"
 msgstr "Geen gebruik gespecificeerd"
 
-#: gui/signatureguiutils.cpp:149
+#: gui/signatureguiutils.cpp:151
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
 msgstr ", "
 
-#: gui/signatureguiutils.cpp:163
+#: gui/signatureguiutils.cpp:165
 #, kde-format
 msgid "The document has not been modified since it was signed."
 msgstr "Het document is niet gewijzigd sinds het was ondertekend."
 
-#: gui/signatureguiutils.cpp:166
+#: gui/signatureguiutils.cpp:168
 #, kde-format
 msgid ""
 "The revision of the document that was covered by this signature has not been "
@@ -1034,7 +1039,7 @@ msgstr ""
 "gewijzigd;\n"
 "er zijn echter opvolgende wijzigingen aan het document."
 
-#: gui/signatureguiutils.cpp:170
+#: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
@@ -1042,23 +1047,23 @@ msgstr ""
 "Het document is gewijzigd op een manier die niet is toegestaan door een "
 "vorige ondertekenaar."
 
-#: gui/signatureguiutils.cpp:172
+#: gui/signatureguiutils.cpp:174
 #, kde-format
 msgid "The document integrity verification could not be completed."
 msgstr ""
 "De verificatie van de integriteit van het document kon niet worden voltooid."
 
-#: gui/signatureguiutils.cpp:206
+#: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "Dit document heeft een niet ondertekend veld voor ondertekening."
 
-#: gui/signatureguiutils.cpp:209
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Dit document is digitaal ondertekend."
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:213
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1066,7 +1071,7 @@ msgstr ""
 "Dit document is digitaal ondertekend. Er zijn wijzigingen sinds de laatste "
 "ondertekening."
 
-#: gui/signatureguiutils.cpp:214
+#: gui/signatureguiutils.cpp:216
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
@@ -1080,7 +1085,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "Niet ondertekende ondertekening %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Veld: %1 op pagina %2"
@@ -1090,17 +1095,17 @@ msgstr "Veld: %1 op pagina %2"
 msgid "Rev. %1: Signed By %2"
 msgstr "Rev. %1: ondertekend door %2"
 
-#: gui/signaturemodel.cpp:158
+#: gui/signaturemodel.cpp:167
 #, kde-format
 msgid "Signing Time: %1"
 msgstr "Tijdstip van ondertekenen: %1"
 
-#: gui/signaturemodel.cpp:163
+#: gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Reason: %1"
 msgstr "Reden:%1"
 
-#: gui/signaturemodel.cpp:168
+#: gui/signaturemodel.cpp:177
 #, kde-format
 msgid "Location: %1"
 msgstr "Locatie: %1"
@@ -3444,17 +3449,17 @@ msgstr "Zoeken tijdens typen"
 msgid "All Files (*)"
 msgstr "Alle bestanden (*)"
 
-#: part/formwidgets.cpp:1179
+#: part/formwidgets.cpp:1178
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Niet ondertekend veld voor ondertekening (klik om te ondertekenen)"
 
-#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Ondertekenen..."
 
-#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Eigenschappen van ondertekening"
@@ -5078,7 +5083,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "Afspelen"
 
-#: part/presentationwidget.cpp:1620
+#: part/presentationwidget.cpp:1622
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5090,7 +5095,7 @@ msgstr ""
 "bovenhoek plaatst. Uiteraard kunt u door de vensters bladeren (standaard via "
 "Alt+Tab)."
 
-#: part/presentationwidget.cpp:1716
+#: part/presentationwidget.cpp:1718
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

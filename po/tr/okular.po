@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-22 13:04+0300\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"PO-Revision-Date: 2024-06-27 01:56+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -64,11 +64,11 @@ msgid ""
 "(C) 2004-2017 Albert Astals Cid\n"
 "(C) 2006-2009 Pino Toscano"
 msgstr ""
-"(C) 2002 Wilco Greven, Christophe Devriese\n"
-"(C) 2004-2005 Enrico Ros\n"
-"(C) 2005 Piotr Szymanski\n"
-"(C) 2004-2017 Albert Astals Cid\n"
-"(C) 2006-2009 Pino Toscano"
+"© 2002 Wilco Greven, Christophe Devriese\n"
+"© 2004–2005 Enrico Ros\n"
+"© 2005 Piotr Szymanski\n"
+"© 2004–2017 Albert Astals Cid\n"
+"c© 2006–2009 Pino Toscanoc"
 
 #: aboutdata.h:31
 #, kde-format
@@ -135,7 +135,7 @@ msgstr "Bilgi notu sanatsal çalışmaları"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "Jiri Baum — NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -145,7 +145,7 @@ msgstr "Tablo seçim aracı"
 #: aboutdata.h:38
 #, kde-format
 msgid "Fabio D'Urso"
-msgstr "Fabio D'Urso"
+msgstr "Fabio D’Urso"
 
 #: aboutdata.h:38
 #, kde-format
@@ -165,7 +165,7 @@ msgstr "Dış dosya aç"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
-msgstr "'%1' komutunu çalıştır..."
+msgstr "Yürüt: “%1”…"
 
 #: core/action.cpp:296
 #, kde-format
@@ -215,17 +215,17 @@ msgstr "Sunumu Bitir"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find..."
-msgstr "Ara..."
+msgstr "Ara…"
 
 #: core/action.cpp:316
 #, kde-format
 msgid "Go To Page..."
-msgstr "Sayfaya Git..."
+msgstr "Sayfaya Git…"
 
 #: core/action.cpp:367
 #, kde-format
 msgid "Play sound..."
-msgstr "Ses çal..."
+msgstr "Ses Çal…"
 
 #: core/action.cpp:435 core/action.cpp:551
 #, kde-format
@@ -235,7 +235,7 @@ msgstr "JavaScript Betiği"
 #: core/action.cpp:485
 #, kde-format
 msgid "Play movie..."
-msgstr "Film oynat..."
+msgstr "Film Oynat…"
 
 #: core/action.cpp:556
 #, kde-format
@@ -276,113 +276,113 @@ msgstr ""
 "<qt>MIME türü için birden fazla arka uç bulundu:<br /><b>%1</b> (%2).<br /"
 "><br />Lütfen kullanmak için birini seçin:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:205
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Çoğu sayfa %1."
 
-#: core/document.cpp:227
+#: core/document.cpp:226
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Dikey %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:228
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Yatay %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 × %2 inç (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1687
+#: core/document.cpp:1686
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Arama, başlangıçtan sürüyor"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Arama, sondan sürüyor"
 
-#: core/document.cpp:2436
+#: core/document.cpp:2435
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Bu belgeyi açmak için bir eklenti bulunamadı."
 
-#: core/document.cpp:3586
+#: core/document.cpp:3585
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "bilgi notlarını kaldır"
 
-#: core/document.cpp:4176 core/document.cpp:4182
+#: core/document.cpp:4175 core/document.cpp:4181
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
-"Belge, bir dış uygulama çalıştırmak istiyor; güvenliğiniz için Okular buna "
+"Belge, bir dış uygulamayı yürütmek istiyor; güvenliğiniz için Okular buna "
 "izin vermez."
 
-#: core/document.cpp:4192
+#: core/document.cpp:4191
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 dosya türünü açmak için bir uygulama bulunamadı."
 
-#: core/document.cpp:4692
+#: core/document.cpp:4691
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Geçici dosya açılamadı"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4693
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Yazdırma dönüşümü başarısız"
 
-#: core/document.cpp:4696
+#: core/document.cpp:4695
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Yazdırma süreci çöktü"
 
-#: core/document.cpp:4698
+#: core/document.cpp:4697
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Yazdırma süreci başlatılamadı"
 
-#: core/document.cpp:4700
+#: core/document.cpp:4699
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Dosyaya yazdırma başarısız"
 
-#: core/document.cpp:4702
+#: core/document.cpp:4701
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Yazıcı geçersiz bir durumdaydı"
 
-#: core/document.cpp:4704
+#: core/document.cpp:4703
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Yazdırılacak dosya bulunamadı"
 
-#: core/document.cpp:4706
+#: core/document.cpp:4705
 #, kde-format
 msgid "There was no file to print"
 msgstr "Yazdırılacak dosya yok"
 
-#: core/document.cpp:4708
+#: core/document.cpp:4707
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -391,92 +391,92 @@ msgstr ""
 "Yazdırmak için uygun bir ikili dosya bulunamadı. CUPS lpr ikili dosyasının "
 "kullanılabilir olduğundan emin olun"
 
-#: core/document.cpp:4710
+#: core/document.cpp:4709
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Sayfa yazdırma boyutu geçersiz"
 
-#: core/document.cpp:5375 part/part.cpp:1114
+#: core/document.cpp:5372 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "'%1' açılamadı. Dosya yok"
+msgstr "“%1” açılamadı. Dosya yok"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5882
 #, kde-format
 msgid "Title"
 msgstr "Başlık"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5885
 #, kde-format
 msgid "Subject"
 msgstr "Konu"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5888
 #, kde-format
 msgid "Description"
 msgstr "Açıklama"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5891
 #, kde-format
 msgid "Author"
 msgstr "Yazar"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5894
 #, kde-format
 msgid "Creator"
 msgstr "Oluşturan"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5897
 #, kde-format
 msgid "Producer"
 msgstr "Üretici"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5900
 #, kde-format
 msgid "Copyright"
 msgstr "Telif Hakkı"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5903
 #, kde-format
 msgid "Pages"
 msgstr "Sayfalar"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5906
 #, kde-format
 msgid "Created"
 msgstr "Oluşturulma"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5909
 #, kde-format
 msgid "Modified"
 msgstr "Değiştirilme"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5912
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME Türü"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5915
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5918
 #, kde-format
 msgid "Keywords"
 msgstr "Anahtar Sözcükler"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5921
 #, kde-format
 msgid "File Path"
 msgstr "Dosya Yolu"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Size"
 msgstr "Dosya Boyutu"
 
-#: core/document.cpp:5930
+#: core/document.cpp:5927
 #, kde-format
 msgid "Page Size"
 msgstr "Sayfa Boyutu"
@@ -550,7 +550,7 @@ msgstr "form düğme durumlarını düzenle"
 #: core/generator.cpp:759
 #, kde-format
 msgid "Plain &Text..."
-msgstr "Düz &Metin..."
+msgstr "Düz &Metin…"
 
 #: core/generator.cpp:762
 #, kde-format
@@ -842,7 +842,7 @@ msgstr "%1 belgesini nereye kaydetmek istiyorsunuz?"
 #: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
-msgstr "\"%1\" yazmak için açılamadı. Dosya kaydedilmedi."
+msgstr "“%1” yazmak için açılamadı. Dosya kaydedilmedi."
 
 #: gui/signatureguiutils.cpp:42
 #, kde-format
@@ -906,126 +906,131 @@ msgstr "Sertifika henüz doğrulanmadı."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
+msgid "Certificate validation in progress"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:74
+#, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
 msgstr "Sertifika ile ilgili bilinmeyen sorun veya hasarlı veri."
 
-#: gui/signatureguiutils.cpp:80
+#: gui/signatureguiutils.cpp:82
 #, kde-format
 msgid "MD2"
 msgstr "MD2"
 
-#: gui/signatureguiutils.cpp:82
+#: gui/signatureguiutils.cpp:84
 #, kde-format
 msgid "MD5"
 msgstr "MD5"
 
-#: gui/signatureguiutils.cpp:84
+#: gui/signatureguiutils.cpp:86
 #, kde-format
 msgid "SHA1"
 msgstr "SHA1"
 
-#: gui/signatureguiutils.cpp:86
+#: gui/signatureguiutils.cpp:88
 #, kde-format
 msgid "SHA256"
 msgstr "SHA256"
 
-#: gui/signatureguiutils.cpp:88
+#: gui/signatureguiutils.cpp:90
 #, kde-format
 msgid "SHA384"
 msgstr "SHA284"
 
-#: gui/signatureguiutils.cpp:90
+#: gui/signatureguiutils.cpp:92
 #, kde-format
 msgid "SHA512"
 msgstr "SHA512"
 
-#: gui/signatureguiutils.cpp:92
+#: gui/signatureguiutils.cpp:94
 #, kde-format
 msgid "SHA224"
 msgstr "SHA224"
 
-#: gui/signatureguiutils.cpp:94
+#: gui/signatureguiutils.cpp:96
 #, kde-format
 msgid "Unknown Algorithm"
 msgstr "Bilinmeyen Algoritma"
 
-#: gui/signatureguiutils.cpp:102
+#: gui/signatureguiutils.cpp:104
 #, kde-format
 msgid "RSA"
 msgstr "RSA"
 
-#: gui/signatureguiutils.cpp:104
+#: gui/signatureguiutils.cpp:106
 #, kde-format
 msgid "DSA"
 msgstr "DSA"
 
-#: gui/signatureguiutils.cpp:106
+#: gui/signatureguiutils.cpp:108
 #, kde-format
 msgid "EC"
 msgstr "EC"
 
-#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#: gui/signatureguiutils.cpp:110 gui/signatureguiutils.cpp:113
 #, kde-format
 msgid "Unknown Type"
 msgstr "Bilinmeyen Tür"
 
-#: gui/signatureguiutils.cpp:118
+#: gui/signatureguiutils.cpp:120
 #, kde-format
 msgid "Digital Signature"
 msgstr "Sayısal İmza"
 
-#: gui/signatureguiutils.cpp:121
+#: gui/signatureguiutils.cpp:123
 #, kde-format
 msgid "Non-Repudiation"
 msgstr "Geri Çevrilemez"
 
-#: gui/signatureguiutils.cpp:124
+#: gui/signatureguiutils.cpp:126
 #, kde-format
 msgid "Encrypt Keys"
 msgstr "Anahtarları Şifrele"
 
-#: gui/signatureguiutils.cpp:127
+#: gui/signatureguiutils.cpp:129
 #, kde-format
 msgid "Decrypt Keys"
 msgstr "Anahtarların Şifresini Çöz"
 
-#: gui/signatureguiutils.cpp:130
+#: gui/signatureguiutils.cpp:132
 #, kde-format
 msgid "Key Agreement"
 msgstr "Anahtar Antlaşması"
 
-#: gui/signatureguiutils.cpp:133
+#: gui/signatureguiutils.cpp:135
 #, kde-format
 msgid "Sign Certificate"
 msgstr "Sertifikayı İmzala"
 
-#: gui/signatureguiutils.cpp:136
+#: gui/signatureguiutils.cpp:138
 #, kde-format
 msgid "Sign CRL"
 msgstr "CRL İmzala"
 
-#: gui/signatureguiutils.cpp:139
+#: gui/signatureguiutils.cpp:141
 #, kde-format
 msgid "Encrypt Only"
 msgstr "Yalnızca Şifreleme"
 
-#: gui/signatureguiutils.cpp:142
+#: gui/signatureguiutils.cpp:144
 #, kde-format
 msgid "No Usage Specified"
 msgstr "Kullanım Belirtilmemiş"
 
-#: gui/signatureguiutils.cpp:149
+#: gui/signatureguiutils.cpp:151
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
 msgstr ", "
 
-#: gui/signatureguiutils.cpp:163
+#: gui/signatureguiutils.cpp:165
 #, kde-format
 msgid "The document has not been modified since it was signed."
 msgstr "Bu belge, imzalandığından bu yana değiştirilmedi."
 
-#: gui/signatureguiutils.cpp:166
+#: gui/signatureguiutils.cpp:168
 #, kde-format
 msgid ""
 "The revision of the document that was covered by this signature has not been "
@@ -1035,7 +1040,7 @@ msgstr ""
 "Belgenin, bu imza tarafından kapsanan revizyonu değiştirilmedi; ancak\n"
 "belgeye kapsamlı değişiklikler yapılmış."
 
-#: gui/signatureguiutils.cpp:170
+#: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
@@ -1043,22 +1048,22 @@ msgstr ""
 "Belge, bir önceki imzalayan tarafından izin verilmeyen bir biçimde "
 "değiştirilmiş."
 
-#: gui/signatureguiutils.cpp:172
+#: gui/signatureguiutils.cpp:174
 #, kde-format
 msgid "The document integrity verification could not be completed."
 msgstr "Belge bütünlülük doğrulaması tamamlanamadı."
 
-#: gui/signatureguiutils.cpp:206
+#: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "Bu belgede imzasız imza alanları var."
 
-#: gui/signatureguiutils.cpp:209
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Bu belge, sayısal olarak imzalı."
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:213
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1066,7 +1071,7 @@ msgstr ""
 "Bu belge, sayısal olarak imzalı. Son imzalandığından bu yana değişiklikler "
 "yapılmış."
 
-#: gui/signatureguiutils.cpp:214
+#: gui/signatureguiutils.cpp:216
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
@@ -1078,7 +1083,7 @@ msgstr "Bu belge, sayısal olarak imzalı. Bazı imzalar düzgünce doğrulanama
 msgid "Unsigned Signature %1"
 msgstr "Bilinmeyen İmza %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "Alan: %2 numaralı sayfada %1"
@@ -1088,17 +1093,17 @@ msgstr "Alan: %2 numaralı sayfada %1"
 msgid "Rev. %1: Signed By %2"
 msgstr "Revizyon %1: %2 tarafından imzalandı"
 
-#: gui/signaturemodel.cpp:158
+#: gui/signaturemodel.cpp:167
 #, kde-format
 msgid "Signing Time: %1"
 msgstr "İmza saati: %1"
 
-#: gui/signaturemodel.cpp:163
+#: gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Reason: %1"
 msgstr "Gerekçe: %1"
 
-#: gui/signaturemodel.cpp:168
+#: gui/signaturemodel.cpp:177
 #, kde-format
 msgid "Location: %1"
 msgstr "Konum: %1"
@@ -1348,7 +1353,7 @@ msgstr "Saydam"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr "Özel Renk..."
+msgstr "Özel Renk…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1597,7 +1602,7 @@ msgstr "Ö&zellikler"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "Kaydet: '%1'..."
+msgstr "Kaydet: “%1”…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2114,7 +2119,7 @@ msgstr ""
 #: part/annotwindow.cpp:416
 #, kde-format
 msgid "Cannot find latex executable."
-msgstr "Latex çalıştırılabilir dosyası bulunamadı."
+msgstr "latex yürütülebiliri bulunamadı."
 
 #: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
 #: part/annotwindow.cpp:431
@@ -2125,17 +2130,17 @@ msgstr "LaTeX sunumu başarısız oldu"
 #: part/annotwindow.cpp:421
 #, kde-format
 msgid "Cannot find dvipng executable."
-msgstr "Dvipng çalıştırılabilir dosyası bulunamadı."
+msgstr "dvipng yürütülebiliri bulunamadı."
 
 #: part/annotwindow.cpp:426
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr "'latex' komutu çalıştırılırken bir hata oluştu."
+msgstr "“latex” komutu yürütülürken bir hata oluştu."
 
 #: part/annotwindow.cpp:431
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr "'dvipng' komutu çalıştırılırken bir hata oluştu."
+msgstr "“dvipng” komutu yürütülürken bir hata oluştu."
 
 #: part/bookmarklist.cpp:115
 #, kde-format
@@ -2171,7 +2176,7 @@ msgstr "Tüm belgeler için göster"
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search..."
-msgstr "Ara..."
+msgstr "Ara…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2208,7 +2213,7 @@ msgstr "Sertifika Görüntüleyicisi"
 #: part/certificateviewer.cpp:50
 #, kde-format
 msgid "Export..."
-msgstr "Dışa Aktar..."
+msgstr "Dışa Aktar…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2325,7 +2330,7 @@ msgstr "Koyu ve Açık Renkleri &Değiştir"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
-msgstr "Siya&h-Beyaza Dönüştür"
+msgstr "Siya&h–Beyaza Dönüştür"
 
 #: part/colormodemenu.cpp:49
 #, kde-format
@@ -2457,7 +2462,7 @@ msgstr "Koyu ve açık renkleri değiştir"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Convert to black & white"
-msgstr "Siyah-beyaza dönüştür"
+msgstr "Siyah–beyaza dönüştür"
 
 #: part/dlgaccessibility.cpp:64
 #, kde-format
@@ -2586,7 +2591,7 @@ msgctxt "@info:whatsthis Config dialog, editor page"
 msgid ""
 "Choose the editor you want to launch when Okular wants to open a source file."
 msgstr ""
-"Okular bir kaynak dosyası açmak istediğinde çalıştırmak istediğiniz "
+"Okular bir kaynak dosyasını açmak istediğinde başlatmak istediğiniz "
 "düzenleyiciyi seçin."
 
 #: part/dlgeditor.cpp:29
@@ -2657,15 +2662,14 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Çalıştırılmak için özel bir metin düzenleyicisinin komutunu belirleyin."
-"<br />\n"
+"<qt>Başlatılacak bir metin düzenleyicisinin komutunu belirleyin.<br />\n"
 "Ayrıca bir kaç yer tutucu koyabilirsiniz:\n"
 "<ul>\n"
-"  <li>%f - dosya adı</li>\n"
-"  <li>%l - dosyanın erişilecek satırı</li>\n"
-"  <li>%c - dosyanın erişilecek sütunu</li>\n"
+"  <li>%f — dosya adı</li>\n"
+"  <li>%l — dosyanın erişilecek satırı</li>\n"
+"  <li>%c — dosyanın erişilecek sütunu</li>\n"
 "</ul>\n"
-"Eğer %f belirtilmiş değilse, o halde dosya adı belirlenmiş komuta eklenir."
+"Eğer %f belirtilmemişse o halde dosya adı belirlenmiş komuta eklenir."
 
 #: part/dlgeditor.cpp:63
 #, kde-format
@@ -2952,7 +2956,7 @@ msgid ""
 "with more than 4GB of memory.)"
 msgstr ""
 "Her şeyi bellekte tutar. Sonraki sayfaları önyükler. Aramaları hızlandırır "
-"(4GB'dan fazla bellekli sistemler için)"
+"(4 GB’dan çok bellekli sistemler için)"
 
 #: part/dlgperformance.cpp:87
 #, no-c-format, kde-format
@@ -2961,7 +2965,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Her şeyi yükleyerek bellekte tutar. Tüm sayfaları yükler (Toplam "
-"belleğinizin ya da boş belleğinizin en fazla % 50'sini kullanır.)."
+"belleğinizin veya boş belleğinizin en çok %​50’sini kullanır.)."
 
 #: part/dlgpresentation.cpp:37
 #, kde-format
@@ -3353,13 +3357,13 @@ msgstr "Değiştirilme zamanı"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As..."
-msgstr "&Farklı Kaydet..."
+msgstr "&Farklı Kaydet…"
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View..."
-msgstr "&Görüntüle..."
+msgstr "&Görüntüle…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3434,17 +3438,17 @@ msgstr "Yazarken Bul"
 msgid "All Files (*)"
 msgstr "Tüm Dosyalar (*)"
 
-#: part/formwidgets.cpp:1179
+#: part/formwidgets.cpp:1178
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "İmzasız İmza Alanı (İmzalamak İçin Tıklayın)"
 
-#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
-msgstr "&İmzala..."
+msgstr "&İmzala…"
 
-#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "İmza Özellikleri"
@@ -3490,7 +3494,7 @@ msgstr "Yakınlaştır"
 #: part/pageview.cpp:492
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "%​100'e Yakınlaştır"
+msgstr "%​100’e Yakınlaştır"
 
 #: part/pageview.cpp:503
 #, kde-format
@@ -3633,7 +3637,7 @@ msgstr "Seçim Araçları"
 #: part/pageview.cpp:684
 #, kde-format
 msgid "Digitally &Sign..."
-msgstr "Sayısal Olarak İm&zala..."
+msgstr "Sayısal Olarak İm&zala…"
 
 #: part/pageview.cpp:690
 #, kde-format
@@ -3717,7 +3721,7 @@ msgstr "Görsel (%1 × %2 piksel)"
 #: part/pageview.cpp:2829
 #, kde-format
 msgid "Save to File..."
-msgstr "Dosyaya Kaydet..."
+msgstr "Dosyaya Kaydet…"
 
 #: part/pageview.cpp:2849
 #, kde-format
@@ -3752,7 +3756,7 @@ msgstr "Metni Kopyala"
 #: part/pageview.cpp:3027
 #, kde-format
 msgid "Go to '%1'"
-msgstr "'%1' sayfasına git"
+msgstr "“%1” sayfasına git"
 
 #: part/pageview.cpp:4005 part/part.cpp:3129
 #, kde-format
@@ -3781,12 +3785,12 @@ msgstr "%%1"
 #: part/pageview.cpp:4311
 #, kde-format
 msgid "Search for '%1' with"
-msgstr "'%1' İfadesini Şununla Ara"
+msgstr "“%1” İfadesini Şununla Ara"
 
 #: part/pageview.cpp:4325
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr "Web Kısayollarını Yapılandır..."
+msgstr "Web Kısayollarını Yapılandır…"
 
 #: part/pageview.cpp:4351
 #, kde-format
@@ -3811,7 +3815,7 @@ msgstr "Bağlantı Adresini Kopyala"
 #: part/pageview.cpp:4383
 #, kde-format
 msgid "Search for '%1' in this document"
-msgstr "'%1' İfadesini Bu Belgede Ara"
+msgstr "“%1” İfadesini Bu Belgede Ara"
 
 #: part/pageview.cpp:4915
 #, kde-format
@@ -3905,7 +3909,7 @@ msgid ""
 "interface> and draw a bigger rectangle."
 msgstr ""
 "Bu boyuttaki bir imza okumak için pek küçük olabilir. Daha okunabilir bir "
-"imza oluşturmak için <interface>Baştan Başlat</interface>'a basın ve daha "
+"imza oluşturmak için <interface>Baştan Başlat</interface>’a basın ve daha "
 "büyük bir dikdörtgen çizin."
 
 #: part/pageviewannotator.cpp:364
@@ -3925,7 +3929,7 @@ msgstr "İmzala"
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
-"İmzalanamadı. Geçersiz sertifika parolası veya '%1' konumuna yazılamadı."
+"İmzalanamadı. Geçersiz sertifika parolası veya “%1” konumuna yazılamadı."
 
 #: part/pageviewannotator.cpp:1177
 #, kde-format
@@ -4086,8 +4090,8 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
-"Bu belge, Okular'ın daha eski bir sürümünde dahili olarak kaydedilen bilgi "
-"notları veya form verisi içeriyor. Dahili depolama <b>artık desteklenmiyor</"
+"Bu belge, Okular’ın daha eski bir sürümünde içsel olarak kaydedilen bilgi "
+"notları veya form verisi içeriyor. İçsel depolama <b>artık desteklenmiyor</"
 "b>.<br/>Dosyayı düzenlemeyi sürdürmek için kurtarma amaçlı olarak onları "
 "lütfen bir dosyaya kaydedin."
 
@@ -4181,22 +4185,22 @@ msgstr "Sonraki yer imine git"
 #: part/part.cpp:717
 #, kde-format
 msgid "Configure Okular..."
-msgstr "Okular Uygulamasını Yapılandır..."
+msgstr "Okular Uygulamasını Yapılandır…"
 
 #: part/part.cpp:720
 #, kde-format
 msgid "Configure Viewer..."
-msgstr "Görüntüleyiciyi Yapılandır..."
+msgstr "Görüntüleyiciyi Yapılandır…"
 
 #: part/part.cpp:726
 #, kde-format
 msgid "Configure Viewer Backends..."
-msgstr "Görüntüleyici Arka Uçlarını Yapılandır..."
+msgstr "Görüntüleyici Arka Uçlarını Yapılandır…"
 
 #: part/part.cpp:728
 #, kde-format
 msgid "Configure Backends..."
-msgstr "Arka Uçları Yapılandır..."
+msgstr "Arka Uçları Yapılandır…"
 
 #: part/part.cpp:764
 #, kde-format
@@ -4227,7 +4231,7 @@ msgstr "Sayfa Numarası"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
-msgstr "Renk Kiplerini Yapılandır..."
+msgstr "Renk Kiplerini Yapılandır…"
 
 #: part/part.cpp:827
 #, kde-format
@@ -4277,7 +4281,7 @@ msgstr "İçeren K&lasörü Aç"
 #: part/part.cpp:914
 #, kde-format
 msgid "&Import PostScript as PDF..."
-msgstr "&PostScript'i PDF Olarak İçe Aktar..."
+msgstr "&PostScript’i PDF Olarak İçe Aktar…"
 
 #: part/part.cpp:918
 #, kde-format
@@ -4292,7 +4296,7 @@ msgstr "Çizimi Sil"
 #: part/part.cpp:931
 #, kde-format
 msgid "Configure Annotations..."
-msgstr "Bilgi Notlarını Yapılandır..."
+msgstr "Bilgi Notlarını Yapılandır…"
 
 #: part/part.cpp:936
 #, kde-format
@@ -4317,7 +4321,7 @@ msgstr "Belge kaydedilemiyor"
 #: part/part.cpp:1121
 #, kde-format
 msgid "Could not open '%1' (%2) "
-msgstr "'%1' (%2) açılamadı "
+msgstr "“%1” (%2) açılamadı "
 
 #: part/part.cpp:1175
 #, kde-format
@@ -4345,7 +4349,7 @@ msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr ""
-"\"ps2pdf\" uygulaması bulunamadı. Bu nedenle Okular PS dosyalarını içe "
+"“ps2pdf” uygulaması bulunamadı. Bu nedenle Okular PS dosyalarını içe "
 "aktaramayacak."
 
 #: part/part.cpp:1306
@@ -4361,7 +4365,7 @@ msgstr "PostScript dosyaları (%1)"
 #: part/part.cpp:1327
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
-msgstr "PS dosyası PDF olarak içe aktarılıyor (biraz zaman alabilir)..."
+msgstr "PS dosyası PDF olarak içe aktarılıyor (biraz zaman alabilir)…"
 
 #: part/part.cpp:1456
 #, kde-format
@@ -4390,7 +4394,7 @@ msgid ""
 "View -> Show Forms."
 msgstr ""
 "Bu belgenin formları var. Bu formlarla etkileşmek için düğmelere tıklayın ya "
-"da Görünüm → Formları Göster menüsünü kullanın."
+"da “Görünüm → Formları Göster” menüsünü kullanın."
 
 #: part/part.cpp:1607
 #, kde-format
@@ -4488,7 +4492,7 @@ msgstr "Kapatmayı İptal Et"
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
-"\"%1\" dosyasına yaptığınız değişiklikler kaydedilsin mi yoksa atılsın mı?"
+"“%1” dosyasına yaptığınız değişiklikler kaydedilsin mi yoksa atılsın mı?"
 
 #: part/part.cpp:1842
 #, kde-format
@@ -4516,7 +4520,7 @@ msgstr ""
 #: part/part.cpp:2072 part/part.cpp:2090
 #, kde-format
 msgid "Reloading the document..."
-msgstr "Belge yeniden yükleniyor..."
+msgstr "Belge yeniden yükleniyor…"
 
 #: part/part.cpp:2247 part/toc.cpp:38
 #, kde-format
@@ -4571,7 +4575,7 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
-"Bir Okular Arşivini dosya adında '%1' uzantısı olmadan kaydetmeyi seçtiniz. "
+"Bir Okular Arşivini dosya adında “%1” uzantısı olmadan kaydetmeyi seçtiniz. "
 "Buna izin verilmez, başka bir ad seçmek istiyor musunuz?"
 
 #: part/part.cpp:2580
@@ -4600,7 +4604,7 @@ msgstr ""
 #: part/part.cpp:2626 part/part.cpp:2644 part/part.cpp:2696
 #, kde-format
 msgid "Save - Warning"
-msgstr "Kaydet - Uyarı"
+msgstr "Kaydet — Uyarı"
 
 #: part/part.cpp:2628
 #, kde-format
@@ -4646,7 +4650,7 @@ msgstr ""
 #: part/part.cpp:2710 part/part.cpp:2779 part/part.cpp:2800 part/part.cpp:3449
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
-msgstr "Dosya '%1' içine kaydedilemedi. Başka bir yere kaydetmeyi deneyin."
+msgstr "Dosya “%1” içine kaydedilemedi. Başka bir yere kaydetmeyi deneyin."
 
 #: part/part.cpp:2723
 #, kde-format
@@ -4677,7 +4681,7 @@ msgstr "Uyarı"
 #: part/part.cpp:2736 part/part.cpp:2758
 #, kde-format
 msgid "Save as Okular document archive..."
-msgstr "Okular belge arşivi olarak kaydet..."
+msgstr "Okular Belge Arşivi Olarak Kaydet…"
 
 #: part/part.cpp:2748
 #, kde-format
@@ -4690,7 +4694,7 @@ msgstr ""
 "Değişiklikleri kaydetmek üzeresiniz; ancak geçerli dosya biçimi aşağıdaki "
 "ögeleri kaydetmeyi desteklemiyor. Onları korumak için lütfen <i>Okular belge "
 "arşivi</i> biçimini kullanın. Bu ögeleri atmak ve dosyayı kaydetmek için "
-"<i>Sürdür></i>'e tıklayın."
+"<i>Sürdür></i>’e tıklayın."
 
 #: part/part.cpp:2751
 #, kde-format
@@ -4702,7 +4706,7 @@ msgid ""
 msgstr ""
 "Değişiklikleri kaydetmek üzeresiniz; ancak geçerli dosya biçimi aşağıdaki "
 "ögeleri kaydetmeyi desteklemiyor. Onları korumak için lütfen <i>Okular belge "
-"arşivi</i> biçimini kullanın. Kaydetmek için <i>Sürdür</i>'e tıklayın; ancak "
+"arşivi</i> biçimini kullanın. Kaydetmek için <i>Sürdür</i>’e tıklayın; ancak "
 "bu ögeleri ve geri al/yine geçmişini kaybedeceksiniz."
 
 #: part/part.cpp:2753
@@ -4718,7 +4722,7 @@ msgstr "Değişiklikleri kaybetmeyi sürdür"
 #: part/part.cpp:2781
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
-msgstr "Dosya '%1' içerisine kaydedilemedi. %2"
+msgstr "Dosya “%1” içerisine kaydedilemedi. %2"
 
 #: part/part.cpp:2820
 #, kde-format
@@ -4737,7 +4741,7 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
-"Dosya '%1' içine kaydedilemedi. Hata: '%2'. Başka bir yere kaydetmeyi "
+"Dosya “%1” içine kaydedilemedi. Hata: “%2”. Başka bir yere kaydetmeyi "
 "deneyin."
 
 #: part/part.cpp:3107
@@ -4806,7 +4810,7 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Belge yazdırılamıyor. Ayrıntılı hata \"%1\". Lütfen bugs.kde.org adresinden "
+"Belge yazdırılamıyor. Ayrıntılı hata “%1”. Lütfen bugs.kde.org adresinden "
 "hatayı raporlayın."
 
 #: part/part.cpp:3640
@@ -4847,7 +4851,7 @@ msgid ""
 msgstr ""
 "<qt>Bu hata genelde yeterli dosya okuma iznine sahip değilseniz meydana "
 "gelir. Dolphin dosya yöneticisinde dosyanın üzerine sağ tıklar ve daha sonra "
-"'Özellikler' sekmesini seçerseniz sahiplik ve izinleri denetleyebilirsiniz.</"
+"“Özellikler” sekmesini seçerseniz sahiplik ve izinleri denetleyebilirsiniz.</"
 "qt>"
 
 #: part/part.cpp:3707
@@ -5002,7 +5006,7 @@ msgid ""
 msgstr ""
 "Komut satırı tarafından ayarlanan düzenleyici: \n"
 "%1 \n"
-"Ayarı kullanmak isterseniz okular'ı --editor-cmd seçeneği olmadan başlatın"
+"Ayarı kullanmak isterseniz Okular’ı --editor-cmd seçeneği olmadan başlatın"
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5058,7 +5062,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "Oynat"
 
-#: part/presentationwidget.cpp:1620
+#: part/presentationwidget.cpp:1622
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5069,7 +5073,7 @@ msgstr ""
 "köşeye götürdüğünüzde görünen çıkış düğmesine basabilirsiniz. Pencereler "
 "arasında da dolaşmak olanaklıdır (öntanımlı olarak Alt+Sekme)."
 
-#: part/presentationwidget.cpp:1716
+#: part/presentationwidget.cpp:1718
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -5106,7 +5110,7 @@ msgstr "&Yazıtipleri"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information..."
-msgstr "Yazıtipi bilgisi okunuyor..."
+msgstr "Yazıtipi bilgisi okunuyor…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5369,7 +5373,7 @@ msgstr "Arka plan:"
 #: part/selectcertificatedialog.ui:95
 #, kde-format
 msgid "Choose..."
-msgstr "Seç..."
+msgstr "Seç…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:107
@@ -5384,8 +5388,8 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Bilgi notu yok</h3>Yeni bilgi notu oluşturmak için F6 "
-"düğmesine basın veya menüden <i>Araçlar -&gt; Bilgi Notları</i>'na tıklayın."
-"</div>"
+"düğmesine basın veya menüden <i>Araçlar → Bilgi Notları</i> seçeneğine "
+"tıklayın.</div>"
 
 #: part/side_reviews.cpp:142
 #, kde-format
@@ -5510,12 +5514,12 @@ msgstr "Belge Revizyonu %1/%2"
 #: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "View Signed Version..."
-msgstr "İmzalanmış Sürümü Görüntüle..."
+msgstr "İmzalanmış Sürümü Görüntüle…"
 
 #: part/signaturepropertiesdialog.cpp:90
 #, kde-format
 msgid "View Certificate..."
-msgstr "Sertifikayı Görüntüle..."
+msgstr "Sertifikayı Görüntüle…"
 
 #: part/signaturepropertiesdialog.cpp:92
 #, kde-format
@@ -5553,22 +5557,22 @@ msgstr "Durdur"
 #: part/videowidget.cpp:503
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr "Bu Okular'da videolar desteklenmiyor"
+msgstr "Bu Okular’da videolar desteklenmiyor"
 
 #: part/videowidget.cpp:507
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr "Bu Okular'da videolar desteklenmiyor"
+msgstr "Bu Okular’da videolar desteklenmiyor"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add..."
-msgstr "&Ekle..."
+msgstr "&Ekle…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
 msgid "&Edit..."
-msgstr "Dü&zenle..."
+msgstr "Dü&zenle…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -5623,7 +5627,7 @@ msgstr "Yazdırma iletişim kutusuyla başlat ve yazdırma sonrasında çık"
 #: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr "\"Benzersiz örnek\" denetimi"
+msgstr "“Benzersiz örnek” denetimi"
 
 #: shell/main.cpp:94
 #, kde-format
@@ -5644,7 +5648,8 @@ msgstr "Dış düzenleyici komutunu ayarlar"
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
-"Açılacak belgeler. Standart girdiden okuma yapmak için  '-' ifadesini belirt."
+"Açılacak belgeler. Standart girdiden okuma yapmak için “-” ifadesini "
+"belirtin."
 
 #: shell/okular_main.cpp:64 shell/okular_main.cpp:169
 #, kde-format
@@ -5805,14 +5810,14 @@ msgstr "Son kullanılan belge yok"
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr "Okular'a hoş geldiniz"
+msgstr "Okular’a hoş geldiniz"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Belge Aç..."
+msgstr "Belge Aç…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382

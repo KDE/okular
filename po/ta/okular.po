@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-20 00:38+0000\n"
+"POT-Creation-Date: 2024-06-27 00:38+0000\n"
 "PO-Revision-Date: 2024-02-18 16:55+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -257,59 +257,59 @@ msgstr ""
 "<qt><b>%1</b> (%2).<br /> என்ற மைம்வகைக்கு ஒன்றுக்கு மேற்பட்ட பின்நிலைகள் "
 "கண்டுபிடிக்கப்பட்டன<br /><br />எதைப் பயன்படுத்த வேண்டுமென்று தேர்ந்தெடுங்கள்:</qt>"
 
-#: core/document.cpp:206
+#: core/document.cpp:205
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "பெரும்பாலான பக்கங்கள் %1 -ஆக உள்ளன."
 
-#: core/document.cpp:227
+#: core/document.cpp:226
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "செங்குத்தான %1"
 
-#: core/document.cpp:229
+#: core/document.cpp:228
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "கிடைமட்டமான %1"
 
-#: core/document.cpp:252
+#: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:254
+#: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 x %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1687
+#: core/document.cpp:1686
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ஆரம்பத்திலிருந்து தேடல் தொடர்கிறது"
 
-#: core/document.cpp:1690
+#: core/document.cpp:1689
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "கடைசியிலிருந்து தேடல் தொடர்கிறது"
 
-#: core/document.cpp:2436
+#: core/document.cpp:2435
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "கொடுத்த ஆவணத்தைக் கையாளக் கூடிய செருகுநிரலைக் கண்டுபிடிக்க முடியவில்லை."
 
-#: core/document.cpp:3586
+#: core/document.cpp:3585
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "குறிப்புகளை நீக்கு"
 
-#: core/document.cpp:4176 core/document.cpp:4182
+#: core/document.cpp:4175 core/document.cpp:4181
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -318,52 +318,52 @@ msgstr ""
 "இந்த ஆவணம் ஒரு வெளி செயலியை இயக்க முயற்சிக்கிறது. உங்கள் பாதுகாப்புக்காக ஆக்குலர் இதை "
 "அனுமதிக்காது."
 
-#: core/document.cpp:4192
+#: core/document.cpp:4191
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "மைம்வகை %1 கொண்ட கோப்பை திறப்பதற்கு எந்த செயலியும் கண்டுபிடிக்கப்படவில்லை."
 
-#: core/document.cpp:4692
+#: core/document.cpp:4691
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "தற்காலிக கோப்பைத் திறக்க முடியவில்லை"
 
-#: core/document.cpp:4694
+#: core/document.cpp:4693
 #, kde-format
 msgid "Print conversion failed"
 msgstr "அச்சிடுவதற்காக மாற்றுதல் தோல்வியடைந்தது"
 
-#: core/document.cpp:4696
+#: core/document.cpp:4695
 #, kde-format
 msgid "Printing process crashed"
 msgstr "அச்சிடும் பணி முறிவடைந்தது"
 
-#: core/document.cpp:4698
+#: core/document.cpp:4697
 #, kde-format
 msgid "Printing process could not start"
 msgstr "அச்சிடும் பணியைத் துவக்க முடியவில்லை"
 
-#: core/document.cpp:4700
+#: core/document.cpp:4699
 #, kde-format
 msgid "Printing to file failed"
 msgstr "கோப்புக்கு அச்சிடுதல் தோல்வியடைந்தது"
 
-#: core/document.cpp:4702
+#: core/document.cpp:4701
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "அச்சுப்பொறி செல்லுபடியாகாத நிலையில் இருந்தது"
 
-#: core/document.cpp:4704
+#: core/document.cpp:4703
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "அச்சிட வேண்டிய கோப்பைக் கண்டுபிடிக்க முடியவில்லை"
 
-#: core/document.cpp:4706
+#: core/document.cpp:4705
 #, kde-format
 msgid "There was no file to print"
 msgstr "அச்சிட எந்தக் கோப்பும் இல்லை"
 
-#: core/document.cpp:4708
+#: core/document.cpp:4707
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "அச்சிட பயன்படும் நிரலைக் கண்டுபிடிக்க முடியவில்லை. CUPS lpr நிரல் உள்ளதா என்று "
 "சரிபாருங்கள்"
 
-#: core/document.cpp:4710
+#: core/document.cpp:4709
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "அச்சிட வேண்டிய பக்க அளவு செல்லுபடியாகாதது"
 
-#: core/document.cpp:5375 part/part.cpp:1114
+#: core/document.cpp:5372 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'-ஐ திறக்க முடியவில்லை. அப்படி ஒரு கோப்பு இல்லை"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5882
 #, kde-format
 msgid "Title"
 msgstr "தலைப்பு"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5885
 #, kde-format
 msgid "Subject"
 msgstr "பொருள்"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5888
 #, kde-format
 msgid "Description"
 msgstr "விவரணம்"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5891
 #, kde-format
 msgid "Author"
 msgstr "இயற்றியவர்"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5894
 #, kde-format
 msgid "Creator"
 msgstr "உருவாக்கியது"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5897
 #, kde-format
 msgid "Producer"
 msgstr "தயாரித்தது"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5900
 #, kde-format
 msgid "Copyright"
 msgstr "பதிப்புரிமை"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5903
 #, kde-format
 msgid "Pages"
 msgstr "பக்கங்கள்"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5906
 #, kde-format
 msgid "Created"
 msgstr "உருவாக்கப்பட்டது"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5909
 #, kde-format
 msgid "Modified"
 msgstr "மாற்றப்பட்டது"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5912
 #, kde-format
 msgid "MIME Type"
 msgstr "மைம் வகை"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5915
 #, kde-format
 msgid "Category"
 msgstr "வகை"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5918
 #, kde-format
 msgid "Keywords"
 msgstr "முதன்மைச்சொற்கள்"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5921
 #, kde-format
 msgid "File Path"
 msgstr "கோப்பிற்கான பாதை"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5924
 #, kde-format
 msgid "File Size"
 msgstr "கோப்பின் அளவு"
 
-#: core/document.cpp:5930
+#: core/document.cpp:5927
 #, kde-format
 msgid "Page Size"
 msgstr "பக்கங்களின் அளவு"
@@ -888,126 +888,131 @@ msgstr "சான்றிதழ் இன்னும் சரிபார்�
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
+msgid "Certificate validation in progress"
+msgstr ""
+
+#: gui/signatureguiutils.cpp:74
+#, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
 msgstr "சான்றிதழில் தெரியாத பிழை அல்லது முறையற்ற தரவு."
 
-#: gui/signatureguiutils.cpp:80
+#: gui/signatureguiutils.cpp:82
 #, kde-format
 msgid "MD2"
 msgstr "MD2"
 
-#: gui/signatureguiutils.cpp:82
+#: gui/signatureguiutils.cpp:84
 #, kde-format
 msgid "MD5"
 msgstr "MD5"
 
-#: gui/signatureguiutils.cpp:84
+#: gui/signatureguiutils.cpp:86
 #, kde-format
 msgid "SHA1"
 msgstr "SHA1"
 
-#: gui/signatureguiutils.cpp:86
+#: gui/signatureguiutils.cpp:88
 #, kde-format
 msgid "SHA256"
 msgstr "SHA256"
 
-#: gui/signatureguiutils.cpp:88
+#: gui/signatureguiutils.cpp:90
 #, kde-format
 msgid "SHA384"
 msgstr "SHA384"
 
-#: gui/signatureguiutils.cpp:90
+#: gui/signatureguiutils.cpp:92
 #, kde-format
 msgid "SHA512"
 msgstr "SHA512"
 
-#: gui/signatureguiutils.cpp:92
+#: gui/signatureguiutils.cpp:94
 #, kde-format
 msgid "SHA224"
 msgstr "SHA224"
 
-#: gui/signatureguiutils.cpp:94
+#: gui/signatureguiutils.cpp:96
 #, kde-format
 msgid "Unknown Algorithm"
 msgstr "தெரியாத படிமுறை"
 
-#: gui/signatureguiutils.cpp:102
+#: gui/signatureguiutils.cpp:104
 #, kde-format
 msgid "RSA"
 msgstr "RSA"
 
-#: gui/signatureguiutils.cpp:104
+#: gui/signatureguiutils.cpp:106
 #, kde-format
 msgid "DSA"
 msgstr "DSA"
 
-#: gui/signatureguiutils.cpp:106
+#: gui/signatureguiutils.cpp:108
 #, kde-format
 msgid "EC"
 msgstr "EC"
 
-#: gui/signatureguiutils.cpp:108 gui/signatureguiutils.cpp:111
+#: gui/signatureguiutils.cpp:110 gui/signatureguiutils.cpp:113
 #, kde-format
 msgid "Unknown Type"
 msgstr "தெரியாத வகை"
 
-#: gui/signatureguiutils.cpp:118
+#: gui/signatureguiutils.cpp:120
 #, kde-format
 msgid "Digital Signature"
 msgstr "டிஜிட்டல் கையொப்பம்"
 
-#: gui/signatureguiutils.cpp:121
+#: gui/signatureguiutils.cpp:123
 #, kde-format
 msgid "Non-Repudiation"
 msgstr "நிராகரிக்க முடியாத‍து"
 
-#: gui/signatureguiutils.cpp:124
+#: gui/signatureguiutils.cpp:126
 #, kde-format
 msgid "Encrypt Keys"
 msgstr "மறையாக்க சாவிகள்"
 
-#: gui/signatureguiutils.cpp:127
+#: gui/signatureguiutils.cpp:129
 #, kde-format
 msgid "Decrypt Keys"
 msgstr "மறைநீக்க சாவிகள்"
 
-#: gui/signatureguiutils.cpp:130
+#: gui/signatureguiutils.cpp:132
 #, kde-format
 msgid "Key Agreement"
 msgstr "சாவி ஒப்பந்தம்"
 
-#: gui/signatureguiutils.cpp:133
+#: gui/signatureguiutils.cpp:135
 #, kde-format
 msgid "Sign Certificate"
 msgstr "கையொப்ப சான்றிதழ்"
 
-#: gui/signatureguiutils.cpp:136
+#: gui/signatureguiutils.cpp:138
 #, kde-format
 msgid "Sign CRL"
 msgstr "கையொப்ப CRL"
 
-#: gui/signatureguiutils.cpp:139
+#: gui/signatureguiutils.cpp:141
 #, kde-format
 msgid "Encrypt Only"
 msgstr "மறையாக்கம் மட்டும்"
 
-#: gui/signatureguiutils.cpp:142
+#: gui/signatureguiutils.cpp:144
 #, kde-format
 msgid "No Usage Specified"
 msgstr "பயன்பாடு குறிப்பிடப்படவில்லை"
 
-#: gui/signatureguiutils.cpp:149
+#: gui/signatureguiutils.cpp:151
 #, kde-format
 msgctxt "Joins the various ways a signature key can be used in a longer string"
 msgid ", "
 msgstr ", "
 
-#: gui/signatureguiutils.cpp:163
+#: gui/signatureguiutils.cpp:165
 #, kde-format
 msgid "The document has not been modified since it was signed."
 msgstr "கையொப்பமிட்ட பிறகு ஆவணம் மாற்றப்படவில்லை."
 
-#: gui/signatureguiutils.cpp:166
+#: gui/signatureguiutils.cpp:168
 #, kde-format
 msgid ""
 "The revision of the document that was covered by this signature has not been "
@@ -1017,34 +1022,34 @@ msgstr ""
 "கையொப்பமிட்ட சீராய்வு மாற்றப்படவில்லை;\n"
 "ஆனால் அதற்கு பிறகு மாற்றங்கள் உள்ளன."
 
-#: gui/signatureguiutils.cpp:170
+#: gui/signatureguiutils.cpp:172
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
 msgstr "முன்பு கையொப்பமிட்டவரால் அனுமதிக்கப்படாத விதத்தில் ஆவணம் மாற்றப்பட்டுள்ளது."
 
-#: gui/signatureguiutils.cpp:172
+#: gui/signatureguiutils.cpp:174
 #, kde-format
 msgid "The document integrity verification could not be completed."
 msgstr "ஆவண நம்பகத்தை சரிபார்த்தலை முடிக்க முடியவில்லை."
 
-#: gui/signatureguiutils.cpp:206
+#: gui/signatureguiutils.cpp:208
 #, kde-format
 msgid "This document has unsigned signature fields."
 msgstr "இவ்வாவணத்தில் எண்ம‍முறையில் கையொப்பமிடப்படாத கையொப்ப புலங்கள் உள்ளன."
 
-#: gui/signatureguiutils.cpp:209
+#: gui/signatureguiutils.cpp:211
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "இந்த ஆவணம் டிஜிட்டலாக கையொப்பமிடப்பட்டது"
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:213
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr "இந்த ஆவணம் டிஜிட்டலாக கையொப்பமிடப்பட்டது. ஆனால் கையொப்பமிட்ட பின் மாற்றப்பட்டுள்ளது."
 
-#: gui/signatureguiutils.cpp:214
+#: gui/signatureguiutils.cpp:216
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
@@ -1057,7 +1062,7 @@ msgstr ""
 msgid "Unsigned Signature %1"
 msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"
 
-#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:172
+#: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
 msgid "Field: %1 on page %2"
 msgstr "புலம்: %1 (பக்கம் %2)"
@@ -1067,17 +1072,17 @@ msgstr "புலம்: %1 (பக்கம் %2)"
 msgid "Rev. %1: Signed By %2"
 msgstr "சீராய்வு. %1: கையொப்பமிட்டவர் %2"
 
-#: gui/signaturemodel.cpp:158
+#: gui/signaturemodel.cpp:167
 #, kde-format
 msgid "Signing Time: %1"
 msgstr "கையொப்பமிட்ட நேரம்: %1"
 
-#: gui/signaturemodel.cpp:163
+#: gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Reason: %1"
 msgstr "காரணம்: %1"
 
-#: gui/signaturemodel.cpp:168
+#: gui/signaturemodel.cpp:177
 #, kde-format
 msgid "Location: %1"
 msgstr "இடம்: %1"
@@ -3422,17 +3427,17 @@ msgstr "தட்டச்சிடும்போதே கண்டுபி�
 msgid "All Files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: part/formwidgets.cpp:1179
+#: part/formwidgets.cpp:1178
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "கையொப்பமிடப்படாத கையொப்ப புலம் (கையொப்பமிட கிளிக் செய்யுங்கள்)"
 
-#: part/formwidgets.cpp:1245 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&கையொப்பமிடு..."
 
-#: part/formwidgets.cpp:1249 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "கையொப்பத்தின் பண்புகள்"
@@ -5039,7 +5044,7 @@ msgctxt "For Presentation"
 msgid "Play"
 msgstr "தானாக முன்னே செல்"
 
-#: part/presentationwidget.cpp:1620
+#: part/presentationwidget.cpp:1622
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5050,7 +5055,7 @@ msgstr ""
 "அழுத்தலாம், அல்லது மேல்-வலது ஓரத்தில் சுட்டிக்குறியை வைக்கும்போது தோன்றும் 'வெளியேறு' "
 "பட்டனை அழுத்துலாம்.வேறு சாளரங்களுக்கும் நீங்கள் செல்லலாம் (இயல்பாக Alt+TAB)."
 
-#: part/presentationwidget.cpp:1716
+#: part/presentationwidget.cpp:1718
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "

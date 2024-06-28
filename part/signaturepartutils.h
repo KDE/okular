@@ -60,7 +60,7 @@ inline QString getSuggestedFileNameForSignedFile(const QString &orig, const QStr
         baseName = info.completeBaseName();
     }
 
-    return i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", baseName, suffix);
+    return i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 its extension", "%1_signed.%2", baseName, suffix);
 }
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-27 00:38+0000\n"
-"PO-Revision-Date: 2024-01-13 05:05+0100\n"
+"PO-Revision-Date: 2024-06-27 03:46+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -892,7 +892,7 @@ msgstr "სერტიფიკატი ჯერ არ შემოწმე
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "მიმდინარეობს სერტიფიკატის გადამოწმება"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format

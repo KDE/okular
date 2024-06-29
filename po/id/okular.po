@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-06-29 00:38+0000\n"
 "PO-Revision-Date: 2023-01-11 22:17+0700\n"
 "Last-Translator: Linerly <linerly@protonmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -5483,10 +5483,14 @@ msgid "Save Signed File As"
 msgstr "Simpan File Yang Ditandatangani Sebagai"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
-"file name and %2 it's extension"
+"file name and %2 its extension"
 msgid "%1_signed.%2"
 msgstr "%1_ditandatangani. %2"
 

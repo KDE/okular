@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-06-29 00:38+0000\n"
 "PO-Revision-Date: 2024-06-27 15:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -5463,10 +5463,14 @@ msgid "Save Signed File As"
 msgstr "İmzalı Dosyayı Farklı Kaydet"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
-"file name and %2 it's extension"
+"file name and %2 its extension"
 msgid "%1_signed.%2"
 msgstr "%1_imzalı.%2"
 

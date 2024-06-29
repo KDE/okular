@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-06-29 00:38+0000\n"
 "PO-Revision-Date: 2024-01-25 11:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -5451,10 +5451,14 @@ msgid "Save Signed File As"
 msgstr "Aláírt fájl mentése másként"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
-"file name and %2 it's extension"
+"file name and %2 its extension"
 msgid "%1_signed.%2"
 msgstr "%1_alairt.%2"
 

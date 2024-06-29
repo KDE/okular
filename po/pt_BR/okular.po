@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-06-29 00:38+0000\n"
 "PO-Revision-Date: 2024-01-11 20:39-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -5478,10 +5478,14 @@ msgid "Save Signed File As"
 msgstr "Salvar arquivo assinado como"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
-"file name and %2 it's extension"
+"file name and %2 its extension"
 msgid "%1_signed.%2"
 msgstr "%1_assinado.%2"
 

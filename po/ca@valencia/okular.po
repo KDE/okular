@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-06-29 00:38+0000\n"
 "PO-Revision-Date: 2024-01-13 16:15+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -5484,10 +5484,14 @@ msgid "Save Signed File As"
 msgstr "Guarda el fitxer signat com a"
 
 #: part/signaturepartutils.h:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Used when suggesting a new name for a digitally signed file. %1 is the "
+#| "old file name and %2 it's extension"
+#| msgid "%1_signed.%2"
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
-"file name and %2 it's extension"
+"file name and %2 its extension"
 msgid "%1_signed.%2"
 msgstr "%1_signat.%2"
 

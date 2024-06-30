@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:38+0000\n"
-"PO-Revision-Date: 2024-06-27 08:36+0200\n"
+"PO-Revision-Date: 2024-06-29 07:01+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -5469,16 +5469,12 @@ msgid "Save Signed File As"
 msgstr "Shrani podpisano datoteko kot"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"
 msgid "%1_signed.%2"
-msgstr "%1_podpisal.%2"
+msgstr "%1_podpisano.%2"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:38+0000\n"
-"PO-Revision-Date: 2024-05-21 19:34+0100\n"
+"PO-Revision-Date: 2024-06-29 11:28+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -890,7 +890,7 @@ msgstr "Certificate has not yet been verified."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Certificate validation in progress"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -5438,11 +5438,7 @@ msgid "Save Signed File As"
 msgstr "Save Signed File As"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

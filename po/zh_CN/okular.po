@@ -890,7 +890,7 @@ msgstr "证书尚未验证。"
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "证书正在验证"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -5380,11 +5380,7 @@ msgid "Save Signed File As"
 msgstr "另存已签名文件为"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

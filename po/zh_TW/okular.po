@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:38+0000\n"
-"PO-Revision-Date: 2024-05-09 06:45+0900\n"
+"PO-Revision-Date: 2024-06-30 11:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -894,7 +894,7 @@ msgstr "憑證尚未驗證。"
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "憑證驗證進行中"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -5381,16 +5381,12 @@ msgid "Save Signed File As"
 msgstr "將已簽名檔案另存為"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"
 msgid "%1_signed.%2"
-msgstr "%1_signed.%2"
+msgstr "%1_已簽署.%2"
 
 #: part/signaturepropertiesdialog.cpp:53
 #, kde-format

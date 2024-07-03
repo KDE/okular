@@ -187,33 +187,39 @@ QQC2.ScrollView {
                     target: mouseArea.currPageDelegate
                     property: "pageNumber"
                     value: root.document.currentPage
+                    restoreMode: Binding.RestoreNone
                 }
                 Binding {
                     target: mouseArea.currPageDelegate
                     property: "visible"
                     value: true
+                    restoreMode: Binding.RestoreNone
                 }
 
                 Binding {
                     target: mouseArea.prevPageDelegate
                     property: "pageNumber"
                     value: root.document.currentPage - 1
+                    restoreMode: Binding.RestoreNone
                 }
                 Binding {
                     target: mouseArea.prevPageDelegate
                     property: "visible"
                     value: !mouseArea.incrementing && root.document.currentPage > 0
+                    restoreMode: Binding.RestoreNone
                 }
 
                 Binding {
                     target: mouseArea.nextPageDelegate
                     property: "pageNumber"
                     value: root.document.currentPage + 1
+                    restoreMode: Binding.RestoreNone
                 }
                 Binding {
                     target: mouseArea.nextPageDelegate
                     property: "visible"
                     value: mouseArea.incrementing && root.document.currentPage < document.pageCount-1
+                    restoreMode: Binding.RestoreNone
                 }
                 
                 SequentialAnimation {

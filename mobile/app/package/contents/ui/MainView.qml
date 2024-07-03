@@ -23,6 +23,7 @@ Kirigami.Page {
         checkable: true
         onCheckedChanged: pageArea.page.bookmarked = checked
         text: pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")
+        checked: pageArea.page.bookmarked
     }
 
     Okular.DocumentView {
@@ -31,7 +32,6 @@ Kirigami.Page {
 
         onPageChanged: {
             bookmarkConnection.target = page
-            actions.main.checked = page.bookmarked
         }
         onClicked: fileBrowserRoot.controlsVisible = !fileBrowserRoot.controlsVisible
     }

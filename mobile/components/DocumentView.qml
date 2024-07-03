@@ -93,16 +93,16 @@ QQC2.ScrollView {
                 property real startMouseX
                 property real startMouseY
                 property bool incrementing: true
-                property Item currPageDelegate: page1
-                property Item prevPageDelegate: page2
-                property Item nextPageDelegate: page3
+                property PageView currPageDelegate: page1
+                property PageView prevPageDelegate: page2
+                property PageView nextPageDelegate: page3
 
-                onPressed: {
+                onPressed: (mouse) => {
                     var pos = mapToItem(flick, mouse.x, mouse.y);
                     startMouseX = oldMouseX = pos.x;
                     startMouseY = oldMouseY = pos.y;
                 }
-                onPositionChanged: {
+                onPositionChanged: (mouse) => {
                     var pos = mapToItem(flick, mouse.x, mouse.y);
 
                     flick.contentY = Math.max(0, Math.min(flick.contentHeight - flick.height, flick.contentY - (pos.y - oldMouseY)));
@@ -136,14 +136,14 @@ QQC2.ScrollView {
                     flick.contentWidth = flick.width
                     flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
                 }
-                onClicked: {
+                onClicked: (mouse) => {
                     var pos = mapToItem(flick, mouse.x, mouse.y);
                     if (Math.abs(startMouseX - pos.x) < 20 &&
                         Math.abs(startMouseY - pos.y) < 20) {
                         root.clicked();
                     }
                 }
-                onWheel: {
+                onWheel: (wheel) => {
                     if (wheel.modifiers & Qt.ControlModifier) {
                         //generate factors between 0.8 and 1.2
                         var factor = (((wheel.angleDelta.y / 120)+1) / 5 )+ 0.8;

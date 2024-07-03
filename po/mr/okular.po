@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:37+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -3688,23 +3688,23 @@ msgstr "वर्तमान पानापासून"
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:817
+#: part/formwidgets.cpp:862
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All Files (*)"
 msgstr "*|सर्व फाईल्स"
 
-#: part/formwidgets.cpp:1178
+#: part/formwidgets.cpp:1223
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1289 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1293 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Caret Properties"
 msgid "Signature Properties"

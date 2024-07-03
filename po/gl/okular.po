@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:38+0000\n"
-"PO-Revision-Date: 2024-06-27 20:54+0200\n"
+"POT-Creation-Date: 2024-07-03 00:37+0000\n"
+"PO-Revision-Date: 2024-07-02 17:40+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -3440,22 +3440,22 @@ msgstr "Da páxina actual"
 msgid "Find as you type"
 msgstr "Atopar a medida que escribe"
 
-#: part/formwidgets.cpp:817
+#: part/formwidgets.cpp:862
 #, kde-format
 msgid "All Files (*)"
 msgstr "Todos os ficheiros (*)"
 
-#: part/formwidgets.cpp:1178
+#: part/formwidgets.cpp:1223
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Campo de sinatura sen asinar (prema para asinar)"
 
-#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1289 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "A&sinar…"
 
-#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1293 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Propiedades da sinatura"
@@ -5469,11 +5469,7 @@ msgid "Save Signed File As"
 msgstr "Gardar o ficheiro asinado como"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

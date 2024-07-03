@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:37+0000\n"
 "PO-Revision-Date: 2023-07-24 17:51+0300\n"
 "Last-Translator: Theofilos Intzoglou <int.teo@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3442,23 +3442,23 @@ msgstr "Από τρέχουσα σελίδα"
 msgid "Find as you type"
 msgstr "Εύρεση καθώς πληκτρολογείτε"
 
-#: part/formwidgets.cpp:817
+#: part/formwidgets.cpp:862
 #, fuzzy, kde-format
 #| msgid "All files (*)"
 msgid "All Files (*)"
 msgstr "Όλα τα αρχεία (*)"
 
-#: part/formwidgets.cpp:1178
+#: part/formwidgets.cpp:1223
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Ανυπόγραφο Πεδίο Υπογραφής (Πατήστε για Υπογραφή)"
 
-#: part/formwidgets.cpp:1244 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1289 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "Υπόγραψε..."
 
-#: part/formwidgets.cpp:1248 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1293 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Ιδιότητες υπογραφής"

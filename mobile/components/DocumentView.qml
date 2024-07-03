@@ -20,6 +20,8 @@ QQC2.ScrollView {
     property DocumentItem document
     property PageItem page: mouseArea.currPageDelegate.pageItem
     signal clicked
+
+    clip: true
     
     //NOTE: on some themes it tries to set the flickable to interactive
     //but we need it always non interactive as we need to manage

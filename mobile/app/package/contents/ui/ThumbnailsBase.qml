@@ -46,6 +46,10 @@ ColumnLayout {
                 implicitWidth: root.width
                 showClickFeedback: true
                 readonly property real ratio: contentItem.implicitHeight/contentItem.implicitWidth
+
+                required property int modelData
+                required property int index
+
                 implicitHeight: width * ratio
                 contentItem: Okular.ThumbnailItem {
                     document: documentItem

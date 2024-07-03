@@ -16,7 +16,7 @@
 
 using namespace Okular;
 
-static bool rankedTilesLessThan(TileNode *t1, TileNode *t2)
+static bool rankedTilesLessThan(const TileNode *t1, const TileNode *t2)
 {
     // Order tiles by its dirty state and then by distance from the viewport.
     if (t1->dirty == t2->dirty) {

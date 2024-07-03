@@ -132,7 +132,7 @@ const QString &fontMap::findFileName(const QString &TeXName)
         return it.value().fontFileName;
     }
 
-    static const QString nullstring;
+    static const QString nullstring {};
     return nullstring;
 }
 
@@ -144,7 +144,7 @@ const QString &fontMap::findFontName(const QString &TeXName)
         return it.value().fullFontName;
     }
 
-    static const QString nullstring;
+    static const QString nullstring {};
     return nullstring;
 }
 
@@ -156,7 +156,7 @@ const QString &fontMap::findEncoding(const QString &TeXName)
         return it.value().fontEncoding;
     }
 
-    static const QString nullstring;
+    static const QString nullstring {};
     return nullstring;
 }
 

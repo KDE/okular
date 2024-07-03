@@ -17,8 +17,9 @@ class dviPageInfo
 {
 public:
     QImage img;
-    int width, height;
-    double resolution;
+    int width = 0;
+    int height = 0;
+    double resolution = 0;
     PageNumber pageNumber;
 
     dviPageInfo();

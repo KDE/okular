@@ -375,7 +375,7 @@ qt_add_resources(okularcore_SRCS
 )
 
 ki18n_wrap_ui(okularcore_SRCS
-   part/textdocumentsettings.ui
+   core/textdocumentsettings.ui
 )
 
 install( FILES

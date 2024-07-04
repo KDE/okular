@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-04 00:38+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -4027,22 +4027,22 @@ msgstr "Text koperen"
 msgid "Go to '%1'"
 msgstr "Na \"%1\" gahn"
 
-#: part/pageview.cpp:4005 part/part.cpp:3129
+#: part/pageview.cpp:4029 part/part.cpp:3129
 #, kde-format
 msgid "Fit Width"
 msgstr "Na Breed topassen"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Fit Page"
 msgstr "Op Siet topassen"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automaatsch topassen"
 
-#: part/pageview.cpp:4028
+#: part/pageview.cpp:4052
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4052,69 +4052,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4311
+#: part/pageview.cpp:4335
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Na \"%1\" söken mit"
 
-#: part/pageview.cpp:4325
+#: part/pageview.cpp:4349
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Nett-Tastkombinatschonen instellen..."
 
-#: part/pageview.cpp:4351
+#: part/pageview.cpp:4375
 #, kde-format
 msgid "Follow This Link"
 msgstr "Dissen Link nagahn"
 
-#: part/pageview.cpp:4354
+#: part/pageview.cpp:4378
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "Klang afspelen..."
 
-#: part/pageview.cpp:4356
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Stop Sound"
 msgstr "Afspelen anhollen"
 
-#: part/pageview.cpp:4362
+#: part/pageview.cpp:4386
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Linkadress koperen"
 
-#: part/pageview.cpp:4383
+#: part/pageview.cpp:4407
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Na \"%1\" söken mit"
 
-#: part/pageview.cpp:4915
+#: part/pageview.cpp:4939
 #, kde-format
 msgid "Welcome"
 msgstr "Willkamen"
 
-#: part/pageview.cpp:5037
+#: part/pageview.cpp:5061
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Söök dat Rebeet för't Gröttermaken ut. Lütter mit Rechtsklick."
 
-#: part/pageview.cpp:5050
+#: part/pageview.cpp:5074
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klick hier, wenn Du dat Kiekglas hier bruken wullt."
 
-#: part/pageview.cpp:5065
+#: part/pageview.cpp:5089
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Treck en Rahmen üm den Text oder de Biller to, de(n) Du koperen wullt."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Select text"
 msgstr "Text utsöken"
 
-#: part/pageview.cpp:5093
+#: part/pageview.cpp:5117
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4123,14 +4123,14 @@ msgstr ""
 "Treck en Rechteck üm de Tabell to, klick neegst de Kanten, wenn Du ehr "
 "ünnerdelen wullt, drück de Utknieptast, wenn Du de Köör leddigmaken wullt."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5129
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5108
+#: part/pageview.cpp:5132
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4138,17 +4138,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5124
+#: part/pageview.cpp:5148
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5140
+#: part/pageview.cpp:5164
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5284
+#: part/pageview.cpp:5308
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

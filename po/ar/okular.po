@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-04 00:38+0000\n"
 "PO-Revision-Date: 2024-01-17 17:16+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -3760,22 +3760,22 @@ msgstr "انسخ نص"
 msgid "Go to '%1'"
 msgstr "اذهب إلى '%1'"
 
-#: part/pageview.cpp:4005 part/part.cpp:3129
+#: part/pageview.cpp:4029 part/part.cpp:3129
 #, kde-format
 msgid "Fit Width"
 msgstr "لائم العرض"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Fit Page"
 msgstr "لائم الصفحة"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Auto Fit"
 msgstr "لائم آليًّا"
 
-#: part/pageview.cpp:4028
+#: part/pageview.cpp:4052
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3784,67 +3784,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1٪"
 
-#: part/pageview.cpp:4311
+#: part/pageview.cpp:4335
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ابحث عن '%1' باستخدام"
 
-#: part/pageview.cpp:4325
+#: part/pageview.cpp:4349
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "اضبط اختصارات الوِب..."
 
-#: part/pageview.cpp:4351
+#: part/pageview.cpp:4375
 #, kde-format
 msgid "Follow This Link"
 msgstr "اتبع هذه الوصلة"
 
-#: part/pageview.cpp:4354
+#: part/pageview.cpp:4378
 #, kde-format
 msgid "Play this Sound"
 msgstr "شغّل هذا الصوت"
 
-#: part/pageview.cpp:4356
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Stop Sound"
 msgstr "أوقف الصوت"
 
-#: part/pageview.cpp:4362
+#: part/pageview.cpp:4386
 #, kde-format
 msgid "Copy Link Address"
 msgstr "انسخ رابط العنوان"
 
-#: part/pageview.cpp:4383
+#: part/pageview.cpp:4407
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "ابحث عن '%1' في هذا المستند"
 
-#: part/pageview.cpp:4915
+#: part/pageview.cpp:4939
 #, kde-format
 msgid "Welcome"
 msgstr "مرحبا"
 
-#: part/pageview.cpp:5037
+#: part/pageview.cpp:5061
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "اختر منطقة التكبير. نقرة-يمنى للتصغير."
 
-#: part/pageview.cpp:5050
+#: part/pageview.cpp:5074
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "اضغط هنا لرؤية العرض المُكَبَّر"
 
-#: part/pageview.cpp:5065
+#: part/pageview.cpp:5089
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ارسم مربعا حول النص/الصورة المراد نسخه."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Select text"
 msgstr "حدد نص"
 
-#: part/pageview.cpp:5093
+#: part/pageview.cpp:5117
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3853,7 +3853,7 @@ msgstr ""
 "ارسم مستطيلاً حول الجدول، ثم انقر بالفأرة بالقرب من الحافة لتُقَسِّم؛ اضغط Esc "
 "للإلغاء."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5129
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3861,7 +3861,7 @@ msgid ""
 msgstr ""
 "جميع شهادات التوقيع الخاصة بك إما غير صالحة بعد أو تجاوزت تاريخ صلاحيتها."
 
-#: part/pageview.cpp:5108
+#: part/pageview.cpp:5132
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3871,17 +3871,17 @@ msgstr ""
 "لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول "
 "<a href=\"%1\"> إضافة التوقيعات الرقمية </a> في الدليل."
 
-#: part/pageview.cpp:5124
+#: part/pageview.cpp:5148
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "لديك تغيرات غير محفوظة. رجاء احفظ المستند قبل توقيعه."
 
-#: part/pageview.cpp:5140
+#: part/pageview.cpp:5164
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ارسم مستطيل لإدراج حقل التوقيع"
 
-#: part/pageview.cpp:5284
+#: part/pageview.cpp:5308
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ارسم مربعا حول مساحة الصفحة التي تريد أن تجعلها مرئية"

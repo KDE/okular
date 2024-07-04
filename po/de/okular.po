@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:37+0000\n"
+"POT-Creation-Date: 2024-07-04 00:38+0000\n"
 "PO-Revision-Date: 2024-04-23 23:32+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3766,22 +3766,22 @@ msgstr "Text kopieren"
 msgid "Go to '%1'"
 msgstr "Gehe zu „%1“"
 
-#: part/pageview.cpp:4005 part/part.cpp:3129
+#: part/pageview.cpp:4029 part/part.cpp:3129
 #, kde-format
 msgid "Fit Width"
 msgstr "Seitenbreite"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Fit Page"
 msgstr "Ganze Seite"
 
-#: part/pageview.cpp:4005
+#: part/pageview.cpp:4029
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatisch einpassen"
 
-#: part/pageview.cpp:4028
+#: part/pageview.cpp:4052
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3790,67 +3790,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 %"
 
-#: part/pageview.cpp:4311
+#: part/pageview.cpp:4335
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Nach „%1“ suchen mit"
 
-#: part/pageview.cpp:4325
+#: part/pageview.cpp:4349
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Web-Kurzbefehle festlegen ..."
 
-#: part/pageview.cpp:4351
+#: part/pageview.cpp:4375
 #, kde-format
 msgid "Follow This Link"
 msgstr "Verknüpfungsadresse aufrufen"
 
-#: part/pageview.cpp:4354
+#: part/pageview.cpp:4378
 #, kde-format
 msgid "Play this Sound"
 msgstr "Diesen Klang abspielen"
 
-#: part/pageview.cpp:4356
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Stop Sound"
 msgstr "Wiedergabe anhalten"
 
-#: part/pageview.cpp:4362
+#: part/pageview.cpp:4386
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Verknüpfungsadresse kopieren"
 
-#: part/pageview.cpp:4383
+#: part/pageview.cpp:4407
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Nach „%1“ im diesem Dokument suchen"
 
-#: part/pageview.cpp:4915
+#: part/pageview.cpp:4939
 #, kde-format
 msgid "Welcome"
 msgstr "Willkommen"
 
-#: part/pageview.cpp:5037
+#: part/pageview.cpp:5061
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Wählen Sie den zu vergrößernden Bereich. Ein Rechtsklick verkleinert."
 
-#: part/pageview.cpp:5050
+#: part/pageview.cpp:5074
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klicken Sie, um die vergrößerte Ansicht zu sehen."
 
-#: part/pageview.cpp:5065
+#: part/pageview.cpp:5089
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Ziehen Sie mit der Maus ein Rechteck um den zu kopierenden Bereich."
 
-#: part/pageview.cpp:5079
+#: part/pageview.cpp:5103
 #, kde-format
 msgid "Select text"
 msgstr "Wählen Sie Text aus"
 
-#: part/pageview.cpp:5093
+#: part/pageview.cpp:5117
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3859,7 +3859,7 @@ msgstr ""
 "Ziehen Sie mit der Maus ein Rechteck um die Tabelle, klicken Sie dann zur "
 "Aufteilung auf die nächsten Kanten, drücken Sie die Taste ESC zum Löschen."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5129
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3867,7 +3867,7 @@ msgid ""
 msgstr ""
 "Alle Ihre Signaturzertifikate sind entweder ungültig oder bereits abgelaufen."
 
-#: part/pageview.cpp:5108
+#: part/pageview.cpp:5132
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3878,19 +3878,19 @@ msgstr ""
 "Informationen finden Sie im Handbuch im Abschnitt <a href=\"%1\">Digitale "
 "Signaturen hinzufügen</a>."
 
-#: part/pageview.cpp:5124
+#: part/pageview.cpp:5148
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Sie haben noch nicht gespeicherte Änderungen. Bitte speichern Sie das "
 "Dokument vor dem Signieren."
 
-#: part/pageview.cpp:5140
+#: part/pageview.cpp:5164
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Zeichnen Sie ein Rechteck, um ein Signaturfeld einzufügen."
 
-#: part/pageview.cpp:5284
+#: part/pageview.cpp:5308
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

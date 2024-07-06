@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-20 02:32+0000\n"
-"PO-Revision-Date: 2024-06-27 15:41+0300\n"
+"PO-Revision-Date: 2024-07-05 20:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -434,7 +434,7 @@ msgstr "Üretici"
 #: core/document.cpp:5845
 #, kde-format
 msgid "Copyright"
-msgstr "Telif Hakkı"
+msgstr "Telif hakkı"
 
 #: core/document.cpp:5848
 #, kde-format
@@ -454,7 +454,7 @@ msgstr "Değiştirilme"
 #: core/document.cpp:5857
 #, kde-format
 msgid "MIME Type"
-msgstr "MIME Türü"
+msgstr "MIME türü"
 
 #: core/document.cpp:5860
 #, kde-format
@@ -464,22 +464,22 @@ msgstr "Kategori"
 #: core/document.cpp:5863
 #, kde-format
 msgid "Keywords"
-msgstr "Anahtar Sözcükler"
+msgstr "Anahtar sözcükler"
 
 #: core/document.cpp:5866
 #, kde-format
 msgid "File Path"
-msgstr "Dosya Yolu"
+msgstr "Dosya yolu"
 
 #: core/document.cpp:5869
 #, kde-format
 msgid "File Size"
-msgstr "Dosya Boyutu"
+msgstr "Dosya boyutu"
 
 #: core/document.cpp:5872
 #, kde-format
 msgid "Page Size"
-msgstr "Sayfa Boyutu"
+msgstr "Sayfa boyutu"
 
 #: core/documentcommands.cpp:62
 #, kde-format
@@ -1716,7 +1716,7 @@ msgstr "Özel damga sembolü seç"
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
-"*.ico *.png *.xpm *.svg *.svgz | Simge Dosyaları (*.ico *.png *.xpm *.svg *."
+"*.ico *.png *.xpm *.svg *.svgz | Simge dosyaları (*.ico *.png *.xpm *.svg *."
 "svgz)"
 
 #: part/annotationwidgets.cpp:160

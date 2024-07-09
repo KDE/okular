@@ -82,7 +82,7 @@ void CalculateTextTest::testSimpleCalculate()
     // Verify the results
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("60"));
     QCOMPARE(fields[QStringLiteral("AVG")]->text(), QStringLiteral("20"));
-    QCOMPARE(fields[QStringLiteral("Prod")]->text(), QStringLiteral("6,000"));
+    QCOMPARE(fields[QStringLiteral("Prod")]->text(), QStringLiteral("6000"));
     QCOMPARE(fields[QStringLiteral("Min")]->text(), QStringLiteral("10"));
     QCOMPARE(fields[QStringLiteral("Max")]->text(), QStringLiteral("30"));
 

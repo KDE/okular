@@ -2344,7 +2344,7 @@ void PartTest::testFieldFormatting()
     QCOMPARE(deCurrencyWidget->text(), QStringLiteral("1.123.234,57 €"));
     QCOMPARE(ff_de->text(), QStringLiteral("1123234,567"));
     QCOMPARE(sumCurrencyWidget->text(), QStringLiteral("1.124.469,13€"));
-    QCOMPARE(ff_sum->text(), QStringLiteral("1,124,469.1340000000782310962677002"));
+    QCOMPARE(ff_sum->text(), QStringLiteral("1124469.1340000000782310962677002"));
 }
 
 } // namespace Okular

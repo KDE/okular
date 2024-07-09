@@ -50,7 +50,7 @@ function AFSimple_Calculate( cFunction, cFields )
     for (i = 0; i < cFields.length; i++)
     {
         var field = Doc.getField( cFields[i] );
-        var val = util.stringToNumber( field.value );
+        var val = AFMakeNumber( field.value );
 
         if ( cFunction === "SUM" || cFunction === "AVG" )
         {
@@ -80,8 +80,7 @@ function AFSimple_Calculate( cFunction, cFields )
     {
         ret /= cFields.length;
     }
-
-    event.value = util.numberToString( ret, "g", 32 );
+    event.value = util.numberToString( ret, "g", 32, "en_US" ).replace(/,/g, "");
 }
 
 
@@ -120,7 +119,7 @@ function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCur
     }
 
     var ret;
-    var localized = util.stringToNumber( event.value );
+    var localized = AFMakeNumber( event.value );
 
     if ( sepStyle === 2 || sepStyle === 3 )
     {
@@ -193,12 +192,17 @@ function AFNumber_Keystroke(nDec, sepStyle, negStyle, currStyle, strCurrency, bC
 
 function AFMakeNumber(string)
 {
+    // Converts an input string into a numerical value not considering thousands separator
+    // Any other character is converted to a ".". This accounts for decimal separators such as ",", "·", "'", etc. 
     var type = typeof string;
     if ( type == "number" )
         return string;
     if ( type != "string" )
         return 0;
-    return util.stringToNumber( string );
+    if (string === "" || !(/\d/.test(string)))
+        return null;
+    string = string.replace(/\D/g, '.');
+    return Number(string);
 }
 
 /** AFTime_Format
@@ -434,7 +438,7 @@ function AFPercent_Format( nDec, sepStyle )
     }
 
     var ret;
-    var percentValue = util.stringToNumber( event.value ) * 100;
+    var percentValue = AFMakeNumber( event.value ) * 100;
     if ( sepStyle === 2 || sepStyle === 3 )
     {
         // Use de_DE as the locale for the dot separator format

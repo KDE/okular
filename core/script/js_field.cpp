@@ -123,9 +123,11 @@ QJSValue JSField::fieldGetValueCore(bool asString) const
     }
     case FormField::FormText: {
         const FormFieldText *text = static_cast<const FormFieldText *>(m_field);
-        const QLocale locale;
+        const QLocale locale(QStringLiteral("en_US"));
+        QString numericalText = text->text();
+        numericalText.replace(QStringLiteral(","), QStringLiteral(".")); // As we do not need to account for thousand separator, commas are definitely decimal separators if they appear
         bool ok;
-        const double textAsNumber = locale.toDouble(text->text(), &ok);
+        const double textAsNumber = locale.toDouble(numericalText, &ok);
         if (ok && !asString) {
             result = textAsNumber;
         } else {

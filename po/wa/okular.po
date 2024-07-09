@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:38+0000\n"
+"POT-Creation-Date: 2024-07-09 00:38+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -341,144 +341,144 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Dji n' a trové nou programe po drovi l' fitchî del sôre mime %1."
 
-#: core/document.cpp:4691
+#: core/document.cpp:4753
 #, fuzzy, kde-format
 #| msgid "Could not open the temporary file for saving."
 msgid "Could not open a temporary file"
 msgstr "Dji n' sai drovi l' fitchî timporaire po schaper."
 
-#: core/document.cpp:4693
+#: core/document.cpp:4755
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4695
+#: core/document.cpp:4757
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4697
+#: core/document.cpp:4759
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4699
+#: core/document.cpp:4761
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4701
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4703
+#: core/document.cpp:4765
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find file to print"
 msgstr "Dji n' a savou trover l' componint Okular."
 
-#: core/document.cpp:4705
+#: core/document.cpp:4767
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4707
+#: core/document.cpp:4769
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4709
+#: core/document.cpp:4771
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5372 part/part.cpp:1114
+#: core/document.cpp:5434 part/part.cpp:1114
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "Dji n' a savou drovi « %1 » po-z î scrire. Fitchî nén schapé."
 
-#: core/document.cpp:5882
+#: core/document.cpp:5944
 #, kde-format
 msgid "Title"
 msgstr "Tite"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5947
 #, kde-format
 msgid "Subject"
 msgstr "Sudjet"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5950
 #, kde-format
 msgid "Description"
 msgstr "Discrijhaedje"
 
-#: core/document.cpp:5891
+#: core/document.cpp:5953
 #, kde-format
 msgid "Author"
 msgstr "Oteur"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5956
 #, kde-format
 msgid "Creator"
 msgstr "Ahiveu"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5959
 #, kde-format
 msgid "Producer"
 msgstr "Produjheu"
 
-#: core/document.cpp:5900
+#: core/document.cpp:5962
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5903
+#: core/document.cpp:5965
 #, kde-format
 msgid "Pages"
 msgstr "Pådjes"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5968
 #, kde-format
 msgid "Created"
 msgstr "Ahivé"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5971
 #, kde-format
 msgid "Modified"
 msgstr "Candjî"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5974
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Sôre MIME"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5977
 #, kde-format
 msgid "Category"
 msgstr "Categoreye"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5980
 #, kde-format
 msgid "Keywords"
 msgstr "Mot-clés"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5983
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "Fitchî"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5986
 #, kde-format
 msgid "File Size"
 msgstr "Grandeu do fitchî"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5989
 #, kde-format
 msgid "Page Size"
 msgstr "Grandeu do papî"
@@ -3691,23 +3691,23 @@ msgstr "A pårti di c' pådje ci"
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:862
+#: part/formwidgets.cpp:849
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All Files (*)"
 msgstr "*|Tos les fitchîs"
 
-#: part/formwidgets.cpp:1223
+#: part/formwidgets.cpp:1210
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1289 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1276 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1293 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1280 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Caret Properties"
 msgid "Signature Properties"

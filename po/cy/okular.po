@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:38+0000\n"
+"POT-Creation-Date: 2024-07-09 00:38+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -317,145 +317,145 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 
-#: core/document.cpp:4691
+#: core/document.cpp:4753
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgid "Could not open a temporary file"
 msgstr "Tudalen %1"
 
-#: core/document.cpp:4693
+#: core/document.cpp:4755
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4695
+#: core/document.cpp:4757
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4697
+#: core/document.cpp:4759
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4699
+#: core/document.cpp:4761
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4701
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4703
+#: core/document.cpp:4765
 #, kde-format
 msgid "Unable to find file to print"
 msgstr ""
 
-#: core/document.cpp:4705
+#: core/document.cpp:4767
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4707
+#: core/document.cpp:4769
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4709
+#: core/document.cpp:4771
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5372 part/part.cpp:1114
+#: core/document.cpp:5434 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:5882
+#: core/document.cpp:5944
 #, kde-format
 msgid "Title"
 msgstr "Teitl"
 
-#: core/document.cpp:5885
+#: core/document.cpp:5947
 #, kde-format
 msgid "Subject"
 msgstr "Pwnc"
 
-#: core/document.cpp:5888
+#: core/document.cpp:5950
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:5891
+#: core/document.cpp:5953
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "Awdur"
 
-#: core/document.cpp:5894
+#: core/document.cpp:5956
 #, kde-format
 msgid "Creator"
 msgstr "Creuwr"
 
-#: core/document.cpp:5897
+#: core/document.cpp:5959
 #, kde-format
 msgid "Producer"
 msgstr ""
 
-#: core/document.cpp:5900
+#: core/document.cpp:5962
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:5903
+#: core/document.cpp:5965
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "Tudalennau :"
 
-#: core/document.cpp:5906
+#: core/document.cpp:5968
 #, kde-format
 msgid "Created"
 msgstr "Crëwyd"
 
-#: core/document.cpp:5909
+#: core/document.cpp:5971
 #, kde-format
 msgid "Modified"
 msgstr "Addaswyd"
 
-#: core/document.cpp:5912
+#: core/document.cpp:5974
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "Math"
 
-#: core/document.cpp:5915
+#: core/document.cpp:5977
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Category"
 msgstr "Creuwr"
 
-#: core/document.cpp:5918
+#: core/document.cpp:5980
 #, kde-format
 msgid "Keywords"
 msgstr "Allweddeiriau"
 
-#: core/document.cpp:5921
+#: core/document.cpp:5983
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "Teitl"
 
-#: core/document.cpp:5924
+#: core/document.cpp:5986
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "Tudalennau"
 
-#: core/document.cpp:5927
+#: core/document.cpp:5989
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"
@@ -3489,22 +3489,22 @@ msgstr ""
 msgid "Find as you type"
 msgstr "Arhosodd y canfod."
 
-#: part/formwidgets.cpp:862
+#: part/formwidgets.cpp:849
 #, kde-format
 msgid "All Files (*)"
 msgstr ""
 
-#: part/formwidgets.cpp:1223
+#: part/formwidgets.cpp:1210
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1289 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1276 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1293 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1280 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 msgid "Signature Properties"
 msgstr "&Priodweddau"

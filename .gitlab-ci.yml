@@ -15,24 +15,30 @@ include:
       - /gitlab-templates/craft-macos-arm64-qt6.yml
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
 
-
-#build_ubuntu_22_04:
-#  stage: build
-#  image: ubuntu:22.04
-#  tags:
-#    - Linux
-#  only:
-#    - merge_requests
-#  before_script:
-#    - sed -i -e 's/# deb-src/deb-src/g' /etc/apt/sources.list
-#    - apt-get update
-#    - apt-get install --yes eatmydata
-#    - eatmydata apt-get build-dep --yes --no-install-recommends okular
-#    - eatmydata apt-get install --yes --no-install-recommends ninja-build libqt5x11extras5-dev
-#  script:
-#    - mkdir -p build && cd build
-#    - cmake -DOKULAR_UI=desktop -G Ninja ..
-#    - ninja
+# Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
+build_ubuntu_24_10:
+ stage: build
+ image: ubuntu:24.10
+ tags:
+   - Linux
+ only:
+   - merge_requests
+ before_script:
+   - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+   - apt-get update
+   - apt-get install --yes eatmydata
+   # Uncomment when ubuntu ships with a Qt6 okular
+   # - eatmydata apt-get build-dep --yes --no-install-recommends okular
+   # Remove when ubuntu ships with a Qt6 okular
+   - eatmydata apt-get install --yes --no-install-recommends libkf6kio-dev cmake g++ extra-cmake-modules qt6-svg-dev libkf6xmlgui-dev libkf6threadweaver-dev libkf6parts-dev libkf6crash-dev libkf6iconthemes-dev libkf6textwidgets-dev libkf6purpose-dev libkf6wallet-dev qt6-speech-dev libtiff-dev libkf6pty-dev libpoppler-qt6-dev libspectre-dev libphonon4qt6-dev libzip-dev libdjvulibre-dev libmarkdown2-dev libqmobipocket6-dev libepub-dev
+   - eatmydata apt-get install --yes --no-install-recommends ninja-build
+ script:
+   - mkdir -p build && cd build
+   # Remove the exiv part one Ununtu has it
+   # remove this line once ubuntu has plasma-activities
+   - sed -i 's/PlasmaActivities REQUIRED/PlasmaActivities/' ../CMakeLists.txt
+   - cmake -DOKULAR_UI=desktop -G Ninja .. -DFORCE_NOT_REQUIRED_DEPENDENCIES="KExiv2Qt6"
+   - ninja
 
 build_clazy_clang_tidy:
   stage: build

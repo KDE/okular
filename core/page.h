@@ -276,6 +276,12 @@ public:
      */
     void setPixmap(DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect = NormalizedRect());
 
+    /*
+     * Gets the Pixmap associated with a particular DocumentObserver.
+     * If the passed observer is not present, return nullptr.
+     */
+    const QPixmap *getPixmap(DocumentObserver *observer) const;
+
     /**
      * Sets the @p text page.
      */

@@ -103,6 +103,7 @@
 #include "core/printoptionswidget.h"
 #include "drawingtoolactions.h"
 #include "embeddedfilesdialog.h"
+#include "exportimagedialog.h"
 #include "extensions.h"
 #include "fileprinterpreview.h"
 #include "findbar.h"
@@ -537,6 +538,9 @@ Part::Part(QObject *parent, const QVariantList &args)
 
     connect(m_reviewsWidget.data(), &Reviews::openAnnotationWindow, m_pageView.data(), &PageView::openAnnotationWindow);
 
+    // Initialize an image export document observer
+    m_exportImageDocumentObserver = new ExportImageDocumentObserver;
+
     // add document observers
     m_document->addObserver(this);
     m_document->addObserver(m_thumbnailList);
@@ -551,6 +555,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_document->addObserver(m_pageSizeLabel);
     m_document->addObserver(m_bookmarkList);
     m_document->addObserver(m_signaturePanel);
+    m_document->addObserver(m_exportImageDocumentObserver);
 
     connect(m_document->bookmarkManager(), &BookmarkManager::saved, this, &Part::slotRebuildBookmarkMenu);
 
@@ -783,6 +788,7 @@ void Part::setupViewerActions()
     m_exportAs = nullptr;
     m_exportAsMenu = nullptr;
     m_exportAsText = nullptr;
+    m_exportAsImage = nullptr;
     m_exportAsDocArchive = nullptr;
 
 #if HAVE_PURPOSE
@@ -916,9 +922,14 @@ void Part::setupActions()
     connect(m_exportAsMenu, &QMenu::triggered, this, &Part::slotExportAs);
     m_exportAs->setMenu(m_exportAsMenu);
     m_exportAsText = actionForExportFormat(Okular::ExportFormat::standardFormat(Okular::ExportFormat::PlainText), m_exportAsMenu);
+    m_exportAsText->setData(Okular::ExportFormat::PlainText);
+    m_exportAsImage = actionForExportFormat(Okular::ExportFormat::standardFormat(Okular::ExportFormat::Image), m_exportAsMenu);
+    m_exportAsImage->setData(Okular::ExportFormat::Image);
     m_exportAsMenu->addAction(m_exportAsText);
+    m_exportAsMenu->addAction(m_exportAsImage);
     m_exportAs->setEnabled(false);
     m_exportAsText->setEnabled(false);
+    m_exportAsImage->setEnabled(false);
 
 #if HAVE_PURPOSE
     m_share = ac->addAction(QStringLiteral("file_share"));
@@ -1007,6 +1018,7 @@ Part::~Part()
     delete m_bookmarkList;
     delete m_infoTimer;
     delete m_signaturePanel;
+    delete m_exportImageDocumentObserver;
 
     delete m_document;
 
@@ -1705,6 +1717,9 @@ bool Part::openFile()
     if (m_exportAsText) {
         m_exportAsText->setEnabled(ok && m_document->canExportToText());
     }
+    if (m_exportAsImage) {
+        m_exportAsImage->setEnabled(ok);
+    }
     if (m_exportAs) {
         m_exportAs->setEnabled(ok);
     }
@@ -1947,12 +1962,15 @@ bool Part::closeUrl(bool promptToSave)
     if (m_exportAsText) {
         m_exportAsText->setEnabled(false);
     }
+    if (m_exportAsImage) {
+        m_exportAsImage->setEnabled(false);
+    }
     m_exportFormats.clear();
     if (m_exportAs) {
         QMenu *menu = m_exportAs->menu();
         QList<QAction *> acts = menu->actions();
         int num = acts.count();
-        for (int i = 1; i < num; ++i) {
+        for (int i = 2 /*The initialized value represents the number of hardcoded actions*/; i < num; ++i) {
             menu->removeAction(acts.at(i));
             delete acts.at(i);
         }
@@ -3485,34 +3503,81 @@ void Part::slotAboutBackend()
 void Part::slotExportAs(QAction *act)
 {
     QList<QAction *> acts = m_exportAs->menu() ? m_exportAs->menu()->actions() : QList<QAction *>();
-    int id = acts.indexOf(act);
-    if ((id < 0) || (id >= acts.count())) {
+    int menuActionId = acts.indexOf(act);
+    // We first check whether the correct action is passed to the slot
+    if ((menuActionId < 0) || (menuActionId >= acts.count())) {
         return;
     }
-
+    // Store an id for dynamically created actions
+    int dynamicActionId = menuActionId - 2; // This number is the number of hardcoded actions
     QMimeDatabase mimeDatabase;
-    QMimeType mimeType;
-    switch (id) {
-    case 0:
-        mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
-        break;
-    default:
-        mimeType = m_exportFormats.at(id - 1).mimeType();
-        break;
+    QStringList allowedExtensions;
+    QStringList extensionComments;
+
+    // Data objects for exporting images
+    QString fileName;
+    Okular::ExportFormat::StandardExportFormat actionType = act->data().value<Okular::ExportFormat::StandardExportFormat>();
+    if (!act->data().isNull()) {
+        switch (actionType) {
+        case ExportFormat::PlainText: {
+            QMimeType mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
+            allowedExtensions << mimeType.globPatterns();
+            extensionComments << mimeType.comment();
+            break;
+        }
+        default: {
+            break;
+        }
+        }
+    } else {
+        QMimeType mimeType = m_exportFormats.at(dynamicActionId).mimeType();
+        allowedExtensions << mimeType.globPatterns();
+        extensionComments << mimeType.comment();
     }
-    QString filter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
 
-    QString fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+    // Open Dialog boxes
+    QString filter = i18nc("File type name and pattern", "%1 (%2)", extensionComments.join(QLatin1Char(' ')), allowedExtensions.join(QLatin1Char(' ')));
+    if (!act->data().isNull()) {
+        switch (actionType) {
+        case ExportFormat::PlainText:
+            fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+            break;
+        case ExportFormat::Image: {
+            // In the context of image export, the fileName is actually dirName
+            ExportImageDialog exportImageDialog(m_document, &fileName, m_exportImageDocumentObserver, widget());
+            int dialogResult = exportImageDialog.exec();
+            if (dialogResult == ExportImageDialog::InvalidOptions) {
+                KMessageBox::information(widget(), i18n("Invalid options have been received."));
+                break;
+            } else if (dialogResult == ExportImageDialog::Canceled) {
+                break;
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    } else {
+        fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+    }
 
+    // Either export or cancel
     if (!fileName.isEmpty()) {
         bool saved = false;
-        switch (id) {
-        case 0:
-            saved = m_document->exportToText(fileName);
-            break;
-        default:
-            saved = m_document->exportTo(fileName, m_exportFormats.at(id - 1));
-            break;
+        if (!act->data().isNull()) {
+            switch (actionType) {
+            case ExportFormat::PlainText:
+                saved = m_document->exportToText(fileName);
+                break;
+            case ExportFormat::Image: {
+                saved = m_exportImageDocumentObserver->getOrRequestPixmaps();
+                break;
+            }
+            default:
+                break;
+            }
+        } else {
+            saved = m_document->exportTo(fileName, m_exportFormats.at(dynamicActionId));
         }
         if (!saved) {
             KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName));

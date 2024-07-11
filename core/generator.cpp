@@ -799,6 +799,9 @@ ExportFormat ExportFormat::standardFormat(StandardExportFormat type)
     case HTML:
         return ExportFormat(QIcon::fromTheme(QStringLiteral("text-html")), i18nc("This is the document format", "HTML"), db.mimeTypeForName(QStringLiteral("text/html")));
         break;
+    case Image:
+        return ExportFormat(QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n("&Image"), db.mimeTypeForName(QStringLiteral("image/*")));
+        break;
     }
     return ExportFormat();
 }

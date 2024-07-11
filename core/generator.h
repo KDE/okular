@@ -149,7 +149,8 @@ public:
         PlainText,        ///< Plain text
         PDF,              ///< PDF, aka Portable Document Format
         OpenDocumentText, ///< OpenDocument Text format @since 0.8 (KDE 4.2)
-        HTML              ///< OpenDocument Text format @since 0.8 (KDE 4.2)
+        HTML,             ///< OpenDocument Text format @since 0.8 (KDE 4.2)
+        Image             ///< Image format @since 24.08
     };
 
     /**

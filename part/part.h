@@ -39,7 +39,6 @@
 #include "../interfaces/viewerinterface.h"
 #include "../kdocumentviewer.h"
 
-#include "exportimagedialog.h"
 #include "okularpart_export.h"
 
 class QAction;
@@ -56,7 +55,6 @@ class KToggleFullScreenAction;
 class QTemporaryFile;
 class QAction;
 class QJsonObject;
-
 namespace KParts
 {
 class GUIActivateEvent;
@@ -356,9 +354,6 @@ private:
     bool m_documentOpenWithPassword;
     bool m_swapInsteadOfOpening; // if set, the next open operation will replace the backing file (used when reloading just saved files)
     bool m_warnedAboutModifyingUnsaveableDocument = false;
-
-    // relevant document observers
-    ExportImageDocumentObserver *m_exportImageDocumentObserver = nullptr;
 
     // main widgets
     Sidebar *m_sidebar;

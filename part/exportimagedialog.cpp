@@ -22,7 +22,6 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include <atomic>
 #include <utility>
 #include <vector>
 
@@ -30,24 +29,13 @@
 #include <KMessageBox>
 
 #include "core/document.h"
+#include "core/generator_p.h"
 #include "core/observer.h"
 #include "core/page.h"
 
-ExportImageDialog::ExportImageDialog(Okular::Document *document, QString *dirPath, ExportImageDocumentObserver *observer, QWidget *parent)
+ExportImageDialog::ExportImageDialog(Okular::Document *document, QWidget *parent)
     : QDialog(parent)
     , m_document(document)
-    , m_dirPath(dirPath)
-    , m_observer(observer)
-    , m_parent(parent)
-{
-    initUI();
-}
-
-ExportImageDialog::~ExportImageDialog()
-{
-}
-
-void ExportImageDialog::initUI()
 {
     m_imageTypeLabel = new QLabel(i18n("Type:"), this);
     m_PNGTypeLabel = new QLabel(i18n("PNG"), this);
@@ -60,7 +48,7 @@ void ExportImageDialog::initUI()
     m_dirPathBrowseButton = new QPushButton(i18n("..."), this);
     m_dirPathBrowseButton->setMaximumSize(30, 30);
     m_dirPathBrowseButton->setToolTip(i18n("The images would be exported in a subfolder in this path of the same name as the file"));
-    connect(m_dirPathBrowseButton, &QPushButton::clicked, this, &ExportImageDialog::searchFileName);
+    connect(m_dirPathBrowseButton, &QPushButton::clicked, this, &ExportImageDialog::browseClicked);
 
     // Options tab
     m_exportRangeGroupBox = new QGroupBox(i18n("Export range"), this);
@@ -121,8 +109,8 @@ void ExportImageDialog::initUI()
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 
     buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("Export"));
-    connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ExportImageDialog::exportImage);
-    connect(buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, [this] { QDialog::done(Canceled); });
+    connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ExportImageDialog::okClicked);
+    connect(buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, [this] { done(Canceled); });
 
     QHBoxLayout *dirPathLayout = new QHBoxLayout;
     dirPathLayout->addWidget(m_dirPathLineEdit);
@@ -142,7 +130,7 @@ void ExportImageDialog::initUI()
     setWindowTitle(i18n("Export Image"));
 }
 
-void ExportImageDialog::searchFileName()
+void ExportImageDialog::browseClicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this, QString(), QDir::homePath(), QFileDialog::ShowDirsOnly);
     if (!(dirPath.isEmpty())) {
@@ -150,7 +138,7 @@ void ExportImageDialog::searchFileName()
     }
 }
 
-void ExportImageDialog::exportImage()
+void ExportImageDialog::okClicked()
 {
     std::vector<std::pair<int, int>> pageRanges;
     if (m_allPagesRadioButton->isChecked()) {
@@ -171,19 +159,19 @@ void ExportImageDialog::exportImage()
             if (range.size() == 1) {
                 int pageVal = range[0].toInt(&ok);
                 if (!ok || pageVal < 1 || pageVal > static_cast<int>(m_document->pages())) {
-                    QDialog::done(InvalidOptions);
+                    done(InvalidOptions);
                     return;
                 }
                 pageRanges.emplace_back(pageVal, pageVal);
             } else if (range.size() == 2) {
                 int pageStart = range[0].toInt(&ok);
                 if (!ok || pageStart < 1 || pageStart > static_cast<int>(m_document->pages())) {
-                    QDialog::done(InvalidOptions);
+                    done(InvalidOptions);
                     return;
                 }
                 int pageEnd = range[1].toInt(&ok);
                 if (!ok || pageEnd < 1 || pageEnd > static_cast<int>(m_document->pages())) {
-                    QDialog::done(InvalidOptions);
+                    done(InvalidOptions);
                     return;
                 }
                 if (pageStart > pageEnd) {
@@ -192,7 +180,7 @@ void ExportImageDialog::exportImage()
                     pageRanges.emplace_back(pageStart, pageEnd);
                 }
             } else {
-                QDialog::done(InvalidOptions);
+                done(InvalidOptions);
                 return;
             }
         }
@@ -201,15 +189,12 @@ void ExportImageDialog::exportImage()
         for (int i = p.first; i <= p.second; i++) {
             int width = (int)((m_document->page(i - 1))->width());
             int height = (int)((m_document->page(i - 1))->height());
-            Okular::PixmapRequest *request = new Okular::PixmapRequest(m_observer, i - 1, width, height, 1 /* dpr */, 1, Okular::PixmapRequest::Asynchronous);
-            m_observer->addToPixmapRequestList(request);
+            Okular::PixmapRequest *request = new Okular::PixmapRequest(nullptr, i - 1, width, height, 1 /* dpr */, 1, Okular::PixmapRequest::Asynchronous);
+            m_pixmapRequestList << request;
         }
     }
-    *m_dirPath = m_dirPathLineEdit->text();
-    m_observer->m_document = m_document;
-    m_observer->m_dirPath = *m_dirPath;
-    m_observer->m_parent = m_parent;
-    QDialog::done(Accepted);
+
+    done(Accepted);
 }
 
 void ExportImageDocumentObserver::notifyPageChanged(int page, int flags)
@@ -217,14 +202,12 @@ void ExportImageDocumentObserver::notifyPageChanged(int page, int flags)
     if (!(flags & Okular::DocumentObserver::Pixmap)) {
         return;
     }
-    getPixmapAndSave(page);
+    QMetaObject::invokeMethod(this, [this, page] { getPixmapAndSave(page); }, Qt::QueuedConnection);
 }
 
 void ExportImageDocumentObserver::getPixmapAndSave(int page)
 {
-    m_progressCanceledMutex.lock();
     if (m_progressCanceled) {
-        m_progressCanceledMutex.unlock();
         return;
     }
     const QPixmap *pixmap = m_document->page(page)->getPixmap(this);
@@ -233,28 +216,22 @@ void ExportImageDocumentObserver::getPixmapAndSave(int page)
     QString filePath = dir.filePath(fileName);
     bool status = pixmap->save(filePath, "PNG");
     if (!status) {
-        KMessageBox::error(m_parent, i18n("Failed to save a file ") + fileName, i18n("Failed"));
+        KMessageBox::error(m_progressDialog->parentWidget(), i18n("Failed to save a file %1").arg(fileName), i18n("Failed"));
     } else {
-        m_progressValue.fetch_add(1);
-        int value = m_progressValue.load();
-        m_progressDialog->setValue(value);
-        if (value == m_progressDialog->maximum()) {
+        ++m_progressValue;
+        m_progressDialog->setValue(m_progressValue);
+        if (m_progressValue == m_progressDialog->maximum()) {
             delete m_progressDialog;
         }
     }
-    m_progressCanceledMutex.unlock();
 }
 
-void ExportImageDocumentObserver::addToPixmapRequestList(Okular::PixmapRequest *request)
+void ExportImageDocumentObserver::doExport(const QList<Okular::PixmapRequest *> &pixmapRequestList, Okular::Document *document, const QString &dirPath, QWidget *parent)
 {
-    m_pixmapRequestList << request;
-}
+    m_document = document;
+    m_dirPath = dirPath;
 
-bool ExportImageDocumentObserver::getOrRequestPixmaps()
-{
-    m_progressCanceledMutex.lock();
     m_progressCanceled = false;
-    m_progressCanceledMutex.unlock();
     QFileInfo info(m_document->documentInfo().get(Okular::DocumentInfo::FilePath));
     QString baseDirPath = m_dirPath + QDir::separator() + info.baseName();
     m_dirPath = baseDirPath;
@@ -266,36 +243,26 @@ bool ExportImageDocumentObserver::getOrRequestPixmaps()
     }
     bool status = dir.mkpath(m_dirPath);
     if (!status) {
-        return false;
+        KMessageBox::error(parent, i18n("Failed creating folder to save images to: %1").arg(m_dirPath), i18n("Failed"));
+        return;
     }
-    QList<Okular::PixmapRequest *> requestsToProcess;
-    m_progressDialog = new QProgressDialog(i18n("Exporting images"), i18n("Cancel"), 0, m_document->pages(), m_parent);
+    m_progressDialog = new QProgressDialog(i18n("Exporting images"), i18n("Cancel"), 0, pixmapRequestList.count(), parent);
     connect(m_progressDialog, &QProgressDialog::canceled, this, &ExportImageDocumentObserver::progressDialogCanceled);
-    m_progressDialog->show();
-    m_progressValue.store(0);
-    for (Okular::PixmapRequest *r : std::as_const(m_pixmapRequestList)) {
-        // If a page had been requested for export earlier, it might already have an associated pixmap pointer.
-        // If this is the case, directly get the pixmap pointed to by the same pointer.
-        if (m_document->page(r->pageNumber())->hasPixmap(r->observer(), r->width(), r->height(), r->normalizedRect())) {
-            getPixmapAndSave(r->pageNumber());
-            delete r;
-        } else {
-            requestsToProcess << r;
-            // Request delete not required in this case since Document::requestPixmaps internally does delete the request
-            // both in case of success and failure.
-        }
+    m_progressValue = 0;
+    for (Okular::PixmapRequest *r : pixmapRequestList) {
+        // This is because we passed nullptr in PixmapRequest constructor in okClicked
+        // because we don't want ExportImageDialog to worry about observer
+        Okular::PixmapRequestPrivate *priv = Okular::PixmapRequestPrivate::get(r);
+        priv->mObserver = this;
     }
-    m_document->requestPixmaps(requestsToProcess, Okular::Document::PixmapRequestFlag::RemoveAllPrevious);
-    m_pixmapRequestList.clear();
-    return true;
+    m_document->requestPixmaps(pixmapRequestList, Okular::Document::PixmapRequestFlag::RemoveAllPrevious);
+    m_progressDialog->exec();
 }
 
 void ExportImageDocumentObserver::progressDialogCanceled()
 {
     m_document->cancelPixmapRequests(this);
-    m_progressCanceledMutex.lock();
     m_progressDialog->cancel();
     m_progressCanceled = true;
     delete m_progressDialog;
-    m_progressCanceledMutex.unlock();
 }

@@ -78,7 +78,10 @@ public:
     void swap();
     TilesManager *tilesManager() const;
 
-    static PixmapRequestPrivate *get(const PixmapRequest *req);
+    static PixmapRequestPrivate *get(const PixmapRequest *req)
+    {
+        return req->d;
+    }
 
     DocumentObserver *mObserver;
     int mPageNumber;

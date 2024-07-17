@@ -698,11 +698,6 @@ Okular::TilesManager *PixmapRequestPrivate::tilesManager() const
     return mPage->d->tilesManager(mObserver);
 }
 
-PixmapRequestPrivate *PixmapRequestPrivate::get(const PixmapRequest *req)
-{
-    return req->d;
-}
-
 void PixmapRequestPrivate::swap()
 {
     std::swap(mWidth, mHeight);

@@ -32,20 +32,19 @@ class ExportImageDocumentObserver : public QObject, public Okular::DocumentObser
     Q_OBJECT
 public:
     void notifyPageChanged(int page, int flags) override;
+    void doExport(const QList<Okular::PixmapRequest *> &pixmapRequestList, Okular::Document *document, const QString &dirPath, QWidget *parent);
+
+private Q_SLOTS:
+    void progressDialogCanceled();
+
+private:
     void getPixmapAndSave(int page);
-    void addToPixmapRequestList(Okular::PixmapRequest *request);
-    bool getOrRequestPixmaps();
 
     Okular::Document *m_document;
     QString m_dirPath;
-    QList<Okular::PixmapRequest *> m_pixmapRequestList;
-    QWidget *m_parent;
     QProgressDialog *m_progressDialog;
-    std::atomic<int> m_progressValue;
+    int m_progressValue;
     bool m_progressCanceled;
-    QMutex m_progressCanceledMutex;
-private Q_SLOTS:
-    void progressDialogCanceled();
 };
 
 class ExportImageDialog : public QDialog
@@ -54,14 +53,20 @@ class ExportImageDialog : public QDialog
 public:
     enum DialogCloseCode { Accepted, Canceled, InvalidOptions };
 
-    ExportImageDialog(Okular::Document *document, QString *dirPath, ExportImageDocumentObserver *observer, QWidget *parent = nullptr);
-    ~ExportImageDialog() override;
+    ExportImageDialog(Okular::Document *document, QWidget *parent = nullptr);
+
+    QString dirPath() const
+    {
+        return m_dirPathLineEdit->text();
+    }
+
+    QList<Okular::PixmapRequest *> pixmapRequestList() const
+    {
+        return m_pixmapRequestList;
+    }
 
 private:
     Okular::Document *m_document;
-    QString *m_dirPath;
-    ExportImageDocumentObserver *m_observer;
-    QWidget *m_parent;
 
     QLabel *m_imageTypeLabel;
     QLabel *m_PNGTypeLabel;
@@ -80,11 +85,11 @@ private:
 
     QPushButton *m_dirPathBrowseButton;
 
-    void initUI();
+    QList<Okular::PixmapRequest *> m_pixmapRequestList;
 
 private Q_SLOTS:
-    void searchFileName();
-    void exportImage();
-}; //
+    void browseClicked();
+    void okClicked();
+};
 
 #endif // _OKULAR_EXPORTIMAGEDIALOG_H_

@@ -525,9 +525,6 @@ Part::Part(QObject *parent, const QVariantList &args)
 
     connect(m_reviewsWidget.data(), &Reviews::openAnnotationWindow, m_pageView.data(), &PageView::openAnnotationWindow);
 
-    // Initialize an image export document observer
-    m_exportImageDocumentObserver = new ExportImageDocumentObserver;
-
     // add document observers
     m_document->addObserver(this);
     m_document->addObserver(m_thumbnailList);
@@ -539,7 +536,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_document->addObserver(m_pageSizeLabel);
     m_document->addObserver(m_bookmarkList);
     m_document->addObserver(m_signaturePanel);
-    m_document->addObserver(m_exportImageDocumentObserver);
 
     connect(m_document->bookmarkManager(), &BookmarkManager::saved, this, &Part::slotRebuildBookmarkMenu);
 
@@ -996,7 +992,6 @@ Part::~Part()
     delete m_bookmarkList;
     delete m_infoTimer;
     delete m_signaturePanel;
-    delete m_exportImageDocumentObserver;
 
     delete m_document;
 
@@ -3565,13 +3560,20 @@ void Part::slotExportAs(QAction *act)
             break;
         case ExportFormat::Image: {
             // In the context of image export, the fileName is actually dirName
-            ExportImageDialog exportImageDialog(m_document, &fileName, m_exportImageDocumentObserver, widget());
+
+            ExportImageDialog exportImageDialog(m_document, widget());
             int dialogResult = exportImageDialog.exec();
             if (dialogResult == ExportImageDialog::InvalidOptions) {
                 KMessageBox::information(widget(), i18n("Invalid options have been received."));
                 break;
             } else if (dialogResult == ExportImageDialog::Canceled) {
                 break;
+            } else {
+                Q_ASSERT(dialogResult == ExportImageDialog::Accepted);
+                ExportImageDocumentObserver imageExportObserver;
+                m_document->addObserver(&imageExportObserver);
+                imageExportObserver.doExport(exportImageDialog.pixmapRequestList(), m_document, exportImageDialog.dirPath(), widget());
+                m_document->removeObserver(&imageExportObserver);
             }
             break;
         }
@@ -3590,10 +3592,7 @@ void Part::slotExportAs(QAction *act)
             case ExportFormat::PlainText:
                 saved = m_document->exportToText(fileName);
                 break;
-            case ExportFormat::Image: {
-                saved = m_exportImageDocumentObserver->getOrRequestPixmaps();
-                break;
-            }
+
             default:
                 break;
             }

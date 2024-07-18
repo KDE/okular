@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component type="desktop">
-  <id>org.kde.okular.kirigami.desktop</id>
+  <id>org.kde.okular.kirigami</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Okular Mobile</name>
@@ -406,7 +406,11 @@
   <project_group>KDE</project_group>
   <provides>
     <binary>okularkirigami</binary>
+    <id>org.kde.okular.kirigami.desktop</id>
   </provides>
+  <replaces>
+    <id>org.kde.okular.kirigami.desktop</id>
+  </replaces>
   <content_rating type="oars-1.1"/>
   <launchable type="desktop-id">org.kde.okular.kirigami.desktop</launchable>
   <releases>

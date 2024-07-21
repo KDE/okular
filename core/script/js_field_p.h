@@ -27,6 +27,7 @@ class JSField : public QObject
     Q_PROPERTY(QJSValue valueAsString READ valueAsString) // clazy:exclude=qproperty-without-notify
     Q_PROPERTY(bool hidden READ hidden WRITE setHidden)   // clazy:exclude=qproperty-without-notify
     Q_PROPERTY(int display READ display WRITE setDisplay) // clazy:exclude=qproperty-without-notify
+    Q_PROPERTY(QJSValue numItems READ numItems CONSTANT)
 
 public:
     explicit JSField(FormField *field, QObject *parent = nullptr);
@@ -47,6 +48,7 @@ public:
     QJSValue valueAsString() const;
     bool hidden() const;
     void setHidden(bool hidden);
+    QJSValue numItems() const;
 
     Q_INVOKABLE QJSValue buttonGetIcon(int nFace = 0) const;
     Q_INVOKABLE void buttonSetIcon(const QJSValue &oIcon, int nFace = 0);

@@ -145,9 +145,9 @@ QJSValue JSField::fieldGetValueCore(bool asString) const
         } else if (choice->choiceType() == FormFieldChoice::ListBox) {
             // value returns array for a listbox with multiple selections
             if (currentChoices.count() > 1) {
-                result = qjsEngine(this)->newArray(choice->currentChoices().size());
+                result = qjsEngine(this)->newArray(currentChoices.count());
                 int arrayIndex = 0;
-                for (const int &selectionIndex : choice->currentChoices()) {
+                for (const int &selectionIndex : currentChoices) {
                     result.setProperty(arrayIndex++, choice->exportValueForChoice(choice->choices().at(selectionIndex)));
                 }
             }
@@ -285,9 +285,9 @@ QJSValue JSField::currentValueIndices() const
                 result = -1;
             }
         } else if (choice->choiceType() == FormFieldChoice::ListBox && currentChoices.count() > 1) {
-            result = qjsEngine(this)->newArray(choice->currentChoices().size());
+            result = qjsEngine(this)->newArray(currentChoices.size());
             int arrayIndex = 0;
-            for (const int &selectionIndex : choice->currentChoices()) {
+            for (const int &selectionIndex : currentChoices) {
                 result.setProperty(arrayIndex++, selectionIndex);
             }
         }

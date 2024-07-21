@@ -264,6 +264,16 @@ void JSField::setDisplay(int display)
     updateField(m_field);
 }
 
+QJSValue JSField::numItems() const
+{
+    QJSValue result(QJSValue::UndefinedValue);
+    if (m_field->type() == FormField::FormChoice) {
+        const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(m_field);
+        result = static_cast<uint>(choice->choices().size());
+    }
+    return result;
+}
+
 //  Instead of getting the Icon, we pick the field.
 QJSValue JSField::buttonGetIcon([[maybe_unused]] int nFace) const
 {

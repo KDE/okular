@@ -50,6 +50,7 @@ public:
 
     Q_INVOKABLE QJSValue buttonGetIcon(int nFace = 0) const;
     Q_INVOKABLE void buttonSetIcon(const QJSValue &oIcon, int nFace = 0);
+    Q_INVOKABLE QJSValue getItemAt(int nIdx, bool bExportValue = true);
 
 private:
     QJSValue fieldGetValueCore(bool asString) const;

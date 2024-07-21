@@ -319,3 +319,25 @@ void JSField::clearCachedFields()
         g_buttonCache->clear();
     }
 }
+
+QJSValue JSField::getItemAt(int nIdx, bool bExportValue)
+{
+    QJSValue result(QJSValue::UndefinedValue);
+    if (m_field->type() == FormField::FormChoice) {
+        const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(m_field);
+        if (bExportValue) {
+            if (nIdx < 0 || nIdx >= choice->choices().size()) {
+                result = choice->exportValueForChoice(choice->choices().at(choice->choices().size() - 1));
+            } else {
+                result = choice->exportValueForChoice(choice->choices().at(nIdx));
+            }
+        } else {
+            if (nIdx < 0 || nIdx >= choice->choices().size()) {
+                result = choice->choices().at(choice->choices().size() - 1);
+            } else {
+                result = choice->choices().at(nIdx);
+            }
+        }
+    }
+    return result;
+}

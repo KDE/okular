@@ -138,6 +138,21 @@ QJSValue JSField::fieldGetValueCore(bool asString) const
     case FormField::FormChoice: {
         const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(m_field);
         const QList<int> currentChoices = choice->currentChoices();
+        if (choice->choiceType() == FormFieldChoice::ComboBox) {
+            if (currentChoices.count() == 0 && choice->isEditable()) {
+                result = choice->editChoice();
+            }
+        } else if (choice->choiceType() == FormFieldChoice::ListBox) {
+            // value returns array for a listbox with multiple selections
+            if (currentChoices.count() > 1) {
+                result = qjsEngine(this)->newArray(choice->currentChoices().size());
+                int arrayIndex = 0;
+                for (const int &selectionIndex : choice->currentChoices()) {
+                    result.setProperty(arrayIndex++, choice->exportValueForChoice(choice->choices().at(selectionIndex)));
+                }
+            }
+        }
+        // for both combobox and listbox, return the selection if exactly one item is selected
         if (currentChoices.count() == 1) {
             result = choice->exportValueForChoice(choice->choices().at(currentChoices[0]));
         }

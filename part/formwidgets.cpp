@@ -1026,6 +1026,7 @@ void ListEdit::slotRefresh(Okular::FormField *form)
     const QList<int> selectedItems = ffc->currentChoices();
     disconnect(this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged);
     if (ffc->multiSelect()) {
+        clearSelection();
         for (const int index : selectedItems) {
             if (index >= 0 && index < count()) {
                 item(index)->setSelected(true);

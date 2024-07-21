@@ -274,6 +274,48 @@ QJSValue JSField::numItems() const
     return result;
 }
 
+QJSValue JSField::currentValueIndices() const
+{
+    QJSValue result(QJSValue::UndefinedValue);
+    if (m_field->type() == FormField::FormChoice) {
+        const FormFieldChoice *choice = static_cast<const FormFieldChoice *>(m_field);
+        const QList<int> currentChoices = choice->currentChoices();
+        if (choice->choiceType() == FormFieldChoice::ComboBox) {
+            if (currentChoices.count() == 0 && choice->isEditable()) {
+                result = -1;
+            }
+        } else if (choice->choiceType() == FormFieldChoice::ListBox && currentChoices.count() > 1) {
+            result = qjsEngine(this)->newArray(choice->currentChoices().size());
+            int arrayIndex = 0;
+            for (const int &selectionIndex : choice->currentChoices()) {
+                result.setProperty(arrayIndex++, selectionIndex);
+            }
+        }
+        if (currentChoices.count() == 1) {
+            result = currentChoices[0];
+        }
+    }
+    return result;
+}
+
+void JSField::setCurrentValueIndices(const QJSValue &value)
+{
+    if (m_field->type() == FormField::FormChoice) {
+        FormFieldChoice *choice = static_cast<FormFieldChoice *>(m_field);
+        QList<int> tempChoiceList;
+        if (value.isArray()) {
+            for (quint32 i = 0; i < value.property(QStringLiteral("length")).toUInt(); i++) {
+                tempChoiceList << value.property(i).toInt();
+            }
+        } else if (value.isNumber()) {
+            tempChoiceList << value.toInt();
+        }
+        const QList<int> choiceList = tempChoiceList;
+        choice->setCurrentChoices(choiceList);
+        updateField(choice);
+    }
+}
+
 //  Instead of getting the Icon, we pick the field.
 QJSValue JSField::buttonGetIcon([[maybe_unused]] int nFace) const
 {

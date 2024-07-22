@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-09 00:38+0000\n"
+"POT-Creation-Date: 2024-07-22 00:38+0000\n"
 "PO-Revision-Date: 2024-06-30 11:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -313,157 +313,157 @@ msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "找不到可以處理此文件的外掛程式。"
 
-#: core/document.cpp:3585
+#: core/document.cpp:3589
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除註記"
 
-#: core/document.cpp:4175 core/document.cpp:4181
+#: core/document.cpp:4179 core/document.cpp:4185
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文件正試著執行外部應用程式，但為了安全起見，okular 不允許此動作。"
 
-#: core/document.cpp:4191
+#: core/document.cpp:4195
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
 
-#: core/document.cpp:4753
+#: core/document.cpp:4799
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "無法開啟暫存檔"
 
-#: core/document.cpp:4755
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr "列印轉換失敗"
 
-#: core/document.cpp:4757
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr "列印行程發生錯誤"
 
-#: core/document.cpp:4759
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr "列印行程無法啟動"
 
-#: core/document.cpp:4761
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr "列印到檔案失敗"
 
-#: core/document.cpp:4763
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "印表機的狀態有問題"
 
-#: core/document.cpp:4765
+#: core/document.cpp:4811
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要列印的檔案"
 
-#: core/document.cpp:4767
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr "沒有檔案可列印"
 
-#: core/document.cpp:4769
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
 
-#: core/document.cpp:4771
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "頁面列印大小無效"
 
-#: core/document.cpp:5434 part/part.cpp:1114
+#: core/document.cpp:5490 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "無法開啟 %1。檔案不存在"
 
-#: core/document.cpp:5944
+#: core/document.cpp:6000
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:5947
+#: core/document.cpp:6003
 #, kde-format
 msgid "Subject"
 msgstr "主旨"
 
-#: core/document.cpp:5950
+#: core/document.cpp:6006
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5953
+#: core/document.cpp:6009
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5956
+#: core/document.cpp:6012
 #, kde-format
 msgid "Creator"
 msgstr "檔案建立者"
 
-#: core/document.cpp:5959
+#: core/document.cpp:6015
 #, kde-format
 msgid "Producer"
 msgstr "產生者"
 
-#: core/document.cpp:5962
+#: core/document.cpp:6018
 #, kde-format
 msgid "Copyright"
 msgstr "版權"
 
-#: core/document.cpp:5965
+#: core/document.cpp:6021
 #, kde-format
 msgid "Pages"
 msgstr "頁面"
 
-#: core/document.cpp:5968
+#: core/document.cpp:6024
 #, kde-format
 msgid "Created"
 msgstr "已建立"
 
-#: core/document.cpp:5971
+#: core/document.cpp:6027
 #, kde-format
 msgid "Modified"
 msgstr "已修改"
 
-#: core/document.cpp:5974
+#: core/document.cpp:6030
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 類型"
 
-#: core/document.cpp:5977
+#: core/document.cpp:6033
 #, kde-format
 msgid "Category"
 msgstr "類別"
 
-#: core/document.cpp:5980
+#: core/document.cpp:6036
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:5983
+#: core/document.cpp:6039
 #, kde-format
 msgid "File Path"
 msgstr "檔案路徑"
 
-#: core/document.cpp:5986
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Size"
 msgstr "檔案大小"
 
-#: core/document.cpp:5989
+#: core/document.cpp:6045
 #, kde-format
 msgid "Page Size"
 msgstr "頁面大小"
@@ -534,23 +534,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "編輯表單按鍵狀態"
 
-#: core/generator.cpp:759
+#: core/generator.cpp:764
 #, kde-format
 msgid "Plain &Text..."
 msgstr "純文字(&T)..."
 
-#: core/generator.cpp:762
+#: core/generator.cpp:767
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:766
+#: core/generator.cpp:771
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "OpenDocument 文字文件"
 
-#: core/generator.cpp:769
+#: core/generator.cpp:774
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -3403,17 +3403,17 @@ msgstr "輸入時尋找"
 msgid "All Files (*)"
 msgstr "所有檔案 (*)"
 
-#: part/formwidgets.cpp:1210
+#: part/formwidgets.cpp:1211
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "未署名的簽名（點擊以署名）"
 
-#: part/formwidgets.cpp:1276 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "簽署(&S)…"
 
-#: part/formwidgets.cpp:1280 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "簽名屬性"

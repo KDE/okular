@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-09 00:38+0000\n"
+"POT-Creation-Date: 2024-07-22 00:38+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -320,14 +320,14 @@ msgid ""
 msgstr ""
 "Dji n' sai trover d' tchôke-divins ki pout apougnî l' documint ki passe."
 
-#: core/document.cpp:3585
+#: core/document.cpp:3589
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Prezintaedje"
 
-#: core/document.cpp:4175 core/document.cpp:4181
+#: core/document.cpp:4179 core/document.cpp:4185
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -336,149 +336,149 @@ msgstr ""
 "Li documint saye d' enonder on dfoûtrin programe eyet, po vosse såvrité, "
 "Okular nel permet nén."
 
-#: core/document.cpp:4191
+#: core/document.cpp:4195
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Dji n' a trové nou programe po drovi l' fitchî del sôre mime %1."
 
-#: core/document.cpp:4753
+#: core/document.cpp:4799
 #, fuzzy, kde-format
 #| msgid "Could not open the temporary file for saving."
 msgid "Could not open a temporary file"
 msgstr "Dji n' sai drovi l' fitchî timporaire po schaper."
 
-#: core/document.cpp:4755
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4757
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4759
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4761
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4763
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4765
+#: core/document.cpp:4811
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find file to print"
 msgstr "Dji n' a savou trover l' componint Okular."
 
-#: core/document.cpp:4767
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4769
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4771
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5434 part/part.cpp:1114
+#: core/document.cpp:5490 part/part.cpp:1114
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "Dji n' a savou drovi « %1 » po-z î scrire. Fitchî nén schapé."
 
-#: core/document.cpp:5944
+#: core/document.cpp:6000
 #, kde-format
 msgid "Title"
 msgstr "Tite"
 
-#: core/document.cpp:5947
+#: core/document.cpp:6003
 #, kde-format
 msgid "Subject"
 msgstr "Sudjet"
 
-#: core/document.cpp:5950
+#: core/document.cpp:6006
 #, kde-format
 msgid "Description"
 msgstr "Discrijhaedje"
 
-#: core/document.cpp:5953
+#: core/document.cpp:6009
 #, kde-format
 msgid "Author"
 msgstr "Oteur"
 
-#: core/document.cpp:5956
+#: core/document.cpp:6012
 #, kde-format
 msgid "Creator"
 msgstr "Ahiveu"
 
-#: core/document.cpp:5959
+#: core/document.cpp:6015
 #, kde-format
 msgid "Producer"
 msgstr "Produjheu"
 
-#: core/document.cpp:5962
+#: core/document.cpp:6018
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5965
+#: core/document.cpp:6021
 #, kde-format
 msgid "Pages"
 msgstr "Pådjes"
 
-#: core/document.cpp:5968
+#: core/document.cpp:6024
 #, kde-format
 msgid "Created"
 msgstr "Ahivé"
 
-#: core/document.cpp:5971
+#: core/document.cpp:6027
 #, kde-format
 msgid "Modified"
 msgstr "Candjî"
 
-#: core/document.cpp:5974
+#: core/document.cpp:6030
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Sôre MIME"
 
-#: core/document.cpp:5977
+#: core/document.cpp:6033
 #, kde-format
 msgid "Category"
 msgstr "Categoreye"
 
-#: core/document.cpp:5980
+#: core/document.cpp:6036
 #, kde-format
 msgid "Keywords"
 msgstr "Mot-clés"
 
-#: core/document.cpp:5983
+#: core/document.cpp:6039
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "Fitchî"
 
-#: core/document.cpp:5986
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Size"
 msgstr "Grandeu do fitchî"
 
-#: core/document.cpp:5989
+#: core/document.cpp:6045
 #, kde-format
 msgid "Page Size"
 msgstr "Grandeu do papî"
@@ -560,23 +560,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr ""
 
-#: core/generator.cpp:759
+#: core/generator.cpp:764
 #, kde-format
 msgid "Plain &Text..."
 msgstr "Peur &tecse..."
 
-#: core/generator.cpp:762
+#: core/generator.cpp:767
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:766
+#: core/generator.cpp:771
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Tecse OpenDocument"
 
-#: core/generator.cpp:769
+#: core/generator.cpp:774
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -3697,17 +3697,17 @@ msgstr ""
 msgid "All Files (*)"
 msgstr "*|Tos les fitchîs"
 
-#: part/formwidgets.cpp:1210
+#: part/formwidgets.cpp:1211
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1276 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1280 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Caret Properties"
 msgid "Signature Properties"

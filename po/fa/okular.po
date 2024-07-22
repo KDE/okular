@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-09 00:38+0000\n"
+"POT-Creation-Date: 2024-07-22 00:38+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -302,14 +302,14 @@ msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 
-#: core/document.cpp:3585
+#: core/document.cpp:3589
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ارائه"
 
-#: core/document.cpp:4175 core/document.cpp:4181
+#: core/document.cpp:4179 core/document.cpp:4185
 #, fuzzy, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -318,149 +318,149 @@ msgstr ""
 "سند سعی در اجرای یک کاربرد خارجی دارد، و okular برای امنیت به شما اجازه این "
 "کار را نمی‌دهد."
 
-#: core/document.cpp:4191
+#: core/document.cpp:4195
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "برای باز کردن پرونده نوع مایم %1، کاربردی یافت نشد."
 
-#: core/document.cpp:4753
+#: core/document.cpp:4799
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open a temporary file"
 msgstr "نتوانست %1 را باز کند. دلیل: %2"
 
-#: core/document.cpp:4755
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4757
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4759
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4761
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4763
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4765
+#: core/document.cpp:4811
 #, fuzzy, kde-format
 #| msgid "Unable to find okular part."
 msgid "Unable to find file to print"
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: core/document.cpp:4767
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4769
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4771
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5434 part/part.cpp:1114
+#: core/document.cpp:5490 part/part.cpp:1114
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open '%1'. File does not exist"
 msgstr "نتوانست %1 را باز کند. دلیل: %2"
 
-#: core/document.cpp:5944
+#: core/document.cpp:6000
 #, kde-format
 msgid "Title"
 msgstr "عنوان"
 
-#: core/document.cpp:5947
+#: core/document.cpp:6003
 #, kde-format
 msgid "Subject"
 msgstr "موضوع"
 
-#: core/document.cpp:5950
+#: core/document.cpp:6006
 #, kde-format
 msgid "Description"
 msgstr "توصیف"
 
-#: core/document.cpp:5953
+#: core/document.cpp:6009
 #, kde-format
 msgid "Author"
 msgstr "نویسنده"
 
-#: core/document.cpp:5956
+#: core/document.cpp:6012
 #, kde-format
 msgid "Creator"
 msgstr "ایجاد‌کننده"
 
-#: core/document.cpp:5959
+#: core/document.cpp:6015
 #, kde-format
 msgid "Producer"
 msgstr "تولید‌کننده"
 
-#: core/document.cpp:5962
+#: core/document.cpp:6018
 #, kde-format
 msgid "Copyright"
 msgstr "حق نشر"
 
-#: core/document.cpp:5965
+#: core/document.cpp:6021
 #, kde-format
 msgid "Pages"
 msgstr "صفحه‌ها"
 
-#: core/document.cpp:5968
+#: core/document.cpp:6024
 #, kde-format
 msgid "Created"
 msgstr "ایجاد‌‌شده"
 
-#: core/document.cpp:5971
+#: core/document.cpp:6027
 #, kde-format
 msgid "Modified"
 msgstr "تغییریافته"
 
-#: core/document.cpp:5974
+#: core/document.cpp:6030
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "نوع مایم"
 
-#: core/document.cpp:5977
+#: core/document.cpp:6033
 #, kde-format
 msgid "Category"
 msgstr "فهرست"
 
-#: core/document.cpp:5980
+#: core/document.cpp:6036
 #, kde-format
 msgid "Keywords"
 msgstr "واژه‌های کلیدی"
 
-#: core/document.cpp:5983
+#: core/document.cpp:6039
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "پرونده"
 
-#: core/document.cpp:5986
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Size"
 msgstr "اندازه پرونده"
 
-#: core/document.cpp:5989
+#: core/document.cpp:6045
 #, fuzzy, kde-format
 msgid "Page Size"
 msgstr "اندازه صفحه‌‌‌ها"
@@ -541,23 +541,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr ""
 
-#: core/generator.cpp:759
+#: core/generator.cpp:764
 #, kde-format
 msgid "Plain &Text..."
 msgstr "&متن ساده...‌"
 
-#: core/generator.cpp:762
+#: core/generator.cpp:767
 #, kde-format
 msgid "PDF"
 msgstr ""
 
-#: core/generator.cpp:766
+#: core/generator.cpp:771
 #, fuzzy, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "باز کردن یک سند"
 
-#: core/generator.cpp:769
+#: core/generator.cpp:774
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -3580,17 +3580,17 @@ msgstr ""
 msgid "All Files (*)"
 msgstr "همه پرونده‌ها"
 
-#: part/formwidgets.cpp:1210
+#: part/formwidgets.cpp:1211
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1276 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1280 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 msgid "Signature Properties"
 msgstr "ویژگیهای FreeText"

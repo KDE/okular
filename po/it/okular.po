@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-22 00:38+0000\n"
-"PO-Revision-Date: 2024-01-15 22:49+0100\n"
+"PO-Revision-Date: 2024-06-29 13:55+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -898,7 +898,7 @@ msgstr "Il certificato non è ancora stato verificato."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Convalida del certificato in corso"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -1070,7 +1070,7 @@ msgid ""
 "validated properly."
 msgstr ""
 "Questo documento è firmato digitalmente. Alcune delle firme non possono "
-"essere validate correttamente."
+"essere convalidate correttamente."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
@@ -5467,11 +5467,7 @@ msgid "Save Signed File As"
 msgstr "Salva file firmato come"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

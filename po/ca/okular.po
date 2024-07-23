@@ -5853,6 +5853,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Tots els fitxers"

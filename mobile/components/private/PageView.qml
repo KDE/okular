@@ -30,6 +30,7 @@ Item {
 
     Rectangle {
         id: backgroundRectangle
+        visible: page.document.opened
         anchors {
             top: parent.top
             bottom: parent.bottom

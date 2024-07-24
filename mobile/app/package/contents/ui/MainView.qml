@@ -21,7 +21,7 @@ Kirigami.Page {
     actions: Kirigami.Action {
         icon.name: pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize"
         checkable: true
-        onCheckedChanged: pageArea.page.bookmarked = checked
+        onCheckedChanged: (checked) => pageArea.page.bookmarked = checked
         text: pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")
         checked: pageArea.page.bookmarked
     }
@@ -30,9 +30,6 @@ Kirigami.Page {
         id: pageArea
         anchors.fill: parent
 
-        onPageChanged: {
-            bookmarkConnection.target = page
-        }
         onClicked: fileBrowserRoot.controlsVisible = !fileBrowserRoot.controlsVisible
     }
 
@@ -85,13 +82,6 @@ Kirigami.Page {
         anchors.centerIn: parent
     }
 
-    Connections {
-        id: bookmarkConnection
-        target: pageArea.page
-        function onBookmarkedChanged() {
-            actions.main.checked = pageArea.page.bookmarked
-        }
-    }
     QQC2.ProgressBar {
         id: bar
         z: 99

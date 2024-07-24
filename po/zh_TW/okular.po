@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-22 02:35+0000\n"
-"PO-Revision-Date: 2024-06-30 11:10+0900\n"
+"PO-Revision-Date: 2024-07-23 21:54+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -5520,7 +5520,7 @@ msgstr "已經有一個同名的工具了。使用預設值"
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "Duplicated Name"
-msgstr "重覆的名稱"
+msgstr "重複的名稱"
 
 #: shell/main.cpp:89
 #, kde-format

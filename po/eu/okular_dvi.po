@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-25 00:38+0000\n"
 "PO-Revision-Date: 2018-08-03 14:49+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
 "Language-Team: Basque <kde-i18n-doc@kde.org>\n"
@@ -234,7 +234,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI kodeak letra-tipo ezezagun bateko karakterea ezarri du."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
@@ -266,12 +266,12 @@ msgstr "Legez kontrako komando bat aurkitu da."
 msgid "The unknown op-code %1 was encountered."
 msgstr "%1 eragiketa-kode ezezaguna aurkitu da."
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1 kapsulatzea"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -280,14 +280,14 @@ msgstr ""
 "%1 orria: <strong>%2</strong> PDF fitxategia ezin izan da PostScript-era "
 "bihurtu.<br>"
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr ""
 "%1 orria: <strong>%2</strong> PostScript fitxategia ezin izan da aurkitu.<br>"
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr ""
@@ -391,7 +391,7 @@ msgstr ""
 "Gaizki osatutako parametroa «epsf» komando berezian.\n"
 "Higikor bat espero zen %1-(e)(r)i %2-an jarraitzeko"
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -400,7 +400,7 @@ msgstr ""
 "Fitxategi ez da aurkitu: \n"
 "%1"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -409,7 +409,7 @@ msgstr ""
 "Errorea '%1' DVI-fitxategian, %2 orria. Ezin izan da angelua interpretatu "
 "testu biraketa berezian."
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "'%1' komando berezia ez dago inplementatuta."

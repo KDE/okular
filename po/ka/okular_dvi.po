@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-25 00:38+0000\n"
 "PO-Revision-Date: 2023-12-20 11:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -227,7 +227,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI კოდის ფონტი უცნობ კოდირებას მიუთითებს."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI კოდი მიმართავს ფონტს #%1, რომელიც აღწერილი არ ყოფილა."
@@ -257,12 +257,12 @@ msgstr "შემჩნეულია არასწორი ბრძან�
 msgid "The unknown op-code %1 was encountered."
 msgstr "შეჩნეულია უცნობი ოპკოდი %1."
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1-ის ჩაშენება"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -270,13 +270,13 @@ msgid ""
 msgstr ""
 "გვერდი %1: PDF ფაილი <strong>%2</strong> PostScript-ში ვერ გადავიყვანე.<br>"
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "გვერდი %1: PostScript ფაილი <strong>%2</strong> ვერ ვიპოვე.<br>"
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "ფურცლის მონაცემების ('%1') დამუშავება შეუძლებელია."
@@ -377,14 +377,14 @@ msgstr ""
 "დაუშვებელი პარამეტრი epsf-ის სპეციალურ ბრძანებაში.\n"
 "მოველოდი მცურავმძიმიან რიცხვს %1-სთვის %2-ში"
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
 " %1"
 msgstr "ფაილი %1 ნაპოვნი არაა"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -393,7 +393,7 @@ msgstr ""
 "შეცდომა DVI ფაილში '%1', გვერდზე %2. ტექსტის ბრუნვის პარამეტრში კუთხის "
 "დამუშავება შეუძლებელია."
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "სპეციალური ბრძანება '%1' ჯერ განხორციელებული არაა."

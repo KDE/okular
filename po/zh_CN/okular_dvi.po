@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-25 00:38+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -209,7 +209,7 @@ msgstr "Okular 无法在此 DVI 文件中定位到与 TeX 文件 %2 中第 %1 �
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI 代码指定了一款未知字体中的字符。"
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI 代码指定了字体 #%1，但是该字体并没有在此前进行过定义。"
@@ -239,25 +239,25 @@ msgstr "遇到非法指令。"
 msgid "The unknown op-code %1 was encountered."
 msgstr "遇到未知的 op 代码 %1。"
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "正在嵌入 %1"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
 msgstr "第 %1 页：PDF 文件 <strong>%2</strong> 无法转换为 PostScript。<br>"
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "第 %1 页：无法找到 PostScript 文件 <strong>%2</strong>。<br>"
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "无法解析纸张尺寸数据“%1”"
@@ -353,7 +353,7 @@ msgstr ""
 "epsf 特殊指令的参数格式不正确。\n"
 "在 %2 中的 %1 后面应该是浮点数。"
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -362,7 +362,7 @@ msgstr ""
 "找不到文件：\n"
 " %1"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -370,7 +370,7 @@ msgid ""
 msgstr ""
 "在 DVI 文件“%1”的第 %2 页发生错误，无法解析文本旋转特殊指令的角度参数。"
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "特殊指令“%1”尚未实现。"

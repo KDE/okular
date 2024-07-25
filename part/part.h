@@ -412,7 +412,6 @@ private:
     QAction *m_findPrev;
     QAction *m_save;
     QAction *m_saveAs;
-    QAction *m_saveCopyAs;
     QAction *m_printPreview;
     QAction *m_showProperties;
     QAction *m_showEmbeddedFiles;

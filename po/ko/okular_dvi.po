@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-27 02:33+0000\n"
 "PO-Revision-Date: 2022-05-07 02:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -216,7 +216,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI 코드에서 알 수 없는 글꼴의 문자를 설정했습니다."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI 코드에서 정의되지 않은 글꼴 #%1을(를) 참조했습니다."
@@ -246,12 +246,12 @@ msgstr "잘못된 명령어를 만났습니다."
 msgid "The unknown op-code %1 was encountered."
 msgstr "알 수 없는 OP 코드 %1을(를) 만났습니다."
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1 임베드 중"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -260,13 +260,13 @@ msgstr ""
 "%1쪽: PDF 파일 <strong>%2</strong>을(를) 포스트스크립트 파일로 변환할 수 없습"
 "니다."
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "%1쪽: 포스트스크립트 파일 <strong>%2</strong>을(를) 찾을 수 없습니다."
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "종이 크기 데이터 '%1'을(를) 해석할 수 없습니다."
@@ -366,7 +366,7 @@ msgstr ""
 "epsf 특수 명령의 인자가 잘못되었습니다.\n"
 "%2에서 %1 다음에 실수가 나오는 것을 예상했습니다"
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -375,14 +375,14 @@ msgstr ""
 "파일을 찾을 수 없음: \n"
 " %1"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr "DVI 파일 '%1'의 %2쪽에서 오류 발생. 텍스트 회전 각도를 처리할 수 없음."
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "특수 명령 '%1'은(는) 구현되지 않았습니다."

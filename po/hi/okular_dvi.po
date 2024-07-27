@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-27 02:33+0000\n"
 "PO-Revision-Date: 2021-08-22 14:18+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -187,7 +187,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "अज्ञात फ़ॉन्ट का डीवीआई कोड सेट अक्षर."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
@@ -217,12 +217,12 @@ msgstr "एक अवैध कमांड से सामना हुआ."
 msgid "The unknown op-code %1 was encountered."
 msgstr "अज्ञात ऑप-कोड %1 से सामना हुआ."
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "सन्निहित किया जा रहा है %1"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -231,13 +231,13 @@ msgstr ""
 "पृष्ठ %1: पीडीएफ फ़ाइल <strong>%2</strong> को पोस्टस्क्रिप्ट में परिवर्ति नहीं किया जा "
 "सकता.<br>"
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "पृष्ठ %1: पोस्टस्क्रिप्ट फ़ाइल <strong>%2</strong> नहीं मिला.<br>"
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "पेपरसाइज डाटा '%1' पार्स नहीं की जा सकी."
@@ -321,7 +321,7 @@ msgid ""
 "Expected a float to follow %1 in %2"
 msgstr ""
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -330,14 +330,14 @@ msgstr ""
 "फ़ाइल नहीं मिलाः\n"
 "%1"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "विशेष कमांड '%1' कार्यान्वित नहीं है."

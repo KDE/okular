@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:38+0000\n"
+"POT-Creation-Date: 2024-07-27 02:33+0000\n"
 "PO-Revision-Date: 2014-07-18 05:17+0300\n"
 "Last-Translator: Marek Laane <bald@smail.ee>\n"
 "Language-Team: Estonian <kde-et@linux.ee>\n"
@@ -222,7 +222,7 @@ msgstr ""
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI kood määras tundmatu fondi sümboli."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:659
+#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI koodis on viide fondile #%1, mis on eelnevalt määratlemata."
@@ -252,12 +252,12 @@ msgstr "Tuvastati lubamatu käsk."
 msgid "The unknown op-code %1 was encountered."
 msgstr "Tuvastati tundmatu opkood %1."
 
-#: dviRenderer_prescan.cpp:83
+#: dviRenderer_prescan.cpp:87
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1 põimimine"
 
-#: dviRenderer_prescan.cpp:101
+#: dviRenderer_prescan.cpp:105
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -266,13 +266,13 @@ msgstr ""
 "Lehekülg %1: PDF-faili <strong>%2</strong> ei saa teisendada PostScript-"
 "failiks.<br>"
 
-#: dviRenderer_prescan.cpp:103
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "Lehekülg %1: PostScript-faili <strong>%2</strong> ei leitud.<br>"
 
-#: dviRenderer_prescan.cpp:257
+#: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Paberisuuruse andmete '%1' parsimine nurjus."
@@ -373,7 +373,7 @@ msgstr ""
 "Vigane parameeter epsf erikäsus.\n"
 "Oodati ujukomaarvu järgnemist %1-le %2-s"
 
-#: special.cpp:442
+#: special.cpp:446
 #, kde-format
 msgid ""
 "File not found: \n"
@@ -382,7 +382,7 @@ msgstr ""
 "Faili ei leitud: \n"
 " %1"
 
-#: special.cpp:691
+#: special.cpp:695
 #, kde-format
 msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
@@ -391,7 +391,7 @@ msgstr ""
 "Viga DVI-failis \"%1\" leheküljel %2. Teksti pöördenurga interpreteerimine "
 "nurjus."
 
-#: special.cpp:710
+#: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
 msgstr "Erikäsk '%1' ei ole rakendatud."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -3634,11 +3634,6 @@ msgstr "Разликува гол. на букви"
 #, kde-format
 msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
-msgstr ""
-
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
 msgstr ""
 
 #: part/layers.cpp:35 part/part.cpp:2267

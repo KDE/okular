@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -3411,11 +3411,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expression regulari"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "S&ercha:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5680,6 +5675,9 @@ msgstr "_Obliviar"
 #, fuzzy, kde-format
 msgid "Hide welcome screen"
 msgstr "Inicial ecran"
+
+#~ msgid "S&earch:"
+#~ msgstr "S&ercha:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Omni files"

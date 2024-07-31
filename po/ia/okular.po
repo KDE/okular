@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2024-07-01 11:06+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -3470,11 +3470,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expression Regular"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "C&erca:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5853,6 +5848,9 @@ msgstr "Oblida Toto"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Cela schermo de benvenite"
+
+#~ msgid "S&earch:"
+#~ msgstr "C&erca:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Omne Files"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2024-06-29 06:35+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3464,11 +3464,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "რეგულარული ექსპრესია"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "ძებ&ნა:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5828,6 +5823,9 @@ msgstr "ყველას დავიწყება"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "საწყისი ეკრანის დამალვა"
+
+#~ msgid "S&earch:"
+#~ msgstr "ძებ&ნა:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|ყველა ფაილი"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2024-06-30 13:21+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3459,11 +3459,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "சுருங்குறித் தொடர்"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "&தேடு:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5817,6 +5812,9 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#~ msgid "S&earch:"
+#~ msgstr "&தேடு:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|அனைத்து கோப்புகள்"

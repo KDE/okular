@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2024-07-20 10:42+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3474,11 +3474,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Wyrażenie regularne"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "&Szukaj:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5847,6 +5842,9 @@ msgstr "Zapomnij o wszystkich"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ukryj ekran powitalny"
+
+#~ msgid "S&earch:"
+#~ msgstr "&Szukaj:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Wszystkie pliki"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular2\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2008-11-07 17:14+0100\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@nospam.gmail.com>\n"
 "Language-Team: Kurdish <kde-i18n-doc@lists.kde.org>\n"
@@ -3540,11 +3540,6 @@ msgstr ""
 #, kde-format
 msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
-msgstr ""
-
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
 msgstr ""
 
 #: part/layers.cpp:35 part/part.cpp:2267

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2023-07-03 00:55+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -3485,11 +3485,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expressão Regular"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "P&rocurar:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5866,6 +5861,9 @@ msgstr "Esquecer Tudo"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Esconder o ecrã de boas-vindas"
+
+#~ msgid "S&earch:"
+#~ msgstr "P&rocurar:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Todos os Ficheiros"

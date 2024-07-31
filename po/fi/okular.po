@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:39+0000\n"
 "PO-Revision-Date: 2024-02-14 19:07+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3496,11 +3496,6 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Toistuva esiinyminen"
 
-#: part/ktreeviewsearchline.cpp:386
-#, kde-format
-msgid "S&earch:"
-msgstr "&Etsi:"
-
 #: part/layers.cpp:35 part/part.cpp:2267
 #, kde-format
 msgid "Layers"
@@ -5867,6 +5862,9 @@ msgstr "Unohda kaikki"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Piilota tervetulonäyttö"
+
+#~ msgid "S&earch:"
+#~ msgstr "&Etsi:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Kaikki tiedostot"

@@ -5828,6 +5828,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "S&earch:"
-#~ msgstr "&Søk:"

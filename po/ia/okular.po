@@ -303,7 +303,7 @@ msgstr "Continuante le cerca ab le fundo"
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
-"Non poite trovar un plugin que es capace de manear le documento que es "
+"Non pote trovar un plugin que es capace de manear le documento que es "
 "passate."
 
 #: core/document.cpp:3589
@@ -4622,7 +4622,7 @@ msgstr ""
 #: part/part.cpp:2670
 #, kde-format
 msgid "Could not open the temporary file for saving."
-msgstr "Il nonpote aperir le file temporanee pro salveguardar."
+msgstr "Il non pote aperir le file temporanee pro salveguardar."
 
 #: part/part.cpp:2683
 #, kde-kuit-format

@@ -5742,6 +5742,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "S&earch:"
-#~ msgstr "搜索(&E)："

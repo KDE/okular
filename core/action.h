@@ -597,8 +597,8 @@ class OKULARCORE_EXPORT BackendOpaqueAction : public Action
 {
 public:
     enum OpaqueActionResult {
-        DoNothing = 0,      ///< @since 24.08 No action needed
-        RefreshForms = 0x01 ///< @since 24.08 Forms need to be refreshed
+        DoNothing = 0,      ///< @since 24.12 No action needed
+        RefreshForms = 0x01 ///< @since 24.12 Forms need to be refreshed
     };
     Q_DECLARE_FLAGS(OpaqueActionResults, OpaqueActionResult)
 

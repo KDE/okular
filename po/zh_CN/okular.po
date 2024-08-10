@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:39+0000\n"
+"POT-Creation-Date: 2024-08-10 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -325,47 +325,47 @@ msgstr "此文档正在试图执行外部应用程序。出于安全考虑，Oku
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用于打开 MIME 类型为 %1 的应用程序。"
 
-#: core/document.cpp:4799
+#: core/document.cpp:4811
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "无法打开临时文件"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4813
 #, kde-format
 msgid "Print conversion failed"
 msgstr "打印转换失败"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4815
 #, kde-format
 msgid "Printing process crashed"
 msgstr "打印进程崩溃"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4817
 #, kde-format
 msgid "Printing process could not start"
 msgstr "打印进程无法启动"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4819
 #, kde-format
 msgid "Printing to file failed"
 msgstr "打印到文件失败"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4821
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "打印机状态无效"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4823
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "无法找到要打印的文件"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4825
 #, kde-format
 msgid "There was no file to print"
 msgstr "没有要打印的文件"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4827
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -374,92 +374,92 @@ msgstr ""
 "无法找到打印所需的二进制程序。请检查并确保 CUPS lpr 二进制程序已经安装并可"
 "用。"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4829
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "页面的打印尺寸无效"
 
-#: core/document.cpp:5490 part/part.cpp:1114
+#: core/document.cpp:5502 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "无法打开“%1”。文件不存在"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6012
 #, kde-format
 msgid "Title"
 msgstr "标题"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6015
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6018
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6021
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6024
 #, kde-format
 msgid "Creator"
 msgstr "创建程序"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6027
 #, kde-format
 msgid "Producer"
 msgstr "转换程序"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6030
 #, kde-format
 msgid "Copyright"
 msgstr "版权"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6033
 #, kde-format
 msgid "Pages"
 msgstr "页数"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6036
 #, kde-format
 msgid "Created"
 msgstr "创建时间"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6039
 #, kde-format
 msgid "Modified"
 msgstr "修改时间"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6042
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 类型"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6045
 #, kde-format
 msgid "Category"
 msgstr "类别"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6048
 #, kde-format
 msgid "Keywords"
 msgstr "关键词"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6051
 #, kde-format
 msgid "File Path"
 msgstr "文件路径"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6054
 #, kde-format
 msgid "File Size"
 msgstr "文件大小"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6057
 #, kde-format
 msgid "Page Size"
 msgstr "页面大小"
@@ -530,23 +530,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "编辑表单按钮状态"
 
-#: core/generator.cpp:764
+#: core/generator.cpp:765
 #, kde-format
 msgid "Plain &Text..."
 msgstr "纯文本(&T)..."
 
-#: core/generator.cpp:767
+#: core/generator.cpp:768
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:771
+#: core/generator.cpp:772
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "开放文档文字格式 (ODT)"
 
-#: core/generator.cpp:774
+#: core/generator.cpp:775
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

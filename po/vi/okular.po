@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:39+0000\n"
+"POT-Creation-Date: 2024-08-10 00:39+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -323,47 +323,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Không tìm thấy ứng dụng nào để mở tệp thuộc kiểu MIME %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4811
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Không mở được tệp tạm"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4813
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Chuyển đổi in thất bại"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4815
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Tiến trình in gặp sự cố"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4817
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Tiến trình in không khởi động được"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4819
 #, kde-format
 msgid "Printing to file failed"
 msgstr "In thành tệp thất bại"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4821
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Máy in ở trạng thái không hợp lệ"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4823
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Không tìm thấy tệp để in"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4825
 #, kde-format
 msgid "There was no file to print"
 msgstr "Không có tệp nào để in"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4827
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "Không tìm được tệp nhị phân phù hợp với việc in. Hãy đảm bảo rằng đang sẵn "
 "có tệp nhị phân lpr của CUPS"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4829
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Cỡ in trang không hợp lệ"
 
-#: core/document.cpp:5490 part/part.cpp:1114
+#: core/document.cpp:5502 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Không mở được '%1'. Tệp không tồn tại"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6012
 #, kde-format
 msgid "Title"
 msgstr "Tiêu đề"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6015
 #, kde-format
 msgid "Subject"
 msgstr "Chủ đề"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6018
 #, kde-format
 msgid "Description"
 msgstr "Mô tả"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6021
 #, kde-format
 msgid "Author"
 msgstr "Tác giả"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6024
 #, kde-format
 msgid "Creator"
 msgstr "Trình tạo"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6027
 #, kde-format
 msgid "Producer"
 msgstr "Trình sinh"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6030
 #, kde-format
 msgid "Copyright"
 msgstr "Bản quyền"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6033
 #, kde-format
 msgid "Pages"
 msgstr "Số trang"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6036
 #, kde-format
 msgid "Created"
 msgstr "Tạo"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6039
 #, kde-format
 msgid "Modified"
 msgstr "Chỉnh sửa"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6042
 #, kde-format
 msgid "MIME Type"
 msgstr "Kiểu MIME"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6045
 #, kde-format
 msgid "Category"
 msgstr "Loại:"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6048
 #, kde-format
 msgid "Keywords"
 msgstr "Từ khoá"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6051
 #, kde-format
 msgid "File Path"
 msgstr "Đường dẫn tệp"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6054
 #, kde-format
 msgid "File Size"
 msgstr "Kích thước tệp"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6057
 #, kde-format
 msgid "Page Size"
 msgstr "Cỡ trang"
@@ -528,23 +528,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "sửa các trạng thái nút biểu mẫu"
 
-#: core/generator.cpp:764
+#: core/generator.cpp:765
 #, kde-format
 msgid "Plain &Text..."
 msgstr "&Văn bản thuần..."
 
-#: core/generator.cpp:767
+#: core/generator.cpp:768
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:771
+#: core/generator.cpp:772
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Văn bản OpenDocument"
 
-#: core/generator.cpp:774
+#: core/generator.cpp:775
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

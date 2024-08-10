@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:39+0000\n"
+"POT-Creation-Date: 2024-08-10 00:39+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -338,140 +338,140 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "mimetype %1 හි ගොනුවක් විවෘත කිරීම සඳහා කිසිඳු යෙදුමක් හමු නොවිනි."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4811
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "තාවකාලික ගොනුව විවෘත කල නොහැක"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4813
 #, kde-format
 msgid "Print conversion failed"
 msgstr "සංවාදය මුද්‍රණය අසාර්ථකයි"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4815
 #, kde-format
 msgid "Printing process crashed"
 msgstr "මුද්‍රණ ක්‍රියාවලිය බිඳ වැටිනි"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4817
 #, kde-format
 msgid "Printing process could not start"
 msgstr "මුද්‍රණ ක්‍රියාවලිය ඇරඹිය නොහැකිවිය"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4819
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ගොනුවට මුද්‍රණය අසාර්ථකයි"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4821
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "මුද්‍රකය අවලංගු ප්‍රකාරයක පැවතිනි"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4823
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "මුද්‍රණය කල යුතු ගොනුව සොයාගත නොහැක"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4825
 #, kde-format
 msgid "There was no file to print"
 msgstr "මුද්‍රණය සඳහා ගොනුවක් නොමැත"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4827
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "මුද්‍රණයක සඳහා සුදුසු  ද්වීමයක් හමු නොවිනි. CUPS lpr ද්වීමය පවතින බව තහවුරු කරගන්න"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4829
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5490 part/part.cpp:1114
+#: core/document.cpp:5502 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' පිටපත් කල නොහැක. ගොනුව නොපවතී"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6012
 #, kde-format
 msgid "Title"
 msgstr "මාතෘකාව"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6015
 #, kde-format
 msgid "Subject"
 msgstr "තේමාව"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6018
 #, kde-format
 msgid "Description"
 msgstr "විස්තරය"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6021
 #, kde-format
 msgid "Author"
 msgstr "කතෲ"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6024
 #, kde-format
 msgid "Creator"
 msgstr "නිර්මාපක"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6027
 #, kde-format
 msgid "Producer"
 msgstr "නිශ්පාදක"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6030
 #, kde-format
 msgid "Copyright"
 msgstr "හිමිකම්"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6033
 #, kde-format
 msgid "Pages"
 msgstr "පිටු"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6036
 #, kde-format
 msgid "Created"
 msgstr "නිර්මාණය කලේ"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6039
 #, kde-format
 msgid "Modified"
 msgstr "වෙනස් කලේ"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6042
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "මයිම් වර්ගය"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6045
 #, kde-format
 msgid "Category"
 msgstr "ප්‍රවර්ගය"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6048
 #, kde-format
 msgid "Keywords"
 msgstr "යතුරු වදන්"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6051
 #, kde-format
 msgid "File Path"
 msgstr "ගොනු මග"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6054
 #, kde-format
 msgid "File Size"
 msgstr "ගොනු ප්‍රමාණය"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6057
 #, kde-format
 msgid "Page Size"
 msgstr "පිටු ප්‍රමාණය"
@@ -553,23 +553,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr ""
 
-#: core/generator.cpp:764
+#: core/generator.cpp:765
 #, kde-format
 msgid "Plain &Text..."
 msgstr "පැතලි පෙළ (&T)..."
 
-#: core/generator.cpp:767
+#: core/generator.cpp:768
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:771
+#: core/generator.cpp:772
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "විවෘතලේඛන පෙළ"
 
-#: core/generator.cpp:774
+#: core/generator.cpp:775
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:39+0000\n"
+"POT-Creation-Date: 2024-08-10 00:39+0000\n"
 "PO-Revision-Date: 2024-04-03 11:58+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -330,47 +330,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nav atrasta neviena programma datnes ar %1 mime tipu atvēršanai."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4811
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Neizdevās atvērt pagaidu datni"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4813
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Drukāšanas pārveide neizdevās"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4815
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Drukāšanas process avarēja"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4817
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Drukāšanas procesu neizdevās palaist"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4819
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Drukāšana uz datni neizdevās"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4821
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printeris atradās neatļautā stāvoklī"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4823
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Neizdevās atrast drukājamo datni"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4825
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebija datnes, ko drukāt"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4827
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -379,92 +379,92 @@ msgstr ""
 "Neizdevās atrast piemērotu bināro datni drukāšanai. Pārliecinieties, ka CUPS "
 "lpr binārā datne ir pieejama"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4829
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Nederīgs lapas drukas izmērs"
 
-#: core/document.cpp:5490 part/part.cpp:1114
+#: core/document.cpp:5502 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Neizdevās atvērt „%1“. Datne neeksistē"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6012
 #, kde-format
 msgid "Title"
 msgstr "Virsraksts"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6015
 #, kde-format
 msgid "Subject"
 msgstr "Tēma"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6018
 #, kde-format
 msgid "Description"
 msgstr "Apraksts"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6021
 #, kde-format
 msgid "Author"
 msgstr "Autors"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6024
 #, kde-format
 msgid "Creator"
 msgstr "Izveidotājs"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6027
 #, kde-format
 msgid "Producer"
 msgstr "Ražotājs"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6030
 #, kde-format
 msgid "Copyright"
 msgstr "Autortiesības"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6033
 #, kde-format
 msgid "Pages"
 msgstr "Lapas"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6036
 #, kde-format
 msgid "Created"
 msgstr "Izveidots"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6039
 #, kde-format
 msgid "Modified"
 msgstr "Mainīts"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6042
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tips"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6045
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6048
 #, kde-format
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6051
 #, kde-format
 msgid "File Path"
 msgstr "Datnes ceļš"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6054
 #, kde-format
 msgid "File Size"
 msgstr "Datnes izmērs"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6057
 #, kde-format
 msgid "Page Size"
 msgstr "Lapas izmērs"
@@ -535,23 +535,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "rediģēt veidnes pogas stāvokļus"
 
-#: core/generator.cpp:764
+#: core/generator.cpp:765
 #, kde-format
 msgid "Plain &Text..."
 msgstr "Vienkāršs &teksts..."
 
-#: core/generator.cpp:767
+#: core/generator.cpp:768
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:771
+#: core/generator.cpp:772
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "OpenDocument Text"
 
-#: core/generator.cpp:774
+#: core/generator.cpp:775
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

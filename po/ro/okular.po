@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:39+0000\n"
+"POT-Creation-Date: 2024-08-10 00:39+0000\n"
 "PO-Revision-Date: 2024-06-09 14:16+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -327,139 +327,139 @@ msgstr ""
 "Nu a fost găsită nicio aplicație pentru deschiderea fișierului cu tipul MIME "
 "%1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4811
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Fișierul temporar nu a putut fi deschis"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4813
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Conversia pentru imprimare a eșuat"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4815
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Procesul de imprimare s-a prăbușit"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4817
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesul de imprimare nu s-a putut porni"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4819
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Imprimarea în fișier a eșuat"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4821
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Imprimanta era în stare nevalidă"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4823
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Fișierul de tipărit nu a putut fi găsit"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4825
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nu era niciun fișier de tipărit"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4827
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4817
+#: core/document.cpp:4829
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Dimensiunea de tipar a paginii nu e validă"
 
-#: core/document.cpp:5490 part/part.cpp:1114
+#: core/document.cpp:5502 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nu s-a putut deschide „%1”. Fișierul nu există"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6012
 #, kde-format
 msgid "Title"
 msgstr "Titlu"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6015
 #, kde-format
 msgid "Subject"
 msgstr "Subiect"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6018
 #, kde-format
 msgid "Description"
 msgstr "Descriere"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6021
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6024
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6027
 #, kde-format
 msgid "Producer"
 msgstr "Producător"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6030
 #, kde-format
 msgid "Copyright"
 msgstr "Drept de autor"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6033
 #, kde-format
 msgid "Pages"
 msgstr "Pagini"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6036
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6039
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6042
 #, kde-format
 msgid "MIME Type"
 msgstr "Tip MIME"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6045
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6048
 #, kde-format
 msgid "Keywords"
 msgstr "Cuvinte-cheie"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6051
 #, kde-format
 msgid "File Path"
 msgstr "Calea fișierului"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6054
 #, kde-format
 msgid "File Size"
 msgstr "Dimensiune fișier"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6057
 #, kde-format
 msgid "Page Size"
 msgstr "Dimensiune pagină"
@@ -530,23 +530,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "modifică stările butonului din formular"
 
-#: core/generator.cpp:764
+#: core/generator.cpp:765
 #, kde-format
 msgid "Plain &Text..."
 msgstr "&Text simplu…"
 
-#: core/generator.cpp:767
+#: core/generator.cpp:768
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:771
+#: core/generator.cpp:772
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Text OpenDocument"
 
-#: core/generator.cpp:774
+#: core/generator.cpp:775
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

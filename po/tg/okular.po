@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:39+0000\n"
+"POT-Creation-Date: 2024-08-13 00:38+0000\n"
 "PO-Revision-Date: 2019-09-15 21:29+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -322,144 +322,144 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 
-#: core/document.cpp:4811
+#: core/document.cpp:4833
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Could not open a temporary file"
 msgstr "Ба саҳифа гузаштан"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4835
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4815
+#: core/document.cpp:4837
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4817
+#: core/document.cpp:4839
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4819
+#: core/document.cpp:4841
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4821
+#: core/document.cpp:4843
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4823
+#: core/document.cpp:4845
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find file to print"
 msgstr "Наметавонам қисмати kpdf ёбам."
 
-#: core/document.cpp:4825
+#: core/document.cpp:4847
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4827
+#: core/document.cpp:4849
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4829
+#: core/document.cpp:4851
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5502 part/part.cpp:1114
+#: core/document.cpp:5524 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:6012
+#: core/document.cpp:6034
 #, fuzzy, kde-format
 #| msgid "Title: %1"
 msgid "Title"
 msgstr "Сарлавҳа: %1"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6037
 #, kde-format
 msgid "Subject"
 msgstr ""
 
-#: core/document.cpp:6018
+#: core/document.cpp:6040
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:6021
+#: core/document.cpp:6043
 #, kde-format
 msgid "Author"
 msgstr ""
 
-#: core/document.cpp:6024
+#: core/document.cpp:6046
 #, kde-format
 msgid "Creator"
 msgstr ""
 
-#: core/document.cpp:6027
+#: core/document.cpp:6049
 #, kde-format
 msgid "Producer"
 msgstr ""
 
-#: core/document.cpp:6030
+#: core/document.cpp:6052
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:6033
+#: core/document.cpp:6055
 #, fuzzy, kde-format
 msgid "Pages"
 msgstr "Саҳифа:"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6058
 #, kde-format
 msgid "Created"
 msgstr ""
 
-#: core/document.cpp:6039
+#: core/document.cpp:6061
 #, kde-format
 msgid "Modified"
 msgstr ""
 
-#: core/document.cpp:6042
+#: core/document.cpp:6064
 #, kde-format
 msgid "MIME Type"
 msgstr ""
 
-#: core/document.cpp:6045
+#: core/document.cpp:6067
 #, kde-format
 msgid "Category"
 msgstr ""
 
-#: core/document.cpp:6048
+#: core/document.cpp:6070
 #, kde-format
 msgid "Keywords"
 msgstr ""
 
-#: core/document.cpp:6051
+#: core/document.cpp:6073
 #, fuzzy, kde-format
 #| msgid "Title: %1"
 msgid "File Path"
 msgstr "Сарлавҳа: %1"
 
-#: core/document.cpp:6054
+#: core/document.cpp:6076
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "Саҳифа"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"

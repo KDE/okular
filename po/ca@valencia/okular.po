@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:39+0000\n"
+"POT-Creation-Date: 2024-08-13 00:38+0000\n"
 "PO-Revision-Date: 2024-06-29 16:45+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -331,47 +331,47 @@ msgid "No application found for opening file of mimetype %1."
 msgstr ""
 "No s'ha trobat cap aplicació per a obrir el fitxer amb el tipus MIME %1."
 
-#: core/document.cpp:4811
+#: core/document.cpp:4833
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "No s'ha pogut obrir un fitxer temporal"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4835
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Ha fallat la conversió d'impressió"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4837
 #, kde-format
 msgid "Printing process crashed"
 msgstr "El procés d'impressió ha fallat"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4839
 #, kde-format
 msgid "Printing process could not start"
 msgstr "No s'ha pogut iniciar el procés d'impressió"
 
-#: core/document.cpp:4819
+#: core/document.cpp:4841
 #, kde-format
 msgid "Printing to file failed"
 msgstr "No s'ha pogut imprimir a un fitxer"
 
-#: core/document.cpp:4821
+#: core/document.cpp:4843
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "La impressora està en un estat no vàlid"
 
-#: core/document.cpp:4823
+#: core/document.cpp:4845
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "No s'ha pogut trobar el fitxer que s'ha d'imprimir"
 
-#: core/document.cpp:4825
+#: core/document.cpp:4847
 #, kde-format
 msgid "There was no file to print"
 msgstr "No hi ha cap fitxer per a imprimir"
 
-#: core/document.cpp:4827
+#: core/document.cpp:4849
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -380,92 +380,92 @@ msgstr ""
 "No s'ha trobat cap binari adequat per a imprimir. Assegureu-vos que està "
 "disponible l'executable «lpr» de CUPS"
 
-#: core/document.cpp:4829
+#: core/document.cpp:4851
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La mida d'impressió de la pàgina no és vàlida"
 
-#: core/document.cpp:5502 part/part.cpp:1114
+#: core/document.cpp:5524 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "No s'ha pogut obrir «%1». El fitxer no existix"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6034
 #, kde-format
 msgid "Title"
 msgstr "Títol"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6037
 #, kde-format
 msgid "Subject"
 msgstr "Assumpte"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6040
 #, kde-format
 msgid "Description"
 msgstr "Descripció"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6043
 #, kde-format
 msgid "Author"
 msgstr "Autoria"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6046
 #, kde-format
 msgid "Creator"
 msgstr "Creador"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6049
 #, kde-format
 msgid "Producer"
 msgstr "Productor"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6052
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6055
 #, kde-format
 msgid "Pages"
 msgstr "Pàgines"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6058
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6061
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6064
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipus MIME"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6067
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6048
+#: core/document.cpp:6070
 #, kde-format
 msgid "Keywords"
 msgstr "Paraules clau"
 
-#: core/document.cpp:6051
+#: core/document.cpp:6073
 #, kde-format
 msgid "File Path"
 msgstr "Camí cap al fitxer"
 
-#: core/document.cpp:6054
+#: core/document.cpp:6076
 #, kde-format
 msgid "File Size"
 msgstr "Mida del fitxer"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Page Size"
 msgstr "Mida de la pàgina"

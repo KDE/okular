@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:39+0000\n"
+"POT-Creation-Date: 2024-08-13 00:38+0000\n"
 "PO-Revision-Date: 2024-07-05 23:16+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -328,47 +328,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nepavyko rasti programos, skirtos atverti mime tipą %1."
 
-#: core/document.cpp:4811
+#: core/document.cpp:4833
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nepavyko atverti laikinojo failo"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4835
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Spausdinimo keitimas nepavyko"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4837
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Spausdinimo procesas užstrigo"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4839
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nepavyko pradėti spausdinimo proceso"
 
-#: core/document.cpp:4819
+#: core/document.cpp:4841
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nepavyko spausdinti į failą"
 
-#: core/document.cpp:4821
+#: core/document.cpp:4843
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Spausdintuvas buvo neteisingoje būsenoje"
 
-#: core/document.cpp:4823
+#: core/document.cpp:4845
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nepavyko rasti failo, kurį spausdinti"
 
-#: core/document.cpp:4825
+#: core/document.cpp:4847
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebuvo jokio failo, kurį spausdinti"
 
-#: core/document.cpp:4827
+#: core/document.cpp:4849
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -377,92 +377,92 @@ msgstr ""
 "Nepavyko rasti tinkamo dvejetainio failo spausdinimui. Įsitikinkite, kad "
 "CUPS lpr dvejetainis failas yra prieinamas"
 
-#: core/document.cpp:4829
+#: core/document.cpp:4851
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Puslapio spaudinio dydis yra neteisingas"
 
-#: core/document.cpp:5502 part/part.cpp:1114
+#: core/document.cpp:5524 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepavyko atverti „%1“. Failas nėra"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6034
 #, kde-format
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6037
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6040
 #, kde-format
 msgid "Description"
 msgstr "Aprašas"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6043
 #, kde-format
 msgid "Author"
 msgstr "Autorius"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6046
 #, kde-format
 msgid "Creator"
 msgstr "Kūrėjas"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6049
 #, kde-format
 msgid "Producer"
 msgstr "Gamintojas"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6052
 #, kde-format
 msgid "Copyright"
 msgstr "Autorių teisės"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6055
 #, kde-format
 msgid "Pages"
 msgstr "Puslapiai"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6058
 #, kde-format
 msgid "Created"
 msgstr "Sukurta"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6061
 #, kde-format
 msgid "Modified"
 msgstr "Modifikuota"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6064
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tipas"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6067
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6048
+#: core/document.cpp:6070
 #, kde-format
 msgid "Keywords"
 msgstr "Raktažodžiai"
 
-#: core/document.cpp:6051
+#: core/document.cpp:6073
 #, kde-format
 msgid "File Path"
 msgstr "Failo kelias"
 
-#: core/document.cpp:6054
+#: core/document.cpp:6076
 #, kde-format
 msgid "File Size"
 msgstr "Failo dydis"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Page Size"
 msgstr "Puslapio dydis"

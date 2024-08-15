@@ -76,7 +76,7 @@ Kirigami.ApplicationWindow {
     }
 
     pageStack.initialPage: MainView {
-        id: pageArea
+        id: mainView
         document: documentItem
         Kirigami.ColumnView.preventStealing: true
     }

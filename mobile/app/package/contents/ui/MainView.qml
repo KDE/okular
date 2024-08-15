@@ -13,6 +13,7 @@ Kirigami.Page {
     id: root
 
     property alias document: pageArea.document
+    property alias page: pageArea.page
     leftPadding: 0
     topPadding: 0
     rightPadding: 0

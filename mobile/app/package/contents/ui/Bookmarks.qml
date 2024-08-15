@@ -23,6 +23,6 @@ ThumbnailsBase {
     }
     model: documentItem.bookmarkedPages
     onPageClicked: {
-        pageArea.delegate.pageItem.goToBookmark(pageArea.delegate.pageItem.bookmarks[0])
+        mainView.page.goToBookmark(mainView.page.bookmarks[0])
     }
 }

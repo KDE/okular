@@ -5763,6 +5763,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgid "S&earch:"
-#~ msgstr "Hl&edat:"

@@ -248,9 +248,9 @@ QString DocumentPrivate::localizedSize(const QSizeF size) const
         break;
     }
     if (QLocale::system().measurementSystem() == QLocale::ImperialSystem) {
-        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 in (%3)", inchesWidth, inchesHeight, namePaperSize(inchesWidth, inchesHeight));
+        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 × %2 in (%3)", inchesWidth, inchesHeight, namePaperSize(inchesWidth, inchesHeight));
     } else {
-        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 mm (%3)", QString::number(inchesWidth * 25.4, 'd', 0), QString::number(inchesHeight * 25.4, 'd', 0), namePaperSize(inchesWidth, inchesHeight));
+        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 × %2 mm (%3)", QString::number(inchesWidth * 25.4, 'd', 0), QString::number(inchesHeight * 25.4, 'd', 0), namePaperSize(inchesWidth, inchesHeight));
     }
 }
 

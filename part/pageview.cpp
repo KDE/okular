@@ -2824,9 +2824,9 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 addWebShortcutsMenu(&menu, selectedText);
             }
         }
-        menu.addAction(new OKMenuTitle(&menu, i18n("Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height())));
+        menu.addAction(new OKMenuTitle(&menu, i18n("Image (%1 × %2 pixels)", selectionRect.width(), selectionRect.height())));
         imageToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n("Copy to Clipboard"));
-        imageToFile = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save to File..."));
+        imageToFile = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save to File…"));
         const QAction *choice = menu.exec(e->globalPosition().toPoint());
         // check if the user really selected an action
         if (choice) {
@@ -2846,7 +2846,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     if (cb->supportsSelection()) {
                         cb->setPixmap(copyPix, QClipboard::Selection);
                     }
-                    d->messageWindow->display(i18n("Image [%1x%2] copied to clipboard.", copyPix.width(), copyPix.height()));
+                    d->messageWindow->display(i18n("Image [%1 × %2] copied to clipboard.", copyPix.width(), copyPix.height()));
                 } else if (choice == imageToFile) {
                     // [3] save pixmap to file
                     QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png *.jpeg)"));
@@ -2862,7 +2862,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                             type = mime.name().section(QLatin1Char('/'), -1).toUpper();
                         }
                         copyPix.save(fileName, qPrintable(type));
-                        d->messageWindow->display(i18n("Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type));
+                        d->messageWindow->display(i18n("Image [%1 × %2] saved to %3 file.", copyPix.width(), copyPix.height(), type));
                     }
                 }
             }

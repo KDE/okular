@@ -295,7 +295,7 @@ QString pageSize::serialize() const
     if ((currentSize >= 0) && (fabs(staticList[currentSize].height - pageHeight.getLength_in_mm()) <= 0.5)) {
         return QString::fromLocal8Bit(staticList[currentSize].name);
     } else {
-        return QStringLiteral("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
+        return i18n("%1 × %2", pageWidth.getLength_in_mm(), pageHeight.getLength_in_mm());
     }
 }
 
@@ -308,9 +308,9 @@ QString pageSize::description() const
     QString size = QStringLiteral(" ");
     if (formatNumber() == -1) {
         if (QLocale::system().measurementSystem() == QLocale::MetricSystem) {
-            size += QStringLiteral("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
+            size += ki18n("%1 × %2 mm").subs(width().getLength_in_mm(), 0, 'f', 0).subs(height().getLength_in_mm(), 0, 'f', 0).toString();
         } else {
-            size += QStringLiteral("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
+            size += ki18n("%1 × %2 in").subs(width().getLength_in_inch(), 0, 'g', 2).subs(height().getLength_in_inch(), 0, 'g', 2).toString();
         }
     } else {
         size += formatName() + QLatin1Char('/');

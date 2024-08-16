@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2009-01-05 17:57+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@lists.kde.org>\n"
@@ -282,6 +282,21 @@ msgstr ""
 #, kde-format
 msgid "Font file not found"
 msgstr "Fișierul cu fonturi nu a fost găsit"
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
+msgstr ""
 
 #: pageSize.cpp:318
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2021-08-22 14:18+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -283,6 +283,21 @@ msgstr "जेनरेटर/तारीख़"
 #, kde-format
 msgid "Font file not found"
 msgstr "फ़ॉन्ट फ़ाइल नहीं मिला"
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
+msgstr ""
 
 #: pageSize.cpp:318
 #, kde-format

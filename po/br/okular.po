@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2005-01-14 16:13+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -267,13 +267,13 @@ msgstr ""
 #: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr ""
 
 #: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr ""
 
 #: core/document.cpp:1686
@@ -3816,18 +3816,20 @@ msgid "Speak Text"
 msgstr "Distagañ ar skrid"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "Skeudenn (%1 x %2 piksel)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "Enrollañ en ur restr ..."
 
 #: part/pageview.cpp:2849
 #, fuzzy, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Ar skeudenn [%1x%2] a oa enrollet er restr %3."
 
 #: part/pageview.cpp:2852
@@ -3847,8 +3849,9 @@ msgid "File not saved."
 msgstr "N'eo ket enrollet ar restr."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Ar skeudenn [%1x%2] a oa enrollet er restr %3."
 
 #: part/pageview.cpp:3007

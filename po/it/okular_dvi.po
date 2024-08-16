@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2014-06-27 20:53+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -346,6 +346,21 @@ msgstr "Generatore/data"
 #, kde-format
 msgid "Font file not found"
 msgstr "Il file del tipo di caratteri non è stato trovato"
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
+msgstr ""
 
 #: pageSize.cpp:318
 #, kde-format

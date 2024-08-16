@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2006-01-10 22:45+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -282,13 +282,13 @@ msgstr ""
 #: core/document.cpp:251
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr ""
 
 #: core/document.cpp:253
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr ""
 
 #: core/document.cpp:1686
@@ -3782,18 +3782,21 @@ msgid "Speak Text"
 msgstr "讀出文字"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "圖像 (%1 X %2 像素)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "儲存至檔案..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "圖像 [%1x%2] 已複製至剪貼簿。"
 
 #: part/pageview.cpp:2852
@@ -3813,8 +3816,9 @@ msgid "File not saved."
 msgstr "檔案未儲存。"
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "圖像 [%1x%2] 已儲存至 %3 檔案。"
 
 #: part/pageview.cpp:3007

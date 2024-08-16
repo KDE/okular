@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -282,15 +282,19 @@ msgid "Landscape %1"
 msgstr "Liggende %1"
 
 #: core/document.cpp:251
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 in (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 tommer (%3)"
 
 #: core/document.cpp:253
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 mm (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
 #: core/document.cpp:1686
@@ -3866,18 +3870,21 @@ msgid "Speak Text"
 msgstr "Udtal tekst"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "Billede (%1 gange %2 pixels)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "Gem til fil..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Billede [%1x%2] kopieret til udklipsholderen."
 
 #: part/pageview.cpp:2852
@@ -3896,8 +3903,9 @@ msgid "File not saved."
 msgstr "Fil ikke gemt."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Billede [%1x%2] gemt til filen %3."
 
 #: part/pageview.cpp:3007

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2010-12-18 14:23+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -276,6 +276,21 @@ msgstr "ตัวสร้าง/วันที่"
 #, kde-format
 msgid "Font file not found"
 msgstr "ไม่พบแฟ้มแบบอักษร"
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
+msgstr ""
 
 #: pageSize.cpp:318
 #, kde-format

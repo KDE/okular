@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2013-03-28 12:50+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -269,6 +269,21 @@ msgstr ""
 #: generator_dvi.cpp:376
 #, kde-format
 msgid "Font file not found"
+msgstr ""
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
 msgstr ""
 
 #: pageSize.cpp:318

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -276,13 +276,13 @@ msgstr "paisage"
 #: core/document.cpp:251
 #, fuzzy, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1, %2 (%3)"
 
 #: core/document.cpp:253
 #, fuzzy, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1, %2 (%3)"
 
 #: core/document.cpp:1686
@@ -3651,17 +3651,17 @@ msgstr "Dir"
 
 #: part/pageview.cpp:2827
 #, fuzzy, kde-format
-msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "Dimension de icone: %1 px"
 
 #: part/pageview.cpp:2829
 #, fuzzy, kde-format
-msgid "Save to File..."
+msgid "Save to File…"
 msgstr "_Salvar ad-in file..."
 
 #: part/pageview.cpp:2849
 #, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr ""
 
 #: part/pageview.cpp:2852
@@ -3681,7 +3681,7 @@ msgstr "Provider un file contenent un salvat configuration"
 
 #: part/pageview.cpp:2865
 #, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr ""
 
 #: part/pageview.cpp:3007

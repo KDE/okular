@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -293,14 +293,14 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "%1 x %2 in"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 pôces"
 
 #: core/document.cpp:253
 #, fuzzy, kde-format
 #| msgid "%1 x %2 mm"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm"
 
 #: core/document.cpp:1686
@@ -3994,18 +3994,21 @@ msgid "Speak Text"
 msgstr "Lére li tecse"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "Imådje (%1 picsels pa %2)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "Schaper dins on fitchî..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Imådje [%1x%2] copieye dins l' presse-papî."
 
 #: part/pageview.cpp:2852
@@ -4025,8 +4028,9 @@ msgid "File not saved."
 msgstr "Fitchî nén schapé."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Imådje [%1x%2] schapêye dins l' fitchî %3."
 
 #: part/pageview.cpp:3007

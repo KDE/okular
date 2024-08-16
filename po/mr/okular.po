@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -288,15 +288,19 @@ msgid "Landscape %1"
 msgstr "लँडस्केप C5E"
 
 #: core/document.cpp:251
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 in (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2  आत (%3)"
 
 #: core/document.cpp:253
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 mm (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
 #: core/document.cpp:1686
@@ -3985,18 +3989,21 @@ msgid "Speak Text"
 msgstr "मजकूर बोला"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "प्रतिमा  (%1 गुणिले %2 पिक्सल्स)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "फाईल मध्ये साठवा..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "[%1x%2] प्रतिमा चिकटपट्टीवर साठवली"
 
 #: part/pageview.cpp:2852
@@ -4016,8 +4023,9 @@ msgid "File not saved."
 msgstr "फाईल साठवली नाही "
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "[%1x%2] प्रतिमा %3 फाईलवर साठवली "
 
 #: part/pageview.cpp:3007

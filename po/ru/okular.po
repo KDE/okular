@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2024-01-20 09:31+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -299,15 +299,19 @@ msgid "Landscape %1"
 msgstr "Альбомная %1"
 
 #: core/document.cpp:251
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 in (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 \" (%3)"
 
 #: core/document.cpp:253
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 mm (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 мм (%3)"
 
 #: core/document.cpp:1686
@@ -3733,18 +3737,21 @@ msgid "Speak Text"
 msgstr "Зачитать текст"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "Рисунок (%1 х %2 точек)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "Сохранить в файл…"
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Рисунок %1×%2 скопирован в буфер обмена."
 
 #: part/pageview.cpp:2852
@@ -3763,8 +3770,9 @@ msgid "File not saved."
 msgstr "Файл не сохранён."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Рисунок %1×%2 сохранён в файле %3."
 
 #: part/pageview.cpp:3007

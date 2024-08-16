@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-25 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2011-08-30 13:30+0530\n"
 "Last-Translator:  Danishka Navin <danishka@gmail.com> \n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -382,6 +382,21 @@ msgstr "ජනකය/දිනය"
 #, kde-format
 msgid "Font file not found"
 msgstr "අකුරු ගොනු සොයාගත නොහැක"
+
+#: pageSize.cpp:298
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
+#: pageSize.cpp:311
+#, kde-format
+msgid "%1 × %2 mm"
+msgstr ""
+
+#: pageSize.cpp:313
+#, kde-format
+msgid "%1 × %2 in"
+msgstr ""
 
 #: pageSize.cpp:318
 #, kde-format

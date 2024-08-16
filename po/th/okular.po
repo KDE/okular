@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -292,14 +292,14 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "%1 x %2 in"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 นิ้ว"
 
 #: core/document.cpp:253
 #, fuzzy, kde-format
 #| msgid "%1 x %2 mm"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 ม.ม."
 
 #: core/document.cpp:1686
@@ -3977,18 +3977,21 @@ msgid "Speak Text"
 msgstr "อ่านข้อความ"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "รูปภาพ (ขนาด %1 x %2 พิกเซล)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "บันทึกเป็นแฟ้ม..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "คัดลอกรูปภาพขนาด [%1x%2] ไปยังคลิปบอร์ดแล้ว"
 
 #: part/pageview.cpp:2852
@@ -4008,8 +4011,9 @@ msgid "File not saved."
 msgstr "แฟ้มไม่ถูกบันทึก..."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "บันทึกรูปภาพขนาด [%1x%2] ไปเป็นแฟ้ม %3 แล้ว"
 
 #: part/pageview.cpp:3007

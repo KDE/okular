@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-13 00:38+0000\n"
+"POT-Creation-Date: 2024-08-16 00:38+0000\n"
 "PO-Revision-Date: 2021-08-22 12:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -277,15 +277,19 @@ msgid "Landscape %1"
 msgstr "आड़ा %1"
 
 #: core/document.cpp:251
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 in (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 in (%3)"
+msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 इंच (%3)"
 
 #: core/document.cpp:253
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
+#| msgid "%1 x %2 mm (%3)"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
-msgid "%1 x %2 mm (%3)"
+msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 मिमी (%3)"
 
 #: core/document.cpp:1686
@@ -3879,18 +3883,21 @@ msgid "Speak Text"
 msgstr "पाठ बोलें"
 
 #: part/pageview.cpp:2827
-#, kde-format
-msgid "Image (%1 by %2 pixels)"
+#, fuzzy, kde-format
+#| msgid "Image (%1 by %2 pixels)"
+msgid "Image (%1 × %2 pixels)"
 msgstr "छवि (%1 x %2 पिक्सेल्स)"
 
 #: part/pageview.cpp:2829
-#, kde-format
-msgid "Save to File..."
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgid "Save to File…"
 msgstr "फ़ाइल में सहेजें..."
 
 #: part/pageview.cpp:2849
-#, kde-format
-msgid "Image [%1x%2] copied to clipboard."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] copied to clipboard."
+msgid "Image [%1 × %2] copied to clipboard."
 msgstr "छवि [%1x%2] क्लिपबोर्ड पर नक़ल किया गया."
 
 #: part/pageview.cpp:2852
@@ -3909,8 +3916,9 @@ msgid "File not saved."
 msgstr "फ़ाइल को सहेजा नहीं गया."
 
 #: part/pageview.cpp:2865
-#, kde-format
-msgid "Image [%1x%2] saved to %3 file."
+#, fuzzy, kde-format
+#| msgid "Image [%1x%2] saved to %3 file."
+msgid "Image [%1 × %2] saved to %3 file."
 msgstr "छवि [%1x%2] को %3 फ़ाइल में सहेजा."
 
 #: part/pageview.cpp:3007

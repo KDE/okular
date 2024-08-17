@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-06-29 08:30+0300\n"
+"PO-Revision-Date: 2024-08-16 21:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -284,17 +284,13 @@ msgid "Landscape %1"
 msgstr "Альбомна %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 ⨯ %2 дюйм (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 мм (%3)"
@@ -3736,22 +3732,19 @@ msgid "Speak Text"
 msgstr "Декламувати текст"
 
 #: part/pageview.cpp:2827
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Зображення (%1 х %2 пікселів)"
+msgstr "Зображення (%1 × %2 пікселів)"
 
 #: part/pageview.cpp:2829
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Зберегти у файл…"
+msgstr "Зберегти до файла…"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Зображення [%1x%2] скопійовано до буфера обміну."
+msgstr "Зображення [%1 × %2] скопійовано до буфера обміну."
 
 #: part/pageview.cpp:2852
 #, kde-format
@@ -3769,10 +3762,9 @@ msgid "File not saved."
 msgstr "Файл не збережено."
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Зображення [%1x%2] збережено у файл %3."
+msgstr "Зображення [%1 × %2] збережено у файл %3."
 
 #: part/pageview.cpp:3007
 #, kde-format

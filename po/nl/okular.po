@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-06-30 20:40+0200\n"
+"PO-Revision-Date: 2024-08-16 10:51+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -293,20 +293,16 @@ msgid "Landscape %1"
 msgstr "Landschap %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 in (%3)"
+msgstr "%1 × %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1686
 #, kde-format
@@ -3724,22 +3720,19 @@ msgid "Speak Text"
 msgstr "Tekst uitspreken"
 
 #: part/pageview.cpp:2827
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Afbeelding (%1 bij %2 pixels)"
+msgstr "Afbeelding (%1 x %2 pixels)"
 
 #: part/pageview.cpp:2829
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Naar bestand opslaan..."
+msgstr "Naar bestand opslaan…"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Afbeelding [%1xx%2] gekopieerd."
+msgstr "Afbeelding [%1 x %2] gekopieerd naar klembord."
 
 #: part/pageview.cpp:2852
 #, kde-format
@@ -3757,10 +3750,9 @@ msgid "File not saved."
 msgstr "Bestand niet opgeslagen."
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Afbeelding [%1x%2] opgeslagen in bestand %3."
+msgstr "Afbeelding [%1 x %2] opgeslagen in bestand %3."
 
 #: part/pageview.cpp:3007
 #, kde-format

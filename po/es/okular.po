@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-06-29 21:35+0200\n"
+"PO-Revision-Date: 2024-08-16 12:10+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -279,20 +279,16 @@ msgid "Landscape %1"
 msgstr "Apaisado %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 pulgadas (%3)"
+msgstr "%1 × %2 pulgadas (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1686
 #, kde-format
@@ -3717,22 +3713,19 @@ msgid "Speak Text"
 msgstr "Hablar texto"
 
 #: part/pageview.cpp:2827
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Imagen (%1x%2 píxeles)"
+msgstr "Imagen (%1 × %2 píxeles)"
 
 #: part/pageview.cpp:2829
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Guardar en archivo..."
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Imagen [%1x%2] copiada en el portapapeles."
+msgstr "Imagen [%1 × %2] copiada en el portapapeles."
 
 #: part/pageview.cpp:2852
 #, kde-format
@@ -3750,10 +3743,9 @@ msgid "File not saved."
 msgstr "Archivo no guardado."
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Imagen [%1x%2] guardada en el archivo %3."
+msgstr "Imagen [%1 × %2] guardada en el archivo %3."
 
 #: part/pageview.cpp:3007
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-07-05 22:51+0200\n"
+"PO-Revision-Date: 2024-08-16 09:47+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -282,20 +282,16 @@ msgid "Landscape %1"
 msgstr "Paisaia %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 in (%3)"
+msgstr "%1 × %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1686
 #, kde-format
@@ -3713,22 +3709,19 @@ msgid "Speak Text"
 msgstr "Hitz egin testua"
 
 #: part/pageview.cpp:2827
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Irudia (%1 x %2 pixel)"
+msgstr "Irudia (%1 × %2 pixel)"
 
 #: part/pageview.cpp:2829
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Gorde fitxategira..."
+msgstr "Gorde fitxategian..."
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Irudia [%1x%2] arbelera kopiatu da."
+msgstr "Irudia [%1 × %2] arbelean kopiatu da."
 
 #: part/pageview.cpp:2852
 #, kde-format
@@ -3746,10 +3739,9 @@ msgid "File not saved."
 msgstr "Fitxategia ez da gorde."
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Irudia [%1x%2] %3 fitxategira gorde da."
+msgstr "Irudia [%1 × %2] %3 fitxategian gorde da."
 
 #: part/pageview.cpp:3007
 #, kde-format

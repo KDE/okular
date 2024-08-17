@@ -14,7 +14,7 @@
 
 #include "fax_debug.h"
 // Uncomment this for verbose debug output
-//#define DEBUG_FAX
+// #define DEBUG_FAX
 #define verbose false
 
 pagenode::pagenode()
@@ -37,7 +37,7 @@ pagenode::pagenode()
     } while (0)
 
 #ifdef DEBUG_FAX
-#define DEBUG_SHOW putchar(BitAcc &(1 << t) ? '1' : '0')
+#define DEBUG_SHOW putchar(BitAcc & (1 << t) ? '1' : '0')
 #define LOOKUP(wid, tab)                                                                                                                                                                                                                       \
     do {                                                                                                                                                                                                                                       \
         int t;                                                                                                                                                                                                                                 \

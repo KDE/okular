@@ -31,7 +31,7 @@
  *                                          and Luis Miguel Silveira, MIT RLE.
  */
 
-//#define DEBUG_RENDER 0
+// #define DEBUG_RENDER 0
 
 #include <config.h>
 
@@ -41,7 +41,7 @@
 #include "dviRenderer.h"
 #include "hyperlink.h"
 #include "psgs.h"
-//#include "renderedDviPagePixmap.h"
+// #include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
 #include "textBox.h"
 #include "xdvi.h"

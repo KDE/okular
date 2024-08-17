@@ -12,9 +12,9 @@
 #define _dvirenderer_h_
 
 #include "bigEndianByteReader.h"
-//#include "documentRenderer.h"
+// #include "documentRenderer.h"
 #include "dviexport.h"
-//#include "dvisourceeditor.h"
+// #include "dvisourceeditor.h"
 #include "anchor.h"
 #include "dviPageInfo.h"
 #include "fontpool.h"

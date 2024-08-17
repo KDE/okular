@@ -18,7 +18,7 @@
 #include <QStandardPaths>
 #include <QTextStream>
 
-//#define DEBUG_FONTMAP
+// #define DEBUG_FONTMAP
 
 fontMap::fontMap()
 {

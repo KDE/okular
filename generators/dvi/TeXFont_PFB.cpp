@@ -22,7 +22,7 @@
 #include <QImage>
 #include <QLoggingCategory>
 
-//#define DEBUG_PFB 1
+// #define DEBUG_PFB 1
 
 TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double slant)
     : TeXFont(parent)

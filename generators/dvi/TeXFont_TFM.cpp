@@ -16,7 +16,7 @@
 #include <QLoggingCategory>
 #include <array>
 
-//#define DEBUG_TFM
+// #define DEBUG_TFM
 
 TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
     : TeXFont(parent)

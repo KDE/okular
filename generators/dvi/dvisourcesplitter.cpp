@@ -14,7 +14,7 @@
 
 #include <QDir>
 
-//#define DEBUG_SOURCESPLITTER
+// #define DEBUG_SOURCESPLITTER
 
 DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QString &dviFile)
 {

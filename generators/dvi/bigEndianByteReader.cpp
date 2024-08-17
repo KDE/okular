@@ -12,7 +12,7 @@
 #include "debug_dvi.h"
 #include "dvi.h"
 
-//#define DEBUG_ENDIANREADER
+// #define DEBUG_ENDIANREADER
 
 quint8 bigEndianByteReader::readUINT8()
 {

@@ -19,7 +19,7 @@
 #include <QStandardPaths>
 #include <QTextStream>
 
-//#define DEBUG_FONTENC
+// #define DEBUG_FONTENC
 
 fontEncoding::fontEncoding(const QString &encName)
 {

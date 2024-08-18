@@ -201,9 +201,12 @@ static KCompressionDevice::CompressionType compressionTypeFor(const QString &mim
     static QHash<QString, KCompressionDevice::CompressionType> compressedMimeMap;
     static bool supportBzip = false;
     static bool supportXz = false;
+    static bool supportZstd = false;
+
     const QString app_gzip(QStringLiteral("application/x-gzip"));
     const QString app_bzip(QStringLiteral("application/x-bzip"));
     const QString app_xz(QStringLiteral("application/x-xz"));
+    const QString app_zstd(QStringLiteral("application/zstd"));
     if (compressedMimeMap.isEmpty()) {
         std::unique_ptr<KFilterBase> f;
         compressedMimeMap[QStringLiteral("image/x-gzeps")] = KCompressionDevice::GZip;
@@ -221,6 +224,11 @@ static KCompressionDevice::CompressionType compressionTypeFor(const QString &mim
         if (f.get()) {
             supportXz = true;
         }
+        // check if we can read zstd-compressed files
+        f.reset(KCompressionDevice::filterForCompressionType(KCompressionDevice::Zstd));
+        if (f.get()) {
+            supportZstd = true;
+        }
     }
     QHash<QString, KCompressionDevice::CompressionType>::const_iterator it = compressedMimeMap.constFind(mime_to_check);
     if (it != compressedMimeMap.constEnd()) {
@@ -236,6 +244,8 @@ static KCompressionDevice::CompressionType compressionTypeFor(const QString &mim
             return KCompressionDevice::BZip2;
         } else if (supportXz && mime.inherits(app_xz)) {
             return KCompressionDevice::Xz;
+        } else if (supportZstd && mime.inherits(app_zstd)) {
+            return KCompressionDevice::Zstd;
         }
     }
 

@@ -1,19 +1,19 @@
 # translation of okular_dvi.po to
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Robert Gomulka <carramba@epf.pl>, 2007, 2008.
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008.
 # Maciej Wikło <maciej.wiklo@wp.pl>, 2009.
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2013, 2014, 2018.
+# SPDX-FileCopyrightText: 2013, 2014, 2018, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2020-11-24 20:01+0100\n"
-"Last-Translator: Ignacy Kajdan <ignacy.kajdan@gmail.com>\n"
+"PO-Revision-Date: 2024-08-17 09:48+0200\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -349,27 +350,27 @@ msgstr "Nie odnaleziono pliku czcionek"
 #: pageSize.cpp:298
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: pageSize.cpp:311
 #, kde-format
 msgid "%1 × %2 mm"
-msgstr ""
+msgstr "%1 × %2 mm"
 
 #: pageSize.cpp:313
 #, kde-format
 msgid "%1 × %2 in"
-msgstr ""
+msgstr "%1 × %2 cal"
 
 #: pageSize.cpp:318
 #, kde-format
 msgid "portrait"
-msgstr "portret"
+msgstr "w pionie"
 
 #: pageSize.cpp:320
 #, kde-format
 msgid "landscape"
-msgstr "pejzaż"
+msgstr "w poziomie"
 
 #: psgs.cpp:283
 #, kde-format

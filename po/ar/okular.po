@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-07-28 12:17+0400\n"
+"PO-Revision-Date: 2024-08-17 20:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -280,20 +280,16 @@ msgid "Landscape %1"
 msgstr "بالعرض %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 في (%3)"
+msgstr "%1 × %2 في (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 مم (%3)"
+msgstr "%1 × %2 مم (%3)"
 
 #: core/document.cpp:1686
 #, kde-format
@@ -3716,22 +3712,19 @@ msgid "Speak Text"
 msgstr "اقرأ النص"
 
 #: part/pageview.cpp:2827
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "صورة (%1 ب %2 بكسل)"
+msgstr "صورة (%1 × %2 بكسل)"
 
 #: part/pageview.cpp:2829
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "حفظ إلى ملف.."
+msgstr "احفظ في ملفّ…"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "الصورة [%1×%2] نسخت إلى الحافظة"
+msgstr "الصورة [%1 × %2] نسخت إلى الحافظة"
 
 #: part/pageview.cpp:2852
 #, kde-format
@@ -3749,10 +3742,9 @@ msgid "File not saved."
 msgstr "الملف لم يحفظ"
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "الصورة  [%1×%2] حفظة إلى الملف %3."
+msgstr "الصورة  [%1 × %2] حفظت إلى الملف %3."
 
 #: part/pageview.cpp:3007
 #, kde-format

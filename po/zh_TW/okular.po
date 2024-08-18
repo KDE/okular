@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-22 02:35+0000\n"
-"PO-Revision-Date: 2024-07-23 21:54+0900\n"
+"PO-Revision-Date: 2024-08-18 01:02+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -101,7 +101,7 @@ msgstr "Piotr Szymanski"
 #: aboutdata.h:34
 #, kde-format
 msgid "Created Okular from KPDF codebase"
-msgstr "從 KPDF 源碼兌變成 okular"
+msgstr "以 KPDF 原始碼為源頭製作了 Okular"
 
 #: aboutdata.h:35
 #, kde-format

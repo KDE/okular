@@ -102,6 +102,14 @@
 #include "url_utils.h"
 #include "videowidget.h"
 
+// Without this the code in DocumentPrivate::setDefaultViewMode
+// that casts Okular::Generator::PageLayout to View::ViewModeModality data won't work
+// Would be possibly better in document.cpp but we can't do it there since Okular::Settings doesn't exist in core
+// This is a bit of a missing feature/documentation in what the QVariant in View API mean
+static_assert(static_cast<int>(Okular::Generator::PageLayout::SinglePage) == Okular::Settings::EnumViewMode::Single);
+static_assert(static_cast<int>(Okular::Generator::PageLayout::TwoPageLeft) == Okular::Settings::EnumViewMode::Facing);
+static_assert(static_cast<int>(Okular::Generator::PageLayout::TwoPageRight) == Okular::Settings::EnumViewMode::FacingFirstCentered);
+
 static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks | PagePainter::EnhanceImages | PagePainter::Highlights | PagePainter::TextSelection | PagePainter::Annotations;
 
 static const std::array<float, 16> kZoomValues {0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00, 25.00, 50.00, 100.00};

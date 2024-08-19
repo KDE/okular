@@ -3339,6 +3339,7 @@ void Part::slotUpdateHamburgerMenu()
 #if HAVE_SPEECH
     auto speakMenu = menu->addMenu(QIcon::fromTheme(QStringLiteral("text-speak")), i18nc("@action:inmenu menu that contains actions to control text to speach", "Speak"));
     speakMenu->addAction(ac->action(QStringLiteral("speak_document")));
+    speakMenu->addAction(ac->action(QStringLiteral("speak_from_current_page")));
     speakMenu->addAction(ac->action(QStringLiteral("speak_current_page")));
     speakMenu->addAction(ac->action(QStringLiteral("speak_stop_all")));
     speakMenu->addAction(ac->action(QStringLiteral("speak_pause_resume")));

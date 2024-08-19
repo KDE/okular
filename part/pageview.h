@@ -305,6 +305,7 @@ private Q_SLOTS:
     void slotRefreshPage();
 #if HAVE_SPEECH
     void slotSpeakDocument();
+    void slotSpeakFromCurrentPage();
     void slotSpeakCurrentPage();
     void slotStopSpeaks();
     void slotPauseResumeSpeech();

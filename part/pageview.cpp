@@ -249,6 +249,7 @@ public:
     QAction *aPrevAction = nullptr;
     KToggleAction *aToggleForms = nullptr;
     QAction *aSpeakDoc = nullptr;
+    QAction *aSpeakDocFromPage = nullptr;
     QAction *aSpeakPage = nullptr;
     QAction *aSpeakStop = nullptr;
     QAction *aSpeakPauseResume = nullptr;
@@ -691,6 +692,11 @@ void PageView::setupActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("speak_document"), d->aSpeakDoc);
     d->aSpeakDoc->setEnabled(false);
     connect(d->aSpeakDoc, &QAction::triggered, this, &PageView::slotSpeakDocument);
+
+    d->aSpeakDocFromPage = new QAction(QIcon::fromTheme(QStringLiteral("text-speak")), i18n("Speak From Current Page"), this);
+    ac->addAction(QStringLiteral("speak_from_current_page"), d->aSpeakDocFromPage);
+    d->aSpeakDocFromPage->setEnabled(false);
+    connect(d->aSpeakDocFromPage, &QAction::triggered, this, &PageView::slotSpeakFromCurrentPage);
 
     d->aSpeakPage = new QAction(QIcon::fromTheme(QStringLiteral("text-speak")), i18n("Speak Current Page"), this);
     ac->addAction(QStringLiteral("speak_current_page"), d->aSpeakPage);
@@ -1319,6 +1325,7 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
     if (d->aSpeakDoc) {
         const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled(enablettsactions);
+        d->aSpeakDocFromPage->setEnabled(enablettsactions);
         d->aSpeakPage->setEnabled(enablettsactions);
     }
 #endif
@@ -5366,6 +5373,22 @@ void PageView::slotSpeakDocument()
     for (const PageViewItem *item : std::as_const(d->items)) {
         std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
         text.append(item->page()->text(area.get()));
+        text.append(QLatin1Char('\n'));
+    }
+
+    d->tts()->say(text);
+}
+
+void PageView::slotSpeakFromCurrentPage()
+{
+    const int currentPage = d->document->viewport().pageNumber;
+
+    QString text;
+    QVector<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+
+    for (dIt += currentPage; dIt != dEnd; dIt++) {
+        std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(*dIt);
+        text.append((*dIt)->page()->text(area.get()));
         text.append(QLatin1Char('\n'));
     }
 

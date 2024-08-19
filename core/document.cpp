@@ -593,6 +593,17 @@ bool DocumentPrivate::loadDocumentInfo(LoadDocumentInfoFlags loadWhat)
 bool DocumentPrivate::loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags loadWhat)
 {
     if (!infoFile.exists() || !infoFile.open(QIODevice::ReadOnly)) {
+        // Use the default layout provided by the generator
+        if (loadWhat & LoadGeneralInfo) {
+            Generator::PageLayout defaultViewMode = m_generator->defaultPageLayout();
+            if (defaultViewMode == Generator::NoLayout) {
+                return false;
+            }
+
+            for (View *view : std::as_const(m_views)) {
+                setDefaultViewMode(view, defaultViewMode);
+            }
+        }
         return false;
     }
 
@@ -742,6 +753,17 @@ void DocumentPrivate::loadViewsInfo(View *view, const QDomElement &e)
         }
 
         viewNode = viewNode.nextSibling();
+    }
+}
+
+void DocumentPrivate::setDefaultViewMode(View *view, Generator::PageLayout defaultViewMode)
+{
+    if (view->supportsCapability(View::ViewModeModality) && (view->capabilityFlags(View::ViewModeModality) & (View::CapabilityRead | View::CapabilitySerializable))) {
+        view->setCapability(View::ViewModeModality, (int)defaultViewMode);
+    }
+
+    if (view->supportsCapability(View::Continuous) && (view->capabilityFlags(View::Continuous) & (View::CapabilityRead | View::CapabilitySerializable))) {
+        view->setCapability(View::Continuous, (int)m_generator->defaultPageContinuous());
     }
 }
 

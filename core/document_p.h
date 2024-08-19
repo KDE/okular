@@ -149,6 +149,12 @@ public:
     bool loadDocumentInfo(LoadDocumentInfoFlags loadWhat);
     bool loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags loadWhat);
     void loadViewsInfo(View *view, const QDomElement &e);
+
+    /**
+     * @since 24.12
+     */
+    void setDefaultViewMode(View *view, Generator::PageLayout defaultValue);
+
     void saveViewsInfo(View *view, QDomElement &e) const;
     QUrl giveAbsoluteUrl(const QString &fileName) const;
     bool openRelativeFile(const QString &fileName);

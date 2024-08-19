@@ -363,6 +363,32 @@ public:
     virtual const QList<EmbeddedFile *> *embeddedFiles() const;
 
     /**
+     * This enum identifies default page layouts.
+     *
+     * @since 24.12
+     */
+    enum PageLayout {
+        NoLayout = -1, ///< Layout not specified
+        SinglePage,    ///< Display a single page
+        TwoPageLeft,   ///< Display the pages in two columns, with odd-numbered pages on the left
+        TwoPageRight   ///< Display the pages in two columns, with odd-numbered pages on the right
+    };
+
+    /**
+     * This method returns the default page layout.
+     *
+     * @since 24.12
+     */
+    virtual PageLayout defaultPageLayout() const;
+
+    /**
+     * This method returns if the default page layout is continuous.
+     *
+     * @since 24.12
+     */
+    virtual bool defaultPageContinuous() const;
+
+    /**
      * This enum identifies the metric of the page size.
      */
     enum PageSizeMetric {

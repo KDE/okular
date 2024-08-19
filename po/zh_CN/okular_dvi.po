@@ -314,17 +314,17 @@ msgstr "字体文件未找到"
 #: pageSize.cpp:298
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: pageSize.cpp:311
 #, kde-format
 msgid "%1 × %2 mm"
-msgstr ""
+msgstr "%1 × %2 毫米"
 
 #: pageSize.cpp:313
 #, kde-format
 msgid "%1 × %2 in"
-msgstr ""
+msgstr "%1 × %2 英寸"
 
 #: pageSize.cpp:318
 #, kde-format

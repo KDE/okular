@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-19 00:38+0000\n"
-"PO-Revision-Date: 2024-02-06 00:39+0100\n"
+"POT-Creation-Date: 2024-08-20 00:38+0000\n"
+"PO-Revision-Date: 2024-08-19 23:36+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -292,81 +292,81 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1686
+#: core/document.cpp:1708
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "처음부터 계속 검색"
 
-#: core/document.cpp:1689
+#: core/document.cpp:1711
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "아래에서부터 계속 검색"
 
-#: core/document.cpp:2435
+#: core/document.cpp:2457
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "전달된 문서를 처리할 플러그인을 찾을 수 없습니다."
 
-#: core/document.cpp:3589
+#: core/document.cpp:3611
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "주석 삭제"
 
-#: core/document.cpp:4179 core/document.cpp:4185
+#: core/document.cpp:4201 core/document.cpp:4207
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "이 문서는 외부 앱을 실행하려고 하며, 안전을 위해서 허용하지 않습니다."
 
-#: core/document.cpp:4195
+#: core/document.cpp:4217
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME 형식이 %1인 파일에 필요한 앱을 찾을 수 없습니다."
 
-#: core/document.cpp:4833
+#: core/document.cpp:4855
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "임시 파일을 열 수 없습니다"
 
-#: core/document.cpp:4835
+#: core/document.cpp:4857
 #, kde-format
 msgid "Print conversion failed"
 msgstr "인쇄 변환 실패"
 
-#: core/document.cpp:4837
+#: core/document.cpp:4859
 #, kde-format
 msgid "Printing process crashed"
 msgstr "인쇄 프로세스 충돌함"
 
-#: core/document.cpp:4839
+#: core/document.cpp:4861
 #, kde-format
 msgid "Printing process could not start"
 msgstr "인쇄 프로세스를 시작할 수 없음"
 
-#: core/document.cpp:4841
+#: core/document.cpp:4863
 #, kde-format
 msgid "Printing to file failed"
 msgstr "파일로 인쇄할 수 없음"
 
-#: core/document.cpp:4843
+#: core/document.cpp:4865
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "프린터 상태가 올바르지 않음"
 
-#: core/document.cpp:4845
+#: core/document.cpp:4867
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "인쇄할 파일을 찾을 수 없음"
 
-#: core/document.cpp:4847
+#: core/document.cpp:4869
 #, kde-format
 msgid "There was no file to print"
 msgstr "인쇄할 파일이 없음"
 
-#: core/document.cpp:4849
+#: core/document.cpp:4871
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -375,92 +375,92 @@ msgstr ""
 "인쇄할 수 있는 실행 파일을 찾을 수 없습니다. CUPS lpr 실행 파일이 있는지 확인"
 "하십시오"
 
-#: core/document.cpp:4851
+#: core/document.cpp:4873
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5524 part/part.cpp:1124
+#: core/document.cpp:5546 part/part.cpp:1124
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
 
-#: core/document.cpp:6034
+#: core/document.cpp:6056
 #, kde-format
 msgid "Title"
 msgstr "제목"
 
-#: core/document.cpp:6037
+#: core/document.cpp:6059
 #, kde-format
 msgid "Subject"
 msgstr "주제"
 
-#: core/document.cpp:6040
+#: core/document.cpp:6062
 #, kde-format
 msgid "Description"
 msgstr "설명"
 
-#: core/document.cpp:6043
+#: core/document.cpp:6065
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: core/document.cpp:6046
+#: core/document.cpp:6068
 #, kde-format
 msgid "Creator"
 msgstr "제작 도구"
 
-#: core/document.cpp:6049
+#: core/document.cpp:6071
 #, kde-format
 msgid "Producer"
 msgstr "생성 도구"
 
-#: core/document.cpp:6052
+#: core/document.cpp:6074
 #, kde-format
 msgid "Copyright"
 msgstr "저작권자"
 
-#: core/document.cpp:6055
+#: core/document.cpp:6077
 #, kde-format
 msgid "Pages"
 msgstr "쪽 수"
 
-#: core/document.cpp:6058
+#: core/document.cpp:6080
 #, kde-format
 msgid "Created"
 msgstr "만든 날짜"
 
-#: core/document.cpp:6061
+#: core/document.cpp:6083
 #, kde-format
 msgid "Modified"
 msgstr "수정한 날짜"
 
-#: core/document.cpp:6064
+#: core/document.cpp:6086
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 형식"
 
-#: core/document.cpp:6067
+#: core/document.cpp:6089
 #, kde-format
 msgid "Category"
 msgstr "분류"
 
-#: core/document.cpp:6070
+#: core/document.cpp:6092
 #, kde-format
 msgid "Keywords"
 msgstr "키워드"
 
-#: core/document.cpp:6073
+#: core/document.cpp:6095
 #, kde-format
 msgid "File Path"
 msgstr "파일 경로"
 
-#: core/document.cpp:6076
+#: core/document.cpp:6098
 #, kde-format
 msgid "File Size"
 msgstr "파일 크기"
 
-#: core/document.cpp:6079
+#: core/document.cpp:6101
 #, kde-format
 msgid "Page Size"
 msgstr "쪽 크기"
@@ -531,23 +531,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "양식 단추 상태 편집"
 
-#: core/generator.cpp:765
+#: core/generator.cpp:775
 #, kde-format
 msgid "Plain &Text..."
 msgstr "일반 텍스트(&T)..."
 
-#: core/generator.cpp:768
+#: core/generator.cpp:778
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:772
+#: core/generator.cpp:782
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "OpenDocument 텍스트"
 
-#: core/generator.cpp:775
+#: core/generator.cpp:785
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -891,7 +891,7 @@ msgstr "인증서가 검증되지 않았습니다."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "인증서 검증 중"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -1559,8 +1559,8 @@ msgid "Copy Text to Clipboard"
 msgstr "문자열을 클립보드에 복사"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2495 part/pageview.cpp:2815 part/pageview.cpp:2959
-#: part/pageview.cpp:3016
+#: part/pageview.cpp:2502 part/pageview.cpp:2822 part/pageview.cpp:2966
+#: part/pageview.cpp:3023
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM 때문에 복사 제한됨"
@@ -3449,296 +3449,302 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "중"
 
-#: part/pageview.cpp:480
+#: part/pageview.cpp:481
 #, kde-format
 msgid "Zoom"
 msgstr "확대/축소"
 
-#: part/pageview.cpp:492
+#: part/pageview.cpp:493
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100%로 크기 조절"
 
-#: part/pageview.cpp:503
+#: part/pageview.cpp:504
 #, kde-format
 msgid "Rotate &Right"
 msgstr "오른쪽으로 회전(&R)"
 
-#: part/pageview.cpp:504
+#: part/pageview.cpp:505
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "오른쪽"
 
-#: part/pageview.cpp:508
+#: part/pageview.cpp:509
 #, kde-format
 msgid "Rotate &Left"
 msgstr "왼쪽으로 회전(&L)"
 
-#: part/pageview.cpp:509
+#: part/pageview.cpp:510
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "왼쪽"
 
-#: part/pageview.cpp:513
+#: part/pageview.cpp:514
 #, kde-format
 msgid "Original Orientation"
 msgstr "원래 방향"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:520
 #, kde-format
 msgid "&Trim View"
 msgstr "보기 잘라내기(&T)"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:524
 #, kde-format
 msgid "&Trim Margins"
 msgstr "여백 잘라내기(&T)"
 
-#: part/pageview.cpp:530
+#: part/pageview.cpp:531
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "선택 영역으로 잘라내기(&S)"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:537
 #, kde-format
 msgid "Fit &Width"
 msgstr "폭 맞춤(&W)"
 
-#: part/pageview.cpp:540
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Fit &Page"
 msgstr "쪽 맞춤(&P)"
 
-#: part/pageview.cpp:544
+#: part/pageview.cpp:545
 #, kde-format
 msgid "&Auto Fit"
 msgstr "자동 맞춤(&A)"
 
-#: part/pageview.cpp:548
+#: part/pageview.cpp:549
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "창을 쪽에 맞춤(&N)"
 
-#: part/pageview.cpp:555
+#: part/pageview.cpp:556
 #, kde-format
 msgid "&View Mode"
 msgstr "보기 모드(&V)"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:568
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "한 쪽(&S)"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:569
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "맞쪽(&F)"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:570
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "맞쪽(첫 쪽 가운데로)(&C)"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:573
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "한눈에 보기(&O)"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:585
 #, kde-format
 msgid "&Continuous"
 msgstr "연속적(&C)"
 
-#: part/pageview.cpp:591
+#: part/pageview.cpp:592
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "오른쪽에서 왼쪽 방향으로 읽기"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:601
 #, kde-format
 msgid "&Browse"
 msgstr "탐색(&B)"
 
-#: part/pageview.cpp:608
+#: part/pageview.cpp:609
 #, kde-format
 msgid "&Zoom"
 msgstr "확대/축소(&Z)"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:629
 #, kde-format
 msgid "Area &Selection"
 msgstr "영역 선택(&S)"
 
-#: part/pageview.cpp:635
+#: part/pageview.cpp:636
 #, kde-format
 msgid "&Text Selection"
 msgstr "텍스트 선택(&T)"
 
-#: part/pageview.cpp:642
+#: part/pageview.cpp:643
 #, kde-format
 msgid "T&able Selection"
 msgstr "표 선택(&A)"
 
-#: part/pageview.cpp:649
+#: part/pageview.cpp:650
 #, kde-format
 msgid "&Magnifier"
 msgstr "돋보기(&M)"
 
-#: part/pageview.cpp:658
+#: part/pageview.cpp:659
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "선택 도구"
 
-#: part/pageview.cpp:684
+#: part/pageview.cpp:685
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "디지털 서명(&S)..."
 
-#: part/pageview.cpp:690
+#: part/pageview.cpp:691
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "전체 문서 말하기"
 
-#: part/pageview.cpp:695
+#: part/pageview.cpp:696
+#, fuzzy, kde-format
+#| msgid "Speak Current Page"
+msgid "Speak From Current Page"
+msgstr "현재 쪽 말하기"
+
+#: part/pageview.cpp:701
 #, kde-format
 msgid "Speak Current Page"
 msgstr "현재 쪽 말하기"
 
-#: part/pageview.cpp:700
+#: part/pageview.cpp:706
 #, kde-format
 msgid "Stop Speaking"
 msgstr "그만 말하기"
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:711
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "말하기 일시 정지/다시 시작"
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:723
 #, kde-format
 msgid "Scroll Up"
 msgstr "위로 스크롤"
 
-#: part/pageview.cpp:723
+#: part/pageview.cpp:729
 #, kde-format
 msgid "Scroll Down"
 msgstr "아래로 스크롤"
 
-#: part/pageview.cpp:729
+#: part/pageview.cpp:735
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "한 페이지 위로 스크롤"
 
-#: part/pageview.cpp:735
+#: part/pageview.cpp:741
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "한 페이지 아래로 스크롤"
 
-#: part/pageview.cpp:741
+#: part/pageview.cpp:747
 #, kde-format
 msgid "Show Forms"
 msgstr "양식 표시"
 
-#: part/pageview.cpp:1245
+#: part/pageview.cpp:1251
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " %1쪽 문서를 불러왔습니다."
 
-#: part/pageview.cpp:2490
+#: part/pageview.cpp:2497
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "클립보드에 표 내용 복사"
 
-#: part/pageview.cpp:2809
+#: part/pageview.cpp:2816
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "텍스트 (%1자)"
 
-#: part/pageview.cpp:2810 part/pageview.cpp:2828
+#: part/pageview.cpp:2817 part/pageview.cpp:2835
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "클립보드에 복사"
 
-#: part/pageview.cpp:2819 part/pageview.cpp:3011
+#: part/pageview.cpp:2826 part/pageview.cpp:3018
 #, kde-format
 msgid "Speak Text"
 msgstr "텍스트 말하기"
 
-#: part/pageview.cpp:2827
+#: part/pageview.cpp:2834
 #, fuzzy, kde-format
 #| msgid "Image (%1 by %2 pixels)"
 msgid "Image (%1 × %2 pixels)"
 msgstr "그림 (%1 x %2 픽셀)"
 
-#: part/pageview.cpp:2829
+#: part/pageview.cpp:2836
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
 msgstr "파일로 저장..."
 
-#: part/pageview.cpp:2849
+#: part/pageview.cpp:2856
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] copied to clipboard."
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "그림 [%1x%2] 이(가) 클립보드에 복사되었습니다."
 
-#: part/pageview.cpp:2852
+#: part/pageview.cpp:2859
 #, kde-format
 msgid "Save file"
 msgstr "파일 저장"
 
-#: part/pageview.cpp:2852
+#: part/pageview.cpp:2859
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "그림 (*.png *.jpeg)"
 
-#: part/pageview.cpp:2854
+#: part/pageview.cpp:2861
 #, kde-format
 msgid "File not saved."
 msgstr "파일이 저장되지 않았습니다."
 
-#: part/pageview.cpp:2865
+#: part/pageview.cpp:2872
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] saved to %3 file."
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "[%1x%2] 크기 그림이 %3 파일로 저장되었습니다."
 
-#: part/pageview.cpp:3007
+#: part/pageview.cpp:3014
 #, kde-format
 msgid "Copy Text"
 msgstr "텍스트 복사"
 
-#: part/pageview.cpp:3027
+#: part/pageview.cpp:3034
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1'(으)로 가기"
 
-#: part/pageview.cpp:4029 part/part.cpp:3139
+#: part/pageview.cpp:4036 part/part.cpp:3139
 #, kde-format
 msgid "Fit Width"
 msgstr "폭 맞춤"
 
-#: part/pageview.cpp:4029
+#: part/pageview.cpp:4036
 #, kde-format
 msgid "Fit Page"
 msgstr "쪽 맞춤"
 
-#: part/pageview.cpp:4029
+#: part/pageview.cpp:4036
 #, kde-format
 msgid "Auto Fit"
 msgstr "자동 맞춤"
 
-#: part/pageview.cpp:4052
+#: part/pageview.cpp:4059
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3747,67 +3753,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4335
+#: part/pageview.cpp:4342
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "다음으로 '%1' 찾기"
 
-#: part/pageview.cpp:4349
+#: part/pageview.cpp:4356
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "웹 바로가기 설정..."
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4382
 #, kde-format
 msgid "Follow This Link"
 msgstr "이 링크 따라가기"
 
-#: part/pageview.cpp:4378
+#: part/pageview.cpp:4385
 #, kde-format
 msgid "Play this Sound"
 msgstr "이 소리 재생"
 
-#: part/pageview.cpp:4380
+#: part/pageview.cpp:4387
 #, kde-format
 msgid "Stop Sound"
 msgstr "소리 끄기"
 
-#: part/pageview.cpp:4386
+#: part/pageview.cpp:4393
 #, kde-format
 msgid "Copy Link Address"
 msgstr "링크 주소 복사하기"
 
-#: part/pageview.cpp:4407
+#: part/pageview.cpp:4414
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "현재 문서에서 '%1' 검색"
 
-#: part/pageview.cpp:4939
+#: part/pageview.cpp:4946
 #, kde-format
 msgid "Welcome"
 msgstr "환영합니다"
 
-#: part/pageview.cpp:5061
+#: part/pageview.cpp:5068
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "확대할 구역을 선택하십시오. 오른쪽으로 클릭하면 축소합니다."
 
-#: part/pageview.cpp:5074
+#: part/pageview.cpp:5081
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "확대해서 보려면 클릭하십시오."
 
-#: part/pageview.cpp:5089
+#: part/pageview.cpp:5096
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "복사할 텍스트나 그림 주위로 사각형을 그리십시오."
 
-#: part/pageview.cpp:5103
+#: part/pageview.cpp:5110
 #, kde-format
 msgid "Select text"
 msgstr "텍스트를 선택하십시오"
 
-#: part/pageview.cpp:5117
+#: part/pageview.cpp:5124
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3816,14 +3822,14 @@ msgstr ""
 "복사할 표 주위로 사각형을 그린 다음 경계선을 클릭해서 나누십시오. Esc 키를 누"
 "르면 다시 시작합니다."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5136
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "모든 서명용 인증서의 유효 기간이 시작되지 않았거나 만료되었습니다."
 
-#: part/pageview.cpp:5132
+#: part/pageview.cpp:5139
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3833,17 +3839,17 @@ msgstr ""
 "서명용 인증서를 사용할 수 없습니다.<br/>자세한 정보를 보려면 도움말의 <a "
 "href=\"%1\">디지털 서명 추가</a>를 참조하십시오."
 
-#: part/pageview.cpp:5148
+#: part/pageview.cpp:5155
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "저장하지 않은 변경 사항이 있습니다. 문서에 서명하기 전에 저장하십시오."
 
-#: part/pageview.cpp:5164
+#: part/pageview.cpp:5171
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "서명 필드를 삽입하려면 직사각형 그리기"
 
-#: part/pageview.cpp:5308
+#: part/pageview.cpp:5315
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "표시할 텍스트나 그림 주위로 사각형을 그리십시오."
@@ -3997,13 +4003,13 @@ msgid "&File"
 msgstr "파일(&F)"
 
 #. i18n: ectx: Menu (settings)
-#: part/part-viewermode.rc:10 part/part.rc:90
+#: part/part-viewermode.rc:10 part/part.rc:91
 #, kde-format
 msgid "&Settings"
 msgstr "설정(&S)"
 
 #. i18n: ectx: Menu (help)
-#: part/part-viewermode.rc:15 part/part.rc:97
+#: part/part-viewermode.rc:15 part/part.rc:98
 #, kde-format
 msgid "&Help"
 msgstr "도움말(&H)"
@@ -4503,7 +4509,7 @@ msgstr "이 책갈피 이름 바꾸기"
 msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
-#: part/part.cpp:2564 part/part.cpp:2565 part/part.cpp:3444
+#: part/part.cpp:2564 part/part.cpp:2565 part/part.cpp:3445
 #: part/signaturepartutils.cpp:442
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4591,7 +4597,7 @@ msgstr ""
 "현재 문서 형식은 문서를 저장한 후 다시 불러와야 합니다. 실행 취소/다시 실행 "
 "기록이 지워집니다.<br />계속 진행하시겠습니까?j"
 
-#: part/part.cpp:2720 part/part.cpp:2789 part/part.cpp:2810 part/part.cpp:3459
+#: part/part.cpp:2720 part/part.cpp:2789 part/part.cpp:2810 part/part.cpp:3460
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "파일이 '%1' 안에 저장될 수 없습니다. 다른 경로에 저장해 보십시오."
@@ -4726,18 +4732,18 @@ msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "말하기"
 
-#: part/part.cpp:3497
+#: part/part.cpp:3498
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "인쇄"
 
-#: part/part.cpp:3560
+#: part/part.cpp:3561
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "이 문서를 인쇄하는 것이 허가되어 있지 않습니다."
 
-#: part/part.cpp:3568
+#: part/part.cpp:3569
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4745,7 +4751,7 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 알 수 없는 오류입니다. bugs.kde.org에 버그를 보"
 "고하십시오."
 
-#: part/part.cpp:3570
+#: part/part.cpp:3571
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4754,17 +4760,17 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 오류 정보: \"%1\". bugs.kde.org에 버그를 보고하"
 "십시오."
 
-#: part/part.cpp:3650
+#: part/part.cpp:3651
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "이전에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3654
+#: part/part.cpp:3655
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "이후에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4773,7 +4779,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 임시 파일 <nobr><strong>%1</strong></nobr>을"
 "(를) 만들 수 없습니다.</qt>"
 
-#: part/part.cpp:3691
+#: part/part.cpp:3692
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4782,7 +4788,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제하려고 열 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3695
+#: part/part.cpp:3696
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4795,7 +4801,7 @@ msgstr ""
 "션을 선택한 다음 대화 상자의 권한 탭에서 소유권과 권한을 확인해 보십시오.</"
 "qt>"
 
-#: part/part.cpp:3717
+#: part/part.cpp:3718
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4804,7 +4810,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제할 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3721
+#: part/part.cpp:3722
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4813,27 +4819,27 @@ msgstr ""
 "<qt>이 오류는 파일이 잘못되었을 때 발생합니다. 만약 확인해 보고 싶으면, 명령"
 "행 유틸리티를 사용해서 압축을 풀어 보십시오.</qt>"
 
-#: part/part.cpp:3747
+#: part/part.cpp:3748
 #, kde-format
 msgid "No Bookmarks"
 msgstr "책갈피 없음"
 
-#: part/part.cpp:3818
+#: part/part.cpp:3819
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "문서 공유 중 문제 발생: %1"
 
-#: part/part.cpp:3818 part/part.cpp:3824
+#: part/part.cpp:3819 part/part.cpp:3825
 #, kde-format
 msgid "Share"
 msgstr "공유"
 
-#: part/part.cpp:3822
+#: part/part.cpp:3823
 #, kde-format
 msgid "Document shared successfully"
 msgstr "문서를 성공적으로 공유함"
 
-#: part/part.cpp:3824
+#: part/part.cpp:3825
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "다음에서 공유된 문서를 확인할 수 있습니다: <a href=\"%1\">%1</a>"
@@ -4863,19 +4869,19 @@ msgid "&Tools"
 msgstr "도구(&T)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:101 shell/shell.rc:24
+#: part/part.rc:102 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "주 도구 모음"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:122
+#: part/part.rc:123
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "주석 도구 모음"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:146
+#: part/part.rc:147
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "빠른 주석 도구 모음"
@@ -5404,11 +5410,7 @@ msgid "Save Signed File As"
 msgstr "서명된 파일 다른 이름으로 저장"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

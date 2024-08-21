@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 16:49+0200\n"
+"PO-Revision-Date: 2024-08-20 09:39+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -3649,10 +3649,9 @@ msgid "Speak Whole Document"
 msgstr "Pronuncia tot el document"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Pronuncia la pàgina actual"
+msgstr "Pronuncia des de la pàgina actual"
 
 #: part/pageview.cpp:701
 #, kde-format

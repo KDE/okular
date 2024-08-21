@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-19 23:36+0200\n"
+"PO-Revision-Date: 2024-08-21 00:51+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -277,20 +277,16 @@ msgid "Landscape %1"
 msgstr "가로 %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 인치 (%3)"
+msgstr "%1 × %2인치(%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm(%3)"
 
 #: core/document.cpp:1708
 #, kde-format
@@ -3608,10 +3604,9 @@ msgid "Speak Whole Document"
 msgstr "전체 문서 말하기"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "현재 쪽 말하기"
+msgstr "현재 쪽부터 말하기"
 
 #: part/pageview.cpp:701
 #, kde-format
@@ -3681,22 +3676,19 @@ msgid "Speak Text"
 msgstr "텍스트 말하기"
 
 #: part/pageview.cpp:2834
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "그림 (%1 x %2 픽셀)"
+msgstr "그림(%1 x %2 픽셀)"
 
 #: part/pageview.cpp:2836
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "파일로 저장..."
+msgstr "파일로 저장…"
 
 #: part/pageview.cpp:2856
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "그림 [%1x%2] 이(가) 클립보드에 복사되었습니다."
+msgstr "[%1 x %2] 크기 그림이 클립보드에 복사되었습니다."
 
 #: part/pageview.cpp:2859
 #, kde-format
@@ -3714,10 +3706,9 @@ msgid "File not saved."
 msgstr "파일이 저장되지 않았습니다."
 
 #: part/pageview.cpp:2872
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "[%1x%2] 크기 그림이 %3 파일로 저장되었습니다."
+msgstr "[%1 x %2] 크기 그림이 %3 파일로 저장되었습니다."
 
 #: part/pageview.cpp:3014
 #, kde-format

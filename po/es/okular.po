@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 12:10+0200\n"
+"PO-Revision-Date: 2024-08-20 03:41+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3644,10 +3644,9 @@ msgid "Speak Whole Document"
 msgstr "Leer todo el documento"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Leer la página actual"
+msgstr "Leer de la página actual"
 
 #: part/pageview.cpp:701
 #, kde-format

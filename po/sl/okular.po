@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 06:22+0200\n"
+"PO-Revision-Date: 2024-08-20 07:29+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -3641,10 +3641,9 @@ msgid "Speak Whole Document"
 msgstr "Govori celoten dokument"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Govori trenutno stran"
+msgstr "Govori iz trenutne strani"
 
 #: part/pageview.cpp:701
 #, kde-format

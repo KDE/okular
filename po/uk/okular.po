@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 21:49+0300\n"
+"PO-Revision-Date: 2024-08-20 09:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3659,10 +3659,9 @@ msgid "Speak Whole Document"
 msgstr "Прочитати уголос весь документ"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Прочитати уголос поточну сторінку"
+msgstr "Прочитати уголос від поточної сторінки"
 
 #: part/pageview.cpp:701
 #, kde-format

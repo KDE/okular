@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 05:11+0200\n"
+"PO-Revision-Date: 2024-08-20 06:08+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3634,10 +3634,9 @@ msgid "Speak Whole Document"
 msgstr "მთელი დოკუმენტის თქმა"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "მიმდინარე გვერდის თქმა"
+msgstr "წარმოთქმა მიმდინარე გვერდიდან"
 
 #: part/pageview.cpp:701
 #, kde-format

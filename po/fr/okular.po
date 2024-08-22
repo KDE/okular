@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-30 11:18+0200\n"
+"PO-Revision-Date: 2024-08-17 10:07+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -302,17 +302,13 @@ msgid "Landscape %1"
 msgstr "Paysage %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 pouces (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
@@ -3752,20 +3748,17 @@ msgid "Speak Text"
 msgstr "Énoncer vocalement le texte"
 
 #: part/pageview.cpp:2834
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Image (%1 par %2 pixels)"
 
 #: part/pageview.cpp:2836
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Enregistrer vers un fichier..."
 
 #: part/pageview.cpp:2856
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Image [%1 x %2] copiée dans le presse-papier."
 
@@ -3785,10 +3778,9 @@ msgid "File not saved."
 msgstr "Fichier non enregistré."
 
 #: part/pageview.cpp:2872
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Image [%1 x %2] copiée dans le fichier « %3 »."
+msgstr "Image [%1 x %2] copiée dans le fichier %3."
 
 #: part/pageview.cpp:3014
 #, kde-format
@@ -4136,9 +4128,9 @@ msgid ""
 "edit the document."
 msgstr ""
 "Ce document contient des annotations ou des données de formulaire qui ont "
-"été enregistrées en interne par une version précédente d'Okular. Le stockage "
-"interne <b>n'est plus géré</b>.<br/> Veuillez les enregistrer vers un "
-"fichier ou les déplacer si vous voulez continuer à éditer ce document."
+"été enregistrées en interne par une version précédente de Okular. Le "
+"stockage interne <b>n'est plus géré</b>.<br/> Veuillez les enregistrer vers "
+"un fichier ou les déplacer si vous voulez continuer à éditer ce document."
 
 #: part/part.cpp:458
 #, kde-format
@@ -4625,7 +4617,7 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
-"Vous avez choisi d'enregistrer une archive d'Okular sans que le nom du "
+"Vous avez choisi d'enregistrer une archive de Okular sans que le nom du "
 "fichier ne se termine par l'extension « %1 ». Cela n'est pas autorisé. "
 "Voulez-vous choisir un nouveau nom ?"
 
@@ -5723,8 +5715,8 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
-"Vous ne pouvez pas définir la commande pour l'éditeur dans une instance "
-"d'Okular déjà en cours d'exécution. Veuillez désactiver les onglets et "
+"Vous ne pouvez pas définir la commande pour l'éditeur dans une instance de "
+"Okular déjà en cours d'exécution. Veuillez désactiver les onglets et "
 "réessayer. Veuillez noter que « Unique » n'est pas non plus pris en charge "
 "lors de la configuration de la commande de l'éditeur par la ligne de "
 "commandes. \n"

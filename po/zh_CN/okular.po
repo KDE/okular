@@ -3600,10 +3600,9 @@ msgid "Speak Whole Document"
 msgstr "朗读整篇文档"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "朗读当前页面"
+msgstr ""
 
 #: part/pageview.cpp:701
 #, kde-format

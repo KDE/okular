@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 09:47+0200\n"
+"PO-Revision-Date: 2024-08-21 12:11+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3640,10 +3640,9 @@ msgid "Speak Whole Document"
 msgstr "Hitz egin dokumentu osoa"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Hitz egin uneko orrialdea"
+msgstr "Hitz egin uneko orrialdeatik"
 
 #: part/pageview.cpp:701
 #, kde-format

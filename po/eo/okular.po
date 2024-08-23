@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-29 10:05+0200\n"
+"PO-Revision-Date: 2024-08-22 17:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -279,17 +279,13 @@ msgid "Landscape %1"
 msgstr "Pejzaĝo %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
@@ -3636,10 +3632,9 @@ msgid "Speak Whole Document"
 msgstr "Laŭtlegi Tutan Dokumenton"
 
 #: part/pageview.cpp:696
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Laŭtlegi Aktualan Paĝon"
+msgstr "Laŭtlegi el Aktuala Paĝo"
 
 #: part/pageview.cpp:701
 #, kde-format
@@ -3711,22 +3706,19 @@ msgid "Speak Text"
 msgstr "Paroli la tekston"
 
 #: part/pageview.cpp:2834
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Bildo (%1 sur %2 rastrumeroj)"
+msgstr "Bildo (%1 × %2 rastrumeroj)"
 
 #: part/pageview.cpp:2836
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Konservi al la dosiero..."
+msgstr "Konservi al la dosiero…"
 
 #: part/pageview.cpp:2856
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Bildo [%1x%2] kopiita al la poŝo."
+msgstr "Bildo [%1 × %2] kopiita al la poŝo."
 
 #: part/pageview.cpp:2859
 #, kde-format
@@ -3744,10 +3736,9 @@ msgid "File not saved."
 msgstr "Dosiero ne konservita."
 
 #: part/pageview.cpp:2872
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Bildo [%1x%2] konservita en la dosiero %3."
+msgstr "Bildo [%1 × %2] konservita al dosiero %3."
 
 #: part/pageview.cpp:3014
 #, kde-format
@@ -5833,6 +5824,3 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
-
-#~ msgid "S&earch:"
-#~ msgstr "S&erĉi:"

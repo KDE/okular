@@ -3602,7 +3602,7 @@ msgstr "朗读整篇文档"
 #: part/pageview.cpp:696
 #, kde-format
 msgid "Speak From Current Page"
-msgstr ""
+msgstr "从当前页面开始朗读"
 
 #: part/pageview.cpp:701
 #, kde-format

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2022-08-07 07:57+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -110,15 +110,15 @@ msgstr "O programie"
 msgid "Password Needed"
 msgstr "Wymagane hasło"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Usuń zakładkę"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Dodaj tę stronę do zakładek"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr "Nie otwarto żadnego dokumentu"
 

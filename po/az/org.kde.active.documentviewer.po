@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2022-08-16 16:17+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -110,15 +110,15 @@ msgstr "Haqqında"
 msgid "Password Needed"
 msgstr "Şifrə tələb olunur"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Əlfəcini silmək"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Bu səhifəni işarələmək"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr "Sənəd açıq deyil"
 

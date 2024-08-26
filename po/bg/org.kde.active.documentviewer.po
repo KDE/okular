@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2022-08-03 09:46+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -111,15 +111,15 @@ msgstr "За програмата"
 msgid "Password Needed"
 msgstr "Необходима е парола"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Премахване на отметка"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Отбелязване на страницата"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr "Няма документ за отваряне"
 

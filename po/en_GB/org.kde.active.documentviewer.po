@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2022-08-07 10:58+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -110,15 +110,15 @@ msgstr "About"
 msgid "Password Needed"
 msgstr "Password Needed"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Remove bookmark"
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Bookmark this page"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr "No document open"
 

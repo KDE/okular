@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
@@ -110,17 +110,17 @@ msgstr ""
 msgid "Password Needed"
 msgstr ""
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr ""
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 #, fuzzy
 #| msgid "Bookmarks"
 msgid "Bookmark this page"
 msgstr "خەتكۈشلەر"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr ""
 

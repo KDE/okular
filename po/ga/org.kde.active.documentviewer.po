@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-08 00:37+0000\n"
+"POT-Creation-Date: 2024-08-26 00:37+0000\n"
 "PO-Revision-Date: 2012-11-29 14:59-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -110,17 +110,17 @@ msgstr ""
 msgid "Password Needed"
 msgstr ""
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr ""
 
-#: package/contents/ui/MainView.qml:25
+#: package/contents/ui/MainView.qml:26
 #, fuzzy
 #| msgid "Bookmarks"
 msgid "Bookmark this page"
 msgstr "Leabharmharcanna"
 
-#: package/contents/ui/MainView.qml:82
+#: package/contents/ui/MainView.qml:80
 msgid "No document open"
 msgstr ""
 

@@ -3389,7 +3389,6 @@ msgstr ""
 
 #: part/formwidgets.cpp:849
 #, fuzzy, kde-format
-#| msgid "All files (*)"
 msgid "All Files (*)"
 msgstr "Alle filer (*)"
 

@@ -19,6 +19,7 @@
 #include <qpainter.h>
 #include <qscrollbar.h>
 #include <qsplitter.h>
+#include <qtabbar.h>
 #include <qtabwidget.h>
 
 #include <KLocalizedString>
@@ -69,6 +70,7 @@ Sidebar::Sidebar(QWidget *parent)
 
     d->viewChooserTabs = new QTabWidget(d->sideContainer);
     d->viewChooserTabs->setDocumentMode(true);
+    d->viewChooserTabs->tabBar()->setExpanding(true);
     d->vlay->addWidget(d->viewChooserTabs);
 
     connect(d->splitter, &QSplitter::splitterMoved, this, &Sidebar::splitterMoved);

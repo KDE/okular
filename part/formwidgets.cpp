@@ -322,6 +322,9 @@ FormWidgetIface::FormWidgetIface(QWidget *w, Okular::FormField *ff)
     , m_widget(w)
     , m_pageItem(nullptr)
 {
+    if (!m_ff->uiName().isEmpty()) {
+        m_widget->setToolTip(m_ff->uiName());
+    }
 }
 
 FormWidgetIface::~FormWidgetIface()

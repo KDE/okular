@@ -1,3 +1,4 @@
 module org.kde.okular
 plugin okularplugin
 DocumentView 2.0 DocumentView.qml
+PageView 2.0 private/PageView.qml

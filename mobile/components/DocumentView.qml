@@ -7,7 +7,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.okular 2.0
-import "./private"
+import "private"
 
 /**
  * A touchscreen optimized view for a document

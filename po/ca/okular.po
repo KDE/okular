@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 02:35+0000\n"
+"POT-Creation-Date: 2024-08-29 02:28+0000\n"
 "PO-Revision-Date: 2024-06-29 16:45+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -3442,22 +3442,22 @@ msgstr "Des de la pàgina actual"
 msgid "Find as you type"
 msgstr "Cerca en teclejar"
 
-#: part/formwidgets.cpp:849
+#: part/formwidgets.cpp:852
 #, kde-format
 msgid "All Files (*)"
 msgstr "Tots els fitxers (*)"
 
-#: part/formwidgets.cpp:1211
+#: part/formwidgets.cpp:1214
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Camp de signatura sense signar (clic per a signar)"
 
-#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Signa..."
 
-#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Propietats de la signatura"

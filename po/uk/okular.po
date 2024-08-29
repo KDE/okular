@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 02:35+0000\n"
+"POT-Creation-Date: 2024-08-29 02:28+0000\n"
 "PO-Revision-Date: 2024-06-29 08:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -3452,22 +3452,22 @@ msgstr "Починаючи з поточної сторінки"
 msgid "Find as you type"
 msgstr "Шукати під час введення"
 
-#: part/formwidgets.cpp:849
+#: part/formwidgets.cpp:852
 #, kde-format
 msgid "All Files (*)"
 msgstr "усі файли (*)"
 
-#: part/formwidgets.cpp:1211
+#: part/formwidgets.cpp:1214
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Непідписане поле підпису (натисніть, щоб підписати)"
 
-#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "Підп&исати…"
 
-#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Властивості підпису"

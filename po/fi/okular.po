@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 02:35+0000\n"
+"POT-Creation-Date: 2024-08-29 02:28+0000\n"
 "PO-Revision-Date: 2024-02-14 19:07+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3459,22 +3459,22 @@ msgstr "Nykyisestä sivusta"
 msgid "Find as you type"
 msgstr "Etsi kirjoittamalla"
 
-#: part/formwidgets.cpp:849
+#: part/formwidgets.cpp:852
 #, kde-format
 msgid "All Files (*)"
 msgstr "Kaikki tiedostot (*)"
 
-#: part/formwidgets.cpp:1211
+#: part/formwidgets.cpp:1214
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Allekirjoittamaton allekirjoituskenttä (allekirjoita napsauttamalla)"
 
-#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Allekirjoita…"
 
-#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Allekirjoituksen ominaisuudet"

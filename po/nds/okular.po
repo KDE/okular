@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 02:35+0000\n"
+"POT-Creation-Date: 2024-08-29 02:28+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -3678,23 +3678,23 @@ msgstr "Ut aktuelle Siet"
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:849
+#: part/formwidgets.cpp:852
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All Files (*)"
 msgstr "*|All Dateien"
 
-#: part/formwidgets.cpp:1211
+#: part/formwidgets.cpp:1214
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1277 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1281 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Caret Properties"
 msgid "Signature Properties"

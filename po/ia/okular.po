@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-28 00:38+0000\n"
-"PO-Revision-Date: 2024-07-01 11:06+0200\n"
+"PO-Revision-Date: 2024-09-02 16:03+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -277,20 +277,16 @@ msgid "Landscape %1"
 msgstr "Orientation horizontal %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 in (%3)"
+msgstr "%1 × %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1708
 #, kde-format
@@ -3644,10 +3640,9 @@ msgid "Speak Whole Document"
 msgstr "Pronuncia le documento complete"
 
 #: part/pageview.cpp:704
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Pronuncia le pagina currente"
+msgstr "Pronuncia ex le pagina currente"
 
 #: part/pageview.cpp:709
 #, kde-format
@@ -3719,20 +3714,17 @@ msgid "Speak Text"
 msgstr "Pronuncia texto"
 
 #: part/pageview.cpp:2842
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Imagine (%1 per %2 pixeles)"
 
 #: part/pageview.cpp:2844
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Salveguarda a File..."
 
 #: part/pageview.cpp:2864
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Imagine [%1x%2] copiate in area de transferentia."
 
@@ -3752,8 +3744,7 @@ msgid "File not saved."
 msgstr "File non salveguardate."
 
 #: part/pageview.cpp:2880
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Imagine [%1x%2] salveguardate in file %3."
 

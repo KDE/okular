@@ -2666,7 +2666,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Aquest submenú permet eliminar la vora blanca de les pàgines en visualitzar-les (element <guimenuitem
 >Retalla els marges</guimenuitem
->) o retallar la vista a la selecció (element <guimenuitem
+>) o retallar l'àrea de visualització a la selecció (element <guimenuitem
 >Retalla a la selecció</guimenuitem
 >). </para>
 						<para

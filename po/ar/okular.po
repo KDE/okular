@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-28 00:38+0000\n"
-"PO-Revision-Date: 2024-08-17 20:34+0400\n"
+"PO-Revision-Date: 2024-09-05 09:31+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3635,10 +3635,9 @@ msgid "Speak Whole Document"
 msgstr "انطق بالمستند كاملا"
 
 #: part/pageview.cpp:704
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "انطق بالصفحة الحالية"
+msgstr "انطق بدءًا من الصفحة الحالية"
 
 #: part/pageview.cpp:709
 #, kde-format

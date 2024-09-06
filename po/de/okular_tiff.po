@@ -4,7 +4,7 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2020, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: okular\n"
+"Project-Id-Version: okular_tiff\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
 "PO-Revision-Date: 2021-04-24 10:37+0200\n"

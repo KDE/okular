@@ -49,6 +49,7 @@ class SignatureAnnotation;
 class PageViewPrivate;
 
 class QGestureEvent;
+class QNativeGestureEvent;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
@@ -174,6 +175,7 @@ protected:
 
     void resizeEvent(QResizeEvent *) override;
     bool gestureEvent(QGestureEvent *e);
+    bool nativeGestureEvent(QNativeGestureEvent *e);
 
     // mouse / keyboard events
     void keyPressEvent(QKeyEvent *) override;

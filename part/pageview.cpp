@@ -33,6 +33,7 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QMimeDatabase>
+#include <QNativeGestureEvent>
 #include <QPainter>
 #include <QScrollBar>
 #include <QScroller>
@@ -1728,6 +1729,8 @@ bool PageView::event(QEvent *event)
 {
     if (event->type() == QEvent::Gesture) {
         return gestureEvent(static_cast<QGestureEvent *>(event));
+    } else if (event->type() == QEvent::NativeGesture) {
+        return nativeGestureEvent(static_cast<QNativeGestureEvent *>(event));
     }
 
     // do not stop the event
@@ -1785,6 +1788,26 @@ bool PageView::gestureEvent(QGestureEvent *event)
         return true;
     }
 
+    return false;
+}
+
+bool PageView::nativeGestureEvent(QNativeGestureEvent *event)
+{
+    if (event->gestureType() == Qt::BeginNativeGesture) {
+        d->pinchZoomActive = true;
+        d->scroller->handleInput(QScroller::InputRelease, QPointF());
+        d->scroller->stop();
+        return true;
+    }
+    if (event->gestureType() == Qt::ZoomNativeGesture) {
+        zoomWithFixedCenter(ZoomRefreshCurrent, mapFromGlobal(QCursor::pos()), d->zoomFactor * (1 + event->value()));
+        return true;
+    }
+    if (event->gestureType() == Qt::EndNativeGesture) {
+        d->pinchZoomActive = false;
+        d->remainingScroll = QPointF(0.0, 0.0);
+        return true;
+    }
     return false;
 }
 

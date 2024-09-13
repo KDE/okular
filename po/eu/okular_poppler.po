@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-20 00:38+0000\n"
+"POT-Creation-Date: 2024-09-13 00:38+0000\n"
 "PO-Revision-Date: 2023-07-14 20:32+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -45,7 +45,7 @@ msgid "Enhance thin lines:"
 msgstr "Areagotu lerro meheak:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:1009
+#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:1011
 #, kde-format
 msgid "No"
 msgstr "Ez"
@@ -198,43 +198,43 @@ msgstr "Inprimatutako orrientzako eskalatzeko modua"
 msgid "Scale mode:"
 msgstr "Eskalatze modua:"
 
-#: generator_pdf.cpp:1007
+#: generator_pdf.cpp:1009
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF %1.%2 bertsioa"
 
-#: generator_pdf.cpp:1007
+#: generator_pdf.cpp:1009
 #, kde-format
 msgid "Format"
 msgstr "Formatua"
 
-#: generator_pdf.cpp:1008
+#: generator_pdf.cpp:1010
 #, kde-format
 msgid "Encrypted"
 msgstr "Zifratuta"
 
-#: generator_pdf.cpp:1008
+#: generator_pdf.cpp:1010
 #, kde-format
 msgid "Unencrypted"
 msgstr "Zifratu gabe"
 
-#: generator_pdf.cpp:1008
+#: generator_pdf.cpp:1010
 #, kde-format
 msgid "Security"
 msgstr "Segurtasuna"
 
-#: generator_pdf.cpp:1009
+#: generator_pdf.cpp:1011
 #, kde-format
 msgid "Yes"
 msgstr "Bai"
 
-#: generator_pdf.cpp:1009
+#: generator_pdf.cpp:1011
 #, kde-format
 msgid "Optimized"
 msgstr "Optimizatuta"
 
-#: generator_pdf.cpp:1483
+#: generator_pdf.cpp:1485
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -245,12 +245,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1690
+#: generator_pdf.cpp:1704
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "«Poppler» %1 erabiltzen"
 
-#: generator_pdf.cpp:1692
+#: generator_pdf.cpp:1706
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -261,17 +261,17 @@ msgstr ""
 "\n"
 "«Poppler» %2 erabiliz eraikia"
 
-#: generator_pdf.cpp:1727
+#: generator_pdf.cpp:1741
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1727
+#: generator_pdf.cpp:1741
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF bizkarraldekoaren konfigurazioa"
 
-#: generator_pdf.cpp:2212
+#: generator_pdf.cpp:2226
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

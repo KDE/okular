@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2024-08-20 07:14+0200\n"
+"PO-Revision-Date: 2024-09-13 08:27+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -3902,6 +3902,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Signerad av: %1\n"
+"\n"
+"Datum: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4103,12 +4106,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Signering pågår. Du kan justera signaturens position och storlek"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Slutför signering"
 
 #: part/part.cpp:655
 #, kde-format

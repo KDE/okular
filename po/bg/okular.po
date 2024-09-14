@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2024-06-30 16:29+0200\n"
+"PO-Revision-Date: 2024-09-13 20:17+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -280,20 +280,16 @@ msgid "Landscape %1"
 msgstr "Пейзаж %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 инча (%3)"
+msgstr "%1 × %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 мм (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1708
 #, kde-format
@@ -3633,8 +3629,7 @@ msgid "Speak Whole Document"
 msgstr "Произнасяне на документа"
 
 #: part/pageview.cpp:709
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
 msgstr "Произнасяне на страницата"
 
@@ -3708,22 +3703,19 @@ msgid "Speak Text"
 msgstr "Произнасяне на текст"
 
 #: part/pageview.cpp:2847
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Изображение (%1х%2 пиксела)"
+msgstr "Изображение (%1 × %2 пиксела)"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Запис във файл..."
 
 #: part/pageview.cpp:2869
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Изображението (%1х%2) е копирано в системния буфер."
+msgstr "Изображението [%1 × %2] е копирано в системния буфер."
 
 #: part/pageview.cpp:2872
 #, kde-format
@@ -3741,10 +3733,9 @@ msgid "File not saved."
 msgstr "Файлът не е записан."
 
 #: part/pageview.cpp:2885
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Изображението (%1х%2) е записано във файла %3."
+msgstr "Изображениетo [%1 × %2] е записано във файла %3."
 
 #: part/pageview.cpp:3027
 #, kde-format
@@ -3916,6 +3907,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Подписан от: %1\n"
+"\n"
+"Дата: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4119,11 +4113,12 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Подписването е в ход. Можете да регулирате позицията и размера на подписа"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Завършване на подписването"
 
 #: part/part.cpp:655
 #, kde-format

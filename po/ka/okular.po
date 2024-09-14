@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2024-08-20 06:08+0200\n"
+"PO-Revision-Date: 2024-09-13 05:29+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3905,6 +3905,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"ხელმომწერი: %1\n"
+"\n"
+"თარიღი: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4108,11 +4111,12 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"მიმდინარეობს ხელმოწერა. შეგიძლიათ, ხელმოწერის მდებარეობა და ზომა გაასწოროთ"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "ხელმოწერის დასრულება"
 
 #: part/part.cpp:655
 #, kde-format

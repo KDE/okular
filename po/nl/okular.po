@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2024-08-20 17:25+0200\n"
+"PO-Revision-Date: 2024-09-14 00:23+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -3925,6 +3925,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Ondertekend door: %1\n"
+"\n"
+"Datum: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4130,11 +4133,13 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Ondertekening bezig. U kunt de positie en grootte van de ondertekening "
+"aanpassen"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Ondertekenen beëindigen"
 
 #: part/part.cpp:655
 #, kde-format

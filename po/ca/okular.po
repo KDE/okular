@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2024-08-20 09:39+0200\n"
+"PO-Revision-Date: 2024-09-14 13:16+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -3925,6 +3925,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Signat per: %1\n"
+"\n"
+"Data: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4128,11 +4131,12 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"La signatura està en curs. Podeu ajustar la posició i la mida de la signatura"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "La signatura ha finalitzat"
 
 #: part/part.cpp:655
 #, kde-format

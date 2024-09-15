@@ -502,6 +502,38 @@ public:
      */
     QString exportValueForChoice(const QString &choice) const;
 
+    /**
+     * Sets the @p text which should be rendered by the PDF in the position of choice FormField.
+     *
+     * @since 24.12
+     */
+    virtual void setAppearanceChoiceText(const QString &text) = 0;
+
+    /**
+     * Sets the @p value asssociated with the choice form field.
+     * It does not set anything for ListBox for now, only for the ComboBox.
+     *
+     * Expected type of @p value is QString.
+     * @since 24.12
+     */
+    void setValue(const QVariant &value) override;
+
+    /**
+     * Returns the value associated with the choice form field.
+     * In case of ComboBox, if there is any selection, then the selected value is returned, else the value entered in editText of the comboBox.
+     * Returns empty string for ListBox for now.
+     *
+     * @since 24.12
+     */
+    QVariant value() const override;
+
+    /**
+     * Sets the appearance @p value associated with the form field.
+     *
+     * @since 24.12
+     */
+    void setAppearanceValue(const QVariant &value) override;
+
 protected:
     FormFieldChoice();
 

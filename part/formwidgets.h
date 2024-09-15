@@ -317,6 +317,7 @@ private Q_SLOTS:
 private:
     int m_prevCursorPos;
     int m_prevAnchorPos;
+    bool m_editing;
     DECLARE_ADDITIONAL_ACTIONS
 
 protected:

@@ -378,6 +378,45 @@ QString FormFieldChoice::exportValueForChoice(const QString &choice) const
     return d->exportValues.value(choice, choice);
 }
 
+void FormFieldChoice::setValue(const QVariant &value)
+{
+    if (choiceType() == ComboBox) {
+        const QStringList availableChoices = choices();
+        const QString valueToSet = value.toString();
+        for (int i = 0; i < availableChoices.size(); i++) {
+            if (valueToSet == availableChoices[i]) {
+                const QList oneChoiceList = {i};
+                setCurrentChoices(oneChoiceList);
+                return; // We expect to set only one element for a combo box
+            }
+        }
+        // If the value to be set is not present in the available choices
+        setEditChoice(valueToSet);
+    } else {
+        // TODO what to set for ListBox.
+    }
+}
+
+QVariant FormFieldChoice::value() const
+{
+    if (choiceType() == ComboBox) {
+        if (currentChoices().isEmpty()) {
+            return QVariant(editChoice());
+        }
+        return QVariant(choices().at(currentChoices().constFirst()));
+    } else {
+        // TODO what to return for ListBox. Temporarily return empty string.
+        return QVariant(QString());
+    }
+}
+
+void FormFieldChoice::setAppearanceValue(const QVariant &value)
+{
+    if (choiceType() == ComboBox) {
+        setAppearanceChoiceText(value.toString());
+    }
+}
+
 class Okular::FormFieldSignaturePrivate : public Okular::FormFieldPrivate
 {
 public:

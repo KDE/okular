@@ -245,9 +245,9 @@ void FormatTest::testDateFormat()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
-    fft->setText(text);
-    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+    Okular::FormField *ff = m_fields[fieldName];
+    ff->setValue(QVariant(text));
+    m_document->processFormatAction(ff->additionalAction(Okular::FormField::FormatField), ff);
 
     QCOMPARE(m_formattedText, result);
 }

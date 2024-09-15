@@ -114,6 +114,7 @@ public:
     void setCurrentChoices(const QList<int> &choices) override;
     QString editChoice() const override;
     void setEditChoice(const QString &text) override;
+    void setAppearanceChoiceText(const QString &text) override;
     Qt::Alignment textAlignment() const override;
     bool canBeSpellChecked() const override;
 

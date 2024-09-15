@@ -257,10 +257,7 @@ std::shared_ptr<Event> Event::createFormCalculateEvent(FormField *target, Page *
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
 
-    const FormFieldText *fft = dynamic_cast<FormFieldText *>(target);
-    if (fft) {
-        ret->setValue(QVariant(fft->text()));
-    }
+    ret->setValue(target->value());
     return ret;
 }
 

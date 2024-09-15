@@ -1205,34 +1205,29 @@ void DocumentPrivate::recalculateForms()
                     if (form->id() == formId) {
                         const Action *action = form->additionalAction(FormField::CalculateField);
                         if (action) {
-                            FormFieldText *fft = dynamic_cast<FormFieldText *>(form);
                             std::shared_ptr<Event> event;
                             QString oldVal;
-                            if (fft) {
+                            if (dynamic_cast<FormFieldText *>(form) || dynamic_cast<FormFieldChoice *>(form)) {
                                 // Prepare text calculate event
-                                event = Event::createFormCalculateEvent(fft, m_pagesVector[pageIdx]);
-                                if (!m_scripter) {
-                                    m_scripter = new Scripter(this);
-                                }
-                                m_scripter->setEvent(event.get());
+                                event = Event::createFormCalculateEvent(form, m_pagesVector[pageIdx]);
+                                const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
+                                executeScriptEvent(event, linkscript);
                                 // The value maybe changed in javascript so save it first.
-                                oldVal = fft->text();
-                            }
+                                oldVal = form->value().toString();
 
-                            m_parent->processAction(action);
-                            if (event && fft) {
-                                // Update text field from calculate
-                                m_scripter->setEvent(nullptr);
-                                const QString newVal = event->value().toString();
-                                if (newVal != oldVal) {
-                                    fft->setText(newVal);
-                                    fft->setAppearanceText(newVal);
-                                    if (const Okular::Action *action = fft->additionalAction(Okular::FormField::FormatField)) {
-                                        // The format action handles the refresh.
-                                        m_parent->processFormatAction(action, form);
-                                    } else {
-                                        Q_EMIT m_parent->refreshFormWidget(fft);
-                                        pageNeedsRefresh = true;
+                                if (event) {
+                                    // Update text field from calculate
+                                    const QString newVal = event->value().toString();
+                                    if (newVal != oldVal) {
+                                        form->setValue(QVariant(newVal));
+                                        form->setAppearanceValue(QVariant(newVal));
+                                        if (const Okular::Action *action = form->additionalAction(Okular::FormField::FormatField)) {
+                                            // The format action handles the refresh.
+                                            m_parent->processFormatAction(action, form);
+                                        } else {
+                                            Q_EMIT m_parent->refreshFormWidget(form);
+                                            pageNeedsRefresh = true;
+                                        }
                                     }
                                 }
                             }

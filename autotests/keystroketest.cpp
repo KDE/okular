@@ -423,11 +423,12 @@ void KeystrokeTest::testDateKeystrokeCommit()
     QFETCH(QString, text);
     QFETCH(QString, result);
 
-    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_AFMethodsTestsFields[fieldName]);
-    fft->setText(text);
-    m_AFMethodsTestsDocument->processKeystrokeCommitAction(fft->additionalAction(Okular::FormField::FieldModified), fft);
+    Okular::FormField *ff = m_AFMethodsTestsFields[fieldName];
+    ff->setValue(QVariant(text));
+    bool returnCode = true;
+    m_AFMethodsTestsDocument->processKeystrokeCommitAction(ff->additionalAction(Okular::FormField::FieldModified), ff, returnCode);
 
-    QCOMPARE(fft->text(), result);
+    QCOMPARE(ff->value().toString(), result);
 }
 
 void KeystrokeTest::testDateKeystrokeCommit_data()

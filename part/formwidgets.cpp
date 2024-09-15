@@ -85,7 +85,7 @@ void FormWidgetsController::signalMouseAction(Okular::Action *action, Okular::Fo
 void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type)
 {
     // If it's not a Action Script or if the field is not a FormText, handle it normally
-    if (a->actionType() != Okular::Action::Script || field->type() != Okular::FormField::FormText) {
+    if (a->actionType() != Okular::Action::Script || field->type() != Okular::FormField::FormText || field->type() != Okular::FormField::FormChoice) {
         Q_EMIT action(a);
         return;
     }
@@ -1065,6 +1065,7 @@ ComboEdit::ComboEdit(Okular::FormFieldChoice *choice, PageView *pageView)
     connect(this, &QComboBox::editTextChanged, this, &ComboEdit::slotValueChanged);
     connect(lineEdit(), &QLineEdit::cursorPositionChanged, this, &ComboEdit::slotValueChanged);
 
+    m_editing = false;
     setVisible(choice->isVisible());
     setCursor(Qt::ArrowCursor);
     m_prevCursorPos = lineEdit()->cursorPosition();
@@ -1090,10 +1091,19 @@ void ComboEdit::slotValueChanged()
         prevText = form->choices().at(form->currentChoices().constFirst());
     }
 
-    int cursorPos = lineEdit()->cursorPosition();
+    int cursorPos;
     if (text != prevText) {
-        Q_EMIT m_controller->formComboChangedByWidget(pageItem()->pageNumber(), form, currentText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        if (form->additionalAction(Okular::FormField::FieldModified) && m_editing && !form->isReadOnly()) {
+            m_controller->document()->processKeystrokeAction(form->additionalAction(Okular::FormField::FieldModified), form, lineEdit()->text(), m_prevCursorPos, m_prevAnchorPos);
+        }
+        cursorPos = lineEdit()->cursorPosition();
+        if (text == lineEdit()->text()) {
+            Q_EMIT m_controller->formComboChangedByWidget(pageItem()->pageNumber(), form, currentText(), cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        }
+    } else {
+        cursorPos = lineEdit()->cursorPosition();
     }
+
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = cursorPos;
     if (lineEdit()->hasSelectedText()) {
@@ -1175,6 +1185,40 @@ bool ComboEdit::event(QEvent *e)
         } else if (keyEvent == QKeySequence::Redo) {
             Q_EMIT m_controller->requestRedo();
             return true;
+        }
+    } else if (e->type() == QEvent::FocusIn) {
+        const auto ffc = static_cast<Okular::FormFieldChoice *>(m_ff);
+
+        QString prevText;
+        if (ffc->currentChoices().isEmpty()) {
+            prevText = ffc->editChoice();
+        } else {
+            prevText = ffc->choices().at(ffc->currentChoices().constFirst());
+        }
+        if (lineEdit()->text() != prevText) {
+            lineEdit()->setText(prevText);
+        }
+        QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
+        if (focusEvent->reason() != Qt::ActiveWindowFocusReason) {
+            if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusIn)) {
+                m_controller->document()->processFocusAction(action, m_ff);
+            }
+        }
+        setFocus();
+        m_editing = true;
+    } else if (e->type() == QEvent::FocusOut) {
+        m_editing = false;
+
+        // Don't worry about focus events from other sources than the user FocusEvent to edit the field
+        QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
+        if (focusEvent->reason() == Qt::OtherFocusReason || focusEvent->reason() == Qt::ActiveWindowFocusReason) {
+            return true;
+        }
+
+        m_controller->document()->processKVCFActions(m_ff);
+
+        if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
+            m_controller->document()->processFocusAction(action, m_ff);
         }
     }
     return QComboBox::event(e);

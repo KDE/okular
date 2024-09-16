@@ -285,6 +285,12 @@ else()
     add_definitions(-DHAVE_NEW_SIGNATURE_API=1)
 endif()
 
+if (Poppler_VERSION VERSION_LESS 24.12.0)
+    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=0)
+else()
+    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=1)
+endif()
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)

@@ -5495,6 +5495,8 @@ PageView::FinishSigningResult PageView::finishSigning()
     data.setDocumentPassword(d->signingInfo.documentPassword);
     data.setReason(d->signingInfo.reason);
     data.setLocation(d->signingInfo.location);
+    data.setLeftFontSize(d->signatureAnnotation->leftFontSize());
+    data.setFontSize(d->signatureAnnotation->fontSize());
 
     Okular::SigningResult result = d->signatureAnnotation->sign(data, newFilePath);
     if (result == Okular::SigningSuccess) {

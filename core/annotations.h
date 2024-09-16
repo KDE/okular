@@ -1374,6 +1374,12 @@ public:
     QString fieldPartialName() const;
     void setFieldPartialName(const QString &fieldPartialName);
 
+    double fontSize() const;
+    void setFontSize(double fontSize);
+
+    double leftFontSize() const;
+    void setLeftFontSize(double fontSize);
+
     int page() const;
     void setPage(int page);
 

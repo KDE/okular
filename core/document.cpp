@@ -6178,6 +6178,8 @@ struct Okular::NewSignatureDataPrivate {
     QString location;
     QString reason;
     QString backgroundImagePath;
+    double fontSize = 10;
+    double leftFontSize = 20;
     int page = -1;
     NormalizedRect boundingRectangle;
 };
@@ -6280,6 +6282,26 @@ QString Okular::NewSignatureData::backgroundImagePath() const
 void Okular::NewSignatureData::setBackgroundImagePath(const QString &path)
 {
     d->backgroundImagePath = path;
+}
+
+double Okular::NewSignatureData::fontSize() const
+{
+    return d->fontSize;
+}
+
+void Okular::NewSignatureData::setFontSize(double fontSize)
+{
+    d->fontSize = fontSize;
+}
+
+double Okular::NewSignatureData::leftFontSize() const
+{
+    return d->leftFontSize;
+}
+
+void Okular::NewSignatureData::setLeftFontSize(double fontSize)
+{
+    d->leftFontSize = fontSize;
 }
 
 #undef foreachObserver

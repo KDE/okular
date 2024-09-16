@@ -486,6 +486,8 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
     pSignatureAnnotation->setLeftText(oSignatureAnnotation->leftText());
     pSignatureAnnotation->setText(oSignatureAnnotation->text());
     pSignatureAnnotation->setFieldPartialName(oSignatureAnnotation->fieldPartialName());
+    pSignatureAnnotation->setFontSize(oSignatureAnnotation->fontSize());
+    pSignatureAnnotation->setLeftFontSize(oSignatureAnnotation->leftFontSize());
 
     if (!oSignatureAnnotation->imagePath().isEmpty()) {
         resizeImage(helper.get(), oSignatureAnnotation->page(), oSignatureAnnotation->boundingRectangle(), pdfdoc);

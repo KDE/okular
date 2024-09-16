@@ -2377,6 +2377,8 @@ public:
     QString m_leftText;
     QString m_imagePath;
     QString m_fieldPartialName = QUuid::createUuid().toString();
+    double m_fontSize = 10;
+    double m_leftFontSize = 20;
     int m_page;
     std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> m_signFunction;
 };
@@ -2440,6 +2442,30 @@ void SignatureAnnotation::setFieldPartialName(const QString &fieldPartialName)
 {
     Q_D(SignatureAnnotation);
     d->m_fieldPartialName = fieldPartialName;
+}
+
+double SignatureAnnotation::fontSize() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_fontSize;
+}
+
+void SignatureAnnotation::setFontSize(double fontSize)
+{
+    Q_D(SignatureAnnotation);
+    d->m_fontSize = fontSize;
+}
+
+double SignatureAnnotation::leftFontSize() const
+{
+    Q_D(const SignatureAnnotation);
+    return d->m_leftFontSize;
+}
+
+void SignatureAnnotation::setLeftFontSize(double fontSize)
+{
+    Q_D(SignatureAnnotation);
+    d->m_leftFontSize = fontSize;
 }
 
 void SignatureAnnotation::setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func)

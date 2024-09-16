@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2024-08-25 22:54+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -292,29 +292,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1708
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Tęsiama paiešką nuo pradžios"
 
-#: core/document.cpp:1711
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Tęsiama paiešką nuo apačios"
 
-#: core/document.cpp:2457
+#: core/document.cpp:2452
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nepavyksta rasti įskiepio, kuris galėtų apdoroti perduodamą dokumentą."
 
-#: core/document.cpp:3612
+#: core/document.cpp:3607
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "šalinti anotacijas"
 
-#: core/document.cpp:4202 core/document.cpp:4208
+#: core/document.cpp:4197 core/document.cpp:4203
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -323,52 +323,52 @@ msgstr ""
 "Dokumentas bando paleisti išorinę programą ir, jūsų saugumo sumetimais, "
 "Okular to neleidžia."
 
-#: core/document.cpp:4218
+#: core/document.cpp:4213
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nepavyko rasti programos, skirtos atverti mime tipą %1."
 
-#: core/document.cpp:4856
+#: core/document.cpp:4851
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nepavyko atverti laikinojo failo"
 
-#: core/document.cpp:4858
+#: core/document.cpp:4853
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Spausdinimo keitimas nepavyko"
 
-#: core/document.cpp:4860
+#: core/document.cpp:4855
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Spausdinimo procesas užstrigo"
 
-#: core/document.cpp:4862
+#: core/document.cpp:4857
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nepavyko pradėti spausdinimo proceso"
 
-#: core/document.cpp:4864
+#: core/document.cpp:4859
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nepavyko spausdinti į failą"
 
-#: core/document.cpp:4866
+#: core/document.cpp:4861
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Spausdintuvas buvo neteisingoje būsenoje"
 
-#: core/document.cpp:4868
+#: core/document.cpp:4863
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nepavyko rasti failo, kurį spausdinti"
 
-#: core/document.cpp:4870
+#: core/document.cpp:4865
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebuvo jokio failo, kurį spausdinti"
 
-#: core/document.cpp:4872
+#: core/document.cpp:4867
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -377,92 +377,92 @@ msgstr ""
 "Nepavyko rasti tinkamo dvejetainio failo spausdinimui. Įsitikinkite, kad "
 "CUPS lpr dvejetainis failas yra prieinamas"
 
-#: core/document.cpp:4874
+#: core/document.cpp:4869
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Puslapio spaudinio dydis yra neteisingas"
 
-#: core/document.cpp:5552 part/part.cpp:1139
+#: core/document.cpp:5547 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepavyko atverti „%1“. Failas nėra"
 
-#: core/document.cpp:6062
+#: core/document.cpp:6057
 #, kde-format
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: core/document.cpp:6065
+#: core/document.cpp:6060
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:6068
+#: core/document.cpp:6063
 #, kde-format
 msgid "Description"
 msgstr "Aprašas"
 
-#: core/document.cpp:6071
+#: core/document.cpp:6066
 #, kde-format
 msgid "Author"
 msgstr "Autorius"
 
-#: core/document.cpp:6074
+#: core/document.cpp:6069
 #, kde-format
 msgid "Creator"
 msgstr "Kūrėjas"
 
-#: core/document.cpp:6077
+#: core/document.cpp:6072
 #, kde-format
 msgid "Producer"
 msgstr "Gamintojas"
 
-#: core/document.cpp:6080
+#: core/document.cpp:6075
 #, kde-format
 msgid "Copyright"
 msgstr "Autorių teisės"
 
-#: core/document.cpp:6083
+#: core/document.cpp:6078
 #, kde-format
 msgid "Pages"
 msgstr "Puslapiai"
 
-#: core/document.cpp:6086
+#: core/document.cpp:6081
 #, kde-format
 msgid "Created"
 msgstr "Sukurta"
 
-#: core/document.cpp:6089
+#: core/document.cpp:6084
 #, kde-format
 msgid "Modified"
 msgstr "Modifikuota"
 
-#: core/document.cpp:6092
+#: core/document.cpp:6087
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tipas"
 
-#: core/document.cpp:6095
+#: core/document.cpp:6090
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6098
+#: core/document.cpp:6093
 #, kde-format
 msgid "Keywords"
 msgstr "Raktažodžiai"
 
-#: core/document.cpp:6101
+#: core/document.cpp:6096
 #, kde-format
 msgid "File Path"
 msgstr "Failo kelias"
 
-#: core/document.cpp:6104
+#: core/document.cpp:6099
 #, kde-format
 msgid "File Size"
 msgstr "Failo dydis"
 
-#: core/document.cpp:6107
+#: core/document.cpp:6102
 #, kde-format
 msgid "Page Size"
 msgstr "Puslapio dydis"
@@ -3448,17 +3448,17 @@ msgstr "Paieška renkant tekstą"
 msgid "All Files (*)"
 msgstr "Visi failai (*)"
 
-#: part/formwidgets.cpp:1214
+#: part/formwidgets.cpp:1258
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "Nepasirašyto parašo laukas (Spustelėkite, norėdami pasirašyti)"
 
-#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&Pasirašyti..."
 
-#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Parašo savybės"

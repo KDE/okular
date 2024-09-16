@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2024-02-01 09:06-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -294,29 +294,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1708
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ਸ਼ੁਰੂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: core/document.cpp:1711
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "ਹੇਠਾਂ ਤੋਂ ਲੱਭਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: core/document.cpp:2457
+#: core/document.cpp:2452
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "ਦਿੱਤੇ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਵਾਸਤੇ ਇੱਕ ਪਲੱਗਇਨ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: core/document.cpp:3612
+#: core/document.cpp:3607
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ਵਿਆਖਿਆ ਨੂੰ ਹਟਾਓ"
 
-#: core/document.cpp:4202 core/document.cpp:4208
+#: core/document.cpp:4197 core/document.cpp:4203
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -325,52 +325,52 @@ msgstr ""
 "ਦਸਤਾਵੇਜ਼ ਇੱਕ ਬਾਹਰੀ ਐਪਲੀਕੇਸ਼ਨ ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਿਹਾ ਹੈ, ਅਤੇ ਓਕੁਲਾਰ ਨੇ ਤੁਹਾਡੀ ਸੁਰੱਖਿਆ ਵਾਸਤੇ "
 "ਇਹ ਮਨਜ਼ੂਰ ਨਹੀਂ ਕੀਤਾ ਹੈ।"
 
-#: core/document.cpp:4218
+#: core/document.cpp:4213
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "ਮਾਈਮ-ਟਾਈਪ %1 ਦੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਲੱਭੀ ਹੈ।"
 
-#: core/document.cpp:4856
+#: core/document.cpp:4851
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "ਆਰਜ਼ੀ ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
 
-#: core/document.cpp:4858
+#: core/document.cpp:4853
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ਕਨਵਰਜ਼ਨ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
 
-#: core/document.cpp:4860
+#: core/document.cpp:4855
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਦੀ ਕਾਰਵਾਈ ਕਰੈਸ਼ ਹੋ ਗਈ"
 
-#: core/document.cpp:4862
+#: core/document.cpp:4857
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ਪਰਿੰਟ ਕਾਰਵਾਈ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ"
 
-#: core/document.cpp:4864
+#: core/document.cpp:4859
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ਫਾਇਲ ਪਰਿੰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
 
-#: core/document.cpp:4866
+#: core/document.cpp:4861
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "ਪਰਿੰਟਰ ਦੀ ਹਾਲਤ ਅਢੁੱਕਵੀ ਹੈ"
 
-#: core/document.cpp:4868
+#: core/document.cpp:4863
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਫਾਇਲ ਲੱਭਣ ਲਈ ਅਸਮਰੱਖ"
 
-#: core/document.cpp:4870
+#: core/document.cpp:4865
 #, kde-format
 msgid "There was no file to print"
 msgstr "ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
-#: core/document.cpp:4872
+#: core/document.cpp:4867
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -378,92 +378,92 @@ msgid ""
 msgstr ""
 "ਪਰਿੰਟ ਕਰਨ ਲਈ ਕੋਈ ਢੁੱਕਵੀਂ ਬਾਈਨਰੀ ਨਹੀਂ ਮਿਲੀ। ਚੈੱਕ ਕਰੋ ਕਿ ਕੀ CUPS lpr ਬਾਈਨਰੀ ਉਪਲੱਬਧ ਹੈ।"
 
-#: core/document.cpp:4874
+#: core/document.cpp:4869
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5552 part/part.cpp:1139
+#: core/document.cpp:5547 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਫਾਇਲ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
 
-#: core/document.cpp:6062
+#: core/document.cpp:6057
 #, kde-format
 msgid "Title"
 msgstr "ਟਾਇਟਲ"
 
-#: core/document.cpp:6065
+#: core/document.cpp:6060
 #, kde-format
 msgid "Subject"
 msgstr "ਵਿਸ਼ਾ"
 
-#: core/document.cpp:6068
+#: core/document.cpp:6063
 #, kde-format
 msgid "Description"
 msgstr "ਵਰਣਨ"
 
-#: core/document.cpp:6071
+#: core/document.cpp:6066
 #, kde-format
 msgid "Author"
 msgstr "ਲੇਖਕ"
 
-#: core/document.cpp:6074
+#: core/document.cpp:6069
 #, kde-format
 msgid "Creator"
 msgstr "ਨਿਰਮਾਤਾ"
 
-#: core/document.cpp:6077
+#: core/document.cpp:6072
 #, kde-format
 msgid "Producer"
 msgstr "ਪਰੋਡਿਊਸਰ"
 
-#: core/document.cpp:6080
+#: core/document.cpp:6075
 #, kde-format
 msgid "Copyright"
 msgstr "ਕਾਪੀਰਾਈਟ"
 
-#: core/document.cpp:6083
+#: core/document.cpp:6078
 #, kde-format
 msgid "Pages"
 msgstr "ਸਫ਼ੇ"
 
-#: core/document.cpp:6086
+#: core/document.cpp:6081
 #, kde-format
 msgid "Created"
 msgstr "ਬਣਾਇਆ"
 
-#: core/document.cpp:6089
+#: core/document.cpp:6084
 #, kde-format
 msgid "Modified"
 msgstr "ਸੋਧ ਕੀਤੀ"
 
-#: core/document.cpp:6092
+#: core/document.cpp:6087
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ਕਿਸਮ"
 
-#: core/document.cpp:6095
+#: core/document.cpp:6090
 #, kde-format
 msgid "Category"
 msgstr "ਕੈਟਾਗਰੀ"
 
-#: core/document.cpp:6098
+#: core/document.cpp:6093
 #, kde-format
 msgid "Keywords"
 msgstr "ਸ਼ਬਦ"
 
-#: core/document.cpp:6101
+#: core/document.cpp:6096
 #, kde-format
 msgid "File Path"
 msgstr "ਫਾਇਲ ਪਾਥ"
 
-#: core/document.cpp:6104
+#: core/document.cpp:6099
 #, kde-format
 msgid "File Size"
 msgstr "ਫਾਇਲ ਦਾ ਆਕਾਰ"
 
-#: core/document.cpp:6107
+#: core/document.cpp:6102
 #, kde-format
 msgid "Page Size"
 msgstr "ਸਫ਼ੇ ਦਾ ਆਕਾਰ"
@@ -3397,17 +3397,17 @@ msgstr "ਜਿਵੇਂ ਤੁਸੀਂ ਲਿਖੋ ਤਿਵੇਂ ਖੋਜ�
 msgid "All Files (*)"
 msgstr "ਸਭ ਫਾਇਲਾਂ (*)"
 
-#: part/formwidgets.cpp:1214
+#: part/formwidgets.cpp:1258
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1280 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "ਦਸਤਖ਼ਤ(&S)..."
 
-#: part/formwidgets.cpp:1284 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "ਦਸਤਖ਼ਤ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"

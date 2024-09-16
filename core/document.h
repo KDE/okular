@@ -1674,6 +1674,18 @@ public:
     /// @since 23.08
     void setBackgroundImagePath(const QString &path);
 
+    /// @since 24.12
+    double fontSize() const;
+
+    /// @since 24.12
+    void setFontSize(double fontSize);
+
+    /// @since 24.12
+    double leftFontSize() const;
+
+    /// @since 24.12
+    void setLeftFontSize(double fontSize);
+
 private:
     NewSignatureDataPrivate *const d;
 };

@@ -366,6 +366,9 @@ public:
         ann->setText(signatureText);
         ann->setImagePath(m_signingInformation->backgroundImagePath);
 
+        ann->setLeftFontSize(0);
+        ann->setFontSize(0);
+
         m_creationCompleted = false;
         clicked = false;
 

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-09-02 16:03+0200\n"
+"PO-Revision-Date: 2024-09-16 12:08+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -3915,6 +3915,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Signate per: %1\n"
+"\n"
+"Data: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4117,11 +4120,12 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Signar in progresso. Tu pote adaptar le position e grandor del signatura"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Termina signar"
 
 #: part/part.cpp:655
 #, kde-format

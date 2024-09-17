@@ -3898,6 +3898,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Podepsal: %1\n"
+"\n"
+"Datum: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format

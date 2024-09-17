@@ -3618,7 +3618,7 @@ msgstr "&Ζουμ"
 #: part/pageview.cpp:642
 #, kde-format
 msgid "Area &Selection"
-msgstr "Επιλογή επιφάνεια&ς"
+msgstr "Ε&πιλογή επιφάνειας"
 
 #: part/pageview.cpp:649
 #, kde-format

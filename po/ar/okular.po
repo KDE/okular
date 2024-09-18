@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-09-05 09:31+0400\n"
+"PO-Revision-Date: 2024-09-17 07:46+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3911,6 +3911,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"وقع بواسطة: %1\n"
+"\n"
+"التاريخ: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4111,12 +4114,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "يجري التوقيع، يمكنك تعديل مكان وحجم التوقيع"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "انتهى التوقيع"
 
 #: part/part.cpp:655
 #, kde-format

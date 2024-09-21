@@ -1,4 +1,5 @@
 # translation of okular.po to Russian
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024 Alexander Yavorsky <kekcuha@gmail.com>
 # Nick Shaforostoff <shaforostoff@kde.ru>, 2004, 2007, 2008, 2009.
 # Oleg Batalov <olegbatalov@mail.ru>, 2004.
 # Gregory Mokhin <mok@kde.ru>, 2005.
@@ -12,21 +13,21 @@
 # Yuri Efremov <yur.arh@gmail.com>, 2012.
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
 # Aleksei Baranov <aleksei.ee@gmail.com>, 2014.
-# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024 Alexander Yavorsky <kekcuha@gmail.com>
 # Olesya Gerasimenko <translation-team@basealt.ru>, 2021, 2022, 2023.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-01-20 09:31+0300\n"
+"PO-Revision-Date: 2024-09-20 11:53+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 21.08.3\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -299,17 +300,13 @@ msgid "Landscape %1"
 msgstr "Альбомная %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 \" (%3)"
+msgstr "%1 x %2 дюйм. (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 мм (%3)"
@@ -3664,10 +3661,9 @@ msgid "Speak Whole Document"
 msgstr "Зачитать весь документ"
 
 #: part/pageview.cpp:709
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Зачитать текущую страницу"
+msgstr "Зачитать начиная с текущей страницы"
 
 #: part/pageview.cpp:714
 #, kde-format
@@ -3743,22 +3739,19 @@ msgid "Speak Text"
 msgstr "Зачитать текст"
 
 #: part/pageview.cpp:2847
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Рисунок (%1 х %2 точек)"
+msgstr "Изображение (%1 х %2 точек)"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Сохранить в файл…"
 
 #: part/pageview.cpp:2869
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Рисунок %1×%2 скопирован в буфер обмена."
+msgstr "Изображение %1×%2 скопировано в буфер обмена."
 
 #: part/pageview.cpp:2872
 #, kde-format
@@ -3776,10 +3769,9 @@ msgid "File not saved."
 msgstr "Файл не сохранён."
 
 #: part/pageview.cpp:2885
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Рисунок %1×%2 сохранён в файле %3."
+msgstr "Изображение %1×%2 сохранено в файл «%3»."
 
 #: part/pageview.cpp:3027
 #, kde-format
@@ -3947,6 +3939,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Подпись: %1\n"
+"\n"
+"Дата: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4149,12 +4144,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Выполняется подписание. Вы можете настроить положение и размер подписи"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Завершить подписание"
 
 #: part/part.cpp:655
 #, kde-format
@@ -5519,11 +5514,7 @@ msgid "Save Signed File As"
 msgstr "Сохранение подписанного файла"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

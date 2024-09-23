@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-08-25 12:18+0200\n"
+"PO-Revision-Date: 2024-09-22 16:35+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -3907,6 +3907,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Signert av: %1\n"
+"\n"
+"Dato: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format

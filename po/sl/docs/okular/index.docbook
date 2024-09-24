@@ -1,0 +1,4433 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Slovenian "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>Priročnik za &okular;</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>Peter</firstname
+><surname
+>Žaucer</surname
+><affiliation
+><address
+><email
+>peter.zaucer@gmail.com</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>19.02.2022</date>
+		<releaseinfo
+>22.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>&okular; je &kde; univerzalni pregledovalnik dokumentov, ki temelji na &kpdf; kodi.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>KDE</keyword>
+			<keyword
+>okular</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>postscript</keyword>
+			<keyword
+>tiff</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>chm</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>annotation</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>Uvod</title>
+		<para
+>&okular; je &kde; univerzalni pregledovalnik dokumentov, ki temelji na kodi &kpdf; aplikacije. Čeprav temelji na &kpdf; kodi, ima &okular; nekaj edinstvenih funkcij, kot je način pregleda, izboljšana podpora za predstavitve in podpora za opombe. </para>
+		<para
+>&okular; podpira veliko različnih formatov, kot so &PDF;, &PostScript;, Tiff, CHM, DjVU, slike (png, jpg itd.) XPS, leposlovne knjige, stripi, Plucker, EPub, faks in Markdown. Za vse podprte formate in njihove funkcije glejte <ulink url="https://okular.kde.org/formats.php"
+> &okular; obdelovalci formatov dokumentov</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>Glavno okno &okular;ja</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>Glavno okno &okular;ja</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>Osnovna uporaba</title>
+		<sect1 id="opening">
+			<title
+>Odpiranje datotek</title>
+			<para
+>Če želite odpreti katero koli podprto datoteko v programu &okular;, izberite <menuchoice
+><guimenu
+>Datoteka</guimenu
+><guimenuitem
+>Odpri...</guimenuitem
+> </menuchoice
+>, izberite podprto datoteko v pogovornem oknu in kliknite <guibutton
+>Odpri </guibutton
+>. Vaša datoteka bi morala biti zdaj prikazana v glavnem oknu. </para>
+			<important>
+			  <para
+>Nov dokument bo odprt v novem zavihku, če je označena možnost <guilabel
+>Odpri nove datoteke v zavihkih</guilabel
+> na <link linkend="configgeneral"
+>strani s splošno konfiguracijo</link
+>. </para>
+                          <para
+>Zavihek lahko zaprete tako, da kliknete &MMB; na njem. </para>
+                          <para
+>Predhodno zaprt dokument v zavihku je mogoče znova odpreti z <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>Datoteka </guimenu
+> <guimenuitem
+>Razveljavi zapiranje zavihka</guimenuitem
+></menuchoice
+> element menija. </para>
+			</important>
+			<para
+>Če ste že odprli datoteke v programu &okular; prej lahko do njih hitro dostopate tako, da jih izberete v meniju <menuchoice
+><guimenu
+>Datoteka</guimenu
+><guisubmenu
+>Odpri nedavno</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>&okular; je privzeta &kde; aplikacija za &PDF; in &PostScript; datoteke, ki se zaženejo, ko kliknete z &LMB; na takšno vrsto datoteke v upravitelju datotek. Če želite odpreti katero koli datoteko, katere format podpira &okular; uporabite <menuchoice
+><guimenu
+>Odpri z...</guimenu
+><guimenuitem
+>&okular;</guimenuitem
+> </menuchoice
+> iz kontekstnega menija v upravitelju datotek. </para>
+			<para
+>Ko odprete datoteko, jo boste verjetno želeli prebrati in zato krmariti po njej. Pojdite na <link linkend="navigating"
+>naslednji razdelek</link
+>, če želite izvedeti več o tem. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>Navigacija</title>
+			<para
+>Ta razdelek opisuje, kako lahko krmarite po dokumentu v programu &okular;.</para>
+			<para
+>Obstaja več načinov premikanja po območju gledanja. Ena je uporaba gor in dol smernih tipk. Uporabite lahko tudi drsni trak, kolesce miške ali &PgUp; in &PgDn; tipki. </para>
+			<para
+>Uporabite lahko tudi navigacijske tipke, podobne <application
+>vim</application
+>, in sicer <keycap
+>H</keycap
+> za pomik na vrh prejšnje strani, <keycap
+>L</keycap
+> za pomik na vrh naslednjo stran, <keycap
+>J</keycap
+> za premik eno vrstico navzdol in <keycap
+>K</keycap
+> za premik eno vrstico navzgor. </para>
+			<para
+>Drug način je, da držite &LMB; navzdol na poljubnem mestu v dokumentu, medtem ko miško vlečete v nasprotni smeri, kamor se želite premakniti. Ta postopek deluje le, če je omogočeno orodje za brskanje, ki ga lahko izberete tako, da izberete <menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Brskaj</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>Pri ogledu dokumenta v <link linkend="presentationMode"
+>predstavitvenem načinu</link
+> uporabite gor in dol puščične tipke za preklapljanje med stranmi ali diapozitivi. Številka in položaj trenutnega diapozitiva bosta prikazana v oknu v desnem zgornjem kotu zaslona. </para>
+			</note>
+			<para
+>Če želite brati dokument z več stranmi, uporabite funkcijo samodejnega drsenja programa &okular;. Zaženite samodejno drsenje s <keycombo action="simul"
+>&Shift;&Down;</keycombo
+> ali <keycombo action="simul"
+>&Shift;&Up;</keycombo
+>. Nato uporabite te tipke za povečanje in zmanjšanje hitrosti drsenja. Samodejno drsenje lahko začasno zaženete ali ustavite tako, da pritisnete &Shift; ključ; s pritiskom katere koli druge tipke to funkcijo deaktivirate. </para>
+			<para
+>Drug način za krmarjenje po dokumentu z več stranmi je uporaba kazalca miške. Povlecite stran gor ali dol, nadaljujte z vlečenjem, tudi ko dosežete dno ali vrh zaslona in glejte. Ko prestopite mejo strani, se kazalec miške znova prikaže na vrhu ali dnu zaslona in lahko nadaljujete z vlečenjem. </para>
+			<para
+>Stranska vrstica na levi strani zaslona omogoča še dva načina krmarjenja po dokumentu: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Če kliknete sličico strani, se bo območje za ogled preusmerilo na to stran. </para>
+				</listitem>
+				<listitem>
+					<para
+>Če ima dokument kazalo vsebine, se s klikom na element kazala prikaže dokument na strani, ki je povezana s tem elementom. </para>
+				</listitem>
+				<listitem>
+					<para
+>Če ima dokument plasti, lahko nadzirate prikazane plasti tako, da označite ali počistite elemente na seznamu <guilabel
+>Sloji</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Če ima dokument zaznamke, omogočite pogled <guilabel
+>Zaznamki</guilabel
+> in jih kliknite, da odprete povezano stran. Če zaznamki niso prikazani samo za trenutni dokument, lahko hitro preklopite na zaznamke v vseh nedavno odprtih datotekah. </para>
+				</listitem>
+				<listitem>
+					<para
+>Če ima dokument opombe, omogočite pogled <guilabel
+>Opombe</guilabel
+> in kliknite opombe ali jih izberite s tipkama gor in dol in pritisnite &Enter; da greste na povezano stran. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>Nekateri dokumenti imajo povezave. V tem primeru jih lahko kliknete in pogled se bo spremenil na stran, na katero vodi povezava. Če je povezava na spletno stran ali kak drug dokument, je privzeti &kde; priklican bo upravljalnik za to obliko. Na primer, s klikom na povezavo, ki kaže na <quote
+>https://www.kde.org</quote
+>, se odpre spletna stran v privzetem spletnem brskalniku &kde;. </para>
+			<important>
+			  <para
+>Notranje povezave do dokumenta delujejo le, če je uporabljeno <link linkend="menutools"
+>Orodje za brskanje</link
+>. </para>
+			</important>
+			<para
+>Poleg tega lahko uporabite naslednje funkcije za hitro premikanje na določena mesta v dokumentu: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Na začetek dokumenta se lahko premaknete z <keycombo action="simul"
+>&Ctrl;<keycap
+>Domov</keycap
+></keycombo
+> ali z <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Začetek dokument</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>Na konec dokumenta se lahko premaknete z <keycombo action="simul"
+>&Ctrl;<keycap
+>Konec</keycap
+></keycombo
+> ali z <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Konec dokumenta</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>V dokumentu se lahko premaknete naprej s pomočjo preslednice ali &PgDn;. Za prehod na naslednjo stran dokumenta uporabite gumb <guibutton
+>Naslednja stran</guibutton
+> orodne vrstice ali <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Naslednja stran</guimenuitem
+> </menuchoice
+> v menijski vrstici . </para>
+				</listitem>
+				<listitem>
+					<para
+>V dokument se lahko vrnete nazaj z &Backspace; ali &PgUp;. Za prehod na prejšnjo stran dokumenta uporabite gumb <guibutton
+>Prejšnja stran</guibutton
+> v orodni vrstici ali <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Prejšnja stran</guimenuitem
+> </menuchoice
+> v menijski vrstici. </para>
+				</listitem>
+				<listitem>
+					<para
+>Lahko se vrnete na položaje v dokumentu, od koder ste prišli v kronološkem vrstnem redu. Razmislite npr. branje fraze <quote
+>Kot je prikazano v [15], …</quote
+>, in želite izvedeti hitro iskanje reference [15]. Torej kliknete nanjo in program &okular; bo skočil na seznam referenc. Z uporabo <keycombo
+>&Alt;&Shift;&Left;</keycombo
+> ali <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Nazaj</guimenuitem
+> </menuchoice
+> v menijski vrstici se boste vrnili točno na položaj, kjer od koder si prišel. </para>
+				</listitem>
+				<listitem>
+					<para
+>V dokumentu se lahko premaknete naprej po skoku nazaj, kot je opisano zgoraj, z uporabo <keycombo
+>&Alt;&Shift;&Right;</keycombo
+> ali <menuchoice
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Naprej</guimenuitem
+> </menuchoice
+> v menijski vrstici. </para>
+				</listitem>
+				<listitem>
+					<para
+>Pri iskanju s <keycap
+>F3</keycap
+> ali &Enter; (ko je fokus na besedilnem polju <guilabel
+>Najdi</guilabel
+>) tipkami ali <menuchoice
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Poišči naslednje</guimenuitem
+> </menuchoice
+> element menija ali se pomaknite nazaj na prejšnje ujemanje z uporabo tipk <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+> ali <keycombo
+>&Shift;&Enter;</keycombo
+> (ko je fokus na besedilnem polju <guilabel
+>Najdi</guilabel
+>) ali <menuchoice
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Poišči prejšnji</guimenuitem
+> </menuchoice
+> element menija. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>Način predstavitve</title>
+			<para
+>Predstavitveni način predstavlja drug način za ogled dokumentov v programu &okular;. Omogoči se lahko v <menuchoice
+><guimenu
+>Pogled</guimenu
+><guimenuitem
+>Predstavitev</guimenuitem
+></menuchoice
+>. Prikazuje dokument stran za stranjo. Strani so prikazane s povečavo strani, kar pomeni, da je vidna vsa stran. </para>
+			<note>
+				<para
+>&PDF; dokumenti lahko celo določijo, da so vedno odprti v predstavitvenem načinu. </para>
+			</note>
+			<para
+>Ko ste v predstavitvenem načinu, imate na vrhu zaslona vrstico za pomoč. Samo premaknite kazalec miške na vrh zaslona, da se prikaže. </para>
+			<screenshot>
+			<screeninfo
+>&okular; v predstavitvenem načinu</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>&okular; v predstavitvenem načinu</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>Za krmarjenje med stranmi lahko uporabite &LMB; (naslednja stran) in &RMB; (prejšnja stran), kolesce miške, ikone s puščicami ali urejanje vrstice v zgornji vrstici ali tipke, določene v razdelku <link linkend="navigating"
+>Krmarjenje</link
+>. </para>
+			<para
+>Uporabite gumb <guilabel
+>Predvajaj/Zaustavi</guilabel
+> v zgornji vrstici, da začnete predvajanje predstavitve ali jo ustrezno zaustavite. </para>
+			<para
+>Predstavitveni način lahko kadar koli zapustite tako, da pritisnete &Esc; ali kliknite ikono <guiicon
+>Zapri</guiicon
+> v zgornji vrstici. </para>
+			<para
+>Na trenutno stran lahko rišete tudi s svinčnikom. Kliknite ikono <guilabel
+>Preklop načina risanja</guilabel
+> v zgornji vrstici, da omogočite ali onemogočite možnost risanja v predstavitvenem načinu. Risbe se samodejno izbrišejo, ko zapustite način predstavitve. Lahko tudi kliknete ikono <guilabel
+>Izbriši risbe</guilabel
+>, da odstranite risbe na trenutni strani. </para>
+			<para
+>Predstavitveni način podpira več kot en zaslon v konfiguraciji z več monitorji. Pri več kot enem zaslonu se bo v zgornji vrstici pojavil nov gumb z ikono zaslona: to je spustno polje, ki vam omogoča, da predstavitev premaknete na katerega koli drugega razpoložljivega zaslona. </para>
+			<para
+>Predstavitveni način ima nekaj konfiguracijskih možnosti, njihov opis najdete v poglavju <link linkend="configpresentation"
+>Konfiguracija &okular;ja</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>Inverzno iskanje med &latex; Urejevalniki in &okular;jem</title>
+
+		<para
+>Inverzno iskanje je zelo uporabna funkcija, ko sami pišete &latex; dokumentirajte. Če je vse pravilno nastavljeno, lahko kliknete v okno &okular; z <mousebutton
+>levo</mousebutton
+> tipko miške in hkrati pritisnete &Shift;. Po tem urejevalnik naloži izvorno datoteko &latex; in skoči na ustrezen odstavek.</para>
+
+		<para
+>Inverzno iskanje ne more delovati, razen če:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>Izvorna datoteka je bila uspešno prevedena.</para
+></listitem>
+			<listitem
+><para
+>&okular; ve, kateri urejevalnik želite uporabiti.</para
+></listitem>
+			<listitem
+><para
+>Omogočeno mora biti orodje za brskanje, ki ga lahko izberete tako, da izberete <menuchoice
+><guimenu
+>Orodja</guimenu
+><guimenuitem
+>Brskaj </guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>Pri tej funkciji programa &okular; levi klik miške med pritiskom &Shift; v &DVI; ali &PDF; dokumentu bo urednik odprl ustrezen &latex; dokument in poskusil iti v ustrezno vrstico. Ne pozabite povedati &okular;ju za uporabo ustreznega urejevalnika v &okular;-jevem menijskem elementu <menuchoice
+><guimenu
+>Nastavitve</guimenu
+><guimenuitem
+>Konfiguriraj Okular...</guimenuitem
+></menuchoice
+> (na strani <guimenuitem
+>Urejevalnik</guimenuitem 
+>).</para>
+
+		<para
+>Za več podrobnosti o konfiguraciji urejevalnika si oglejte <link linkend="configeditor"
+>ustrezen razdelek tega priročnika</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>Konfiguracija &okular;ja</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Konfiguriranje urejevalnika v &okular;ju</phrase>
+			</textobject>
+			<caption
+><para
+>Konfiguriranje urejevalnika v &okular;ju</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>Napredne funkcije programa &okular;</title>
+		<sect1 id="embedded-files">
+			<title
+>Vgrajene datoteke</title>
+			<para
+>Če ima trenutni dokument vgrajenih nekaj datotek, se bo, ko ga odprete, nad pogledom strani prikazala vrstica, ki vas bo obvestila o vgrajenih datotekah. </para>
+			<screenshot>
+				<screeninfo
+>Vrstica z vgrajenimi datotekami</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Vrstica z vgrajenimi datotekami</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>V tem primeru lahko bodisi kliknete povezavo v besedilu vrstice ali izberete <menuchoice
+><guimenu
+>Datoteka</guimenu
+><guimenuitem
+>Vgrajene datoteke</guimenuitem
+></menuchoice
+>, da odprete pogovorno okno za vgrajene datoteke. Pogovorno okno vam omogoča ogled vgrajenih datotek in njihovo izvlečenje. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>Obrazci</title>
+			<para
+>Če ima trenutni dokument obrazce, se bo, ko ga odprete, nad pogledom strani pojavila vrstica, kjer lahko omogočite obrazce. </para>
+			<screenshot>
+				<screeninfo
+>Vrstica z obrazci</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Vrstica z obrazci</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>V tem primeru lahko kliknete <guilabel
+>Pokaži obrazce</guilabel
+> v vrstici ali izberete <menuchoice
+><guimenu
+>Pogled</guimenu
+><guimenuitem
+>Pokaži obrazce</guimenuitem
+></menuchoice
+> za vnos podatkov v polja obrazca. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>Podpisi</title>
+			<para
+>Če ima trenutni dokument podpise, se bo po odprtju dokumenta nad pogledom strani pojavila vrstica. Omogoča odpiranje plošče <guilabel
+>Podpisi</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>Vrstica s podpisi</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Vrstica s podpisi</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Z uporabo plošče <guilabel
+>Podpisi</guilabel
+> lahko pregledate podpis dokumenta in njegovo potrdilo. </para>
+			<screenshot>
+				<screeninfo
+>Plošče s podpisi</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Plošče s podpisi</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>Ta funkcija je na voljo samo za &PDF; dokumente. Za pridobitev večine informacij o podpisih morate namestiti vsaj različico 0.51 programa <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>, različico 0.68 za pridobitev informacij o lokaciji/razlogu podpisa in različico 0.73 za pridobitev informacij o potrdilu o podpisu. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Dodajanje digitalnih podpisov</title>
+				<para
+>Dokumentom lahko dodate digitalne podpise z ustreznim dejanjem v meniju <menuchoice
+><guimenu
+>Orodja</guimenu
+></menuchoice
+>. </para>
+				<para
+>Da bi lahko podpisali dokument, morate imeti v sistemu na voljo ustrezno podpisno potrdilo <acronym
+>PKCS</acronym
+>. &okular; nima zmožnosti ustvariti takih potrdil, ker jih morajo izdati overitelji potrdil, da so uporabna za preverjanje itd. </para>
+				<para
+>Za podpisovanje &PDF; dokumentov uporabljamo knjižnico Poppler, ki uporablja knjižnico NSS za obdelavo potrdil. V trenutku pisanja bo Poppler poskušal uporabiti eno od naslednjih shramb potrdil NSS po vrstnem redu (prvo, ki obstaja): </para>
+				<itemizedlist>
+					<listitem
+><para
+>Trenutna shramba uporabniških potrdil Firefox.</para
+></listitem>
+					<listitem
+><para
+>Sistemska shramba potrdil <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>Trenutni uporabnik <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>Če želite uporabiti shrambo potrdil po meri, lahko to storite tako, da jo nastavite v <link linkend="config-pdf-digital-signatures"
+>&PDF; Razdelku Konfiguracije ozadja</link
+> pogovornega okna <link linkend="configure-backends"
+>Konfiguriraj ozadja...</link
+>. </para>
+				<note>
+					<para
+>Ta funkcija je na voljo za samo &PDF; dokumente. Če želite dokumentu dodati digitalne podpise, morate namestiti vsaj različico 21.01 programa <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>Opombe</title>
+			<para
+>&okular; omogoča pregledovanje in komentiranje vaših dokumentov. </para>
+			<screenshot>
+			<screeninfo
+>Okularjeve opombe</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>Okularjeve opombe</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>&okular; ima dve različni vrsti opomb:</para>
+			<para
+>Besedilne opombe, kot sta <guilabel
+>Rumeni označevalec</guilabel
+> in <guilabel
+>Črno podčrtano</guilabel
+>, lahko uporabite z datotekami, ki vsebujejo besedilo (npr. &PDF;).</para>
+		      <para
+>Grafične opombe, kot so <guilabel
+>Pojavna opomba</guilabel
+>, <guilabel
+>Vdelana opomba</guilabel
+>, <guilabel
+>Prostoročna črta</guilabel
+>, <guilabel
+>Označevalnik</guilabel
+>, <guilabel
+>Ravna črta</guilabel
+>, <guilabel
+>Mnogokotnik</guilabel
+>, <guilabel
+>Žig</guilabel
+>, <guilabel
+>Podčrtano</guilabel
+>, <guilabel
+>Elipsa</guilabel
+> in <guilabel
+>Pisalni stroj</guilabel
+>.</para>
+			  <para
+>Grafične opombe niso omejene na &PDF; datoteke; mogoče jih je uporabiti za kateri koli format, ki ga podpira &okular;.</para>
+			<para
+>Z uporabo menija <guilabel
+>Opombe</guilabel
+> lahko dodate <guilabel
+>Pojavno opombo</guilabel
+> ali katero koli drugo vrsto opombe za dodajanje ali urejanje komentarjev.</para>
+
+			<para
+>&okular; ima funkcijo "arhiviranja dokumentov". To je format, specifičen za &okular; za prenašanje dokumenta in različnih metapodatkov, povezanih z njim (trenutno samo opombe). Iz odprtega dokumenta lahko shranite »arhiv dokumentov« tako, da izberete <menuchoice
+><guimenu
+>Datoteka</guimenu
+><guisubmenu
+>Shrani kot</guisubmenu
+></menuchoice
+> in izberete <guilabel
+>Arhiv dokumentov Okular</guilabel
+> v izbirniku <guilabel
+>Filter</guilabel
+>. Tako shranjeni dokumenti bodo kot pripono imena datoteke dobili <filename
+>.okular</filename
+>. Če želite odpreti &okular; arhiv dokumentov, ga odprite z programom &okular; kot bi bil npr. &PDF; dokument. </para>
+			<para
+>Opombe lahko shranite <emphasis
+>tudi</emphasis
+> neposredno v &PDF; datoteke. Uporabite lahko <menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Shrani</guimenuitem
+></menuchoice
+>, da jo shranite nad trenutno datoteko, ali <menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Shrani kot...</guimenuitem
+></menuchoice
+>, da jo shranite v novo datoteko. </para>
+				<note>
+					<para
+>Upoštevajte, da dodajanje, urejanje ali odstranjevanje opomb morda ne bo mogoče pri datotekah, ki podpirajo DRM. </para>
+				</note>
+				<note>
+				  <para
+>Možno je <link linkend="edit-undo"
+>razveljaviti</link
+> ali <link linkend="edit-redo"
+>ponoviti</link
+> katero koli dejanje opombe z uporabo ustreznega elementa v <guimenu
+>Uredi</guimenu
+> meni. Dejanje je mogoče razveljaviti tudi s pritiskom na <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> in ponoviti predhodno razveljavljeno dejanje s pritiskom na <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap 
+></keycombo
+>. </para>
+				</note>
+			<para
+>Konfigurirate lahko privzete lastnosti in videz vsakega orodja za opombe. Oglejte si <link linkend="configannotations"
+>ustrezen razdelek v tej dokumentaciji</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>Dodajanje opomb</title>
+				<para
+>Če želite dokumentu dodati opombe, lahko uporabite gumb <guilabel
+>Hitre opombe</guilabel
+> na glavni &okular; orodni vrstici ali aktivirajte orodno vrstico za opombe. To storite tako, da izberete <menuchoice
+><guimenu
+>Orodja</guimenu
+><guimenuitem
+>Opombe</guimenuitem
+></menuchoice
+> ali pritisnete <keycap
+>F6</keycap
+>. Ko se prikaže orodna vrstica za opombe, samo pritisnite enega od njenih gumbov ali uporabite bližnjice na tipkovnici (tipke od <keycap
+>1</keycap
+> do <keycap
+>9</keycap
+>), da uporabite to opombo. </para>
+				<para
+>Orodna vrstica za opombe vam pomaga ustvarjati opombe z risbami, oblikami in besedilnimi sporočili. Z orodno vrstico za opombe lahko označite dokument (npr. dodate črte, elipse, mnogokotnike, žige, poudarke, podčrtaje itd.). Spodnja tabela natančno opisuje, kaj počne privzeti nabor gumbov orodne vrstice za opombe. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Gumb </entry>
+					<entry
+>Ime orodja </entry>
+					<entry
+>Opis </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Označevalnik </para>
+					</entry>
+					<entry>
+					  <para
+>Označi besedilo v dokumentu z dano barvo ozadja. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in povlecite, da označite delček besedila. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Označi</guimenuitem
+>, <guimenuitem
+>Vijugast</guimenuitem
+>, <guimenuitem
+>Podčrtaj</guimenuitem
+> ali <guimenuitem
+>Prečrtaj</guimenuitem 
+>), <guilabel
+>Barvo</guilabel
+> in <guilabel
+>Prosojnost</guilabel
+> za označevalnik. Z desno miškino tipko kliknite označeno besedilo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Podčrtaj </para>
+					</entry>
+					<entry>
+					  <para
+>Besedilo podčrta z ravno črto. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in povlecite, da podčrtate delček besedila. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Označi</guimenuitem
+>, <guimenuitem
+>Vijugast</guimenuitem
+>, <guimenuitem
+>Podčrtaj</guimenuitem
+> ali <guimenuitem
+>Prečrtaj</guimenuitem 
+>), <guilabel
+>Barvo</guilabel
+> in <guilabel
+>Prosojnost</guilabel
+> za podčrtaj. Z desno miškino tipko kliknite podčrtano besedilo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Vijuganje </para>
+					</entry>
+					<entry>
+					  <para
+>Besedilo podčrta z vijugasto črto. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in povlecite, da vijugasto podčrtate delček besedila. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Označi</guimenuitem
+>, <guimenuitem
+>Vijugast</guimenuitem
+>, <guimenuitem
+>Podčrtaj</guimenuitem
+> ali <guimenuitem
+>Prečrtaj</guimenuitem 
+>), <guilabel
+>Barvo</guilabel
+> in <guilabel
+>Prosojnost</guilabel
+> za podčrtaj. Z desno miškino tipko kliknite podčrtano besedilo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Prečrtati </para>
+					</entry>
+					<entry>
+					  <para
+>Prečrta nekaj besedila. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in povlecite, da vijugasto prečrtate delček besedila. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Označi</guimenuitem
+>, <guimenuitem
+>Vijugast</guimenuitem
+>, <guimenuitem
+>Podčrtaj</guimenuitem
+> ali <guimenuitem
+>Prečrtaj</guimenuitem 
+>), <guilabel
+>Barvo</guilabel
+> in <guilabel
+>Prosojnost</guilabel
+> za podčrtaj. Z desno miškino tipko kliknite podčrtano besedilo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pisalni stroj </para>
+					</entry>
+					<entry>
+					  <para
+>Doda besedilo na prozorno ozadje. To je uporabno za izpolnjevanje obrazcev brez integriranih besedilnih polj, ki jih je mogoče urejati. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; kamor želite dodati zgornji levi kot besedila, nato povlecite, da postavite spodnjega desnega. Vnesite besedilo, nato kliknite <guibutton
+>V redu</guibutton
+>, da ga shranite, <guibutton
+>Počisti</guibutton
+>, da počistite besedilo in začnete znova, ali <guibutton
+>Prekliči</guibutton
+>, da prekličete. </para>
+					  <para
+>Možno je določiti <guilabel
+>Pisavo</guilabel
+> in <guilabel
+>Barvo besedila</guilabel
+> za besedilo. Z desno miškino tipko kliknite ustvarjeno besedilo pisalnega stroja in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Opomba v vrstici </para>
+					</entry>
+					<entry>
+					  <para
+>Nariše opombo v vrstici. Opomba bo prikazana v vrstici, kakršna je. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; kamor želite dodati zgornji levi kot zapiska, nato povlecite, da postavite spodnjega desnega kota. Vnesite besedilo opombe in kliknite <guibutton
+>V redu</guibutton
+>, da shranite opombo, <guibutton
+>Počisti</guibutton
+>, da počistite besedilo opombe, ali <guibutton
+>Prekliči</guibutton
+>, da prekličete ustvarjanje opombe . </para>
+					  <para
+>Možno je določiti <guilabel
+>barvo</guilabel
+>, <guilabel
+>motnost</guilabel
+>, <guilabel
+>pisavo</guilabel
+>, <guilabel
+>poravnavo</guilabel
+> in <guilabel
+>širino obrobe</guilabel
+> za opombo. Z desno miškino tipko kliknite ustvarjeno ikono opombe in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pojavna opomba </para>
+					</entry>
+					<entry>
+					  <para
+>Nariše večvrstični zapis. Opombo si lahko ogledate z dvojnim klikom na ikono, ustvarjeno v dokumentu. </para>
+					  <para
+>Kliknite gumb orodja in nato kliknite mesto v dokumentu, kamor naj bo dodana pojavna opomba. Vnesite besedilo pojavne opombe in kliknite gumb <guilabel
+>Zapri to opombo</guilabel
+> v zgornjem desnem kotu pojavnega okna. </para>
+					  <para
+>Možno je določiti <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel
+> in <guilabel
+>Ikono</guilabel
+> za zapisek. Z desno miškino tipko kliknite ustvarjeno ikono opombe in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Prostoročna črta </para>
+					</entry>
+					<entry>
+					  <para
+>Riše črte proste oblike. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in povlecite, da narišete črto. </para>
+					  <para
+>Za črto je možno določiti <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel
+> in <guilabel
+>Širino</guilabel
+>. Z desno miškino tipko kliknite ustvarjeno vrstico in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Puščica (spustni seznam) </para>
+					</entry>
+					<entry>
+					  <para
+>Nariše puščico med dvema točkama. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; da postavite začetno točko puščice, nato povlecite, da postavite končno točko črte, in še enkrat kliknite. </para>
+					  <para
+>Možno je določiti <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel
+>, <guilabel
+>Širino</guilabel
+>, <guilabel
+>Začetek vrstice</guilabel
+>, <guilabel
+>Konec vrstice</guilabel
+>, <guilabel
+>Dolžina vodilne črte</guilabel
+> in <guilabel
+>Dolžina podaljška vodilne črte</guilabel
+> za črto desno miškino tipko kliknite ustvarjeno vrstico in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Ravna črta (spustni seznam) </para>
+					</entry>
+					<entry>
+					  <para
+>Nariše črto med dvema točkama. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; da postavite začetno točko črte, nato povlecite, da postavite končno točko črte, in še enkrat kliknite. </para>
+					  <para
+>Možno je določiti <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel
+>, <guilabel
+>Širino</guilabel
+>, <guilabel
+>Začetek vrstice</guilabel
+>, <guilabel
+>Konec vrstice</guilabel
+>, <guilabel
+>Dolžina vodilne črte</guilabel
+> in <guilabel
+>Dolžina podaljška vodilne črte</guilabel
+> za črto desno miškino tipko kliknite ustvarjeno vrstico in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pravokotnik (spustni seznam) </para>
+					</entry>
+					<entry>
+					  <para
+>Okoli izbranega območja nariše pravokotnik. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; da postavite zgornji levi kot pravokotnika, nato povlecite, da postavite spodnjega desnega kota. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Pravokotnik</guimenuitem
+> ali <guimenuitem
+>Elipsa</guimenuitem
+>), <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel 
+>, <guilabel
+>Polnilo oblike</guilabel
+> (in njegova barva) in <guilabel
+>Širino</guilabel
+> za obrobo. Z desno miškino tipko kliknite ustvarjeno obrobo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Elipsa (spustni seznam) </para>
+					</entry>
+					<entry>
+					  <para
+>Okoli izbranega območja nariše elipso ali pravokotnik. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; in pridržite, da postavite zgornji levi kot obrobljenega pravokotnika za elipso, nato povlecite, da postavite spodnjega desnega kota. </para>
+					  <para
+>Možno je definirati <guilabel
+>Vrsto</guilabel
+> (<guimenuitem
+>Pravokotnik</guimenuitem
+> ali <guimenuitem
+>Elipsa</guimenuitem
+>), <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel 
+>, <guilabel
+>Polnilo oblike</guilabel
+> (in njegova barva) in <guilabel
+>Širino</guilabel
+> za obrobo. Z desno miškino tipko kliknite ustvarjeno obrobo in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Večkotnik (spustni seznam) </para>
+					</entry>
+					<entry>
+					  <para
+>Nariše zaprto obliko iz treh ali več segmentov črte. Ustrezno opombo si lahko ogledate z dvojnim klikom znotraj večkotnika. </para>
+					  <para
+>Kliknite gumb orodja, nato kliknite z &LMB; da postavite prvo oglišče večkotnika, nato povlecite na mesto drugega oglišča. Nadaljujte, dokler ne narišete celotnega večgona in se ponovno povežete s prvo točko. Kliknite dvakrat, da večkotniku dodate opombo. Vnesite besedilo opombe in kliknite <guibutton
+>V redu</guibutton
+>, da shranite opombo, <guibutton
+>Počisti</guibutton
+>, da počistite opombo, ali <guibutton
+>Prekliči</guibutton
+>, da prekličete vnos opombe. </para>
+					  <para
+>Za večkotnik lahko definirate <guilabel
+>Barvo</guilabel
+>, <guilabel
+>Prosojnost</guilabel
+>, <guilabel
+>Polnilo oblike</guilabel
+> (in barvo), in <guilabel
+>Širino</guilabel
+>. Z desno miškino tipko kliknite ustvarjeni večkotnik in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Žig </para>
+					</entry>
+					<entry>
+					  <para
+>V dokument vstavi vnaprej določeno obliko. </para>
+					  <para
+>Kliknite gumb orodja, da izberete žig s spustnega seznama, nato kliknite z &LMB; za oddajo žiga. </para>
+					  <para
+>Z enim klikom samo postavite kvadratni žig (uporabno za ikone). Če želite dodati pravokotni žig, kliknite z &LMB; in pridržite, da postavite zgornjo levo točko, nato povlecite, da postavite spodnjo desno. </para>
+					  <para
+>Možno je določiti <guilabel
+>Prosojnost</guilabel
+> in <guilabel
+>Simbol žiga</guilabel
+> za žig. Z desno miškino tipko kliknite ustvarjeno ikono žiga in izberite menijsko postavko <guimenuitem
+>Lastnosti</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Ta funkcija je poskusna. Žigi po meri vstavljeni v &PDF; dokumente niso vidni v PDF bralnikih, ki niso okular;. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>To so privzete opombe, ki jih ponuja &okular;. Na <link linkend="configannotations"
+>strani z opombami</link
+> v konfiguracijskem pogovornem oknu lahko dodate lastne opombe, kot so žigi po meri, oznake besedila ali geometrijske oblike z notranjo barvo za označevanje regij itd. </para>
+                                  <note>
+                                      <para
+>Možno je dodati &latex; kodo v besedilo opomb. Če želite to narediti, dodajte <userinput
+>$$<replaceable
+>code</replaceable
+>$$</userinput
+> v besedilo opombe, kjer je <replaceable
+>code</replaceable
+> katera koli veljavna &latex; enačba. Sledite navodilom, ki se bodo pojavila na zaslonu, da ga upodabljate z &latex; distribucijo nameščeno v vašem sistemu. </para>
+                                  </note>
+				<para
+>Izbrano orodje je možno konfigurirati s samo orodno vrstico za opombe: </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Gumb </entry>
+					<entry
+>Ime možnosti </entry>
+					<entry
+>Opis </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Širina črte </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite na ta gumb, da izberete širino s spustnega seznama. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Barva pripisa </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite na ta gumb, da izberete barvo besedila ali obrobe vaše opombe. Izberete lahko eno od vnaprej določenih barv ali kliknete na element <guimenuitem
+>Barva po meri...</guimenuitem
+>, da odprete pogovorno okno za izbiro barve. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Barva polnila pripisov </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite na ta gumb, da izberete barvo polnila vaše opombe. Izberete lahko eno od vnaprej določenih barv ali kliknete na element <guimenuitem
+>Barva po meri...</guimenuitem
+>, da odprete pogovorno okno za izbiro barve. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Neprosojnost opombe </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite ta gumb, da izberete prosojnost vaše opombe s spustnega seznama (<guimenuitem
+>100 %</guimenuitem
+> ustvari neprozorne opombe). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Pisava opombe </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite na ta gumb, da odprete pogovorno okno za izbiro pisave. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Napredne nastavitve za trenutno orodje za opombe </para>
+					</entry>
+					<entry>
+					  <para
+>Kliknite ta gumb, da odprete splošno konfiguracijsko pogovorno okno za svojo opombo. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>V orodni vrstici za opombe so trije dodatni pomožni gumbi: </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Gumb </entry>
+					<entry
+>Opis </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Dodajte trenutno opombo v meni <guilabel
+>Hitre opombe</guilabel
+> v glavni orodni vrstici. </para>
+					  <note>
+						  <para
+>Uporabite lahko privzete bližnjice od <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> do <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+>, da kadar koli izberete hitra dejanja pripisov, tudi če je orodna vrstica pripisov skrita. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Ko je označeno, ohrani trenutno orodje za opombe aktivno po uporabi. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Skrij orodno vrstico za opombe. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>S pritiskom na &Shift; lahko omejite kote v večkotnikov na korake po 15°, razmerje pripisov oblik (npr. Pravokotnik, Elipsa) pa na 1:1. Gumb orodne vrstice lahko dobite tudi na <ulink url="help:/fundamentals/config.html#toolbars"
+>Konfiguriraj orodne vrstice...</ulink
+>. </para>
+				  <para
+>Vsebino menija <guilabel
+>Hitre opombe</guilabel
+> lahko konfigurirate s pomočjo <link linkend="configannotations"
+>strani z opombami v &okular;jevem konfiguracijskem pogovornem oknu</link
+>. To stran lahko odprete tako, da kliknete gumb <guilabel
+>Hitre opombe</guilabel
+> in nato v pojavnem meniju izberete <guimenuitem
+>Konfiguriraj opombe...</guimenuitem
+>. </para>
+				<note>
+					<para
+>Aktiviranje orodne vrstice za opombe bo samodejno preklopilo v način brskanja. </para>
+				</note>
+				<para
+>Komentiranje lahko kadar koli prekinete tako, da ponovno pritisnete gumb opombe, ki jo uporabljate, ali pritisnete &Esc; tipko. </para>
+				<para
+>Novo ustvarjena opomba bo imela avtorja, ki ste ga nastavili na strani <link linkend="configannotations"
+><guilabel
+>Opombe</guilabel
+></link
+> v konfiguracijskem pogovornem oknu &okular;ja. Stran <guilabel
+>Pripombe</guilabel
+> lahko uporabite tudi za nastavitev vsebin orodne vrstice pripomb. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>Odstranjevanje opomb</title>
+				<para
+>Če želite odstraniti opombo, najprej izberite orodje za brskanje (<menuchoice
+><guimenu
+>Orodja</guimenu
+><guimenuitem
+>Brskaj</guimenuitem
+></menuchoice
+>), nato jo kliknite z &RMB; in izberite <guimenuitem
+> Izbriši</guimenuitem
+> ali izberite opombo z &LMB; in pritisnite &Del; tipko. </para>
+				<para
+>Pri odstranjevanju opombe bo njeno okno zaprto, če je odprto. </para>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>Urejanje opomb</title>
+				<para
+>Če želite urediti opombo, najprej izberite orodje za brskanje (<menuchoice
+><guimenu
+>Orodja</guimenu
+><guimenuitem
+>Brskaj</guimenuitem
+></menuchoice
+>), nato kliknite opombo z &RMB; in izberite <guimenuitem
+>Lastnosti</guimenuitem
+>. Pojavilo se bo pogovorno okno s splošnimi nastavitvami pripisov (kot so barva in motnost, avtor itd.) in nastavitvami, značilnimi za to vrsto pripisov. </para>
+				<screenshot>
+				<screeninfo
+>Pogovorno okno lastnosti opombe</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>Pogovorno okno lastnosti opombe</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>Če želite premakniti opombo, pridržite &Ctrl; tipko, premaknite kazalec miške nanjo in nato začnite vleči z &LMB;. </para>
+				<para
+>Če kliknete z &LMB; na opombi se izbere. Ročaji za spreminjanje velikosti se prikažejo na izbirnem pravokotniku. Ko se kazalec premakne nad eno od 8 ročic za spreminjanje velikosti na vogalih ali robovih, se oblika kazalca spremeni, da prikaže način spreminjanja velikosti. Kliknite kjer koli drugje pripis, da ga premaknete. S pritiskom &Esc; ali pa s klikom na območje zunaj opombe prekličete izbor. </para>
+				<para
+>Spreminjanje velikosti je na voljo samo za anotacije: vrstične opombe, pisalni stroj, žig in elipsa.</para>
+
+				<note>
+					<para
+>Nekatere možnosti so lahko onemogočene, odvisno od dovoljenj dokumenta (to običajno vpliva le na nekatere dokumente &PDF;). </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>Upravljanje zaznamkov</title>
+			<para
+>&okular; ima zelo prilagodljiv sistem zaznamkov. &okular; shrani položaj na strani v zaznamku in vam omogoča, da določite več kot en zaznamek na stran. </para>
+			<para
+>Za upravljanje zaznamkov v programu &okular; lahko uporabite pogled <guilabel
+>Zaznamki</guilabel
+> v <guilabel
+>stranski vrstici</guilabel
+>, <link linkend="menubookmarks"
+>meniju Zaznamkov</link
+> ali kontekstnem meniju pogleda dokumenta (kliknite z &RMB;, da ga odprete ). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>Pogled zaznamkov</title>
+				<para
+>Če želite odpreti pogled <guilabel
+>Zaznamki</guilabel
+>, kliknite zavihek <guilabel
+>Zaznamki</guilabel
+> na vrhu <guilabel
+>stranske vrstice</guilabel
+>. Če <guilabel
+>stranska vrstica</guilabel
+> ni prikazana, kliknite gumb <guibutton
+>Pokaži stransko vrstico</guibutton
+> v orodni vrstici ali elementu menija ali <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Nastavitve</guimenu
+><guimenuitem
+>Pokaži stransko vrstico</guimenuitem
+></menuchoice
+> element menija, da bo viden. </para>
+				<screenshot>
+				    <screeninfo
+>Kontekstni meni pogleda zaznamkov</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>Kontekstni meni pogleda zaznamkov</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>Potrditveno polje <guilabel
+>Pokaži za vse dokumente</guilabel
+> lahko počistite, da prikažete samo zaznamke iz trenutnega dokumenta. </para>
+				<para
+>Filtrirno vrstico na vrhu pogleda <guilabel
+>Zaznamki</guilabel
+> lahko uporabite za filtriranje vsebine podokna s seznamom zaznamkov glede na besedilo v polju. </para>
+				<para
+>Podokno s seznami omogoča ogled seznama zaznamkov v obliki drevesa: vsak dokument na seznamu je mogoče <quote
+>razširiti</quote
+> ali <quote
+>strniti</quote
+> s klikom na <guiicon
+>&lt;</guiicon
+> ali <guiicon
+>v</guiicon
+> zraven. </para>
+				<para
+>Z desnim klikom menija elementa dokumenta lahko odprete dokument, preimenujete njegov element ali ga odstranite s seznama. Ne pozabite, da odstranitev postavke dokumenta povzroči odstranitev vseh zaznamkov v ustreznem dokumentu. </para>
+				<para
+>Meniji z desnim klikom posameznih elementov zaznamkov vam omogočajo, da odprete zaznamek, ga preimenujete ali odstranite. </para>
+				<para
+>Meni elementov v kazalu z desnim klikom lahko uporabite za ustvarjanje zaznamkov ali prehod na naslednji ali prejšnji zaznamek. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>Možnosti ukazne vrstice</title>
+		    <para
+>Čeprav se &okular; največkrat zažene iz &kde; programskega menija ali ikone na namizju, ga lahko odprete tudi v ukazni vrstici okna terminala. Pri tem je na voljo nekaj uporabnih možnosti. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>Določite datoteko</title>
+			<para
+>Z določitvijo poti in imena določene datoteke lahko uporabnik &okular;ja odpre to datoteko takoj po zagonu. Ta možnost je lahko videti nekako takole: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/myhome/docs/mydoc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>Za &PDF; dokumente, lahko ime podate kot <replaceable
+>ime_dokumenta</replaceable
+>#<replaceable
+>ime_cilja</replaceable
+>, kjer je <replaceable
+>ime_cilja</replaceable
+> določen imenovani cilj, vstavljen v dokument. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>Druge možnosti ukazne vrstice</title>
+			<para
+>Na voljo so naslednje možnosti pomoči v ukazni vrstici </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>število</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Odprite stran z dano številko v dokumentu. Na voljo tudi prek <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>število</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--predstavitev</option
+></userinput
+></term>
+				<listitem
+><para
+>Zaženite dokument v predstavitvenem načinu.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>Začni s pogovornim oknom za tiskanje.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>Začni s pogovornim oknom za tiskanje in zapusti po tiskanju.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>Edinstveni nadzor primerkov.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>Omogoča preprečevanje programu &okular; dvig oken po startu.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>niz</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Poskuša najti in označiti dani niz v dokumentu. Deluje le, če je samo en dokument podan kot argument ukaza <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>niz</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Nastavi ukaz zunanjega urejevalnika. Ukaza urejevalnika ne morete nastaviti v že delujoči instanci programa &okular;. Upoštevajte, da <option
+>--unique</option
+> ni podprt pri nastavljanju ukaza urejevalnika v ukazni vrstici.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>Prilagodi okno strani</title>
+			<para
+>Funkcija Prilagodi okno strani spremeni velikost okna, tako da je popolnoma enake velikosti kot stran pri trenutnem faktorju povečave. Če se stran ne prilega v celoti na zaslon, se okno poveča, tako da je prikazan največji možni del strani. </para>
+			<para
+>Do te funkcije lahko dostopate z uporabo bližnjice na tipkovnici <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>Menijska vrstica</title>
+
+		<sect1 id="menufile">
+			<title
+>Meni Datoteka</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Odpri...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Odpri</action
+> podprto datoteko ali &okular; arhiv dokumentov. Če že obstaja odprta datoteka, bo zaprta. Za več informacij glejte razdelek o <link linkend="opening"
+>odpiranju datotek</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guisubmenu
+>Odpri nedavno</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Odpri</action
+> datoteko, ki je bila prej uporabljena v podmeniju. Če je datoteka trenutno prikazana, bo zaprta. Za več informacij glejte razdelek o <link linkend="opening"
+>odpiranju datotek</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Uvozi PostScript kot &PDF;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Odpri</action
+> PostScript; datoteko in jo pretvorite v &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Razveljavi zapiranje zavihka</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Ponovno odpri</action
+> nazadnje zaprt dokument. To dejanje je aktivno samo, če ste med trenutno sejo zaprli kakšen dokument v zavihku. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Odpri mapo, ki vsebuje</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Odpri</action
+> mapo, ki vsebuje trenutni dokument v vašem priljubljenem upravitelju datotek. To dejanje je še posebej uporabno v primeru, ko ste prenesli &PDF; datoteko iz interneta, ki se sama odpre v &okular;ju. Lokacija te datoteke morda ne bo jasna ali jo bo enostavno najti brez te funkcije. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Shrani</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Shrani</action
+> dokument, vključno z vsemi spremembami (opombe, vsebina obrazca itd.), pod pogojem, da zaledje dokumenta podpira shranjevanje teh sprememb. Če zaledje ne podpira shranjevanja sprememb, bo uporabnik imel možnost, da jih zavrže ali shrani skupaj z dokumentom v &okular;jev arhiv dokumentov.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Shrani kot...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Shrani</action
+> dokument pod novim imenom, vključno z vsemi spremembami (opombe, vsebina obrazca itd.), pod pogojem, da zaledje dokumenta podpira shranjevanje sprememb. Če zaledje ne podpira shranjevanja sprememb, bo uporabnik imel možnost, da jih zavrže ali shrani skupaj z dokumentom v &okular;jev arhiv dokumentov.</para>
+                                        <note>
+                                        <para
+>Upoštevajte, da zaradi načina izvajanja tega ni treba, da je nova datoteka natančna bit-za-bitna kopija izvirne datoteke, tudi če datoteka ni spremenjena (npr. lahko ima drugačen SHA-1 hash itd.). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Osveži</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Osveži</action
+> trenutno odprto datoteko.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Natisni...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Natisni</action
+> trenutno prikazan dokument. Upoštevajte, da ima &okular; nekaj posebnih možnosti za tiskanje &PDF; ki so na voljo tako, da pritisnete gumb <guibutton
+>Možnosti 
+>
+></guibutton
+> in nato izberete <guilabel
+>&PDF; Možnosti</guilabel
+>. Uporabite te možnosti za tiskanje opomb ali konfiguracijo načina rastriranja, če imate težave s tiskanjem nekaterih simbolov ali morate spremeniti način merila. </para>
+                                                <note>
+                                                    <para
+>Možnosti načina merila so na voljo le, če označite možnost <guilabel
+>Vsili rastrizacijo</guilabel
+>. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Predogled tiskanja ...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pokaži predogled</action
+> tega, kako bi bil trenutno prikazan dokument natisnjen s privzetimi možnostmi. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Lastnosti</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Prikaži nekaj osnovnih informacij</action
+> o dokumentu, kot so naslov, avtor, datum nastanka in podrobnosti o uporabljenih pisavah. Razpoložljive informacije so odvisne od vrste dokumenta.</para>
+						<note>
+							<para
+>Prosimo, bodite pozorni na informacije o zamenjavi pisave na zavihku <guilabel
+>Pisave</guilabel
+> pogovornega okna <guilabel
+>Lastnosti</guilabel
+>. Veliko težav z upodabljanjem pisav je mogoče rešiti z namestitvijo nadomeščenih pisav.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Vstavljene datoteke...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pokaži datoteke, vstavljene</action
+> v dokument, če jih ima dokument. Za več informacij si oglejte razdelek o <link linkend="embedded-files"
+>vstavljenih datotekah</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guisubmenu
+>Izvozi kot</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ta element vsebuje izvozne formate, v katere je mogoče izvoziti trenutni dokument. Prvi vnos za vse vrste dokumentov je vedno <guimenuitem
+>Navadno besedilo...</guimenuitem
+>.</para>
+						<para
+>Drugi vnos je <guimenuitem
+>Arhiv dokumentov</guimenuitem
+>, ki vam omogoča, da dokument s svojimi opombami shranite v arhivski format, specifičen za &okular;. Tako je preprosto mogoče deliti izvirni dokument in vaše opombe z drugimi uporabniki &okular;ja ali delati z njimi skupaj.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guisubmenu
+>Deli</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ta element vsebuje storitve, ki jih je mogoče uporabiti za skupno rabo trenutnega dokumenta z drugimi ljudmi ali za pošiljanje v vaše naprave. Vnose v tem podmeniju nadzira sistem. Odvisne so od trenutnega formata dokumenta in nameščenih vtičnikov KPurpose.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Opusti</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zapri</action
+> &okular;.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>Meni Urejanje</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Razveljavi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Razveljavi</action
+> zadnji ukaz za urejanje pripisov (ustvarjanje in odstranjevanje pripisov, urejanje poljubnih lastnosti pripisov, premeščanje pripisov z &Ctrl;+vlečenjem in urejanje besedilne vsebine pripisov).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Ponovi</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>Ponovi</action
+> zadnji korak razveljavitve pri urejanju opomb.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Kopiraj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Kopiraj</action
+> trenutno izbrano besedilo v načinu <guibutton
+>Izbira besedila</guibutton
+> v odložišče.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Izberi vse</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Izbere</action
+> celotno besedilo (če ga dokument ponuja). To deluje samo v načinu <guibutton
+>Izbira besedila</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Izberi vse besedilo na trenutni strani</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Izbere</action
+> vse besedilo (če ga dokument ponuja) trenutne strani. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Najdi...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Pokaži vrstico za iskanje na dnu območja za ogled, ki vam omogoča <action
+>iskanje niza v dokumentu</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Najdi naprej</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Poskusite <action
+>ponovno najti prejšnji iskani niz</action
+> v dokumentu.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Poišči prejšnje</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pomakne se na prejšnjo pojavitev iskalnega niza</action
+> v dokumentu.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>Meni Pogled</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Predstavitev</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Aktivira</action
+> način predstavitve. Za več informacij si oglejte razdelek o <link linkend="presentationMode"
+>predstavitvenem načinu</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Celozaslonski način</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Omogoči celozaslonski način</action
+>. Upoštevajte, da se celozaslonski način razlikuje od predstavitvenega načina, saj je edina posebnost celozaslonskega načina ta, da skrije okraske oken, menijsko vrstico in orodno vrstico.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Povečaj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Povečajte povečavo</action
+> pogleda dokumenta.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Pomanjšaj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zmanjšajte povečavo</action
+> pogleda dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Povečaj do 100 %</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Povečajte sliko dokumenta na dejansko velikost</action
+>, kot je predpisano s parametri dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Prilagodi širini</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Spremenite povečavo</action
+> pogleda dokumenta na vrednost, zaradi katere je širina strani enaka širini pogleda dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Prilagodi strani</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Spremenite povečavo</action
+> pogleda dokumenta na vrednost, zaradi katere bo vidna vsaj ena cela stran.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Samodejno prilagajanje</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Spremenite povečavo</action
+> pogleda dokumenta na vrednost, ki glede na razmerje velikosti med stranjo in območjem pogleda samodejno bodisi izenači širino strani s širino pogleda dokumenta (kot je širina prileganja ), višina strani enaka višini pogleda dokumenta (kot fit-height) ali vidna cela stran (kot fit-page).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guisubmenu
+>Način pogleda</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>V tem podmeniju lahko izberete način pogleda za strani. Možne možnosti so: <guimenuitem
+>Ena stran</guimenuitem
+> (samo ena stran na vrstico), <guimenuitem
+>Obrnjene strani</guimenuitem
+> (dve strani na vrstico, v knjižnem slogu), <guimenuitem
+>Obrnjene strani (na sredino prva stran)</guimenuitem
+> in <guimenuitem
+>Pregled</guimenuitem
+> (število stolpcev je tisto, ki je določeno v <link linkend="configure"
+>&okular; nastavitvah</link
+>).</para>
+						<para
+>Poleg tega lahko omogočite način <guimenuitem
+>Neprekinjeno</guimenuitem
+>. V neprekinjenem načinu so prikazane vse strani dokumenta in se lahko gladko premikate po njih. V nasprotnem primeru je naenkrat prikazana samo ena stran (ali ena vrstica strani).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guisubmenu
+>Usmerjenost</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ta podmeni vam omogoča, da <action
+>spremenite orientacijo</action
+> strani dokumenta. </para>
+						<note>
+							<para
+>Vrtenje se uporablja za orientacijo vsake strani. </para>
+						</note>
+						<para
+>Izberete lahko <guimenuitem
+>Izvirna orientacija</guimenuitem
+>, da obnovite orientacijo dokumenta in zavržete vse ročno narejene zasuke. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>View</guimenu
+> <guisubmenu
+>Trim View</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ta podmeni vam omogoča, da med ogledovanjem strani odstranite belo obrobo strani (element <guimenuitem
+>Obreži robove</guimenuitem
+>) ali obrežite vidno polje na izbor (element <guimenuitem
+>Obreži na izbor</guimenuitem
+>). </para>
+						<para
+>Način <quote
+>obreži na izbor</quote
+> vam omogoča, da narišete izbor čez upodobljeno stran, da določite vidno omejevalno polje, ki bo uporabljeno za <emphasis
+>vse strani</emphasis
+> v dokumentu. Izbira majhnega omejevalnega polja za obrezovanje uveljavi najmanjšo velikost dimenzij (20 % kot odstotek celotne velikosti strani). </para>
+						<para
+>Način <quote
+>obrezanja robov</quote
+> je obstojen po ponovnih zagonih programa. Način <quote
+>obreži na izbor</quote
+> je pozabljen po ponovnih zagonih programa. </para>
+						<para
+>Ko preklopite &okular; iz načina <quote
+>obreži robove</quote
+> v način <quote
+>obreži na izbor</quote
+>, pogled skoči iz načina <quote
+>obreži robov</quote
+> za interakcijo izbire omejevalne škatle. </para>
+						<para
+>Način obrezovanja lahko deaktivirate tako, da ponovno izberete isto točko menija, ki ga aktivira. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pogled</guimenu
+> <guimenuitem
+>Pokaži/skrij obrazce</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Prikaži ali skrij prikaz</action
+> polj obrazca v dokumentu. </para>
+						<note>
+							<para
+>Ta postavka menija je aktivna le, če ima trenutni dokument polja obrazca. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>Meni Go</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Prejšnja stran</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Oglejte si prejšnjo stran</action
+> dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Naslednja stran</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Oglejte si naslednjo stran</action
+> dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></shortcut
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Začetek dokumenta</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pojdi na začetek</action
+> dokumenta.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></shortcut
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Konec dokumenta</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pojdi na konec</action
+> dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Left;</keycombo
+></shortcut
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Nazaj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Nazaj na prejšnji pogled</action
+> dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Right;</keycombo
+></shortcut
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Naprej</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pomik naprej na naslednji pogled</action
+> dokumenta. To deluje le, če ste se že pomaknili nazaj.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pojdi</guimenu
+> <guimenuitem
+>Pojdi na stran...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Odprite pogovorno okno, ki vam omogoča, da <action
+>odprete katero koli stran</action
+> dokumenta.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>Meni z zaznamki</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Dodaj/odstrani zaznamek</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Dodaj ali odstrani zaznamek za trenutni položaj</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Preimenuj zaznamek</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Preimenuj zaznamek za trenutni položaj</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Prejšnji zaznamek</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pojdi na prejšnji zaznamek</action
+> ali ne naredi ničesar, če pred trenutnim zaznamkom ni nobenega zaznamka.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Naslednji zaznamek</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Pojdi na naslednji zaznamek</action
+> ali ne naredi ničesar, če za trenutnim zaznamkom ni nobenega zaznamka.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Brez zaznamkov</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>To je vedno onemogočeno dejanje, ki se prikaže v tem meniju le, če trenutni dokument nima zaznamkov. V nasprotnem primeru je tukaj prikazan seznam vseh zaznamkov. S klikom na te zaznamke se lahko pomaknete neposredno na povezan položaj.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>Meni Orodja</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Brskaj</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Miška se bo normalno obnašala, &LMB; za vlečenje dokumenta in sledenje povezavam ter &RMB; za dodajanje zaznamkov in prilagajanje širini.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Povečava</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Miška bo delovala kot orodje za povečavo. S klikom na &LMB; in vlečenje bo povečalo pogled na izbrano območje, kliknite &RMB; bo vrnil dokument na prejšnjo povečavo.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Izbira območja</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Miška bo delovala kot orodje za izbiro pravokotne regije. V tem načinu s klikom &LMB; in vlečenjem nariše izbirno polje in ponudi možnost kopiranja izbrane vsebine v odložišče, izgovorjavo izbranega besedila ali preoblikovanje izbirnega območja v sliko in shranjevanje v datoteko.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Izbira besedila</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Miška bo delovala kot orodje za izbiro besedila. V tem načinu bo s klikom &LMB; in vlečenjem dalo možnost izbire besedila dokumenta. Nato samo kliknite z &RMB; da kopirate v odložišče ali izgovorite trenutni izbor.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Izbor seznama</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Okoli besedila tabele narišite pravokotnik, nato kliknite z &LMB; za razdelitev besedilnega bloka v vrstice in stolpce. &LMB; klik na obstoječo vrstico jo odstrani in združi sosednje vrstice ali stolpce. Nazadnje samo kliknite z &RMB; da kopirate tabelo v odložišče. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Lupa</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Aktivira način lupe za kazalec miške. Pritisnite in držite &LMB; če želite aktivirati gradnik lupe, premaknite kazalec za pomikanje po dokumentu. Lupa poveča vsako slikovno piko v dokumentu v 10 slikovnih pik v gradniku lupe.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Opombe</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Odprite orodno vrstico za opombe</action
+>. Orodna vrstica za opombe vam omogoča dodajanje opomb dokumentu, ki ga berete. Za več informacij si oglejte razdelek o <link linkend="annotations"
+>Pripombah</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Digitalni podpis ...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Zažene potek dela za ustvarjanje digitalnega podpisa</action
+>. Dodajanje digitalnih podpisov je trenutno podprto samo za datoteke PDF. Za več informacij si oglejte razdelek o <link linkend="adding_digital_signatures"
+>Dodajanju digitalnih podpisov</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Izgovori celoten dokument</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Izgovori trenutno stran</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Nehaj govoriti</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Začasno ustavi/nadaljuj govor</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Ti elementi vam omogočajo, da izgovorite celoten dokument ali samo trenutno stran in prekinete govor z uporabo sistemske govorne storitve. To storitev zagotavlja &Qt; knjižnica, ki ovija govorni dispečer na &Linux;u in sisteme maternega govora na drugih platformah. Možno je izbrati trenutni glas preko programa &okular; Stran s konfiguracijo <link linkend="configaccessibility"
+>Dostopnost</link
+>.</para>
+						<para
+>Dejanja <guilabel
+>Govori ...</guilabel
+> so omogočena samo, če je govorna storitev na voljo v sistemu.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>Meni z nastavitvami in pomočjo</title>
+			<para
+>Poleg običajnega &kde; Menija sta <guimenu
+>Nastavitve</guimenu
+> in <guimenu
+>Pomoč</guimenu
+> opisana v poglavju <ulink url="help:/fundamentals/menus.html"
+>Meni</ulink
+> v &kde; Dokumentaciji o osnovah &okular;ja ima te menijske vnose za posamezne aplikacije:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Pokaži stransko vrstico</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Prikaže ali skrije stransko vrstico.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Prikaži vrstico strani</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Vklopite in izklopite vrstico strani</action
+> na dnu območja dokumenta, da shranite navpično mesto v &okular;jevem oknu. Upoštevajte, da bodo številke strani vseeno prikazane v privzeti orodni vrstici.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj ozadja...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>Odpre okno <link linkend="configure-backends"
+>Konfiguracija ozadja</link
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure-backends">
+	  <title
+>Konfiguriranje</title>
+	  <para
+>Konfigurirate lahko &okular; ozadja tako, da izberete <menuchoice
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj ozadja...</guimenuitem
+> </menuchoice
+>. Trenutno so konfiguracijske možnosti na voljo za samo EPub, &PostScript;, FictionBook, Txt, OpenDocument Text in &PDF; zaledja. </para>
+	  <screenshot>
+	    <screeninfo
+>Pogovorno okno za konfiguracijo ozadja</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase
+>Pogovorno okno za konfiguracijo ozadja</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <para
+>Z zalednimi konfiguracijskimi stranmi za EPub, FictionBook, Mobipocket, Markdown, TXT in OpenDocument Text lahko določite pisavo za upodabljanje dokumentov v ustreznih formatih. Gumb <guibutton
+>Izberi...</guibutton
+> na teh straneh odpre standardno &kde; okno za konfiguracijo pisave. Oglejte si <ulink url="help:/fundamentals/fonts.html"
+>&kde; Dokumentacija o osnovah</ulink
+> za podrobnosti. </para>
+	  <para
+>Opis aplikacije Markdown, &PostScript; in &PDF; konfiguracijske strani ozadij najdete spodaj. </para>
+	  <sect1 id="config-markdown">
+	    <title
+>Konfiguracija zaledja Markdown</title>
+	    <para
+>Konfigurirate lahko zaledje &okular; ki upodablja markdown na podlagi <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>popusta</ulink
+> z izbiro <guilabel
+>Markdown</guilabel
+> seznam na levem delu konfiguracijskega pogovornega okna. Dodatna nastavljiva možnost je naslednja. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Omogoči formatiranje SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Ko je označena, ta možnost dovoljuje &okular; za obdelavo oblikovanja <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Takšno oblikovanje je lahko v tehničnih besedilih težavno zaradi nezaželenih zamenjav (npr. zamenja <literal
+>(C)</literal
+> s simbolom avtorskih pravic). Ta možnost je privzeto označena. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-ghostscript">
+	    <title
+>&PostScript; konfiguracija zaledja</title>
+	    <para
+>Konfigurirate lahko &okular; &PostScript; upodabljanje zaledja na podlagi <ulink url="https://www.ghostscript.com/"
+>Ghostscripta</ulink
+> tako, da izberete <guilabel
+>Ghostscript</guilabel
+> s seznama v levem delu konfiguracijskega pogovornega okna. Edina nastavljiva možnost je naslednja. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Uporabite pisave platforme</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Ta možnost določa, ali naj bo Ghostscriptu dovoljena uporaba pisav platforme; če ni potrjena, bo dovoljena samo uporaba pisav, vdelanih v dokument. Ta možnost je privzeto označena. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title
+>&PDF; konfiguracija zaledja</title>
+	    <para
+>Konfigurirate lahko &okular; upodabljanje &PDF; zaledja, ki temelji na <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>, tako da na seznamu v levem delu konfiguracijskega pogovornega okna izberete <guilabel
+>&PDF;</guilabel
+>. Edina nastavljiva možnost je naslednja. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Izboljšajte tanke črte</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Risanje črt v &okular;ju se izvaja v dveh korakih: ustvarjanje izrezovalne poti in polnjenje te izrezovalne poti. Če je vrstica v izvirnem dokumentu manjša od ene slikovne pike, lahko ta dvostopenjska izvedba povzroči težave. Za te črte je pot izrezovanja napolnjena z barvo polnila, ki je odvisna od debeline dela črte znotraj območja izrezovanja. Če del črte znotraj območja izrezovanja postane zelo majhen, lahko postane kontrast med obliko in barvo ozadja prenizek, da bi bila črta prepoznavna. Mreže takšnih črt potem izgledajo zelo neljubo. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Tanka črta (rdeča), njena izrezovalna pot (črtkana črta) in meje slikovnih pik (polne črne črte)</entry>
+			    <entry
+>Tanka črta, prikazana z nizkim kontrastom</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Za izboljšanje videza tankih linij &okular; izvaja dve možnosti. </para>
+		    <para
+>Prva možnost je <guimenuitem 
+>Trdna</guimenuitem 
+>. S to možnostjo &okular; prilagodi položaj izrezovalne poti in črte, tako da sta izrezovalna pot in črta na isti meji pikslov, tj. &okular; poveča tanke črte na eno slikovno piko na izhodni napravi. Ta način je podoben <guilabel
+>Izboljšajte tanke črte</guilabel
+> v <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Če izberete to možnost, so tanke črte vedno povečane. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Tanka linija z <guimenuitem
+>Trdno</guimenuitem
+> izboljšavo </phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Tanka linija z <guimenuitem
+>Trdno</guimenuitem
+> izboljšavo </para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Druga možnost je <guimenuitem 
+>Oblika</guimenuitem 
+>. S to možnostjo se izrezovalna pot in črta prav tako prilagodita meji slikovnih pik, vendar se intenzivnost črte popravi glede na njeno širino. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Tanka črta z izboljšavo <guimenuitem
+>oblike</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Tanka linija z izboljšavo <guimenuitem
+>oblike</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Tanke črte privzeto niso izboljšane (možnost <guimenuitem
+>Ne</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Potrdila za digitalni podpis</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Ta razdelek vam omogoča, da nastavite zbirko podatkov potrdil po meri za uporabo pri dodajanju digitalnih podpisov v &PDF; datoteke. </para>
+			<para
+>Navaja tudi seznam potrdil, ki so na voljo v trenutni zbirki podatkov potrdil (če obstajajo). </para>
+		</sect2>
+	  </sect1>
+	</chapter>
+	<chapter id="configure">
+		<title
+>Konfiguracija &okular;ja</title>
+		<sect1 id="configindex">
+			<title
+>Splošna konfiguracija</title>
+			<para
+>&okular; lahko konfigurirate, tako da izberete <menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj &okular;...</guimenuitem
+></menuchoice
+>. Konfiguracijsko pogovorno okno je razdeljeno na šest razdelkov. V tem poglavju so podrobno opisane razpoložljive možnosti. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>Splošno</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>Dostopnost</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>Zmogljivost</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>Predstavitev</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>Opombe</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>Urejevalnik</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>Konfiguracijsko pogovorno okno</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Konfiguracijsko pogovorno okno</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>Odvisno od trenutno nameščenih ozadij je lahko omogočen menijski element <menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj zaledja...</guimenuitem
+></menuchoice
+>. To posebno konfiguracijsko pogovorno okno vsebuje konfiguracije zaledij, ki jih je dejansko mogoče konfigurirati. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>Splošno</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Uporabite gladko drsenje</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se prikažejo animirani prehodi med pomikanjem s koleščkom miške in tipkovnico.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaži drsne trakove</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se prikažejo drsni trakovi za pogled dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Povežite sličice s stranjo</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj pogled sličic vedno prikazuje trenutno stran ali ne.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaži namige in informativna sporočila</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj prikaže nekatera informativna sporočila ob zagonu, nalaganju datoteke itd.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Obvestite o vdelanih datotekah, obrazcih ali podpisih</guilabel
+></term>
+					<listitem>
+						<para
+>Ali želite prikazati informativne plošče o vdelanih datotekah, obrazcih ali podpisih itd.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Prikaži naslov dokumenta v naslovni vrstici, če je na voljo</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se naslov trenutnega dokumenta prikaže v naslovni vrstici okna &okular;. Če v dokumentu ni najdenih metapodatkov za naslov ali ta element ni označen, &okular; prikaže ime datoteke dokumenta. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ko ni prikazan naslov dokumenta</guilabel
+></term>
+					<listitem>
+					  <para
+>Izberete lahko eno od dveh možnosti, <guilabel
+>Prikaži samo ime datoteke</guilabel
+> ali <guilabel
+>Prikaži celotno pot do datoteke</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Uporabite barvo ozadja po meri</guilabel
+></term>
+					<listitem>
+                                            <para
+>Omogoči <ulink url="help:/fundamentals/colors.html"
+>izbiro barve ozadja dokumenta</ulink
+> (barva okoli prikazane strani). Privzeto je &Qt; barva kompleta orodij se uporablja, ko ta možnost ni potrjena. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>Odprite nove datoteke v zavihkih</guilabel
+></term>
+					<listitem>
+						<para
+>Ali odpreti nove dokumente v zavihkih. Zavihki so privzeto onemogočeni.</para>
+						<para
+>Privzete bližnjice za preklapljanje med zavihki so <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>Naslednji zavihek</guilabel
+>) in <keycombo
+>&Ctrl;<keycap
+>,</keycap
+> </keycombo
+> (<guilabel
+>Prejšnji zavihek</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Preklopite na obstoječi zavihek, če je datoteka že odprta</guilabel
+></term>
+					<listitem>
+						<para
+>Ali bi &okular; moral preklopiti na zavihek, če je datoteka že odprta, namesto da odpre nov zavihek. Ta možnost je privzeto omogočena. Lahko se preklaplja le, če je omogočeno <guilabel
+>Odpri nove datoteke v zavihkih</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Upoštevajte omejitve DRM</guilabel
+></term>
+					<listitem>
+						<para
+>Ali mora &okular; upoštevati omejitve <firstterm
+>DRM</firstterm
+> (upravljanje digitalnih pravic). Omejitve DRM se uporabljajo za onemogočanje nekaterih dejanj z &PDF; dokumentov, kot je kopiranje vsebine v odložišče. Upoštevajte, da v nekaterih konfiguracijah programa &okular; ta možnost ni na voljo.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ponovno naloži dokument ob spremembi datoteke</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se odprte datoteke samodejno preverijo glede sprememb in po potrebi posodobijo.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaži pogovorno okno za izbiro zaledja</guilabel
+></term>
+					<listitem>
+						<para
+>Ali mora &okular; vprašati uporabnika, katero zaledje naj uporabi, če lahko trenutno datoteko odpre več kot eno zaledje. Če ni označeno, bo &okular; uporabil zaledje z najvišjo prioriteto.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Smer branja od desne proti levi</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se za odprte datoteke privzeto uporabi smer branja od desne proti levi. Lahko je uporabno za <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>nekatere pisne sisteme</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Privzeto odprto v neprekinjenem načinu</guilabel
+></term>
+					<listitem>
+						<para
+>Ali želite privzeto uporabiti neprekinjeni način. V neprekinjenem načinu so prikazane vse strani dokumenta in se lahko gladko premikate po njih. V nasprotnem primeru je naenkrat prikazana samo ena stran (ali ena vrstica strani). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ko uporabljate orodje za brskanje, zavijte kazalec na robove zaslona</guilabel
+></term>
+					<listitem>
+						<para
+>Omogoča neskončno pomikanje po celotnem dokumentu z <link linkend="menutools"
+>orodjem za brskanje</link
+>. Če je omogočeno, se kazalec miške zavije na nasprotni konec zaslona, ko se med vlečenjem dokumenta dotakne robov. Ta funkcija je podprta samo na X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pregled nad stolpci</guilabel
+></term>
+					<listitem>
+						<para
+>Ta možnost predstavlja število stolpcev za uporabo v načinu pregleda. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Prekrivanje strani gor/dol</guilabel
+></term>
+					<listitem>
+						<para
+>Tukaj lahko določite odstotek trenutnega območja gledanja, ki naj bo viden po pritisku &PgUp;/&PgDn; tipk. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Privzeta povečava</guilabel
+></term>
+					<listitem>
+						<para
+>Ta možnost določa privzeti način povečave za datoteko, ki še nikoli ni bila odprta. Za tiste datoteke, ki so bile odprte, preden je bil uporabljen prejšnji način povečave. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>Dostopnost</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Narišite obrobo okoli povezav</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj nariše obrobo okoli povezav.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Spremeni barve</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Omogoči</action
+> možnosti spreminjanja barv.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Barvni način</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Določi</action
+> način spreminjanja barve.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Obrni barve</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Obrne</action
+> barve na pogledu, tj. črni predmeti bodo prikazani beli.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Spremeni barvo papirja</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>Spremeni</action
+> barvo papirja, tj. ozadje dokumenta.</para>
+                                                                        <para
+>Barvo lahko izberete s spodnjim vzorcem <guilabel
+>Barva papirja</guilabel
+>. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Spremeni temno</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Spremeni</action
+> temno in svetlo barvo po vaših željah, kar pomeni, da črna ne bo upodobljena kot črna, temveč kot izbrana temna barva, bela pa ne bo upodobljena kot bela, ampak kot izbrana svetla barva.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Pretvori v črno-belo</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Pretvori</action
+> dokument v črno-belega. Nastavite lahko prag in kontrast. Če prag nastavite na višjo vrednost s premikanjem v desno, bodo uporabljene svetlejše sive barve.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Obrni svetlost</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Obrne</action
+> svetlost vseh barv. Svetle in temne barve bodo zamenjane, vendar to ne bo vplivalo na odtenek in nasičenost. Kontrast v slikah bo običajno slabši kot pri <guilabel
+>Obrni svetlost (linearno sRGB)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Obrni svetlost (linearno sRGB)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Obrne</action
+> svetlost vseh barv. Svetlo in temno bosta zamenjana, vendar to ne bo vplivalo na odtenek in nasičenost. Kontrast v slikah je ohranjen bolje kot pri privzeti <guilabel
+>Obrni svetlost</guilabel
+>, vendar so grafike in pisane oznake besedila običajno videti slabše. Uporablja koeficiente svetilnosti sRGB, vendar brez korekcije gama.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Obrni svetlost (simetrično)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Obrne</action
+> svetlost vseh barv z uporabo simetričnih koeficientov svetlosti. Svetlo in temno bosta zamenjana, vendar to ne bo vplivalo na odtenek in nasičenost. Zelo podobno kot <guilabel
+>Obrni svetlost</guilabel
+>, vendar je kontrast v nekaterih primerih boljši.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Premakni odtenek v pozitivno</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Premakne</action
+> odtenek vseh barv za 120 stopinj. Lahko ublaži nekatere težave s kontrastom pri barviti grafiki.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Premakni odtenek v negativno</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Premakne</action
+> odtenek vseh barv za 240 stopinj. Lahko ublaži nekatere težave s kontrastom pri barviti grafiki.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>Bližnjice na tipkovnici in dejanja orodne vrstice za barvne načine lahko konfigurirate z uporabo ustreznih elementov menija v meniju <guimenu
+>Nastavitve</guimenu
+> v &okular;jevem glavnem oknu.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Mehanizem za pretvorbo besedila v govor</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Omogoča vam, da izberete</action
+> mehanizem za pretvorbo besedila v govor (<abbrev
+>TTS</abbrev
+>), ki ga bo uporabljal &okular;. Privzeto je <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Glas za pretvorbo besedila v govor</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Omogoča vam, da izberete</action
+> glas za mehanizem za pretvorbo besedila v govor, ki ga bo uporabljal &okular;. Uporabite lahko vse jezike in glasove, odvisno od razpoložljivih sintetizatorjev na vaši platformi. V &Linux;u se govorni dispečer privzeto uporablja za določanje razpoložljivih glasov.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>Zmogljivost</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Omogoči učinke prosojnosti</guilabel
+></term>
+					<listitem>
+						<para
+>Narišite izbore in druge posebne grafike z učinki prosojnosti. Onemogočite možnost, da jih narišete z orisi ali neprozornimi slogi polnila in povečajte hitrost izbir.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Poraba pomnilnika</guilabel
+></term>
+					<listitem>
+						<para
+>&okular; lahko doseže najboljšo zmogljivost z nastavitvijo porabe pomnilnika glede na vaš sistem in vaš okus. Več pomnilnika kot mu dovolite, hitreje se bo program obnašal. Privzeti profil je dober za vsak sistem, vendar lahko preprečite &okular;ju uporabo več pomnilnika, kot je potrebno, tako da izberete nizek profil, ali pa pustite, da kar najbolje izkoristi vaš sistem z uporabo agresivnega. Uporabite profil Greedy za vnaprejšnje nalaganje vseh strani brez nevarnosti, da bo sistemski pomnilnik prepoln (uporabljenih bo le 50 % celotnega pomnilnika ali prostega pomnilnika).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Možnosti izvajanja</guilabel
+></term>
+					<listitem>
+						<para
+>S to skupino možnosti lahko izboljšate upodabljanje besedila in slik v &okular;ju. Rezultat je odvisen od naprave za prikaz dokumenta. Elementa <guilabel
+>Omogoči prevleko besedila</guilabel
+> in <guilabel
+>Omogoči prevleko grafike</guilabel
+> lahko uporabite za vklop in izklop <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing "
+>prostorsko izravnavanje</ulink
+> besedila in slik v dokumentu, ustrezno. Element <guilabel
+>Omogoči namigovanje besedila</guilabel
+> je mišljen kot preklopnik za <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>namigovanje pisave</ulink
+>. Antialiasing in namigi spremenijo način prikaza dokumentov, morda jih boste želeli prilagoditi svojim željam.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>Predstavitev</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Vsak vnaprej</guilabel
+></term>
+					<listitem>
+						<para
+>Omogoča samodejno premikanje po straneh glede na časovno obdobje.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ponovi po zadnji strani</guilabel
+></term>
+					<listitem>
+						<para
+>Pri navigaciji v predstavitvenem načinu in prehodu mimo zadnje strani se prikaže prva stran.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Navigacija na dotik</guilabel
+></term>
+					<listitem>
+						<para
+>Omogoča vam natančno nastavitev navigacije po zaslonu na dotik s dotikom v predstavitvi z uporabo naslednjih treh možnih vrednosti:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>Dotaknite se leve/desne strani, da se pomaknete nazaj/naprej</guilabel
+>: Če se dotaknete leve (desne) polovice zaslona, se predstavitev premakne na prejšnji (naslednji) diapozitiv.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Tapnite kjer koli, da greste naprej</guilabel
+> (privzeto): Če se dotaknete zaslona, se predstavitev premakne na naslednji diapozitiv, ne glede na to, kje se dotaknete zaslona.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>Onemogočeno</guilabel
+>: tapkanje zaslona ne naredi ničesar.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Barva ozadja</guilabel
+></term>
+					<listitem>
+						<para
+>Barva, ki bo v predstavitvenem načinu zapolnila del zaslona, ki ga stran ne pokriva.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Kazalec miške</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj bo miška vedno skrita, vedno prikazana ali skrita po kratkem času nedejavnosti.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaži indikator napredka</guilabel
+></term>
+					<listitem>
+						<para
+>Ali želite prikazati krog napredka, ki prikazuje trenutno stran in skupno število strani v zgornjem desnem kotu predstavitvenega zaslona vsakič, ko spremenite stran.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Pokaži stran s povzetkom</guilabel
+></term>
+					<listitem>
+						<para
+>Ali naj se na začetku predstavitve prikaže stran s povzetkom z naslovom, avtorjem in številom strani dokumenta.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Omogoči prehode</guilabel
+></term>
+					<listitem>
+						<para
+>S tem potrditvenim poljem omogočite ali onemogočite učinke prehoda med stranmi.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Privzeti prehod</guilabel
+></term>
+					<listitem>
+						<para
+>Učinek prehoda med stranmi, če ga dokument ne določa. To nastavite na <guilabel
+>Naključni prehod</guilabel
+>, da bo &okular; naključno izberal enega od razpoložljivih učinkov.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Postavitev</guilabel
+></term>
+					<listitem>
+						<para
+>V tem razdelku lahko izberete <guilabel
+>Zaslon</guilabel
+> za prikaz predstavitve.</para>
+						<para
+><guilabel
+>Trenutni zaslon</guilabel
+> je enak zaslonu &okular;ja, ki zažene predstavitveni način.</para>
+						<para
+><guilabel
+>Privzeti zaslon</guilabel
+> je zaslon, ki je v konfiguraciji xinerama označen kot privzeti.</para>
+						<para
+><guilabel
+>Zaslon 0</guilabel
+>, <guilabel
+>Zaslon 1</guilabel
+> itd. so razpoložljivi zasloni.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Konfiguracija orodja za risanje</guilabel
+></term>
+					<listitem>
+						<para
+>Upravljajte barve svinčnika, ki se uporablja pri risanju po straneh v predstavitvenem načinu.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>Opombe</title>
+			<screenshot>
+				<screeninfo
+>Stran z opombami v konfiguracijskem pogovornem oknu</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>Stran z opombami v konfiguracijskem pogovornem oknu</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Orodna vrstica za opombe</guilabel
+></term>
+					<listitem>
+                                            <para
+>Omogoča preklapljanje med <guimenuitem
+>Orodno vrstico za polne opombe</guimenuitem
+> (<link linkend="annotations-add"
+>privzeta orodna vrstica</link
+> v zgornjem delu okna &okular;ja) in <guimenuitem
+>Orodno vrstico za hitro opombo</guimenuitem 
+> (drsna orodna vrstica z vašimi najljubšimi orodji na desnem delu podokna dokumenta).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Avtor</guilabel
+></term>
+					<listitem>
+						<para
+>Avtor vsebine, dodane v dokument. Privzeto je ime iz <guilabel
+>Geslo &amp; Uporabniški račun</guilabel
+> strani &systemsettings; v modulu <guilabel
+>Podrobnosti o računu</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Orodja za opombe</guilabel
+></term>
+					<listitem>
+					  <para
+>To podokno se uporablja za konfiguracijo vaše <link linkend="annotations-add"
+>orodne vrstice za opombe</link
+>. </para>
+					  <para
+>Obstaja pet gumbov (<guibutton
+>Dodaj</guibutton
+>, <guibutton
+>Uredi</guibutton
+>, <guibutton
+>Odstrani</guibutton
+>, <guibutton
+>Premakni gor</guibutton
+>, <guibutton
+>Premakni dol</guibutton 
+>) in polje s seznamom (v katerem je navedena vsebina trenutne orodne vrstice z opombami), ki se uporabljata za konfiguracijo orodne vrstice. </para>
+					  <para
+>Če morate v orodno vrstico dodati kakšen orodni gumb, kliknite gumb <guibutton
+>Dodaj</guibutton
+>. Izberete lahko <guilabel
+>Ime</guilabel
+>, <guilabel
+>Vrsto</guilabel
+> in <guilabel
+>Videz</guilabel
+> ustvarjenega orodja. </para>
+					  <note>
+					    <para
+>Ne pozabite, da so orodja za opombe v &okular;ju zelo nastavljiva. Na primer, lahko imate dva gumba istega orodja, vendar različnih barv. Ne oklevajte in eksperimentirajte pri izbiri nabora gumbov, ki je natančno prilagojen vašemu delovnemu toku. </para>
+					  </note>
+					  <para
+>Kliknite na določeno postavko v polju s seznamom in nato kliknite na ustrezni gumb na desnem delu strani, da uredite, odstranite, premaknete element navzgor ali navzdol. Bližnjica na tipkovnici orodja (tipke od <keycap
+>1</keycap
+> do <keycap
+>9</keycap
+>) je odvisna od njegovega položaja na seznamu orodne vrstice za opombe. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>Uporaba žigov po meri</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>Ustvarite ikono, ki jo želite uporabiti za svoj žig, in jo shranite v poljubni grafični obliki, ki jo podpira &okular;</para
+></listitem>
+					<listitem
+><para
+>Kliknite gumb <guibutton
+>Dodaj</guibutton
+>, izberite vrsto <guilabel
+>Žiga</guilabel
+> in vnesite ime za svoj žig.</para
+></listitem>
+					<listitem
+><para
+>Vnesite celotno pot do svoje ikone po meri v spustno polje v skupini <guilabel
+>Simbol žiga</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>Urejevalnik</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>Urejevalnik</guilabel
+></term>
+					<listitem>
+						<para
+>Izberite urejevalnik, ki ga želite zagnati, ko želi &okular; odpreti izvorno datoteko. To je v primeru, ko ima dokument sklicevanja na različne točke (običajno številko vrstice in stolpca) virov, iz katerih je bil ustvarjen. &DVI; format izvorno podpira dodajanje informacij o virih iz katerih je bil &latex; dokument  ustvarjen. Podoben sistem obstaja za &PDF; dokumente, imenovan <acronym
+>pdfsync</acronym
+>, ki te dodatne informacije shranijo v zunanjo datoteko, imenovano po datoteki &PDF; sama datoteka (na primer <filename
+>mydocument.pdfsync</filename
+> za <filename
+>mydocument.pdf</filename
+>). </para>
+						<para
+>&okular; pošilja s predkonfiguriranimi nastavitvami za naslednje urejevalnike: <ulink url="https://kate-editor.org/"
+>&kate;</ulink
+>, <ulink url="https://kile.sourceforge.io/"
+> Kile</ulink
+>, <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>, <ulink url="https://www.gnu.org/software/emacs /"
+>&Emacs; odjemalec</ulink
+>, <ulink url="https://www.lyx.org/"
+>odjemalec LyX</ulink
+>, <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+> in <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>Če želite uporabiti obratno iskanje v &kile;, morate prevesti svojo &latex; datoteko s konfiguracijo <guilabel
+>Moderno</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Ukaz</guilabel
+></term>
+					<listitem>
+						<para
+>To je ukaz in njegovi parametri za priklic izbranega urejevalnika z izvorno datoteko dejanskega dokumenta.</para>
+						<para
+>To polje bo samodejno izpolnjeno, če uporabljate enega od predhodno konfiguriranih urejevalnikov. V nasprotnem primeru izberite <guimenuitem
+>Urejevalnik besedil po meri</guimenuitem
+> v spustnem polju <guilabel
+>Urejevalnik</guilabel
+> in si oglejte dokumentacijo vašega priljubljenega urejevalnika, da poiščete ustrezen ukaz. </para>
+						<para
+>Uporabite lahko naslednje začasne oznake:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - ime datoteke</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - vrstica datoteke, ki jo želite doseči</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - stolpec datoteke, ki jo želite doseči</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>Če %f ni podan, je podanemu ukazu dodano ime dokumenta.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>Zasluge in licenca</title>
+
+		<itemizedlist>
+			<title
+>Avtorske pravice za program:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Trenutni vzdrževalec</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> &kpdf; razvijalec</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>Avtorske pravice za dokumentacijo:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Avtor</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> Nekaj posodobitev in dodatkov</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>Prevod: Peter Žaucer<email
+>peter.zaucer@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

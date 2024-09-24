@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Slovenian "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Uporabniški priročnik Okular</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>Okular man page.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>19.02.2022</date>
+<releaseinfo
+>Okular 22.04</releaseinfo>
+<productname
+>KDE Gear</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>okular</refname>
+<refpurpose
+>univerzalni pregledovalnik dokumentov</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>okular</command
+> <arg choice="opt"
+><replaceable
+>Okular možnosti</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>URL</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>Opis</title>
+<para
+><command
+>okular</command
+> je namenjen prikazovanju dokumentov v različnih formatih.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>Okular možnosti</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>število</replaceable
+></option
+></term>
+<listitem>
+<para
+>Odpri stran s podano stranjo v dokumentu.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>Zaženite dokument v predstavitvenem načinu.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>Začni s pogovornim oknom za tiskanje.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>Začni s pogovornim oknom za tiskanje in zapusti po tiskanju.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>Edinstveni nadzor primerkov.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>Omogoča preprečitev dviga okna Okularja po začetku.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--poišči <replaceable
+>niz</replaceable
+></option
+></term>
+<listitem>
+<para
+>Poskuša najti in označiti dani niz v dokumentu. Deluje le, če je podan samo en dokument kot argument ukaza okular.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>niz</replaceable
+></option
+></term>
+<listitem>
+<para
+>Nastavi ukaz zunanjega urejevalnika. Ukaza urejevalnika ne morete nastaviti v že delujočem primerku Okularja. Upoštevajte, da <option
+>--unique</option
+> ni podprt pri nastavljanju ukaza urejevalnika v ukazni vrstici.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>Argumenti</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>URL</option
+></term>
+<listitem>
+<para
+>Naslov dokumenta, ki ga želite odpreti. Za PDF se lahko poda kot <replaceable
+>ime_dokumenta</replaceable
+>#<replaceable
+>ime_cilja</replaceable
+>, kjer je <replaceable
+>ime_cilja</replaceable
+> določen imenovani cilj, vdelan v dokument.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>Povratne informacije</title>
+<para
+>Na IRC, irc.libera.chat #okular ali po e-pošti, okular-devel@kde.org ali na spletu, &lt;<ulink url="https://okular.kde.org/"
+>https://okular .kde.org/</ulink
+>&gt;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Glej tudi</title>
+<simplelist>
+<member
+>Podrobnejša uporabniška dokumentacija je na voljo na <ulink url="help:/okular"
+>help:/okular</ulink
+> (bodisi vnesite ta <acronym
+>URL</acronym
+> v &konqueror; ali zaženite <userinput
+><command
+> khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf6options(7)</member>
+<member
+>qt6options(7)</member>
+<member
+>Dodatne informacije so na voljo tudi na <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>Avtorske pravice</title>
+<para
+>Avtorske pravice &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>Avtorske pravice &copy; 2004-2005 Enrico Ros</para>
+<para
+>Avtorske pravice &copy; 2005 Piotr Szymanski</para>
+<para
+>Avtorske pravice &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>Avtorske pravice &copy; 2006-2009 Pino Toscano</para>
+<para
+>Licenca: GNU Splošna javna različica 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html </ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

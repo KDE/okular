@@ -5865,6 +5865,3 @@ msgstr "Забравяне на всичко"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Скриване на приветстващия  прозорец"
-
-#~ msgid "S&earch:"
-#~ msgstr "&Търсене:"

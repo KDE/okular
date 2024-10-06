@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-08-24 11:50+0200\n"
+"PO-Revision-Date: 2024-10-05 13:05+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -3919,6 +3919,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Podpisany przez: %1\n"
+"\n"
+"Data: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4122,12 +4125,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Podpisywanie w trakcie. Możesz dostosować położenie i rozmiar podpisu."
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Ukończ podpisywanie"
 
 #: part/part.cpp:655
 #, kde-format

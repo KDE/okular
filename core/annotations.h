@@ -684,7 +684,28 @@ public:
      *
      * @since 0.17 (KDE 4.11)
      */
+
     void setAnnotationProperties(const QDomNode &node);
+
+    /**
+     * Sets some native internal data with shared ownership.
+     *
+     * data is kept alive according to shared_ptr refcount.
+     *
+     * Can be cleared in here with just setting a nullptr.
+     *
+     * @since 24.12
+     */
+    void setNativeData(std::shared_ptr<void> data);
+
+    /**
+     * @returns the native data content, or nullptr if nothing set.
+     *
+     * You set it, you know what's in it
+     *
+     * @since 24.12
+     */
+    const void *nativeData() const;
 
 protected:
     /// @cond PRIVATE

@@ -75,6 +75,7 @@ public:
 
     Annotation::DisposeDataFunction m_disposeFunc;
     QVariant m_nativeId;
+    std::shared_ptr<const void> m_nativeData;
 };
 
 }

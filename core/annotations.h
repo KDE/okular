@@ -684,7 +684,11 @@ public:
      *
      * @since 0.17 (KDE 4.11)
      */
+
     void setAnnotationProperties(const QDomNode &node);
+
+    void setNativeData(std::shared_ptr<void> data);
+    const void *nativeData() const;
 
 protected:
     /// @cond PRIVATE

@@ -3661,8 +3661,9 @@ void Part::moveSplitter(int sideWidgetSize)
 #if HAVE_NEW_SIGNATURE_API
 void Part::finishSigning()
 {
-    m_signatureInProgressMessage->setVisible(false);
-    m_pageView->finishSigning();
+    if (m_pageView->finishSigning() != PageView::FinishSigningResult::Cancelled) {
+        m_signatureInProgressMessage->setVisible(false);
+    }
 }
 #endif
 

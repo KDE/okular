@@ -142,7 +142,7 @@ public Q_SLOTS:
 
     void externalKeyPressEvent(QKeyEvent *e);
 #if HAVE_NEW_SIGNATURE_API
-    void finishSigning();
+    bool finishSigning();
 #endif
 
 Q_SIGNALS:

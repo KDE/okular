@@ -5474,12 +5474,12 @@ void PageView::externalKeyPressEvent(QKeyEvent *e)
 }
 
 #if HAVE_NEW_SIGNATURE_API
-void PageView::finishSigning()
+bool PageView::finishSigning()
 {
     const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(this, d->document);
 
     if (newFilePath.isEmpty()) {
-        return;
+        return false;
     }
 
     Okular::NewSignatureData data;
@@ -5496,6 +5496,7 @@ void PageView::finishSigning()
     } else {
         KMessageBox::error(this, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", d->document->currentDocument().toLocalFile()));
     }
+    return true;
 }
 #endif
 

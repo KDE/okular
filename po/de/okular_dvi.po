@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
 # Thomas Reitelbach <tr@erdfunkstelle.de>, 2007.
 # Burkhard Lück <lueck@hube-lueck.de>, 2007, 2008, 2009, 2013, 2014, 2019.
 # Frederik Schwarzer <schwarzer@kde.org>, 2012, 2013.
@@ -6,14 +7,15 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2019-08-22 08:11+0200\n"
-"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"PO-Revision-Date: 2024-10-07 18:01+0200\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -346,17 +348,17 @@ msgstr "Schriftdatei nicht gefunden"
 #: pageSize.cpp:298
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: pageSize.cpp:311
 #, kde-format
 msgid "%1 × %2 mm"
-msgstr ""
+msgstr "%1 × %2 mm"
 
 #: pageSize.cpp:313
 #, kde-format
 msgid "%1 × %2 in"
-msgstr ""
+msgstr "%1 × %2 Zoll"
 
 #: pageSize.cpp:318
 #, kde-format

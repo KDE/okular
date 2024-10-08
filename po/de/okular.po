@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 00:38+0000\n"
-"PO-Revision-Date: 2024-09-08 18:40+0200\n"
-"Last-Translator: Frank Steinmetzger <dev-kde@felsenfleischer.de>\n"
+"PO-Revision-Date: 2024-10-07 18:04+0200\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -900,7 +900,7 @@ msgstr "Das Zertifikat wurde noch nicht überprüft."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Zerifikat wird überprüft"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -3651,8 +3651,7 @@ msgid "Speak Whole Document"
 msgstr "Gesamtes Dokument vorlesen"
 
 #: part/pageview.cpp:709
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
 msgstr "Aktuelle Seite vorlesen"
 
@@ -3927,6 +3926,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Signiert von : %1\n"
+"\n"
+"Datum: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4136,11 +4138,13 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Signieren wird ausgeführt. Die Position und Größe der Signatur kann "
+"angepasst werden."
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Signieren ist abgeschlossen"
 
 #: part/part.cpp:655
 #, kde-format

@@ -69,6 +69,12 @@ public:
 
     enum ClearMode { ClearAllSelection, ClearOnlyDividers };
 
+    enum FinishSigningResult {
+        Success,
+        Failed,
+        Cancelled,
+    };
+
     // create actions that interact with this widget
     void setupBaseActions(KActionCollection *ac);
     void setupViewerActions(KActionCollection *ac);
@@ -142,7 +148,7 @@ public Q_SLOTS:
 
     void externalKeyPressEvent(QKeyEvent *e);
 #if HAVE_NEW_SIGNATURE_API
-    void finishSigning();
+    PageView::FinishSigningResult finishSigning();
 #endif
 
 Q_SIGNALS:

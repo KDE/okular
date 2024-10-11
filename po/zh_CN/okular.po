@@ -3863,6 +3863,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"签名者：%1\n"
+"\n"
+"日期：%2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4061,12 +4064,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "签名正在进行中。您可以调整签名的位置和大小"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "完成签名"
 
 #: part/part.cpp:655
 #, kde-format

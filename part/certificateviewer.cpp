@@ -78,6 +78,7 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto fingerprintBox = new QGroupBox(i18n("Fingerprints"), generalPage);
     auto fingerprintFormLayout = new QFormLayout(fingerprintBox);
     fingerprintFormLayout->setLabelAlignment(Qt::AlignLeft);
+    fingerprintFormLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     QByteArray certData = m_certificateInfo.certificateData();
     auto sha1Label = new QLabel(QString::fromLatin1(QCryptographicHash::hash(certData, QCryptographicHash::Sha1).toHex(' ')));
     sha1Label->setWordWrap(true);

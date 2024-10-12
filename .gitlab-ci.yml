@@ -27,17 +27,11 @@ build_ubuntu_24_10:
    - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
    - apt-get update
    - apt-get install --yes eatmydata
-   # Uncomment when ubuntu ships with a Qt6 okular
-   # - eatmydata apt-get build-dep --yes --no-install-recommends okular
-   # Remove when ubuntu ships with a Qt6 okular
-   - eatmydata apt-get install --yes --no-install-recommends libkf6kio-dev cmake g++ extra-cmake-modules qt6-svg-dev libkf6xmlgui-dev libkf6threadweaver-dev libkf6parts-dev libkf6crash-dev libkf6iconthemes-dev libkf6textwidgets-dev libkf6purpose-dev libkf6wallet-dev qt6-speech-dev libtiff-dev libkf6pty-dev libpoppler-qt6-dev libspectre-dev libphonon4qt6-dev libzip-dev libdjvulibre-dev libmarkdown2-dev libqmobipocket6-dev libepub-dev
+   - eatmydata apt-get build-dep --yes --no-install-recommends okular
    - eatmydata apt-get install --yes --no-install-recommends ninja-build
  script:
    - mkdir -p build && cd build
-   # Remove the exiv part one Ununtu has it
-   # remove this line once ubuntu has plasma-activities
-   - sed -i 's/PlasmaActivities REQUIRED/PlasmaActivities/' ../CMakeLists.txt
-   - cmake -DOKULAR_UI=desktop -G Ninja .. -DFORCE_NOT_REQUIRED_DEPENDENCIES="KExiv2Qt6"
+   - cmake -DOKULAR_UI=both -G Ninja ..
    - ninja
 
 build_clazy_clang_tidy:

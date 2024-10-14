@@ -1221,10 +1221,25 @@ void DocumentPrivate::recalculateForms()
                                     if (newVal != oldVal) {
                                         form->setValue(QVariant(newVal));
                                         form->setAppearanceValue(QVariant(newVal));
+                                        bool returnCode = true;
+                                        if (form->additionalAction(Okular::FormField::FieldModified) && !form->isReadOnly()) {
+                                            m_parent->processKeystrokeCommitAction(form->additionalAction(Okular::FormField::FieldModified), form, returnCode);
+                                        }
+                                        if (const Okular::Action *action = form->additionalAction(Okular::FormField::ValidateField)) {
+                                            if (returnCode) {
+                                                m_parent->processValidateAction(action, form, returnCode);
+                                            }
+                                        }
+                                        if (!returnCode) {
+                                            continue;
+                                        } else {
+                                            form->commitValue(form->value().toString());
+                                        }
                                         if (const Okular::Action *action = form->additionalAction(Okular::FormField::FormatField)) {
                                             // The format action handles the refresh.
                                             m_parent->processFormatAction(action, form);
                                         } else {
+                                            form->commitFormattedValue(form->value().toString());
                                             Q_EMIT m_parent->refreshFormWidget(form);
                                             pageNeedsRefresh = true;
                                         }
@@ -3490,6 +3505,11 @@ void DocumentPrivate::notifyFormChanges(int /*page*/)
     recalculateForms();
 }
 
+void Document::recalculateForms()
+{
+    d->recalculateForms();
+}
+
 void Document::addPageAnnotation(int page, Annotation *annotation)
 {
     // Transform annotation's base boundary rectangle into unrotated coordinates
@@ -4625,10 +4645,12 @@ void Document::processKVCFActions(Okular::FormField *ff)
         ff->commitValue(ff->value().toString());
     }
 
-    // TODO add calculation script here
+    recalculateForms();
 
     if (const Okular::Action *action = ff->additionalAction(Okular::FormField::FormatField)) {
         processFormatAction(action, ff);
+    } else {
+        ff->commitFormattedValue(ff->value().toString());
     }
 }
 

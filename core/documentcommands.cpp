@@ -452,7 +452,6 @@ void EditFormTextCommand::undo()
     moveViewportIfBoundingRectNotFullyVisible(m_form->rect(), m_docPriv, m_pageNumber);
     m_form->setText(m_prevContents);
     Q_EMIT m_docPriv->m_parent->formTextChangedByUndoRedo(m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos);
-    m_docPriv->notifyFormChanges(m_pageNumber);
 }
 
 void EditFormTextCommand::redo()
@@ -460,7 +459,6 @@ void EditFormTextCommand::redo()
     moveViewportIfBoundingRectNotFullyVisible(m_form->rect(), m_docPriv, m_pageNumber);
     m_form->setText(m_newContents);
     Q_EMIT m_docPriv->m_parent->formTextChangedByUndoRedo(m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos);
-    m_docPriv->notifyFormChanges(m_pageNumber);
 }
 
 int EditFormTextCommand::id() const
@@ -550,7 +548,6 @@ void EditFormComboCommand::undo()
     }
     moveViewportIfBoundingRectNotFullyVisible(m_form->rect(), m_docPriv, m_pageNumber);
     Q_EMIT m_docPriv->m_parent->formComboChangedByUndoRedo(m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos);
-    m_docPriv->notifyFormChanges(m_pageNumber);
 }
 
 void EditFormComboCommand::redo()
@@ -562,7 +559,6 @@ void EditFormComboCommand::redo()
     }
     moveViewportIfBoundingRectNotFullyVisible(m_form->rect(), m_docPriv, m_pageNumber);
     Q_EMIT m_docPriv->m_parent->formComboChangedByUndoRedo(m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos);
-    m_docPriv->notifyFormChanges(m_pageNumber);
 }
 
 int EditFormComboCommand::id() const

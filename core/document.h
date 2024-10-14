@@ -788,6 +788,13 @@ public:
     void processDocumentAction(const Action *action, DocumentAdditionalActionType type);
 
     /**
+     * Recalculates all the form fields in the document
+     *
+     * @since 24.12
+     */
+    void recalculateForms();
+
+    /**
      * Returns a list of the bookmarked.pages
      */
     QList<int> bookmarkedPageList() const;

@@ -70,14 +70,17 @@ void CalculateTextTest::testSimpleCalculate()
     Okular::FormFieldText *field1 = fields[QStringLiteral("field1")];
     QVERIFY(field1);
     m_document->editFormText(0, field1, QStringLiteral("10"), 0, 0, 0, QString());
+    m_document->recalculateForms();
 
     Okular::FormFieldText *field2 = fields[QStringLiteral("field2")];
     QVERIFY(field2);
     m_document->editFormText(0, field2, QStringLiteral("20"), 0, 0, 0, QString());
+    m_document->recalculateForms();
 
     Okular::FormFieldText *field3 = fields[QStringLiteral("field3")];
     QVERIFY(field3);
     m_document->editFormText(0, field3, QStringLiteral("30"), 0, 0, 0, QString());
+    m_document->recalculateForms();
 
     // Verify the results
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("60"));
@@ -91,6 +94,7 @@ void CalculateTextTest::testSimpleCalculate()
 
     // Test that multiplication with zero works
     m_document->editFormText(0, field2, QStringLiteral("0"), 0, 0, 0, QStringLiteral("20"));
+    m_document->recalculateForms();
     QCOMPARE(fields[QStringLiteral("Prod")]->text(), QStringLiteral("0"));
 
     // Test that updating the field also worked with sum
@@ -99,10 +103,12 @@ void CalculateTextTest::testSimpleCalculate()
     // Test that undo / redo works
     QVERIFY(m_document->canUndo());
     m_document->undo();
+    m_document->recalculateForms();
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("60"));
 
     QVERIFY(m_document->canRedo());
     m_document->redo();
+    m_document->recalculateForms();
     QCOMPARE(fields[QStringLiteral("Sum")]->text(), QStringLiteral("40"));
 }
 

@@ -84,8 +84,9 @@ void FormWidgetsController::signalMouseAction(Okular::Action *action, Okular::Fo
 
 void FormWidgetsController::processScriptAction(Okular::Action *a, Okular::FormField *field, Okular::Annotation::AdditionalActionType type)
 {
-    // If it's not a Action Script or if the field is not a FormText, handle it normally
-    if (a->actionType() != Okular::Action::Script || field->type() != Okular::FormField::FormText || field->type() != Okular::FormField::FormChoice) {
+    // If it's not a Action Script or if the field is neither a FormText nor a combobox FormChoice, handle it normally
+    if (a->actionType() != Okular::Action::Script ||
+        (field->type() != Okular::FormField::FormText && !(field->type() == Okular::FormField::FormChoice && (dynamic_cast<Okular::FormFieldChoice *>(field)->choiceType() == Okular::FormFieldChoice::ComboBox)))) {
         Q_EMIT action(a);
         return;
     }
@@ -568,6 +569,10 @@ bool FormLineEdit::event(QEvent *e)
 {
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+            m_controller->document()->processKVCFActions(m_ff);
+            return true;
+        }
         if (keyEvent == QKeySequence::Undo) {
             Q_EMIT m_controller->requestUndo();
             return true;
@@ -683,8 +688,8 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo(int pageNumber, Okular::FormF
     m_prevAnchorPos = anchorPos;
 
     // If the contents of the box have already lost focus, we need to run all the keystroke, validation, formatting scripts again.
-    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing was still retain the focus and these scripts would execute when focus is lost.
-        // TODO handle the keystroke, validate, calculate, format events here.
+    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing will still retain the focus and these scripts would execute when focus is lost or enter key is pressed.
+        m_controller->document()->processKVCFActions(textForm);
     }
 }
 
@@ -743,8 +748,21 @@ bool TextAreaEdit::event(QEvent *e)
             setText(fft->text());
         }
         m_editing = true;
+
+        QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
+        if (focusEvent->reason() != Qt::ActiveWindowFocusReason) {
+            if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusIn)) {
+                m_controller->document()->processFocusAction(action, fft);
+            }
+        }
+        setFocus();
     } else if (e->type() == QEvent::FocusOut) {
         m_editing = false;
+
+        QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
+        if (focusEvent->reason() == Qt::OtherFocusReason || focusEvent->reason() == Qt::ActiveWindowFocusReason) {
+            return true;
+        }
 
         m_controller->document()->processKVCFActions(m_ff);
 
@@ -803,8 +821,8 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo(int pageNumber, Okular::FormF
     setTextCursor(c);
 
     // If the contents of the box have already lost focus, we need to run all the keystroke, validation, formatting scripts again.
-    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing was still retain the focus and these scripts would execute when focus is lost.
-        // TODO handle the keystroke, validate, calculate, format events here.
+    if (!hasFocus()) { // if lineEdit already had focus, undoing/redoing will still retain the focus and these scripts would execute when focus is lost or enter key is pressed.
+        m_controller->document()->processKVCFActions(textForm);
     }
 }
 
@@ -1179,6 +1197,10 @@ bool ComboEdit::event(QEvent *e)
 {
     if (e->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+            m_controller->document()->processKVCFActions(m_ff);
+            return true;
+        }
         if (keyEvent == QKeySequence::Undo) {
             Q_EMIT m_controller->requestUndo();
             return true;

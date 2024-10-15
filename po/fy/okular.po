@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-10-15 00:38+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -303,30 +303,30 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm"
 
-#: core/document.cpp:1703
+#: core/document.cpp:1718
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1706
+#: core/document.cpp:1721
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2452
+#: core/document.cpp:2467
 #, fuzzy, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Kin gjin plugin fine om it foarrige dokumint te bewurkjen."
 
-#: core/document.cpp:3607
+#: core/document.cpp:3627
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Presintaasje"
 
-#: core/document.cpp:4197 core/document.cpp:4203
+#: core/document.cpp:4217 core/document.cpp:4223
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document is trying to execute an external application and for your "
@@ -338,150 +338,150 @@ msgstr ""
 "De pdf-triem besiket in ekstern programma út te fieren. Foar de feilichheid "
 "fan jo systeem lit kpdf dit net ta."
 
-#: core/document.cpp:4213
+#: core/document.cpp:4233
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Gjin programma fûn foar it iepenjen fan triemmen fan it type %1."
 
-#: core/document.cpp:4851
+#: core/document.cpp:4873
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open a temporary file"
 msgstr "Koe %1 net iepenje. Redenn: %2"
 
-#: core/document.cpp:4853
+#: core/document.cpp:4875
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4855
+#: core/document.cpp:4877
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4857
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4859
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4861
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4863
+#: core/document.cpp:4885
 #, fuzzy, kde-format
 #| msgid "Unable to find okular part."
 msgid "Unable to find file to print"
 msgstr "It KPDF-Part koe net fûn wurde."
 
-#: core/document.cpp:4865
+#: core/document.cpp:4887
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4867
+#: core/document.cpp:4889
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4869
+#: core/document.cpp:4891
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5547 part/part.cpp:1139
+#: core/document.cpp:5569 part/part.cpp:1139
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open '%1'. File does not exist"
 msgstr "Koe %1 net iepenje. Redenn: %2"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:6060
+#: core/document.cpp:6082
 #, kde-format
 msgid "Subject"
 msgstr "Underwerp"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6085
 #, kde-format
 msgid "Description"
 msgstr "Beskriuwing"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6088
 #, kde-format
 msgid "Author"
 msgstr "Skriuwer"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6091
 #, kde-format
 msgid "Creator"
 msgstr "Oanmakke troch"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6094
 #, kde-format
 msgid "Producer"
 msgstr "Produsint"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6097
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6100
 #, kde-format
 msgid "Pages"
 msgstr "Siden"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6103
 #, kde-format
 msgid "Created"
 msgstr "Makke"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6106
 #, kde-format
 msgid "Modified"
 msgstr "Wizige"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6109
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Mime-triemtype"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6112
 #, kde-format
 msgid "Category"
 msgstr "Kategory"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6115
 #, kde-format
 msgid "Keywords"
 msgstr "Trefwurden"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6118
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "Triem"
 
 # oersetting OK?
-#: core/document.cpp:6099
+#: core/document.cpp:6121
 #, fuzzy, kde-format
 msgid "File Size"
 msgstr "Siden"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6124
 #, fuzzy, kde-format
 msgid "Page Size"
 msgstr "Siden"
@@ -539,19 +539,19 @@ msgctxt "Edit an form's text contents"
 msgid "edit form contents"
 msgstr "%1-eigenskippen"
 
-#: core/documentcommands.cpp:496
+#: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
 msgstr ""
 
-#: core/documentcommands.cpp:530
+#: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
 msgstr ""
 
-#: core/documentcommands.cpp:602
+#: core/documentcommands.cpp:598
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
@@ -3627,23 +3627,23 @@ msgstr ""
 msgid "Find as you type"
 msgstr ""
 
-#: part/formwidgets.cpp:852
+#: part/formwidgets.cpp:870
 #, fuzzy, kde-format
 #| msgid "All files"
 msgid "All Files (*)"
 msgstr "Alle triemmen"
 
-#: part/formwidgets.cpp:1258
+#: part/formwidgets.cpp:1280
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr ""
 
-#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:40
 #, fuzzy, kde-format
 msgid "Signature Properties"
 msgstr "Eigenski&ppen"

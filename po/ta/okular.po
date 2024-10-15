@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-10-15 00:38+0000\n"
 "PO-Revision-Date: 2024-09-07 20:54+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -287,29 +287,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 மி.மீ. (%3)"
 
-#: core/document.cpp:1703
+#: core/document.cpp:1718
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ஆரம்பத்திலிருந்து தேடல் தொடர்கிறது"
 
-#: core/document.cpp:1706
+#: core/document.cpp:1721
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "கடைசியிலிருந்து தேடல் தொடர்கிறது"
 
-#: core/document.cpp:2452
+#: core/document.cpp:2467
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "கொடுத்த ஆவணத்தைக் கையாளக் கூடிய செருகுநிரலைக் கண்டுபிடிக்க முடியவில்லை."
 
-#: core/document.cpp:3607
+#: core/document.cpp:3627
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "குறிப்புகளை நீக்கு"
 
-#: core/document.cpp:4197 core/document.cpp:4203
+#: core/document.cpp:4217 core/document.cpp:4223
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -318,52 +318,52 @@ msgstr ""
 "இந்த ஆவணம் ஒரு வெளி செயலியை இயக்க முயற்சிக்கிறது. உங்கள் பாதுகாப்புக்காக ஆக்குலர் இதை "
 "அனுமதிக்காது."
 
-#: core/document.cpp:4213
+#: core/document.cpp:4233
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "மைம்வகை %1 கொண்ட கோப்பை திறப்பதற்கு எந்த செயலியும் கண்டுபிடிக்கப்படவில்லை."
 
-#: core/document.cpp:4851
+#: core/document.cpp:4873
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "தற்காலிக கோப்பைத் திறக்க முடியவில்லை"
 
-#: core/document.cpp:4853
+#: core/document.cpp:4875
 #, kde-format
 msgid "Print conversion failed"
 msgstr "அச்சிடுவதற்காக மாற்றுதல் தோல்வியடைந்தது"
 
-#: core/document.cpp:4855
+#: core/document.cpp:4877
 #, kde-format
 msgid "Printing process crashed"
 msgstr "அச்சிடும் பணி முறிவடைந்தது"
 
-#: core/document.cpp:4857
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process could not start"
 msgstr "அச்சிடும் பணியைத் துவக்க முடியவில்லை"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing to file failed"
 msgstr "கோப்புக்கு அச்சிடுதல் தோல்வியடைந்தது"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "அச்சுப்பொறி செல்லுபடியாகாத நிலையில் இருந்தது"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4885
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "அச்சிட வேண்டிய கோப்பைக் கண்டுபிடிக்க முடியவில்லை"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4887
 #, kde-format
 msgid "There was no file to print"
 msgstr "அச்சிட எந்தக் கோப்பும் இல்லை"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4889
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "அச்சிட பயன்படும் நிரலைக் கண்டுபிடிக்க முடியவில்லை. CUPS lpr நிரல் உள்ளதா என்று "
 "சரிபாருங்கள்"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4891
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "அச்சிட வேண்டிய பக்க அளவு செல்லுபடியாகாதது"
 
-#: core/document.cpp:5547 part/part.cpp:1139
+#: core/document.cpp:5569 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'-ஐ திறக்க முடியவில்லை. அப்படி ஒரு கோப்பு இல்லை"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Title"
 msgstr "தலைப்பு"
 
-#: core/document.cpp:6060
+#: core/document.cpp:6082
 #, kde-format
 msgid "Subject"
 msgstr "பொருள்"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6085
 #, kde-format
 msgid "Description"
 msgstr "விவரணம்"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6088
 #, kde-format
 msgid "Author"
 msgstr "இயற்றியவர்"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6091
 #, kde-format
 msgid "Creator"
 msgstr "உருவாக்கியது"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6094
 #, kde-format
 msgid "Producer"
 msgstr "தயாரித்தது"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6097
 #, kde-format
 msgid "Copyright"
 msgstr "பதிப்புரிமை"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6100
 #, kde-format
 msgid "Pages"
 msgstr "பக்கங்கள்"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6103
 #, kde-format
 msgid "Created"
 msgstr "உருவாக்கப்பட்டது"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6106
 #, kde-format
 msgid "Modified"
 msgstr "மாற்றப்பட்டது"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6109
 #, kde-format
 msgid "MIME Type"
 msgstr "மைம் வகை"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6112
 #, kde-format
 msgid "Category"
 msgstr "வகை"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6115
 #, kde-format
 msgid "Keywords"
 msgstr "முதன்மைச்சொற்கள்"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6118
 #, kde-format
 msgid "File Path"
 msgstr "கோப்பிற்கான பாதை"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6121
 #, kde-format
 msgid "File Size"
 msgstr "கோப்பின் அளவு"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6124
 #, kde-format
 msgid "Page Size"
 msgstr "பக்கங்களின் அளவு"
@@ -510,19 +510,19 @@ msgctxt "Edit an form's text contents"
 msgid "edit form contents"
 msgstr "படிவத்தின் உள்ளடக்கத்தைத் திருத்து"
 
-#: core/documentcommands.cpp:496
+#: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
 msgstr "பட்டியல் படிவத் தேர்வைத் திருத்து"
 
-#: core/documentcommands.cpp:530
+#: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
 msgstr "கீழிறங்கு படிவத் தேர்வைத் திருத்து"
 
-#: core/documentcommands.cpp:602
+#: core/documentcommands.cpp:598
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
@@ -3422,22 +3422,22 @@ msgstr "தற்போதைய பக்கத்திலிருந்த�
 msgid "Find as you type"
 msgstr "தட்டச்சிடும்போதே கண்டுபிடி"
 
-#: part/formwidgets.cpp:852
+#: part/formwidgets.cpp:870
 #, kde-format
 msgid "All Files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: part/formwidgets.cpp:1258
+#: part/formwidgets.cpp:1280
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "கையொப்பமிடப்படாத கையொப்ப புலம் (கையொப்பமிட கிளிக் செய்யுங்கள்)"
 
-#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&கையொப்பமிடு..."
 
-#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "கையொப்பத்தின் பண்புகள்"

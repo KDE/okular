@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-10-15 00:38+0000\n"
 "PO-Revision-Date: 2024-09-13 12:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -306,29 +306,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1703
+#: core/document.cpp:1718
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Arama, başlangıçtan sürüyor"
 
-#: core/document.cpp:1706
+#: core/document.cpp:1721
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Arama, sondan sürüyor"
 
-#: core/document.cpp:2452
+#: core/document.cpp:2467
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Bu belgeyi açmak için bir eklenti bulunamadı."
 
-#: core/document.cpp:3607
+#: core/document.cpp:3627
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "bilgi notlarını kaldır"
 
-#: core/document.cpp:4197 core/document.cpp:4203
+#: core/document.cpp:4217 core/document.cpp:4223
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -337,52 +337,52 @@ msgstr ""
 "Belge, bir dış uygulamayı yürütmek istiyor; güvenliğiniz için Okular buna "
 "izin vermez."
 
-#: core/document.cpp:4213
+#: core/document.cpp:4233
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 dosya türünü açmak için bir uygulama bulunamadı."
 
-#: core/document.cpp:4851
+#: core/document.cpp:4873
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Geçici dosya açılamadı"
 
-#: core/document.cpp:4853
+#: core/document.cpp:4875
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Yazdırma dönüşümü başarısız"
 
-#: core/document.cpp:4855
+#: core/document.cpp:4877
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Yazdırma süreci çöktü"
 
-#: core/document.cpp:4857
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Yazdırma süreci başlatılamadı"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Dosyaya yazdırma başarısız"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Yazıcı geçersiz bir durumdaydı"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4885
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Yazdırılacak dosya bulunamadı"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4887
 #, kde-format
 msgid "There was no file to print"
 msgstr "Yazdırılacak dosya yok"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4889
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -391,92 +391,92 @@ msgstr ""
 "Yazdırmak için uygun bir ikili dosya bulunamadı. CUPS lpr ikili dosyasının "
 "kullanılabilir olduğundan emin olun"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4891
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Sayfa yazdırma boyutu geçersiz"
 
-#: core/document.cpp:5547 part/part.cpp:1139
+#: core/document.cpp:5569 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "“%1” açılamadı. Dosya yok"
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Title"
 msgstr "Başlık"
 
-#: core/document.cpp:6060
+#: core/document.cpp:6082
 #, kde-format
 msgid "Subject"
 msgstr "Konu"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6085
 #, kde-format
 msgid "Description"
 msgstr "Açıklama"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6088
 #, kde-format
 msgid "Author"
 msgstr "Yazar"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6091
 #, kde-format
 msgid "Creator"
 msgstr "Oluşturan"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6094
 #, kde-format
 msgid "Producer"
 msgstr "Üretici"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6097
 #, kde-format
 msgid "Copyright"
 msgstr "Telif hakkı"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6100
 #, kde-format
 msgid "Pages"
 msgstr "Sayfalar"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6103
 #, kde-format
 msgid "Created"
 msgstr "Oluşturulma"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6106
 #, kde-format
 msgid "Modified"
 msgstr "Değiştirilme"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6109
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME türü"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6112
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6115
 #, kde-format
 msgid "Keywords"
 msgstr "Anahtar sözcükler"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6118
 #, kde-format
 msgid "File Path"
 msgstr "Dosya yolu"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6121
 #, kde-format
 msgid "File Size"
 msgstr "Dosya boyutu"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6124
 #, kde-format
 msgid "Page Size"
 msgstr "Sayfa boyutu"
@@ -529,19 +529,19 @@ msgctxt "Edit an form's text contents"
 msgid "edit form contents"
 msgstr "form içeriğini düzenle"
 
-#: core/documentcommands.cpp:496
+#: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
 msgstr "liste formu seçimlerini düzenle"
 
-#: core/documentcommands.cpp:530
+#: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
 msgstr "açılır kutu seçimlerini düzenle"
 
-#: core/documentcommands.cpp:602
+#: core/documentcommands.cpp:598
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
@@ -3433,22 +3433,22 @@ msgstr "Geçerli Sayfadan"
 msgid "Find as you type"
 msgstr "Yazarken Bul"
 
-#: part/formwidgets.cpp:852
+#: part/formwidgets.cpp:870
 #, kde-format
 msgid "All Files (*)"
 msgstr "Tüm Dosyalar (*)"
 
-#: part/formwidgets.cpp:1258
+#: part/formwidgets.cpp:1280
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr "İmzasız İmza Alanı (İmzalamak İçin Tıklayın)"
 
-#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "&İmzala…"
 
-#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "İmza Özellikleri"

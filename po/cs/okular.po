@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-10-15 00:38+0000\n"
 "PO-Revision-Date: 2024-09-18 09:43+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -297,29 +297,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1703
+#: core/document.cpp:1718
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Pokračovat v hledání od začátku"
 
-#: core/document.cpp:1706
+#: core/document.cpp:1721
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Pokračovat v hledání zdola"
 
-#: core/document.cpp:2452
+#: core/document.cpp:2467
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nebyl nalezen zásuvný modul vhodný pro zpracování zadaného dokumentu."
 
-#: core/document.cpp:3607
+#: core/document.cpp:3627
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Odstranit poznámky"
 
-#: core/document.cpp:4197 core/document.cpp:4203
+#: core/document.cpp:4217 core/document.cpp:4223
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +328,52 @@ msgstr ""
 "Dokument se pokouší spustit externí aplikaci. Pro vaše bezpečí to Okular "
 "nepovolil."
 
-#: core/document.cpp:4213
+#: core/document.cpp:4233
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nebyla nalezena žádná aplikace pro otevírání typu MIME %1."
 
-#: core/document.cpp:4851
+#: core/document.cpp:4873
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nelze otevřít dočasný soubor"
 
-#: core/document.cpp:4853
+#: core/document.cpp:4875
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Tisková konverze selhala"
 
-#: core/document.cpp:4855
+#: core/document.cpp:4877
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces tisku zhavaroval"
 
-#: core/document.cpp:4857
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proces tisku nemohl být zahájen"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tisk do souboru selhal"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tiskárna byla v nesprávném stavu"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4885
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nelze najít soubor pro vytištění"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4887
 #, kde-format
 msgid "There was no file to print"
 msgstr "Soubor pro tisk nebyl zadán"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4889
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +382,92 @@ msgstr ""
 "Nebyl nalezen vhodný program pro tisk. Ujistěte se, že je program CUPS lpr "
 "dostupný"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4891
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Velikost stránky k tisku je neplatná"
 
-#: core/document.cpp:5547 part/part.cpp:1139
+#: core/document.cpp:5569 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nelze otevřít \"%1\". Soubor neexistuje."
 
-#: core/document.cpp:6057
+#: core/document.cpp:6079
 #, kde-format
 msgid "Title"
 msgstr "Název"
 
-#: core/document.cpp:6060
+#: core/document.cpp:6082
 #, kde-format
 msgid "Subject"
 msgstr "Předmět"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6085
 #, kde-format
 msgid "Description"
 msgstr "Popis"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6088
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6091
 #, kde-format
 msgid "Creator"
 msgstr "Vytvořil"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6094
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6097
 #, kde-format
 msgid "Copyright"
 msgstr "Autorská práva"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6100
 #, kde-format
 msgid "Pages"
 msgstr "Strany"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6103
 #, kde-format
 msgid "Created"
 msgstr "Vytvořeno"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6106
 #, kde-format
 msgid "Modified"
 msgstr "Změněno"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6109
 #, kde-format
 msgid "MIME Type"
 msgstr "Typ MIME"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6112
 #, kde-format
 msgid "Category"
 msgstr "Kategorie"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6115
 #, kde-format
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6118
 #, kde-format
 msgid "File Path"
 msgstr "Cesta k souboru"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6121
 #, kde-format
 msgid "File Size"
 msgstr "Velikost souboru"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6124
 #, kde-format
 msgid "Page Size"
 msgstr "Velikost stran"
@@ -520,19 +520,19 @@ msgctxt "Edit an form's text contents"
 msgid "edit form contents"
 msgstr "upravit obsah formuláře"
 
-#: core/documentcommands.cpp:496
+#: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
 msgstr "upravit položky seznamu"
 
-#: core/documentcommands.cpp:530
+#: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
 msgstr "upravit výběr seznamu"
 
-#: core/documentcommands.cpp:602
+#: core/documentcommands.cpp:598
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
@@ -3422,22 +3422,22 @@ msgstr "Z aktuální stránky"
 msgid "Find as you type"
 msgstr "Hledat při psaní"
 
-#: part/formwidgets.cpp:852
+#: part/formwidgets.cpp:870
 #, kde-format
 msgid "All Files (*)"
 msgstr "Všechny soubory (*)"
 
-#: part/formwidgets.cpp:1258
+#: part/formwidgets.cpp:1280
 #, kde-format
 msgid "Unsigned Signature Field (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1324 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign..."
 msgstr "Podep&sat..."
 
-#: part/formwidgets.cpp:1328 part/signaturepropertiesdialog.cpp:40
+#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:40
 #, kde-format
 msgid "Signature Properties"
 msgstr "Vlastnosti podpisu"

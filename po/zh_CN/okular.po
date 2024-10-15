@@ -4334,7 +4334,7 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"此文档包含表单。点击按钮，或者在菜单栏选择查看 -> 显示表单即可对表单进行操"
+"此文档包含表单。点击按钮，或者在菜单栏选择视图 -> 显示表单即可对表单进行操"
 "作。"
 
 #: part/part.cpp:1607

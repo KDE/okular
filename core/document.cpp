@@ -4353,11 +4353,9 @@ void Document::processAction(const Action *action)
         Okular::BackendOpaqueAction::OpaqueActionResult res = d->m_generator->opaqueAction(backendOpaqueAction);
         if (res & Okular::BackendOpaqueAction::RefreshForms) {
             for (const Page *p : std::as_const(d->m_pagesVector)) {
-                if (p) {
-                    const QList<Okular::FormField *> forms = p->formFields();
-                    for (FormField *form : forms) {
-                        Q_EMIT refreshFormWidget(form);
-                    }
+                const QList<Okular::FormField *> forms = p->formFields();
+                for (FormField *form : forms) {
+                    Q_EMIT refreshFormWidget(form);
                 }
                 d->refreshPixmaps(p->number());
             }

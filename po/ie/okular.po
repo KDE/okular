@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -2215,37 +2215,37 @@ msgstr "Validitá"
 msgid "Fingerprints"
 msgstr "Fingre-printes"
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Fingre-print SHA-1"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Fingre-print SHA-256"
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr "Detallies"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, fuzzy, kde-format
 msgid "Certificate Data:"
 msgstr "Data"
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, fuzzy, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Catalog esset modificat. Esque vu vole salvar li modificationes?"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "File de certificate (*.cer)"
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, fuzzy, kde-format
 msgid "Could not export the certificate"
 msgstr "_Exportar li certificate"

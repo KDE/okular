@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
 "PO-Revision-Date: 2024-06-09 14:16+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -2249,37 +2249,37 @@ msgstr "Valabilitate"
 msgid "Fingerprints"
 msgstr "Amprente"
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Amprentă SHA-1"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Amprentă SHA-256"
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr "Detalii"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Date certificat:"
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Unde doriți să salvați acest certificat?"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Fișier cu certificat (*.cer)"
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Certificatul nu a putut fi exportat"

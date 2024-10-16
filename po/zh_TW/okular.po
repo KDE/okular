@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
 "PO-Revision-Date: 2024-09-17 07:36+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2226,37 +2226,37 @@ msgstr "有效性"
 msgid "Fingerprints"
 msgstr "金鑰指紋"
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "SHA-1 指紋"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 指紋"
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr "詳細資訊"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
 msgstr "憑證資料："
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "此憑證的儲存位置為何？"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "憑證檔案 (*.cer)"
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "無法匯出憑證"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -2278,37 +2278,37 @@ msgstr ""
 msgid "Fingerprints"
 msgstr ""
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr ""
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr ""
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr ""
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
 msgstr ""
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr ""
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr ""
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
 msgstr ""

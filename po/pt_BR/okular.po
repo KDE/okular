@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
 "PO-Revision-Date: 2024-07-12 08:32-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -2267,37 +2267,37 @@ msgstr "Validade"
 msgid "Fingerprints"
 msgstr "Impressões digitais"
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Impressão digital SHA-1"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Impressão digital SHA-256"
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr "Detalhes"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Dados do certificado:"
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Onde gostaria de salvar este certificado?"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Arquivo de certificado (*.cer)"
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Não foi possível exportar o certificado"

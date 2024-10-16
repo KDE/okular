@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-15 00:38+0000\n"
-"PO-Revision-Date: 2024-04-03 11:58+0300\n"
+"POT-Creation-Date: 2024-10-16 00:38+0000\n"
+"PO-Revision-Date: 2024-10-14 15:01+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -283,17 +283,13 @@ msgid "Landscape %1"
 msgstr "Ainavas %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 × %2 collas (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
@@ -899,7 +895,7 @@ msgstr "Sertifikāts vēl nav pārbaudīts."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Notiek sertifikāta pārbaude"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -2256,37 +2252,37 @@ msgstr "Derīgums"
 msgid "Fingerprints"
 msgstr "Digitālnospiedumi"
 
-#: part/certificateviewer.cpp:86
+#: part/certificateviewer.cpp:87
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "SHA-1 digitālnospiedums"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:88
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 digitālnospiedums"
 
-#: part/certificateviewer.cpp:105
+#: part/certificateviewer.cpp:106
 #, kde-format
 msgid "Details"
 msgstr "Papildinformācija"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Sertifikāta dati:"
 
-#: part/certificateviewer.cpp:158
+#: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Kur vēlaties saglabāt šo sertifikātu?"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Sertifikāta datne (*.cer)"
 
-#: part/certificateviewer.cpp:162
+#: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Sertifikāta eksports neizdevās"
@@ -3644,15 +3640,14 @@ msgid "Speak Whole Document"
 msgstr "Izrunāt visu dokumentu"
 
 #: part/pageview.cpp:709
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Izrunāt atvērto lappusi"
+msgstr "Izrunāt no atvērtās lapas"
 
 #: part/pageview.cpp:714
 #, kde-format
 msgid "Speak Current Page"
-msgstr "Izrunāt atvērto lappusi"
+msgstr "Izrunāt atvērto lapu"
 
 #: part/pageview.cpp:719
 #, kde-format
@@ -3721,22 +3716,19 @@ msgid "Speak Text"
 msgstr "Izrunāt tekstu"
 
 #: part/pageview.cpp:2847
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Attēls (%1 × %2 pikseļi)"
 
 #: part/pageview.cpp:2849
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Saglabāt datnē..."
+msgstr "Saglabāt datnē…"
 
 #: part/pageview.cpp:2869
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Attēls [%1×%2] ir iekopēts starpliktuvē."
+msgstr "Attēls [%1 × %2] ir iekopēts starpliktuvē."
 
 #: part/pageview.cpp:2872
 #, kde-format
@@ -3754,10 +3746,9 @@ msgid "File not saved."
 msgstr "Datne nav saglabāta."
 
 #: part/pageview.cpp:2885
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Attēls [%1x%2] ir saglabāts datnē „%3“."
+msgstr "Attēls [%1 × %2] ir saglabāts datnē „%3“."
 
 #: part/pageview.cpp:3027
 #, kde-format
@@ -3925,6 +3916,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Parakstīja: %1\n"
+"\n"
+"Datums: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4127,12 +4121,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Notiek parakstīšana. Varat pielāgot paraksta novietojumu un izmēru"
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "Pabeigt parakstīšanu"
 
 #: part/part.cpp:655
 #, kde-format
@@ -5491,11 +5485,7 @@ msgid "Save Signed File As"
 msgstr "Parakstīto datni saglabāt kā"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

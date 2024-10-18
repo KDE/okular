@@ -3561,7 +3561,7 @@ msgstr "浏览(&B)"
 #: part/pageview.cpp:622
 #, kde-format
 msgid "&Zoom"
-msgstr "缩放 (&Z)"
+msgstr "缩放(&Z)"
 
 #: part/pageview.cpp:642
 #, kde-format
@@ -4058,7 +4058,7 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "此文档包含嵌入的文件。<a href=\"okular:/embeddedfiles\">点击此处可查看这些文"
-"件</a>，也可通过菜单栏的文件 -> 嵌入文件查看。"
+"件</a>，也可通过菜单栏的文件 -> 嵌入的文件查看。"
 
 #: part/part.cpp:484
 #, kde-format

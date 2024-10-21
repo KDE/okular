@@ -147,9 +147,7 @@ void MainShellTest::initTestCase()
     // Register in bus as okular
 #if HAVE_DBUS
     QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
-    const QString myPid = QString::number(getpid());
-    const QString serviceName = QStringLiteral("org.kde.okular-") + myPid;
-    QVERIFY(bus->registerService(serviceName) == QDBusConnectionInterface::ServiceRegistered);
+    QVERIFY(bus->registerService(ShellUtils::currentProcessDbusName()) == QDBusConnectionInterface::ServiceRegistered);
 #endif
     // Tell the presentationWidget and queryClose to not be annoying
     KSharedConfigPtr c = KSharedConfig::openConfig(QStringLiteral("mainshelltest.kmessagebox"));

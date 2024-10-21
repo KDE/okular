@@ -14,6 +14,10 @@
 #include <QFileInfo>
 #include <QUrl>
 
+#if HAVE_DBUS
+#include <QUuid>
+#endif
+
 namespace ShellUtils
 {
 namespace detail
@@ -150,4 +154,12 @@ QString editorCmd(const QString &serializedOptions)
     unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &dummy, &dummy, &dummyString, &dummyString, &result);
     return QString::fromUtf8(QByteArray::fromBase64(result.toLatin1()));
 }
+
+#if HAVE_DBUS
+QString currentProcessDbusName()
+{
+    static const QString name = kPerProcessDbusPrefix + QUuid::createUuid().toString(QUuid::Id128);
+    return name;
+}
+#endif
 }

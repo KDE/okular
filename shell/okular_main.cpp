@@ -100,9 +100,6 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 
     const QStringList services = sessionInterface->registeredServiceNames().value();
 
-    // Don't match the service without trailing "-" (unique instance)
-    const QString pattern = QStringLiteral("org.kde.okular-");
-    const QString myPid = QString::number(qApp->applicationPid());
     QScopedPointer<QDBusInterface> bestService;
 #if HAVE_X11
     const int desktop = KX11Extras::currentDesktop();
@@ -111,8 +108,9 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 #endif
 
     // Select the first instance that isn't us (metric may change in future)
+    const QString ownDbus = ShellUtils::currentProcessDbusName();
     for (const QString &service : services) {
-        if (service.startsWith(pattern) && !service.endsWith(myPid)) {
+        if (service.startsWith(ShellUtils::kPerProcessDbusPrefix) && service != ownDbus) {
             bestService.reset(new QDBusInterface(service, QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular")));
 
             // Find a window that can handle our documents

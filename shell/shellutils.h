@@ -7,7 +7,13 @@
 #ifndef OKULAR_SHELLUTILS_H
 #define OKULAR_SHELLUTILS_H
 
+#include "config-okular.h"
+
 #include <QString>
+
+#if HAVE_DBUS
+#include <QLatin1StringView>
+#endif
 
 class QUrl;
 
@@ -30,6 +36,12 @@ QString page(const QString &serializedOptions);
 QString find(const QString &serializedOptions);
 QString editorCmd(const QString &serializedOptions);
 
+#if HAVE_DBUS
+// Must be a subname of "org.kde.okular" due to Flatpak not supporting wildcard D-Bus permissions.
+inline constexpr QLatin1StringView kPerProcessDbusPrefix("org.kde.okular.Instance_");
+
+QString currentProcessDbusName();
+#endif // HAVE_DBUS
 }
 
 #endif

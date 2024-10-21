@@ -47,7 +47,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword>tiff</keyword>
 			<keyword>djvu</keyword>
 			<keyword>dvi</keyword>
-			<keyword>chm</keyword>
 			<keyword>xps</keyword>
 			<keyword>comicbook</keyword>
 			<keyword>fictionbook</keyword>
@@ -63,7 +62,7 @@ Context menu actions like Rename Bookmarks etc.)
 			improved presentation support and annotation support.
 		</para>
 		<para>
-			&okular; supports a lot of different formats like &PDF;, &PostScript;, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
+			&okular; supports a lot of different formats like &PDF;, &PostScript;, Tiff, DjVU, Images (png, jpg, &etc;)
 			XPS, Fiction Books, Comic Book, Plucker, EPub, Fax and Markdown.
 			For all supported formats and their features see <ulink url="https://okular.kde.org/formats.php">
 			&okular; Document Format Handlers</ulink>.

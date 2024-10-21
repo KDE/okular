@@ -34,7 +34,7 @@ include(ECMSetupQtPluginMacroNames)
 include(ECMAddAndroidApk)
 
 if (ANDROID AND (FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;CHM;LibZip;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;DjVuLibre;EPub;Discount;")
 endif()
 
 function(set_okular_optional_package_properties _name _props)
@@ -250,21 +250,6 @@ set_okular_optional_package_properties(KExiv2Qt6 PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")
-
-if (FALSE ) # Investigate porting at some point
-    find_package(CHM)
-    set_okular_optional_package_properties(CHM PROPERTIES
-            DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
-            URL "http://www.jedrea.com/chmlib"
-            PURPOSE "Support CHM files in okular.")
-
-endif()
-
-find_package(LibZip)
-set_okular_optional_package_properties(LibZip PROPERTIES
-        DESCRIPTION  "A library for reading, creating, and modifying zip archives"
-        URL "https://libzip.org/"
-        PURPOSE "Support CHM files in okular.")
 
 find_package(DjVuLibre "3.5.28")
 set_okular_optional_package_properties(DjVuLibre PROPERTIES

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-16 00:38+0000\n"
-"PO-Revision-Date: 2024-09-07 20:54+0200\n"
+"PO-Revision-Date: 2024-10-20 16:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3902,6 +3902,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"கையொப்பமிட்டவர்: %1\n"
+"\n"
+"தேதி: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4103,11 +4106,13 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"கையொப்பமிடுவது செயலிலுள்ளது. கையொப்பத்தின் இருப்பிடத்தையும் அளவையும் நீங்கள் "
+"மாற்றியமைக்கலாம்."
 
 #: part/part.cpp:485
 #, kde-format
 msgid "Finish Signing"
-msgstr ""
+msgstr "கையொப்பமிடு"
 
 #: part/part.cpp:655
 #, kde-format

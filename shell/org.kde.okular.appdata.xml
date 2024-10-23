@@ -203,6 +203,15 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, DjVu, imágenes, DVI, XPS, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
+      <li xml:lang="he">תסדירים נתמכים: PDF,‏ PS,‏ Tiff,‏ DjVu, תמונות, DVI,‏ XPS,‏ Fiction Book,‏ Comic Book,‏ Plucker, ספר אלקטרוני/EPub, פקס</li>
+      <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
+      <li xml:lang="sl">Podprti formati: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="tr">Desteklenen biçimler: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
+      <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>

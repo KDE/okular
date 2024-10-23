@@ -482,7 +482,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signatureInProgressMessage->setVisible(false);
     m_signatureInProgressMessage->setWordWrap(true);
     m_signatureInProgressMessage->setText(i18n("Signing in progress. You can adjust the position and size of the signature"));
-    QAction *finishSigningAction = new QAction(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18n("Finish Signing"), this);
+    QAction *finishSigningAction = new QAction(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18nc("@action:button finish the signing process", "Finish Signing"), this);
     connect(finishSigningAction, &QAction::triggered, this, &Part::finishSigning);
     m_signatureInProgressMessage->addAction(finishSigningAction);
     rightLayout->addWidget(m_signatureInProgressMessage);

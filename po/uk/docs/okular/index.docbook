@@ -85,8 +85,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >dvi</keyword>
 			<keyword
->chm</keyword>
-			<keyword
 >xps</keyword>
 			<keyword
 >comicbook</keyword>
@@ -106,7 +104,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<para
 >&okular; — це універсальний переглядач документів для &kde;, заснований на коді програми &kpdf;. Хоча програму і засновано на коді &kpdf;, &okular; має декілька унікальних можливостей, таких як режим огляду, покращену підтримку презентацій і анотування. </para>
 		<para
->У &okular; передбачено підтримку багатьох форматів даних, зокрема &PDF;, &PostScript;, Tiff, CHM, DjVU, зображення (png, jpg тощо) XPS, Fiction Book, Comic Book, Plucker, EPub, Fax і Markdown. Повний список підтримуваних форматів та можливостей наведено на сторінці <ulink url="https://okular.kde.org/formats.php"
+>У &okular; передбачено підтримку багатьох форматів даних, зокрема &PDF;, &PostScript;, Tiff, DjVU, зображення (png, jpg тощо) XPS, Fiction Book, Comic Book, Plucker, EPub, Fax і Markdown. Повний список підтримуваних форматів та можливостей наведено на сторінці <ulink url="https://okular.kde.org/formats.php"
 >інструментів обробки форматів документів &okular;</ulink
 >. </para>
 		<screenshot>

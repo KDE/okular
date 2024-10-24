@@ -63,7 +63,9 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     extraInfoFormLayout->addRow(i18n("Signed By:"), new QLabel(signerName));
     extraInfoFormLayout->addRow(i18n("Signing Time:"), new QLabel(signingTime));
     if (!signingReason.isEmpty()) {
-        extraInfoFormLayout->addRow(i18n("Reason:"), new QLabel(signingReason));
+        auto label = std::make_unique<QLabel>(signingReason);
+        label->setWordWrap(true);
+        extraInfoFormLayout->addRow(i18n("Reason:"), label.release());
     }
     extraInfoFormLayout->addRow(i18n("Location:"), new QLabel(signingLocation));
 

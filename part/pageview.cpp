@@ -186,6 +186,7 @@ public:
     int lastSourceLocationViewportPageNumber = -1;
     double lastSourceLocationViewportNormalizedX = 0.0;
     double lastSourceLocationViewportNormalizedY = 0.0;
+    int singlePageWheelAccumulatedDelta = 0;
 
     // for everything except PgUp/PgDn and scroll to arbitrary locations
     const int baseShortScrollDuration = 100;
@@ -3259,9 +3260,11 @@ void PageView::wheelEvent(QWheelEvent *e)
     }
 
     // Perform scroll
-    if (delta <= -QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->maximum()) {
+    if (!getContinuousMode() && vScroll == verticalScrollBar()->maximum() && delta < 0) {
+        d->singlePageWheelAccumulatedDelta += delta;
         // go to next page
-        if ((int)d->document->currentPage() < d->items.count() - 1) {
+        if (d->singlePageWheelAccumulatedDelta <= -QWheelEvent::DefaultDeltasPerStep && (int)d->document->currentPage() < d->items.count() - 1) {
+            d->singlePageWheelAccumulatedDelta = 0;
             // more optimized than document->setNextPage and then move view to top
             Okular::DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber += viewColumns();
@@ -3273,9 +3276,11 @@ void PageView::wheelEvent(QWheelEvent *e)
             d->document->setViewport(newViewport);
             d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
         }
-    } else if (delta >= QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->minimum()) {
+    } else if (!getContinuousMode() && vScroll == verticalScrollBar()->minimum() && delta > 0) {
+        d->singlePageWheelAccumulatedDelta += delta;
         // go to prev page
-        if (d->document->currentPage() > 0) {
+        if (d->singlePageWheelAccumulatedDelta >= QWheelEvent::DefaultDeltasPerStep && d->document->currentPage() > 0) {
+            d->singlePageWheelAccumulatedDelta = 0;
             // more optimized than document->setPrevPage and then move view to bottom
             Okular::DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber -= viewColumns();
@@ -3288,6 +3293,7 @@ void PageView::wheelEvent(QWheelEvent *e)
             d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
         }
     } else {
+        d->singlePageWheelAccumulatedDelta = 0;
         // When the shift key is held down, scroll ten times faster
         int multiplier = (e->modifiers() & Qt::ShiftModifier) ? 10 : 1;
 

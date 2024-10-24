@@ -203,7 +203,9 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="bg">Поддържани формати: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, DjVu, imágenes, DVI, XPS, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="he">תסדירים נתמכים: PDF,‏ PS,‏ Tiff,‏ DjVu, תמונות, DVI,‏ XPS,‏ Fiction Book,‏ Comic Book,‏ Plucker, ספר אלקטרוני/EPub, פקס</li>
       <li xml:lang="ka">მხარდაჭერილი ფორმატები: PDF, PS, Tiff, DjVu, სურათები, DVI, XPS, ფანტასტიკის წიგნი, Comic Book, Plucker, EPub, Fax</li>

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-22 00:38+0000\n"
+"POT-Creation-Date: 2024-10-25 00:38+0000\n"
 "PO-Revision-Date: 2024-09-28 08:29+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1575,8 +1575,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopiatu testua arbelera"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2515 part/pageview.cpp:2835 part/pageview.cpp:2979
-#: part/pageview.cpp:3036
+#: part/pageview.cpp:2516 part/pageview.cpp:2836 part/pageview.cpp:2980
+#: part/pageview.cpp:3037
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRMak kopiatzea debekatu du"
@@ -3481,299 +3481,299 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr " / "
 
-#: part/pageview.cpp:494
+#: part/pageview.cpp:495
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom"
 
-#: part/pageview.cpp:506
+#: part/pageview.cpp:507
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Zoom % 100era"
 
-#: part/pageview.cpp:517
+#: part/pageview.cpp:518
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Biratu e&skuinera"
 
-#: part/pageview.cpp:518
+#: part/pageview.cpp:519
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Eskuinera"
 
-#: part/pageview.cpp:522
+#: part/pageview.cpp:523
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Biratu e&zkerrera"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:524
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Ezkerrera"
 
-#: part/pageview.cpp:527
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Original Orientation"
 msgstr "Jatorrizko orientazioa"
 
-#: part/pageview.cpp:533
+#: part/pageview.cpp:534
 #, kde-format
 msgid "&Trim View"
 msgstr "&Moztu ikuspegia"
 
-#: part/pageview.cpp:537
+#: part/pageview.cpp:538
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Moztu marjinak"
 
-#: part/pageview.cpp:544
+#: part/pageview.cpp:545
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Moztu &hautapenera"
 
-#: part/pageview.cpp:550
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Fit &Width"
 msgstr "Doitu &zabalera"
 
-#: part/pageview.cpp:554
+#: part/pageview.cpp:555
 #, kde-format
 msgid "Fit &Page"
 msgstr "Doitu &orrialdea"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:559
 #, kde-format
 msgid "&Auto Fit"
 msgstr "Doitze &automatikoa"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:563
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Doitu &leihoa orrialdera"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:570
 #, kde-format
 msgid "&View Mode"
 msgstr "%Ikuspegi modua"
 
-#: part/pageview.cpp:581
+#: part/pageview.cpp:582
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Orrialde &bakarra"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:583
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Aurrez-aurreko orrialdeak"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:584
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Aurrez-aurreko orrialdeak (&erdiratu aurreneko orrialdea)"
 
-#: part/pageview.cpp:586
+#: part/pageview.cpp:587
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Ikuspegi &orokorra"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:599
 #, kde-format
 msgid "&Continuous"
 msgstr "&Jarraitu"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:606
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Erabili eskuinetik ezkerrera irakurtzeko noranzkoa"
 
-#: part/pageview.cpp:614
+#: part/pageview.cpp:615
 #, kde-format
 msgid "&Browse"
 msgstr "&Arakatu"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:623
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:642
+#: part/pageview.cpp:643
 #, kde-format
 msgid "Area &Selection"
 msgstr "Azalera &hautapena"
 
-#: part/pageview.cpp:649
+#: part/pageview.cpp:650
 #, kde-format
 msgid "&Text Selection"
 msgstr "&Testu hautapena"
 
-#: part/pageview.cpp:656
+#: part/pageview.cpp:657
 #, kde-format
 msgid "T&able Selection"
 msgstr "T&aula hautapena"
 
-#: part/pageview.cpp:663
+#: part/pageview.cpp:664
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Lupa"
 
-#: part/pageview.cpp:672
+#: part/pageview.cpp:673
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Hautapen tresnak"
 
-#: part/pageview.cpp:698
+#: part/pageview.cpp:699
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Digitalki &sinatu..."
 
-#: part/pageview.cpp:704
+#: part/pageview.cpp:705
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Hitz egin dokumentu osoa"
 
-#: part/pageview.cpp:709
+#: part/pageview.cpp:710
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Hitz egin uneko orrialdeatik"
 
-#: part/pageview.cpp:714
+#: part/pageview.cpp:715
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Hitz egin uneko orrialdea"
 
-#: part/pageview.cpp:719
+#: part/pageview.cpp:720
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Gelditu hitz egitea"
 
-#: part/pageview.cpp:724
+#: part/pageview.cpp:725
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Eten/Berrekin hizketa"
 
-#: part/pageview.cpp:736
+#: part/pageview.cpp:737
 #, kde-format
 msgid "Scroll Up"
 msgstr "Labaindu gora"
 
-#: part/pageview.cpp:742
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Scroll Down"
 msgstr "Labaindu behera"
 
-#: part/pageview.cpp:748
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Labaindu orri gora"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:755
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Labandu orri behera"
 
-#: part/pageview.cpp:760
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Show Forms"
 msgstr "Erakutsi inprimakiak"
 
-#: part/pageview.cpp:1264
+#: part/pageview.cpp:1265
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Orri bakarreko dokumentua zamatu da."
 msgstr[1] " %1 orriko dokumentua zamatu da."
 
-#: part/pageview.cpp:2510
+#: part/pageview.cpp:2511
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiatu taularen edukia arbelera"
 
-#: part/pageview.cpp:2829
+#: part/pageview.cpp:2830
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Testua (karaktere 1)"
 msgstr[1] "Testua (%1 karaktere)"
 
-#: part/pageview.cpp:2830 part/pageview.cpp:2848
+#: part/pageview.cpp:2831 part/pageview.cpp:2849
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiatu arbelera"
 
-#: part/pageview.cpp:2839 part/pageview.cpp:3031
+#: part/pageview.cpp:2840 part/pageview.cpp:3032
 #, kde-format
 msgid "Speak Text"
 msgstr "Hitz egin testua"
 
-#: part/pageview.cpp:2847
+#: part/pageview.cpp:2848
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Irudia (%1 × %2 pixel)"
 
-#: part/pageview.cpp:2849
+#: part/pageview.cpp:2850
 #, kde-format
 msgid "Save to File…"
 msgstr "Gorde fitxategian..."
 
-#: part/pageview.cpp:2869
+#: part/pageview.cpp:2870
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Irudia [%1 × %2] arbelean kopiatu da."
 
-#: part/pageview.cpp:2872
+#: part/pageview.cpp:2873
 #, kde-format
 msgid "Save file"
 msgstr "Gorde fitxategia"
 
-#: part/pageview.cpp:2872
+#: part/pageview.cpp:2873
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Irudiak (*.png *.jpeg)"
 
-#: part/pageview.cpp:2874
+#: part/pageview.cpp:2875
 #, kde-format
 msgid "File not saved."
 msgstr "Fitxategia ez da gorde."
 
-#: part/pageview.cpp:2885
+#: part/pageview.cpp:2886
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Irudia [%1 × %2] %3 fitxategian gorde da."
 
-#: part/pageview.cpp:3027
+#: part/pageview.cpp:3028
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiatu testua"
 
-#: part/pageview.cpp:3047
+#: part/pageview.cpp:3048
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Joan '%1'(e)ra"
 
-#: part/pageview.cpp:4049 part/part.cpp:3154
+#: part/pageview.cpp:4055 part/part.cpp:3154
 #, kde-format
 msgid "Fit Width"
 msgstr "Doitu zabalera"
 
-#: part/pageview.cpp:4049
+#: part/pageview.cpp:4055
 #, kde-format
 msgid "Fit Page"
 msgstr "Doitu orrialdea"
 
-#: part/pageview.cpp:4049
+#: part/pageview.cpp:4055
 #, kde-format
 msgid "Auto Fit"
 msgstr "Doitu automatikoki"
 
-#: part/pageview.cpp:4072
+#: part/pageview.cpp:4078
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3782,67 +3782,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%%1"
 
-#: part/pageview.cpp:4355
+#: part/pageview.cpp:4361
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Bilatu '%1' honekin"
 
-#: part/pageview.cpp:4369
+#: part/pageview.cpp:4375
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfiguratu web lasterbideak..."
 
-#: part/pageview.cpp:4395
+#: part/pageview.cpp:4401
 #, kde-format
 msgid "Follow This Link"
 msgstr "Jarraitu esteka honi"
 
-#: part/pageview.cpp:4398
+#: part/pageview.cpp:4404
 #, kde-format
 msgid "Play this Sound"
 msgstr "Jo soinu hau"
 
-#: part/pageview.cpp:4400
+#: part/pageview.cpp:4406
 #, kde-format
 msgid "Stop Sound"
 msgstr "Gelditu soinua"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4412
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiatu estekaren helbidea"
 
-#: part/pageview.cpp:4427
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Bilatu '%1' dokumentu honetan"
 
-#: part/pageview.cpp:4959
+#: part/pageview.cpp:4965
 #, kde-format
 msgid "Welcome"
 msgstr "Ongi etorri"
 
-#: part/pageview.cpp:5081
+#: part/pageview.cpp:5087
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Hautatu zoomaren azalera. Eskuineko-klik zooma urruntzeko."
 
-#: part/pageview.cpp:5094
+#: part/pageview.cpp:5100
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik egin handitutako ikuspegia ikusteko."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5115
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Marraztu laukizuzen bat kopiatu beharreko testuen/grafikoen inguruan."
 
-#: part/pageview.cpp:5123
+#: part/pageview.cpp:5129
 #, kde-format
 msgid "Select text"
 msgstr "Hautatu testua"
 
-#: part/pageview.cpp:5137
+#: part/pageview.cpp:5143
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3851,7 +3851,7 @@ msgstr ""
 "Marraztu laukizuzen bat taularen inguruan, ondoren klik egin ertzen ondoan "
 "erdibitzeko; sakatu «Ihes» garbitzeko."
 
-#: part/pageview.cpp:5149
+#: part/pageview.cpp:5155
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3860,7 +3860,7 @@ msgstr ""
 "Zure sinatzeko ziurtagiri guztiak, edo oraindik ez dira baliozkoak edo "
 "baliozkotasun data gainditu dute."
 
-#: part/pageview.cpp:5152
+#: part/pageview.cpp:5158
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3870,24 +3870,24 @@ msgstr ""
 "Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Informazio gehiagorako, "
 "begiratu eskuliburuko <a href=\"%1\">Sinadura digitala gehitzea</a> atala."
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5182
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Gorde gabeko aldaketak dituzu. Gorde ezazu dokumentua hura sinatu aurretik."
 
-#: part/pageview.cpp:5199
+#: part/pageview.cpp:5205
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Marraztu laukizuzen bat sinaduraren eremua txertatzeko"
 
-#: part/pageview.cpp:5343
+#: part/pageview.cpp:5349
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Marraztu laukizuzen bat ikusgai izan nahi duzun orrialde azaleraren inguruan"
 
-#: part/pageview.cpp:5497 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4121,7 +4121,9 @@ msgid ""
 msgstr "Sinatzen. Sinaduraren kokalekua eta neurria doi ditzakezu"
 
 #: part/part.cpp:485
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Finish Signing"
+msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Sinatzen amaitu"
 
@@ -5365,7 +5367,7 @@ msgid "Select certificate to sign with:"
 msgstr "Aukeratu sinatzeko ziurtagiria:"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:66
+#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:68
 #, kde-format
 msgid "Reason:"
 msgstr "Zergatia:"
@@ -5380,7 +5382,7 @@ msgid "optional"
 msgstr "aukerakoa"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:68
+#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:70
 #, kde-format
 msgid "Location:"
 msgstr "Kokalekua:"
@@ -5521,33 +5523,33 @@ msgstr "Nork sinatua:"
 msgid "Signing Time:"
 msgstr "Sinatze ordua:"
 
-#: part/signaturepropertiesdialog.cpp:78
+#: part/signaturepropertiesdialog.cpp:80
 #, kde-format
 msgid "Document Version"
 msgstr "Dokumentuaren bertsioa"
 
-#: part/signaturepropertiesdialog.cpp:81
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Dokumentuaren berrikuspena %1/%2"
 
-#: part/signaturepropertiesdialog.cpp:83
+#: part/signaturepropertiesdialog.cpp:85
 #, kde-format
 msgid "View Signed Version..."
 msgstr "Ikusi sinatutako bertsioa..."
 
-#: part/signaturepropertiesdialog.cpp:90
+#: part/signaturepropertiesdialog.cpp:92
 #, kde-format
 msgid "View Certificate..."
 msgstr "Ikusi ziurtagiria..."
 
-#: part/signaturepropertiesdialog.cpp:92
+#: part/signaturepropertiesdialog.cpp:94
 #, kde-format
 msgid "View in Certificate Manager"
 msgstr "Ikusi ziurtagiri kudeatzailean"
 
-#: part/signaturepropertiesdialog.cpp:96
+#: part/signaturepropertiesdialog.cpp:98
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDEren ziurtagiri kudeatzailea (kleopatra) ez du aurkitu"

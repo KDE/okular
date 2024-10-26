@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-09-13 16:11+0300\n"
+"PO-Revision-Date: 2024-10-25 18:31+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4150,8 +4150,7 @@ msgstr ""
 "Виконуємо підписування. Ви можете скоригувати розташування і розмір підпису"
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Завершити підписування"

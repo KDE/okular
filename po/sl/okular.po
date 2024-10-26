@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-09-13 13:20+0200\n"
+"PO-Revision-Date: 2024-10-25 09:07+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4127,11 +4127,10 @@ msgid ""
 msgstr "Podpisovanje v teku. Prilagodite lahko položaj in velikost podpisa"
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr "Končaj podpisovanje"
+msgstr "Dokončaj podpisovanje"
 
 #: part/part.cpp:655
 #, kde-format

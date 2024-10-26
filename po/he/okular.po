@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-09-13 05:50+0300\n"
+"PO-Revision-Date: 2024-10-25 22:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4102,8 +4102,7 @@ msgid ""
 msgstr "מתבצעת חתימה. אפשר לכוון את מקום החתימה ואת גודלה"
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "סיום חתימה"

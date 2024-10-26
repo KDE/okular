@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-09-14 13:16+0200\n"
+"PO-Revision-Date: 2024-10-25 10:51+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -4134,11 +4134,10 @@ msgstr ""
 "La signatura està en curs. Podeu ajustar la posició i la mida de la signatura"
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr "La signatura ha finalitzat"
+msgstr "Finalitza la signatura"
 
 #: part/part.cpp:655
 #, kde-format

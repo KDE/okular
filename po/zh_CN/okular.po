@@ -4067,11 +4067,10 @@ msgid ""
 msgstr "签名正在进行中。您可以调整签名的位置和大小"
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr "完成签名"
+msgstr ""
 
 #: part/part.cpp:655
 #, kde-format

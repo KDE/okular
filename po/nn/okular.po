@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-09-24 19:25+0200\n"
+"PO-Revision-Date: 2024-10-27 14:45+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -4114,8 +4114,7 @@ msgid ""
 msgstr "Signering pågår. Du kan justera plassering og storleik til signaturen."
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Fullfør signeringa"

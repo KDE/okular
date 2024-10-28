@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-10-20 16:01+0530\n"
+"PO-Revision-Date: 2024-10-27 11:27+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -4110,11 +4110,10 @@ msgstr ""
 "மாற்றியமைக்கலாம்."
 
 #: part/part.cpp:485
-#, fuzzy, kde-format
-#| msgid "Finish Signing"
+#, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr "கையொப்பமிடு"
+msgstr "கையொப்பமிடுவதை முடி"
 
 #: part/part.cpp:655
 #, kde-format

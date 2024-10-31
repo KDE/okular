@@ -670,7 +670,10 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
     {
         if (auto signature = dynamic_cast<const Okular::SignatureAnnotation *>(okl_ann)) {
             auto helper = static_cast<const SignatureImageHelper *>(signature->nativeData());
-            resizeImage(helper, signature->page(), signature->boundingRectangle(), ppl_doc);
+
+            if (helper) {
+                resizeImage(helper, signature->page(), signature->boundingRectangle(), ppl_doc);
+            }
 
             break;
         }

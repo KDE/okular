@@ -3940,6 +3940,7 @@ static synctex_ss_s _synctex_decode_string(synctex_scanner_p scanner)
     size_t already_len = 0;
     synctex_zs_s zs = {0, 0};
     char *string = NULL;
+    char *new_string = NULL;
     if (NULL == scanner) {
         return (synctex_ss_s) {NULL, SYNCTEX_STATUS_BAD_ARGUMENT};
     }
@@ -3948,8 +3949,10 @@ static synctex_ss_s _synctex_decode_string(synctex_scanner_p scanner)
     more_characters:
         zs = _synctex_buffer_get_available_size(scanner, 1);
         if (zs.status < SYNCTEX_STATUS_EOF) {
+            free(string);
             return (synctex_ss_s) {NULL, zs.status};
         } else if (0 == zs.size) {
+            free(string);
             return (synctex_ss_s) {NULL, SYNCTEX_STATUS_EOF};
         }
     }
@@ -3966,7 +3969,9 @@ static synctex_ss_s _synctex_decode_string(synctex_scanner_p scanner)
      *      or *end == '\n' */
     len = end - SYNCTEX_CUR;
     if (len < UINT_MAX - already_len) {
-        if ((string = realloc(string, len + already_len + 1)) != NULL) {
+        if ((new_string = realloc(string, len + already_len + 1)) != NULL) {
+            string = new_string;
+            new_string = NULL;
             if (memcpy(string + already_len, SYNCTEX_CUR, len)) {
                 already_len += len;
                 string[already_len] = '\0'; /*  Terminate the string */
@@ -3991,6 +3996,7 @@ static synctex_ss_s _synctex_decode_string(synctex_scanner_p scanner)
             return (synctex_ss_s) {NULL, SYNCTEX_STATUS_ERROR};
         }
     }
+    free(string);
     _synctex_error("could not (re)allocate memory (1).");
     return (synctex_ss_s) {NULL, SYNCTEX_STATUS_ERROR};
 }

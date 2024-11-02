@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-10-26 19:03+0200\n"
+"PO-Revision-Date: 2024-11-01 09:24+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2846,7 +2846,7 @@ msgid ""
 msgstr ""
 "Определя режима на мащабиране по подразбиране за файлове, които никога преди "
 "не са били отваряни. За файлове, които са били отворени, се прилага "
-"предишното увеличение."
+"предишният мащаб."
 
 #: part/dlggeneral.cpp:210
 #, kde-format
@@ -3478,7 +3478,7 @@ msgstr "Мащабиране"
 #: part/pageview.cpp:507
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "МащабиранеУвеличаване до 100%"
+msgstr "Мащабиране до 100%"
 
 #: part/pageview.cpp:518
 #, kde-format

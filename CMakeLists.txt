@@ -197,7 +197,7 @@ if (BUILD_MOBILE)
     )
 endif()
 
-if(NOT WIN32 AND NOT ANDROID AND NOT APPLE)
+if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
     find_package(Qt6Gui REQUIRED COMPONENTS Private)
     find_package(PlasmaActivities REQUIRED)
     set_package_properties("PlasmaActivities" PROPERTIES

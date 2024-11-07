@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -4207,7 +4207,7 @@ msgstr ""
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Исцртајте правоугаоник око дела странице који желите да буде видљив."
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -5172,18 +5172,18 @@ msgstr ""
 "Не могу да одштампам документ. Грешка је „%1“. Пријавите ово на bugs.kde.org."
 
 # >> @info:whatsthis
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Идите на мјесто на коме сте били прије."
 
 # >> @info:whatsthis
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Идите на мјесто на коме сте били послије."
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5192,7 +5192,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да направим привремени фајл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5201,7 +5201,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да отворим фајл <nobr><strong>%1</"
 "strong></nobr> зарад распакивања. Фајл неће бити учитан.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5218,7 +5218,7 @@ msgstr ""
 "Власништво и дозволе можете да провјерите ако кликнете десним на фајл у "
 "менаџеру фајлова Делфину и изаберете језичак <i>Својства</i>.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5227,7 +5227,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да распакујем <nobr><strong>%1</"
 "strong></nobr>. Фајл неће бити учитан.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5237,28 +5237,28 @@ msgstr ""
 "сигурни, покушајте да га распакујете ручно помоћу наредби из командне линије."
 "</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Нема обиљеживача"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Проблем при дељењу документа: %1"
 
 # >> @title:window
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Дељење"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ успешно подељен."
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Подељени документ можете наћи на: <a href=\"%1\">%1</a>"

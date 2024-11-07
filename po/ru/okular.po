@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-10-15 16:34+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -3913,7 +3913,7 @@ msgstr "Для вставки поля подписи нарисуйте пря�
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Выделите прямоугольную область, которая останется видимой"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4865,17 +4865,17 @@ msgstr ""
 "Не удалось напечатать документ. Сообщение об ошибке: «%1». Сообщите об этой "
 "проблеме на bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Перейти на позицию где вы были раньше"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Перейти на позицию где вы были позднее"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4884,7 +4884,7 @@ msgstr ""
 "<qt><strong>Ошибка файловой операции!</strong> Невозможно создать временный "
 "файл <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4894,7 +4894,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> для распаковки. Файл не может быть загружен."
 "</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4907,7 +4907,7 @@ msgstr ""
 "правой кнопкой мыши на файле в диспетчере файлов Dolphin, далее выбрав пункт "
 "меню «Свойства» и открыв вкладку «Права» в открывшемся окне.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4916,7 +4916,7 @@ msgstr ""
 "<qt><strong>Ошибка файловой системы!</strong> Невозможно распаковать файл "
 "<nobr><strong>%1</strong></nobr>. Файл не может быть загружен.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4926,27 +4926,27 @@ msgstr ""
 "проверить целостность файла, попробуйте распаковать файл вручную в командной "
 "строке.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Закладки отсутствуют"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Не удалось опубликовать документ: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Опубликовать"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ опубликован успешно"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Опубликованный документ доступен по адресу: <a href=\"%1\">%1</a>"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-06-05 07:04\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -3905,7 +3905,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Намалюйце прамавугольнік вакол вобласці старонкі, якую хочаце пакінуць бачнай"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4851,17 +4851,17 @@ msgstr ""
 "Не ўдалося надрукаваць дакумент. Падрабязныя звесткі памылкі \"%1\". Калі "
 "ласка, стварыце справаздачу пра хібу на bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Перайсці да месца, якое наведвалася перад гэтым"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Перайсці да месца, якое наведвалася пасля гэтага"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4870,7 +4870,7 @@ msgstr ""
 "<qt><strong>Памылка файла!</strong> Не ўдалося стварыць часовы файл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4879,7 +4879,7 @@ msgstr ""
 "<qt><strong>Памылка!</strong> Не ўдалося адкрыць файл <nobr><strong>%1</"
 "strong></nobr>, каб распакаваць яго. Файл не будзе загружаны.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4892,7 +4892,7 @@ msgstr ""
 "кіраўніку файлаў Dolphin пстрыкнеце правай кнопкай мышы па файле, абераце "
 "\"Уласцівасці\" і перойдзеце на ўкладку \"Правы доступу\".</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4901,7 +4901,7 @@ msgstr ""
 "<qt><strong>Памылка!</strong> Не ўдалося распакаваць файл <nobr><strong>%1</"
 "strong></nobr>, каб распакаваць яго. Файл не будзе загружаны.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4911,27 +4911,27 @@ msgstr ""
 "быць праверыць файл, паспрабуйце распакаваць яго ўласнаручна з дапамогай "
 "інструментаў каманднага радка.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Няма закладак"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Пры спробе падзяліцца дакументам паўстала праблема: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Падзяліцца"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Дакумент паспяхова абагулены"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Вы можаце знайсці абагулены дакумент тут: <a href=\"%1\">%1</a>"

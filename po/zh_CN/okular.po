@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -3839,7 +3839,7 @@ msgstr "绘制用于插入签名字段的矩形区域"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "请在需要保留可见的页面区域之外绘制一个矩形"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4758,17 +4758,17 @@ msgid ""
 "bugs.kde.org"
 msgstr "无法打印此文档。具体错误是“%1”。请到 bugs.kde.org 网站提交程序缺陷报告"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "跳转到之前的位置"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "跳转到之后的位置"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4777,7 +4777,7 @@ msgstr ""
 "<qt><strong>文件错误。</strong>无法创建临时文件 <nobr><strong>%1</strong></"
 "nobr>。</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4786,7 +4786,7 @@ msgstr ""
 "<qt><strong>文件错误！</strong> 无法打开并解压文件 <nobr><strong>%1</"
 "strong></nobr>。将不会加载此文件。</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4797,7 +4797,7 @@ msgstr ""
 "<qt>此错误通常是因为您没有文件的读取权限。您可以在 Dolphin 文件管理器中右键点"
 "击该文件，选择“属性”，然后切换到“权限”标签页，检查文件的所有者和权限。</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4806,7 +4806,7 @@ msgstr ""
 "<qt><strong>文件错误！</strong>无法解压文件 <nobr><strong>%1</strong></nobr>"
 "将不会加载此文件。</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4815,27 +4815,27 @@ msgstr ""
 "<qt>此错误通常是因为文件已经损坏。您可以尝试使用命令行工具手动解压此文件，以"
 "确认它是否已经损坏。</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "没有书签"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "分享文档时出错：%1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "分享"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "文档成功分享"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "您可以在此找到已分享的文档：<a href=\"%1\">%1</a>"

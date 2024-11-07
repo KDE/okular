@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -4049,7 +4049,7 @@ msgstr ""
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Tegn et rektangel omkring det sideområde du vil holde synligt"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4960,17 +4960,17 @@ msgstr ""
 "Kunne ikke udskrive dokumentet. Den detaljerede fejl er \"%1\". Rapportér "
 "til bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Gå til det sted du var før"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Gå til det sted du var efter"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4979,7 +4979,7 @@ msgstr ""
 "<qt><strong>Fil-fejl!</strong> Kunne ikke oprette midlertidig fil "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4988,7 +4988,7 @@ msgstr ""
 "<qt><strong>Fil-fejl!</strong> Kunne ikke åbne filen <nobr><strong>%1</"
 "strong></nobr> til udpakning. Filen vil ikke blive indlæst.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5005,7 +5005,7 @@ msgstr ""
 "læse filen. Du kan tjekke ejerskab og tilladelser, hvis du højreklikker på "
 "filen i filhåndteringen Dolphin, og vælger fanebladet 'Egenskaber'.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5014,7 +5014,7 @@ msgstr ""
 "<qt><strong>Fil-fejl!</strong> Kunne ikke udpakke filen <nobr><strong>%1</"
 "strong></nobr>. Filen vil ikke blive indlæst.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5023,27 +5023,27 @@ msgstr ""
 "<qt>Denne fejl sker typisk hvis filen er ødelagt. Hvis du vil være sikker, "
 "så forsøg at udpakke filen manuelt vha. kommandolinje-værktøjer.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Ingen bogmærker"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Der opstod et problem ved deling af dette dokument: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Del"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentet blev delt"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Du kan finde det delte dokument på: <a href=\"%1\">%1</a>"

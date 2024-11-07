@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -4160,7 +4160,7 @@ msgstr ""
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "วาดสี่เหลี่ยมรอบข้อความ/ภาพกราฟิกที่ต้องการจะคัดลอก"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -5105,17 +5105,17 @@ msgstr ""
 "ไม่สามารถพิมพ์เอกสารได้ รายละเอียดข้อผิดพลาดคือ \"%1\" โปรดรายงานข้อผิดพลาดไปยัง bugs."
 "kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "ไปยังที่ที่คุณเคยไป ก่อน"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "ไปยังที่ ที่คุณเคยไป หลังจาก"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5124,7 +5124,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถสร้างแฟ้มชั่วคราว <nobr><strong>%1</"
 "strong></nobr> ได้</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5133,7 +5133,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถเปิดแฟ้ม <nobr><strong>%1</strong></"
 "nobr> เพื่อทำการคลายแฟ้มได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5150,7 +5150,7 @@ msgstr ""
 "คุณสามารถตรวจสอบความเป็นเจ้าของแฟ้มและสิทธิ์ที่มีได้ง่าย ๆ "
 "โดยการคลิกเมาส์ปุ่มขวาบนแฟ้มในโปรแกรมจัดการแฟ้ม 'ดอลฟิน' จากนั้นเลือกแท็บ 'คุณสมบัติ'</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5159,7 +5159,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถคลายแฟ้ม <nobr><strong>%1</strong></"
 "nobr> ได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5168,27 +5168,27 @@ msgstr ""
 "<qt>ข้อผิดพลาดนี้ จะเกิดขึ้นเมื่อแฟ้มมีส่วนผิดพลาดภายใน หากคุณต้องการความแน่ใจ "
 "โปรดทดลองคลายแฟ้มด้วยตัวเอง โดยใช้เครื่องมือคลายแฟ้มผ่านทางบรรทัดคำสั่ง</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "ไม่มีที่คั่นหน้าใด ๆ"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

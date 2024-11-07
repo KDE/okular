@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-10-25 22:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -3873,7 +3873,7 @@ msgstr "יש לצייר ריבוע כדי להוסיף את שדה החתימה"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "נא לצייר מרובע סביב האזור בעמוד שאמור להישאר גלוי"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4798,17 +4798,17 @@ msgstr ""
 "לא ניתן להדפיס את המסמך. השגיאה המפורטת היא „%1”. מומלץ לדווח על זה מול bugs."
 "kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "מעבר למיקום הקודם שהיית בו"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "מעבר למיקום הבא שהיית בו"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4817,7 +4817,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן ליצור קובץ זמני <nobr><strong>%1</"
 "strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4826,7 +4826,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן לפתוח את הקובץ <nobr><strong>%1</"
 "strong></nobr> לפריסה. הקובץ לא יטען.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4838,7 +4838,7 @@ msgstr ""
 "לבדוק את הבעלות ואת ההרשאות בלחיצה ימנית על הקובץ במנהל הקבצים, לאחר מכן "
 "לבחור באפשרות ‚מאפיינים’ ואז בלשונית ‚הרשאות’ בחלון שנפתח.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4847,7 +4847,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן לפרוש את הקובץ <nobr><strong>%1</"
 "strong></nobr>. הקובץ לא יטען.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4856,27 +4856,27 @@ msgstr ""
 "<qt>שגיאה זו מתרחשת בדרך כלל כשהקובץ פגום. על מנת לוודא זאת, ניתן לפרוש את "
 "הקובץ ידנית בעזרת כלי שורת־הפקודה.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "אין סימניות"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "אירעה בעיה בשיתוף המסמך: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "שיתוף"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "המסמך שותף בהצלחה"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "אפשר למצוא את המסמך המשותף תחת: <a href=\"%1\">%1</a>"

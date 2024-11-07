@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-10-25 03:44+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3879,7 +3879,7 @@ msgstr "დახატეთ მართკუთხედი ხელმო�
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "დახატეთ მართკუთხედი იმ გვერდის გარშემო, რომელიც გნებავთ, ხილული დარჩეს"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4827,17 +4827,17 @@ msgstr ""
 "დოკუმენტი ვერ დავბეჭდე. დეტალური შეცდომაა \"%1\". მოგვწერეთ შეცდომის შესახებ "
 "საიტზე bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "გადასვლა ადგილზე, სადაც მანამდე იყავით"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "გადასვლა ადგილზე, სადაც შემდეგ იყავით"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4846,7 +4846,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ შევქმენი დროებითი ფაილი "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4855,7 +4855,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ გავხსენი ფაილი <nobr><strong>%1</"
 "strong></nobr> გასაშლელად. ფაილი არ ჩაიტვირთება.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4868,7 +4868,7 @@ msgstr ""
 "თუ Dolphin-ში ფაილზე მარჯვენა ღილაკით დააწკაპუნეთ, შემდეგ აირჩევთ "
 "'თვისებებს' და 'წვდომების' ჩანართს ფანჯარაში, რომელიც გაიხსნება.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4877,7 +4877,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ გავშალე ფაილი <nobr><strong>%1</"
 "strong></nobr>. ფაილი არ ჩაიტვირთება.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4887,27 +4887,27 @@ msgstr ""
 "გნებავთ, დარწმუნდეთ, სცადეთ, ფაილი ხელით, ბრძანების სტრიქონის ბრძანებებით "
 "გაშალოთ</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "სანიშნების გარეშე"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "პრობლემა დოკუმენტის გაზიარებისას: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "გაზიარება"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "დოკუმენტი წარმატებით გაზიარდა"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2020-10-15 14:19+0200\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -4048,7 +4048,7 @@ msgstr ""
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Tõmba ristkülik ala ümber, mida soovid nähtaval hoida"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4995,17 +4995,17 @@ msgstr ""
 "Dokumendi trükkimine nurjus. Täpne viga on \"%1\". Palun anna sellest teada "
 "aadressil bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Liigub eelmisesse asukohta"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Liigub järgmisse asukohta"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5014,7 +5014,7 @@ msgstr ""
 "<qt><strong>Faili viga!</strong> Ei õnnestunud luua ajutist faili "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5023,7 +5023,7 @@ msgstr ""
 "<qt><strong>Faili viga!</strong> Faili <nobr><strong>%1</strong></nobr> "
 "avamine lahtipakkimiseks nurjus. Faili ei laaditud.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5036,7 +5036,7 @@ msgstr ""
 "failile hiire parema nupuga ja valid kontekstimenüüst 'Omadused' ning "
 "avanenud aknas kaardi 'Õigused'.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5045,7 +5045,7 @@ msgstr ""
 "<qt><strong>Faili viga!</strong> Faili <nobr><strong>%1</strong></nobr> "
 "lahtipakkimine nurjus. Faili ei laaditud.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5054,27 +5054,27 @@ msgstr ""
 "<qt>See viga juhtub tavaliselt siis, kui fail on vigane. Kui soovid seda "
 "kontrollida, proovi fail lahti pakkida käsureatööriistade abil.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Järjehoidjaid pole"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Dokumendi jagamisel tekkis probleem: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Jagamine"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumendi jagamine oli edukas"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Jagatud dokumendi leiab aadressilt <a href=\"%1\">%1</a>"

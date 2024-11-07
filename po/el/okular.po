@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3907,7 +3907,7 @@ msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρω από την περιοχή της σελίδας που θέλετε να "
 "διατηρήσετε ορατή"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4860,17 +4860,17 @@ msgstr ""
 "Αδύνατη η εκτύπωση του εγγράφου. Το λεπτομερές σφάλμα είναι \"%1\". Παρακαλώ "
 "αναφέρετέ το στο bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Μετάβαση στο σημείο που ήσασταν πριν"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Μετάβαση στο σημείο που ήσασταν μετά"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4879,7 +4879,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η δημιουργία του "
 "προσωρινού αρχείου <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4889,7 +4889,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> για αποσυμπίεση. Το αρχείο δε θα φορτωθεί.</"
 "qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4903,7 +4903,7 @@ msgstr ""
 "επιλέγοντας την επιλογή 'Ιδιότητες' και επιλέγοντας την καρτέλα 'Δικαιώματα' "
 "στο ανοιχτό παράθυρο.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4912,7 +4912,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η αποσυμπίεση του "
 "αρχείου <nobr><strong>%1</strong></nobr>. Το αρχείο δε θα φορτωθεί.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4922,27 +4922,27 @@ msgstr ""
 "Αν θέλετε να σιγουρευτείτε, προσπαθήστε να το αποσυμπιέσετε με χρήση "
 "εργαλείων γραμμής εντολών.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Κανένας σελιδοδείκτης"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Παρουσιάστηκε πρόβλημα με το διαμοιρασμό του εγγράφου: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Διαμοιρασμός"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Το έγγραφο μοιράστηκε με επιτυχία"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Μπορείτε να βρείτε το κοινόχρηστο έγγραφο στο: <a href=\"%1\">%1</a>"

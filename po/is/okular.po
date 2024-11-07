@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-01-21 21:29+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -3885,7 +3885,7 @@ msgstr "Dragðu ferhyrning til að setja inn undirskriftarreit"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Dragðu ferhyrning yfir svæðið á síðunni sem þú vilt halda sýnilegu."
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4824,17 +4824,17 @@ msgstr ""
 "Gat ekki prentað skjalið. Útlistuð villa er \"%1\". Sendu villuskýrslu til "
 "bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Fara þangað sem þú varst síðast"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Fara þangað sem þú varst eftir"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4843,7 +4843,7 @@ msgstr ""
 "<qt><strong>Skráarvilla!</strong> Gat ekki búið til bráðabirgðaskrá "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4852,7 +4852,7 @@ msgstr ""
 "<qt><strong>Skráarvilla!</strong> Gat ekki opnað skrána <nobr><strong>%1</"
 "strong></nobr> til að afþjappa hana. Skránni verður ekki hlaðið inn.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4864,7 +4864,7 @@ msgstr ""
 "að lesa skrána. Þú getur athugað eiganda og heimildir með því að hægrismella "
 "á skrána í Dolphin-skráastjóranum og velja síðan flipann 'Heimildir'.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4873,7 +4873,7 @@ msgstr ""
 "<qt><strong>Skráarvilla!</strong> Gat ekki afþjappað skrána <nobr><strong>"
 "%1</strong></nobr>. Skránni verður ekki hlaðið inn.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4883,27 +4883,27 @@ msgstr ""
 "fullvissa þig um það skaltu reyna að afþjappa hana handvirkt með því að nota "
 "skipanalínuforrit.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Engin bókamerki"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Vandamál kom upp við að deila skjalinu: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Deila"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Tókst að deila skjali"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Þú getur fundið skjalið sem var deilt á: <a href=\"%1\">%1</a>"

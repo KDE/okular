@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-07-27 21:35+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3882,7 +3882,7 @@ msgstr "Rajzoljon egy téglalapot aláírásmező beszúrásához"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Húzzon egy keretet a láthatóvá tenni kívánt oldalterület köré"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4828,17 +4828,17 @@ msgstr ""
 "A következő hiba miatt nem sikerült kinyomtatni a dokumentumot: „%1”. Kérjük "
 "jelentse be a hibát itt: bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ugrás az előző pozícióra"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ugrás a következő pozícióra"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4847,7 +4847,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült létrehozni ezt az ideiglenes "
 "fájlt: <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4857,7 +4857,7 @@ msgstr ""
 "kitömörítésre: <nobr><strong>%1</strong></nobr>. A fájlt nem sikerült "
 "betölteni.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4870,7 +4870,7 @@ msgstr ""
 "kiválasztja a „Tulajdonságok” opciót, és a „Jogosultsáok” fület a megnyitott "
 "ablakban.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4879,7 +4879,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült kitömöríteni a fájlt "
 "<nobr><strong>%1</strong></nobr>. A fájlt nem sikerült betölteni.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4888,27 +4888,27 @@ msgstr ""
 "<qt>Ez a hiba általában akkor jelentkezik, ha a fájl megsérült. A fájl "
 "integritásának ellenőrzéséhez tömörítse ki azt parancssoros eszközökkel.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nincs könyvjelző"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Hiba történt a dokumentum megosztásakor: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Megosztás"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentum sikeresen megosztva"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "A megosztott dokumentumot itt találhatja meg: <a href=\"%1\">%1</a>"

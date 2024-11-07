@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
 "PO-Revision-Date: 2024-10-25 09:07+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3893,7 +3893,7 @@ msgstr "Narišite pravokotnik za vstavljanje polja podpisa"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Narišite pravokotnik okoli območja strani, ki naj ostane vidno"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4841,17 +4841,17 @@ msgstr ""
 "Ni bilo mogoče natisniti dokumenta. Podrobna napaka je »%1«. Sporočite jo na "
 "bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Pojdite na mesto, kjer ste bili prej"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Pojdite na mesto, kjer ste bili kasneje"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4860,7 +4860,7 @@ msgstr ""
 "<qt><strong>Napaka datoteke!</strong> Ni bilo mogoče ustvariti začasne "
 "datoteke<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4870,7 +4870,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> za razširjanje. Datoteka ne bo naložena.</"
 "qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4883,7 +4883,7 @@ msgstr ""
 "upravljalniku datotek tako da z desnim gumbom miške kliknete na datoteko in "
 "z menija izberete možnost Lastnosti.</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4892,7 +4892,7 @@ msgstr ""
 "<qt><strong>Napaka datoteke</strong> Ni bilo mogoče razširiti datoteke "
 "<nobr><strong>%1</strong></nobr>. Datoteka ne bo naložena.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4902,27 +4902,27 @@ msgstr ""
 "prepričate, poskusite datoteko razširiti z uporabo orodij iz ukazne vrstice."
 "</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Ni zaznamkov"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Med deljenjem dokumenta je prišlo do težave: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Deli"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument je bil uspešno deljen"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Deljen dokument lahko najdete na: <a href=\"%1\">%1</a>"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-25 00:38+0000\n"
-"PO-Revision-Date: 2024-10-25 11:49+0200\n"
+"POT-Creation-Date: 2024-11-07 00:38+0000\n"
+"PO-Revision-Date: 2024-11-06 15:53+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2749,7 +2749,7 @@ msgstr "Characteristicas de programma:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
-msgstr "Aperi nove filess in schedas"
+msgstr "Aperi nove files in schedas"
 
 #: part/dlggeneral.cpp:124
 #, kde-format
@@ -3889,7 +3889,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Designa un rectangulo circa le area de pagina que tu vole mantener visibile"
 
-#: part/pageview.cpp:5503 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -4844,17 +4844,17 @@ msgstr ""
 "Non pote imprimer le documento Error detaliate es \"%1\". Pro favor tu "
 "reporta le falta a bugs.kde.org"
 
-#: part/part.cpp:3679
+#: part/part.cpp:3680
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Vade al placia ubi tu esseva ante"
 
-#: part/part.cpp:3683
+#: part/part.cpp:3684
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Vade al placia ubi tu esseva post"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3709
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4863,7 +4863,7 @@ msgstr ""
 "<qt><strong>Error de File!</strong> Non pote crear file temporanee "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3721
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4872,7 +4872,7 @@ msgstr ""
 "<qt><strong>Error de File!</strong> Non pote aperir le file <nobr><strong>"
 "%1</strong></nobr> pro decomprimer lo. Le file non essera cargate.</qt>"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3725
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4886,7 +4886,7 @@ msgstr ""
 "le scheda de \"Proprietates\" e selige le scheda 'Permissiones' in le "
 "fenestra aperite</qt>"
 
-#: part/part.cpp:3746
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4895,7 +4895,7 @@ msgstr ""
 "<qt><strong>Error de File!</strong> Nonn pote decomprimer le file "
 "<nobr><strong>%1</strong></nobr>. Le file non essera cargate.</qt>"
 
-#: part/part.cpp:3750
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4905,27 +4905,27 @@ msgstr ""
 "esser secur, essaya decomprimer le file manualmente per usar le instrumentos "
 "de commando de linea.</qt>"
 
-#: part/part.cpp:3776
+#: part/part.cpp:3777
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Necun marcator de libros"
 
-#: part/part.cpp:3847
+#: part/part.cpp:3848
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Il ha un problema a impartir le documento: %1"
 
-#: part/part.cpp:3847 part/part.cpp:3853
+#: part/part.cpp:3848 part/part.cpp:3854
 #, kde-format
 msgid "Share"
 msgstr "Impartir"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3852
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Documento impartite con successo"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Tu pote trovar le documento impartite in: <a href=\"%1\">%1</a>"

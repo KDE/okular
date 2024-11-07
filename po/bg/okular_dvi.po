@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-27 02:33+0000\n"
-"PO-Revision-Date: 2024-05-30 20:46+0200\n"
+"PO-Revision-Date: 2024-11-06 23:15+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -204,7 +204,7 @@ msgstr "Всички външни PostScript файлове са вграден�
 #: dviRenderer.cpp:419
 #, kde-format
 msgid "The specified file '%1' does not exist."
-msgstr "Посоченият файл '%1' не съществува."
+msgstr "Посоченият файл „%1“ не съществува."
 
 #: dviRenderer.cpp:565
 #, kde-format
@@ -284,7 +284,7 @@ msgstr "Страница %1:  PostScript файлът <strong>%2</strong> не �
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr "Данните за размера '%1' не могат да бъдат обработени."
+msgstr "Данните за размера „%1“ не могат да бъдат обработени."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -372,7 +372,7 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"Грешка в DVI файла '%1', страница %2. Color pop команадта е използвана "
+"Грешка в DVI файла „%1“, страница %2. Color pop команадта е използвана "
 "когато стека с цветове е празен."
 
 #: special.cpp:318
@@ -399,13 +399,13 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
-"Грешка в DVI файла '%1', страница %2. Грешка при интерпретиране ъгъла при "
+"Грешка в DVI файла „%1“, страница %2. Грешка при интерпретиране ъгъла при "
 "въртене на текст."
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "Специалната команда '%1' не е имплементирана."
+msgstr "Специалната команда „%1“ не е имплементирана."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format

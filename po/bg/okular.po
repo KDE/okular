@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-29 02:28+0000\n"
-"PO-Revision-Date: 2024-09-29 14:37+0200\n"
+"PO-Revision-Date: 2024-11-06 23:58+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 24.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -150,7 +150,7 @@ msgstr "Отваряне на външен файл"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
-msgstr "Изпълнение на \"%1\"..."
+msgstr "Изпълнение на „%1“..."
 
 #: core/action.cpp:296
 #, kde-format
@@ -384,7 +384,7 @@ msgstr "Размерът на страницата за печат е невал
 #: core/document.cpp:5490 part/part.cpp:1114
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "\"%1\" не може да бъде отворен. Файлът не съществува."
+msgstr "„%1“ не може да бъде отворен. Файлът не съществува."
 
 #: core/document.cpp:6000
 #, kde-format
@@ -827,7 +827,7 @@ msgstr "Къде искате да запишете %1?"
 #: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
-msgstr "\"%1\" не може да бъде отворен за запис. Файлът не е записан."
+msgstr "„%1“ не може да бъде отворен за запис. Файлът не е записан."
 
 #: gui/signatureguiutils.cpp:42
 #, kde-format
@@ -1589,7 +1589,7 @@ msgstr "&Информация"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "&Запис на \"%1\"..."
+msgstr "&Запис на „%1“..."
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -3745,7 +3745,7 @@ msgstr "Копиране на текст"
 #: part/pageview.cpp:3027
 #, kde-format
 msgid "Go to '%1'"
-msgstr "Отиване до \"%1\""
+msgstr "Отиване до „%1“"
 
 #: part/pageview.cpp:4029 part/part.cpp:3129
 #, kde-format
@@ -3774,7 +3774,7 @@ msgstr "%1%"
 #: part/pageview.cpp:4335
 #, kde-format
 msgid "Search for '%1' with"
-msgstr "Търсене на \"%1\" с"
+msgstr "Търсене на „%1“ с"
 
 #: part/pageview.cpp:4349
 #, kde-format
@@ -3804,7 +3804,7 @@ msgstr "Копиране адреса на връзката"
 #: part/pageview.cpp:4407
 #, kde-format
 msgid "Search for '%1' in this document"
-msgstr "Търсене на \"%1\" в този документ"
+msgstr "Търсене на „%1“ в този документ"
 
 #: part/pageview.cpp:4939
 #, kde-format
@@ -3860,7 +3860,7 @@ msgid ""
 "the manual."
 msgstr ""
 "Няма налични сертификати за подписване. <br/> За повече информация, моля "
-"вижте раздела за <a href=\"%1\">Добавяне на цифрови подписи</a> в "
+"вижте раздела за <a href='%1'>Добавяне на цифрови подписи</a> в "
 "ръководството."
 
 #: part/pageview.cpp:5148
@@ -3921,7 +3921,7 @@ msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "Не може да бъде подписан. Невалидна парола за сертификат или не може да "
-"запише на '%1'"
+"запише на „%1“"
 
 #: part/pageviewannotator.cpp:1177
 #, kde-format
@@ -4313,7 +4313,7 @@ msgstr "Документът не може да бъде записан"
 #: part/part.cpp:1121
 #, kde-format
 msgid "Could not open '%1' (%2) "
-msgstr "Не можа да се отвори \"%1\" (%2) "
+msgstr "Не можа да се отвори „%1“ (%2) "
 
 #: part/part.cpp:1175
 #, kde-format
@@ -4483,7 +4483,7 @@ msgstr "Прекъсване на затварянето"
 #: part/part.cpp:1842
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr "Искате ли да запазите промените си в \"%1\" или да ги отхвърлите?"
+msgstr "Искате ли да запазите промените си в „%1“ или да ги отхвърлите?"
 
 #: part/part.cpp:1842
 #, kde-format
@@ -4566,7 +4566,7 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
-"Избрахте да запазите архив на Okular без разширение на файл  '%1'. Това не е "
+"Избрахте да запазите архив на Okular без разширение на файл  „%1“. Това не е "
 "разрешено. Искате ли да изберете друго име?"
 
 #: part/part.cpp:2580
@@ -4643,7 +4643,7 @@ msgstr ""
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
-"Файлът не може да бъде записан в \"%1\". Пробвайте да го запишете в друга "
+"Файлът не може да бъде записан в „%1“. Пробвайте да го запишете в друга "
 "директория."
 
 #: part/part.cpp:2723
@@ -4717,7 +4717,7 @@ msgstr "Продължаване на загуба на промени"
 #: part/part.cpp:2781
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
-msgstr "Файлът не може да бъде записан в '%1'. %2"
+msgstr "Файлът не може да бъде записан в „%1“. %2"
 
 #: part/part.cpp:2820
 #, kde-format
@@ -4736,7 +4736,7 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
-"Файлът не можа да бъде запазен в \"%1\" . Грешка: \"%2 \". Опитайте да го "
+"Файлът не можа да бъде запазен в „%1“ . Грешка: \"%2 \". Опитайте да го "
 "запазите на друго място."
 
 #: part/part.cpp:3107
@@ -4805,7 +4805,7 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Грешка при печат на документа. Подробната грешка е \"%1\". Моля, съобщете за "
+"Грешка при печат на документа. Подробната грешка е „%1“. Моля, съобщете за "
 "грешка на bugs.kde.org"
 
 #: part/part.cpp:3640
@@ -4892,8 +4892,7 @@ msgstr "Документът е споделен успешно"
 #: part/part.cpp:3814
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
-msgstr ""
-"Можете да намерите споделения документ на адрес: <a href=\"%1\"> %1 </a>"
+msgstr "Можете да намерите споделения документ на адрес: <a href='%1'> %1 </a>"
 
 #. i18n: ectx: Menu (edit)
 #: part/part.rc:19

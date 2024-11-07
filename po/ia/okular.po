@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-29 02:28+0000\n"
-"PO-Revision-Date: 2024-07-01 11:06+0200\n"
+"PO-Revision-Date: 2024-11-06 16:09+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2749,7 +2749,7 @@ msgstr "Characteristicas de programma:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
-msgstr "Aperi nove filess in schedas"
+msgstr "Aperi nove files in schedas"
 
 #: part/dlggeneral.cpp:124
 #, kde-format

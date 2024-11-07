@@ -49,6 +49,10 @@ static bool isLeftOfVector(const NormalizedPoint &a, const NormalizedPoint &b, c
 static double distanceSqr(double x, double y, double xScale, double yScale, const QList<NormalizedPoint> &path)
 {
     double distance = DBL_MAX;
+    if (path.isEmpty()) {
+        return distance;
+    }
+
     QList<NormalizedPoint>::const_iterator i = path.constBegin();
     NormalizedPoint lastPoint = *i;
 

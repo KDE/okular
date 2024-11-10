@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-07 00:38+0000\n"
-"PO-Revision-Date: 2024-11-01 09:24+0100\n"
+"PO-Revision-Date: 2024-11-09 20:07+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -150,7 +150,7 @@ msgstr "Отваряне на външен файл"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'..."
-msgstr "Изпълнение на \"%1\"..."
+msgstr "Изпълнение на „%1“..."
 
 #: core/action.cpp:296
 #, kde-format
@@ -384,7 +384,7 @@ msgstr "Размерът на страницата за печат е невал
 #: core/document.cpp:5567 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "\"%1\" не може да бъде отворен. Файлът не съществува."
+msgstr "„%1“ не може да бъде отворен. Файлът не съществува."
 
 #: core/document.cpp:6077
 #, kde-format
@@ -827,7 +827,7 @@ msgstr "Къде искате да запишете %1?"
 #: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
-msgstr "\"%1\" не може да бъде отворен за запис. Файлът не е записан."
+msgstr "„%1“ не може да бъде отворен за запис. Файлът не е записан."
 
 #: gui/signatureguiutils.cpp:42
 #, kde-format
@@ -1589,7 +1589,7 @@ msgstr "&Информация"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'..."
-msgstr "&Запис на \"%1\"..."
+msgstr "&Запис на „%1“..."
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -3745,7 +3745,7 @@ msgstr "Копиране на текст"
 #: part/pageview.cpp:3048
 #, kde-format
 msgid "Go to '%1'"
-msgstr "Отиване до \"%1\""
+msgstr "Отиване до „%1“"
 
 #: part/pageview.cpp:4055 part/part.cpp:3154
 #, kde-format
@@ -3774,7 +3774,7 @@ msgstr "%1%"
 #: part/pageview.cpp:4361
 #, kde-format
 msgid "Search for '%1' with"
-msgstr "Търсене на \"%1\" с"
+msgstr "Търсене на „%1“ с"
 
 #: part/pageview.cpp:4375
 #, kde-format
@@ -3804,7 +3804,7 @@ msgstr "Копиране адреса на връзката"
 #: part/pageview.cpp:4433
 #, kde-format
 msgid "Search for '%1' in this document"
-msgstr "Търсене на \"%1\" в този документ"
+msgstr "Търсене на „%1“ в този документ"
 
 #: part/pageview.cpp:4965
 #, kde-format
@@ -3860,7 +3860,7 @@ msgid ""
 "the manual."
 msgstr ""
 "Няма налични сертификати за подписване. <br/> За повече информация, моля "
-"вижте раздела за <a href=\"%1\">Добавяне на цифрови подписи</a> в "
+"вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</a> в "
 "ръководството."
 
 #: part/pageview.cpp:5182
@@ -4338,7 +4338,7 @@ msgstr "Документът не може да бъде записан"
 #: part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1' (%2) "
-msgstr "Не можа да се отвори \"%1\" (%2) "
+msgstr "Не можа да се отвори „%1“ (%2) "
 
 #: part/part.cpp:1200
 #, kde-format
@@ -4508,7 +4508,7 @@ msgstr "Прекъсване на затварянето"
 #: part/part.cpp:1867
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr "Искате ли да запазите промените си в \"%1\" или да ги отхвърлите?"
+msgstr "Искате ли да запазите промените си в „%1“ или да ги отхвърлите?"
 
 #: part/part.cpp:1867
 #, kde-format
@@ -4668,7 +4668,7 @@ msgstr ""
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
-"Файлът не може да бъде записан в \"%1\". Пробвайте да го запишете в друга "
+"Файлът не може да бъде записан в „%1“. Пробвайте да го запишете в друга "
 "директория."
 
 #: part/part.cpp:2748
@@ -4761,7 +4761,7 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
-"Файлът не можа да бъде запазен в \"%1\" . Грешка: \"%2 \". Опитайте да го "
+"Файлът не можа да бъде запазен в „%1“ . Грешка: „%2“. Опитайте да го "
 "запазите на друго място."
 
 #: part/part.cpp:3132
@@ -4830,7 +4830,7 @@ msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr ""
-"Грешка при печат на документа. Подробната грешка е \"%1\". Моля, съобщете за "
+"Грешка при печат на документа. Подробната грешка е „%1“. Моля, съобщете за "
 "грешка на bugs.kde.org"
 
 #: part/part.cpp:3680
@@ -4917,8 +4917,7 @@ msgstr "Документът е споделен успешно"
 #: part/part.cpp:3854
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
-msgstr ""
-"Можете да намерите споделения документ на адрес: <a href=\"%1\"> %1 </a>"
+msgstr "Можете да намерите споделения документ на адрес: <a href=„%1“> %1 </a>"
 
 #. i18n: ectx: Menu (edit)
 #: part/part.rc:19

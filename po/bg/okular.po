@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-07 00:38+0000\n"
-"PO-Revision-Date: 2024-11-09 20:07+0100\n"
+"PO-Revision-Date: 2024-11-10 20:12+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2650,7 +2650,7 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Напишете командата с която да бъде стратират текстовия редактор.<br />\n"
+"<qt>Напишете командата с която да бъде стартиран текстовият редактор.<br />\n"
 "Можете да укажете и:\n"
 "<ul>\n"
 "  <li>%f - име на файла</li>\n"
@@ -3888,7 +3888,7 @@ msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "Не може да бъде подписан. Невалидна парола за сертификат или не може да "
-"запише на '%1'"
+"запише на „%1“"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4302,7 +4302,7 @@ msgstr "&Внасяне на Postscript като PDF..."
 #: part/part.cpp:943
 #, kde-format
 msgid "Switch Blackscreen Mode"
-msgstr "Превключане към черен екран"
+msgstr "Превключване към черен екран"
 
 #: part/part.cpp:951
 #, kde-format
@@ -4591,7 +4591,7 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
-"Избрахте да запазите архив на Okular без разширение на файл  '%1'. Това не е "
+"Избрахте да запазите архив на Okular без разширение на файл  „%1“. Това не е "
 "разрешено. Искате ли да изберете друго име?"
 
 #: part/part.cpp:2605
@@ -4742,7 +4742,7 @@ msgstr "Продължаване на загуба на промени"
 #: part/part.cpp:2806
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
-msgstr "Файлът не може да бъде записан в '%1'. %2"
+msgstr "Файлът не може да бъде записан в „%1“. %2"
 
 #: part/part.cpp:2845
 #, kde-format

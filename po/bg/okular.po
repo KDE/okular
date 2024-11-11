@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-07 00:38+0000\n"
-"PO-Revision-Date: 2024-11-01 09:24+0100\n"
+"PO-Revision-Date: 2024-11-10 14:10+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2650,7 +2650,7 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Напишете командата с която да бъде стратират текстовия редактор.<br />\n"
+"<qt>Напишете командата с която да бъде стартиран текстовият редактор.<br />\n"
 "Можете да укажете и:\n"
 "<ul>\n"
 "  <li>%f - име на файла</li>\n"
@@ -4302,7 +4302,7 @@ msgstr "&Внасяне на Postscript като PDF..."
 #: part/part.cpp:943
 #, kde-format
 msgid "Switch Blackscreen Mode"
-msgstr "Превключане към черен екран"
+msgstr "Превключване към черен екран"
 
 #: part/part.cpp:951
 #, kde-format

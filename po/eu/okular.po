@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:38+0000\n"
+"POT-Creation-Date: 2024-11-15 00:38+0000\n"
 "PO-Revision-Date: 2024-10-27 06:05+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -5674,7 +5674,7 @@ msgstr ""
 "Ireki beharreko dokumentuak. Zehaztu '-' sarrera estandarretik (stdin) "
 "irakurtzeko."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:169
+#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5685,32 +5685,32 @@ msgstr ""
 "instantzia batean. Mesedez, ezgaitu fitxak eta saiatu berriz. Kontuan izan "
 "«unique» ere ez dela onartzen editore komandoa komando-lerroan ezartzean.\n"
 
-#: shell/okular_main.cpp:188
+#: shell/okular_main.cpp:186
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Errorea: Ezin da dokumentu bat baino gehiako ireki  --unique  etengailuarekin"
 
-#: shell/okular_main.cpp:194
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Errorea: Ezin da dokumentu bat baino gehiago ireki  --presentation  "
 "etengailuarekin"
 
-#: shell/okular_main.cpp:200
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Errorea: Ezin da dokumentu bat baino gehiago ireki  --print  etengailuarekin"
 
-#: shell/okular_main.cpp:206
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Errorea: Ezin da dokumentu bat baino gehiago ireki  --page  etengailuarekin"
 
-#: shell/okular_main.cpp:212
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
@@ -5735,12 +5735,12 @@ msgstr ""
 "Dagoeneko Okularren instantzia bakar bat martxan dago. Instantzia hau ez da "
 "izango 'bakarra'."
 
-#: shell/shell.cpp:313
+#: shell/shell.cpp:318
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Ezin da Okularren osagaia aurkitu."
 
-#: shell/shell.cpp:570
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5749,7 +5749,7 @@ msgstr ""
 "Egin klik fitxategi bat irekitzeko\n"
 "Egin klik eta eutsi oraintsuko fitxategi bat irekitzeko"
 
-#: shell/shell.cpp:571
+#: shell/shell.cpp:576
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5757,57 +5757,57 @@ msgstr ""
 "<b>Klik egin</b> fitxategi bat irekitzeko edo <b>Klik egin eta eutsi</b> "
 "oraintsuko fitxategi bat hautatzeko"
 
-#: shell/shell.cpp:584
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Next Tab"
 msgstr "Hurrengo fitxa"
 
-#: shell/shell.cpp:590
+#: shell/shell.cpp:595
 #, kde-format
 msgid "Previous Tab"
 msgstr "Aurreko fitxa"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:601
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desegin fitxa ixtea"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:610
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Giltzatu Alboko-barra"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All files (*)"
 msgstr "Fitxategi guztiak (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:711
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Onartutako fitxategi guztiak (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:715
 #, kde-format
 msgid "Open Document"
 msgstr "Ireki dokumentua"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:829
 #, kde-format
 msgid "Confirm Close"
 msgstr "Berretsi ixtea"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:833
 #, kde-format
 msgid "Close Tabs"
 msgstr "Itxi fitxak"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:840
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 fitxa ixtera zoaz. Ziur zaude jarraitu nahi duzula?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Abisatu niri fitxa ugari ixten saiatzen naizenean"

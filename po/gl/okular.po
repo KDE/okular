@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:38+0000\n"
+"POT-Creation-Date: 2024-11-15 00:38+0000\n"
 "PO-Revision-Date: 2024-11-09 15:59+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -5679,7 +5679,7 @@ msgstr "Define a orde do editor externo"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Os documentos para abrir. Indique «-» para ler da entrada estándar."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:169
+#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5691,28 +5691,28 @@ msgstr ""
 "que «unique» tampouco se permite ao definir a orde do editor na liña de "
 "ordes.\n"
 
-#: shell/okular_main.cpp:188
+#: shell/okular_main.cpp:186
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Erro: Non é posíbel abrir máis dun documento coa opción «--unique»."
 
-#: shell/okular_main.cpp:194
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Erro: Non é posíbel abrir máis dun documento coa opción «--presentation»."
 
-#: shell/okular_main.cpp:200
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Erro: Non é posíbel abrir máis dun documento coa opción «--print»."
 
-#: shell/okular_main.cpp:206
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Erro: Non é posíbel abrir máis dun documento coa opción «--page»."
 
-#: shell/okular_main.cpp:212
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Erro: Non é posíbel abrir máis dun documento coa opción «--find»."
@@ -5736,12 +5736,12 @@ msgstr ""
 "Xa se está a executar unha instancia de Okular única. Esta instancia non "
 "será a única."
 
-#: shell/shell.cpp:313
+#: shell/shell.cpp:318
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Non é posíbel atopar o compoñente de Okular."
 
-#: shell/shell.cpp:570
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5750,7 +5750,7 @@ msgstr ""
 "Prema para abrir un ficheiro\n"
 "Prema e manteña premido para abrir un ficheiro recente"
 
-#: shell/shell.cpp:571
+#: shell/shell.cpp:576
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5758,57 +5758,57 @@ msgstr ""
 "<b>Prema</b> para abrir un ficheiro ou <b>Prema e manteña premido</b> para "
 "escoller un ficheiro recente"
 
-#: shell/shell.cpp:584
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Next Tab"
 msgstr "Seguinte lapela"
 
-#: shell/shell.cpp:590
+#: shell/shell.cpp:595
 #, kde-format
 msgid "Previous Tab"
 msgstr "Lapela anterior"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:601
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desfacer o peche de lapela"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:610
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloquear a barra lateral"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All files (*)"
 msgstr "Todos os ficheiros (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:711
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Todos os ficheiros compatíbeis (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:715
 #, kde-format
 msgid "Open Document"
 msgstr "Abrir un documento"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:829
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar o peche"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:833
 #, kde-format
 msgid "Close Tabs"
 msgstr "Pechar as lapelas"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:840
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Está a piques de pechar %1 lapelas. Seguro que quere continuar?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avisarme cando intente pechar varias lapelas."

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:38+0000\n"
+"POT-Creation-Date: 2024-11-15 00:38+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -5705,7 +5705,7 @@ msgstr "Ορίζει την εντολή του εξωτερικού κειμε�
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Έγγραφα για άνοιγμα. Καθορίστε το '-' για ανάγνωση από το stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:169
+#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5713,35 +5713,35 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:188
+#: shell/okular_main.cpp:186
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Σφάλμα: Αδυναμία ανοίγματος περισσότερων του ενός εγγράφων με τον διακόπτη --"
 "switch"
 
-#: shell/okular_main.cpp:194
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Σφάλμα: Αδυναμία ανοίγματος περισσότερων του ενός εγγράφων με τον διακόπτη --"
 "presentation"
 
-#: shell/okular_main.cpp:200
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Σφάλμα: Αδυναμία ανοίγματος περισσότερων του ενός εγγράφων με τον διακόπτη --"
 "print"
 
-#: shell/okular_main.cpp:206
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Σφάλμα: Αδυναμία ανοίγματος περισσότερων του ενός εγγράφων με τον διακόπτη --"
 "page"
 
-#: shell/okular_main.cpp:212
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
@@ -5767,12 +5767,12 @@ msgstr ""
 "Υπάρχει ήδη μια μοναδική διεργασία Okular που εκτελείται. Η διεργασία αυτή "
 "δεν θα είναι η μόνη."
 
-#: shell/shell.cpp:313
+#: shell/shell.cpp:318
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Αδυναμία εύρεσης του συστατικού Okular."
 
-#: shell/shell.cpp:570
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5781,7 +5781,7 @@ msgstr ""
 "Κάντε κλικ για να ανοίξετε ένα αρχείο.\n"
 "Κλικ και κράτημα για να ανοίξετε ένα πρόσφατο αρχείο"
 
-#: shell/shell.cpp:571
+#: shell/shell.cpp:576
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5789,57 +5789,57 @@ msgstr ""
 "<b>Κλικ</b> για να ανοίξετε ένα αρχείο ή <b>Κλικ και κράτημα</b> για να "
 "επιλέξετε ένα πρόσφατο αρχείο"
 
-#: shell/shell.cpp:584
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Next Tab"
 msgstr "Επόμενη καρτέλα"
 
-#: shell/shell.cpp:590
+#: shell/shell.cpp:595
 #, kde-format
 msgid "Previous Tab"
 msgstr "Προηγούμενη καρτέλα"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:601
 #, kde-format
 msgid "Undo close tab"
 msgstr "Αναίρεση κλεισίματος καρτέλας"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:610
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Κλείδωμα πλευρικής στήλης"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All files (*)"
 msgstr "Όλα τα αρχεία (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:711
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Όλα τα υποστηριζόμενα αρχεία (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:715
 #, kde-format
 msgid "Open Document"
 msgstr "Άνοιγμα εγγράφου"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:829
 #, kde-format
 msgid "Confirm Close"
 msgstr "Επιβεβαίωση κλεισίματος"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:833
 #, kde-format
 msgid "Close Tabs"
 msgstr "Κλείσιμο καρτελών"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:840
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Προτίθεσθε να κλείσετε %1 καρτέλες. Σίγουρα θέλετε να συνεχίσετε;"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Να προειδοποιούμαι όταν επιχειρώ να κλείσω πολλές καρτέλες"

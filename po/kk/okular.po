@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:38+0000\n"
+"POT-Creation-Date: 2024-11-15 02:30+0000\n"
 "PO-Revision-Date: 2013-10-30 03:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -5948,7 +5948,7 @@ msgstr ""
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Ашатын құжат. stdin. құрылғысынан оқу үшін  '-' деп келтіріңіз."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:169
+#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5956,30 +5956,30 @@ msgid ""
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
 
-#: shell/okular_main.cpp:188
+#: shell/okular_main.cpp:186
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Қате: --unique параметрімен бір ғана құжатты ашуға болады"
 
-#: shell/okular_main.cpp:194
+#: shell/okular_main.cpp:192
 #, fuzzy, kde-format
 #| msgid "Error: Can't open more than one document with the --unique switch"
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "Қате: --unique параметрімен бір ғана құжатты ашуға болады"
 
-#: shell/okular_main.cpp:200
+#: shell/okular_main.cpp:198
 #, fuzzy, kde-format
 #| msgid "Error: Can't open more than one document with the --unique switch"
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Қате: --unique параметрімен бір ғана құжатты ашуға болады"
 
-#: shell/okular_main.cpp:206
+#: shell/okular_main.cpp:204
 #, fuzzy, kde-format
 #| msgid "Error: Can't open more than one document with the --unique switch"
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Қате: --unique параметрімен бір ғана құжатты ашуға болады"
 
-#: shell/okular_main.cpp:212
+#: shell/okular_main.cpp:210
 #, fuzzy, kde-format
 #| msgid "Error: Can't open more than one document with the --unique switch"
 msgid "Error: Can't open more than one document with the --find switch"
@@ -6004,12 +6004,12 @@ msgid ""
 "the unique one."
 msgstr "Жегілген жалғыз деген Okular данасы бар. Бұл дана жалғыз бола алмайды."
 
-#: shell/shell.cpp:313
+#: shell/shell.cpp:318
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular бөлшегі табылмады."
 
-#: shell/shell.cpp:570
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6018,7 +6018,7 @@ msgstr ""
 "Файлды ашу үшін түртіңіз\n"
 "Жуырдағы файлды ашу үшін түртіп басып тұрыңыз"
 
-#: shell/shell.cpp:571
+#: shell/shell.cpp:576
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6026,64 +6026,64 @@ msgstr ""
 "Файлды ашу үшін <b>Түртіңіз</b> немесе жуырдағы файлды ашу үшін <b>Түртіп "
 "басып тұрыңыз</b>"
 
-#: shell/shell.cpp:584
+#: shell/shell.cpp:589
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "Келесі бет"
 
-#: shell/shell.cpp:590
+#: shell/shell.cpp:595
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "Алдыңғы бет"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:601
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:610
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "&Беттер панелін көрсету"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:710
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|Бүкіл файлдар"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:711
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:715
 #, kde-format
 msgid "Open Document"
 msgstr "Құжатты ашу"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:829
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:833
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Жабу"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:840
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "\"%1\" деген файл бар ғой. Шынымен оның үстінен жазбақсыз ба?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

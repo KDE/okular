@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-15 00:38+0000\n"
-"PO-Revision-Date: 2024-07-27 21:35+0200\n"
+"PO-Revision-Date: 2024-11-17 21:36+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -278,20 +278,16 @@ msgid "Landscape %1"
 msgstr "%1 fekvő"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 hüvelyk (%3)"
+msgstr "%1 × %2 hüvelyk (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 × %2 mm (%3)"
 
 #: core/document.cpp:1718
 #, kde-format
@@ -3633,10 +3629,9 @@ msgid "Speak Whole Document"
 msgstr "Felolvasás (a teljes dokumentumot)"
 
 #: part/pageview.cpp:710
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Felolvasás (a jelenlegi oldalt)"
+msgstr "Felolvasás a jelenlegi oldaltól"
 
 #: part/pageview.cpp:715
 #, kde-format
@@ -3708,22 +3703,19 @@ msgid "Speak Text"
 msgstr "Szöveg felolvasása"
 
 #: part/pageview.cpp:2848
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Kép (%1 x %2 képpont)"
+msgstr "Kép (%1 × %2 képpont)"
 
 #: part/pageview.cpp:2850
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Mentés fájlba…"
 
 #: part/pageview.cpp:2870
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Egy kép (%1 x %2) kimásolva a vágólapra."
+msgstr "Egy kép [%1 × %2] kimásolva a vágólapra."
 
 #: part/pageview.cpp:2873
 #, kde-format
@@ -3741,10 +3733,9 @@ msgid "File not saved."
 msgstr "A fájl nincs elmentve."
 
 #: part/pageview.cpp:2886
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Egy kép (%1 x %2) elmentve ebbe a fájlba: %3."
+msgstr "Egy kép [%1 × %2] elmentve ebbe a fájlba: %3."
 
 #: part/pageview.cpp:3028
 #, kde-format
@@ -3908,6 +3899,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Aláíró: %1\n"
+"\n"
+"Dátum: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4111,13 +4105,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Aláírás folyamatban. Beállíthatja az aláírás pozícióját és méretét"
 
 #: part/part.cpp:485
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Aláírás bejefezése"
 
 #: part/part.cpp:655
 #, kde-format

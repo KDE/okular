@@ -32,10 +32,12 @@ target_link_libraries(okularGenerator_poppler okularcore KF6::I18n KF6::Completi
 
 ########### autotests ###############
 
-ecm_add_test(autotests/testimagescaling.cpp
-    TEST_NAME "imageScalingTest"
-    LINK_LIBRARIES Qt6::Test Qt6::Gui
-)
+if(BUILD_TESTING)
+    ecm_add_test(autotests/testimagescaling.cpp
+        TEST_NAME "imageScalingTest"
+        LINK_LIBRARIES Qt6::Test Qt6::Gui
+    )
+endif()
 
 ########### install files ###############
 install( PROGRAMS okularApplication_pdf.desktop org.kde.mobile.okular_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

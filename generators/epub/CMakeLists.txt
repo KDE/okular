@@ -19,12 +19,13 @@ target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF6::I18
 
 ########### autotests ###############
 
-add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
-ecm_add_test(autotests/epubgeneratortest.cpp
-    TEST_NAME "epubgeneratortest"
-    LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore
-)
-
+if(BUILD_TESTING)
+    add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
+    ecm_add_test(autotests/epubgeneratortest.cpp
+        TEST_NAME "epubgeneratortest"
+        LINK_LIBRARIES Qt6::Test KF6::CoreAddons okularcore
+    )
+endif()
 
 ########### install files ###############
 install( PROGRAMS okularApplication_epub.desktop org.kde.mobile.okular_epub.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

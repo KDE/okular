@@ -404,7 +404,7 @@
     <value key="KDE::irc">#okular</value>
     <value key="KDE::mailinglist-devel">okular-devel@kde.org</value>
     <value key="KDE::forum">251</value>
-    <value key="KDE::supporters">George Fakidis;Paxriel;tmpod.dev</value>
+    <value key="KDE::supporters">George Fakidis;Paxriel;[tmpod](https://tmpod.dev/);[mdPlusPlus](https://github.com/mdPlusPlus)</value>
   </custom>
   <launchable type="desktop-id">org.kde.okular.desktop</launchable>
   <releases>

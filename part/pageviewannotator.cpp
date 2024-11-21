@@ -50,7 +50,7 @@
 class PickPointEngine : public AnnotatorEngine
 {
 public:
-    explicit PickPointEngine(const QDomElement &engineElement)
+    explicit PickPointEngine(PageView *pageView, const QDomElement &engineElement)
         : AnnotatorEngine(engineElement)
         , clicked(false)
         , xscale(1.0)
@@ -59,6 +59,7 @@ public:
         , iconName {m_annotElement.attribute(QStringLiteral("icon"))}
         , pagewidth(1.0)
         , pageheight(1.0)
+        , pageView(pageView)
     {
         // parse engine specific attributes
         if (m_annotElement.attribute(QStringLiteral("type")) == QLatin1String("Stamp") && !iconName.simplified().isEmpty()) {
@@ -258,7 +259,7 @@ public:
             addInPlaceTextAnnotation(ann, i18n("Inline Note"), QString(), Okular::TextAnnotation::Unknown);
         } else if (typeString == QLatin1String("Typewriter")) {
             bool resok;
-            const QString content = QInputDialog::getMultiLineText(nullptr, i18n("New Text Note"), i18n("Text of the new note:"), QString(), &resok);
+            const QString content = QInputDialog::getMultiLineText(pageView, i18n("New Text Note"), i18n("Text of the new note:"), QString(), &resok);
             if (resok) {
                 addInPlaceTextAnnotation(ann, i18n("Typewriter"), content, Okular::TextAnnotation::TypeWriter);
             }
@@ -368,6 +369,7 @@ private:
     int size;
     double pagewidth, pageheight;
     bool center;
+    PageView *pageView = nullptr;
 };
 
 class PickPointEngineSignature : public PickPointEngine
@@ -375,7 +377,7 @@ class PickPointEngineSignature : public PickPointEngine
 #if HAVE_NEW_SIGNATURE_API
 public:
     explicit PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
-        : PickPointEngine({})
+        : PickPointEngine(nullptr, {})
         , m_page(nullptr)
         , m_aborted(false)
         , m_signingInformation(info)
@@ -455,7 +457,7 @@ private:
 #else
 public:
     PickPointEngineSignature(Okular::Document *document, PageView *pageView, SignaturePartUtils::SigningInformation *info)
-        : PickPointEngine({})
+        : PickPointEngine(pageView, {})
         , m_document(document)
         , m_page(nullptr)
         , m_pageView(pageView)
@@ -1324,7 +1326,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
         // ask the user for confirmation/change
         if (userName.isEmpty()) {
             bool ok = false;
-            userName = QInputDialog::getText(nullptr, i18n("Author name"), i18n("Author name for the annotation:"), QLineEdit::Normal, QString(), &ok);
+            userName = QInputDialog::getText(m_pageView, i18n("Author name"), i18n("Author name for the annotation:"), QLineEdit::Normal, QString(), &ok);
 
             if (!ok) {
                 detachAnnotation();
@@ -1370,7 +1372,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
             if (type == QLatin1String("SmoothLine")) {
                 m_engine = new SmoothPathEngine(engineElement);
             } else if (type == QLatin1String("PickPoint")) {
-                m_engine = new PickPointEngine(engineElement);
+                m_engine = new PickPointEngine(m_pageView, engineElement);
             } else if (type == QLatin1String("PolyLine")) {
                 m_engine = new PolyLineEngine(engineElement);
             } else if (type == QLatin1String("TextSelector")) {
@@ -1765,7 +1767,7 @@ void PageViewAnnotator::addToQuickAnnotations()
 
     // set custom name for quick annotation
     bool ok = false;
-    QString itemText = QInputDialog::getText(nullptr, i18n("Add favorite annotation"), i18n("Custom annotation name:"), QLineEdit::Normal, defaultToolName(sourceToolElement), &ok);
+    QString itemText = QInputDialog::getText(m_pageView, i18n("Add favorite annotation"), i18n("Custom annotation name:"), QLineEdit::Normal, defaultToolName(sourceToolElement), &ok);
     if (!ok) {
         return;
     }

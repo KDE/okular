@@ -2376,7 +2376,7 @@ public:
     QString m_text;
     QString m_leftText;
     QString m_imagePath;
-    QString m_fieldPartialName;
+    QString m_fieldPartialName = QUuid::createUuid().toString();
     int m_page;
     std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> m_signFunction;
 };

@@ -32,7 +32,7 @@ ColorModeMenu::ColorModeMenu(KActionCollection *ac, QObject *parent)
     m_colorModeActionGroup->addAction(m_aNormal);
 
     // Other color mode actions.
-    auto addColorMode = [=](KToggleAction *a, const QString &name, Okular::SettingsCore::EnumRenderMode::type id) {
+    auto addColorMode = [=, this](KToggleAction *a, const QString &name, Okular::SettingsCore::EnumRenderMode::type id) {
         a->setData(int(id));
         addAction(a);
         ac->addAction(name, a);

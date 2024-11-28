@@ -114,7 +114,7 @@ public:
         // If the user selects a scaling mode that requires the use of the
         // "Force rasterization" feature, enable it automatically so they don't
         // have to 1) know this and 2) do it manually
-        connect(m_scaleMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) { m_forceRaster->setChecked(index != 0); });
+        connect(m_scaleMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=, this](int index) { m_forceRaster->setChecked(index != 0); });
 
         layout->addWidget(formWidget);
 

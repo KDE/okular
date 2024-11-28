@@ -367,7 +367,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     }
     }
 
-    connect(Okular::Settings::self(), &Okular::Settings::viewContinuousChanged, this, [=]() {
+    connect(Okular::Settings::self(), &Okular::Settings::viewContinuousChanged, this, [=, this]() {
         if (d->aViewContinuous && !d->document->isOpened()) {
             d->aViewContinuous->setChecked(Okular::Settings::viewContinuous());
         }
@@ -429,7 +429,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     // but are only emitted when the “slider is down”, i. e. not when the user scrolls on the scrollbar.
     // QAbstractSlider::actionTriggered() is emitted in all user input cases,
     // but before the value() changes, so we need queued connection here.
-    auto update_scroller = [=]() {
+    auto update_scroller = [=, this]() {
         d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
     };
     connect(verticalScrollBar(), &QAbstractSlider::actionTriggered, this, update_scroller, Qt::QueuedConnection);
@@ -572,7 +572,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("view_render_mode"), d->aViewModeMenu);
 
     d->viewModeActionGroup = new QActionGroup(this);
-    auto addViewMode = [=](QAction *a, const QString &name, Okular::Settings::EnumViewMode::type id) {
+    auto addViewMode = [=, this](QAction *a, const QString &name, Okular::Settings::EnumViewMode::type id) {
         a->setCheckable(true);
         a->setData(int(id));
         d->aViewModeMenu->addAction(a);

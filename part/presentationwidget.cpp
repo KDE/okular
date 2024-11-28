@@ -2222,7 +2222,7 @@ void PresentationWidget::initTransition(const Okular::PageTransition *transition
     } break;
 
     case Okular::PageTransition::Fade: {
-        enum { FADE_TRANSITION_FPS = 20 };
+        const int FADE_TRANSITION_FPS = 20;
         const int steps = totalTime * FADE_TRANSITION_FPS;
         m_transitionSteps = steps;
         QPainter pixmapPainter;

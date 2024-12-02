@@ -4,6 +4,7 @@
 # Author: Artnay
 # Author: Lliehu
 # Author: Niklas Laxström
+# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 # Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2003.
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2004, 2005, 2006.
 # Ilpo Kantonen <ilpo@iki.fi>, 2005.
@@ -15,13 +16,12 @@
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
 # Jiri Grönroos <jiri.gronroos+kde@iki.fi>, 2012.
 # Niklas Laxström <niklas.laxstrom+kdetrans@gmail.com>, 2012.
-# Tommi Nieminen <translator@legisign.org>, 2012, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-15 02:30+0000\n"
-"PO-Revision-Date: 2024-02-14 19:07+0200\n"
+"PO-Revision-Date: 2024-11-10 11:08+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -29,8 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-POT-Import-Date: 2012-12-01 22:24:13+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -299,17 +298,13 @@ msgid "Landscape %1"
 msgstr "Vaaka-%1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 × %2 tuumaa (%3)"
+msgstr "%1 × %2\" (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
@@ -914,7 +909,7 @@ msgstr "Varmenteen myöntäjä on tuntematon."
 #: gui/signatureguiutils.cpp:66
 #, kde-format
 msgid "Certificate has been Revoked."
-msgstr "Varmenne on peruttu."
+msgstr "Varmenne on mitätöity."
 
 #: gui/signatureguiutils.cpp:68
 #, kde-format
@@ -929,7 +924,7 @@ msgstr "Varmennetta ei ole vielä todennettu."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Varmenteen todennus meneillään"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -3672,10 +3667,9 @@ msgid "Speak Whole Document"
 msgstr "Lue koko tiedosto ääneen"
 
 #: part/pageview.cpp:710
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Lue tämä sivu ääneen"
+msgstr "Lue tältä sivulta"
 
 #: part/pageview.cpp:715
 #, kde-format
@@ -3747,22 +3741,19 @@ msgid "Speak Text"
 msgstr "Puhu teksti"
 
 #: part/pageview.cpp:2848
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Kuva (%1×%2 kuvapistettä)"
+msgstr "Kuva (%1 × %2 kuvapistettä)"
 
 #: part/pageview.cpp:2850
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Tallenna tiedostoon…"
 
 #: part/pageview.cpp:2870
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Kuva [%1 × %2] kopioitu leikepöydälle."
+msgstr "Kuva [%1 × %2] kopioitiin leikepöydälle."
 
 #: part/pageview.cpp:2873
 #, kde-format
@@ -3780,8 +3771,7 @@ msgid "File not saved."
 msgstr "Tiedostoa ei tallennettu."
 
 #: part/pageview.cpp:2886
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Kuva [%1×%2] tallennettiin tiedostoon %3."
 
@@ -3950,6 +3940,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Allekirjoittanut: %1\n"
+"\n"
+"Päiväys: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4155,12 +4148,13 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Allekirjoittaminen meneillään. Allekirjoituksen sijaintia ja kokoa voi säätää"
 
 #: part/part.cpp:485
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Viimeistele allekirjoitus"
 
 #: part/part.cpp:655
 #, kde-format
@@ -5520,11 +5514,7 @@ msgid "Save Signed File As"
 msgstr "Tallenna allekirjoitettu tiedosto nimellä"
 
 #: part/signaturepartutils.h:63
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

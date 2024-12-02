@@ -1006,7 +1006,7 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
         handle_ddjvu_messages(d->m_djvu_cxt, true);
     }
 
-    free(optv);
+    free(static_cast<void *>(optv));
 
     return fclose(f) == 0;
 }

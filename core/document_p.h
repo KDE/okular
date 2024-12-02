@@ -153,7 +153,7 @@ public:
     /**
      * @since 24.12
      */
-    void setDefaultViewMode(View *view, Generator::PageLayout defaultValue);
+    void setDefaultViewMode(View *view, Generator::PageLayout defaultViewMode);
 
     void saveViewsInfo(View *view, QDomElement &e) const;
     QUrl giveAbsoluteUrl(const QString &fileName) const;

@@ -642,12 +642,6 @@ template<typename T> T *givePtr(T &t)
 {
     return &t;
 }
-
-/** @internal */
-template<typename T> T &deref(T &t)
-{
-    return t;
-}
 /// @endcond
 
 /**
@@ -734,8 +728,8 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
 #endif
     int end = this->count() - 1, x = 0;
     for (int i = 0; i < end; ++i) {
-        if (givePtr((*this)[x])->intersects(deref((*this)[i + 1]))) {
-            deref((*this)[x]) |= deref((*this)[i + 1]);
+        if (givePtr((*this)[x])->intersects((*this)[i + 1])) {
+            (*this)[x] |= (*this)[i + 1];
             this->removeAt(i + 1);
             --end;
             --i;
@@ -856,7 +850,7 @@ template<class NormalizedShape, class Shape> void RegularArea<NormalizedShape, S
         // if the new shape intersects with the last shape in the list, then
         // merge it with that and delete the shape
         if (intersection) {
-            deref((*this)[size - 1]) |= deref(shape);
+            (*this)[size - 1] |= shape;
         } else {
             this->append(shape);
         }

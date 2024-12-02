@@ -322,8 +322,9 @@ public:
     {
         // Store the display text, with parent if any, e.g. "Page 4 / David Faure"
         QString key = index.data().toString();
-        if (auto parent = index.parent(); parent.isValid())
+        if (auto parent = index.parent(); parent.isValid()) {
             key.prepend(parent.data().toString() + QLatin1String(" / "));
+        }
         return key;
     }
     QModelIndex indexFromConfigString(const QAbstractItemModel *model, const QString &key) const override
@@ -340,8 +341,9 @@ public:
         QModelIndex index = model->index(0, 0);
         for (const QString &subKey : subKeys) {
             index = matchFirst(index, subKey);
-            if (!index.isValid())
+            if (!index.isValid()) {
                 break;
+            }
         }
         return index;
     }

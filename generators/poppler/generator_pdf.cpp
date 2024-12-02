@@ -1185,10 +1185,11 @@ bool PDFGenerator::defaultPageContinuous() const
 {
     Poppler::Document::PageLayout defaultValue = pdfdoc->pageLayout();
 
-    if ((defaultValue == Poppler::Document::OneColumn) || (defaultValue == Poppler::Document::TwoColumnLeft) || (defaultValue == Poppler::Document::TwoColumnRight))
+    if ((defaultValue == Poppler::Document::OneColumn) || (defaultValue == Poppler::Document::TwoColumnLeft) || (defaultValue == Poppler::Document::TwoColumnRight)) {
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
 QAbstractItemModel *PDFGenerator::layersModel() const

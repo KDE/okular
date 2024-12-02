@@ -6,7 +6,7 @@
 # Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2008.
 # Lasse Liehu <lliehu@kolumbus.fi>, 2011.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2011, 2012, 2013, 2014.
-# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 #
 # KDE Finnish translation sprint participants:
 # Author: Lliehu
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-13 00:38+0000\n"
-"PO-Revision-Date: 2023-07-27 15:57+0300\n"
+"PO-Revision-Date: 2024-11-10 11:09+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -24,8 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-POT-Import-Date: 2012-12-01 22:24:15+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -101,7 +100,7 @@ msgid ""
 msgstr ""
 "Tällä valinnalla Okular ottaa yhteyden kolmannen osapuolen OSCP-palvelimiin "
 "tarkistaakseen, onko digitaalista allekirjoitusta varten luodut varmenteet "
-"peruttu luomisensa jälkeen."
+"luomisensa jälkeen mitätöity."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:116
@@ -109,8 +108,8 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
-"Tarkista digitaalisten allekirjoitusten varmenteiden peruminen kolmannen "
-"osapuolen palvelimilta"
+"Tarkista kolmannen osapuolen palvelimilta digitaalisten allekirjoitusten "
+"varmenteiden mitätöinti"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:138

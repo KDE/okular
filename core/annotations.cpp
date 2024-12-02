@@ -772,7 +772,7 @@ void Annotation::setDisposeDataFunction(DisposeDataFunction func)
 void Annotation::setNativeData(std::shared_ptr<void> data)
 {
     Q_D(Annotation);
-    d->m_nativeData = data;
+    d->m_nativeData = std::move(data);
 }
 
 const void *Annotation::nativeData() const

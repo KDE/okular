@@ -70,10 +70,10 @@ QVector<Action *> Action::nextActions() const
     return d->m_nextActions;
 }
 
-void Action::setNativeHandle(std::shared_ptr<const void> ptr)
+void Action::setNativeHandle(std::shared_ptr<const void> handle)
 {
     Q_D(Action);
-    d->m_nativeHandle = ptr;
+    d->m_nativeHandle = std::move(handle);
 }
 const void *Action::nativeHandle() const
 {

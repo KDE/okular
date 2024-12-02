@@ -904,7 +904,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
             }
             tmplink = p->action(Poppler::Page::Closing);
             if (tmplink) {
-                page->setPageAction(Okular::Page::Closing, createLinkFromPopplerLink(std::move(tmplink.get())));
+                page->setPageAction(Okular::Page::Closing, createLinkFromPopplerLink(tmplink.get()));
             }
             page->setDuration(p->duration());
             page->setLabel(p->label());

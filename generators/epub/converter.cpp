@@ -62,7 +62,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key, enum epub_metadata type
         for (int i = 0; i < size; i++) {
             free(data[i]);
         }
-        free(data);
+        free(static_cast<void *>(data));
     }
 }
 

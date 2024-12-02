@@ -4442,7 +4442,8 @@ QString DocumentPrivate::evaluateKeystrokeEventChange(const QString &oldVal, con
         // This should not happen, but just a guard.
         return {};
     }
-    return QString::fromUcs4(subview.data(), changeLength);
+    Q_ASSERT(subview.length() == changeLength);
+    return QString::fromUcs4(subview.data(), subview.length());
 }
 
 void Document::processKeystrokeAction(const Action *action, Okular::FormField *ff, const QVariant &newValue, int prevCursorPos, int prevAnchorPos)

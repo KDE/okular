@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-15 00:38+0000\n"
+"POT-Creation-Date: 2024-12-04 00:38+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -322,47 +322,47 @@ msgstr "이 문서는 외부 앱을 실행하려고 하며, 안전을 위해서 
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME 형식이 %1인 파일에 필요한 앱을 찾을 수 없습니다."
 
-#: core/document.cpp:4871
+#: core/document.cpp:4872
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "임시 파일을 열 수 없습니다"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4874
 #, kde-format
 msgid "Print conversion failed"
 msgstr "인쇄 변환 실패"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4876
 #, kde-format
 msgid "Printing process crashed"
 msgstr "인쇄 프로세스 충돌함"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4878
 #, kde-format
 msgid "Printing process could not start"
 msgstr "인쇄 프로세스를 시작할 수 없음"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4880
 #, kde-format
 msgid "Printing to file failed"
 msgstr "파일로 인쇄할 수 없음"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "프린터 상태가 올바르지 않음"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4884
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "인쇄할 파일을 찾을 수 없음"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4886
 #, kde-format
 msgid "There was no file to print"
 msgstr "인쇄할 파일이 없음"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4888
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -371,92 +371,92 @@ msgstr ""
 "인쇄할 수 있는 실행 파일을 찾을 수 없습니다. CUPS lpr 실행 파일이 있는지 확인"
 "하십시오"
 
-#: core/document.cpp:4889
+#: core/document.cpp:4890
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5567 part/part.cpp:1139
+#: core/document.cpp:5568 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
 
-#: core/document.cpp:6077
+#: core/document.cpp:6078
 #, kde-format
 msgid "Title"
 msgstr "제목"
 
-#: core/document.cpp:6080
+#: core/document.cpp:6081
 #, kde-format
 msgid "Subject"
 msgstr "주제"
 
-#: core/document.cpp:6083
+#: core/document.cpp:6084
 #, kde-format
 msgid "Description"
 msgstr "설명"
 
-#: core/document.cpp:6086
+#: core/document.cpp:6087
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: core/document.cpp:6089
+#: core/document.cpp:6090
 #, kde-format
 msgid "Creator"
 msgstr "제작 도구"
 
-#: core/document.cpp:6092
+#: core/document.cpp:6093
 #, kde-format
 msgid "Producer"
 msgstr "생성 도구"
 
-#: core/document.cpp:6095
+#: core/document.cpp:6096
 #, kde-format
 msgid "Copyright"
 msgstr "저작권자"
 
-#: core/document.cpp:6098
+#: core/document.cpp:6099
 #, kde-format
 msgid "Pages"
 msgstr "쪽 수"
 
-#: core/document.cpp:6101
+#: core/document.cpp:6102
 #, kde-format
 msgid "Created"
 msgstr "만든 날짜"
 
-#: core/document.cpp:6104
+#: core/document.cpp:6105
 #, kde-format
 msgid "Modified"
 msgstr "수정한 날짜"
 
-#: core/document.cpp:6107
+#: core/document.cpp:6108
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 형식"
 
-#: core/document.cpp:6110
+#: core/document.cpp:6111
 #, kde-format
 msgid "Category"
 msgstr "분류"
 
-#: core/document.cpp:6113
+#: core/document.cpp:6114
 #, kde-format
 msgid "Keywords"
 msgstr "키워드"
 
-#: core/document.cpp:6116
+#: core/document.cpp:6117
 #, kde-format
 msgid "File Path"
 msgstr "파일 경로"
 
-#: core/document.cpp:6119
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Size"
 msgstr "파일 크기"
 
-#: core/document.cpp:6122
+#: core/document.cpp:6123
 #, kde-format
 msgid "Page Size"
 msgstr "쪽 크기"
@@ -652,19 +652,19 @@ msgid "Value"
 msgstr "값"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Pop-up Note"
 msgstr "팝업 노트"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
 #, kde-format
 msgid "Typewriter"
 msgstr "타자기"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Inline Note"
 msgstr "인라인 노트"
@@ -675,7 +675,7 @@ msgid "Straight Line with Comment"
 msgstr "주석이 있는 직선"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Straight Line"
 msgstr "직선"
@@ -686,7 +686,7 @@ msgid "Polygon with Comment"
 msgstr "주석이 있는 다각형"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Polygon"
 msgstr "다각형"
@@ -717,7 +717,7 @@ msgid "Squiggle with Comment"
 msgstr "주석이 있는 휘어진 모양"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
 msgstr "곡선"
@@ -728,7 +728,7 @@ msgid "Underline with Comment"
 msgstr "주석이 있는 밑줄"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
 msgstr "밑줄"
@@ -749,7 +749,7 @@ msgid "Stamp with Comment"
 msgstr "주석이 있는 스탬프"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Stamp"
 msgstr "스탬프"
@@ -760,7 +760,7 @@ msgid "Freehand Line with Comment"
 msgstr "주석이 있는 자유형 곡선"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Freehand Line"
 msgstr "자유형 선"
@@ -1982,17 +1982,17 @@ msgstr "도형 채우기:"
 msgid "Type:"
 msgstr "종류:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1427
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "취소선"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1419
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "직사각형"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1407
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "타원"
@@ -3845,7 +3845,7 @@ msgstr "서명 필드를 삽입하려면 직사각형 그리기"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "표시할 텍스트나 그림 주위로 사각형을 그리십시오."
 
-#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -3873,7 +3873,7 @@ msgstr ""
 "\n"
 "날짜: %2"
 
-#: part/pageviewannotator.cpp:442
+#: part/pageviewannotator.cpp:448
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -3884,117 +3884,117 @@ msgstr ""
 "서명 크기가 너무 작아서 읽기 어려울 수도 있습니다. 더 큰 서명을 만들려면 "
 "<interface>다시 시작</interface>을 클릭하고 더 큰 직사각형을 그리십시오."
 
-#: part/pageviewannotator.cpp:444
+#: part/pageviewannotator.cpp:450
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "다시 시작"
 
-#: part/pageviewannotator.cpp:445
+#: part/pageviewannotator.cpp:451
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "서명"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name"
 msgstr "작성자 이름"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "주석을 단 사용자 이름:"
 
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "타원 그리기(드래그로 영역 설정)"
 
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "텍스트 강조"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "자유형 곡선 그리기"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "인라인 텍스트 주석(드래그해서 영역 선택)"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "팝업 노트 붙이기"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "다각형 그리기(첫 번째 점을 클릭해서 닫기)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "직사각형 그리기"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "휘어진 텍스트"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "스탬프 기호 삽입"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "직선 그리기"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "취소선 긋기"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "밑줄 긋기"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1356
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "타자기 형태 메모(드래그해서 영역 선택)"
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Highlighter"
 msgstr "강조 도구"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "책갈피에 주석 추가"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "사용자 정의 주석 이름:"

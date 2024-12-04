@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-15 00:38+0000\n"
+"POT-Creation-Date: 2024-12-04 00:38+0000\n"
 "PO-Revision-Date: 2024-10-25 20:45+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -332,47 +332,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Impossibile trovare un programma per aprire un file di tipo %1."
 
-#: core/document.cpp:4871
+#: core/document.cpp:4872
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Impossibile aprire un file temporaneo"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4874
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Conversione della stampa non riuscita"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4876
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Il processo di stampa è andato in crash"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4878
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Impossibile avviare il processo di stampa"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4880
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Stampa su file non riuscita"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "La stampante era in uno stato non valido"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4884
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Impossibile trovare il file da stampare."
 
-#: core/document.cpp:4885
+#: core/document.cpp:4886
 #, kde-format
 msgid "There was no file to print"
 msgstr "Non c'è nessun file da stampare"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4888
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -381,92 +381,92 @@ msgstr ""
 "Impossibile trovare un eseguibile adatto per la stampa. Assicurati che il "
 "programma lpr di CUPS sia disponibile"
 
-#: core/document.cpp:4889
+#: core/document.cpp:4890
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La dimensione di stampa della pagina non è valida"
 
-#: core/document.cpp:5567 part/part.cpp:1139
+#: core/document.cpp:5568 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Impossibile aprire il file «%1». Il file non esiste"
 
-#: core/document.cpp:6077
+#: core/document.cpp:6078
 #, kde-format
 msgid "Title"
 msgstr "Titolo"
 
-#: core/document.cpp:6080
+#: core/document.cpp:6081
 #, kde-format
 msgid "Subject"
 msgstr "Oggetto"
 
-#: core/document.cpp:6083
+#: core/document.cpp:6084
 #, kde-format
 msgid "Description"
 msgstr "Descrizione"
 
-#: core/document.cpp:6086
+#: core/document.cpp:6087
 #, kde-format
 msgid "Author"
 msgstr "Autore"
 
-#: core/document.cpp:6089
+#: core/document.cpp:6090
 #, kde-format
 msgid "Creator"
 msgstr "Creatore"
 
-#: core/document.cpp:6092
+#: core/document.cpp:6093
 #, kde-format
 msgid "Producer"
 msgstr "Produttore"
 
-#: core/document.cpp:6095
+#: core/document.cpp:6096
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6098
+#: core/document.cpp:6099
 #, kde-format
 msgid "Pages"
 msgstr "Pagine"
 
-#: core/document.cpp:6101
+#: core/document.cpp:6102
 #, kde-format
 msgid "Created"
 msgstr "Creato"
 
-#: core/document.cpp:6104
+#: core/document.cpp:6105
 #, kde-format
 msgid "Modified"
 msgstr "Modificato"
 
-#: core/document.cpp:6107
+#: core/document.cpp:6108
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipo MIME"
 
-#: core/document.cpp:6110
+#: core/document.cpp:6111
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6113
+#: core/document.cpp:6114
 #, kde-format
 msgid "Keywords"
 msgstr "Parole chiave"
 
-#: core/document.cpp:6116
+#: core/document.cpp:6117
 #, kde-format
 msgid "File Path"
 msgstr "Percorso del file"
 
-#: core/document.cpp:6119
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Size"
 msgstr "Dimensione file"
 
-#: core/document.cpp:6122
+#: core/document.cpp:6123
 #, kde-format
 msgid "Page Size"
 msgstr "Dimensione pagina"
@@ -662,19 +662,19 @@ msgid "Value"
 msgstr "Valore"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Nota a comparsa"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
 #, kde-format
 msgid "Typewriter"
 msgstr "Macchina da scrivere"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Inline Note"
 msgstr "Nota in linea"
@@ -685,7 +685,7 @@ msgid "Straight Line with Comment"
 msgstr "Linea retta con commento"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Straight Line"
 msgstr "Linea retta"
@@ -696,7 +696,7 @@ msgid "Polygon with Comment"
 msgstr "Poligono con commento"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Polygon"
 msgstr "Poligono"
@@ -727,7 +727,7 @@ msgid "Squiggle with Comment"
 msgstr "Scarabocchiato con commento"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
 msgstr "Scarabocchiato"
@@ -738,7 +738,7 @@ msgid "Underline with Comment"
 msgstr "Sottolineato con commento"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
 msgstr "Sottolineato"
@@ -759,7 +759,7 @@ msgid "Stamp with Comment"
 msgstr "Timbro con commento"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Stamp"
 msgstr "Timbro"
@@ -770,7 +770,7 @@ msgid "Freehand Line with Comment"
 msgstr "Linea a mano libera con commento"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Freehand Line"
 msgstr "Linea a mano libera"
@@ -2006,17 +2006,17 @@ msgstr "Riempimento forma:"
 msgid "Type:"
 msgstr "Tipo:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1427
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "Barrato"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1419
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "Rettangolo"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1407
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellisse"
@@ -3889,7 +3889,7 @@ msgstr "Disegna un rettangolo per inserire il campo della firma"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Seleziona l'area della pagina che vuoi mantenere visibile"
 
-#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -3919,7 +3919,7 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: part/pageviewannotator.cpp:442
+#: part/pageviewannotator.cpp:448
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -3931,117 +3931,117 @@ msgstr ""
 "vuoi creare una firma potenzialmente maggiormente leggibile, premi "
 "<interface>Ricomincia</interface> e disegna un rettangolo più grande."
 
-#: part/pageviewannotator.cpp:444
+#: part/pageviewannotator.cpp:450
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Ricomincia"
 
-#: part/pageviewannotator.cpp:445
+#: part/pageviewannotator.cpp:451
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Firma"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name"
 msgstr "Nome dell'autore"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Nome dell'autore per l'annotazione:"
 
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Disegna un'ellisse (trascina per selezionare una zona)"
 
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Testo evidenziato"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Traccia una linea a mano libera"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Annotazione di testo in linea (trascina per selezionare una zona)"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Inserisci una nota a comparsa"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Disegna un poligono (clic sul primo punto per chiuderlo)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Disegna un rettangolo"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Testo scarabocchiato"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Inserisci un timbro"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Disegna una linea retta"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Barra il testo"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Sottolinea il testo"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1356
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Annotazione macchina da scrivere (trascina per selezionare una zona)"
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Highlighter"
 msgstr "Evidenziatore"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Aggiungi annotazione preferita"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Nome annotazione personalizzato:"

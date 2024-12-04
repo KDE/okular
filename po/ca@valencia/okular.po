@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-15 00:38+0000\n"
+"POT-Creation-Date: 2024-12-04 00:38+0000\n"
 "PO-Revision-Date: 2024-10-27 14:31+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -331,47 +331,47 @@ msgid "No application found for opening file of mimetype %1."
 msgstr ""
 "No s'ha trobat cap aplicació per a obrir el fitxer amb el tipus MIME %1."
 
-#: core/document.cpp:4871
+#: core/document.cpp:4872
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "No s'ha pogut obrir un fitxer temporal"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4874
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Ha fallat la conversió d'impressió"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4876
 #, kde-format
 msgid "Printing process crashed"
 msgstr "El procés d'impressió ha fallat"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4878
 #, kde-format
 msgid "Printing process could not start"
 msgstr "No s'ha pogut iniciar el procés d'impressió"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4880
 #, kde-format
 msgid "Printing to file failed"
 msgstr "No s'ha pogut imprimir a un fitxer"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "La impressora està en un estat no vàlid"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4884
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "No s'ha pogut trobar el fitxer que s'ha d'imprimir"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4886
 #, kde-format
 msgid "There was no file to print"
 msgstr "No hi ha cap fitxer per a imprimir"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4888
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -380,92 +380,92 @@ msgstr ""
 "No s'ha trobat cap binari adequat per a imprimir. Assegureu-vos que està "
 "disponible l'executable «lpr» de CUPS"
 
-#: core/document.cpp:4889
+#: core/document.cpp:4890
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La mida d'impressió de la pàgina no és vàlida"
 
-#: core/document.cpp:5567 part/part.cpp:1139
+#: core/document.cpp:5568 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "No s'ha pogut obrir «%1». El fitxer no existix"
 
-#: core/document.cpp:6077
+#: core/document.cpp:6078
 #, kde-format
 msgid "Title"
 msgstr "Títol"
 
-#: core/document.cpp:6080
+#: core/document.cpp:6081
 #, kde-format
 msgid "Subject"
 msgstr "Assumpte"
 
-#: core/document.cpp:6083
+#: core/document.cpp:6084
 #, kde-format
 msgid "Description"
 msgstr "Descripció"
 
-#: core/document.cpp:6086
+#: core/document.cpp:6087
 #, kde-format
 msgid "Author"
 msgstr "Autoria"
 
-#: core/document.cpp:6089
+#: core/document.cpp:6090
 #, kde-format
 msgid "Creator"
 msgstr "Creador"
 
-#: core/document.cpp:6092
+#: core/document.cpp:6093
 #, kde-format
 msgid "Producer"
 msgstr "Productor"
 
-#: core/document.cpp:6095
+#: core/document.cpp:6096
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6098
+#: core/document.cpp:6099
 #, kde-format
 msgid "Pages"
 msgstr "Pàgines"
 
-#: core/document.cpp:6101
+#: core/document.cpp:6102
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:6104
+#: core/document.cpp:6105
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:6107
+#: core/document.cpp:6108
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipus MIME"
 
-#: core/document.cpp:6110
+#: core/document.cpp:6111
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6113
+#: core/document.cpp:6114
 #, kde-format
 msgid "Keywords"
 msgstr "Paraules clau"
 
-#: core/document.cpp:6116
+#: core/document.cpp:6117
 #, kde-format
 msgid "File Path"
 msgstr "Camí cap al fitxer"
 
-#: core/document.cpp:6119
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Size"
 msgstr "Mida del fitxer"
 
-#: core/document.cpp:6122
+#: core/document.cpp:6123
 #, kde-format
 msgid "Page Size"
 msgstr "Mida de la pàgina"
@@ -661,19 +661,19 @@ msgid "Value"
 msgstr "Valor"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Nota emergent"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
 #, kde-format
 msgid "Typewriter"
 msgstr "Màquina d'escriure"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Inline Note"
 msgstr "Nota inclosa"
@@ -684,7 +684,7 @@ msgid "Straight Line with Comment"
 msgstr "Línia recta amb comentari"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Straight Line"
 msgstr "Línia recta"
@@ -695,7 +695,7 @@ msgid "Polygon with Comment"
 msgstr "Polígon amb comentari"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Polygon"
 msgstr "Polígon"
@@ -726,7 +726,7 @@ msgid "Squiggle with Comment"
 msgstr "Giragonses amb comentari"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
 msgstr "Giragonses"
@@ -737,7 +737,7 @@ msgid "Underline with Comment"
 msgstr "Subratllat amb comentari"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
 msgstr "Subratllat"
@@ -758,7 +758,7 @@ msgid "Stamp with Comment"
 msgstr "Segell amb comentari"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Stamp"
 msgstr "Segell"
@@ -769,7 +769,7 @@ msgid "Freehand Line with Comment"
 msgstr "Línia a ma alçària amb comentari"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Freehand Line"
 msgstr "Línia a mà alçada"
@@ -2004,17 +2004,17 @@ msgstr "Emplenat de forma:"
 msgid "Type:"
 msgstr "Tipus:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1427
+#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "Barrat"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1419
+#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1407
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "El·lipse"
@@ -3900,7 +3900,7 @@ msgstr ""
 "Dibuixa un rectangle al voltant de l'àrea de la pàgina que voleu mantindre "
 "visible"
 
-#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"
@@ -3930,7 +3930,7 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: part/pageviewannotator.cpp:442
+#: part/pageviewannotator.cpp:448
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -3942,118 +3942,118 @@ msgstr ""
 "crear una signatura potencialment més llegible, premeu <interface>Torna a "
 "començar</interface> i dibuixeu un rectangle més gran."
 
-#: part/pageviewannotator.cpp:444
+#: part/pageviewannotator.cpp:450
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Torna a començar"
 
-#: part/pageviewannotator.cpp:445
+#: part/pageviewannotator.cpp:451
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Signa"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name"
 msgstr "Nom de l'autor"
 
-#: part/pageviewannotator.cpp:1265
+#: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Nom de l'autor a l'anotació:"
 
-#: part/pageviewannotator.cpp:1326
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Dibuixa una el·lipse (arrossegueu per a seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1328
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Text ressaltat"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Dibuixa una línia a mà alçada"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Anotació de text inclosa (arrossegueu per a seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Posa una nota emergent"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Dibuixa un polígon (cliqueu en el primer punt per a tancar-lo)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Dibuixa un rectangle"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Text de giragonses"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Posa un símbol de segell"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Dibuixa una línia recta"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Text barrat"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Text subratllat"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1356
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr ""
 "Anotació de màquina d'escriure (arrossegueu per a seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Highlighter"
 msgstr "Marcador fluorescent"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Afig una anotació preferida"
 
-#: part/pageviewannotator.cpp:1706
+#: part/pageviewannotator.cpp:1712
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Nom personalitzat d'anotació:"

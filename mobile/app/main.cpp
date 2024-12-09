@@ -44,10 +44,10 @@ int main(int argc, char *argv[])
 
 #ifdef __ANDROID__
     AndroidInstance::handleViewIntent();
-    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new AndroidInstance; });
+    qmlRegisterSingletonType<QObject>("org.kde.okular.android", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new AndroidInstance; });
     const QString uri = URIHandler::handler.m_lastUrl;
 #else
-    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new QObject; });
+    qmlRegisterSingletonType<QObject>("org.kde.okular.android", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new QObject; });
     const QString uri = parser.positionalArguments().count() == 1 ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString() : QString();
 #endif
     // TODO move away from context property when possible
@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
     paths[QStringLiteral("home")] = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("userPaths"), paths);
 
-    engine.setBaseUrl(QUrl(QStringLiteral("qrc:/package/contents/ui/")));
-    engine.load(QUrl(QStringLiteral("qrc:/package/contents/ui/main.qml")));
+    engine.loadFromModule(QLatin1StringView("org.kde.okular.app"), QLatin1StringView("Main"));
     return app.exec();
 }

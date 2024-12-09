@@ -11,7 +11,7 @@ import QtQuick.Dialogs as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.17 as Kirigami
 import org.kde.kirigamiaddons.formcard 1.0 as FormCard
-import org.kde.okular.app 2.0
+import org.kde.okular.app
 
 Kirigami.ApplicationWindow {
     id: fileBrowserRoot

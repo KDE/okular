@@ -1,5 +1,15 @@
-set(okular_SRCS
-    okularplugin.cpp
+# SPDX-FileCopyrightText: 2024 Carl Schwan <carl@carlschwan.eu>
+# SPDX-License-Identifier: BSD-2-Clause
+
+ecm_add_qml_module(okularplugin 
+    URI "org.kde.okular"
+    VERSION 2.0
+    GENERATE_PLUGIN_SOURCE
+    DEPENDENCIES
+        org.kde.kirigami
+)
+
+target_sources(okularplugin PRIVATE
     ${CMAKE_SOURCE_DIR}/gui/guiutils.cpp
     ${CMAKE_SOURCE_DIR}/gui/tocmodel.cpp
     ${CMAKE_SOURCE_DIR}/gui/signaturemodel.cpp
@@ -11,27 +21,30 @@ set(okular_SRCS
     documentitem.cpp
     thumbnailitem.cpp
     okularsingleton.cpp
-    )
+)
 
-kconfig_add_kcfg_files(okular_SRCS GENERATE_MOC ${CMAKE_SOURCE_DIR}/conf/settings_mobile.kcfgc)
+kconfig_add_kcfg_files(okularplugin GENERATE_MOC ${CMAKE_SOURCE_DIR}/conf/settings_mobile.kcfgc)
 
-add_library(okularplugin SHARED ${okular_SRCS})
-set_target_properties(okularplugin PROPERTIES COMPILE_DEFINITIONS "okularpart_EXPORTS")
-target_link_libraries(okularplugin
-        Qt6::Quick
-        Qt6::Qml
-        Qt6::Core
-        Qt6::Xml
-        Qt6::Svg
-        KF6::Bookmarks
-        KF6::I18n
-        KF6::Service
-        okularcore
-        )
+ecm_target_qml_sources(okularplugin SOURCES
+    DocumentView.qml
+)
 
-install(TARGETS okularplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
-install(FILES DocumentView.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
-install(FILES private/PageView.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular/private)
+ecm_target_qml_sources(okularplugin PRIVATE PATH private SOURCES
+    private/PageView.qml
+)
+
+target_link_libraries(okularplugin PRIVATE
+    Qt6::Quick
+    Qt6::Qml
+    Qt6::Core
+    Qt6::Xml
+    Qt6::Svg
+    KF6::Bookmarks
+    KF6::I18n
+    KF6::Service
+    okularcore
+)
+
+ecm_finalize_qml_module(okularplugin DESTINATION ${KDE_INSTALL_QMLDIR} EXPORT OkularTargets)
 
 #add_subdirectory(test)

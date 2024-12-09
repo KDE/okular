@@ -12,6 +12,7 @@
 class ThumbnailItem : public PageItem
 {
     Q_OBJECT
+    QML_ELEMENT
 
 public:
     explicit ThumbnailItem(QQuickItem *parent = nullptr);

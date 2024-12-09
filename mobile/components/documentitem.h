@@ -8,6 +8,7 @@
 #define QDOCUMENTITEM_H
 
 #include <QObject>
+#include <qqmlregistration.h>
 
 #include "settings.h"
 
@@ -29,6 +30,7 @@ class TOCModel;
 class DocumentItem : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 
     /**
      * Absolute URI to document file to open

@@ -78,6 +78,7 @@ else()
     set(BUILD_DESKTOP OFF)
 endif()
 if(OKULAR_UI STREQUAL "mobile" OR OKULAR_UI STREQUAL "both")
+    include(ECMQmlModule)
     set(BUILD_MOBILE ON)
 else()
     set(BUILD_MOBILE OFF)
@@ -145,6 +146,8 @@ if(TARGET Qt6::Qml)
 else()
     set(HAVE_JS 0)
 endif()
+
+qt_policy(SET QTP0001 NEW)
 
 if (BUILD_DESKTOP)
     # shall we use DBus?

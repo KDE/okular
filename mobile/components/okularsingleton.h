@@ -9,10 +9,13 @@
 
 #include <QObject>
 #include <QStringList>
+#include <qqmlintegration.h>
 
 class OkularSingleton : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Okular)
+    QML_SINGLETON
     Q_PROPERTY(QStringList nameFilters READ nameFilters CONSTANT)
 
 public:

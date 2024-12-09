@@ -10,6 +10,7 @@
 #include <QImage>
 #include <QPointer>
 #include <QQuickItem>
+#include <qqmlregistration.h>
 
 #include <core/document.h>
 #include <core/view.h>
@@ -27,6 +28,7 @@ class Page;
 class PageItem : public QQuickItem, public Okular::View
 {
     Q_OBJECT
+    QML_ELEMENT
 
     /**
      * If this page is in a Flickable, assign it in this property, to make goToBookmark work

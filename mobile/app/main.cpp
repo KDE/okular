@@ -53,14 +53,6 @@ int main(int argc, char *argv[])
     // TODO move away from context property when possible
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.rootContext()->setContextProperty(QStringLiteral("uri"), uri);
-    QVariantMap paths;
-    paths[QStringLiteral("desktop")] = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    paths[QStringLiteral("documents")] = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    paths[QStringLiteral("music")] = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
-    paths[QStringLiteral("movies")] = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
-    paths[QStringLiteral("pictures")] = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-    paths[QStringLiteral("home")] = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    engine.rootContext()->setContextProperty(QStringLiteral("userPaths"), paths);
 
     engine.loadFromModule(QLatin1StringView("org.kde.okular.app"), QLatin1StringView("Main"));
     return app.exec();

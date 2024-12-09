@@ -12,16 +12,9 @@
 
 #include "core/signatureutils.h"
 
-#if __has_include(<qqmlregistration.h>)
-#include <qqmlregistration.h>
-#endif
-
 class CertificateModel : public QAbstractTableModel
 {
     Q_OBJECT
-#if __has_include(<qqmlregistration.h>)
-    QML_ELEMENT
-#endif
 
 public:
     explicit CertificateModel(const Okular::CertificateInfo &certInfo, QObject *parent = nullptr);

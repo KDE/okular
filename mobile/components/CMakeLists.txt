@@ -21,6 +21,7 @@ target_sources(okularplugin PRIVATE
     documentitem.cpp
     thumbnailitem.cpp
     okularsingleton.cpp
+    types.cpp
 )
 
 kconfig_add_kcfg_files(okularplugin GENERATE_MOC ${CMAKE_SOURCE_DIR}/conf/settings_mobile.kcfgc)

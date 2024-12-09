@@ -8,7 +8,6 @@
 #define ANDROID_H
 
 #include <QObject>
-#include <QUrl>
 #include <jni.h>
 
 class URIHandler
@@ -19,24 +18,13 @@ public:
         m_lastUrl = uri;
     }
 
+    static void handleViewIntent();
+
     QString m_lastUrl;
     static URIHandler handler;
 };
 
-class AndroidInstance : public QObject
-{
-    Q_OBJECT
-public:
-    Q_SCRIPTABLE void openFile(const QString &title, const QStringList &mimes);
-
-    static void handleViewIntent();
-
-Q_SIGNALS:
-    void openUri(const QUrl &uri);
-};
-
 extern "C" {
-
 JNIEXPORT void JNICALL Java_org_kde_something_FileClass_openUri(JNIEnv *env, jobject /*obj*/, jstring uri);
 }
 

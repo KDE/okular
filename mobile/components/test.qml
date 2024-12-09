@@ -13,7 +13,7 @@ Item {
     height: 600
     Okular.DocumentItem {
         id: docItem
-        url: "pageitem.cpp"
+        url: Qt.resolvedUrl("pageitem.cpp")
     }
     Okular.PageItem {
         id: page

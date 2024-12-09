@@ -63,7 +63,7 @@ build_clazy_clang_tidy:
     - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
     - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
     - cp "$CI_PROJECT_DIR/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h" ninja -k 0
+    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h|okularplugin_qmltyperegistrations.cpp|okularkirigami_qmltyperegistrations.cpp|okularkirigami_qmlcache_loader.cpp|okularplugin_qmlcache_loader.cpp" ninja -k 0
     - run-clang-tidy
 
 clang_format:

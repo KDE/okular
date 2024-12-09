@@ -52,7 +52,9 @@ Kirigami.Page {
 
     Kirigami.InlineMessage {
         id: inlineMessage
+
         width: parent.width
+        position: Kirigami.InlineMessage.Header
 
         function showMessage(type, text, duration) {
             inlineMessage.type = type;

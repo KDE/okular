@@ -447,6 +447,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_migrationMessage->setVisible(false);
     m_migrationMessage->setWordWrap(true);
     m_migrationMessage->setMessageType(KMessageWidget::Warning);
+    m_migrationMessage->setPosition(KMessageWidget::Position::Header);
     m_migrationMessage->setText(
         i18n("This document contains annotations or form data that were saved internally by a previous Okular version. Internal storage is <b>no longer supported</b>.<br/>Please save to a file in order to move them if you want to continue "
              "to edit the document."));
@@ -455,6 +456,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_topMessage->setVisible(false);
     m_topMessage->setWordWrap(true);
     m_topMessage->setMessageType(KMessageWidget::Information);
+    m_topMessage->setPosition(KMessageWidget::Position::Header);
     m_topMessage->setText(i18n("This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files."));
     m_topMessage->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
     connect(m_topMessage, &KMessageWidget::linkActivated, this, &Part::slotShowEmbeddedFiles);
@@ -463,11 +465,13 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_formsMessage->setVisible(false);
     m_formsMessage->setWordWrap(true);
     m_formsMessage->setMessageType(KMessageWidget::Information);
+    m_formsMessage->setPosition(KMessageWidget::Position::Header);
     rightLayout->addWidget(m_formsMessage);
     m_infoMessage = new KMessageWidget(rightContainer);
     m_infoMessage->setVisible(false);
     m_infoMessage->setWordWrap(true);
     m_infoMessage->setMessageType(KMessageWidget::Information);
+    m_infoMessage->setPosition(KMessageWidget::Position::Header);
     rightLayout->addWidget(m_infoMessage);
     m_infoTimer = new QTimer();
     m_infoTimer->setSingleShot(true);
@@ -475,6 +479,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signatureMessage = new KMessageWidget(rightContainer);
     m_signatureMessage->setVisible(false);
     m_signatureMessage->setWordWrap(true);
+    m_signatureMessage->setPosition(KMessageWidget::Position::Header);
     rightLayout->addWidget(m_signatureMessage);
 #if HAVE_NEW_SIGNATURE_API
     m_signatureInProgressMessage = new KMessageWidget(rightContainer);
@@ -482,6 +487,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signatureInProgressMessage->setVisible(false);
     m_signatureInProgressMessage->setWordWrap(true);
     m_signatureInProgressMessage->setText(i18n("Signing in progress. You can adjust the position and size of the signature"));
+    m_signatureInProgressMessage->setPosition(KMessageWidget::Position::Header);
     QAction *finishSigningAction = new QAction(QIcon::fromTheme(QStringLiteral("dialog-ok-apply")), i18nc("@action:button finish the signing process", "Finish Signing"), this);
     connect(finishSigningAction, &QAction::triggered, this, &Part::finishSigning);
     m_signatureInProgressMessage->addAction(finishSigningAction);

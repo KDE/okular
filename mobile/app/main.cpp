@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
     // TODO move away from context property when possible
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.rootContext()->setContextProperty(QStringLiteral("uri"), uri);
-    engine.rootContext()->setContextProperty(QStringLiteral("about"), QVariant::fromValue(aboutData));
     QVariantMap paths;
     paths[QStringLiteral("desktop")] = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     paths[QStringLiteral("documents")] = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);

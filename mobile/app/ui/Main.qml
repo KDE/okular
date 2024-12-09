@@ -48,7 +48,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18n("About")
                 icon.name: "help-about-symbolic"
-                onTriggered: fileBrowserRoot.pageStack.layers.push(aboutPage);
+                onTriggered: fileBrowserRoot.pageStack.layers.push(Qt.createComponent("org.kde.kirigamiaddons.formcard", "AboutPage"));
                 enabled: fileBrowserRoot.pageStack.layers.depth === 1
             }
         ]
@@ -79,13 +79,6 @@ Kirigami.ApplicationWindow {
         id: mainView
         document: documentItem
         Kirigami.ColumnView.preventStealing: true
-    }
-
-    Component {
-        id: aboutPage
-        FormCard.AboutPage {
-            aboutData: about
-        }
     }
 
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing

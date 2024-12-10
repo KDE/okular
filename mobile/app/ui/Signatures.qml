@@ -30,7 +30,7 @@ QQC2.ScrollView {
             text: model.display
             onClicked: {
                 if (!model.isUnsignedSignature) {
-                    var dialog = dialogComponent.createObject(Window.window, {
+                    const dialog = applicationWindow().pageStack.pushDialogLayer(dialogComponent, {
                         signatureValidityText: model.readableStatus,
                         documentModificationsText: model.readableModificationSummary,
                         signerNameText: displayString(model.signerName),
@@ -40,7 +40,6 @@ QQC2.ScrollView {
                         certificateModel: model.certificateModel,
                         signatureRevisionIndex: model.signatureRevisionIndex
                     })
-                    dialog.open()
                     root.dialogOpened();
                 }
             }
@@ -48,11 +47,8 @@ QQC2.ScrollView {
 
         Component {
             id: dialogComponent
-            SignaturePropertiesDialog {
+            SignaturePropertiesPage {
                 id: dialog
-                onVisibleChanged: if(!visible) {
-                    destroy(1000)
-                }
                 onSaveSignatureSignedVersion: (path) => {
                     if (!documentItem.signaturesModel.saveSignedVersion(signatureRevisionIndex, path)) {
                         dialog.showErrorDialog();

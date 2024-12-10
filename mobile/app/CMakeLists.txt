@@ -13,8 +13,8 @@ ecm_add_qml_module(okularkirigami
 )
 
 ecm_target_qml_sources(okularkirigami SOURCES
-    ui/CertificateViewerDialog.qml
     ui/Bookmarks.qml
+    ui/CertificateViewerPage.qml
     ui/Main.qml
     ui/MainView.qml
     ui/OkularDrawer.qml
@@ -24,7 +24,7 @@ ecm_target_qml_sources(okularkirigami SOURCES
     ui/TreeItem.qml
     ui/TreeViewDecoration.qml
     ui/Signatures.qml
-    ui/SignaturePropertiesDialog.qml
+    ui/SignaturePropertiesPage.qml
 )
 
 if (ANDROID)

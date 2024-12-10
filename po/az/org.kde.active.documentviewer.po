@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-26 00:37+0000\n"
+"POT-Creation-Date: 2024-12-10 00:39+0000\n"
 "PO-Revision-Date: 2022-08-16 16:17+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,185 +17,180 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.04.3\n"
 
-#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+#: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
 msgstr "Əlfəcinlər"
 
-#: package/contents/ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Sertifikata baxış"
 
-#: package/contents/ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Təhciz edən:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:38
-#: package/contents/ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Tanınmış adı:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:44
-#: package/contents/ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "E-poçt:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:50
-#: package/contents/ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Təşkilat:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Təhciz edən:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Etibarlılıq"
 
-#: package/contents/ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Buraxılma tarixi:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Bitmə tarixi:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Barmaq izləri"
 
-#: package/contents/ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 barmaq izi:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 barmaq izi:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:136
+#: ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "İxrac..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:142
-#: package/contents/ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Bağla"
 
-#: package/contents/ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Sertifikat faylı (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:165
-#: package/contents/ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Xəta"
 
-#: package/contents/ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Sertifikatı ixrac edilə bilmədi."
 
-#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+#: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:42
+#: ui/Main.qml:42
 msgid "Open..."
 msgstr "Açmaq..."
 
-#: package/contents/ui/main.qml:49
+#: ui/Main.qml:49
 msgid "About"
 msgstr "Haqqında"
 
-#: package/contents/ui/main.qml:106
+#: ui/Main.qml:99
 msgid "Password Needed"
 msgstr "Şifrə tələb olunur"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Əlfəcini silmək"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Bu səhifəni işarələmək"
 
-#: package/contents/ui/MainView.qml:80
+#: ui/MainView.qml:80
 msgid "No document open"
 msgstr "Sənəd açıq deyil"
 
-#: package/contents/ui/OkularDrawer.qml:57
+#: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
 msgstr "Miniatürlər"
 
-#: package/contents/ui/OkularDrawer.qml:71
+#: ui/OkularDrawer.qml:71
 msgid "Table of contents"
 msgstr "Tərkiblərinin cədvəli"
 
-#: package/contents/ui/OkularDrawer.qml:99
+#: ui/OkularDrawer.qml:99
 msgid "Signatures"
 msgstr "İmzalar"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "İmza xüsusiyyətləri"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Etibarlılıq vəziyyəti"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "İmzanın etibarlılığı:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Sənəddəki dəyişikliklər:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Əlavə məlumatlar"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "İmzalayan:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "İmzalanma tarixi:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Səbəbi:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Yerləşmə yeri:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Sənədin versiyası"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Sənədin buraxılışı %1 / %2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:115
+#: ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "İmzalanmış versiyanı saxla..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:129
+#: ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Sertifikata baxış..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "İmzanı saxlamaq mümkün olmadı."
 
-#: package/contents/ui/Signatures.qml:27
+#: ui/Signatures.qml:27
 msgid "Not Available"
 msgstr "sƏlçatan deyil"
 
-#: package/contents/ui/ThumbnailsBase.qml:42
+#: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nəticə tapılmadı."
 

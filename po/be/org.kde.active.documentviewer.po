@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-26 00:37+0000\n"
+"POT-Creation-Date: 2024-12-10 00:39+0000\n"
 "PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -22,184 +22,179 @@ msgstr ""
 "documentviewer.po\n"
 "X-Crowdin-File-ID: 10538\n"
 
-#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+#: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
 msgstr "Закладкі"
 
-#: package/contents/ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Сродак для прагляду сертыфікатаў"
 
-#: package/contents/ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Выдавец"
 
-#: package/contents/ui/CertificateViewerDialog.qml:38
-#: package/contents/ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Агульная назва:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:44
-#: package/contents/ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "Электронная пошта:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:50
-#: package/contents/ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Арганізацыя:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Каму выдадзена"
 
-#: package/contents/ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Тэрмін дзеяння"
 
-#: package/contents/ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Выдадзена:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Сканчэнне тэрміну дзеяння:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Адбіткі"
 
-#: package/contents/ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "Адбітак SHA-1:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "Адбітак SHA-256:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:136
+#: ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "Экспартаванне..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:142
-#: package/contents/ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Закрыць"
 
-#: package/contents/ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Файл сертыфіката (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:165
-#: package/contents/ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Памылка"
 
-#: package/contents/ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Не ўдалося экспартаваць сертыфікат."
 
-#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+#: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:42
+#: ui/Main.qml:42
 msgid "Open..."
 msgstr "Адкрыць..."
 
-#: package/contents/ui/main.qml:49
+#: ui/Main.qml:49
 msgid "About"
 msgstr "Пра праграму"
 
-#: package/contents/ui/main.qml:106
+#: ui/Main.qml:99
 msgid "Password Needed"
 msgstr "Патрэбны пароль"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Выдаліць закладку"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Дадаць гэтую старонку ў закладкі"
 
-#: package/contents/ui/MainView.qml:80
+#: ui/MainView.qml:80
 msgid "No document open"
 msgstr "Няма дакументаў для адкрыцця"
 
-#: package/contents/ui/OkularDrawer.qml:57
+#: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
 msgstr "Мініяцюры"
 
-#: package/contents/ui/OkularDrawer.qml:71
+#: ui/OkularDrawer.qml:71
 msgid "Table of contents"
 msgstr "Змест"
 
-#: package/contents/ui/OkularDrawer.qml:99
+#: ui/OkularDrawer.qml:99
 msgid "Signatures"
 msgstr "Подпісы"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "Уласцівасці подпісу"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Стан прыдатнасці"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "Тэрмін дзеяння подпісу:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Мадыфікацыі дакумента:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Дадатковая інфармацыя"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "Падпісана:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "Час падпісання:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Прычына:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Размяшчэнне:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Версія дакумента"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Рэдакцыя дакумента %1 з %2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:115
+#: ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "Захаваць падпісаную версію..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:129
+#: ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Праглядзець сертыфікат..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "Не ўдалося захаваць подпіс."
 
-#: package/contents/ui/Signatures.qml:27
+#: ui/Signatures.qml:27
 msgid "Not Available"
 msgstr "Недаступна"
 
-#: package/contents/ui/ThumbnailsBase.qml:42
+#: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Нічога не знойдзена."

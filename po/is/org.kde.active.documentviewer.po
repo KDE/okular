@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-26 00:37+0000\n"
+"POT-Creation-Date: 2024-12-10 00:39+0000\n"
 "PO-Revision-Date: 2024-01-26 20:36+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -18,185 +18,180 @@ msgstr ""
 "X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+#: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
 msgstr "Bókamerki"
 
-#: package/contents/ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Vottorðaskoðari"
 
-#: package/contents/ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Útgefandi"
 
-#: package/contents/ui/CertificateViewerDialog.qml:38
-#: package/contents/ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Almennt heiti:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:44
-#: package/contents/ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "Netfang:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:50
-#: package/contents/ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Fyrirtæki/stofnun:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Handhafi"
 
-#: package/contents/ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Gildi"
 
-#: package/contents/ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Gefið út:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Gildir til:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Fingraför"
 
-#: package/contents/ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 fingrafar:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 fingrafar:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:136
+#: ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "Flytja út..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:142
-#: package/contents/ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Loka"
 
-#: package/contents/ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Vottorðaskrá (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:165
-#: package/contents/ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Villa"
 
-#: package/contents/ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Gat ekki flutt út vottorðið."
 
-#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+#: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:42
+#: ui/Main.qml:42
 msgid "Open..."
 msgstr "Opna..."
 
-#: package/contents/ui/main.qml:49
+#: ui/Main.qml:49
 msgid "About"
 msgstr "Um hugbúnaðinn"
 
-#: package/contents/ui/main.qml:106
+#: ui/Main.qml:99
 msgid "Password Needed"
 msgstr "Lykilorðs er krafist"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Fjarlægja bókamerki"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Bókamerkja þessa síðu"
 
-#: package/contents/ui/MainView.qml:80
+#: ui/MainView.qml:80
 msgid "No document open"
 msgstr "Ekkert skjal opið"
 
-#: package/contents/ui/OkularDrawer.qml:57
+#: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
 msgstr "Smámyndir"
 
-#: package/contents/ui/OkularDrawer.qml:71
+#: ui/OkularDrawer.qml:71
 msgid "Table of contents"
 msgstr "Efnisyfirlit"
 
-#: package/contents/ui/OkularDrawer.qml:99
+#: ui/OkularDrawer.qml:99
 msgid "Signatures"
 msgstr "Undirskriftir"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "Eiginleikar undirskrifta"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Gildisstaða"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "Lögmæti undirskriftar:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Breytingar á skjali:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Viðbótarupplýsingar"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "Undirritari:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "Tími undirritunar:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Ástæða:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Staðsetning:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Útgáfa skjals"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "%1. endurskoðuð útgáfa skjals af %2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:115
+#: ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "Vista undirritaða útgáfu..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:129
+#: ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Skoða vottorð..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "Gat ekki vistað undirskriftina."
 
-#: package/contents/ui/Signatures.qml:27
+#: ui/Signatures.qml:27
 msgid "Not Available"
 msgstr "Ekki tiltækt"
 
-#: package/contents/ui/ThumbnailsBase.qml:42
+#: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Engar niðurstöður fundust."
 

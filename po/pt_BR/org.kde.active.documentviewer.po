@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-26 00:37+0000\n"
+"POT-Creation-Date: 2024-12-10 00:39+0000\n"
 "PO-Revision-Date: 2022-08-19 14:56-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -19,185 +19,180 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 21.12.3\n"
 
-#: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
+#: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
 msgstr "Favoritos"
 
-#: package/contents/ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerDialog.qml:22
 msgid "Certificate Viewer"
 msgstr "Visualizador de certificado"
 
-#: package/contents/ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerDialog.qml:33
 msgid "Issued By"
 msgstr "Emitido por"
 
-#: package/contents/ui/CertificateViewerDialog.qml:38
-#: package/contents/ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
 msgid "Common Name:"
 msgstr "Nome comum:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:44
-#: package/contents/ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
 msgid "EMail:"
 msgstr "E-mail:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:50
-#: package/contents/ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
 msgid "Organization:"
 msgstr "Organização:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerDialog.qml:61
 msgid "Issued To"
 msgstr "Emitido para"
 
-#: package/contents/ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerDialog.qml:89
 msgid "Validity"
 msgstr "Validade"
 
-#: package/contents/ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerDialog.qml:94
 msgid "Issued On:"
 msgstr "Emitido em:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerDialog.qml:100
 msgid "Expires On:"
 msgstr "Expira em:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerDialog.qml:111
 msgid "Fingerprints"
 msgstr "Impressões digitais"
 
-#: package/contents/ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerDialog.qml:116
 msgid "SHA-1 Fingerprint:"
 msgstr "Impressão digital SHA-1:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerDialog.qml:122
 msgid "SHA-256 Fingerprint:"
 msgstr "Impressão digital SHA-256:"
 
-#: package/contents/ui/CertificateViewerDialog.qml:136
+#: ui/CertificateViewerDialog.qml:136
 msgid "Export..."
 msgstr "Exportar..."
 
-#: package/contents/ui/CertificateViewerDialog.qml:142
-#: package/contents/ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
 msgid "Close"
 msgstr "Fechar"
 
-#: package/contents/ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
 msgstr "Arquivo de certificado (*.cer)"
 
-#: package/contents/ui/CertificateViewerDialog.qml:165
-#: package/contents/ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
 msgid "Error"
 msgstr "Erro"
 
-#: package/contents/ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerDialog.qml:167
 msgid "Could not export the certificate."
 msgstr "Não foi possível exportar o certificado."
 
-#: package/contents/ui/main.qml:25 package/contents/ui/main.qml:66
+#: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
 msgstr "Okular"
 
-#: package/contents/ui/main.qml:42
+#: ui/Main.qml:42
 msgid "Open..."
 msgstr "Abrir..."
 
-#: package/contents/ui/main.qml:49
+#: ui/Main.qml:49
 msgid "About"
 msgstr "Sobre"
 
-#: package/contents/ui/main.qml:106
+#: ui/Main.qml:99
 msgid "Password Needed"
 msgstr "Senha necessária"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Remove bookmark"
 msgstr "Remover favorito"
 
-#: package/contents/ui/MainView.qml:26
+#: ui/MainView.qml:26
 msgid "Bookmark this page"
 msgstr "Adicionar esta página aos favoritos"
 
-#: package/contents/ui/MainView.qml:80
+#: ui/MainView.qml:80
 msgid "No document open"
 msgstr "Nenhum documento aberto"
 
-#: package/contents/ui/OkularDrawer.qml:57
+#: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
 msgstr "Miniaturas"
 
-#: package/contents/ui/OkularDrawer.qml:71
+#: ui/OkularDrawer.qml:71
 msgid "Table of contents"
 msgstr "Sumário"
 
-#: package/contents/ui/OkularDrawer.qml:99
+#: ui/OkularDrawer.qml:99
 msgid "Signatures"
 msgstr "Assinaturas"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesDialog.qml:31
 msgid "Signature Properties"
 msgstr "Propriedades da assinatura"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesDialog.qml:45
 msgid "Validity Status"
 msgstr "Status da validade"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesDialog.qml:51
 msgid "Signature Validity:"
 msgstr "Validade da assinatura:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesDialog.qml:57
 msgid "Document Modifications:"
 msgstr "Modificações no documento:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesDialog.qml:64
 msgid "Additional Information"
 msgstr "Informações adicionais"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesDialog.qml:73
 msgid "Signed By:"
 msgstr "Assinado por:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesDialog.qml:79
 msgid "Signing Time:"
 msgstr "Assinado em:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesDialog.qml:85
 msgid "Reason:"
 msgstr "Motivo:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesDialog.qml:92
 msgid "Location:"
 msgstr "Localização:"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesDialog.qml:101
 msgid "Document Version"
 msgstr "Versão do documento"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Revisão do documento %1 de %2"
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:115
+#: ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."
 msgstr "Visualizar versão assinada..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:129
+#: ui/SignaturePropertiesDialog.qml:129
 msgid "View Certificate..."
 msgstr "Visualizar certificado..."
 
-#: package/contents/ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesDialog.qml:171
 msgid "Could not save the signature."
 msgstr "Não foi possível salvar a assinatura."
 
-#: package/contents/ui/Signatures.qml:27
+#: ui/Signatures.qml:27
 msgid "Not Available"
 msgstr "Não disponível"
 
-#: package/contents/ui/ThumbnailsBase.qml:42
+#: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 

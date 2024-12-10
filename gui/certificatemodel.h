@@ -41,7 +41,7 @@ public:
 
 private:
     QVector<Property> m_certificateProperties;
-    const Okular::CertificateInfo &m_certificateInfo;
+    Okular::CertificateInfo m_certificateInfo;
 };
 
 #endif

@@ -49,7 +49,7 @@ if (ANDROID)
         # and NSS has plugins. Here we link to those plugins so they get packaged
         pkg_check_modules(NSS "nss")
         target_link_directories(okularkirigami PRIVATE ${NSS_LIBRARY_DIRS})
-        target_link_libraries(okularkirigami -lsoftokn3 -lnssckbi -lfreebl3)
+        target_link_libraries(okularkirigami PRIVATE -lsoftokn3 -lnssckbi -lfreebl3)
     endif()
 
     kirigami_package_breeze_icons(ICONS

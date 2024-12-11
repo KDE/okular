@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2024-09-19 17:12+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -116,7 +116,7 @@ msgstr "Αφαίρεση σελιδοδείκτη"
 msgid "Bookmark this page"
 msgstr "Προσθέστε αυτήν τη σελίδα στους σελιδοδείκτες"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "Κανένα ανοικτό έγγραφο"
 

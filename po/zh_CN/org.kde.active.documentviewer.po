@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -114,7 +114,7 @@ msgstr "移除书签"
 msgid "Bookmark this page"
 msgstr "添加此页到书签"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "没有打开文档"
 

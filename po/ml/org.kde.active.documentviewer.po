@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2019-12-12 21:14+0000\n"
 "Last-Translator: Sabu Siyad <ssiyad@tuta.io>\n"
 "Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Bookmark this page"
 msgstr ""
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr ""
 

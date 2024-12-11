@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2021-08-21 17:02+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -113,7 +113,7 @@ msgstr "पुस्तचिन्ह हटाएँ"
 msgid "Bookmark this page"
 msgstr "इस पृष्ठ को पुस्तचिन्हित करें"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "कोई दस्तावेज़ खुला नहीं"
 

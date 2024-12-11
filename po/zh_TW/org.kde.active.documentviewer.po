@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2023-04-23 18:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -116,7 +116,7 @@ msgstr "移除書籤"
 msgid "Bookmark this page"
 msgstr "將此頁面加入書籤"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "沒有開啟文件"
 

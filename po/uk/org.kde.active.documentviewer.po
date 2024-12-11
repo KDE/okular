@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2022-08-03 08:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -116,7 +116,7 @@ msgstr "Вилучити закладку"
 msgid "Bookmark this page"
 msgstr "Додати цю сторінку до закладок"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "Немає відкритих документів"
 

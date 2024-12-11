@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2022-08-05 12:28+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -120,7 +120,7 @@ msgstr "Supprimer le signet"
 msgid "Bookmark this page"
 msgstr "Ajouter cette page aux signets"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "Aucun document ouvert"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
 "PO-Revision-Date: 2022-08-03 16:36+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -109,7 +109,7 @@ msgstr "Remover o favorito"
 msgid "Bookmark this page"
 msgstr "Adicionar aos favoritos"
 
-#: ui/MainView.qml:80
+#: ui/MainView.qml:82
 msgid "No document open"
 msgstr "Nenhum documento aberto"
 

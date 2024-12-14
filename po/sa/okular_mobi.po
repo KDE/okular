@@ -1,0 +1,48 @@
+# Sanskrit translations for okular package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: converter.cpp:59
+#, kde-format
+msgid "Error while opening the Mobipocket document."
+msgstr "Mobipocket दस्तावेजं उद्घाटयन् त्रुटिः।"
+
+#: converter.cpp:64
+#, kde-format
+msgid ""
+"This book is protected by DRM and can be displayed only on designated device"
+msgstr "एतत् पुस्तकं DRM द्वारा सुरक्षितं भवति, केवलं निर्दिष्टयन्त्रे एव प्रदर्शयितुं शक्यते"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket"
+msgstr "मोबिपॉकेट"
+
+#: generator_mobi.cpp:25
+#, kde-format
+msgid "Mobipocket Backend Configuration"
+msgstr "Mobipocket Backend विन्यासः"

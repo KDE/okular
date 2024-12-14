@@ -1,0 +1,52 @@
+# Sanskrit translations for okular package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-04-23 00:37+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: converter.cpp:83 converter.cpp:117
+#, kde-format
+msgid "Failed to open the document"
+msgstr "दस्तावेजं उद्घाटयितुं असफलम्"
+
+#: converter.cpp:130 converter.cpp:148
+#, kde-format
+msgid "Failed to compile the Markdown document."
+msgstr "Markdown दस्तावेजस्य संकलनं कर्तुं असफलम् ।"
+
+#: generator_md.cpp:58
+#, kde-format
+msgid "Enable SmartyPants formatting"
+msgstr "SmartyPants स्वरूपणं सक्षमं कुर्वन्तु"
+
+#: generator_md.cpp:60
+#, kde-format
+msgid "Markdown"
+msgstr "मार्कडाउन"
+
+#: generator_md.cpp:60
+#, kde-format
+msgid "Markdown Backend Configuration"
+msgstr "Markdown Backend विन्यासः"

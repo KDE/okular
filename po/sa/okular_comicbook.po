@@ -1,0 +1,43 @@
+# Sanskrit translations for okular package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-04-16 00:37+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: document.cpp:97
+#, kde-format
+msgid "Cannot open document, neither unrar nor unarchiver were found."
+msgstr "दस्तावेजं उद्घाटयितुं न शक्यते, न च unrar न च unarchiver प्राप्तम् ।"
+
+#: document.cpp:102
+#, kde-format
+msgid ""
+"The version of unrar on your system is not suitable for opening comicbooks."
+msgstr "भवतः प्रणाल्यां unrar इत्यस्य संस्करणं हास्यपुस्तकानां उद्घाटनाय उपयुक्तं नास्ति ।"
+
+#: document.cpp:131
+#, kde-format
+msgid "Unknown ComicBook format."
+msgstr "अज्ञात ComicBook प्रारूप।"

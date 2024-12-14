@@ -1,0 +1,194 @@
+# Sanskrit translations for okular package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the okular package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: okular\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
+msgid "Bookmarks"
+msgstr "बुकमार्क्स"
+
+#: ui/CertificateViewerDialog.qml:22
+msgid "Certificate Viewer"
+msgstr "प्रमाणपत्र दर्शक"
+
+#: ui/CertificateViewerDialog.qml:33
+msgid "Issued By"
+msgstr "Issued By"
+
+#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+msgid "Common Name:"
+msgstr "सामान्य नाम : १."
+
+#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+msgid "EMail:"
+msgstr "ईमेलः : १."
+
+#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+msgid "Organization:"
+msgstr "संघठनं:"
+
+#: ui/CertificateViewerDialog.qml:61
+msgid "Issued To"
+msgstr "निर्गतं To"
+
+#: ui/CertificateViewerDialog.qml:89
+msgid "Validity"
+msgstr "वैधता"
+
+#: ui/CertificateViewerDialog.qml:94
+msgid "Issued On:"
+msgstr "निर्गतम् On:"
+
+#: ui/CertificateViewerDialog.qml:100
+msgid "Expires On:"
+msgstr "अवधिः समाप्तः On:"
+
+#: ui/CertificateViewerDialog.qml:111
+msgid "Fingerprints"
+msgstr "अङ्गुलिचिह्नानि"
+
+#: ui/CertificateViewerDialog.qml:116
+msgid "SHA-1 Fingerprint:"
+msgstr "SHA-1 अङ्गुलिचिह्नः : १."
+
+#: ui/CertificateViewerDialog.qml:122
+msgid "SHA-256 Fingerprint:"
+msgstr "SHA-256 अङ्गुलिचिह्न : १."
+
+#: ui/CertificateViewerDialog.qml:136
+msgid "Export..."
+msgstr "निर्यात..."
+
+#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+msgid "Close"
+msgstr "पिधानं करोतु"
+
+#: ui/CertificateViewerDialog.qml:150
+msgid "Certificate File (*.cer)"
+msgstr "प्रमाणपत्र सञ्चिका (*.cer) ."
+
+#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+msgid "Error"
+msgstr "त्रुटि"
+
+#: ui/CertificateViewerDialog.qml:167
+msgid "Could not export the certificate."
+msgstr "प्रमाणपत्रं निर्यातयितुं न शक्तवान्।"
+
+#: ui/Main.qml:25 ui/Main.qml:66
+msgid "Okular"
+msgstr "नेत्रस्य"
+
+#: ui/Main.qml:42
+msgid "Open..."
+msgstr "उद्घाटित..."
+
+#: ui/Main.qml:49
+msgid "About"
+msgstr "विषये"
+
+#: ui/Main.qml:99
+msgid "Password Needed"
+msgstr "गुप्तशब्दस्य आवश्यकता अस्ति"
+
+#: ui/MainView.qml:26
+msgid "Remove bookmark"
+msgstr "बुकमार्कं निष्कासयन्तु"
+
+#: ui/MainView.qml:26
+msgid "Bookmark this page"
+msgstr "एतत् पृष्ठं बुकमार्कं कुर्वन्तु"
+
+#: ui/MainView.qml:82
+msgid "No document open"
+msgstr "कोऽपि दस्तावेजः उद्घाटितः नास्ति"
+
+#: ui/OkularDrawer.qml:57
+msgid "Thumbnails"
+msgstr "लघुचित्रम्"
+
+#: ui/OkularDrawer.qml:71
+msgid "Table of contents"
+msgstr "विषयवस्तुसारणी"
+
+#: ui/OkularDrawer.qml:99
+msgid "Signatures"
+msgstr "हस्ताक्षर"
+
+#: ui/SignaturePropertiesDialog.qml:31
+msgid "Signature Properties"
+msgstr "हस्ताक्षर गुण"
+
+#: ui/SignaturePropertiesDialog.qml:45
+msgid "Validity Status"
+msgstr "वैधता स्थिति"
+
+#: ui/SignaturePropertiesDialog.qml:51
+msgid "Signature Validity:"
+msgstr "हस्ताक्षर वैधता : १."
+
+#: ui/SignaturePropertiesDialog.qml:57
+msgid "Document Modifications:"
+msgstr "दस्तावेज परिवर्तनम् : १."
+
+#: ui/SignaturePropertiesDialog.qml:64
+msgid "Additional Information"
+msgstr "अतिरिक्त सूचना"
+
+#: ui/SignaturePropertiesDialog.qml:73
+msgid "Signed By:"
+msgstr "हस्ताक्षरितम् : १."
+
+#: ui/SignaturePropertiesDialog.qml:79
+msgid "Signing Time:"
+msgstr "हस्ताक्षरसमयः : १."
+
+#: ui/SignaturePropertiesDialog.qml:85
+msgid "Reason:"
+msgstr "कारणम्‌:"
+
+#: ui/SignaturePropertiesDialog.qml:92
+msgid "Location:"
+msgstr "स्थानीय:"
+
+#: ui/SignaturePropertiesDialog.qml:101
+msgid "Document Version"
+msgstr "दस्तावेज संस्करणम्"
+
+#: ui/SignaturePropertiesDialog.qml:111
+msgctxt "Document Revision <current> of <total>"
+msgid "Document Revision %1 of %2"
+msgstr ""
+
+#: ui/SignaturePropertiesDialog.qml:115
+msgid "Save Signed Version..."
+msgstr "हस्ताक्षरितं संस्करणं रक्षतु..."
+
+#: ui/SignaturePropertiesDialog.qml:129
+msgid "View Certificate..."
+msgstr "प्रमाणपत्रं पश्यन्तु..."
+
+#: ui/SignaturePropertiesDialog.qml:171
+msgid "Could not save the signature."
+msgstr "हस्ताक्षरं रक्षितुं न शक्तवान्।"
+
+#: ui/Signatures.qml:27
+msgid "Not Available"
+msgstr "न उपलब्धम्"
+
+#: ui/ThumbnailsBase.qml:42
+msgid "No results found."
+msgstr "न परिणामः प्राप्तः।"

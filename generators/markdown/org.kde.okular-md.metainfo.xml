@@ -42,6 +42,7 @@
   <name xml:lang="pt-BR">Markdown</name>
   <name xml:lang="ro">Markdown</name>
   <name xml:lang="ru">Markdown</name>
+  <name xml:lang="sa">मार्कडाउन</name>
   <name xml:lang="sk">Markdown</name>
   <name xml:lang="sl">Markdown</name>
   <name xml:lang="sr">Маркдаун</name>
@@ -93,6 +94,7 @@
   <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos em Markdown</summary>
   <summary xml:lang="ro">Adaugă suport pentru citirea documentelor Markdown</summary>
   <summary xml:lang="ru">Поддержка чтения документов Markdown</summary>
+  <summary xml:lang="sa">Markdown दस्तावेजान् पठितुं समर्थनं योजयति</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie Markdown dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov Markdown</summary>
   <summary xml:lang="sr">Подршка за читање маркдаун докумената</summary>

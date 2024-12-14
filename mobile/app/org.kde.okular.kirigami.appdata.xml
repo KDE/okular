@@ -41,6 +41,7 @@
   <name xml:lang="pt-BR">Okular móvel</name>
   <name xml:lang="ro">Okular Mobil</name>
   <name xml:lang="ru">Okular Mobile</name>
+  <name xml:lang="sa">ओकुलर मोबाईल</name>
   <name xml:lang="sk">Okular Mobile</name>
   <name xml:lang="sl">Okular Mobile</name>
   <name xml:lang="sv">Okular Mobil</name>
@@ -89,6 +90,7 @@
   <summary xml:lang="pt-BR">Visualizador de documentos</summary>
   <summary xml:lang="ro">Vizualizor de documente</summary>
   <summary xml:lang="ru">Просмотр документов</summary>
+  <summary xml:lang="sa">दस्तावेज दर्शक</summary>
   <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
   <summary xml:lang="sv">Dokumentvisare</summary>
@@ -142,6 +144,7 @@
     <p xml:lang="pt-BR">O Okular é um visualizador de documentos universal desenvolvido pelo KDE. Ele funciona em várias plataformas, incluindo, mas não se limitando, o Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ro">Okular e un vizualizor de documente universal dezvoltat de KDE. Okular funcționează pe multe platforme, inclusiv Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ru">Okular — универсальная программа просмотра документов от KDE. Okular работает на многих платформах: Linux, Windows, Mac OS X, *BSD и других.</p>
+    <p xml:lang="sa">Okular इति KDE द्वारा विकसितः सार्वत्रिकः दस्तावेजदर्शकः अस्ति । Okular बहुषु मञ्चेषु कार्यं करोति, यत्र Linux, Windows, Mac OS X, *BSD इत्यादयः सन्ति किन्तु एतेषु एव सीमिताः न सन्ति ।</p>
     <p xml:lang="sk">Okular je univerzálny zobrazovač dokumentov vyvynutý týmom KDE. Okular funguje na viacerých platformách, vrátane týchto: Linux, Windows, MAC OS X, *BSD, atď.</p>
     <p xml:lang="sl">Okular je univerzalni pregledovalnik dokumentov, ki ga je razvil KDE. Okular deluje na več platformah, vključno z Linuxom, Windows, Mac OS X, * BSD itd.</p>
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
@@ -191,6 +194,7 @@
     <p xml:lang="pt-BR">Funcionalidades:</p>
     <p xml:lang="ro">Caracteristici:</p>
     <p xml:lang="ru">Возможности:</p>
+    <p xml:lang="sa">गुणाः:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Možnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
@@ -237,6 +241,7 @@
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ro">Formate susținute: PDF, PS, Tiff, CHM, DjVu, imagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
+      <li xml:lang="sa">समर्थित प्रारूपाः: पीडीएफ, पीएस, टिफ, सीएचएम, डीजेवीयू, इमेजेज, डीवीआई, एक्सपीएस, कथापुस्तक, हास्यपुस्तक, प्लकर, ईपीयूबी, फैक्स</li>
       <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprti formati: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -283,6 +288,7 @@
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
       <li xml:lang="ro">Bară laterală cu cuprins, miniaturi, recenzii și semne de carte</li>
       <li xml:lang="ru">Боковая панель с содержанием, миниатюрами страниц, комментариями и закладками;</li>
+      <li xml:lang="sa">सामग्री, लघुचित्रं, समीक्षाः, पुस्तकचिह्नानि च सहितं पार्श्वपट्टिका</li>
       <li xml:lang="sk">Bočný panel s obsahom, náhľadmi, hodnoteniami, a záložkami</li>
       <li xml:lang="sl">Stranska vrstica z vsebino, sličicami, pregledi in zaznamki</li>
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
@@ -330,6 +336,7 @@
       <li xml:lang="pt-BR">Suporte a anotações</li>
       <li xml:lang="ro">Suport pentru adnotări</li>
       <li xml:lang="ru">Поддержка комментариев.</li>
+      <li xml:lang="sa">एनोटेशन्स् समर्थनम्</li>
       <li xml:lang="sk">Podpora anotácií</li>
       <li xml:lang="sl">Podpora zaznamkom</li>
       <li xml:lang="sv">Stöd för kommentarer</li>
@@ -381,6 +388,7 @@
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>
       <caption xml:lang="ro">Citirea unui manual în Okular</caption>
       <caption xml:lang="ru">Документация, открытая в Okular</caption>
+      <caption xml:lang="sa">ओकुलरभाषायां पठनपुस्तिका</caption>
       <caption xml:lang="sk">Čítanie návodu v Okular</caption>
       <caption xml:lang="sl">Branje priročnikov v Okularju</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>

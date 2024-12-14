@@ -42,6 +42,7 @@
   <name xml:lang="pt-BR">TIFF</name>
   <name xml:lang="ro">Tiff</name>
   <name xml:lang="ru">TIFF</name>
+  <name xml:lang="sa">तिफ्फ</name>
   <name xml:lang="sk">Tiff</name>
   <name xml:lang="sl">Tiff</name>
   <name xml:lang="sr">ТИФФ</name>
@@ -93,6 +94,7 @@
   <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos em TIFF</summary>
   <summary xml:lang="ro">Adaugă suport pentru citirea documentelor Tiff</summary>
   <summary xml:lang="ru">Поддержка чтения документов TIFF</summary>
+  <summary xml:lang="sa">Tiff दस्तावेजान् पठितुं समर्थनं योजयति</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie Tiff dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov Tiff</summary>
   <summary xml:lang="sr">Подршка за читање ТИФФ докумената</summary>

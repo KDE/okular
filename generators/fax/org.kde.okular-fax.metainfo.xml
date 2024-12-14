@@ -42,6 +42,7 @@
   <name xml:lang="pt-BR">Fax</name>
   <name xml:lang="ro">Fax</name>
   <name xml:lang="ru">Факсы</name>
+  <name xml:lang="sa">फैक्स</name>
   <name xml:lang="sk">Fax</name>
   <name xml:lang="sl">Faks</name>
   <name xml:lang="sr">Факс</name>
@@ -93,6 +94,7 @@
   <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos de fax</summary>
   <summary xml:lang="ro">Adaugă suport pentru citirea documentelor fax</summary>
   <summary xml:lang="ru">Поддержка чтения документов факсов</summary>
+  <summary xml:lang="sa">Fax दस्तावेजान् पठितुं समर्थनं योजयति</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie faxových dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje faksiranih dokumentov</summary>
   <summary xml:lang="sr">Подршка за читање факс докумената</summary>

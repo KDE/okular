@@ -41,6 +41,7 @@
   <name xml:lang="pt-BR">Documentos DVI</name>
   <name xml:lang="ro">Documente DVI</name>
   <name xml:lang="ru">Документы DVI</name>
+  <name xml:lang="sa">डीवीआई दस्तावेज</name>
   <name xml:lang="sk">DVI dokumenty</name>
   <name xml:lang="sl">Dokumenti DVI</name>
   <name xml:lang="sr">ДВИ документи</name>
@@ -92,6 +93,7 @@
   <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos DVI</summary>
   <summary xml:lang="ro">Adaugă suport pentru citirea documentelor DVI</summary>
   <summary xml:lang="ru">Поддержка чтения документов DVI</summary>
+  <summary xml:lang="sa">DVI दस्तावेजानां पठनार्थं समर्थनं योजयति</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie DVI dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov DVI</summary>
   <summary xml:lang="sr">Подршка за читање ДВИ докумената</summary>

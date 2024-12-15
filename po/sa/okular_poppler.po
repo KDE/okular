@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:17
@@ -192,7 +192,7 @@ msgstr "स्केल मोडः : १."
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr ""
+msgstr "पीडीएफ वि. %1.%2"
 
 #: generator_pdf.cpp:1009
 #, kde-format
@@ -272,7 +272,7 @@ msgstr "दस्तावेजे केचन त्रुटयः प्र
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "निर्गतम्"
 
 #: pdfsettingswidget.cpp:135
 #, kde-format
@@ -283,7 +283,7 @@ msgstr "ई-मेल"
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "समाप्ति तिथि"
 
 #: pdfsettingswidget.cpp:152
 #, kde-format

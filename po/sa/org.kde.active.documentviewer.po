@@ -171,7 +171,7 @@ msgstr "दस्तावेज संस्करणम्"
 #: ui/SignaturePropertiesDialog.qml:111
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "%2 इत्यस्य %1 दस्तावेजपुनरीक्षणम्"
 
 #: ui/SignaturePropertiesDialog.qml:115
 msgid "Save Signed Version..."

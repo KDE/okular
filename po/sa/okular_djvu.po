@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: generator_djvu.cpp:136
 #, kde-format
@@ -50,7 +50,7 @@ msgstr "दस्तावेजस्य प्रकारः"
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
-msgstr ""
+msgstr "अज्ञात"
 
 #: generator_djvu.cpp:141
 #, kde-format
@@ -61,34 +61,34 @@ msgstr "घटकसञ्चिकाः"
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Unknown"
-msgstr ""
+msgstr "अज्ञात"
 
 #: kdjvu.cpp:675
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Single Page"
-msgstr ""
+msgstr "एकल पृष्ठ"
 
 #: kdjvu.cpp:678
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
-msgstr ""
+msgstr "बण्डल्"
 
 #: kdjvu.cpp:681
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indirect"
-msgstr ""
+msgstr "परोक्ष"
 
 #: kdjvu.cpp:684
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
-msgstr ""
+msgstr "बण्डल् (पुराण) २."
 
 #: kdjvu.cpp:687
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"
-msgstr ""
+msgstr "अनुक्रमित (पुराण) २."

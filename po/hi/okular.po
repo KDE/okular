@@ -5,20 +5,21 @@
 # Ravishankar Shrivastava <raviratlami@yahoo.com>, 2007.
 # rawkoder <rawkoder@fastmail.in>, 2020.
 # Raghavendra Kamath <raghu@raghukamath.com>, 2020, 2021.
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-10 00:39+0000\n"
-"PO-Revision-Date: 2021-08-22 12:47+0530\n"
-"Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
-"Language-Team: kde-hindi\n"
+"PO-Revision-Date: 2024-12-15 19:31+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Lokalize 21.08.0\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3897,7 +3898,7 @@ msgstr "छवि (%1 x %2 पिक्सेल्स)"
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
-msgstr "फ़ाइल में सहेजें..."
+msgstr "फ़ाइल में सहेजें…"
 
 #: part/pageview.cpp:2870
 #, fuzzy, kde-format

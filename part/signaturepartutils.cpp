@@ -56,6 +56,8 @@ static inline QString ConfigLastKeyNick()
     return QStringLiteral("KeyNick");
 }
 
+enum SignatureListRoles { NickRole = Qt::UserRole, NickDisplayRole, CommonNameRole, EmailRole };
+
 }
 
 namespace SignaturePartUtils
@@ -255,9 +257,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     for (const auto &cert : std::as_const(certs)) {
         auto item = std::make_unique<QStandardItem>();
         QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
-        item->setData(commonName, Qt::UserRole);
+        item->setData(commonName, CommonNameRole);
         QString emailAddress = cert.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::Empty);
-        item->setData(emailAddress, Qt::UserRole + 1);
+        item->setData(emailAddress, EmailRole);
 
         minWidth = std::max(minWidth, std::max(cert.nickName().size(), emailAddress.size() + commonName.size()));
 
@@ -277,7 +279,14 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
             break;
         }
 
-        item->setData(cert.nickName(), Qt::DisplayRole);
+        QString nick = cert.nickName();
+        item->setData(nick, NickRole);
+
+        if (cert.backend() == Okular::CertificateInfo::Backend::Gpg) {
+            static const auto group4 = QRegularExpression(QStringLiteral("(....)"));
+            nick = nick.replace(group4, QStringLiteral("\\1 ")).trimmed();
+        }
+        item->setData(nick, NickDisplayRole);
         item->setData(cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty), Qt::ToolTipRole);
         item->setEditable(false);
         if (cert.nickName() == lastNick) {
@@ -389,7 +398,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     if (result == QDialog::Rejected) {
         return std::nullopt;
     }
-    const auto certNicknameToUse = dialog.ui->list->currentIndex().data(Qt::DisplayRole).toString();
+    const auto certNicknameToUse = dialog.ui->list->currentIndex().data(NickRole).toString();
     auto backGroundImage = dialog.ui->backgroundInput->text();
     if (!backGroundImage.isEmpty()) {
         if (QFile::exists(backGroundImage)) {
@@ -524,9 +533,9 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     QRect topHalf {textRect.x(), textRect.y(), textRect.width(), textRect.height() / 2};
     QRect bottomHalf {textRect.x(), textRect.y() + textRect.height() / 2, textRect.width(), textRect.height() / 2};
 
-    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::DisplayRole).toString());
-    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(Qt::UserRole + 1).toString());
-    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(Qt::UserRole).toString());
+    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(NickDisplayRole).toString());
+    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(EmailRole).toString());
+    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(CommonNameRole).toString());
     if (showIcon) {
         if (auto icon = index.data(Qt::DecorationRole).value<QIcon>(); !icon.isNull()) {
             icon.paint(painter, QRect(option.rect.topLeft(), QSize(textRect.height(), textRect.height())));

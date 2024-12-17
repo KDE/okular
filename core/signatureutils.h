@@ -298,6 +298,9 @@ public:
      */
     void setCheckPasswordFunction(const std::function<bool(const QString &)> &passwordFunction);
 
+    bool isQualified() const;
+    void setQualified(bool qualified);
+
     CertificateInfo();
     CertificateInfo(const CertificateInfo &other);
     CertificateInfo(CertificateInfo &&other) noexcept;

@@ -117,6 +117,9 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
         oInfo.setBackend(Okular::CertificateInfo::Backend::Gpg);
     }
 #endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
+    oInfo.setQualified(pInfo.isQualified());
+#endif
     return oInfo;
 }
 

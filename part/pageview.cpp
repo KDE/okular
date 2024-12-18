@@ -365,6 +365,11 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
         d->zoomMode = PageView::ZoomFitAuto;
         break;
     }
+    case 4: {
+        d->zoomMode = PageView::ZoomFixed;
+        d->zoomFactor = Okular::Settings::customZoomFactor() / 100.0;
+        break;
+    }
     }
 
     connect(Okular::Settings::self(), &Okular::Settings::viewContinuousChanged, this, [=, this]() {

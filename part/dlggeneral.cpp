@@ -8,6 +8,7 @@
 
 #include <KAuthorized>
 #include <KColorButton>
+#include <KLocalization>
 #include <KLocalizedString>
 
 #include <QCheckBox>
@@ -19,6 +20,7 @@
 #include <QSpinBox>
 
 #include <config-okular.h>
+#include <qspinbox.h>
 
 #include "settings.h"
 
@@ -200,13 +202,25 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Page Up/Down overlap:"), pageUpDownOverlap);
 
     // Combobox: prefer file name or full path in titlebar
+    QHBoxLayout *zoomLayout = new QHBoxLayout();
+    QSpinBox *customZoom = new QSpinBox(this);
+    KLocalization::setupSpinBoxFormatString(customZoom, ki18nc("item:inlistbox Config dialog, general page, custom zoom factor", "%v%"));
+    customZoom->setObjectName("kcfg_CustomZoomFactor");
+    customZoom->setVisible(false);
     QComboBox *defaultZoom = new QComboBox(this);
     defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "100%"));
     defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Fit Width"));
     defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Fit Page"));
     defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Auto Fit"));
+    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Custom"));
     defaultZoom->setToolTip(i18nc("item:inlistbox Config dialog, general page, default zoom", "Defines the default zoom mode for files which were never opened before. For files which were opened before the previous zoom is applied."));
     defaultZoom->setObjectName(QStringLiteral("kcfg_ZoomMode"));
-    layout->addRow(i18nc("label:listbox Config dialog, general page, default zoom", "Default zoom:"), defaultZoom);
+    zoomLayout->addWidget(defaultZoom);
+    zoomLayout->addWidget(customZoom);
+    layout->addRow(i18nc("label:listbox Config dialog, general page, default zoom", "Default zoom:"), zoomLayout);
+    connect(defaultZoom, &QComboBox::currentIndexChanged, this, [=](int index) {
+        bool enabled = index == 4;
+        customZoom->setVisible(enabled);
+    });
     // END View options section
 }

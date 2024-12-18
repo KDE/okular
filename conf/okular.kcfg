@@ -174,7 +174,12 @@
  <group name="Zoom">
    <entry key="ZoomMode" type="UInt" >
     <default>1</default>
-    <max>3</max>
+    <max>4</max>
+   </entry>
+   <entry key="CustomZoomFactor" type="UInt" >
+     <default>100</default>
+     <min>10</min>
+     <max>500</max>
    </entry>
  </group>
  <group name="General" >

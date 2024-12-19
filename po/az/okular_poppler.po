@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:38+0000\n"
+"POT-Creation-Date: 2024-12-19 02:29+0000\n"
 "PO-Revision-Date: 2023-06-30 11:51+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -229,7 +229,7 @@ msgstr "Bəli"
 msgid "Optimized"
 msgstr "Optimallaşdırılmış"
 
-#: generator_pdf.cpp:1485
+#: generator_pdf.cpp:1486
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -240,12 +240,12 @@ msgstr ""
 "\n"
 "Tarix: %2"
 
-#: generator_pdf.cpp:1704
+#: generator_pdf.cpp:1705
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 istifadə edilməsi"
 
-#: generator_pdf.cpp:1706
+#: generator_pdf.cpp:1707
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -256,17 +256,17 @@ msgstr ""
 "\n"
 "Poppler %2 qarşı yaradılıb"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Modulu Tənzimləmələri"
 
-#: generator_pdf.cpp:2226
+#: generator_pdf.cpp:2227
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

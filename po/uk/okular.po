@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2024-10-25 18:31+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -1582,8 +1582,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Копіювати текст до буфера обміну"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2516 part/pageview.cpp:2836 part/pageview.cpp:2980
-#: part/pageview.cpp:3037
+#: part/pageview.cpp:2521 part/pageview.cpp:2841 part/pageview.cpp:2985
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копіювання заборонене DRM"
@@ -2691,139 +2691,139 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Команда:"
 
-#: part/dlggeneral.cpp:33
+#: part/dlggeneral.cpp:35
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Використовувати плавне гортання"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:37
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Вигляд:"
 
-#: part/dlggeneral.cpp:39
+#: part/dlggeneral.cpp:41
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Показати смужки гортання"
 
-#: part/dlggeneral.cpp:46
+#: part/dlggeneral.cpp:48
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Зв'язати мініатюри зі сторінкою"
 
-#: part/dlggeneral.cpp:53
+#: part/dlggeneral.cpp:55
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Показувати підказки та інформаційні повідомлення"
 
-#: part/dlggeneral.cpp:59
+#: part/dlggeneral.cpp:61
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Сповіщати про вбудовані файли, форми або підписи"
 
-#: part/dlggeneral.cpp:66
+#: part/dlggeneral.cpp:68
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Показувати заголовок документа на смужці заголовка вікна, якщо можна"
 
-#: part/dlggeneral.cpp:72
+#: part/dlggeneral.cpp:74
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Показувати лише назву файла"
 
-#: part/dlggeneral.cpp:73
+#: part/dlggeneral.cpp:75
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Показувати шлях до документа повністю"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:77
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Якщо не показано заголовок документа:"
 
-#: part/dlggeneral.cpp:90
+#: part/dlggeneral.cpp:92
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Нетиповий колір тла:"
 
-#: part/dlggeneral.cpp:112
+#: part/dlggeneral.cpp:114
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Можливості програми:"
 
-#: part/dlggeneral.cpp:119
+#: part/dlggeneral.cpp:121
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Відкривати нові файли у вкладках"
 
-#: part/dlggeneral.cpp:124
+#: part/dlggeneral.cpp:126
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Перемкнутися на наявну вкладку, якщо файл вже відкрито"
 
-#: part/dlggeneral.cpp:137
+#: part/dlggeneral.cpp:139
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Дотримуватись обмежень DRM"
 
-#: part/dlggeneral.cpp:146
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "У разі зміни документа перезавантажити документ"
 
-#: part/dlggeneral.cpp:153
+#: part/dlggeneral.cpp:155
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Показати вікно вибору модуля обробки"
 
-#: part/dlggeneral.cpp:160
+#: part/dlggeneral.cpp:162
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Напрям читання справа ліворуч"
 
-#: part/dlggeneral.cpp:166
+#: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Типово відкривати у неперервному режимі"
 
-#: part/dlggeneral.cpp:173
+#: part/dlggeneral.cpp:175
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "При використанні засобу навігації завертати вказівник на краях екрана"
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:192
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Колонки огляду:"
 
-#: part/dlggeneral.cpp:197
+#: part/dlggeneral.cpp:199
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:200
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2833,37 +2833,51 @@ msgstr ""
 "Визначає розміри поточної області перегляду, яка залишиться видимою після "
 "натискання клавіш Page Up і Page Down."
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:202
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Перекриття Page Up/Down:"
 
-#: part/dlggeneral.cpp:204
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgid "%v%"
+msgstr "%1%"
+
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:205
+#: part/dlggeneral.cpp:212
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Влаштувати ширину"
 
-#: part/dlggeneral.cpp:206
+#: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Влаштувати сторінку"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:214
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Автомасштаб"
 
-#: part/dlggeneral.cpp:208
+#: part/dlggeneral.cpp:215
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Custom"
+msgstr ""
+
+#: part/dlggeneral.cpp:216
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2874,7 +2888,7 @@ msgstr ""
 "програмі. Для файлів, які вже відкривалися, буде використано попередній "
 "вибраний масштаб."
 
-#: part/dlggeneral.cpp:210
+#: part/dlggeneral.cpp:220
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3500,210 +3514,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "з"
 
-#: part/pageview.cpp:495
+#: part/pageview.cpp:500
 #, kde-format
 msgid "Zoom"
 msgstr "Масштабувати"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:512
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Масштаб у 100%"
 
-#: part/pageview.cpp:518
+#: part/pageview.cpp:523
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Обернути п&раворуч"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:524
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Праворуч"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Обернути &ліворуч"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:529
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Ліворуч"
 
-#: part/pageview.cpp:528
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Original Orientation"
 msgstr "Початкова орієнтація"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:539
 #, kde-format
 msgid "&Trim View"
 msgstr "Обрізати п&ерегляд"
 
-#: part/pageview.cpp:538
+#: part/pageview.cpp:543
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Обрізати краї"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:550
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Обрізати за &позначеним"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Fit &Width"
 msgstr "Вмістити за &шириною"
 
-#: part/pageview.cpp:555
+#: part/pageview.cpp:560
 #, kde-format
 msgid "Fit &Page"
 msgstr "Вмістити &сторінку"
 
-#: part/pageview.cpp:559
+#: part/pageview.cpp:564
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Автомасштаб"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:568
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Масштаб ві&кна за сторінкою"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:575
 #, kde-format
 msgid "&View Mode"
 msgstr "Ре&жим перегляду"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:587
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Одна сторінка"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "С&уміжні сторінки"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:589
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Суміжні сторінки (перша сторінка у &центрі)"
 
-#: part/pageview.cpp:587
+#: part/pageview.cpp:592
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "О&гляд"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
 msgstr "&Безперервний"
 
-#: part/pageview.cpp:606
+#: part/pageview.cpp:611
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Використовувати напрям читання справа ліворуч"
 
-#: part/pageview.cpp:615
+#: part/pageview.cpp:620
 #, kde-format
 msgid "&Browse"
 msgstr "&Навігація"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:628
 #, kde-format
 msgid "&Zoom"
 msgstr "&Масштабувати"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:648
 #, kde-format
 msgid "Area &Selection"
 msgstr "Вибір &ділянки"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:655
 #, kde-format
 msgid "&Text Selection"
 msgstr "Вибір &тексту"
 
-#: part/pageview.cpp:657
+#: part/pageview.cpp:662
 #, kde-format
 msgid "T&able Selection"
 msgstr "Вибір &таблиці"
 
-#: part/pageview.cpp:664
+#: part/pageview.cpp:669
 #, kde-format
 msgid "&Magnifier"
 msgstr "З&більшувальне скло"
 
-#: part/pageview.cpp:673
+#: part/pageview.cpp:678
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Засоби позначення"
 
-#: part/pageview.cpp:699
+#: part/pageview.cpp:704
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Підписати &цифровим підписом…"
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:710
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Прочитати уголос весь документ"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:715
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Прочитати уголос від поточної сторінки"
 
-#: part/pageview.cpp:715
+#: part/pageview.cpp:720
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Прочитати уголос поточну сторінку"
 
-#: part/pageview.cpp:720
+#: part/pageview.cpp:725
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Зупинити читання"
 
-#: part/pageview.cpp:725
+#: part/pageview.cpp:730
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Призупинити/Відновити читання уголос"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:742
 #, kde-format
 msgid "Scroll Up"
 msgstr "Прогорнути вгору"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Scroll Down"
 msgstr "Прогорнути вниз"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Прогорнути на сторінку вгору"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:760
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Прогорнути на сторінку вниз"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:766
 #, kde-format
 msgid "Show Forms"
 msgstr "Показати форми"
 
-#: part/pageview.cpp:1265
+#: part/pageview.cpp:1270
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3712,12 +3726,12 @@ msgstr[1] " Завантажено документ з %1 сторінками."
 msgstr[2] " Завантажено документ з %1 сторінками."
 msgstr[3] " Завантажено документ з однієї сторінки."
 
-#: part/pageview.cpp:2511
+#: part/pageview.cpp:2516
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Копіювати зміст до буфера обміну"
 
-#: part/pageview.cpp:2830
+#: part/pageview.cpp:2835
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3726,77 +3740,77 @@ msgstr[1] "Текст (%1 символи)"
 msgstr[2] "Текст (%1 символів)"
 msgstr[3] "Текст (1 символ)"
 
-#: part/pageview.cpp:2831 part/pageview.cpp:2849
+#: part/pageview.cpp:2836 part/pageview.cpp:2854
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Скопіювати до буфера"
 
-#: part/pageview.cpp:2840 part/pageview.cpp:3032
+#: part/pageview.cpp:2845 part/pageview.cpp:3037
 #, kde-format
 msgid "Speak Text"
 msgstr "Декламувати текст"
 
-#: part/pageview.cpp:2848
+#: part/pageview.cpp:2853
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Зображення (%1 × %2 пікселів)"
 
-#: part/pageview.cpp:2850
+#: part/pageview.cpp:2855
 #, kde-format
 msgid "Save to File…"
 msgstr "Зберегти до файла…"
 
-#: part/pageview.cpp:2870
+#: part/pageview.cpp:2875
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Зображення [%1 × %2] скопійовано до буфера обміну."
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Save file"
 msgstr "Зберегти файл"
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "зображення (*.png *.jpeg)"
 
-#: part/pageview.cpp:2875
+#: part/pageview.cpp:2880
 #, kde-format
 msgid "File not saved."
 msgstr "Файл не збережено."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Зображення [%1 × %2] збережено у файл %3."
 
-#: part/pageview.cpp:3028
+#: part/pageview.cpp:3033
 #, kde-format
 msgid "Copy Text"
 msgstr "Скопіювати текст"
 
-#: part/pageview.cpp:3048
+#: part/pageview.cpp:3053
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Перейти до «%1»"
 
-#: part/pageview.cpp:4055 part/part.cpp:3160
+#: part/pageview.cpp:4060 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "Влаштувати ширину"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Fit Page"
 msgstr "Влаштувати сторінку"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автомасштаб"
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4083
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3805,68 +3819,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4366
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Шукати «%1» за допомогою"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Налаштувати вебскорочення…"
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4406
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перейти за цим посиланням"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4409
 #, kde-format
 msgid "Play this Sound"
 msgstr "Відтворити цей звук"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Stop Sound"
 msgstr "Припинити відтворення звуку"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4417
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Скопіювати адресу посилання"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4438
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Шукати «%1» у цьому документі"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4970
 #, kde-format
 msgid "Welcome"
 msgstr "Ласкаво просимо!"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5092
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Виберіть ділянку масштабування. Щоб зменшити, клацніть правою кнопкою мишки."
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5105
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Клацніть, щоб скористатися збільшувальним склом."
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5120
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Намалюйте прямокутник навколо тексту/малюнка для копіювання."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5134
 #, kde-format
 msgid "Select text"
 msgstr "Вибрати текст"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5148
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3875,7 +3889,7 @@ msgstr ""
 "Намалюйте прямокутник навколо таблиці, потім клацніть поряд з краєм, щоб "
 "поділити текст. Натисніть Esc, щоб скасувати позначення."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5160
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3883,7 +3897,7 @@ msgid ""
 msgstr ""
 "Усі ваші сертифікати для підпису або ще не є чинними або вже є простроченими."
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5163
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3894,25 +3908,25 @@ msgstr ""
 "будь ласка, ознайомтеся із розділом <a href=\"%1\">Додавання цифрових "
 "підписів</a> у підручнику."
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Деякі внесені вами зміни не збережено. Будь ласка, збережіть документ, перш "
 "ніж його підписувати."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5210
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Намалюйте прямокутник для вставлення поля підпису"
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5354
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Намалюйте прямокутник навколо області сторінки, яку слід залишити видимою"
 
-#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

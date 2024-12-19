@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2022-08-05 07:29+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -25,71 +25,73 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "Zaznamki"
 
-#: ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
 msgstr "Pregledovalnik potrdil"
 
-#: ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
 msgstr "Izdajatelj"
 
-#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
 msgstr "Splošno ime:"
 
-#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
 msgstr "E-naslov:"
 
-#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
 msgstr "Organizacija:"
 
-#: ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
 msgstr "Izdano za"
 
-#: ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerPage.qml:76
 msgid "Validity"
 msgstr "Veljavnost"
 
-#: ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
 msgstr "Izdano:"
 
-#: ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
 msgstr "Preteče:"
 
-#: ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
 msgstr "Prstni odtisi"
 
-#: ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
 msgstr "Prstni odtis SHA-1:"
 
-#: ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
 msgstr "Prstni odtis SHA-256:"
 
-#: ui/CertificateViewerDialog.qml:136
-msgid "Export..."
+#: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
+#, fuzzy
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Izvozi ..."
 
-#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
 msgstr "Zapri"
 
-#: ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
 msgstr "Datoteka potrdila (*.cer)"
 
-#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
 msgstr "Napaka"
 
-#: ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
 msgstr "Potrdila ni bilo mogoče izvoziti."
 
@@ -133,60 +135,64 @@ msgstr "Kazalo vsebine"
 msgid "Signatures"
 msgstr "Podpisi"
 
-#: ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
 msgstr "Lastnosti podpisa"
 
-#: ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
 msgstr "Stanje veljavnosti"
 
-#: ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
 msgstr "Veljavnost podpisa:"
 
-#: ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
 msgstr "Spremembe dokumenta:"
 
-#: ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
 msgstr "Dodatne informacije"
 
-#: ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
 msgstr "Podpisal:"
 
-#: ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
 msgstr "Čas podpisovanja:"
 
-#: ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
 msgstr "Razlog:"
 
-#: ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
 msgstr "Mesto:"
 
-#: ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
 msgstr "Različica dokumenta"
 
-#: ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Revizija dokumenta %1 od %2"
 
-#: ui/SignaturePropertiesDialog.qml:115
-msgid "Save Signed Version..."
+#: ui/SignaturePropertiesPage.qml:108
+#, fuzzy
+#| msgid "Save Signed Version..."
+msgid "Save Signed Version…"
 msgstr "Shrani podpisano različico ..."
 
-#: ui/SignaturePropertiesDialog.qml:129
-msgid "View Certificate..."
+#: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
+#, fuzzy
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Pokaži potrdilo ..."
 
-#: ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
 msgstr "Podpisa ni bilo mogoče shraniti."
 

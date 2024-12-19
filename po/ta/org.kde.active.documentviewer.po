@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2022-08-07 10:59+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -21,71 +21,73 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "நினைவுக்குறிகள்"
 
-#: ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
 msgstr "சான்றிதழ் காட்டி"
 
-#: ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
 msgstr "வழங்கியவர்"
 
-#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
 msgstr "பொதுப்பெயர்:"
 
-#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
 msgstr "மின்னஞ்சல்:"
 
-#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
 msgstr "நிறுவனம்:"
 
-#: ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
 msgstr "யாரிடம் வழங்கப்பட்டது"
 
-#: ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerPage.qml:76
 msgid "Validity"
 msgstr "செல்லுபடி"
 
-#: ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
 msgstr "வழங்கப்பட்ட தேதி:"
 
-#: ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
 msgstr "காலாவதி ஆகும் தேதி:"
 
-#: ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
 msgstr "சரிகாண்தொகைகள்"
 
-#: ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 சரிகாண்தொகை:"
 
-#: ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 சரிகாண்தொகை:"
 
-#: ui/CertificateViewerDialog.qml:136
-msgid "Export..."
+#: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
+#, fuzzy
+#| msgid "Export..."
+msgid "Export…"
 msgstr "ஏற்றுமதி…"
 
-#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
 msgstr "மூடு"
 
-#: ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
 msgstr "சான்றிதழ் கோப்பு (*.cer)"
 
-#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
 msgstr "சிக்கல்"
 
-#: ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
 msgstr "சான்றிதழை ஏற்றுமதி செய்ய முடியவில்லை."
 
@@ -129,60 +131,64 @@ msgstr "பொருளடக்க அட்டவணை"
 msgid "Signatures"
 msgstr "கையொப்பங்கள்"
 
-#: ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
 msgstr "கையொப்பத்தின் பண்புகள்"
 
-#: ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
 msgstr "செல்லுபடி நிலை"
 
-#: ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
 msgstr "கையொப்பத்தின் செல்லுபடி நிலை:"
 
-#: ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
 msgstr "ஆவண மாற்றங்கள்:"
 
-#: ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
 msgstr "கூடுதல் விவரங்கள்"
 
-#: ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
 msgstr "கையொப்பமிட்டவர்:"
 
-#: ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
 msgstr "கையொப்பமிட்ட நேரம்:"
 
-#: ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
 msgstr "காரணம்:"
 
-#: ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
 msgstr "இடம்:"
 
-#: ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
 msgstr "ஆவண பதிப்பு"
 
-#: ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "ஆவண சீராய்வு %1 (மொத்த சீராய்வுகள் %2)"
 
-#: ui/SignaturePropertiesDialog.qml:115
-msgid "Save Signed Version..."
+#: ui/SignaturePropertiesPage.qml:108
+#, fuzzy
+#| msgid "Save Signed Version..."
+msgid "Save Signed Version…"
 msgstr "கையொப்பமிடப்பட்ட பதிப்பை சேமி…"
 
-#: ui/SignaturePropertiesDialog.qml:129
-msgid "View Certificate..."
+#: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
+#, fuzzy
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "சான்றிதழைப் காட்டு..."
 
-#: ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
 msgstr "கையொப்பத்தை சேமிக்க முடியவில்லை"
 

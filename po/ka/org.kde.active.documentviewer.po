@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2024-04-08 04:34+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -22,71 +22,73 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "სანიშნები"
 
-#: ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
 msgstr "სერტიფიკატების ნახვა"
 
-#: ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
 msgstr "გამომცემელი"
 
-#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
 msgstr "საერთო სახელი:"
 
-#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
 msgstr "ელფოსტა:"
 
-#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
 msgstr "ორგანიზაცია:"
 
-#: ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
 msgstr "ვისთვისაა გამოცემული"
 
-#: ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerPage.qml:76
 msgid "Validity"
 msgstr "სისწორე"
 
-#: ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
 msgstr "გამოცემის თარიღი:"
 
-#: ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
 msgstr "ვადის ამოწურვის თარიღი:"
 
-#: ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
 msgstr "ანაბეჭდები"
 
-#: ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 თითის ანაბეჭდი:"
 
-#: ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 თითის ანაბეჭდი:"
 
-#: ui/CertificateViewerDialog.qml:136
-msgid "Export..."
+#: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
+#, fuzzy
+#| msgid "Export..."
+msgid "Export…"
 msgstr "გატანა..."
 
-#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
 msgstr "დახურვა"
 
-#: ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
 msgstr "სერტიფიკატის ფაილი (* .cer)"
 
-#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
 msgstr "შეცდომა"
 
-#: ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
 msgstr "სერტიფიკატის გატანის შეცდომა."
 
@@ -130,60 +132,64 @@ msgstr "Სარჩევი"
 msgid "Signatures"
 msgstr "ხელმოწერები"
 
-#: ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
 msgstr "ხელმოწერის თვისებები"
 
-#: ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
 msgstr "გადამოწმების სტატუსი"
 
-#: ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
 msgstr "ხელმოწერის სისწორე:"
 
-#: ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
 msgstr "დოკუმენტის ცვლილებები:"
 
-#: ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
 msgstr "დამატებითი ინფორმაცია"
 
-#: ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
 msgstr "ხელმომწერი:"
 
-#: ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
 msgstr "ხელმოწერის დრო:"
 
-#: ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
 msgstr "მიზეზი:"
 
-#: ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
 msgstr "მდებარეობა:"
 
-#: ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
 msgstr "დოკუმენტის ვერსია"
 
-#: ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "დოკუმენტის გადასინჯვა %1 %2-დან"
 
-#: ui/SignaturePropertiesDialog.qml:115
-msgid "Save Signed Version..."
+#: ui/SignaturePropertiesPage.qml:108
+#, fuzzy
+#| msgid "Save Signed Version..."
+msgid "Save Signed Version…"
 msgstr "ხელმოწერილი ვერსიის შენახვა..."
 
-#: ui/SignaturePropertiesDialog.qml:129
-msgid "View Certificate..."
+#: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
+#, fuzzy
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "სერტიფიკატის ნახვა..."
 
-#: ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
 msgstr "ხელმოწერის შენახვის შეცდომა."
 

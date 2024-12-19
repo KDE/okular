@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2024-11-17 21:36+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -1568,8 +1568,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Szöveg másolása a vágólapra"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2516 part/pageview.cpp:2836 part/pageview.cpp:2980
-#: part/pageview.cpp:3037
+#: part/pageview.cpp:2521 part/pageview.cpp:2841 part/pageview.cpp:2985
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM-korlátozás miatt nem lehet másolni"
@@ -2663,140 +2663,140 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Parancs:"
 
-#: part/dlggeneral.cpp:33
+#: part/dlggeneral.cpp:35
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Finomgörgetés használata"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:37
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Megjelenés:"
 
-#: part/dlggeneral.cpp:39
+#: part/dlggeneral.cpp:41
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Görgetősávok megjelenítése"
 
-#: part/dlggeneral.cpp:46
+#: part/dlggeneral.cpp:48
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "A bélyegképek kapcsolása az oldalhoz"
 
-#: part/dlggeneral.cpp:53
+#: part/dlggeneral.cpp:55
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Tippek és tájékoztató üzenetek megjelenítése"
 
-#: part/dlggeneral.cpp:59
+#: part/dlggeneral.cpp:61
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Értesítés beágyazott fájlokról, űrlapokról vagy aláírásokról"
 
-#: part/dlggeneral.cpp:66
+#: part/dlggeneral.cpp:68
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "A dokumentum címének megjelenítése a címsoron, ha elérhető"
 
-#: part/dlggeneral.cpp:72
+#: part/dlggeneral.cpp:74
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Csak fájlnév megjelenítése"
 
-#: part/dlggeneral.cpp:73
+#: part/dlggeneral.cpp:75
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Teljes elérési út megjelenítése"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:77
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Ha nem jelenik meg a dokumentum címe:"
 
-#: part/dlggeneral.cpp:90
+#: part/dlggeneral.cpp:92
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Egyéni háttérszín használata:"
 
-#: part/dlggeneral.cpp:112
+#: part/dlggeneral.cpp:114
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "A program jellemzői:"
 
-#: part/dlggeneral.cpp:119
+#: part/dlggeneral.cpp:121
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Új fájlok megnyitása lapokon"
 
-#: part/dlggeneral.cpp:124
+#: part/dlggeneral.cpp:126
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Váltás a meglévő lapra, ha a fájl már meg van nyitva"
 
-#: part/dlggeneral.cpp:137
+#: part/dlggeneral.cpp:139
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "A DRM-korlátozások betartása"
 
-#: part/dlggeneral.cpp:146
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "A dokumentum újratöltése, ha a fájl megváltozik"
 
-#: part/dlggeneral.cpp:153
+#: part/dlggeneral.cpp:155
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Választóablak a háttérmodul kijelöléséhez"
 
-#: part/dlggeneral.cpp:160
+#: part/dlggeneral.cpp:162
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Jobbról-balra olvasási irány"
 
-#: part/dlggeneral.cpp:166
+#: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Megnyitás folyamatos módban alapértelmezés szerint"
 
-#: part/dlggeneral.cpp:173
+#: part/dlggeneral.cpp:175
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "A kurzor körbefuttatása a képernyőszéleken a Böngészés eszköz használatakor"
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:192
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Áttekintő oszlopok:"
 
-#: part/dlggeneral.cpp:197
+#: part/dlggeneral.cpp:199
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:200
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2806,37 +2806,51 @@ msgstr ""
 "Meghatározza, hogy a jelenlegi nézetterületből mennyi látszódjon még a "
 "PageUp/Down gombok lenyomásakor."
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:202
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Page Up/Down átfedés:"
 
-#: part/dlggeneral.cpp:204
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgid "%v%"
+msgstr "%1%"
+
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:205
+#: part/dlggeneral.cpp:212
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Teljes szélességre"
 
-#: part/dlggeneral.cpp:206
+#: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Teljes oldal"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:214
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automatikus igazítás"
 
-#: part/dlggeneral.cpp:208
+#: part/dlggeneral.cpp:215
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Custom"
+msgstr ""
+
+#: part/dlggeneral.cpp:216
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2847,7 +2861,7 @@ msgstr ""
 "még nem voltak eddig megnyitva. A korábban már megnyitott fájlokra az előző "
 "nagyítás lesz alkalmazva."
 
-#: part/dlggeneral.cpp:210
+#: part/dlggeneral.cpp:220
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3470,299 +3484,299 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "/"
 
-#: part/pageview.cpp:495
+#: part/pageview.cpp:500
 #, kde-format
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:512
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Nagyítás 100%-ra"
 
-#: part/pageview.cpp:518
+#: part/pageview.cpp:523
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Forgatás &jobbra"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:524
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Jobbra"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Forgatás &balra"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:529
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Balra"
 
-#: part/pageview.cpp:528
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Original Orientation"
 msgstr "Eredeti tájolás"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:539
 #, kde-format
 msgid "&Trim View"
 msgstr "Né&zet levágása"
 
-#: part/pageview.cpp:538
+#: part/pageview.cpp:543
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Szegélyek levá&gása"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:550
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Levágás &kijelölésre"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Fit &Width"
 msgstr "Te&ljes szélesség"
 
-#: part/pageview.cpp:555
+#: part/pageview.cpp:560
 #, kde-format
 msgid "Fit &Page"
 msgstr "Teljes ol&dal"
 
-#: part/pageview.cpp:559
+#: part/pageview.cpp:564
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automatikus igazítás"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:568
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Oldalméretnyi a&blak"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:575
 #, kde-format
 msgid "&View Mode"
 msgstr "Né&zetmód"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:587
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Egy oldal"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Sze&mközti oldalak"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:589
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Két oldal (első oldal &középre)"
 
-#: part/pageview.cpp:587
+#: part/pageview.cpp:592
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Á&ttekintés"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
 msgstr "&Folyamatos"
 
-#: part/pageview.cpp:606
+#: part/pageview.cpp:611
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Jobbról-balra olvasási irány használata"
 
-#: part/pageview.cpp:615
+#: part/pageview.cpp:620
 #, kde-format
 msgid "&Browse"
 msgstr "&Böngészés"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:628
 #, kde-format
 msgid "&Zoom"
 msgstr "Na&gyítás"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:648
 #, kde-format
 msgid "Area &Selection"
 msgstr "Területkijelölé&s"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:655
 #, kde-format
 msgid "&Text Selection"
 msgstr "S&zövegkijelölés"
 
-#: part/pageview.cpp:657
+#: part/pageview.cpp:662
 #, kde-format
 msgid "T&able Selection"
 msgstr "Tábláz&atkijelölés"
 
-#: part/pageview.cpp:664
+#: part/pageview.cpp:669
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Nagyító"
 
-#: part/pageview.cpp:673
+#: part/pageview.cpp:678
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Kijelölő eszközök"
 
-#: part/pageview.cpp:699
+#: part/pageview.cpp:704
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Digitális aláírá&s…"
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:710
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Felolvasás (a teljes dokumentumot)"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:715
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Felolvasás a jelenlegi oldaltól"
 
-#: part/pageview.cpp:715
+#: part/pageview.cpp:720
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Felolvasás (a jelenlegi oldalt)"
 
-#: part/pageview.cpp:720
+#: part/pageview.cpp:725
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Állj"
 
-#: part/pageview.cpp:725
+#: part/pageview.cpp:730
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Felolvasás szüneteltetése/folytatása"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:742
 #, kde-format
 msgid "Scroll Up"
 msgstr "Gördítés felfelé"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Scroll Down"
 msgstr "Gördítés lefelé"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Egy oldallal feljebb görgetés"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:760
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Egy oldallal lejjebb görgetés"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:766
 #, kde-format
 msgid "Show Forms"
 msgstr "Űrlapok megjelenítése"
 
-#: part/pageview.cpp:1265
+#: part/pageview.cpp:1270
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Betöltve egy 1 oldalas dokumentum."
 msgstr[1] " Betöltve egy %1 oldalas dokumentum."
 
-#: part/pageview.cpp:2511
+#: part/pageview.cpp:2516
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Táblázat tartalmának másolása a vágólapra"
 
-#: part/pageview.cpp:2830
+#: part/pageview.cpp:2835
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Szöveg (1 karakter)"
 msgstr[1] "Szöveg (%1 karakter)"
 
-#: part/pageview.cpp:2831 part/pageview.cpp:2849
+#: part/pageview.cpp:2836 part/pageview.cpp:2854
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Másolás a vágólapra"
 
-#: part/pageview.cpp:2840 part/pageview.cpp:3032
+#: part/pageview.cpp:2845 part/pageview.cpp:3037
 #, kde-format
 msgid "Speak Text"
 msgstr "Szöveg felolvasása"
 
-#: part/pageview.cpp:2848
+#: part/pageview.cpp:2853
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Kép (%1 × %2 képpont)"
 
-#: part/pageview.cpp:2850
+#: part/pageview.cpp:2855
 #, kde-format
 msgid "Save to File…"
 msgstr "Mentés fájlba…"
 
-#: part/pageview.cpp:2870
+#: part/pageview.cpp:2875
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Egy kép [%1 × %2] kimásolva a vágólapra."
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Save file"
 msgstr "Fájl mentése"
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Képek (*.png *.jpeg)"
 
-#: part/pageview.cpp:2875
+#: part/pageview.cpp:2880
 #, kde-format
 msgid "File not saved."
 msgstr "A fájl nincs elmentve."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2891
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Egy kép [%1 × %2] elmentve ebbe a fájlba: %3."
 
-#: part/pageview.cpp:3028
+#: part/pageview.cpp:3033
 #, kde-format
 msgid "Copy Text"
 msgstr "Szöveg másolása"
 
-#: part/pageview.cpp:3048
+#: part/pageview.cpp:3053
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Ugrás erre: „%1”"
 
-#: part/pageview.cpp:4055 part/part.cpp:3160
+#: part/pageview.cpp:4060 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "Teljes szélességre"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Fit Page"
 msgstr "Teljes oldal"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatikus igazítás"
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4083
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3771,67 +3785,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4366
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "„%1” keresése ezzel:"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Keresőazonosítók beállítása…"
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4406
 #, kde-format
 msgid "Follow This Link"
 msgstr "A link követése"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4409
 #, kde-format
 msgid "Play this Sound"
 msgstr "Hang lejátszása"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hang leállítása"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4417
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Hivatkozás címének másolása"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4438
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "„%1” keresése a dokumentumban"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4970
 #, kde-format
 msgid "Welcome"
 msgstr "Üdvözöljük"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5092
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Válassza ki a kinagyítandó területet. Kicsinyítés: jobb kattintással."
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5105
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kattintson a nagyított nézet megtekintéséhez."
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5120
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Húzzon keretet a másolandó szöveg vagy grafika köré."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5134
 #, kde-format
 msgid "Select text"
 msgstr "Szöveg kijelölése"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5148
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3840,14 +3854,14 @@ msgstr ""
 "Rajzoljon egy téglalapot a táblázat köré, majd kattintson a sarkok közelébe "
 "a felosztáshoz; nyomja meg az Esc gombot a törléshez."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5160
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "Az összes aláíró tanúsítványa lejárt, vagy még nem érvényes."
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5163
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3857,23 +3871,23 @@ msgstr ""
 "Nincsenek aláíró tanúsítványok.<br/>További információkért lásd a kézikönyv "
 "<a href=\"%1\">Digitális aláírások</a> fejezetét."
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Nem mentett módosításai vannak. Mentse a dokumentumot, mielőtt aláírja."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5210
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Rajzoljon egy téglalapot aláírásmező beszúrásához"
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5354
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Húzzon egy keretet a láthatóvá tenni kívánt oldalterület köré"
 
-#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

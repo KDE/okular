@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -1662,8 +1662,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopiraj u Clipboard"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2516 part/pageview.cpp:2836 part/pageview.cpp:2980
-#: part/pageview.cpp:3037
+#: part/pageview.cpp:2521 part/pageview.cpp:2841 part/pageview.cpp:2985
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Kopiraj i zabranjeno po DRM-u"
@@ -2842,155 +2842,155 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Naredba:"
 
-#: part/dlggeneral.cpp:33
+#: part/dlggeneral.cpp:35
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr ""
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:37
 #, fuzzy, kde-format
 #| msgid "Appearance"
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Izgled"
 
-#: part/dlggeneral.cpp:39
+#: part/dlggeneral.cpp:41
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Prikaži &klizačke trake"
 
-#: part/dlggeneral.cpp:46
+#: part/dlggeneral.cpp:48
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Poveži &sličice sa stranom"
 
-#: part/dlggeneral.cpp:53
+#: part/dlggeneral.cpp:55
 #, fuzzy, kde-format
 #| msgid "Show &hints and info messages"
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Prikaži &savjete i info poruke"
 
-#: part/dlggeneral.cpp:59
+#: part/dlggeneral.cpp:61
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr ""
 
-#: part/dlggeneral.cpp:66
+#: part/dlggeneral.cpp:68
 #, fuzzy, kde-format
 #| msgid "Display document title in titlebar if available"
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Prikaži naslov dokumenta u naslovu programa ako je moguće"
 
-#: part/dlggeneral.cpp:72
+#: part/dlggeneral.cpp:74
 #, fuzzy, kde-format
 #| msgid "Display file name only"
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Prikaži samo ime datoteke"
 
-#: part/dlggeneral.cpp:73
+#: part/dlggeneral.cpp:75
 #, fuzzy, kde-format
 #| msgid "Display full file path"
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Prikaži punu stazu datoteke"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:77
 #, fuzzy, kde-format
 #| msgid "When not displaying document title:"
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Kada ne prikazati naslov dokumenta:"
 
-#: part/dlggeneral.cpp:90
+#: part/dlggeneral.cpp:92
 #, fuzzy, kde-format
 #| msgid "Background color:"
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Boja pozadine:"
 
-#: part/dlggeneral.cpp:112
+#: part/dlggeneral.cpp:114
 #, fuzzy, kde-format
 #| msgid "Program Features"
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Osobine programa"
 
-#: part/dlggeneral.cpp:119
+#: part/dlggeneral.cpp:121
 #, fuzzy, kde-format
 #| msgid "Open new files in &tabs"
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Otvoriti nove datoteke u &karticama"
 
-#: part/dlggeneral.cpp:124
+#: part/dlggeneral.cpp:126
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr ""
 
-#: part/dlggeneral.cpp:137
+#: part/dlggeneral.cpp:139
 #, fuzzy, kde-format
 #| msgid "&Obey DRM limitations"
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "&Poštivanje DRM ograničenja"
 
-#: part/dlggeneral.cpp:146
+#: part/dlggeneral.cpp:148
 #, fuzzy, kde-format
 #| msgid "&Reload document on file change"
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "&Nanovo učitaj dokument na promjenu datoteke"
 
-#: part/dlggeneral.cpp:153
+#: part/dlggeneral.cpp:155
 #, fuzzy, kde-format
 #| msgid "Show backend selection dialog"
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Prikaži dijalog za izbor pozadine"
 
-#: part/dlggeneral.cpp:160
+#: part/dlggeneral.cpp:162
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr ""
 
-#: part/dlggeneral.cpp:166
+#: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr ""
 
-#: part/dlggeneral.cpp:173
+#: part/dlggeneral.cpp:175
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:192
 #, fuzzy, kde-format
 #| msgid "Overview &columns:"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Osnovne &kolone:"
 
-#: part/dlggeneral.cpp:197
+#: part/dlggeneral.cpp:199
 #, fuzzy, kde-format
 #| msgid "%"
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:200
 #, fuzzy, kde-format
 #| msgid ""
 #| "Defines how much of the current viewing area will still be visible when "
@@ -3003,42 +3003,55 @@ msgstr ""
 "Definiše koliko će trenutnog područja gledanja još biti vidljivo prilikom "
 "pritika na Page Up/Down tastere."
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:202
 #, fuzzy, kde-format
 #| msgid "&Page Up/Down overlap:"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "&Page Up/Down preklapanje:"
 
-#: part/dlggeneral.cpp:204
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgid "%1:"
+msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgid "%v%"
+msgstr "%1:"
+
+#: part/dlggeneral.cpp:211
 #, fuzzy, kde-format
 #| msgid "100%"
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:205
+#: part/dlggeneral.cpp:212
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Prilagodi po širini"
 
-#: part/dlggeneral.cpp:206
+#: part/dlggeneral.cpp:213
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Prilagodi po stranici"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
 #| msgid "Auto Fit"
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automatsko uklapanje"
 
-#: part/dlggeneral.cpp:208
+#: part/dlggeneral.cpp:215
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Custom"
+msgstr ""
+
+#: part/dlggeneral.cpp:216
 #, fuzzy, kde-format
 #| msgid ""
 #| "Defines the default zoom mode for files which were never opened before.\n"
@@ -3052,7 +3065,7 @@ msgstr ""
 "otvarane. \n"
 "Za datoteke koje su ranije otvorene, primjenjuje se prethodno uvećanje."
 
-#: part/dlggeneral.cpp:210
+#: part/dlggeneral.cpp:220
 #, fuzzy, kde-format
 #| msgid "&Default Zoom:"
 msgctxt "label:listbox Config dialog, general page, default zoom"
@@ -3737,231 +3750,231 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "od"
 
-#: part/pageview.cpp:495
+#: part/pageview.cpp:500
 #, kde-format
 msgid "Zoom"
 msgstr "Uvećaj"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:512
 #, kde-format
 msgid "Zoom to 100%"
 msgstr ""
 
-#: part/pageview.cpp:518
+#: part/pageview.cpp:523
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Rotiraj &desno"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:524
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Desno"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rotiraj &lijevo"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:529
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Lijevo"
 
-#: part/pageview.cpp:528
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Original Orientation"
 msgstr "Originalna orjentacija"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:539
 #, fuzzy, kde-format
 #| msgid "&View"
 msgid "&Trim View"
 msgstr "&Pogled"
 
-#: part/pageview.cpp:538
+#: part/pageview.cpp:543
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Skrati margine"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:550
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "Trim To &Selection"
 msgstr "Označeni tekst"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Fit &Width"
 msgstr "Uklopi &Širinu"
 
-#: part/pageview.cpp:555
+#: part/pageview.cpp:560
 #, kde-format
 msgid "Fit &Page"
 msgstr "Uklopi &Stranicu"
 
-#: part/pageview.cpp:559
+#: part/pageview.cpp:564
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automatsko uklapanje"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:568
 #, fuzzy, kde-format
 #| msgid "Fit &Page"
 msgid "Fit Wi&ndow to Page"
 msgstr "Uklopi &Stranicu"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:575
 #, kde-format
 msgid "&View Mode"
 msgstr "&Način prikaza"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:587
 #, fuzzy, kde-format
 #| msgid "Single Page"
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Jedna strana"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, fuzzy, kde-format
 #| msgid "Facing Pages"
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Naspramne stranice"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:589
 #, fuzzy, kde-format
 #| msgid "Facing Pages (Center First Page)"
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Naspramne stranice (prva centrirana)"
 
-#: part/pageview.cpp:587
+#: part/pageview.cpp:592
 #, fuzzy, kde-format
 #| msgid "Overview"
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Pregled"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
 msgstr "&Neprekidno"
 
-#: part/pageview.cpp:606
+#: part/pageview.cpp:611
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr ""
 
-#: part/pageview.cpp:615
+#: part/pageview.cpp:620
 #, fuzzy, kde-format
 #| msgctxt "Browse Tool"
 #| msgid "Browse"
 msgid "&Browse"
 msgstr "Razgledaj..."
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:628
 #, fuzzy, kde-format
 #| msgid "Zoom"
 msgid "&Zoom"
 msgstr "Uvećaj"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:648
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "Area &Selection"
 msgstr "Označeni tekst"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:655
 #, fuzzy, kde-format
 #| msgctxt "Text Selection Tool"
 #| msgid "Text Selection"
 msgid "&Text Selection"
 msgstr "Označeni tekst"
 
-#: part/pageview.cpp:657
+#: part/pageview.cpp:662
 #, fuzzy, kde-format
 #| msgctxt "Table Selection Tool"
 #| msgid "Table Selection"
 msgid "T&able Selection"
 msgstr "Izbor tabele"
 
-#: part/pageview.cpp:664
+#: part/pageview.cpp:669
 #, fuzzy, kde-format
 #| msgctxt "Magnifier Tool"
 #| msgid "Magnifier"
 msgid "&Magnifier"
 msgstr "Povećalo"
 
-#: part/pageview.cpp:673
+#: part/pageview.cpp:678
 #, fuzzy, kde-format
 #| msgid "Selection Tools"
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Alati označavanja"
 
-#: part/pageview.cpp:699
+#: part/pageview.cpp:704
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr ""
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:710
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Govori cijeli dokument"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:715
 #, fuzzy, kde-format
 #| msgid "Speak Current Page"
 msgid "Speak From Current Page"
 msgstr "Govori trenutnu stranicu"
 
-#: part/pageview.cpp:715
+#: part/pageview.cpp:720
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Govori trenutnu stranicu"
 
-#: part/pageview.cpp:720
+#: part/pageview.cpp:725
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Prekini izgovaranje"
 
-#: part/pageview.cpp:725
+#: part/pageview.cpp:730
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr ""
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:742
 #, kde-format
 msgid "Scroll Up"
 msgstr "Kliži prema gore"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Scroll Down"
 msgstr "Kliži prema dolje"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Kliži stranicu gore"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:760
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Kliži stranicu dolje"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:766
 #, kde-format
 msgid "Show Forms"
 msgstr "Prikaži forme"
 
-#: part/pageview.cpp:1265
+#: part/pageview.cpp:1270
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3969,13 +3982,13 @@ msgstr[0] " Učitan dokument od %1 stranice."
 msgstr[1] " Učitan dokument od %1 stranice."
 msgstr[2] " Učitan dokument od %1 stranica."
 
-#: part/pageview.cpp:2511
+#: part/pageview.cpp:2516
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiraj u Clipboard"
 
-#: part/pageview.cpp:2830
+#: part/pageview.cpp:2835
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3983,82 +3996,82 @@ msgstr[0] "Tekst (%1 karakter)"
 msgstr[1] "Tekst (%1 karaktera)"
 msgstr[2] "Tekst (%1 karaktera)"
 
-#: part/pageview.cpp:2831 part/pageview.cpp:2849
+#: part/pageview.cpp:2836 part/pageview.cpp:2854
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiraj u Clipboard"
 
-#: part/pageview.cpp:2840 part/pageview.cpp:3032
+#: part/pageview.cpp:2845 part/pageview.cpp:3037
 #, kde-format
 msgid "Speak Text"
 msgstr "Izgovaranje teksta"
 
-#: part/pageview.cpp:2848
+#: part/pageview.cpp:2853
 #, fuzzy, kde-format
 #| msgid "Image (%1 by %2 pixels)"
 msgid "Image (%1 × %2 pixels)"
 msgstr "Slika (%1 x %2 piksela)"
 
-#: part/pageview.cpp:2850
+#: part/pageview.cpp:2855
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
 msgstr "Spremi u datoteku..."
 
-#: part/pageview.cpp:2870
+#: part/pageview.cpp:2875
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] copied to clipboard."
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Slika [%1x%2] kopirana u clipboard."
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save file"
 msgstr "Spremi u datoteku..."
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr ""
 
-#: part/pageview.cpp:2875
+#: part/pageview.cpp:2880
 #, kde-format
 msgid "File not saved."
 msgstr "Datoteka nije spremljena."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2891
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] saved to %3 file."
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Slika [%1x%2] spremljena u datoteku %3."
 
-#: part/pageview.cpp:3028
+#: part/pageview.cpp:3033
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiraj tekst"
 
-#: part/pageview.cpp:3048
+#: part/pageview.cpp:3053
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Idi na %1"
 
-#: part/pageview.cpp:4055 part/part.cpp:3160
+#: part/pageview.cpp:4060 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "Prilagodi po širini"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Fit Page"
 msgstr "Prilagodi po stranici"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatsko uklapanje"
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4083
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4068,68 +4081,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4366
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Traži „%1“ pomoću"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Podesi veb prečice..."
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4406
 #, kde-format
 msgid "Follow This Link"
 msgstr "Prati ovaj link"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4409
 #, kde-format
 msgid "Play this Sound"
 msgstr "Sviraj ovaj zvuk"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zaustavi zvuk"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4417
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiraj adresu linka"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4438
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Traži „%1“ pomoću"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4970
 #, kde-format
 msgid "Welcome"
 msgstr "Dobrodošli"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5092
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Izaberite područje za uvećanje. Desni klik za umanjenje."
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5105
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknuti da bi vidjeli uvećani prikaz."
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5120
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Nacrtaj pravougaonik oko teksta/grafike za kopiranje."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5134
 #, kde-format
 msgid "Select text"
 msgstr "Označite tekst."
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5148
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4138,14 +4151,14 @@ msgstr ""
 "Nacrtajte pravougaonik oko tabele, kliknite blizu ivica da podijelite, "
 "pritisnite Esc za brisanje."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5160
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5163
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4153,23 +4166,23 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5210
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5354
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Nacrtaj pravougaonik oko teksta/grafike za kopiranje."
 
-#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

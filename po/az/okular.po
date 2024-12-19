@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-10 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1562,8 +1562,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Mətni mübadilə yaddaşına kopyalayın"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2516 part/pageview.cpp:2836 part/pageview.cpp:2980
-#: part/pageview.cpp:3037
+#: part/pageview.cpp:2521 part/pageview.cpp:2841 part/pageview.cpp:2985
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Kopyalama DRM tərəfindən qadağan edilmişdir"
@@ -2658,121 +2658,121 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Əmr:"
 
-#: part/dlggeneral.cpp:33
+#: part/dlggeneral.cpp:35
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Hamar sürüşdürmədən istifadə edin"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:37
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Xarici görünüş:"
 
-#: part/dlggeneral.cpp:39
+#: part/dlggeneral.cpp:41
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Şürüşdürmə çubuqlarını göstərmək"
 
-#: part/dlggeneral.cpp:46
+#: part/dlggeneral.cpp:48
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Miniatürləri səhifə ilə əlaqələndirmək"
 
-#: part/dlggeneral.cpp:53
+#: part/dlggeneral.cpp:55
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Məsləhətlri və məlumat ismarıclarını göstərmək"
 
-#: part/dlggeneral.cpp:59
+#: part/dlggeneral.cpp:61
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Daxilə yerləşdirilmiş fayllar, formalar və imzalar haqqında bildirin"
 
-#: part/dlggeneral.cpp:66
+#: part/dlggeneral.cpp:68
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Varsa, başlıq panelində sənədin başlığını göstərmək"
 
-#: part/dlggeneral.cpp:72
+#: part/dlggeneral.cpp:74
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Yalnız faylın adı görünsün"
 
-#: part/dlggeneral.cpp:73
+#: part/dlggeneral.cpp:75
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Faylın tam yolu görünsün"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:77
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Sənədin başlığı görünmədikdə:"
 
-#: part/dlggeneral.cpp:90
+#: part/dlggeneral.cpp:92
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Başqa arxa fon rəngi:"
 
-#: part/dlggeneral.cpp:112
+#: part/dlggeneral.cpp:114
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Proqramın imkanları:"
 
-#: part/dlggeneral.cpp:119
+#: part/dlggeneral.cpp:121
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Yeni faylı vərəqlərdə açmaq"
 
-#: part/dlggeneral.cpp:124
+#: part/dlggeneral.cpp:126
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Fayl artıq açılıbsa mövcud vərəqə keçmək"
 
-#: part/dlggeneral.cpp:137
+#: part/dlggeneral.cpp:139
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "DRM məhdudiyyətlərinə əməl etmək"
 
-#: part/dlggeneral.cpp:146
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Dəyişiklik edildikdə faylı yeniləmək"
 
-#: part/dlggeneral.cpp:153
+#: part/dlggeneral.cpp:155
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Seçim dialoqu modulunu göstərmək"
 
-#: part/dlggeneral.cpp:160
+#: part/dlggeneral.cpp:162
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Sağdan sola oxunuş qaydası"
 
-#: part/dlggeneral.cpp:166
+#: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Əsas olaraq davamlı rejimdə açın"
 
-#: part/dlggeneral.cpp:173
+#: part/dlggeneral.cpp:175
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
@@ -2780,19 +2780,19 @@ msgstr ""
 "\"Baxış\" alətindən istifadə edərkən kursoru ekranın kənarında hərəkət "
 "etdirin"
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:192
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Baxış sütunları:"
 
-#: part/dlggeneral.cpp:197
+#: part/dlggeneral.cpp:199
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
 msgstr "%"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:200
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2802,37 +2802,51 @@ msgstr ""
 "Səhifənin Yuxarı/Aşağı düymələrinə basarkən, nə qədər cari baxış sahəsinin "
 "görünən vəziyyətdə qalacağınıi təyin edir."
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:202
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Səhifə Yuxarı/Aşağı üst-üstə düşür:"
 
-#: part/dlggeneral.cpp:204
+#: part/dlggeneral.cpp:207
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgid "%v%"
+msgstr "%1%"
+
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:205
+#: part/dlggeneral.cpp:212
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Eninə Sığışdır"
 
-#: part/dlggeneral.cpp:206
+#: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Səhifəni Tam Doldur"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:214
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Avtomatik doldurma"
 
-#: part/dlggeneral.cpp:208
+#: part/dlggeneral.cpp:215
+#, kde-format
+msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgid "Custom"
+msgstr ""
+
+#: part/dlggeneral.cpp:216
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2842,7 +2856,7 @@ msgstr ""
 "Daha əvvəllər heç aşılmamış fayllar üçün standart miqyası təyi edir. "
 "Əvvəllər açılmış fayllar üçün əvvəlki miqyası tətbiq edir."
 
-#: part/dlggeneral.cpp:210
+#: part/dlggeneral.cpp:220
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3465,304 +3479,304 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "-"
 
-#: part/pageview.cpp:495
+#: part/pageview.cpp:500
 #, kde-format
 msgid "Zoom"
 msgstr "Miqyas"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:512
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Miqyas 100%"
 
-#: part/pageview.cpp:518
+#: part/pageview.cpp:523
 #, kde-format
 msgid "Rotate &Right"
 msgstr "&Sağa döndərmək"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:524
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Sağ"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Rotate &Left"
 msgstr "So&la döndərmək"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:529
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Sol"
 
-#: part/pageview.cpp:528
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Original Orientation"
 msgstr "Əsl istiqamət"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:539
 #, kde-format
 msgid "&Trim View"
 msgstr "Görünüşü &kəsmək"
 
-#: part/pageview.cpp:538
+#: part/pageview.cpp:543
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Kənarları &kəsmək"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:550
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "&Seçilmişi kəsmək"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Fit &Width"
 msgstr "Eninə &Sığışdır"
 
-#: part/pageview.cpp:555
+#: part/pageview.cpp:560
 #, kde-format
 msgid "Fit &Page"
 msgstr "Sə&hifəni Doldurmaq"
 
-#: part/pageview.cpp:559
+#: part/pageview.cpp:564
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Avtomatik doldurma"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:568
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Pə&ncərəni səhifəyə yerləşdirmək"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:575
 #, kde-format
 msgid "&View Mode"
 msgstr "&Baxış rejimi"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:587
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Tək səhifə"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Dönən səhifələr"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:589
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Dönən səhifələr(İlk səhifəni &mərkəzdə)"
 
-#: part/pageview.cpp:587
+#: part/pageview.cpp:592
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Nəzər salamq"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
 msgstr "&Davamlı"
 
-#: part/pageview.cpp:606
+#: part/pageview.cpp:611
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Sağdan sola oxunuş istiqaməti"
 
-#: part/pageview.cpp:615
+#: part/pageview.cpp:620
 #, kde-format
 msgid "&Browse"
 msgstr "&Baxmaq"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:628
 #, kde-format
 msgid "&Zoom"
 msgstr "&Miqyas"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:648
 #, kde-format
 msgid "Area &Selection"
 msgstr "Sahə &seçimi"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:655
 #, kde-format
 msgid "&Text Selection"
 msgstr "Mə&tn seçimi"
 
-#: part/pageview.cpp:657
+#: part/pageview.cpp:662
 #, kde-format
 msgid "T&able Selection"
 msgstr "&Cədvəl seçimi"
 
-#: part/pageview.cpp:664
+#: part/pageview.cpp:669
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Böyüdücü"
 
-#: part/pageview.cpp:673
+#: part/pageview.cpp:678
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Seçim alətləri"
 
-#: part/pageview.cpp:699
+#: part/pageview.cpp:704
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "Elektron &İmza..."
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:710
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Bütün sənədi səsləndirmək"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:715
 #, fuzzy, kde-format
 #| msgid "Speak Current Page"
 msgid "Speak From Current Page"
 msgstr "Cari sənədi səsləndirmək"
 
-#: part/pageview.cpp:715
+#: part/pageview.cpp:720
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Cari sənədi səsləndirmək"
 
-#: part/pageview.cpp:720
+#: part/pageview.cpp:725
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Səsləndirməni dayandırmaq"
 
-#: part/pageview.cpp:725
+#: part/pageview.cpp:730
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Səsləndirmənin Fasiləsi/Davam edilməsi"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:742
 #, kde-format
 msgid "Scroll Up"
 msgstr "Yuxarı sürüşdürmək"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Scroll Down"
 msgstr "Aşağı sürüşdürmək"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Səhifəni yuxarı sürüşdürmək"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:760
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Səhifəni aşağı sürüşdürmək"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:766
 #, kde-format
 msgid "Show Forms"
 msgstr "Formaları göstərmək"
 
-#: part/pageview.cpp:1265
+#: part/pageview.cpp:1270
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " %1 səhifəlik sənəd yükləndi"
 msgstr[1] " %1 səhifəlik sənəd yükləndi"
 
-#: part/pageview.cpp:2511
+#: part/pageview.cpp:2516
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Cədvəlin tərkiblərini Mübadilə buferinə kopyalamaq"
 
-#: part/pageview.cpp:2830
+#: part/pageview.cpp:2835
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Mətn ( %1 simvol)"
 msgstr[1] "Mətn ( %1 simvol)"
 
-#: part/pageview.cpp:2831 part/pageview.cpp:2849
+#: part/pageview.cpp:2836 part/pageview.cpp:2854
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Mübadilə buferinə kopyalamaq"
 
-#: part/pageview.cpp:2840 part/pageview.cpp:3032
+#: part/pageview.cpp:2845 part/pageview.cpp:3037
 #, kde-format
 msgid "Speak Text"
 msgstr "Mətni səsləndirmək"
 
-#: part/pageview.cpp:2848
+#: part/pageview.cpp:2853
 #, fuzzy, kde-format
 #| msgid "Image (%1 by %2 pixels)"
 msgid "Image (%1 × %2 pixels)"
 msgstr "Şəkil (%1 x %2 piksel)"
 
-#: part/pageview.cpp:2850
+#: part/pageview.cpp:2855
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
 msgstr "Faylda saxlamaq..."
 
-#: part/pageview.cpp:2870
+#: part/pageview.cpp:2875
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] copied to clipboard."
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Şəkil [%1x%2] mübadilə buferinə kopyalandı."
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Save file"
 msgstr "Faylı saxlayın"
 
-#: part/pageview.cpp:2873
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Şəkillər (*.png *.jpeg)"
 
-#: part/pageview.cpp:2875
+#: part/pageview.cpp:2880
 #, kde-format
 msgid "File not saved."
 msgstr "Fayl saxlanılmadı."
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2891
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] saved to %3 file."
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Şəkil [%1x%2] %3 faylında saxlanıldı."
 
-#: part/pageview.cpp:3028
+#: part/pageview.cpp:3033
 #, kde-format
 msgid "Copy Text"
 msgstr "Mətni  Kopyalamaq"
 
-#: part/pageview.cpp:3048
+#: part/pageview.cpp:3053
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1-ə(a) keçmək'"
 
-#: part/pageview.cpp:4055 part/part.cpp:3160
+#: part/pageview.cpp:4060 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "Eninə Sığışdır"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Fit Page"
 msgstr "Səhifəni Tam Doldur"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4060
 #, kde-format
 msgid "Auto Fit"
 msgstr "Avtomatik doldurma"
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4083
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3771,67 +3785,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4366
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "\"%1\" ifadəsini bununla axtar"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4380
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Veb Qısaltmalarını Tənzimləmək..."
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4406
 #, kde-format
 msgid "Follow This Link"
 msgstr "Bu keçidi izləmək"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4409
 #, kde-format
 msgid "Play this Sound"
 msgstr "Bu səsi oxutmaq"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Stop Sound"
 msgstr "Səsi dayandırmaq"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4417
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Keçid ünvanını kopyalamaq"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4438
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Bu sənəddə '%1' axtarmaq"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4970
 #, kde-format
 msgid "Welcome"
 msgstr "Xoş Gəldiniz"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5092
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Miqyaslanacaq sahəni seçmək. Sağ kliklə böyüdün."
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5105
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Lupa ilə baxmaq üçün vurun."
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5120
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Kpyalamaq üçün mətnin/qrafiklərin ətrafını kvadrata alın."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5134
 #, kde-format
 msgid "Select text"
 msgstr "Mətni seçmək"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5148
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3840,7 +3854,7 @@ msgstr ""
 "Cədvəlin ətrafını kvadrata alın və, bölmək üçün kənarlarına vurun, silmək "
 "üçün Esc vurun."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5160
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3849,7 +3863,7 @@ msgstr ""
 "Bütün imza sertifikatlarınız ya hələlik qüvvədə deyil və ya etibarlılıq "
 "tarixi bitmişdir."
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5163
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3859,22 +3873,22 @@ msgstr ""
 "Mövcud İmzalama sertifikatları yoxdur.<br/> Daha çox məlumat üçün təlimatda "
 "<a href=\"%1\">Elektron imza əlavə etmək</a> bölməsinə baxın."
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5187
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Saxlanılmamış dəyişiklikləriniz var. İmzalamadan öncə sənədi saxlayın."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5210
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Düzbucaqlı çəkərək imzalama sahəsi əlavə edin"
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5354
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"
 
-#: part/pageview.cpp:5506 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

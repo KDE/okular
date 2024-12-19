@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2021-08-21 17:02+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -21,71 +21,71 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "पुस्तचिन्ह"
 
-#: ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerPage.qml:76
 msgid "Validity"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:136
-msgid "Export..."
+#: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
+msgid "Export…"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
 msgstr ""
 
-#: ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
 msgstr ""
 
@@ -129,62 +129,62 @@ msgstr "विषयसूची तालिका"
 msgid "Signatures"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesPage.qml:96
 #, fuzzy
 #| msgid "No document open"
 msgid "Document Version"
 msgstr "कोई दस्तावेज़ खुला नहीं"
 
-#: ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:115
-msgid "Save Signed Version..."
+#: ui/SignaturePropertiesPage.qml:108
+msgid "Save Signed Version…"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:129
-msgid "View Certificate..."
+#: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
+msgid "View Certificate…"
 msgstr ""
 
-#: ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
 msgstr ""
 

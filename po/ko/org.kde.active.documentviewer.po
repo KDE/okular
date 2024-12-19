@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-11 00:39+0000\n"
+"POT-Creation-Date: 2024-12-19 00:39+0000\n"
 "PO-Revision-Date: 2022-08-09 13:27+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -21,71 +21,73 @@ msgstr ""
 msgid "Bookmarks"
 msgstr "책갈피"
 
-#: ui/CertificateViewerDialog.qml:22
+#: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
 msgstr "인증서 뷰어"
 
-#: ui/CertificateViewerDialog.qml:33
+#: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
 msgstr "발급자"
 
-#: ui/CertificateViewerDialog.qml:38 ui/CertificateViewerDialog.qml:66
+#: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
 msgstr "일반 이름"
 
-#: ui/CertificateViewerDialog.qml:44 ui/CertificateViewerDialog.qml:72
+#: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
 msgstr "이메일"
 
-#: ui/CertificateViewerDialog.qml:50 ui/CertificateViewerDialog.qml:78
+#: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
 msgstr "조직:"
 
-#: ui/CertificateViewerDialog.qml:61
+#: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
 msgstr "발급 대상:"
 
-#: ui/CertificateViewerDialog.qml:89
+#: ui/CertificateViewerPage.qml:76
 msgid "Validity"
 msgstr "유효성"
 
-#: ui/CertificateViewerDialog.qml:94
+#: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
 msgstr "발급 시간:"
 
-#: ui/CertificateViewerDialog.qml:100
+#: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
 msgstr "만료 시간:"
 
-#: ui/CertificateViewerDialog.qml:111
+#: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
 msgstr "지문"
 
-#: ui/CertificateViewerDialog.qml:116
+#: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
 msgstr "SHA-1 지문:"
 
-#: ui/CertificateViewerDialog.qml:122
+#: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 지문:"
 
-#: ui/CertificateViewerDialog.qml:136
-msgid "Export..."
+#: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
+#, fuzzy
+#| msgid "Export..."
+msgid "Export…"
 msgstr "내보내기..."
 
-#: ui/CertificateViewerDialog.qml:142 ui/SignaturePropertiesDialog.qml:149
+#: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
 msgstr "닫기"
 
-#: ui/CertificateViewerDialog.qml:150
+#: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
 msgstr "인증서 파일 (*.cer)"
 
-#: ui/CertificateViewerDialog.qml:165 ui/SignaturePropertiesDialog.qml:169
+#: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
 msgstr "오류"
 
-#: ui/CertificateViewerDialog.qml:167
+#: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
 msgstr "인증서를 내보낼 수 없습니다."
 
@@ -129,60 +131,64 @@ msgstr "목차"
 msgid "Signatures"
 msgstr "서명"
 
-#: ui/SignaturePropertiesDialog.qml:31
+#: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
 msgstr "인증서 속성"
 
-#: ui/SignaturePropertiesDialog.qml:45
+#: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
 msgstr "유효 상태"
 
-#: ui/SignaturePropertiesDialog.qml:51
+#: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
 msgstr "인증서 유효성:"
 
-#: ui/SignaturePropertiesDialog.qml:57
+#: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
 msgstr "문서 수정:"
 
-#: ui/SignaturePropertiesDialog.qml:64
+#: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
 msgstr "추가 정보"
 
-#: ui/SignaturePropertiesDialog.qml:73
+#: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
 msgstr "서명한 사람:"
 
-#: ui/SignaturePropertiesDialog.qml:79
+#: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
 msgstr "서명 시간:"
 
-#: ui/SignaturePropertiesDialog.qml:85
+#: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
 msgstr "이유:"
 
-#: ui/SignaturePropertiesDialog.qml:92
+#: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
 msgstr "위치:"
 
-#: ui/SignaturePropertiesDialog.qml:101
+#: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
 msgstr "문서 버전"
 
-#: ui/SignaturePropertiesDialog.qml:111
+#: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "문서 리비전 %2 중 %1"
 
-#: ui/SignaturePropertiesDialog.qml:115
-msgid "Save Signed Version..."
+#: ui/SignaturePropertiesPage.qml:108
+#, fuzzy
+#| msgid "Save Signed Version..."
+msgid "Save Signed Version…"
 msgstr "서명된 버전 저장..."
 
-#: ui/SignaturePropertiesDialog.qml:129
-msgid "View Certificate..."
+#: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
+#, fuzzy
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "인증서 보기..."
 
-#: ui/SignaturePropertiesDialog.qml:171
+#: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
 msgstr "서명을 저장할 수 없습니다."
 

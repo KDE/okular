@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-11-09 15:59+0100\n"
+"PO-Revision-Date: 2024-12-19 21:45+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2831,12 +2831,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Solapamento de páxina arriba/abaixo:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2866,7 +2864,7 @@ msgstr "Axuste automático"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Personalizada"
 
 #: part/dlggeneral.cpp:216
 #, kde-format

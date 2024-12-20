@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the okular package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-19 22:06+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -70,10 +72,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 अङ्गुलिचिह्न : १."
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "निर्यात..."
+msgstr "निर्यात…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
@@ -177,16 +177,12 @@ msgid "Document Revision %1 of %2"
 msgstr "%2 इत्यस्य %1 दस्तावेजपुनरीक्षणम्"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "हस्ताक्षरितं संस्करणं रक्षतु..."
+msgstr "हस्ताक्षरितं संस्करणं रक्षतु…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "प्रमाणपत्रं पश्यन्तु..."
+msgstr "प्रमाणपत्रं पश्यन्तु…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

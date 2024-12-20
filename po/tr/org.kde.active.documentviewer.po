@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-06-27 01:43+0300\n"
+"PO-Revision-Date: 2024-12-19 16:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 25.03.70\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -33,7 +33,7 @@ msgstr "Veren"
 
 #: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
-msgstr "Ortak Ad:"
+msgstr "Ortak ad:"
 
 #: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
@@ -53,11 +53,11 @@ msgstr "Geçerlilik"
 
 #: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
-msgstr "Verilme Tarihi:"
+msgstr "Verilme tarihi:"
 
 #: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
-msgstr "Süre Dolum Tarihi:"
+msgstr "Süre dolum tarihi:"
 
 #: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
@@ -72,10 +72,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 parmak izi:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "Dışa Aktar..."
+msgstr "Dışa Aktar…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
@@ -143,11 +141,11 @@ msgstr "Geçerlilik Durumu"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr "İmza Geçerliliği:"
+msgstr "İmza geçerliliği:"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr "Belge Değiştirmeleri:"
+msgstr "Belge değişiklikleri:"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
@@ -159,11 +157,11 @@ msgstr "İmzalayan:"
 
 #: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
-msgstr "İmza Zamanı:"
+msgstr "İmza zamanı:"
 
 #: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
-msgstr "Neden:"
+msgstr "Gerekçe:"
 
 #: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
@@ -179,16 +177,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Belge Sürümü %1/%2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "İmzalı Sürümü Kaydet..."
+msgstr "İmzalı Sürümü Kaydet…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "Sertifikayı Görüntüle..."
+msgstr "Sertifikayı Görüntüle…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

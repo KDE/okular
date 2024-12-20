@@ -4,21 +4,21 @@
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2012.
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019.
-# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2023.
+# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2023-04-23 18:39+0900\n"
+"PO-Revision-Date: 2024-12-19 17:34+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
-"Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -73,8 +73,6 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 指紋："
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
 msgstr "匯出…"
 
@@ -180,14 +178,10 @@ msgid "Document Revision %1 of %2"
 msgstr "文件修訂版 %1，共 %2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
 msgstr "儲存已簽名的版本…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
 msgstr "檢視憑證…"
 

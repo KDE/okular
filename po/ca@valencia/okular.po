@@ -1,24 +1,24 @@
 # Translation of okular.po to Catalan (Valencian)
 # Copyright (C) 2003-2024 This_file_is_part_of_KDE
 #
-# SPDX-FileCopyrightText: 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-10-27 14:31+0100\n"
+"PO-Revision-Date: 2024-12-19 09:40+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2830,12 +2830,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Superposició «Re Pàg»/«Av Pàg»:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2865,7 +2863,7 @@ msgstr "Encaixat automàtic"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Personalitzat"
 
 #: part/dlggeneral.cpp:216
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-04-08 04:34+0200\n"
+"PO-Revision-Date: 2024-12-19 04:54+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -71,10 +71,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 თითის ანაბეჭდი:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "გატანა..."
+msgstr "გატანა…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
@@ -178,16 +176,12 @@ msgid "Document Revision %1 of %2"
 msgstr "დოკუმენტის გადასინჯვა %1 %2-დან"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "ხელმოწერილი ვერსიის შენახვა..."
+msgstr "ხელმოწერილი ვერსიის შენახვა…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "სერტიფიკატის ნახვა..."
+msgstr "სერტიფიკატის ნახვა…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

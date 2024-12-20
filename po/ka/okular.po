@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-10-25 03:44+0200\n"
+"PO-Revision-Date: 2024-12-19 04:53+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2816,12 +2816,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Page Up/Down გადაფარვა:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2851,7 +2849,7 @@ msgstr "ავტომატური ჩატევა"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "მომხმარებლის"
 
 #: part/dlggeneral.cpp:216
 #, kde-format

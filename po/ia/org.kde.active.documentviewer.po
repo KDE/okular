@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Giovanni Sora <g.sora@tiscali.it>, 2013, 2017, 2021, 2022.
+# SPDX-FileCopyrightText: 2013, 2017, 2021, 2022, 2024 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2022-12-20 17:19+0100\n"
+"PO-Revision-Date: 2024-12-19 10:36+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -70,8 +70,6 @@ msgid "SHA-256 Fingerprint:"
 msgstr "Impression digital SHA-256:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
 msgstr "Exporta..."
 
@@ -177,14 +175,10 @@ msgid "Document Revision %1 of %2"
 msgstr "Revision de documento %1 de %2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "Salveuarda version signate ..."
+msgstr "Salveguarda version signate ..."
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
 msgstr "Vide certificato..."
 

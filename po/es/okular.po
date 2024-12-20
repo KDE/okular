@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 02:29+0000\n"
-"PO-Revision-Date: 2024-10-25 17:53+0200\n"
+"PO-Revision-Date: 2024-12-20 03:01+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1168,7 +1168,7 @@ msgstr "Anchura %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
@@ -1541,7 +1541,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:320
 #, kde-format
@@ -1742,7 +1742,7 @@ msgstr "&Color:"
 #, kde-format
 msgctxt "Suffix for the opacity level, eg '80%'"
 msgid "%"
-msgstr "%"
+msgstr " %"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
 #, kde-format
@@ -2809,7 +2809,7 @@ msgstr "Columnas del resumen:"
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
-msgstr "%"
+msgstr " %"
 
 #: part/dlggeneral.cpp:198
 #, kde-format
@@ -2831,7 +2831,7 @@ msgstr "Solapamiento de RePág/AvPág:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:205
 #, kde-format
@@ -2969,7 +2969,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Carga y mantiene todo en memoria. Precarga todas las páginas (usará como "
-"máximo el 50% de la memoria total o de la memoria libre, la que sea mayor)."
+"máximo el 50 % de la memoria total o de la memoria libre, la que sea mayor)."
 
 #: part/dlgpresentation.cpp:37
 #, kde-format
@@ -3493,7 +3493,7 @@ msgstr "Ampliación"
 #: part/pageview.cpp:507
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Ampliar al 100%"
+msgstr "Ampliar al 100 %"
 
 #: part/pageview.cpp:518
 #, kde-format
@@ -3784,7 +3784,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4361
 #, kde-format

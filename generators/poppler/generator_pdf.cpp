@@ -362,7 +362,7 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
     return qMakePair(movie, pdfEmbeddedFile);
 }
 
-static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkAction::ActionType pat)
+static std::optional<Okular::DocumentAction::DocumentActionType> popplerToOkular(Poppler::LinkAction::ActionType pat)
 {
     switch (pat) {
     case Poppler::LinkAction::PageFirst:
@@ -398,10 +398,7 @@ static Okular::DocumentAction::DocumentActionType popplerToOkular(Poppler::LinkA
     }
 
     qWarning() << "Unsupported Poppler::LinkAction::ActionType" << pat;
-    // TODO When we can use C++17 make this function return an optional
-    //      for now it's not super important since at the time of writing
-    //      okular DocumentAction supports all that poppler ActionType supports
-    return Okular::DocumentAction::PageFirst;
+    return {};
 }
 
 // helper for using std::visit to get a dependent false for static_asserts
@@ -473,7 +470,10 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
 
     case Poppler::Link::Action: {
         auto popplerLinkAction = static_cast<const Poppler::LinkAction *>(rawPopplerLink);
-        link = new Okular::DocumentAction(popplerToOkular(popplerLinkAction->actionType()));
+        const auto okularLinkActionType = popplerToOkular(popplerLinkAction->actionType());
+        if (okularLinkActionType) {
+            link = new Okular::DocumentAction(okularLinkActionType.value());
+        }
         break;
     }
 

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-10-25 22:05+0300\n"
+"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"PO-Revision-Date: 2024-12-19 22:13+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2810,12 +2810,10 @@ msgid "Page Up/Down overlap:"
 msgstr "חפיפת Page Up/Down:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2845,7 +2843,7 @@ msgstr "התאמה אוטומטית"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "מותאם אישית"
 
 #: part/dlggeneral.cpp:216
 #, kde-format
@@ -3888,7 +3886,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "נא לצייר מרובע סביב האזור בעמוד שאמור להישאר גלוי"
 
 #: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:474
+#: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4564,7 +4562,7 @@ msgid "Remove this Bookmark"
 msgstr "הסרת הסימנייה"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:442
+#: part/signaturepartutils.cpp:451
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5418,43 +5416,43 @@ msgstr "צמצום כל הרכיבים"
 msgid "Properties"
 msgstr "מאפיינים"
 
-#: part/signaturepartutils.cpp:360
+#: part/signaturepartutils.cpp:369
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "תמונות (%1)"
 
-#: part/signaturepartutils.cpp:361
+#: part/signaturepartutils.cpp:370
 #, kde-format
 msgid "Select background image"
 msgstr "בחירת תמונת רקע"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Forget image"
 msgstr "לשכוח תמונה"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:376
 #, kde-format
 msgid "Forget all images"
 msgstr "לשכוח את כל התמונות"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:419
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "נא למלא סיסמה (אם יש) לשחרור האישור: %1"
 
-#: part/signaturepartutils.cpp:412
+#: part/signaturepartutils.cpp:421
 #, kde-format
 msgid "Enter certificate password"
 msgstr "מילוי סיסמת האישור"
 
-#: part/signaturepartutils.cpp:425
+#: part/signaturepartutils.cpp:434
 #, kde-format
 msgid "Enter document password"
 msgstr "נא למלא סיסמה למסמך"
 
-#: part/signaturepartutils.cpp:448
+#: part/signaturepartutils.cpp:457
 #, kde-format
 msgid "Save Signed File As"
 msgstr "לשמור את הקובץ החתום בשם"

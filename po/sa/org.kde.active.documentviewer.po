@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-12-19 22:06+0530\n"
+"PO-Revision-Date: 2024-12-20 21:53+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -33,11 +33,11 @@ msgstr "Issued By"
 
 #: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
-msgstr "सामान्य नाम : १."
+msgstr "सामान्य नाम :"
 
 #: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
-msgstr "ईमेलः : १."
+msgstr "ईमेलः :"
 
 #: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
@@ -65,11 +65,11 @@ msgstr "अङ्गुलिचिह्नानि"
 
 #: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
-msgstr "SHA-1 अङ्गुलिचिह्नः : १."
+msgstr "SHA-1 अङ्गुलिचिह्नः :"
 
 #: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
-msgstr "SHA-256 अङ्गुलिचिह्न : १."
+msgstr "SHA-256 अङ्गुलिचिह्न :"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
 msgid "Export…"
@@ -141,11 +141,11 @@ msgstr "वैधता स्थिति"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr "हस्ताक्षर वैधता : १."
+msgstr "हस्ताक्षर वैधता :"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr "दस्तावेज परिवर्तनम् : १."
+msgstr "दस्तावेज परिवर्तनम् :"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
@@ -153,11 +153,11 @@ msgstr "अतिरिक्त सूचना"
 
 #: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
-msgstr "हस्ताक्षरितम् : १."
+msgstr "हस्ताक्षरितम् :"
 
 #: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
-msgstr "हस्ताक्षरसमयः : १."
+msgstr "हस्ताक्षरसमयः :"
 
 #: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"

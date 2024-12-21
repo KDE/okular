@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-10-25 17:53+0200\n"
+"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"PO-Revision-Date: 2024-12-20 03:01+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1168,7 +1168,7 @@ msgstr "Anchura %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
@@ -1541,7 +1541,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:320
 #, kde-format
@@ -1742,7 +1742,7 @@ msgstr "&Color:"
 #, kde-format
 msgctxt "Suffix for the opacity level, eg '80%'"
 msgid "%"
-msgstr "%"
+msgstr " %"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
 #, kde-format
@@ -2809,7 +2809,7 @@ msgstr "Columnas del resumen:"
 #, kde-format
 msgctxt "Page Up/Down overlap, spinbox suffix"
 msgid "%"
-msgstr "%"
+msgstr " %"
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2828,18 +2828,16 @@ msgid "Page Up/Down overlap:"
 msgstr "Solapamiento de RePág/AvPág:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:212
 #, kde-format
@@ -2863,7 +2861,7 @@ msgstr "Ajuste automático"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Personalizado"
 
 #: part/dlggeneral.cpp:216
 #, kde-format
@@ -2983,7 +2981,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Carga y mantiene todo en memoria. Precarga todas las páginas (usará como "
-"máximo el 50% de la memoria total o de la memoria libre, la que sea mayor)."
+"máximo el 50 % de la memoria total o de la memoria libre, la que sea mayor)."
 
 #: part/dlgpresentation.cpp:37
 #, kde-format
@@ -3507,7 +3505,7 @@ msgstr "Ampliación"
 #: part/pageview.cpp:512
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Ampliar al 100%"
+msgstr "Ampliar al 100 %"
 
 #: part/pageview.cpp:523
 #, kde-format
@@ -3798,7 +3796,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4366
 #, kde-format
@@ -3906,7 +3904,7 @@ msgstr ""
 "visible"
 
 #: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:474
+#: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4597,7 +4595,7 @@ msgid "Remove this Bookmark"
 msgstr "Eliminar este marcador"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:442
+#: part/signaturepartutils.cpp:451
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5468,44 +5466,44 @@ msgstr "Contraer todos los elementos"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: part/signaturepartutils.cpp:360
+#: part/signaturepartutils.cpp:369
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imágenes (%1)"
 
-#: part/signaturepartutils.cpp:361
+#: part/signaturepartutils.cpp:370
 #, kde-format
 msgid "Select background image"
 msgstr "Seleccione la imagen de fondo"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Forget image"
 msgstr "Olvidar la imagen"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:376
 #, kde-format
 msgid "Forget all images"
 msgstr "Olvidar todas las imágenes"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:419
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduzca la contraseña (si existe) para desbloquear el certificado: %1"
 
-#: part/signaturepartutils.cpp:412
+#: part/signaturepartutils.cpp:421
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduzca la contraseña del certificado"
 
-#: part/signaturepartutils.cpp:425
+#: part/signaturepartutils.cpp:434
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduzca la contraseña del documento"
 
-#: part/signaturepartutils.cpp:448
+#: part/signaturepartutils.cpp:457
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Guardar archivo firmado como"

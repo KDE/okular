@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-12-19 22:05+0530\n"
+"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -286,7 +286,7 @@ msgstr "%1 × %2 in (%3)"
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 × %2 मि.मी.(%3) २."
+msgstr "%1 × %2 मि.मी.(%3)"
 
 #: core/document.cpp:1718
 #, kde-format
@@ -568,7 +568,7 @@ msgstr "पूर्णपृष्ठं प्रति उपयुक्त�
 #: core/printoptionswidget.cpp:25
 #, kde-format
 msgid "Scale mode:"
-msgstr "स्केल मोडः : १."
+msgstr "स्केल मोडः :"
 
 #: core/script/js_app.cpp:206
 #, kde-format
@@ -640,7 +640,7 @@ msgstr "In%1"
 #: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "%1 (%2 bits)"
-msgstr "%1 (%2 बिट्) २."
+msgstr "%1 (%2 बिट्)"
 
 #: gui/certificatemodel.cpp:146
 #, kde-format
@@ -1157,7 +1157,7 @@ msgstr "चौड़ाई %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
@@ -1521,7 +1521,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: part/annotationmodel.cpp:320
 #, kde-format
@@ -1599,12 +1599,12 @@ msgstr "&लेखकः:"
 #: part/annotationpropertiesdialog.cpp:69
 #, kde-format
 msgid "Created:"
-msgstr "निर्मितः : १."
+msgstr "निर्मितः :"
 
 #: part/annotationpropertiesdialog.cpp:74
 #, kde-format
 msgid "Modified:"
-msgstr "परिवर्तितः : १."
+msgstr "परिवर्तितः :"
 
 #: part/annotationpropertiesdialog.cpp:108
 #, kde-format
@@ -1727,12 +1727,12 @@ msgstr "% ."
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
 #, kde-format
 msgid "&Opacity:"
-msgstr "&अस्पष्टता : १."
+msgstr "&अस्पष्टता :"
 
 #: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Icon:"
-msgstr "चिह्नम् : १."
+msgstr "चिह्नम् :"
 
 #: part/annotationwidgets.cpp:366
 #, kde-format
@@ -1772,12 +1772,12 @@ msgstr "अनुच्छेदः"
 #: part/annotationwidgets.cpp:380
 #, kde-format
 msgid "Font:"
-msgstr "फन्ट् : १."
+msgstr "फन्ट् :"
 
 #: part/annotationwidgets.cpp:389
 #, kde-format
 msgid "Text &color:"
-msgstr "पाठ &वर्णः १."
+msgstr "पाठ &वर्णः"
 
 #: part/annotationwidgets.cpp:396
 #, kde-format
@@ -1802,7 +1802,7 @@ msgstr "दक्षिणः"
 #: part/annotationwidgets.cpp:407
 #, kde-format
 msgid "Border &width:"
-msgstr "सीमा &विस्तारः : १."
+msgstr "सीमा &विस्तारः :"
 
 #: part/annotationwidgets.cpp:416
 #, kde-format
@@ -1892,7 +1892,7 @@ msgstr "कुत्र"
 #: part/annotationwidgets.cpp:453
 #, kde-format
 msgid "Stamp symbol:"
-msgstr "डाकटिकटचिह्नम् : १."
+msgstr "डाकटिकटचिह्नम् :"
 
 #: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
 #: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
@@ -1904,12 +1904,12 @@ msgstr "&विस्तार:"
 #: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line start:"
-msgstr "रेखाप्रारम्भः : १."
+msgstr "रेखाप्रारम्भः :"
 
 #: part/annotationwidgets.cpp:508
 #, kde-format
 msgid "Line end:"
-msgstr "रेखासमाप्तिः : १."
+msgstr "रेखासमाप्तिः :"
 
 #: part/annotationwidgets.cpp:511
 #, kde-format
@@ -1964,12 +1964,12 @@ msgstr "स्लैश"
 #: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line length:"
-msgstr "लीडर रेखा लम्बाई : १."
+msgstr "लीडर रेखा लम्बाई :"
 
 #: part/annotationwidgets.cpp:535
 #, kde-format
 msgid "Leader line extensions length:"
-msgstr "नेता रेखाविस्तारदीर्घता : १."
+msgstr "नेता रेखाविस्तारदीर्घता :"
 
 #: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
 #, kde-format
@@ -1979,7 +1979,7 @@ msgstr "सक्षमम्"
 #: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
 #, kde-format
 msgid "Shape fill:"
-msgstr "आकारपूरणम् : १."
+msgstr "आकारपूरणम् :"
 
 #: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
 #, kde-format
@@ -2004,7 +2004,7 @@ msgstr "दीर्घवृत्तम्"
 #: part/annotationwidgets.cpp:747
 #, kde-format
 msgid "File attachment symbol:"
-msgstr "सञ्चिकासंलग्नकचिह्नम् : १."
+msgstr "सञ्चिकासंलग्नकचिह्नम् :"
 
 #: part/annotationwidgets.cpp:750
 #, kde-format
@@ -2060,7 +2060,7 @@ msgstr "वर्णनम्‌:"
 #: part/annotationwidgets.cpp:845
 #, kde-format
 msgid "Caret symbol:"
-msgstr "केरेट् प्रतीकः : १."
+msgstr "केरेट् प्रतीकः :"
 
 #: part/annotationwidgets.cpp:847
 #, kde-format
@@ -2205,7 +2205,7 @@ msgstr "निर्गतम् By"
 #: part/certificateviewer.cpp:61 part/certificateviewer.cpp:68
 #, kde-format
 msgid "Common Name(CN)"
-msgstr "सामान्य नाम(CN) ९."
+msgstr "सामान्य नाम(CN)"
 
 #: part/certificateviewer.cpp:62 part/certificateviewer.cpp:69
 #, kde-format
@@ -2215,7 +2215,7 @@ msgstr "ईमेल"
 #: part/certificateviewer.cpp:63 part/certificateviewer.cpp:70
 #, kde-format
 msgid "Organization(O)"
-msgstr "संगठन(ओ) ९."
+msgstr "संगठन(ओ)"
 
 #: part/certificateviewer.cpp:65
 #, kde-format
@@ -2250,7 +2250,7 @@ msgstr "वर्णन"
 #: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
-msgstr "प्रमाणपत्रदत्तांशः : १."
+msgstr "प्रमाणपत्रदत्तांशः :"
 
 #: part/certificateviewer.cpp:159
 #, kde-format
@@ -2325,7 +2325,7 @@ msgstr "उलटा L&a (sRGB रेखीय) 1.1."
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr "उल्टा लुमा (&सममित) २."
+msgstr "उल्टा लुमा (&सममित)"
 
 #: part/colormodemenu.cpp:58
 #, kde-format
@@ -2475,25 +2475,25 @@ msgstr "शिफ्ट ह्यू नकारात्मक"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Color mode:"
-msgstr "वर्णविधिः : १."
+msgstr "वर्णविधिः :"
 
 #: part/dlgaccessibility.cpp:87
 #, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Paper color:"
-msgstr "कागदस्य वर्णः : १."
+msgstr "कागदस्य वर्णः :"
 
 #: part/dlgaccessibility.cpp:99
 #, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Dark color:"
-msgstr "कृष्णवर्णः : १."
+msgstr "कृष्णवर्णः :"
 
 #: part/dlgaccessibility.cpp:104
 #, kde-format
 msgctxt "@label:chooser Config dialog, accessibility page"
 msgid "Light color:"
-msgstr "हल्के वर्णः : १."
+msgstr "हल्के वर्णः :"
 
 #: part/dlgaccessibility.cpp:119
 #, kde-format
@@ -2511,13 +2511,13 @@ msgstr "विप्रकर्ष:"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr "पाठ-वाक्-इञ्जिनम् : १."
+msgstr "पाठ-वाक्-इञ्जिनम् :"
 
 #: part/dlgaccessibility.cpp:165
 #, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "पाठ-वाक्-स्वरः : १."
+msgstr "पाठ-वाक्-स्वरः :"
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -2535,7 +2535,7 @@ msgstr "त्वरित एनोटेशन टूलबार"
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "एनोटेशन टूल्बार : १."
+msgstr "एनोटेशन टूल्बार :"
 
 #: part/dlgannotations.cpp:34
 #, kde-format
@@ -2623,7 +2623,7 @@ msgstr "TeXiFy विचार"
 #, kde-format
 msgctxt "@label:listbox Config dialog, editor page"
 msgid "Editor:"
-msgstr "सम्पादकः : १."
+msgstr "सम्पादकः :"
 
 #: part/dlgeditor.cpp:52
 #, kde-format
@@ -2720,7 +2720,7 @@ msgstr "कस्टम् पृष्ठभूमिवर्णस्य उ�
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
-msgstr "कार्यक्रमस्य विशेषताः : १."
+msgstr "कार्यक्रमस्य विशेषताः :"
 
 #: part/dlggeneral.cpp:121
 #, kde-format
@@ -2774,7 +2774,7 @@ msgstr "Browse Tool इत्यस्य उपयोगं कुर्वन�
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
-msgstr "अवलोकनस्तम्भाः : १."
+msgstr "अवलोकनस्तम्भाः :"
 
 #: part/dlggeneral.cpp:199
 #, kde-format
@@ -2808,7 +2808,7 @@ msgstr "%v%"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "१००% २."
+msgstr "१००%"
 
 #: part/dlggeneral.cpp:212
 #, kde-format
@@ -2848,7 +2848,7 @@ msgstr ""
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "पूर्वनिर्धारितं जूमः : १."
+msgstr "पूर्वनिर्धारितं जूमः :"
 
 #: part/dlgperformance.cpp:26
 #, kde-format
@@ -2860,7 +2860,7 @@ msgstr "पारदर्शिता प्रभावान् सक्ष�
 #, kde-format
 msgctxt "@label Config dialog, performance page"
 msgid "CPU usage:"
-msgstr "CPU उपयोगः : १."
+msgstr "CPU उपयोगः :"
 
 #: part/dlgperformance.cpp:35
 #, kde-format
@@ -2872,7 +2872,7 @@ msgstr "न्यूनम्‌"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Normal (default)"
-msgstr "सामान्यम् (पूर्वनिर्धारितम्) २."
+msgstr "सामान्यम् (पूर्वनिर्धारितम्)"
 
 #: part/dlgperformance.cpp:37
 #, kde-format
@@ -2890,7 +2890,7 @@ msgstr "लोलुप"
 #, kde-format
 msgctxt "@label:listbox Config dialog, performance page, memory usage"
 msgid "Memory usage:"
-msgstr "स्मृतिप्रयोगः : १."
+msgstr "स्मृतिप्रयोगः :"
 
 #: part/dlgperformance.cpp:54
 #, kde-format
@@ -2902,7 +2902,7 @@ msgstr "पाठं प्रतिनाम सक्षमं कुर्व
 #, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "रेण्डरिंग् विकल्पाः : १."
+msgstr "रेण्डरिंग् विकल्पाः :"
 
 #: part/dlgperformance.cpp:59
 #, kde-format
@@ -2970,7 +2970,7 @@ msgstr[1] " सेकण्ड्"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr "स्वयमेव अग्रिमम् : १."
+msgstr "स्वयमेव अग्रिमम् :"
 
 #: part/dlgpresentation.cpp:53
 #, kde-format
@@ -3000,13 +3000,13 @@ msgstr "अक्षमित"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, tap navigation"
 msgid "Touch navigation:"
-msgstr "स्पर्शमार्गदर्शनम् : १."
+msgstr "स्पर्शमार्गदर्शनम् :"
 
 #: part/dlgpresentation.cpp:72
 #, kde-format
 msgctxt "@label:chooser Config dialog, presentation page"
 msgid "Background color:"
-msgstr "पृष्ठभूमिवर्णः : १."
+msgstr "पृष्ठभूमिवर्णः :"
 
 #: part/dlgpresentation.cpp:76
 #, kde-format
@@ -3030,7 +3030,7 @@ msgstr "सदा निगूढम्"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, cursor visibility"
 msgid "Mouse cursor:"
-msgstr "मूषकस्य कर्सरः : १."
+msgstr "मूषकस्य कर्सरः :"
 
 #: part/dlgpresentation.cpp:84
 #, kde-format
@@ -3168,13 +3168,13 @@ msgstr "मार्जतु"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, transitions"
 msgid "Default transition:"
-msgstr "पूर्वनिर्धारितसंक्रमणम् : १."
+msgstr "पूर्वनिर्धारितसंक्रमणम् :"
 
 #: part/dlgpresentation.cpp:130
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, preferred screen"
 msgid "Preferred screen:"
-msgstr "प्राधान्यं पटलम् : १."
+msgstr "प्राधान्यं पटलम् :"
 
 #: part/dlgpresentation.cpp:137
 #, kde-format
@@ -3266,7 +3266,7 @@ msgstr "वर्ण:"
 #: part/editdrawingtooldialog.cpp:57
 #, kde-format
 msgid "&Pen Width:"
-msgstr "&पेन चौड़ाई : १."
+msgstr "&पेन चौड़ाई :"
 
 #: part/editdrawingtooldialog.cpp:63
 #, kde-format
@@ -3685,8 +3685,8 @@ msgstr "सारणीसामग्रीम् क्लिप्बोर�
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
-msgstr[0] "पाठ (१ वर्ण) २."
-msgstr[1] "पाठः (%1 वर्णाः) २."
+msgstr[0] "पाठ (१ वर्ण)"
+msgstr[1] "पाठः (%1 वर्णाः)"
 
 #: part/pageview.cpp:2836 part/pageview.cpp:2854
 #, kde-format
@@ -3765,7 +3765,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: part/pageview.cpp:4366
 #, kde-format
@@ -3870,7 +3870,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
 
 #: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:474
+#: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3885,7 +3885,7 @@ msgstr "नवीन पाठ टिप्पणी"
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "Text of the new note:"
-msgstr "नवीनटिप्पण्याः पाठः- १."
+msgstr "नवीनटिप्पण्याः पाठः-"
 
 #: part/pageviewannotator.cpp:363
 #, kde-format
@@ -3930,7 +3930,7 @@ msgstr "लेखक का नाम"
 #: part/pageviewannotator.cpp:1271
 #, kde-format
 msgid "Author name for the annotation:"
-msgstr "एनोटेशनस्य लेखकनाम : १."
+msgstr "एनोटेशनस्य लेखकनाम :"
 
 #: part/pageviewannotator.cpp:1332
 #, kde-format
@@ -4375,7 +4375,7 @@ msgstr "दस्तावेजं पठितुं कृपया गुप
 #: part/part.cpp:1489
 #, kde-format
 msgid "Incorrect password. Try again:"
-msgstr "अशुद्धगुप्तशब्दः। पुनः प्रयासं कुर्वन्तु : १."
+msgstr "अशुद्धगुप्तशब्दः। पुनः प्रयासं कुर्वन्तु :"
 
 #: part/part.cpp:1495
 #, kde-format
@@ -4552,11 +4552,11 @@ msgid "Remove this Bookmark"
 msgstr "एतत् Bookmark निष्कासयन्तु"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:442
+#: part/signaturepartutils.cpp:451
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
-msgstr "%1 (%2) २."
+msgstr "%1 (%2)"
 
 #: part/part.cpp:2593 part/revisionviewer.cpp:44
 #, kde-format
@@ -5084,12 +5084,12 @@ msgstr "%1 गुणाः"
 #, kde-format
 msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
 msgid "%1 (%2)"
-msgstr "%1 (%2) २."
+msgstr "%1 (%2)"
 
 #: part/propertiesdialog.cpp:117
 #, kde-format
 msgid "%1:"
-msgstr "%1: १."
+msgstr "%1:"
 
 #: part/propertiesdialog.cpp:124
 #, kde-format
@@ -5126,7 +5126,7 @@ msgstr "प्रकार 1C"
 #, kde-format
 msgctxt "OT means OpenType"
 msgid "Type 1C (OT)"
-msgstr "प्रकारः १ ग (OT) २."
+msgstr "प्रकारः १ ग (OT)"
 
 #: part/propertiesdialog.cpp:282
 #, kde-format
@@ -5142,7 +5142,7 @@ msgstr "TrueType इति"
 #, kde-format
 msgctxt "OT means OpenType"
 msgid "TrueType (OT)"
-msgstr "TrueType (OT) ९."
+msgstr "TrueType (OT)"
 
 #: part/propertiesdialog.cpp:291
 #, kde-format
@@ -5169,7 +5169,7 @@ msgstr "CID TrueType इति"
 #, kde-format
 msgctxt "OT means OpenType"
 msgid "CID TrueType (OT)"
-msgstr "CID TrueType (OT) ९."
+msgstr "CID TrueType (OT)"
 
 #: part/propertiesdialog.cpp:306
 #, kde-format
@@ -5200,7 +5200,7 @@ msgstr "अज्ञात"
 #: part/propertiesdialog.cpp:331
 #, kde-format
 msgid "Embedded (subset)"
-msgstr "एम्बेडेड् (उपसमूहः) २."
+msgstr "एम्बेडेड् (उपसमूहः)"
 
 #: part/propertiesdialog.cpp:334
 #, kde-format
@@ -5215,7 +5215,7 @@ msgstr "नहि"
 #: part/propertiesdialog.cpp:347
 #, kde-format
 msgid "Yes (subset)"
-msgstr "हाँ (उपसमूह) ९."
+msgstr "हाँ (उपसमूह)"
 
 #: part/propertiesdialog.cpp:350
 #, kde-format
@@ -5368,7 +5368,7 @@ msgstr "चिनोतु..."
 #: part/selectcertificatedialog.ui:107
 #, kde-format
 msgid "Recent backgrounds:"
-msgstr "अद्यतनपृष्ठभूमिः : १."
+msgstr "अद्यतनपृष्ठभूमिः :"
 
 #: part/side_reviews.cpp:66
 #, kde-format
@@ -5409,43 +5409,43 @@ msgstr "सर्वाणि तत्त्वानि संकुचयन�
 msgid "Properties"
 msgstr "गुणाः"
 
-#: part/signaturepartutils.cpp:360
+#: part/signaturepartutils.cpp:369
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "चित्राणि (%1) ."
 
-#: part/signaturepartutils.cpp:361
+#: part/signaturepartutils.cpp:370
 #, kde-format
 msgid "Select background image"
 msgstr "पृष्ठभूमिचित्रं चिनोतु"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Forget image"
 msgstr "बिम्बं विस्मरतु"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:376
 #, kde-format
 msgid "Forget all images"
 msgstr "सर्वाणि चित्राणि विस्मरन्तु"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:419
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "प्रमाणपत्रं अनलॉक् कर्तुं गुप्तशब्दं (यदि अस्ति) प्रविशतु: %1"
 
-#: part/signaturepartutils.cpp:412
+#: part/signaturepartutils.cpp:421
 #, kde-format
 msgid "Enter certificate password"
 msgstr "प्रमाणपत्रगुप्तशब्दं प्रविशतु"
 
-#: part/signaturepartutils.cpp:425
+#: part/signaturepartutils.cpp:434
 #, kde-format
 msgid "Enter document password"
 msgstr "दस्तावेजगुप्तशब्दं प्रविशतु"
 
-#: part/signaturepartutils.cpp:448
+#: part/signaturepartutils.cpp:457
 #, kde-format
 msgid "Save Signed File As"
 msgstr "हस्ताक्षरितसञ्चिकां यथा रक्षन्तु"
@@ -5466,12 +5466,12 @@ msgstr "वैधता स्थिति"
 #: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signature Validity:"
-msgstr "हस्ताक्षर वैधता : १."
+msgstr "हस्ताक्षर वैधता :"
 
 #: part/signaturepropertiesdialog.cpp:65
 #, kde-format
 msgid "Document Modifications:"
-msgstr "दस्तावेज परिवर्तनम् : १."
+msgstr "दस्तावेज परिवर्तनम् :"
 
 #: part/signaturepropertiesdialog.cpp:68
 #, kde-format
@@ -5481,12 +5481,12 @@ msgstr "अतिरिक्त सूचना"
 #: part/signaturepropertiesdialog.cpp:71
 #, kde-format
 msgid "Signed By:"
-msgstr "हस्ताक्षरितम् : १."
+msgstr "हस्ताक्षरितम् :"
 
 #: part/signaturepropertiesdialog.cpp:72
 #, kde-format
 msgid "Signing Time:"
-msgstr "हस्ताक्षरसमयः : १."
+msgstr "हस्ताक्षरसमयः :"
 
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format

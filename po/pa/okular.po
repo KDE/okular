@@ -10,16 +10,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-02-01 09:06-0600\n"
-"Last-Translator: A S Alam <aalam@punlinux.org>\n"
-"Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
+"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"PO-Revision-Date: 2024-12-19 22:37-0600\n"
+"Last-Translator: aalam <aalam@punlinux.org>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -279,20 +279,16 @@ msgid "Landscape %1"
 msgstr "ਲੈਂਡਸਕੇਪ %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 ਇੰ (%3)"
+msgstr "%1 × %2 ਇੰਚ (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 mm (%3)"
+msgstr "%1 x %2 ਮਿਮੀ (%3)"
 
 #: core/document.cpp:1718
 #, kde-format
@@ -2791,12 +2787,10 @@ msgid "Page Up/Down overlap:"
 msgstr "ਸਫ਼ੇ ਉੱਤੋ/ਹੇਠੋਂ ਓਵਰਲੈਪ:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2826,7 +2820,7 @@ msgstr "ਆਟੋ ਫਿੱਟ"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "ਕਸਟਮ"
 
 #: part/dlggeneral.cpp:216
 #, kde-format
@@ -3688,22 +3682,19 @@ msgid "Speak Text"
 msgstr "ਲਿਖਤ ਨੂੰ ਬੋਲੋ"
 
 #: part/pageview.cpp:2853
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "ਚਿੱਤਰ (%1 x %2 ਪਿਕਸਲ)"
+msgstr "ਚਿੱਤਰ (%1 × %2 ਪਿਕਸਲ)"
 
 #: part/pageview.cpp:2855
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "...ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ"
+msgstr "…ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ"
 
 #: part/pageview.cpp:2875
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "ਚਿੱਤਰ [%1x%2] ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਨਕਲ ਕੀਤਾ ਗਿਆ ਹੈ।"
+msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
 #: part/pageview.cpp:2878
 #, kde-format
@@ -3721,15 +3712,14 @@ msgid "File not saved."
 msgstr "ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਗਈ ਹੈ।"
 
 #: part/pageview.cpp:2891
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "ਚਿੱਤਰ [%1x%2] ਫਾਇਲ %3 ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
+msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਫਾਇਲ %3 ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
 
 #: part/pageview.cpp:3033
 #, kde-format
 msgid "Copy Text"
-msgstr "ਲਿਖਤ ਕਾਪੀ ਕਰੋ"
+msgstr "ਲਿਖਤ ਨੂੰ ਕਾਪੀ ਕਰੋ"
 
 #: part/pageview.cpp:3053
 #, kde-format
@@ -3859,7 +3849,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ਸਫ਼ੇ ਦੇ ਖੇਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਦਿਖਾਈ ਦਿੰਦਾ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਦੁਆਲੇ ਆਇਤ ਵਾਹੋ"
 
 #: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:474
+#: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3883,6 +3873,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"ਦਸਤਖ਼ਤ ਕੀਤੇ: %1\n"
+"\n"
+"ਤਾਰੀਖ: %2"
 
 #: part/pageviewannotator.cpp:448
 #, kde-kuit-format
@@ -4526,7 +4519,7 @@ msgid "Remove this Bookmark"
 msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਹਟਾਓ"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:442
+#: part/signaturepartutils.cpp:451
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5364,43 +5357,43 @@ msgstr "ਸਾਰੇ ਭਾਗ ਸਮੇਟੋ"
 msgid "Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
 
-#: part/signaturepartutils.cpp:360
+#: part/signaturepartutils.cpp:369
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "ਚਿੱਤਰ (%1)"
 
-#: part/signaturepartutils.cpp:361
+#: part/signaturepartutils.cpp:370
 #, kde-format
 msgid "Select background image"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਚਿੱਤਰ ਚੁਣੋ"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Forget image"
 msgstr "ਚਿੱਤਰ ਭੁੱਲ ਜਾਓ"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:376
 #, kde-format
 msgid "Forget all images"
 msgstr "ਸਾਰੇ ਚਿੱਤਰ ਭੁੱਲ ਜਾਓ"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:419
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "ਸਰਟੀਫਿਕੇਟ ਅਣ-ਲਾਕ ਕਰਨ ਲਈ ਪਾਸਵਰਡ (ਜੇ ਕੋਈ ਹੈ ਤਾਂ) ਦਿਓ: %1"
 
-#: part/signaturepartutils.cpp:412
+#: part/signaturepartutils.cpp:421
 #, kde-format
 msgid "Enter certificate password"
 msgstr "ਸਰਟੀਫਿਕੇਟ ਦਾ ਪਾਸਵਰਡ ਦਿਓ"
 
-#: part/signaturepartutils.cpp:425
+#: part/signaturepartutils.cpp:434
 #, kde-format
 msgid "Enter document password"
 msgstr "ਦਸਤਾਵੇਜ਼ ਦਾ ਪਾਸਵਰਡ ਦਿਓ"
 
-#: part/signaturepartutils.cpp:448
+#: part/signaturepartutils.cpp:457
 #, kde-format
 msgid "Save Signed File As"
 msgstr "ਦਸਤਖਤ ਕੀਤੀ ਫਾਇਲ ਇੰਝ ਸੰਭਾਲੋ"

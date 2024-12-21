@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-11-10 20:12+0100\n"
+"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"PO-Revision-Date: 2024-12-20 17:40+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 25.03.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2814,12 +2814,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Припокриване на страницата нагоре/надолу:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2849,7 +2847,7 @@ msgstr "Автоматично напасване"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Потребителски"
 
 #: part/dlggeneral.cpp:216
 #, kde-format
@@ -3896,7 +3894,7 @@ msgstr ""
 "запазите видима"
 
 #: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:474
+#: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4588,7 +4586,7 @@ msgid "Remove this Bookmark"
 msgstr "Премахване на тази отметка"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:442
+#: part/signaturepartutils.cpp:451
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5459,43 +5457,43 @@ msgstr "Свиване на всички елементи"
 msgid "Properties"
 msgstr "Информация"
 
-#: part/signaturepartutils.cpp:360
+#: part/signaturepartutils.cpp:369
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Изображения (%1)"
 
-#: part/signaturepartutils.cpp:361
+#: part/signaturepartutils.cpp:370
 #, kde-format
 msgid "Select background image"
 msgstr "Избиране на изображение за фон"
 
-#: part/signaturepartutils.cpp:366
+#: part/signaturepartutils.cpp:375
 #, kde-format
 msgid "Forget image"
 msgstr "Забравяне на  изображението"
 
-#: part/signaturepartutils.cpp:367
+#: part/signaturepartutils.cpp:376
 #, kde-format
 msgid "Forget all images"
 msgstr "Забравяне на всички изображения"
 
-#: part/signaturepartutils.cpp:410
+#: part/signaturepartutils.cpp:419
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Въведете парола (ако има такава), за да отключите сертификат: %1"
 
-#: part/signaturepartutils.cpp:412
+#: part/signaturepartutils.cpp:421
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Въведете парола за сертификат"
 
-#: part/signaturepartutils.cpp:425
+#: part/signaturepartutils.cpp:434
 #, kde-format
 msgid "Enter document password"
 msgstr "Въведете парола за документ"
 
-#: part/signaturepartutils.cpp:448
+#: part/signaturepartutils.cpp:457
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Запазване на подписания файл като"

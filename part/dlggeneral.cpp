@@ -196,7 +196,7 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     pageUpDownOverlap->setMinimum(0);
     pageUpDownOverlap->setMaximum(50);
     pageUpDownOverlap->setSingleStep(5);
-    pageUpDownOverlap->setSuffix(i18nc("Page Up/Down overlap, spinbox suffix", "%"));
+    KLocalization::setupSpinBoxFormatString(pageUpDownOverlap, ki18nc("@item:spinbox Config dialog, general page, page overlap factor", "%v%"));
     pageUpDownOverlap->setToolTip(i18nc("@info:tooltip Config dialog, general page", "Defines how much of the current viewing area will still be visible when pressing the Page Up/Down keys."));
     pageUpDownOverlap->setObjectName(QStringLiteral("kcfg_ScrollOverlap"));
     layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Page Up/Down overlap:"), pageUpDownOverlap);
@@ -204,16 +204,16 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     // Combobox: prefer file name or full path in titlebar
     QHBoxLayout *zoomLayout = new QHBoxLayout();
     QSpinBox *customZoom = new QSpinBox(this);
-    KLocalization::setupSpinBoxFormatString(customZoom, ki18nc("item:inlistbox Config dialog, general page, custom zoom factor", "%v%"));
+    KLocalization::setupSpinBoxFormatString(customZoom, ki18nc("@item:inlistbox Config dialog, general page, custom zoom factor", "%v%"));
     customZoom->setObjectName("kcfg_CustomZoomFactor");
     customZoom->setVisible(false);
     QComboBox *defaultZoom = new QComboBox(this);
-    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "100%"));
-    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Fit Width"));
-    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Fit Page"));
-    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Auto Fit"));
-    defaultZoom->addItem(i18nc("item:inlistbox Config dialog, general page, default zoom", "Custom"));
-    defaultZoom->setToolTip(i18nc("item:inlistbox Config dialog, general page, default zoom", "Defines the default zoom mode for files which were never opened before. For files which were opened before the previous zoom is applied."));
+    defaultZoom->addItem(i18nc("@item:inlistbox Config dialog, general page, default zoom", "100%"));
+    defaultZoom->addItem(i18nc("@item:inlistbox Config dialog, general page, default zoom", "Fit Width"));
+    defaultZoom->addItem(i18nc("@item:inlistbox Config dialog, general page, default zoom", "Fit Page"));
+    defaultZoom->addItem(i18nc("@item:inlistbox Config dialog, general page, default zoom", "Auto Fit"));
+    defaultZoom->addItem(i18nc("@item:inlistbox Config dialog, general page, default zoom", "Custom"));
+    defaultZoom->setToolTip(i18nc("@item:inlistbox Config dialog, general page, default zoom", "Defines the default zoom mode for files which were never opened before. For files which were opened before the previous zoom is applied."));
     defaultZoom->setObjectName(QStringLiteral("kcfg_ZoomMode"));
     zoomLayout->addWidget(defaultZoom);
     zoomLayout->addWidget(customZoom);

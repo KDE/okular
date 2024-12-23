@@ -71,10 +71,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 指纹："
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "导出..."
+msgstr "导出…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
@@ -178,16 +176,12 @@ msgid "Document Revision %1 of %2"
 msgstr "文档修订版本 %1，共 %2 版"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "保存已签名版本..."
+msgstr "保存已签名版本…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "查看证书..."
+msgstr "查看证书…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

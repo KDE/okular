@@ -1,17 +1,17 @@
 # Translation for org.kde.active.appdata.po to Euskara/Basque (eu).
 # Copyright (C) 2018, Free Software Foundation.
-# Copyright (C) 2019-2022, This file is copyright:
+# Copyright (C) 2019-2024 This file is copyright:
 # This file is distributed under the same license as the okular package.
 # SPDX-FileCopyrightText: 2024 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2018, 2019, 2021, 2022, 2023.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2018, 2019, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2024-08-19 14:44+0200\n"
+"PO-Revision-Date: 2024-12-22 14:14+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -74,8 +74,6 @@ msgid "SHA-256 Fingerprint:"
 msgstr "SHA-256 hatz-marka:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
 msgstr "Esportatu..."
 
@@ -85,7 +83,7 @@ msgstr "Itxi"
 
 #: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
-msgstr "Ziurtagiri fitxategia (*.cer)"
+msgstr "Ziurtagiri-fitxategia (*.cer)"
 
 #: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
@@ -181,14 +179,10 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumentuaren berrikuspena %1/%2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
 msgstr "Gorde sinatutako bertsioa..."
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
 msgstr "Ikusi ziurtagiria..."
 

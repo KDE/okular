@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-26 00:37+0000\n"
-"PO-Revision-Date: 2024-08-19 14:44+0200\n"
+"PO-Revision-Date: 2024-12-22 14:14+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: package/contents/ui/Bookmarks.qml:20 package/contents/ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -87,7 +87,7 @@ msgstr "Itxi"
 
 #: package/contents/ui/CertificateViewerDialog.qml:150
 msgid "Certificate File (*.cer)"
-msgstr "Ziurtagiri fitxategia (*.cer)"
+msgstr "Ziurtagiri-fitxategia (*.cer)"
 
 #: package/contents/ui/CertificateViewerDialog.qml:165
 #: package/contents/ui/SignaturePropertiesDialog.qml:169

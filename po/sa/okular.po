@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-21 00:39+0000\n"
-"PO-Revision-Date: 2024-12-24 20:39+0530\n"
+"PO-Revision-Date: 2024-12-25 19:37+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -2034,7 +2034,7 @@ msgstr "सूचकपत्त्र"
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
-msgstr "संचिका"
+msgstr "सञ्चिका"
 
 #: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:90
 #, kde-format
@@ -5257,7 +5257,7 @@ msgstr "प्रकारः"
 #: part/propertiesdialog.cpp:430
 #, kde-format
 msgid "File"
-msgstr "संचिका"
+msgstr "सञ्चिका"
 
 #: part/propertiesdialog.cpp:498
 #, kde-format

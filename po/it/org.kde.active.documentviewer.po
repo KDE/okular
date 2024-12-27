@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the okular package.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2012, 2016, 2018, 2019, 2020, 2022.
+# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2020, 2022, 2024 Luigi Toscano <luigi.toscano@tiscali.it>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2022-08-07 15:54+0200\n"
+"PO-Revision-Date: 2024-12-19 21:26+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 25.03.70\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -70,10 +70,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "Impronta digitale SHA-256:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "Esporta..."
+msgstr "Esporta…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
@@ -177,16 +175,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Revisione %1 di %2 del documento"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "Salva versione firmata..."
+msgstr "Salva versione firmata…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "Visualizza certificato..."
+msgstr "Visualizza certificato…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

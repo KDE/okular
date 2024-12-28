@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"POT-Creation-Date: 2024-12-28 00:39+0000\n"
 "PO-Revision-Date: 2004-12-10 10:29+0100\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -2742,8 +2742,8 @@ msgstr ""
 
 #: part/dlggeneral.cpp:199
 #, kde-format
-msgctxt "Page Up/Down overlap, spinbox suffix"
-msgid "%"
+msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
+msgid "%v%"
 msgstr ""
 
 #: part/dlggeneral.cpp:200
@@ -2762,43 +2762,44 @@ msgstr ""
 
 #: part/dlggeneral.cpp:207
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr ""
 
 #: part/dlggeneral.cpp:211
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr ""
 
 #: part/dlggeneral.cpp:212
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr ""
 
 #: part/dlggeneral.cpp:213
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
-msgstr ""
+msgstr "Mana siidui"
 
 #: part/dlggeneral.cpp:214
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr ""
 
 #: part/dlggeneral.cpp:215
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
 #: part/dlggeneral.cpp:216
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."

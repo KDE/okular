@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"POT-Creation-Date: 2024-12-28 00:39+0000\n"
 "PO-Revision-Date: 2024-10-27 11:27+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -2782,10 +2782,12 @@ msgid "Overview columns:"
 msgstr "மேலோட்ட நெடுவரிசைகள்:"
 
 #: part/dlggeneral.cpp:199
-#, kde-format
-msgctxt "Page Up/Down overlap, spinbox suffix"
-msgid "%"
-msgstr "%"
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
+msgid "%v%"
+msgstr "%1%"
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2807,43 +2809,52 @@ msgstr "பக்கம் மேலே/கீழே நகரும்போத
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
-msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1%"
 
 #: part/dlggeneral.cpp:211
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#| msgid "100%"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Fit Width"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
-msgstr "அகலப் பொருத்தம்"
+msgstr "அகலம் படி"
 
 #: part/dlggeneral.cpp:213
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Fit Page"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
-msgstr "பக்கப் பொருத்தம்"
+msgstr "பக்க அளவுபடி"
 
 #: part/dlggeneral.cpp:214
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Auto Fit"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr "தானியக்க பொருத்தம்"
+msgstr "தானியக்கம்"
 
 #: part/dlggeneral.cpp:215
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
 #: part/dlggeneral.cpp:216
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#| msgid ""
+#| "Defines the default zoom mode for files which were never opened before. "
+#| "For files which were opened before the previous zoom is applied."
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
@@ -5857,6 +5868,22 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#~ msgctxt "Page Up/Down overlap, spinbox suffix"
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Fit Width"
+#~ msgstr "அகலப் பொருத்தம்"
+
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Fit Page"
+#~ msgstr "பக்கப் பொருத்தம்"
+
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Auto Fit"
+#~ msgstr "தானியக்க பொருத்தம்"
 
 #~ msgid "S&earch:"
 #~ msgstr "&தேடு:"

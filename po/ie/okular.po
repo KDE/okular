@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-21 00:39+0000\n"
+"POT-Creation-Date: 2024-12-28 00:39+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -2752,10 +2752,12 @@ msgid "Overview columns:"
 msgstr "Columnes"
 
 #: part/dlggeneral.cpp:199
-#, kde-format
-msgctxt "Page Up/Down overlap, spinbox suffix"
-msgid "%"
-msgstr ""
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
+msgid "%v%"
+msgstr "%1%"
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2775,43 +2777,47 @@ msgstr "Mover li subtitules ad-up/-bass"
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
-msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
+msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1%"
 
 #: part/dlggeneral.cpp:211
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#| msgid "100%"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Fit Width"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Ajustar a largore"
 
 #: part/dlggeneral.cpp:213
-#, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#, fuzzy, kde-format
+#| msgid "Fit Page"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ajustar al págine"
 
 #: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Auto"
 
 #: part/dlggeneral.cpp:215
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
 #: part/dlggeneral.cpp:216
 #, kde-format
-msgctxt "item:inlistbox Config dialog, general page, default zoom"
+msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
@@ -5715,6 +5721,19 @@ msgstr "_Obliviar"
 #, fuzzy, kde-format
 msgid "Hide welcome screen"
 msgstr "Inicial ecran"
+
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Fit Width"
+#~ msgstr "Ajustar a largore"
+
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Fit Page"
+#~ msgstr "Ajustar al págine"
+
+#, fuzzy
+#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
+#~ msgid "Auto Fit"
+#~ msgstr "Auto"
 
 #~ msgid "S&earch:"
 #~ msgstr "S&ercha:"

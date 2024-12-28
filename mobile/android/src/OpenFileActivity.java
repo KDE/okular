@@ -22,6 +22,10 @@ public class OpenFileActivity extends QtActivity
 
     public String contentUrlToFd(String url)
     {
+        if (Uri.parse(url).getScheme().equals("fd")) {
+            return url;
+        }
+
         try {
             ContentResolver resolver = getBaseContext().getContentResolver();
             ParcelFileDescriptor fdObject = resolver.openFileDescriptor(Uri.parse(url), "r");

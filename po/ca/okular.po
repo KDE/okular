@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-28 00:39+0000\n"
-"PO-Revision-Date: 2024-12-19 09:40+0100\n"
+"PO-Revision-Date: 2024-12-28 12:54+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2805,9 +2805,7 @@ msgid "Overview columns:"
 msgstr "Columnes de visió general:"
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
@@ -2831,56 +2829,43 @@ msgid "Page Up/Down overlap:"
 msgstr "Superposició Re/Av Pàg:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Ajusta a l'amplada de pàgina"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ajusta a la pàgina"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Encaixat automàtic"
 
 #: part/dlggeneral.cpp:215
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "Custom"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Personalitzat"
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "

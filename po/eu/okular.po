@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-28 00:39+0000\n"
-"PO-Revision-Date: 2024-12-22 14:13+0100\n"
+"PO-Revision-Date: 2024-12-28 08:56+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -2802,9 +2802,7 @@ msgid "Overview columns:"
 msgstr "Ikuspegi orokorreko zutabeak:"
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%%v"
@@ -2826,62 +2824,49 @@ msgid "Page Up/Down overlap:"
 msgstr "Orri Gora/Behera gainezartzea:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%%v"
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "% 100"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Doitu zabalera"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Doitu orrialdea"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr "Doitu automatikoki"
+msgstr "Doitze automatikoa"
 
 #: part/dlggeneral.cpp:215
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "Custom"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Neurrira"
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
-"Aurrez inoiz ireki gabeko fitxategien zoom modu lehenetsia zehazten du. "
+"Aurrez inoiz ireki gabeko fitxategien zoom modu lehenetsia definitzen du. "
 "Aurrez ireki diren fitxategiekin aurreko zooma erabiltzen da."
 
 #: part/dlggeneral.cpp:220

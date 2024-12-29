@@ -2769,12 +2769,10 @@ msgid "Overview columns:"
 msgstr "总览模式页面列数："
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%v%"
+msgstr ""
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2792,56 +2790,43 @@ msgid "Page Up/Down overlap:"
 msgstr "上一页/下一页按钮重叠区域："
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%v%"
+msgstr ""
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "适合宽度"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "适合整页"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "自动适应"
 
 #: part/dlggeneral.cpp:215
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "Custom"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr "自定义"
+msgstr ""
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
@@ -5798,19 +5783,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgctxt "Page Up/Down overlap, spinbox suffix"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Width"
-#~ msgstr "适合宽度"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Page"
-#~ msgstr "适合整页"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Auto Fit"
-#~ msgstr "自动适应"

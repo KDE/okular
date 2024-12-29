@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-28 00:39+0000\n"
-"PO-Revision-Date: 2024-12-19 14:11+0100\n"
+"PO-Revision-Date: 2024-12-28 11:13+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -34,15 +34,15 @@ msgstr ""
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Wilbert Berendsen,Rinse de Vries,Freek de Kruijf - t/m 2024,Luc Castermans - "
-"t/m 2021"
+"Wilbert Berendsen,Rinse de Vries,Luc Castermans - t/m 2021,Freek de Kruijf - "
+"t/m 2024"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"wilbert@kde.nl,rinsedevries@kde.nl,freekdekruijf@kde.nl,luc.castermans@gmail."
-"com"
+"wilbert@kde.nl,rinsedevries@kde.nl,luc.castermans@gmail.com,"
+"freekdekruijf@kde.nl"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -2813,9 +2813,7 @@ msgid "Overview columns:"
 msgstr "Overzicht kolommen:"
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
@@ -2837,56 +2835,43 @@ msgid "Page Up/Down overlap:"
 msgstr "Overlap bij pagina omhoog/omlaag:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Breedte passend maken"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Pagina passend maken"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automatisch passend"
 
 #: part/dlggeneral.cpp:215
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "Custom"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Aangepast"
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "

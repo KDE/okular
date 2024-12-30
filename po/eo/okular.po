@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-28 00:39+0000\n"
-"PO-Revision-Date: 2024-12-27 10:42+0100\n"
+"PO-Revision-Date: 2024-12-29 12:45+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -557,7 +557,7 @@ msgstr "HTML"
 #: core/printoptionswidget.cpp:19
 #, kde-format
 msgid "Print Options"
-msgstr "Presi Opcioj"
+msgstr "Elektebloj por Presi"
 
 #: core/printoptionswidget.cpp:23
 #, kde-format
@@ -2093,7 +2093,7 @@ msgstr "Fermi ĉi noton"
 #: part/annotwindow.cpp:95 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
-msgstr "Opcioj"
+msgstr "Elektebloj"
 
 #: part/annotwindow.cpp:106
 #, kde-format
@@ -2426,7 +2426,8 @@ msgstr "Ŝanĝi kolorojn"
 #, kde-format
 msgctxt "@info Config dialog, accessibility page"
 msgid "<b>Warning:</b> these options can badly affect drawing speed."
-msgstr "<b>Averto:</b> ĉi tiuj opcioj povas malbone influi desegna rapidecon."
+msgstr ""
+"<b>Averto:</b> ĉi tiuj elektebloj povas malbone influi desegnan rapidecon."
 
 #: part/dlgaccessibility.cpp:60
 #, kde-format
@@ -2794,9 +2795,7 @@ msgid "Overview columns:"
 msgstr "Superrigardaj kolumnoj:"
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
@@ -2818,38 +2817,31 @@ msgid "Page Up/Down overlap:"
 msgstr "Paĝo Supre/Malsupren interkovro:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
-msgstr "Laŭ larĝo"
+msgstr "Ĝisrandigi laŭ Larĝo"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
-msgstr "Laŭ paĝo"
+msgstr "Ĝisrandigi laŭ Paĝo"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Aŭtomate Ĝisrandigi"
@@ -2858,14 +2850,10 @@ msgstr "Aŭtomate Ĝisrandigi"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Propra"
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
@@ -2933,7 +2921,7 @@ msgstr "Ebligi tekstkontraŭaliason"
 #, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "Bildaj opcioj:"
+msgstr "Bildaj elektebloj:"
 
 #: part/dlgperformance.cpp:59
 #, kde-format
@@ -3473,7 +3461,7 @@ msgstr "Subskribo Propraĵoj"
 #: part/ktreeviewsearchline.cpp:283
 #, kde-format
 msgid "Search Options"
-msgstr "Serĉaj opcioj"
+msgstr "Serĉaj Elektebloj"
 
 #: part/ktreeviewsearchline.cpp:284
 #, kde-format
@@ -3930,6 +3918,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Subskribita de: %1\n"
+"\n"
+"Dato: %2"
 
 #: part/pageviewannotator.cpp:448
 #, kde-kuit-format
@@ -4133,12 +4124,14 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Subskribado faratas. Vi povas ĝustigi la pozicion kaj grandecon de la "
+"subskribo"
 
 #: part/part.cpp:491
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Fini Subskribi"
 
 #: part/part.cpp:661
 #, kde-format
@@ -4886,7 +4879,7 @@ msgid ""
 msgstr ""
 "<qt>Tiu eraro kutime okazas se vi ne havas sufiĉajn permesojn por legi la "
 "dosieron. Vi povas kontroli proprieton kaj permesojn se vi dekstre alklakas "
-"la dosieron en la dosiermanaĝero de Dolphin, poste elektas la opcion "
+"la dosieron en la dosiermanaĝero de Dolphin, poste elektas la elekteblon "
 "'Propertoj' kaj elektu langeton 'Permesoj' en la malfermita fenestro.</qt>"
 
 #: part/part.cpp:3753
@@ -5012,12 +5005,12 @@ msgstr "Prezento"
 #: part/preferencesdialog.cpp:49
 #, kde-format
 msgid "Options for Presentation Mode"
-msgstr "Opcioj por la prezenta moduso"
+msgstr "Elektebloj por la Prezenta Moduso"
 
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr "Komentario Opcioj"
+msgstr "Elektebloj por Komentario"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5027,7 +5020,7 @@ msgstr "Redaktilo"
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
 msgid "Editor Options"
-msgstr "Redaktilaj Opcioj"
+msgstr "Redaktilaj Elektebloj"
 
 #: part/preferencesdialog.cpp:56
 #, kde-format

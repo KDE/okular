@@ -2772,7 +2772,7 @@ msgstr "总览模式页面列数："
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2793,7 +2793,7 @@ msgstr "上一页/下一页按钮重叠区域："
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:211
 #, kde-format
@@ -2823,7 +2823,7 @@ msgstr "自动适应"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "自定义"
 
 #: part/dlggeneral.cpp:216
 #, kde-format

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 02:29+0000\n"
+"POT-Creation-Date: 2025-01-03 02:31+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -4037,22 +4037,22 @@ msgstr "ចម្លង​អត្ថបទ"
 msgid "Go to '%1'"
 msgstr "ទៅកាន់​ទំព័រ %1"
 
-#: part/pageview.cpp:4055 part/part.cpp:3154
+#: part/pageview.cpp:4059 part/part.cpp:3154
 #, kde-format
 msgid "Fit Width"
 msgstr "សម​ទទឹង"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4059
 #, kde-format
 msgid "Fit Page"
 msgstr "សម​ទំព័រ"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4059
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4082
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4062,70 +4062,70 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 ៖"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4365
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ស្វែងរក '%1' ដោយ"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4379
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​ផ្លូវកាត់​បណ្ដាញ..."
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4405
 #, kde-format
 msgid "Follow This Link"
 msgstr "តាម​តំណ​នេះ"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4408
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "ចាក់​សំឡេង..."
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4410
 #, fuzzy, kde-format
 #| msgid "Sound"
 msgid "Stop Sound"
 msgstr "សំឡេង"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ចម្លង​អាសយដ្ឋាន​តំណ"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4437
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "ស្វែងរក '%1' ដោយ"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4969
 #, kde-format
 msgid "Welcome"
 msgstr "សូម​ស្វាគមន៍"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5091
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "ជ្រើស​តំបន់​ពង្រីក ។ ចុច​កណ្ដុរ​ស្ដាំ ដើម្បី​បង្រួម ។​"
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5104
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5119
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "គូរ​ចតុកោណកែង​​ជុំ​វិញ​អត្ថបទ/​ក្រាហ្វិក ដើម្បី​ចម្លង ។"
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5133
 #, kde-format
 msgid "Select text"
 msgstr "ជ្រើស​អត្ថបទ"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5147
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4133,14 +4133,14 @@ msgid ""
 msgstr ""
 "គូរ​ចតុកោណកែង​​ជុំ​វិញតារាង បន្ទាប់​មក​ចុច​នៅជិត​គែម ដើម្បី​បែងចែក ចុច​ គេច (Esc) ដើម្បី​សម្អាត ។"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5159
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr ""
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5162
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4148,23 +4148,23 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5209
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5353
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "គូរ​ចតុកោណកែង​​ជុំ​វិញ​អត្ថបទ/​ក្រាហ្វិក ដើម្បី​ចម្លង ។"
 
-#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5508 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

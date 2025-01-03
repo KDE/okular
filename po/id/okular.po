@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 02:29+0000\n"
+"POT-Creation-Date: 2025-01-03 02:31+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -3765,22 +3765,22 @@ msgstr "Salin Teks"
 msgid "Go to '%1'"
 msgstr "Menuju ke '%1'"
 
-#: part/pageview.cpp:4055 part/part.cpp:3154
+#: part/pageview.cpp:4059 part/part.cpp:3154
 #, kde-format
 msgid "Fit Width"
 msgstr "Pas Lebar"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4059
 #, kde-format
 msgid "Fit Page"
 msgstr "Pas Halaman"
 
-#: part/pageview.cpp:4055
+#: part/pageview.cpp:4059
 #, kde-format
 msgid "Auto Fit"
 msgstr "Auto Pas"
 
-#: part/pageview.cpp:4078
+#: part/pageview.cpp:4082
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -3791,67 +3791,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4361
+#: part/pageview.cpp:4365
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Pencarian untuk '%1% dengan"
 
-#: part/pageview.cpp:4375
+#: part/pageview.cpp:4379
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfigurasikan Pintasan Web..."
 
-#: part/pageview.cpp:4401
+#: part/pageview.cpp:4405
 #, kde-format
 msgid "Follow This Link"
 msgstr "Ikuti Tautan Ini"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4408
 #, kde-format
 msgid "Play this Sound"
 msgstr "Bunyikan Suara ini"
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4410
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hentikan Suara"
 
-#: part/pageview.cpp:4412
+#: part/pageview.cpp:4416
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Salin Alamat Tautan"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4437
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Mencari '%1' dalam dokumen ini"
 
-#: part/pageview.cpp:4965
+#: part/pageview.cpp:4969
 #, kde-format
 msgid "Welcome"
 msgstr "Selamat Datang"
 
-#: part/pageview.cpp:5087
+#: part/pageview.cpp:5091
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Pilih area pengezooman. Klik kanan untuk mengezoom perkecil."
 
-#: part/pageview.cpp:5100
+#: part/pageview.cpp:5104
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik untuk melihat tinjauan diperbesar."
 
-#: part/pageview.cpp:5115
+#: part/pageview.cpp:5119
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Gambari sebuah persegi di sekitar teks/grafik untuk menyalin."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5133
 #, kde-format
 msgid "Select text"
 msgstr "Pilih teks"
 
-#: part/pageview.cpp:5143
+#: part/pageview.cpp:5147
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3860,7 +3860,7 @@ msgstr ""
 "Gambari sebuah persegi di sekitar tabel, kemudian klik dekat pinggiran untuk "
 "membaginya; tekan Esc untuk membersihkan."
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5159
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
@@ -3869,7 +3869,7 @@ msgstr ""
 "Semua sertifikat tandatangan Anda antara tidak valid atau tanggal "
 "kebasaannya sudah kedaluwarsa"
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5162
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3880,26 +3880,26 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5182
+#: part/pageview.cpp:5186
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Anda memiliki perubahan yang tak disimpan. Mohon simpan dokumen sebelum "
 "menandatanganinya."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5209
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Gambari sebuah persegi untuk menyisipkan bidang tandatangan"
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5353
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Gambari sebuah persegi di sekitar area halaman yang Anda inginkan untuk "
 "tetap terlihat"
 
-#: part/pageview.cpp:5504 part/pageviewannotator.cpp:1131
+#: part/pageview.cpp:5508 part/pageviewannotator.cpp:1131
 #: part/signaturepartutils.cpp:474
 #, kde-format
 msgctxt "%1 is a file path"

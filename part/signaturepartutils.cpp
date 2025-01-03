@@ -80,157 +80,6 @@ static QImage scaleAndFitCanvas(const QImage &input, const QSize expectedSize)
     return canvas;
 }
 
-class ImageItemDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-public:
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override
-    {
-        auto style = option.widget ? option.widget->style() : QApplication::style();
-        // This paints the background without initializing the
-        // styleoption from the actual index. Given we want default background
-        // and paint the foreground a bit later
-        // This accomplishes it quite nicely.
-        style->drawControl(QStyle::CE_ItemViewItem, &option, painter, option.widget);
-        const auto path = index.data(Qt::DisplayRole).value<QString>();
-
-        QImageReader reader(path);
-        const QSize imageSize = reader.size();
-        if (!reader.size().isNull()) {
-            reader.setScaledSize(imageSize.scaled(option.rect.size(), Qt::KeepAspectRatio));
-        }
-        const auto input = reader.read();
-        if (!input.isNull()) {
-            const auto scaled = scaleAndFitCanvas(input, option.rect.size());
-            painter->drawImage(option.rect.topLeft(), scaled);
-        }
-    }
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override
-    {
-        Q_UNUSED(index);
-        QSize defaultSize(10, 10); // let's start with a square
-        if (auto view = qobject_cast<QListView *>(option.styleObject)) {
-            auto frameRect = view->frameRect().size();
-            frameRect.setWidth((frameRect.width() - view->style()->pixelMetric(QStyle::PM_ScrollBarExtent)) / 2 - 2 * view->frameWidth() - view->spacing());
-            return defaultSize.scaled(frameRect, Qt::KeepAspectRatio);
-        }
-        return defaultSize;
-    }
-};
-
-class RecentImagesModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    RecentImagesModel()
-    {
-        const auto recentList = KSharedConfig::openConfig()->group(ConfigGroup()).readEntry<QStringList>(ConfigBackgroundKey(), QStringList());
-        for (const auto &element : recentList) {
-            if (QFile::exists(element)) { // maybe the image has been removed from disk since last invocation
-                m_storedElements.push_back(element);
-            }
-        }
-    }
-    QVariant roleFromString(const QString &data, int role) const
-    {
-        switch (role) {
-        case Qt::DisplayRole:
-        case Qt::ToolTipRole:
-            return data;
-        default:
-            return QVariant();
-        }
-    }
-    QVariant data(const QModelIndex &index, int role) const override
-    {
-        Q_ASSERT(checkIndex(index, QAbstractItemModel::CheckIndexOption::IndexIsValid));
-        int row = index.row();
-        if (m_selectedFromFileSystem.has_value()) {
-            if (row == 0) {
-                return roleFromString(*m_selectedFromFileSystem, role);
-            } else {
-                row--;
-            }
-        }
-        if (row < m_storedElements.size()) {
-            return roleFromString(m_storedElements.at(row), role);
-        }
-        return QVariant();
-    }
-    int rowCount(const QModelIndex &parent = {}) const override
-    {
-        if (parent.isValid()) {
-            return 0;
-        }
-        return m_storedElements.size() + (m_selectedFromFileSystem.has_value() ? 1 : 0);
-    }
-    void setFileSystemSelection(const QString &selection)
-    {
-        if (m_storedElements.contains(selection)) {
-            return;
-        }
-        if (selection.isEmpty()) {
-            if (!m_selectedFromFileSystem) {
-                return;
-            }
-            beginRemoveRows(QModelIndex(), 0, 0);
-            m_selectedFromFileSystem.reset();
-            endRemoveRows();
-            return;
-        }
-        if (!QFile::exists(selection)) {
-            return;
-        }
-        if (m_selectedFromFileSystem) {
-            m_selectedFromFileSystem = selection;
-            Q_EMIT dataChanged(index(0, 0), index(0, 0));
-        } else {
-            beginInsertRows(QModelIndex(), 0, 0);
-            m_selectedFromFileSystem = selection;
-            endInsertRows();
-        }
-    }
-    void clear()
-    {
-        beginResetModel();
-        m_selectedFromFileSystem = {};
-        m_storedElements.clear();
-        endResetModel();
-    }
-    void removeItem(const QString &text)
-    {
-        if (text == m_selectedFromFileSystem) {
-            beginRemoveRows(QModelIndex(), 0, 0);
-            m_selectedFromFileSystem.reset();
-            endRemoveRows();
-            return;
-        }
-        auto elementIndex = m_storedElements.indexOf(text);
-        auto beginRemove = elementIndex;
-        if (m_selectedFromFileSystem) {
-            beginRemove++;
-        }
-        beginRemoveRows(QModelIndex(), beginRemove, beginRemove);
-        m_storedElements.removeAt(elementIndex);
-        endRemoveRows();
-    }
-    void saveBack()
-    {
-        QStringList elementsToStore = m_storedElements;
-        if (m_selectedFromFileSystem) {
-            elementsToStore.push_front(*m_selectedFromFileSystem);
-        }
-        while (elementsToStore.size() > 3) {
-            elementsToStore.pop_back();
-        }
-        KSharedConfig::openConfig()->group(ConfigGroup()).writeEntry(ConfigBackgroundKey(), elementsToStore);
-    }
-
-private:
-    std::optional<QString> m_selectedFromFileSystem;
-    QStringList m_storedElements;
-};
-
 std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, SigningInformationOptions opts)
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
@@ -542,6 +391,150 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         }
     }
 }
+
+void ImageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    auto style = option.widget ? option.widget->style() : QApplication::style();
+    // This paints the background without initializing the
+    // styleoption from the actual index. Given we want default background
+    // and paint the foreground a bit later
+    // This accomplishes it quite nicely.
+    style->drawControl(QStyle::CE_ItemViewItem, &option, painter, option.widget);
+    const auto path = index.data(Qt::DisplayRole).value<QString>();
+
+    QImageReader reader(path);
+    const QSize imageSize = reader.size();
+    if (!reader.size().isNull()) {
+        reader.setScaledSize(imageSize.scaled(option.rect.size(), Qt::KeepAspectRatio));
+    }
+    const auto input = reader.read();
+    if (!input.isNull()) {
+        const auto scaled = scaleAndFitCanvas(input, option.rect.size());
+        painter->drawImage(option.rect.topLeft(), scaled);
+    }
 }
 
-#include "signaturepartutils.moc"
+QSize ImageItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    Q_UNUSED(index);
+    QSize defaultSize(10, 10); // let's start with a square
+    if (auto view = qobject_cast<QListView *>(option.styleObject)) {
+        auto frameRect = view->frameRect().size();
+        frameRect.setWidth((frameRect.width() - view->style()->pixelMetric(QStyle::PM_ScrollBarExtent)) / 2 - 2 * view->frameWidth() - view->spacing());
+        return defaultSize.scaled(frameRect, Qt::KeepAspectRatio);
+    }
+    return defaultSize;
+}
+
+RecentImagesModel::RecentImagesModel()
+{
+    const auto recentList = KSharedConfig::openConfig()->group(ConfigGroup()).readEntry<QStringList>(ConfigBackgroundKey(), QStringList());
+    for (const auto &element : recentList) {
+        if (QFile::exists(element)) { // maybe the image has been removed from disk since last invocation
+            m_storedElements.push_back(element);
+        }
+    }
+}
+
+QVariant RecentImagesModel::roleFromString(const QString &data, int role) const
+{
+    switch (role) {
+    case Qt::DisplayRole:
+    case Qt::ToolTipRole:
+        return data;
+    default:
+        return QVariant();
+    }
+}
+
+QVariant RecentImagesModel::data(const QModelIndex &index, int role) const
+{
+    Q_ASSERT(checkIndex(index, QAbstractItemModel::CheckIndexOption::IndexIsValid));
+    int row = index.row();
+    if (m_selectedFromFileSystem.has_value()) {
+        if (row == 0) {
+            return roleFromString(*m_selectedFromFileSystem, role);
+        } else {
+            row--;
+        }
+    }
+    if (row < m_storedElements.size()) {
+        return roleFromString(m_storedElements.at(row), role);
+    }
+    return QVariant();
+}
+
+int RecentImagesModel::rowCount(const QModelIndex &parent) const
+{
+    if (parent.isValid()) {
+        return 0;
+    }
+    return m_storedElements.size() + (m_selectedFromFileSystem.has_value() ? 1 : 0);
+}
+
+void RecentImagesModel::setFileSystemSelection(const QString &selection)
+{
+    if (m_storedElements.contains(selection)) {
+        return;
+    }
+    if (selection.isEmpty()) {
+        if (!m_selectedFromFileSystem) {
+            return;
+        }
+        beginRemoveRows(QModelIndex(), 0, 0);
+        m_selectedFromFileSystem.reset();
+        endRemoveRows();
+        return;
+    }
+    if (!QFile::exists(selection)) {
+        return;
+    }
+    if (m_selectedFromFileSystem) {
+        m_selectedFromFileSystem = selection;
+        Q_EMIT dataChanged(index(0, 0), index(0, 0));
+    } else {
+        beginInsertRows(QModelIndex(), 0, 0);
+        m_selectedFromFileSystem = selection;
+        endInsertRows();
+    }
+}
+
+void RecentImagesModel::clear()
+{
+    beginResetModel();
+    m_selectedFromFileSystem = {};
+    m_storedElements.clear();
+    endResetModel();
+}
+
+void RecentImagesModel::removeItem(const QString &text)
+{
+    if (text == m_selectedFromFileSystem) {
+        beginRemoveRows(QModelIndex(), 0, 0);
+        m_selectedFromFileSystem.reset();
+        endRemoveRows();
+        return;
+    }
+    auto elementIndex = m_storedElements.indexOf(text);
+    auto beginRemove = elementIndex;
+    if (m_selectedFromFileSystem) {
+        beginRemove++;
+    }
+    beginRemoveRows(QModelIndex(), beginRemove, beginRemove);
+    m_storedElements.removeAt(elementIndex);
+    endRemoveRows();
+}
+
+void RecentImagesModel::saveBack()
+{
+    QStringList elementsToStore = m_storedElements;
+    if (m_selectedFromFileSystem) {
+        elementsToStore.push_front(*m_selectedFromFileSystem);
+    }
+    while (elementsToStore.size() > 3) {
+        elementsToStore.pop_back();
+    }
+    KSharedConfig::openConfig()->group(ConfigGroup()).writeEntry(ConfigBackgroundKey(), elementsToStore);
+}
+
+}

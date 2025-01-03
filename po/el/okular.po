@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-28 00:39+0000\n"
+"POT-Creation-Date: 2025-01-03 00:40+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3799,22 +3799,22 @@ msgstr "Αντιγραφή κειμένου"
 msgid "Go to '%1'"
 msgstr "Μετάβαση στην %1"
 
-#: part/pageview.cpp:4060 part/part.cpp:3160
+#: part/pageview.cpp:4064 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "Προσαρμογή στο πλάτος"
 
-#: part/pageview.cpp:4060
+#: part/pageview.cpp:4064
 #, kde-format
 msgid "Fit Page"
 msgstr "Προσαρμογή στη σελίδα"
 
-#: part/pageview.cpp:4060
+#: part/pageview.cpp:4064
 #, kde-format
 msgid "Auto Fit"
 msgstr "Αυτόματη προσαρμογή"
 
-#: part/pageview.cpp:4083
+#: part/pageview.cpp:4087
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3823,69 +3823,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4366
+#: part/pageview.cpp:4370
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Αναζήτηση για '%1' με"
 
-#: part/pageview.cpp:4380
+#: part/pageview.cpp:4384
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Διαμόρφωση συντομεύσεων ιστού..."
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4410
 #, kde-format
 msgid "Follow This Link"
 msgstr "Ακολούθησε αυτό το δεσμό"
 
-#: part/pageview.cpp:4409
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Play this Sound"
 msgstr "Αναπαραγωγή του ήχου"
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4415
 #, kde-format
 msgid "Stop Sound"
 msgstr "Διακοπή του ήχου"
 
-#: part/pageview.cpp:4417
+#: part/pageview.cpp:4421
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Αντιγραφή διεύθυνσης δεσμού"
 
-#: part/pageview.cpp:4438
+#: part/pageview.cpp:4442
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Αναζήτηση για '%1' σε αυτό το έγγραφο"
 
-#: part/pageview.cpp:4970
+#: part/pageview.cpp:4974
 #, kde-format
 msgid "Welcome"
 msgstr "Καλώς ήρθατε"
 
-#: part/pageview.cpp:5092
+#: part/pageview.cpp:5096
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Επιλέξτε περιοχή προσαρμογής οπτικού πεδίου. Δεξί κλικ για σμίκρυνση."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5109
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Κάντε κλικ για να δείτε την προβολή μεγέθυνσης."
 
-#: part/pageview.cpp:5120
+#: part/pageview.cpp:5124
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρο από το κείμενο/γραφικό που θέλετε να "
 "αντιγράψετε."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5138
 #, kde-format
 msgid "Select text"
 msgstr "Επιλέξτε κείμενο"
 
-#: part/pageview.cpp:5148
+#: part/pageview.cpp:5152
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3894,14 +3894,14 @@ msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρο από τον πίνακα, έπειτα κάντε κλικ κοντά "
 "στις ακμές για την κατανομή. Πατήστε Esc για καθαρισμό."
 
-#: part/pageview.cpp:5160
+#: part/pageview.cpp:5164
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "Όλα τα πιστοποιητικά σας ή δεν έχουν ακόμη επικυρωθεί ή έχουν λήξει."
 
-#: part/pageview.cpp:5163
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3912,27 +3912,27 @@ msgstr ""
 "πληροφορίες δείτε την ενότητα για την <a href=\"%1\">Προσθήκη ψηφιακών "
 "υπογραφών</a> στο εγχειρίδιο χρήσης."
 
-#: part/pageview.cpp:5187
+#: part/pageview.cpp:5191
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Έχετε μη αποθηκευμένες αλλαγές. Αποθηκεύστε το έγγραφο πριν το υπογράψετε."
 
-#: part/pageview.cpp:5210
+#: part/pageview.cpp:5214
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 "Σχηματίστε ένα ορθογώνιο παραλληλόγραμμο για να εισαγάγετε το πεδίο της "
 "υπογραφής"
 
-#: part/pageview.cpp:5354
+#: part/pageview.cpp:5358
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρω από την περιοχή της σελίδας που θέλετε να "
 "διατηρήσετε ορατή"
 
-#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"

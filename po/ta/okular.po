@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-28 00:39+0000\n"
+"POT-Creation-Date: 2025-01-03 00:40+0000\n"
 "PO-Revision-Date: 2024-10-27 11:27+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3772,22 +3772,22 @@ msgstr "உரையை நகலெடு"
 msgid "Go to '%1'"
 msgstr "'%1' என்பதற்கு செல்"
 
-#: part/pageview.cpp:4060 part/part.cpp:3160
+#: part/pageview.cpp:4064 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
 msgstr "அகலம் படி"
 
-#: part/pageview.cpp:4060
+#: part/pageview.cpp:4064
 #, kde-format
 msgid "Fit Page"
 msgstr "பக்க அளவுபடி"
 
-#: part/pageview.cpp:4060
+#: part/pageview.cpp:4064
 #, kde-format
 msgid "Auto Fit"
 msgstr "தானியக்கம்"
 
-#: part/pageview.cpp:4083
+#: part/pageview.cpp:4087
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3796,69 +3796,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4366
+#: part/pageview.cpp:4370
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' என்பதற்கு இதைக்கொண்டு தேடு"
 
-#: part/pageview.cpp:4380
+#: part/pageview.cpp:4384
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "இணைய சுருக்குவழிகளை அமை..."
 
-#: part/pageview.cpp:4406
+#: part/pageview.cpp:4410
 #, kde-format
 msgid "Follow This Link"
 msgstr "இந்த இணைப்புக்கு செல்"
 
-#: part/pageview.cpp:4409
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Play this Sound"
 msgstr "இந்த ஒலியை இயக்கு"
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4415
 #, kde-format
 msgid "Stop Sound"
 msgstr "ஒலியை நிறுத்து"
 
-#: part/pageview.cpp:4417
+#: part/pageview.cpp:4421
 #, kde-format
 msgid "Copy Link Address"
 msgstr "இணைப்பின் முகவரியை நகலெடு"
 
-#: part/pageview.cpp:4438
+#: part/pageview.cpp:4442
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "'%1' என்பதற்கு இந்த ஆவணத்தில் தேடு"
 
-#: part/pageview.cpp:4970
+#: part/pageview.cpp:4974
 #, kde-format
 msgid "Welcome"
 msgstr "நல்வரவு"
 
-#: part/pageview.cpp:5092
+#: part/pageview.cpp:5096
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "பெரிதாக்க வேண்டிய பரப்பை தேர்ந்தெடுங்கள். உருப்பெருக்கத்தை ரத்து செய்ய வலது-க்ளிக் "
 "செய்யுங்கள்."
 
-#: part/pageview.cpp:5105
+#: part/pageview.cpp:5109
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "பெரிதாக்கப்பட்ட காட்சியைக் காண க்ளிக் செய்யுங்கள்."
 
-#: part/pageview.cpp:5120
+#: part/pageview.cpp:5124
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "உரை/படங்களை நகலெடுக்க, அவற்றைச் சுற்றி ஒரு செவ்வகத்தை வரையுங்கள்."
 
-#: part/pageview.cpp:5134
+#: part/pageview.cpp:5138
 #, kde-format
 msgid "Select text"
 msgstr "உரையைத் தேர்ந்தெடு"
 
-#: part/pageview.cpp:5148
+#: part/pageview.cpp:5152
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3867,14 +3867,14 @@ msgstr ""
 "அட்டவணையைச் சுற்றி ஒரு செவ்வகத்தை வரைந்து, அதை பிரிக்க ஓரங்களில் க்ளிக் செய்யுங்கள்; "
 "நிராகரிக்க Esc விசையை அழுத்துங்கள்."
 
-#: part/pageview.cpp:5160
+#: part/pageview.cpp:5164
 #, kde-format
 msgid ""
 "All your signing certificates are either not valid yet or are past their "
 "validity date."
 msgstr "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகவில்லை அல்லது காலாவதியாகிவிட்டன."
 
-#: part/pageview.cpp:5163
+#: part/pageview.cpp:5167
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3884,24 +3884,24 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5187
+#: part/pageview.cpp:5191
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "சேமிக்கப்படாத மாற்றங்கள் உள்ளன. கையொப்பம் இடுவதற்கு முன் ஆவணத்தை சேமியுங்கள்."
 
-#: part/pageview.cpp:5210
+#: part/pageview.cpp:5214
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "கையொப்பப் புலத்தை நுழைக்க ஒரு செவ்வகத்தை வரையுங்கள்"
 
-#: part/pageview.cpp:5354
+#: part/pageview.cpp:5358
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "பக்கத்தின் எந்தப் பகுதியை நீங்கள் பார்க்க விரும்புகிறீர்களோ, அதை சுற்றி ஒரு செவ்வகத்தை "
 "வரையுங்கள்"
 
-#: part/pageview.cpp:5511 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:483
 #, kde-format
 msgctxt "%1 is a file path"

@@ -11,7 +11,6 @@
 
 #include <QDialog>
 #include <QFileInfo>
-#include <QStyledItemDelegate>
 #include <memory>
 #include <optional>
 
@@ -63,14 +62,6 @@ inline QString getSuggestedFileNameForSignedFile(const QString &orig, const QStr
     return i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 its extension", "%1_signed.%2", baseName, suffix);
 }
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
-
-class ImageItemDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-public:
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-};
 
 class SelectCertificateDialog : public QDialog
 {

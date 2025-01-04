@@ -64,16 +64,6 @@ inline QString getSuggestedFileNameForSignedFile(const QString &orig, const QStr
 }
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc);
 
-class KeyDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-public:
-    using QStyledItemDelegate::QStyledItemDelegate;
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const final;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const final;
-    bool showIcon = false;
-};
-
 class ImageItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT

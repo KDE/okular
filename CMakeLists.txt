@@ -568,6 +568,7 @@ if(BUILD_DESKTOP)
     part/videowidget.cpp
     part/layers.cpp
     part/signaturepartutils.cpp
+    part/signaturepartutilskeydelegate.cpp
     part/signaturepropertiesdialog.cpp
     part/signaturepanel.cpp
 

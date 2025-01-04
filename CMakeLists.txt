@@ -569,6 +569,7 @@ if(BUILD_DESKTOP)
     part/layers.cpp
     part/signaturepartutils.cpp
     part/signaturepartutilskeydelegate.cpp
+    part/signaturepartutilsrecentimagesmodel.cpp
     part/signaturepropertiesdialog.cpp
     part/signaturepanel.cpp
 

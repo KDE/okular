@@ -72,24 +72,6 @@ public:
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
-class RecentImagesModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    RecentImagesModel();
-    QVariant roleFromString(const QString &data, int role) const;
-    QVariant data(const QModelIndex &index, int role) const override;
-    int rowCount(const QModelIndex &parent = {}) const override;
-    void setFileSystemSelection(const QString &selection);
-    void clear();
-    void removeItem(const QString &text);
-    void saveBack();
-
-private:
-    std::optional<QString> m_selectedFromFileSystem;
-    QStringList m_storedElements;
-};
-
 class SelectCertificateDialog : public QDialog
 {
     Q_OBJECT

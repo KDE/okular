@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:40+0000\n"
+"POT-Creation-Date: 2025-01-05 00:39+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -3900,7 +3900,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:483
+#: part/signaturepartutils.cpp:298
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4588,7 +4588,7 @@ msgid "Remove this Bookmark"
 msgstr "Bu əlfəcini silmək"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:451
+#: part/signaturepartutils.cpp:266
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5450,48 +5450,48 @@ msgstr "Bütün elementləri yığmaq"
 msgid "Properties"
 msgstr "Xüsusiyyətlər"
 
-#: part/signaturepartutils.cpp:369
+#: part/signaturepartutils.cpp:184
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Şəkillər (%1)"
 
-#: part/signaturepartutils.cpp:370
+#: part/signaturepartutils.cpp:185
 #, kde-format
 msgid "Select background image"
 msgstr "Arxa fon şəklini seçin"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:190
 #, kde-format
 msgid "Forget image"
 msgstr "Şəkili unutmaq"
 
-#: part/signaturepartutils.cpp:376
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Forget all images"
 msgstr "Bütün şəkilləri unutmaq"
 
-#: part/signaturepartutils.cpp:419
+#: part/signaturepartutils.cpp:234
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Sertifikatın kilidini açmaq üçün şifrəni (əgər varsa) daxil edin: %1"
 
-#: part/signaturepartutils.cpp:421
+#: part/signaturepartutils.cpp:236
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Sertifikat şifrəsini daxil edin"
 
-#: part/signaturepartutils.cpp:434
+#: part/signaturepartutils.cpp:249
 #, kde-format
 msgid "Enter document password"
 msgstr "Sənədin şifrəsini daxil edin"
 
-#: part/signaturepartutils.cpp:457
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Save Signed File As"
 msgstr "İmzalanmış faylı belə saxlayın"
 
-#: part/signaturepartutils.h:63
+#: part/signaturepartutils.h:62
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "

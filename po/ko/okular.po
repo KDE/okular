@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:40+0000\n"
+"POT-Creation-Date: 2025-01-05 00:39+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -3871,7 +3871,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "표시할 텍스트나 그림 주위로 사각형을 그리십시오."
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:483
+#: part/signaturepartutils.cpp:298
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4550,7 +4550,7 @@ msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:451
+#: part/signaturepartutils.cpp:266
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5408,48 +5408,48 @@ msgstr "모든 구성 요소 접기"
 msgid "Properties"
 msgstr "속성"
 
-#: part/signaturepartutils.cpp:369
+#: part/signaturepartutils.cpp:184
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "이미지(%1)"
 
-#: part/signaturepartutils.cpp:370
+#: part/signaturepartutils.cpp:185
 #, kde-format
 msgid "Select background image"
 msgstr "배경 이미지 선택"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:190
 #, kde-format
 msgid "Forget image"
 msgstr "이미지 잊기"
 
-#: part/signaturepartutils.cpp:376
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Forget all images"
 msgstr "모든 이미지 잊기"
 
-#: part/signaturepartutils.cpp:419
+#: part/signaturepartutils.cpp:234
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "인증서 잠금을 해제할 암호 입력(존재하는 경우): %1"
 
-#: part/signaturepartutils.cpp:421
+#: part/signaturepartutils.cpp:236
 #, kde-format
 msgid "Enter certificate password"
 msgstr "인증서 암호 입력"
 
-#: part/signaturepartutils.cpp:434
+#: part/signaturepartutils.cpp:249
 #, kde-format
 msgid "Enter document password"
 msgstr "문서 암호 입력"
 
-#: part/signaturepartutils.cpp:457
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Save Signed File As"
 msgstr "서명된 파일 다른 이름으로 저장"
 
-#: part/signaturepartutils.h:63
+#: part/signaturepartutils.h:62
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "

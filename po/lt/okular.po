@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:40+0000\n"
+"POT-Creation-Date: 2025-01-05 00:39+0000\n"
 "PO-Revision-Date: 2024-11-13 02:10+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3932,7 +3932,7 @@ msgstr ""
 "Apibrėžkite stačiakampį aplink puslapio sritį, kurią norite palikti matomą"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:483
+#: part/signaturepartutils.cpp:298
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4626,7 +4626,7 @@ msgid "Remove this Bookmark"
 msgstr "Šalinti šią žymelę"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:451
+#: part/signaturepartutils.cpp:266
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5493,48 +5493,48 @@ msgstr "Suskleisti visus elementus"
 msgid "Properties"
 msgstr "Savybės"
 
-#: part/signaturepartutils.cpp:369
+#: part/signaturepartutils.cpp:184
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Paveikslai (%1)"
 
-#: part/signaturepartutils.cpp:370
+#: part/signaturepartutils.cpp:185
 #, kde-format
 msgid "Select background image"
 msgstr "Pasirinkti foninį paveikslą"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:190
 #, kde-format
 msgid "Forget image"
 msgstr "Išvalyti paveikslą"
 
-#: part/signaturepartutils.cpp:376
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Forget all images"
 msgstr "Išvalyti visus paveikslus"
 
-#: part/signaturepartutils.cpp:419
+#: part/signaturepartutils.cpp:234
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Įveskite slaptažodį (jeigu yra), kad atrakintumėte liudijimą: %1"
 
-#: part/signaturepartutils.cpp:421
+#: part/signaturepartutils.cpp:236
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Įveskite liudijimo slaptažodį"
 
-#: part/signaturepartutils.cpp:434
+#: part/signaturepartutils.cpp:249
 #, kde-format
 msgid "Enter document password"
 msgstr "Įveskite dokumento slaptažodį"
 
-#: part/signaturepartutils.cpp:457
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Įrašyti pasirašytą failą kaip"
 
-#: part/signaturepartutils.h:63
+#: part/signaturepartutils.h:62
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "

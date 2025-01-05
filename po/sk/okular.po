@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:40+0000\n"
+"POT-Creation-Date: 2025-01-05 00:39+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -3932,7 +3932,7 @@ msgstr ""
 "Nakreslite obdĺžnik okolo oblasti strany, ktorú chcete nechať viditeľnú"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:483
+#: part/signaturepartutils.cpp:298
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4624,7 +4624,7 @@ msgid "Remove this Bookmark"
 msgstr "Odstrániť túto záložku"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:451
+#: part/signaturepartutils.cpp:266
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5485,52 +5485,52 @@ msgstr "Zbaliť všetko"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: part/signaturepartutils.cpp:369
+#: part/signaturepartutils.cpp:184
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Obrázky (%1)"
 
-#: part/signaturepartutils.cpp:370
+#: part/signaturepartutils.cpp:185
 #, kde-format
 msgid "Select background image"
 msgstr "Vyberte obrázok pozadia"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:190
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Zabudnúť všetko"
 
-#: part/signaturepartutils.cpp:376
+#: part/signaturepartutils.cpp:191
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Zabudnúť všetko"
 
-#: part/signaturepartutils.cpp:419
+#: part/signaturepartutils.cpp:234
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Ak chcete odomknúť certifikát, zadajte heslo (ak existuje): %1"
 
-#: part/signaturepartutils.cpp:421
+#: part/signaturepartutils.cpp:236
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Zadajte heslo k certifikátu"
 
-#: part/signaturepartutils.cpp:434
+#: part/signaturepartutils.cpp:249
 #, kde-format
 msgid "Enter document password"
 msgstr "Zadajte heslo dokumentu"
 
-#: part/signaturepartutils.cpp:457
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Uložiť podpísaný súbor ako"
 
-#: part/signaturepartutils.h:63
+#: part/signaturepartutils.h:62
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "Used when suggesting a new name for a digitally signed file. %1 is the "

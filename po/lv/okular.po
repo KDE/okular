@@ -2,7 +2,7 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2023, 2024 Toms Trasūns <toms.trasuns@posteo.net>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Toms Trasūns <toms.trasuns@posteo.net>
 # Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2007, 2008, 2010.
 # Maris Nartiss <maris.kde@gmail.com>, 2007, 2008, 2020, 2024.
 # Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:40+0000\n"
-"PO-Revision-Date: 2024-11-12 20:26+0200\n"
+"POT-Creation-Date: 2025-01-05 00:39+0000\n"
+"PO-Revision-Date: 2025-01-03 16:46+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -515,25 +515,25 @@ msgstr "rediģēt anotācijas saturu"
 #, kde-format
 msgctxt "Edit an form's text contents"
 msgid "edit form contents"
-msgstr "rediģēt veidnes saturu"
+msgstr "rediģēt formas saturu"
 
 #: core/documentcommands.cpp:494
 #, kde-format
 msgctxt "Edit a list form's choices"
 msgid "edit list form choices"
-msgstr "rediģēt veidnes saraksta izvēles"
+msgstr "rediģēt formas saraksta izvēles"
 
 #: core/documentcommands.cpp:528
 #, kde-format
 msgctxt "Edit a combo form's selection"
 msgid "edit combo form selection"
-msgstr "rediģēt veidnes kombinētā lodziņa izvēlnes"
+msgstr "rediģēt formas kombinētā lodziņa izvēlnes"
 
 #: core/documentcommands.cpp:598
 #, kde-format
 msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
-msgstr "rediģēt veidnes pogas stāvokļus"
+msgstr "rediģēt formas pogas stāvokļus"
 
 #: core/generator.cpp:775
 #, kde-format
@@ -2802,12 +2802,10 @@ msgid "Overview columns:"
 msgstr "Pārskata kolonnas:"
 
 #: part/dlggeneral.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:200
 #, kde-format
@@ -2826,38 +2824,31 @@ msgid "Page Up/Down overlap:"
 msgstr "„Page Up/Page Down“ pārklāšanās:"
 
 #: part/dlggeneral.cpp:207
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:211
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:212
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Pilnā platumā"
 
 #: part/dlggeneral.cpp:213
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ietilpināt lapu"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automātiski ietilpināt"
@@ -2866,21 +2857,17 @@ msgstr "Automātiski ietilpināt"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Pielāgots"
 
 #: part/dlggeneral.cpp:216
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
-"Nosaka noklusēto tālummaiņas režīmu datnēm, kuras nekad iepriekš nav "
-"atvērtas. Iepriekš atvērtām datnēm tiks izmantots iepriekšējais tuvinājums."
+"Nosaka noklusējuma tālummaiņas režīmu datnēm, kas nekad iepriekš nav "
+"atvērtas. Iepriekš atvērtām datnēm programma izmantos iepriekšējo tuvinājumu."
 
 #: part/dlggeneral.cpp:220
 #, kde-format
@@ -3707,7 +3694,7 @@ msgstr "Ritināt lapu lejup"
 #: part/pageview.cpp:766
 #, kde-format
 msgid "Show Forms"
-msgstr "Rādīt veidnes"
+msgstr "Rādīt formas"
 
 #: part/pageview.cpp:1270
 #, kde-format
@@ -3916,7 +3903,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Apvelciet taisnstūri ap vietu lapā, kuru vēlaties paturēt redzamu"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:483
+#: part/signaturepartutils.cpp:298
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4127,10 +4114,10 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
-"Šis dokuments satur anotācijas vai veidnes datus, kas ir saglabāti iekšēji "
-"ar vecāku „Okular“ versiju. Iekšējā saglabāšana <b>vairs netiek atbalstīta</"
-"b>.<br/>Ja vēlaties turpināt rediģēt šo dokumentu, saglabājiet to datnē, lai "
-"šo informāciju pārvietotu."
+"Šis dokuments satur anotācijas vai formas lauku datus, kas ir saglabāti "
+"iekšēji ar vecāku „Okular“ versiju. Iekšējā saglabāšana <b>vairs netiek "
+"atbalstīta</b>.<br/>Ja vēlaties turpināt rediģēt šo dokumentu, saglabājiet "
+"to datnē, lai šo informāciju pārvietotu."
 
 #: part/part.cpp:460
 #, kde-format
@@ -4434,7 +4421,7 @@ msgstr "Dokumenta parole"
 #: part/part.cpp:1615
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
-msgstr "Šim dokumentam ir XFA veidnes, kas šobrīd <b>nav atbalstītas</b>."
+msgstr "Šim dokumentam ir XFA formas lauki, kas šobrīd <b>nav atbalstītas</b>."
 
 #: part/part.cpp:1622
 #, kde-format
@@ -4605,7 +4592,7 @@ msgid "Remove this Bookmark"
 msgstr "Noņemt šo grāmatzīmi"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:451
+#: part/signaturepartutils.cpp:266
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5469,48 +5456,48 @@ msgstr "Sakļaut visus elementus"
 msgid "Properties"
 msgstr "Īpašības"
 
-#: part/signaturepartutils.cpp:369
+#: part/signaturepartutils.cpp:184
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Attēli (%1)"
 
-#: part/signaturepartutils.cpp:370
+#: part/signaturepartutils.cpp:185
 #, kde-format
 msgid "Select background image"
 msgstr "Izvēlēties fona attēlu"
 
-#: part/signaturepartutils.cpp:375
+#: part/signaturepartutils.cpp:190
 #, kde-format
 msgid "Forget image"
 msgstr "Aizmirst attēlu"
 
-#: part/signaturepartutils.cpp:376
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Forget all images"
 msgstr "Aizmirst visus attēlus"
 
-#: part/signaturepartutils.cpp:419
+#: part/signaturepartutils.cpp:234
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Ievadīt paroli (ja tāda ir), lai piekļūtu sertifikātam: %1"
 
-#: part/signaturepartutils.cpp:421
+#: part/signaturepartutils.cpp:236
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Ievadiet sertifikāta paroli"
 
-#: part/signaturepartutils.cpp:434
+#: part/signaturepartutils.cpp:249
 #, kde-format
 msgid "Enter document password"
 msgstr "Ievadiet dokumenta paroli"
 
-#: part/signaturepartutils.cpp:457
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Parakstīto datni saglabāt kā"
 
-#: part/signaturepartutils.h:63
+#: part/signaturepartutils.h:62
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "

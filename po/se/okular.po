@@ -2780,7 +2780,6 @@ msgstr ""
 
 #: part/dlggeneral.cpp:213
 #, fuzzy, kde-format
-#| msgid "Go to Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Mana siidui"

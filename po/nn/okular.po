@@ -2796,8 +2796,6 @@ msgstr "Oversiktsspalter:"
 
 #: part/dlggeneral.cpp:199
 #, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%1 %"
@@ -2820,37 +2818,30 @@ msgstr "«Page Up/Down»-overlapp:"
 
 #: part/dlggeneral.cpp:207
 #, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1 %"
 
 #: part/dlggeneral.cpp:211
 #, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100 %"
 
 #: part/dlggeneral.cpp:212
 #, fuzzy, kde-format
-#| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Tilpass til breidda"
 
 #: part/dlggeneral.cpp:213
 #, fuzzy, kde-format
-#| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Tilpass til sida"
 
 #: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
-#| msgid "Auto Fit"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Autotilpassa"
@@ -2863,10 +2854,6 @@ msgstr ""
 
 #: part/dlggeneral.cpp:216
 #, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "

@@ -2799,21 +2799,18 @@ msgstr ""
 
 #: part/dlggeneral.cpp:212
 #, fuzzy, kde-format
-#| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Tilpass til bredden"
 
 #: part/dlggeneral.cpp:213
 #, fuzzy, kde-format
-#| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Tilpass til siden"
 
 #: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
-#| msgid "Auto Fit"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Tilpass automatisk"

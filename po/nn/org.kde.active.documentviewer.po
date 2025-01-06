@@ -73,7 +73,6 @@ msgstr "SHA-256-fingeravtrykk:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
 #, fuzzy
-#| msgid "Export..."
 msgid "Export…"
 msgstr "Eksporter …"
 
@@ -180,13 +179,11 @@ msgstr "Dokumentrevisjon %1 av %2"
 
 #: ui/SignaturePropertiesPage.qml:108
 #, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
 msgstr "Lagra signert versjon …"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
 #, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
 msgstr "Vis sertifikat …"
 

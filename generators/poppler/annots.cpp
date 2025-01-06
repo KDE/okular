@@ -445,8 +445,15 @@ static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::Signin
         return Okular::FieldAlreadySigned;
     case Poppler::SignatureAnnotation::GenericSigningError:
         return Okular::GenericSigningError;
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
+    case Poppler::SignatureAnnotation::InternalError:
+    case Poppler::SignatureAnnotation::KeyMissing:
+    case Poppler::SignatureAnnotation::WriteFailed:
+    case Poppler::SignatureAnnotation::UserCancelled:
+        return Okular::GenericSigningError;
+#endif
     }
-    return Okular::GenericSigningError;
+    Q_UNREACHABLE_RETURN(Okular::GenericSigningError);
 }
 
 void resizeImage(const SignatureImageHelper *helper, int page, const Okular::NormalizedRect &bRect, Poppler::Document *pdfdoc)

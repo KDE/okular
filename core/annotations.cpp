@@ -2471,7 +2471,7 @@ void SignatureAnnotation::setLeftFontSize(double fontSize)
 void SignatureAnnotation::setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func)
 {
     Q_D(SignatureAnnotation);
-    d->m_signFunction = func;
+    d->m_signFunction = std::move(func);
 }
 
 SigningResult SignatureAnnotation::sign(const Okular::NewSignatureData &data, const QString &fileName)
@@ -2492,7 +2492,7 @@ void SignatureAnnotation::setPage(int page)
     d->m_page = page;
 }
 
-void SignatureAnnotation::store(QDomNode &node, QDomDocument &document) const
+void SignatureAnnotation::store(QDomNode & /*node*/, QDomDocument & /*document*/) const
 {
     // TODO is this relevant?
 }

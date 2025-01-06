@@ -20,5 +20,10 @@ endif()
 
 
 ########### install files ###############
-install( PROGRAMS okularApplication_kimgio.desktop org.kde.mobile.okular_kimgio.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+if (BUILD_DESKTOP)
+  install( PROGRAMS okularApplication_kimgio.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
+if (BUILD_MOBILE)
+  install( PROGRAMS org.kde.mobile.okular_kimgio.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
 install( FILES org.kde.okular-kimgio.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

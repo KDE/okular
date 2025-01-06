@@ -39,5 +39,10 @@ if(BUILD_TESTING)
 endif()
 
 ########### install files ###############
-install( PROGRAMS okularApplication_comicbook.desktop org.kde.mobile.okular_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+if (BUILD_DESKTOP)
+  install( PROGRAMS okularApplication_comicbook.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
+if (BUILD_MOBILE)
+  install( PROGRAMS org.kde.mobile.okular_comicbook.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
 install( FILES org.kde.okular-comicbook.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

@@ -19,7 +19,7 @@ if (BUILD_DESKTOP)
   install( PROGRAMS okularApplication_djvu.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
 endif()
 if (BUILD_MOBILE)
-  install( PROGRAMS kde.mobile.okular_djvu.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+  install( PROGRAMS org.kde.mobile.okular_djvu.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
 endif()
 install( FILES org.kde.okular-djvu.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 

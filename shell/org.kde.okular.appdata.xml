@@ -62,6 +62,7 @@
   <summary>View and annotate documents</summary>
   <summary xml:lang="ar">يعرض المستندات و يستطيع وضع الشروح عليها</summary>
   <summary xml:lang="az">Sənədləri gözdən keçirin və qeydinizi yazın</summary>
+  <summary xml:lang="be">Прагляд і анатаванне дакументаў</summary>
   <summary xml:lang="bg">Преглед на документи и поставяне на бележки</summary>
   <summary xml:lang="ca">Visualitzeu i anoteu documents</summary>
   <summary xml:lang="ca-valencia">Visualitzeu i anoteu documents</summary>
@@ -208,6 +209,7 @@
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ar">يدعم التنسيقات: PDF و PS و Tiff و DjVu و Images و DVI و XPS  و Fiction Book و Comic Book و Plucker و EPub و Fax</li>
+      <li xml:lang="be">Падтрымліваюцца фарматы: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="bg">Поддържани формати: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>

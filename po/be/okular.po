@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-05 00:39+0000\n"
-"PO-Revision-Date: 2024-06-05 07:04\n"
+"PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -280,20 +280,16 @@ msgid "Landscape %1"
 msgstr "Альбомная %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 у (%3)"
+msgstr "%1 × %2 цал (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
-msgstr "%1 x %2 мм (%3)"
+msgstr "%1 × %2 мм (%3)"
 
 #: core/document.cpp:1718
 #, kde-format
@@ -896,7 +892,7 @@ msgstr "Сертыфікат яшчэ не правераны."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Правяранне сертыфіката"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -3674,10 +3670,9 @@ msgid "Speak Whole Document"
 msgstr "Прачытаць уголас увесь дакумент"
 
 #: part/pageview.cpp:715
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Прачытаць уголас бягучую старонку"
+msgstr "Прачытаць з бягучай старонкі"
 
 #: part/pageview.cpp:720
 #, kde-format
@@ -3753,22 +3748,19 @@ msgid "Speak Text"
 msgstr "Прачытаць тэкст уголас"
 
 #: part/pageview.cpp:2853
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Выява (%1 на %2 пікселяў)"
+msgstr "Выява (%1 × %2 пікселяў)"
 
 #: part/pageview.cpp:2855
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Захаваць у файл..."
+msgstr "Захаваць у файл…"
 
 #: part/pageview.cpp:2875
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Выява [%1x%2] скапіяваная ў буфер абмену."
+msgstr "Выява [%1 × %2] скапіяваная ў буфер абмену."
 
 #: part/pageview.cpp:2878
 #, kde-format
@@ -3786,10 +3778,9 @@ msgid "File not saved."
 msgstr "Файл не захаваны."
 
 #: part/pageview.cpp:2891
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Выява [%1x%2] захаваная ў файл %3."
+msgstr "Выява [%1 × %2] захаваная ў файл %3."
 
 #: part/pageview.cpp:3033
 #, kde-format
@@ -3956,6 +3947,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Падпісана: %1\n"
+"\n"
+"Дата: %2"
 
 #: part/pageviewannotator.cpp:448
 #, kde-kuit-format
@@ -4160,13 +4154,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Выконваецца падпісанне. Вы можаце наладзіць пазіцыю і памер подпісу"
 
 #: part/part.cpp:491
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Скончыць падпісанне"
 
 #: part/part.cpp:661
 #, kde-format
@@ -5527,11 +5521,7 @@ msgid "Save Signed File As"
 msgstr "Захаваць падпісаны файл як"
 
 #: part/signaturepartutils.h:62
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"

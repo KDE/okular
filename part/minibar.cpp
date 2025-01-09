@@ -483,6 +483,7 @@ PagesEdit::PagesEdit(MiniBar *parent)
     // send a focus out event
     QFocusEvent fe(QEvent::FocusOut);
     QApplication::sendEvent(this, &fe);
+    qApp->installEventFilter(this);
 }
 
 void PagesEdit::setText(const QString &newText)
@@ -526,12 +527,12 @@ void PagesEdit::updatePalette()
     setPalette(pal);
 }
 
-bool PagesEdit::event(QEvent *e)
+bool PagesEdit::eventFilter(QObject *watched, QEvent *e)
 {
-    if (e->type() == QEvent::ApplicationPaletteChange) {
+    if (watched == qApp && e->type() == QEvent::ApplicationPaletteChange) {
         updatePalette();
     }
-    return KLineEdit::event(e);
+    return KLineEdit::eventFilter(watched, e);
 }
 
 void PagesEdit::focusInEvent(QFocusEvent *e)

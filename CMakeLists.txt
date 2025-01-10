@@ -573,6 +573,7 @@ if(BUILD_DESKTOP)
     part/signaturepartutilsimageitemdelegate.cpp
     part/signaturepropertiesdialog.cpp
     part/signaturepanel.cpp
+    part/signingcertificatelistmodel.cpp
     part/part.qrc
   )
   ki18n_wrap_ui(okularpart_SRCS part/selectcertificatedialog.ui)

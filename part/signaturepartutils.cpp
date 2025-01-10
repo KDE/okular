@@ -13,6 +13,7 @@
 #include "signaturepartutilskeydelegate.h"
 #include "signaturepartutilsmodel.h"
 #include "signaturepartutilsrecentimagesmodel.h"
+#include "signingcertificatelistmodel.h"
 
 #include "core/document.h"
 #include "core/form.h"
@@ -62,54 +63,11 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QString password;
     QString documentPassword;
 
-    QStandardItemModel items;
-    QHash<QString, Okular::CertificateInfo> nickToCert;
-    qsizetype minWidth = -1;
-    bool showIcons = false;
-    int selectIndex = 0;
+    SigningCertificateListModel certificateModel(certs);
+    bool showIcons = certificateModel.hasIcons();
+    int minWidth = certificateModel.minWidth();
     auto config = KSharedConfig::openConfig();
     const QString lastNick = config->group(ConfigGroup()).readEntry<QString>(ConfigLastKeyNick(), QString());
-    for (const auto &cert : std::as_const(certs)) {
-        auto item = std::make_unique<QStandardItem>();
-        QString commonName = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
-        item->setData(commonName, CommonNameRole);
-        QString emailAddress = cert.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::Empty);
-        item->setData(emailAddress, EmailRole);
-
-        minWidth = std::max(minWidth, std::max(cert.nickName().size(), emailAddress.size() + commonName.size()));
-
-        switch (cert.keyLocation()) {
-        case Okular::CertificateInfo::KeyLocation::Computer:
-            item->setData(QIcon::fromTheme(QStringLiteral("view-certificate")), Qt::DecorationRole);
-            showIcons = true;
-            break;
-        case Okular::CertificateInfo::KeyLocation::HardwareToken:
-            /* Better icon requested in https://bugs.kde.org/show_bug.cgi?id=428278*/
-            item->setData(QIcon::fromTheme(QStringLiteral("auth-sim")), Qt::DecorationRole);
-            showIcons = true;
-            break;
-        case Okular::CertificateInfo::KeyLocation::Unknown:; //
-            break;
-        case Okular::CertificateInfo::KeyLocation::Other:
-            break;
-        }
-
-        QString nick = cert.nickName();
-        item->setData(nick, NickRole);
-
-        if (cert.backend() == Okular::CertificateInfo::Backend::Gpg) {
-            static const auto group4 = QRegularExpression(QStringLiteral("(....)"));
-            nick = nick.replace(group4, QStringLiteral("\\1 ")).trimmed();
-        }
-        item->setData(nick, NickDisplayRole);
-        item->setData(cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty), Qt::ToolTipRole);
-        item->setEditable(false);
-        if (cert.nickName() == lastNick) {
-            selectIndex = items.rowCount();
-        }
-        items.appendRow(item.release());
-        nickToCert[cert.nickName()] = cert;
-    }
 
     SelectCertificateDialog dialog(pageView);
     auto keyDelegate = new KeyDelegate(dialog.ui->list);
@@ -117,11 +75,11 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     dialog.ui->list->setItemDelegate(keyDelegate);
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
-    dialog.ui->list->setModel(&items);
-    dialog.ui->list->setCurrentIndex(items.index(selectIndex, 0));
-    if (items.rowCount() < 3) {
+    dialog.ui->list->setModel(&certificateModel);
+    dialog.ui->list->setCurrentIndex(certificateModel.indexForNick(lastNick));
+    if (certificateModel.rowCount() < 3) {
         auto rowHeight = dialog.ui->list->sizeHintForRow(0);
-        dialog.ui->list->setFixedHeight(rowHeight * items.rowCount() + (items.rowCount() - 1) * dialog.ui->list->spacing() + dialog.ui->list->contentsMargins().top() + dialog.ui->list->contentsMargins().bottom());
+        dialog.ui->list->setFixedHeight(rowHeight * certificateModel.rowCount() + (certificateModel.rowCount() - 1) * dialog.ui->list->spacing() + dialog.ui->list->contentsMargins().top() + dialog.ui->list->contentsMargins().bottom());
     }
     QObject::connect(dialog.ui->list->selectionModel(), &QItemSelectionModel::selectionChanged, &dialog, [dialog = &dialog](auto &&, auto &&) {
         // One can ctrl-click on the selected item to deselect it, that would
@@ -213,7 +171,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     if (result == QDialog::Rejected) {
         return std::nullopt;
     }
-    const auto certNicknameToUse = dialog.ui->list->currentIndex().data(NickRole).toString();
+    auto cert = dialog.ui->list->currentIndex().data(CertRole).value<Okular::CertificateInfo>();
     auto backGroundImage = dialog.ui->backgroundInput->text();
     if (!backGroundImage.isEmpty()) {
         if (QFile::exists(backGroundImage)) {
@@ -228,10 +186,9 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
     // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
     // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
-    Okular::CertificateInfo cert = nickToCert.value(certNicknameToUse);
     bool passok = cert.checkPassword(password);
     while (!passok) {
-        const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
+        const QString title = i18n("Enter password (if any) to unlock certificate: %1", cert.nickName());
         bool ok;
         password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
         if (ok) {

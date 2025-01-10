@@ -70,10 +70,8 @@ msgid "SHA-256 Fingerprint:"
 msgstr "Otisk SHA-256:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
-#, fuzzy
-#| msgid "Export..."
 msgid "Export…"
-msgstr "Exportovat..."
+msgstr "Exportovat…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"

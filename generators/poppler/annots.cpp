@@ -453,7 +453,7 @@ static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::Signin
         return Okular::GenericSigningError;
 #endif
     }
-    Q_UNREACHABLE_RETURN(Okular::GenericSigningError);
+    return Okular::GenericSigningError;
 }
 
 void resizeImage(const SignatureImageHelper *helper, int page, const Okular::NormalizedRect &bRect, Poppler::Document *pdfdoc)

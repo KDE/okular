@@ -52,5 +52,10 @@ endif (FREETYPE_FOUND)
 
 
 ########### install files ###############
-install( PROGRAMS okularApplication_dvi.desktop org.kde.mobile.okular_dvi.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+if (BUILD_DESKTOP)
+  install( PROGRAMS okularApplication_dvi.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
+if (BUILD_MOBILE)
+  install( PROGRAMS org.kde.mobile.okular_dvi.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+endif()
 install( FILES org.kde.okular-dvi.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

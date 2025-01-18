@@ -122,6 +122,8 @@ private:
     std::unique_ptr<Poppler::FormFieldChoice> m_field;
     Okular::NormalizedRect m_rect;
     int m_id;
+
+    mutable std::optional<QStringList> m_choices;
 };
 
 class PopplerFormFieldSignature : public Okular::FormFieldSignature

@@ -344,7 +344,10 @@ Okular::FormFieldChoice::ChoiceType PopplerFormFieldChoice::choiceType() const
 
 QStringList PopplerFormFieldChoice::choices() const
 {
-    return m_field->choices();
+    if (!m_choices) {
+        m_choices = m_field->choices();
+    }
+    return *m_choices;
 }
 
 bool PopplerFormFieldChoice::isEditable() const

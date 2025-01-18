@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-05 00:39+0000\n"
+"POT-Creation-Date: 2025-01-18 00:39+0000\n"
 "PO-Revision-Date: 2024-10-27 11:27+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3902,7 +3902,7 @@ msgstr ""
 "வரையுங்கள்"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:298
+#: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4591,7 +4591,7 @@ msgid "Remove this Bookmark"
 msgstr "இந்த நினைவுக்குறியை நீக்கு"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:266
+#: part/signaturepartutils.cpp:223
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5454,43 +5454,43 @@ msgstr "அனைத்து உருப்படிகளையும் ச�
 msgid "Properties"
 msgstr "பண்புகள்"
 
-#: part/signaturepartutils.cpp:184
+#: part/signaturepartutils.cpp:142
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "படங்கள் (%1)"
 
-#: part/signaturepartutils.cpp:185
+#: part/signaturepartutils.cpp:143
 #, kde-format
 msgid "Select background image"
 msgstr "பின்புலப் படத்தை தேர்ந்தெடுத்தல்"
 
-#: part/signaturepartutils.cpp:190
+#: part/signaturepartutils.cpp:148
 #, kde-format
 msgid "Forget image"
 msgstr "படத்தை மற"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:149
 #, kde-format
 msgid "Forget all images"
 msgstr "அனைத்துப் படங்களையும் மற"
 
-#: part/signaturepartutils.cpp:234
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "%1 என்ற சான்றிதழை திறப்பதற்கான கடவுச்சொல்லை (இருந்தால்) உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:236
+#: part/signaturepartutils.cpp:193
 #, kde-format
 msgid "Enter certificate password"
 msgstr "சான்றிதழுக்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:249
+#: part/signaturepartutils.cpp:206
 #, kde-format
 msgid "Enter document password"
 msgstr "ஆவணத்திற்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:272
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Save Signed File As"
 msgstr "கையொப்பமிட்ட கோப்பை இவ்வாறு சேமி"

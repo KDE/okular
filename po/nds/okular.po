@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-05 00:39+0000\n"
+"POT-Creation-Date: 2025-01-18 00:39+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -4177,7 +4177,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Treck en Rahmen üm den Text oder de Biller to, de(n) Du koperen wullt."
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:298
+#: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4862,7 +4862,7 @@ msgid "Remove this Bookmark"
 msgstr "Dit Leesteken ümnömen"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:266
+#: part/signaturepartutils.cpp:223
 #, fuzzy, kde-format
 #| msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
 #| msgid "%1 (%2)"
@@ -5744,46 +5744,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&Egenschappen"
 
-#: part/signaturepartutils.cpp:184
+#: part/signaturepartutils.cpp:142
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Sieden: %1"
 
-#: part/signaturepartutils.cpp:185
+#: part/signaturepartutils.cpp:143
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "&Opstellen in Achtergrund anmaken"
 
-#: part/signaturepartutils.cpp:190
+#: part/signaturepartutils.cpp:148
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:149
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:234
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:236
+#: part/signaturepartutils.cpp:193
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:249
+#: part/signaturepartutils.cpp:206
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgid "Enter document password"
 msgstr "Dokment-Passwoort"
 
-#: part/signaturepartutils.cpp:272
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""

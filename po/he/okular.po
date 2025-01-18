@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-05 00:39+0000\n"
+"POT-Creation-Date: 2025-01-18 00:39+0000\n"
 "PO-Revision-Date: 2024-12-28 10:42+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -3886,7 +3886,7 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "נא לצייר מרובע סביב האזור בעמוד שאמור להישאר גלוי"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:298
+#: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4562,7 +4562,7 @@ msgid "Remove this Bookmark"
 msgstr "הסרת הסימנייה"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:266
+#: part/signaturepartutils.cpp:223
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5416,43 +5416,43 @@ msgstr "צמצום כל הרכיבים"
 msgid "Properties"
 msgstr "מאפיינים"
 
-#: part/signaturepartutils.cpp:184
+#: part/signaturepartutils.cpp:142
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "תמונות (%1)"
 
-#: part/signaturepartutils.cpp:185
+#: part/signaturepartutils.cpp:143
 #, kde-format
 msgid "Select background image"
 msgstr "בחירת תמונת רקע"
 
-#: part/signaturepartutils.cpp:190
+#: part/signaturepartutils.cpp:148
 #, kde-format
 msgid "Forget image"
 msgstr "לשכוח תמונה"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:149
 #, kde-format
 msgid "Forget all images"
 msgstr "לשכוח את כל התמונות"
 
-#: part/signaturepartutils.cpp:234
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "נא למלא סיסמה (אם יש) לשחרור האישור: %1"
 
-#: part/signaturepartutils.cpp:236
+#: part/signaturepartutils.cpp:193
 #, kde-format
 msgid "Enter certificate password"
 msgstr "מילוי סיסמת האישור"
 
-#: part/signaturepartutils.cpp:249
+#: part/signaturepartutils.cpp:206
 #, kde-format
 msgid "Enter document password"
 msgstr "נא למלא סיסמה למסמך"
 
-#: part/signaturepartutils.cpp:272
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Save Signed File As"
 msgstr "לשמור את הקובץ החתום בשם"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-05 00:39+0000\n"
+"POT-Creation-Date: 2025-01-18 00:39+0000\n"
 "PO-Revision-Date: 2024-12-28 08:56+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -3900,7 +3900,7 @@ msgstr ""
 "Marraztu laukizuzen bat ikusgai izan nahi duzun orrialde azaleraren inguruan"
 
 #: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:298
+#: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4589,7 +4589,7 @@ msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:266
+#: part/signaturepartutils.cpp:223
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5455,43 +5455,43 @@ msgstr "Tolestu elementu guztiak"
 msgid "Properties"
 msgstr "Propietateak"
 
-#: part/signaturepartutils.cpp:184
+#: part/signaturepartutils.cpp:142
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Irudiak (%1)"
 
-#: part/signaturepartutils.cpp:185
+#: part/signaturepartutils.cpp:143
 #, kde-format
 msgid "Select background image"
 msgstr "Hautatu atzeko planoko irudia"
 
-#: part/signaturepartutils.cpp:190
+#: part/signaturepartutils.cpp:148
 #, kde-format
 msgid "Forget image"
 msgstr "Ahaztu irudia"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:149
 #, kde-format
 msgid "Forget all images"
 msgstr "Ahaztu irudi guztiak"
 
-#: part/signaturepartutils.cpp:234
+#: part/signaturepartutils.cpp:191
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Sartu ziurtagiria desblokeatzeko pasahitza (baldin badago): %1"
 
-#: part/signaturepartutils.cpp:236
+#: part/signaturepartutils.cpp:193
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Sartu ziurtagiriaren pasahitza"
 
-#: part/signaturepartutils.cpp:249
+#: part/signaturepartutils.cpp:206
 #, kde-format
 msgid "Enter document password"
 msgstr "Sartu dokumentuaren pasahitza"
 
-#: part/signaturepartutils.cpp:272
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gorde sinatutako fitxategia honela"

@@ -1,6 +1,5 @@
 # translation of okular.po to
 # Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
-#
 # Michal Rudolf <mrudolf@kdewebdev.org>, 2003, 2004, 2005.
 # Krzysztof Lichota <lichota@mimuw.edu.pl>, 2005, 2006.
 # Robert Gomulka <carramba@epf.pl>, 2007, 2008.
@@ -8,9 +7,10 @@
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008, 2010, 2013.
 # Maciej Wikło <maciej.wiklo@wp.pl>, 2009, 2010.
 # Artur Chłond <eugenewolfe@o2.pl>, 2011.
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Kris <x-men@mixbox.pl>, 2013.
 # Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"

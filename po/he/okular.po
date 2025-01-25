@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-18 00:39+0000\n"
-"PO-Revision-Date: 2024-12-28 10:42+0200\n"
+"PO-Revision-Date: 2025-01-24 09:27+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2757,7 +2757,7 @@ msgstr "ציות למגבלות DRM (ניהול זכויות דיגיטליות)
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "רענון המסמך עם שינוי הקובץ"
+msgstr "ריענון המסמך עם שינוי הקובץ"
 
 #: part/dlggeneral.cpp:155
 #, kde-format
@@ -4229,7 +4229,7 @@ msgstr "&טעינה מחדש"
 #: part/part.cpp:801
 #, kde-format
 msgid "Reload the current document from disk."
-msgstr "רענון המסמך הנוכחי מהכונן."
+msgstr "ריענון המסמך הנוכחי מהכונן."
 
 #: part/part.cpp:807
 #, kde-format

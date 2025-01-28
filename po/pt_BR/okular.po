@@ -10,13 +10,13 @@
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010, 2011, 2012.
 # Aracele Torres <araceletorres@gmail.com>, 2010.
-# SPDX-FileCopyrightText: 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
+# SPDX-FileCopyrightText: 2024, 2025 Geraldo Simiao <geraldosimiao@fedoraproject.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-03 02:31+0000\n"
-"PO-Revision-Date: 2024-07-12 08:32-0300\n"
+"PO-Revision-Date: 2025-01-27 16:34-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -290,17 +290,13 @@ msgid "Landscape %1"
 msgstr "Paisagem %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 polegadas (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 milímetros (%3)"
@@ -3656,10 +3652,9 @@ msgid "Speak Whole Document"
 msgstr "Falar o documento inteiro"
 
 #: part/pageview.cpp:710
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Falar a página atual"
+msgstr "Falar a partir da página atual"
 
 #: part/pageview.cpp:715
 #, kde-format
@@ -3731,22 +3726,19 @@ msgid "Speak Text"
 msgstr "Falar o texto"
 
 #: part/pageview.cpp:2848
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Imagem (%1 x %2 pixels)"
 
 #: part/pageview.cpp:2850
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Salvar para arquivo..."
 
 #: part/pageview.cpp:2870
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "A imagem [%1x%2] foi copiada para a área de transferência."
+msgstr "A imagem [%1 × %2] foi copiada para a área de transferência."
 
 #: part/pageview.cpp:2873
 #, kde-format
@@ -3764,10 +3756,9 @@ msgid "File not saved."
 msgstr "O arquivo não foi salvo."
 
 #: part/pageview.cpp:2886
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "A imagem [%1x%2] foi salva no arquivo %3."
+msgstr "A imagem [%1 × %2] foi salva no arquivo %3."
 
 #: part/pageview.cpp:3028
 #, kde-format
@@ -3935,6 +3926,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Assinado por: %1\n"
+"\n"
+"Data: %2"
 
 #: part/pageviewannotator.cpp:442
 #, kde-kuit-format
@@ -4138,12 +4132,14 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Assinatura em andamento. Você pode ajustar a posição e o tamanho da "
+"assinatura"
 
 #: part/part.cpp:485
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Terminar de assinar"
 
 #: part/part.cpp:655
 #, kde-format

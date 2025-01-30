@@ -171,10 +171,12 @@ bool PDFSettingsWidget::event(QEvent *e)
             m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
 
             for (const auto &cert : certs) {
+                QDateTime end = cert.validityEnd();
+                QString validityString = end.isValid() ? end.toString(QStringLiteral("yyyy-MM-dd")) : i18nc("certificate end validity", "forever");
                 new QTreeWidgetItem(m_tree,
                                     {cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
                                      cert.subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable),
-                                     cert.validityEnd().toString(QStringLiteral("yyyy-MM-dd"))});
+                                     validityString});
             }
 
             m_pdfsw.defaultLabel->setText(Poppler::getNSSDir());

@@ -464,7 +464,7 @@ QList<CertificateInfo> CertificateStore::signingCertificatesForNow(bool *userCan
     auto it = certs.begin();
     *nonDateValidCerts = false;
     while (it != certs.end()) {
-        if (it->validityStart() > now || now > it->validityEnd()) {
+        if (it->validityStart() > now || (it->validityEnd().isValid() && now > it->validityEnd())) {
             it = certs.erase(it);
             *nonDateValidCerts = true;
         } else {

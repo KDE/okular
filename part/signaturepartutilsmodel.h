@@ -12,7 +12,7 @@
 namespace SignaturePartUtils
 {
 
-enum SignatureListRoles { NickRole = Qt::UserRole, NickDisplayRole, CommonNameRole, EmailRole, CertRole };
+enum SignatureListRoles { NickRole = Qt::UserRole, NickDisplayRole, CommonNameRole, EmailRole, CertRole, NameEmailDisplayRole, TypeRole };
 
 enum class CertificateType { None = 0x0, SMime = 0x1, QES = 0x2 };
 Q_DECLARE_FLAGS(CertificateTypes, CertificateType)

@@ -63,9 +63,11 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QString password;
     QString documentPassword;
 
-    SigningCertificateListModel certificateModel(certs);
-    bool showIcons = certificateModel.hasIcons();
-    int minWidth = certificateModel.minWidth();
+    SigningCertificateListModel certificateModelUnderlying(certs);
+    FilterSigningCertificateTypeListModel certificateModel;
+    certificateModel.setSourceModel(&certificateModelUnderlying);
+    bool showIcons = certificateModelUnderlying.hasIcons();
+    int minWidth = certificateModelUnderlying.minWidth();
     auto config = KSharedConfig::openConfig();
     const QString lastNick = config->group(ConfigGroup()).readEntry<QString>(ConfigLastKeyNick(), QString());
 
@@ -76,7 +78,26 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&certificateModel);
-    dialog.ui->list->setCurrentIndex(certificateModel.indexForNick(lastNick));
+    dialog.ui->list->setCurrentIndex(certificateModel.mapFromSource(certificateModelUnderlying.indexForNick(lastNick)));
+    if (certificateModelUnderlying.types() == SignaturePartUtils::CertificateType::SMime) {
+        // Only one type of certificates, no need to show filters
+        for (int i = 0; i < dialog.ui->toggleTypes->count(); i++) {
+            auto item = dialog.ui->toggleTypes->itemAt(i);
+            if (auto w = item->widget()) {
+                w->hide();
+            }
+        }
+    }
+    QObject::connect(dialog.ui->qesCertificates, &QAbstractButton::clicked, &dialog, [&certificateModel](bool checked) {
+        if (checked) {
+            certificateModel.setAllowedTypes(SignaturePartUtils::CertificateType::QES);
+        }
+    });
+    QObject::connect(dialog.ui->allCertificateOption, &QAbstractButton::clicked, &dialog, [&certificateModel](bool checked) {
+        if (checked) {
+            certificateModel.setAllowedTypes(SignaturePartUtils::CertificateType::None);
+        }
+    });
     if (certificateModel.rowCount() < 3) {
         auto rowHeight = dialog.ui->list->sizeHintForRow(0);
         dialog.ui->list->setFixedHeight(rowHeight * certificateModel.rowCount() + (certificateModel.rowCount() - 1) * dialog.ui->list->spacing() + dialog.ui->list->contentsMargins().top() + dialog.ui->list->contentsMargins().bottom());

@@ -4,6 +4,7 @@
 #include "gui/signatureguiutils.h"
 #include "signaturepartutilsmodel.h"
 #include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
 class SigningCertificateListModel : public QAbstractListModel
 {
@@ -23,6 +24,19 @@ private:
     const QList<Okular::CertificateInfo> m_certs;
     bool m_hasIcons = false;
     qsizetype m_minWidth = -1;
+    SignaturePartUtils::CertificateTypes m_types = SignaturePartUtils::CertificateType::None;
+};
+
+class FilterSigningCertificateTypeListModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+public:
+    void setAllowedTypes(SignaturePartUtils::CertificateTypes types);
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+
+private:
     SignaturePartUtils::CertificateTypes m_types = SignaturePartUtils::CertificateType::None;
 };
 

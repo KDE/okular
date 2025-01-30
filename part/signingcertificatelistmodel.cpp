@@ -117,3 +117,30 @@ QVariant SigningCertificateListModel::data(const QModelIndex &index, int role) c
     }
     return {};
 }
+
+bool FilterSigningCertificateTypeListModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    if (m_types == SignaturePartUtils::CertificateType::None) {
+        return true;
+    }
+    if (!sourceModel()) {
+        return false;
+    }
+    auto data = sourceModel()->index(sourceRow, 0, sourceParent);
+    if (!data.isValid()) {
+        return false;
+    }
+    auto cert = data.data(SignaturePartUtils::CertRole).value<Okular::CertificateInfo>();
+    if (m_types & SignaturePartUtils::CertificateType::QES && cert.isQualified()) {
+        return true;
+    }
+    return false;
+}
+
+void FilterSigningCertificateTypeListModel::setAllowedTypes(SignaturePartUtils::CertificateTypes types)
+{
+    if (types != m_types) {
+        m_types = types;
+        invalidateRowsFilter();
+    }
+}

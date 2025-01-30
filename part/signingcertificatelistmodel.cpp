@@ -1,4 +1,5 @@
 #include "signingcertificatelistmodel.h"
+#include <KLocalizedString>
 #include <QRegularExpression>
 
 SigningCertificateListModel::SigningCertificateListModel(const QList<Okular::CertificateInfo> &certs, QObject *parent)
@@ -84,8 +85,22 @@ QVariant SigningCertificateListModel::data(const QModelIndex &index, int role) c
         }
         return nick;
     }
+    case SignaturePartUtils::NameEmailDisplayRole: {
+        auto email = cert.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::Empty);
+        auto name = cert.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty);
+        if (!email.isEmpty()) {
+            return QStringLiteral("%1 <%2>").arg(name, email);
+        }
+        return name;
+    }
     case SignaturePartUtils::CertRole:
         return QVariant::fromValue(cert);
+    case SignaturePartUtils::TypeRole: {
+        if (cert.isQualified()) {
+            return i18nc("Qualified electronic signature, see wikipedia", "Qualified");
+        }
+        return {};
+    }
     case Qt::ToolTipRole:
         return cert.subjectInfo(Okular::CertificateInfo::DistinguishedName, Okular::CertificateInfo::EmptyString::Empty);
     case Qt::DecorationRole:

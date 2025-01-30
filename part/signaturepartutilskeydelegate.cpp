@@ -47,20 +47,20 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 
     auto textRect = option.rect;
     int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, &option, option.widget) + 1;
-    if (showIcon) {
-        textRect.adjust(textRect.height() + textMargin, 0, 0, 0); // make space for icon
-    }
     textRect.adjust(textMargin, 0, -textMargin, 0);
 
     QRect topHalf {textRect.x(), textRect.y(), textRect.width(), textRect.height() / 2};
     QRect bottomHalf {textRect.x(), textRect.y() + textRect.height() / 2, textRect.width(), textRect.height() / 2};
+    if (showIcon) {
+        topHalf.adjust(topHalf.height() + textMargin, 0, 0, 0); // make space for icon
+    }
 
-    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(NickDisplayRole).toString());
-    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(EmailRole).toString());
-    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(CommonNameRole).toString());
+    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(NameEmailDisplayRole).toString());
+    style->drawItemText(painter, topHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignRight, option.palette, true, index.data(TypeRole).toString());
+    style->drawItemText(painter, bottomHalf, (option.displayAlignment & Qt::AlignVertical_Mask) | Qt::AlignLeft, option.palette, true, index.data(NickDisplayRole).toString());
     if (showIcon) {
         if (auto icon = index.data(Qt::DecorationRole).value<QIcon>(); !icon.isNull()) {
-            icon.paint(painter, QRect(option.rect.topLeft(), QSize(textRect.height(), textRect.height())));
+            icon.paint(painter, QRect(option.rect.topLeft(), QSize(topHalf.height(), topHalf.height())));
         }
     }
 }

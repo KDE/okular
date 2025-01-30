@@ -22,6 +22,27 @@
     </widget>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="toggleTypes">
+     <item>
+      <widget class="QRadioButton" name="allCertificateOption">
+       <property name="text">
+        <string>All</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="qesCertificates">
+       <property name="text">
+        <string>Only QES certificates</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QListView" name="list">
      <property name="alternatingRowColors">
       <bool>true</bool>

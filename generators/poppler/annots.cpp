@@ -447,10 +447,13 @@ static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::Signin
         return Okular::GenericSigningError;
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
     case Poppler::SignatureAnnotation::InternalError:
+        return Okular::InternalSigningError;
     case Poppler::SignatureAnnotation::KeyMissing:
+        return Okular::KeyMissing;
     case Poppler::SignatureAnnotation::WriteFailed:
+        return Okular::SignatureWriteFailed;
     case Poppler::SignatureAnnotation::UserCancelled:
-        return Okular::GenericSigningError;
+        return Okular::UserCancelled;
 #endif
     }
     return Okular::GenericSigningError;

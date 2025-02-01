@@ -1161,29 +1161,21 @@ const QList<Okular::EmbeddedFile *> *PDFGenerator::embeddedFiles() const
 PDFGenerator::PageLayout PDFGenerator::defaultPageLayout() const
 {
     Poppler::Document::PageLayout defaultValue = pdfdoc->pageLayout();
-    PDFGenerator::PageLayout retValue;
 
     switch (defaultValue) {
     case Poppler::Document::OneColumn:
     case Poppler::Document::SinglePage:
-        retValue = PDFGenerator::SinglePage;
-        break;
-
+        return PDFGenerator::SinglePage;
     case Poppler::Document::TwoColumnLeft:
     case Poppler::Document::TwoPageLeft:
-        retValue = PDFGenerator::TwoPageLeft;
-        break;
-
+        return PDFGenerator::TwoPageLeft;
     case Poppler::Document::TwoPageRight:
     case Poppler::Document::TwoColumnRight:
-        retValue = PDFGenerator::TwoPageRight;
-        break;
-
+        return PDFGenerator::TwoPageRight;
     case Poppler::Document::NoLayout:
-        retValue = PDFGenerator::NoLayout;
-        break;
+        return PDFGenerator::NoLayout;
     }
-    return retValue;
+    return PDFGenerator::NoLayout;
 }
 
 bool PDFGenerator::defaultPageContinuous() const

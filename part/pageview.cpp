@@ -5508,13 +5508,28 @@ PageView::FinishSigningResult PageView::finishSigning()
     data.setFontSize(d->signatureAnnotation->fontSize());
 
     Okular::SigningResult result = d->signatureAnnotation->sign(data, newFilePath);
-    if (result == Okular::SigningSuccess) {
+    switch (result) {
+    case Okular::SigningSuccess: {
         Q_EMIT requestOpenNewlySignedFile(newFilePath, d->signatureAnnotation->page() + 1);
         return Success;
-    } else {
+    }
+    case Okular::FieldAlreadySigned: // We should not end up here
+    case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+    case Okular::InternalSigningError:
+        KMessageBox::error(this, i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", static_cast<int>(result)));
+        return Failed;
+    case Okular::GenericSigningError:
         KMessageBox::error(this, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", d->document->currentDocument().toLocalFile()));
         return Failed;
+    case Okular::UserCancelled:
+        return Cancelled;
+    case Okular::SignatureWriteFailed:
+        KMessageBox::error(this, i18nc("%1 is a file path", "Could not write signated document at '%1', please ensure you have selected a folder with write permission", d->document->currentDocument().toLocalFile()));
+        return Failed;
     }
+    // We should not end here
+    Q_ASSERT(false);
+    return Failed;
 }
 #endif
 

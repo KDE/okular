@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-18 00:39+0000\n"
+"POT-Creation-Date: 2025-02-02 00:40+0000\n"
 "PO-Revision-Date: 2024-12-28 12:09+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -3925,7 +3925,15 @@ msgstr "Для вставки поля подписи нарисуйте пря�
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Выделите прямоугольную область, которая останется видимой"
 
-#: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5519
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
@@ -3933,6 +3941,14 @@ msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "Не удалось подписать, неверный пароль сертификата или отсутствует доступ на "
 "запись файла «%1»"
+
+#: part/pageview.cpp:5527
+#, kde-format
+msgctxt "%1 is a file path"
+msgid ""
+"Could not write signated document at '%1', please ensure you have selected a "
+"folder with write permission"
+msgstr ""
 
 #: part/pageviewannotator.cpp:218
 #, kde-format

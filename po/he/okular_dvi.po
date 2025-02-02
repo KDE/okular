@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-08-16 08:42+0300\n"
+"PO-Revision-Date: 2025-02-01 09:36+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -225,12 +225,12 @@ msgstr "קוד ה־DVI הפנה לגופן מס׳ %1, שלא הוגדר קודם
 #: dviRenderer_draw.cpp:353
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr "הערימה לא הייתה ריקה כשהתקבלה פקודת EOP (סוף עמוד)."
+msgstr "הערמה לא הייתה ריקה כשהתקבלה פקודת EOP (סוף עמוד)."
 
 #: dviRenderer_draw.cpp:365
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr "הערימה הייתה ריקה כשהתקבלה פקודת POP (שליפה)."
+msgstr "הערמה הייתה ריקה כשהתקבלה פקודת POP (שליפה)."
 
 #: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
 #, kde-format
@@ -370,7 +370,7 @@ msgid ""
 "stack is empty."
 msgstr ""
 "שגיאה בקובץ ה־DVI‏ ‚%1’, בעמוד %2. פקודת שליפת צבע (color pop) נקראה כאשר "
-"ערימת הצבעים ריקה."
+"ערמת הצבעים ריקה."
 
 #: special.cpp:318
 #, kde-format

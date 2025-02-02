@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-18 00:39+0000\n"
+"POT-Creation-Date: 2025-02-02 00:40+0000\n"
 "PO-Revision-Date: 2024-12-29 02:00+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3856,12 +3856,28 @@ msgstr "繪製插入簽名欄位用的矩形"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "在您想要保持可見的頁面區域畫一矩形"
 
-#: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5519
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr "無法簽名。無效的憑證密碼，或是無法寫入至 '%1'"
+
+#: part/pageview.cpp:5527
+#, kde-format
+msgctxt "%1 is a file path"
+msgid ""
+"Could not write signated document at '%1', please ensure you have selected a "
+"folder with write permission"
+msgstr ""
 
 #: part/pageviewannotator.cpp:218
 #, kde-format

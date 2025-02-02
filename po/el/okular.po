@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-18 00:39+0000\n"
+"POT-Creation-Date: 2025-02-02 00:40+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3923,7 +3923,15 @@ msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρω από την περιοχή της σελίδας που θέλετε να "
 "διατηρήσετε ορατή"
 
-#: part/pageview.cpp:5515 part/pageviewannotator.cpp:1137
+#: part/pageview.cpp:5519
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:255
 #, kde-format
 msgctxt "%1 is a file path"
@@ -3931,6 +3939,14 @@ msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "Αδυναμία υπογραφής. Μη έγκυρος κωδικός πιστοποιητικού ή αδυναμία εγγραφής "
 "στο '%1'"
+
+#: part/pageview.cpp:5527
+#, kde-format
+msgctxt "%1 is a file path"
+msgid ""
+"Could not write signated document at '%1', please ensure you have selected a "
+"folder with write permission"
+msgstr ""
 
 #: part/pageviewannotator.cpp:218
 #, kde-format

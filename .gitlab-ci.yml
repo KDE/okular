@@ -14,25 +14,26 @@ include:
       - /gitlab-templates/craft-android-qt6-apks.yml
       - /gitlab-templates/craft-macos-arm64-qt6.yml
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
+      - /gitlab-templates/yaml-lint.yml
 
 # Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
 build_ubuntu_24_10:
- stage: build
- image: ubuntu:24.10
- tags:
-   - Linux
- only:
-   - merge_requests
- before_script:
-   - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-   - apt-get update
-   - apt-get install --yes eatmydata
-   - eatmydata apt-get build-dep --yes --no-install-recommends okular
-   - eatmydata apt-get install --yes --no-install-recommends ninja-build
- script:
-   - mkdir -p build && cd build
-   - cmake -DOKULAR_UI=both -G Ninja ..
-   - ninja
+stage: build
+image: ubuntu:24.10
+tags:
+  - Linux
+only:
+  - merge_requests
+before_script:
+  - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+  - apt-get update
+  - apt-get install --yes eatmydata
+  - eatmydata apt-get build-dep --yes --no-install-recommends okular
+  - eatmydata apt-get install --yes --no-install-recommends ninja-build
+script:
+  - mkdir -p build && cd build
+  - cmake -DOKULAR_UI=both -G Ninja ..
+  - ninja
 
 build_clazy_clang_tidy:
   stage: build

@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['@all']
-  'require':
+ - 'on': ['@all']
+   'require':
     'frameworks/kbookmarks': '@latest-kf6'
     'frameworks/threadweaver': '@latest-kf6'
     'frameworks/kcolorscheme': '@latest-kf6'
@@ -18,29 +18,29 @@ Dependencies:
     'libraries/phonon': '@latest-kf6'
     'graphics/kdegraphics-mobipocket': '@same'
 
-- 'on': ['Linux', 'FreeBSD', 'Windows']
-  'require':
+ - 'on': ['Linux', 'FreeBSD', 'Windows']
+   'require':
     'frameworks/purpose': '@latest-kf6'
     'frameworks/breeze-icons': '@latest-kf6'
     'graphics/libkexiv2': '@same'
 
-- 'on': ['Linux', 'FreeBSD']
-  'require':
+ - 'on': ['Linux', 'FreeBSD']
+   'require':
     'plasma/plasma-activities': '@latest-kf6'
     'frameworks/kpty': '@latest-kf6'
 
-- 'on': ['Android']
-  'require':
+ - 'on': ['Android']
+   'require':
     'frameworks/kirigami': '@latest-kf6'
 
 Options:
-  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
-  per-test-timeout: 300
-  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'
-  cppcheck-ignore-files:
-    - autotests
-    - core/synctex/synctex_parser.c
-  xml-validate-include:
-    - shell/shell.rc
-    - part/part-viewermode.rc
-    - part/part.rc
+ require-passing-tests-on: ['Linux', 'FreeBSD']
+ per-test-timeout: 300
+ cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'
+ cppcheck-ignore-files:
+  - autotests
+  - core/synctex/synctex_parser.c
+ xml-validate-include:
+  - shell/shell.rc
+  - part/part-viewermode.rc
+  - part/part.rc

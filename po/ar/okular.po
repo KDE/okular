@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2025-01-02 09:29+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -3908,7 +3908,7 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4601,7 +4601,7 @@ msgid "Remove this Bookmark"
 msgstr "أزل هذه العلامة"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5375,8 +5375,22 @@ msgstr "الشّهادات"
 msgid "Select certificate to sign with:"
 msgstr "حدد شهادة للتوقيع بها:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, fuzzy, kde-format
+#| msgid "Allow"
+msgid "All"
+msgstr "اسمح"
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "الشّهادات"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "السبب:"
@@ -5384,32 +5398,32 @@ msgstr "السبب:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "اختياري"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "المكان:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "الخلفية:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "اختر..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "خلفيات مستخدمة حديثا:"
@@ -5453,43 +5467,43 @@ msgstr "اطو كل العناصر"
 msgid "Properties"
 msgstr "الخصائص"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "صور (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "حدد صورة الخلفية"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "انسَ صورة"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "انسَ كل الصور"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "أدخل كلمة المرور (إن وجدت) لفتح الشهادة: %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "أدخل كلمة مرور الشهادة"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "أدخل كلمة سر المستند"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "حفظ الملف الموقع باسم"
@@ -5562,6 +5576,12 @@ msgstr "اعرض في مدير الشهادات"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "مدير شهادات كيدي (kleopatra) غير موجود"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -6224,9 +6244,6 @@ msgstr "أخف شاشة مرحبا"
 
 #~ msgid "Presentation Mode"
 #~ msgstr "نمط العرض التقديمي"
-
-#~ msgid "Allow"
-#~ msgstr "اسمح"
 
 #~ msgid "Allow the presentation mode"
 #~ msgstr "اسمح بنمط العرض التقديمي"

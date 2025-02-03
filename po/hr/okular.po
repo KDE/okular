@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2011-08-25 19:25+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -4212,7 +4212,7 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4931,7 +4931,7 @@ msgid "Remove this Bookmark"
 msgstr "Preimenuj oznaku"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5725,8 +5725,22 @@ msgstr "Konfiguriraj preglednik…"
 msgid "Select certificate to sign with:"
 msgstr ""
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, fuzzy, kde-format
+#| msgid "Allow"
+msgid "All"
+msgstr "Dopusti"
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Configure Viewer..."
+msgid "Only QES certificates"
+msgstr "Konfiguriraj preglednik…"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr ""
@@ -5734,15 +5748,15 @@ msgstr ""
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, fuzzy, kde-format
 #| msgid "Options"
 msgid "optional"
 msgstr "Opcije"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -5750,20 +5764,20 @@ msgid "Location:"
 msgstr "%1 opaska"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, fuzzy, kde-format
 #| msgid "Background color:"
 msgid "Background:"
 msgstr "Boja pozadine:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, fuzzy, kde-format
 #| msgid "Background color:"
 msgid "Recent backgrounds:"
@@ -5813,47 +5827,47 @@ msgstr ""
 msgid "Properties"
 msgstr "&Svojstva"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Stranica: %1"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Omogući stvaranje po&zadine"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, fuzzy, kde-format
 #| msgctxt "A document format, Okular-specific"
 #| msgid "Document Archive"
 msgid "Enter document password"
 msgstr "Document Archive"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
@@ -5929,6 +5943,12 @@ msgstr "Konfiguriraj preglednik…"
 #: part/signaturepropertiesdialog.cpp:106
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
+msgstr ""
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
 msgstr ""
 
 #: part/thumbnaillist.cpp:1017
@@ -6556,9 +6576,6 @@ msgstr ""
 
 #~ msgid "Presentation Mode"
 #~ msgstr "Prezentacijski način"
-
-#~ msgid "Allow"
-#~ msgstr "Dopusti"
 
 #~ msgid "Allow the presentation mode"
 #~ msgstr "Dozvoli prezentacijski način"

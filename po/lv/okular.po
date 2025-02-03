@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2025-01-03 16:46+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -3911,7 +3911,7 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4608,7 +4608,7 @@ msgid "Remove this Bookmark"
 msgstr "Noņemt šo grāmatzīmi"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5394,8 +5394,22 @@ msgstr "Sertifikāti"
 msgid "Select certificate to sign with:"
 msgstr "Izvēlieties sertifikātu, ar kuru parakstīt:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, fuzzy, kde-format
+#| msgid "Allow"
+msgid "All"
+msgstr "Atļaut"
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "Sertifikāti"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "Iemesls:"
@@ -5403,32 +5417,32 @@ msgstr "Iemesls:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "pēc izvēles"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "Vieta:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "Fons:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "Izvēlēties..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Pēdējie foni:"
@@ -5472,43 +5486,43 @@ msgstr "Sakļaut visus elementus"
 msgid "Properties"
 msgstr "Īpašības"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Attēli (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "Izvēlēties fona attēlu"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "Aizmirst attēlu"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "Aizmirst visus attēlus"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Ievadīt paroli (ja tāda ir), lai piekļūtu sertifikātam: %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Ievadiet sertifikāta paroli"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "Ievadiet dokumenta paroli"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Parakstīto datni saglabāt kā"
@@ -5581,6 +5595,12 @@ msgstr "Aplūkot sertifikātu pārvaldniekā"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDE sertifikātu pārvaldnieks (kleopatra) nav atrasts"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -6217,9 +6237,6 @@ msgstr "Paslēpt sveiciena ekrānu"
 
 #~ msgid "Presentation Mode"
 #~ msgstr "Prezentācijas režīms"
-
-#~ msgid "Allow"
-#~ msgstr "Atļaut"
 
 #~ msgid "Allow the presentation mode"
 #~ msgstr "Atļaut prezentācijas režīmu"

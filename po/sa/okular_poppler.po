@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -297,12 +297,18 @@ msgstr ""
 "भवान् NSS समर्थनं विना निर्मितं Poppler पुस्तकालयं उपयुङ्क्ते ।\n"
 "तदर्थं Digital Signatures योजयितुं उपलब्धं नास्ति"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:175
+#, kde-format
+msgctxt "certificate end validity"
+msgid "forever"
+msgstr ""
+
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "Restart needed"
 msgstr "पुनः आरम्भस्य आवश्यकता अस्ति"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS निर्देशिकासेटिंग्स् परिवर्त्य भवद्भिः Okular पुनः आरभ्यत इति आवश्यकम्"

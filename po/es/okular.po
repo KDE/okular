@@ -1,15 +1,15 @@
-# translation of okular.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Translation of okular.po to Spanish
+# Copyright (C) 2007-2025 This_file_is_part_of_KDE
+# This file is distributed under the same license as the okular package.
 #
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2013 Javier Viñal <fjvinal@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
-"PO-Revision-Date: 2024-12-29 00:57+0100\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"PO-Revision-Date: 2025-02-02 23:44+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3910,9 +3910,11 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Error interno de firma. Informe del error con los pasos necesarios para "
+"reproducirlo. Código de error: %1."
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3927,6 +3929,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"No se ha podido escribir el documento firmado en «%1». Asegúrese de que ha "
+"seleccionado una carpeta con permisos de escritura."
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4611,7 +4615,7 @@ msgid "Remove this Bookmark"
 msgstr "Eliminar este marcador"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5403,8 +5407,21 @@ msgstr "Certificados"
 msgid "Select certificate to sign with:"
 msgstr "Seleccione certificado con el que firmar:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, kde-format
+msgid "All"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "Certificados"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "Motivo:"
@@ -5412,32 +5429,32 @@ msgstr "Motivo:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "opcional"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "Localización:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "Fondo:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "Escoger..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Fondos recientes:"
@@ -5482,44 +5499,44 @@ msgstr "Contraer todos los elementos"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imágenes (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "Seleccione la imagen de fondo"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "Olvidar la imagen"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "Olvidar todas las imágenes"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduzca la contraseña (si existe) para desbloquear el certificado: %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduzca la contraseña del certificado"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduzca la contraseña del documento"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Guardar archivo firmado como"
@@ -5592,6 +5609,12 @@ msgstr "Ver en el gestor de certificados"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "Gestor de certificados de KDE (kleopatra) no encontrado"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5902,642 +5925,3 @@ msgstr "Olvidar todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar la pantalla de bienvenida"
-
-#~ msgctxt "Page Up/Down overlap, spinbox suffix"
-#~ msgid "%"
-#~ msgstr " %"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Width"
-#~ msgstr "Ajustar al ancho"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Page"
-#~ msgstr "Ajustar a la página"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Auto Fit"
-#~ msgstr "Ajuste automático"
-
-#~ msgid "S&earch:"
-#~ msgstr "&Buscar:"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Todos los archivos"
-
-#~ msgid "Missing alert type"
-#~ msgstr "Falta el tipo de alerta"
-
-#~ msgid ""
-#~ "The file '%1' has been modified by another program, which means it can no "
-#~ "longer be saved."
-#~ msgstr ""
-#~ "El archivo «%1» ha sido modificado por otro programa, lo que significa "
-#~ "que ya no se puede guardar."
-
-#~ msgid "Show Sidebar"
-#~ msgstr "Mostrar la barra lateral"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "<warning>experimental feature.<nl/>Stamps inserted in PDF documents are "
-#~ "not visible in PDF readers other than Okular.</warning>"
-#~ msgstr ""
-#~ "<warning>Funcionalidad experimental.<nl/>Los sellos insertados en "
-#~ "documentos PDF no son visibles en otros lectores PDF distintos de Okular."
-#~ "</warning>"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "The version of the Poppler library this Okular was compiled with does not "
-#~ "support signing documents with passwords. Please ask your provider to "
-#~ "update it to 22.02 or later."
-#~ msgstr ""
-#~ "La versión de la biblioteca Poppler con la que se compiló este Okular no "
-#~ "permite firmar documentos con contraseñas. Solicite a su distribuidor que "
-#~ "lo actualice a la versión 22.02 o posterior."
-
-#~ msgctxt "@title:window"
-#~ msgid "Poppler library is too old"
-#~ msgstr "La biblioteca Poppler es muy antigua"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "Stamps inserted in PDF documents are not visible in PDF readers other "
-#~ "than Okular"
-#~ msgstr ""
-#~ "Los sellos insertados en documentos PDF no son visibles en otros lectores "
-#~ "PDF distintos de Okular."
-
-#~ msgctxt "@title:window"
-#~ msgid "Experimental feature"
-#~ msgstr "Funcionalidad experimental"
-
-#~ msgid "Form"
-#~ msgstr "Formulario"
-
-#~ msgid "Remove Bookmarks"
-#~ msgstr "Eliminar marcadores"
-
-#~ msgctxt "verb"
-#~ msgid "&Annotate"
-#~ msgstr "&Anotar"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Highlight"
-#~ msgstr "Resaltar"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Underline"
-#~ msgstr "Subrayar"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Squiggle"
-#~ msgstr "Garabatear"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Strike Out"
-#~ msgstr "Tachar"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Insert Text"
-#~ msgstr "Insertar texto"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Insert Inline Note"
-#~ msgstr "Insertar nota en línea"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Insert Popup Note"
-#~ msgstr "Insertar nota emergente"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Freehand Line"
-#~ msgstr "Dibujar una línea a mano alzada"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Straight line"
-#~ msgstr "Dibujar una línea recta"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Arrow"
-#~ msgstr "Dibujar una flecha"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Rectangle"
-#~ msgstr "Dibujar un rectángulo"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Ellipse"
-#~ msgstr "Dibujar una elipse"
-
-#~ msgctxt "@action:intoolbar Annotation tool, verb"
-#~ msgid "Draw Polygon"
-#~ msgstr "Dibujar un polígono"
-
-#~ msgid "Highlight in Yellow"
-#~ msgstr "Resaltar en amarillo"
-
-#~ msgid "Highlight in Green"
-#~ msgstr "Resaltar en verde"
-
-#~ msgid "Insert Inline Note"
-#~ msgstr "Insertar nota en línea"
-
-#~ msgid "Insert Popup Note"
-#~ msgstr "Insertar nota emergente"
-
-#~ msgctxt "verb"
-#~ msgid "&Select Area"
-#~ msgstr "&Seleccionar área"
-
-#~ msgctxt "verb"
-#~ msgid "Select &Text"
-#~ msgstr "Seleccionar &texto"
-
-#~ msgctxt "verb"
-#~ msgid "Select T&able"
-#~ msgstr "Seleccionar t&abla"
-
-#~ msgctxt "verb"
-#~ msgid "&Magnify"
-#~ msgstr "A&mpliar"
-
-#~ msgid "Bookmark annotation"
-#~ msgstr "Marcar la anotación"
-
-#~ msgid "&Toggle Change Colors"
-#~ msgstr "Conmu&tar cambiar colores"
-
-#~ msgctxt "@option:check Config dialog, presentation page, transitions"
-#~ msgid "Enable transitions"
-#~ msgstr "Activar transiciones"
-
-#~ msgctxt "@label:spinbox Config dialog, presentation page"
-#~ msgid "Advance every:"
-#~ msgstr "Avanzar cada:"
-
-#~ msgctxt "@label:listbox Config dialog, general page"
-#~ msgid "Custom background color:"
-#~ msgstr "Color de fondo personalizado:"
-
-#~ msgid "Draw border around &Images"
-#~ msgstr "Dibujar borde alrededor de las &imágenes"
-
-#~ msgid "Speech"
-#~ msgstr "Habla"
-
-#~ msgid "Engine"
-#~ msgstr "Motor"
-
-#~ msgid "Identity"
-#~ msgstr "Identidad"
-
-#~ msgid "Au&thor:"
-#~ msgstr "Au&tor:"
-
-#~ msgid "View Options"
-#~ msgstr "Opciones de visualización"
-
-#~ msgctxt "@info:whatsthis"
-#~ msgid ""
-#~ "Defines the default zoom mode for files which were never opened before.\n"
-#~ "For files which were opened before the previous zoom is applied."
-#~ msgstr ""
-#~ "Define el modo de ampliación por omisión para los archivos que no ha "
-#~ "abierto antes.\n"
-#~ "Para los archivos que ya se han abierto alguna vez se aplica la "
-#~ "ampliación usada con anterioridad."
-
-#~ msgid "Navigation"
-#~ msgstr "Navegación"
-
-#~ msgid "Placement"
-#~ msgstr "Posición"
-
-#~ msgid "Screen:"
-#~ msgstr "Pantalla:"
-
-#~ msgid "Drawing Tool Configuration"
-#~ msgstr "Configuración de la herramienta de dibujo"
-
-#~ msgid "&Get Books From Internet..."
-#~ msgstr "&Obtener libros de Internet..."
-
-#~ msgid "Reviews"
-#~ msgstr "Revisiones"
-
-#~ msgctxt "@item:inlistbox Color name"
-#~ msgid "%1"
-#~ msgstr "%1"
-
-#~ msgid "Hide Forms"
-#~ msgstr "Ocultar formularios"
-
-#~ msgid "&Review"
-#~ msgstr "&Revisión"
-
-#~ msgid "Annotations author"
-#~ msgstr "Autor de las anotaciones"
-
-#~ msgid "Please insert your name or initials:"
-#~ msgstr "Introduzca su nombre o iniciales:"
-
-#~ msgctxt "Used in this context: 'Page sizes: Multiple'"
-#~ msgid "Multiple"
-#~ msgstr "Múltiple"
-
-#~ msgid "Show &Navigation Panel"
-#~ msgstr "Mostrar el panel de &navegación"
-
-#~ msgid "Show Text"
-#~ msgstr "Mostrar texto"
-
-#~ msgid "Small Icons"
-#~ msgstr "Iconos pequeños"
-
-#~ msgid "Large Icons"
-#~ msgstr "Iconos grandes"
-
-#~ msgid ""
-#~ "Click to use the current selection tool\n"
-#~ "Click on the arrow to choose another selection tool"
-#~ msgstr ""
-#~ "Clic para usar la herramienta de selección actual\n"
-#~ "Clic sobre la flecha para escoger otra herramienta de selección"
-
-#~ msgid "Created: %1"
-#~ msgstr "Creado: %1"
-
-#~ msgid "Style"
-#~ msgstr "Estilo"
-
-#~ msgid "&Size:"
-#~ msgstr "&Tamaño:"
-
-#~ msgid "Inner color:"
-#~ msgstr "Color interno:"
-
-#~ msgid "Name: %1"
-#~ msgstr "Nombre: %1"
-
-#~ msgid "Size: %1"
-#~ msgstr "Tamaño: %1"
-
-#~ msgid "&Browse Tool"
-#~ msgstr "Herramienta de &navegación"
-
-#~ msgid "&Zoom Tool"
-#~ msgstr "Herramienta de &ampliación"
-
-#~ msgctxt "Zoom Tool"
-#~ msgid "Zoom"
-#~ msgstr "Ampliar"
-
-#~ msgctxt "Select Tool"
-#~ msgid "Selection"
-#~ msgstr "Selección"
-
-#~ msgid "&Text Selection Tool"
-#~ msgstr "Herramienta de selección de &texto"
-
-#~ msgid "T&able Selection Tool"
-#~ msgstr "Herr&amienta de selección de tablas"
-
-#~ msgid " None"
-#~ msgstr " Ninguno"
-
-#~ msgid ""
-#~ "The document requested to be launched in presentation mode.\n"
-#~ "Do you want to allow it?"
-#~ msgstr ""
-#~ "El documento ha solicitado ser lanzado en modo de presentación.\n"
-#~ "¿Desea permitirlo?"
-
-#~ msgid "Presentation Mode"
-#~ msgstr "Modo de presentación"
-
-#~ msgid "Allow"
-#~ msgstr "Permitir"
-
-#~ msgid "Allow the presentation mode"
-#~ msgstr "Permitir el modo de presentación"
-
-#~ msgid "Do Not Allow"
-#~ msgstr "No permitir"
-
-#~ msgid "Do not allow the presentation mode"
-#~ msgstr "No permitir el modo de presentación"
-
-#~ msgid ""
-#~ "Your annotation changes will not be saved automatically. Use File -> Save "
-#~ "As...\n"
-#~ "or your changes will be lost once the document is closed"
-#~ msgstr ""
-#~ "Los cambios en las notas no se guardarán automáticamente. Utilice "
-#~ "«Archivo -> Guardar como...»\n"
-#~ "o los cambios se perderán cuando cierre el documento"
-
-#~ msgid ""
-#~ "Your annotations are saved internally by Okular.\n"
-#~ "You can export the annotated document using File -> Export As -> Document "
-#~ "Archive"
-#~ msgstr ""
-#~ "Okular guarda internamente sus anotaciones.\n"
-#~ "Puede exportar el documento con notas usando «Archivo -> Exportar como -> "
-#~ "Archivo comprimido de documento»"
-
-#~ msgid "Save &Copy As..."
-#~ msgstr "Guardar &copia como..."
-
-#~ msgid ""
-#~ "Your annotations will not be exported.\n"
-#~ "You can export the annotated document using File -> Export As -> Document "
-#~ "Archive"
-#~ msgstr ""
-#~ "Las anotaciones no se exportarán.\n"
-#~ "Puede exportar el documento con notas usando «Archivo -> Exportar como -> "
-#~ "Archivo comprimido de documento»"
-
-#~ msgid ""
-#~ "End of document reached.\n"
-#~ "Continue from the beginning?"
-#~ msgstr ""
-#~ "Se ha alcanzado el final del documento.\n"
-#~ "¿Continuar desde el principio?"
-
-#~ msgid ""
-#~ "Beginning of document reached.\n"
-#~ "Continue from the bottom?"
-#~ msgstr ""
-#~ "Se ha alcanzado el principio del documento.\n"
-#~ "¿Continuar desde el final?"
-
-#~ msgid "Current maintainer"
-#~ msgstr "Encargado actual"
-
-#~ msgid " sec."
-#~ msgstr " seg."
-
-#~ msgid "Pencil color:"
-#~ msgstr "Color del lápiz:"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A0"
-#~ msgstr "DIN/ISO A0 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A0"
-#~ msgstr "DIN/ISO A0 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A1"
-#~ msgstr "DIN/ISO A1 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A1"
-#~ msgstr "DIN/ISO A1 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A2"
-#~ msgstr "DIN/ISO A2 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A2"
-#~ msgstr "DIN/ISO A2 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A3"
-#~ msgstr "DIN/ISO A3 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A3"
-#~ msgstr "DIN/ISO A3 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A4"
-#~ msgstr "DIN/ISO A4 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A4"
-#~ msgstr "DIN/ISO A4 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A5"
-#~ msgstr "DIN/ISO A5 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A5"
-#~ msgstr "DIN/ISO A5 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A6"
-#~ msgstr "DIN/ISO A6 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A6"
-#~ msgstr "DIN/ISO A6 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A7"
-#~ msgstr "DIN/ISO A7 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A7"
-#~ msgstr "DIN/ISO A7 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A8"
-#~ msgstr "DIN/ISO A8 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A8"
-#~ msgstr "DIN/ISO A8 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO A9"
-#~ msgstr "DIN/ISO A9 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO A9"
-#~ msgstr "DIN/ISO A9 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B0"
-#~ msgstr "DIN/ISO B0 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B0"
-#~ msgstr "DIN/ISO B0 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B1"
-#~ msgstr "DIN/ISO B1 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B1"
-#~ msgstr "DIN/ISO B1 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B2"
-#~ msgstr "DIN/ISO B2 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B2"
-#~ msgstr "DIN/ISO B2 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B3"
-#~ msgstr "DIN/ISO B3 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B3"
-#~ msgstr "DIN/ISO B3 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B4"
-#~ msgstr "DIN/ISO B4 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B4"
-#~ msgstr "DIN/ISO B4 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B5"
-#~ msgstr "DIN/ISO B5 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B5"
-#~ msgstr "DIN/ISO B5 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B6"
-#~ msgstr "DIN/ISO B6 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B6"
-#~ msgstr "DIN/ISO B6 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B7"
-#~ msgstr "DIN/ISO B7 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B7"
-#~ msgstr "DIN/ISO B7 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B8"
-#~ msgstr "DIN/ISO B8 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B8"
-#~ msgstr "DIN/ISO B8 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B9"
-#~ msgstr "DIN/ISO B9 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B9"
-#~ msgstr "DIN/ISO B9 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DIN/ISO B10"
-#~ msgstr "DIN/ISO B10 apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DIN/ISO B10"
-#~ msgstr "DIN/ISO B10 vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape letter"
-#~ msgstr "letter apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait letter"
-#~ msgstr "letter vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape legal"
-#~ msgstr "legal apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait legal"
-#~ msgstr "legal vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape executive"
-#~ msgstr "executive apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait executive"
-#~ msgstr "executive vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape Comm10E"
-#~ msgstr "Comm10E apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait Comm10E"
-#~ msgstr "Comm10E vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape DLE"
-#~ msgstr "DLE apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait DLE"
-#~ msgstr "DLE vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "landscape folio"
-#~ msgstr "folio apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "portrait folio"
-#~ msgstr "folio vertical"
-
-#~ msgctxt "paper size"
-#~ msgid "ledger"
-#~ msgstr "ledger"
-
-#~ msgctxt "paper size"
-#~ msgid "tabloid"
-#~ msgstr "tabloid"
-
-#~ msgctxt "paper size"
-#~ msgid "unknown landscape paper size"
-#~ msgstr "tamaño de papel desconocido apaisado"
-
-#~ msgctxt "paper size"
-#~ msgid "unknown portrait paper size"
-#~ msgstr "tamaño de papel desconocido vertical"
-
-#~ msgid "Toggle Drawing Mode"
-#~ msgstr "Cambiar modo de dibujo"
-
-#~ msgid "Starting Jovie Text-to-Speech service Failed: %1"
-#~ msgstr "El inicio del lector de texto Jovie ha fallado: %1"
-
-#~ msgid "Search Columns"
-#~ msgstr "Buscar columnas"
-
-#~ msgid "All Visible Columns"
-#~ msgstr "Todas las columnas visibles"
-
-#~ msgid "No document opened."
-#~ msgstr "Ningún documento abierto."
-
-#~ msgid "Can't open more than one document in the unique Okular instance."
-#~ msgstr ""
-#~ "No se puede abrir más de un documento en la única instancia de Okular."
-
-#~ msgid "No matches found for '%1'."
-#~ msgstr "No se han encontrado coincidencias para «%1»."
-
-#~ msgid "Search in progress..."
-#~ msgstr "Búsqueda en progreso..."
-
-#~ msgid "Searching for %1"
-#~ msgstr "Buscando %1"

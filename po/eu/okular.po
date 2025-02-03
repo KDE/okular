@@ -1,26 +1,26 @@
 # Translation for okular.po to Euskara/Basque (eu).
-# Copyright (C) 2003-2024 This file is copyright:
+# Copyright (C) 2003-2025 This file is copyright:
 # This file is distributed under the same license as the okular package.
-# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2003, 2005, 2006.
 # Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
-"PO-Revision-Date: 2024-12-28 08:56+0100\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"PO-Revision-Date: 2025-02-02 21:21+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -3906,9 +3906,11 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Sinatzeko barneko errorea. Mesedez eman akats baten berri hura errepikatzeko "
+"urratsekin. Errore kodea %1"
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3923,6 +3925,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"Ezin izan du sinatutako dokumentua '%1'(e)an idatzi, mesedez, ziurtatu "
+"idazteko baimena duzun karpeta bat aukeratu duzula"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4605,7 +4609,7 @@ msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5393,8 +5397,22 @@ msgstr "Ziurtagiriak"
 msgid "Select certificate to sign with:"
 msgstr "Aukeratu sinatzeko ziurtagiria:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, fuzzy, kde-format
+#| msgid "Allow"
+msgid "All"
+msgstr "Baimendu"
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "Ziurtagiriak"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "Zergatia:"
@@ -5402,32 +5420,32 @@ msgstr "Zergatia:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "aukerakoa"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "Kokalekua:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "Atzeko planoa:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "Hautatu..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Azkenaldiko atzeko planoak:"
@@ -5471,43 +5489,43 @@ msgstr "Tolestu elementu guztiak"
 msgid "Properties"
 msgstr "Propietateak"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Irudiak (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "Hautatu atzeko planoko irudia"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "Ahaztu irudia"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "Ahaztu irudi guztiak"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Sartu ziurtagiria desblokeatzeko pasahitza (baldin badago): %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Sartu ziurtagiriaren pasahitza"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "Sartu dokumentuaren pasahitza"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gorde sinatutako fitxategia honela"
@@ -5580,6 +5598,12 @@ msgstr "Ikusi ziurtagiri kudeatzailean"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDEren ziurtagiri kudeatzailea (kleopatra) ez du aurkitu"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -6256,9 +6280,6 @@ msgstr "Ezkutatu ongietorri pantaila"
 
 #~ msgid "Presentation Mode"
 #~ msgstr "Aurkezpen modua"
-
-#~ msgid "Allow"
-#~ msgstr "Baimendu"
 
 #~ msgid "Allow the presentation mode"
 #~ msgstr "Baimendu aurkezpen modua"

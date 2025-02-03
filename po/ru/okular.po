@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2024-12-28 12:09+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -3934,7 +3934,7 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4634,7 +4634,7 @@ msgid "Remove this Bookmark"
 msgstr "Удалить эту закладку"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5423,8 +5423,22 @@ msgstr "Сертификаты"
 msgid "Select certificate to sign with:"
 msgstr "Выбор сертификата для подписания:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, fuzzy, kde-format
+#| msgid "Allow"
+msgid "All"
+msgstr "Перейти"
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "Сертификаты"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "Причина:"
@@ -5432,32 +5446,32 @@ msgstr "Причина:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "необязательно"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "Местоположение:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "Фон:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "Выбрать…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Последние фоны:"
@@ -5501,43 +5515,43 @@ msgstr "Свернуть все элементы"
 msgid "Properties"
 msgstr "Свойства"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Изображения (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "Выбор фонового изображения"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "Удалить изображение"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "Удалить все изображения"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Введите пароль (если используется) для разблокирования сертификата: %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Ввод пароля сертификата"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "Введите пароль к документу"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Сохранение подписанного файла"
@@ -5610,6 +5624,12 @@ msgstr "Просмотреть в диспетчере сертификатов"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "Диспетчер сертификатов KDE (kleopatra) не найден"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -6259,9 +6279,6 @@ msgstr "Не использовать экран приветствия"
 
 #~ msgid "Presentation Mode"
 #~ msgstr "Режим презентации"
-
-#~ msgid "Allow"
-#~ msgstr "Перейти"
 
 #~ msgid "Allow the presentation mode"
 #~ msgstr "Перейти в режим презентации"

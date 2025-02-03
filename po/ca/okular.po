@@ -1,17 +1,17 @@
 # Translation of okular.po to Catalan
-# Copyright (C) 2003-2024 This_file_is_part_of_KDE
+# Copyright (C) 2003-2025 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2007.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022, 2023.
-# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# Josep M. Ferrer <txemaq@gmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
-"PO-Revision-Date: 2024-12-28 12:54+0100\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"PO-Revision-Date: 2025-02-02 08:53+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -3918,9 +3918,11 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Error intern de signatura. Informeu l'error amb els passos per a reproduir-"
+"lo. Codi d'error %1"
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:255
+#: part/signaturepartutils.cpp:276
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -3935,6 +3937,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"No s'ha pogut escriure el document signat a «%1». Assegureu-vos que heu "
+"seleccionat una carpeta amb permís d'escriptura"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4622,7 +4626,7 @@ msgid "Remove this Bookmark"
 msgstr "Elimina aquest punt"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:223
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5410,8 +5414,21 @@ msgstr "Certificats"
 msgid "Select certificate to sign with:"
 msgstr "Seleccioneu un certificat amb el qual signar:"
 
+#. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
+#: part/selectcertificatedialog.ui:29
+#, kde-format
+msgid "All"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
+#: part/selectcertificatedialog.ui:39
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "Only QES certificates"
+msgstr "Certificats"
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:42 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "Motiu:"
@@ -5419,32 +5436,32 @@ msgstr "Motiu:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:49 part/selectcertificatedialog.ui:66
-#: part/selectcertificatedialog.ui:85
+#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
+#: part/selectcertificatedialog.ui:106
 #, kde-format
 msgid "optional"
 msgstr "opcional"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:59 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "Ubicació:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:76
+#: part/selectcertificatedialog.ui:97
 #, kde-format
 msgid "Background:"
 msgstr "Fons:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:95
+#: part/selectcertificatedialog.ui:116
 #, kde-format
 msgid "Choose..."
 msgstr "Escolliu..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:107
+#: part/selectcertificatedialog.ui:128
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Fons recents:"
@@ -5488,44 +5505,44 @@ msgstr "Redueix tots els elements"
 msgid "Properties"
 msgstr "Propietats"
 
-#: part/signaturepartutils.cpp:142
+#: part/signaturepartutils.cpp:163
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imatges (%1)"
 
-#: part/signaturepartutils.cpp:143
+#: part/signaturepartutils.cpp:164
 #, kde-format
 msgid "Select background image"
 msgstr "Seleccioneu una imatge de fons"
 
-#: part/signaturepartutils.cpp:148
+#: part/signaturepartutils.cpp:169
 #, kde-format
 msgid "Forget image"
 msgstr "Oblida la imatge"
 
-#: part/signaturepartutils.cpp:149
+#: part/signaturepartutils.cpp:170
 #, kde-format
 msgid "Forget all images"
 msgstr "Oblida totes les imatges"
 
-#: part/signaturepartutils.cpp:191
+#: part/signaturepartutils.cpp:212
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Introduïu la contrasenya (si n'hi ha) per a desblocar el certificat: %1"
 
-#: part/signaturepartutils.cpp:193
+#: part/signaturepartutils.cpp:214
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Introduïu la contrasenya del certificat"
 
-#: part/signaturepartutils.cpp:206
+#: part/signaturepartutils.cpp:227
 #, kde-format
 msgid "Enter document password"
 msgstr "Introduïu la contrasenya del document"
 
-#: part/signaturepartutils.cpp:229
+#: part/signaturepartutils.cpp:250
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Desa el fitxer signat com a"
@@ -5598,6 +5615,12 @@ msgstr "Visualitza en el gestor de certificats"
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "No s'ha trobat el Gestor de certificats de KDE (Kleopatra)"
+
+#: part/signingcertificatelistmodel.cpp:100
+#, kde-format
+msgctxt "Qualified electronic signature, see wikipedia"
+msgid "Qualified"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5906,25 +5929,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgctxt "Page Up/Down overlap, spinbox suffix"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Width"
-#~ msgstr "Ajusta a l'amplada"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Page"
-#~ msgstr "Ajusta a la pàgina"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Auto Fit"
-#~ msgstr "Encaixat automàtic"
-
-#~ msgid "S&earch:"
-#~ msgstr "C&erca:"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Tots els fitxers"

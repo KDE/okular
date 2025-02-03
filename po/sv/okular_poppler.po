@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2023-07-25 11:50+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -300,12 +300,18 @@ msgstr ""
 "Du använder ett Poppler-bibliotek byggt utan stöd för NSS.\n"
 "Av den anledningen går det inte att lägga till digitala signaturer."
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:175
+#, kde-format
+msgctxt "certificate end validity"
+msgid "forever"
+msgstr ""
+
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "Restart needed"
 msgstr "Omstart krävs"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

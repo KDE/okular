@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2023-07-25 21:52-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -304,12 +304,18 @@ msgstr ""
 "Você está usando uma biblioteca Poppler sem suporte a NSS.\n"
 "Adicionar assinaturas digitais não está disponível por este motivo"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:175
+#, kde-format
+msgctxt "certificate end validity"
+msgid "forever"
+msgstr ""
+
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "Restart needed"
 msgstr "Reinício necessário"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

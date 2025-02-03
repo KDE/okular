@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-02 00:40+0000\n"
+"POT-Creation-Date: 2025-02-03 00:39+0000\n"
 "PO-Revision-Date: 2024-01-13 18:15+0200\n"
 "Last-Translator: Liudas <liudas.alisauskas@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -304,12 +304,18 @@ msgstr ""
 "Jūs naudojate Poppler biblioteką, sudarytą be NSS palaikymo.\n"
 "Dėl šios priežasties, skaitmeninių parašų pridėjimas yra neprieinamas"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:175
+#, kde-format
+msgctxt "certificate end validity"
+msgid "forever"
+msgstr ""
+
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "Restart needed"
 msgstr "Reikia paleisti iš naujo"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:201
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Pakeitę NSS katalogo nuostatas, turite paleisti Okular iš naujo"

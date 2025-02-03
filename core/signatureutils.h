@@ -45,6 +45,8 @@ public:
      */
     enum PublicKeyType { RsaKey, DsaKey, EcKey, OtherKey };
 
+    enum CertificateType { X509, PGP };
+
     /**
      * Certificate key usage extensions.
      */
@@ -300,6 +302,9 @@ public:
 
     bool isQualified() const;
     void setQualified(bool qualified);
+
+    CertificateType certificateType() const;
+    void setCertificateType(CertificateType type);
 
     CertificateInfo();
     CertificateInfo(const CertificateInfo &other);

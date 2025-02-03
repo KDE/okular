@@ -7,6 +7,7 @@
     <signal name="useDefaultDBChanged" />
     <signal name="signatureBackendChanged" />
     <signal name="dBCertificatePathChanged" />
+    <signal name="enablePgpChanged" />
     <group name="General">
         <entry key="EnhanceThinLines" type="Enum" >
             <default>No</default>
@@ -34,6 +35,10 @@
     <group name="Signatures" >
       <entry key="SignatureBackend" type="String">
           <emit signal="signatureBackendChanged" />
+      </entry>
+      <entry key="EnablePgp" type="Bool">
+          <default>false</default>
+          <emit signal="enablePgpChanged" />
       </entry>
       <entry key="UseDefaultCertDB" type="Bool">
           <default>true</default>

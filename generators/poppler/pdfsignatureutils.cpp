@@ -73,6 +73,20 @@ static Okular::CertificateInfo::KeyLocation fromPoppler(Poppler::CertificateInfo
 }
 #endif
 
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 2, 0)
+static Okular::CertificateInfo::CertificateType fromPoppler(Poppler::CertificateInfo::CertificateType type)
+{
+    switch (type) {
+    case Poppler::CertificateInfo::CertificateType::PGP:
+        return Okular::CertificateInfo::CertificateType::PGP;
+    case Poppler::CertificateInfo::CertificateType::X509:
+        return Okular::CertificateInfo::CertificateType::X509;
+    }
+    // fallback, it's probably X.509
+    return Okular::CertificateInfo::CertificateType::X509;
+}
+#endif
+
 Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
 {
     Okular::CertificateInfo oInfo;
@@ -119,6 +133,10 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
 #endif
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
     oInfo.setQualified(pInfo.isQualified());
+#endif
+
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+    oInfo.setCertificateType(fromPoppler(pInfo.certificateType()));
 #endif
     return oInfo;
 }

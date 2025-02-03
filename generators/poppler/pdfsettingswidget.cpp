@@ -13,6 +13,7 @@
 #include <KLocalizedString>
 #include <KUrlRequester>
 
+#include <KMessageBox>
 #include <QEvent>
 #include <QHBoxLayout>
 #include <QMessageBox>
@@ -64,6 +65,9 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 #if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(23, 07, 0)
     m_pdfsw.kcfg_OverprintPreviewEnabled->hide();
 #endif
+#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(25, 02, 90)
+    m_pdfsw.kcfg_EnablePgp->hide();
+#endif
 
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     auto backends = Poppler::availableCryptoSignBackends();
@@ -101,13 +105,31 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             }
             Poppler::setActiveCryptoSignBackend(backendEnum.value());
             m_pdfsw.certDBGroupBox->setVisible(backendEnum == Poppler::CryptoSignBackend::NSS);
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+            m_pdfsw.kcfg_EnablePgp->setVisible(backendEnum == Poppler::CryptoSignBackend::GPG);
+#endif
             m_certificatesAsked = false;
             if (m_tree) {
                 m_tree->clear();
             }
             update();
         });
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+        connect(m_pdfsw.kcfg_EnablePgp, &QAbstractButton::toggled, this, [this](bool checked) {
+            bool wasAllowed = Poppler::arePgpSignaturesAllowed();
+            if (!wasAllowed && checked) {
+                KMessageBox::information(this,
+                                         i18nc("@info Kind of a notice/warning", "These signatures only work between modern versions of Okular with the GnuPG based backend activated"),
+                                         i18nc("@title:dialog", "Enable PGP Signatures"),
+                                         QStringLiteral("enablePgpWarningShown"));
+            }
+            Poppler::setPgpSignaturesAllowed(checked);
+        });
+#endif
 
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+        m_pdfsw.kcfg_EnablePgp->setVisible(currentBackend == Poppler::CryptoSignBackend::GPG);
+#endif
         m_pdfsw.certDBGroupBox->setVisible(currentBackend == Poppler::CryptoSignBackend::NSS);
 #else
     if (Poppler::hasNSSSupport()) {

@@ -87,10 +87,22 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
                 w->hide();
             }
         }
+    } else {
+        if (!certificateModelUnderlying.types().testFlag(SignaturePartUtils::CertificateType::QES)) {
+            dialog.ui->qesCertificates->hide();
+        }
+        if (!certificateModelUnderlying.types().testFlag(SignaturePartUtils::CertificateType::PGP)) {
+            dialog.ui->pgpOption->hide();
+        }
     }
     QObject::connect(dialog.ui->qesCertificates, &QAbstractButton::clicked, &dialog, [&certificateModel](bool checked) {
         if (checked) {
             certificateModel.setAllowedTypes(SignaturePartUtils::CertificateType::QES);
+        }
+    });
+    QObject::connect(dialog.ui->pgpOption, &QAbstractButton::clicked, &dialog, [&certificateModel](bool checked) {
+        if (checked) {
+            certificateModel.setAllowedTypes(SignaturePartUtils::CertificateType::PGP);
         }
     });
     QObject::connect(dialog.ui->allCertificateOption, &QAbstractButton::clicked, &dialog, [&certificateModel](bool checked) {

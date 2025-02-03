@@ -703,6 +703,9 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
         Poppler::setActiveCryptoSignBackend(activeBackend.value());
     }
 #endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+    Poppler::setPgpSignaturesAllowed(PDFSettings::enablePgp());
+#endif
 }
 
 PDFGenerator::~PDFGenerator()

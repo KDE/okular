@@ -195,6 +195,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_EnablePgp">
+     <property name="toolTip">
+      <string comment="@info:tooltip">These signatures can only be validated by modern Okular users with GnuPG backend activated</string>
+     </property>
+     <property name="text">
+      <string comment="@option:check">Allow PGP keys for signatures (Okular extension)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="certDBGroupBox">
      <property name="title">
       <string>Certificate Database</string>

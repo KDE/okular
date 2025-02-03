@@ -46,6 +46,12 @@ public:
     enum PublicKeyType { RsaKey, DsaKey, EcKey, OtherKey };
 
     /**
+     * Certificate types
+     * @since 25.04
+     */
+    enum CertificateType { X509 /** X509 standardized certificates */, PGP /** PGP keys (Custom extension) */ };
+
+    /**
      * Certificate key usage extensions.
      */
     enum KeyUsageExtension { KuDigitalSignature = 0x80, KuNonRepudiation = 0x40, KuKeyEncipherment = 0x20, KuDataEncipherment = 0x10, KuKeyAgreement = 0x08, KuKeyCertSign = 0x04, KuClrSign = 0x02, KuEncipherOnly = 0x01, KuNone = 0x00 };
@@ -300,6 +306,20 @@ public:
 
     bool isQualified() const;
     void setQualified(bool qualified);
+
+    /**
+     * @since 25.04
+     * \see also \ref CertificateType
+     * @return certificateType
+     */
+    CertificateType certificateType() const;
+
+    /**
+     * @since 25.04
+     * sets the certificateType
+     * \see also \ref CertificateType
+     */
+    void setCertificateType(CertificateType type);
 
     CertificateInfo();
     CertificateInfo(const CertificateInfo &other);

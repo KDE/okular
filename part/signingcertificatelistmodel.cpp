@@ -18,6 +18,8 @@ SigningCertificateListModel::SigningCertificateListModel(const QList<Okular::Cer
         }
         if (cert.isQualified()) {
             m_types |= SignaturePartUtils::CertificateType::QES;
+        } else if (cert.certificateType() == Okular::CertificateInfo::CertificateType::PGP) {
+            m_types |= SignaturePartUtils::CertificateType::PGP;
         } else {
             m_types |= SignaturePartUtils::CertificateType::SMime;
         }
@@ -99,6 +101,9 @@ QVariant SigningCertificateListModel::data(const QModelIndex &index, int role) c
         if (cert.isQualified()) {
             return i18nc("Qualified electronic signature, see wikipedia", "Qualified");
         }
+        if (cert.certificateType() == Okular::CertificateInfo::CertificateType::PGP) {
+            return i18n("PGP");
+        }
         return {};
     }
     case Qt::ToolTipRole:
@@ -131,7 +136,10 @@ bool FilterSigningCertificateTypeListModel::filterAcceptsRow(int sourceRow, cons
         return false;
     }
     auto cert = data.data(SignaturePartUtils::CertRole).value<Okular::CertificateInfo>();
-    if (m_types & SignaturePartUtils::CertificateType::QES && cert.isQualified()) {
+    if (m_types.testFlag(SignaturePartUtils::CertificateType::QES) && cert.isQualified()) {
+        return true;
+    }
+    if (m_types.testFlag(SignaturePartUtils::CertificateType::PGP) && cert.certificateType() == Okular::CertificateInfo::CertificateType::PGP) {
         return true;
     }
     return false;

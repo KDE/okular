@@ -50,6 +50,7 @@ public:
     QByteArray certificateData;
     CertificateInfo::Backend backend = CertificateInfo::Backend::Unknown;
     CertificateInfo::KeyLocation keyLocation = CertificateInfo::KeyLocation::Unknown;
+    CertificateInfo::CertificateType certificateType = CertificateInfo::CertificateType::X509;
     bool isQualified = false;
     std::function<bool(QString)> checkPasswordFunction;
 };
@@ -293,6 +294,16 @@ bool CertificateInfo::isQualified() const
 void CertificateInfo::setQualified(bool qualified)
 {
     d->isQualified = qualified;
+}
+
+CertificateInfo::CertificateType CertificateInfo::certificateType() const
+{
+    return d->certificateType;
+}
+
+void CertificateInfo::setCertificateType(CertificateType type)
+{
+    d->certificateType = type;
 }
 
 class Okular::SignatureInfoPrivate : public QSharedData

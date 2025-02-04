@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 07:53+0200\n"
+"PO-Revision-Date: 2025-02-03 09:31+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5359,17 +5359,15 @@ msgstr "נא לבחור אישור לחתום איתו:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "איפשור"
+msgstr "הכול"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "אישורים"
+msgstr "אישורי QES (חתימה אלקטרונית מוסמכת) בלבד"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5563,7 +5561,7 @@ msgstr "מנהל האישורים של KDE‏ (kleopatra) לא נמצא"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "מוסמך"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

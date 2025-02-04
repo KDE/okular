@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 10:10+0200\n"
+"PO-Revision-Date: 2025-02-03 08:53+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5438,17 +5438,15 @@ msgstr "Виберіть сертифікат для підписування:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Дозволити"
+msgstr "Усі"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Сертифікати"
+msgstr "Лише сертифікати QES"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5642,7 +5640,7 @@ msgstr "Не знайдено засобу керування сертифіка
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Кваліфікований"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

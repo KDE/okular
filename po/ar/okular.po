@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-01-02 09:29+0400\n"
+"PO-Revision-Date: 2025-02-03 16:40+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -51,16 +51,16 @@ msgid ""
 "(C) 2004-2017 Albert Astals Cid\n"
 "(C) 2006-2009 Pino Toscano"
 msgstr ""
-"(C) 2002 Wilco Greven, Christophe Devriese\n"
-"(C) 2004-2005 Enrico Ros\n"
-"(C) 2005 Piotr Szymanski\n"
-"(C) 2004-2017 Albert Astals Cid\n"
-"(C) 2006-2009 Pino Toscano"
+"(ج) 2002 ويلكو جريفن، كريستوف ديفريز\n"
+"(ج) 2004-2005 إنريكو روس\n"
+"(ج) 2005 بيوتر زيمانسكي\n"
+"(C) 2004-2017 ألبرت أستالس سيد\n"
+"(ج) 2006-2009 بينو توسكانو"
 
 #: aboutdata.h:31
 #, kde-format
 msgid "Pino Toscano"
-msgstr "Pino Toscano"
+msgstr "بينو توسكانو"
 
 #: aboutdata.h:31
 #, kde-format
@@ -70,7 +70,7 @@ msgstr "المشرف السابق"
 #: aboutdata.h:32
 #, kde-format
 msgid "Tobias Koenig"
-msgstr "Tobias Koenig"
+msgstr "توبياس كونيغ"
 
 #: aboutdata.h:32
 #, kde-format
@@ -80,7 +80,7 @@ msgstr "الكثير من هياكل العمل ، نهايات خلفية ل OD
 #: aboutdata.h:33
 #, kde-format
 msgid "Albert Astals Cid"
-msgstr "Albert Astals Cid"
+msgstr "ألبرت أستالس سيد"
 
 #: aboutdata.h:33
 #, kde-format
@@ -90,7 +90,7 @@ msgstr "المطوّر"
 #: aboutdata.h:34
 #, kde-format
 msgid "Piotr Szymanski"
-msgstr "Piotr Szymanski"
+msgstr "بيوتر شيمانسكي"
 
 #: aboutdata.h:34
 #, kde-format
@@ -100,7 +100,7 @@ msgstr "أنشئ أوكلار من الكود الأساس ل KPDF"
 #: aboutdata.h:35
 #, kde-format
 msgid "Enrico Ros"
-msgstr "Enrico Ros"
+msgstr "إنريكو روس"
 
 #: aboutdata.h:35
 #, kde-format
@@ -110,7 +110,7 @@ msgstr "مطور KPDF"
 #: aboutdata.h:36
 #, kde-format
 msgid "Eugene Trounev"
-msgstr "Eugene Trounev"
+msgstr "يوجين ترونيف"
 
 #: aboutdata.h:36
 #, kde-format
@@ -120,7 +120,7 @@ msgstr "الأعمال الفنية للشروح"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "جيري باوم - NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -130,7 +130,7 @@ msgstr "أداة اختيار الجداول"
 #: aboutdata.h:38
 #, kde-format
 msgid "Fabio D'Urso"
-msgstr "Fabio D'Urso"
+msgstr "فابيو دورسو"
 
 #: aboutdata.h:38
 #, kde-format
@@ -3906,6 +3906,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"خطأ في التوقيع الداخلي. يُرجى الإبلاغ عن خطأ مع الخطوات اللازمة لإعادة "
+"إنتاجه. رمز الخطأ %1"
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:276
@@ -3921,6 +3923,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"لم نتمكن من كتابة مستند موقّع في '%1'، يرجى التأكد من تحديد مجلد به إذن "
+"الكتابة"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -5377,17 +5381,15 @@ msgstr "حدد شهادة للتوقيع بها:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "اسمح"
+msgstr "الكلّ"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "الشّهادات"
+msgstr "شهادات QES فقط"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5581,7 +5583,7 @@ msgstr "مدير شهادات كيدي (kleopatra) غير موجود"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "المؤهل"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

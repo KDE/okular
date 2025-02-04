@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 08:25+0100\n"
+"PO-Revision-Date: 2025-02-03 15:47+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -5382,17 +5382,15 @@ msgstr "Välj certifikat att signera med:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Tillåt"
+msgstr "Alla"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Certifikat"
+msgstr "Bara QES-certifikat"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5586,7 +5584,7 @@ msgstr "KDE:s certifikathantering (kleopatra) hittades inte"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalificerad"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

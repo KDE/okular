@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 12:47+0300\n"
+"PO-Revision-Date: 2025-02-03 11:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -5402,14 +5402,13 @@ msgstr "Birlikte imzalamak için sertifika seçin:"
 #: part/selectcertificatedialog.ui:29
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "Tümü"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Sertifikalar"
+msgstr "Yalnızca QES sertifikaları"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5604,7 +5603,7 @@ msgstr "KDE Sertifika Yöneticisi (Kleopatra) bulunamadı"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kalifiye"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

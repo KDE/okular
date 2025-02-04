@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 08:33+0100\n"
+"PO-Revision-Date: 2025-02-03 07:25+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -5409,14 +5409,13 @@ msgstr "Izberite potrdilo, s katerim se želite podpisati:"
 #: part/selectcertificatedialog.ui:29
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "Vsa"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Potrdila"
+msgstr "Samo potrdila QES"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5610,7 +5609,7 @@ msgstr "Programa KDE Certificate Manager (kleopatra) ni mogoče najti"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalificirana"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

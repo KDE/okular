@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-02 14:20+0100\n"
+"PO-Revision-Date: 2025-02-03 13:59+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5424,17 +5424,15 @@ msgstr "Certificaat selecteren om mee te ondertekenen:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Toestaan"
+msgstr "Alles"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Certificaten"
+msgstr "Alleen CES-certificaten"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5629,7 +5627,7 @@ msgstr "Certificatenbeheerder van KDE (kleopatra) niet gevonden"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Gekwalificeerd"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

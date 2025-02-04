@@ -3,26 +3,26 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Rinse de Vries <rinsedevries@kde.nl>, 2007, 2008.
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2012, 2013, 2018, 2019, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2009, 2010, 2012, 2013, 2018, 2019, 2020, 2021, 2023, 2025 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2023-06-29 10:20+0200\n"
+"PO-Revision-Date: 2025-02-03 13:59+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 24.12.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Rinse de Vries - 2007, Freek de Kruijf - 2013 t/m 2021;2023"
+msgstr "Rinse de Vries - 2007, Freek de Kruijf - 2013 t/m 2025"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -307,7 +307,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "eeuwig"
 
 #: pdfsettingswidget.cpp:201
 #, kde-format

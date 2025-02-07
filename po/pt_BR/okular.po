@@ -11,13 +11,14 @@
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010, 2011, 2012.
 # Aracele Torres <araceletorres@gmail.com>, 2010.
 # SPDX-FileCopyrightText: 2024, 2025 Geraldo Simiao <geraldosimiao@fedoraproject.org>
+# SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-03 02:31+0000\n"
-"PO-Revision-Date: 2025-01-27 16:34-0300\n"
-"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
+"PO-Revision-Date: 2025-02-06 00:33-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -31,14 +32,15 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Lisiane Sztoltz Teixeira, Henrique Pinto, André Marcelo Alvarenga, Luiz "
-"Fernando Ranghetti, Geraldo Simião"
+"Fernando Ranghetti, Geraldo Simião, Guilherme Marçal Silva"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "lisiane@kdemail.net, henrique.pinto@kdemail.net, alvarenga@kde.org, "
-"elchevive@opensuse.org, geraldosimiao@fedoraproject.org"
+"elchevive@opensuse.org, geraldosimiao@fedoraproject.org, "
+"guimarcalsilva@gmail.com"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format

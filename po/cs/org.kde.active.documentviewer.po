@@ -175,16 +175,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Revize dokumentu %1 z %2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "Uložit podepsanou verzi..."
+msgstr ""
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "Prohlížet certifikát..."
+msgstr ""
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

@@ -3857,7 +3857,7 @@ msgctxt "%1 is a error code"
 msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
-msgstr ""
+msgstr "内部签名错误。请提交程序缺陷报告并包含能复现此错误的步骤。错误代码 %1"
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:276
@@ -3872,7 +3872,7 @@ msgctxt "%1 is a file path"
 msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
-msgstr ""
+msgstr "无法在“%1”处写入已签名文档，请确保您选择的是具有写入权限的文件夹。"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -5316,14 +5316,13 @@ msgstr "选择用于签名的证书："
 #: part/selectcertificatedialog.ui:29
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "证书"
+msgstr "仅 QES 证书"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5517,7 +5516,7 @@ msgstr "KDE 证书管理器 (kleopatra) 没有找到"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "eIDAS 合格"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

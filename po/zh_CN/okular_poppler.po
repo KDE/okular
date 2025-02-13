@@ -297,7 +297,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "永久"
 
 #: pdfsettingswidget.cpp:201
 #, kde-format

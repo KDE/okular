@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-01-03 16:46+0200\n"
+"PO-Revision-Date: 2025-02-11 09:52+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3909,6 +3909,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Iekšējā parakstīšanas kļūda. Lūdzu, informējiet par šo kļūdu un soļiem, kā "
+"to atkārtot. Kļūdas kods %1"
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:276
@@ -3926,6 +3928,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"Neizdevās „%1“ rakstīt parakstītu dokumentu. Pārliecinieties, ka norādītajā "
+"mapē jums ir rakstīšanas atļaujas."
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -5396,17 +5400,15 @@ msgstr "Izvēlieties sertifikātu, ar kuru parakstīt:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Atļaut"
+msgstr "Visi"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Sertifikāti"
+msgstr "Tikai QES sertifikāti"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5600,7 +5602,7 @@ msgstr "KDE sertifikātu pārvaldnieks (kleopatra) nav atrasts"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalificēts"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

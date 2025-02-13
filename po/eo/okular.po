@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2024-12-29 12:45+0100\n"
+"PO-Revision-Date: 2025-02-12 07:01+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -5395,10 +5395,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Atestiloj"
+msgstr "Nur QES-atestiloj"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
@@ -5898,19 +5897,3 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
-
-#~ msgctxt "Page Up/Down overlap, spinbox suffix"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Width"
-#~ msgstr "Laŭ larĝo"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Page"
-#~ msgstr "Laŭ paĝo"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Auto Fit"
-#~ msgstr "Aŭtomate Ĝisrandigi"

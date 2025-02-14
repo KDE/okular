@@ -4,11 +4,8 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "mobidocument.h"
-#include <QApplication> // Because of the HACK
-#include <QColor>
 #include <QDebug>
 #include <QFile>
-#include <QPalette> // Because of the HACK
 #include <QRegularExpression>
 #include <qmobipocket/mobipocket.h>
 #include <qmobipocket/qfilestream.h>
@@ -24,19 +21,8 @@ MobiDocument::MobiDocument(const QString &fileName)
         QString text = doc->text();
         QString header = text.left(1024);
         if (header.contains(QStringLiteral("<html>")) || header.contains(QStringLiteral("<HTML>"))) {
-            // HACK BEGIN Get the links without CSS to be blue
-            //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
-            const QPalette orig = qApp->palette();
-            QPalette p = orig;
-            p.setColor(QPalette::Link, Qt::blue);
-            qApp->setPalette(p);
-            // HACK END
-
+            setDefaultStyleSheet(QStringLiteral("a { color: %1 }").arg(QColor(Qt::blue).name()));
             setHtml(fixMobiMarkup(text));
-
-            // HACK BEGIN
-            qApp->setPalette(orig);
-            // HACK END
         } else {
             setPlainText(text);
         }

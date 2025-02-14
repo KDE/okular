@@ -25,6 +25,7 @@ EpubDocument::EpubDocument(const QString &fileName, const QFont &font)
 #endif
 
     setPageSize(QSizeF(600, 800));
+    setDefaultStyleSheet(QStringLiteral("a { color: %1 }").arg(QColor(Qt::blue).name()));
 }
 
 bool EpubDocument::isValid()

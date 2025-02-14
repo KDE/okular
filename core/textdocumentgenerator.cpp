@@ -396,8 +396,7 @@ QImage TextDocumentGeneratorPrivate::image(PixmapRequest *request)
 
     p.scale(width / (qreal)size.width(), height / (qreal)size.height());
 
-    QRect rect;
-    rect = QRect(0, request->pageNumber() * size.height(), size.width(), size.height());
+    const QRect rect = QRect(0, request->pageNumber() * size.height(), size.width(), size.height());
     p.translate(QPoint(0, request->pageNumber() * size.height() * -1));
     p.setClipRect(rect);
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
@@ -405,10 +404,6 @@ QImage TextDocumentGeneratorPrivate::image(PixmapRequest *request)
 #endif
     QAbstractTextDocumentLayout::PaintContext context;
     context.palette.setColor(QPalette::Text, Qt::black);
-    //  FIXME Fix Qt, this doesn't work, we have horrible hacks
-    //        in the generators that return html, remove that code
-    //        if Qt ever gets fixed
-    //     context.palette.setColor( QPalette::Link, Qt::blue );
     context.clip = rect;
     mDocument->setDefaultFont(mFont);
     mDocument->documentLayout()->draw(&p, context);

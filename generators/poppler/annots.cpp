@@ -455,6 +455,10 @@ static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::Signin
     case Poppler::SignatureAnnotation::UserCancelled:
         return Okular::UserCancelled;
 #endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+    case Poppler::SignatureAnnotation::BadPassphrase:
+        return Okular::UserCancelled;
+#endif
     }
     return Okular::GenericSigningError;
 }

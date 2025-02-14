@@ -560,6 +560,7 @@ enum SigningResult {
     KeyMissing,           ///< requested key not found \since 25.04
     SignatureWriteFailed, ///< writing error \since 25.04
     UserCancelled,        ///< user aborted \since 25.04
+    BadPassphrase,        ///< bad passphrase \since 25.04
 };
 }
 

@@ -2663,8 +2663,8 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Default Zoom</guilabel></term>
 					<listitem>
 						<para>
-							This options specifies the default zoom mode for file which were never
-							opened before. For those files which were opened before the previous zoom mode
+							This option specifies the default zoom mode for files which were never
+							opened before. For those files which were opened before, the previous zoom mode
 							is applied.
 						</para>
 					</listitem>

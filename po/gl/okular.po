@@ -9,14 +9,14 @@
 # Miguel Branco <mgl.branco@gmail.com>, 2010, 2013.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2024-12-28 13:13+0100\n"
+"PO-Revision-Date: 2025-02-14 08:02+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -37,7 +37,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "martina.ramilo@hispalinux.es, mvillarino@gmail.com, proxecto@trasno.gal, "
-"adrian@chaves.io"
+"adrian@chaves.gal"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:433
 #, kde-format
@@ -1098,7 +1098,7 @@ msgstr "Hora da sinatura: %1"
 #: gui/signaturemodel.cpp:172
 #, kde-format
 msgid "Reason: %1"
-msgstr "Razón: %1"
+msgstr "Motivo: %1"
 
 #: gui/signaturemodel.cpp:177
 #, kde-format
@@ -3913,6 +3913,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Erro interno de sinatura. Informe do fallo, incluíndo os pasos para "
+"reproducilo. O código de erro é: %1."
 
 #: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
 #: part/signaturepartutils.cpp:276
@@ -3930,6 +3932,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"Non foi posíbel escribir o documento asinado en «%1». Asegúrese de que "
+"seleccionou un cartafol no que ten permisos de escritura."
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -4387,7 +4391,7 @@ msgstr "Cancelouse a carga de %1."
 #: part/part.cpp:1222
 #, kde-format
 msgid "Could not open %1. Reason: %2"
-msgstr "Non foi posíbel abrir %1. Razón: %2"
+msgstr "Non foi posíbel abrir %1. Motivo: %2"
 
 #: part/part.cpp:1250
 #, kde-format
@@ -5403,23 +5407,21 @@ msgstr "Seleccione o certificado co que asinar:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Permitir"
+msgstr "Todo"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Certificados"
+msgstr "Só os certificados QES"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
-msgstr "Razón:"
+msgstr "Motivo:"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
@@ -5607,7 +5609,7 @@ msgstr "Non se atopou o xestor de certificados de KDE (kleopatra)."
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Cualificada"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

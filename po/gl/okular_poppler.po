@@ -35,7 +35,7 @@ msgid "Your emails"
 msgstr ""
 "mvillarino@users.sourceforge.net,\n"
 "xosecalvo@gmail.com,\n"
-"adrian@chaves.io"
+"adrian@chaves.gal"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:17

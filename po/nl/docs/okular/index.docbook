@@ -3748,7 +3748,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Deze optie definieert de standaard zoommodus voor bestanden die nooit eerder zijn geopend. Voor eerder geopende bestanden wordt de vorige zoommodus gebruikt. </para>
+>Deze optie specificeert de standaard zoommodus voor bestanden die nooit eerder zijn geopend. Voor eerder geopende bestanden wordt de vorige zoommodus gebruikt. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

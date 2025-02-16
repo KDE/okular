@@ -3728,7 +3728,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Aquesta opció especifica el mode de zoom predeterminat per als fitxers que mai s'han obert abans. Per als fitxers que ja s'han obert s'aplicarà el mode de zoom anterior. </para>
+>Aquesta opció especifica el mode de zoom predeterminat per als fitxers que no s'han obert mai. Per als fitxers que ja s'han obert s'aplicarà el mode de zoom anterior. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

@@ -456,22 +456,33 @@ static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::Signin
     return Okular::GenericSigningError;
 }
 
-void resizeImage(const SignatureImageHelper *helper, int page, const Okular::NormalizedRect &bRect, Poppler::Document *pdfdoc)
+static QSize calculateImagePixelSize(int page, const Okular::NormalizedRect &bRect, Poppler::Document *pdfdoc)
 {
-    QImageReader reader(helper->imagePath);
-
     // 2 is an experimental decided upon fudge factor to compensate for the fact that pageSize is in points
     // but most of this ends up working in pixels anyway
     double width = pdfdoc->page(page)->pageSizeF().width() * bRect.width() * 2;
     double height = pdfdoc->page(page)->pageSizeF().height() * bRect.height() * 2;
 
+    return QSize(width, height);
+}
+
+static bool isValidImageSize(QSize size)
+{
+    // if the image gets too small, embedding it fails horribly, so better detect up front and ignore it
+    return size.width() > 5 && size.height() > 5;
+}
+
+static void resizeImage(const SignatureImageHelper *helper, QSize size)
+{
+    QImageReader reader(helper->imagePath);
+
     QSize imageSize = reader.size();
     if (!reader.size().isNull()) {
-        reader.setScaledSize(imageSize.scaled(width, height, Qt::KeepAspectRatio));
+        reader.setScaledSize(imageSize.scaled(size, Qt::KeepAspectRatio));
     }
     auto input = reader.read();
     if (!input.isNull()) {
-        auto scaled = imagescaling::scaleAndFitCanvas(input, QSize(width, height));
+        auto scaled = imagescaling::scaleAndFitCanvas(input, size);
         scaled.save(helper->imageFile->fileName(), "png");
     }
 }
@@ -495,8 +506,11 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
     pSignatureAnnotation->setFieldPartialName(oSignatureAnnotation->fieldPartialName());
 
     if (!oSignatureAnnotation->imagePath().isEmpty()) {
-        resizeImage(helper.get(), oSignatureAnnotation->page(), oSignatureAnnotation->boundingRectangle(), pdfdoc);
-        pSignatureAnnotation->setImagePath(helper->imageFile->fileName());
+        QSize imageSize = calculateImagePixelSize(oSignatureAnnotation->page(), oSignatureAnnotation->boundingRectangle(), pdfdoc);
+        if (isValidImageSize(imageSize)) {
+            resizeImage(helper.get(), imageSize);
+            pSignatureAnnotation->setImagePath(helper->imageFile->fileName());
+        }
         oSignatureAnnotation->setNativeData(helper);
     }
 
@@ -679,7 +693,14 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
             auto helper = static_cast<const SignatureImageHelper *>(signature->nativeData());
 
             if (helper) {
-                resizeImage(helper, signature->page(), signature->boundingRectangle(), ppl_doc);
+                auto popplerSigAnnot = static_cast<Poppler::SignatureAnnotation *>(ppl_ann);
+                QSize imageSize = calculateImagePixelSize(signature->page(), signature->boundingRectangle(), ppl_doc);
+                if (isValidImageSize(imageSize)) {
+                    resizeImage(helper, imageSize);
+                    popplerSigAnnot->setImagePath(helper->imageFile->fileName());
+                } else {
+                    popplerSigAnnot->setImagePath({});
+                }
             }
 
             break;

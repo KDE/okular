@@ -3034,7 +3034,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->El ratón puede trabajar como una herramienta de aumento. Pulsando el &LMB; y arrastrando puede aumentar la vista para ver el área seleccionada, pulsando el &RMB; se podrá ir a la anterior visualización del documento.</para>
+>El ratón puede trabajar como una herramienta de ampliación. Pulse el &LMB; y arrastre para ampliar la vista para ver el área seleccionada; pulse el &RMB; para ir a la anterior visualización del documento.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3782,11 +3782,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Aumento predeterminado</guilabel
+>Ampliación predeterminada</guilabel
 ></term>
 					<listitem>
 						<para
->Estas opciones especifican el modo de zoom predeterminado para archivos que no se han abierto previamente. Para aquellos archivos que se abrieron con anterioridad se aplica el modo de zoom previo. </para>
+>Esta opción especifica el modo de ampliación predeterminado para archivos que no se han abierto previamente. Para los archivos que se abrieron con anterioridad se aplica el modo de ampliación previo. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

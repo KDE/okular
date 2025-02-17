@@ -32,6 +32,7 @@
 #include <QTextStream>
 #include <QTimeZone>
 #include <QTimer>
+#include <QXmlStreamReader>
 
 #include <KAboutData>
 #include <KConfigDialog>
@@ -668,6 +669,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     , pdfdoc(nullptr)
     , docSynopsisDirty(true)
     , xrefReconstructed(false)
+    , hasVisibleOverprint(false)
     , docEmbeddedFilesDirty(true)
     , nextFontPage(0)
     , annotProxy(nullptr)
@@ -769,6 +771,16 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
     } else {
         std::function<void()> cb = std::bind(&PDFGenerator::xrefReconstructionHandler, this);
         pdfdoc->setXRefReconstructedCallback(cb);
+    }
+
+    hasVisibleOverprint = false;
+    QXmlStreamReader xml(pdfdoc->metadata());
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && xml.name() == QStringLiteral("HasVisibleOverprint")) {
+            xml.readNext();
+            hasVisibleOverprint = xml.text().toString().toLower() == QStringLiteral("true");
+        }
     }
 
     // build Pages (currentPage was set -1 by deletePages)

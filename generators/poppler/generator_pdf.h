@@ -155,6 +155,7 @@ private:
     QString documentFilePath;
     bool docSynopsisDirty;
     bool xrefReconstructed;
+    bool hasVisibleOverprint;
     Okular::DocumentSynopsis docSyn;
     mutable bool docEmbeddedFilesDirty;
     mutable QList<Okular::EmbeddedFile *> docEmbeddedFiles;

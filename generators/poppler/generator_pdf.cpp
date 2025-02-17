@@ -1519,7 +1519,8 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
         scaleMode = pdfOptionsPage->scaleMode();
     }
 
-    const auto overprintPreviewEnabled = PDFSettings::overprintPreviewEnabled();
+    const auto overprintSetting = PDFSettings::overprintPreviewEnabled();
+    const auto overprintPreviewEnabled = overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Always || (overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Automatic && hasVisibleOverprint);
 
 #ifdef Q_OS_WIN
     // Windows can only print by rasterization, because that is
@@ -1772,7 +1773,8 @@ bool PDFGenerator::setDocumentRenderHints()
     // load thin line mode
     const int thinLineMode = PDFSettings::enhanceThinLines();
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 07, 0)
-    const bool enableOverprintPreview = PDFSettings::overprintPreviewEnabled();
+    const auto overprintSetting = PDFSettings::overprintPreviewEnabled();
+    const auto enableOverprintPreview = overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Always || (overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Automatic && hasVisibleOverprint);
 #endif
     const bool enableThinLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Solid;
     const bool enableShapeLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Shape;

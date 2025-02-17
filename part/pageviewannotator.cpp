@@ -331,7 +331,7 @@ private:
 class PickPointEngineSignature : public PickPointEngine
 {
 public:
-    PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
+    explicit PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
         : PickPointEngine({})
         , m_page(nullptr)
         , m_aborted(false)

@@ -5173,9 +5173,9 @@ Okular::Document *PageView::document() const
 }
 
 #if HAVE_NEW_SIGNATURE_API
-void PageView::startSigning(Okular::SignatureAnnotation *form)
+void PageView::startSigning(Okular::SignatureAnnotation *signatureAnnotation)
 {
-    d->signatureAnnotation = form;
+    d->signatureAnnotation = signatureAnnotation;
     Q_EMIT signingStarted();
 }
 #endif

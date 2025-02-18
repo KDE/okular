@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2025-01-26 13:17+0300\n"
+"PO-Revision-Date: 2025-02-17 19:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -113,7 +113,7 @@ msgstr "Yer imini kaldır"
 
 #: ui/MainView.qml:26
 msgid "Bookmark this page"
-msgstr "Bu sayfayı yer imlerine ekle"
+msgstr "Bu sayfaya yer imi koy"
 
 #: ui/MainView.qml:82
 msgid "No document open"

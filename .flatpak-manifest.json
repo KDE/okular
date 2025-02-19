@@ -1,0 +1,502 @@
+{
+    "id": "org.kde.okular",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.8",
+    "sdk": "org.kde.Sdk",
+    "command": "okular",
+    "rename-icon": "okular",
+    "tags": [
+        "nightly"
+    ],
+    "desktop-file-name-suffix": " (Nightly)",
+    "finish-args": [
+        "--share=ipc",
+        "--share=network",
+        "--socket=cups",
+        "--socket=pulseaudio",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri",
+        "--filesystem=host",
+        "--allow=bluetooth",
+        "--talk-name=org.freedesktop.ScreenSaver",
+        "--talk-name=org.freedesktop.login1"
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/*.a",
+        "/lib/*.la",
+        "/lib/cmake",
+        "/share/man",
+        "/share/doc",
+        "/share/pkgconfig",
+        "/share/cmake"
+    ],
+    "modules": [
+        {
+            "name": "gnustep-make",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./configure --prefix=/app",
+                "make -j $FLATPAK_BUILDER_N_JOBS install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/gnustep/tools-make/archive/make-2_9_3.tar.gz",
+                    "sha256": "aad12caecb0398b099f3b8b0282cecc3f01a9f371200641b2e1e535ae6ee2543",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1220,
+                        "stable-only": true,
+                        "url-template": "https://github.com/gnustep/tools-make/archive/make-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "gnustep",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./configure --prefix=/app",
+                "make -j $FLATPAK_BUILDER_N_JOBS install",
+                "ls /app/include"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/gnustep/libs-base/releases/download/base-1_31_0/gnustep-base-1.31.0.tar.gz",
+                    "sha256": "d493ed2ba2a32f559f94e2ae5e339c440ae77d481dff1eb0d51eeac4d9127e33",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 9105,
+                        "stable-only": true,
+                        "url-template": "https://github.com/gnustep/libs-base/releases/download/base-$version/gnustep-base-1.$patch.0.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "unarchiver",
+            "buildsystem": "simple",
+            "build-commands": [
+                "sed -s -i 's#/usr/include/GNUstep#/app/include#g' */Makefile.linux && cd XADMaster && make -j $FLATPAK_BUILDER_N_JOBS -f Makefile.linux",
+                "install -m755 XADMaster/unar XADMaster/lsar /app/bin/"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://cdn.theunarchiver.com/downloads/TheUnarchiverSource.zip",
+                    "sha256": "ac4cedf9b49375c0f805bda010fa03629d05ab283a0a8e35bf2dd01ae477e0a1",
+                    "strip-components": 0
+                }
+            ]
+        },
+        {
+            "name": "discount",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./configure.sh --prefix=/app --enable-all-features --with-fenced-code --shared",
+                "sed -e 's|/sbin/ldconfig|/sbin/ldconfig -n|' -i librarian.sh",
+                "make install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Orc/discount/archive/v3.0.0d.tar.gz",
+                    "sha256": "0ed8cc27ac5d46dc6a8beedd5e5673ac8b466a6474bdb7d35f37c815f670385f",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 12139,
+                        "stable-only": true,
+                        "url-template": "https://github.com/Orc/discount/archive/v$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./bootstrap.sh --prefix=/app --with-libraries=system",
+                "./b2 -j $FLATPAK_BUILDER_N_JOBS install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.bz2",
+                    "sha256": "af57be25cb4c4f4b413ed692fe378affb4352ea50fbe294a11ef548f4d527d89",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6845,
+                        "stable-only": true,
+                        "url-template": "https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libzip",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://libzip.org/download/libzip-1.11.3.tar.xz",
+                    "sha256": "9509d878ba788271c8b5abca9cfde1720f075335686237b7e9a9e7210fe67c1b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10649,
+                        "stable-only": true,
+                        "url-template": "https://libzip.org/download/libzip-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ebook-tools",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz",
+                    "sha256": "cbc35996e911144fa62925366ad6a6212d6af2588f1e39075954973bbee627ae",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 17771,
+                        "stable-only": true,
+                        "url-template": "https://downloads.sourceforge.net/project/ebook-tools/ebook-tools/$version/ebook-tools-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "djvulibre",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/djvu/djvulibre-3.5.28.tar.gz",
+                    "sha256": "fcd009ea7654fde5a83600eb80757bd3a76998e47d13c66b54c8db849f8f2edc",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10159,
+                        "stable-only": true,
+                        "url-template": "http://downloads.sourceforge.net/djvu/djvulibre-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ghostscript",
+            "config-opts": [
+                "--disable-cups"
+            ],
+            "make-args": [
+                "so"
+            ],
+            "make-install-args": [
+                "soinstall"
+            ],
+            "post-install": [
+                "mv -f ${FLATPAK_DEST}/bin/{gsc,gs} "
+            ],
+            "cleanup": [
+                "/share/ghostscript/*/doc/",
+                "/share/ghostscript/*/examples"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.gz",
+                    "sha256": "c764dfbb7b13fc71a7a05c634e014f9bb1fb83b899fe39efc0b6c3522a9998b1",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1157,
+                        "stable-only": true,
+                        "url-template": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${major}0$minor$patch/ghostscript-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libspectre",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://libspectre.freedesktop.org/releases/libspectre-0.2.12.tar.gz",
+                    "sha256": "55a7517cd3572bd2565df0cf450944a04d5273b279ebb369a895391957f0f960",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1724,
+                        "stable-only": true,
+                        "url-template": "http://libspectre.freedesktop.org/releases/libspectre-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "poppler-data",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
+                    "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3687,
+                        "stable-only": true,
+                        "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "poppler",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DBUILD_GTK_TESTS=OFF",
+                "-DBUILD_QT5_TESTS=OFF",
+                "-DBUILD_QT6_TESTS=OFF",
+                "-DBUILD_CPP_TESTS=OFF",
+                "-DENABLE_UTILS=OFF",
+                "-DENABLE_CPP=OFF",
+                "-DENABLE_GLIB=OFF",
+                "-DENABLE_QT5=OFF",
+                "-DENABLE_QT6=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-25.02.0.tar.xz",
+                    "sha256": "21234cb2a9647d73c752ce4031e65a79d11a511a835f2798284c2497b8701dee",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3686,
+                        "stable-only": true,
+                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "inih",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddefault_library=shared",
+                "-Ddistro_install=true",
+                "-Dwith_INIReader=true"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r58.tar.gz",
+                    "sha256": "e79216260d5dffe809bda840be48ab0eec7737b2bb9f02d2275c1b46344ea7b7",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 11600,
+                        "stable-only": true,
+                        "url-template": "https://github.com/benhoyt/inih/archive/refs/tags/r$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "exiv2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.4.tar.gz",
+                    "sha256": "65cb3a813f34fb6db7a72bba3fc295dd6c419082d2d8bbf96518be6d1024b784",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 769,
+                        "stable-only": true,
+                        "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "pcre",
+            "config-opts": [
+                "--enable-unicode-properties"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.bz2",
+                    "sha256": "4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8"
+                }
+            ]
+        },
+        {
+            "name": "libkexiv2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DQT_MAJOR_VERSION=6"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/release-service/24.12.2/src/libkexiv2-24.12.2.tar.xz",
+                    "sha256": "f797fd8f442f578de464ba2b861b9d6b2d02e2351a3ffb6aa5e54ce2947c2c8f",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 8763,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/release-service/$version/src/libkexiv2-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "kdegraphics-mobipocket",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DQT_MAJOR_VERSION=6"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/release-service/24.12.2/src/kdegraphics-mobipocket-24.12.2.tar.xz",
+                    "sha256": "ea9dfbc69baf5ebe8c482344bdccc980abccbcb397971db21d178922255abb46",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 8763,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/release-service/$version/src/kdegraphics-mobipocket-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ffmpeg",
+            "config-opts": [
+                "--enable-pic",
+                "--enable-shared",
+                "--disable-doc",
+                "--disable-static",
+                "--enable-gpl",
+                "--enable-libvpx",
+                "--enable-libmp3lame",
+                "--enable-libvorbis",
+                "--enable-libopus"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ffmpeg.org/releases/ffmpeg-4.4.5.tar.xz",
+                    "sha256": "f9514e0d3515aee5a271283df71636e1d1ff7274b15853bcd84e144be416ab07"
+                }
+            ]
+        },
+        {
+            "name": "phonon",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF",
+                "-DPHONON_BUILD_QT5=OFF",
+                "-DPHONON_BUILD_QT6=ON"
+            ],
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/phonon/4.12.0/phonon-4.12.0.tar.xz",
+                    "sha256": "3287ffe0fbcc2d4aa1363f9e15747302d0b080090fe76e5f211d809ecb43f39a",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 229047,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/phonon/$version/phonon-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libvlc",
+            "config-opts": [
+                "BUILDCC=gcc",
+                "--disable-lua",
+                "--disable-a52",
+                "--disable-qt",
+                "--disable-ncurses",
+                "--disable-udev"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://get.videolan.org/vlc/3.0.21/vlc-3.0.21.tar.xz",
+                    "sha256": "24dbbe1d7dfaeea0994d5def0bbde200177347136dbfe573f5b6a4cee25afbb0",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6504,
+                        "stable-only": true,
+                        "url-template": "https://get.videolan.org/vlc/$version/vlc-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "phonon-vlc",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DPHONON_BUILD_QT5=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/phonon/phonon-backend-vlc/0.12.0/phonon-backend-vlc-0.12.0.tar.xz",
+                    "sha256": "338479dc451e4b94b3ca5b578def741dcf82f5c626a2807d36235be2dce7c9a5",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 229046,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/phonon/phonon-backend-vlc/$version/phonon-backend-vlc-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "okular",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "post-install": [
+                "mv /app/bin/okular /app/bin/okular-bin",
+                "install -Dm755 ../okular-wrapper /app/bin/okular"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}

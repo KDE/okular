@@ -5519,9 +5519,12 @@ PageView::FinishSigningResult PageView::finishSigning()
         KMessageBox::error(this, i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", static_cast<int>(result)));
         return Failed;
     case Okular::GenericSigningError:
-        KMessageBox::error(this, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", d->document->currentDocument().toLocalFile()));
+        KMessageBox::error(this, i18nc("%1 is a file path", "Could not sign. Could not write to '%1'", d->document->currentDocument().toLocalFile()));
         return Failed;
     case Okular::UserCancelled:
+        return Cancelled;
+    case Okular::BadPassphrase:
+        KMessageBox::error(this, i18n("Could not sign. Wrong passphrase"));
         return Cancelled;
     case Okular::SignatureWriteFailed:
         KMessageBox::error(this, i18nc("%1 is a file path", "Could not write signated document at '%1', please ensure you have selected a folder with write permission", d->document->currentDocument().toLocalFile()));

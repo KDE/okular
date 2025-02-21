@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-03 00:39+0000\n"
-"PO-Revision-Date: 2025-02-11 09:52+0200\n"
+"PO-Revision-Date: 2025-02-19 13:55+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2708,7 +2708,7 @@ msgstr "Rādīt padomus un informācijas ziņojumus"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr "Informēt par iegultām datnēm, veidnēm un parakstiem"
+msgstr "Informēt par iegultām datnēm, formām un parakstiem"
 
 #: part/dlggeneral.cpp:68
 #, kde-format
@@ -4449,8 +4449,8 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"Šis dokuments satur formas. Nospiediet uz pogas lai darbotos ar tām, vai "
-"izmantojiet Skats -> Parādīt formas."
+"Šis dokuments satur formas. Lai ar tām darbotos, nospiediet uz pogas vai "
+"izmantojiet „Skats —> Rādīt formas“."
 
 #: part/part.cpp:1638
 #, kde-format

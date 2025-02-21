@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-21 00:40+0000\n"
 "PO-Revision-Date: 2021-12-07 16:35+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -28,63 +28,81 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Richard.Fric@kdemail.net,misurel@gmail.com"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
-#: conf/pdfsettingswidget.ui:17
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: conf/pdfsettingswidget.ui:19
 #, kde-format
-msgid "Enable overprint preview"
+msgid "Enable overprint preview:"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:27
+#, kde-format
+msgid "Never"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:32
+#, kde-format
+msgid "Always"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:37
+#, kde-format
+msgid "Automatic"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: conf/pdfsettingswidget.ui:26
+#: conf/pdfsettingswidget.ui:62
 #, kde-format
 msgid "Enhance thin lines:"
 msgstr "Rozšíriť tenké čiary:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:1016
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "Nie"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:42
+#: conf/pdfsettingswidget.ui:78
 #, kde-format
 msgid "Solid"
 msgstr "Plný"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:47
+#: conf/pdfsettingswidget.ui:83
 #, kde-format
 msgid "Shape"
 msgstr "Tvar"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:72
+#: conf/pdfsettingswidget.ui:108
 #, fuzzy, kde-format
 #| msgid "Scaling mode for the printed pages"
 msgid "Default scaling mode when printing:"
 msgstr "Režim škálovania pre tlačené stránky"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Umiestniť do tlačiteľnej oblasti"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr "Umiestniť na celú stranu"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr "Žiadne; tlačiť pôvodnú veľkosť"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:113
+#: conf/pdfsettingswidget.ui:149
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -96,7 +114,7 @@ msgstr ""
 "neboli od ich vytvorenia zrušené."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:116
+#: conf/pdfsettingswidget.ui:152
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
@@ -105,57 +123,57 @@ msgstr ""
 "tretích strán"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:138
+#: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:164
+#: conf/pdfsettingswidget.ui:200
 #, kde-format
 msgid "Certificate Database"
 msgstr "Databáza certifikátov"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:173
+#: conf/pdfsettingswidget.ui:209
 #, kde-format
 msgid "Default:"
 msgstr "Predvolené:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:180
+#: conf/pdfsettingswidget.ui:216
 #, kde-format
 msgid "Custom:"
 msgstr "Vlastné:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:197
+#: conf/pdfsettingswidget.ui:233
 #, kde-format
 msgid "Available Certificates"
 msgstr "Dostupné certifikáty"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:205
+#: conf/pdfsettingswidget.ui:241
 #, kde-format
 msgid "&Load Signatures"
 msgstr "Načítať podpisy"
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF možnosti"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr "Tlačiť anotácie"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Zahrnúť anotácie vo vytlačenom dokumente"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -164,17 +182,17 @@ msgstr ""
 "Zahrnie anotácie vo vytlačenom dokumente. Toto môžete zakázať, ak chcete "
 "vytlačiť pôvodný neanotovaný dokument."
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "Vynútiť rasterizáciu"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Pred tlačou rasterizovať do obrázku"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -185,53 +203,53 @@ msgstr ""
 "zvyčajne dáva o niečo horšie výsledky, ale je to užitočné pri tlači "
 "dokumentov, ktoré sa nevytlačia správne."
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Režim škálovania pre tlačené stránky"
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr "Režim škálovania:"
 
-#: generator_pdf.cpp:1014
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1014
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "Formát"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "Šifrovaný"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nešifrovaný"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "Bezpečnosť"
 
-#: generator_pdf.cpp:1016
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "Áno"
 
-#: generator_pdf.cpp:1016
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "Optimalizovaný"
 
-#: generator_pdf.cpp:1483
+#: generator_pdf.cpp:1495
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -242,12 +260,12 @@ msgstr ""
 "\n"
 "Dátum: %2"
 
-#: generator_pdf.cpp:1704
+#: generator_pdf.cpp:1717
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Používam Poppler %1"
 
-#: generator_pdf.cpp:1706
+#: generator_pdf.cpp:1719
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -258,17 +276,17 @@ msgstr ""
 "\n"
 "Skompilované s Poppler %2"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1754
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1754
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Nastavenie PDF backendu"
 
-#: generator_pdf.cpp:2226
+#: generator_pdf.cpp:2240
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

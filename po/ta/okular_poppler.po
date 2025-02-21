@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-21 00:40+0000\n"
 "PO-Revision-Date: 2025-02-16 16:30+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -27,62 +27,83 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_OverprintPreviewEnabled)
-#: conf/pdfsettingswidget.ui:17
-#, kde-format
-msgid "Enable overprint preview"
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: conf/pdfsettingswidget.ui:19
+#, fuzzy, kde-format
+#| msgid "Enable overprint preview"
+msgid "Enable overprint preview:"
 msgstr "மேல் அச்சிடுவதன் (overprinting) முன்னோட்டங்காட்டு"
 
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:27
+#, fuzzy, kde-format
+#| msgctxt "certificate end validity"
+#| msgid "forever"
+msgid "Never"
+msgstr "என்றென்றும்"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:32
+#, kde-format
+msgid "Always"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
+#: conf/pdfsettingswidget.ui:37
+#, kde-format
+msgid "Automatic"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: conf/pdfsettingswidget.ui:26
+#: conf/pdfsettingswidget.ui:62
 #, kde-format
 msgid "Enhance thin lines:"
 msgstr "மெல்லிய கோடுகளை மேம்படுத்து:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:37 generator_pdf.cpp:1016
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "இல்லை"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:42
+#: conf/pdfsettingswidget.ui:78
 #, kde-format
 msgid "Solid"
 msgstr "திடப்படுத்து"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:47
+#: conf/pdfsettingswidget.ui:83
 #, kde-format
 msgid "Shape"
 msgstr "வடிவப்படுத்து"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:72
+#: conf/pdfsettingswidget.ui:108
 #, kde-format
 msgid "Default scaling mode when printing:"
 msgstr "அச்சிடும்போது அளவை மாற்றும் இயல்பிருப்பு முறை:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:80 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr "அச்சிடக்கூடிய பரப்பளவுக்கு பொருத்தமாக"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:85 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr "முழுப் பக்கத்துக்கு பொருத்தமாக"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:90 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr "ஏதுமில்லை; உண்மையான அளவிலேயே அச்சிடு"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:113
+#: conf/pdfsettingswidget.ui:149
 #, kde-format
 msgid ""
 "Enabling this option will allow Okular to contact 3rd-party OCSP servers to "
@@ -93,7 +114,7 @@ msgstr ""
 "என்று சரிபார்ப்பதற்கு மூன்றாம் தரப்பு OCSP சேவையகங்களை ஆக்குலர் தொடர்புகொள்ளும்."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
-#: conf/pdfsettingswidget.ui:116
+#: conf/pdfsettingswidget.ui:152
 #, kde-format
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
@@ -102,57 +123,57 @@ msgstr ""
 "ப்பெறப்பட்டுள்ளனவா என சரிபார்"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: conf/pdfsettingswidget.ui:138
+#: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
 msgstr "கையொப்ப பின்நிரல்:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
-#: conf/pdfsettingswidget.ui:164
+#: conf/pdfsettingswidget.ui:200
 #, kde-format
 msgid "Certificate Database"
 msgstr "சான்றிதழ் தரவுதளம்"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:173
+#: conf/pdfsettingswidget.ui:209
 #, kde-format
 msgid "Default:"
 msgstr "இயல்பிருப்பு:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:180
+#: conf/pdfsettingswidget.ui:216
 #, kde-format
 msgid "Custom:"
 msgstr "விருப்பமானது:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:197
+#: conf/pdfsettingswidget.ui:233
 #, kde-format
 msgid "Available Certificates"
 msgstr "உள்ள சான்றிதழ்கள்"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:205
+#: conf/pdfsettingswidget.ui:241
 #, kde-format
 msgid "&Load Signatures"
 msgstr "சான்றிதழ்களை &ஏற்று:"
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF விருப்பங்கள்"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr "குறிப்புகளை அச்சிடு"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "அச்சிடப்படும் ஆவணத்தில் குறிப்புகளையும் சேர்க்கும்"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -161,17 +182,17 @@ msgstr ""
 "அச்சிடப்படும் ஆவணத்தில் குறிப்புகளையும் சேர்க்கும். குறிப்புகள் இல்லாமல் ஆவணத்தை மட்டும் "
 "அச்சிட வேண்டுமெனில், நீங்கள் இதை முடக்கலாம்."
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "பரவு வரைகலையை கட்டாயப்படுத்து"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "அச்சிடுமுன் பரவுப்படமாக (raster image-ஆக) மாற்றும்"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -182,53 +203,53 @@ msgstr ""
 "தரத்தை இது பெரும்பாலும் குறைக்கும், ஆனால் ஒழுங்காக அச்சிட முடியாத ஆவணங்களுக்கு இது "
 "தேவைப்படலாம்."
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "அச்சிடப்படும் பக்கங்களின் அளவை மாற்றும் முறை"
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr "அளவுமாற்ற முறை:"
 
-#: generator_pdf.cpp:1014
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1014
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "படிவம்"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "மறையாக்கம் செய்யப்பட்டது"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "மறையாக்கம் செய்யப்படாதது"
 
-#: generator_pdf.cpp:1015
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "பாதுகாப்பு"
 
-#: generator_pdf.cpp:1016
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "ஆம்"
 
-#: generator_pdf.cpp:1016
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "நேரியல்பாக்கப்பட்டதா"
 
-#: generator_pdf.cpp:1483
+#: generator_pdf.cpp:1495
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -239,12 +260,12 @@ msgstr ""
 "\n"
 "தேதி: %2"
 
-#: generator_pdf.cpp:1704
+#: generator_pdf.cpp:1717
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 பயனிலுள்ளது"
 
-#: generator_pdf.cpp:1706
+#: generator_pdf.cpp:1719
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -255,17 +276,17 @@ msgstr ""
 "\n"
 "நிரல்தொகுக்க Poppler %2 பயன்படுத்தப்பட்டது"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1754
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1741
+#: generator_pdf.cpp:1754
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF பின்நிலை அமைப்பு"
 
-#: generator_pdf.cpp:2226
+#: generator_pdf.cpp:2240
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

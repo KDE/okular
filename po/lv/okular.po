@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-22 00:40+0000\n"
 "PO-Revision-Date: 2025-02-19 13:55+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -3912,16 +3912,23 @@ msgstr ""
 "Iekšējā parakstīšanas kļūda. Lūdzu, informējiet par šo kļūdu un soļiem, kā "
 "to atkārtot. Kļūdas kods %1"
 
-#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:276
-#, kde-format
+#: part/pageview.cpp:5522
+#, fuzzy, kde-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not sign. Invalid certificate password or could not write to '%1'"
 msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgid "Could not sign. Could not write to '%1'"
 msgstr ""
 "Neizdevās parakstīt. Nederīga sertifikāta parole vai neizdevās ierakstīt "
 "datnē „%1“"
 
 #: part/pageview.cpp:5527
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: part/pageview.cpp:5530
 #, kde-format
 msgctxt "%1 is a file path"
 msgid ""
@@ -3975,6 +3982,14 @@ msgstr "Sākt no sākuma"
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Parakstīt"
+
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+"Neizdevās parakstīt. Nederīga sertifikāta parole vai neizdevās ierakstīt "
+"datnē „%1“"
 
 #: part/pageviewannotator.cpp:1271
 #, kde-format

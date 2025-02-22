@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-22 00:40+0000\n"
 "PO-Revision-Date: 2025-02-16 16:30+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3898,16 +3898,23 @@ msgstr ""
 "உள்ளக கையொப்ப சிக்கல். இதைத் தூண்டும் முறையை விவரிக்கும் பிழையறிக்கையை சமர்பிக்கவும். "
 "சிக்கல் எண்: %1"
 
-#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:276
-#, kde-format
+#: part/pageview.cpp:5522
+#, fuzzy, kde-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not sign. Invalid certificate password or could not write to '%1'"
 msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgid "Could not sign. Could not write to '%1'"
 msgstr ""
 "கையொப்பமிட முடியவில்லை. சான்றிதழுக்கான கடவுச்சொல் செல்லுபடியாகாதது, அல்லது '%1' "
 "என்பதற்கு எழுத முடியவில்லை"
 
 #: part/pageview.cpp:5527
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: part/pageview.cpp:5530
 #, kde-format
 msgctxt "%1 is a file path"
 msgid ""
@@ -3961,6 +3968,14 @@ msgstr "மறுபடியும் தொடங்கு"
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "கையொப்பம் இடு"
+
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+"கையொப்பமிட முடியவில்லை. சான்றிதழுக்கான கடவுச்சொல் செல்லுபடியாகாதது, அல்லது '%1' "
+"என்பதற்கு எழுத முடியவில்லை"
 
 #: part/pageviewannotator.cpp:1271
 #, kde-format

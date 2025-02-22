@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-22 00:40+0000\n"
 "PO-Revision-Date: 2025-02-06 20:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3864,14 +3864,21 @@ msgid ""
 "Error code %1"
 msgstr "內部簽署錯誤。請回報問題給我們，並提供重現此錯誤的步驟。錯誤代碼 %1"
 
-#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:276
-#, kde-format
+#: part/pageview.cpp:5522
+#, fuzzy, kde-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not sign. Invalid certificate password or could not write to '%1'"
 msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgid "Could not sign. Could not write to '%1'"
 msgstr "無法簽名。無效的憑證密碼，或是無法寫入至 '%1'"
 
 #: part/pageview.cpp:5527
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: part/pageview.cpp:5530
 #, kde-format
 msgctxt "%1 is a file path"
 msgid ""
@@ -3922,6 +3929,12 @@ msgstr "重新開始"
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "簽署"
+
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr "無法簽名。無效的憑證密碼，或是無法寫入至 '%1'"
 
 #: part/pageviewannotator.cpp:1271
 #, kde-format

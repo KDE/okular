@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-22 00:40+0000\n"
 "PO-Revision-Date: 2025-02-09 19:36+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -3909,16 +3909,23 @@ msgstr ""
 "Sinatzeko barneko errorea. Mesedez eman akats baten berri hura errepikatzeko "
 "urratsekin. Errore kodea %1"
 
-#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:276
-#, kde-format
+#: part/pageview.cpp:5522
+#, fuzzy, kde-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not sign. Invalid certificate password or could not write to '%1'"
 msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgid "Could not sign. Could not write to '%1'"
 msgstr ""
 "Ezin izan da sinatu. Ziurtagiriaren pasahitz baliogabea edo ezin izan da "
 "«%1»era idatzi"
 
 #: part/pageview.cpp:5527
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: part/pageview.cpp:5530
 #, kde-format
 msgctxt "%1 is a file path"
 msgid ""
@@ -3972,6 +3979,14 @@ msgstr "Berriro hasi"
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Sinatu"
+
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr ""
+"Ezin izan da sinatu. Ziurtagiriaren pasahitz baliogabea edo ezin izan da "
+"«%1»era idatzi"
 
 #: part/pageviewannotator.cpp:1271
 #, kde-format

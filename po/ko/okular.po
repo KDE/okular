@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-03 00:39+0000\n"
+"POT-Creation-Date: 2025-02-22 00:40+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -3878,14 +3878,21 @@ msgid ""
 "Error code %1"
 msgstr ""
 
-#: part/pageview.cpp:5522 part/pageviewannotator.cpp:1137
-#: part/signaturepartutils.cpp:276
-#, kde-format
+#: part/pageview.cpp:5522
+#, fuzzy, kde-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not sign. Invalid certificate password or could not write to '%1'"
 msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgid "Could not sign. Could not write to '%1'"
 msgstr "서명할 수 없습니다. 인증서 암호가 잘못되었거나 '%1'에 쓸 수 없습니다"
 
 #: part/pageview.cpp:5527
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: part/pageview.cpp:5530
 #, kde-format
 msgctxt "%1 is a file path"
 msgid ""
@@ -3936,6 +3943,12 @@ msgstr "다시 시작"
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "서명"
+
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#, kde-format
+msgctxt "%1 is a file path"
+msgid "Could not sign. Invalid certificate password or could not write to '%1'"
+msgstr "서명할 수 없습니다. 인증서 암호가 잘못되었거나 '%1'에 쓸 수 없습니다"
 
 #: part/pageviewannotator.cpp:1271
 #, kde-format

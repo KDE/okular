@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-22 00:40+0000\n"
-"PO-Revision-Date: 2025-02-04 03:59+0100\n"
+"PO-Revision-Date: 2025-02-22 06:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3902,20 +3902,15 @@ msgstr ""
 "იგივე. შეცდომის კოდია %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"ხელმოწერა შეუძლებელია. სერტიფიკატის პაროლი არასწორია ან '%1'-ში ჩაწერა "
-"შეუძლებელია"
+msgstr "ხელმოწერა შეუძლებელია. '%1'-ში ჩაწერა შეუძლებელია"
 
 #: part/pageview.cpp:5527
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "ხელმოწერა შეუძლებელია. საკვანძო ფრაზა არასწორია"
 
 #: part/pageview.cpp:5530
 #, kde-format

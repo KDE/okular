@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-21 00:40+0000\n"
-"PO-Revision-Date: 2023-06-29 07:50+0100\n"
+"PO-Revision-Date: 2025-02-22 21:54+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -31,28 +31,27 @@ msgstr "pedrotpmx@wanadoo.fr, olivermkellogg@gmail.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "Ebligi superpresan antaŭrigardon"
+msgstr "Ebligi superpresan antaŭrigardon:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "Neniam"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Ĉiam"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Aŭtomate"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -325,7 +324,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "porĉiame"
 
 #: pdfsettingswidget.cpp:201
 #, kde-format

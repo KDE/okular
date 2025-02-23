@@ -3860,13 +3860,10 @@ msgid ""
 msgstr "内部签名错误。请提交程序缺陷报告并包含能复现此错误的步骤。错误代码 %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr "无法签名。无效的证书密码或者无法写入“%1”"
+msgstr ""
 
 #: part/pageview.cpp:5527
 #, kde-format

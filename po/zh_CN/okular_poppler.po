@@ -31,25 +31,25 @@ msgstr "i@guoyunhe.me, tds00@qq.com"
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "显示叠印预览："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "从不"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "总是"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "自动"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-22 00:40+0000\n"
-"PO-Revision-Date: 2025-02-22 21:54+0100\n"
+"PO-Revision-Date: 2025-02-23 13:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -3900,6 +3900,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Interna subskrib-eraro. Bonvolu raporti cimon kun la paŝoj por reprodukti "
+"ĝin. Erarkodo %1"
 
 #: part/pageview.cpp:5522
 #, kde-format
@@ -5401,7 +5403,7 @@ msgstr "Elektu atestilon kun kiu subskribi:"
 #: part/selectcertificatedialog.ui:29
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "Ĉiuj"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
@@ -5601,7 +5603,7 @@ msgstr "KDE-Atestiladministranto (kleopatra) ne trovita"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalifikita"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

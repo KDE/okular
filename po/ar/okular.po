@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-22 00:40+0000\n"
-"PO-Revision-Date: 2025-02-03 16:40+0400\n"
+"PO-Revision-Date: 2025-02-23 19:07+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3910,18 +3910,15 @@ msgstr ""
 "إنتاجه. رمز الخطأ %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr "لا يمكن التوقيع. كلمة مرور الشهادة غير صالحة أو تعذر الكتابة إلى '%1'"
+msgstr "تعذر التوقيع. لم أتمكن من الكتابة إلى '%1'"
 
 #: part/pageview.cpp:5527
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "تعذر التوقيع. عبارة المرور خاطئة"
 
 #: part/pageview.cpp:5530
 #, kde-format

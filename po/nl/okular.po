@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-22 00:40+0000\n"
-"PO-Revision-Date: 2025-02-03 13:59+0100\n"
+"PO-Revision-Date: 2025-02-23 12:02+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -3922,20 +3922,15 @@ msgstr ""
 "reproduceren. Foutcode %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"Kon niet ondertekenen. Ongeldig certificaat wachtwoord of kon niet schrijven "
-"naar '%1'"
+msgstr "Kon niet ondertekenen. Kon niet schrijven naar '%1'"
 
 #: part/pageview.cpp:5527
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Kon niet ondertekenen. Verkeerde wachtwoordzin"
 
 #: part/pageview.cpp:5530
 #, kde-format

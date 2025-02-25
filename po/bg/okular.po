@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-22 00:40+0000\n"
-"PO-Revision-Date: 2025-02-04 14:39+0100\n"
+"PO-Revision-Date: 2025-02-24 20:43+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -3904,20 +3904,15 @@ msgstr ""
 "нейното възпроизвеждане. Код на грешка %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"Не може да бъде подписан. Невалидна парола за сертификат или не може да "
-"запише на „%1“"
+msgstr "Не може да бъде подписан. Не може да се записва на „%1“"
 
 #: part/pageview.cpp:5527
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Не може да бъде подписан. Грешна парола"
 
 #: part/pageview.cpp:5530
 #, kde-format

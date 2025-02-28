@@ -64,7 +64,7 @@ void SignUnsignedFieldTest::initTestCase()
     KConfig cfg(QStringLiteral("okular-generator-popplerrc"));
     KConfigGroup g = cfg.group(QStringLiteral("Signatures"));
     g.writeEntry(QStringLiteral("UseDefaultCertDB"), false);
-    g.writeEntry(QStringLiteral("DBCertificatePath"), "file://" KDESRCDIR "data/fake_okular_certstore");
+    g.writeEntry(QStringLiteral("DBCertificatePath"), "file:///" KDESRCDIR "data/fake_okular_certstore");
 
     m_document = new Okular::Document(nullptr);
 }

@@ -3541,8 +3541,12 @@ bool Document::canModifyPageAnnotation(const Annotation *annotation) const
     case Annotation::AHighlight:
     case Annotation::AStamp:
     case Annotation::AInk:
-    case Annotation::AWidget:
         return true;
+    case Annotation::AWidget:
+#if HAVE_NEW_SIGNATURE_API
+        return dynamic_cast<const SignatureAnnotation *>(annotation);
+#endif
+        return false;
     default:
         return false;
     }

@@ -17,12 +17,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Thomas Reitelbach"
+msgstr "Deutsches KDE-Übersetzungsteam"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "tr@erdfunkstelle.de"
+msgstr "kde-i18n-de@kde.org"
 
 #. i18n: ectx: label, entry (PlatformFonts), group (General)
 #: conf/gssettings.kcfg:9

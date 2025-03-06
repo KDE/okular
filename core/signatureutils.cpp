@@ -484,3 +484,24 @@ QList<CertificateInfo> CertificateStore::signingCertificatesForNow(bool *userCan
     }
     return certs;
 }
+
+QString Okular::errorString(SigningResult result, const QVariant &additionalMessage)
+{
+    switch (result) {
+    case SigningSuccess:
+        return {};
+    case FieldAlreadySigned: // We should not end up here, code should have caught it earlier and not allowed signature
+    case KeyMissing:         // Given we provide a key id back to poppler, this should only be able to happen if the user removes the key underneath us
+    case InternalSigningError:
+        return i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", additionalMessage.toInt());
+    case GenericSigningError:
+        return xi18n("Could not sign document with location: <filename>%</filename>", additionalMessage.toString());
+    case UserCancelled: // This is unlikely to actually happen in a way where we want to show a message
+        return i18n("Signing cancelled by user");
+    case BadPassphrase:
+        return i18n("Could not sign. Wrong passphrase");
+    case SignatureWriteFailed:
+        return xi18n("Could not write signed document at <filename>%1</filename>, please ensure you have selected a folder with write permission", additionalMessage.toString());
+    }
+    return i18n("Unknown signing error");
+}

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-22 00:40+0000\n"
+"POT-Creation-Date: 2025-03-06 00:40+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -307,13 +307,13 @@ msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Не ўдалося знайсці ўбудову, якая можа апрацаваць перададзены дакумент."
 
-#: core/document.cpp:3627
+#: core/document.cpp:3631
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "выдаліць анатацыі"
 
-#: core/document.cpp:4217 core/document.cpp:4223
+#: core/document.cpp:4221 core/document.cpp:4227
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -322,52 +322,52 @@ msgstr ""
 "Дакумент спрабуе выканаць вонкавую праграму, а Okular не дазваляе гэта "
 "зрабіць у мэтах бяспекі."
 
-#: core/document.cpp:4233
+#: core/document.cpp:4237
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Не знойдзена праграм для адкрыцця файла тыпу %1."
 
-#: core/document.cpp:4872
+#: core/document.cpp:4876
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Не ўдалося адкрыць часовы файл"
 
-#: core/document.cpp:4874
+#: core/document.cpp:4878
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Не ўдалося выканаць пераўтварэнне для друкавання"
 
-#: core/document.cpp:4876
+#: core/document.cpp:4880
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Працэс друкавання аварыйна завяршыўся"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Не ўдалося запусціць працэс друкавання"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4884
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Не ўдалося надрукаваць у файл"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4886
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Прынтар быў у хібным стане"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4888
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Не ўдадося знайсці файл для друкавання"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4890
 #, kde-format
 msgid "There was no file to print"
 msgstr "Няма файла для друкавання"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4892
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -376,92 +376,92 @@ msgstr ""
 "Не ўдалося знайсці прыдатны выканальны файл для друкавання. Пераканайцеся, "
 "што выканальны файл CUPS lpr даступны"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4894
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Хібны памер старонкі для друкавання"
 
-#: core/document.cpp:5568 part/part.cpp:1145
+#: core/document.cpp:5572 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Не ўдалося адкрыць \"%1\". Файл не існуе"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6082
 #, kde-format
 msgid "Title"
 msgstr "Загаловак"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6085
 #, kde-format
 msgid "Subject"
 msgstr "Тэма"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6088
 #, kde-format
 msgid "Description"
 msgstr "Апісанне"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6091
 #, kde-format
 msgid "Author"
 msgstr "Аўтар"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6094
 #, kde-format
 msgid "Creator"
 msgstr "Стваральнік"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6097
 #, kde-format
 msgid "Producer"
 msgstr "Вытворца"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6100
 #, kde-format
 msgid "Copyright"
 msgstr "Аўтарскія правы"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6103
 #, kde-format
 msgid "Pages"
 msgstr "Старонак"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6106
 #, kde-format
 msgid "Created"
 msgstr "Створана"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6109
 #, kde-format
 msgid "Modified"
 msgstr "Зменена"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6112
 #, kde-format
 msgid "MIME Type"
 msgstr "Тып MIME"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6115
 #, kde-format
 msgid "Category"
 msgstr "Катэгорыя"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6118
 #, kde-format
 msgid "Keywords"
 msgstr "Ключавыя словы"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6121
 #, kde-format
 msgid "File Path"
 msgstr "Шлях да файла"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6124
 #, kde-format
 msgid "File Size"
 msgstr "Памер файла"
 
-#: core/document.cpp:6123
+#: core/document.cpp:6127
 #, kde-format
 msgid "Page Size"
 msgstr "Памер старонкі"

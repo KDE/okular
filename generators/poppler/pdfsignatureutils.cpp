@@ -73,7 +73,7 @@ static Okular::CertificateInfo::KeyLocation fromPoppler(Poppler::CertificateInfo
 }
 #endif
 
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 2, 0)
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 2, 90)
 static Okular::CertificateInfo::CertificateType fromPoppler(Poppler::CertificateInfo::CertificateType type)
 {
     switch (type) {

@@ -582,6 +582,15 @@ enum SigningResult {
     UserCancelled,        ///< user aborted \since 25.04
     BadPassphrase,        ///< bad passphrase \since 25.04
 };
+
+/**
+ * User strings for signing errors
+ * \param SigningResult
+ * \param possible argument for the signing result
+ * \since 25.04
+ */
+
+OKULARCORE_EXPORT QString errorString(SigningResult result, const QVariant &additionalMessage);
 }
 
 #endif

@@ -5516,18 +5516,18 @@ PageView::FinishSigningResult PageView::finishSigning()
     case Okular::FieldAlreadySigned: // We should not end up here
     case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
     case Okular::InternalSigningError:
-        KMessageBox::error(this, i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", static_cast<int>(result)));
+        KMessageBox::error(this, errorString(result, static_cast<int>(result)));
         return Failed;
     case Okular::GenericSigningError:
-        KMessageBox::error(this, i18nc("%1 is a file path", "Could not sign. Could not write to '%1'", d->document->currentDocument().toLocalFile()));
+        KMessageBox::error(this, errorString(result, d->document->currentDocument().toLocalFile()));
         return Failed;
     case Okular::UserCancelled:
         return Cancelled;
     case Okular::BadPassphrase:
-        KMessageBox::error(this, i18n("Could not sign. Wrong passphrase"));
+        KMessageBox::error(this, errorString(result, {}));
         return Cancelled;
     case Okular::SignatureWriteFailed:
-        KMessageBox::error(this, i18nc("%1 is a file path", "Could not write signated document at '%1', please ensure you have selected a folder with write permission", d->document->currentDocument().toLocalFile()));
+        KMessageBox::error(this, errorString(result, d->document->currentDocument().toLocalFile()));
         return Failed;
     }
     // We should not end here

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-21 00:40+0000\n"
+"POT-Creation-Date: 2025-03-07 00:40+0000\n"
 "PO-Revision-Date: 2023-06-30 11:51+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -59,7 +59,7 @@ msgid "Enhance thin lines:"
 msgstr "İncə xətləri artırın:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1031
 #, kde-format
 msgid "No"
 msgstr "Xeyr"
@@ -127,32 +127,48 @@ msgstr ""
 msgid "Signature backend:"
 msgstr "İmza modulu:"
 
-#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"These signatures can only be validated by modern Okular users with GnuPG "
+"backend activated"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
+#: conf/pdfsettingswidget.ui:203
+#, kde-format
+msgctxt "@option:check"
+msgid "Allow PGP keys for signatures (Okular extension)"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:210
 #, kde-format
 msgid "Certificate Database"
 msgstr "Sertifikat Verilənlər Bazası"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:209
+#: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
 msgstr "Susmaya görə:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:216
+#: conf/pdfsettingswidget.ui:226
 #, kde-format
 msgid "Custom:"
 msgstr "Başqa:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:233
+#: conf/pdfsettingswidget.ui:243
 #, kde-format
 msgid "Available Certificates"
 msgstr "Mövcud sertifikatlar"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:241
+#: conf/pdfsettingswidget.ui:251
 #, kde-format
 msgid "&Load Signatures"
 msgstr "İmzaları Yük&ləmək"
@@ -212,43 +228,43 @@ msgstr "Çap olunmuş səhifələr üçün miqyaslandırma rejimi"
 msgid "Scale mode:"
 msgstr "Miqyas rejimi:"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1029
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1029
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Encrypted"
 msgstr "Şifrələnmiş"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Unencrypted"
 msgstr "Şifrələnməmiş"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Security"
 msgstr "Təhlükəsizlik"
 
-#: generator_pdf.cpp:1028
+#: generator_pdf.cpp:1031
 #, kde-format
 msgid "Yes"
 msgstr "Bəli"
 
-#: generator_pdf.cpp:1028
+#: generator_pdf.cpp:1031
 #, kde-format
 msgid "Optimized"
 msgstr "Optimallaşdırılmış"
 
-#: generator_pdf.cpp:1495
+#: generator_pdf.cpp:1498
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -259,12 +275,12 @@ msgstr ""
 "\n"
 "Tarix: %2"
 
-#: generator_pdf.cpp:1717
+#: generator_pdf.cpp:1720
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 istifadə edilməsi"
 
-#: generator_pdf.cpp:1719
+#: generator_pdf.cpp:1722
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -275,17 +291,17 @@ msgstr ""
 "\n"
 "Poppler %2 qarşı yaradılıb"
 
-#: generator_pdf.cpp:1754
+#: generator_pdf.cpp:1757
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1754
+#: generator_pdf.cpp:1757
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Modulu Tənzimləmələri"
 
-#: generator_pdf.cpp:2240
+#: generator_pdf.cpp:2243
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -294,24 +310,39 @@ msgstr ""
 "Sənəddə bəzi xətalar tapıldı, Okulyar bu sənədin məzmununu düzgün göstərməyə "
 "bilər"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:122
+#, kde-format
+msgctxt "@info Kind of a notice/warning"
+msgid ""
+"These signatures only work between modern versions of Okular with the GnuPG "
+"based backend activated"
+msgstr ""
+
+#: pdfsettingswidget.cpp:123
+#, fuzzy, kde-format
+#| msgid "&Load Signatures"
+msgctxt "@title:dialog"
+msgid "Enable PGP Signatures"
+msgstr "İmzaları Yük&ləmək"
+
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Adına verilən"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgid "E-mail"
 msgstr "E-poçt"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Bitmə Tarixi"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:174
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -320,29 +351,29 @@ msgstr ""
 "NSS dəstəklənməsi olmadan bir Poppler kitabxanası istifadə edirsiniz.\n"
 "Bu səbəbdən Elektron İmza əlavə etmək mümkündeyildir"
 
-#: pdfsettingswidget.cpp:175
+#: pdfsettingswidget.cpp:197
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr ""
 
-#: pdfsettingswidget.cpp:201
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Yenidən başlatmaq lazımdır"
 
-#: pdfsettingswidget.cpp:201
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "NSS kataloqu ayarlarını dəyişdikdən sonra Okuları yenidən başlatmalısınız"
 
-#: pdfsignatureutils.cpp:221
+#: pdfsignatureutils.cpp:239
 #, kde-format
 msgid "Enter Password"
 msgstr "Şifrəni daxil edin"
 
-#: pdfsignatureutils.cpp:221
+#: pdfsignatureutils.cpp:239
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "%1 açmaq üçün şifrəni daxil edin:"

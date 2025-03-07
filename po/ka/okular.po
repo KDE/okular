@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-06 00:40+0000\n"
+"POT-Creation-Date: 2025-03-07 00:40+0000\n"
 "PO-Revision-Date: 2025-02-22 06:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3967,7 +3967,7 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "ხელმოწერა"
 
-#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:276
+#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:288
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4613,7 +4613,7 @@ msgid "Remove this Bookmark"
 msgstr "სანიშნის წაშლა"
 
 #: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5414,8 +5414,15 @@ msgstr "ყველა"
 msgid "Only QES certificates"
 msgstr "მხოლოდ QES სერთიფიკატები"
 
+#. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
+#: part/selectcertificatedialog.ui:46
+#, kde-format
+msgctxt "@option:radio"
+msgid "Only PGP keys"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:63 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
 #, kde-format
 msgid "Reason:"
 msgstr "მიზეზი:"
@@ -5423,32 +5430,32 @@ msgstr "მიზეზი:"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, reasonInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, locationInput)
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, backgroundInput)
-#: part/selectcertificatedialog.ui:70 part/selectcertificatedialog.ui:87
-#: part/selectcertificatedialog.ui:106
+#: part/selectcertificatedialog.ui:77 part/selectcertificatedialog.ui:94
+#: part/selectcertificatedialog.ui:113
 #, kde-format
 msgid "optional"
 msgstr "არასავალდებულო"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:80 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:87 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
 msgstr "მდებარეობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
-#: part/selectcertificatedialog.ui:97
+#: part/selectcertificatedialog.ui:104
 #, kde-format
 msgid "Background:"
 msgstr "ფონი:"
 
 #. i18n: ectx: property (text), widget (QPushButton, backgroundButton)
-#: part/selectcertificatedialog.ui:116
+#: part/selectcertificatedialog.ui:123
 #, kde-format
 msgid "Choose..."
 msgstr "აირჩიეთ..."
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:128
+#: part/selectcertificatedialog.ui:135
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "ბოლო ფონი:"
@@ -5493,43 +5500,43 @@ msgstr "ყველა ელემენტის ჩაკეცვა"
 msgid "Properties"
 msgstr "პარამეტრები"
 
-#: part/signaturepartutils.cpp:163
+#: part/signaturepartutils.cpp:175
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "სურათები (%1)"
 
-#: part/signaturepartutils.cpp:164
+#: part/signaturepartutils.cpp:176
 #, kde-format
 msgid "Select background image"
 msgstr "აირჩიე ფონის გამოსახულება"
 
-#: part/signaturepartutils.cpp:169
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Forget image"
 msgstr "გამოსახულების დავიწყება"
 
-#: part/signaturepartutils.cpp:170
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Forget all images"
 msgstr "ყველა გამოსახულების დავიწყება"
 
-#: part/signaturepartutils.cpp:212
+#: part/signaturepartutils.cpp:224
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "შეიყვანეთ პაროლი (თუ არსებობს) სერტიფიკატის განსაბლოკად: %1"
 
-#: part/signaturepartutils.cpp:214
+#: part/signaturepartutils.cpp:226
 #, kde-format
 msgid "Enter certificate password"
 msgstr "შეიყვანეთ სერტიფიკატის პაროლი"
 
-#: part/signaturepartutils.cpp:227
+#: part/signaturepartutils.cpp:239
 #, kde-format
 msgid "Enter document password"
 msgstr "შეიყვანეთ დოკუმენტის პაროლი"
 
-#: part/signaturepartutils.cpp:250
+#: part/signaturepartutils.cpp:262
 #, kde-format
 msgid "Save Signed File As"
 msgstr "ხელმოწერილი ფაილის შენახვა, როგორც"
@@ -5603,11 +5610,16 @@ msgstr "სერტიფიკატის მმართველში ნ�
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDE-ის სერტიფიკატების მმართველი (kleopatra) აღმოჩენილი არაა"
 
-#: part/signingcertificatelistmodel.cpp:100
+#: part/signingcertificatelistmodel.cpp:102
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
 msgstr "წინასწარ შეთანხმებული"
+
+#: part/signingcertificatelistmodel.cpp:105
+#, kde-format
+msgid "PGP"
+msgstr ""
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

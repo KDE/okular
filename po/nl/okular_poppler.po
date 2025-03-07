@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-21 00:40+0000\n"
+"POT-Creation-Date: 2025-03-07 00:40+0000\n"
 "PO-Revision-Date: 2025-02-21 11:38+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -60,7 +60,7 @@ msgid "Enhance thin lines:"
 msgstr "Maak dunne lijnen beter zichtbaar:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1031
 #, kde-format
 msgid "No"
 msgstr "Nee"
@@ -128,32 +128,48 @@ msgstr ""
 msgid "Signature backend:"
 msgstr "Backend voor ondertekening:"
 
-#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"These signatures can only be validated by modern Okular users with GnuPG "
+"backend activated"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
+#: conf/pdfsettingswidget.ui:203
+#, kde-format
+msgctxt "@option:check"
+msgid "Allow PGP keys for signatures (Okular extension)"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
+#: conf/pdfsettingswidget.ui:210
 #, kde-format
 msgid "Certificate Database"
 msgstr "Database met certificaten"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
-#: conf/pdfsettingswidget.ui:209
+#: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
 msgstr "Standaard:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
-#: conf/pdfsettingswidget.ui:216
+#: conf/pdfsettingswidget.ui:226
 #, kde-format
 msgid "Custom:"
 msgstr "Aangepast:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
-#: conf/pdfsettingswidget.ui:233
+#: conf/pdfsettingswidget.ui:243
 #, kde-format
 msgid "Available Certificates"
 msgstr "Beschikbare certificaten"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
-#: conf/pdfsettingswidget.ui:241
+#: conf/pdfsettingswidget.ui:251
 #, kde-format
 msgid "&Load Signatures"
 msgstr "Ondertekeningen &laden"
@@ -213,43 +229,43 @@ msgstr "Modus schalen voor de afgedrukte pagina's"
 msgid "Scale mode:"
 msgstr "Schaalmodus:"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1029
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1029
 #, kde-format
 msgid "Format"
 msgstr "Opmaak"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Encrypted"
 msgstr "Versleuteld"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Unencrypted"
 msgstr "Niet-versleuteld"
 
-#: generator_pdf.cpp:1027
+#: generator_pdf.cpp:1030
 #, kde-format
 msgid "Security"
 msgstr "Beveiliging"
 
-#: generator_pdf.cpp:1028
+#: generator_pdf.cpp:1031
 #, kde-format
 msgid "Yes"
 msgstr "Ja"
 
-#: generator_pdf.cpp:1028
+#: generator_pdf.cpp:1031
 #, kde-format
 msgid "Optimized"
 msgstr "Geoptimaliseerd"
 
-#: generator_pdf.cpp:1495
+#: generator_pdf.cpp:1498
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -260,12 +276,12 @@ msgstr ""
 "\n"
 "Datum: %2"
 
-#: generator_pdf.cpp:1717
+#: generator_pdf.cpp:1720
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Poppler %1 gebruiken"
 
-#: generator_pdf.cpp:1719
+#: generator_pdf.cpp:1722
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -276,17 +292,17 @@ msgstr ""
 "\n"
 "Gebouwd tegen Poppler %2"
 
-#: generator_pdf.cpp:1754
+#: generator_pdf.cpp:1757
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1754
+#: generator_pdf.cpp:1757
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Configuratie van PDF-backend"
 
-#: generator_pdf.cpp:2240
+#: generator_pdf.cpp:2243
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -295,24 +311,39 @@ msgstr ""
 "Er zijn enige fouten in het document gevonden, Okular kan mogelijk de inhoud "
 "niet juist tonen"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:122
+#, kde-format
+msgctxt "@info Kind of a notice/warning"
+msgid ""
+"These signatures only work between modern versions of Okular with the GnuPG "
+"based backend activated"
+msgstr ""
+
+#: pdfsettingswidget.cpp:123
+#, fuzzy, kde-format
+#| msgid "&Load Signatures"
+msgctxt "@title:dialog"
+msgid "Enable PGP Signatures"
+msgstr "Ondertekeningen &laden"
+
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Uitgegeven aan"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:135
+#: pdfsettingswidget.cpp:157
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Vervaldatum"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:174
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -321,30 +352,30 @@ msgstr ""
 "U gebruikt een Poppler bibliotheek gebouwd zonder ondersteuning van NSS.\n"
 "Daarom is het toevoegen van digitale ondertekening niet beschikbaar"
 
-#: pdfsettingswidget.cpp:175
+#: pdfsettingswidget.cpp:197
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "eeuwig"
 
-#: pdfsettingswidget.cpp:201
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Herstart vereist"
 
-#: pdfsettingswidget.cpp:201
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "U moet Okular opnieuw starten na het wijzigen van de instelling van de NSS-"
 "map"
 
-#: pdfsignatureutils.cpp:221
+#: pdfsignatureutils.cpp:239
 #, kde-format
 msgid "Enter Password"
 msgstr "Wachtwoord invoeren"
 
-#: pdfsignatureutils.cpp:221
+#: pdfsignatureutils.cpp:239
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Wachtwoord invoeren om %1 te openen:"

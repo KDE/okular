@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-22 01:47+0100\n"
+"PO-Revision-Date: 2025-03-07 17:08+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -135,13 +135,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Estas firmas solo las pueden validar los usuarios de un Okular reciente con "
+"el motor GnuPG activado"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Permitir claves PGP para las firmas (extensión de Okular)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -317,13 +319,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Estas firmas solo funcionan entre versiones recientes de Okular con un motor "
+"basado en GnuPG activado"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "Cargar &firmas"
+msgstr "Activar firmas PGP"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format
@@ -378,48 +381,3 @@ msgstr "Introduzca la contraseña"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Introduzca la contraseña para abrir %1:"
-
-#~ msgid "Not Available"
-#~ msgstr "No disponible"
-
-#~ msgid "PDF Certificates"
-#~ msgstr "Certificados PDF"
-
-#~ msgid "PDF Digital Signature Certificates"
-#~ msgstr "Certificados de firma digital PDF"
-
-#~ msgid "Select rasterization to enable this!"
-#~ msgstr "Seleccione la conversión a imagen para activar esto."
-
-#~ msgid "PDF Backend"
-#~ msgstr "Motor PDF"
-
-#~ msgid "A PDF file renderer"
-#~ msgstr "Un visualizador de archivos PDF"
-
-#~ msgid "© 2005-2008 Albert Astals Cid"
-#~ msgstr "© 2005-2008 Albert Astals Cid"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Saving files with /Encrypt is not supported."
-#~ msgstr "No está permitido guardar archivos con /Encrypt."
-
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgid "Unknown Date"
-#~ msgstr "Fecha desconocida"
-
-#~ msgid "Unknown Encryption"
-#~ msgstr "Cifrado desconocido"
-
-#~ msgid "Unknown Optimization"
-#~ msgstr "Optimización desconocida"
-
-#~ msgid "Please enter the password to read the document:"
-#~ msgstr "Introduzca la contraseña para leer el documento:"
-
-#~ msgid "Incorrect password. Try again:"
-#~ msgstr "Contraseña incorrecta. Pruebe de nuevo:"

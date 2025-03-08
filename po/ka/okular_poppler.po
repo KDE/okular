@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-21 07:20+0100\n"
+"PO-Revision-Date: 2025-03-07 05:54+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -135,13 +135,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"ამ ხელმოწერების გადამოწმება, მხოლოდ, თანამედროვე Okular-ის ვერსიებს "
+"შეუძლიათ, თუ GnuPG უკანაბოლო ჩართულია"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "PGP გასაღებების დაშვება ხელმოწერებისთვის (Okular-ის გაფართოება)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -317,13 +319,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"ეს ხელმოწერები, მხოლოდ, Okular-ის თანამედროვე ვერსიებს შორის მუშაობს, ისიც, "
+"თუ GnuPG უკანაბოლო გააქტიურებულია"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "ხელმოწერების &ჩატვირთვა"
+msgstr "PGP ხელმოწერების ჩართვა"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

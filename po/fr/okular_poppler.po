@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-22 09:23+0100\n"
+"PO-Revision-Date: 2025-03-08 10:23+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -144,13 +144,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Ces signatures ne peuvent être validées que par les utilisateurs de versions "
+"récentes de Okular ayant le moteur GnuPG activé"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Autoriser les clés « PGP » pour les signatures (Extension de Okular)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -327,13 +329,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Ces signatures ne fonctionnent qu'entre les versions récentes de Okular "
+"ayant  le moteur  reposant sur GnuPG activé"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "Charger &les signatures"
+msgstr "Activer les signatures « PGP »"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

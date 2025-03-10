@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-16 16:30+0530\n"
+"PO-Revision-Date: 2025-03-09 17:11+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3899,20 +3899,15 @@ msgstr ""
 "சிக்கல் எண்: %1"
 
 #: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
+#, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"கையொப்பமிட முடியவில்லை. சான்றிதழுக்கான கடவுச்சொல் செல்லுபடியாகாதது, அல்லது '%1' "
-"என்பதற்கு எழுத முடியவில்லை"
+msgstr "கையொப்பமிட முடியவில்லை. '%1' என்பதற்கு எழுத முடியவில்லை"
 
 #: part/pageview.cpp:5527
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "கையொப்பமிட முடியவில்லை. தவறான கடவுச்சொல்"
 
 #: part/pageview.cpp:5530
 #, kde-format
@@ -5414,7 +5409,7 @@ msgstr "QES சான்றிதழ்கள் மட்டும்"
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "PGP சாவிகள் மட்டும்"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5614,7 +5609,7 @@ msgstr "அதிகாரப்பூர்வமானது"
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

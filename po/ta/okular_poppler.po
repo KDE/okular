@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-16 16:30+0530\n"
+"PO-Revision-Date: 2025-03-09 18:12+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -29,30 +29,27 @@ msgstr "Kde-l10n-ta@kde.org"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "மேல் அச்சிடுவதன் (overprinting) முன்னோட்டங்காட்டு"
+msgstr "மேல் அச்சிடுவதன் (overprinting) முன்னோட்டங்காட்டுவது:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
-#, fuzzy, kde-format
-#| msgctxt "certificate end validity"
-#| msgid "forever"
+#, kde-format
 msgid "Never"
-msgstr "என்றென்றும்"
+msgstr "ஒருபோதும் வேண்டாம்"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "எப்போதும்"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "தானியக்கம்"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -136,13 +133,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"இக்கையொப்பங்களை ஆக்குலரின் சமீபத்திய பதிப்பைப் பயன்படுத்தி அதன் GnuPG பின்நிரலை இயக்கியுள்ள "
+"பயனர்களால் மட்டும்தான் சரிபார்க்க முடியும்."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "கையொப்பங்களுக்கு PGP சாவிகளை பயன்படுத்து (ஆக்குலர் நீட்சி)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -316,13 +315,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"GnuPG பின்நிரல் இயக்கப்பட்டுள்ள சமீபத்திய ஆக்குலர் பதிப்புகளில் மட்டுமே இக்கையொப்பங்களை வேலை "
+"செய்யும்"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "சான்றிதழ்களை &ஏற்று:"
+msgstr "PGP கையொப்பங்களை இயக்கு"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

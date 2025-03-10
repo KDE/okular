@@ -130,14 +130,14 @@ msgctxt "@info:tooltip"
 msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
-msgstr ""
+msgstr "这些签名只能由激活了 GnuPG 后端程序的现代 Okular 用户进行验证"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "允许使用 PGP 密钥签名 (Okular 扩展程序)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -307,13 +307,13 @@ msgctxt "@info Kind of a notice/warning"
 msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
-msgstr ""
+msgstr "这些签名只能在激活了 GnuPG 的 Okular 现代版本之间通用"
 
 #: pdfsettingswidget.cpp:123
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr ""
+msgstr "启用 PGP 签名"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

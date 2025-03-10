@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-01-12 16:58+0200\n"
+"PO-Revision-Date: 2025-02-14 19:46+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -3933,6 +3933,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Sisäinen allekirjoitusvirhe. Ilmoita ohjelmavirheestä ja kerro miten tämän "
+"voi toistaa. Virhekoodi %1"
 
 #: part/pageview.cpp:5522
 #, fuzzy, kde-format
@@ -3957,6 +3959,8 @@ msgid ""
 "Could not write signated document at '%1', please ensure you have selected a "
 "folder with write permission"
 msgstr ""
+"Ei voitu kirjoittaa allekirjoitettuun tiedostoon kansiossa ”%1”: varmista, "
+"että sinne on kirjoitusoikeudet"
 
 #: part/pageviewannotator.cpp:218
 #, kde-format
@@ -5438,17 +5442,15 @@ msgstr "Valitse varmenne, jolla allekirjoitetaan:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Salli"
+msgstr "Kaikki"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Varmenteet"
+msgstr "Vain QES-varmenteet"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
@@ -5646,11 +5648,12 @@ msgstr "Näytä varmenteenhallinnassa"
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr "KDE:n varmenteenhallintaa (Kleopatra) ei löytynyt"
 
+# Wikipedia ei varsinaisesti auta ratkaisemaan sananvalintaa: ”A qualified electronic signature is an electronic signature that is compliant with EU Regulation No 910/2014 (eIDAS Regulation) for electronic transactions within the internal European market.”
 #: part/signingcertificatelistmodel.cpp:102
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Pätevät"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format

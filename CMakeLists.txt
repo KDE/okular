@@ -147,8 +147,6 @@ else()
     set(HAVE_JS 0)
 endif()
 
-qt_policy(SET QTP0001 NEW)
-
 if (BUILD_DESKTOP)
     # shall we use DBus?
     # enabled per default on Linux & BSD systems
@@ -198,6 +196,8 @@ if (BUILD_MOBILE)
         PURPOSE "Required at runtime by the mobile app"
         TYPE RUNTIME
     )
+
+    qt_policy(SET QTP0001 NEW)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)

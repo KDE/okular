@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-06 20:40+0900\n"
+"PO-Revision-Date: 2025-03-10 20:40+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -35,30 +35,27 @@ msgstr "franklin@goodhorse.idv.tw, mail@kisaragi-hiu.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "啟用疊印預覽"
+msgstr "啟用疊印預覽："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
-#, fuzzy, kde-format
-#| msgctxt "certificate end validity"
-#| msgid "forever"
+#, kde-format
 msgid "Never"
-msgstr "永久"
+msgstr "永不"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "總是"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -139,14 +136,14 @@ msgctxt "@info:tooltip"
 msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
-msgstr ""
+msgstr "這些簽章只能給有啟用 GnuPG 後端的現代 Okular 使用者進行驗證"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "允許使用 PGP 金鑰作為簽章（Okular 延伸）"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -317,14 +314,13 @@ msgctxt "@info Kind of a notice/warning"
 msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
-msgstr ""
+msgstr "這些簽章只能在有啟用 GnuPG 後端的現代 Okular 之間作用"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "載入簽章(&L)"
+msgstr "啟用 PGP 簽章"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

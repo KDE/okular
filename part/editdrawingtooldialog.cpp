@@ -8,6 +8,7 @@
 
 #include <KColorButton>
 #include <KLineEdit>
+#include <KLocalization>
 #include <KLocalizedString>
 
 #include <QDialogButtonBox>
@@ -60,7 +61,7 @@ EditDrawingToolDialog::EditDrawingToolDialog(const QDomElement &initialState, QW
     m_penWidth = new QSpinBox(widget);
     m_penWidth->setObjectName(QStringLiteral("penWidth"));
     m_penWidth->setRange(0, 50);
-    m_penWidth->setSuffix(i18nc("Suffix for the pen width, eg '10 px'", " px"));
+    KLocalization::setupSpinBoxFormatString(m_penWidth, ki18nc("@label:spinbox Suffix for the pen width, e.g. '10 px'", "%v px"));
     tmplabel->setBuddy(m_penWidth);
     widgetLayout->addWidget(m_penWidth, 2, 1);
 
@@ -70,7 +71,7 @@ EditDrawingToolDialog::EditDrawingToolDialog(const QDomElement &initialState, QW
     m_opacity = new QSpinBox(widget);
     m_opacity->setObjectName(QStringLiteral("opacity"));
     m_opacity->setRange(0, 100);
-    m_opacity->setSuffix(i18nc("Suffix for the opacity level, eg '80 %'", " %"));
+    KLocalization::setupSpinBoxFormatString(m_opacity, ki18nc("@label:spinbox Suffix for the opacity level, e.g. '80%'", "%v%"));
     tmplabel->setBuddy(m_opacity);
     widgetLayout->addWidget(m_opacity, 3, 1);
 

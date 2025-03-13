@@ -488,9 +488,14 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         return Okular::FormFieldSignature::EtsiCAdESdetached;
     case Poppler::FormFieldSignature::UnsignedSignature:
         return Okular::FormFieldSignature::UnsignedSignature;
-    default:
+    case Poppler::FormFieldSignature::UnknownSignatureType:
         return Okular::FormFieldSignature::UnknownType;
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
+    case Poppler::FormFieldSignature::G10cPgpSignatureDetached:
+        return Okular::FormFieldSignature::G10cPgpSignatureDetached;
+#endif
     }
+    return Okular::FormFieldSignature::UnknownType;
 }
 
 Okular::SignatureInfo PopplerFormFieldSignature::signatureInfo() const

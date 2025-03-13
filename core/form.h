@@ -567,7 +567,8 @@ public:
         AdbePkcs7detached,
         EtsiCAdESdetached,
         UnknownType,
-        UnsignedSignature ///< The signature field has not been signed yet. @since 22.04
+        UnsignedSignature,        ///< The signature field has not been signed yet. @since 22.04
+        G10cPgpSignatureDetached, ///< Poppler/okular extension of pgp signature \since 25.04
     };
 
     ~FormFieldSignature() override;

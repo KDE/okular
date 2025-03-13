@@ -23,7 +23,7 @@
 #include "core/signatureutils.h"
 
 struct SignatureItem {
-    enum DataType { Root, RevisionInfo, ValidityStatus, CertificateStatus, SigningTime, Reason, Location, FieldInfo };
+    enum DataType { Root, RevisionInfo, ValidityStatus, CertificateStatus, SigningTime, Reason, Location, FieldInfo, SignatureType };
 
     SignatureItem();
     SignatureItem(SignatureItem *parent, const Okular::FormFieldSignature *form, DataType type, int page);
@@ -179,6 +179,26 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
             auto childItem4 = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, pageNumber);
             childItem4->displayString = i18n("Field: %1 on page %2", sf->name(), pageNumber + 1);
+            auto signatureType = [sf] {
+                switch (sf->signatureType()) {
+                case Okular::FormFieldSignature::G10cPgpSignatureDetached:
+                    return i18nc("Signature type", "PGP Signature");
+                case Okular::FormFieldSignature::AdbePkcs7detached:
+                    return i18nc("Signature type", "Adobe PKCS7");
+                case Okular::FormFieldSignature::AdbePkcs7sha1:
+                    return i18nc("Signature type", "Adobe PKCS7 Sha1");
+                case Okular::FormFieldSignature::EtsiCAdESdetached:
+                    return i18nc("Signature type", "ETSI CAdES");
+                case Okular::FormFieldSignature::UnknownType:
+                    return i18nc("Signature type", "Unknown");
+                case Okular::FormFieldSignature::UnsignedSignature:
+                    return i18nc("Signature type", "Unsigned signature");
+                }
+                return QString {};
+            }();
+
+            auto childItem5 = new SignatureItem(parentItem, nullptr, SignatureItem::SignatureType, pageNumber);
+            childItem5->displayString = i18n("Signature Type: %1", signatureType);
 
             ++revNumber;
         }

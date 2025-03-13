@@ -9,8 +9,8 @@
 #include "widgetdrawingtools.h"
 
 #include <KColorButton>
+#include <KLocalization>
 #include <KLocalizedString>
-#include <KPluralHandlingSpinBox>
 
 #include <QApplication>
 #include <QCheckBox>
@@ -19,6 +19,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QScreen>
+#include <QSpinBox>
 
 #include "settings.h"
 
@@ -33,9 +34,8 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     advanceAutomatically->setText(QString());
     advanceAutomatically->setObjectName(QStringLiteral("kcfg_SlidesAdvance"));
 
-    KPluralHandlingSpinBox *advanceTime = new KPluralHandlingSpinBox(this);
-    advanceTime->setPrefix(i18nc("Spinbox prefix: Advance automatically: every n seconds", "every "));
-    advanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
+    QSpinBox *advanceTime = new QSpinBox(this);
+    KLocalization::setupSpinBoxFormatString(advanceTime, ki18ncp("@label:spinbox Advance automatically: Every n second", "every %v second", "every %v seconds"));
     advanceTime->setObjectName(QStringLiteral("kcfg_SlidesAdvanceTime"));
 
     QHBoxLayout *advanceAutomaticallyLayout = new QHBoxLayout();
@@ -46,7 +46,7 @@ DlgPresentation::DlgPresentation(QWidget *parent)
 
     advanceAutomatically->setChecked(false);
     advanceTime->setEnabled(false);
-    connect(advanceAutomatically, &QCheckBox::toggled, advanceTime, &KPluralHandlingSpinBox::setEnabled);
+    connect(advanceAutomatically, &QCheckBox::toggled, advanceTime, &QSpinBox::setEnabled);
 
     // Checkbox: Loop after last page
     QCheckBox *loopAfterLastPage = new QCheckBox(this);

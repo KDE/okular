@@ -11,6 +11,7 @@
 #include <KComboBox>
 #include <KFontRequester>
 #include <KFormat>
+#include <KLocalization>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMessageWidget>
@@ -273,7 +274,7 @@ void AnnotationWidget::addOpacitySpinBox(QWidget *widget, QFormLayout *formlayou
     m_opacity = new QSpinBox(widget);
     m_opacity->setRange(0, 100);
     m_opacity->setValue((int)(m_ann->style().opacity() * 100));
-    m_opacity->setSuffix(i18nc("Suffix for the opacity level, eg '80%'", "%"));
+    KLocalization::setupSpinBoxFormatString(m_opacity, ki18nc("@label:spinbox Suffix for the opacity level, e.g. '80%'", "%v%"));
     formlayout->addRow(i18n("&Opacity:"), m_opacity);
     connect(m_opacity, QOverload<int>::of(&QSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
 }

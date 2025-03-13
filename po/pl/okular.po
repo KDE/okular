@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 00:40+0000\n"
 "PO-Revision-Date: 2025-02-23 12:35+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -593,6 +593,52 @@ msgstr "Nie wyświetlaj więcej tej wiadomości"
 #, kde-format
 msgid "Not Available"
 msgstr "Niedostępny"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"Wewnętrzny błąd podpisywania. Zgłoś błąd wraz z krokami do jego odtworzenia. "
+"Kod błędu %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Nie można wczytać pliku <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Nie można podpisać. Zły podpis"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Nie można zapisać podpisanego dokumentu w '%1'. Wybierz katalog, w którym "
+"masz uprawienia do zapisywania."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Nieznany plik"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3905,37 +3951,6 @@ msgstr "Narysuj prostokąt, aby wstawić pole podpisu"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Narysuj prostokąt wokół obszaru, który ma pozostać widoczny."
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"Wewnętrzny błąd podpisywania. Zgłoś błąd wraz z krokami do jego odtworzenia. "
-"Kod błędu %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "Nie można podpisać. Nie można zapisywać do '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Nie można podpisać. Zły podpis"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"Nie można zapisać podpisanego dokumentu w '%1'. Wybierz katalog, w którym "
-"masz uprawienia do zapisywania."
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5943,6 +5958,10 @@ msgstr "Zapomnij o wszystkich"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ukryj ekran powitalny"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "Nie można podpisać. Nie można zapisywać do '%1'"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

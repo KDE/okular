@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 00:40+0000\n"
 "PO-Revision-Date: 2025-03-07 23:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -598,6 +598,52 @@ msgstr "Bu iletiyi bir daha gösterme"
 #, kde-format
 msgid "Not Available"
 msgstr "Kullanılamıyor"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"İçsel imzalama hatası. Lütfen, yeniden oluşturma adımlarını da içererek bir "
+"hata kaydı açın. Hata kodu %1."
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Dosya <filename>%1</filename> yüklenemedi"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Yanlış parola verildiğinden imzalanamadı."
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"“%1” konumundaki imzalı belgeye yazılamadı; lütfen yazma iznine iye "
+"olduğunuz bir klasör seçtiğinizden emin olun."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Bilinmeyen Dosya"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3902,37 +3948,6 @@ msgstr ""
 "Görünür olarak tutmak istediğiniz sayfa alanının etrafına bir dikdörtgen "
 "çizin"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"İçsel imzalama hatası. Lütfen, yeniden oluşturma adımlarını da içererek bir "
-"hata kaydı açın. Hata kodu %1."
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "“%1” konumuna yazılamadığından imzalanamadı."
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Yanlış parola verildiğinden imzalanamadı."
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"“%1” konumundaki imzalı belgeye yazılamadı; lütfen yazma iznine iye "
-"olduğunuz bir klasör seçtiğinizden emin olun."
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5934,6 +5949,10 @@ msgstr "Tümünü Unut"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Karşılama ekranını gizle"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "“%1” konumuna yazılamadığından imzalanamadı."
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

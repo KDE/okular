@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 00:40+0000\n"
 "PO-Revision-Date: 2025-02-23 13:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -583,6 +583,52 @@ msgstr "Ne montri ĉi tiun mesaĝon denove"
 #, kde-format
 msgid "Not Available"
 msgstr "Ne disponebla"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"Interna subskrib-eraro. Bonvolu raporti cimon kun la paŝoj por reprodukti "
+"ĝin. Erarkodo %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Ne eblis ŝargi la dosieron <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Ne eblis subskribi. Malĝusta pasfrazo"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Could not overwrite <filename>%1</filename> because that file is read-"
+#| "only. Try saving to another location or changing that file's permissions."
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Ne eblis anstataŭigi <filename>%1</filename> ĉar tiu dosiero estas "
+"nurlegebla. Provu konservi al alia loko aŭ ŝanĝi la permesojn de tiu dosiero."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Nekonata dosiero"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3893,35 +3939,6 @@ msgstr "Desegnu rektangulon por enmeti la subskriban kampon"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Desegnu rektangulon ĉirkaŭ la paĝareo, kiun vi volas konservi videbla"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"Interna subskrib-eraro. Bonvolu raporti cimon kun la paŝoj por reprodukti "
-"ĝin. Erarkodo %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "Ne povis subskribi. Ne povis skribi al '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Ne eblis subskribi. Malĝusta pasfrazo"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5921,3 +5938,7 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "Ne povis subskribi. Ne povis skribi al '%1'"

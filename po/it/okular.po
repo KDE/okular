@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2025-03-09 12:14+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -588,6 +588,52 @@ msgstr "Non mostrare più questo messaggio"
 #, kde-format
 msgid "Not Available"
 msgstr "Non disponibile"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"Errore interno di firma. Segnalare il bug con i passaggi per riprodurlo. "
+"Codice di errore %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Impossibile caricare il file <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Impossibile firmare. Frase segreta non valida"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Impossibile scrivere il documento con firma presso «%1»; assicurarsi di aver "
+"selezionato una cartella in cui si ha il permesso di scrittura"
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "File sconosciuto"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3901,37 +3947,6 @@ msgstr "Disegna un rettangolo per inserire il campo della firma"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Seleziona l'area della pagina che vuoi mantenere visibile"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"Errore interno di firma. Segnalare il bug con i passaggi per riprodurlo. "
-"Codice di errore %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "Impossibile firmate. Impossibile scrivere in «%1»"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Impossibile firmare. Frase segreta non valida"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"Impossibile scrivere il documento con firma presso «%1»; assicurarsi di aver "
-"selezionato una cartella in cui si ha il permesso di scrittura"
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5940,6 +5955,10 @@ msgstr "Dimentica tutti"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Nascondo la schermata di benvenuto"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "Impossibile firmate. Impossibile scrivere in «%1»"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

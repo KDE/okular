@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2025-01-06 21:45+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -584,6 +584,50 @@ msgstr "Daugiau neberodyti šio pranešimo"
 #, kde-format
 msgid "Not Available"
 msgstr "Neprieinama"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Nepavyko įkelti failo <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Could not overwrite <filename>%1</filename> because that file is read-"
+#| "only. Try saving to another location or changing that file's permissions."
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Nepavyko perrašyti <filename>%1</filename>, nes tas failas yra skirtas tik "
+"skaitymui. Pabandykite įrašyti failą į kitą vietą arba pakeisti jo leidimus."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Nežinomas failas"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3918,38 +3962,6 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Apibrėžkite stačiakampį aplink puslapio sritį, kurią norite palikti matomą"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-
-#: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"Nepavyko pasirašyti. Neteisingas liudijimo slaptažodis arba nepavyko rašyti "
-"į „%1“"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr ""
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5968,6 +5980,16 @@ msgstr "Išvalyti visus"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Slėpti pasisveikinimo langą"
+
+#, fuzzy
+#~| msgctxt "%1 is a file path"
+#~| msgid ""
+#~| "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr ""
+#~ "Nepavyko pasirašyti. Neteisingas liudijimo slaptažodis arba nepavyko "
+#~ "rašyti į „%1“"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

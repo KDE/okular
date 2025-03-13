@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2025-03-07 13:12+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -596,6 +596,52 @@ msgstr "Dit bericht niet meer tonen"
 #, kde-format
 msgid "Not Available"
 msgstr "Niet beschikbaar"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"Interne fout bij ondertekenen. Rapporteer een bug met de stappen om het te "
+"reproduceren. Foutcode %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Kon bestand het bestand <filename>%1</filename> niet laden"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Kon niet ondertekenen. Verkeerde wachtwoordzin"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Kon ondertekend document niet schrijven in '%1', ga na dat u een map met "
+"schrijfrechten hebt geselecteerd."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Onbekend bestand"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3911,37 +3957,6 @@ msgstr "Een rechthoek tekenen voor het veld voor ondertekenen in te voegen"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Teken een rechthoek rond het paginagebied dat u zichtbaar wilt laten"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"Interne fout bij ondertekenen. Rapporteer een bug met de stappen om het te "
-"reproduceren. Foutcode %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "Kon niet ondertekenen. Kon niet schrijven naar '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Kon niet ondertekenen. Verkeerde wachtwoordzin"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"Kon ondertekend document niet schrijven in '%1', ga na dat u een map met "
-"schrijfrechten hebt geselecteerd."
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5957,6 +5972,10 @@ msgstr "Alles vergeten"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Welkomstscherm verbergen"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "Kon niet ondertekenen. Kon niet schrijven naar '%1'"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

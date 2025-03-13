@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -575,6 +575,42 @@ msgstr "Ne monstrar ti missage denov"
 #, kde-format
 msgid "Not Available"
 msgstr "Índisponibil"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Ark ne successat extraer <filename>%1</filename>."
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: core/signatureutils.cpp:504
+#, kde-kuit-format
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Ínconosset file"
 
 #: core/sourcereference.cpp:101
 #, fuzzy, kde-format
@@ -3840,33 +3876,6 @@ msgstr ""
 #: part/pageview.cpp:5358
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
-msgstr ""
-
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr ""
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
 msgstr ""
 
 #: part/pageviewannotator.cpp:218

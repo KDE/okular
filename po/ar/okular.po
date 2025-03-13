@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2025-03-08 22:27+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -580,6 +580,52 @@ msgstr "لا تعرض هذه الرّسالة مجدّدًا"
 #, kde-format
 msgid "Not Available"
 msgstr "غير متوفّر"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"خطأ في التوقيع الداخلي. يُرجى الإبلاغ عن خطأ مع الخطوات اللازمة لإعادة "
+"إنتاجه. رمز الخطأ %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "لا يمكن تحميل الملف <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "تعذر التوقيع. عبارة المرور خاطئة"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"لم نتمكن من كتابة مستند موقّع في '%1'، يرجى التأكد من تحديد مجلد به إذن "
+"الكتابة"
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "ملف غير معروف"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3899,37 +3945,6 @@ msgstr "ارسم مستطيل لإدراج حقل التوقيع"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ارسم مربعا حول مساحة الصفحة التي تريد أن تجعلها مرئية"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"خطأ في التوقيع الداخلي. يُرجى الإبلاغ عن خطأ مع الخطوات اللازمة لإعادة "
-"إنتاجه. رمز الخطأ %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "تعذر التوقيع. لم أتمكن من الكتابة إلى '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "تعذر التوقيع. عبارة المرور خاطئة"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"لم نتمكن من كتابة مستند موقّع في '%1'، يرجى التأكد من تحديد مجلد به إذن "
-"الكتابة"
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5907,6 +5922,10 @@ msgstr "انسَ الكلّ"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "أخف شاشة مرحبا"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "تعذر التوقيع. لم أتمكن من الكتابة إلى '%1'"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

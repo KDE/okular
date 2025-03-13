@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -579,6 +579,50 @@ msgstr "पुनः एतत् सन्देशं न दर्शयत�
 #, kde-format
 msgid "Not Available"
 msgstr "न उपलब्धम्"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "<filename>%1</filename> इति सञ्चिकां लोड् कर्तुं न शक्यते"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Could not overwrite <filename>%1</filename> because that file is read-"
+#| "only. Try saving to another location or changing that file's permissions."
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"<filename>%1</filename> इत्यस्य अधिलेखनं कर्तुं न शक्यते यतः सा सञ्चिका केवलं पठनीयः "
+"अस्ति । अन्यस्मिन् स्थाने रक्षितुं वा तस्याः सञ्चिकायाः अनुमतिं परिवर्तयितुं वा प्रयतस्व ।"
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "अज्ञात सञ्चिका"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3869,37 +3913,6 @@ msgstr "हस्ताक्षरक्षेत्रं सम्मिल�
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-
-#: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"हस्ताक्षरं कर्तुं न शक्तवान्। अमान्यप्रमाणपत्रगुप्तशब्दः अथवा '%1' इत्यत्र लिखितुं न शक्तवान् ।"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr ""
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5883,6 +5896,16 @@ msgstr "सर्वं विस्मरतु"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "स्वागतपटलं गोपयन्तु"
+
+#, fuzzy
+#~| msgctxt "%1 is a file path"
+#~| msgid ""
+#~| "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr ""
+#~ "हस्ताक्षरं कर्तुं न शक्तवान्। अमान्यप्रमाणपत्रगुप्तशब्दः अथवा '%1' इत्यत्र लिखितुं न शक्तवान् "
+#~ "।"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

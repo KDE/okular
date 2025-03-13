@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-24 16:19+0100\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
+"PO-Revision-Date: 2025-03-12 14:40+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -582,6 +582,52 @@ msgstr "Non monstra iste message de nove"
 #, kde-format
 msgid "Not Available"
 msgstr "Non disponibile"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+"Error interne a signar. Pro favor tu reporta un bug con le passos per "
+"reproducer lo.Codice de error %1"
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Non poteva cargar file <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr "Il non pote signar.  Phrase de contrasigno errate"
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "%1 is a file path"
+#| msgid ""
+#| "Could not write signated document at '%1', please ensure you have "
+#| "selected a folder with write permission"
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Non poteva scriber documento signate a '%1',profavortu assecura te que tu ha "
+"seligite un dossier con permission ascriber"
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "File incognite"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3901,37 +3947,6 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Designa un rectangulo circa le area de pagina que tu vole mantener visibile"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-"Error interne a signar. Pro favor tu reporta un bug con le passos per "
-"reproducer lo.Codice de error %1"
-
-#: part/pageview.cpp:5522
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr "Non poteva signar. Non poteva scriber a '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr "Il non pote signar.  Phrase de contrasigno errate"
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-"Non poteva scriber documento signate a '%1',profavortu assecura te que tu ha "
-"seligite un dossier con permission ascriber"
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5435,7 +5450,7 @@ msgstr "Solmente Certificatos QES"
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Solmente claves de PGP"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5637,7 +5652,7 @@ msgstr "Qualificate"
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -5950,6 +5965,10 @@ msgstr "Oblida Toto"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Cela schermo de benvenite"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr "Non poteva signar. Non poteva scriber a '%1'"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

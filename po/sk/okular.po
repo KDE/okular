@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-03-13 02:33+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -592,6 +592,50 @@ msgstr "Túto správu viac nezobrazovať"
 #, kde-format
 msgid "Not Available"
 msgstr "Nedostupné"
+
+#: core/signatureutils.cpp:496
+#, kde-format
+msgctxt "%1 is a error code"
+msgid ""
+"Internal signing error. Please report a bug with the steps to reproduce it. "
+"Error code %1"
+msgstr ""
+
+#: core/signatureutils.cpp:498
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Could not load the file <filename>%1</filename>"
+msgid "Could not sign document with location: <filename>%</filename>"
+msgstr "Nepodarilo sa načítať súbor <filename>%1</filename>"
+
+#: core/signatureutils.cpp:500
+#, kde-format
+msgid "Signing cancelled by user"
+msgstr ""
+
+#: core/signatureutils.cpp:502
+#, kde-format
+msgid "Could not sign. Wrong passphrase"
+msgstr ""
+
+#: core/signatureutils.cpp:504
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Could not overwrite <filename>%1</filename> because that file is read-"
+#| "only. Try saving to another location or changing that file's permissions."
+msgid ""
+"Could not write signed document at <filename>%1</filename>, please ensure "
+"you have selected a folder with write permission"
+msgstr ""
+"Nemožno prepísať <filename>%1</filename>, pretože tento súbor je len na "
+"čítanie. Skúste uložiť na iné miesto alebo zmeniť oprávnenia tohto súboru."
+
+#: core/signatureutils.cpp:506
+#, fuzzy, kde-format
+#| msgid "Unknown File"
+msgid "Unknown signing error"
+msgstr "Neznámy súbor"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -3931,38 +3975,6 @@ msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
 "Nakreslite obdĺžnik okolo oblasti strany, ktorú chcete nechať viditeľnú"
 
-#: part/pageview.cpp:5519
-#, kde-format
-msgctxt "%1 is a error code"
-msgid ""
-"Internal signing error. Please report a bug with the steps to reproduce it. "
-"Error code %1"
-msgstr ""
-
-#: part/pageview.cpp:5522
-#, fuzzy, kde-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not sign. Invalid certificate password or could not write to '%1'"
-msgctxt "%1 is a file path"
-msgid "Could not sign. Could not write to '%1'"
-msgstr ""
-"Nepodarilo sa podpísať. Neplatné heslo k certifikátu alebo sa nepodarilo "
-"zapísať na '%1'"
-
-#: part/pageview.cpp:5527
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
-msgstr ""
-
-#: part/pageview.cpp:5530
-#, kde-format
-msgctxt "%1 is a file path"
-msgid ""
-"Could not write signated document at '%1', please ensure you have selected a "
-"folder with write permission"
-msgstr ""
-
 #: part/pageviewannotator.cpp:218
 #, kde-format
 msgid "New Text Note"
@@ -5971,6 +5983,16 @@ msgstr "Zabudnúť všetko"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skryť uvítaciu obrazovku"
+
+#, fuzzy
+#~| msgctxt "%1 is a file path"
+#~| msgid ""
+#~| "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgctxt "%1 is a file path"
+#~ msgid "Could not sign. Could not write to '%1'"
+#~ msgstr ""
+#~ "Nepodarilo sa podpísať. Neplatné heslo k certifikátu alebo sa nepodarilo "
+#~ "zapísať na '%1'"
 
 #~ msgctxt "Page Up/Down overlap, spinbox suffix"
 #~ msgid "%"

@@ -5519,7 +5519,7 @@ PageView::FinishSigningResult PageView::finishSigning()
         KMessageBox::error(this, errorString(result, static_cast<int>(result)));
         return Failed;
     case Okular::GenericSigningError:
-        KMessageBox::error(this, errorString(result, d->document->currentDocument().toLocalFile()));
+        KMessageBox::error(this, errorString(result, newFilePath));
         return Failed;
     case Okular::UserCancelled:
         return Cancelled;
@@ -5527,7 +5527,7 @@ PageView::FinishSigningResult PageView::finishSigning()
         KMessageBox::error(this, errorString(result, {}));
         return Cancelled;
     case Okular::SignatureWriteFailed:
-        KMessageBox::error(this, errorString(result, d->document->currentDocument().toLocalFile()));
+        KMessageBox::error(this, errorString(result, newFilePath));
         return Failed;
     }
     // We should not end here

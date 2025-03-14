@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -586,7 +586,7 @@ msgstr ""
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
-msgid "Could not sign document with location: <filename>%</filename>"
+msgid "Could not sign document with location: <filename>%1</filename>"
 msgstr "Ark ne successat extraer <filename>%1</filename>."
 
 #: core/signatureutils.cpp:500
@@ -1115,6 +1115,52 @@ msgstr "Cause: %1"
 #| msgid "Location:"
 msgid "Location: %1"
 msgstr "Localisation:"
+
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Signatures"
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "Signatures"
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "Ínconosset"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "Signature"
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+msgid "Signature Type: %1"
+msgstr ""
+"\n"
+"Validita del signature: %s"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

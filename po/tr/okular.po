@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
-"PO-Revision-Date: 2025-03-07 23:59+0300\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
+"PO-Revision-Date: 2025-03-13 14:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -611,15 +611,14 @@ msgstr ""
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
-msgid "Could not sign document with location: <filename>%</filename>"
-msgstr "Dosya <filename>%1</filename> yüklenemedi"
+#| msgid "Could not sign document with location: <filename>%</filename>"
+msgid "Could not sign document with location: <filename>%1</filename>"
+msgstr "Dosya imzalanamadı: <filename>%</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "İmzalama kullanıcı tarafından iptal edildi"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -627,23 +626,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Yanlış parola verildiğinden imzalanamadı."
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"“%1” konumundaki imzalı belgeye yazılamadı; lütfen yazma iznine iye "
-"olduğunuz bir klasör seçtiğinizden emin olun."
+"<filename>%1</filename> konumundaki imzalı belgeye yazılamadı; lütfen yazma "
+"iznine iye olduğunuz bir klasör seçtiğinizden emin olun."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Bilinmeyen Dosya"
+msgstr "Bilinmeyen İmzalama Hatası"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1154,6 +1148,52 @@ msgstr "Gerekçe: %1"
 msgid "Location: %1"
 msgstr "Konum: %1"
 
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Signatures"
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "İmzalar"
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature %1"
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "Bilinmeyen İmza %1"
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgid "Signature Type: %1"
+msgstr "İmza geçerliliği:"
+
 #: part/annotationactionhandler.cpp:148
 #, kde-format
 msgctxt "@item:inlistbox Color name"
@@ -1399,7 +1439,7 @@ msgstr "Saydam"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color..."
-msgstr "Özel Renk…"
+msgstr "Özel renk…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -2592,13 +2632,13 @@ msgstr "Konuşma sesi:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Tam Bilgi Notu Araç Çubuğu"
+msgstr "Tam bilgi notu araç çubuğu"
 
 #: part/dlgannotations.cpp:26
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Tez Bilgi Notu Araç Çubuğu"
+msgstr "Tez bilgi notu araç çubuğu"
 
 #: part/dlgannotations.cpp:28
 #, kde-format
@@ -2644,7 +2684,7 @@ msgstr ""
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, editor page"
 msgid "Custom Text Editor"
-msgstr "Özel Metin Düzenleyicisi"
+msgstr "Özel metin düzenleyicisi"
 
 #: part/dlgeditor.cpp:30
 #, kde-format
@@ -2887,19 +2927,19 @@ msgstr "%​100"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
-msgstr "Genişliğe Sığdır"
+msgstr "Genişliğe sığdır"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
-msgstr "Sayfayı Sığdır"
+msgstr "Sayfayı sığdır"
 
 #: part/dlggeneral.cpp:214
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr "Kendiliğinden Sığdır"
+msgstr "Kendiliğinden sığdır"
 
 #: part/dlggeneral.cpp:215
 #, kde-format
@@ -2957,7 +2997,7 @@ msgstr "Yoğun"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Greedy"
-msgstr "Çok Yoğun"
+msgstr "Çok yoğun"
 
 #: part/dlgperformance.cpp:40
 #, kde-format
@@ -3261,13 +3301,13 @@ msgstr "<h3>Çizim Araçları</h3>"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Current Screen"
-msgstr "Geçerli Ekran"
+msgstr "Geçerli ekran"
 
 #: part/dlgpresentation.cpp:172
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
-msgstr "Öntanımlı Ekran"
+msgstr "Öntanımlı ekran"
 
 #: part/dlgpresentation.cpp:178
 #, kde-format
@@ -5949,29 +5989,3 @@ msgstr "Tümünü Unut"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Karşılama ekranını gizle"
-
-#~ msgctxt "%1 is a file path"
-#~ msgid "Could not sign. Could not write to '%1'"
-#~ msgstr "“%1” konumuna yazılamadığından imzalanamadı."
-
-#~ msgctxt "Page Up/Down overlap, spinbox suffix"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Width"
-#~ msgstr "Genişliğe Sığdır"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Fit Page"
-#~ msgstr "Sayfayı Sığdır"
-
-#~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#~ msgid "Auto Fit"
-#~ msgstr "Kendiliğinden Sığdır"
-
-#~ msgid "S&earch:"
-#~ msgstr "A&ra:"
-
-#~ msgid "*|All Files"
-#~ msgstr "*|Tüm Dosyalar"

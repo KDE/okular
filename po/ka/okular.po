@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
-"PO-Revision-Date: 2025-03-07 05:52+0100\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
+"PO-Revision-Date: 2025-03-13 05:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -596,15 +596,14 @@ msgstr ""
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
-msgid "Could not sign document with location: <filename>%</filename>"
-msgstr "შეცდომა <filename>%1</filename> ფაილის ჩატვირთვისას"
+#| msgid "Could not sign document with location: <filename>%</filename>"
+msgid "Could not sign document with location: <filename>%1</filename>"
+msgstr "ხელმოწერის შეცდომა დოკუმენტისთვის მდებარეობით: <filename>%</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "ხელმოწერა გაუქმდა მომხმარებლის მიერ"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -612,23 +611,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "ხელმოწერა შეუძლებელია. საკვანძო ფრაზა არასწორია"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"ხელმოწერილი დოკუმენტის ჩაწერის შეცდომა მისამართზე '%1'. დარწმუნდით, რომ "
-"არჩეული საქაღალდის ჩაწერის უფლებები სწორია"
+"ხელმოწერილი დოკუმენტის ჩაწერის შეცდომა მისამართზე <filename>%1</filename>. "
+"დარწმუნდით, რომ არჩეული საქაღალდის ჩაწერის უფლებები სწორია"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "უცნობი ფაილი"
+msgstr "უცნობი ხელმოწერის შეცდომა"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1138,6 +1132,52 @@ msgstr "მიზეზი: %1"
 #, kde-format
 msgid "Location: %1"
 msgstr "მდებარეობა: %1"
+
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Signatures"
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "ხელმოწერები"
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature %1"
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "ხელმოუწერელი ხელმოწერა %1"
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgid "Signature Type: %1"
+msgstr "ხელმოწერის სისწორე:"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

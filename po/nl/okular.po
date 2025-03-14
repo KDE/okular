@@ -19,15 +19,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
-"PO-Revision-Date: 2025-03-07 13:12+0100\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
+"PO-Revision-Date: 2025-03-13 12:15+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: \n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -608,16 +608,14 @@ msgstr ""
 "reproduceren. Foutcode %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
-msgid "Could not sign document with location: <filename>%</filename>"
-msgstr "Kon bestand het bestand <filename>%1</filename> niet laden"
+#, kde-kuit-format
+msgid "Could not sign document with location: <filename>%1</filename>"
+msgstr "Kon document met locatie: <filename>%1</filename> niet ondertekenen"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Ondertekenen geannuleerd door gebruiker"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -625,23 +623,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Kon niet ondertekenen. Verkeerde wachtwoordzin"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Kon ondertekend document niet schrijven in '%1', ga na dat u een map met "
-"schrijfrechten hebt geselecteerd."
+"Kon ondertekend document op <filename>%1</filename> niet schrijven, ga na "
+"dat u een map met schrijfrechten hebt geselecteerd."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Onbekend bestand"
+msgstr "Onbekende fout met ondertekenen"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1155,6 +1148,52 @@ msgstr "Reden:%1"
 #, kde-format
 msgid "Location: %1"
 msgstr "Locatie: %1"
+
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Signatures"
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "Handtekeningen"
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature %1"
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "Niet ondertekende ondertekening %1"
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgid "Signature Type: %1"
+msgstr "Geldigheid ondertekening:"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -592,7 +592,7 @@ msgstr ""
 
 #: core/signatureutils.cpp:498
 #, kde-kuit-format
-msgid "Could not sign document with location: <filename>%</filename>"
+msgid "Could not sign document with location: <filename>%1</filename>"
 msgstr ""
 
 #: core/signatureutils.cpp:500
@@ -1142,6 +1142,52 @@ msgstr "Strony: %1"
 #| msgid "Location:"
 msgid "Location: %1"
 msgstr "Pozicija teksta:"
+
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "Digitalnje &podpisać..."
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown date"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "Njeznaty"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "Digitalnje &podpisać..."
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+#| msgid "Signature Properties"
+msgid "Signature Type: %1"
+msgstr "Swójstwa signatury"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:40+0000\n"
+"POT-Creation-Date: 2025-03-14 00:41+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -591,7 +591,7 @@ msgstr ""
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid "Could not load the file <filename>%1</filename>"
-msgid "Could not sign document with location: <filename>%</filename>"
+msgid "Could not sign document with location: <filename>%1</filename>"
 msgstr "파일 <filename>%1</filename>을(를) 불러올 수 없음"
 
 #: core/signatureutils.cpp:500
@@ -1130,6 +1130,52 @@ msgstr "이유: %1"
 #, kde-format
 msgid "Location: %1"
 msgstr "위치: %1"
+
+#: gui/signaturemodel.cpp:185
+#, fuzzy, kde-format
+#| msgid "Signatures"
+msgctxt "Signature type"
+msgid "PGP Signature"
+msgstr "서명"
+
+#: gui/signaturemodel.cpp:187
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7"
+msgstr ""
+
+#: gui/signaturemodel.cpp:189
+#, kde-format
+msgctxt "Signature type"
+msgid "Adobe PKCS7 Sha1"
+msgstr ""
+
+#: gui/signaturemodel.cpp:191
+#, kde-format
+msgctxt "Signature type"
+msgid "ETSI CAdES"
+msgstr ""
+
+#: gui/signaturemodel.cpp:193
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Signature type"
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: gui/signaturemodel.cpp:195
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature %1"
+msgctxt "Signature type"
+msgid "Unsigned signature"
+msgstr "서명되지 않은 서명 %1"
+
+#: gui/signaturemodel.cpp:201
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgid "Signature Type: %1"
+msgstr "인증서 유효성:"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

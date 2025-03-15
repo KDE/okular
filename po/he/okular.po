@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-14 00:41+0000\n"
-"PO-Revision-Date: 2025-03-07 10:12+0200\n"
+"PO-Revision-Date: 2025-03-14 09:34+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -595,16 +595,14 @@ msgstr ""
 "שגיאת חתימה פנימית. נא לדווח על תקלה עם השלבים שהובילו אליה. קוד שגיאה: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "לא ניתן לטעון את הקובץ <filename>%1</filename>"
+msgstr "לא ניתן לחתום על המסמך שנמצא במקום: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "החתימה בוטלה על ידי המשתמש"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -612,23 +610,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "לא ניתן לחתום. מילת הצופן שגויה"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"לא ניתן לכתוב מסמך חתום אל ‚%1’, נא לוודא שבחרת בתיקייה שיש לך הרשאות לכתוב "
-"אליה"
+"לא ניתן לכתוב מסמך חתום אל <filename>%1</filename>, נא לוודא שבחרת תיקייה עם "
+"הרשאות כתיבה"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "קובץ לא ידוע"
+msgstr "שגיאת חתימה לא ידועה"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1136,50 +1129,45 @@ msgid "Location: %1"
 msgstr "מקום: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "חתימות"
+msgstr "חתימת PGP"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "PKCS7 של Adobe"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Sha1 של PKCS7 של Adobe"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "לא ידוע"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "חתימה לא חתומה %1"
+msgstr "חתימה לא חתומה"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "תוקף תחימה:"
+msgstr "סוג חתימה: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -5582,7 +5570,7 @@ msgstr "מצב תוקף"
 #: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signature Validity:"
-msgstr "תוקף תחימה:"
+msgstr "תוקף חתימה:"
 
 #: part/signaturepropertiesdialog.cpp:65
 #, kde-format

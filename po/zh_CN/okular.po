@@ -591,16 +591,14 @@ msgid ""
 msgstr "内部签名错误。请提交程序缺陷报告并包含能复现此错误的步骤。错误代码 %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "无法加载文件 <filename>%1</filename>"
+msgstr ""
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "签名被用户取消"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -612,12 +610,12 @@ msgstr "无法签名。密码错误"
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
-msgstr ""
+msgstr "无法将已签名文档写入“%1”，请确保您选择了具有写入权限的文件夹"
 
 #: core/signatureutils.cpp:506
 #, kde-format
 msgid "Unknown signing error"
-msgstr ""
+msgstr "未知签名错误"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1125,11 +1123,10 @@ msgid "Location: %1"
 msgstr "位置：%1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "签名"
+msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -1150,25 +1147,21 @@ msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "未知"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "未经签名的签名 %1"
+msgstr ""
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "签名有效期："
+msgstr ""
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

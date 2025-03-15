@@ -5989,13 +5989,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#, fuzzy
-#~| msgctxt "%1 is a file path"
-#~| msgid ""
-#~| "Could not sign. Invalid certificate password or could not write to '%1'"
-#~ msgctxt "%1 is a file path"
-#~ msgid "Could not sign. Could not write to '%1'"
-#~ msgstr ""
-#~ "Klarte ikkje signera. Anten er passordet til sertifikatet ugyldig eller "
-#~ "så var det ikkje mogleg å lagra til «%1»."

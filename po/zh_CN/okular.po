@@ -593,7 +593,7 @@ msgstr "内部签名错误。请提交程序缺陷报告并包含能复现此错
 #: core/signatureutils.cpp:498
 #, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr ""
+msgstr "无法签名位于此位置的文档：<filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -1126,25 +1126,25 @@ msgstr "位置：%1"
 #, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr ""
+msgstr "PGP 签名"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 SHA1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
 #, kde-format
@@ -1156,12 +1156,12 @@ msgstr "未知"
 #, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr ""
+msgstr "未经签名的签名"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
 msgid "Signature Type: %1"
-msgstr ""
+msgstr "签名类型：%1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format

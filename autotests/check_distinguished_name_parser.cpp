@@ -75,6 +75,8 @@ void TestDistinguishedNameParser::testParser_data()
 
     QTest::newRow("frompdf1") << std::string {"2.5.4.97=#5553742D49644E722E20444520313233343735323233,CN=TeleSec PKS eIDAS QES CA 5,O=Deutsche Telekom AG,C=DE"}
                               << DN::Result {{"2.5.4.97", "USt-IdNr. DE 123475223"}, {"CN", "TeleSec PKS eIDAS QES CA 5"}, {"O", "Deutsche Telekom AG"}, {"C", "DE"}};
+    QTest::newRow("frompdf1") << std::string {"2.5.4.97=#5553742d49644e722e20444520313233343735323233,CN=TeleSec PKS eIDAS QES CA 5,O=Deutsche Telekom AG,C=DE"}
+                              << DN::Result {{"2.5.4.97", "USt-IdNr. DE 123475223"}, {"CN", "TeleSec PKS eIDAS QES CA 5"}, {"O", "Deutsche Telekom AG"}, {"C", "DE"}};
     QTest::newRow("frompdf2") << std::string {"2.5.4.5=#34,CN=Koch\\, Werner,2.5.4.42=#5765726E6572,2.5.4.4=#4B6F6368,C=DE"} << DN::Result {{"SerialNumber", "4"}, {"CN", "Koch, Werner"}, {"GN", "Werner"}, {"SN", "Koch"}, {"C", "DE"}};
     QTest::newRow("frompdf2a") << std::string {"2.5.4.5=#34,CN=Koch\\, Werner,oid.2.5.4.42=#5765726E6572,OID.2.5.4.4=#4B6F6368,C=DE"}
                                << DN::Result {{"SerialNumber", "4"}, {"CN", "Koch, Werner"}, {"GN", "Werner"}, {"SN", "Koch"}, {"C", "DE"}};

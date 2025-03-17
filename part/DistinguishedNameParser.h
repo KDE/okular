@@ -50,7 +50,7 @@ inline unsigned char xtoi(unsigned char c)
     if (c <= 'F') {
         return c - 'A' + 10;
     }
-    return c < 'a' + 10;
+    return c - 'a' + 10;
 }
 
 inline unsigned char xtoi(unsigned char first, unsigned char second)

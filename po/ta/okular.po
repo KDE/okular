@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-14 00:41+0000\n"
-"PO-Revision-Date: 2025-03-09 17:11+0530\n"
+"PO-Revision-Date: 2025-03-16 14:55+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -591,16 +591,14 @@ msgstr ""
 "சிக்கல் எண்: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "<filename>%1</filename> என்கிற கோப்பை ஏற்ற முடியவில்லை"
+msgstr "<filename>%1</filename> என்கிற கோப்பிற்கு கையொப்பமிட முடியவில்லை"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "கையொப்பமிடுவதை பயனர் ரத்து செய்தார்"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -608,23 +606,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "கையொப்பமிட முடியவில்லை. தவறான கடவுச்சொல்"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"'%1' என்ற இடத்தில் கையொப்பமிட்ட ஆவணத்தை சேமிக்க முடியவில்லை. அவ்வடைவில் எழுதும் அனுமதி "
-"உள்ளதா என சரிபார்க்கவும்."
+"<filename>%1</filename> என்ற இடத்தில் கையொப்பமிட்ட ஆவணத்தை சேமிக்க முடியவில்லை. "
+"அவ்வடைவில் எழுதும் அனுமதி உள்ளதா என சரிபார்க்கவும்."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "தெரியாத கோப்பு"
+msgstr "கையொப்பமிடுவதில் தெரியாத சிக்கல்"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1134,11 +1127,10 @@ msgid "Location: %1"
 msgstr "இடம்: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "கையொப்பங்கள்"
+msgstr "PGP கையொப்பம்"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -1159,25 +1151,21 @@ msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
-msgstr "தெரியாதவர்"
+msgstr "தெரியாதது"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"
+msgstr "எண்மக்கையொப்பமிடா கையொப்பம்"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "கையொப்பத்தின் செல்லுபடி நிலை:"
+msgstr "கையொப்ப வகை: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -5768,7 +5756,7 @@ msgstr "அச்சிடும் சாளரத்துடன் துவ�
 #: shell/main.cpp:93
 #, kde-format
 msgid "\"Unique instance\" control"
-msgstr ""
+msgstr "\"ஒரே சாளரம்\" கட்டுப்பாடு"
 
 #: shell/main.cpp:94
 #, kde-format

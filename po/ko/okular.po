@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 00:41+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -29,7 +29,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde@peremen.name"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#: aboutdata.h:19 part/annotationwidgets.cpp:434
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -750,7 +750,7 @@ msgstr "도형"
 msgid "Highlight with Comment"
 msgstr "주석이 있는 강조"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
 #, kde-format
 msgid "Highlight"
 msgstr "하이라이트"
@@ -760,7 +760,7 @@ msgstr "하이라이트"
 msgid "Squiggle with Comment"
 msgstr "주석이 있는 휘어진 모양"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
@@ -771,7 +771,7 @@ msgstr "곡선"
 msgid "Underline with Comment"
 msgstr "주석이 있는 밑줄"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
 #: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
@@ -1768,393 +1768,395 @@ msgstr "주석 속성"
 msgid "Modified: %1"
 msgstr "수정한 날짜: %1"
 
-#: part/annotationwidgets.cpp:56
+#: part/annotationwidgets.cpp:57
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "파일에서 사용자 정의 스탬프 기호 선택"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "사용자 정의 스탬프 기호 선택"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz | 아이콘 파일 (*.ico *.png *.xpm *.svg *.svgz)"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "파일 <filename>%1</filename>을(를) 불러올 수 없음"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "잘못된 파일"
 
-#: part/annotationwidgets.cpp:267
+#: part/annotationwidgets.cpp:268
 #, kde-format
 msgid "&Color:"
 msgstr "색상(&C):"
 
-#: part/annotationwidgets.cpp:276
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80%'"
-msgid "%"
-msgstr "%"
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "%1%"
+msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
+msgid "%v%"
+msgstr "%1%"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "불투명도(&O):"
 
-#: part/annotationwidgets.cpp:365
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Icon:"
 msgstr "아이콘:"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Comment"
 msgstr "설명"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "Help"
 msgstr "도움말"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Insert"
 msgstr "삽입"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Key"
 msgstr "키"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:371
 #, kde-format
 msgid "New paragraph"
 msgstr "새 문단"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:372
 #, kde-format
 msgid "Note"
 msgstr "노트"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:373
 #, kde-format
 msgid "Paragraph"
 msgstr "문단"
 
-#: part/annotationwidgets.cpp:380
+#: part/annotationwidgets.cpp:381
 #, kde-format
 msgid "Font:"
 msgstr "글꼴:"
 
-#: part/annotationwidgets.cpp:389
+#: part/annotationwidgets.cpp:390
 #, kde-format
 msgid "Text &color:"
 msgstr "글자색(&C):"
 
-#: part/annotationwidgets.cpp:396
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "&Align:"
 msgstr "정렬(&A):"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:398
 #, kde-format
 msgid "Left"
 msgstr "왼쪽"
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:399
 #, kde-format
 msgid "Center"
 msgstr "가운데"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:400
 #, kde-format
 msgid "Right"
 msgstr "오른쪽"
 
-#: part/annotationwidgets.cpp:407
+#: part/annotationwidgets.cpp:408
 #, kde-format
 msgid "Border &width:"
 msgstr "경계선 넓이(&W):"
 
-#: part/annotationwidgets.cpp:416
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Approved"
 msgstr "승인됨"
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "As Is"
 msgstr "그대로"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Confidential"
 msgstr "기밀"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Departmental"
 msgstr "중요"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Draft"
 msgstr "초안"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "Experimental"
 msgstr "실험적"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "Expired"
 msgstr "만료됨"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Final"
 msgstr "최종"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "For Comment"
 msgstr "주석 필요"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "For Public Release"
 msgstr "공개용"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Not Approved"
 msgstr "승인되지 않음"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Not For Public Release"
 msgstr "비공개용"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Sold"
 msgstr "팔렸음"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "Top Secret"
 msgstr "일급 기밀"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Bookmark"
 msgstr "책갈피"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:432
 #, kde-format
 msgid "Information"
 msgstr "정보"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:433
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:453
+#: part/annotationwidgets.cpp:454
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "스탬프 기호:"
 
-#: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
-#: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
-#: part/annotationwidgets.cpp:779
+#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
+#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
+#: part/annotationwidgets.cpp:780
 #, kde-format
 msgid "&Width:"
 msgstr "너비(&W):"
 
-#: part/annotationwidgets.cpp:506
+#: part/annotationwidgets.cpp:507
 #, kde-format
 msgid "Line start:"
 msgstr "선 시작:"
 
-#: part/annotationwidgets.cpp:508
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Line end:"
 msgstr "선 끝:"
 
-#: part/annotationwidgets.cpp:511
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Square"
 msgstr "사각형"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Circle"
 msgstr "원형"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Diamond"
 msgstr "마름모꼴"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Open Arrow"
 msgstr "열린 화살표"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Closed Arrow"
 msgstr "닫힌 화살표"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "None"
 msgstr "없음"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Butt"
 msgstr "끝부분"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "오른쪽으로 열린 화살표"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "오른쪽으로 닫힌 화살표"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:521
 #, kde-format
 msgid "Slash"
 msgstr "/"
 
-#: part/annotationwidgets.cpp:533
+#: part/annotationwidgets.cpp:534
 #, kde-format
 msgid "Leader line length:"
 msgstr "위쪽 연장선 길이:"
 
-#: part/annotationwidgets.cpp:535
+#: part/annotationwidgets.cpp:536
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "아래쪽 연장선 길이:"
 
-#: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
+#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
 #, kde-format
 msgid "Enabled"
 msgstr "사용함"
 
-#: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
+#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
 #, kde-format
 msgid "Shape fill:"
 msgstr "도형 채우기:"
 
-#: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
+#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
 #, kde-format
 msgid "Type:"
 msgstr "종류:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "취소선"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "직사각형"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "타원"
 
-#: part/annotationwidgets.cpp:747
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "첨부 파일 기호:"
 
-#: part/annotationwidgets.cpp:750
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "그래프"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:752
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "압핀"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:753
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "종이 클립"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:754
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "태그"
 
-#: part/annotationwidgets.cpp:762
+#: part/annotationwidgets.cpp:763
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "파일"
 
-#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "N/A"
 
-#: part/annotationwidgets.cpp:767
+#: part/annotationwidgets.cpp:768
 #, kde-format
 msgid "No description available."
 msgstr "설명이 없습니다."
 
-#: part/annotationwidgets.cpp:775
+#: part/annotationwidgets.cpp:776
 #, kde-format
 msgid "Name:"
 msgstr "이름:"
 
-#: part/annotationwidgets.cpp:786
+#: part/annotationwidgets.cpp:787
 #, kde-format
 msgid "Description:"
 msgstr "설명:"
 
-#: part/annotationwidgets.cpp:845
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgid "Caret symbol:"
 msgstr "캐럿 기호:"
 
-#: part/annotationwidgets.cpp:847
+#: part/annotationwidgets.cpp:848
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "없음"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:849
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -3047,17 +3049,14 @@ msgstr ""
 "메모리에 모든 것을 불러오고 저장합니다. 모든 쪽을 미리 불러옵니다. (총 메모"
 "리 양의 50%나 현재 남은 메모리 중 더 작은 값을 사용합니다.)"
 
-#: part/dlgpresentation.cpp:37
-#, kde-format
-msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-msgid "every "
-msgstr "매 "
-
 #: part/dlgpresentation.cpp:38
-#, kde-format
-msgctxt "Advance every %1 seconds"
-msgid " second"
-msgid_plural " seconds"
+#, fuzzy, kde-format
+#| msgctxt "Advance every %1 seconds"
+#| msgid " second"
+#| msgid_plural " seconds"
+msgctxt "@label:spinbox Advance automatically: Every n second"
+msgid "every %v second"
+msgid_plural "every %v seconds"
 msgstr[0] "초"
 
 #: part/dlgpresentation.cpp:45
@@ -3317,7 +3316,7 @@ msgstr "그리기 도구: %1"
 msgid "Eraser"
 msgstr "지우개"
 
-#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:44
 #, kde-format
 msgid "&Name:"
 msgstr "이름(&N):"
@@ -3352,34 +3351,28 @@ msgstr "주석 생성 도구"
 msgid "Edit annotation tool"
 msgstr "주석 편집 도구"
 
-#: part/editdrawingtooldialog.cpp:50
+#: part/editdrawingtooldialog.cpp:51
 #, kde-format
 msgid "Color:"
 msgstr "색상:"
 
-#: part/editdrawingtooldialog.cpp:57
+#: part/editdrawingtooldialog.cpp:58
 #, kde-format
 msgid "&Pen Width:"
 msgstr "펜 굵기(&P):"
 
-#: part/editdrawingtooldialog.cpp:63
+#: part/editdrawingtooldialog.cpp:64
 #, kde-format
-msgctxt "Suffix for the pen width, eg '10 px'"
-msgid " px"
-msgstr "픽셀"
+msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
+msgid "%v px"
+msgstr ""
 
-#: part/editdrawingtooldialog.cpp:73
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80 %'"
-msgid " %"
-msgstr " %"
-
-#: part/editdrawingtooldialog.cpp:78
+#: part/editdrawingtooldialog.cpp:79
 #, kde-format
 msgid "Create drawing tool"
 msgstr "그리기 도구 만들기"
 
-#: part/editdrawingtooldialog.cpp:83
+#: part/editdrawingtooldialog.cpp:84
 #, kde-format
 msgid "Edit drawing tool"
 msgstr "그리기 도구 편집"
@@ -5944,6 +5937,22 @@ msgstr "모두 잊기"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "시작 화면 숨기기"
+
+#~ msgctxt "Suffix for the opacity level, eg '80%'"
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+#~ msgid "every "
+#~ msgstr "매 "
+
+#~ msgctxt "Suffix for the pen width, eg '10 px'"
+#~ msgid " px"
+#~ msgstr "픽셀"
+
+#~ msgctxt "Suffix for the opacity level, eg '80 %'"
+#~ msgid " %"
+#~ msgstr " %"
 
 #, fuzzy
 #~| msgctxt "%1 is a file path"

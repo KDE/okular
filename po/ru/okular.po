@@ -1,6 +1,6 @@
 # translation of okular.po to Russian
 # SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024 Alexander Yavorsky <kekcuha@gmail.com>
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 # Nick Shaforostoff <shaforostoff@kde.ru>, 2004, 2007, 2008, 2009.
 # Oleg Batalov <olegbatalov@mail.ru>, 2004.
 # Gregory Mokhin <mok@kde.ru>, 2005.
@@ -19,15 +19,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 00:41+0000\n"
-"PO-Revision-Date: 2024-12-28 12:09+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
+"PO-Revision-Date: 2025-03-17 15:44+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -48,7 +48,7 @@ msgstr ""
 "shaforostoff@kde.ru,skull@kde.ru,oleg.kluchkin@gmail.com,kekcuha@gmail.com,"
 "translation-team@basealt.ru"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#: aboutdata.h:19 part/annotationwidgets.cpp:434
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -611,43 +611,38 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Внутренняя ошибка подписания. Просьба сообщить разработчикам об этой ошибке "
+"(с указанием шагов, позволяющих её воспроизвести). Код ошибки: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "Не удалось загрузить файл <filename>%1</filename>"
+msgstr ""
+"Не удалось подписать документ по следующему адресу: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Подписание отменено пользователем"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Не удалось подписать. Неверная парольная фраза"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Не удалось перезаписать <filename>%1</filename>, так как этот файл доступен "
-"только для чтения. Попробуйте выполнить сохранение в другой папке или "
-"изменить разрешения этого файла."
+"Не удалось сохранить подписанный документ по адресу <filename>%1</filename>, "
+"убедитесь в наличии права записи в выбранную папку"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Неизвестный файл"
+msgstr "Неизвестная ошибка подписания"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -776,7 +771,7 @@ msgstr "Фигура"
 msgid "Highlight with Comment"
 msgstr "Выделение цветом, содержащее комментарий"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
 #, kde-format
 msgid "Highlight"
 msgstr "Выделение"
@@ -786,7 +781,7 @@ msgstr "Выделение"
 msgid "Squiggle with Comment"
 msgstr "Подчёркивание волнистой линией, содержащее комментарий"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
@@ -797,7 +792,7 @@ msgstr "Волнистая линия"
 msgid "Underline with Comment"
 msgstr "Подчёркивание текста, содержащее комментарий"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
 #: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
@@ -1155,53 +1150,48 @@ msgstr "Причина: %1"
 #: gui/signaturemodel.cpp:177
 #, kde-format
 msgid "Location: %1"
-msgstr "Местоположение: %1"
+msgstr "Расположение: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Подписи"
+msgstr "Подпись PGP"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
-msgstr "Неизвестный"
+msgstr "Неизвестно"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Неподписанная подпись %1"
+msgstr "Неподписанная подпись"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Достоверность подписи:"
+msgstr "Тип подписи: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1803,393 +1793,395 @@ msgstr "Свойства комментария"
 msgid "Modified: %1"
 msgstr "Изменёно: %1"
 
-#: part/annotationwidgets.cpp:56
+#: part/annotationwidgets.cpp:57
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "Выбрать штамп из файла"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "Выбор штампа"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz|Файлы значков (*.ico *.png *.xpm *.svg *.svgz)"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "Не удалось загрузить файл <filename>%1</filename>"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "Недопустимый файл"
 
-#: part/annotationwidgets.cpp:267
+#: part/annotationwidgets.cpp:268
 #, kde-format
 msgid "&Color:"
 msgstr "&Цвет:"
 
-#: part/annotationwidgets.cpp:276
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80%'"
-msgid "%"
-msgstr "%"
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#, fuzzy, kde-format
+#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
+#| msgid "%v%"
+msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
+msgid "%v%"
+msgstr "%v%"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "&Непрозрачность:"
 
-#: part/annotationwidgets.cpp:365
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Icon:"
 msgstr "Значок:"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Comment"
 msgstr "Комментарий"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "Help"
 msgstr "Справка"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Insert"
 msgstr "Вставка"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Key"
 msgstr "Клавиша"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:371
 #, kde-format
 msgid "New paragraph"
 msgstr "Новый абзац"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:372
 #, kde-format
 msgid "Note"
 msgstr "Заметка"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:373
 #, kde-format
 msgid "Paragraph"
 msgstr "Абзац"
 
-#: part/annotationwidgets.cpp:380
+#: part/annotationwidgets.cpp:381
 #, kde-format
 msgid "Font:"
 msgstr "Шрифт:"
 
-#: part/annotationwidgets.cpp:389
+#: part/annotationwidgets.cpp:390
 #, kde-format
 msgid "Text &color:"
 msgstr "&Цвет текста:"
 
-#: part/annotationwidgets.cpp:396
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "&Align:"
 msgstr "&Выравнивание:"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:398
 #, kde-format
 msgid "Left"
 msgstr "По левой стороне"
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:399
 #, kde-format
 msgid "Center"
 msgstr "По центру"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:400
 #, kde-format
 msgid "Right"
 msgstr "По правой стороне"
 
-#: part/annotationwidgets.cpp:407
+#: part/annotationwidgets.cpp:408
 #, kde-format
 msgid "Border &width:"
 msgstr "Толщина &границы:"
 
-#: part/annotationwidgets.cpp:416
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Approved"
 msgstr "Одобрено"
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "As Is"
 msgstr "Как есть"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Confidential"
 msgstr "Конфиденциально"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Departmental"
 msgstr "Для служебного пользования"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Draft"
 msgstr "Черновик"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "Experimental"
 msgstr "Экспериментально"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "Expired"
 msgstr "Срок действия истёк"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Final"
 msgstr "Окончательный вариант"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "For Comment"
 msgstr "Для рецензирования"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "For Public Release"
 msgstr "Для публичного распространения"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Not Approved"
 msgstr "Не одобрено"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Not For Public Release"
 msgstr "Не для публичного распространения"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Sold"
 msgstr "Продано"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "Top Secret"
 msgstr "Совершенно секретно"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Bookmark"
 msgstr "Закладка"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:432
 #, kde-format
 msgid "Information"
 msgstr "Сведения"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:433
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:453
+#: part/annotationwidgets.cpp:454
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "Символ штампа:"
 
-#: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
-#: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
-#: part/annotationwidgets.cpp:779
+#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
+#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
+#: part/annotationwidgets.cpp:780
 #, kde-format
 msgid "&Width:"
 msgstr "Толщина &линии:"
 
-#: part/annotationwidgets.cpp:506
+#: part/annotationwidgets.cpp:507
 #, kde-format
 msgid "Line start:"
 msgstr "Начало линии:"
 
-#: part/annotationwidgets.cpp:508
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Line end:"
 msgstr "Конец линии:"
 
-#: part/annotationwidgets.cpp:511
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Square"
 msgstr "Квадрат"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Circle"
 msgstr "Круг"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Diamond"
 msgstr "Ромб"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Open Arrow"
 msgstr "Открытая стрелка"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Closed Arrow"
 msgstr "Закрытая стрелка"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "None"
 msgstr "Ничего"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Butt"
 msgstr "Засечка"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "Правая открытая стрелка"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "Правая закрытая стрелка"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:521
 #, kde-format
 msgid "Slash"
 msgstr "Наклонная черта"
 
-#: part/annotationwidgets.cpp:533
+#: part/annotationwidgets.cpp:534
 #, kde-format
 msgid "Leader line length:"
 msgstr "Длина линии выноски:"
 
-#: part/annotationwidgets.cpp:535
+#: part/annotationwidgets.cpp:536
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "Длина продления выноски:"
 
-#: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
+#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
 #, kde-format
 msgid "Enabled"
 msgstr "Использовать"
 
-#: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
+#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
 #, kde-format
 msgid "Shape fill:"
 msgstr "Заливка:"
 
-#: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
+#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
 #, kde-format
 msgid "Type:"
 msgstr "Тип:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "Перечёркнутый текст"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "Прямоугольник"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "Эллипс"
 
-#: part/annotationwidgets.cpp:747
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "Символ вложения файла:"
 
-#: part/annotationwidgets.cpp:750
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "График"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:752
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "Кнопка"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:753
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "Скрепка"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:754
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "Метка"
 
-#: part/annotationwidgets.cpp:762
+#: part/annotationwidgets.cpp:763
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Файл"
 
-#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "Недоступно"
 
-#: part/annotationwidgets.cpp:767
+#: part/annotationwidgets.cpp:768
 #, kde-format
 msgid "No description available."
 msgstr "Описание недоступно"
 
-#: part/annotationwidgets.cpp:775
+#: part/annotationwidgets.cpp:776
 #, kde-format
 msgid "Name:"
 msgstr "&Название:"
 
-#: part/annotationwidgets.cpp:786
+#: part/annotationwidgets.cpp:787
 #, kde-format
 msgid "Description:"
 msgstr "Описание:"
 
-#: part/annotationwidgets.cpp:845
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgid "Caret symbol:"
 msgstr "Знак поля ввода:"
 
-#: part/annotationwidgets.cpp:847
+#: part/annotationwidgets.cpp:848
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "Нет"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:849
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -3089,17 +3081,14 @@ msgstr ""
 "страниц. Будет использована вся свободная память, но не более 50% от общего "
 "объёма оперативной памяти."
 
-#: part/dlgpresentation.cpp:37
-#, kde-format
-msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-msgid "every "
-msgstr "через "
-
 #: part/dlgpresentation.cpp:38
-#, kde-format
-msgctxt "Advance every %1 seconds"
-msgid " second"
-msgid_plural " seconds"
+#, fuzzy, kde-format
+#| msgctxt "Advance every %1 seconds"
+#| msgid " second"
+#| msgid_plural " seconds"
+msgctxt "@label:spinbox Advance automatically: Every n second"
+msgid "every %v second"
+msgid_plural "every %v seconds"
 msgstr[0] " секунда"
 msgstr[1] " секунды"
 msgstr[2] " секунд"
@@ -3362,7 +3351,7 @@ msgstr "Инструмент рисования: %1"
 msgid "Eraser"
 msgstr "Ластик"
 
-#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:44
 #, kde-format
 msgid "&Name:"
 msgstr "&Название:"
@@ -3397,34 +3386,28 @@ msgstr "Создание комментария"
 msgid "Edit annotation tool"
 msgstr "Изменение комментария"
 
-#: part/editdrawingtooldialog.cpp:50
+#: part/editdrawingtooldialog.cpp:51
 #, kde-format
 msgid "Color:"
 msgstr "Цвет:"
 
-#: part/editdrawingtooldialog.cpp:57
+#: part/editdrawingtooldialog.cpp:58
 #, kde-format
 msgid "&Pen Width:"
 msgstr "&Толщина линии:"
 
-#: part/editdrawingtooldialog.cpp:63
+#: part/editdrawingtooldialog.cpp:64
 #, kde-format
-msgctxt "Suffix for the pen width, eg '10 px'"
-msgid " px"
-msgstr " пикс."
+msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
+msgid "%v px"
+msgstr ""
 
-#: part/editdrawingtooldialog.cpp:73
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80 %'"
-msgid " %"
-msgstr " %"
-
-#: part/editdrawingtooldialog.cpp:78
+#: part/editdrawingtooldialog.cpp:79
 #, kde-format
 msgid "Create drawing tool"
 msgstr "Создание инструмента рисования"
 
-#: part/editdrawingtooldialog.cpp:83
+#: part/editdrawingtooldialog.cpp:84
 #, kde-format
 msgid "Edit drawing tool"
 msgstr "Изменение инструмента рисования"
@@ -5499,24 +5482,22 @@ msgstr "Выбор сертификата для подписания:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Перейти"
+msgstr "Все"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Сертификаты"
+msgstr "Только сертификаты QES"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Только ключи PGP"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5537,7 +5518,7 @@ msgstr "необязательно"
 #: part/selectcertificatedialog.ui:87 part/signaturepropertiesdialog.cpp:78
 #, kde-format
 msgid "Location:"
-msgstr "Местоположение:"
+msgstr "Расположение:"
 
 #. i18n: ectx: property (text), widget (QLabel, backgroundLabel)
 #: part/selectcertificatedialog.ui:104
@@ -5710,12 +5691,12 @@ msgstr "Диспетчер сертификатов KDE (kleopatra) не най�
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Квалифицированная подпись"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format
@@ -6035,10 +6016,23 @@ msgstr "Очистить список"
 msgid "Hide welcome screen"
 msgstr "Не использовать экран приветствия"
 
+#~ msgctxt "Suffix for the opacity level, eg '80%'"
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+#~ msgid "every "
+#~ msgstr "через "
+
+#~ msgctxt "Suffix for the pen width, eg '10 px'"
+#~ msgid " px"
+#~ msgstr " пикс."
+
+#~ msgctxt "Suffix for the opacity level, eg '80 %'"
+#~ msgid " %"
+#~ msgstr " %"
+
 #, fuzzy
-#~| msgctxt "%1 is a file path"
-#~| msgid ""
-#~| "Could not sign. Invalid certificate password or could not write to '%1'"
 #~ msgctxt "%1 is a file path"
 #~ msgid "Could not sign. Could not write to '%1'"
 #~ msgstr ""

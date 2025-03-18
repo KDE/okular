@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 00:41+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2025-03-14 13:45+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -34,7 +34,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "rysin@kde.org,ivanpetrouchtchak@yahoo.com,yurchor@ukr.net"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:433
+#: aboutdata.h:19 part/annotationwidgets.cpp:434
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -756,7 +756,7 @@ msgstr "Геометрична фігура"
 msgid "Highlight with Comment"
 msgstr "Підсвічений текст із коментарем"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
 #, kde-format
 msgid "Highlight"
 msgstr "Підсвічування"
@@ -766,7 +766,7 @@ msgstr "Підсвічування"
 msgid "Squiggle with Comment"
 msgstr "Хвилястий текст із коментарем"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
 #: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Squiggle"
@@ -777,7 +777,7 @@ msgstr "Підкреслення хвилястою"
 msgid "Underline with Comment"
 msgstr "Підкреслений текст із коментарем"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
 #: part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Underline"
@@ -1785,19 +1785,19 @@ msgstr "Властивості анотацій"
 msgid "Modified: %1"
 msgstr "Змінено: %1"
 
-#: part/annotationwidgets.cpp:56
+#: part/annotationwidgets.cpp:57
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "Вибрати нетиповий символ штампа з файла"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "Виберіть нетиповий символ штампа"
 
-#: part/annotationwidgets.cpp:156
+#: part/annotationwidgets.cpp:157
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
@@ -1805,374 +1805,376 @@ msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz | файли піктограм (*.ico *.png *.xpm *.svg *."
 "svgz)"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "Не вдалося завантажити файл <filename>%1</filename>"
 
-#: part/annotationwidgets.cpp:160
+#: part/annotationwidgets.cpp:161
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "Некоректний файл"
 
-#: part/annotationwidgets.cpp:267
+#: part/annotationwidgets.cpp:268
 #, kde-format
 msgid "&Color:"
 msgstr "&Колір:"
 
-#: part/annotationwidgets.cpp:276
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80%'"
-msgid "%"
-msgstr "%"
+#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#, fuzzy, kde-format
+#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
+#| msgid "%v%"
+msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
+msgid "%v%"
+msgstr "%v%"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:67
+#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "&Непрозорість:"
 
-#: part/annotationwidgets.cpp:365
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Icon:"
 msgstr "Піктограма:"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Comment"
 msgstr "Коментар"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "Help"
 msgstr "Довідка"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Insert"
 msgstr "Вставити"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Key"
 msgstr "Ключ"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:371
 #, kde-format
 msgid "New paragraph"
 msgstr "Новий абзац"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:372
 #, kde-format
 msgid "Note"
 msgstr "Примітка"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:373
 #, kde-format
 msgid "Paragraph"
 msgstr "Абзац"
 
-#: part/annotationwidgets.cpp:380
+#: part/annotationwidgets.cpp:381
 #, kde-format
 msgid "Font:"
 msgstr "Шрифт:"
 
-#: part/annotationwidgets.cpp:389
+#: part/annotationwidgets.cpp:390
 #, kde-format
 msgid "Text &color:"
 msgstr "Колір &тексту:"
 
-#: part/annotationwidgets.cpp:396
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "&Align:"
 msgstr "Ви&рівнювання:"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:398
 #, kde-format
 msgid "Left"
 msgstr "Ліворуч"
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:399
 #, kde-format
 msgid "Center"
 msgstr "За центром"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:400
 #, kde-format
 msgid "Right"
 msgstr "Праворуч"
 
-#: part/annotationwidgets.cpp:407
+#: part/annotationwidgets.cpp:408
 #, kde-format
 msgid "Border &width:"
 msgstr "&Ширина рамки:"
 
-#: part/annotationwidgets.cpp:416
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Approved"
 msgstr "Схвалено"
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "As Is"
 msgstr "Як є"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Confidential"
 msgstr "Секретно"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Departmental"
 msgstr "Для відділу"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Draft"
 msgstr "Чернетка"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "Experimental"
 msgstr "Експериментальний"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "Expired"
 msgstr "Застарілий"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Final"
 msgstr "Остаточний"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "For Comment"
 msgstr "Для коментарів"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "For Public Release"
 msgstr "Для випуску до публіки"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Not Approved"
 msgstr "Не схвалений"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Not For Public Release"
 msgstr "Не для випуску до публіки"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Sold"
 msgstr "Продано"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "Top Secret"
 msgstr "Цілком таємно"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Bookmark"
 msgstr "Закладка"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:432
 #, kde-format
 msgid "Information"
 msgstr "Інформація"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:433
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:453
+#: part/annotationwidgets.cpp:454
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "Символ штампа:"
 
-#: part/annotationwidgets.cpp:501 part/annotationwidgets.cpp:563
-#: part/annotationwidgets.cpp:626 part/annotationwidgets.cpp:700
-#: part/annotationwidgets.cpp:779
+#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
+#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
+#: part/annotationwidgets.cpp:780
 #, kde-format
 msgid "&Width:"
 msgstr "&Товщина:"
 
-#: part/annotationwidgets.cpp:506
+#: part/annotationwidgets.cpp:507
 #, kde-format
 msgid "Line start:"
 msgstr "Початок лінії:"
 
-#: part/annotationwidgets.cpp:508
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Line end:"
 msgstr "Кінчик лінії:"
 
-#: part/annotationwidgets.cpp:511
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Square"
 msgstr "Квадрат"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Circle"
 msgstr "Коло"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "Diamond"
 msgstr "Ромб"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Open Arrow"
 msgstr "Відкрита стрілка"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Closed Arrow"
 msgstr "Закрита стрілка"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "None"
 msgstr "Немає"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Butt"
 msgstr "Обрізок"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:519
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "Відкрита стрілка праворуч"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:520
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "Закрита стрілка праворуч"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:521
 #, kde-format
 msgid "Slash"
 msgstr "Похила риска"
 
-#: part/annotationwidgets.cpp:533
+#: part/annotationwidgets.cpp:534
 #, kde-format
 msgid "Leader line length:"
 msgstr "Довжина ведучої лінії:"
 
-#: part/annotationwidgets.cpp:535
+#: part/annotationwidgets.cpp:536
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "Довжина розширень ведучої лінії:"
 
-#: part/annotationwidgets.cpp:549 part/annotationwidgets.cpp:693
+#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
 #, kde-format
 msgid "Enabled"
 msgstr "Увімкнено"
 
-#: part/annotationwidgets.cpp:553 part/annotationwidgets.cpp:697
+#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
 #, kde-format
 msgid "Shape fill:"
 msgstr "Заповнення форми:"
 
-#: part/annotationwidgets.cpp:653 part/annotationwidgets.cpp:687
+#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
 #, kde-format
 msgid "Type:"
 msgstr "Тип:"
 
-#: part/annotationwidgets.cpp:658 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Strike out"
 msgstr "Перекреслення"
 
-#: part/annotationwidgets.cpp:702 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Rectangle"
 msgstr "Прямокутник"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Ellipse"
 msgstr "Еліпс"
 
-#: part/annotationwidgets.cpp:747
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "Символ долучення файла:"
 
-#: part/annotationwidgets.cpp:750
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "Графіка"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:752
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "Кнопка"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:753
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "Затискач для паперу"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:754
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "Мітка"
 
-#: part/annotationwidgets.cpp:762
+#: part/annotationwidgets.cpp:763
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Файл"
 
-#: part/annotationwidgets.cpp:766 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "н/п"
 
-#: part/annotationwidgets.cpp:767
+#: part/annotationwidgets.cpp:768
 #, kde-format
 msgid "No description available."
 msgstr "Немає опису."
 
-#: part/annotationwidgets.cpp:775
+#: part/annotationwidgets.cpp:776
 #, kde-format
 msgid "Name:"
 msgstr "Назва:"
 
-#: part/annotationwidgets.cpp:786
+#: part/annotationwidgets.cpp:787
 #, kde-format
 msgid "Description:"
 msgstr "Опис:"
 
-#: part/annotationwidgets.cpp:845
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgid "Caret symbol:"
 msgstr "Символ каретки:"
 
-#: part/annotationwidgets.cpp:847
+#: part/annotationwidgets.cpp:848
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "Жодного"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:849
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -3076,17 +3078,14 @@ msgstr ""
 "оперативної пам’яті або вільної пам’яті, залежно від того, який з об’ємів "
 "буде більшим.)"
 
-#: part/dlgpresentation.cpp:37
-#, kde-format
-msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-msgid "every "
-msgstr "кожні"
-
 #: part/dlgpresentation.cpp:38
-#, kde-format
-msgctxt "Advance every %1 seconds"
-msgid " second"
-msgid_plural " seconds"
+#, fuzzy, kde-format
+#| msgctxt "Advance every %1 seconds"
+#| msgid " second"
+#| msgid_plural " seconds"
+msgctxt "@label:spinbox Advance automatically: Every n second"
+msgid "every %v second"
+msgid_plural "every %v seconds"
 msgstr[0] " секунду"
 msgstr[1] " секунди"
 msgstr[2] " секунд"
@@ -3349,7 +3348,7 @@ msgstr "Інструмент малювання: %1"
 msgid "Eraser"
 msgstr "Гумка"
 
-#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:43
+#: part/editannottooldialog.cpp:59 part/editdrawingtooldialog.cpp:44
 #, kde-format
 msgid "&Name:"
 msgstr "&Назва:"
@@ -3384,34 +3383,28 @@ msgstr "Інструмент створення анотацій"
 msgid "Edit annotation tool"
 msgstr "Інструмент редагування анотацій"
 
-#: part/editdrawingtooldialog.cpp:50
+#: part/editdrawingtooldialog.cpp:51
 #, kde-format
 msgid "Color:"
 msgstr "Колір:"
 
-#: part/editdrawingtooldialog.cpp:57
+#: part/editdrawingtooldialog.cpp:58
 #, kde-format
 msgid "&Pen Width:"
 msgstr "Товщина &пера:"
 
-#: part/editdrawingtooldialog.cpp:63
+#: part/editdrawingtooldialog.cpp:64
 #, kde-format
-msgctxt "Suffix for the pen width, eg '10 px'"
-msgid " px"
-msgstr " пк"
+msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
+msgid "%v px"
+msgstr ""
 
-#: part/editdrawingtooldialog.cpp:73
-#, kde-format
-msgctxt "Suffix for the opacity level, eg '80 %'"
-msgid " %"
-msgstr " %"
-
-#: part/editdrawingtooldialog.cpp:78
+#: part/editdrawingtooldialog.cpp:79
 #, kde-format
 msgid "Create drawing tool"
 msgstr "Створення інструменту малювання"
 
-#: part/editdrawingtooldialog.cpp:83
+#: part/editdrawingtooldialog.cpp:84
 #, kde-format
 msgid "Edit drawing tool"
 msgstr "Редагування інструменту малювання"
@@ -6030,6 +6023,22 @@ msgstr "Забути всі"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Приховати вікно вітання"
+
+#~ msgctxt "Suffix for the opacity level, eg '80%'"
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+#~ msgid "every "
+#~ msgstr "кожні"
+
+#~ msgctxt "Suffix for the pen width, eg '10 px'"
+#~ msgid " px"
+#~ msgstr " пк"
+
+#~ msgctxt "Suffix for the opacity level, eg '80 %'"
+#~ msgid " %"
+#~ msgstr " %"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid "Could not sign. Could not write to '%1'"

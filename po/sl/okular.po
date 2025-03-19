@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-14 07:23+0100\n"
+"PO-Revision-Date: 2025-03-18 07:27+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -1811,9 +1811,7 @@ msgid "&Color:"
 msgstr "Barva:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -3061,17 +3059,14 @@ msgstr ""
 "največ 50 % celotnega pomnilnika ali prostega pomnilnika (katerega je več).)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " sekund"
-msgstr[1] " sekundo"
-msgstr[2] " sekundi"
-msgstr[3] " sekunde"
+msgstr[0] "vsakih %v sekund"
+msgstr[1] "vsako %v sekundo"
+msgstr[2] "vsaki %v sekundi"
+msgstr[3] "vsake %v sekunde"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3379,7 +3374,7 @@ msgstr "Širina &peresa:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format

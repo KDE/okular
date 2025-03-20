@@ -1792,7 +1792,7 @@ msgstr "颜色(&C)："
 #, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -3021,7 +3021,7 @@ msgstr ""
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] ""
+msgstr[0] "每 %v 秒"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3329,7 +3329,7 @@ msgstr "线条宽度(&P)："
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v 像素"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format

@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-09 12:14+0100\n"
+"PO-Revision-Date: 2025-03-18 23:16+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -600,16 +600,15 @@ msgstr ""
 "Codice di errore %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "Impossibile caricare il file <filename>%1</filename>"
+msgstr ""
+"Impossibile firmare il documento alla posizione: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Firma annullata dall'utente"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -617,23 +616,19 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Impossibile firmare. Frase segreta non valida"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Impossibile scrivere il documento con firma presso «%1»; assicurarsi di aver "
-"selezionato una cartella in cui si ha il permesso di scrittura"
+"Impossibile scrivere il documento con firma alla posizione <filename>%1</"
+"filename>; assicurarsi di aver selezionato una cartella in cui si ha il "
+"permesso di scrittura"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "File sconosciuto"
+msgstr "Errore di firma sconosciuto"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1149,50 +1144,45 @@ msgid "Location: %1"
 msgstr "Posizione: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Firme"
+msgstr "Firma PGP"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
-msgstr "Sconosciuto"
+msgstr "Sconosciuta"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Firma non firmata %1"
+msgstr "Firma sconosciuta"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Validità della firma:"
+msgstr "Tipo di firma: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1831,9 +1821,7 @@ msgid "&Color:"
 msgstr "&Colore:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -3077,15 +3065,12 @@ msgstr ""
 "massimo il 50% del maggiore tra memoria totale e memoria libera)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " secondo"
-msgstr[1] " secondi"
+msgstr[0] "ogni %v secondo"
+msgstr[1] "ogni %v secondi"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3393,7 +3378,7 @@ msgstr "Spessore della &penna:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format

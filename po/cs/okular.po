@@ -5614,7 +5614,7 @@ msgstr ""
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-13 09:46+0100\n"
+"PO-Revision-Date: 2025-03-18 09:46+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -599,8 +599,7 @@ msgstr ""
 "per a reproduir-lo. Codi d'error %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
 msgstr ""
 "No s'ha pogut signar el document a la ubicació: <filename>%1</filename>"
@@ -1141,50 +1140,45 @@ msgid "Location: %1"
 msgstr "Ubicació: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Signatures"
+msgstr "Signatura PGP"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 SHA1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
-msgstr "Desconegut"
+msgstr "Desconeguda"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Signatura sense signar %1"
+msgstr "Signatura sense signar"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Validesa de la signatura:"
+msgstr "Tipus de signatura: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1824,9 +1818,7 @@ msgid "&Color:"
 msgstr "&Color:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -3079,15 +3071,12 @@ msgstr ""
 "més gran dels dos)."
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " segon"
-msgstr[1] " segons"
+msgstr[0] "cada %v segon"
+msgstr[1] "cada %v segons"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3395,7 +3384,7 @@ msgstr "Amplària de la &ploma:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -6015,19 +6004,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgctxt "Suffix for the opacity level, eg '80%'"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#~ msgid "every "
-#~ msgstr "cada "
-
-#~ msgctxt "Suffix for the pen width, eg '10 px'"
-#~ msgid " px"
-#~ msgstr " px"
-
-#~ msgctxt "Suffix for the opacity level, eg '80 %'"
-#~ msgid " %"
-#~ msgstr " %"

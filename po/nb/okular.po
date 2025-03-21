@@ -5849,7 +5849,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgctxt "Suffix for the opacity level, eg '80 %'"
-#~ msgid " %"
-#~ msgstr " %"

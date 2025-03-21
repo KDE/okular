@@ -5980,19 +5980,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgctxt "Suffix for the opacity level, eg '80%'"
-#~ msgid "%"
-#~ msgstr " %"
-
-#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#~ msgid "every "
-#~ msgstr "kvart "
-
-#~ msgctxt "Suffix for the pen width, eg '10 px'"
-#~ msgid " px"
-#~ msgstr " pikslar"
-
-#~ msgctxt "Suffix for the opacity level, eg '80 %'"
-#~ msgid " %"
-#~ msgstr " %"

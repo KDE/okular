@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-15 10:43+0100\n"
+"PO-Revision-Date: 2025-03-22 12:43+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -1817,9 +1817,7 @@ msgid "&Color:"
 msgstr "&Barwa:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -3065,16 +3063,13 @@ msgstr ""
 "zależności od tego co będzie większe.)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " sekundę"
-msgstr[1] " sekundy"
-msgstr[2] " sekund"
+msgstr[0] "co każdą %v sekundę"
+msgstr[1] "co każde %v sekundy"
+msgstr[2] "co każde %v sekund"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3382,7 +3377,7 @@ msgstr "Szerokość &pióra:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format

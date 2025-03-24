@@ -164,10 +164,25 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         layout->addRow(programFeaturesLabel(), useRtl);
     }
 
+    QCheckBox *useFileInfoForContinuousMode = new QCheckBox(this);
+    useFileInfoForContinuousMode->setText(i18nc("@option:check Config dialog, general page", "Use file information to determine whether to open in continuous mode by default"));
+    useFileInfoForContinuousMode->setObjectName(QStringLiteral("kcfg_UseFileInfoForViewContinuous"));
+    layout->addRow(programFeaturesLabel(), useFileInfoForContinuousMode);
+
     QCheckBox *openInContinuousModeByDefault = new QCheckBox(this);
-    openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "Open in continuous mode by default"));
     openInContinuousModeByDefault->setObjectName(QStringLiteral("kcfg_ViewContinuous"));
     layout->addRow(programFeaturesLabel(), openInContinuousModeByDefault);
+
+    auto setOpenInContinuousModeByDefaultText = [useFileInfoForContinuousMode, openInContinuousModeByDefault]() {
+        if (useFileInfoForContinuousMode->isChecked()) {
+            openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "For files without file information, open in continuous mode by default"));
+        } else {
+            openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "Open in continuous mode by default"));
+        }
+    };
+
+    setOpenInContinuousModeByDefaultText();
+    connect(useFileInfoForContinuousMode, &QCheckBox::toggled, this, setOpenInContinuousModeByDefaultText);
 
     // Under Wayland the cursor wrap feature is unavailable
     if (QGuiApplication::platformName() != QLatin1String("wayland")) {

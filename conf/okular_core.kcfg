@@ -89,6 +89,9 @@
   <entry key="ExternalEditorCommand" type="String">
     <default>kate --line %l --column %c</default>
   </entry>
+  <entry key="UseFileInfoForViewContinuous" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
  <group name="Core Presentation" >
   <entry key="SlidesAdvance" type="Bool" >

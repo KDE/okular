@@ -762,8 +762,10 @@ void DocumentPrivate::setDefaultViewMode(View *view, Generator::PageLayout defau
         view->setCapability(View::ViewModeModality, (int)defaultViewMode);
     }
 
-    if (view->supportsCapability(View::Continuous) && (view->capabilityFlags(View::Continuous) & (View::CapabilityRead | View::CapabilitySerializable))) {
-        view->setCapability(View::Continuous, (int)m_generator->defaultPageContinuous());
+    if (SettingsCore::useFileInfoForViewContinuous()) {
+        if (view->supportsCapability(View::Continuous) && (view->capabilityFlags(View::Continuous) & (View::CapabilityRead | View::CapabilitySerializable))) {
+            view->setCapability(View::Continuous, (int)m_generator->defaultPageContinuous());
+        }
     }
 }
 

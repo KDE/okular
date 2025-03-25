@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-18 09:46+0100\n"
+"PO-Revision-Date: 2025-03-24 22:45+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2815,7 +2815,7 @@ msgstr "Mostra el camí complet del fitxer"
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
-msgstr "Quan no mostrar el títol del document:"
+msgstr "Quan no es mostri el títol del document:"
 
 #: part/dlggeneral.cpp:92
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 02:42+0000\n"
+"POT-Creation-Date: 2025-03-27 02:36+0000\n"
 "PO-Revision-Date: 2024-11-29 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -288,81 +288,81 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm(%3)"
 
-#: core/document.cpp:1718
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "처음부터 계속 검색"
 
-#: core/document.cpp:1721
+#: core/document.cpp:1723
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "아래에서부터 계속 검색"
 
-#: core/document.cpp:2467
+#: core/document.cpp:2469
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "전달된 문서를 처리할 플러그인을 찾을 수 없습니다."
 
-#: core/document.cpp:3631
+#: core/document.cpp:3633
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "주석 삭제"
 
-#: core/document.cpp:4221 core/document.cpp:4227
+#: core/document.cpp:4223 core/document.cpp:4229
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "이 문서는 외부 앱을 실행하려고 하며, 안전을 위해서 허용하지 않습니다."
 
-#: core/document.cpp:4237
+#: core/document.cpp:4239
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME 형식이 %1인 파일에 필요한 앱을 찾을 수 없습니다."
 
-#: core/document.cpp:4876
+#: core/document.cpp:4878
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "임시 파일을 열 수 없습니다"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4880
 #, kde-format
 msgid "Print conversion failed"
 msgstr "인쇄 변환 실패"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printing process crashed"
 msgstr "인쇄 프로세스 충돌함"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4884
 #, kde-format
 msgid "Printing process could not start"
 msgstr "인쇄 프로세스를 시작할 수 없음"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4886
 #, kde-format
 msgid "Printing to file failed"
 msgstr "파일로 인쇄할 수 없음"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4888
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "프린터 상태가 올바르지 않음"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4890
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "인쇄할 파일을 찾을 수 없음"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4892
 #, kde-format
 msgid "There was no file to print"
 msgstr "인쇄할 파일이 없음"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4894
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -371,92 +371,92 @@ msgstr ""
 "인쇄할 수 있는 실행 파일을 찾을 수 없습니다. CUPS lpr 실행 파일이 있는지 확인"
 "하십시오"
 
-#: core/document.cpp:4894
+#: core/document.cpp:4896
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5572 part/part.cpp:1145
+#: core/document.cpp:5574 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
 
-#: core/document.cpp:6082
+#: core/document.cpp:6084
 #, kde-format
 msgid "Title"
 msgstr "제목"
 
-#: core/document.cpp:6085
+#: core/document.cpp:6087
 #, kde-format
 msgid "Subject"
 msgstr "주제"
 
-#: core/document.cpp:6088
+#: core/document.cpp:6090
 #, kde-format
 msgid "Description"
 msgstr "설명"
 
-#: core/document.cpp:6091
+#: core/document.cpp:6093
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: core/document.cpp:6094
+#: core/document.cpp:6096
 #, kde-format
 msgid "Creator"
 msgstr "제작 도구"
 
-#: core/document.cpp:6097
+#: core/document.cpp:6099
 #, kde-format
 msgid "Producer"
 msgstr "생성 도구"
 
-#: core/document.cpp:6100
+#: core/document.cpp:6102
 #, kde-format
 msgid "Copyright"
 msgstr "저작권자"
 
-#: core/document.cpp:6103
+#: core/document.cpp:6105
 #, kde-format
 msgid "Pages"
 msgstr "쪽 수"
 
-#: core/document.cpp:6106
+#: core/document.cpp:6108
 #, kde-format
 msgid "Created"
 msgstr "만든 날짜"
 
-#: core/document.cpp:6109
+#: core/document.cpp:6111
 #, kde-format
 msgid "Modified"
 msgstr "수정한 날짜"
 
-#: core/document.cpp:6112
+#: core/document.cpp:6114
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 형식"
 
-#: core/document.cpp:6115
+#: core/document.cpp:6117
 #, kde-format
 msgid "Category"
 msgstr "분류"
 
-#: core/document.cpp:6118
+#: core/document.cpp:6120
 #, kde-format
 msgid "Keywords"
 msgstr "키워드"
 
-#: core/document.cpp:6121
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Path"
 msgstr "파일 경로"
 
-#: core/document.cpp:6124
+#: core/document.cpp:6126
 #, kde-format
 msgid "File Size"
 msgstr "파일 크기"
 
-#: core/document.cpp:6127
+#: core/document.cpp:6129
 #, kde-format
 msgid "Page Size"
 msgstr "쪽 크기"
@@ -2845,22 +2845,38 @@ msgstr "오른쪽에서 왼쪽 방향으로 읽기"
 #: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
+msgid ""
+"Use file information to determine whether to open in continuous mode by "
+"default"
+msgstr ""
+
+#: part/dlggeneral.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@option:check Config dialog, general page"
+#| msgid "Open in continuous mode by default"
+msgctxt "@option:check Config dialog, general page"
+msgid "For files without file information, open in continuous mode by default"
+msgstr "기본값으로 연속 모드에서 열기"
+
+#: part/dlggeneral.cpp:180
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "기본값으로 연속 모드에서 열기"
 
-#: part/dlggeneral.cpp:175
+#: part/dlggeneral.cpp:190
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "탐색 도구를 사용할 때 화면 경계에서 커서 둘러싸기"
 
-#: part/dlggeneral.cpp:192
+#: part/dlggeneral.cpp:207
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "한눈에 보기 열:"
 
-#: part/dlggeneral.cpp:199
+#: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -2868,7 +2884,7 @@ msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%1%"
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:215
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2876,13 +2892,13 @@ msgid ""
 "pressing the Page Up/Down keys."
 msgstr "Page Up/Down 키를 누를 때 현재 보기 영역의 얼마까지 보일지 설정합니다."
 
-#: part/dlggeneral.cpp:202
+#: part/dlggeneral.cpp:217
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Page Up/Down 겹침 정도:"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:222
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -2890,7 +2906,7 @@ msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1%"
 
-#: part/dlggeneral.cpp:211
+#: part/dlggeneral.cpp:226
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #| msgid "100%"
@@ -2898,34 +2914,34 @@ msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:212
+#: part/dlggeneral.cpp:227
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "폭 맞춤"
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:228
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "쪽 맞춤"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:229
 #, fuzzy, kde-format
 #| msgid "Auto Fit"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "자동 맞춤"
 
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:230
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
-#: part/dlggeneral.cpp:216
+#: part/dlggeneral.cpp:231
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #| msgid ""
@@ -2939,7 +2955,7 @@ msgstr ""
 "이전에 연 적이 없는 파일의 기본 확대/축소 모드를 설정합니다. 이전에 연 적이 "
 "있는 파일은 닫았을 때의 크기를 사용합니다."
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

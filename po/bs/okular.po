@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 02:42+0000\n"
+"POT-Creation-Date: 2025-03-27 02:36+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -308,30 +308,30 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1718
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1721
+#: core/document.cpp:1723
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2467
+#: core/document.cpp:2469
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Ne mogu pronaći dodatak koji može rukovati s dokumentom koji je proslijeđen."
 
-#: core/document.cpp:3631
+#: core/document.cpp:3633
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ukloni zabilješke"
 
-#: core/document.cpp:4221 core/document.cpp:4227
+#: core/document.cpp:4223 core/document.cpp:4229
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -340,52 +340,52 @@ msgstr ""
 "Dokument pokušava izvršiti eksterni program i, za Vašu sigurnost, Okular to "
 "ne dozvoljava."
 
-#: core/document.cpp:4237
+#: core/document.cpp:4239
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nije nađen nijedan program za otvaranje datoteke MIME tipa %1."
 
-#: core/document.cpp:4876
+#: core/document.cpp:4878
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ne mogu da otvorim privremenu datoteku"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4880
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konverzija štampe nije uspjela"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Prekinut proces štampanja"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4884
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ne mogu pokrenut proces štampanja"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4886
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Štampanje u datoteku nije uspjelo"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4888
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Štampanje je u nedozvoljenom stanju"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4890
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ne mogu pronaći datoteku za štampanje"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4892
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nema datoteke za štampanje"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4894
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -394,93 +394,93 @@ msgstr ""
 "Ne mogu da nađem pogodnu naredbu za štampanje. Obezbijedite da <command>lpr</"
 "command> iz CUPS‑a bude dostupna."
 
-#: core/document.cpp:4894
+#: core/document.cpp:4896
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Veličina stranice za štampu neispravna"
 
-#: core/document.cpp:5572 part/part.cpp:1145
+#: core/document.cpp:5574 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ne mogu otvoriti '%1'. Datoteka ne postoji"
 
-#: core/document.cpp:6082
+#: core/document.cpp:6084
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:6085
+#: core/document.cpp:6087
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:6088
+#: core/document.cpp:6090
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:6091
+#: core/document.cpp:6093
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6094
+#: core/document.cpp:6096
 #, kde-format
 msgid "Creator"
 msgstr "Autor"
 
-#: core/document.cpp:6097
+#: core/document.cpp:6099
 #, kde-format
 msgid "Producer"
 msgstr "Proizvođač"
 
-#: core/document.cpp:6100
+#: core/document.cpp:6102
 #, kde-format
 msgid "Copyright"
 msgstr "Autorska prava"
 
-#: core/document.cpp:6103
+#: core/document.cpp:6105
 #, kde-format
 msgid "Pages"
 msgstr "Stranice"
 
-#: core/document.cpp:6106
+#: core/document.cpp:6108
 #, kde-format
 msgid "Created"
 msgstr "Kreirano"
 
-#: core/document.cpp:6109
+#: core/document.cpp:6111
 #, kde-format
 msgid "Modified"
 msgstr "Izmijenjen"
 
-#: core/document.cpp:6112
+#: core/document.cpp:6114
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "MIME tip"
 
-#: core/document.cpp:6115
+#: core/document.cpp:6117
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6118
+#: core/document.cpp:6120
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne riječi"
 
-#: core/document.cpp:6121
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Path"
 msgstr "Putanja datoteke"
 
-#: core/document.cpp:6124
+#: core/document.cpp:6126
 #, kde-format
 msgid "File Size"
 msgstr "Veličina datoteke"
 
-#: core/document.cpp:6127
+#: core/document.cpp:6129
 #, kde-format
 msgid "Page Size"
 msgstr "Veličina stranice"
@@ -3048,30 +3048,44 @@ msgstr ""
 #: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
+msgid ""
+"Use file information to determine whether to open in continuous mode by "
+"default"
+msgstr ""
+
+#: part/dlggeneral.cpp:178
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "For files without file information, open in continuous mode by default"
+msgstr ""
+
+#: part/dlggeneral.cpp:180
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr ""
 
-#: part/dlggeneral.cpp:175
+#: part/dlggeneral.cpp:190
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 
-#: part/dlggeneral.cpp:192
+#: part/dlggeneral.cpp:207
 #, fuzzy, kde-format
 #| msgid "Overview &columns:"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Osnovne &kolone:"
 
-#: part/dlggeneral.cpp:199
+#: part/dlggeneral.cpp:214
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:215
 #, fuzzy, kde-format
 #| msgid ""
 #| "Defines how much of the current viewing area will still be visible when "
@@ -3084,55 +3098,55 @@ msgstr ""
 "Definiše koliko će trenutnog područja gledanja još biti vidljivo prilikom "
 "pritika na Page Up/Down tastere."
 
-#: part/dlggeneral.cpp:202
+#: part/dlggeneral.cpp:217
 #, fuzzy, kde-format
 #| msgid "&Page Up/Down overlap:"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "&Page Up/Down preklapanje:"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:222
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:211
+#: part/dlggeneral.cpp:226
 #, fuzzy, kde-format
 #| msgid "100%"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:212
+#: part/dlggeneral.cpp:227
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Prilagodi po širini"
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:228
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Prilagodi po stranici"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:229
 #, fuzzy, kde-format
 #| msgid "Auto Fit"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automatsko uklapanje"
 
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:230
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
-#: part/dlggeneral.cpp:216
+#: part/dlggeneral.cpp:231
 #, fuzzy, kde-format
 #| msgid ""
 #| "Defines the default zoom mode for files which were never opened before.\n"
@@ -3146,7 +3160,7 @@ msgstr ""
 "otvarane. \n"
 "Za datoteke koje su ranije otvorene, primjenjuje se prethodno uvećanje."
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:235
 #, fuzzy, kde-format
 #| msgid "&Default Zoom:"
 msgctxt "label:listbox Config dialog, general page, default zoom"

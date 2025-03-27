@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 02:42+0000\n"
+"POT-Creation-Date: 2025-03-27 02:36+0000\n"
 "PO-Revision-Date: 2025-03-15 09:27+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -313,17 +313,17 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1718
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Suite de la recherche à partir du début du fichier"
 
-#: core/document.cpp:1721
+#: core/document.cpp:1723
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Continuer la recherche à partir du bas du fichier ?"
 
-#: core/document.cpp:2467
+#: core/document.cpp:2469
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -331,13 +331,13 @@ msgstr ""
 "Impossible de trouver un module externe capable de traiter le document "
 "indiqué."
 
-#: core/document.cpp:3631
+#: core/document.cpp:3633
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Supprimer des annotations"
 
-#: core/document.cpp:4221 core/document.cpp:4227
+#: core/document.cpp:4223 core/document.cpp:4229
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -346,52 +346,52 @@ msgstr ""
 "Le document tente de lancer une application externe. Pour votre sécurité, "
 "Okular interdit cela."
 
-#: core/document.cpp:4237
+#: core/document.cpp:4239
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Aucune application trouvée pour ouvrir le fichier de type MIME « %1 »."
 
-#: core/document.cpp:4876
+#: core/document.cpp:4878
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Impossible d'ouvrir un fichier temporaire"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4880
 #, kde-format
 msgid "Print conversion failed"
 msgstr "La conversion d'impression a échoué"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4882
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Le processus d'impression s'est arrêté brutalement"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4884
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Le processus d'impression n'a pas pu démarrer"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4886
 #, kde-format
 msgid "Printing to file failed"
 msgstr "L'impression dans un fichier a échoué"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4888
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "L'imprimante était dans un état non valable"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4890
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Impossible de trouver le fichier à imprimer"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4892
 #, kde-format
 msgid "There was no file to print"
 msgstr "Il n'y avait aucun fichier à imprimer"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4894
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -400,92 +400,92 @@ msgstr ""
 "Impossible de trouver un exécutable adapté à l'impression. Veuillez vérifier "
 "que le binaire CUPS « lpr » est disponible"
 
-#: core/document.cpp:4894
+#: core/document.cpp:4896
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La taille de page pour l'impression est incorrecte"
 
-#: core/document.cpp:5572 part/part.cpp:1145
+#: core/document.cpp:5574 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Impossible d'ouvrir « %1 ». Le fichier n'existe pas."
 
-#: core/document.cpp:6082
+#: core/document.cpp:6084
 #, kde-format
 msgid "Title"
 msgstr "Titre"
 
-#: core/document.cpp:6085
+#: core/document.cpp:6087
 #, kde-format
 msgid "Subject"
 msgstr "Objet"
 
-#: core/document.cpp:6088
+#: core/document.cpp:6090
 #, kde-format
 msgid "Description"
 msgstr "Description"
 
-#: core/document.cpp:6091
+#: core/document.cpp:6093
 #, kde-format
 msgid "Author"
 msgstr "Auteur"
 
-#: core/document.cpp:6094
+#: core/document.cpp:6096
 #, kde-format
 msgid "Creator"
 msgstr "Créateur"
 
-#: core/document.cpp:6097
+#: core/document.cpp:6099
 #, kde-format
 msgid "Producer"
 msgstr "Producteur"
 
-#: core/document.cpp:6100
+#: core/document.cpp:6102
 #, kde-format
 msgid "Copyright"
 msgstr "Droit d'auteur"
 
-#: core/document.cpp:6103
+#: core/document.cpp:6105
 #, kde-format
 msgid "Pages"
 msgstr "Pages"
 
-#: core/document.cpp:6106
+#: core/document.cpp:6108
 #, kde-format
 msgid "Created"
 msgstr "Créé"
 
-#: core/document.cpp:6109
+#: core/document.cpp:6111
 #, kde-format
 msgid "Modified"
 msgstr "Modifié"
 
-#: core/document.cpp:6112
+#: core/document.cpp:6114
 #, kde-format
 msgid "MIME Type"
 msgstr "Type « MIME »"
 
-#: core/document.cpp:6115
+#: core/document.cpp:6117
 #, kde-format
 msgid "Category"
 msgstr "Catégorie"
 
-#: core/document.cpp:6118
+#: core/document.cpp:6120
 #, kde-format
 msgid "Keywords"
 msgstr "Mots-clés"
 
-#: core/document.cpp:6121
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Path"
 msgstr "Emplacement du fichier"
 
-#: core/document.cpp:6124
+#: core/document.cpp:6126
 #, kde-format
 msgid "File Size"
 msgstr "Taille du fichier"
 
-#: core/document.cpp:6127
+#: core/document.cpp:6129
 #, kde-format
 msgid "Page Size"
 msgstr "Taille de page"
@@ -2896,10 +2896,26 @@ msgstr "Sens de lecture de droite à gauche"
 #: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
+msgid ""
+"Use file information to determine whether to open in continuous mode by "
+"default"
+msgstr ""
+
+#: part/dlggeneral.cpp:178
+#, fuzzy, kde-format
+#| msgctxt "@option:check Config dialog, general page"
+#| msgid "Open in continuous mode by default"
+msgctxt "@option:check Config dialog, general page"
+msgid "For files without file information, open in continuous mode by default"
+msgstr "Ouvrir en mode continu par défaut"
+
+#: part/dlggeneral.cpp:180
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Ouvrir en mode continu par défaut"
 
-#: part/dlggeneral.cpp:175
+#: part/dlggeneral.cpp:190
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
@@ -2907,19 +2923,19 @@ msgstr ""
 "Lors de l'utilisation de l'outil de navigation, renvoyer le curseur sur les "
 "bords de l'écran"
 
-#: part/dlggeneral.cpp:192
+#: part/dlggeneral.cpp:207
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Colonnes d'aperçus :"
 
-#: part/dlggeneral.cpp:199
+#: part/dlggeneral.cpp:214
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v %"
 
-#: part/dlggeneral.cpp:200
+#: part/dlggeneral.cpp:215
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2930,50 +2946,50 @@ msgstr ""
 "visible lors d'un appui sur les touches « Page précédente » / « Page "
 "suivante »."
 
-#: part/dlggeneral.cpp:202
+#: part/dlggeneral.cpp:217
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr ""
 "Chevauchement pour les touches « Page précédente » / « Page suivante » :"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:222
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v %"
 
-#: part/dlggeneral.cpp:211
+#: part/dlggeneral.cpp:226
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100 %"
 
-#: part/dlggeneral.cpp:212
+#: part/dlggeneral.cpp:227
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Adapter à la largeur"
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Adapter à la page"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:229
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Adapter automatiquement"
 
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:230
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: part/dlggeneral.cpp:216
+#: part/dlggeneral.cpp:231
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2984,7 +3000,7 @@ msgstr ""
 "ouverts. Pour les fichiers ayant déjà été ouverts, le dernier niveau de zoom "
 "utilisé est appliqué."
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

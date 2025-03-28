@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 00:40+0000\n"
-"PO-Revision-Date: 2025-02-09 19:36+0100\n"
+"PO-Revision-Date: 2025-03-27 21:08+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -597,40 +597,34 @@ msgstr ""
 "urratsekin. Errore kodea %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "Ezin izan da zamatu <filename>%1</filename> fitxategia"
+msgstr ""
+"Ezin izan du kokapen hau duen dokumentua sinatu: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Erabiltzailek sinatzea bertan behera utzi du"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Ezin izan du sinatu. Pasaesaldi okerra"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Ezin izan du sinatutako dokumentua '%1'(e)an idatzi, mesedez, ziurtatu "
-"idazteko baimena duzun karpeta bat aukeratu duzula"
+"Ezin izan du <filename>%1</filename>(e)an dagoen sinatutako dokumentuan "
+"idatzi, mesedez, ziurtatu idazteko baimena duzun karpeta bat aukeratu duzula"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Fitxategi ezezaguna"
+msgstr "Sinatzeko errore ezezaguna"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1146,50 +1140,45 @@ msgid "Location: %1"
 msgstr "Kokalekua: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Sinadurak"
+msgstr "PGP sinadura"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Sinatu gabeko %1 sinadura"
+msgstr "Sinatu gabeko sinadura"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Sinaduraren baliozkotasuna:"
+msgstr "Sinadura mota: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1828,9 +1817,7 @@ msgid "&Color:"
 msgstr "&Kolorea:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%%v"
@@ -2884,14 +2871,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Erabili fitxategiaren informazioa, era lehenetsian, modu jarraituan ireki "
+"ala ez zehazteko"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Ireki modu jarraitua era lehenetsian"
+msgstr ""
+"Fitxategi informaziorik ez duten fitxategiekin, ireki modu jarraitua era "
+"lehenetsian"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -3090,15 +3079,12 @@ msgstr ""
 "bietan handiena dena)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " segundo"
-msgstr[1] " segundo"
+msgstr[0] "%v segundoan behin"
+msgstr[1] "%v segundoan behin"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3406,7 +3392,7 @@ msgstr "&Bolalumaren zabalerara:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -5494,7 +5480,7 @@ msgstr "QES ziurtagiriak bakarrik"
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "PGP gakoak bakarrik"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5693,7 +5679,7 @@ msgstr "Kualifikatu"
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

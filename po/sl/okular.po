@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 00:40+0000\n"
-"PO-Revision-Date: 2025-03-18 07:27+0100\n"
+"PO-Revision-Date: 2025-03-27 06:59+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -2871,14 +2871,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Uporabi informacije o datoteki za odločitev ali naj se privzeto odpre v "
+"zveznem načinu"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Privzeto odpri v zveznem načinu"
+msgstr "Datoteke brez podatkov o datoteki privzeto odpri v zveznem načinu"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -3682,7 +3682,7 @@ msgstr "Pregled"
 #: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
-msgstr "Zaporedno"
+msgstr "Zvezno"
 
 #: part/pageview.cpp:611
 #, kde-format

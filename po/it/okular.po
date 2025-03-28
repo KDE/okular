@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-18 23:16+0100\n"
+"PO-Revision-Date: 2025-03-27 16:25+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2873,14 +2873,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Usa le informazioni nel file per decidere se aprire usando la modalità "
+"continua come predefinita"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Apri in modalità continua per impostazione predefinita"
+msgstr ""
+"Per i file senza informazioni integrate, usa la modalità continua come "
+"predefinita"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

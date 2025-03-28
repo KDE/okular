@@ -4,13 +4,13 @@
 # Gregor Rakar <gregor.rakar@kiss.si>, 2003, 2004, 2005.
 # SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2024 Jure Repinc <jlp@holodeck1.com>
 # Andrej Mernik <andrejm@ubuntu.si>, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
-# Matjaž Jeran <matjaz.jeran@amis.net>, 2019, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2025 Matjaž Jeran <matjaz.jeran@amis.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-14 07:06+0100\n"
+"PO-Revision-Date: 2025-03-27 07:13+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2871,14 +2871,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Uporabi informacije o datoteki za odločitev ali naj se privzeto odpre v "
+"zveznem načinu"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Privzeto odpri v zveznem načinu"
+msgstr "Datoteke brez podatkov o datoteki privzeto odpri v zveznem načinu"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -3694,7 +3694,7 @@ msgstr "Pregled"
 #: part/pageview.cpp:604
 #, kde-format
 msgid "&Continuous"
-msgstr "Zaporedno"
+msgstr "Zvezno"
 
 #: part/pageview.cpp:611
 #, kde-format

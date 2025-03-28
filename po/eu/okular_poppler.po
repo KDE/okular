@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2025-02-09 19:33+0100\n"
+"PO-Revision-Date: 2025-03-27 20:54+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -34,30 +34,27 @@ msgstr "marcos@euskalgnu.org,xalba@ni.eus"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "Gaitu gaininprimatze aurreikuspegia"
+msgstr "Gaitu gaininprimatze aurreikuspegia:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
-#, fuzzy, kde-format
-#| msgctxt "certificate end validity"
-#| msgid "forever"
+#, kde-format
 msgid "Never"
-msgstr "betirako"
+msgstr "Inoiz ez"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Beti"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikoa"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -142,13 +139,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Sinadura hauek baliozkotzeko, GnuPG bizkarraldekoa aktibatuta duten Okular-"
+"ren bertsio modernoak erabili behar dira"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Baimendu PGP gakoak sinaduretarako (Okular-ren hedapena)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -324,13 +323,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Sinadura hauek GnuPG oinarri duen bizkarraldekoa aktibatuta duten Okular-ren "
+"bertsio modernoen artean baino ez dabil"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "&Zamatu sinadurak"
+msgstr "Gaitu PGP sinadurak"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

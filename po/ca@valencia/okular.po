@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-14 08:45+0100\n"
+"PO-Revision-Date: 2025-03-27 06:01+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2816,7 +2816,7 @@ msgstr "Mostra el camí complet del fitxer"
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
-msgstr "Quan no mostrar el títol del document:"
+msgstr "Quan no es mostre el títol del document:"
 
 #: part/dlggeneral.cpp:92
 #, kde-format
@@ -2873,14 +2873,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Fes servir la informació de fitxer per a determinar si s'ha d'obrir en mode "
+"continu de manera predeterminada"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Obri en mode continu de manera predeterminada"
+msgstr ""
+"Per als fitxers sense informació de fitxer, obri en mode continu de manera "
+"predeterminada"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

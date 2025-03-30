@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-22 17:57+0100\n"
+"PO-Revision-Date: 2025-03-29 19:00+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2861,14 +2861,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Използване на информация за файла, за да се определи дали да се отваря в "
+"непрекъснат режим по подразбиране"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Отваряне в непрекъснат режим по подразбиране"
+msgstr ""
+"Отваряне в непрекъснат режим по подразбиране на файлове без информация за "
+"файла"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

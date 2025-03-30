@@ -2832,13 +2832,13 @@ msgctxt "@option:check Config dialog, general page"
 msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
-msgstr ""
+msgstr "使用文件信息来确定是否在连续翻页模式下打开"
 
 #: part/dlggeneral.cpp:178
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr ""
+msgstr "对于没有文件信息的文件，默认在连续翻页模式中打开"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

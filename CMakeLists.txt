@@ -201,7 +201,11 @@ if (BUILD_MOBILE)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
-    find_package(Qt6Gui REQUIRED COMPONENTS Private)
+    if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
+        find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED)
+    else()
+        find_package(Qt6Gui REQUIRED COMPONENTS Private)
+    endif()
     find_package(PlasmaActivities REQUIRED)
     set_package_properties("PlasmaActivities" PROPERTIES
         DESCRIPTION  "Activities interface library"

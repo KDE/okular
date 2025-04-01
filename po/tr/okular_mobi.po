@@ -3,13 +3,13 @@
 #
 # Translators:
 # obsoleteman <tulliana@gmail.com>, 2009,2013.
-# Emir SARI <emir_sari@icloud.com>, 2023.
+# SPDX-FileCopyrightText: 2023, 2025 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2023-01-18 22:31+0300\n"
+"PO-Revision-Date: 2025-03-31 01:42+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -38,7 +38,8 @@ msgstr "Mobipocket belgesi açılırken bir hata oluştu."
 #, kde-format
 msgid ""
 "This book is protected by DRM and can be displayed only on designated device"
-msgstr "Bu kitap DRM korumalı ve yalnızca belirlenen aygıt ile okunabilir"
+msgstr ""
+"Bu kitap DRM korumalı olduğundan yalnızca belirlenen aygıt ile okunabilir"
 
 #: generator_mobi.cpp:25
 #, kde-format
@@ -48,7 +49,7 @@ msgstr "Mobipocket"
 #: generator_mobi.cpp:25
 #, kde-format
 msgid "Mobipocket Backend Configuration"
-msgstr "Mobipocket Arka Uç Yapılandırması"
+msgstr "Mobipocket Arka Ucu Yapılandırması"
 
 #~ msgid "Mobipocket Backend"
 #~ msgstr "Mobipocket Arka Ucu"

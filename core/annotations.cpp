@@ -12,6 +12,7 @@
 #include <QColor>
 #include <QFile>
 #include <QIcon>
+#include <QImageReader>
 #include <QPainter>
 #include <QStandardPaths>
 #include <QSvgRenderer>
@@ -172,6 +173,11 @@ QRect AnnotationUtils::annotationGeometry(const Annotation *annotation, double s
 
 QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio)
 {
+    return loadStamp(nameOrPath, QSize(size, size), keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
+}
+
+QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, QSize size, Qt::AspectRatioMode keepAspectRatio)
+{
     const QString name = nameOrPath.toLower();
 
     static std::unique_ptr<QSvgRenderer> svgStampFile;
@@ -188,7 +194,7 @@ QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool kee
     QSvgRenderer *r = svgStampFile.get();
     if (r && r->isValid() && r->elementExists(name)) {
         const QSize stampSize = r->boundsOnElement(name).size().toSize();
-        const QSize pixmapSize = stampSize.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
+        const QSize pixmapSize = stampSize.scaled(size, keepAspectRatio);
         QPixmap pixmap(pixmapSize);
         pixmap.fill(Qt::transparent);
         QPainter p(&pixmap);
@@ -202,16 +208,20 @@ QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool kee
     // actually an icon from theme, the loader will try all supported
     // extensions in current workdir before failing
     if (QFile::exists(nameOrPath)) {
-        QPixmap pixmap;
-        pixmap.load(nameOrPath);
-        if (!pixmap.isNull()) {
-            pixmap = pixmap.scaled(size, size, keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-            return pixmap;
+        QImageReader reader(nameOrPath);
+
+        QSize imageSize = reader.size();
+        if (!reader.size().isNull()) {
+            reader.setScaledSize(imageSize.scaled(size, keepAspectRatio));
+        }
+        auto pix = QPixmap::fromImageReader(&reader);
+        if (!pix.isNull()) {
+            return pix;
         }
     }
 
     // _name is an icon name
-    return QIcon::fromTheme(name).pixmap(size);
+    return QIcon::fromTheme(name).pixmap(std::max(size.height(), size.width()));
 }
 // END AnnotationUtils implementation
 

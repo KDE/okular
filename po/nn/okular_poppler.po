@@ -33,7 +33,6 @@ msgstr "karl@huftis.org"
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
 #, fuzzy, kde-format
-#| msgid "Enable overprint preview"
 msgid "Enable overprint preview:"
 msgstr "Slå på førehandsvising av overtrykk"
 
@@ -322,7 +321,6 @@ msgstr ""
 
 #: pdfsettingswidget.cpp:123
 #, fuzzy, kde-format
-#| msgid "&Load Signatures"
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "&Last inn signaturar"

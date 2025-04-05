@@ -612,7 +612,6 @@ msgstr ""
 
 #: core/signatureutils.cpp:506
 #, fuzzy, kde-format
-#| msgid "Unknown File"
 msgid "Unknown signing error"
 msgstr "Ukjent fil"
 
@@ -1145,8 +1144,6 @@ msgstr ""
 
 #: gui/signaturemodel.cpp:193
 #, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Ukjent"

@@ -612,7 +612,6 @@ msgstr ""
 
 #: core/signatureutils.cpp:506
 #, fuzzy, kde-format
-#| msgid "Unknown File"
 msgid "Unknown signing error"
 msgstr "Ukjent fil"
 
@@ -1145,8 +1144,6 @@ msgstr ""
 
 #: gui/signaturemodel.cpp:193
 #, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Ukjent"
@@ -3028,9 +3025,6 @@ msgstr ""
 
 #: part/dlgpresentation.cpp:38
 #, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"

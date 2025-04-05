@@ -595,8 +595,6 @@ msgstr ""
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
 msgid "Could not sign document with location: <filename>%1</filename>"
 msgstr "Klarte ikkje opna fila  <filename>%1</filename>"
 
@@ -612,10 +610,6 @@ msgstr ""
 
 #: core/signatureutils.cpp:504
 #, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
@@ -625,7 +619,6 @@ msgstr ""
 
 #: core/signatureutils.cpp:506
 #, fuzzy, kde-format
-#| msgid "Unknown File"
 msgid "Unknown signing error"
 msgstr "Ukjend fil"
 
@@ -1144,7 +1137,6 @@ msgstr "Stad: %1"
 
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
-#| msgid "Signatures"
 msgctxt "Signature type"
 msgid "PGP Signature"
 msgstr "Signaturar"
@@ -1169,22 +1161,18 @@ msgstr ""
 
 #: gui/signaturemodel.cpp:193
 #, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Ukjend"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
 msgctxt "Signature type"
 msgid "Unsigned signature"
 msgstr "Usignert signatur %1"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
-#| msgid "Signature Validity:"
 msgid "Signature Type: %1"
 msgstr "Signaturvaliditet:"
 
@@ -2876,8 +2864,6 @@ msgstr ""
 
 #: part/dlggeneral.cpp:178
 #, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr "Opna i samanhengande-modus som standard"
@@ -3079,9 +3065,6 @@ msgstr ""
 # Punktumet er for å gjera om til rekkjetal. I brukargrensesnittet ser det for eksempel slik ut: «Skift kvart: 10. sekund.»
 #: part/dlgpresentation.cpp:38
 #, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
@@ -5475,7 +5458,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
 #, fuzzy, kde-format
-#| msgid "Certificates"
 msgid "Only QES certificates"
 msgstr "Sertifikat"
 

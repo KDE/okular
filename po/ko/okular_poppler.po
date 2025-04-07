@@ -1,14 +1,14 @@
 # translation of okular_poppler.po to Korean
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdegraphics package.
-# Shinjo Park <kde@peremen.name>, 2007, 2009, 2010, 2012, 2013, 2019, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2012, 2013, 2019, 2020, 2021, 2023, 2025 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2023-08-09 00:23+0200\n"
+"PO-Revision-Date: 2025-04-07 00:08+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -30,28 +30,27 @@ msgstr "kde@peremen.name"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "오버프린트 미리 보기 활성화"
+msgstr "오버프린트 미리 보기 활성화:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "하지 않음"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "항상"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "자동"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -132,14 +131,14 @@ msgctxt "@info:tooltip"
 msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
-msgstr ""
+msgstr "이 서명은 GnuPG 백엔드가 활성화된 Okular 버전에서만 검증할 수 있습니다"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "PGP 키로 서명 허용(Okular 확장)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -313,13 +312,13 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"이 서명은 GnuPG 기반 백엔드가 활성화된 Okular 버전에서만 사용할 수 있습니다"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "서명 불러오기(&L)"
+msgstr "PGP 서명 활성화"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format
@@ -351,7 +350,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "영구"
 
 #: pdfsettingswidget.cpp:223
 #, kde-format

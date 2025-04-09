@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 00:40+0000\n"
-"PO-Revision-Date: 2025-03-17 15:44+0300\n"
+"PO-Revision-Date: 2025-04-08 12:35+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1831,8 +1831,6 @@ msgstr "&Цвет:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
 #, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -2892,14 +2890,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Использовать сведения о файлах для принятия решения об открытии в режиме "
+"«рулоном» по умолчанию"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Открывать по умолчанию в режиме «рулоном»"
+msgstr "По умолчанию открывать файлы без сведений в режиме «рулоном»"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -3099,9 +3097,6 @@ msgstr ""
 
 #: part/dlgpresentation.cpp:38
 #, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"

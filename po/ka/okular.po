@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-20 09:07+0100\n"
+"PO-Revision-Date: 2025-04-13 05:19+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1136,7 +1136,7 @@ msgstr "მდებარეობა: %1"
 #, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "PGP ხელმოწერა:"
+msgstr "PGP ხელმოწერა"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -2862,14 +2862,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"ფაილის ინფორმაციის გამოყენება დასადგენად, მოხდება თუ არა გახსნა უწყვეტ "
+"რეჟიმში"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "ნაგულისხმევად გახსნა უწყვეტ რეჟიმში"
+msgstr "ინფორმაციის გარეშე ფაილების ნაგულისხმევი გახსნა უწყვეტ რეჟიმში"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

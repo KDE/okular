@@ -98,7 +98,7 @@ const char *StateNames[] = {
             printf("%4d %d\n", a0, *pa);                                                                                                                                                                                                       \
     } while (0)
 
-#define EndOfData(pn) (sp >= pn->data + pn->length / sizeof(*pn->data))
+#define EndOfData(pn) (sp >= pn->data + pn->length / sizeof(*pn->data)) // NOLINT(bugprone-sizeof-expression)
 
 /* This macro handles coding errors in G3 data.
    We redefine it below for the G4 case */
@@ -712,11 +712,11 @@ static const unsigned char zerotab[256] = {0x88, 0x07, 0x16, 0x06, 0x25, 0x05, 0
 int G3count(pagenode *pn, int twoD)
 {
     t16bits *p = pn->data;
-    t16bits *end = p + pn->length / sizeof(*p);
-    int lines = 0;  /* lines seen so far */
-    int zeros = 0;  /* number of consecutive zero bits seen */
-    int EOLcnt = 0; /* number of consecutive EOLs seen */
-    int empty = 1;  /* empty line */
+    t16bits *end = p + pn->length / sizeof(*p); // NOLINT(bugprone-sizeof-expression)
+    int lines = 0;                              /* lines seen so far */
+    int zeros = 0;                              /* number of consecutive zero bits seen */
+    int EOLcnt = 0;                             /* number of consecutive EOLs seen */
+    int empty = 1;                              /* empty line */
     int prezeros, postzeros;
 
     while (p < end && EOLcnt < 6) {

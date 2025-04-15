@@ -149,7 +149,7 @@ static void draw_line(pixnum *run, int lineNum, pagenode *pn)
     }
 
     p = reinterpret_cast<t32bits *>(pn->imageData + lineNum * (2 - pn->vres) * pn->bytes_per_line);
-    p1 = reinterpret_cast<t32bits *>(pn->vres ? nullptr : p + pn->bytes_per_line / sizeof(*p));
+    p1 = reinterpret_cast<t32bits *>(pn->vres ? nullptr : p + pn->bytes_per_line / sizeof(*p)); // NOLINT(bugprone-sizeof-expression)
 
     r = run;
     acc = 0;

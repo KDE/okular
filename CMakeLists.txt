@@ -636,7 +636,6 @@ endif()# End of BUILD_DESKTOP if
 
 ########### install files ###############
 
-install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 ki18n_install(po)

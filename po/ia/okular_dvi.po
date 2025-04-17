@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2013, 2014, 2021, 2024 Giovanni Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2013, 2014, 2021, 2024, 2025 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-09-02 16:02+0200\n"
+"PO-Revision-Date: 2025-04-16 12:12+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -508,7 +508,7 @@ msgstr "Mal file PK (%1), nimie bits"
 #: TeXFont_PK.cpp:713
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr "Font non ha rata de aspecto non-quadrate "
+msgstr "Font non ha proportiones (rata de aspecto) non-quadrate "
 
 #: TeXFontDefinition.cpp:106
 #, kde-format

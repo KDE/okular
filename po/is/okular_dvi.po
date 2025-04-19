@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2013, 2014, 2015.
-# SPDX-FileCopyrightText: 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-16 00:38+0000\n"
-"PO-Revision-Date: 2024-01-26 20:26+0000\n"
-"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"PO-Revision-Date: 2025-04-17 13:39+0000\n"
+"Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -339,17 +339,17 @@ msgstr "Leturskrá fannst ekki"
 #: pageSize.cpp:298
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: pageSize.cpp:311
 #, kde-format
 msgid "%1 × %2 mm"
-msgstr ""
+msgstr "%1 × %2 mm"
 
 #: pageSize.cpp:313
 #, kde-format
 msgid "%1 × %2 in"
-msgstr ""
+msgstr "%1 × %2 in"
 
 #: pageSize.cpp:318
 #, kde-format

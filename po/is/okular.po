@@ -6,20 +6,20 @@
 # Arnar Leósson <leosson@frisurf.no>, 2005.
 # Björgvin Ragnarsson <nifgraup@gmail.com>, 2005.
 # Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2011, 2014, 2016, 2017, 2018, 2022.
-# SPDX-FileCopyrightText: 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 00:40+0000\n"
-"PO-Revision-Date: 2024-01-21 21:29+0000\n"
-"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"PO-Revision-Date: 2025-04-17 14:03+0000\n"
+"Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -284,17 +284,13 @@ msgid "Landscape %1"
 msgstr "Langsnið %1"
 
 #: core/document.cpp:251
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 in (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr "%1 x %2 tommur (%3)"
+msgstr "%1 x %2 in (%3)"
 
 #: core/document.cpp:253
-#, fuzzy, kde-format
-#| msgctxt "%1 is width, %2 is height, %3 is paper size name"
-#| msgid "%1 x %2 mm (%3)"
+#, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
@@ -599,42 +595,37 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Innri undirskriftarvilla. Sendu villuskýrslu og lýstu því hvernig hægt er að "
+"kalla hana fram. Villuboð %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "Gat ekki hlaðið inn skrána <filename>%1</filename>"
+msgstr "Gat ekki undirritað skrá með staðsetningu: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Notandi hætti við undirritun"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Gat ekki undirritað. Röng lykilsetning"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Gat ekki skrifað yfir <filename>%1</filename> þar sem skráin er skrifvarin. "
-"Prófaðu að vista á öðrum stað eða breyttu heimildum skrárinnar."
+"Gat ekki skrifað undirritað skjal á <filename>%1</filename>, gakktu úr "
+"skugga um að þú hafir valið möppu sem má skrifa í."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Óþekkt skrá"
+msgstr "Óþekkt undirritunarvilla"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -944,7 +935,7 @@ msgstr "Vottorðið hefur ekki verið sannprófað."
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr ""
+msgstr "Sannprófun vottorðs í gangi"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
@@ -1149,110 +1140,105 @@ msgid "Location: %1"
 msgstr "Staðsetning: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Undirskriftir"
+msgstr "PGP-undirskrift"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Óútfyllt undirskrift %1"
+msgstr "Óútfyllt undirskrift"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Gildi undirritunar:"
+msgstr "Gerð undirskriftar: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Red"
-msgstr "Rautt"
+msgstr "Rauður"
 
 #: part/annotationactionhandler.cpp:149
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Orange"
-msgstr "Appelsínugult"
+msgstr "Appelsínugulur"
 
 #: part/annotationactionhandler.cpp:150
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Yellow"
-msgstr "Gult"
+msgstr "Gulur"
 
 #: part/annotationactionhandler.cpp:151
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Green"
-msgstr "Grænt"
+msgstr "Grænn"
 
 #: part/annotationactionhandler.cpp:152
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Cyan"
-msgstr "Blágrænt"
+msgstr "Blágrænn"
 
 #: part/annotationactionhandler.cpp:153
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Blue"
-msgstr "Blátt"
+msgstr "Blár"
 
 #: part/annotationactionhandler.cpp:154
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Magenta"
-msgstr "Blárautt"
+msgstr "Magenta"
 
 #: part/annotationactionhandler.cpp:155
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "White"
-msgstr "Hvítt"
+msgstr "Hvítur"
 
 #: part/annotationactionhandler.cpp:156
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Gray"
-msgstr "Grátt"
+msgstr "Grár"
 
 #: part/annotationactionhandler.cpp:157
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Black"
-msgstr "Svart"
+msgstr "Svartur"
 
 #: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:686
 #, kde-format
@@ -1825,12 +1811,10 @@ msgid "&Color:"
 msgstr "&Litur:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -2878,14 +2862,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Nota skrárupplýsingar til að greina hvort opna eigi sjálfgefið í samfelldu "
+"sniði"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Opna sjálfgefið í samfelldu sniði"
+msgstr "Fyrir skrár án skrárupplýsinga, opna sjálfgefið í samfelldu sniði"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -2906,12 +2890,10 @@ msgid "Overview columns:"
 msgstr "Yfirlitsdálkar:"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:215
 #, kde-format
@@ -2930,38 +2912,31 @@ msgid "Page Up/Down overlap:"
 msgstr "Skörun á síðum við Upp/niður um síðu:"
 
 #: part/dlggeneral.cpp:222
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:226
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:227
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Passa á breidd"
 
 #: part/dlggeneral.cpp:228
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Passa á síðu"
 
 #: part/dlggeneral.cpp:229
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Aðlaga sjálfvirkt"
@@ -2970,14 +2945,10 @@ msgstr "Aðlaga sjálfvirkt"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Sérsnið"
 
 #: part/dlggeneral.cpp:231
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
@@ -3082,7 +3053,7 @@ msgid ""
 "Keeps everything in memory. Preload next pages. Boost searches. (For systems "
 "with more than 4GB of memory.)"
 msgstr ""
-"Heldur öllu í minni. Forhlaða næstu síðu. Bæta leitir. (Fyrir kerfi með "
+"Heldur öllu í minni. Forhlaða næstu síður. Bæta leitir. (Fyrir kerfi með "
 "meira en 4GB af minni.)"
 
 #: part/dlgperformance.cpp:87
@@ -3092,18 +3063,15 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Hleður og heldur öllu í minni. Forhlaða allar síður. (Notar að hámarki 50% "
-"af heildarminni þínu eða lausu minni, hvort sem er stærra.)"
+"af heildarminni þínu eða laust minni, hvort sem er stærra.)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " sekúndu fresti"
-msgstr[1] " sekúndna fresti"
+msgstr[0] "á %v sekúndu fresti"
+msgstr[1] "á %v sekúndna fresti"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3115,7 +3083,7 @@ msgstr "Fara sjálfkrafa áfram:"
 #, kde-format
 msgctxt "@option:check Config dialog, presentation page"
 msgid "Loop after last page"
-msgstr "Byrja aftur frá byrjun eftir síðustu síðu"
+msgstr "Aftur frá byrjun eftir síðustu síðu"
 
 #: part/dlgpresentation.cpp:59
 #, kde-format
@@ -3411,7 +3379,7 @@ msgstr "&Pennabreidd:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3758,10 +3726,9 @@ msgid "Speak Whole Document"
 msgstr "Lesa upp allt skjalið"
 
 #: part/pageview.cpp:715
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Lesa upp núverandi síðu"
+msgstr "Lesa upp af núverandi síðu"
 
 #: part/pageview.cpp:720
 #, kde-format
@@ -3833,22 +3800,19 @@ msgid "Speak Text"
 msgstr "Lesa upp texta"
 
 #: part/pageview.cpp:2853
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Mynd (%1 x %2 dílar)"
+msgstr "Mynd (%1 x %2 pixlar)"
 
 #: part/pageview.cpp:2855
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
 msgstr "Vista í skrá..."
 
 #: part/pageview.cpp:2875
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Mynd [%1x%2] afrituð á klippispjald."
+msgstr "Mynd [%1 × %2] afrituð á klippispjald."
 
 #: part/pageview.cpp:2878
 #, kde-format
@@ -3866,10 +3830,9 @@ msgid "File not saved."
 msgstr "Skrá ekki vistuð."
 
 #: part/pageview.cpp:2891
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Mynd [%1x%2] vistuð í %3 skrá."
+msgstr "Mynd [%1 × %2] vistuð í skrá %3."
 
 #: part/pageview.cpp:3033
 #, kde-format
@@ -4026,6 +3989,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Undirritari: %1\n"
+"\n"
+"Dags.: %2"
 
 #: part/pageviewannotator.cpp:448
 #, kde-kuit-format
@@ -4235,12 +4201,13 @@ msgstr ""
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
+"Undirritun í gangi. Þú getur breytt staðsetningu og stærð undirskriftarinnar"
 
 #: part/part.cpp:491
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Ljúka undirritun"
 
 #: part/part.cpp:661
 #, kde-format
@@ -5479,24 +5446,22 @@ msgstr "Veldu vottorð til að undirrita með:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Leyfa"
+msgstr "Allt"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Vottorð"
+msgstr "Einungis QES-vottorð"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Einungis PGP-lyklar"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5618,11 +5583,7 @@ msgid "Save Signed File As"
 msgstr "Vista undirritaða skrá sem"
 
 #: part/signaturepartutils.h:62
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"
@@ -5632,12 +5593,12 @@ msgstr "%1_undirritað.%2"
 #: part/signaturepropertiesdialog.cpp:61
 #, kde-format
 msgid "Validity Status"
-msgstr "Gildisstaða"
+msgstr "Staða gildistíma"
 
 #: part/signaturepropertiesdialog.cpp:64
 #, kde-format
 msgid "Signature Validity:"
-msgstr "Gildi undirritunar:"
+msgstr "Gildistími undirskriftar:"
 
 #: part/signaturepropertiesdialog.cpp:65
 #, kde-format
@@ -5694,12 +5655,12 @@ msgstr "Vottorðastjóri KDE (kleopatra) fannst ekki"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Fullgild (QES)"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

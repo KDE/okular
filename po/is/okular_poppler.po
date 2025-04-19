@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2013, 2015.
-# SPDX-FileCopyrightText: 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:40+0000\n"
-"PO-Revision-Date: 2024-01-26 20:32+0000\n"
-"Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
+"PO-Revision-Date: 2025-04-17 13:45+0000\n"
+"Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -33,28 +33,27 @@ msgstr "sv1@fellsnet.is,gudmundure@gmail.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, fuzzy, kde-format
-#| msgid "Enable overprint preview"
+#, kde-format
 msgid "Enable overprint preview:"
-msgstr "Virkja forskoðun yfirprentunar"
+msgstr "Virkja forskoðun yfirprentunar:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "Aldrei"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Alltaf"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Sjálfvirkt"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -139,13 +138,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Notendur nýlegra útgáfna af Okular með virkan GPG-bakenda geta einir "
+"auðkennt þessar undirskriftir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Leyfa PGP-lykla fyrir undirskriftir (Okular-viðbót)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -320,13 +321,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Þessar undirskriftir virka einungis á milli nýlegra útgáfna af Okular með "
+"GnuPG-bakenda virkan"
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "&Hlaða undirskriftum"
+msgstr "Leyfa PGP-undirskriftir"
 
 #: pdfsettingswidget.cpp:157
 #, kde-format
@@ -351,14 +353,14 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
-"Þú ert að nota Poppler-safn sem er án stuðnings við NSS.\n"
+"Þú ert að nota Poppler-safn sem styður ekki NSS.\n"
 "Þess vegna er ekki hægt að bæta við stafrænum undirskriftum"
 
 #: pdfsettingswidget.cpp:197
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "að eilífu"
 
 #: pdfsettingswidget.cpp:223
 #, kde-format
@@ -368,7 +370,7 @@ msgstr "Það þarf að endurræsa"
 #: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr "Þú þarft að endurræsa Okular eftir að hafa breytt NSS-möppustillingum"
+msgstr "Það þarf að endurræsa Okular þegar NSS-möppustillingum er breytt"
 
 #: pdfsignatureutils.cpp:239
 #, kde-format

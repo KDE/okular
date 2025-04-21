@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-16 14:55+0530\n"
+"PO-Revision-Date: 2025-04-20 18:11+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2850,14 +2850,14 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"இயல்பாக தொடர்ச்சியான காட்சிமுறையில் ஓர் கோப்பைத் திறக்க வேண்டுமா என முடிவு செய்ய "
+"அக்கோப்பிலுள்ள விவரங்களைப் பயன்படுத்து"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "இயல்பாக தொடர்ச்சியான பயன்முறையில் திற"
+msgstr "காட்சிமுறையைக் குறிப்பிடா கோப்புகளை இயல்பாக தொடர்ச்சியான பயன்முறையில் திற"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

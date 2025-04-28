@@ -204,13 +204,15 @@ if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
 else()
     set(HAVE_X11 FALSE)
 endif()
-find_package(Phonon4Qt6 CONFIG)
-set_okular_optional_package_properties(Phonon4Qt6 PROPERTIES
-    PURPOSE "Required for documents with audio or video elements")
-if (Phonon4Qt6_FOUND)
-    set(HAVE_PHONON 1)
+
+find_package(Qt6MultimediaWidgets ${QT_REQUIRED_VERSION} CONFIG)
+set_okular_optional_package_properties(Qt5::MultimediaWidgets PROPERTIES
+    PURPOSE "Required for documents with audio or video elements.")
+
+if (TARGET Qt6::MultimediaWidgets)
+    set(HAVE_MULTIMEDIA 1)
 else()
-    set(HAVE_PHONON 0)
+    set(HAVE_MULTIMEDIA 0)
 endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
@@ -286,7 +288,7 @@ else()
     add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=1)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} core/synctex ${CMAKE_BINARY_DIR}/core)
 
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
@@ -455,8 +457,8 @@ PUBLIC  # these are included from the installed headers
     Qt6::PrintSupport
     Qt6::Widgets
 )
-if (Phonon4Qt6_FOUND)
-    target_link_libraries(okularcore PRIVATE Phonon::phonon4qt6)
+if (TARGET Qt6::MultimediaWidgets)
+    target_link_libraries(okularcore PRIVATE Qt6::MultimediaWidgets)
 endif()
 
 
@@ -554,7 +556,6 @@ if(BUILD_DESKTOP)
     part/searchwidget.cpp
     part/sidebar.cpp
     part/side_reviews.cpp
-    part/snapshottaker.cpp
     part/thumbnaillist.cpp
     part/toc.cpp
     part/toggleactionmenu.cpp
@@ -598,8 +599,8 @@ target_link_libraries(okularpart okularcore
 if (TARGET Qt6::DBus)
     target_link_libraries(okularpart Qt6::DBus)
 endif()
-if (Phonon4Qt6_FOUND)
-   target_link_libraries(okularpart Phonon::phonon4qt6)
+if (TARGET Qt6::MultimediaWidgets)
+    target_link_libraries(okularpart Qt6::MultimediaWidgets)
 endif()
 
 if(KF6Wallet_FOUND)

@@ -34,7 +34,7 @@ Dependencies:
     'frameworks/kirigami': '@latest-kf6'
 
 Options:
-  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
+  require-passing-tests-on: [ 'Linux/Qt6', 'FreeBSD' ]
   per-test-timeout: 300
   cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'
   cppcheck-ignore-files:

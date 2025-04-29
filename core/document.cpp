@@ -507,7 +507,7 @@ qulonglong DocumentPrivate::getFreeMemory(qulonglong *freeSwap)
     QString entry;
     QTextStream readStream(&memFile);
     static const int nElems = 5;
-    QString names[nElems] = {QStringLiteral("MemFree:"), QStringLiteral("Buffers:"), QStringLiteral("Cached:"), QStringLiteral("SwapFree:"), QStringLiteral("SwapTotal:")};
+    const QString names[nElems] = {QStringLiteral("MemFree:"), QStringLiteral("Buffers:"), QStringLiteral("Cached:"), QStringLiteral("SwapFree:"), QStringLiteral("SwapTotal:")};
     qulonglong values[nElems] = {0, 0, 0, 0, 0};
     bool foundValues[nElems] = {false, false, false, false, false};
     while (true) {

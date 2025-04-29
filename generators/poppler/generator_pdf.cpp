@@ -480,7 +480,7 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
 
     case Poppler::Link::Sound: {
         auto popplerLinkSound = static_cast<const Poppler::LinkSound *>(rawPopplerLink);
-        Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
+        const Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
         Okular::Sound *sound = createSoundFromPopplerSound(popplerSound);
         link = new Okular::SoundAction(popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound);
     } break;

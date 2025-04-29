@@ -1120,7 +1120,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         }
 
         if (signatureMode()) {
-            auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
+            const auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
 
 #if !HAVE_NEW_SIGNATURE_API
             if (signEngine->userWantsToStartOver()) {

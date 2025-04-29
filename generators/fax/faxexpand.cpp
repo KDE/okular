@@ -712,11 +712,11 @@ static const unsigned char zerotab[256] = {0x88, 0x07, 0x16, 0x06, 0x25, 0x05, 0
 int G3count(pagenode *pn, int twoD)
 {
     t16bits *p = pn->data;
-    t16bits *end = p + pn->length / sizeof(*p); // NOLINT(bugprone-sizeof-expression)
-    int lines = 0;                              /* lines seen so far */
-    int zeros = 0;                              /* number of consecutive zero bits seen */
-    int EOLcnt = 0;                             /* number of consecutive EOLs seen */
-    int empty = 1;                              /* empty line */
+    const t16bits *end = p + pn->length / sizeof(*p); // NOLINT(bugprone-sizeof-expression)
+    int lines = 0;                                    /* lines seen so far */
+    int zeros = 0;                                    /* number of consecutive zero bits seen */
+    int EOLcnt = 0;                                   /* number of consecutive EOLs seen */
+    int empty = 1;                                    /* empty line */
     int prezeros, postzeros;
 
     while (p < end && EOLcnt < 6) {

@@ -4133,7 +4133,7 @@ void PageView::updateCursor(const QPoint p)
     d->mouseOverLinkObject = nullptr;
 
     // detect the underlaying page (if present)
-    PageViewItem *pageItem = pickItemOnPoint(p.x(), p.y());
+    const PageViewItem *pageItem = pickItemOnPoint(p.x(), p.y());
     QScroller::State scrollerState = d->scroller->state();
 
     if (d->annotator && d->annotator->active()) {
@@ -4260,7 +4260,7 @@ void PageView::moveMagnifier(const QPoint p) // non scaled point
 void PageView::updateMagnifier(const QPoint p) // scaled point
 {
     /* translate mouse coordinates to page coordinates and inform the magnifier of the situation */
-    PageViewItem *item = pickItemOnPoint(p.x(), p.y());
+    const PageViewItem *item = pickItemOnPoint(p.x(), p.y());
     if (item) {
         Okular::NormalizedPoint np(item->absToPageX(p.x()), item->absToPageY(p.y()));
         d->magnifierView->updateView(np, item->page());
@@ -5442,7 +5442,7 @@ void PageView::slotSpeakCurrentPage()
 {
     const int currentPage = d->document->viewport().pageNumber;
 
-    PageViewItem *item = d->items.at(currentPage);
+    const PageViewItem *item = d->items.at(currentPage);
     std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);
     const QString text = item->page()->text(area.get());
 
@@ -5652,7 +5652,7 @@ void PageView::slotSelectPage()
 {
     textSelectionClear();
     const int currentPage = d->document->viewport().pageNumber;
-    PageViewItem *item = d->items.at(currentPage);
+    const PageViewItem *item = d->items.at(currentPage);
 
     if (item) {
         std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(item);

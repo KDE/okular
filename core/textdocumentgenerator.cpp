@@ -380,7 +380,7 @@ QImage TextDocumentGeneratorPrivate::image(PixmapRequest *request)
     }
 
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
-    Q_Q(TextDocumentGenerator);
+    Q_Q(const TextDocumentGenerator);
 #endif
 
     QImage image(request->width(), request->height(), QImage::Format_ARGB32);

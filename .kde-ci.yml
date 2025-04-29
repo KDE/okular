@@ -36,7 +36,7 @@ Dependencies:
 Options:
   require-passing-tests-on: [ 'Linux/Qt6', 'FreeBSD' ]
   per-test-timeout: 300
-  cppcheck-arguments: '--enable=warning,style,performance -DOKULAR_EXPORT_PLUGIN --suppress-xml=cppcheck-suppressions.xml'
+  cppcheck-arguments: '--enable=warning,style,performance --library=okular-cppcheck.xml --suppress-xml=cppcheck-suppressions.xml'
   cppcheck-ignore-files:
     - autotests
     - core/synctex/synctex_parser.c

@@ -10,6 +10,9 @@
 
 // qt/kde includes
 #include <qaction.h>
+#if HAVE_MULTIMEDIA
+#include <qaudiooutput.h>
+#endif
 #include <qcoreapplication.h>
 #include <qdir.h>
 #include <qevent.h>
@@ -55,15 +58,6 @@ public:
     {
         if (player) {
             player->stop();
-
-            // To handle https://bugreports.qt.io/browse/QTBUG-87325 do these in this order...
-            // FIXME: Remove once we port to Qt6 and/or the bug is fixed.
-            player->disconnect();
-            videoWidget->disconnect();
-            videoWidget->setParent(nullptr);
-            player->setParent(nullptr);
-            player->deleteLater();
-            videoWidget->deleteLater();
         }
     }
 
@@ -74,7 +68,7 @@ public:
     void setPosterImage(const QImage &);
     void takeSnapshot();
     void videoStopped();
-    void stateChanged(QMediaPlayer::State newState);
+    void playbackStateChanged(QMediaPlayer::PlaybackState newState);
 
     // slots
     void mediaStatusChanged(QMediaPlayer::MediaStatus);
@@ -121,9 +115,9 @@ void VideoWidget::Private::load()
 
     loaded = true;
 
-    player->setMedia(urlFromUrlString(movie->url(), document));
+    player->setSource(urlFromUrlString(movie->url(), document));
 
-    connect(player, &QMediaPlayer::stateChanged, q, [this](QMediaPlayer::State s) { stateChanged(s); });
+    connect(player, &QMediaPlayer::playbackStateChanged, q, [this](QMediaPlayer::PlaybackState s) { playbackStateChanged(s); });
 }
 
 void VideoWidget::Private::setupPlayPauseAction(PlayPauseMode mode)
@@ -190,7 +184,7 @@ void VideoWidget::Private::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 
 void VideoWidget::Private::playOrPause()
 {
-    if (player->state() == QMediaPlayer::PlayingState) {
+    if (player->isPlaying()) {
         player->pause();
         setupPlayPauseAction(PlayMode);
     } else {
@@ -208,7 +202,7 @@ void VideoWidget::Private::setPosterImage(const QImage &image)
     posterImagePage->setPixmap(QPixmap::fromImage(image));
 }
 
-void VideoWidget::Private::stateChanged(QMediaPlayer::State newState)
+void VideoWidget::Private::playbackStateChanged(QMediaPlayer::PlaybackState newState)
 {
     if (newState == QMediaPlayer::PlayingState) {
         pageLayout->setCurrentIndex(kVideoPage);
@@ -231,6 +225,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     mainlay->setSpacing(0);
 
     d->player = new QMediaPlayer();
+    d->player->setAudioOutput(new QAudioOutput());
     d->videoWidget = new QVideoWidget(playerPage);
     d->player->setVideoOutput(d->videoWidget);
     mainlay->addWidget(d->videoWidget);
@@ -243,7 +238,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->playPauseAction = new QAction(d->controlBar);
     d->controlBar->addAction(d->playPauseAction);
     d->setupPlayPauseAction(Private::PlayMode);
-    d->stopAction = d->controlBar->addAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18nc("stop the movie playback", "Stop"), this, SLOT(stop()));
+    d->stopAction = d->controlBar->addAction(QIcon::fromTheme(QStringLiteral("media-playback-stop")), i18nc("stop the movie playback", "Stop"), this, &VideoWidget::stop);
     d->stopAction->setEnabled(false);
     d->controlBar->addSeparator();
 
@@ -261,7 +256,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->posterImagePage->setCursor(Qt::PointingHandCursor);
 
     d->pageLayout = new QStackedLayout(this);
-    d->pageLayout->setMargin(0);
+    d->pageLayout->setContentsMargins({});
     d->pageLayout->setSpacing(0);
     d->pageLayout->addWidget(playerPage);
     d->pageLayout->addWidget(d->posterImagePage);
@@ -297,7 +292,7 @@ Okular::NormalizedRect VideoWidget::normGeometry() const
 
 bool VideoWidget::isPlaying() const
 {
-    return d->player->state() == QMediaPlayer::PlayingState;
+    return d->player->isPlaying();
 }
 
 void VideoWidget::pageInitialized()
@@ -359,7 +354,7 @@ bool VideoWidget::eventFilter(QObject *object, QEvent *event)
         case QEvent::MouseButtonPress: {
             QMouseEvent *me = static_cast<QMouseEvent *>(event);
             if (me->button() == Qt::LeftButton) {
-                if (d->player->state() != QMediaPlayer::PlayingState) {
+                if (!d->player->isPlaying()) {
                     play();
                 }
                 event->accept();
@@ -371,7 +366,7 @@ bool VideoWidget::eventFilter(QObject *object, QEvent *event)
                 QWheelEvent *we = static_cast<QWheelEvent *>(event);
 
                 // forward wheel events to parent widget
-                QWheelEvent *copy = new QWheelEvent(we->pos(), we->globalPos(), we->angleDelta().y(), we->buttons(), we->modifiers(), we->orientation());
+                QWheelEvent *copy = new QWheelEvent(we->position(), we->globalPosition(), we->pixelDelta(), we->angleDelta(), we->buttons(), we->modifiers(), we->phase(), we->inverted(), we->source());
                 QCoreApplication::postEvent(parentWidget(), copy);
             }
             break;
@@ -397,6 +392,10 @@ bool VideoWidget::event(QEvent *event)
     return QWidget::event(event);
 }
 
+void VideoWidget::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+}
 #else
 
 class VideoWidget::Private

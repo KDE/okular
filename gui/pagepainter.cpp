@@ -261,7 +261,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                         destPainter->drawPixmap(tileRect, *tilePixmap, tilePixmap->rect());
                     }
                 }
-                tIt++;
+                ++tIt;
             }
         } else {
             destPainter->drawPixmap(limits, pixmap.scaled(dScaledWidth, dScaledHeight), dLimitsInPixmap);

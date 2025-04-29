@@ -5429,7 +5429,7 @@ void PageView::slotSpeakFromCurrentPage()
     QString text;
     QVector<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
 
-    for (dIt += currentPage; dIt != dEnd; dIt++) {
+    for (dIt += currentPage; dIt != dEnd; ++dIt) {
         std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(*dIt);
         text.append((*dIt)->page()->text(area.get()));
         text.append(QLatin1Char('\n'));

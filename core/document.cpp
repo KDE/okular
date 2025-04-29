@@ -3416,7 +3416,7 @@ void Document::requestPixmaps(const QList<PixmapRequest *> &requests, PixmapRequ
                     }
                 }
 
-                tIt++;
+                ++tIt;
             }
 
             request->setNormalizedRect(tilesRect);

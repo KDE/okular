@@ -168,7 +168,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
     while (i != page->hyperLinkList.end()) {
         // Iterator j always points to the element after i.
         j = i;
-        j++;
+        ++j;
 
         if (j == page->hyperLinkList.end()) {
             break;
@@ -184,7 +184,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
             merged = true;
             hi.box = hi.box.united(hj.box);
 
-            j++;
+            ++j;
             if (j == page->hyperLinkList.end()) {
                 break;
             }
@@ -195,7 +195,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
         if (merged) {
             i = page->hyperLinkList.erase(++i, j);
         } else {
-            i++;
+            ++i;
         }
     }
 

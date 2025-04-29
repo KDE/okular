@@ -720,10 +720,10 @@ public:
             return oldrect;
         } else if (type == Move) {
             if (item()) {
-                const QPoint start((int)(lastPoint.x * item()->uncroppedWidth()), (int)(lastPoint.y * item()->uncroppedHeight()));
-                const QPoint end((int)(nX * item()->uncroppedWidth()), (int)(nY * item()->uncroppedHeight()));
+                const QPoint selectionStart((int)(lastPoint.x * item()->uncroppedWidth()), (int)(lastPoint.y * item()->uncroppedHeight()));
+                const QPoint selectionEnd((int)(nX * item()->uncroppedWidth()), (int)(nY * item()->uncroppedHeight()));
                 selection.reset();
-                std::unique_ptr<Okular::RegularAreaRect> newselection(m_pageView->textSelectionForItem(item(), start, end));
+                std::unique_ptr<Okular::RegularAreaRect> newselection = m_pageView->textSelectionForItem(item(), selectionStart, selectionEnd);
                 if (newselection && !newselection->isEmpty()) {
                     const QList<QRect> geom = newselection->geometry((int)xScale, (int)yScale);
                     QRect newrect;

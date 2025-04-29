@@ -184,16 +184,16 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         // append annotations inside limits to the un/buffered list
         if (canDrawAnnotations) {
             for (Okular::Annotation *ann : page->m_annotations) {
-                int flags = ann->flags();
+                int annFlags = ann->flags();
 
-                if (flags & Okular::Annotation::Hidden) {
+                if (annFlags & Okular::Annotation::Hidden) {
                     continue;
                 }
 
-                if (flags & Okular::Annotation::ExternallyDrawn) {
+                if (annFlags & Okular::Annotation::ExternallyDrawn) {
                     // ExternallyDrawn annots are never rendered by PagePainter.
                     // Just paint the boundingRect if the annot is moved or resized.
-                    if (flags & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized)) {
+                    if (annFlags & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized)) {
                         boundingRectOnlyAnn = ann;
                     }
                     continue;
@@ -396,7 +396,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 else if (type == Okular::Annotation::AHighlight) {
                     // get the annotation
                     Okular::HighlightAnnotation *ha = (Okular::HighlightAnnotation *)a;
-                    Okular::HighlightAnnotation::HighlightType type = ha->highlightType();
+                    Okular::HighlightAnnotation::HighlightType hlType = ha->highlightType();
 
                     // draw each quad of the annotation
                     int quads = ha->highlightQuads().size();
@@ -411,7 +411,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                             path.append(point);
                         }
                         // draw the normalized path into image
-                        switch (type) {
+                        switch (hlType) {
                         // highlight the whole rect
                         case Okular::HighlightAnnotation::Highlight:
                             drawShapeOnImage(backImage, path, true, Qt::NoPen, acolor, pageScale, Multiply);
@@ -566,9 +566,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     mixedPainter->drawImage(annotBoundary.topLeft(), image);
                 } else if (text->textType() == Okular::TextAnnotation::Linked) {
                     // get pixmap, colorize and alpha-blend it
-                    QPixmap pixmap = QIcon::fromTheme(text->textIcon().toLower()).pixmap(32);
+                    QPixmap iconPixmap = QIcon::fromTheme(text->textIcon().toLower()).pixmap(32);
 
-                    QPixmap scaledCroppedPixmap = pixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
+                    QPixmap scaledCroppedPixmap = iconPixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
                     scaledCroppedPixmap.setDevicePixelRatio(dpr);
                     QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
 
@@ -578,10 +578,10 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     if (a->style().color().isValid()) {
                         GuiUtils::colorizeImage(scaledCroppedImage, a->style().color(), opacity);
                     }
-                    pixmap = QPixmap::fromImage(scaledCroppedImage);
+                    iconPixmap = QPixmap::fromImage(scaledCroppedImage);
 
                     // draw the mangled image to painter
-                    mixedPainter->drawPixmap(annotRect.topLeft(), pixmap);
+                    mixedPainter->drawPixmap(annotRect.topLeft(), iconPixmap);
                 }
 
             }

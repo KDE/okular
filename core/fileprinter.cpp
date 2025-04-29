@@ -552,17 +552,17 @@ QStringList FilePrinter::optionPageMargins(QPrinter &printer, ScaleMode scaleMod
 QStringList FilePrinter::optionCupsProperties(QPrinter &printer)
 {
     QStringList dialogOptions = printer.printEngine()->property(QPrintEngine::PrintEnginePropertyKey(0xfe00)).toStringList();
-    QStringList cupsOptions;
+    QStringList cupsOpts;
 
     for (int i = 0; i < dialogOptions.count(); i = i + 2) {
         if (dialogOptions[i + 1].isEmpty()) {
-            cupsOptions << QStringLiteral("-o") << dialogOptions[i];
+            cupsOpts << QStringLiteral("-o") << dialogOptions[i];
         } else {
-            cupsOptions << QStringLiteral("-o") << dialogOptions[i] + QLatin1Char('=') + dialogOptions[i + 1];
+            cupsOpts << QStringLiteral("-o") << dialogOptions[i] + QLatin1Char('=') + dialogOptions[i + 1];
         }
     }
 
-    return cupsOptions;
+    return cupsOpts;
 }
 
 /* kate: replace-tabs on; indent-width 4; */

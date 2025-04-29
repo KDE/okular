@@ -390,7 +390,7 @@ bool SignatureModel::saveSignedVersion(int signatureRevisionIndex, const QUrl &f
         return false;
     }
     const Okular::FormFieldSignature *signature = signatureFormFields[signatureRevisionIndex];
-    const QByteArray data = d->document->requestSignedRevisionData(signature->signatureInfo());
+    const QByteArray signedRevisionData = d->document->requestSignedRevisionData(signature->signatureInfo());
 
     if (!filePath.isLocalFile()) {
         qWarning() << "Unexpected non local path given to saveSignedVersion" << filePath;
@@ -401,7 +401,7 @@ bool SignatureModel::saveSignedVersion(int signatureRevisionIndex, const QUrl &f
         qWarning() << "Failed to open path for writing in saveSignedVersion" << filePath;
         return false;
     }
-    if (f.write(data) != data.size()) {
+    if (f.write(signedRevisionData) != signedRevisionData.size()) {
         qWarning() << "Failed to write all data in saveSignedVersion" << filePath;
         return false;
     }

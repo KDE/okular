@@ -83,11 +83,13 @@ QTextDocument *Converter::convert(const QString &fileName)
      */
     mTextDocument->setPageSize(QSizeF(600, 800));
 
-    QTextFrameFormat frameFormat;
-    frameFormat.setMargin(20);
+    {
+        QTextFrameFormat frameFormat;
+        frameFormat.setMargin(20);
 
-    QTextFrame *rootFrame = mTextDocument->rootFrame();
-    rootFrame->setFrameFormat(frameFormat);
+        QTextFrame *rootFrame = mTextDocument->rootFrame();
+        rootFrame->setFrameFormat(frameFormat);
+    }
 
     /**
      * Parse the content of the document

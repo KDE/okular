@@ -227,9 +227,6 @@ bool TIFFGenerator::doCloseDocument()
 
 QImage TIFFGenerator::image(Okular::PixmapRequest *request)
 {
-    bool generated = false;
-    QImage img;
-
     if (TIFFSetDirectory(d->tiff, mapPage(request->page()->number()))) {
         int rotation = request->page()->rotation();
         uint32_t width = 1;
@@ -242,8 +239,8 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
             orientation = ORIENTATION_TOPLEFT;
         }
 
-        QImage image(width, height, QImage::Format_RGB32);
-        uint32_t *data = reinterpret_cast<uint32_t *>(image.bits());
+        QImage img(width, height, QImage::Format_RGB32);
+        uint32_t *data = reinterpret_cast<uint32_t *>(img.bits());
 
         // read data
         if (TIFFReadRGBAImageOriented(d->tiff, width, height, data, orientation) != 0) {
@@ -260,17 +257,12 @@ QImage TIFFGenerator::image(Okular::PixmapRequest *request)
             if (rotation % 2 == 1) {
                 std::swap(reqwidth, reqheight);
             }
-            img = image.scaled(reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-            generated = true;
+            return img.scaled(reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         }
     }
 
-    if (!generated) {
-        img = QImage(request->width(), request->height(), QImage::Format_RGB32);
-        img.fill(qRgb(255, 255, 255));
-    }
-
+    QImage img(request->width(), request->height(), QImage::Format_RGB32);
+    img.fill(qRgb(255, 255, 255));
     return img;
 }
 
@@ -372,8 +364,8 @@ Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
             continue;
         }
 
-        QImage image(width, height, QImage::Format_RGB32);
-        uint32_t *data = reinterpret_cast<uint32_t *>(image.bits());
+        QImage printImage(width, height, QImage::Format_RGB32);
+        uint32_t *data = reinterpret_cast<uint32_t *>(printImage.bits());
 
         // read data
         if (TIFFReadRGBAImageOriented(d->tiff, width, height, data, ORIENTATION_TOPLEFT) != 0) {
@@ -392,12 +384,12 @@ Okular::Document::PrintError TIFFGenerator::print(QPrinter &printer)
 
         QSize targetSize = printer.pageRect(QPrinter::Unit::DevicePixel).size().toSize();
 
-        if ((image.width() < targetSize.width()) && (image.height() < targetSize.height())) {
+        if ((printImage.width() < targetSize.width()) && (printImage.height() < targetSize.height())) {
             // draw small images at 100% (don't scale up)
-            p.drawImage(0, 0, image);
+            p.drawImage(0, 0, printImage);
         } else {
             // fit to page
-            p.drawImage(0, 0, image.scaled(targetSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            p.drawImage(0, 0, printImage.scaled(targetSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
     }
 

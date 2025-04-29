@@ -161,6 +161,6 @@ bool CertificateModel::exportCertificateTo(const QString &path)
     if (!targetFile.open(QIODevice::WriteOnly)) {
         return false;
     }
-    const QByteArray data = m_certificateInfo.certificateData();
-    return targetFile.write(data) == data.size();
+    const QByteArray certificateData = m_certificateInfo.certificateData();
+    return targetFile.write(certificateData) == certificateData.size();
 }

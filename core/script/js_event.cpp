@@ -68,9 +68,9 @@ QJSValue JSEvent::target() const
     case Event::FieldMouseDown:
     case Event::FieldMouseEnter:
     case Event::FieldMouseExit: {
-        FormField *target = static_cast<FormField *>(m_event->target());
-        if (target) {
-            return JSField::wrapField(qjsEngine(this), target, m_event->targetPage());
+        FormField *targetField = static_cast<FormField *>(m_event->target());
+        if (targetField) {
+            return JSField::wrapField(qjsEngine(this), targetField, m_event->targetPage());
         }
         break;
     }

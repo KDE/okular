@@ -89,13 +89,13 @@ Okular::Document::PrintError FaxGenerator::print(QPrinter &printer)
 {
     QPainter p(&printer);
 
-    QImage image(m_img);
+    QImage printImage(m_img);
 
-    if ((image.width() > printer.width()) || (image.height() > printer.height())) {
-        image = image.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if ((printImage.width() > printer.width()) || (printImage.height() > printer.height())) {
+        printImage = printImage.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
-    p.drawImage(0, 0, image);
+    p.drawImage(0, 0, printImage);
 
     return Okular::Document::NoPrintError;
 }

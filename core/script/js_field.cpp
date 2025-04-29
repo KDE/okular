@@ -194,12 +194,12 @@ void JSField::setValue(const QJSValue &value)
         FormFieldText *textField = static_cast<FormFieldText *>(m_field);
         Page *page = g_fieldCache->value(m_field);
         if (page) {
-            Document *doc = PagePrivate::get(page)->m_doc->m_parent;
+            Document *document = PagePrivate::get(page)->m_doc->m_parent;
             const QString text = value.toString();
             if (text != textField->text()) {
                 textField->setText(text);
             }
-            doc->processKVCFActions(textField);
+            document->processKVCFActions(textField);
         } else {
             qWarning() << "Could not get page of field" << m_field;
         }
@@ -211,18 +211,18 @@ void JSField::setValue(const QJSValue &value)
             const QString text = value.toString();
             Page *page = g_fieldCache->value(m_field);
             if (page) {
-                Document *doc = PagePrivate::get(page)->m_doc->m_parent;
+                Document *document = PagePrivate::get(page)->m_doc->m_parent;
                 const int idx = choice->choices().indexOf(text);
                 if (idx == -1) {
                     if (choice->isEditable()) {
                         choice->setEditChoice(text);
-                        doc->processKVCFActions(choice);
+                        document->processKVCFActions(choice);
                     } else {
                         qWarning() << "Set not possible, invalid or unknown";
                     }
                 } else {
                     choice->setCurrentChoices({idx});
-                    doc->processKVCFActions(choice);
+                    document->processKVCFActions(choice);
                 }
             }
         }

@@ -55,16 +55,16 @@ QUrl urlFromArg(const QString &_arg, FileExistFunc exist_func, const QString &pa
 
 QString serializeOptions(const QCommandLineParser &args)
 {
-    const bool startInPresentation = args.isSet(QStringLiteral("presentation"));
-    const bool showPrintDialog = args.isSet(QStringLiteral("print"));
-    const bool showPrintDialogAndExit = args.isSet(QStringLiteral("print-and-exit"));
-    const bool unique = args.isSet(QStringLiteral("unique")) && args.positionalArguments().count() <= 1;
-    const bool noRaise = args.isSet(QStringLiteral("noraise"));
-    const QString page = args.value(QStringLiteral("page"));
-    const QString find = args.value(QStringLiteral("find"));
-    const QString editorCmd = args.value(QStringLiteral("editor-cmd"));
+    const bool startInPresentationVal = args.isSet(QStringLiteral("presentation"));
+    const bool showPrintDialogVal = args.isSet(QStringLiteral("print"));
+    const bool showPrintDialogAndExitVal = args.isSet(QStringLiteral("print-and-exit"));
+    const bool uniqueVal = args.isSet(QStringLiteral("unique")) && args.positionalArguments().count() <= 1;
+    const bool noRaiseVal = args.isSet(QStringLiteral("noraise"));
+    const QString pageVal = args.value(QStringLiteral("page"));
+    const QString findVal = args.value(QStringLiteral("find"));
+    const QString editorCmdVal = args.value(QStringLiteral("editor-cmd"));
 
-    return serializeOptions(startInPresentation, showPrintDialog, showPrintDialogAndExit, unique, noRaise, page, find, editorCmd);
+    return serializeOptions(startInPresentationVal, showPrintDialogVal, showPrintDialogAndExitVal, uniqueVal, noRaiseVal, pageVal, findVal, editorCmdVal);
 }
 
 QString serializeOptions(bool startInPresentation, bool showPrintDialog, bool showPrintDialogAndExit, bool unique, bool noRaise, const QString &page, const QString &find, const QString &editorCmd)

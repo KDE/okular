@@ -286,10 +286,10 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
             for (int y = 0; y < shrunk_height; y++) {
                 unsigned int *destScanLine = reinterpret_cast<unsigned int *>(im32.scanLine(y));
                 for (int col = 0; col < shrunk_width; col++) {
-                    quint16 data = *srcScanLine;
+                    quint16 lineData = *srcScanLine;
                     // The value stored in "data" now has the following meaning:
                     // data = 0 -> white; data = 0xff -> use "color"
-                    *destScanLine = qRgba(0xFF - (rInv * data + 0x7F) / 0xFF, 0xFF - (gInv * data + 0x7F) / 0xFF, 0xFF - (bInv * data + 0x7F) / 0xFF, (data > 0x03) ? 0xff : 0x00);
+                    *destScanLine = qRgba(0xFF - (rInv * lineData + 0x7F) / 0xFF, 0xFF - (gInv * lineData + 0x7F) / 0xFF, 0xFF - (bInv * lineData + 0x7F) / 0xFF, (lineData > 0x03) ? 0xff : 0x00);
                     destScanLine++;
                     srcScanLine++;
                 }

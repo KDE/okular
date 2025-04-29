@@ -175,13 +175,13 @@ void AnnotationModelPrivate::notifyPageChanged(int page, int flags)
             ++i;
         }
 
-        AnnItem *annItem = new AnnItem();
-        annItem->page = page;
-        annItem->parent = root;
+        AnnItem *newAnnItem = new AnnItem();
+        newAnnItem->page = page;
+        newAnnItem->parent = root;
         q->beginInsertRows(indexForItem(root), i, i);
-        annItem->parent->children.insert(i, annItem);
+        newAnnItem->parent->children.insert(i, newAnnItem);
         for (Okular::Annotation *annot : annots) {
-            new AnnItem(annItem, annot);
+            new AnnItem(newAnnItem, annot);
         }
         q->endInsertRows();
         return;

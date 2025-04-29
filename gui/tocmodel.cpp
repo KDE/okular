@@ -341,23 +341,23 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
     Q_EMIT layoutChanged();
     if (equals(d->m_oldModel)) {
         for (const QModelIndex &oldIndex : std::as_const(d->m_oldTocExpandedIndexes)) {
-            const QModelIndex index = indexForIndex(oldIndex, this);
-            if (!index.isValid()) {
+            const QModelIndex idx = indexForIndex(oldIndex, this);
+            if (!idx.isValid()) {
                 continue;
             }
 
             // TODO misusing parent() here, fix
-            QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, index));
+            QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, idx));
         }
     } else {
         for (TOCItem *item : std::as_const(d->itemsToOpen)) {
-            const QModelIndex index = d->indexForItem(item);
-            if (!index.isValid()) {
+            const QModelIndex idx = d->indexForItem(item);
+            if (!idx.isValid()) {
                 continue;
             }
 
             // TODO misusing parent() here, fix
-            QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, index));
+            QMetaObject::invokeMethod(QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG(QModelIndex, idx));
         }
     }
     d->itemsToOpen.clear();
@@ -383,13 +383,13 @@ void TOCModel::clear()
 void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
 {
     for (TOCItem *item : std::as_const(d->currentPage)) {
-        QModelIndex index = d->indexForItem(item);
-        if (!index.isValid()) {
+        QModelIndex idx = d->indexForItem(item);
+        if (!idx.isValid()) {
             continue;
         }
 
         item->highlight = false;
-        Q_EMIT dataChanged(index, index);
+        Q_EMIT dataChanged(idx, idx);
     }
     d->currentPage.clear();
 
@@ -399,13 +399,13 @@ void TOCModel::setCurrentViewport(const Okular::DocumentViewport &viewport)
     d->currentPage = newCurrentPage;
 
     for (TOCItem *item : std::as_const(d->currentPage)) {
-        QModelIndex index = d->indexForItem(item);
-        if (!index.isValid()) {
+        QModelIndex idx = d->indexForItem(item);
+        if (!idx.isValid()) {
             continue;
         }
 
         item->highlight = true;
-        Q_EMIT dataChanged(index, index);
+        Q_EMIT dataChanged(idx, idx);
     }
 }
 

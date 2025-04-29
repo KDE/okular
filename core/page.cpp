@@ -491,10 +491,10 @@ const ObjectRect *Page::nearestObjectRect(ObjectRect::ObjectType type, double x,
 
     for (ObjectRect *rect : m_rects) {
         if (rect->objectType() == type) {
-            double d = rect->distanceSqr(x, y, xScale, yScale);
-            if (d < minDistance) {
+            double dist = rect->distanceSqr(x, y, xScale, yScale);
+            if (dist < minDistance) {
                 res = rect;
-                minDistance = d;
+                minDistance = dist;
             }
         }
     }
@@ -605,8 +605,8 @@ void Page::setObjectRects(const QList<ObjectRect *> &rects)
      */
     const QTransform matrix = d->rotationMatrix();
 
-    for (ObjectRect *objectRect : rects) {
-        objectRect->transform(matrix);
+    for (ObjectRect *r : rects) {
+        r->transform(matrix);
     }
 
     m_rects << rects;

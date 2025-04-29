@@ -296,9 +296,9 @@ KDjVu::TextAnnotation::TextAnnotation(miniexp_t anno)
 QSize KDjVu::TextAnnotation::size() const
 {
     miniexp_t area = miniexp_nth(3, m_anno);
-    int c = miniexp_to_int(miniexp_nth(3, area));
-    int d = miniexp_to_int(miniexp_nth(4, area));
-    return QSize(c, d);
+    int w = miniexp_to_int(miniexp_nth(3, area));
+    int h = miniexp_to_int(miniexp_nth(4, area));
+    return QSize(w, h);
 }
 
 int KDjVu::TextAnnotation::type() const
@@ -374,9 +374,9 @@ void KDjVu::LineAnnotation::setColor(const QColor &color)
 QPoint KDjVu::LineAnnotation::point2() const
 {
     miniexp_t area = miniexp_nth(3, m_anno);
-    int c = miniexp_to_int(miniexp_nth(3, area));
-    int d = miniexp_to_int(miniexp_nth(4, area));
-    return QPoint(c, d);
+    int x = miniexp_to_int(miniexp_nth(3, area));
+    int y = miniexp_to_int(miniexp_nth(4, area));
+    return QPoint(x, y);
 }
 
 bool KDjVu::LineAnnotation::isArrow() const

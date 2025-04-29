@@ -73,14 +73,14 @@ void TeXFontDefinition::read_VF_index()
     first_font = nullptr;
     while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
         int TeXnumber = num(VF_file, (int)cmnd - FNTDEF1 + 1);
-        quint32 checksum = four(VF_file);
+        quint32 font_checksum = four(VF_file);
         quint32 scale = four(VF_file);
         quint32 design = four(VF_file);
         Q_UNUSED(design);
         quint16 len = one(VF_file) + one(VF_file); /* sequence point in the middle */
-        char *fontname = new char[len + 1];
-        fread(fontname, sizeof(char), len, VF_file);
-        fontname[len] = '\0';
+        char *newfontname = new char[len + 1];
+        fread(newfontname, sizeof(char), len, VF_file);
+        newfontname[len] = '\0';
 
 #ifdef DEBUG_FONTS
         qCDebug(OkularDviDebug) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design;
@@ -93,8 +93,8 @@ void TeXFontDefinition::read_VF_index()
         // imposes. One obtains the enlargement by dividing 2^20.
         double enlargement_factor = double(scale) / (1 << 20) * enlargement;
 
-        //    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, (quint32)(scaled_size_in_DVI_units*enlargement_factor), enlargement_factor);
-        TeXFontDefinition *newfontp = font_pool->appendx(QString::fromLocal8Bit(fontname), checksum, (quint32)((double(scale) / (1 << 20)) * scaled_size_in_DVI_units), enlargement_factor);
+        //    TeXFontDefinition *newfontp = font_pool->appendx(newfontname, checksum, (quint32)(scaled_size_in_DVI_units*enlargement_factor), enlargement_factor);
+        TeXFontDefinition *newfontp = font_pool->appendx(QString::fromLocal8Bit(newfontname), font_checksum, (quint32)((double(scale) / (1 << 20)) * scaled_size_in_DVI_units), enlargement_factor);
 
         // Insert font in dictionary and make sure the dictionary is big
         // enough.

@@ -275,8 +275,8 @@ KBookmark::List BookmarkManager::bookmarks(const QUrl &documentUrl) const
             continue;
         }
 
-        KBookmarkGroup group = bm.toGroup();
-        for (KBookmark b = group.first(); !b.isNull(); b = group.next(b)) {
+        KBookmarkGroup bmGroup = bm.toGroup();
+        for (KBookmark b = bmGroup.first(); !b.isNull(); b = bmGroup.next(b)) {
             if (b.isSeparator() || b.isGroup()) {
                 continue;
             }
@@ -624,8 +624,8 @@ QList<QAction *> BookmarkManager::actionsForUrl(const QUrl &documentUrl) const
             continue;
         }
 
-        KBookmarkGroup group = bm.toGroup();
-        for (KBookmark b = group.first(); !b.isNull(); b = group.next(b)) {
+        KBookmarkGroup bmGroup = bm.toGroup();
+        for (KBookmark b = bmGroup.first(); !b.isNull(); b = bmGroup.next(b)) {
             if (b.isSeparator() || b.isGroup()) {
                 continue;
             }
@@ -702,16 +702,16 @@ KBookmark BookmarkManager::nextBookmark(const DocumentViewport &viewport) const
     KBookmark::List bmarks = bookmarks();
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
-    KBookmark bookmark;
+    KBookmark nextBm;
     for (const KBookmark &bm : std::as_const(bmarks)) {
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (viewport < vp) {
-            bookmark = bm;
+            nextBm = bm;
             break;
         }
     }
 
-    return bookmark;
+    return nextBm;
 }
 
 KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) const
@@ -719,17 +719,17 @@ KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) co
     KBookmark::List bmarks = bookmarks();
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
-    KBookmark bookmark;
+    KBookmark prevBm;
     for (KBookmark::List::const_iterator it = bmarks.constEnd(); it != bmarks.constBegin(); --it) {
         KBookmark bm = *(it - 1);
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (vp < viewport) {
-            bookmark = bm;
+            prevBm = bm;
             break;
         }
     }
 
-    return bookmark;
+    return prevBm;
 }
 
 #undef foreachObserver

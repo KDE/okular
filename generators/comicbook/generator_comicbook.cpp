@@ -58,9 +58,9 @@ QImage ComicBookGenerator::image(Okular::PixmapRequest *request)
     int width = request->width();
     int height = request->height();
 
-    QImage image = mDocument.pageImage(request->pageNumber());
+    QImage pageImage = mDocument.pageImage(request->pageNumber());
 
-    return image.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    return pageImage.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
 Okular::Document::PrintError ComicBookGenerator::print(QPrinter &printer)
@@ -70,17 +70,17 @@ Okular::Document::PrintError ComicBookGenerator::print(QPrinter &printer)
     QList<int> pageList = Okular::FilePrinter::pageList(printer, document()->pages(), document()->currentPage() + 1, document()->bookmarkedPageList());
 
     for (int i = 0; i < pageList.count(); ++i) {
-        QImage image = mDocument.pageImage(pageList[i] - 1);
+        QImage pageImage = mDocument.pageImage(pageList[i] - 1);
 
-        if ((image.width() > printer.width()) || (image.height() > printer.height())) {
-            image = image.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        if ((pageImage.width() > printer.width()) || (pageImage.height() > printer.height())) {
+            pageImage = pageImage.scaled(printer.width(), printer.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
         if (i != 0) {
             printer.newPage();
         }
 
-        p.drawImage(0, 0, image);
+        p.drawImage(0, 0, pageImage);
     }
 
     return Okular::Document::NoPrintError;

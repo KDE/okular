@@ -1227,9 +1227,9 @@ void DocumentPrivate::recalculateForms()
                                         if (form->additionalAction(Okular::FormField::FieldModified) && !form->isReadOnly()) {
                                             m_parent->processKeystrokeCommitAction(form->additionalAction(Okular::FormField::FieldModified), form, returnCode);
                                         }
-                                        if (const Okular::Action *action = form->additionalAction(Okular::FormField::ValidateField)) {
+                                        if (const Okular::Action *validateAction = form->additionalAction(Okular::FormField::ValidateField)) {
                                             if (returnCode) {
-                                                m_parent->processValidateAction(action, form, returnCode);
+                                                m_parent->processValidateAction(validateAction, form, returnCode);
                                             }
                                         }
                                         if (!returnCode) {
@@ -1237,9 +1237,9 @@ void DocumentPrivate::recalculateForms()
                                         } else {
                                             form->commitValue(form->value().toString());
                                         }
-                                        if (const Okular::Action *action = form->additionalAction(Okular::FormField::FormatField)) {
+                                        if (const Okular::Action *formatAction = form->additionalAction(Okular::FormField::FormatField)) {
                                             // The format action handles the refresh.
-                                            m_parent->processFormatAction(action, form);
+                                            m_parent->processFormatAction(formatAction, form);
                                         } else {
                                             form->commitFormattedValue(form->value().toString());
                                             Q_EMIT m_parent->refreshFormWidget(form);
@@ -1590,21 +1590,19 @@ void DocumentPrivate::slotGeneratorConfigChanged()
 
     // reparse generator config and if something changed clear Pages
     bool configchanged = false;
-    QHash<QString, GeneratorInfo>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
-    for (; it != itEnd; ++it) {
-        Okular::ConfigInterface *iface = generatorConfig(it.value());
+    for (const auto &[key, value] : m_loadedGenerators.asKeyValueRange()) {
+        Okular::ConfigInterface *iface = generatorConfig(value);
         if (iface) {
             bool it_changed = iface->reparseConfig();
-            if (it_changed && (m_generator == it.value().generator)) {
+            if (it_changed && (m_generator == value.generator)) {
                 configchanged = true;
             }
         }
     }
     if (configchanged) {
         // invalidate pixmaps
-        QVector<Page *>::const_iterator it = m_pagesVector.constBegin(), end = m_pagesVector.constEnd();
-        for (; it != end; ++it) {
-            (*it)->deletePixmaps();
+        for (auto &page : std::as_const(m_pagesVector)) {
+            page->deletePixmaps();
         }
 
         // [MEM] remove allocation descriptors
@@ -3206,23 +3204,23 @@ QVariant Document::metaData(const QString &key, const QVariant &option) const
             // For now use the first hit. Could possibly be made smarter
             // in case there are multiple hits.
             while ((node = synctex_scanner_next_result(d->m_synctex_scanner))) {
-                Okular::DocumentViewport viewport;
+                Okular::DocumentViewport view;
 
                 // TeX pages start at 1.
-                viewport.pageNumber = synctex_node_page(node) - 1;
+                view.pageNumber = synctex_node_page(node) - 1;
 
-                if (viewport.pageNumber >= 0) {
+                if (view.pageNumber >= 0) {
                     const QSizeF dpi = d->m_generator->dpi();
 
                     // TeX small points ...
                     double px = (synctex_node_visible_h(node) * dpi.width()) / 72.27;
                     double py = (synctex_node_visible_v(node) * dpi.height()) / 72.27;
-                    viewport.rePos.normalizedX = px / page(viewport.pageNumber)->width();
-                    viewport.rePos.normalizedY = (py + 0.5) / page(viewport.pageNumber)->height();
-                    viewport.rePos.enabled = true;
-                    viewport.rePos.pos = Okular::DocumentViewport::Center;
+                    view.rePos.normalizedX = px / page(view.pageNumber)->width();
+                    view.rePos.normalizedY = (py + 0.5) / page(view.pageNumber)->height();
+                    view.rePos.enabled = true;
+                    view.rePos.pos = Okular::DocumentViewport::Center;
 
-                    return viewport.toString();
+                    return view.toString();
                 }
             }
         }
@@ -3889,8 +3887,8 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
         const bool forward = type == NextMatch;
         const int viewportPage = (*d->m_viewportIterator).pageNumber;
         const int fromStartSearchPage = forward ? 0 : d->m_pagesVector.count() - 1;
-        int currentPage = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
-        const Page *lastPage = fromStart ? nullptr : d->m_pagesVector[currentPage];
+        int currentPageNumber = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        const Page *lastPage = fromStart ? nullptr : d->m_pagesVector[currentPageNumber];
         int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)
@@ -3903,9 +3901,9 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
             }
             if (!match) {
                 if (forward) {
-                    currentPage++;
+                    currentPageNumber++;
                 } else {
-                    currentPage--;
+                    currentPageNumber--;
                 }
                 pagesDone++;
             }
@@ -3916,7 +3914,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
         DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
         searchStruct->pagesToNotify = pagesToNotify;
         searchStruct->match = match;
-        searchStruct->currentPage = currentPage;
+        searchStruct->currentPage = currentPageNumber;
         searchStruct->searchID = searchID;
 
         QTimer::singleShot(0, this, [this, searchStruct] { d->doContinueDirectionMatchSearch(searchStruct); });
@@ -5514,10 +5512,10 @@ QPageLayout::Orientation Document::orientation() const
     landscape = 0;
     portrait = 0;
     for (uint i = 0; i < pages(); i++) {
-        const Okular::Page *currentPage = page(i);
-        double width = currentPage->width();
-        double height = currentPage->height();
-        if (currentPage->orientation() == Okular::Rotation90 || currentPage->orientation() == Okular::Rotation270) {
+        const Okular::Page *current = page(i);
+        double width = current->width();
+        double height = current->height();
+        if (current->orientation() == Okular::Rotation90 || current->orientation() == Okular::Rotation270) {
             std::swap(width, height);
         }
         if (width > height) {

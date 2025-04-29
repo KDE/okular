@@ -198,9 +198,9 @@ void FormWidgetsController::slotButtonClicked(QAbstractButton *button)
     QList<bool> prevChecked;
     QList<Okular::FormFieldButton *> formButtons;
 
-    for (QAbstractButton *button : buttons) {
-        checked.append(button->isChecked());
-        Okular::FormFieldButton *formButton = static_cast<Okular::FormFieldButton *>(dynamic_cast<FormWidgetIface *>(button)->formField());
+    for (QAbstractButton *btn : buttons) {
+        checked.append(btn->isChecked());
+        Okular::FormFieldButton *formButton = static_cast<Okular::FormFieldButton *>(dynamic_cast<FormWidgetIface *>(btn)->formField());
         formButtons.append(formButton);
         prevChecked.append(formButton->state());
     }

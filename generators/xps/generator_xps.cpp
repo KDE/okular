@@ -474,8 +474,8 @@ static QByteArray readFileOrDirectoryParts(const KArchiveEntry *entry, QString *
         const KArchiveDirectory *relDir = static_cast<const KArchiveDirectory *>(entry);
         QStringList entries = relDir->entries();
         std::sort(entries.begin(), entries.end());
-        for (const QString &entry : std::as_const(entries)) {
-            const KArchiveEntry *relSubEntry = relDir->entry(entry);
+        for (const QString &entryElem : std::as_const(entries)) {
+            const KArchiveEntry *relSubEntry = relDir->entry(entryElem);
             if (!relSubEntry->isFile()) {
                 continue;
             }
@@ -1697,8 +1697,8 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName)
             if (docXml.name() == QStringLiteral("PageContent")) {
                 QString pagePath = docXml.attributes().value(QStringLiteral("Source")).toString();
                 qCWarning(OkularXpsDebug) << "Page Path: " << pagePath;
-                auto page = std::make_unique<XpsPage>(file, absolutePath(documentFilePath, pagePath));
-                m_pages.push_back(std::move(page));
+                auto xpsPage = std::make_unique<XpsPage>(file, absolutePath(documentFilePath, pagePath));
+                m_pages.push_back(std::move(xpsPage));
             } else if (docXml.name() == QStringLiteral("PageContent.LinkTargets")) {
                 // do nothing - wait for the real LinkTarget elements
             } else if (docXml.name() == QStringLiteral("LinkTarget")) {
@@ -2062,11 +2062,11 @@ bool XpsGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
 
         QTextStream ts(&f);
         for (int i = 0; i < m_xpsFile->numPages(); ++i) {
-            Okular::TextPage *textPage = m_xpsFile->page(i)->textPage();
-            QString text = textPage->text();
+            Okular::TextPage *tp = m_xpsFile->page(i)->textPage();
+            QString text = tp->text();
             ts << text;
             ts << QLatin1Char('\n');
-            delete textPage;
+            delete tp;
         }
         f.close();
 

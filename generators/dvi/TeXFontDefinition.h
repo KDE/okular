@@ -116,7 +116,7 @@ public:
     QHash<int, TeXFontDefinition *> vf_table;
     // accessible by number
     // used by (loaded) virtual fonts, list of fonts used by this vf
-    TeXFontDefinition *first_font;
+    TeXFontDefinition *first_font = nullptr;
 
 #ifdef HAVE_FREETYPE
     const QString &getFullFontName() const

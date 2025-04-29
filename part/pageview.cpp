@@ -158,7 +158,7 @@ public:
     Okular::Document *document = nullptr;
     QVector<PageViewItem *> items;
     QList<PageViewItem *> visibleItems;
-    MagnifierView *magnifierView;
+    MagnifierView *magnifierView = nullptr;
 
     // view layout (columns in Settings), zoom and mouse
     PageView::ZoomMode zoomMode = PageView::ZoomFitWidth;

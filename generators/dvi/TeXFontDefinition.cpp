@@ -32,14 +32,14 @@ extern const int MFResolutions[];
 // #define DEBUG_FONT
 
 TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units, class fontPool *pool, double _enlargement)
+    : fontname {nfontname}
+    , enlargement {_enlargement}
 {
 #ifdef DEBUG_FONT
     qCDebug(OkularDviDebug) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement;
 #endif
 
-    enlargement = _enlargement;
     font_pool = pool;
-    fontname = nfontname;
     font = nullptr;
     displayResolution_in_dpi = _displayResolution_in_dpi;
     checksum = chk;

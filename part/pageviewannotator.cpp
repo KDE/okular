@@ -364,6 +364,13 @@ public:
         const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
         const QString signatureText = i18n("Signed by: %1\n\nDate: %2", certSubjectCommonName, datetime);
 
+        m_creationCompleted = false;
+        clicked = false;
+        // safety check
+        if (!ann) {
+            return QList<Okular::Annotation *>();
+        }
+
         ann->setLeftText(certSubjectCommonName);
         ann->setText(signatureText);
         ann->setImagePath(m_signingInformation->backgroundImagePath);
@@ -373,14 +380,6 @@ public:
         ann->setLeftFontSize(0);
         ann->setFontSize(0);
 #endif
-
-        m_creationCompleted = false;
-        clicked = false;
-
-        // safety check
-        if (!ann) {
-            return QList<Okular::Annotation *>();
-        }
 
         // set the bounding rectangle, and make sure that the newly created
         // annotation lies within the page by translating it if necessary

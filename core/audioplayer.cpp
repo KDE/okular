@@ -10,6 +10,9 @@
 
 // qt/kde includes
 #include <KLocalizedString>
+#if HAVE_MULTIMEDIA
+#include <QAudioOutput>
+#endif
 #include <QBuffer>
 #include <QDebug>
 #include <QDir>
@@ -45,7 +48,7 @@ public:
     bool play(const SoundInfo &si);
     void stopPlayings();
 
-    void stateChanged(int, QMediaPlayer::State);
+    void playbackStateChanged(int, QMediaPlayer::PlaybackState);
 
     AudioPlayer *q;
 
@@ -140,7 +143,9 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
     PlayData *data = new PlayData();
     data->m_info = si;
     data->m_player = new QMediaPlayer();
-    data->m_player->setVolume(data->m_info.volume * 100); // Convert from double 0 - 1 to int 0 - 100 range.
+    QAudioOutput *audioOutput = new QAudioOutput();
+    data->m_player->setAudioOutput(audioOutput); 
+    audioOutput->setVolume(data->m_info.volume * 100); // Convert from double 0 - 1 to int 0 - 100 range.
     bool valid = false;
 
     switch (data->m_info.sound->soundType()) {
@@ -150,8 +155,8 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
         if (!url.isEmpty()) {
             int newid = newId();
             const QUrl newurl = QUrl::fromUserInput(url, m_currentDocument.adjusted(QUrl::RemoveFilename).toLocalFile());
-            data->m_player->setMedia(newurl);
-            QObject::connect(data->m_player, &QMediaPlayer::stateChanged, q, [this, newid](QMediaPlayer::State state) { stateChanged(newid, state); });
+            data->m_player->setSource(newurl);
+            QObject::connect(data->m_player, &QMediaPlayer::playbackStateChanged, q, [this, newid](QMediaPlayer::PlaybackState state) { playbackStateChanged(newid, state); });
             m_playing.insert(newid, data);
             valid = true;
         }
@@ -162,11 +167,11 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
         qCDebug(OkularCoreDebug) << "Embedded," << filedata.length();
         if (!filedata.isEmpty()) {
             int newid = newId();
-            QObject::connect(data->m_player, &QMediaPlayer::stateChanged, q, [this, newid](QMediaPlayer::State state) { stateChanged(newid, state); });
+            QObject::connect(data->m_player, &QMediaPlayer::playbackStateChanged, q, [this, newid](QMediaPlayer::PlaybackState state) { playbackStateChanged(newid, state); });
             QBuffer *buffer = new QBuffer();
             buffer->setData(filedata);
             buffer->open(QBuffer::ReadOnly);
-            data->m_player->setMedia(QMediaContent(), buffer);
+            data->m_player->setSourceDevice(buffer);
             m_playing.insert(newid, data);
             m_buffers.append(buffer);
             valid = true;
@@ -195,7 +200,7 @@ void AudioPlayerPrivate::stopPlayings()
     m_state = AudioPlayer::StoppedState;
 }
 
-void AudioPlayerPrivate::stateChanged(int id, QMediaPlayer::State state)
+void AudioPlayerPrivate::playbackStateChanged(int id, QMediaPlayer::PlaybackState state)
 {
     QHash<int, PlayData *>::iterator it = m_playing.find(id);
     if (it == m_playing.end()) {

@@ -2366,6 +2366,7 @@ class Okular::SignatureAnnotationPrivate : public Okular::AnnotationPrivate
 public:
     SignatureAnnotationPrivate()
         : AnnotationPrivate()
+        , m_pageNumber(-1)
     {
     }
 
@@ -2379,7 +2380,7 @@ public:
     QString m_fieldPartialName = QUuid::createUuid().toString();
     double m_fontSize = 10;
     double m_leftFontSize = 20;
-    int m_page;
+    int m_pageNumber;
     std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> m_signFunction;
 };
 
@@ -2483,13 +2484,13 @@ SigningResult SignatureAnnotation::sign(const Okular::NewSignatureData &data, co
 int SignatureAnnotation::page() const
 {
     Q_D(const SignatureAnnotation);
-    return d->m_page;
+    return d->m_pageNumber;
 }
 
 void SignatureAnnotation::setPage(int page)
 {
     Q_D(SignatureAnnotation);
-    d->m_page = page;
+    d->m_pageNumber = page;
 }
 
 void SignatureAnnotation::store(QDomNode & /*node*/, QDomDocument & /*document*/) const

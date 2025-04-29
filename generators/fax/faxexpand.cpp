@@ -358,7 +358,7 @@ void MHexpand(pagenode *pn, drawfunc df)
     BitAcc = 0;
     BitsAvail = 0;
     lastx = pn->size.width();
-    runs = (pixnum *)malloc(lastx * sizeof(pixnum));
+    runs = static_cast<pixnum *>(malloc(lastx * sizeof(pixnum)));
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
         printf("\nBitAcc=%08lX, BitsAvail = %d\n", BitAcc, BitsAvail);
@@ -415,7 +415,7 @@ void g31expand(pagenode *pn, drawfunc df)
     BitAcc = 0;
     BitsAvail = 0;
     lastx = pn->size.width();
-    runs = (pixnum *)malloc(lastx * sizeof(pixnum));
+    runs = static_cast<pixnum *>(malloc(lastx * sizeof(pixnum)));
     EOLcnt = 0;
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
@@ -508,7 +508,7 @@ void g32expand(pagenode *pn, drawfunc df)
     BitAcc = 0;
     BitsAvail = 0;
     /* allocate space for 2 runlength arrays */
-    run0 = (pixnum *)malloc(2 * ((lastx + 5) & ~1) * sizeof(pixnum));
+    run0 = static_cast<pixnum *>(malloc(2 * ((lastx + 5) & ~1) * sizeof(pixnum)));
     run1 = run0 + ((lastx + 5) & ~1);
     run1[0] = lastx;
     run1[1] = 0;
@@ -635,7 +635,7 @@ void g4expand(pagenode *pn, drawfunc df)
     BitAcc = 0;
     BitsAvail = 0;
     /* allocate space for 2 runlength arrays */
-    run0 = (pixnum *)malloc(2 * ((lastx + 5) & ~1) * sizeof(pixnum));
+    run0 = static_cast<pixnum *>(malloc(2 * ((lastx + 5) & ~1) * sizeof(pixnum)));
     run1 = run0 + ((lastx + 5) & ~1);
     run1[0] = lastx; /* initial reference line */
     run1[1] = 0;

@@ -185,7 +185,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
         // Turn the image into 8 bit
         QByteArray translated(characterBitmaps[ch]->w * characterBitmaps[ch]->h, '\0');
-        quint8 *data = (quint8 *)translated.data();
+        quint8 *data = reinterpret_cast<quint8 *>(translated.data());
         for (int x = 0; x < characterBitmaps[ch]->w; x++) {
             for (int y = 0; y < characterBitmaps[ch]->h; y++) {
                 quint8 bit = *(characterBitmaps[ch]->bits + characterBitmaps[ch]->bytes_wide * y + (x >> 3));
@@ -197,7 +197,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
         // Now shrink the image. We shrink the X-direction first
         QByteArray xshrunk(shrunk_width * characterBitmaps[ch]->h, '\0');
-        quint8 *xdata = (quint8 *)xshrunk.data();
+        quint8 *xdata = reinterpret_cast<quint8 *>(xshrunk.data());
 
         // Do the shrinking. The pixel (x,y) that we want to calculate
         // corresponds to the line segment from
@@ -230,7 +230,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
         // Now shrink the Y-direction
         QByteArray xyshrunk(shrunk_width * shrunk_height, '\0');
-        quint8 *xydata = (quint8 *)xyshrunk.data();
+        quint8 *xydata = reinterpret_cast<quint8 *>(xyshrunk.data());
         for (int x = 0; x < shrunk_width; x++) {
             for (int y = 0; y < shrunk_height; y++) {
                 quint32 value = 0;
@@ -263,7 +263,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
             // good quality rendering for overlapping characters.
             im32.fill(qRgb(color.red(), color.green(), color.blue()));
             for (int y = 0; y < shrunk_height; y++) {
-                quint8 *destScanLine = (quint8 *)im32.scanLine(y);
+                quint8 *destScanLine = reinterpret_cast<quint8 *>(im32.scanLine(y));
                 for (int col = 0; col < shrunk_width; col++) {
                     destScanLine[4 * col + 3] = xydata[shrunk_width * y + col];
                 }
@@ -301,8 +301,8 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     return g;
 }
 
-#define ADD(a, b) (reinterpret_cast<quint32 *>(((char *)a) + b))
-#define SUB(a, b) (reinterpret_cast<quint32 *>(((char *)a) - b))
+#define ADD(a, b) (reinterpret_cast<quint32 *>((reinterpret_cast<char *>(a)) + b))
+#define SUB(a, b) (reinterpret_cast<quint32 *>((reinterpret_cast<char *>(a)) - b))
 
 // This table is used for changing the bit order in a byte. The
 // expression bitflp[byte] takes a byte in big endian and gives the
@@ -596,7 +596,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         // The data in the bitmap is now in the processor's bit order,
         // that is, big endian. Since XWindows needs little endian, we
         // need to change the bit order now.
-        unsigned char *bitmapData = (unsigned char *)characterBitmaps[ch]->bits;
+        unsigned char *bitmapData = reinterpret_cast<unsigned char *>(characterBitmaps[ch]->bits);
         const unsigned char *endOfData = bitmapData + characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
         while (bitmapData < endOfData) {
             *bitmapData = bitflip[*bitmapData];

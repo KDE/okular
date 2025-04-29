@@ -83,9 +83,9 @@ private:
     void gs_generate_graphics_file(const quint16 page, const QString &filename, long magnification);
     QHash<quint16, pageInfo *> pageList;
 
-    double resolution; // in dots per inch
-    int pixel_page_w;  // in pixels
-    int pixel_page_h;  // in pixels
+    double resolution = 0; // in dots per inch
+    int pixel_page_w = 0;  // in pixels
+    int pixel_page_h = 0;  // in pixels
 
     QString includePath;
 

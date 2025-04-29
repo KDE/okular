@@ -98,7 +98,7 @@ static unsigned char *getstrip(pagenode *pn, int strip)
     *(reinterpret_cast<t32bits *>(data + roundup / 4 - 1)) = 0;
 
     /* we expect to get it in one gulp... */
-    if (!file.seek(offset) || (size_t)file.read((char *)data, pn->length) != pn->length) {
+    if (!file.seek(offset) || (size_t)file.read(reinterpret_cast<char *>(data), pn->length) != pn->length) {
         delete[] data;
         return nullptr;
     }
@@ -289,7 +289,7 @@ bool FaxDocument::load()
     }
 
     // convert it into a QImage
-    QImage img((uchar *)bytes.data(), d->mPageNode.size.width(), d->mPageNode.size.height(), QImage::Format_MonoLSB);
+    QImage img(reinterpret_cast<uchar *>(bytes.data()), d->mPageNode.size.width(), d->mPageNode.size.height(), QImage::Format_MonoLSB);
     img.setColor(0, qRgb(255, 255, 255));
     img.setColor(1, qRgb(0, 0, 0));
 

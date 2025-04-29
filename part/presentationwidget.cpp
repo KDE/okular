@@ -558,7 +558,7 @@ bool PresentationWidget::event(QEvent *e)
     }
 
     if (e->type() == QEvent::ToolTip) {
-        QHelpEvent *he = (QHelpEvent *)e;
+        QHelpEvent *he = static_cast<QHelpEvent *>(e);
 
         QRect r;
         const Okular::Action *link = getLink(he->pos(), &r);

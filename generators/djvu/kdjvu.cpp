@@ -485,7 +485,7 @@ QImage KDjVu::Private::generateImageTile(ddjvu_page_t *djvupage, int &res, int w
     // the following line workarounds a rare crash in djvulibre;
     // it should be fixed with >= 3.5.21
     ddjvu_page_get_width(djvupage);
-    res = ddjvu_page_render(djvupage, DDJVU_RENDER_COLOR, &pagerect, &renderrect, m_format, res_img.bytesPerLine(), (char *)res_img.bits());
+    res = ddjvu_page_render(djvupage, DDJVU_RENDER_COLOR, &pagerect, &renderrect, m_format, res_img.bytesPerLine(), reinterpret_cast<char *>(res_img.bits()));
     if (!res) {
         res_img.fill(Qt::white);
     }
@@ -997,7 +997,7 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
 
     // setting the options
     static const int optc = 1;
-    const char **optv = (const char **)malloc(1 * sizeof(char *));
+    const char *optv[1] = {};
     QByteArray plb = pl.toLatin1();
     optv[0] = plb.constData();
 
@@ -1005,8 +1005,6 @@ bool KDjVu::exportAsPostScript(QFile *file, const QList<int> &pageList) const
     while (!ddjvu_job_done(printjob)) {
         handle_ddjvu_messages(d->m_djvu_cxt, true);
     }
-
-    free(static_cast<void *>(optv));
 
     return fclose(f) == 0;
 }

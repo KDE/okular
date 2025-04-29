@@ -48,21 +48,21 @@ public:
     ~pagenode()
     {
     }
-    int nstrips;          /* number of strips */
-    int rowsperstrip;     /* number of rows per strip */
-    int stripnum;         /* current strip while expanding */
-    struct strip *strips; /* array of strips containing fax data in file */
-    t16bits *data;        /* in-memory copy of strip */
-    t16bits *dataOrig;    /* copy of `data', in case we shift it */
-    size_t length;        /* length of data */
-    QSize size;           /* width & height of page in pixels */
-    int inverse;          /* black <=> white */
-    int lsbfirst;         /* bit order is lsb first */
-    int orient;           /* orientation - upsidedown, landscape, mirrored */
-    int vres;             /* vertical resolution: 1 = fine  */
-    QPoint dpi;           /* DPI horz/vert */
-    void (*expander)(class pagenode *, drawfunc);
-    unsigned int bytes_per_line;
+    int nstrips = 0;                /* number of strips */
+    int rowsperstrip = 0;           /* number of rows per strip */
+    int stripnum = 0;               /* current strip while expanding */
+    struct strip *strips = nullptr; /* array of strips containing fax data in file */
+    t16bits *data = nullptr;        /* in-memory copy of strip */
+    t16bits *dataOrig = nullptr;    /* copy of `data', in case we shift it */
+    size_t length = 0;              /* length of data */
+    QSize size;                     /* width & height of page in pixels */
+    int inverse = 0;                /* black <=> white */
+    int lsbfirst = 0;               /* bit order is lsb first */
+    int orient = 0;                 /* orientation - upsidedown, landscape, mirrored */
+    int vres = 0;                   /* vertical resolution: 1 = fine  */
+    QPoint dpi;                     /* DPI horz/vert */
+    void (*expander)(class pagenode *, drawfunc) = {};
+    unsigned int bytes_per_line = 0;
     QString filename;           /* The name of the file to be opened */
     QImage image;               /* The final image */
     uchar *imageData = nullptr; /* The temporary raw image data */

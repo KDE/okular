@@ -156,7 +156,7 @@ void TeXFontDefinition::read_VF_index()
                     m->pos = new unsigned char[len];
                 }
             }
-            fread((char *)m->pos, 1, len, VF_file);
+            fread(reinterpret_cast<char *>(m->pos), 1, len, VF_file);
             m->end = m->pos + len;
         }
     }

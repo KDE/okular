@@ -115,7 +115,7 @@ void dvifile::process_preamble()
     // string.
     char job_id[300];
     magic_number = readUINT8();
-    strncpy(job_id, (char *)command_pointer, magic_number);
+    strncpy(job_id, reinterpret_cast<const char *>(command_pointer), magic_number);
     job_id[magic_number] = '\0';
     generatorString = QString::fromLocal8Bit(job_id);
 }
@@ -170,7 +170,7 @@ void dvifile::read_postamble()
         quint32 scale = readUINT32();
         quint32 design = readUINT32();
         quint16 len = readUINT8() + readUINT8(); // Length of the font name, including the directory name
-        QByteArray fontname((char *)command_pointer, len);
+        QByteArray fontname(reinterpret_cast<const char *>(command_pointer), len);
         command_pointer += len;
 
 #ifdef DEBUG_FONTS
@@ -276,7 +276,7 @@ dvifile::dvifile(const QString &fname, fontPool *pool)
         qCCritical(OkularDviDebug) << "Not enough memory to load the DVI-file.";
         return;
     }
-    file.read((char *)dvi_Data(), size_of_file);
+    file.read(reinterpret_cast<char *>(dvi_Data()), size_of_file);
     file.close();
     if (file.error() != QFile::NoError) {
         qCCritical(OkularDviDebug) << "Could not load the DVI-file.";
@@ -325,7 +325,7 @@ void dvifile::renumber()
 
     for (int i = 1; i <= total_pages; i++) {
         quint8 *ptr = dviData.data() + page_offset[i - 1] + 1;
-        const quint8 *num = (quint8 *)&i;
+        const quint8 *num = reinterpret_cast<quint8 *>(&i);
         for (quint8 j = 0; j < 4; j++) {
             if (bigEndian) {
                 *(ptr++) = num[0];
@@ -436,7 +436,7 @@ bool dvifile::saveAs(const QString &filename)
     if (out.open(QIODevice::WriteOnly) == false) {
         return false;
     }
-    if (out.write((char *)(dvi_Data()), size_of_file) == -1) {
+    if (out.write(reinterpret_cast<char *>(dvi_Data()), size_of_file) == -1) {
         return false;
     }
     out.close();

@@ -19,15 +19,15 @@ private:
     // open font file or NULL
     FILE *file;
 
-    struct bitmap *characterBitmaps[TeXFontDefinition::max_num_of_chars_in_font];
+    struct bitmap *characterBitmaps[TeXFontDefinition::max_num_of_chars_in_font] = {};
 
     // For use by PK-decryption routines. I don't understand what these
     // are good for -- Stefan Kebekus
     int PK_flag_byte;
-    unsigned int PK_input_byte;
-    int PK_bitpos;
-    int PK_dyn_f;
-    int PK_repeat_count;
+    unsigned int PK_input_byte = 0;
+    int PK_bitpos = 0;
+    int PK_dyn_f = 0;
+    int PK_repeat_count = 0;
 
     // PK-internal routines which were taken from xdvi. Again, I do not
     // really know what they are good for -- Stefan Kebekus

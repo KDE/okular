@@ -64,7 +64,7 @@ public:
         FONT_KPSE_NAME = 8
     };
 
-    enum font_type { TEX_PK, TEX_VIRTUAL, TEX_FONTMETRIC, FREETYPE };
+    enum font_type { UNKNOWN, TEX_PK, TEX_VIRTUAL, TEX_FONTMETRIC, FREETYPE };
 
     TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units, class fontPool *pool, double _enlargement);
     ~TeXFontDefinition();

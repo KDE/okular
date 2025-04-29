@@ -111,7 +111,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
     if (data) {
         switch (type) {
         case QTextDocument::ImageResource: {
-            QImage img = QImage::fromData((unsigned char *)data, size);
+            QImage img = QImage::fromData(reinterpret_cast<unsigned char *>(data), size);
             const int maxHeight = maxContentHeight();
             const int maxWidth = maxContentWidth();
             if (img.height() > maxHeight) {

@@ -23,7 +23,7 @@ private Q_SLOTS:
     void cleanupTestCase();
 
 private:
-    Okular::Document *m_document;
+    Okular::Document *m_document = nullptr;
 };
 
 void EpubGeneratorTest::initTestCase()

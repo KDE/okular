@@ -33,7 +33,7 @@ protected:
 
 private:
     QImage m_img;
-    FaxDocument::DocumentType m_type;
+    FaxDocument::DocumentType m_type = FaxDocument::G3;
 };
 
 #endif

@@ -257,7 +257,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
     currinf.set_char_p = &dviRenderer::set_no_char;
 
     int last_space_index = 0;
-    bool space_encountered = false;
+    bool space_encountered;
     bool after_space = false;
     for (;;) {
         space_encountered = false;

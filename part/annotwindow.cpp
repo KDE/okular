@@ -132,7 +132,7 @@ public:
         QMouseEvent *me = nullptr;
         switch (e->type()) {
         case QEvent::MouseButtonPress:
-            me = (QMouseEvent *)e;
+            me = static_cast<QMouseEvent *>(e);
             mousePressPos = me->pos();
             parentWidget()->raise();
             break;
@@ -140,7 +140,7 @@ public:
             mousePressPos = QPoint();
             break;
         case QEvent::MouseMove: {
-            me = (QMouseEvent *)e;
+            me = static_cast<QMouseEvent *>(e);
 
             // viewport info
             const QPoint topLeftPoint = parentWidget()->parentWidget()->pos();

@@ -65,8 +65,6 @@ public:
         : q(qq)
         , movie(m)
         , document(doc)
-        , player(nullptr)
-        , loaded(false)
     {
     }
 
@@ -94,17 +92,17 @@ public:
     Okular::Movie *movie;
     Okular::Document *document;
     Okular::NormalizedRect geom;
-    Phonon::VideoPlayer *player;
-    Phonon::SeekSlider *seekSlider;
-    QToolBar *controlBar;
-    QAction *playPauseAction;
-    QAction *stopAction;
-    QAction *seekSliderAction;
-    QAction *seekSliderMenuAction;
-    QStackedLayout *pageLayout;
-    QLabel *posterImagePage;
-    bool loaded : 1;
-    double repetitionsLeft;
+    Phonon::VideoPlayer *player = nullptr;
+    Phonon::SeekSlider *seekSlider = nullptr;
+    QToolBar *controlBar = nullptr;
+    QAction *playPauseAction = nullptr;
+    QAction *stopAction = nullptr;
+    QAction *seekSliderAction = nullptr;
+    QAction *seekSliderMenuAction = nullptr;
+    QStackedLayout *pageLayout = nullptr;
+    QLabel *posterImagePage = nullptr;
+    bool loaded : 1 = false;
+    double repetitionsLeft = 0;
 };
 
 static QUrl urlFromUrlString(const QString &url, Okular::Document *document)

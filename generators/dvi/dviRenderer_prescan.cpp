@@ -798,7 +798,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
             a = readUINT(ch - XXX1 + 1);
             if (a > 0) {
                 char *cmd = new char[a + 1];
-                strncpy(cmd, (char *)command_pointer, a);
+                strncpy(cmd, reinterpret_cast<char *>(command_pointer), a);
                 command_pointer += a;
                 cmd[a] = '\0';
                 (this->*specialParser)(cmd, beginningOfSpecialCommand);

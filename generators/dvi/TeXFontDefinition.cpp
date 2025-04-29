@@ -34,6 +34,7 @@ extern const int MFResolutions[];
 TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units, class fontPool *pool, double _enlargement)
     : fontname {nfontname}
     , enlargement {_enlargement}
+    , fontType {UNKNOWN}
 {
 #ifdef DEBUG_FONT
     qCDebug(OkularDviDebug) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement;

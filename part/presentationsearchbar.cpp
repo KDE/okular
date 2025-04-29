@@ -110,7 +110,7 @@ void PresentationSearchBar::resizeEvent(QResizeEvent *)
 bool PresentationSearchBar::eventFilter(QObject *obj, QEvent *e)
 {
     if (obj == m_handle && (e->type() == QEvent::MouseButtonPress || e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::MouseMove)) {
-        QMouseEvent *me = (QMouseEvent *)e;
+        QMouseEvent *me = static_cast<QMouseEvent *>(e);
         if (e->type() == QEvent::MouseButtonPress) {
             m_drag = m_handle->mapTo(this, me->pos());
         } else if (e->type() == QEvent::MouseButtonRelease) {

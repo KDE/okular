@@ -57,7 +57,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key, enum epub_metadata type
     data = epub_get_metadata(mTextDocument->getEpub(), type, &size);
 
     if (data) {
-        Q_EMIT addMetaData(key, _strPack((char **)data, size));
+        Q_EMIT addMetaData(key, _strPack(reinterpret_cast<char **>(data), size));
         for (int i = 0; i < size; i++) {
             free(data[i]);
         }
@@ -386,7 +386,7 @@ QTextDocument *Converter::convert(const QString &fileName)
                             block = _cursor->block();
                             QImage image;
                             mSectionMap.insert(link, block);
-                            if (image.loadFromData((unsigned char *)data, size)) {
+                            if (image.loadFromData(reinterpret_cast<unsigned char *>(data), size)) {
                                 mTextDocument->addResource(QTextDocument::ImageResource, QUrl(link), image);
                                 _cursor->insertImage(link);
                             } else {

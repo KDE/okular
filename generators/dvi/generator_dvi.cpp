@@ -41,6 +41,7 @@ OKULAR_EXPORT_PLUGIN(DviGenerator, "libokularGenerator_dvi.json")
 
 DviGenerator::DviGenerator(QObject *parent, const QVariantList &args)
     : Okular::Generator(parent, args)
+    , m_resolution {0}
     , m_fontExtracted(false)
     , m_docSynopsis(nullptr)
     , m_dviRenderer(nullptr)
@@ -396,6 +397,9 @@ Okular::FontInfo::List DviGenerator::fontsForPage(int page)
                 break;
             case TeXFontDefinition::FREETYPE:
                 ft = Okular::FontInfo::TeXFreeTypeHandled;
+                break;
+            case TeXFontDefinition::UNKNOWN:
+                ft = Okular::FontInfo::Unknown;
                 break;
             }
             of.setType(ft);

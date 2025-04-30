@@ -285,8 +285,9 @@ glyph *TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
             }
             qCCritical(OkularDviDebug) << msg;
             g->dvi_advance_in_units_of_design_size_by_2e20 = 1;
+        } else {
+            g->dvi_advance_in_units_of_design_size_by_2e20 = (qint32)(((qint64)(1 << 20) * (qint64)face->glyph->metrics.horiAdvance) / (qint64)face->units_per_EM);
         }
-        g->dvi_advance_in_units_of_design_size_by_2e20 = (qint32)(((qint64)(1 << 20) * (qint64)face->glyph->metrics.horiAdvance) / (qint64)face->units_per_EM);
     }
 
     return g;

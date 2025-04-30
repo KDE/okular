@@ -330,7 +330,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                 matchingFiles = fileNameList.filter(fn);
             }
 #endif
-            if (matchingFiles.isEmpty() == true) {
+            if (matchingFiles.isEmpty() == true) { /* cppcheck-suppress knownConditionTrueFalse */
                 matchingFiles += fileNameList.filter(QLatin1Char('/') + fontp->fontname + QLatin1Char('.'));
             }
 

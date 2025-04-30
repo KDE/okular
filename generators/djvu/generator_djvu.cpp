@@ -304,7 +304,7 @@ Okular::ObjectRect *DjVuGenerator::convertKDjVuLink(int page, KDjVu::Link *link)
         int width = p.width();
         int height = p.height();
         bool scape_orientation = false; // hack by tokoe, should always create default page
-        if (scape_orientation) {
+        if (scape_orientation) {        /* cppcheck-suppress knownConditionTrueFalse*/
             std::swap(width, height);
         }
         switch (link->areaType()) {

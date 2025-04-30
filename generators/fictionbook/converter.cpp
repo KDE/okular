@@ -108,7 +108,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     QDomElement element = documentElement.firstChildElement();
     while (!element.isNull()) {
         if (element.tagName() == QLatin1String("binary")) {
-            if (!convertBinary(element)) {
+            if (!convertBinary(element)) { /* cppcheck-suppress knownConditionTrueFalse */
                 delete mCursor;
                 return nullptr;
             }
@@ -245,7 +245,7 @@ bool Converter::convertBody(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child)) {
+            if (!convertImage(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("title")) {
@@ -294,7 +294,7 @@ bool Converter::convertTitleInfo(const QDomElement &element)
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("genre")) {
             QString genre;
-            if (!convertTextNode(child, genre)) {
+            if (!convertTextNode(child, genre)) { /*cppcheck-suppress knownConditionTrueFalse*/
                 return false;
             }
 
@@ -314,28 +314,28 @@ bool Converter::convertTitleInfo(const QDomElement &element)
                 mTitleInfo->mAuthor += QStringLiteral(", %1 %2 %3").arg(firstName, middleName, lastName).simplified();
             }
         } else if (child.tagName() == QLatin1String("book-title")) {
-            if (!convertTextNode(child, mTitleInfo->mTitle)) {
+            if (!convertTextNode(child, mTitleInfo->mTitle)) { /* cppcheck-suppress knownConditionTrueFalse*/
                 return false;
             }
         } else if (child.tagName() == QLatin1String("keywords")) {
             QString keywords;
-            if (!convertTextNode(child, keywords)) {
+            if (!convertTextNode(child, keywords)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
 
             mTitleInfo->mKeywords = keywords;
         } else if (child.tagName() == QLatin1String("annotation")) {
-            if (!convertAnnotation(child, mTitleInfo->mAnnotation)) {
+            if (!convertAnnotation(child, mTitleInfo->mAnnotation)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("date")) {
-            if (!convertDate(child, mTitleInfo->mDate)) {
+            if (!convertDate(child, mTitleInfo->mDate)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("coverpage")) {
             mTitleInfo->mCoverPage = child;
         } else if (child.tagName() == QLatin1String("lang")) {
-            if (!convertTextNode(child, mTitleInfo->mLanguage)) {
+            if (!convertTextNode(child, mTitleInfo->mLanguage)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         }
@@ -361,19 +361,19 @@ bool Converter::convertDocumentInfo(const QDomElement &element)
 
             mDocumentInfo->mAuthor = QStringLiteral("%1 %2 %3 <%4> (%5)").arg(firstName, middleName, lastName, email, nickname);
         } else if (child.tagName() == QLatin1String("program-used")) {
-            if (!convertTextNode(child, mDocumentInfo->mProducer)) {
+            if (!convertTextNode(child, mDocumentInfo->mProducer)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("date")) {
-            if (!convertDate(child, mDocumentInfo->mDate)) {
+            if (!convertDate(child, mDocumentInfo->mDate)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("id")) {
-            if (!convertTextNode(child, mDocumentInfo->mId)) {
+            if (!convertTextNode(child, mDocumentInfo->mId)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("version")) {
-            if (!convertTextNode(child, mDocumentInfo->mVersion)) {
+            if (!convertTextNode(child, mDocumentInfo->mVersion)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         }
@@ -388,23 +388,23 @@ bool Converter::convertAuthor(const QDomElement &element, QString &firstName, QS
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("first-name")) {
-            if (!convertTextNode(child, firstName)) {
+            if (!convertTextNode(child, firstName)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("middle-name")) {
-            if (!convertTextNode(child, middleName)) {
+            if (!convertTextNode(child, middleName)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("last-name")) {
-            if (!convertTextNode(child, lastName)) {
+            if (!convertTextNode(child, lastName)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("email")) {
-            if (!convertTextNode(child, email)) {
+            if (!convertTextNode(child, email)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("nickname")) {
-            if (!convertTextNode(child, nickname)) {
+            if (!convertTextNode(child, nickname)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         }
@@ -473,7 +473,7 @@ bool Converter::convertSection(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child)) {
+            if (!convertImage(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("section")) {
@@ -500,7 +500,7 @@ bool Converter::convertSection(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child)) {
+            if (!convertEmptyLine(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("code")) {
@@ -559,7 +559,7 @@ bool Converter::convertTitle(const QDomElement &element)
             Q_EMIT addTitle(mSectionCounter, child.text(), mCursor->block());
 
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child)) {
+            if (!convertEmptyLine(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         }
@@ -595,7 +595,7 @@ bool Converter::convertParagraph(const QDomElement &element)
                     return false;
                 }
             } else if (childElement.tagName() == QLatin1String("image")) {
-                if (!convertImage(childElement)) {
+                if (!convertImage(childElement)) { /* cppcheck-suppress knownConditionTrueFalse */
                     return false;
                 }
             } else if (childElement.tagName() == QLatin1String("strikethrough")) {
@@ -704,7 +704,7 @@ bool Converter::convertCover(const QDomElement &element)
     QDomElement child = element.firstChildElement();
     while (!child.isNull()) {
         if (child.tagName() == QLatin1String("image")) {
-            if (!convertImage(child)) {
+            if (!convertImage(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         }
@@ -759,7 +759,7 @@ bool Converter::convertEpigraph(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child)) {
+            if (!convertEmptyLine(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("text-author")) {
@@ -790,7 +790,7 @@ bool Converter::convertPoem(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child)) {
+            if (!convertEmptyLine(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("stanza")) {
@@ -856,7 +856,7 @@ bool Converter::convertCite(const QDomElement &element)
                 return false;
             }
         } else if (child.tagName() == QLatin1String("empty-line")) {
-            if (!convertEmptyLine(child)) {
+            if (!convertEmptyLine(child)) { /* cppcheck-suppress knownConditionTrueFalse */
                 return false;
             }
         } else if (child.tagName() == QLatin1String("subtitle")) {

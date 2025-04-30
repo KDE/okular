@@ -1529,10 +1529,10 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
     // Windows can only print by rasterization, because that is
     // currently the only way Okular implements printing without using UNIX-specific
     // tools like 'lpr'.
-    forceRasterize = true;
+    forceRasterize = true; /* cppcheck-suppress redundantAssignment */
 #endif
 
-    if (forceRasterize) {
+    if (forceRasterize) { /* cppcheck-suppress knownConditionTrueFalse */
         pdfdoc->setRenderHint(Poppler::Document::HideAnnotations, !printAnnots);
         pdfdoc->setRenderHint(Poppler::Document::OverprintPreview, overprintPreviewEnabled);
 

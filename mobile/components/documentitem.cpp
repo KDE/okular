@@ -61,7 +61,7 @@ void DocumentItem::openUrl(const QUrl &url, const QString &password)
     QUrl realUrl = url; // NOLINT(performance-unnecessary-copy-initialization) because of the ifdef below this can't be const &
 
 #ifdef Q_OS_ANDROID
-    realUrl =
+    realUrl = /* cppcheck-suppress redundantInitialization */
         QUrl(QJniObject(QNativeInterface::QAndroidApplication::context()).callObjectMethod("contentUrlToFd", "(Ljava/lang/String;)Ljava/lang/String;", QJniObject::fromString(url.toString(QUrl::FullyEncoded)).object<jstring>()).toString());
 #endif
 

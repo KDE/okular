@@ -712,8 +712,8 @@ void Shell::fileOpen()
         dlg->setNameFilters(namePatterns);
     }
 
-    dlg->setWindowTitle(i18n("Open Document"));
-    if (dlg->exec() && dlg) {
+    dlg->setWindowTitle(i18n("Open Document")); /* cppcheck-suppress nullPointerRedundantCheck ; QPointer things here is not understood*/
+    if (dlg->exec() && dlg) {                   /* cppcheck-suppress nullPointerRedundantCheck ; QPointer things here is not understood*/
         const QList<QUrl> urlList = dlg->selectedUrls();
         for (const QUrl &url : urlList) {
             openUrl(url);

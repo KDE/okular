@@ -734,7 +734,7 @@ TextAreaEdit::~TextAreaEdit()
 bool TextAreaEdit::event(QEvent *e)
 {
     if (e->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e); /* cppcheck-suppress constVariablePointer ; Qt doesn't have const equality operator*/
         if (keyEvent == QKeySequence::Undo) {
             Q_EMIT m_controller->requestUndo();
             return true;
@@ -889,7 +889,7 @@ bool FileEdit::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == lineEdit()) {
         if (event->type() == QEvent::KeyPress) {
-            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event); /* cppcheck-suppress constVariablePointer */
             if (keyEvent == QKeySequence::Undo) {
                 Q_EMIT m_controller->requestUndo();
                 return true;

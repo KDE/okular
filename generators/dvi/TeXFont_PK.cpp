@@ -351,9 +351,10 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
     qCDebug(OkularDviDebug) << "PK_packed_num";
 #endif
 
-    int i, j;
+    int i;
 
     if ((i = PK_get_nyb(fp)) == 0) {
+        int j;
         do {
             j = PK_get_nyb(fp);
             ++i;

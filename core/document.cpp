@@ -1208,14 +1208,13 @@ void DocumentPrivate::recalculateForms()
                         const Action *action = form->additionalAction(FormField::CalculateField);
                         if (action) {
                             std::shared_ptr<Event> event;
-                            QString oldVal;
                             if (dynamic_cast<FormFieldText *>(form) || dynamic_cast<FormFieldChoice *>(form)) {
                                 // Prepare text calculate event
                                 event = Event::createFormCalculateEvent(form, m_pagesVector[pageIdx]);
                                 const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
                                 executeScriptEvent(event, linkscript);
                                 // The value maybe changed in javascript so save it first.
-                                oldVal = form->value().toString();
+                                QString oldVal = form->value().toString();
 
                                 if (event) {
                                     // Update text field from calculate

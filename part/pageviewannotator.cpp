@@ -329,9 +329,9 @@ private:
     bool center;
 };
 
-#if HAVE_NEW_SIGNATURE_API
 class PickPointEngineSignature : public PickPointEngine
 {
+#if HAVE_NEW_SIGNATURE_API
 public:
     explicit PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
         : PickPointEngine({})
@@ -411,10 +411,7 @@ private:
 
     bool m_aborted;
     SignaturePartUtils::SigningInformation *m_signingInformation;
-};
 #else
-class PickPointEngineSignature : public PickPointEngine
-{
 public:
     PickPointEngineSignature(Okular::Document *document, PageView *pageView, SignaturePartUtils::SigningInformation *info)
         : PickPointEngine({})
@@ -505,8 +502,8 @@ private:
     bool m_startOver;
     bool m_aborted;
     SignaturePartUtils::SigningInformation *m_signingInformation;
-};
 #endif
+};
 
 /** @short PolyLineEngine */
 class PolyLineEngine : public AnnotatorEngine

@@ -6,7 +6,8 @@ include:
     file:
       - /gitlab-templates/android-qt6.yml
       - /gitlab-templates/linux-qt6.yml
-      - /gitlab-templates/linux-qt6-next.yml
+# Disable qt6-next temporarily due to       https://bugreports.qt.io/browse/QTBUG-136485
+#      - /gitlab-templates/linux-qt6-next.yml
       - /gitlab-templates/freebsd-qt6.yml
       - /gitlab-templates/windows-qt6.yml
       - /gitlab-templates/cppcheck.yml

@@ -1648,8 +1648,7 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
     psConverter->setTitle(pstitle);
 
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 9, 0)
-    const auto isPdfOutput = printer.outputFormat() == QPrinter::PdfFormat;
-    psConverter->setForceOverprintPreview(!isPdfOutput && overprintPreviewEnabled);
+    psConverter->setForceOverprintPreview(overprintPreviewEnabled);
 #endif
 
     if (!printAnnots) {

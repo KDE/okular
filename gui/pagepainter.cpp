@@ -146,9 +146,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                nYMax = ((double)limits.bottom() / scaledHeight) + crop.top;
         // append all highlights inside limits to their list
         if (canDrawHighlights) {
-            if (!bufferedHighlights) {
-                bufferedHighlights = new QList<QPair<QColor, Okular::NormalizedRect>>();
-            }
+            bufferedHighlights = new QList<QPair<QColor, Okular::NormalizedRect>>();
             /*            else
                         {*/
 

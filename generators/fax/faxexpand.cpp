@@ -43,7 +43,7 @@ pagenode::pagenode()
         int t;                                                                                                                                                                                                                                 \
         NeedBits(wid);                                                                                                                                                                                                                         \
         TabEnt = tab + GetBits(wid);                                                                                                                                                                                                           \
-        printf("%08lX/%d: %s%5d\t", BitAcc, BitsAvail, StateNames[TabEnt->State], TabEnt->Param);                                                                                                                                              \
+        printf("%08u4/%d: %s%5d\t", BitAcc, BitsAvail, StateNames[TabEnt->State], TabEnt->Param);                                                                                                                                              \
         for (t = 0; t < TabEnt->Width; t++)                                                                                                                                                                                                    \
             DEBUG_SHOW;                                                                                                                                                                                                                        \
         putchar('\n');                                                                                                                                                                                                                         \
@@ -361,7 +361,7 @@ void MHexpand(pagenode *pn, drawfunc df)
     runs = static_cast<pixnum *>(malloc(lastx * sizeof(pixnum)));
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
-        printf("\nBitAcc=%08lX, BitsAvail = %d\n", BitAcc, BitsAvail);
+        printf("\nBitAcc=%08u, BitsAvail = %d\n", BitAcc, BitsAvail);
         printf("-------------------- %d\n", LineNum);
         fflush(stdout);
 #endif
@@ -419,7 +419,7 @@ void g31expand(pagenode *pn, drawfunc df)
     EOLcnt = 0;
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
-        fprintf(stderr, "\nBitAcc=%08lX, BitsAvail = %d\n", BitAcc, BitsAvail);
+        fprintf(stderr, "\nBitAcc=%08u, BitsAvail = %d\n", BitAcc, BitsAvail);
         fprintf(stderr, "-------------------- %d\n", LineNum);
         fflush(stderr);
 #endif
@@ -515,7 +515,7 @@ void g32expand(pagenode *pn, drawfunc df)
     EOLcnt = 0;
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
-        printf("\nBitAcc=%08lX, BitsAvail = %d\n", BitAcc, BitsAvail);
+        printf("\nBitAcc=%08u, BitsAvail = %d\n", BitAcc, BitsAvail);
         printf("-------------------- %d\n", LineNum);
         fflush(stdout);
 #endif
@@ -642,7 +642,7 @@ void g4expand(pagenode *pn, drawfunc df)
 
     for (LineNum = 0; LineNum < pn->rowsperstrip;) {
 #ifdef DEBUG_FAX
-        printf("\nBitAcc=%08lX, BitsAvail = %d\n", BitAcc, BitsAvail);
+        printf("\nBitAcc=%08u, BitsAvail = %d\n", BitAcc, BitsAvail);
         printf("-------------------- %d\n", LineNum);
         fflush(stdout);
 #endif

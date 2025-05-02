@@ -671,25 +671,24 @@ void dviRenderer::prescan(parseSpecials specialParser)
             continue;
         }
 
-        qint32 a, b;
-
         switch (ch) {
         case SET1:
             prescan_setChar(readUINT8());
             break;
 
-        case SETRULE:
+        case SETRULE: {
             /* Be careful, dvicopy outputs rules with height =
                0x80000000. We don't want any SIGFPE here. */
-            a = readUINT32();
-            b = readUINT32();
+            (void)readUINT32();
+            quint32 b = readUINT32();
             b = ((long)(b * 65536.0 * fontPixelPerDVIunit));
             currinf.data.dvi_h += b;
             break;
+        }
 
         case PUTRULE:
-            a = readUINT32();
-            b = readUINT32();
+            (void)readUINT32();
+            (void)readUINT32();
             break;
 
         case PUT1:
@@ -795,7 +794,7 @@ void dviRenderer::prescan(parseSpecials specialParser)
         case XXX3:
         case XXX4: {
             quint8 *beginningOfSpecialCommand = command_pointer - 1;
-            a = readUINT(ch - XXX1 + 1);
+            quint32 a = readUINT(ch - XXX1 + 1);
             if (a > 0) {
                 char *cmd = new char[a + 1];
                 strncpy(cmd, reinterpret_cast<char *>(command_pointer), a);

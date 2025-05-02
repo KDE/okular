@@ -96,6 +96,7 @@ void TeXFontDefinition::read_VF_index()
         //    TeXFontDefinition *newfontp = font_pool->appendx(newfontname, checksum, (quint32)(scaled_size_in_DVI_units*enlargement_factor), enlargement_factor);
         TeXFontDefinition *newfontp = font_pool->appendx(QString::fromLocal8Bit(newfontname), font_checksum, (quint32)((double(scale) / (1 << 20)) * scaled_size_in_DVI_units), enlargement_factor);
 
+        delete[] newfontname;
         // Insert font in dictionary and make sure the dictionary is big
         // enough.
         if (vf_table.capacity() - 2 <= vf_table.count()) {

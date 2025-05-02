@@ -123,7 +123,7 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     XmlGui
 )
 
-if (NOT WIN32)
+if (NOT WIN32 AND NOT HAIKU)
     find_package(KF6Wallet ${KF_REQUIRED_VERSION})
     set_okular_optional_package_properties(KF6Wallet PROPERTIES
     PURPOSE "Required for document storing passwords in secure wallets.")

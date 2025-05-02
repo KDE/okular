@@ -16,7 +16,7 @@ set_target_properties(okular_comicbook PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 okular_add_generator(okularGenerator_comicbook generator_comicbook.cpp)
 target_link_libraries(okularGenerator_comicbook okular_comicbook)
-if (UNIX AND NOT ANDROID)
+if (UNIX AND NOT ANDROID AND NOT HAIKU)
    find_package(KF6Pty REQUIRED)
    target_compile_definitions(okular_comicbook PRIVATE -DWITH_KPTY=1)
    target_link_libraries(okular_comicbook KF6::Pty)

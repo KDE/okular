@@ -226,6 +226,10 @@ QImage DviGenerator::image(Okular::PixmapRequest *request)
 
 Okular::TextPage *DviGenerator::textPage(Okular::TextRequest *request)
 {
+    if (!m_dviRenderer) {
+        return nullptr;
+    }
+
     const Okular::Page *page = request->page();
 
     qCDebug(OkularDviDebug);
@@ -236,21 +240,17 @@ Okular::TextPage *DviGenerator::textPage(Okular::TextRequest *request)
 
     pageInfo.pageNumber = page->number() + 1;
 
-    pageInfo.resolution = m_resolution;
-
     QMutexLocker lock(userMutex());
 
     // get page text from m_dviRenderer
     Okular::TextPage *ktp = nullptr;
-    if (m_dviRenderer) {
-        SimplePageSize s = m_dviRenderer->sizeOfPage(pageInfo.pageNumber);
-        pageInfo.resolution = (double)(pageInfo.width) / s.width().getLength_in_inch();
+    SimplePageSize s = m_dviRenderer->sizeOfPage(pageInfo.pageNumber);
+    pageInfo.resolution = (double)(pageInfo.width) / s.width().getLength_in_inch();
 
-        m_dviRenderer->getText(&pageInfo);
-        lock.unlock();
+    m_dviRenderer->getText(&pageInfo);
+    lock.unlock();
 
-        ktp = extractTextFromPage(pageInfo);
-    }
+    ktp = extractTextFromPage(pageInfo);
     return ktp;
 }
 

@@ -109,11 +109,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
             Hyperlink dhl;
             dhl.baseline = currinf.data.pxl_v;
             dhl.box.setRect(x, y, pix.width(), pix.height());
-            if (source_href != nullptr) {
-                dhl.linkText = *source_href;
-            } else {
-                dhl.linkText = QLatin1String("");
-            }
+            dhl.linkText = *source_href;
             currentDVIPage->sourceHyperLinkList.push_back(dhl);
         } else {
             QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size() - 1].box.united(QRect(x, y, pix.width(), pix.height()));

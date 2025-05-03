@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-16 00:38+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2024-10-17 10:55+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -219,37 +219,37 @@ msgstr ""
 "Okular ei pystynyt löytämään DVI-tiedoston sijaintia, joka vastaa riviä %1 "
 "TeX-tiedostossa %2."
 
-#: dviRenderer_draw.cpp:243
+#: dviRenderer_draw.cpp:239
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI-koodi latoi merkin, joka kuuluu tuntemattomaan fonttiin."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI-koodi viittaa fonttiin #%1, jota ei ole vielä määritelty."
 
-#: dviRenderer_draw.cpp:353
+#: dviRenderer_draw.cpp:349
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "Pino ei ollut tyhjä, kun kohdattiin EOP-komento."
 
-#: dviRenderer_draw.cpp:365
+#: dviRenderer_draw.cpp:361
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "Pino oli tyhjä, kun kohdattiin POP-komento."
 
-#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr "DVI-koodi viittasi fonttiin, jota ei ole vielä määritelty."
 
-#: dviRenderer_draw.cpp:539
+#: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "Kohdattiin virheellinen komento."
 
-#: dviRenderer_draw.cpp:544
+#: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "Kohdattiin tuntematon koodi %1."
@@ -321,12 +321,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Generoidaan %1 tarkkuudella %2 dpi…"
 
-#: generator_dvi.cpp:287
+#: generator_dvi.cpp:288
 #, kde-format
 msgid "Generator/Date"
 msgstr "Generoija/Päivämäärä"
 
-#: generator_dvi.cpp:376
+#: generator_dvi.cpp:377
 #, kde-format
 msgid "Font file not found"
 msgstr "Fonttitiedostoa ei löytynyt"
@@ -467,42 +467,42 @@ msgstr "Tiedostoa %1 ei voitu avata"
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
 msgstr "TexFont_PK::operator[]:  Merkkiä %1 ei ole määritelty fontissa %2"
 
-#: TeXFont_PK.cpp:418
+#: TeXFont_PK.cpp:419
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
 msgstr "Odottamaton %1 PK-tiedostossa %2"
 
-#: TeXFont_PK.cpp:484
+#: TeXFont_PK.cpp:485
 #, kde-format
 msgid "The character %1 is too large in file %2"
 msgstr "Merkki %1 tiedostossa %2 on liian suuri"
 
-#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
 msgstr "Virheellinen määrä bittejä: merkki %1, fontti %2."
 
-#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
 msgstr "Viallinen PK-tiedosto (%1), liian paljon bittejä."
 
-#: TeXFont_PK.cpp:713
+#: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
 msgstr "Fontin sivusuhde ei ole neliömäinen."
 
-#: TeXFontDefinition.cpp:106
+#: TeXFontDefinition.cpp:107
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "Fonttia %1, tiedosto %2 ei löydy."
 
-#: TeXFontDefinition.cpp:123
+#: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "Tarkistussumma tiedostolle %1 ei täsmää"
 
-#: TeXFontDefinition.cpp:174
+#: TeXFontDefinition.cpp:175
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Fonttitiedoston %1 tiedostomuotoa ei tunnisteta"
@@ -538,7 +538,7 @@ msgstr ""
 "tai jos uskot, että Okularin pitäisi toimia tässä tilanteessa paremmin,\n"
 "ole ystävällinen ja tee virheraportti."
 
-#: vf.cpp:164
+#: vf.cpp:165
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Väärä komentotavu löydetty VF-makroluettelossa: %1"

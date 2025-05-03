@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-16 00:38+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2024-08-16 10:50+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -226,40 +226,40 @@ msgstr ""
 "Okular was niet in staat de plaats in het DVI-bestand te lokaliseren wat "
 "overeenkomt met regel %1 in het TeX-bestand %2."
 
-#: dviRenderer_draw.cpp:243
+#: dviRenderer_draw.cpp:239
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "De DVI-code zette een teken van een onbekend lettertype."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
 "De DVI-code verwees naar lettertype #%1, dat niet van te voren was "
 "gedefinieerd."
 
-#: dviRenderer_draw.cpp:353
+#: dviRenderer_draw.cpp:349
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "De stack was nog niet leeg toen het commando EOP bereikt werd."
 
-#: dviRenderer_draw.cpp:365
+#: dviRenderer_draw.cpp:361
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "De stack was leeg toen een commando POP bereikt werd."
 
-#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr ""
 "De DVI-code verwees naar een lettertype dat niet eerder was gedefinieerd."
 
-#: dviRenderer_draw.cpp:539
+#: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "Een illegaal commando werd aangetroffen."
 
-#: dviRenderer_draw.cpp:544
+#: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "Een onbekende op-code %1 werd aangetroffen."
@@ -334,12 +334,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Momenteel bezig met genereren van %1 op %2 dpi..."
 
-#: generator_dvi.cpp:287
+#: generator_dvi.cpp:288
 #, kde-format
 msgid "Generator/Date"
 msgstr "Generator/datum"
 
-#: generator_dvi.cpp:376
+#: generator_dvi.cpp:377
 #, kde-format
 msgid "Font file not found"
 msgstr "Lettertypebestand niet gevonden"
@@ -487,42 +487,42 @@ msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
 msgstr ""
 "TexFont_PK::operator[]: Het teken %1 is niet gedefinieerd in lettertype %2."
 
-#: TeXFont_PK.cpp:418
+#: TeXFont_PK.cpp:419
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
 msgstr "Onverwachte %1 in PK-bestand %2."
 
-#: TeXFont_PK.cpp:484
+#: TeXFont_PK.cpp:485
 #, kde-format
 msgid "The character %1 is too large in file %2"
 msgstr "Het teken %1 in bestand %2 is te groot."
 
-#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
 msgstr "Onjuist aantal bits opgeslagen: teken %1, lettertype %2"
 
-#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
 msgstr "Ongelding pk-bestand (%1), teveel bits."
 
-#: TeXFont_PK.cpp:713
+#: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
 msgstr "Lettertype heeft niet-vierkante verhouding "
 
-#: TeXFontDefinition.cpp:106
+#: TeXFontDefinition.cpp:107
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "Lettertype %1, bestand %2 is niet gevonden."
 
-#: TeXFontDefinition.cpp:123
+#: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "Controlesom onjuist voor lettertypebestand %1"
 
-#: TeXFontDefinition.cpp:174
+#: TeXFontDefinition.cpp:175
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Kan de opmaak voor lettertypebestand %1 niet herkennen."
@@ -558,7 +558,7 @@ msgstr ""
 "programmafout ontdekt hebt of vindt dat Okular zich in zo'n situatie beter\n"
 "dient te gedragen, meldt dan a.u.b. het probleem."
 
-#: vf.cpp:164
+#: vf.cpp:165
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Ongeldige commandobyte gevonden in VF-macro-lijst: %1"

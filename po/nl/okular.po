@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-27 00:40+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2025-03-27 13:47+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -304,29 +304,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1717
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Doorgaan met zoeken vanaf het begin"
 
-#: core/document.cpp:1723
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Doorgaan met zoeken vanaf het einde"
 
-#: core/document.cpp:2469
+#: core/document.cpp:2466
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Kon geen plugin vinden voor het openen van het  aangeleverde document."
 
-#: core/document.cpp:3633
+#: core/document.cpp:3630
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "annotaties verwijderen"
 
-#: core/document.cpp:4223 core/document.cpp:4229
+#: core/document.cpp:4220 core/document.cpp:4226
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -335,52 +335,52 @@ msgstr ""
 "Het document probeert een extern programma uit te voeren. Voor de veiligheid "
 "van uw systeem laat Okular dit niet toe."
 
-#: core/document.cpp:4239
+#: core/document.cpp:4236
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Geen programma gevonden voor het openen van bestanden van het type %1."
 
-#: core/document.cpp:4878
+#: core/document.cpp:4875
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Kon geen tijdelijk bestand openen"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4877
 #, kde-format
 msgid "Print conversion failed"
 msgstr "De afdrukconversie is mislukt"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Afdrukproces is onverwacht beëindigd"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Afdrukproces kon niet beginnen"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Afdrukken naar bestand is mislukt"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4885
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer was in een ongeldige status"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4887
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Af te drukken bestand is niet gevonden"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4889
 #, kde-format
 msgid "There was no file to print"
 msgstr "Er was geen bestand om af te drukken"
 
-#: core/document.cpp:4894
+#: core/document.cpp:4891
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -389,92 +389,92 @@ msgstr ""
 "Een geschikt programma voor afdrukken is niet gevonden. Verzeker u ervan dat "
 "het CUPS-programma lpr beschikbaar is"
 
-#: core/document.cpp:4896
+#: core/document.cpp:4893
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "De afdrukgrootte van de pagina is ongeldig"
 
-#: core/document.cpp:5574 part/part.cpp:1145
+#: core/document.cpp:5571 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Kon '%1' niet openen. Bestand bestaat niet"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6081
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6084
 #, kde-format
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6087
 #, kde-format
 msgid "Description"
 msgstr "Beschrijving"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6090
 #, kde-format
 msgid "Author"
 msgstr "Auteur"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6093
 #, kde-format
 msgid "Creator"
 msgstr "Aangemaakt door"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6096
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6099
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6102
 #, kde-format
 msgid "Pages"
 msgstr "Pagina's"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6105
 #, kde-format
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6108
 #, kde-format
 msgid "Modified"
 msgstr "Gewijzigd"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6111
 #, kde-format
 msgid "MIME Type"
 msgstr "Mime-type"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6114
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6117
 #, kde-format
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: core/document.cpp:6123
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Path"
 msgstr "Bestandspad"
 
-#: core/document.cpp:6126
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Size"
 msgstr "Bestandsgrootte"
 
-#: core/document.cpp:6129
+#: core/document.cpp:6126
 #, kde-format
 msgid "Page Size"
 msgstr "Paginagrootte"
@@ -709,19 +709,19 @@ msgid "Value"
 msgstr "Waarde"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Pop-up-notitie"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Typewriter"
 msgstr "Schrijfmachine"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Inline Note"
 msgstr "Inline-notitie"
@@ -732,7 +732,7 @@ msgid "Straight Line with Comment"
 msgstr "Rechte lijn met opmerking"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Straight Line"
 msgstr "Rechte lijn"
@@ -743,7 +743,7 @@ msgid "Polygon with Comment"
 msgstr "Polygoon met opmerking"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Polygon"
 msgstr "Veelhoek"
@@ -774,7 +774,7 @@ msgid "Squiggle with Comment"
 msgstr "Krul met opmerking"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
 msgstr "Golvend"
@@ -785,7 +785,7 @@ msgid "Underline with Comment"
 msgstr "Onderstreping met opmerking"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
-#: part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
 msgstr "Onderstrepen"
@@ -806,7 +806,7 @@ msgid "Stamp with Comment"
 msgstr "Stempel met opmerking"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Stamp"
 msgstr "Postzegel"
@@ -817,7 +817,7 @@ msgid "Freehand Line with Comment"
 msgstr "Lijn uit de vrije hand met opmerking"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Freehand Line"
 msgstr "Lijn uit de vrije hand"
@@ -2093,17 +2093,17 @@ msgstr "Vulling van vorm:"
 msgid "Type:"
 msgstr "Type:"
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "Doorgehaald"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "Rechthoek"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellips"
@@ -3996,17 +3996,17 @@ msgstr "Een rechthoek tekenen voor het veld voor ondertekenen in te voegen"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Teken een rechthoek rond het paginagebied dat u zichtbaar wilt laten"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "New Text Note"
 msgstr "Nieuwe tekstnotitie:"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "Text of the new note:"
 msgstr "Tekst voor de nieuwe notitie:"
 
-#: part/pageviewannotator.cpp:363
+#: part/pageviewannotator.cpp:365
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4017,7 +4017,7 @@ msgstr ""
 "\n"
 "Datum: %2"
 
-#: part/pageviewannotator.cpp:448
+#: part/pageviewannotator.cpp:446
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4029,19 +4029,19 @@ msgstr ""
 "u een potentieel beter leesbare ondertekening wilt aanmaken, druk op "
 "<interface>Opnieuw starten</interface> en teken een grotere rechthoek."
 
-#: part/pageviewannotator.cpp:450
+#: part/pageviewannotator.cpp:448
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Opnieuw starten"
 
-#: part/pageviewannotator.cpp:451
+#: part/pageviewannotator.cpp:449
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Ondertekenen"
 
-#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:288
+#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -4049,35 +4049,35 @@ msgstr ""
 "Kon niet ondertekenen. Ongeldig certificaat wachtwoord of kon niet schrijven "
 "naar '%1'"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name"
 msgstr "Naam van de auteur"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Naam van de auteur voor de annotatie:"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1330
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Teken een ellips (sleep om een zone te selecteren)"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Accentueer tekst"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Teken een lijn uit de vrije hand"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
@@ -4085,71 +4085,71 @@ msgstr ""
 "Inline-tekst-annotatie (sleep met de muisaanwijzer om een gebied te "
 "selecteren)"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Popup-notitie invoegen"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Teken een veelhoek (klik op het eerste punt om het te sluiten)"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Een rechthoek tekenen"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Tekst laten golven"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Plaats een postzegelsymbool"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Een rechte lijn tekenen"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Tekst doorhalen"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Tekst onderstrepen"
 
-#: part/pageviewannotator.cpp:1356
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Annotatie van schrijfmachine (sleep om een gebied te selecteren)"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Highlighter"
 msgstr "Accentuering"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Favoriete annotatie toevoegen"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Eigen annotatienaam:"
@@ -5710,30 +5710,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "Alleen pagina's met bladwijzer tonen"
 
-#: part/videowidget.cpp:145
+#: part/videowidget.cpp:143
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "Afspelen"
 
-#: part/videowidget.cpp:148
+#: part/videowidget.cpp:146
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "Pauze"
 
-#: part/videowidget.cpp:254
+#: part/videowidget.cpp:252
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "Stoppen"
 
-#: part/videowidget.cpp:503
+#: part/videowidget.cpp:501
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "Videos worden in deze okular niet ondersteund"
 
-#: part/videowidget.cpp:507
+#: part/videowidget.cpp:505
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "Videos worden in deze Okular niet ondersteund"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-16 00:38+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:11+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -234,41 +234,41 @@ msgstr ""
 "Το Okular δεν μπόρεσε να εντοπίσει τη θέση στο αρχείο DVI που αντιστοιχεί "
 "στη γραμμή %1 του αρχείου TeX %2."
 
-#: dviRenderer_draw.cpp:243
+#: dviRenderer_draw.cpp:239
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "Ο κώδικας DVI καθόρισε ένα χαρακτήρα μίας άγνωστης γραμματοσειράς."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
 "Ο κώδικας DVI αναφέρθηκε στη γραμματοσειρά #%1, η οποία δεν έχει "
 "προηγουμένως οριστεί."
 
-#: dviRenderer_draw.cpp:353
+#: dviRenderer_draw.cpp:349
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "Η στοίβα δεν ήταν άδεια όταν παρουσιάστηκε η εντολή EOP."
 
-#: dviRenderer_draw.cpp:365
+#: dviRenderer_draw.cpp:361
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "Η στοίβα ήταν άδεια όταν παρουσιάστηκε μία εντολή POP."
 
-#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr ""
 "Ο κώδικας DVI αναφέρθηκε σε μία γραμματοσειρά η οποία δεν έχει προηγουμένως "
 "οριστεί."
 
-#: dviRenderer_draw.cpp:539
+#: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "Βρέθηκε μια άγνωστη εντολή."
 
-#: dviRenderer_draw.cpp:544
+#: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "Βρέθηκε ένας άγνωστος κωδικός %1."
@@ -345,12 +345,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "Δημιουργία της γραμματοσειράς %1 στα %2 dpi..."
 
-#: generator_dvi.cpp:287
+#: generator_dvi.cpp:288
 #, kde-format
 msgid "Generator/Date"
 msgstr "Δημιουργός/Ημερομηνία"
 
-#: generator_dvi.cpp:376
+#: generator_dvi.cpp:377
 #, kde-format
 msgid "Font file not found"
 msgstr "Το αρχείο γραμματοσειράς δε βρέθηκε"
@@ -507,42 +507,42 @@ msgstr ""
 "TexFont_PK::operator[]: Ο χαρακτήρας %1 δεν είναι ορισμένος στη "
 "γραμματοσειρά %2"
 
-#: TeXFont_PK.cpp:418
+#: TeXFont_PK.cpp:419
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
 msgstr "Μη αναμενόμενο %1 στο αρχείο PK %2"
 
-#: TeXFont_PK.cpp:484
+#: TeXFont_PK.cpp:485
 #, kde-format
 msgid "The character %1 is too large in file %2"
 msgstr "Ο χαρακτήρας %1 είναι πολύ μεγάλος στο αρχείο %2"
 
-#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
 msgstr "Εσφαλμένος αριθμός αποθηκευμένων bit:  χαρ %1. γραμματοσειρά %2"
 
-#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
 msgstr "Χαλασμένο αρχείο pk (%1), πάρα πολλά bit"
 
-#: TeXFont_PK.cpp:713
+#: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
 msgstr "Η γραμματοσειρά έχει μη τετραγωνικό λόγο διαστάσεων"
 
-#: TeXFontDefinition.cpp:106
+#: TeXFontDefinition.cpp:107
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "Αδύνατη η εύρεση της γραμματοσειράς %1, αρχείο %2."
 
-#: TeXFontDefinition.cpp:123
+#: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "Το άθροισμα ελέγχου δεν ταιριάζει για το αρχείο γραμματοσειράς %1"
 
-#: TeXFontDefinition.cpp:174
+#: TeXFontDefinition.cpp:175
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Δεν είναι δυνατό να αναγνωριστεί ο τύπος του αρχείου γραμματοσειράς %1"
@@ -577,7 +577,7 @@ msgstr ""
 "βρήκατε ένα σφάλμα, ή ότι το Okular θα έπρεπε να διαχειριστεί\n"
 "καλύτερα αυτή την κατάσταση, παρακαλώ αναφέρετε το πρόβλημα."
 
-#: vf.cpp:164
+#: vf.cpp:165
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Εντοπίστηκε εσφαλμένη εντολή byte στη λίστα μακροεντολής VF: %1"

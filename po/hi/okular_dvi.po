@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-16 00:38+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2021-08-22 14:18+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -182,37 +182,37 @@ msgid ""
 "line %1 in the TeX-file %2."
 msgstr ""
 
-#: dviRenderer_draw.cpp:243
+#: dviRenderer_draw.cpp:239
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "अज्ञात फ़ॉन्ट का डीवीआई कोड सेट अक्षर."
 
-#: dviRenderer_draw.cpp:270 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
 
-#: dviRenderer_draw.cpp:353
+#: dviRenderer_draw.cpp:349
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "जब ईओपी कमांड से सामना हुआ, स्टैक खाली नहीं था."
 
-#: dviRenderer_draw.cpp:365
+#: dviRenderer_draw.cpp:361
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "जब पीओपी कमांड से सामना हुआ, स्टैक खाली था."
 
-#: dviRenderer_draw.cpp:489 dviRenderer_draw.cpp:498
+#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr "डीवीआई कोड में फ़ॉन्ट संदर्भ है जो कि पहले से पारिभाषित नहीं है."
 
-#: dviRenderer_draw.cpp:539
+#: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "एक अवैध कमांड से सामना हुआ."
 
-#: dviRenderer_draw.cpp:544
+#: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "अज्ञात ऑप-कोड %1 से सामना हुआ."
@@ -274,12 +274,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi..."
 msgstr "वर्तमान में बनाया जा रहा है %1 को %2 डीपीआई पर"
 
-#: generator_dvi.cpp:287
+#: generator_dvi.cpp:288
 #, kde-format
 msgid "Generator/Date"
 msgstr "जेनरेटर/तारीख़"
 
-#: generator_dvi.cpp:376
+#: generator_dvi.cpp:377
 #, kde-format
 msgid "Font file not found"
 msgstr "फ़ॉन्ट फ़ाइल नहीं मिला"
@@ -411,42 +411,42 @@ msgstr "फ़ॉन्ट फ़ाइल %1 खोल नहीं सका."
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
 msgstr "TexFont_PK::operator[]: अक्षर %1 फ़ॉन्ट %2 में पारिभाषित नहीं है"
 
-#: TeXFont_PK.cpp:418
+#: TeXFont_PK.cpp:419
 #, kde-format
 msgid "Unexpected %1 in PK file %2"
 msgstr "अप्रत्याशित %1 पीके फ़ाइल %2 में"
 
-#: TeXFont_PK.cpp:484
+#: TeXFont_PK.cpp:485
 #, kde-format
 msgid "The character %1 is too large in file %2"
 msgstr "अक्षर %1 फ़ाइल %2 में बहुत बड़ा है"
 
-#: TeXFont_PK.cpp:589 TeXFont_PK.cpp:679
+#: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
 msgstr "भंडारित किए बिट्स की गलत संख्या:  अक्षर. %1, फ़ॉन्ट %2"
 
-#: TeXFont_PK.cpp:592 TeXFont_PK.cpp:682
+#: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
 msgid "Bad pk file (%1), too many bits"
 msgstr "खराब पीके फ़ाइल (%1), बहुत सारे बिट्स"
 
-#: TeXFont_PK.cpp:713
+#: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
 msgstr "फ़ॉन्ट में नॉन-स्कवेयर आस्पेक्ट रेशो है"
 
-#: TeXFontDefinition.cpp:106
+#: TeXFontDefinition.cpp:107
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "फ़ॉन्ट फ़ाइल %1 ढूंढ नहीं सका %2."
 
-#: TeXFontDefinition.cpp:123
+#: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "फ़ॉन्ट फ़ाइल %1 के लिए चेकसम मिसमैच"
 
-#: TeXFontDefinition.cpp:174
+#: TeXFontDefinition.cpp:175
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "फ़ाइल %1 के लिए फ़ॉन्ट फ़ाइल प्रारूप पहचाना नहीं जा सकता"
@@ -473,7 +473,7 @@ msgid ""
 "please report the problem."
 msgstr ""
 
-#: vf.cpp:164
+#: vf.cpp:165
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "वीएफ मेक्रो सूची : %1 में गलत कमांड बाइट मिला"

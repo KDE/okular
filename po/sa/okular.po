@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-27 00:40+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -288,29 +288,29 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 मि.मी.(%3)"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1717
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "आरम्भादेव अन्वेषणं निरन्तरं कुर्वन्"
 
-#: core/document.cpp:1723
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "अधः अन्वेषणं निरन्तरं कुर्वन्"
 
-#: core/document.cpp:2469
+#: core/document.cpp:2466
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "प्लगिन् न प्राप्नुयात् यत् पारितं दस्तावेजं सम्भालितुं समर्थं भवति ।"
 
-#: core/document.cpp:3633
+#: core/document.cpp:3630
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "टिप्पणीं निष्कासयन्तु"
 
-#: core/document.cpp:4223 core/document.cpp:4229
+#: core/document.cpp:4220 core/document.cpp:4226
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -318,52 +318,52 @@ msgid ""
 msgstr ""
 "दस्तावेजं बाह्य-अनुप्रयोगं निष्पादयितुं प्रयतते तथा च, भवतः सुरक्षार्थं, Okular तत् न अनुमन्यते ।"
 
-#: core/document.cpp:4239
+#: core/document.cpp:4236
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "mimetype %1 इत्यस्य सञ्चिकां उद्घाटयितुं कोऽपि अनुप्रयोगः न प्राप्तः ।"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4875
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "अस्थायीसञ्चिकां उद्घाटयितुं न शक्तवान्"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4877
 #, kde-format
 msgid "Print conversion failed"
 msgstr "मुद्रणरूपान्तरणं विफलम् अभवत्"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process crashed"
 msgstr "मुद्रणप्रक्रिया दुर्घटितवती"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing process could not start"
 msgstr "मुद्रणप्रक्रिया आरभ्यतुं न शक्तवती"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printing to file failed"
 msgstr "सञ्चिकायां मुद्रणं विफलम् अभवत्"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4885
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "मुद्रकः अमान्यस्थितौ आसीत्"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4887
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "मुद्रणार्थं सञ्चिकां अन्वेष्टुं असमर्थः"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4889
 #, kde-format
 msgid "There was no file to print"
 msgstr "मुद्रणार्थं सञ्चिका नासीत्"
 
-#: core/document.cpp:4894
+#: core/document.cpp:4891
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -372,92 +372,92 @@ msgstr ""
 "मुद्रणार्थं उपयुक्तं द्विचक्रिका न प्राप्नोत् । CUPS lpr द्विचक्रिका उपलब्धा इति सुनिश्चितं "
 "कुर्वन्तु"
 
-#: core/document.cpp:4896
+#: core/document.cpp:4893
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "पृष्ठमुद्रणस्य आकारः अमान्यः अस्ति"
 
-#: core/document.cpp:5574 part/part.cpp:1145
+#: core/document.cpp:5571 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' उद्घाटयितुं न शक्यते । सञ्चिका नास्ति"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6081
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6084
 #, kde-format
 msgid "Subject"
 msgstr "विषयः"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6087
 #, kde-format
 msgid "Description"
 msgstr "वर्णनम्‌"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6090
 #, kde-format
 msgid "Author"
 msgstr "लेखकः"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6093
 #, kde-format
 msgid "Creator"
 msgstr "प्रजापति"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6096
 #, kde-format
 msgid "Producer"
 msgstr "निर्माता"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6099
 #, kde-format
 msgid "Copyright"
 msgstr "प्रतिलिपि अधिकार"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6102
 #, kde-format
 msgid "Pages"
 msgstr "पृष्ठहरू"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6105
 #, kde-format
 msgid "Created"
 msgstr "निर्मितम्"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6108
 #, kde-format
 msgid "Modified"
 msgstr "परिवर्तित"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6111
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME प्रकार"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6114
 #, kde-format
 msgid "Category"
 msgstr "कोटी"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6117
 #, kde-format
 msgid "Keywords"
 msgstr "कीवर्ड"
 
-#: core/document.cpp:6123
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Path"
 msgstr "सञ्चिकामार्गः"
 
-#: core/document.cpp:6126
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Size"
 msgstr "सञ्चिकायाः आकारः"
 
-#: core/document.cpp:6129
+#: core/document.cpp:6126
 #, kde-format
 msgid "Page Size"
 msgstr "पृष्ठ आकार"
@@ -697,19 +697,19 @@ msgid "Value"
 msgstr "मूल्यम्‌"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Pop-up Note"
 msgstr "पॉप-अप नोट्"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Typewriter"
 msgstr "टंकनयंत्रम्"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Inline Note"
 msgstr "Inline Note"
@@ -720,7 +720,7 @@ msgid "Straight Line with Comment"
 msgstr "टिप्पणी सहित सीधा रेखा"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Straight Line"
 msgstr "सीधा रेखा"
@@ -731,7 +731,7 @@ msgid "Polygon with Comment"
 msgstr "टिप्पणी सहित बहुभुज"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Polygon"
 msgstr "बहुभुज"
@@ -762,7 +762,7 @@ msgid "Squiggle with Comment"
 msgstr "टिप्पणी सह स्क्विग्ल् कुर्वन्तु"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
 msgstr "स्क्विग्ल्"
@@ -773,7 +773,7 @@ msgid "Underline with Comment"
 msgstr "टिप्पण्या सह रेखांकयन्तु"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
-#: part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
 msgstr "रेखांकनम्"
@@ -794,7 +794,7 @@ msgid "Stamp with Comment"
 msgstr "टिप्पण्या सह मुद्रांकनम्"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Stamp"
 msgstr "मुद्रा"
@@ -805,7 +805,7 @@ msgid "Freehand Line with Comment"
 msgstr "टिप्पणी सहित मुक्तहस्त रेखा"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Freehand Line"
 msgstr "मुक्तहस्त रेखा"
@@ -2078,17 +2078,17 @@ msgstr "आकारपूरणम् :"
 msgid "Type:"
 msgstr "प्रकारः:"
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "प्रहारं कुरुत"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "आयत"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "दीर्घवृत्तम्"
@@ -3968,17 +3968,17 @@ msgstr "हस्ताक्षरक्षेत्रं सम्मिल�
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "New Text Note"
 msgstr "नवीन पाठ टिप्पणी"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "Text of the new note:"
 msgstr "नवीनटिप्पण्याः पाठः-"
 
-#: part/pageviewannotator.cpp:363
+#: part/pageviewannotator.cpp:365
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -3989,7 +3989,7 @@ msgstr ""
 "\n"
 "तिथिः %2"
 
-#: part/pageviewannotator.cpp:448
+#: part/pageviewannotator.cpp:446
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4001,124 +4001,124 @@ msgstr ""
 "निर्मातुम् इच्छति तर्हि <interface>Start over</interface> इति नुत्वा बृहत्तरं आयतं "
 "आकर्षयतु ।"
 
-#: part/pageviewannotator.cpp:450
+#: part/pageviewannotator.cpp:448
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "पुनः आरभत"
 
-#: part/pageviewannotator.cpp:451
+#: part/pageviewannotator.cpp:449
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "चिह्नम्‌"
 
-#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:288
+#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr ""
 "हस्ताक्षरं कर्तुं न शक्तवान्। अमान्यप्रमाणपत्रगुप्तशब्दः अथवा '%1' इत्यत्र लिखितुं न शक्तवान् ।"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name"
 msgstr "लेखक का नाम"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "एनोटेशनस्य लेखकनाम :"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1330
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "दीर्घवृत्तं आकर्षयन्तु (क्षेत्रं चयनं कर्तुं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "पाठं प्रकाशयन्तु"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "मुक्तहस्तरेखां आकर्षयन्तु"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Inline Text Annotation (क्षेत्रं चयनं कर्तुं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "एकं पॉप-अप-टिप्पणं स्थापयन्तु"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "बहुभुजं आकर्षयन्तु (तत् पिधातुं प्रथमबिन्दौ क्लिक् कुर्वन्तु)"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "एकं आयतं आकर्षयतु"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "स्क्विग्ल् पाठः"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "एकं मुद्राचिह्नं स्थापयतु"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "ऋजुरेखां आकर्षयन्तु"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "पाठं प्रहरतु"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "पाठं रेखांकयन्तु"
 
-#: part/pageviewannotator.cpp:1356
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "टङ्कनयन्त्रस्य टिप्पणी (क्षेत्रस्य चयनार्थं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Highlighter"
 msgstr "हाइलाइटर"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "प्रियं टिप्पणीं योजयन्तु"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "कस्टम एनोटेशन नाम:"
@@ -5653,30 +5653,30 @@ msgstr ""
 msgid "Show bookmarked pages only"
 msgstr "केवलं बुकमार्ककृतानि पृष्ठानि दर्शयन्तु"
 
-#: part/videowidget.cpp:145
+#: part/videowidget.cpp:143
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "क्रीडतु"
 
-#: part/videowidget.cpp:148
+#: part/videowidget.cpp:146
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "विराम"
 
-#: part/videowidget.cpp:254
+#: part/videowidget.cpp:252
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "विरमतु"
 
-#: part/videowidget.cpp:503
+#: part/videowidget.cpp:501
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "अस्मिन् okular मध्ये समर्थिताः न सन्ति इति विडियो"
 
-#: part/videowidget.cpp:507
+#: part/videowidget.cpp:505
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "अस्मिन् Okular मध्ये समर्थिताः न सन्ति इति विडियो"

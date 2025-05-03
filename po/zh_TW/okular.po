@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-27 00:40+0000\n"
+"POT-Creation-Date: 2025-05-03 00:41+0000\n"
 "PO-Revision-Date: 2025-03-27 21:45+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -297,173 +297,173 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 毫米 (%3)"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1717
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "從開頭重新搜尋"
 
-#: core/document.cpp:1723
+#: core/document.cpp:1720
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "從底端重新搜尋"
 
-#: core/document.cpp:2469
+#: core/document.cpp:2466
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "找不到可以處理此文件的外掛程式。"
 
-#: core/document.cpp:3633
+#: core/document.cpp:3630
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除註記"
 
-#: core/document.cpp:4223 core/document.cpp:4229
+#: core/document.cpp:4220 core/document.cpp:4226
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文件正試著執行外部應用程式，但為了安全起見，okular 不允許此動作。"
 
-#: core/document.cpp:4239
+#: core/document.cpp:4236
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
 
-#: core/document.cpp:4878
+#: core/document.cpp:4875
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "無法開啟暫存檔"
 
-#: core/document.cpp:4880
+#: core/document.cpp:4877
 #, kde-format
 msgid "Print conversion failed"
 msgstr "列印轉換失敗"
 
-#: core/document.cpp:4882
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printing process crashed"
 msgstr "列印行程發生錯誤"
 
-#: core/document.cpp:4884
+#: core/document.cpp:4881
 #, kde-format
 msgid "Printing process could not start"
 msgstr "列印行程無法啟動"
 
-#: core/document.cpp:4886
+#: core/document.cpp:4883
 #, kde-format
 msgid "Printing to file failed"
 msgstr "列印到檔案失敗"
 
-#: core/document.cpp:4888
+#: core/document.cpp:4885
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "印表機的狀態有問題"
 
-#: core/document.cpp:4890
+#: core/document.cpp:4887
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要列印的檔案"
 
-#: core/document.cpp:4892
+#: core/document.cpp:4889
 #, kde-format
 msgid "There was no file to print"
 msgstr "沒有檔案可列印"
 
-#: core/document.cpp:4894
+#: core/document.cpp:4891
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
 
-#: core/document.cpp:4896
+#: core/document.cpp:4893
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "頁面列印大小無效"
 
-#: core/document.cpp:5574 part/part.cpp:1145
+#: core/document.cpp:5571 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "無法開啟 %1。檔案不存在"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6081
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6084
 #, kde-format
 msgid "Subject"
 msgstr "主旨"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6087
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6090
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6093
 #, kde-format
 msgid "Creator"
 msgstr "檔案建立者"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6096
 #, kde-format
 msgid "Producer"
 msgstr "產生者"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6099
 #, kde-format
 msgid "Copyright"
 msgstr "版權"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6102
 #, kde-format
 msgid "Pages"
 msgstr "頁面"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6105
 #, kde-format
 msgid "Created"
 msgstr "已建立"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6108
 #, kde-format
 msgid "Modified"
 msgstr "已修改"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6111
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 類型"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6114
 #, kde-format
 msgid "Category"
 msgstr "類別"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6117
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:6123
+#: core/document.cpp:6120
 #, kde-format
 msgid "File Path"
 msgstr "檔案路徑"
 
-#: core/document.cpp:6126
+#: core/document.cpp:6123
 #, kde-format
 msgid "File Size"
 msgstr "檔案大小"
 
-#: core/document.cpp:6129
+#: core/document.cpp:6126
 #, kde-format
 msgid "Page Size"
 msgstr "頁面大小"
@@ -696,19 +696,19 @@ msgid "Value"
 msgstr "數值"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:233 part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
 #, kde-format
 msgid "Pop-up Note"
 msgstr "彈出式備註"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:220 part/pageviewannotator.cpp:1437
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
 #, kde-format
 msgid "Typewriter"
 msgstr "打字機"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:215 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
 #, kde-format
 msgid "Inline Note"
 msgstr "文內備註"
@@ -719,7 +719,7 @@ msgid "Straight Line with Comment"
 msgstr "含備註的直線"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1431
+#: part/pageviewannotator.cpp:1429
 #, kde-format
 msgid "Straight Line"
 msgstr "直線"
@@ -730,7 +730,7 @@ msgid "Polygon with Comment"
 msgstr "含備註的多邊形"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1423
+#: part/pageviewannotator.cpp:1421
 #, kde-format
 msgid "Polygon"
 msgstr "多邊形"
@@ -761,7 +761,7 @@ msgid "Squiggle with Comment"
 msgstr "含備註的波狀線"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
 msgstr "草寫"
@@ -772,7 +772,7 @@ msgid "Underline with Comment"
 msgstr "含備註的底線"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
-#: part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
 msgstr "底線"
@@ -793,7 +793,7 @@ msgid "Stamp with Comment"
 msgstr "含備註的印花"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1427
 #, kde-format
 msgid "Stamp"
 msgstr "印花"
@@ -804,7 +804,7 @@ msgid "Freehand Line with Comment"
 msgstr "含備註的手繪線條"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgid "Freehand Line"
 msgstr "自由手繪線條"
@@ -2062,17 +2062,17 @@ msgstr "圖形填充："
 msgid "Type:"
 msgstr "類型："
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1433
+#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "刪除線"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1425
+#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "矩形"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1413
+#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "橢圓形"
@@ -3936,17 +3936,17 @@ msgstr "繪製插入簽名欄位用的矩形"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "在您想要保持可見的頁面區域畫一矩形"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "New Text Note"
 msgstr "新文字備註"
 
-#: part/pageviewannotator.cpp:218
+#: part/pageviewannotator.cpp:220
 #, kde-format
 msgid "Text of the new note:"
 msgstr "新備註文字："
 
-#: part/pageviewannotator.cpp:363
+#: part/pageviewannotator.cpp:365
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -3957,7 +3957,7 @@ msgstr ""
 "\n"
 "日期：%2"
 
-#: part/pageviewannotator.cpp:448
+#: part/pageviewannotator.cpp:446
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -3968,123 +3968,123 @@ msgstr ""
 "這個大小的簽名可能小到無法閱讀。如果您希望建立一個可能更能讀的簽名，請按 "
 "<interface>重新開始</interface> 然後繪製一個更大的矩形。"
 
-#: part/pageviewannotator.cpp:450
+#: part/pageviewannotator.cpp:448
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "重新開始"
 
-#: part/pageviewannotator.cpp:451
+#: part/pageviewannotator.cpp:449
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "簽署"
 
-#: part/pageviewannotator.cpp:1137 part/signaturepartutils.cpp:288
+#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
 #, kde-format
 msgctxt "%1 is a file path"
 msgid "Could not sign. Invalid certificate password or could not write to '%1'"
 msgstr "無法簽名。無效的憑證密碼，或是無法寫入至 '%1'"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name"
 msgstr "作者名稱"
 
-#: part/pageviewannotator.cpp:1271
+#: part/pageviewannotator.cpp:1269
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "註記用的作者名稱："
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1330
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "畫一橢圓形（拖曳以選取區域）"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1332
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "突顯文字"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1334
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "繪製自由手繪線條"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1336
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "文內文字註記（拖曳以選取區域）"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "放一個彈出式備註"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1340
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "畫出一多邊形（點選第一個點以結束）"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1342
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "畫一矩形"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1344
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "草寫魂字"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1346
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "放置印花標記"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1348
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "畫一直線"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1350
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "文字加上刪除線"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1352
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "文字加上底線"
 
-#: part/pageviewannotator.cpp:1356
+#: part/pageviewannotator.cpp:1354
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "打字機註解 (拖曳以選取區域)"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgid "Highlighter"
 msgstr "螢光筆"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "新增最愛註記"
 
-#: part/pageviewannotator.cpp:1712
+#: part/pageviewannotator.cpp:1710
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "自訂註記名稱："
@@ -5599,30 +5599,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "只顯示書籤頁"
 
-#: part/videowidget.cpp:145
+#: part/videowidget.cpp:143
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "播放"
 
-#: part/videowidget.cpp:148
+#: part/videowidget.cpp:146
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "暫停"
 
-#: part/videowidget.cpp:254
+#: part/videowidget.cpp:252
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "停止"
 
-#: part/videowidget.cpp:503
+#: part/videowidget.cpp:501
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "這個 Okular 不支援影片"
 
-#: part/videowidget.cpp:507
+#: part/videowidget.cpp:505
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "這個 Okular 不支援影片"

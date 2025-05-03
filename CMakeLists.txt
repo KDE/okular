@@ -605,6 +605,7 @@ target_link_libraries(okularpart okularcore
     KF6::Parts
     KF6::WindowSystem
     KF6::TextWidgets
+    KF6::ColorScheme
 )
 if (TARGET Qt6::DBus)
     target_link_libraries(okularpart Qt6::DBus)

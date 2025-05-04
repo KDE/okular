@@ -22,6 +22,7 @@
 #include <qmediaplayer.h>
 #endif
 #include <qmenu.h>
+#include <qslider.h>
 #include <qstackedlayout.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
@@ -80,11 +81,11 @@ public:
     Okular::NormalizedRect geom;
     QMediaPlayer *player = nullptr;
     QVideoWidget *videoWidget = nullptr;
+    QSlider *seekSlider = nullptr;
     QToolBar *controlBar = nullptr;
     QAction *playPauseAction = nullptr;
     QAction *stopAction = nullptr;
     QAction *seekSliderAction = nullptr;
-    QAction *seekSliderMenuAction = nullptr;
     QStackedLayout *pageLayout = nullptr;
     QLabel *posterImagePage = nullptr;
     bool loaded : 1 = false;
@@ -118,6 +119,8 @@ void VideoWidget::Private::load()
     player->setSource(urlFromUrlString(movie->url(), document));
 
     connect(player, &QMediaPlayer::playbackStateChanged, q, [this](QMediaPlayer::PlaybackState s) { playbackStateChanged(s); });
+
+    seekSlider->setEnabled(true);
 }
 
 void VideoWidget::Private::setupPlayPauseAction(PlayPauseMode mode)
@@ -242,10 +245,19 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->stopAction->setEnabled(false);
     d->controlBar->addSeparator();
 
+    d->seekSlider = new QSlider(Qt::Horizontal, d->controlBar);
+    d->seekSlider->setRange(0, 100);
+    d->seekSliderAction = d->controlBar->addWidget(d->seekSlider);
+    d->seekSlider->setEnabled(false);
+
     d->controlBar->setVisible(movie->showControls());
 
     connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status) { d->mediaStatusChanged(status); });
     connect(d->playPauseAction, &QAction::triggered, this, [this] { d->playOrPause(); });
+
+    connect(d->seekSlider, &QSlider::sliderMoved, this, [this](int position) { d->player->setPosition(position); });
+    connect(d->player, &QMediaPlayer::positionChanged, this, [this](qint64 position) { d->seekSlider->setValue(position); });
+    connect(d->player, &QMediaPlayer::durationChanged, this, [this](qint64 duration) { d->seekSlider->setRange(0, duration); });
 
     d->geom = annotation->transformedBoundingRectangle();
 
@@ -394,7 +406,7 @@ bool VideoWidget::event(QEvent *event)
 
 void VideoWidget::resizeEvent(QResizeEvent *event)
 {
-    Q_UNUSED(event)
+    QWidget::resizeEvent(event);
 }
 #else
 

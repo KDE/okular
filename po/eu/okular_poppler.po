@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-05-04 00:40+0000\n"
 "PO-Revision-Date: 2025-03-27 20:54+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -281,12 +281,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1720
+#: generator_pdf.cpp:1719
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "«Poppler» %1 erabiltzen"
 
-#: generator_pdf.cpp:1722
+#: generator_pdf.cpp:1721
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -297,17 +297,17 @@ msgstr ""
 "\n"
 "«Poppler» %2 erabiliz eraikia"
 
-#: generator_pdf.cpp:1757
+#: generator_pdf.cpp:1756
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1757
+#: generator_pdf.cpp:1756
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF bizkarraldekoaren konfigurazioa"
 
-#: generator_pdf.cpp:2243
+#: generator_pdf.cpp:2242
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

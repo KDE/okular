@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-07 00:40+0000\n"
+"POT-Creation-Date: 2025-05-04 00:40+0000\n"
 "PO-Revision-Date: 2025-03-15 09:01+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -285,12 +285,12 @@ msgstr ""
 "\n"
 "Päiväys: %2"
 
-#: generator_pdf.cpp:1720
+#: generator_pdf.cpp:1719
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Käytössä Poppler %1"
 
-#: generator_pdf.cpp:1722
+#: generator_pdf.cpp:1721
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -301,17 +301,17 @@ msgstr ""
 "\n"
 "Koostettu Poppler-versiolle %2"
 
-#: generator_pdf.cpp:1757
+#: generator_pdf.cpp:1756
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1757
+#: generator_pdf.cpp:1756
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF-taustaosan asetukset"
 
-#: generator_pdf.cpp:2243
+#: generator_pdf.cpp:2242
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

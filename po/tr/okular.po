@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-03 00:41+0000\n"
-"PO-Revision-Date: 2025-03-27 20:17+0300\n"
+"PO-Revision-Date: 2025-05-04 10:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -399,7 +399,7 @@ msgstr "Sayfa yazdırma boyutu geçersiz"
 #: core/document.cpp:5571 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "“%1” açılamadı. Dosya yok"
+msgstr "“%1” açılamadı. Dosya yok."
 
 #: core/document.cpp:6081
 #, kde-format
@@ -3853,22 +3853,22 @@ msgstr "Metni Kopyala"
 #: part/pageview.cpp:3053
 #, kde-format
 msgid "Go to '%1'"
-msgstr "“%1” sayfasına git"
+msgstr "Git: “%1”"
 
 #: part/pageview.cpp:4064 part/part.cpp:3160
 #, kde-format
 msgid "Fit Width"
-msgstr "Genişliğe Sığdır"
+msgstr "Genişliğe sığdır"
 
 #: part/pageview.cpp:4064
 #, kde-format
 msgid "Fit Page"
-msgstr "Sayfayı Sığdır"
+msgstr "Sayfayı sığdır"
 
 #: part/pageview.cpp:4064
 #, kde-format
 msgid "Auto Fit"
-msgstr "Kendiliğinden Sığdır"
+msgstr "Kendiliğinden sığdır"
 
 #: part/pageview.cpp:4087
 #, kde-format

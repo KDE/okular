@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <def format="2">
   <define name="OKULAR_EXPORT_PLUGIN(class_name, json_name)" value=""/>
+  <define name="QML_FOREIGN" value=""/>
+  <define name="QML_NAMED_ELEMENT" value=""/>
 </def>
 

@@ -146,7 +146,7 @@ public:
     void showSourceLocation(const QString &fileName, int line, int column, bool showGraphically = true) override;
     void clearLastShownSourceLocation() override;
     bool isWatchFileModeEnabled() const override;
-    void setWatchFileModeEnabled(bool enable) override;
+    void setWatchFileModeEnabled(bool enable) final;
     bool areSourceLocationsShownGraphically() const override;
     void setShowSourceLocationsGraphically(bool show) override;
     bool openNewFilesInTabs() const override;

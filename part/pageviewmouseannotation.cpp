@@ -66,7 +66,7 @@ AnnotationDescription::AnnotationDescription(PageViewItem *newPageViewItem, cons
         /* find out normalized mouse coords inside current item (nX and nY will be in the range of 0..1). */
         const double nX = newPageViewItem->absToPageX(eventPos.x());
         const double nY = newPageViewItem->absToPageY(eventPos.y());
-        annObjRect = (Okular::AnnotationObjectRect *)newPageViewItem->page()->objectRect(Okular::ObjectRect::OAnnotation, nX, nY, uncroppedPage.width(), uncroppedPage.height());
+        annObjRect = static_cast<const Okular::AnnotationObjectRect *>(newPageViewItem->page()->objectRect(Okular::ObjectRect::OAnnotation, nX, nY, uncroppedPage.width(), uncroppedPage.height()));
     }
 
     if (annObjRect) {

@@ -794,13 +794,13 @@ void Part::setupViewerActions()
     m_aboutBackend->setEnabled(false);
     connect(m_aboutBackend, &QAction::triggered, this, &Part::slotAboutBackend);
 
-    QAction *reload = ac->add<QAction>(QStringLiteral("file_reload"));
-    reload->setText(i18n("Reloa&d"));
-    reload->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
-    reload->setWhatsThis(i18n("Reload the current document from disk."));
-    connect(reload, &QAction::triggered, this, &Part::slotReload);
-    ac->setDefaultShortcuts(reload, KStandardShortcut::reload());
-    m_reload = reload;
+    QAction *reloadAction = ac->add<QAction>(QStringLiteral("file_reload"));
+    reloadAction->setText(i18n("Reloa&d"));
+    reloadAction->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
+    reloadAction->setWhatsThis(i18n("Reload the current document from disk."));
+    connect(reloadAction, &QAction::triggered, this, &Part::slotReload);
+    ac->setDefaultShortcuts(reloadAction, KStandardShortcut::reload());
+    m_reload = reloadAction;
 
     m_closeFindBar = ac->addAction(QStringLiteral("close_find_bar"), this, SLOT(slotHideFindBar()));
     m_closeFindBar->setText(i18n("Close &Find Bar"));
@@ -1192,8 +1192,7 @@ void Part::handleDroppedUrls(const QList<QUrl> &urls)
 void Part::slotJobStarted(KIO::Job *job)
 {
     if (job) {
-        QStringList supportedMimeTypes = m_document->supportedMimeTypes();
-        job->addMetaData(QStringLiteral("accept"), supportedMimeTypes.join(QStringLiteral(", ")) + QStringLiteral(", */*;q=0.5"));
+        job->addMetaData(QStringLiteral("accept"), supportedMimeTypes().join(QStringLiteral(", ")) + QStringLiteral(", */*;q=0.5"));
 
         connect(job, &KJob::result, this, &Part::slotJobFinished);
     }
@@ -1827,8 +1826,8 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
         } else {
             resetStartArguments();
             /* TRANSLATORS: Adding the reason (%2) why the opening failed (if any). */
-            QString errorMessage = i18n("Could not open %1. %2", url.toDisplayString(), QStringLiteral("\n%1").arg(m_document->openError()));
-            KMessageBox::error(widget(), errorMessage);
+            QString errorMessageString = i18n("Could not open %1. %2", url.toDisplayString(), QStringLiteral("\n%1").arg(m_document->openError()));
+            KMessageBox::error(widget(), errorMessageString);
         }
     }
 
@@ -2771,9 +2770,9 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
         if (!listOfwontSaves.isEmpty()) {
             if (saveUrl == url()) {
                 // Save
-                const QString warningMessage = i18n("You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them.");
+                const QString warningMessageString = i18n("You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them.");
                 const int result = KMessageBox::warningContinueCancelList(widget(),
-                                                                          warningMessage,
+                                                                          warningMessageString,
                                                                           listOfwontSaves,
                                                                           i18n("Warning"),
                                                                           KGuiItem(i18n("Save as Okular document archive..."), QStringLiteral("document-save-as")), // <- KMessageBox::Continue
@@ -2787,15 +2786,15 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                 }
             } else {
                 // Save as
-                const QString warningMessage = m_document->canSwapBackingFile() ? i18n(
-                                                                                      "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document "
-                                                                                      "archive</i> format to preserve them. Click <i>Continue</i> to save the document and discard these elements.")
-                                                                                : i18n(
-                                                                                      "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document "
-                                                                                      "archive</i> format to preserve them. Click <i>Continue</i> to save, but you will lose these elements as well as the undo/redo history.");
+                const QString warningMessageString = m_document->canSwapBackingFile() ? i18n(
+                                                                                            "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document "
+                                                                                            "archive</i> format to preserve them. Click <i>Continue</i> to save the document and discard these elements.")
+                                                                                      : i18n(
+                                                                                            "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document "
+                                                                                            "archive</i> format to preserve them. Click <i>Continue</i> to save, but you will lose these elements as well as the undo/redo history.");
                 const QString continueMessage = m_document->canSwapBackingFile() ? i18n("Continue") : i18n("Continue losing changes");
                 const int result = KMessageBox::warningTwoActionsCancelList(widget(),
-                                                                            warningMessage,
+                                                                            warningMessageString,
                                                                             listOfwontSaves,
                                                                             i18n("Warning"),
                                                                             KGuiItem(i18n("Save as Okular document archive..."), QStringLiteral("document-save-as")), // <- KMessageBox::PrimaryAction

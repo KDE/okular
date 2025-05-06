@@ -850,10 +850,9 @@ PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile(QString const 
     if (oldRectsGenerated.count() == rectsGenerated.count()) {
         for (int i = 0; i < oldRectsGenerated.count(); ++i) {
             if (oldRectsGenerated[i]) {
-                Okular::Page *page = newPagesVector[i];
-
                 std::unique_ptr<Poppler::Page> pp = pdfdoc->page(i);
                 if (pp) {
+                    Okular::Page *page = newPagesVector[i];
                     page->setObjectRects(generateLinks(pp->links()));
                     rectsGenerated[i] = true;
                     resolveMediaLinkReferences(page);

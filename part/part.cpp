@@ -163,9 +163,8 @@ public:
         retFile->open();
 
         std::rewind(m_handle);
-        int c = -1;
         do {
-            c = std::fgetc(m_handle);
+            int c = std::fgetc(m_handle);
             if (c == EOF)
                 break;
             if (!retFile->putChar((char)c))
@@ -2658,23 +2657,25 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // Also don't warn if the file was modified on disk but the user is doing a Save As
     // with a different URL, since the original changed document is safe so there's
     // nothing to warn about.
-    const QFileInfo fi(localFilePath());
-    if (fi.exists() && m_fileLastModified != fi.lastModified() && saveUrl == realUrl()) {
-        const int res = KMessageBox::warningTwoActionsCancel(widget(),
-                                                             xi18nc("@info",
-                                                                    "The file <filename>%1</filename> has been modified by another program. If you save now, any "
-                                                                    "changes made in the other program will be lost. Are you sure you want to continue?",
-                                                                    realUrl().fileName()),
-                                                             i18n("Save - Warning"),
-                                                             KStandardGuiItem::cont(),                // <- KMessageBox::PrimaryAction
-                                                             KGuiItem(i18n("Save a Copy Elsewhere")), // <- KMessageBox::SecondaryAction
-                                                             KStandardGuiItem::cancel());             // <- KMessageBox::Cancel
+    {
+        const QFileInfo fi(localFilePath());
+        if (fi.exists() && m_fileLastModified != fi.lastModified() && saveUrl == realUrl()) {
+            const int res = KMessageBox::warningTwoActionsCancel(widget(),
+                                                                 xi18nc("@info",
+                                                                        "The file <filename>%1</filename> has been modified by another program. If you save now, any "
+                                                                        "changes made in the other program will be lost. Are you sure you want to continue?",
+                                                                        realUrl().fileName()),
+                                                                 i18n("Save - Warning"),
+                                                                 KStandardGuiItem::cont(),                // <- KMessageBox::PrimaryAction
+                                                                 KGuiItem(i18n("Save a Copy Elsewhere")), // <- KMessageBox::SecondaryAction
+                                                                 KStandardGuiItem::cancel());             // <- KMessageBox::Cancel
 
-        if (res == KMessageBox::SecondaryAction) {
-            slotSaveFileAs(false);
-        }
-        if (res != KMessageBox::PrimaryAction) {
-            return false;
+            if (res == KMessageBox::SecondaryAction) {
+                slotSaveFileAs(false);
+            }
+            if (res != KMessageBox::PrimaryAction) {
+                return false;
+            }
         }
     }
 

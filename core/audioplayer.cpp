@@ -326,6 +326,7 @@ void AudioPlayer::stopPlaybacks()
 
 AudioPlayer::~AudioPlayer() noexcept
 {
+    delete d;
 }
 
 void AudioPlayer::resetDocument()

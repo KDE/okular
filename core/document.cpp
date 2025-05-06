@@ -1832,10 +1832,10 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     if (currentPage < m_pagesVector.count()) {
         // get page (from the first to the last)
         Page *page = m_pagesVector.at(currentPage);
-        int pageNumber = page->number(); // redundant? is it == currentPage ?
 
         // request search page if needed
         if (!page->hasTextPage()) {
+            int pageNumber = page->number(); // redundant? is it == currentPage ?
             m_parent->requestTextPage(pageNumber);
         }
 
@@ -1934,10 +1934,10 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     if (currentPage < m_pagesVector.count()) {
         // get page (from the first to the last)
         Page *page = m_pagesVector.at(currentPage);
-        int pageNumber = page->number(); // redundant? is it == currentPage ?
 
         // request search page if needed
         if (!page->hasTextPage()) {
+            int pageNumber = page->number(); // redundant? is it == currentPage ?
             m_parent->requestTextPage(pageNumber);
         }
 
@@ -2036,16 +2036,14 @@ QVariant DocumentPrivate::documentMetaData(const Generator::DocumentMetaDataKey 
             color = Qt::white;
         }
         return color;
-    } break;
+    }
 
     case Generator::TextAntialiasMetaData:
         switch (SettingsCore::textAntialias()) {
         case SettingsCore::EnumTextAntialias::Enabled:
             return true;
-            break;
         case SettingsCore::EnumTextAntialias::Disabled:
             return false;
-            break;
         }
         break;
 
@@ -2053,10 +2051,8 @@ QVariant DocumentPrivate::documentMetaData(const Generator::DocumentMetaDataKey 
         switch (SettingsCore::graphicsAntialias()) {
         case SettingsCore::EnumGraphicsAntialias::Enabled:
             return true;
-            break;
         case SettingsCore::EnumGraphicsAntialias::Disabled:
             return false;
-            break;
         }
         break;
 
@@ -2064,10 +2060,8 @@ QVariant DocumentPrivate::documentMetaData(const Generator::DocumentMetaDataKey 
         switch (SettingsCore::textHinting()) {
         case SettingsCore::EnumTextHinting::Enabled:
             return true;
-            break;
         case SettingsCore::EnumTextHinting::Disabled:
             return false;
-            break;
         }
         break;
     }

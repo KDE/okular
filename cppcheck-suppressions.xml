@@ -9,6 +9,9 @@
 <symbolName>*::d_func</symbolName>
 </suppress>
 <suppress>
+<id>returnByReference</id>
+</suppress>
+<suppress>
 <id>constParameterPointer</id>
 </suppress>
 <!-- generic -->

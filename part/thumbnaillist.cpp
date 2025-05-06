@@ -783,12 +783,10 @@ void ThumbnailListPrivate::mouseReleaseEvent(QMouseEvent *e)
         return;
     }
 
-    QRect r = item->visibleRect();
     const QPoint p = e->pos() - item->pos();
 
     // jump center of viewport to cursor if it wasn't dragged
     if (m_mouseGrabPos.isNull()) {
-        r = item->visibleRect();
         Okular::DocumentViewport vp = Okular::DocumentViewport(item->pageNumber());
         vp.rePos.normalizedX = double(p.x()) / double(item->rect().width());
         vp.rePos.normalizedY = double(p.y()) / double(item->rect().height());

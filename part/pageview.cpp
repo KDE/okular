@@ -3015,7 +3015,6 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             }
         } else if (!d->mousePressPos.isNull() && rightButton) {
             PageViewItem *item = pickItemOnPoint(eventPos.x(), eventPos.y());
-            const Okular::Page *page;
             // if there is text selected in the page
             if (item) {
                 QAction *httpLink = nullptr;
@@ -3027,7 +3026,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 #if HAVE_SPEECH
                 const QAction *speakText = nullptr;
 #endif
-                if ((page = item->page())->textSelection()) {
+                if (item->page()->textSelection()) {
                     if (!menu) {
                         menu = new QMenu(this);
                     }

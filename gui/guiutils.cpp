@@ -33,10 +33,10 @@ QString captionForAnnotation(const Okular::Annotation *ann)
     QString ret;
     switch (ann->subType()) {
     case Okular::Annotation::AText:
-        if (((Okular::TextAnnotation *)ann)->textType() == Okular::TextAnnotation::Linked) {
+        if ((static_cast<const Okular::TextAnnotation *>(ann))->textType() == Okular::TextAnnotation::Linked) {
             ret = i18n("Pop-up Note");
         } else {
-            if (((Okular::TextAnnotation *)ann)->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
+            if ((static_cast<const Okular::TextAnnotation *>(ann))->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
                 ret = i18n("Typewriter");
             } else {
                 ret = i18n("Inline Note");
@@ -44,7 +44,7 @@ QString captionForAnnotation(const Okular::Annotation *ann)
         }
         break;
     case Okular::Annotation::ALine:
-        if (((Okular::LineAnnotation *)ann)->linePoints().count() == 2) {
+        if ((static_cast<const Okular::LineAnnotation *>(ann))->linePoints().count() == 2) {
             ret = hasComment ? i18n("Straight Line with Comment") : i18n("Straight Line");
         } else {
             ret = hasComment ? i18n("Polygon with Comment") : i18n("Polygon");
@@ -54,7 +54,7 @@ QString captionForAnnotation(const Okular::Annotation *ann)
         ret = hasComment ? i18n("Geometry with Comment") : i18n("Geometry");
         break;
     case Okular::Annotation::AHighlight:
-        switch (((Okular::HighlightAnnotation *)ann)->highlightType()) {
+        switch ((static_cast<const Okular::HighlightAnnotation *>(ann))->highlightType()) {
         case Okular::HighlightAnnotation::Highlight:
             ret = hasComment ? i18n("Highlight with Comment") : i18n("Highlight");
             break;

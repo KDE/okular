@@ -2636,7 +2636,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 // Do not move annotPopup inside the if, it needs to live until menu->exec()
                 if (!annotRects.isEmpty()) {
                     for (const Okular::ObjectRect *annotRect : annotRects) {
-                        Okular::Annotation *ann = ((Okular::AnnotationObjectRect *)annotRect)->annotation();
+                        Okular::Annotation *ann = static_cast<const Okular::AnnotationObjectRect *>(annotRect)->annotation();
                         if (ann && (ann->subType() != Okular::Annotation::AWidget)) {
                             annotPopup.addAnnotation(ann, pageItem->pageNumber());
                         }
@@ -3220,7 +3220,7 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
 
             const Okular::ObjectRect *orect = pageItem->page()->objectRect(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
             if (orect) {
-                ann = ((Okular::AnnotationObjectRect *)orect)->annotation();
+                ann = static_cast<const Okular::AnnotationObjectRect *>(orect)->annotation();
             }
             if (ann && ann->subType() != Okular::Annotation::AWidget) {
                 openAnnotationWindow(ann, pageItem->pageNumber());

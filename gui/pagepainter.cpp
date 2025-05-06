@@ -387,7 +387,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
                 // draw LineAnnotation MISSING: caption, dash pattern, endings for multipoint lines
                 if (type == Okular::Annotation::ALine) {
-                    LineAnnotPainter linepainter {(Okular::LineAnnotation *)a, {page->width(), page->height()}, pageScale, {xScale, 0., 0., yScale, -xOffset * xScale, -yOffset * yScale}};
+                    LineAnnotPainter linepainter {static_cast<Okular::LineAnnotation *>(a), {page->width(), page->height()}, pageScale, {xScale, 0., 0., yScale, -xOffset * xScale, -yOffset * yScale}};
                     linepainter.draw(backImage);
                 }
                 // draw HighlightAnnotation MISSING: under/strike width, feather, capping
@@ -448,7 +448,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 // draw InkAnnotation MISSING:invar width, PENTRACER
                 else if (type == Okular::Annotation::AInk) {
                     // get the annotation
-                    Okular::InkAnnotation *ia = (Okular::InkAnnotation *)a;
+                    Okular::InkAnnotation *ia = static_cast<Okular::InkAnnotation *>(a);
 
                     // draw each ink path
                     const QList<QList<Okular::NormalizedPoint>> transformedInkPaths = ia->transformedInkPaths();
@@ -537,7 +537,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
             // draw TextAnnotation
             if (type == Okular::Annotation::AText) {
-                Okular::TextAnnotation *text = (Okular::TextAnnotation *)a;
+                Okular::TextAnnotation *text = static_cast<Okular::TextAnnotation *>(a);
                 if (text->textType() == Okular::TextAnnotation::InPlace) {
                     QImage image(annotBoundary.size(), QImage::Format_ARGB32);
                     image.fill(acolor.rgba());
@@ -585,7 +585,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             }
             // draw StampAnnotation
             else if (type == Okular::Annotation::AStamp) {
-                Okular::StampAnnotation *stamp = (Okular::StampAnnotation *)a;
+                Okular::StampAnnotation *stamp = static_cast<Okular::StampAnnotation *>(a);
 
                 // get pixmap and alpha blend it if needed
                 QPixmap pixmap = Okular::AnnotationUtils::loadStamp(stamp->stampIconName(), annotBoundary.size() * dpr);
@@ -602,7 +602,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             }
             // draw GeomAnnotation
             else if (type == Okular::Annotation::AGeom) {
-                Okular::GeomAnnotation *geom = (Okular::GeomAnnotation *)a;
+                Okular::GeomAnnotation *geom = static_cast<Okular::GeomAnnotation *>(a);
                 // check whether there's anything to draw
                 if (geom->style().width() || geom->geometricalInnerColor().isValid()) {
                     mixedPainter->save();

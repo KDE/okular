@@ -87,6 +87,10 @@ public:
     virtual QWidget *getSideContainer() const = 0;
 
     // SIGNALS
+    /* These can only be connected to using string-based syntax
+     * given it is a bit of a hack; it is at least used in Kile.
+     * The actual signal definition are in the part and the code as well
+     */
     /**
      * The signal 'openSourceReference' is emitted whenever the user has triggered a source
      * reference in the currently displayed document.

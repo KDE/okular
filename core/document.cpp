@@ -1504,7 +1504,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     if (tm) {
         pixmapBytes = tm->totalMemory();
     } else {
-        pixmapBytes = 4 * request->width() * request->height();
+        pixmapBytes = 4 * qulonglong(request->width()) * request->height();
     }
 
     if (pixmapBytes > (1024 * 1024)) {
@@ -5638,7 +5638,7 @@ void DocumentPrivate::requestDone(PixmapRequest *req)
             if (tm) {
                 memoryBytes = tm->totalMemory();
             } else {
-                memoryBytes = 4 * req->width() * req->height();
+                memoryBytes = 4 * qulonglong(req->width()) * req->height();
             }
 
             AllocatedPixmap *memoryPage = new AllocatedPixmap(req->observer(), req->pageNumber(), memoryBytes);

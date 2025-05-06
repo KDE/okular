@@ -48,7 +48,7 @@ public:
     double zoomFactor() const;
     bool isVisible() const;
     QSet<FormWidgetIface *> &formWidgets();
-    QHash<Okular::Movie *, VideoWidget *> &videoWidgets();
+    QHash<const Okular::Movie *, VideoWidget *> &videoWidgets();
 
     /* The page is cropped as follows: */
     const Okular::NormalizedRect &crop() const;
@@ -88,7 +88,7 @@ private:
     QRect m_uncroppedGeometry;
     Okular::NormalizedRect m_crop;
     QSet<FormWidgetIface *> m_formWidgets;
-    QHash<Okular::Movie *, VideoWidget *> m_videoWidgets;
+    QHash<const Okular::Movie *, VideoWidget *> m_videoWidgets;
 };
 
 /**

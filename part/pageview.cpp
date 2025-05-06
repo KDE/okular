@@ -1191,7 +1191,7 @@ void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlag
                     // For the video widgets we don't really care about reusing them since they don't contain much info so just
                     // create them again
                     createAnnotationsVideoWidgets(item, pageSet[i]->annotations());
-                    const QHash<Okular::Movie *, VideoWidget *> videoWidgets = item->videoWidgets();
+                    const QHash<const Okular::Movie *, VideoWidget *> videoWidgets = item->videoWidgets();
                     for (VideoWidget *vw : videoWidgets) {
                         const Okular::NormalizedRect r = vw->normGeometry();
                         vw->setGeometry(qRound(item->uncroppedGeometry().left() + item->uncroppedWidth() * r.left) + 1 - viewportRect.left(),
@@ -1562,7 +1562,7 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
     if (previous != -1) {
         PageViewItem *item = d->items.at(previous);
         if (item) {
-            const QHash<Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
+            const QHash<const Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
             for (VideoWidget *videoWidget : videoWidgetsList) {
                 videoWidget->pageLeft();
             }
@@ -1582,7 +1582,7 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
     if (current != -1) {
         PageViewItem *item = d->items.at(current);
         if (item) {
-            const QHash<Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
+            const QHash<const Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
             for (VideoWidget *videoWidget : videoWidgetsList) {
                 videoWidget->pageEntered();
             }
@@ -2828,10 +2828,10 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         menu.setObjectName(QStringLiteral("PopupMenu"));
         QAction *textToClipboard = nullptr;
 #if HAVE_SPEECH
-        QAction *speakText = nullptr;
+        const QAction *speakText = nullptr;
 #endif
-        QAction *imageToClipboard = nullptr;
-        QAction *imageToFile = nullptr;
+        const QAction *imageToClipboard = nullptr;
+        const QAction *imageToFile = nullptr;
         if (d->document->supportsSearching() && !selectedText.isEmpty()) {
             menu.addAction(new OKMenuTitle(&menu, i18np("Text (1 character)", "Text (%1 characters)", selectedText.length())));
             textToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy to Clipboard"));
@@ -3025,7 +3025,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 QMenu *menu = createProcessLinkMenu(item, eventPos);
                 const bool mouseClickOverLink = (menu != nullptr);
 #if HAVE_SPEECH
-                QAction *speakText = nullptr;
+                const QAction *speakText = nullptr;
 #endif
                 if ((page = item->page())->textSelection()) {
                     if (!menu) {
@@ -3929,7 +3929,7 @@ void PageView::updateZoom(ZoomMode newZoomMode)
     }
 
     float newFactor = d->zoomFactor;
-    QAction *checkedZoomAction = nullptr;
+    const QAction *checkedZoomAction = nullptr;
     switch (newZoomMode) {
     case ZoomFixed: { // ZoomFixed case
         newFactor = parseZoomString(d->aZoom->currentText());
@@ -4801,7 +4801,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
             Okular::NormalizedRect r = fwi->rect();
             fwi->moveTo(qRound(i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left) + 1 - viewportRect.left(), qRound(i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top) + 1 - viewportRect.top());
         }
-        const QHash<Okular::Movie *, VideoWidget *> videoWidgets = i->videoWidgets();
+        const QHash<const Okular::Movie *, VideoWidget *> videoWidgets = i->videoWidgets();
         for (VideoWidget *vw : videoWidgets) {
             const Okular::NormalizedRect r = vw->normGeometry();
             vw->move(qRound(i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left) + 1 - viewportRect.left(), qRound(i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top) + 1 - viewportRect.top());
@@ -5567,7 +5567,7 @@ void PageView::slotProcessMovieAction(const Okular::MovieAction *action)
         return;
     }
 
-    Okular::Movie *movie = movieAnnotation->movie();
+    const Okular::Movie *movie = movieAnnotation->movie();
     if (!movie) {
         return;
     }
@@ -5605,7 +5605,7 @@ void PageView::slotProcessMovieAction(const Okular::MovieAction *action)
 
 void PageView::slotProcessRenditionAction(const Okular::RenditionAction *action)
 {
-    Okular::Movie *movie = action->movie();
+    const Okular::Movie *movie = action->movie();
     if (!movie) {
         return;
     }

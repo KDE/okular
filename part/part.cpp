@@ -3153,9 +3153,9 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
         reallyShow = true;
     }
 
-    QAction *addBookmark = nullptr;
-    QAction *removeBookmark = nullptr;
-    QAction *fitPageWidth = nullptr;
+    const QAction *addBookmark = nullptr;
+    const QAction *removeBookmark = nullptr;
+    const QAction *fitPageWidth = nullptr;
     if (page) {
         popup.addAction(new OKMenuTitle(&popup, i18n("Page %1", page->number() + 1)));
         if (m_thumbnailList->isVisible() && !Okular::Settings::syncThumbnailsViewport()) {
@@ -3192,7 +3192,7 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     }
 
     if (reallyShow) {
-        QAction *res = popup.exec(point);
+        const QAction *res = popup.exec(point);
         if (res) {
             if (res == addBookmark) {
                 if (isCurrentPage && bookmarkTitle.isEmpty()) {

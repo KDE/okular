@@ -111,7 +111,7 @@ struct PresentationFrame {
 
     const Okular::Page *page;
     QRect geometry;
-    QHash<Okular::Movie *, VideoWidget *> videoWidgets;
+    QHash<const Okular::Movie *, VideoWidget *> videoWidgets;
     std::vector<SmoothPath> drawings;
 };
 
@@ -2295,7 +2295,7 @@ void PresentationWidget::slotProcessMovieAction(const Okular::MovieAction *actio
 
 void PresentationWidget::slotProcessRenditionAction(const Okular::RenditionAction *action)
 {
-    Okular::Movie *movie = action->movie();
+    const Okular::Movie *movie = action->movie();
     if (!movie) {
         return;
     }

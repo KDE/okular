@@ -111,7 +111,7 @@ QSet<FormWidgetIface *> &PageViewItem::formWidgets()
     return m_formWidgets;
 }
 
-QHash<Okular::Movie *, VideoWidget *> &PageViewItem::videoWidgets()
+QHash<const Okular::Movie *, VideoWidget *> &PageViewItem::videoWidgets()
 {
     return m_videoWidgets;
 }

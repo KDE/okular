@@ -36,21 +36,11 @@ build_ubuntu_24_10:
    - ninja
 
 build_clazy_clang_tidy:
-  stage: build
-  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt69:latest
-  tags:
-    - Linux
-  interruptible: true
-  before_script:
-    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1
-    - git clone https://invent.kde.org/sysadmin/repo-metadata.git ci-utilities/repo-metadata/ --depth=1
-  only:
-    - merge_requests
+  extends: .suse_tumbleweed_qt6stable
+  rules:
+    # only run on merge requests
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   variables:
-    KDECI_CC_CACHE: /mnt/caches/suse-qt6.9/
-    KDECI_CACHE_PATH: /mnt/artifacts/suse-qt6.9/
-    KDECI_GITLAB_SERVER: https://invent.kde.org/
-    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt6.9
     CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
     CXXFLAGS: -Werror -Wno-deprecated-declarations
     CC: clang
@@ -66,6 +56,7 @@ build_clazy_clang_tidy:
     - cp "$CI_PROJECT_DIR/.clang-tidy" .
     - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h|okularplugin_qmltyperegistrations.cpp|okularkirigami_qmltyperegistrations.cpp|okularkirigami_qmlcache_loader.cpp|okularplugin_qmlcache_loader.cpp" ninja -k 0
     - run-clang-tidy
+  artifacts: null
 
 clang_format:
   stage: build

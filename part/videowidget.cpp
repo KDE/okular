@@ -447,11 +447,6 @@ bool VideoWidget::event(QEvent *event)
 
     return QWidget::event(event);
 }
-
-void VideoWidget::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-}
 #else
 
 class VideoWidget::Private
@@ -497,11 +492,6 @@ void VideoWidget::pause()
 }
 void VideoWidget::play()
 {
-}
-
-void VideoWidget::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
 }
 
 void VideoWidget::setNormGeometry(const Okular::NormalizedRect &rect)

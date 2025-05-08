@@ -144,7 +144,7 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
     data->m_info = si;
     data->m_player = new QMediaPlayer();
     QAudioOutput *audioOutput = new QAudioOutput();
-    data->m_player->setAudioOutput(audioOutput); 
+    data->m_player->setAudioOutput(audioOutput);
     audioOutput->setVolume(data->m_info.volume * 100); // Convert from double 0 - 1 to int 0 - 100 range.
     bool valid = false;
 

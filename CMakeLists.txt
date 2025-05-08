@@ -206,7 +206,7 @@ else()
 endif()
 
 find_package(Qt6MultimediaWidgets ${QT_REQUIRED_VERSION} CONFIG)
-set_okular_optional_package_properties(Qt5::MultimediaWidgets PROPERTIES
+set_okular_optional_package_properties(Qt6::MultimediaWidgets PROPERTIES
     PURPOSE "Required for documents with audio or video elements.")
 
 if (TARGET Qt6::MultimediaWidgets)

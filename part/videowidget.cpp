@@ -22,8 +22,8 @@
 #include <qmediaplayer.h>
 #endif
 #include <qmenu.h>
-#include <qslider.h>
 #include <qstackedlayout.h>
+#include <qstyleoption.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 #if HAVE_MULTIMEDIA
@@ -43,6 +43,51 @@ const int kVideoPage = 0;
 const int kPosterPage = 1;
 
 #if HAVE_MULTIMEDIA
+
+// Inspired by SeekSlider in Dolphin's Information Panel (MediaWidget)
+SeekSlider::SeekSlider(QWidget *parent)
+    : QSlider(Qt::Horizontal, parent)
+{
+}
+
+int SeekSlider::pixelPosToRangeValue(int pos) const
+{
+    QStyleOptionSlider opt;
+    initStyleOption(&opt);
+
+    QRect gr = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
+    QRect sr = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+
+    return QStyle::sliderValueFromPosition(minimum(), maximum(), pos - gr.x(), (gr.right() - sr.width() + 1) - gr.x(), opt.upsideDown);
+}
+
+void SeekSlider::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() != Qt::LeftButton) {
+        QSlider::mousePressEvent(event);
+        return;
+    }
+
+    QStyleOptionSlider opt;
+    initStyleOption(&opt);
+    const QRect sliderRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+    // to take half of the slider off for the setSliderPosition call we use the center - topLeft
+    const QPoint center = sliderRect.center() - sliderRect.topLeft();
+
+    if (!sliderRect.contains(event->pos())) {
+        event->accept();
+
+        int pos = pixelPosToRangeValue((event->pos() - center).x());
+
+        setSliderPosition(pos);
+        triggerAction(SliderMove);
+        setRepeatAction(SliderNoAction);
+
+        Q_EMIT sliderMoved(pos);
+    } else {
+        QSlider::mousePressEvent(event);
+    }
+}
 
 /* Private storage. */
 class VideoWidget::Private
@@ -81,7 +126,7 @@ public:
     Okular::NormalizedRect geom;
     QMediaPlayer *player = nullptr;
     QVideoWidget *videoWidget = nullptr;
-    QSlider *seekSlider = nullptr;
+    SeekSlider *seekSlider = nullptr;
     QToolBar *controlBar = nullptr;
     QAction *playPauseAction = nullptr;
     QAction *stopAction = nullptr;
@@ -245,8 +290,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->stopAction->setEnabled(false);
     d->controlBar->addSeparator();
 
-    d->seekSlider = new QSlider(Qt::Horizontal, d->controlBar);
-    d->seekSlider->setRange(0, 100);
+    d->seekSlider = new SeekSlider(d->controlBar);
     d->seekSliderAction = d->controlBar->addWidget(d->seekSlider);
     d->seekSlider->setEnabled(false);
 
@@ -257,7 +301,7 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
 
     connect(d->seekSlider, &QSlider::sliderMoved, this, [this](int position) { d->player->setPosition(position); });
     connect(d->player, &QMediaPlayer::positionChanged, this, [this](qint64 position) { d->seekSlider->setValue(position); });
-    connect(d->player, &QMediaPlayer::durationChanged, this, [this](qint64 duration) { d->seekSlider->setRange(0, duration); });
+    connect(d->player, &QMediaPlayer::durationChanged, this, [this](qint64 duration) { d->seekSlider->setMaximum(duration); });
 
     d->geom = annotation->transformedBoundingRectangle();
 

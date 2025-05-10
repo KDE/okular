@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-03 00:41+0000\n"
-"PO-Revision-Date: 2025-04-16 12:01+0200\n"
+"PO-Revision-Date: 2025-05-09 18:45+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -4569,7 +4569,7 @@ msgstr ""
 "Le file <filename>%1</filename> ha modificationes non salveguardate, ma ha "
 "essite modificate per un altere programma. Recargar lo reimplacera le "
 "modificationes non salveguardate con le modificationes facite in le altere "
-"programma.<nl/><nl/> Tu vole continuar a recarcar iste file?"
+"programma.<nl/><nl/> Tu vole continuar a recargar iste file?"
 
 #: part/part.cpp:1854 part/part.cpp:1864
 #, kde-format

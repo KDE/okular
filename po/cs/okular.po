@@ -614,23 +614,16 @@ msgid "Could not sign. Wrong passphrase"
 msgstr ""
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Soubor <filename>%1</filename> nelze přepsat, protože je pouze ke čtení. "
-"Pokuste se jej uložit jinam nebo změňte jeho oprávnění."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Neznámý soubor"
+msgstr ""
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1138,11 +1131,10 @@ msgid "Location: %1"
 msgstr "Umístění: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Podpisy"
+msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -1163,25 +1155,21 @@ msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
-msgstr "Neznámý"
+msgstr ""
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Nepodepsaný podpis %1"
+msgstr ""
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Platnost podpisu:"
+msgstr ""
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1811,12 +1799,10 @@ msgid "&Color:"
 msgstr "&Barva:"
 
 #: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%1%"
+msgstr ""
 
 #: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -2872,12 +2858,10 @@ msgid ""
 msgstr ""
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Otevřít v průběžném režimu jako výchozí"
+msgstr ""
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -3072,16 +3056,13 @@ msgstr ""
 "50 % celkové paměti, či volné paměti, dle jejich velikosti)."
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " sekunda"
-msgstr[1] " sekundy"
-msgstr[2] " sekund"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -5928,19 +5909,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgctxt "Suffix for the opacity level, eg '80%'"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#~ msgid "every "
-#~ msgstr "každých "
-
-#~ msgctxt "Suffix for the pen width, eg '10 px'"
-#~ msgid " px"
-#~ msgstr " px"
-
-#~ msgctxt "Suffix for the opacity level, eg '80 %'"
-#~ msgid " %"
-#~ msgstr " %"

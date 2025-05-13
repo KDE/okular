@@ -318,11 +318,10 @@ msgid ""
 msgstr ""
 
 #: pdfsettingswidget.cpp:123
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "Načíst podp&isy"
+msgstr ""
 
 #: pdfsettingswidget.cpp:157
 #, kde-format

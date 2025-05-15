@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-05-09 18:53+0200\n"
+"PO-Revision-Date: 2025-05-14 16:18+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2241,7 +2241,7 @@ msgstr "Marcatores de libro"
 #: part/bookmarklist.cpp:135
 #, kde-format
 msgid "Show for all documents"
-msgstr "Mnstra per omne documentos"
+msgstr "Monstra per omne documentos"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43

@@ -495,13 +495,13 @@ QString Okular::errorString(SigningResult result, const QVariant &additionalMess
     case InternalSigningError:
         return i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", additionalMessage.toInt());
     case GenericSigningError:
-        return xi18n("Could not sign document with location: <filename>%1</filename>", additionalMessage.toString());
+        return xi18nc("%1 is a filename with path", "Could not sign the document: <filename>%1</filename>", additionalMessage.toString());
     case UserCancelled: // This is unlikely to actually happen in a way where we want to show a message
         return i18n("Signing cancelled by user");
     case BadPassphrase:
         return i18n("Could not sign. Wrong passphrase");
     case SignatureWriteFailed:
-        return xi18n("Could not write signed document at <filename>%1</filename>, please ensure you have selected a folder with write permission", additionalMessage.toString());
+        return xi18nc("%1 is a filename with path", "Could not write the signed document to <filename>%1</filename>, please ensure you have selected a folder with write permission", additionalMessage.toString());
     }
     return i18n("Unknown signing error");
 }

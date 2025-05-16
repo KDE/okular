@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-27 02:36+0000\n"
-"PO-Revision-Date: 2025-03-15 09:02+0200\n"
+"PO-Revision-Date: 2025-04-08 21:13+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -625,16 +625,14 @@ msgstr ""
 "voi toistaa. Virhekoodi %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgid "Could not sign document with location: <filename>%1</filename>"
-msgstr "Tiedoston <filename>%1</filename> avaaminen epäonnistui."
+msgstr "Ei voitu allekirjoittaa tiedostoa sijainnilla: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Käyttäjä perui allekirjoittamisen"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -642,23 +640,18 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Ei voitu allekirjoittaa. Väärä salasana"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "%1 is a file path"
-#| msgid ""
-#| "Could not write signated document at '%1', please ensure you have "
-#| "selected a folder with write permission"
+#, kde-kuit-format
 msgid ""
 "Could not write signed document at <filename>%1</filename>, please ensure "
 "you have selected a folder with write permission"
 msgstr ""
-"Ei voitu kirjoittaa allekirjoitettuun tiedostoon kansiossa ”%1”: varmista, "
-"että sinne on kirjoitusoikeudet"
+"Ei voitu kirjoittaa allekirjoitettua tiedostoa kansioon <filename>%1</"
+"filename>: varmista, että kansioon on kirjoitusoikeus"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Tuntematon tiedosto"
+msgstr "Tuntematon allekirjoittamisvirhe"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1174,51 +1167,46 @@ msgid "Location: %1"
 msgstr "Sijainti: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Signature type"
 msgid "PGP Signature"
-msgstr "Allekirjoitukset"
+msgstr "PGP-allekirjoitus"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 SHA-1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unknown"
 msgstr "Tuntematon"
 
 # Jösses!
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Unsigned signature"
-msgstr "Allekirjoittamaton allekirjoitus %1"
+msgstr "Allekirjoittamaton allekirjoitus"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Allekirjoituksen kelpoisuus:"
+msgstr "Allekirjoituksen tyyppi: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -2908,15 +2896,13 @@ msgctxt "@option:check Config dialog, general page"
 msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
-msgstr ""
+msgstr "Tunnista tiedoston tiedoista, avataanko oletuksena jatkuvaan tilaan"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Avaa oletuksena jatkuvaan tilaan"
+msgstr "Avaa tiedostot, joista tieto puuttuu, oletuksena jatkuvaan tilaan"
 
 #: part/dlggeneral.cpp:180
 #, kde-format

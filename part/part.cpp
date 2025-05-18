@@ -1449,17 +1449,19 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
         }
         m_documentOpenWithPassword = false;
 
-#if HAVE_KWALLET
         // if the file didn't open correctly it might be encrypted, so ask for a pass
+#if HAVE_KWALLET
         QString walletName, walletFolder, walletKey;
         m_document->walletDataForFile(fileNameToOpen, &walletName, &walletFolder, &walletKey);
-        bool firstInput = true;
         bool triedWallet = false;
         KWallet::Wallet *wallet = nullptr;
         bool keep = true;
+#endif
+        bool firstInput = true;
         while (openResult == Document::OpenNeedsPassword) {
             QString password;
 
+#if HAVE_KWALLET
             // 1.A. try to retrieve the first password from the kde wallet system
             if (!triedWallet && !walletKey.isNull()) {
                 const WId parentwid = widget()->effectiveWinId();
@@ -1479,6 +1481,7 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
                 }
                 triedWallet = true;
             }
+#endif
 
             // 1.B. if not retrieved, ask the password using the kde password dialog
             if (password.isNull()) {
@@ -1491,16 +1494,23 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
                 firstInput = false;
 
                 // if the user presses cancel, abort opening
-                KPasswordDialog dlg(widget(), wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags());
+#if HAVE_KWALLET
+                const KPasswordDialog::KPasswordDialogFlags dlgFlags = wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags();
+#else
+                const KPasswordDialog::KPasswordDialogFlags dlgFlags;
+#endif
+                KPasswordDialog dlg(widget(), dlgFlags);
                 dlg.setWindowTitle(i18n("Document Password"));
                 dlg.setPrompt(prompt);
                 if (!dlg.exec()) {
                     break;
                 }
                 password = dlg.password();
+#if HAVE_KWALLET
                 if (wallet) {
                     keep = dlg.keepPassword();
                 }
+#endif
             }
 
             // 2. reopen the document using the password
@@ -1514,13 +1524,14 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
             if (openResult == Document::OpenSuccess) {
                 m_documentOpenWithPassword = true;
 
+#if HAVE_KWALLET
                 // 3. if the password is correct and the user chose to remember it, store it to the wallet
                 if (wallet && /*safety check*/ wallet->isOpen() && keep) {
                     wallet->writePassword(walletKey, password);
                 }
+#endif
             }
         }
-#endif
     }
 
     if (openResult == Document::OpenSuccess) {

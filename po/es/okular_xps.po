@@ -1,14 +1,14 @@
-# translation of okular_xps.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_xps.po package.
+# Copyright (C) 2007-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2007, 2008.
+# SPDX-FileCopyrightText: 2007, 2008, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_xps\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-09 00:40+0000\n"
-"PO-Revision-Date: 2008-08-10 11:33+0200\n"
+"PO-Revision-Date: 2025-05-20 02:18+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -32,27 +32,3 @@ msgstr "ecuadra@eloihr.net"
 #, kde-format
 msgid "Revision"
 msgstr "Revisión"
-
-#~ msgid "XPS Backend"
-#~ msgstr "Motor XPS"
-
-#~ msgid "An XPS backend"
-#~ msgstr "Un motor XPS"
-
-#~ msgid ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-#~ msgstr ""
-#~ "© 2006-2007 Brad Hards\n"
-#~ "© 2007 Jiri Klement\n"
-#~ "© 2008 Pino Toscano"
-
-#~ msgid "Brad Hards"
-#~ msgstr "Brad Hards"
-
-#~ msgid "Jiri Klement"
-#~ msgstr "Jiri Klement"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"

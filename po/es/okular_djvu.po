@@ -1,14 +1,14 @@
-# translation of okular_djvu.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_djvu.po package.
+# Copyright (C) 2007-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2007, 2008.
+# SPDX-FileCopyrightText: 2007, 2008, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-17 00:37+0000\n"
-"PO-Revision-Date: 2008-09-02 16:34+0200\n"
+"PO-Revision-Date: 2025-05-20 02:15+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -94,43 +94,3 @@ msgstr "Empaquetado (antiguo)"
 msgctxt "Type of DjVu document"
 msgid "Indexed (old)"
 msgstr "Indexado (antiguo)"
-
-#~ msgid "DjVu Backend"
-#~ msgstr "Motor DjVu"
-
-#~ msgid "DjVu backend based on DjVuLibre."
-#~ msgstr "Motor DjVu basado en DjVuLibre."
-
-#~ msgid "© 2006-2008 Pino Toscano"
-#~ msgstr "© 2006-2008 Pino Toscano"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"
-
-#~ msgctxt "Unknown title"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown author"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown editor"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown publisher"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown creation date"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown volume information"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
-
-#~ msgctxt "Unknown type of document"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"

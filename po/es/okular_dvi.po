@@ -1,15 +1,15 @@
-# translation of okular_dvi.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_dvi.po package.
+# Copyright (C) 2007-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013, 2014, 2024 Eloy Cuadra <ecuadra@eloihr.net>
-# Javier Viñal <fjvinal@gmail.com>, 2013.
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013, 2014, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2013 Javier Viñal <fjvinal@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-03 00:41+0000\n"
-"PO-Revision-Date: 2024-08-16 12:10+0200\n"
+"PO-Revision-Date: 2025-05-20 02:15+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -337,7 +337,7 @@ msgstr ""
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi..."
-msgstr "Generando ahora %1 a %2 ppp..."
+msgstr "Generando ahora %1 a %2 ppp…"
 
 #: generator_dvi.cpp:288
 #, kde-format
@@ -568,202 +568,3 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Byte de orden incorrecto encontrado en la lista de macros VF: %1"
-
-#~ msgid ""
-#~ "<qt><p>The Ghostview program, which Okular uses internally to display the "
-#~ "PostScript graphics that is included in this DVI file, is generally able "
-#~ "to write its output in a variety of formats. The sub-programs that "
-#~ "Ghostview uses for these tasks are called 'device drivers'; there is one "
-#~ "device driver for each format that Ghostview is able to write. Different "
-#~ "versions of Ghostview often have different sets of device drivers "
-#~ "available. It seems that the version of Ghostview that is installed on "
-#~ "this computer does not contain <strong>any</strong> of the device drivers "
-#~ "that are known to Okular.</p><p>It seems unlikely that a regular "
-#~ "installation of Ghostview would not contain these drivers. This error may "
-#~ "therefore point to a serious misconfiguration of the Ghostview "
-#~ "installation on your computer.</p><p>If you want to fix the problems with "
-#~ "Ghostview, you can use the command <strong>gs --help</strong> to display "
-#~ "the list of device drivers contained in Ghostview. Among others, Okular "
-#~ "can use the 'png256', 'jpeg' and 'pnm' drivers. Note that Okular needs to "
-#~ "be restarted to re-enable PostScript support.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>El programa Ghostview (que Okular usa internamente para mostrar "
-#~ "los gráficos PostScript incluidos en este archivo DVI) es, por lo "
-#~ "general, capaz de escribir su salida en diversos formatos. Los "
-#~ "subprogramas que Ghostview usa para estas tareas se denominan "
-#~ "«controladores de dispositivos». Existe un controlador de dispositivo "
-#~ "para cada formato que Ghostview es capaz de escribir. Distintas versiones "
-#~ "de Ghostview tienen a menudo diferentes juegos de controladores de "
-#~ "dispositivos. Parece que la versión de Ghostview que está instalada en su "
-#~ "equipo no contiene <strong>ninguno</strong> de los controladores de "
-#~ "dispositivo que son conocidos por Okular.</p><p>No es probable que una "
-#~ "instalación normal de Ghostview no contenga estos controladores. Por lo "
-#~ "tanto, este error puede apuntar a una severa desconfiguración de su "
-#~ "instalación de Ghostview.</p><p>Si desea solucionar los problemas "
-#~ "relacionados con Ghostview, puede usar la orden <strong>gs --help</"
-#~ "strong> para mostrar la lista de controladores de dispositivo que "
-#~ "contiene Ghostview. Entre otros, Okular puede usar los controladores "
-#~ "«png256», «jpeg» y «pnm». Tenga en cuenta que será necesario reiniciar "
-#~ "Okular para reactivar el soporte de PostScript.</p></qt>"
-
-#~ msgid "DVI Backend"
-#~ msgstr "Motor DVI"
-
-#~ msgid "A DVI file renderer"
-#~ msgstr "Un visualizador de archivos DVI"
-
-#~ msgid "© 2006 Luigi Toscano"
-#~ msgstr "© 2006 Luigi Toscano"
-
-#~ msgid ""
-#~ "<p>Okular relies on the <b>kpsewhich</b> program to locate font files on "
-#~ "your hard disk and to generate PK fonts, if necessary.</p>"
-#~ msgstr ""
-#~ "<p>Okular confía en el programa <b>kpsewhich</b> para localizar archivos "
-#~ "de tipos de letra en su disco duro y para generar tipos de letra PK, si "
-#~ "es necesario.</p>"
-
-#~ msgid "Okular is currently generating bitmap fonts..."
-#~ msgstr "Okular está generando actualmente tipos de letra de mapa de bits..."
-
-#~ msgid "Aborts the font generation. Do not do this."
-#~ msgstr "Interrumpe la generación de tipos de letra. No haga esto."
-
-#~ msgid ""
-#~ "Okular is currently generating bitmap fonts which are needed to display "
-#~ "your document. For this, Okular uses a number of external programs, such "
-#~ "as MetaFont. You can find the output of these programs later in the "
-#~ "document info dialog."
-#~ msgstr ""
-#~ "Okular está generando actualmente tipos de letra de mapas de bits que son "
-#~ "necesarios para mostrar el documento. Para ello, Okular usa cierto número "
-#~ "de programas externos, como MetaFont. Más adelante podrá encontrar la "
-#~ "salida producida por estos programas en el diálogo de información del "
-#~ "documento."
-
-#~ msgid "Okular is generating fonts. Please wait."
-#~ msgstr "Okular está generando tipos de letra. Espere un momento."
-
-#~ msgid "Font Generation Progress Dialog"
-#~ msgstr "Diálogo de progreso de la generación de tipo de letra"
-
-#~ msgid "Abort"
-#~ msgstr "Interrumpir"
-
-#~ msgid "What is happening here?"
-#~ msgstr "¿Qué está ocurriendo?"
-
-#~ msgid "%v of %m"
-#~ msgstr "%v de %m"
-
-#~ msgid "Please be patient"
-#~ msgstr "Por favor, sea paciente"
-
-#~ msgid "*.pdf|Portable Document Format (*.pdf)"
-#~ msgstr "*.pdf|Formato de documento portable (*.pdf)"
-
-#~ msgid "Export File As"
-#~ msgstr "Exportar archivo como"
-
-#~ msgid ""
-#~ "The file %1\n"
-#~ "exists. Do you want to overwrite it?"
-#~ msgstr ""
-#~ "El archivo %1\n"
-#~ "ya existe. ¿Desea sobrescribirlo?"
-
-#~ msgid "Overwrite File"
-#~ msgstr "Sobrescribir archivo"
-
-#~ msgid "Overwrite"
-#~ msgstr "Sobrescribir"
-
-#~ msgid "Using dvipdfm to export the file to PDF"
-#~ msgstr "Usando «dvipdfm» para exportar el archivo a PDF"
-
-#~ msgid ""
-#~ "Okular is currently using the external program 'dvipdfm' to convert your "
-#~ "DVI-file to PDF. Sometimes that can take a while because dvipdfm needs to "
-#~ "generate its own bitmap fonts Please be patient."
-#~ msgstr ""
-#~ "Okular está usando actualmente el programa externo «dvipdfm» para "
-#~ "convertir su archivo DVI a PDF. Algunas veces esto puede tardar cierto "
-#~ "tiempo debido a que «dvipdfm» necesita generar sus propios tipos de letra "
-#~ "de mapa de bits. Por favor, espere un momento."
-
-#~ msgid "Waiting for dvipdfm to finish..."
-#~ msgstr "Esperando que «dvipdfm» termine..."
-
-#~ msgid "*.ps|PostScript (*.ps)"
-#~ msgstr "*.ps|PostScript (*.ps)"
-
-#~ msgid "Using dvips to export the file to PostScript"
-#~ msgstr "Usando «dvips» para exportar el archivo a PostScript"
-
-#~ msgid ""
-#~ "Okular is currently using the external program 'dvips' to convert your "
-#~ "DVI-file to PostScript. Sometimes that can take a while because dvips "
-#~ "needs to generate its own bitmap fonts Please be patient."
-#~ msgstr ""
-#~ "Okular está usando actualmente el programa externo «dvips» para convertir "
-#~ "su archivo DVI a PostScript. Algunas veces esto puede tardar cierto "
-#~ "tiempo debido a que «dvips» necesita generar sus propios tipos de letra "
-#~ "de mapa de bits. Por favor, espere un momento."
-
-#~ msgid "Waiting for dvips to finish..."
-#~ msgstr "Esperando que «dvips» termine..."
-
-#~ msgid "Functionality Unavailable"
-#~ msgstr "Funcionalidad no disponible"
-
-#~ msgid ""
-#~ "<qt><strong>File corruption</strong> Okular could not interpret your DVI "
-#~ "file. This is most commonly caused by a corrupted file.</qt>"
-#~ msgstr ""
-#~ "<qt><strong>Archivo dañado.</strong> Okular no puede interpretar el "
-#~ "archivo DVI. Lo más probable es que el archivo esté dañado.</qt>"
-
-#~ msgid "DVI File Error"
-#~ msgstr "Error de archivo DVI"
-
-#~ msgid "Not All Font Files Found"
-#~ msgstr "No se han encontrado todos los archivos de tipos de letra"
-
-#~ msgid "Locating fonts..."
-#~ msgstr "Localizando tipos de letra..."
-
-#~ msgid ""
-#~ "<p>There were problems running <b>kpsewhich</b>. As a result, some font "
-#~ "files could not be located, and your document might be unreadable.</"
-#~ "p><p><b>Possible reason:</b> The kpsewhich program is perhaps not "
-#~ "installed on your system, or it cannot be found in the current search "
-#~ "path.</p><p><b>What you can do:</b> The kpsewhich program is normally "
-#~ "contained in distributions of the TeX typesetting system. If TeX is not "
-#~ "installed on your system, you could install the TeX Live distribution "
-#~ "(www.tug.org/texlive). If you are sure that TeX is installed, please try "
-#~ "to use the kpsewhich program from the command line to check if it really "
-#~ "works.</p>"
-#~ msgstr ""
-#~ "<p>Ha ocurrido algún problema al ejecutar <b>kpsewhich</b>. Como "
-#~ "consecuencia, no se ha podido localizar algunos archivos de tipos de "
-#~ "letra, por lo es posible que su documento no sea legible.</"
-#~ "p><p><b>Posible motivo:</b> Tal vez el programa «kpsewhich» no esté "
-#~ "instalado en su equipo, o no se puede encontrar en su ruta de búsqueda "
-#~ "actual.</p><p><b>¿Qué puede hacer?:</b> Normalmente, el programa "
-#~ "«kpsewhich» está contenido en las distribuciones del sistema TeX. Si TeX "
-#~ "no está instalado en su equipo, puede instalar la distribución TeX Live "
-#~ "(www.tug.org/texlive). Si está seguro de que TeX está instalado, pruebe a "
-#~ "usar el programa «kpsewhich» desde la línea de órdenes para comprobar que "
-#~ "realmente funciona.</p>"
-
-#~ msgid "Problem locating fonts"
-#~ msgstr "Problema localizando tipos de letra"
-
-#~ msgid "Font generation aborted"
-#~ msgstr "Generación de tipos de letra interrumpida"
-
-#~ msgid "Export: %1 to PDF"
-#~ msgstr "Exportar: %1 a PDF"
-
-#~ msgid "Export: %1 to PostScript"
-#~ msgstr "Exportar: %1 a PostScript"

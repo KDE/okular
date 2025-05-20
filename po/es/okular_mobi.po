@@ -1,16 +1,16 @@
-# translation of okular_mobi.po to Español
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_mobi.po package.
+# Copyright (C) 2008-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Miguel Angel Quesada Fernandez <kesadalive@gmail.com>, 2008.
-# Ignacio Poggi <ignaciop.3@gmail.com>, 2009.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2009, 2013, 2014.
+# SPDX-FileCopyrightText: 2008 Miguel Angel Quesada Fernandez <kesadalive@gmail.com>
+# SPDX-FileCopyrightText: 2009 Ignacio Poggi <ignaciop.3@gmail.com>
+# SPDX-FileCopyrightText: 2009, 2013, 2014, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_mobi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2014-03-26 14:51+0100\n"
+"PO-Revision-Date: 2025-05-20 02:17+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -52,15 +52,3 @@ msgstr "Mobipocket"
 #, kde-format
 msgid "Mobipocket Backend Configuration"
 msgstr "Configuración del motor Mobipocket"
-
-#~ msgid "Mobipocket Backend"
-#~ msgstr "Motor Mobipocket"
-
-#~ msgid "A mobipocket backend"
-#~ msgstr "Un motor mobipocket"
-
-#~ msgid "© 2008-2009 Jakub Stachowski"
-#~ msgstr "© 2008-2009 Jakub Stachowski"
-
-#~ msgid "Jakub Stachowski"
-#~ msgstr "Jakub Stachowski"

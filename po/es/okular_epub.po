@@ -1,15 +1,15 @@
-# translation of okular_epub.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_epub.po package.
+# Copyright (C) 2008-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Ignacio Poggi <ignaciop.3@gmail.com>, 2008.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2008, 2013, 2014.
+# SPDX-FileCopyrightText: 2008 Ignacio Poggi <ignaciop.3@gmail.com>
+# SPDX-FileCopyrightText: 2008, 2013, 2014, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-15 00:40+0000\n"
-"PO-Revision-Date: 2014-03-26 14:50+0100\n"
+"PO-Revision-Date: 2025-05-20 02:16+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -43,15 +43,3 @@ msgstr "EPub"
 #, kde-format
 msgid "EPub Backend Configuration"
 msgstr "Configuración del motor EPub"
-
-#~ msgid "EPub Backend"
-#~ msgstr "Motor EPub"
-
-#~ msgid "An EPub backend"
-#~ msgstr "Un motor EPub"
-
-#~ msgid "© 2008 Ely Levy"
-#~ msgstr "© 2008 Ely Levy"
-
-#~ msgid "Ely Levy"
-#~ msgstr "Ely Levy"

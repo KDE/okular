@@ -1,14 +1,14 @@
-# translation of okular_kimgio.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_kimgio.po package.
+# Copyright (C) 2007-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2007, 2009, 2017.
+# SPDX-FileCopyrightText: 2007, 2009, 2017, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_kimgio\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2017-11-20 20:13+0100\n"
+"PO-Revision-Date: 2025-05-20 02:23+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -41,30 +41,3 @@ msgid ""
 msgstr ""
 "Parece que este documento está mal formado. Esta es la mejor aproximación "
 "del aspecto previsto del documento."
-
-#~ msgid "Image Backend"
-#~ msgstr "Motor de imagen"
-
-#~ msgid "A simple image backend"
-#~ msgstr "Un sencillo motor de imagen"
-
-#~ msgid ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-#~ msgstr ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Main Toolbar"
-#~ msgstr "Barra de herramientas principal"

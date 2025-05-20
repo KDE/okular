@@ -1,15 +1,16 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_txt.po package.
+# Copyright (C) 2013-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2013.
-# Javier Viñal <fjvinal@gmail.com>, 2013.
+# SPDX-FileCopyrightText: 2013, 2025 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2013 Javier Viñal <fjvinal@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: okular_txt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2013-07-24 16:42+0200\n"
-"Last-Translator: Javier Viñal <fjvinal@gmail.com>\n"
+"PO-Revision-Date: 2025-05-20 02:24+0100\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -37,15 +38,3 @@ msgstr "Txt"
 #, kde-format
 msgid "Txt Backend Configuration"
 msgstr "Configuración del motor de texto"
-
-#~ msgid "Txt Backend"
-#~ msgstr "Motor de texto"
-
-#~ msgid "Txt backend."
-#~ msgstr "Motor de texto."
-
-#~ msgid "© 2013 Azat Khuzhin"
-#~ msgstr "© 2013 Azat Khuzhin"
-
-#~ msgid "Azat Khuzhin"
-#~ msgstr "Azat Khuzhin"

@@ -1,14 +1,14 @@
-# translation of okular_comicbook.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_comicbook.po package.
+# Copyright (C) 2008-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2008, 2018.
+# SPDX-FileCopyrightText: 2008, 2018, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-16 00:37+0000\n"
-"PO-Revision-Date: 2018-11-13 22:26+0100\n"
+"PO-Revision-Date: 2025-05-20 02:22+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -46,15 +46,3 @@ msgstr ""
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Formato ComicBook desconocido."
-
-#~ msgid "ComicBook Backend"
-#~ msgstr "Motor ComicBook"
-
-#~ msgid "A renderer for various comic book formats"
-#~ msgstr "Un visualizador de varios formatos de libros de cómics"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

@@ -1,14 +1,14 @@
-# translation of okular_ghostview.po to Spanish
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_ghostview.po package.
+# Copyright (C) 2007-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2007, 2008, 2009, 2011.
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2011, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_ghostview\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2011-06-13 15:07+0200\n"
+"PO-Revision-Date: 2025-05-20 02:32+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -76,18 +76,3 @@ msgstr "Versión del documento"
 #, kde-format
 msgid "Language Level"
 msgstr "Nivel de lenguaje"
-
-#~ msgid "PS Backend"
-#~ msgstr "Motor PS"
-
-#~ msgid "A PostScript file renderer."
-#~ msgstr "Un visualizador de archivos PostScript."
-
-#~ msgid "© 2007-2008 Albert Astals Cid"
-#~ msgstr "© 2007-2008 Albert Astals Cid"
-
-#~ msgid "Based on the Spectre library."
-#~ msgstr "Basado en la biblioteca Spectre."
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"

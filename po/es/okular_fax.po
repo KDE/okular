@@ -1,13 +1,14 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for okular_fax.po package.
+# Copyright (C) 2008-2025 This file is copyright:
+# This file is distributed under the same license as the okular package.
 #
-# Eloy Cuadra <ecuadra@eloihr.net>, 2008.
+# SPDX-FileCopyrightText: 2008, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_fax\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:27+0000\n"
-"PO-Revision-Date: 2008-11-26 21:37+0100\n"
+"PO-Revision-Date: 2025-05-20 02:23+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -31,15 +32,3 @@ msgstr "ecuadra@eloihr.net"
 #, kde-format
 msgid "Unable to load document"
 msgstr "No se puede cargar el documento"
-
-#~ msgid "Fax Backend"
-#~ msgstr "Motor de fax"
-
-#~ msgid "A G3/G4 fax document backend"
-#~ msgstr "Un motor de documentos de fax G3/G4"
-
-#~ msgid "© 2008 Tobias Koenig"
-#~ msgstr "© 2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

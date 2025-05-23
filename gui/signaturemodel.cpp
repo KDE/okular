@@ -138,7 +138,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
         if (sf->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
             auto *parentItem = new SignatureItem(root, sf, SignatureItem::RevisionInfo, pageNumber);
-            parentItem->displayString = i18n("Unsigned Signature %1", unsignedSignatureNumber);
+            parentItem->displayString = i18nc("Digital signature", "Signature placeholder %1", unsignedSignatureNumber);
 
             auto childItem = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, pageNumber);
             childItem->displayString = i18n("Field: %1 on page %2", sf->name(), pageNumber + 1);
@@ -182,17 +182,17 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
             auto signatureType = [sf] {
                 switch (sf->signatureType()) {
                 case Okular::FormFieldSignature::G10cPgpSignatureDetached:
-                    return i18nc("Signature type", "PGP Signature");
+                    return i18nc("Digital signature type", "PGP Signature");
                 case Okular::FormFieldSignature::AdbePkcs7detached:
-                    return i18nc("Signature type", "Adobe PKCS7");
+                    return i18nc("Digital signature type", "Adobe PKCS7");
                 case Okular::FormFieldSignature::AdbePkcs7sha1:
-                    return i18nc("Signature type", "Adobe PKCS7 Sha1");
+                    return i18nc("Digital signature type", "Adobe PKCS7 Sha1");
                 case Okular::FormFieldSignature::EtsiCAdESdetached:
-                    return i18nc("Signature type", "ETSI CAdES");
+                    return i18nc("Digital signature type", "ETSI CAdES");
                 case Okular::FormFieldSignature::UnknownType:
-                    return i18nc("Signature type", "Unknown");
+                    return i18nc("Digital signature type", "Unknown");
                 case Okular::FormFieldSignature::UnsignedSignature:
-                    return i18nc("Signature type", "Unsigned signature");
+                    return i18nc("Digital signature type", "Signature placeholder");
                 }
                 return QString {};
             }();

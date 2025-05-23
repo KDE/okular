@@ -205,7 +205,7 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
         }
 
         if (anySignatureUnsigned) {
-            return {KMessageWidget::Information, i18n("This document has unsigned signature fields.")};
+            return {KMessageWidget::Information, i18nc("Digital signature", "This document has signature placeholder fields.")};
         } else if (allSignaturesValid) {
             if (signatureFormFields.last()->signatureInfo().signsTotalDocument()) {
                 return {KMessageWidget::Information, i18n("This document is digitally signed.")};

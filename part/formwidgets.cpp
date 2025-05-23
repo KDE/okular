@@ -1277,7 +1277,7 @@ SignatureEdit::SignatureEdit(Okular::FormFieldSignature *signature, PageView *pa
 {
     setCursor(Qt::PointingHandCursor);
     if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
-        setToolTip(i18n("Unsigned Signature Field (Click to Sign)"));
+        setToolTip(i18nc("Digital signature", "Signature placeholder (Click to Sign)"));
         connect(this, &SignatureEdit::clicked, this, &SignatureEdit::signUnsignedSignature);
     } else {
         connect(this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties);

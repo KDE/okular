@@ -2412,7 +2412,7 @@ msgstr "Convertix a &blanc i negre"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
-msgstr "Invertix la &lluminositat"
+msgstr "Invertix la c&laredat"
 
 #: part/colormodemenu.cpp:52
 #, kde-format
@@ -2546,7 +2546,7 @@ msgstr "Convertix a blanc i negre"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "Invertix la lluminositat"
+msgstr "Invertix la claredat"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
@@ -3936,7 +3936,7 @@ msgstr "Us donem la benvinguda"
 #: part/pageview.cpp:5096
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
-msgstr "Seleccioneu l'àrea de zoom. Feu clic amb el botó dret per a allunyar."
+msgstr "Seleccioneu l'àrea de zoom. Cliqueu amb el botó dret per a allunyar."
 
 #: part/pageview.cpp:5109
 #, kde-format
@@ -4096,7 +4096,7 @@ msgstr "Posa una nota emergent"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
-msgstr "Dibuixa un polígon (cliqueu en el primer punt per a tancar-lo)"
+msgstr "Dibuixa un polígon (cliqueu damunt del primer punt per a tancar-lo)"
 
 #: part/pageviewannotator.cpp:1342
 #, kde-format
@@ -4530,7 +4530,7 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"Este document té formularis. Cliqueu en el botó per a interactuar-hi, o "
+"Este document té formularis. Cliqueu damunt del botó per a interactuar-hi, o "
 "utilitzeu «Visualitza -> Mostra els formularis»."
 
 #: part/part.cpp:1649
@@ -4831,8 +4831,8 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
-"guardar el document i descartar estos elements."
+"document d'Okular</i> per a conservar-los. Cliqueu damunt <i>Continua</i> "
+"per a guardar el document i descartar estos elements."
 
 #: part/part.cpp:2793
 #, kde-format
@@ -4844,9 +4844,9 @@ msgid ""
 msgstr ""
 "Esteu a punt de guardar els canvis, però el format actual del document no "
 "permet guardar els elements següents. Utilitzeu el format <i>arxiu de "
-"document d'Okular</i> per a conservar-los. Feu clic en <i>Continua</i> per a "
-"guardar, però es perdran estos elements, així com l'historial de desfer/"
-"refer."
+"document d'Okular</i> per a conservar-los. Cliqueu damunt <i>Continua</i> "
+"per a guardar, però es perdran estos elements, així com l'historial de "
+"desfer/refer."
 
 #: part/part.cpp:2795
 #, kde-format
@@ -5191,7 +5191,7 @@ msgstr "Pàgines: %1"
 #: part/presentationwidget.cpp:379
 #, kde-format
 msgid "Click to begin"
-msgstr "Feu un clic per a començar"
+msgstr "Cliqueu per a començar"
 
 #: part/presentationwidget.cpp:521
 #, kde-format
@@ -5213,7 +5213,7 @@ msgid ""
 "top-right corner. Of course you can cycle windows (Alt+TAB by default)"
 msgstr ""
 "Hi ha dues maneres d'eixir del mode de presentació: podeu prémer tant la "
-"tecla ESC com fent clic amb el botó d'eixida que apareix quan el ratolí se "
+"tecla «Esc» com clicant amb el botó d'eixida que apareix quan el ratolí se "
 "situa en el cantó superior dret. També podeu rodar les finestres "
 "(predeterminat «Alt-Tab»)"
 
@@ -5536,7 +5536,7 @@ msgstr "Fons:"
 #: part/selectcertificatedialog.ui:123
 #, kde-format
 msgid "Choose..."
-msgstr "Escolliu…"
+msgstr "Trieu…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:135
@@ -5902,16 +5902,16 @@ msgid ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 msgstr ""
-"Feu un clic per a obrir un fitxer\n"
-"Feu un clic i manteniu-lo premut per a obrir un fitxer recent"
+"Cliqueu per a obrir un fitxer\n"
+"Cliqueu i manteniu-lo premut per a obrir un fitxer recent"
 
 #: shell/shell.cpp:576
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
-"<b>Feu un clic</b> per a obrir un fitxer o <b>feu un clic i manteniu-lo "
-"premut</b> per a seleccionar un fitxer recent"
+"<b>Cliqueu</b> per a obrir un fitxer o <b>cliqueu i manteniu-lo premut</b> "
+"per a seleccionar un fitxer recent"
 
 #: shell/shell.cpp:589
 #, kde-format

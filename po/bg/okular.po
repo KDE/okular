@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-27 02:36+0000\n"
+"POT-Creation-Date: 2025-05-25 03:07+0000\n"
 "PO-Revision-Date: 2025-03-29 19:00+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -1620,7 +1620,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Страница %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3149
+#: part/annotationmodel.cpp:322 part/part.cpp:3160
 #, kde-format
 msgid "Page %1"
 msgstr "Страница %1"
@@ -2252,12 +2252,12 @@ msgid "Go to This Bookmark"
 msgstr "Към тази отметка"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:704
-#: part/part.cpp:2450
+#: part/part.cpp:2461
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Преименуване на отметка"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2255 part/part.cpp:3155
+#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3166
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Премахване на отметка"
@@ -3570,7 +3570,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Регулярен израз"
 
-#: part/layers.cpp:35 part/part.cpp:2298
+#: part/layers.cpp:35 part/part.cpp:2309
 #, kde-format
 msgid "Layers"
 msgstr "Слоеве"
@@ -3858,7 +3858,7 @@ msgstr "Копиране на текст"
 msgid "Go to '%1'"
 msgstr "Отиване до „%1“"
 
-#: part/pageview.cpp:4064 part/part.cpp:3160
+#: part/pageview.cpp:4064 part/part.cpp:3171
 #, kde-format
 msgid "Fit Width"
 msgstr "До широчината на страницата"
@@ -4493,28 +4493,28 @@ msgstr "PostScript файлове (%1)"
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "Импортиране на PS файла като PDF (може да отнеме известно време)..."
 
-#: part/part.cpp:1487
+#: part/part.cpp:1490
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Моля, въведете паролата, за да прочетете документа:"
 
-#: part/part.cpp:1489
+#: part/part.cpp:1492
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Неправилна парола. Опитайте отново:"
 
-#: part/part.cpp:1495
+#: part/part.cpp:1503
 #, kde-format
 msgid "Document Password"
 msgstr "Парола за документ"
 
-#: part/part.cpp:1615
+#: part/part.cpp:1626
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Този ​​документ има XFA формуляри, които в момента <b> не се поддържат </b>."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1633
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4523,7 +4523,7 @@ msgstr ""
 "Документа съдържа формуляри. Натиснете бутона за да работите с тях или "
 "използвайте Изглед -> Показване на формуляри."
 
-#: part/part.cpp:1638
+#: part/part.cpp:1649
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4533,7 +4533,7 @@ msgstr ""
 "деактивирани. Моля, запазете копие и отворете отново, за да редактирате този "
 "документ."
 
-#: part/part.cpp:1726
+#: part/part.cpp:1737
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4542,27 +4542,27 @@ msgstr ""
 "Този документ иска да се показва на цял екран. \n"
 "Да се ​​излезе ли от нормалния режим и да се влезе в режим на презентация?"
 
-#: part/part.cpp:1728
+#: part/part.cpp:1739
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Искане за промяна на режима на гледане"
 
-#: part/part.cpp:1729
+#: part/part.cpp:1740
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Влезте в режим на презентация"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1741
 #, kde-format
 msgid "Deny Request"
 msgstr "Отхвърляне на заявка"
 
-#: part/part.cpp:1820
+#: part/part.cpp:1831
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Не може да се отвори %1. %2"
 
-#: part/part.cpp:1850
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4576,22 +4576,22 @@ msgstr ""
 "направените промени от другата програма.<nl/><nl/>Искате ли да продължите "
 "презареждането на файла?"
 
-#: part/part.cpp:1854 part/part.cpp:1864
+#: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
 msgid "File Changed"
 msgstr "Файлът е променен"
 
-#: part/part.cpp:1855
+#: part/part.cpp:1866
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Продължи презареждане"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Прекъсване на презареждането"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1871
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4605,27 +4605,27 @@ msgstr ""
 "промените, направени в другата програма.<nl/><nl/>Искате ли да затворите "
 "файла?"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1876
 #, kde-format
 msgid "Continue Closing"
 msgstr "Продължаване на затварянето"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1877
 #, kde-format
 msgid "Abort Closing"
 msgstr "Прекъсване на затварянето"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1884
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Искате ли да запазите промените си в „%1“ или да ги отхвърлите?"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1884
 #, kde-format
 msgid "Close Document"
 msgstr "Затваряне на документа"
 
-#: part/part.cpp:2005
+#: part/part.cpp:2016
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4634,7 +4634,7 @@ msgstr ""
 "Връзката сочи към операция от затворен документ, която не работи с вграден "
 "визуализатор."
 
-#: part/part.cpp:2011
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4643,59 +4643,59 @@ msgstr ""
 "Връзката сочи към операция от затворена програма, която не работи с вграден "
 "визуализатор."
 
-#: part/part.cpp:2103 part/part.cpp:2121
+#: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Презареждане на документа..."
 
-#: part/part.cpp:2278 part/toc.cpp:38
+#: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Съдържание"
 
-#: part/part.cpp:2307 part/signaturepanel.cpp:47
+#: part/part.cpp:2318 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Подпис"
 
-#: part/part.cpp:2334
+#: part/part.cpp:2345
 #, kde-format
 msgid "Go to Page"
 msgstr "Към страница"
 
-#: part/part.cpp:2357
+#: part/part.cpp:2368
 #, kde-format
 msgid "&Page:"
 msgstr "&Страница:"
 
-#: part/part.cpp:2450
+#: part/part.cpp:2461
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Въведете ново име за отметката:"
 
-#: part/part.cpp:2496
+#: part/part.cpp:2507
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Преименуване на отметката"
 
-#: part/part.cpp:2499
+#: part/part.cpp:2510
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Премахване на тази отметка"
 
-#: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
+#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3477
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2593 part/revisionviewer.cpp:44
+#: part/part.cpp:2604 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Запазване като"
 
-#: part/part.cpp:2610
+#: part/part.cpp:2621
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4704,18 +4704,18 @@ msgstr ""
 "Избрахте да запазите архив на Okular без разширение на файл  „%1“. Това не е "
 "разрешено. Искате ли да изберете друго име?"
 
-#: part/part.cpp:2611
+#: part/part.cpp:2622
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Неподдържано разширение"
 
-#: part/part.cpp:2612
+#: part/part.cpp:2623
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Избиране на ново име"
 
-#: part/part.cpp:2654
+#: part/part.cpp:2665
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4727,17 +4727,17 @@ msgstr ""
 "запишете сега, всички промени, направени в другата програма, ще бъдат "
 "загубени. Сигурни ли сте, че искате да продължите?"
 
-#: part/part.cpp:2657 part/part.cpp:2675 part/part.cpp:2727
+#: part/part.cpp:2668 part/part.cpp:2686 part/part.cpp:2738
 #, kde-format
 msgid "Save - Warning"
 msgstr "Запазване - предупреждение"
 
-#: part/part.cpp:2659
+#: part/part.cpp:2670
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Запазване на колие на друго място"
 
-#: part/part.cpp:2674
+#: part/part.cpp:2685
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4748,12 +4748,12 @@ msgstr ""
 "да бъде презареден. Пак ще бъдете помолени за паролата и вашата история на "
 "отмените/повторенията ще бъде загубена. <br /> искате да продължите?"
 
-#: part/part.cpp:2701
+#: part/part.cpp:2712
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Временният файл не може да бъде отворен за запис."
 
-#: part/part.cpp:2714
+#: part/part.cpp:2725
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4764,7 +4764,7 @@ msgstr ""
 "четене. Опитайте да го запазите на друго място или променете разрешенията на "
 "този файл."
 
-#: part/part.cpp:2726
+#: part/part.cpp:2737
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4774,24 +4774,24 @@ msgstr ""
 "презареден. Историята ви за отмяна/повторение ще бъде загубена. <br /> "
 "Искате ли да продължите?"
 
-#: part/part.cpp:2741 part/part.cpp:2810 part/part.cpp:2831 part/part.cpp:3481
+#: part/part.cpp:2752 part/part.cpp:2821 part/part.cpp:2842 part/part.cpp:3492
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Файлът не може да бъде записан в „%1“. Пробвайте да го запишете в друга "
 "директория."
 
-#: part/part.cpp:2754
+#: part/part.cpp:2765
 #, kde-format
 msgid "Filled form contents"
 msgstr "Попълнено съдържание"
 
-#: part/part.cpp:2757
+#: part/part.cpp:2768
 #, kde-format
 msgid "User annotations"
 msgstr "Потребителски пояснения"
 
-#: part/part.cpp:2762
+#: part/part.cpp:2773
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4802,17 +4802,17 @@ msgstr ""
 "запазване на следните елементи. Моля, използвайте формата <i> архив на "
 "документи Okular </i>, за да ги запазите."
 
-#: part/part.cpp:2766 part/part.cpp:2788
+#: part/part.cpp:2777 part/part.cpp:2799
 #, kde-format
 msgid "Warning"
 msgstr "Внимание"
 
-#: part/part.cpp:2767 part/part.cpp:2789
+#: part/part.cpp:2778 part/part.cpp:2800
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Запазване като архив на документи на Okular..."
 
-#: part/part.cpp:2779
+#: part/part.cpp:2790
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4825,7 +4825,7 @@ msgstr ""
 "документи Okular </i>, за да ги запазите. Щракнете върху <i> Напред </i>, за "
 "да запазите документа и изхвърлете тези елементи."
 
-#: part/part.cpp:2782
+#: part/part.cpp:2793
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4839,22 +4839,22 @@ msgstr ""
 "да запазите, но ще загубите тези елементи, както и историята на отмените/"
 "повторенията."
 
-#: part/part.cpp:2784
+#: part/part.cpp:2795
 #, kde-format
 msgid "Continue"
 msgstr "Продължаване"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2795
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Продължаване на загуба на промени"
 
-#: part/part.cpp:2812
+#: part/part.cpp:2823
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Файлът не може да бъде записан в „%1“. %2"
 
-#: part/part.cpp:2851
+#: part/part.cpp:2862
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4865,7 +4865,7 @@ msgstr ""
 "\n"
 "Документът вече не съществува."
 
-#: part/part.cpp:2887
+#: part/part.cpp:2898
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4874,59 +4874,59 @@ msgstr ""
 "Файлът не можа да бъде запазен в „%1“ . Грешка: „%2“. Опитайте да го "
 "запазите на друго място."
 
-#: part/part.cpp:3138
+#: part/part.cpp:3149
 #, kde-format
 msgid "Expand whole section"
 msgstr "Разгъване на целия раздел"
 
-#: part/part.cpp:3139
+#: part/part.cpp:3150
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Свиване на целия раздел"
 
-#: part/part.cpp:3140
+#: part/part.cpp:3151
 #, kde-format
 msgid "Expand all"
 msgstr "Разгъване на всички"
 
-#: part/part.cpp:3141
+#: part/part.cpp:3152
 #, kde-format
 msgid "Collapse all"
 msgstr "Свиване на всички"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3163
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Синхронизиране на миниатюрите със страницата"
 
-#: part/part.cpp:3157
+#: part/part.cpp:3168
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Добавяне на отметка"
 
-#: part/part.cpp:3179
+#: part/part.cpp:3190
 #, kde-format
 msgid "Tools"
 msgstr "Инструменти"
 
-#: part/part.cpp:3361
+#: part/part.cpp:3372
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Изговаряне на текст"
 
-#: part/part.cpp:3519
+#: part/part.cpp:3530
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Отпечатване"
 
-#: part/part.cpp:3582
+#: part/part.cpp:3593
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Печатането на документа не е разрешено."
 
-#: part/part.cpp:3595
+#: part/part.cpp:3606
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4934,7 +4934,7 @@ msgstr ""
 "Грешка при печат на документа. Непозната грешка. Моля, съобщете за грешка на "
 "bugs.kde.org"
 
-#: part/part.cpp:3597
+#: part/part.cpp:3608
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4943,17 +4943,17 @@ msgstr ""
 "Грешка при печат на документа. Подробната грешка е „%1“. Моля, съобщете за "
 "грешка на bugs.kde.org"
 
-#: part/part.cpp:3686
+#: part/part.cpp:3697
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Назад една стъпка"
 
-#: part/part.cpp:3690
+#: part/part.cpp:3701
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Напред една стъпка"
 
-#: part/part.cpp:3715
+#: part/part.cpp:3726
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4962,7 +4962,7 @@ msgstr ""
 "<qt><strong>Грешка!</strong> Не може да бъде създаден временен файл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3727
+#: part/part.cpp:3738
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4971,7 +4971,7 @@ msgstr ""
 "<qt><strong>Грешка!</strong> Файлът <nobr><strong>%1</strong></nobr> не може "
 "да бъде отворен за разкомпресиране и няма да бъде зареден.</qt>"
 
-#: part/part.cpp:3731
+#: part/part.cpp:3742
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4985,7 +4985,7 @@ msgstr ""
 "това изберете опцията \"Свойства \" и изберете Раздел \"Разрешения\" в "
 "отворения прозорец.</qt>"
 
-#: part/part.cpp:3753
+#: part/part.cpp:3764
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4994,7 +4994,7 @@ msgstr ""
 "<qt><strong>Грешка!</strong> Файлът <nobr><strong>%1</strong></nobr> не може "
 "да бъде разкомпресиран и няма да бъде зареден.</qt>"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3768
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5004,27 +5004,27 @@ msgstr ""
 "опитайте се да го разкомпресирате ръчно използвайки програма от командния "
 "ред.</qt>"
 
-#: part/part.cpp:3783
+#: part/part.cpp:3794
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Няма отметки"
 
-#: part/part.cpp:3854
+#: part/part.cpp:3865
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Възникна проблем при споделянето на документа: %1"
 
-#: part/part.cpp:3854 part/part.cpp:3860
+#: part/part.cpp:3865 part/part.cpp:3871
 #, kde-format
 msgid "Share"
 msgstr "Споделени"
 
-#: part/part.cpp:3858
+#: part/part.cpp:3869
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документът е споделен успешно"
 
-#: part/part.cpp:3860
+#: part/part.cpp:3871
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Можете да намерите споделения документ на адрес: <a href=„%1“> %1 </a>"

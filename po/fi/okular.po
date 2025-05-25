@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-27 02:36+0000\n"
+"POT-Creation-Date: 2025-05-25 03:07+0000\n"
 "PO-Revision-Date: 2025-04-08 21:13+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1655,7 +1655,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Sivu %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3149
+#: part/annotationmodel.cpp:322 part/part.cpp:3160
 #, kde-format
 msgid "Page %1"
 msgstr "Sivu %1"
@@ -2289,12 +2289,12 @@ msgid "Go to This Bookmark"
 msgstr "Siirry kirjanmerkkiin"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:704
-#: part/part.cpp:2450
+#: part/part.cpp:2461
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Muuta kirjanmerkin nimeä"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2255 part/part.cpp:3155
+#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3166
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Poista kirjanmerkki"
@@ -3602,7 +3602,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Toistuva esiinyminen"
 
-#: part/layers.cpp:35 part/part.cpp:2298
+#: part/layers.cpp:35 part/part.cpp:2309
 #, kde-format
 msgid "Layers"
 msgstr "Tasot"
@@ -3892,7 +3892,7 @@ msgstr "Kopioi teksti"
 msgid "Go to '%1'"
 msgstr "Siirry osoitteeseen %1"
 
-#: part/pageview.cpp:4064 part/part.cpp:3160
+#: part/pageview.cpp:4064 part/part.cpp:3171
 #, kde-format
 msgid "Fit Width"
 msgstr "Sovita leveyteen"
@@ -4525,27 +4525,27 @@ msgstr "Postscript-tiedostot (%1)"
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "Tuodaan Postscript-tiedosto PDF:ksi (voi kestää hetken)…"
 
-#: part/part.cpp:1487
+#: part/part.cpp:1490
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Syötä tiedoston lukemiseen vaadittava salasana:"
 
-#: part/part.cpp:1489
+#: part/part.cpp:1492
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Salasana on väärin. Yritä uudelleen:"
 
-#: part/part.cpp:1495
+#: part/part.cpp:1503
 #, kde-format
 msgid "Document Password"
 msgstr "Tiedoston salasana"
 
-#: part/part.cpp:1615
+#: part/part.cpp:1626
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "Tiedostossa on XFA-lomakkeita, joita <b>ei toistaiseksi tueta</b>."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1633
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4554,7 +4554,7 @@ msgstr ""
 "Tiedostossa on lomakkeita. Käytä niitä napsauttamalla painiketta tai "
 "valitsemalla Näytä → Näytä lomakkeet."
 
-#: part/part.cpp:1638
+#: part/part.cpp:1649
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4563,34 +4563,34 @@ msgstr ""
 "Kaikki muokkaus- ja vuorovaikutteiset ominaisuudet on poistettu käytöstä. "
 "Muokataksesi tiedostoa tallenna siitä kopio ja avaa se."
 
-#: part/part.cpp:1726
+#: part/part.cpp:1737
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr "Tiedosto haluaa tulla esitetyksi koko näytöllä."
 
-#: part/part.cpp:1728
+#: part/part.cpp:1739
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Pyyntö näyttötilan muuttamiseksi"
 
-#: part/part.cpp:1729
+#: part/part.cpp:1740
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Siirry esitystilaan"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1741
 #, kde-format
 msgid "Deny Request"
 msgstr "Hylkää pyyntö"
 
-#: part/part.cpp:1820
+#: part/part.cpp:1831
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Ei voitu avata: ”%1”. (%2)"
 
-#: part/part.cpp:1850
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4604,22 +4604,22 @@ msgstr ""
 "muutokset toisen ohjelman tekemillä.<nl/><nl/>Haluatko jatkaa tiedoston "
 "lataamista uudelleen?"
 
-#: part/part.cpp:1854 part/part.cpp:1864
+#: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
 msgid "File Changed"
 msgstr "Tiedosto on muuttunut"
 
-#: part/part.cpp:1855
+#: part/part.cpp:1866
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Jatka uudelleenavausta"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Keskeytä uudeelleenavaus"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1871
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4633,27 +4633,27 @@ msgstr ""
 "muutokset toisen ohjelman tekemillä.<nl/><nl/>Haluatko jatkaa tiedoston "
 "sulkemista?"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1876
 #, kde-format
 msgid "Continue Closing"
 msgstr "Sulje tiedosto"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1877
 #, kde-format
 msgid "Abort Closing"
 msgstr "Peru sulkeminen"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1884
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Haluako tallentaa vai hylätä tiedoston ”%1” muutokset?"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1884
 #, kde-format
 msgid "Close Document"
 msgstr "Sulje tiedosto"
 
-#: part/part.cpp:2005
+#: part/part.cpp:2016
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4662,7 +4662,7 @@ msgstr ""
 "Tämä linkki osoittaa tiedoston sulkemistoimintoon, joka ei toimi upotetussa "
 "katselimessa."
 
-#: part/part.cpp:2011
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4671,59 +4671,59 @@ msgstr ""
 "Tämä linkki osoittaa sovelluksen lopetustoimintoon, joka ei se toimi "
 "upotetussa katselimessa."
 
-#: part/part.cpp:2103 part/part.cpp:2121
+#: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Avataan tiedostoa uudelleen…"
 
-#: part/part.cpp:2278 part/toc.cpp:38
+#: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Sisältö"
 
-#: part/part.cpp:2307 part/signaturepanel.cpp:47
+#: part/part.cpp:2318 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Allekirjoitukset"
 
-#: part/part.cpp:2334
+#: part/part.cpp:2345
 #, kde-format
 msgid "Go to Page"
 msgstr "Siirry sivulle"
 
-#: part/part.cpp:2357
+#: part/part.cpp:2368
 #, kde-format
 msgid "&Page:"
 msgstr "&Sivu:"
 
-#: part/part.cpp:2450
+#: part/part.cpp:2461
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Anna uudelle kirjanmerkille nimi:"
 
-#: part/part.cpp:2496
+#: part/part.cpp:2507
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Muuta tämän kirjanmerkin nimeä"
 
-#: part/part.cpp:2499
+#: part/part.cpp:2510
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Poista tämä kirjanmerkki"
 
-#: part/part.cpp:2585 part/part.cpp:2586 part/part.cpp:3466
+#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3477
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2593 part/revisionviewer.cpp:44
+#: part/part.cpp:2604 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Tallenna nimellä"
 
-#: part/part.cpp:2610
+#: part/part.cpp:2621
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4732,18 +4732,18 @@ msgstr ""
 "Yrität tallentaa Okular-arkistoa niin, ettei tiedostonimi pääty ”%1”-"
 "päätteeseen. Tätä ei sallita. Haluatko valita uuden nimen?"
 
-#: part/part.cpp:2611
+#: part/part.cpp:2622
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Ei-tuettu laajennus"
 
-#: part/part.cpp:2612
+#: part/part.cpp:2623
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Valitse uusi nimi"
 
-#: part/part.cpp:2654
+#: part/part.cpp:2665
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4754,17 +4754,17 @@ msgstr ""
 "Toinen ohjelma on muuttanut tiedostoa <filename>%1</filename>. Jos tallennat "
 "nyt, toisen ohjelman tekemät muutokset menetetään. Haluatko varmasti jatkaa?"
 
-#: part/part.cpp:2657 part/part.cpp:2675 part/part.cpp:2727
+#: part/part.cpp:2668 part/part.cpp:2686 part/part.cpp:2738
 #, kde-format
 msgid "Save - Warning"
 msgstr "Tallennus – Varoitus"
 
-#: part/part.cpp:2659
+#: part/part.cpp:2670
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Tallenna kopio toisaalle"
 
-#: part/part.cpp:2674
+#: part/part.cpp:2685
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4775,12 +4775,12 @@ msgstr ""
 "avattava uudelleen. Salasanaa kysytään toistamiseen ja kumoamishistoria "
 "menetetään.<br />Haluatko jatkaa?"
 
-#: part/part.cpp:2701
+#: part/part.cpp:2712
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Väliaikaistiedostoa tiedoston tallentamiseksi ei voitu avata."
 
-#: part/part.cpp:2714
+#: part/part.cpp:2725
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4790,7 +4790,7 @@ msgstr ""
 "Tiedostoa <filename>%1</filename> ei voi korvata, koska se on vain "
 "luettavissa. Yritä tallentaa muualle tai muuttaa tiedoston käyttöoikeuksia."
 
-#: part/part.cpp:2726
+#: part/part.cpp:2737
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4799,25 +4799,25 @@ msgstr ""
 "Tallennuksen jälkeen nykyinen tiedostomuoto vaatii avaamaan tiedoston "
 "uudelleen. Kumoamishistoria menetetään.<br />Haluatko jatkaa?"
 
-#: part/part.cpp:2741 part/part.cpp:2810 part/part.cpp:2831 part/part.cpp:3481
+#: part/part.cpp:2752 part/part.cpp:2821 part/part.cpp:2842 part/part.cpp:3492
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Tiedostoa ei voi tallentaa kohteeseen ”%1”. Yritä tallentaa se muualle."
 
 # Tekstiä käytetään viestien ”Undo %1” ja ”Redo %1” yhteydessä.
-#: part/part.cpp:2754
+#: part/part.cpp:2765
 #, kde-format
 msgid "Filled form contents"
 msgstr "lomakkeen sisältö"
 
 # Tekstiä käytetään viestien ”Undo %1” ja ”Redo %1” yhteydessä.
-#: part/part.cpp:2757
+#: part/part.cpp:2768
 #, kde-format
 msgid "User annotations"
 msgstr "käyttäjän merkinnät"
 
-#: part/part.cpp:2762
+#: part/part.cpp:2773
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4828,17 +4828,17 @@ msgstr ""
 "elementtien tallennusta. Säilyttääksesi ne käytä <i>Okularin "
 "tiedostoarkisto</i> -muotoa."
 
-#: part/part.cpp:2766 part/part.cpp:2788
+#: part/part.cpp:2777 part/part.cpp:2799
 #, kde-format
 msgid "Warning"
 msgstr "Varoitus"
 
-#: part/part.cpp:2767 part/part.cpp:2789
+#: part/part.cpp:2778 part/part.cpp:2800
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Tallenna Okularin tiedostoarkistoksi…"
 
-#: part/part.cpp:2779
+#: part/part.cpp:2790
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4851,7 +4851,7 @@ msgstr ""
 "tiedostoarkisto</i> -muotoa. Tallenna tiedosto nämä elementit hyläten "
 "napsauttamalla <i>Jatka</i>."
 
-#: part/part.cpp:2782
+#: part/part.cpp:2793
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4864,22 +4864,22 @@ msgstr ""
 "tiedostoarkisto</i> -muotoa. Tallenna napsauttamalla <i>Jatka</i>, jolloin "
 "nämä elementit samoin kuin kumoamishistoriasi hylätään."
 
-#: part/part.cpp:2784
+#: part/part.cpp:2795
 #, kde-format
 msgid "Continue"
 msgstr "Jatka"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2795
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Jatka muutokset menettäen"
 
-#: part/part.cpp:2812
+#: part/part.cpp:2823
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Tiedostoa ei voi tallentaa kohteeseen ”%1”. %2"
 
-#: part/part.cpp:2851
+#: part/part.cpp:2862
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4890,7 +4890,7 @@ msgstr ""
 "\n"
 "Tiedostoa ei ole enää olemassa."
 
-#: part/part.cpp:2887
+#: part/part.cpp:2898
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4899,59 +4899,59 @@ msgstr ""
 "Tiedostoa ei voi tallentaa kohteeseen ”%1”. Virhe: %2. Yritä tallentaa se "
 "muualle."
 
-#: part/part.cpp:3138
+#: part/part.cpp:3149
 #, kde-format
 msgid "Expand whole section"
 msgstr "Laajenna koko osio"
 
-#: part/part.cpp:3139
+#: part/part.cpp:3150
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Supista koko osio"
 
-#: part/part.cpp:3140
+#: part/part.cpp:3151
 #, kde-format
 msgid "Expand all"
 msgstr "Laajenna kaikki"
 
-#: part/part.cpp:3141
+#: part/part.cpp:3152
 #, kde-format
 msgid "Collapse all"
 msgstr "Supista kaikki"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3163
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Synkronoi pienoiskuva sivuun"
 
-#: part/part.cpp:3157
+#: part/part.cpp:3168
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Lisää kirjanmerkki"
 
-#: part/part.cpp:3179
+#: part/part.cpp:3190
 #, kde-format
 msgid "Tools"
 msgstr "Työkalut"
 
-#: part/part.cpp:3361
+#: part/part.cpp:3372
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Puhu"
 
-#: part/part.cpp:3519
+#: part/part.cpp:3530
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Tulosta"
 
-#: part/part.cpp:3582
+#: part/part.cpp:3593
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Tämän tiedoston tulostamista ei ole sallittu."
 
-#: part/part.cpp:3595
+#: part/part.cpp:3606
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4959,7 +4959,7 @@ msgstr ""
 "Tiedoston tulostaminen epäonnistui. Tuntematon virhe. Ilmoita tästä bugs.kde."
 "org-palveluun."
 
-#: part/part.cpp:3597
+#: part/part.cpp:3608
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4968,17 +4968,17 @@ msgstr ""
 "Tiedoston tulostaminen epäonnistui. Yksityiskohtainen virhe on ”%1”. Ilmoita "
 "tästä bugs.kde.org-palveluun."
 
-#: part/part.cpp:3686
+#: part/part.cpp:3697
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Mene paikkaan, jossa olit aiemmin"
 
-#: part/part.cpp:3690
+#: part/part.cpp:3701
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Mene paikkaan, jossa olit myöhemmin"
 
-#: part/part.cpp:3715
+#: part/part.cpp:3726
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4987,7 +4987,7 @@ msgstr ""
 "<qt><strong>Tiedostovirhe!</strong> Väliaikaistiedostoa <nobr><strong>%1</"
 "strong></nobr> ei voitu luoda.</qt>"
 
-#: part/part.cpp:3727
+#: part/part.cpp:3738
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4996,7 +4996,7 @@ msgstr ""
 "<qt><strong>Tiedostovirhe!</strong> Tiedostoa <nobr><strong>%1</strong></"
 "nobr> ei voitu avata pakkauksen purkamiseksi. Tiedostoa ei avata.</qt>"
 
-#: part/part.cpp:3731
+#: part/part.cpp:3742
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5009,7 +5009,7 @@ msgstr ""
 "tiedostoa hiiren oikealla painikkeella Dolphin-tiedostonhallinnassa ja "
 "valitsemalla Ominaisuudet → Käyttöoikeudet.</qt>"
 
-#: part/part.cpp:3753
+#: part/part.cpp:3764
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5018,7 +5018,7 @@ msgstr ""
 "<qt><strong>Tiedostovirhe!</strong> Tiedoston <nobr><strong>%1</strong></"
 "nobr> pakkausta ei voitu purkaa. Tiedostoa ei avata.</qt>"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3768
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5028,27 +5028,27 @@ msgstr ""
 "varma asiasta, yritää purkaa tiedosto käsin käyttäen komentorivityökaluja.</"
 "qt>"
 
-#: part/part.cpp:3783
+#: part/part.cpp:3794
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Ei kirjanmerkkejä"
 
-#: part/part.cpp:3854
+#: part/part.cpp:3865
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Tiedoston jakamisessa ilmeni ongelma: %1"
 
-#: part/part.cpp:3854 part/part.cpp:3860
+#: part/part.cpp:3865 part/part.cpp:3871
 #, kde-format
 msgid "Share"
 msgstr "Jaa"
 
-#: part/part.cpp:3858
+#: part/part.cpp:3869
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Tiedoston jakaminen onnistui"
 
-#: part/part.cpp:3860
+#: part/part.cpp:3871
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Löydät jaetun tiedoston osoitteesta: <a href=\"%1\">%1</a>"

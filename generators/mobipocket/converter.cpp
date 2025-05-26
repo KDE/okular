@@ -27,6 +27,32 @@ Converter::~Converter()
 {
 }
 
+#if QMOBIPOCKET_VERSION_MAJOR >= 3
+void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey, QVariant> &metadata)
+{
+    QMapIterator<Mobipocket::Document::MetaKey, QVariant> it(metadata);
+    while (it.hasNext()) {
+        it.next();
+        switch (it.key()) {
+        case Mobipocket::Document::Title:
+            Q_EMIT addMetaData(Okular::DocumentInfo::Title, it.value().toString());
+            break;
+        case Mobipocket::Document::Author:
+            Q_EMIT addMetaData(Okular::DocumentInfo::Author, it.value().toString());
+            break;
+        case Mobipocket::Document::Description:
+            Q_EMIT addMetaData(Okular::DocumentInfo::Description, it.value().toString());
+            break;
+        case Mobipocket::Document::Subject:
+            Q_EMIT addMetaData(Okular::DocumentInfo::Subject, it.value().toString());
+            break;
+        case Mobipocket::Document::Copyright:
+            Q_EMIT addMetaData(Okular::DocumentInfo::Copyright, it.value().toString());
+            break;
+        }
+    }
+}
+#else
 void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> &metadata)
 {
     QMapIterator<Mobipocket::Document::MetaKey, QString> it(metadata);
@@ -51,6 +77,7 @@ void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString
         }
     }
 }
+#endif
 
 QTextDocument *Converter::convert(const QString &fileName)
 {

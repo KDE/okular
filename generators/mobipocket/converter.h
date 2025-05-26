@@ -24,7 +24,11 @@ public:
     QTextDocument *convert(const QString &fileName) override;
 
 private:
+#if QMOBIPOCKET_VERSION_MAJOR >= 3
+    void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QVariant> &metadata);
+#else
     void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> &metadata);
+#endif
 };
 }
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2025-04-20 18:12+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1073,8 +1073,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "ஆவண நம்பகத்தை சரிபார்த்தலை முடிக்க முடியவில்லை."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "இவ்வாவணத்தில் எண்ம‍முறையில் கையொப்பமிடப்படாத கையொப்ப புலங்கள் உள்ளன."
 
 #: gui/signatureguiutils.cpp:211
@@ -1097,9 +1099,11 @@ msgstr ""
 "இந்த ஆவணம் டிஜிட்டலாக கையொப்பமிடப்பட்டது. சில கையொப்பங்களை சரிபார்க்க முடியவில்லை."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "கையொப்ப வகை: %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1127,40 +1131,45 @@ msgid "Location: %1"
 msgstr "இடம்: %1"
 
 #: gui/signaturemodel.cpp:185
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "PGP Signature"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP கையொப்பம்"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr "தெரியாதது"
+msgstr "தெரியாதவர்"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "எண்மக்கையொப்பமிடா கையொப்பம்"
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "கையொப்பத்தின் செல்லுபடி நிலை:"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3524,8 +3533,10 @@ msgid "All Files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "கையொப்பமிடப்படாத கையொப்ப புலம் (கையொப்பமிட கிளிக் செய்யுங்கள்)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5968,6 +5979,17 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "தெரியாதது"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "எண்மக்கையொப்பமிடா கையொப்பம்"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

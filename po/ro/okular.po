@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2024-06-09 14:16+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -1081,8 +1081,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Verificarea integrității documentului nu a putut fi finalizată."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Acest document are câmpuri pentru semnătură nesemnate."
 
 #: gui/signatureguiutils.cpp:211
@@ -1108,9 +1110,11 @@ msgstr ""
 "corespunzător."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Semnătură nesemnată %1"
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Valabilitate semnătură:"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1140,25 +1144,25 @@ msgstr "Amplasare: %1"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Signatures"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Semnături"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1166,16 +1170,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Necunoscut"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Semnătură nesemnată %1"
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Valabilitate semnătură:"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3550,7 +3554,8 @@ msgstr "*|Toate fișierele"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5953,6 +5958,22 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Semnătură nesemnată %1"
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Necunoscut"
+
+#, fuzzy
+#~| msgid "Unsigned Signature %1"
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Semnătură nesemnată %1"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

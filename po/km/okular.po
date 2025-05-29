@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1130,7 +1130,8 @@ msgstr ""
 #: gui/signatureguiutils.cpp:208
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
-msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "មិន​អនុញ្ញាត​ឲ្យ​បោះពុម្ព​ឯកសារ​នេះ​ឡើយ ។"
 
 #: gui/signatureguiutils.cpp:211
@@ -1155,9 +1156,11 @@ msgid ""
 msgstr "មិន​អនុញ្ញាត​ឲ្យ​បោះពុម្ព​ឯកសារ​នេះ​ឡើយ ។"
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Caret Properties"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "លក្ខណៈ​សម្បត្តិ​សញ្ញា​បន្ថែម​ពាក្យ​រំលង"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1189,25 +1192,25 @@ msgstr "%1 ចំណារពន្យល់"
 
 #: gui/signaturemodel.cpp:185
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1215,15 +1218,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "មិន​ស្គាល់"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Caret Properties"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "លក្ខណៈ​សម្បត្តិ​សញ្ញា​បន្ថែម​ពាក្យ​រំលង"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3791,7 +3795,8 @@ msgstr "*|ឯកសារ​ទាំងអស់"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -6292,6 +6297,13 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "មិន​ស្គាល់"
 
 #, fuzzy
 #~| msgid "%"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2025-05-17 09:42+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1076,8 +1076,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "無法完成此文件的有效性驗證。"
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "此文件有未署名的簽名欄位。"
 
 #: gui/signatureguiutils.cpp:211
@@ -1099,9 +1101,11 @@ msgid ""
 msgstr "此文件已經數位簽名。某些簽名無法正常驗證。"
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "未署名的簽名 %1"
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "簽名類型：%1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1129,40 +1133,51 @@ msgid "Location: %1"
 msgstr "位置：%1"
 
 #: gui/signaturemodel.cpp:185
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "PGP Signature"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP 簽名"
 
 #: gui/signaturemodel.cpp:187
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7 Sha1"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "ETSI CAdES"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "未知"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "未署名的簽名"
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "簽名有效性："
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3496,8 +3511,10 @@ msgid "All Files (*)"
 msgstr "所有檔案 (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "未署名的簽名（點擊以署名）"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5891,6 +5908,17 @@ msgstr "忘記全部"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隱藏歡迎畫面"
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "未署名的簽名 %1"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "未知"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "未署名的簽名"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

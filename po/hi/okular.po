@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2024-12-15 19:31+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1099,7 +1099,8 @@ msgstr ""
 #: gui/signatureguiutils.cpp:208
 #, fuzzy, kde-format
 #| msgid "This document is digitally signed."
-msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "यह दस्तावेज़ डिजिटल रूप से हस्ताक्षरित है।"
 
 #: gui/signatureguiutils.cpp:211
@@ -1124,9 +1125,10 @@ msgstr "यह दस्तावेज़ डिजिटल रूप से �
 
 #: gui/signaturemodel.cpp:141
 #, fuzzy, kde-format
-#| msgid "Digital Signature"
-msgid "Unsigned Signature %1"
-msgstr "डिजिटल हस्ताक्षर"
+#| msgid "Signature Validity:"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "हस्ताक्षर की वैधता :"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1157,25 +1159,25 @@ msgstr "स्थान :"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Signatures"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "हस्ताक्षरें"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1183,16 +1185,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "अज्ञात"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Digital Signature"
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "डिजिटल हस्ताक्षर"
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "हस्ताक्षर की वैधता :"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3709,7 +3711,8 @@ msgstr "सभी फ़ाइलें (*)"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -6134,6 +6137,24 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Digital Signature"
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "डिजिटल हस्ताक्षर"
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "अज्ञात"
+
+#, fuzzy
+#~| msgid "Digital Signature"
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "डिजिटल हस्ताक्षर"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

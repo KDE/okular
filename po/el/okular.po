@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1095,8 +1095,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Αδυναμία ολοκλήρωσης της επιβεβαίωσης ακεραιότητας του εγγράφου."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Αυτό το έγγραφο έχει ψηφιακή υπογραφή."
 
 #: gui/signatureguiutils.cpp:211
@@ -1122,9 +1124,11 @@ msgstr ""
 "μπορούν να επαληθευθούν."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Επιβεβαίωση υπογραφής:"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1154,25 +1158,25 @@ msgstr "Τοποθεσία: %1"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Signatures"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Υπογραφές"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1180,16 +1184,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Άγνωστο"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Digital Signature"
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Ψηφιακή υπογραφή"
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Επιβεβαίωση υπογραφής:"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3567,8 +3571,10 @@ msgid "All Files (*)"
 msgstr "Όλα τα αρχεία (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "Ανυπόγραφο Πεδίο Υπογραφής (Πατήστε για Υπογραφή)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -6045,6 +6051,19 @@ msgstr "Να ξεχαστούν όλα"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Απόκρυψη οθόνης υποδοχής"
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Άγνωστο"
+
+#, fuzzy
+#~| msgid "Digital Signature"
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Ψηφιακή υπογραφή"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2025-05-17 13:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -1090,8 +1090,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Non foi posíbel completar a verificación da integridade do documento."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Este documento ten campos de sinatura sen asinar."
 
 #: gui/signatureguiutils.cpp:211
@@ -1116,9 +1118,11 @@ msgstr ""
 "correctamente algunhas das sinaturas."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Sinatura sen asinar %1"
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Tipo de sinatura: %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1146,40 +1150,51 @@ msgid "Location: %1"
 msgstr "Localización: %1"
 
 #: gui/signaturemodel.cpp:185
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "PGP Signature"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Sinatura de PGP"
 
 #: gui/signaturemodel.cpp:187
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "PKCS7 de Adobe"
 
 #: gui/signaturemodel.cpp:189
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7 Sha1"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "SHA1 de PKCS7 de Adobe"
 
 #: gui/signaturemodel.cpp:191
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "ETSI CAdES"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "CAdES de ETSI"
 
 #: gui/signaturemodel.cpp:193
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr "Descoñecida"
+msgstr "Descoñecido"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Sinatura sen asinar"
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Validez da sinatura:"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3545,8 +3560,10 @@ msgid "All Files (*)"
 msgstr "Todos os ficheiros (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "Campo de sinatura sen asinar (prema para asinar)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5995,6 +6012,17 @@ msgstr "Esquecelo todo"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Agochar a pantalla de benvida."
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Sinatura sen asinar %1"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Descoñecida"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Sinatura sen asinar"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -1090,7 +1090,8 @@ msgstr ""
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
-msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr ""
 
 #: gui/signatureguiutils.cpp:211
@@ -1112,9 +1113,11 @@ msgid ""
 msgstr ""
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Signature Properties"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Swójstwa signatury"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1146,25 +1149,25 @@ msgstr "Pozicija teksta:"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Digitalnje &podpisać..."
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1172,16 +1175,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown date"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Njeznaty"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Digitalnje &podpisać..."
+#| msgid "Signature Properties"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Swójstwa signatury"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3542,7 +3545,8 @@ msgstr "Wšitke dataje (*)"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5908,6 +5912,19 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgctxt "Unknown date"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Njeznaty"
+
+#, fuzzy
+#~| msgid "Digitally &Sign..."
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Digitalnje &podpisać..."
 
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Fit Width"

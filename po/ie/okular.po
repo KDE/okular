@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2022-11-01 00:05+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -1063,9 +1063,10 @@ msgid "The document integrity verification could not be completed."
 msgstr ""
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
-msgstr ""
+#, fuzzy, kde-format
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
+msgstr "Signat de:"
 
 #: gui/signatureguiutils.cpp:211
 #, fuzzy, kde-format
@@ -1087,8 +1088,11 @@ msgstr ""
 
 #: gui/signaturemodel.cpp:141
 #, fuzzy, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Signature"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr ""
+"\n"
+"Validita del signature: %s"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, fuzzy, kde-format
@@ -1119,25 +1123,25 @@ msgstr "Localisation:"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Signatures"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Signatures"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1145,15 +1149,17 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Ínconosset"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Signature"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr ""
+"\n"
+"Validita del signature: %s"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3490,7 +3496,8 @@ msgstr "Omni files (*)"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5840,6 +5847,22 @@ msgstr "_Obliviar"
 #, fuzzy, kde-format
 msgid "Hide welcome screen"
 msgstr "Inicial ecran"
+
+#, fuzzy
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Signature"
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Ínconosset"
+
+#, fuzzy
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Signature"
 
 #~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 #~ msgid "every "

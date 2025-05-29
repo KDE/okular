@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -1078,8 +1078,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "La dokumentkontrolo de integreco ne povis esti finita."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Ĉi tiu dokumento havas nesubskribitajn subskribajn kampojn."
 
 #: gui/signatureguiutils.cpp:211
@@ -1105,9 +1107,11 @@ msgstr ""
 "povis esti konvene validigitaj."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Nesubskribita Subskribo %1"
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Subskriba Tipo: %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1135,41 +1139,45 @@ msgid "Location: %1"
 msgstr "Loko: %1"
 
 #: gui/signaturemodel.cpp:185
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "PGP Signature"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP-Subskribo"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Nekonata"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Unsigned signature"
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Nesubskribita subskribo"
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Valido de subskribo:"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3534,8 +3542,10 @@ msgid "All Files (*)"
 msgstr "Ĉiuj Dosieroj (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "Nesubskribita Signatura Kampo (Klaku por Subskribi)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5982,6 +5992,19 @@ msgstr "Forgesi Ĉion"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kaŝi bonvenigan ekranon"
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Nesubskribita Subskribo %1"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Nekonata"
+
+#, fuzzy
+#~| msgid "Unsigned signature"
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Nesubskribita subskribo"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

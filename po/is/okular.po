@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2025-04-17 14:03+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -1083,8 +1083,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Ekki tókst að ljúka sannprófun á heilleika skjalsins."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Það eru óútfylltir undirskriftarreitir í þessu skjali."
 
 #: gui/signatureguiutils.cpp:211
@@ -1110,9 +1112,11 @@ msgstr ""
 "undirskriftirnar með tilhlýðilegum hætti."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Óútfyllt undirskrift %1"
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Gerð undirskriftar: %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1140,40 +1144,51 @@ msgid "Location: %1"
 msgstr "Staðsetning: %1"
 
 #: gui/signaturemodel.cpp:185
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "PGP Signature"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP-undirskrift"
 
 #: gui/signaturemodel.cpp:187
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Adobe PKCS7 Sha1"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "ETSI CAdES"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, kde-format
-msgctxt "Signature type"
+#, fuzzy, kde-format
+#| msgctxt "Unknown author"
+#| msgid "Unknown"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Óútfyllt undirskrift"
+#, fuzzy, kde-format
+#| msgid "Signature Validity:"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Gildistími undirskriftar:"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3525,8 +3540,10 @@ msgid "All Files (*)"
 msgstr "Allar skrár (*)"
 
 #: part/formwidgets.cpp:1280
-#, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr "Óútfylltur undirskriftarreitur (smelltu til að undirrita)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5968,6 +5985,17 @@ msgstr "Gleyma öllu"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Fela upphafsskjá"
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Óútfyllt undirskrift %1"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Óþekkt"
+
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Óútfyllt undirskrift"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

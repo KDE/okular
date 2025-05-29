@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -1076,8 +1076,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Không hoàn tất được việc xác minh tính toàn vẹn của tài liệu."
 
 #: gui/signatureguiutils.cpp:208
-#, kde-format
-msgid "This document has unsigned signature fields."
+#, fuzzy, kde-format
+#| msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Tài liệu này có các trường chữ kí chưa được kí."
 
 #: gui/signatureguiutils.cpp:211
@@ -1100,9 +1102,11 @@ msgstr ""
 "Tài liệu này đã được kí số. Không kiểm nhận được chính xác một số chữ kí."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr "Chữ kí chưa được kí %1"
+#, fuzzy, kde-format
+#| msgid "Signing Time: %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Thời gian kí: %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1133,25 +1137,25 @@ msgstr "Lí do: %1"
 #: gui/signaturemodel.cpp:185
 #, fuzzy, kde-format
 #| msgid "Digital Signature"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Chữ kí số"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1159,16 +1163,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Không rõ"
 
 #: gui/signaturemodel.cpp:195
 #, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr "Chữ kí chưa được kí %1"
+#| msgid "Signing Time: %1"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Thời gian kí: %1"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3503,7 +3507,8 @@ msgstr ""
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -5841,6 +5846,22 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Unsigned Signature %1"
+#~ msgstr "Chữ kí chưa được kí %1"
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Không rõ"
+
+#, fuzzy
+#~| msgid "Unsigned Signature %1"
+#~ msgctxt "Signature type"
+#~ msgid "Unsigned signature"
+#~ msgstr "Chữ kí chưa được kí %1"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

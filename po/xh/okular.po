@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2002-11-14 17:05SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1065,7 +1065,8 @@ msgstr ""
 
 #: gui/signatureguiutils.cpp:208
 #, kde-format
-msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr ""
 
 #: gui/signatureguiutils.cpp:211
@@ -1088,7 +1089,8 @@ msgstr ""
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
-msgid "Unsigned Signature %1"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
@@ -1118,38 +1120,38 @@ msgstr "&Iyonela Kububanzi Bephepha"
 
 #: gui/signaturemodel.cpp:185
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr ""
 
 #: gui/signaturemodel.cpp:195
 #, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
 msgstr ""
 
 #: gui/signaturemodel.cpp:201
@@ -3463,7 +3465,8 @@ msgstr ""
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97

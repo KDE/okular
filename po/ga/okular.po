@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-24 00:40+0000\n"
+"POT-Creation-Date: 2025-05-29 00:40+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1129,7 +1129,8 @@ msgstr ""
 #: gui/signatureguiutils.cpp:208
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
-msgid "This document has unsigned signature fields."
+msgctxt "Digital signature"
+msgid "This document has signature placeholder fields."
 msgstr "Níl cead agat an cháipéis seo a phriontáil."
 
 #: gui/signatureguiutils.cpp:211
@@ -1154,9 +1155,11 @@ msgid ""
 msgstr "Níl cead agat an cháipéis seo a phriontáil."
 
 #: gui/signaturemodel.cpp:141
-#, kde-format
-msgid "Unsigned Signature %1"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Movie Properties"
+msgctxt "Digital signature"
+msgid "Signature placeholder %1"
+msgstr "Airíonna an Scannáin"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1188,25 +1191,25 @@ msgstr "Anótáil"
 
 #: gui/signaturemodel.cpp:185
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr ""
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr ""
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr ""
 
@@ -1214,15 +1217,16 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgctxt "Unknown author"
 #| msgid "Unknown"
-msgctxt "Signature type"
+msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Anaithnid"
 
 #: gui/signaturemodel.cpp:195
-#, kde-format
-msgctxt "Signature type"
-msgid "Unsigned signature"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Movie Properties"
+msgctxt "Digital signature type"
+msgid "Signature placeholder"
+msgstr "Airíonna an Scannáin"
 
 #: gui/signaturemodel.cpp:201
 #, fuzzy, kde-format
@@ -3752,7 +3756,8 @@ msgstr "*|Gach Comhad"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
-msgid "Unsigned Signature Field (Click to Sign)"
+msgctxt "Digital signature"
+msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
@@ -6240,6 +6245,13 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgctxt "Unknown author"
+#~| msgid "Unknown"
+#~ msgctxt "Signature type"
+#~ msgid "Unknown"
+#~ msgstr "Anaithnid"
 
 #, fuzzy
 #~| msgid "%"

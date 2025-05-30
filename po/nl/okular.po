@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-29 00:40+0000\n"
-"PO-Revision-Date: 2025-03-27 13:47+0100\n"
+"PO-Revision-Date: 2025-05-29 10:32+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1093,11 +1093,10 @@ msgstr ""
 "De verificatie van de integriteit van het document kon niet worden voltooid."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Dit document heeft een niet ondertekend veld voor ondertekening."
+msgstr "Dit document heeft plaatshoudervelden voor ondertekening."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1122,11 +1121,10 @@ msgstr ""
 "niet als juist worden geverifieerd."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Type ondertekening: %1"
+msgstr "Plaatshouder voor ondertekening %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1154,51 +1152,40 @@ msgid "Location: %1"
 msgstr "Locatie: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP-handtekening"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Geldigheid ondertekening:"
+msgstr "Plaatshouder voor ondertekening"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3562,11 +3549,10 @@ msgid "All Files (*)"
 msgstr "Alle bestanden (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Niet ondertekend veld voor ondertekening (klik om te ondertekenen)"
+msgstr "Plaatshouder voor ondertekening (klik om te ondertekenen)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format

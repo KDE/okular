@@ -21,15 +21,15 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-29 00:40+0000\n"
-"PO-Revision-Date: 2025-05-04 10:30+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-05-29 21:51+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1093,11 +1093,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Belge bütünlülük doğrulaması tamamlanamadı."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Bu belgede imzasız imza alanları var."
+msgstr "Bu belgede imza yerleri var."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1120,11 +1119,10 @@ msgid ""
 msgstr "Bu belge, sayısal olarak imzalı. Bazı imzalar düzgünce doğrulanamadı."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "İmza türü: %1"
+msgstr "İmza yeri %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1152,51 +1150,40 @@ msgid "Location: %1"
 msgstr "Konum: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "PGP"
+msgstr "PGP imzası"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 SHA1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "İmza geçerliliği:"
+msgstr "İmza yeri"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3551,11 +3538,10 @@ msgid "All Files (*)"
 msgstr "Tüm Dosyalar (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "İmzasız İmza Alanı (İmzalamak İçin Tıklayın)"
+msgstr "İmza yeri (imzalamak için tıklayın)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format

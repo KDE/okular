@@ -5862,8 +5862,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#, fuzzy
-#~ msgctxt "Signature type"
-#~ msgid "Unknown"
-#~ msgstr "Ukjent"

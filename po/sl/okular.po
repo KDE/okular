@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-29 00:40+0000\n"
-"PO-Revision-Date: 2025-03-27 06:59+0100\n"
+"PO-Revision-Date: 2025-05-29 07:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1079,11 +1079,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Preverjanja celovitosti dokumenta ni bilo mogoče zaključiti."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Ta dokument ima nepodpisana podpisna polja."
+msgstr "Ta dokument ima podpisna polja."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1107,11 +1106,10 @@ msgstr ""
 "potrditi pravilnosti."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Vrsta podpisa: %1"
+msgstr "Polje za podpis %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1139,51 +1137,40 @@ msgid "Location: %1"
 msgstr "Lokacija: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Podpis PGP"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Neznano"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Veljavnost podpisa:"
+msgstr "Polje podpisa"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3551,11 +3538,10 @@ msgid "All Files (*)"
 msgstr "Vse datoteke (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Še nepodpisano polje podpisa (Kliknite za podpis)"
+msgstr "Polje podpisa (Kliknite za podpis)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format

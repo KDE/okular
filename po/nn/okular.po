@@ -5986,16 +5986,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "Unsigned Signature %1"
-#~ msgstr "Usignert signatur %1"
-
-#, fuzzy
-#~ msgctxt "Signature type"
-#~ msgid "Unknown"
-#~ msgstr "Ukjend"
-
-#, fuzzy
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "Usignert signatur %1"

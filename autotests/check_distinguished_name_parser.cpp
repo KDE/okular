@@ -164,5 +164,5 @@ void TestDistinguishedNameParser::testParseHexString_data()
     QTest::newRow("XX") << std::string {"XX"} << std::optional<std::string> {};
 }
 
-QTEST_GUILESS_MAIN(TestDistinguishedNameParser);
+QTEST_MAIN(TestDistinguishedNameParser);
 #include "check_distinguished_name_parser.moc"

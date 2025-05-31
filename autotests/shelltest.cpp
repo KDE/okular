@@ -81,5 +81,5 @@ void ShellTest::testUrlArgs()
     QCOMPARE(url, resUrl);
 }
 
-QTEST_GUILESS_MAIN(ShellTest)
+QTEST_MAIN(ShellTest)
 #include "shelltest.moc"

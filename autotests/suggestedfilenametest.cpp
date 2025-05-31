@@ -48,6 +48,6 @@ void SuggestedFileNameTest::testSuggestedSignedDocumentName_data()
     QTest::newRow("no extension with versions") << QStringLiteral("foo-1.2.3") << QStringLiteral("pdf") << QStringLiteral("foo-1.2_signed.pdf"); // This is not as such expected behavior but more a documentation of implementation.
 }
 
-QTEST_GUILESS_MAIN(SuggestedFileNameTest)
+QTEST_MAIN(SuggestedFileNameTest)
 
 #include "suggestedfilenametest.moc"

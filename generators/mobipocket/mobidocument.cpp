@@ -20,7 +20,7 @@ MobiDocument::MobiDocument(const QString &fileName)
     if (doc->isValid()) {
         QString text = doc->text();
         QString header = text.left(1024);
-        if (header.contains(QStringLiteral("<html>")) || header.contains(QStringLiteral("<HTML>"))) {
+        if (header.contains(QStringLiteral("<html")) || header.contains(QStringLiteral("<HTML"))) {
             setDefaultStyleSheet(QStringLiteral("a { color: %1 }").arg(QColor(Qt::blue).name()));
             setHtml(fixMobiMarkup(text));
         } else {

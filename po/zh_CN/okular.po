@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:40+0000\n"
+"POT-Creation-Date: 2025-06-08 00:41+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -32,7 +32,7 @@ msgstr ""
 "com, mhh@ricetons.com, shuizhuyuanluo@126.com, tds00@qq.com, wengxt@gmail."
 "com, yahzee@d3eye.com"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:434
+#: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -744,7 +744,7 @@ msgstr "几何图形"
 msgid "Highlight with Comment"
 msgstr "高亮 (有注释)"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "高亮"
@@ -754,7 +754,7 @@ msgstr "高亮"
 msgid "Squiggle with Comment"
 msgstr "波浪下划线 (有注释)"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
@@ -765,7 +765,7 @@ msgstr "波浪下划线"
 msgid "Underline with Comment"
 msgstr "下划线 (有注释)"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
@@ -1070,11 +1070,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "此文档无法通过一致性验证。"
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "此文档有未签名的签名字段。"
+msgstr "此文档有签名占位符字段。"
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1095,11 +1094,10 @@ msgid ""
 msgstr "此文档已经过数字签名，但它包含的某些签名无法通过验证。"
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "签名类型：%1"
+msgstr "签名占位符 %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1127,51 +1125,40 @@ msgid "Location: %1"
 msgstr "位置：%1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP 签名"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 SHA1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "未知"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "签名有效期："
+msgstr "签名占位符"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -1773,387 +1760,387 @@ msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "选择一个自定义图章图像"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "选择自定义图章图像"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz | 图标文件 (*.ico *.png *.xpm *.svg *.svgz)"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "无法加载文件 <filename>%1</filename>"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "无效的文件"
 
-#: part/annotationwidgets.cpp:268
+#: part/annotationwidgets.cpp:265
 #, kde-format
 msgid "&Color:"
 msgstr "颜色(&C)："
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
 #, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
+#: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "不透明度(&O)："
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:363
 #, kde-format
 msgid "Icon:"
 msgstr "图标："
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:364
 #, kde-format
 msgid "Comment"
 msgstr "注释"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Help"
 msgstr "帮助"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Insert"
 msgstr "插入"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Key"
 msgstr "键名"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "New paragraph"
 msgstr "新段落"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Note"
 msgstr "批注"
 
-#: part/annotationwidgets.cpp:373
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Paragraph"
 msgstr "段落"
 
-#: part/annotationwidgets.cpp:381
+#: part/annotationwidgets.cpp:378
 #, kde-format
 msgid "Font:"
 msgstr "字体："
 
-#: part/annotationwidgets.cpp:390
+#: part/annotationwidgets.cpp:387
 #, kde-format
 msgid "Text &color:"
 msgstr "文字颜色(&C)："
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:394
 #, kde-format
 msgid "&Align:"
 msgstr "对齐(&A)："
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:395
 #, kde-format
 msgid "Left"
 msgstr "左对齐"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:396
 #, kde-format
 msgid "Center"
 msgstr "居中对齐"
 
-#: part/annotationwidgets.cpp:400
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "Right"
 msgstr "右对齐"
 
-#: part/annotationwidgets.cpp:408
+#: part/annotationwidgets.cpp:405
 #, kde-format
 msgid "Border &width:"
 msgstr "边框宽度(&W)："
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:414
 #, kde-format
 msgid "Approved"
 msgstr "已批准"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:415
 #, kde-format
 msgid "As Is"
 msgstr "保持原样"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Confidential"
 msgstr "机密"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Departmental"
 msgstr "部门"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "Draft"
 msgstr "草稿"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Experimental"
 msgstr "实验"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Expired"
 msgstr "已过期"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Final"
 msgstr "终稿"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "For Comment"
 msgstr "用于注释"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "For Public Release"
 msgstr "公开发布"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Not Approved"
 msgstr "未批准"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "Not For Public Release"
 msgstr "不公开发布"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Sold"
 msgstr "已售出"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Top Secret"
 msgstr "极密"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Bookmark"
 msgstr "书签"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Information"
 msgstr "信息"
 
-#: part/annotationwidgets.cpp:433
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:454
+#: part/annotationwidgets.cpp:451
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "图章图像："
 
-#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
-#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
-#: part/annotationwidgets.cpp:780
+#: part/annotationwidgets.cpp:499 part/annotationwidgets.cpp:561
+#: part/annotationwidgets.cpp:624 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:777
 #, kde-format
 msgid "&Width:"
 msgstr "宽度(&W)："
 
-#: part/annotationwidgets.cpp:507
+#: part/annotationwidgets.cpp:504
 #, kde-format
 msgid "Line start:"
 msgstr "线条起点："
 
-#: part/annotationwidgets.cpp:509
+#: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line end:"
 msgstr "线条终点："
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Square"
 msgstr "方形"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:510
 #, kde-format
 msgid "Circle"
 msgstr "圆形"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Diamond"
 msgstr "菱形"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Open Arrow"
 msgstr "开放式箭头"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Closed Arrow"
 msgstr "封闭式箭头"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "None"
 msgstr "无"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
 msgstr "竖杠"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "开放式反箭头"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "封闭式反箭头"
 
-#: part/annotationwidgets.cpp:521
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Slash"
 msgstr "斜杠"
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:531
 #, kde-format
 msgid "Leader line length:"
 msgstr "引线长度："
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "引线延长线长度："
 
-#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
+#: part/annotationwidgets.cpp:547 part/annotationwidgets.cpp:691
 #, kde-format
 msgid "Enabled"
 msgstr "启用"
 
-#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:551 part/annotationwidgets.cpp:695
 #, kde-format
 msgid "Shape fill:"
 msgstr "形状填充："
 
-#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
+#: part/annotationwidgets.cpp:651 part/annotationwidgets.cpp:685
 #, kde-format
 msgid "Type:"
 msgstr "类型："
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "删除线"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "矩形"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "椭圆形"
 
-#: part/annotationwidgets.cpp:748
+#: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "文件附件图像："
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "图表"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:749
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "图钉"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "回形针"
 
-#: part/annotationwidgets.cpp:754
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "标签"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:760
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "文件"
 
-#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "大小不可用"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:765
 #, kde-format
 msgid "No description available."
 msgstr "没有可用的描述。"
 
-#: part/annotationwidgets.cpp:776
+#: part/annotationwidgets.cpp:773
 #, kde-format
 msgid "Name:"
 msgstr "名称："
 
-#: part/annotationwidgets.cpp:787
+#: part/annotationwidgets.cpp:784
 #, kde-format
 msgid "Description:"
 msgstr "描述："
 
-#: part/annotationwidgets.cpp:846
+#: part/annotationwidgets.cpp:843
 #, kde-format
 msgid "Caret symbol:"
 msgstr "脱字符符号："
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "无"
 
-#: part/annotationwidgets.cpp:849
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"
@@ -3504,11 +3491,10 @@ msgid "All Files (*)"
 msgstr "所有文件 (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "未签名的签名字段 (点击进行签名)"
+msgstr "签名占位符 (点击签名)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
@@ -5907,14 +5893,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Unsigned Signature %1"
-#~ msgstr "未经签名的签名 %1"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unknown"
-#~ msgstr "未知"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "未经签名的签名"

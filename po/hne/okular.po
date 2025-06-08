@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:40+0000\n"
+"POT-Creation-Date: 2025-06-08 00:41+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -29,7 +29,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "raviratlami@aol.in,"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:434
+#: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Okular"
 msgstr "ओकुलर"
@@ -793,7 +793,7 @@ msgstr "ज्यामिति"
 msgid "Highlight with Comment"
 msgstr "चमकाव"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "चमकाव"
@@ -804,7 +804,7 @@ msgstr "चमकाव"
 msgid "Squiggle with Comment"
 msgstr "स्क्विग्ली"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1425
 #, fuzzy, kde-format
 #| msgid "Squiggly"
@@ -817,7 +817,7 @@ msgstr "स्क्विग्ली"
 msgid "Underline with Comment"
 msgstr "रेखांकित"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
@@ -1893,7 +1893,7 @@ msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr ""
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, fuzzy, kde-format
 #| msgctxt "Annotation tool"
 #| msgid "Put a stamp symbol"
@@ -1901,400 +1901,400 @@ msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "स्टैम्प चिनहा लगाव"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr ""
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr ""
 
-#: part/annotationwidgets.cpp:268
+#: part/annotationwidgets.cpp:265
 #, kde-format
 msgid "&Color:"
 msgstr "रंग: (&C)"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
+#: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "अपारदर्सिता: (&O)"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:363
 #, fuzzy, kde-format
 #| msgid "Icon"
 msgid "Icon:"
 msgstr "चिनहा"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:364
 #, kde-format
 msgid "Comment"
 msgstr "टिप्पनी"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Help"
 msgstr "मदद"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Insert"
 msgstr "प्रविस्ट"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Key"
 msgstr "कुंजी"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:368
 #, fuzzy, kde-format
 #| msgid "New Paragraph"
 msgid "New paragraph"
 msgstr "नवा पैराग्राफ"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Note"
 msgstr "टिप्पनी"
 
-#: part/annotationwidgets.cpp:373
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Paragraph"
 msgstr "पैराग्राफ"
 
-#: part/annotationwidgets.cpp:381
+#: part/annotationwidgets.cpp:378
 #, kde-format
 msgid "Font:"
 msgstr "फोंटः"
 
-#: part/annotationwidgets.cpp:390
+#: part/annotationwidgets.cpp:387
 #, fuzzy, kde-format
 #| msgid "&Color:"
 msgid "Text &color:"
 msgstr "रंग: (&C)"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:394
 #, kde-format
 msgid "&Align:"
 msgstr ""
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:395
 #, fuzzy, kde-format
 #| msgctxt "Rotate left"
 #| msgid "Left"
 msgid "Left"
 msgstr "डेरी"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:396
 #, kde-format
 msgid "Center"
 msgstr ""
 
-#: part/annotationwidgets.cpp:400
+#: part/annotationwidgets.cpp:397
 #, fuzzy, kde-format
 #| msgctxt "Rotate right"
 #| msgid "Right"
 msgid "Right"
 msgstr "जेवनी"
 
-#: part/annotationwidgets.cpp:408
+#: part/annotationwidgets.cpp:405
 #, kde-format
 msgid "Border &width:"
 msgstr ""
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:414
 #, kde-format
 msgid "Approved"
 msgstr "स्वीकृत"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:415
 #, kde-format
 msgid "As Is"
 msgstr "जैसा हे"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Confidential"
 msgstr "गोपनीय"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Departmental"
 msgstr "विभागीय"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "Draft"
 msgstr "ड्राफ्ट"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Experimental"
 msgstr "परीक्छनाधीन"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Expired"
 msgstr "मियाद खतम"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Final"
 msgstr "आखरी"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "For Comment"
 msgstr "टिप्पनियों बर"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "For Public Release"
 msgstr "सार्वजनिक जारी करे बर"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Not Approved"
 msgstr "स्वीकृत नइ"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "Not For Public Release"
 msgstr "सार्वजनिक जारी करे बर नइ"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Sold"
 msgstr "बिक गिस"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Top Secret"
 msgstr "बहुत गुप्त"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Bookmark"
 msgstr " निसानी "
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Information"
 msgstr "जानकारी"
 
-#: part/annotationwidgets.cpp:433
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "KDE"
 msgstr "केडीई"
 
-#: part/annotationwidgets.cpp:454
+#: part/annotationwidgets.cpp:451
 #, fuzzy, kde-format
 #| msgid "Stamp Symbol"
 msgid "Stamp symbol:"
 msgstr "स्टैम्प चिनहा"
 
-#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
-#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
-#: part/annotationwidgets.cpp:780
+#: part/annotationwidgets.cpp:499 part/annotationwidgets.cpp:561
+#: part/annotationwidgets.cpp:624 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:777
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgid "&Width:"
 msgstr "चौड़ाई जमाव"
 
-#: part/annotationwidgets.cpp:507
+#: part/annotationwidgets.cpp:504
 #, fuzzy, kde-format
 #| msgid "Line"
 msgid "Line start:"
 msgstr "पंक्ति"
 
-#: part/annotationwidgets.cpp:509
+#: part/annotationwidgets.cpp:506
 #, fuzzy, kde-format
 #| msgid "Line"
 msgid "Line end:"
 msgstr "पंक्ति"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Square"
 msgstr ""
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:510
 #, kde-format
 msgid "Circle"
 msgstr ""
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Diamond"
 msgstr ""
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Open Arrow"
 msgstr ""
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Closed Arrow"
 msgstr ""
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:514
 #, fuzzy, kde-format
 #| msgctxt "Symbol for caret annotations"
 #| msgid "None"
 msgid "None"
 msgstr "कुछ नइ"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
 msgstr ""
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Right Open Arrow"
 msgstr ""
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr ""
 
-#: part/annotationwidgets.cpp:521
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Slash"
 msgstr ""
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:531
 #, fuzzy, kde-format
 #| msgid "Leader Line Length:"
 msgid "Leader line length:"
 msgstr "लीडर लाइन लंबाई:"
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:533
 #, fuzzy, kde-format
 #| msgid "Leader Line Extensions Length:"
 msgid "Leader line extensions length:"
 msgstr "लीडर लाइन एक्सटेंसन लंबाई:"
 
-#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
+#: part/annotationwidgets.cpp:547 part/annotationwidgets.cpp:691
 #, kde-format
 msgid "Enabled"
 msgstr ""
 
-#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:551 part/annotationwidgets.cpp:695
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Shape fill:"
 msgstr "फाइल मं सहेजव..."
 
-#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
+#: part/annotationwidgets.cpp:651 part/annotationwidgets.cpp:685
 #, kde-format
 msgid "Type:"
 msgstr "किसिमः"
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "लिखकर काटव"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "चतुर्भुज"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "दीर्घवृत्त"
 
-#: part/annotationwidgets.cpp:748
+#: part/annotationwidgets.cpp:745
 #, fuzzy, kde-format
 #| msgid "File Attachment Symbol"
 msgid "File attachment symbol:"
 msgstr "फाइल संलग्नक चिनहा"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "ग्राफ "
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:749
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "पुस पिन"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "आलपिन"
 
-#: part/annotationwidgets.cpp:754
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "टैग"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:760
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "फाइल"
 
-#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "लागू नइ"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:765
 #, kde-format
 msgid "No description available."
 msgstr "कोई वर्नन नइ मिलत."
 
-#: part/annotationwidgets.cpp:776
+#: part/annotationwidgets.cpp:773
 #, fuzzy, kde-format
 #| msgid "Name"
 msgid "Name:"
 msgstr "नाम"
 
-#: part/annotationwidgets.cpp:787
+#: part/annotationwidgets.cpp:784
 #, kde-format
 msgid "Description:"
 msgstr "वर्नन:"
 
-#: part/annotationwidgets.cpp:846
+#: part/annotationwidgets.cpp:843
 #, fuzzy, kde-format
 #| msgid "Caret Symbol"
 msgid "Caret symbol:"
 msgstr "कैरट चिनहा"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "कुछ नइ"
 
-#: part/annotationwidgets.cpp:849
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"

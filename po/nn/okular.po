@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:40+0000\n"
+"POT-Creation-Date: 2025-06-08 00:41+0000\n"
 "PO-Revision-Date: 2024-10-27 14:45+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -31,7 +31,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "gaute@verdsveven.com,karl@huftis.org"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:434
+#: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -750,7 +750,7 @@ msgstr "Geometri"
 msgid "Highlight with Comment"
 msgstr "Utheving med merknad"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "Utheving"
@@ -760,7 +760,7 @@ msgstr "Utheving"
 msgid "Squiggle with Comment"
 msgstr "Bølgje med merknad"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
@@ -771,7 +771,7 @@ msgstr "Bølgje"
 msgid "Underline with Comment"
 msgstr "Understreking med merknad"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
@@ -1784,387 +1784,387 @@ msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "Vel eit stempelsymbol frå ei fil"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "Vel eit tilpassa stempelsymbol"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
 msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz | Ikonfiler (*.ico *.png *.xpm *.svg *.svgz)"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "Klarte ikkje opna fila  <filename>%1</filename>"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "Ugyldig fil"
 
-#: part/annotationwidgets.cpp:268
+#: part/annotationwidgets.cpp:265
 #, kde-format
 msgid "&Color:"
 msgstr "&Farge:"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
 #, fuzzy, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%1 %"
 
-#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
+#: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "&Gjennomsikt:"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:363
 #, kde-format
 msgid "Icon:"
 msgstr "Ikon:"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:364
 #, kde-format
 msgid "Comment"
 msgstr "Merknad"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Help"
 msgstr "Hjelp"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Insert"
 msgstr "Set inn"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Key"
 msgstr "Nøkkel"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "New paragraph"
 msgstr "Nytt avsnitt"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Note"
 msgstr "Notat"
 
-#: part/annotationwidgets.cpp:373
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Paragraph"
 msgstr "Avsnitt"
 
-#: part/annotationwidgets.cpp:381
+#: part/annotationwidgets.cpp:378
 #, kde-format
 msgid "Font:"
 msgstr "Skrift:"
 
-#: part/annotationwidgets.cpp:390
+#: part/annotationwidgets.cpp:387
 #, kde-format
 msgid "Text &color:"
 msgstr "Tekst&farge:"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:394
 #, kde-format
 msgid "&Align:"
 msgstr "&Juster:"
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:395
 #, kde-format
 msgid "Left"
 msgstr "Til venstre"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:396
 #, kde-format
 msgid "Center"
 msgstr "I midten"
 
-#: part/annotationwidgets.cpp:400
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "Right"
 msgstr "Til høgre"
 
-#: part/annotationwidgets.cpp:408
+#: part/annotationwidgets.cpp:405
 #, kde-format
 msgid "Border &width:"
 msgstr "Kant&breidd:"
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:414
 #, kde-format
 msgid "Approved"
 msgstr "Godkjent"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:415
 #, kde-format
 msgid "As Is"
 msgstr "Som det er"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Confidential"
 msgstr "Konfidensielt"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Departmental"
 msgstr "For avdelinga"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "Draft"
 msgstr "Utkast"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Experimental"
 msgstr "Eksperimentelt"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Expired"
 msgstr "Utgått"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Final"
 msgstr "Endeleg"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "For Comment"
 msgstr "For kommentering"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "For Public Release"
 msgstr "Til offentleggjering"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Not Approved"
 msgstr "Ikkje godkjent"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "Not For Public Release"
 msgstr "Skal ikkje offentleggjerast"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Sold"
 msgstr "Selt"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Top Secret"
 msgstr "Strengt hemmeleg"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Bookmark"
 msgstr "Bokmerke"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Information"
 msgstr "Informasjon"
 
-#: part/annotationwidgets.cpp:433
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:454
+#: part/annotationwidgets.cpp:451
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "Stempelsymbol:"
 
-#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
-#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
-#: part/annotationwidgets.cpp:780
+#: part/annotationwidgets.cpp:499 part/annotationwidgets.cpp:561
+#: part/annotationwidgets.cpp:624 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:777
 #, kde-format
 msgid "&Width:"
 msgstr "&Breidd:"
 
-#: part/annotationwidgets.cpp:507
+#: part/annotationwidgets.cpp:504
 #, kde-format
 msgid "Line start:"
 msgstr "Linjestart:"
 
-#: part/annotationwidgets.cpp:509
+#: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line end:"
 msgstr "Linjeslutt:"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Square"
 msgstr "Kvadrat"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:510
 #, kde-format
 msgid "Circle"
 msgstr "Sirkel"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Diamond"
 msgstr "Diamant"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Open Arrow"
 msgstr "Open pil"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Closed Arrow"
 msgstr "Lukka pil"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "None"
 msgstr "Ingen"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
 msgstr "Butt"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "Pil høgre (open)"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "Pil høgre (fylt)"
 
-#: part/annotationwidgets.cpp:521
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Slash"
 msgstr "Skråstrek"
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:531
 #, kde-format
 msgid "Leader line length:"
 msgstr "Lengd på tilvisingslinje:"
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "Lengd på utviding til tilvisingslinje:"
 
-#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
+#: part/annotationwidgets.cpp:547 part/annotationwidgets.cpp:691
 #, kde-format
 msgid "Enabled"
 msgstr "På"
 
-#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:551 part/annotationwidgets.cpp:695
 #, kde-format
 msgid "Shape fill:"
 msgstr "Formfyll:"
 
-#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
+#: part/annotationwidgets.cpp:651 part/annotationwidgets.cpp:685
 #, kde-format
 msgid "Type:"
 msgstr "Type:"
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "Gjennomstreking"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "Rektangel"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellipse"
 
-#: part/annotationwidgets.cpp:748
+#: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "Filvedleggsymbol:"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "Graf"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:749
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "Teiknestift"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "Binders"
 
-#: part/annotationwidgets.cpp:754
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "Merkelapp"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:760
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Fil"
 
-#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "–"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:765
 #, kde-format
 msgid "No description available."
 msgstr "Inga skildring er tilgjengeleg."
 
-#: part/annotationwidgets.cpp:776
+#: part/annotationwidgets.cpp:773
 #, kde-format
 msgid "Name:"
 msgstr "Namn:"
 
-#: part/annotationwidgets.cpp:787
+#: part/annotationwidgets.cpp:784
 #, kde-format
 msgid "Description:"
 msgstr "Skildring:"
 
-#: part/annotationwidgets.cpp:846
+#: part/annotationwidgets.cpp:843
 #, kde-format
 msgid "Caret symbol:"
 msgstr "Skrivemerke-symbol:"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "Ingen"
 
-#: part/annotationwidgets.cpp:849
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"

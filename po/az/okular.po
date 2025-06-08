@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:40+0000\n"
+"POT-Creation-Date: 2025-06-08 00:41+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -27,7 +27,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "xxmn77@gmail.com"
 
-#: aboutdata.h:19 part/annotationwidgets.cpp:434
+#: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
 msgid "Okular"
 msgstr "Okular"
@@ -756,7 +756,7 @@ msgstr "Fiqur"
 msgid "Highlight with Comment"
 msgstr "Şərh mətninin vurğulanması"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:656
+#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "Vurğulama"
@@ -766,7 +766,7 @@ msgstr "Vurğulama"
 msgid "Squiggle with Comment"
 msgstr "Dalğavari xətlə altı cizilan şərhlər"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:657
+#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1425
 #, kde-format
 msgid "Squiggle"
@@ -777,7 +777,7 @@ msgstr "Dalğavari xətt"
 msgid "Underline with Comment"
 msgstr "Altı cızılan sərhlər"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:658
+#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1433
 #, kde-format
 msgid "Underline"
@@ -1786,13 +1786,13 @@ msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
 msgstr "Fərdi möhür simvolunu fayldan seçin"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
 msgstr "Fərdi möhür simvolunu seçin"
 
-#: part/annotationwidgets.cpp:157
+#: part/annotationwidgets.cpp:154
 #, kde-format
 msgid ""
 "*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)"
@@ -1800,24 +1800,24 @@ msgstr ""
 "*.ico *.png *.xpm *.svg *.svgz | Ikon faylları (*.ico *.png *.xpm *.svg *."
 "svgz)"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
 msgstr "<filename>%1</filename> faylı yüklənə bilmədi"
 
-#: part/annotationwidgets.cpp:161
+#: part/annotationwidgets.cpp:158
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid file"
 msgstr "Səhv fayl"
 
-#: part/annotationwidgets.cpp:268
+#: part/annotationwidgets.cpp:265
 #, kde-format
 msgid "&Color:"
 msgstr "&Rəng:"
 
-#: part/annotationwidgets.cpp:277 part/editdrawingtooldialog.cpp:74
+#: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -1825,351 +1825,351 @@ msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%1%"
 
-#: part/annotationwidgets.cpp:278 part/editdrawingtooldialog.cpp:68
+#: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
 msgid "&Opacity:"
 msgstr "&Qeyri-şəffaflıq:"
 
-#: part/annotationwidgets.cpp:366
+#: part/annotationwidgets.cpp:363
 #, kde-format
 msgid "Icon:"
 msgstr "Nişan:"
 
-#: part/annotationwidgets.cpp:367
+#: part/annotationwidgets.cpp:364
 #, kde-format
 msgid "Comment"
 msgstr "Rəy"
 
-#: part/annotationwidgets.cpp:368
+#: part/annotationwidgets.cpp:365
 #, kde-format
 msgid "Help"
 msgstr "Kömək"
 
-#: part/annotationwidgets.cpp:369
+#: part/annotationwidgets.cpp:366
 #, kde-format
 msgid "Insert"
 msgstr "Daxil etmək"
 
-#: part/annotationwidgets.cpp:370
+#: part/annotationwidgets.cpp:367
 #, kde-format
 msgid "Key"
 msgstr "Açar"
 
-#: part/annotationwidgets.cpp:371
+#: part/annotationwidgets.cpp:368
 #, kde-format
 msgid "New paragraph"
 msgstr "Yeni paraqraf"
 
-#: part/annotationwidgets.cpp:372
+#: part/annotationwidgets.cpp:369
 #, kde-format
 msgid "Note"
 msgstr "Qeyd"
 
-#: part/annotationwidgets.cpp:373
+#: part/annotationwidgets.cpp:370
 #, kde-format
 msgid "Paragraph"
 msgstr "Paraqraf"
 
-#: part/annotationwidgets.cpp:381
+#: part/annotationwidgets.cpp:378
 #, kde-format
 msgid "Font:"
 msgstr "Şrift:"
 
-#: part/annotationwidgets.cpp:390
+#: part/annotationwidgets.cpp:387
 #, kde-format
 msgid "Text &color:"
 msgstr "Mətnin &rəngi:"
 
-#: part/annotationwidgets.cpp:397
+#: part/annotationwidgets.cpp:394
 #, kde-format
 msgid "&Align:"
 msgstr "&Düzəltmək:"
 
-#: part/annotationwidgets.cpp:398
+#: part/annotationwidgets.cpp:395
 #, kde-format
 msgid "Left"
 msgstr "Sol"
 
-#: part/annotationwidgets.cpp:399
+#: part/annotationwidgets.cpp:396
 #, kde-format
 msgid "Center"
 msgstr "Mərkəz"
 
-#: part/annotationwidgets.cpp:400
+#: part/annotationwidgets.cpp:397
 #, kde-format
 msgid "Right"
 msgstr "Sağ"
 
-#: part/annotationwidgets.cpp:408
+#: part/annotationwidgets.cpp:405
 #, kde-format
 msgid "Border &width:"
 msgstr "Çərçivənin e&ni:"
 
-#: part/annotationwidgets.cpp:417
+#: part/annotationwidgets.cpp:414
 #, kde-format
 msgid "Approved"
 msgstr "Təsdiqləndi"
 
-#: part/annotationwidgets.cpp:418
+#: part/annotationwidgets.cpp:415
 #, kde-format
 msgid "As Is"
 msgstr "Olduğu kimi"
 
-#: part/annotationwidgets.cpp:419
+#: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Confidential"
 msgstr "Məxfi"
 
-#: part/annotationwidgets.cpp:420
+#: part/annotationwidgets.cpp:417
 #, kde-format
 msgid "Departmental"
 msgstr "Xidməti istifadə"
 
-#: part/annotationwidgets.cpp:421
+#: part/annotationwidgets.cpp:418
 #, kde-format
 msgid "Draft"
 msgstr "Qaralama"
 
-#: part/annotationwidgets.cpp:422
+#: part/annotationwidgets.cpp:419
 #, kde-format
 msgid "Experimental"
 msgstr "Təcrübi"
 
-#: part/annotationwidgets.cpp:423
+#: part/annotationwidgets.cpp:420
 #, kde-format
 msgid "Expired"
 msgstr "Vaxtı bitdi"
 
-#: part/annotationwidgets.cpp:424
+#: part/annotationwidgets.cpp:421
 #, kde-format
 msgid "Final"
 msgstr "Final"
 
-#: part/annotationwidgets.cpp:425
+#: part/annotationwidgets.cpp:422
 #, kde-format
 msgid "For Comment"
 msgstr "Rəy üçün"
 
-#: part/annotationwidgets.cpp:426
+#: part/annotationwidgets.cpp:423
 #, kde-format
 msgid "For Public Release"
 msgstr "Publik paylaşım üçün"
 
-#: part/annotationwidgets.cpp:427
+#: part/annotationwidgets.cpp:424
 #, kde-format
 msgid "Not Approved"
 msgstr "Təsdiqlənmədi"
 
-#: part/annotationwidgets.cpp:428
+#: part/annotationwidgets.cpp:425
 #, kde-format
 msgid "Not For Public Release"
 msgstr "Publik paylamaq üçün olmayan"
 
-#: part/annotationwidgets.cpp:429
+#: part/annotationwidgets.cpp:426
 #, kde-format
 msgid "Sold"
 msgstr "Satıldı"
 
-#: part/annotationwidgets.cpp:430
+#: part/annotationwidgets.cpp:427
 #, kde-format
 msgid "Top Secret"
 msgstr "Tam məxfi"
 
-#: part/annotationwidgets.cpp:431
+#: part/annotationwidgets.cpp:428
 #, kde-format
 msgid "Bookmark"
 msgstr "Əlfəcin"
 
-#: part/annotationwidgets.cpp:432
+#: part/annotationwidgets.cpp:429
 #, kde-format
 msgid "Information"
 msgstr "Məlumat"
 
-#: part/annotationwidgets.cpp:433
+#: part/annotationwidgets.cpp:430
 #, kde-format
 msgid "KDE"
 msgstr "KDE"
 
-#: part/annotationwidgets.cpp:454
+#: part/annotationwidgets.cpp:451
 #, kde-format
 msgid "Stamp symbol:"
 msgstr "Möhür simvolu:"
 
-#: part/annotationwidgets.cpp:502 part/annotationwidgets.cpp:564
-#: part/annotationwidgets.cpp:627 part/annotationwidgets.cpp:701
-#: part/annotationwidgets.cpp:780
+#: part/annotationwidgets.cpp:499 part/annotationwidgets.cpp:561
+#: part/annotationwidgets.cpp:624 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:777
 #, kde-format
 msgid "&Width:"
 msgstr "&Eni:"
 
-#: part/annotationwidgets.cpp:507
+#: part/annotationwidgets.cpp:504
 #, kde-format
 msgid "Line start:"
 msgstr "Xəttin başlanğıcı:"
 
-#: part/annotationwidgets.cpp:509
+#: part/annotationwidgets.cpp:506
 #, kde-format
 msgid "Line end:"
 msgstr "Xəttin sonu:"
 
-#: part/annotationwidgets.cpp:512
+#: part/annotationwidgets.cpp:509
 #, kde-format
 msgid "Square"
 msgstr "Kvadrat"
 
-#: part/annotationwidgets.cpp:513
+#: part/annotationwidgets.cpp:510
 #, kde-format
 msgid "Circle"
 msgstr "Dairə"
 
-#: part/annotationwidgets.cpp:514
+#: part/annotationwidgets.cpp:511
 #, kde-format
 msgid "Diamond"
 msgstr "Romb"
 
-#: part/annotationwidgets.cpp:515
+#: part/annotationwidgets.cpp:512
 #, kde-format
 msgid "Open Arrow"
 msgstr "Açıq ox"
 
-#: part/annotationwidgets.cpp:516
+#: part/annotationwidgets.cpp:513
 #, kde-format
 msgid "Closed Arrow"
 msgstr "Bağlı ox"
 
-#: part/annotationwidgets.cpp:517
+#: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "None"
 msgstr "Heç biri"
 
-#: part/annotationwidgets.cpp:518
+#: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
 msgstr "Kəsik"
 
-#: part/annotationwidgets.cpp:519
+#: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Right Open Arrow"
 msgstr "Sağ aşıq ox"
 
-#: part/annotationwidgets.cpp:520
+#: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
 msgstr "Sağ bağlı ox"
 
-#: part/annotationwidgets.cpp:521
+#: part/annotationwidgets.cpp:518
 #, kde-format
 msgid "Slash"
 msgstr "Köndələn xətt"
 
-#: part/annotationwidgets.cpp:534
+#: part/annotationwidgets.cpp:531
 #, kde-format
 msgid "Leader line length:"
 msgstr "Aparıcı xəttin uzunluğu:"
 
-#: part/annotationwidgets.cpp:536
+#: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line extensions length:"
 msgstr "Aparıcı xəttin uzantılarının uzunluğu:"
 
-#: part/annotationwidgets.cpp:550 part/annotationwidgets.cpp:694
+#: part/annotationwidgets.cpp:547 part/annotationwidgets.cpp:691
 #, kde-format
 msgid "Enabled"
 msgstr "Aktivdir"
 
-#: part/annotationwidgets.cpp:554 part/annotationwidgets.cpp:698
+#: part/annotationwidgets.cpp:551 part/annotationwidgets.cpp:695
 #, kde-format
 msgid "Shape fill:"
 msgstr "Dolğu:"
 
-#: part/annotationwidgets.cpp:654 part/annotationwidgets.cpp:688
+#: part/annotationwidgets.cpp:651 part/annotationwidgets.cpp:685
 #, kde-format
 msgid "Type:"
 msgstr "Növü:"
 
-#: part/annotationwidgets.cpp:659 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
 #, kde-format
 msgid "Strike out"
 msgstr "Üzərində cizgi"
 
-#: part/annotationwidgets.cpp:703 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
 #, kde-format
 msgid "Rectangle"
 msgstr "Düzbucaqlı"
 
-#: part/annotationwidgets.cpp:704 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellips"
 
-#: part/annotationwidgets.cpp:748
+#: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
 msgstr "Fayl əlavə etmə simvolu:"
 
-#: part/annotationwidgets.cpp:751
+#: part/annotationwidgets.cpp:748
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Graph"
 msgstr "Qrafik"
 
-#: part/annotationwidgets.cpp:752
+#: part/annotationwidgets.cpp:749
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Push Pin"
 msgstr "Düymə"
 
-#: part/annotationwidgets.cpp:753
+#: part/annotationwidgets.cpp:750
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Paperclip"
 msgstr "Sancaq"
 
-#: part/annotationwidgets.cpp:754
+#: part/annotationwidgets.cpp:751
 #, kde-format
 msgctxt "Symbol for file attachment annotations"
 msgid "Tag"
 msgstr "Yarlıq"
 
-#: part/annotationwidgets.cpp:763
+#: part/annotationwidgets.cpp:760
 #, kde-format
 msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Fayl"
 
-#: part/annotationwidgets.cpp:767 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:90
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
 msgstr "Əlçatmaz"
 
-#: part/annotationwidgets.cpp:768
+#: part/annotationwidgets.cpp:765
 #, kde-format
 msgid "No description available."
 msgstr "Açıqlaması yoxdur."
 
-#: part/annotationwidgets.cpp:776
+#: part/annotationwidgets.cpp:773
 #, kde-format
 msgid "Name:"
 msgstr "Adı:"
 
-#: part/annotationwidgets.cpp:787
+#: part/annotationwidgets.cpp:784
 #, kde-format
 msgid "Description:"
 msgstr "Təsviri:"
 
-#: part/annotationwidgets.cpp:846
+#: part/annotationwidgets.cpp:843
 #, kde-format
 msgid "Caret symbol:"
 msgstr "Yazı sahəsi simvolu:"
 
-#: part/annotationwidgets.cpp:848
+#: part/annotationwidgets.cpp:845
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
 msgstr "Heç biri"
 
-#: part/annotationwidgets.cpp:849
+#: part/annotationwidgets.cpp:846
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "P"

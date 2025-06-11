@@ -160,7 +160,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 > Archivo</guimenu
 ><guimenuitem
->Abrir... </guimenuitem
+>Abrir… </guimenuitem
 ></menuchoice
 >, elija un archivo en el cuadro de diálogo y pulse <guibutton
 >Abrir</guibutton
@@ -200,7 +200,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >&okular; es la aplicación predeterminada de &kde; para archivos &PDF; y &PostScript; que se lanzará cuando pulse con el &LMB; en esos tipos de archivos en el administrador de archivos. Si quiere abrir algún archivo cuyo formato esté admitido por &okular; utilice <menuchoice
 ><guimenu
->Abrir con...</guimenu
+>Abrir con…</guimenu
 ><guimenuitem
 >&okular;</guimenuitem
 > </menuchoice
@@ -349,7 +349,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para
 >Puede volver a las posiciones del documento de las que venía en orden cronológico. Considere, por ejemplo, que está leyendo la frase <quote
->Como se muestra en [15]...</quote
+>Como se muestra en [15]…</quote
 >, y que quiere saber rápidamente lo que dice la referencia [15]. Para ello, pulse sobre ella para que &okular; salte a la lista de referencias. Use luego <keycombo
 >&Alt;&Shift;&Left;</keycombo
 > o <menuchoice
@@ -496,7 +496,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Preferencias</guimenu
 ><guimenuitem
->Configurar Okular...</guimenuitem
+>Configurar Okular…</guimenuitem
 ></menuchoice
 > (en la página <guimenuitem
 >Editor</guimenuitem
@@ -666,7 +666,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Di desea usar un almacén de certificados personalizado, puede definirlo en la sección <link linkend="config-pdf-digital-signatures"
 >Configuración del motor &PDF;</link
 > del diálogo <link linkend="configure-backends"
->Configurar motores...</link
+>Configurar motores…</link
 >. </para>
 				<note>
 					<para
@@ -760,7 +760,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Archivo</guimenu
 > <guimenuitem
->Guardar como...</guimenuitem
+>Guardar como…</guimenuitem
 ></menuchoice
 > para guardarlas en un nuevo archivo. </para>
 				<note>
@@ -1422,7 +1422,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<entry>
 					  <para
 >Pulse este botón para escoger el color del texto o del borde de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
->Color personalizado...</guimenuitem
+>Color personalizado…</guimenuitem
 > para abrir el diálogo de selección de color. </para>
 					</entry>
 				      </row>
@@ -1443,7 +1443,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<entry>
 					  <para
 >Pulse este botón para escoger el color relleno de la anotación. Puede escoger uno de los colores predefinidos o pulsar la opción <guimenuitem
->Color personalizado...</guimenuitem
+>Color personalizado…</guimenuitem
 > para abrir el diálogo de selección de color. </para>
 					</entry>
 				      </row>
@@ -1586,7 +1586,7 @@ Context menu actions like Rename Bookmarks etc.)
 				  </informaltable>
 				  <para
 >Al pulsar &Shift; puede limitar el ángulo de las anotaciones de línea y de polígono a pasos de 15°, y la proporción de las anotaciones de forma (como rectángulo o elipse) a 1:1. También puede obtener un botón de la barra de herramientas de <ulink url="help:/fundamentals/config.html#toolbars"
->Configurar barras de herramientas...</ulink
+>Configurar barras de herramientas…</ulink
 >. </para>
 				  <para
 >El contenido del menú <guilabel
@@ -1594,7 +1594,7 @@ Context menu actions like Rename Bookmarks etc.)
 > se puede configurar usando la <link linkend="configannotations"
 >Página de anotaciones del diálogo de configuración de &okular;</link
 >. Esta página se puede abrir pulsando el botón <guimenuitem
->Configurar anotaciones...</guimenuitem
+>Configurar anotaciones…</guimenuitem
 > en el menú emergente. </para>
 				<note>
 					<para
@@ -1950,7 +1950,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Archivo</guimenu
 > <guimenuitem
->Abrir...</guimenuitem
+>Abrir…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2093,7 +2093,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Archivo</guimenu
 > <guimenuitem
->Guardar como...</guimenuitem
+>Guardar como…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2141,7 +2141,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Archivo</guimenu
 > <guimenuitem
->Imprimir...</guimenuitem
+>Imprimir…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2170,7 +2170,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Archivo</guimenu
 > <guimenuitem
->Imprimir vista previa...</guimenuitem
+>Imprimir vista previa…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2217,7 +2217,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Archivo</guimenu
 > <guimenuitem
->Archivos empotrados...</guimenuitem
+>Archivos empotrados…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2242,7 +2242,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 >Este elemento contiene los formatos a los que se puede exportar el documento actual. La primera entrada para todo tipo de documentos es siempre <guimenuitem
->Texto sin formato...</guimenuitem
+>Texto sin formato…</guimenuitem
 >.</para>
 						<para
 >La segunda entrada es <guimenuitem
@@ -2429,7 +2429,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Editar</guimenu
 > <guimenuitem
->Buscar...</guimenuitem
+>Buscar…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2889,7 +2889,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Ir</guimenu
 > <guimenuitem
->Ir a la página...</guimenuitem
+>Ir a la página…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3145,7 +3145,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Herramientas</guimenu
 > <guimenuitem
->Firmar digitalmente...</guimenuitem
+>Firmar digitalmente…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3197,7 +3197,7 @@ Context menu actions like Rename Bookmarks etc.)
 > de &okular;.</para>
 						<para
 >Las acciones <guilabel
->Hablar...</guilabel
+>Hablar…</guilabel
 > se activan solo si el sistema dispone de algún servicio de voz.</para>
 					</listitem>
 				</varlistentry>
@@ -3258,7 +3258,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Preferencias</guimenu
 > <guimenuitem
->Configurar motores de programas...</guimenuitem
+>Configurar motores de programas…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3280,7 +3280,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Preferencias</guimenu
 > <guimenuitem
->Configurar motores...</guimenuitem
+>Configurar motores…</guimenuitem
 > </menuchoice
 >. En la actualidad solo se proporcionan opciones de configuración para los motores EPub, &PostScript;, FictionBook, Txt, texto de OpenDocument y &PDF;. </para>
 	  <screenshot>
@@ -3298,7 +3298,7 @@ Context menu actions like Rename Bookmarks etc.)
 	  </screenshot>
 	  <para
 >Use las páginas de configuración para los motores EPub, FictionBook, Mobipocket, Markdown, texto sencillo y texto de OpenDocument para definir el tipo de letra a usar para mostrar los documentos en el correspondiente formato. El botón <guibutton
->Escoger...</guibutton
+>Escoger…</guibutton
 > de estas páginas abre la ventana estándar de &kde; para seleccionar el tipo de letra. Por favor, consulte la <ulink url="help:/fundamentals/fonts.html"
 >documentación de los principios básicos de &kde;</ulink
 > para más detalles. </para>
@@ -3504,7 +3504,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Preferencias</guimenu
 > <guimenuitem
->Configurar &okular;...</guimenuitem
+>Configurar &okular;…</guimenuitem
 ></menuchoice
 >. El diálogo de configuración está dividido en seis secciones. Este capítulo describe detalladamente las opciones disponibles. </para>
 			<itemizedlist>
@@ -3563,7 +3563,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Configuración</guimenu
 > <guimenuitem
->Configurar motores...</guimenuitem
+>Configurar motores…</guimenuitem
 ></menuchoice
 > puede estar activada. Este dialogo de configuración mantiene las configuraciones de los motores de programa que pueden ser configurados. </para>
 		</sect1>

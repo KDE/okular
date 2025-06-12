@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2025-05-29 23:42+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -597,8 +597,10 @@ msgstr ""
 "urratsekin. Errore kodea %1"
 
 #: core/signatureutils.cpp:498
-#, kde-kuit-format
-msgid "Could not sign document with location: <filename>%1</filename>"
+#, fuzzy, kde-kuit-format
+#| msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr ""
 "Ezin izan du kokapen hau duen dokumentua sinatu: <filename>%1</filename>"
 
@@ -613,10 +615,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Ezin izan du sinatu. Pasaesaldi okerra"
 
 #: core/signatureutils.cpp:504
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgid ""
+#| "Could not write signed document at <filename>%1</filename>, please ensure "
+#| "you have selected a folder with write permission"
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 "Ezin izan du <filename>%1</filename>(e)an dagoen sinatutako dokumentuan "
 "idatzi, mesedez, ziurtatu idazteko baimena duzun karpeta bat aukeratu duzula"

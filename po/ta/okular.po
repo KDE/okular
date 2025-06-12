@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2025-04-20 18:12+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -591,8 +591,10 @@ msgstr ""
 "சிக்கல் எண்: %1"
 
 #: core/signatureutils.cpp:498
-#, kde-kuit-format
-msgid "Could not sign document with location: <filename>%1</filename>"
+#, fuzzy, kde-kuit-format
+#| msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "<filename>%1</filename> என்கிற கோப்பிற்கு கையொப்பமிட முடியவில்லை"
 
 #: core/signatureutils.cpp:500
@@ -606,10 +608,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "கையொப்பமிட முடியவில்லை. தவறான கடவுச்சொல்"
 
 #: core/signatureutils.cpp:504
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgid ""
+#| "Could not write signed document at <filename>%1</filename>, please ensure "
+#| "you have selected a folder with write permission"
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 "<filename>%1</filename> என்ற இடத்தில் கையொப்பமிட்ட ஆவணத்தை சேமிக்க முடியவில்லை. "
 "அவ்வடைவில் எழுதும் அனுமதி உள்ளதா என சரிபார்க்கவும்."

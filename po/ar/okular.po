@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2025-05-30 17:23+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -592,8 +592,10 @@ msgstr ""
 "إنتاجه. رمز الخطأ %1"
 
 #: core/signatureutils.cpp:498
-#, kde-kuit-format
-msgid "Could not sign document with location: <filename>%1</filename>"
+#, fuzzy, kde-kuit-format
+#| msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "تعذر توقيع المستند بالموقع: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
@@ -607,10 +609,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "تعذر التوقيع. عبارة المرور خاطئة"
 
 #: core/signatureutils.cpp:504
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgid ""
+#| "Could not write signed document at <filename>%1</filename>, please ensure "
+#| "you have selected a folder with write permission"
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 "لم نتمكن من كتابة مستند موقّع في <filename>%1</filename>، يرجى التأكد من "
 "تحديد مجلد به إذن الكتابة"

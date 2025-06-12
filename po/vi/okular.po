@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -596,7 +596,8 @@ msgstr ""
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid "Could not load the file <filename>%1</filename>"
-msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Không tải được tệp <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
@@ -611,9 +612,10 @@ msgstr ""
 
 #: core/signatureutils.cpp:504
 #, kde-kuit-format
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 
 #: core/signatureutils.cpp:506

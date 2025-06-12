@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2025-05-30 18:52+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -594,8 +594,10 @@ msgstr ""
 "reproducer lo.Codice de error %1"
 
 #: core/signatureutils.cpp:498
-#, kde-kuit-format
-msgid "Could not sign document with location: <filename>%1</filename>"
+#, fuzzy, kde-kuit-format
+#| msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Non poteva signar documento con location:  <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
@@ -609,10 +611,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Il non pote signar.  Phrase de contrasigno errate"
 
 #: core/signatureutils.cpp:504
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgid ""
+#| "Could not write signed document at <filename>%1</filename>, please ensure "
+#| "you have selected a folder with write permission"
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 "Non poteva scriber documento signate a <filename>%1</filename>, pro favor  "
 "tu assecura te que tu ha seligite un dossier con permission a scriber"

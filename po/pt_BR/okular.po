@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-08 00:41+0000\n"
+"POT-Creation-Date: 2025-06-12 00:40+0000\n"
 "PO-Revision-Date: 2025-04-14 01:25-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -608,8 +608,10 @@ msgstr ""
 "Código de erro %1"
 
 #: core/signatureutils.cpp:498
-#, kde-kuit-format
-msgid "Could not sign document with location: <filename>%1</filename>"
+#, fuzzy, kde-kuit-format
+#| msgid "Could not sign document with location: <filename>%1</filename>"
+msgctxt "%1 is a filename with path"
+msgid "Could not sign the document: <filename>%1</filename>"
 msgstr ""
 "Não foi possível assinar o documento com a localização: <filename>%1</"
 "filename>"
@@ -625,10 +627,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Não foi possível assinar. A frase secreta está incorreta"
 
 #: core/signatureutils.cpp:504
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgid ""
+#| "Could not write signed document at <filename>%1</filename>, please ensure "
+#| "you have selected a folder with write permission"
+msgctxt "%1 is a filename with path"
 msgid ""
-"Could not write signed document at <filename>%1</filename>, please ensure "
-"you have selected a folder with write permission"
+"Could not write the signed document to <filename>%1</filename>, please "
+"ensure you have selected a folder with write permission"
 msgstr ""
 "Não foi possível escrever documento assinado em <filename>%1</filename>, "
 "certifique-se de ter selecionado uma pasta com permissão de escrita"

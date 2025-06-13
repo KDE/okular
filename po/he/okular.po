@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-12 00:40+0000\n"
-"PO-Revision-Date: 2025-05-29 14:41+0300\n"
+"PO-Revision-Date: 2025-06-12 06:57+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -595,11 +595,10 @@ msgstr ""
 "שגיאת חתימה פנימית. נא לדווח על תקלה עם השלבים שהובילו אליה. קוד שגיאה: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "לא ניתן לחתום על המסמך שנמצא במקום: <filename>%1</filename>"
+msgstr "לא ניתן לחתום על המסמך: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -612,17 +611,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "לא ניתן לחתום. מילת הצופן שגויה"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"לא ניתן לכתוב מסמך חתום אל <filename>%1</filename>, נא לוודא שבחרת תיקייה עם "
-"הרשאות כתיבה"
+"לא ניתן לכתוב את המסמך חתום אל <filename>%1</filename>, נא לוודא שבחרת "
+"תיקייה עם הרשאת כתיבה"
 
 #: core/signatureutils.cpp:506
 #, kde-format

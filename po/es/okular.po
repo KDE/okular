@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-12 00:40+0000\n"
-"PO-Revision-Date: 2025-05-29 12:34+0100\n"
+"PO-Revision-Date: 2025-06-12 18:55+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -596,12 +596,10 @@ msgstr ""
 "reproducirlo. Código de error: %1."
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr ""
-"No se ha podido firmar el archivo con ubicación: <filename>%1</filename>"
+msgstr "No se ha podido firmar el documento: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -614,10 +612,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "No se puede firmar. La contraseña larga es errónea."
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "

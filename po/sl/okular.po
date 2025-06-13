@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-12 00:40+0000\n"
-"PO-Revision-Date: 2025-05-29 07:04+0200\n"
+"PO-Revision-Date: 2025-06-12 06:56+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -597,11 +597,10 @@ msgstr ""
 "reprodukcijo. Koda napake %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Ni bilo mogoče podpisati dokumenta z lokacijo: <filename>%1</filename>"
+msgstr "Ni bilo mogoče podpisati dokumenta: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -614,17 +613,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Ni bilo mogoče podpisati. Napačna geselna fraza"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
 "Ni bilo mogoče zapisati podpisanega dokumenta v <filename>%1</filename>, "
-"preverite, ali ste izbrali mapo z dovoljenjem za pisanje"
+"zagotovite, da ste izbrali mapo z dovoljenjem za pisanje"
 
 #: core/signatureutils.cpp:506
 #, kde-format

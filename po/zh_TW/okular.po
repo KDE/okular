@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-12 00:40+0000\n"
-"PO-Revision-Date: 2025-05-29 17:45+0900\n"
+"PO-Revision-Date: 2025-06-15 18:16+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -595,11 +595,10 @@ msgid ""
 msgstr "內部簽署錯誤。請回報問題給我們，並提供重現此錯誤的步驟。錯誤代碼 %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "無法簽署文件，位置：<filename>%1</filename>"
+msgstr "無法簽署文件：<filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -612,17 +611,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "無法簽名。錯誤密碼"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"無法將簽署後的文件寫入到 <filename>%1</filename>，請確保您有權限寫入所選的資"
-"料夾"
+"無法將簽署後的文件寫入 <filename>%1</filename>，請確保您有權限寫入所選的資料"
+"夾"
 
 #: core/signatureutils.cpp:506
 #, kde-format

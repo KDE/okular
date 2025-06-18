@@ -109,9 +109,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             m_pdfsw.kcfg_EnablePgp->setVisible(backendEnum == Poppler::CryptoSignBackend::GPG);
 #endif
             m_certificatesAsked = false;
-            if (m_tree) {
-                m_tree->clear();
-            }
             update();
         });
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
@@ -124,6 +121,8 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
                                          QStringLiteral("enablePgpWarningShown"));
             }
             Poppler::setPgpSignaturesAllowed(checked);
+            m_certificatesAsked = false;
+            update();
         });
 #endif
 
@@ -181,6 +180,7 @@ bool PDFSettingsWidget::event(QEvent *e)
 {
     if (m_tree && e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
+        m_tree->clear();
 
         // Calling st.signingCertificates(&userCancelled) from the paint event handler results
         // in "QWidget::repaint: Recursive repaint detected" warning and a crash when the

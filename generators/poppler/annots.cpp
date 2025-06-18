@@ -299,7 +299,7 @@ static void setPopplerStampAnnotationCustomImage(const Poppler::Page *page, Popp
     const QSize size = page->pageSize();
     const QRect rect = Okular::AnnotationUtils::annotationGeometry(oStampAnnotation, size.width(), size.height());
 
-    QImage image = Okular::AnnotationUtils::loadStamp(oStampAnnotation->stampIconName(), qMax(rect.width(), rect.height())).toImage();
+    QImage image = Okular::AnnotationUtils::loadStamp(oStampAnnotation->stampIconName(), rect.size()).toImage();
 
     if (!image.isNull()) {
         pStampAnnotation->setStampCustomImage(image);

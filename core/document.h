@@ -1433,6 +1433,7 @@ private:
     friend class EditFormListCommand;
     friend class EditFormComboCommand;
     friend class EditFormButtonsCommand;
+    friend class KleopatraIntegration;
     /// @endcond
     DocumentPrivate *const d;
 

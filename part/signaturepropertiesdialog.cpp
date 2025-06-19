@@ -27,6 +27,8 @@
 #include "gui/signatureguiutils.h"
 #include "revisionviewer.h"
 
+#include "kleopatraintegration.h"
+
 static QString getValidDisplayString(const QString &str)
 {
     return !str.isEmpty() ? str : i18n("Not Available");
@@ -40,14 +42,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     setModal(true);
     setWindowTitle(i18n("Signature Properties"));
 
-#ifdef Q_OS_WIN
-    m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"), {QCoreApplication::applicationDirPath()});
-    if (m_kleopatraPath.isEmpty()) {
-        m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"));
-    }
-#else
-    m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
-#endif
+    auto kleo = std::make_unique<Okular::KleopatraIntegration>(doc);
 
     const Okular::SignatureInfo &signatureInfo = form->signatureInfo();
     const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
@@ -101,19 +96,15 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     certPropBtn->setEnabled(!signatureInfo.certificateInfo().isNull());
     auto certManagerBtn = new QPushButton(i18n("View in Certificate Manager"));
     certManagerBtn->setVisible(signatureInfo.certificateInfo().backend() == Okular::CertificateInfo::Backend::Gpg);
-    certManagerBtn->setEnabled(!m_kleopatraPath.isEmpty());
-    if (m_kleopatraPath.isEmpty()) {
+    certManagerBtn->setEnabled(kleo->kleopatraIntegrationActive());
+    if (!kleo->kleopatraIntegrationActive()) {
         certManagerBtn->setToolTip(i18n("KDE Certificate Manager (kleopatra) not found"));
     }
     btnBox->addButton(certPropBtn, QDialogButtonBox::ActionRole);
     btnBox->addButton(certManagerBtn, QDialogButtonBox::ActionRole);
     connect(btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject);
     connect(certPropBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::viewCertificateProperties);
-    connect(certManagerBtn, &QPushButton::clicked, this, [this]() {
-        QStringList args;
-        args << QStringLiteral("--parent-windowid") << QString::number(static_cast<qlonglong>(window()->winId())) << QStringLiteral("--query") << m_signatureForm->signatureInfo().certificateInfo().nickName();
-        QProcess::startDetached(m_kleopatraPath, args);
-    });
+    connect(certManagerBtn, &QPushButton::clicked, this, [this, kleo = std::move(kleo)]() { kleo->executeKeySearch(m_signatureForm->signatureInfo().certificateInfo().nickName(), window()->windowHandle()); });
 
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(signatureStatusBox);

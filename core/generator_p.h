@@ -69,6 +69,7 @@ public:
     bool m_closing : 1;
     QEventLoop *m_closingLoop;
     QSizeF m_dpi;
+    Okular::CertificateInfo::Backend m_signatureBackend = Okular::CertificateInfo::Backend::Unknown;
 };
 
 class PixmapRequestPrivate

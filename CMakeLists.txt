@@ -546,6 +546,8 @@ if(BUILD_DESKTOP)
     part/fileprinterpreview.cpp
     part/findbar.cpp
     part/formwidgets.cpp
+    part/kleopatraintegration.h
+    part/kleopatraintegration.cpp
     part/ktreeviewsearchline.cpp
     part/latexrenderer.cpp
     part/minibar.cpp

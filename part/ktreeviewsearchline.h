@@ -125,12 +125,12 @@ protected:
      * Connects signals of this listview to the appropriate slots of the search
      * line.
      */
-    virtual void connectTreeView(QTreeView *);
+    void connectTreeView(QTreeView *);
 
     /**
      * Disconnects signals of a listviews from the search line.
      */
-    virtual void disconnectTreeView(QTreeView *);
+    void disconnectTreeView(QTreeView *);
 
 protected Q_SLOTS:
     /**

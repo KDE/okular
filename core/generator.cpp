@@ -266,6 +266,18 @@ CertificateStore *Generator::certificateStore() const
     return nullptr;
 }
 
+Okular::CertificateInfo::Backend Generator::activeCertificateBackend() const
+{
+    Q_D(const Generator);
+    return d->m_signatureBackend;
+}
+
+void Generator::setActiveCertificateBackend(Okular::CertificateInfo::Backend newBackend)
+{
+    Q_D(Generator);
+    d->m_signatureBackend = newBackend;
+}
+
 void Generator::generatePixmap(PixmapRequest *request)
 {
     Q_D(Generator);

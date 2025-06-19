@@ -313,6 +313,17 @@ public:
     virtual CertificateStore *certificateStore() const;
 
     /**
+     * @brief sets the active certificate backend
+     * @param backend
+     */
+    void setActiveCertificateBackend(Okular::CertificateInfo::Backend backend);
+    /**
+     * @brief returns the active certificate backend, defaults to unknown
+     * @param backend
+     */
+    Okular::CertificateInfo::Backend activeCertificateBackend() const;
+
+    /**
      * This method can be called to trigger the generation of
      * a new pixmap as described by @p request.
      */

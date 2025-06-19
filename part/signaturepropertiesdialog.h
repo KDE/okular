@@ -29,7 +29,6 @@ public Q_SLOTS:
 private:
     Okular::Document *m_doc;
     const Okular::FormFieldSignature *m_signatureForm;
-    QString m_kleopatraPath;
 };
 
 #endif

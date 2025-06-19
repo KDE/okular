@@ -701,6 +701,9 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     auto activeBackend = PDFSettingsWidget::settingStringToPopplerEnum(PDFSettings::signatureBackend());
     if (activeBackend) {
         Poppler::setActiveCryptoSignBackend(activeBackend.value());
+        if (activeBackend == Poppler::CryptoSignBackend::GPG) {
+            setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
+        }
     }
 #endif
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)

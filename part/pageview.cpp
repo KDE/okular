@@ -96,6 +96,7 @@
 #include "core/page_p.h"
 #include "core/sourcereference.h"
 #include "core/tile.h"
+#include "kleopatraintegration.h"
 #include "magnifierview.h"
 #include "settings.h"
 #include "settings_core.h"
@@ -5160,15 +5161,38 @@ void PageView::slotSetMouseTableSelect()
 
 void PageView::showNoSigningCertificatesDialog(bool nonDateValidCerts)
 {
+    Okular::KleopatraIntegration kleo(document());
     if (nonDateValidCerts) {
-        KMessageBox::information(this, i18n("All your signing certificates are either not valid yet or are past their validity date."));
+        if (kleo.kleopatraIntegrationActive()) {
+            auto result = KMessageBox::questionTwoActions(this, i18n("All your signing certificates are invalid"), i18n("No valid certificates"), KGuiItem(i18n("Open Certificate Manager")), KStandardGuiItem::cancel());
+            if (result == KMessageBox::PrimaryAction) {
+                kleo.launchKleopatra(window()->windowHandle());
+            }
+        } else {
+            KMessageBox::information(this, i18n("All your signing certificates are invalid"));
+        }
     } else {
-        KMessageBox::information(this,
-                                 i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
-                                      QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
-                                 QString(),
-                                 QString(),
-                                 KMessageBox::Notify | KMessageBox::AllowLink);
+        if (kleo.kleopatraIntegrationActive()) {
+            auto result = KMessageBox::questionTwoActions(this,
+                                                          i18n("There are no available signing certificates.<br/>Launch Certificate Manager to import or manage certificates<br/>For more information, please see the section about <a "
+                                                               "href=\"%1\">Adding Digital Signatures</a> in the manual.",
+                                                               QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
+                                                          i18n("No certificates found"),
+                                                          KGuiItem(i18n("Open Certificate Manager")),
+                                                          KStandardGuiItem::cancel(),
+                                                          QString {},
+                                                          KMessageBox::Notify | KMessageBox::AllowLink);
+            if (result == KMessageBox::PrimaryAction) {
+                kleo.launchKleopatra(window()->windowHandle());
+            }
+        } else {
+            KMessageBox::information(this,
+                                     i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
+                                          QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
+                                     i18n("No certificates found"),
+                                     QString(),
+                                     KMessageBox::Notify | KMessageBox::AllowLink);
+        }
     }
 }
 

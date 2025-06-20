@@ -81,7 +81,7 @@ Q_SIGNALS:
      *
      * @since 0.7 (KDE 4.1)
      */
-    void addMetaData(DocumentInfo::Key key, const QString &value);
+    void addMetaData(Okular::DocumentInfo::Key key, const QString &value);
 
     /**
      * This signal should be emitted whenever an error occurred in the converter.

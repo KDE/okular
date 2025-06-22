@@ -3,13 +3,13 @@
 # Kiszel Kristóf <ulysses@kubuntu.org>, 2010.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012, 2022.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014, 2015.
-# SPDX-FileCopyrightText: 2021, 2022, 2024 Kristof Kiszel <kiszel.kristof@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2022, 2024, 2025 Kristof Kiszel <kiszel.kristof@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-12 00:40+0000\n"
-"PO-Revision-Date: 2024-11-17 21:36+0100\n"
+"PO-Revision-Date: 2025-06-21 22:45+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -589,6 +589,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Belső aláírási hiba. Jelezze ezt a hibát a reprodukálás lépéseivel együtt. "
+"Hibakód: %1"
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
@@ -601,12 +603,12 @@ msgstr "Nem sikerült betölteni a(z) <filename>%1</filename> fájlt"
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "A felhasználó megszakította az aláírást"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Nem sikerült aláírni. Hibás jelszó"
 
 #: core/signatureutils.cpp:504
 #, fuzzy, kde-kuit-format
@@ -623,10 +625,9 @@ msgstr ""
 "olvasható. Próbálja máshová menteni, vagy módosítsa a fájl jogosultságait."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Ismeretlen fájl"
+msgstr "Ismeretlen aláírás hiba"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1145,29 +1146,28 @@ msgid "Location: %1"
 msgstr "Hely: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "Aláírások"
+msgstr "PGP-aláírás"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
 #, fuzzy, kde-format
@@ -1185,10 +1185,9 @@ msgid "Signature placeholder"
 msgstr "Aláírás érvényessége:"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Aláírás érvényessége:"
+msgstr "Aláírástípus: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -2876,14 +2875,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Fájlinformációk használata az alapértelmezés szerint folyamatos módban "
+"megnyitás meghatározásához"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Megnyitás folyamatos módban alapértelmezés szerint"
+msgstr ""
+"Fájlinformáció nélküli fájlok esetén megnyitás folyamatos módban "
+"alapértelmezés szerint"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -2905,12 +2906,10 @@ msgid "Overview columns:"
 msgstr "Áttekintő oszlopok:"
 
 #: part/dlggeneral.cpp:214
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:215
 #, kde-format
@@ -2929,38 +2928,31 @@ msgid "Page Up/Down overlap:"
 msgstr "Page Up/Down átfedés:"
 
 #: part/dlggeneral.cpp:222
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:226
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid "100%"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
 #: part/dlggeneral.cpp:227
-#, fuzzy, kde-format
-#| msgid "Fit Width"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Teljes szélességre"
 
 #: part/dlggeneral.cpp:228
-#, fuzzy, kde-format
-#| msgid "Fit Page"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Teljes oldal"
 
 #: part/dlggeneral.cpp:229
-#, fuzzy, kde-format
-#| msgid "Auto Fit"
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automatikus igazítás"
@@ -2969,14 +2961,10 @@ msgstr "Automatikus igazítás"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Egyéni"
 
 #: part/dlggeneral.cpp:231
-#, fuzzy, kde-format
-#| msgctxt "item:inlistbox Config dialog, general page, default zoom"
-#| msgid ""
-#| "Defines the default zoom mode for files which were never opened before. "
-#| "For files which were opened before the previous zoom is applied."
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
@@ -5487,24 +5475,22 @@ msgstr "Válassza ki az aláíró tanúsítványt:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Engedélyezem"
+msgstr "Mind"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Tanúsítványok"
+msgstr "Csak QES-tanúsítványok"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Csak PGP-kulcsok"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
@@ -5699,12 +5685,12 @@ msgstr "A KDE Tanúsítványkezelő (kleopatra) nem található"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Minősített"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1017
 #, kde-format

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-04 00:40+0000\n"
+"POT-Creation-Date: 2025-06-24 00:41+0000\n"
 "PO-Revision-Date: 2025-03-09 00:17-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -315,7 +315,7 @@ msgstr ""
 "Alguns erros foram encontrados no documento. O Okular pode não ser capaz de "
 "mostrar o conteúdo corretamente"
 
-#: pdfsettingswidget.cpp:122
+#: pdfsettingswidget.cpp:119
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -325,30 +325,30 @@ msgstr ""
 "Essas assinaturas só funcionam entre versões modernas do Okular com o "
 "backend baseado em GnuPG ativado"
 
-#: pdfsettingswidget.cpp:123
+#: pdfsettingswidget.cpp:120
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Habilitar assinaturas PGP"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Emitido para"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Data de vencimento"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:173
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"

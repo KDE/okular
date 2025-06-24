@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-04 00:40+0000\n"
+"POT-Creation-Date: 2025-06-24 00:41+0000\n"
 "PO-Revision-Date: 2024-02-01 09:11-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -298,7 +298,7 @@ msgid ""
 msgstr ""
 "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੁਝ ਗਲਤੀਆਂ ਲੱਭੀਆਂ ਹਨ। ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਓਕੁਲਾਰ ਸਮੱਗਰੀ ਨੂੰ ਠੀਕ ਤਰ੍ਹਾਂ ਨਾ ਦਿਖਾ ਸਕੇ।"
 
-#: pdfsettingswidget.cpp:122
+#: pdfsettingswidget.cpp:119
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -306,31 +306,31 @@ msgid ""
 "based backend activated"
 msgstr ""
 
-#: pdfsettingswidget.cpp:123
+#: pdfsettingswidget.cpp:120
 #, fuzzy, kde-format
 #| msgid "&Load Signatures"
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "ਦਸਤਖ਼ਤ ਲੋਡ ਕਰੋ(&L)"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "ਇਸ ਨੂੰ ਜਾਰੀ ਕੀਤਾ"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgid "E-mail"
 msgstr "ਈ-ਮੇਲ"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "ਮਿਆਦ"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:173
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"

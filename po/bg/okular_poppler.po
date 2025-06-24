@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-04 00:40+0000\n"
+"POT-Creation-Date: 2025-06-24 00:41+0000\n"
 "PO-Revision-Date: 2025-03-08 17:57+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -311,7 +311,7 @@ msgstr ""
 "Открити са грешки в документа. Okular няма да може да покаже съдържанието на "
 "документа коректно"
 
-#: pdfsettingswidget.cpp:122
+#: pdfsettingswidget.cpp:119
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -321,30 +321,30 @@ msgstr ""
 "Тези подписи работят само между съвременните версии на Okular с активиран "
 "бекенд, базиран на GnuPG"
 
-#: pdfsettingswidget.cpp:123
+#: pdfsettingswidget.cpp:120
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Активиране на PGP подписи"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Издаден за"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgid "E-mail"
 msgstr "Електронна поща"
 
-#: pdfsettingswidget.cpp:157
+#: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Дата на изтичане"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:173
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"

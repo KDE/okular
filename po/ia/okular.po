@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-12 00:40+0000\n"
+"POT-Creation-Date: 2025-06-25 00:41+0000\n"
 "PO-Revision-Date: 2025-05-30 18:52+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -298,7 +298,7 @@ msgstr "Continuante le cerca ab le initio"
 msgid "Continuing search from bottom"
 msgstr "Continuante le cerca ab le fundo"
 
-#: core/document.cpp:2466
+#: core/document.cpp:2460
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -306,13 +306,13 @@ msgstr ""
 "Non pote trovar un plugin que es capace de manear le documento que es "
 "passate."
 
-#: core/document.cpp:3630
+#: core/document.cpp:3624
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "remove annotationes"
 
-#: core/document.cpp:4220 core/document.cpp:4226
+#: core/document.cpp:4214 core/document.cpp:4220
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -321,52 +321,52 @@ msgstr ""
 "Le documento es essayanteexecutar un appliocation externe e, pro tu "
 "securitate, Okular non permitte lo."
 
-#: core/document.cpp:4236
+#: core/document.cpp:4230
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "il non trovava alcun application pro aper file de typo mime %1."
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Il non pote aperir un file temporanee"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Il falleve conversion de imprimer"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Processo de imprimer fracassava"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Processo de imprimer non startava"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Il falleva imprimer a un file"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Imprimitor essev in un stato invalide"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Incapace de tovar le file de imprimer"
 
-#: core/document.cpp:4889
+#: core/document.cpp:4883
 #, kde-format
 msgid "There was no file to print"
 msgstr "Il non habeva alcun file de imprimer"
 
-#: core/document.cpp:4891
+#: core/document.cpp:4885
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -375,92 +375,92 @@ msgstr ""
 "Il non pote trovar un binari convenibile pro imprimer. Tu assecura te que le "
 "codice binari lpr de CUPS es disponibile"
 
-#: core/document.cpp:4893
+#: core/document.cpp:4887
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Le grandor de pagina de imprimer es invalide"
 
-#: core/document.cpp:5571 part/part.cpp:1145
+#: core/document.cpp:5565 part/part.cpp:1144
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Non pote aperir '%1': Le file non existe"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Title"
 msgstr "Titulo"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Subject"
 msgstr "Subjecto"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Description"
 msgstr "Description"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Producer"
 msgstr "Productor"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Pages"
 msgstr "Paginas"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "Created"
 msgstr "Create"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Modified"
 msgstr "Modificate"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "MIME Type"
 msgstr "Typo MIME"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "Keywords"
 msgstr "Parolas clave"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "File Path"
 msgstr "Percurso de file"
 
-#: core/document.cpp:6123
+#: core/document.cpp:6117
 #, kde-format
 msgid "File Size"
 msgstr "Grandor de file"
 
-#: core/document.cpp:6126
+#: core/document.cpp:6120
 #, kde-format
 msgid "Page Size"
 msgstr "Dimension de Pagina"
@@ -531,23 +531,23 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "modific statos de button del formulario"
 
-#: core/generator.cpp:775
+#: core/generator.cpp:787
 #, kde-format
 msgid "Plain &Text..."
 msgstr "&Texto simplice..."
 
-#: core/generator.cpp:778
+#: core/generator.cpp:790
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:782
+#: core/generator.cpp:794
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "Texto de OpenDocument"
 
-#: core/generator.cpp:785
+#: core/generator.cpp:797
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"
@@ -578,7 +578,7 @@ msgstr "Modo de scalar:"
 msgid "Do not show this message again"
 msgstr "Non monstra iste message de nove"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:32
+#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:34
 #, kde-format
 msgid "Not Available"
 msgstr "Non disponibile"
@@ -1661,7 +1661,7 @@ msgid "Copy Text to Clipboard"
 msgstr "Copia texto in area de transferentia"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2521 part/pageview.cpp:2841 part/pageview.cpp:2985
+#: part/pageview.cpp:2522 part/pageview.cpp:2842 part/pageview.cpp:2986
 #: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy forbidden by DRM"
@@ -1672,7 +1672,7 @@ msgstr "Copia prohibite per DRM"
 msgid "&Delete"
 msgstr "&Dele"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:772
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:771
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2241,7 +2241,7 @@ msgstr[1] ""
 "\n"
 "%2 marcatores de libro"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:413
+#: part/bookmarklist.cpp:131 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "Marcatores de libro"
@@ -2262,13 +2262,13 @@ msgstr "Il cerca ..."
 msgid "Go to This Bookmark"
 msgstr "Va a iste marcator"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:704
-#: part/part.cpp:2461
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:703
+#: part/part.cpp:2459
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Renomina marcator de libro"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3166
+#: part/bookmarklist.cpp:259 part/part.cpp:2264 part/part.cpp:3166
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Remove iste marcator de libro"
@@ -3554,7 +3554,7 @@ msgstr "Substituto de Signatura (clicca per signar)"
 msgid "&Sign..."
 msgstr "&Signa..."
 
-#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:41
+#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "Proprietates del signatura"
@@ -3576,7 +3576,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expression Regular"
 
-#: part/layers.cpp:35 part/part.cpp:2309
+#: part/layers.cpp:35 part/part.cpp:2307
 #, kde-format
 msgid "Layers"
 msgstr "Stratos o layers"
@@ -3587,269 +3587,269 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "de"
 
-#: part/pageview.cpp:500
+#: part/pageview.cpp:501
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom"
 
-#: part/pageview.cpp:512
+#: part/pageview.cpp:513
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Exeque zoom a 100%"
 
-#: part/pageview.cpp:523
+#: part/pageview.cpp:524
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Rota a &dextera"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:525
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Dextera"
 
-#: part/pageview.cpp:528
+#: part/pageview.cpp:529
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rota a &sinistra"
 
-#: part/pageview.cpp:529
+#: part/pageview.cpp:530
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Sinistra"
 
-#: part/pageview.cpp:533
+#: part/pageview.cpp:534
 #, kde-format
 msgid "Original Orientation"
 msgstr "Orientation original"
 
-#: part/pageview.cpp:539
+#: part/pageview.cpp:540
 #, kde-format
 msgid "&Trim View"
 msgstr "Vista de pu&tar"
 
-#: part/pageview.cpp:543
+#: part/pageview.cpp:544
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Tonde margines"
 
-#: part/pageview.cpp:550
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Putar a &Selection"
 
-#: part/pageview.cpp:556
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Fit &Width"
 msgstr "Adapta in &largessa"
 
-#: part/pageview.cpp:560
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Fit &Page"
 msgstr "Adapta al &pagina"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:565
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Adjusta automaticamente"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:569
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Adapta Fe&nestra a Pagina"
 
-#: part/pageview.cpp:575
+#: part/pageview.cpp:576
 #, kde-format
 msgid "&View Mode"
 msgstr "Modo de &Vider"
 
-#: part/pageview.cpp:587
+#: part/pageview.cpp:588
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Pagina &singule"
 
-#: part/pageview.cpp:588
+#: part/pageview.cpp:589
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Paginas &flancate"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:590
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Paginas flancate (prime pagina al &centro)"
 
-#: part/pageview.cpp:592
+#: part/pageview.cpp:593
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Vision de &juncto"
 
-#: part/pageview.cpp:604
+#: part/pageview.cpp:605
 #, kde-format
 msgid "&Continuous"
 msgstr "&Continue"
 
-#: part/pageview.cpp:611
+#: part/pageview.cpp:612
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Usa direction de lectura ex dextra a sinistra"
 
-#: part/pageview.cpp:620
+#: part/pageview.cpp:621
 #, kde-format
 msgid "&Browse"
 msgstr "&Naviga "
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:629
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom (aggrandir)"
 
-#: part/pageview.cpp:648
+#: part/pageview.cpp:649
 #, kde-format
 msgid "Area &Selection"
 msgstr "&Selection de Area"
 
-#: part/pageview.cpp:655
+#: part/pageview.cpp:656
 #, kde-format
 msgid "&Text Selection"
 msgstr "Selection de &Texto"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:663
 #, kde-format
 msgid "T&able Selection"
 msgstr "Selection de T&abula"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:670
 #, kde-format
 msgid "&Magnifier"
 msgstr "A&ggranditor"
 
-#: part/pageview.cpp:678
+#: part/pageview.cpp:679
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Instrumentos de selection"
 
-#: part/pageview.cpp:704
+#: part/pageview.cpp:705
 #, kde-format
 msgid "Digitally &Sign..."
 msgstr "&Signa digitalmente..."
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:711
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Pronuncia le documento complete"
 
-#: part/pageview.cpp:715
+#: part/pageview.cpp:716
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Pronuncia ex le pagina currente"
 
-#: part/pageview.cpp:720
+#: part/pageview.cpp:721
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Pronuncia le pagina currente"
 
-#: part/pageview.cpp:725
+#: part/pageview.cpp:726
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Stoppa pronunciar"
 
-#: part/pageview.cpp:730
+#: part/pageview.cpp:731
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pausa/Restabili Pronunciar"
 
-#: part/pageview.cpp:742
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Scroll Up"
 msgstr "Rola in alto"
 
-#: part/pageview.cpp:748
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Scroll Down"
 msgstr "Rola a basso"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:755
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Rola pagina in alto"
 
-#: part/pageview.cpp:760
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Rola pagina a basso"
 
-#: part/pageview.cpp:766
+#: part/pageview.cpp:767
 #, kde-format
 msgid "Show Forms"
 msgstr "Monstra formularios"
 
-#: part/pageview.cpp:1270
+#: part/pageview.cpp:1271
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Cargate un documento de un pagina."
 msgstr[1] " Cargate un documento de %1-paginas"
 
-#: part/pageview.cpp:2516
+#: part/pageview.cpp:2517
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Copia contentos de tabella in area de transferentia"
 
-#: part/pageview.cpp:2835
+#: part/pageview.cpp:2836
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Texto(1 character)"
 msgstr[1] "Texto(%1 characteres)"
 
-#: part/pageview.cpp:2836 part/pageview.cpp:2854
+#: part/pageview.cpp:2837 part/pageview.cpp:2855
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Copia in area de transferentia"
 
-#: part/pageview.cpp:2845 part/pageview.cpp:3037
+#: part/pageview.cpp:2846 part/pageview.cpp:3037
 #, kde-format
 msgid "Speak Text"
 msgstr "Pronuncia texto"
 
-#: part/pageview.cpp:2853
+#: part/pageview.cpp:2854
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Imagine (%1 per %2 pixeles)"
 
-#: part/pageview.cpp:2855
+#: part/pageview.cpp:2856
 #, kde-format
 msgid "Save to File…"
 msgstr "Salveguarda a File..."
 
-#: part/pageview.cpp:2875
+#: part/pageview.cpp:2876
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Imagine [%1x%2] copiate in area de transferentia."
 
-#: part/pageview.cpp:2878
+#: part/pageview.cpp:2879
 #, kde-format
 msgid "Save file"
 msgstr "Salveguarda file"
 
-#: part/pageview.cpp:2878
+#: part/pageview.cpp:2879
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Images (*.png *.jpeg)"
 
-#: part/pageview.cpp:2880
+#: part/pageview.cpp:2881
 #, kde-format
 msgid "File not saved."
 msgstr "File non salveguardate."
 
-#: part/pageview.cpp:2891
+#: part/pageview.cpp:2892
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Imagine [%1x%2] salveguardate in file %3."
@@ -3957,16 +3957,50 @@ msgstr ""
 "Designa un rectangulo circa le tabula, post pulsa  bordos vicin pro divider; "
 "pressa Esc pro nettar."
 
-#: part/pageview.cpp:5164
-#, kde-format
-msgid ""
-"All your signing certificates are either not valid yet or are past their "
-"validity date."
+#: part/pageview.cpp:5166 part/pageview.cpp:5171
+#, fuzzy, kde-format
+#| msgid ""
+#| "All your signing certificates are either not valid yet or are past their "
+#| "validity date."
+msgid "All your signing certificates are invalid"
 msgstr ""
 "Omne tu certificatos de signar es o ancora invalide o ha passate lor data de "
 "validitate. "
 
-#: part/pageview.cpp:5167
+#: part/pageview.cpp:5166
+#, fuzzy, kde-format
+#| msgid "Only QES certificates"
+msgid "No valid certificates"
+msgstr "Solmente Certificatos QES"
+
+#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#, fuzzy, kde-format
+#| msgid "View in Certificate Manager"
+msgid "Open Certificate Manager"
+msgstr "Vide in Gerente de Certificato (Certificate Manager)"
+
+#: part/pageview.cpp:5176
+#, fuzzy, kde-format
+#| msgid ""
+#| "There are no available signing certificates.<br/>For more information, "
+#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
+#| "in the manual."
+msgid ""
+"There are no available signing certificates.<br/>Launch Certificate Manager "
+"to import or manage certificates<br/>For more information, please see the "
+"section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
+msgstr ""
+"Il non ha sertificatos de signar disponibile.<br/>Per plus  information, pro "
+"favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
+"le manual."
+
+#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#, fuzzy, kde-format
+#| msgid "Certificates"
+msgid "No certificates found"
+msgstr "Certificatos"
+
+#: part/pageview.cpp:5189
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3977,19 +4011,19 @@ msgstr ""
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5214
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Tu ha modificationes non salveguardate. Pro favor tu salveguarda le "
 "documento ante signar lo."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5237
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Designa un rectangulo per inertar le campo de signatura"
 
-#: part/pageview.cpp:5358
+#: part/pageview.cpp:5381
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4188,17 +4222,17 @@ msgstr "Marcatores de li&bro"
 msgid "Viewer Toolbar"
 msgstr "barra de instrumento de visor"
 
-#: part/part.cpp:403 part/thumbnaillist.cpp:48
+#: part/part.cpp:402 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "Miniaturas"
 
-#: part/part.cpp:409 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
+#: part/part.cpp:408 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Annotationes"
 
-#: part/part.cpp:452
+#: part/part.cpp:451
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4211,7 +4245,7 @@ msgstr ""
 "interne es <b> non plus supportate</b>.<br/>Pro favor salveguarda a un file "
 "per mover los si tu vole continuar a modificar le documento."
 
-#: part/part.cpp:460
+#: part/part.cpp:459
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4220,218 +4254,218 @@ msgstr ""
 "Iste documento ha files incorporate. <a href=\"okular:/embeddedfiles\">Pulsa "
 "ci pro vider los</a> o va a File->Files Incorporate."
 
-#: part/part.cpp:489
+#: part/part.cpp:488
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
 "Signar in progresso. Tu pote adaptar le position e grandor del signatura"
 
-#: part/part.cpp:491
+#: part/part.cpp:490
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Termina signar"
 
-#: part/part.cpp:661
+#: part/part.cpp:660
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Precedente"
 
-#: part/part.cpp:662
+#: part/part.cpp:661
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Va retro al pagina previe"
 
-#: part/part.cpp:663
+#: part/part.cpp:662
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Il move al pagina precedente del documento"
 
-#: part/part.cpp:673
+#: part/part.cpp:672
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Proxime"
 
-#: part/part.cpp:674
+#: part/part.cpp:673
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Avantia al proxime pagina"
 
-#: part/part.cpp:675
+#: part/part.cpp:674
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Il move al pagina proxime del documento"
 
-#: part/part.cpp:686
+#: part/part.cpp:685
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Initio del documento"
 
-#: part/part.cpp:687
+#: part/part.cpp:686
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Move al initio del documento"
 
-#: part/part.cpp:691
+#: part/part.cpp:690
 #, kde-format
 msgid "End of the document"
 msgstr "Fin del documento"
 
-#: part/part.cpp:692
+#: part/part.cpp:691
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Move al fin del documento"
 
-#: part/part.cpp:706
+#: part/part.cpp:705
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Renomina le marcator currente"
 
-#: part/part.cpp:710
+#: part/part.cpp:709
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Previe marcator de libro"
 
-#: part/part.cpp:712
+#: part/part.cpp:711
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Va al previe marcator de libro"
 
-#: part/part.cpp:716
+#: part/part.cpp:715
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Proxime marcator de libro"
 
-#: part/part.cpp:718
+#: part/part.cpp:717
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Va al proxime marcator de libro"
 
-#: part/part.cpp:747
+#: part/part.cpp:746
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Configura Okular ..."
 
-#: part/part.cpp:750
+#: part/part.cpp:749
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "Configura visor..."
 
-#: part/part.cpp:756
+#: part/part.cpp:755
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "Configura retroadministrationes de visor..."
 
-#: part/part.cpp:758
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Backends..."
 msgstr "Configura retroadministrationes..."
 
-#: part/part.cpp:794
+#: part/part.cpp:793
 #, kde-format
 msgid "About Backend"
 msgstr "Re retroadministration"
 
-#: part/part.cpp:799
+#: part/part.cpp:798
 #, kde-format
 msgid "Reloa&d"
 msgstr "Recar&ga"
 
-#: part/part.cpp:801
+#: part/part.cpp:800
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Recarga le documento currente ex le disco."
 
-#: part/part.cpp:807
+#: part/part.cpp:806
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Claude barra de &trovar"
 
-#: part/part.cpp:812
+#: part/part.cpp:811
 #, kde-format
 msgid "Page Number"
 msgstr "Numero de Pagina"
 
-#: part/part.cpp:816
+#: part/part.cpp:815
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "Configura Modos de Color de Okular ..."
 
-#: part/part.cpp:857
+#: part/part.cpp:856
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Selige omne texto sur le pagina currente"
 
-#: part/part.cpp:871
+#: part/part.cpp:870
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Monstra barra &lateral"
 
-#: part/part.cpp:880
+#: part/part.cpp:879
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Monstra barra de &pagina"
 
-#: part/part.cpp:886
+#: part/part.cpp:885
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Monstra pannello de &Signaturas"
 
-#: part/part.cpp:897
+#: part/part.cpp:896
 #, kde-format
 msgid "&Embedded Files"
 msgstr "Files incorporat&e"
 
-#: part/part.cpp:903
+#: part/part.cpp:902
 #, kde-format
 msgid "E&xport As"
 msgstr "E&xporta como"
 
-#: part/part.cpp:915
+#: part/part.cpp:914
 #, kde-format
 msgid "S&hare"
 msgstr "I&mparti"
 
-#: part/part.cpp:924
+#: part/part.cpp:923
 #, kde-format
 msgid "P&resentation"
 msgstr "P&resentation"
 
-#: part/part.cpp:931
+#: part/part.cpp:930
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Aperi dossier con&tinente"
 
-#: part/part.cpp:945
+#: part/part.cpp:944
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "&Importa PostScript como PDF..."
 
-#: part/part.cpp:949
+#: part/part.cpp:948
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Commuta modo de schermo nigre"
 
-#: part/part.cpp:957
+#: part/part.cpp:956
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Rade designos"
 
-#: part/part.cpp:962
+#: part/part.cpp:961
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "Configura annotationes..."
 
-#: part/part.cpp:967
+#: part/part.cpp:966
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Reproduce/Pausa Presentation"
 
-#: part/part.cpp:1122
+#: part/part.cpp:1121
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4442,37 +4476,37 @@ msgstr ""
 "pote esser salveguardate.\n"
 "Ulle modificationes essera perdite un vice que Okular es claudite."
 
-#: part/part.cpp:1123
+#: part/part.cpp:1122
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Documento non pote esser salveguardate"
 
-#: part/part.cpp:1152
+#: part/part.cpp:1151
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Non pote aperir \"'%1' (%2) "
 
-#: part/part.cpp:1206
+#: part/part.cpp:1204
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Le cargamento de %1 ha essite cancellate."
 
-#: part/part.cpp:1222
+#: part/part.cpp:1220
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Non pote aperir %1: Motivo: %2"
 
-#: part/part.cpp:1250
+#: part/part.cpp:1248
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Configura retroadministrationes de visor"
 
-#: part/part.cpp:1252
+#: part/part.cpp:1250
 #, kde-format
 msgid "Configure Backends"
 msgstr "Configura retroadministrationes"
 
-#: part/part.cpp:1337
+#: part/part.cpp:1335
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4481,44 +4515,44 @@ msgstr ""
 "Le programma \"ps2pdf\"non esseva trovate, dunque Okular non pote importar "
 "files PS per usar illo."
 
-#: part/part.cpp:1337
+#: part/part.cpp:1335
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf non trovate"
 
-#: part/part.cpp:1342
+#: part/part.cpp:1340
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "Files PostScript (%1)"
 
-#: part/part.cpp:1358
+#: part/part.cpp:1356
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "Importante file PS como PDF (isto pote prender del tempore)..."
 
-#: part/part.cpp:1490
+#: part/part.cpp:1488
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Pro favor inserta le contrasigno per leger le documento:"
 
-#: part/part.cpp:1492
+#: part/part.cpp:1490
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Contrasigno incorrecte. Essaya de nove:"
 
-#: part/part.cpp:1503
+#: part/part.cpp:1501
 #, kde-format
 msgid "Document Password"
 msgstr "Contrasigno  de documento"
 
-#: part/part.cpp:1626
+#: part/part.cpp:1624
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Iste documento ha formularios XFA, que currentemente <b>non es supportate</"
 "b>."
 
-#: part/part.cpp:1633
+#: part/part.cpp:1631
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4527,7 +4561,7 @@ msgstr ""
 "Iste documento ha formularios. Pulsa sur le button pro interager con illos, "
 "o usa Vista->Monstra formularios."
 
-#: part/part.cpp:1649
+#: part/part.cpp:1647
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4537,7 +4571,7 @@ msgstr ""
 "dishabilitate. Pro favor salveguarda un copia  e reaperi per modificar iste "
 "documento."
 
-#: part/part.cpp:1737
+#: part/part.cpp:1735
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4546,27 +4580,27 @@ msgstr ""
 "Iste documentovole esser monstrate a schermo plen.\n"
 "Lassa modo normal e inserta  modo de presentation?"
 
-#: part/part.cpp:1739
+#: part/part.cpp:1737
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Requesta per cambiar modo de vider"
 
-#: part/part.cpp:1740
+#: part/part.cpp:1738
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Inserta modo de presentation"
 
-#: part/part.cpp:1741
+#: part/part.cpp:1739
 #, kde-format
 msgid "Deny Request"
 msgstr "Nega requesta"
 
-#: part/part.cpp:1831
+#: part/part.cpp:1829
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Non pote aperir %1. %2"
 
-#: part/part.cpp:1861
+#: part/part.cpp:1859
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4580,22 +4614,22 @@ msgstr ""
 "modificationes non salveguardate con le modificationes facite in le altere "
 "programma.<nl/><nl/> Tu vole continuar a recargar iste file?"
 
-#: part/part.cpp:1865 part/part.cpp:1875
+#: part/part.cpp:1863 part/part.cpp:1873
 #, kde-format
 msgid "File Changed"
 msgstr "File modificate"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1864
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Continua recargar"
 
-#: part/part.cpp:1867
+#: part/part.cpp:1865
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Abandona recargar"
 
-#: part/part.cpp:1871
+#: part/part.cpp:1869
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4609,27 +4643,27 @@ msgstr ""
 "modificationes non salveguardate con le modificationes facite in le altere "
 "programma.<nl/><nl/> Tu vole continuar a clauder le file?"
 
-#: part/part.cpp:1876
+#: part/part.cpp:1874
 #, kde-format
 msgid "Continue Closing"
 msgstr "Continue cluder"
 
-#: part/part.cpp:1877
+#: part/part.cpp:1875
 #, kde-format
 msgid "Abort Closing"
 msgstr "Abndona clauder"
 
-#: part/part.cpp:1884
+#: part/part.cpp:1882
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Tu vole salveguardar tu modificationes \"%1\" o annullar los?"
 
-#: part/part.cpp:1884
+#: part/part.cpp:1882
 #, kde-format
 msgid "Close Document"
 msgstr "Claude documento"
 
-#: part/part.cpp:2016
+#: part/part.cpp:2014
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4638,7 +4672,7 @@ msgstr ""
 "Isto ligamine puncta a un action de clauder documento que  non functiona "
 "quando on usa le visor incorporate."
 
-#: part/part.cpp:2022
+#: part/part.cpp:2020
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4647,59 +4681,59 @@ msgstr ""
 "Isto ligamine puncta a un action de clauder application que non functiona "
 "quando on usa le visor incorporate."
 
-#: part/part.cpp:2114 part/part.cpp:2132
+#: part/part.cpp:2112 part/part.cpp:2130
 #, kde-format
 msgid "Reloading the document..."
 msgstr "Recargante le documento..."
 
-#: part/part.cpp:2289 part/toc.cpp:38
+#: part/part.cpp:2287 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Contentos"
 
-#: part/part.cpp:2318 part/signaturepanel.cpp:47
+#: part/part.cpp:2316 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Signaturas"
 
-#: part/part.cpp:2345
+#: part/part.cpp:2343
 #, kde-format
 msgid "Go to Page"
 msgstr "Va a pagina"
 
-#: part/part.cpp:2368
+#: part/part.cpp:2366
 #, kde-format
 msgid "&Page:"
 msgstr "&Pagina:"
 
-#: part/part.cpp:2461
+#: part/part.cpp:2459
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Inserta le nove nomine del marcator de libro:"
 
-#: part/part.cpp:2507
+#: part/part.cpp:2505
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Renomina iste marcator de libro"
 
-#: part/part.cpp:2510
+#: part/part.cpp:2508
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Remove iste marcator de libro"
 
-#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3477
+#: part/part.cpp:2594 part/part.cpp:2595 part/part.cpp:3477
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2604 part/revisionviewer.cpp:44
+#: part/part.cpp:2602 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Salveguarda como"
 
-#: part/part.cpp:2621
+#: part/part.cpp:2619
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4709,18 +4743,18 @@ msgstr ""
 "termina con le extension '%1'. Illo non es permittite, tu vole seliger un "
 "nove nomine?"
 
-#: part/part.cpp:2622
+#: part/part.cpp:2620
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Extension non supportate"
 
-#: part/part.cpp:2623
+#: part/part.cpp:2621
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Selige nove nomine"
 
-#: part/part.cpp:2665
+#: part/part.cpp:2664
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4732,12 +4766,12 @@ msgstr ""
 "programma. SiTuu salveguarda nunc, omne modificationes facite in le altere "
 "programma essera perdite. Tu es secur que tu vole continuar?"
 
-#: part/part.cpp:2668 part/part.cpp:2686 part/part.cpp:2738
+#: part/part.cpp:2667 part/part.cpp:2686 part/part.cpp:2738
 #, kde-format
 msgid "Save - Warning"
 msgstr "Salveguarda - Aviso"
 
-#: part/part.cpp:2670
+#: part/part.cpp:2669
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Salveguarda un copia alibi"
@@ -5501,7 +5535,7 @@ msgid "Only PGP keys"
 msgstr "Solmente claves de PGP"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
-#: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:76
+#: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:71
 #, kde-format
 msgid "Reason:"
 msgstr "Motivo:"
@@ -5516,7 +5550,7 @@ msgid "optional"
 msgstr "optional"
 
 #. i18n: ectx: property (text), widget (QLabel, locationLabel)
-#: part/selectcertificatedialog.ui:87 part/signaturepropertiesdialog.cpp:78
+#: part/selectcertificatedialog.ui:87 part/signaturepropertiesdialog.cpp:73
 #, kde-format
 msgid "Location:"
 msgstr "Location:"
@@ -5628,63 +5662,63 @@ msgctxt ""
 msgid "%1_signed.%2"
 msgstr "%1_signate.%2"
 
-#: part/signaturepropertiesdialog.cpp:61
+#: part/signaturepropertiesdialog.cpp:56
 #, kde-format
 msgid "Validity Status"
 msgstr "Stato valide"
 
-#: part/signaturepropertiesdialog.cpp:64
+#: part/signaturepropertiesdialog.cpp:59
 #, kde-format
 msgid "Signature Validity:"
 msgstr "Validitate de signatura:"
 
-#: part/signaturepropertiesdialog.cpp:65
+#: part/signaturepropertiesdialog.cpp:60
 #, kde-format
 msgid "Document Modifications:"
 msgstr "Modificationes de documento:"
 
-#: part/signaturepropertiesdialog.cpp:68
+#: part/signaturepropertiesdialog.cpp:63
 #, kde-format
 msgid "Additional Information"
 msgstr "Information additional"
 
-#: part/signaturepropertiesdialog.cpp:71
+#: part/signaturepropertiesdialog.cpp:66
 #, kde-format
 msgid "Signed By:"
 msgstr "Signate per :"
 
-#: part/signaturepropertiesdialog.cpp:72
+#: part/signaturepropertiesdialog.cpp:67
 #, kde-format
 msgid "Signing Time:"
 msgstr "Tempore de signar:"
 
-#: part/signaturepropertiesdialog.cpp:88
+#: part/signaturepropertiesdialog.cpp:83
 #, kde-format
 msgid "Document Version"
 msgstr "Version de documento"
 
-#: part/signaturepropertiesdialog.cpp:91
+#: part/signaturepropertiesdialog.cpp:86
 #, kde-format
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
 msgstr "Revision de documento %1 de %2"
 
-#: part/signaturepropertiesdialog.cpp:93
+#: part/signaturepropertiesdialog.cpp:88
 #, kde-format
 msgid "View Signed Version..."
 msgstr "Vide version signate..."
 
-#: part/signaturepropertiesdialog.cpp:100
+#: part/signaturepropertiesdialog.cpp:95
 #, kde-format
 msgid "View Certificate..."
 msgstr "Vide certificato..."
 
-#: part/signaturepropertiesdialog.cpp:102
+#: part/signaturepropertiesdialog.cpp:97
 #, kde-format
 msgid "View in Certificate Manager"
 msgstr "Vide in Gerente de Certificato (Certificate Manager)"
 
-#: part/signaturepropertiesdialog.cpp:106
+#: part/signaturepropertiesdialog.cpp:101
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
 msgstr ""
@@ -5702,7 +5736,7 @@ msgstr "Qualificate"
 msgid "PGP"
 msgstr "PGP"
 
-#: part/thumbnaillist.cpp:1017
+#: part/thumbnaillist.cpp:1015
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Monstra solmente paginas que es ponite in marcatores de libro"

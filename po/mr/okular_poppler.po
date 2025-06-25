@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-24 00:41+0000\n"
+"POT-Creation-Date: 2025-06-25 00:41+0000\n"
 "PO-Revision-Date: 2013-03-28 12:46+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -58,7 +58,7 @@ msgid "Enhance thin lines:"
 msgstr "बारिक ओळी वाढवा :"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1031
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1033
 #, kde-format
 msgid "No"
 msgstr "नाही"
@@ -221,43 +221,43 @@ msgstr ""
 msgid "Scale mode:"
 msgstr ""
 
-#: generator_pdf.cpp:1029
+#: generator_pdf.cpp:1031
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "पीडीएफ आवृत्ती %1.%2"
 
-#: generator_pdf.cpp:1029
+#: generator_pdf.cpp:1031
 #, kde-format
 msgid "Format"
 msgstr "स्वरूप"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1032
 #, kde-format
 msgid "Encrypted"
 msgstr "कुटलिपीबद्ध"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1032
 #, kde-format
 msgid "Unencrypted"
 msgstr "विनाकुटलिपी"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1032
 #, kde-format
 msgid "Security"
 msgstr "सुरक्षा"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1033
 #, kde-format
 msgid "Yes"
 msgstr "हो"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1033
 #, kde-format
 msgid "Optimized"
 msgstr "ऑप्टीमाइज्ड"
 
-#: generator_pdf.cpp:1498
+#: generator_pdf.cpp:1500
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -265,12 +265,12 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: generator_pdf.cpp:1719
+#: generator_pdf.cpp:1721
 #, kde-format
 msgid "Using Poppler %1"
 msgstr ""
 
-#: generator_pdf.cpp:1721
+#: generator_pdf.cpp:1723
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -278,17 +278,17 @@ msgid ""
 "Built against Poppler %2"
 msgstr ""
 
-#: generator_pdf.cpp:1756
+#: generator_pdf.cpp:1758
 #, kde-format
 msgid "PDF"
 msgstr "पीडीएफ"
 
-#: generator_pdf.cpp:1756
+#: generator_pdf.cpp:1758
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "पीडीएफ बॅकएन्ड संयोजना"
 
-#: generator_pdf.cpp:2242
+#: generator_pdf.cpp:2244
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

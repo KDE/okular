@@ -5163,12 +5163,16 @@ void PageView::showNoSigningCertificatesDialog(bool nonDateValidCerts)
     Okular::KleopatraIntegration kleo(document());
     if (nonDateValidCerts) {
         if (kleo.kleopatraIntegrationActive()) {
-            auto result = KMessageBox::questionTwoActions(this, i18n("All your signing certificates are invalid"), i18n("No valid certificates"), KGuiItem(i18n("Open Certificate Manager")), KStandardGuiItem::cancel());
+            auto result = KMessageBox::questionTwoActions(this,
+                                                          i18n("All your signing certificates are invalid. In case signing worked before, please check their validity dates."),
+                                                          i18n("No valid certificates"),
+                                                          KGuiItem(i18n("Open Certificate Manager")),
+                                                          KStandardGuiItem::cancel());
             if (result == KMessageBox::PrimaryAction) {
                 kleo.launchKleopatra(window()->windowHandle());
             }
         } else {
-            KMessageBox::information(this, i18n("All your signing certificates are invalid"));
+            KMessageBox::information(this, i18n("All your signing certificates are invalid. In case signing worked before, please check their validity dates."));
         }
     } else {
         if (kleo.kleopatraIntegrationActive()) {

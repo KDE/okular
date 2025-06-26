@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 09:58+0200\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-25 16:58+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -3965,50 +3965,41 @@ msgstr ""
 "Dibuixeu un rectangle al voltant de la taula, després cliqueu a prop de les "
 "vores per a dividir-lo. Premeu «Esc» per a netejar-lo."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Tots els vostres certificats de signatura encara no són vàlids o ja ha "
-"passat la seva data de validesa."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "Només els certificats QES"
+msgstr "No hi ha cap certificat vàlid"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Visualitza en el gestor de certificats"
+msgstr "Obre el gestor de certificats"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"No hi ha cap certificat disponible de signatura.<br/>Per a més informació, "
+"No hi ha cap certificat disponible de signatura.<br/>Llanceu el gestor de "
+"certificats per a importar o gestionar certificats<br/>Per a més informació, "
 "vegeu la secció quant a <a href=\"%1\">Afegir signatures digitals</a> en el "
 "manual."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificats"
+msgstr "No s'ha trobat cap certificat"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4019,17 +4010,17 @@ msgstr ""
 "vegeu la secció quant a <a href=\"%1\">Afegir signatures digitals</a> en el "
 "manual."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Hi ha canvis sense desar. Deseu el document abans de signar-lo."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Dibuixa un rectangle per a inserir el camp de signatura"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6044,6 +6035,12 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Tots els vostres certificats de signatura no són vàlids"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Signatura sense signar %1"

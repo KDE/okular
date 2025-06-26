@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2025-01-06 21:45+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3988,29 +3988,26 @@ msgstr ""
 "Apibrėžkite stačiakampį aplink lentelę, tada spustelėkite šalia kraštų "
 "norėdami perskirti; paspauskite Grįžimo (Esc) klavišą norėdami išvalyti."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Visi jūsų pasirašymo liudijimai arba dar kol kas nepradėjo galioti, arba jau "
-"nebegalioja."
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "Liudijimai"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "Rodyti liudijimų tvarkytuvėje"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4025,13 +4022,13 @@ msgstr ""
 "vadove žiūrėkite sekciją apie <a href=\"%1\">Skaitmeninių parašų pridėjimą</"
 "a>."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "Liudijimai"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4042,18 +4039,18 @@ msgstr ""
 "vadove žiūrėkite sekciją apie <a href=\"%1\">Skaitmeninių parašų pridėjimą</"
 "a>."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Yra neįrašytų pakeitimų. Prieš pasirašydami dokumentą, įrašykite pakeitimus."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Pieškite stačiakampį, norėdami įterpti parašo lauką"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6077,6 +6074,15 @@ msgstr "Išvalyti visus"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Slėpti pasisveikinimo langą"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "Visi jūsų pasirašymo liudijimai arba dar kol kas nepradėjo galioti, arba "
+#~ "jau nebegalioja."
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Nepasirašytas parašas %1"

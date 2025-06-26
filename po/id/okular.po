@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -3992,29 +3992,26 @@ msgstr ""
 "Gambari sebuah persegi di sekitar tabel, kemudian klik dekat pinggiran untuk "
 "membaginya; tekan Esc untuk membersihkan."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Semua sertifikat tandatangan Anda antara tidak valid atau tanggal "
-"kebasaannya sudah kedaluwarsa"
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates:"
 msgid "No valid certificates"
 msgstr "Sertifikat:"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View Certificate..."
 msgid "Open Certificate Manager"
 msgstr "Tampilan Sertifikat..."
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4029,13 +4026,13 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates:"
 msgid "No certificates found"
 msgstr "Sertifikat:"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4046,19 +4043,19 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Anda memiliki perubahan yang tak disimpan. Mohon simpan dokumen sebelum "
 "menandatanganinya."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Gambari sebuah persegi untuk menyisipkan bidang tandatangan"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6091,6 +6088,15 @@ msgstr "Lupakan Semuanya"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "Semua sertifikat tandatangan Anda antara tidak valid atau tanggal "
+#~ "kebasaannya sudah kedaluwarsa"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Tanda Tangan Tidak Tertandatangani %1"

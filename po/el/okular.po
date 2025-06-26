@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3993,27 +3993,26 @@ msgstr ""
 "Σχεδιάστε ένα παραλληλόγραμμο γύρο από τον πίνακα, έπειτα κάντε κλικ κοντά "
 "στις ακμές για την κατανομή. Πατήστε Esc για καθαρισμό."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
-msgstr "Όλα τα πιστοποιητικά σας ή δεν έχουν ακόμη επικυρωθεί ή έχουν λήξει."
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
+msgstr ""
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "Πιστοποιητικά"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "Προβολή στον Διαχειριστή Πιστοποιητικών..."
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4028,13 +4027,13 @@ msgstr ""
 "πληροφορίες δείτε την ενότητα για την <a href=\"%1\">Προσθήκη ψηφιακών "
 "υπογραφών</a> στο εγχειρίδιο χρήσης."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "Πιστοποιητικά"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4045,20 +4044,20 @@ msgstr ""
 "πληροφορίες δείτε την ενότητα για την <a href=\"%1\">Προσθήκη ψηφιακών "
 "υπογραφών</a> στο εγχειρίδιο χρήσης."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Έχετε μη αποθηκευμένες αλλαγές. Αποθηκεύστε το έγγραφο πριν το υπογράψετε."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 "Σχηματίστε ένα ορθογώνιο παραλληλόγραμμο για να εισαγάγετε το πεδίο της "
 "υπογραφής"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6087,6 +6086,14 @@ msgstr "Να ξεχαστούν όλα"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Απόκρυψη οθόνης υποδοχής"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "Όλα τα πιστοποιητικά σας ή δεν έχουν ακόμη επικυρωθεί ή έχουν λήξει."
 
 #, fuzzy
 #~| msgctxt "Unknown author"

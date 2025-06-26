@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2025-06-15 18:16+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3909,27 +3909,26 @@ msgid ""
 "Esc to clear."
 msgstr "在表格周圍畫一個矩形，然後在邊緣附近點擊以分割。按下 Esc 清除。"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
-msgstr "您所有的簽名憑證都尚未生效或是已經過期。"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
+msgstr ""
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Only QES certificates"
 msgid "No valid certificates"
 msgstr "僅 QES 憑證"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "在憑證管理員中檢視"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -3943,13 +3942,13 @@ msgstr ""
 "沒有可用的簽名憑證。<br/>更多資訊請參考說明文件中關於 <a href=\"%1\">加入數位"
 "簽名</a> 的段落。"
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "憑證"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3959,17 +3958,17 @@ msgstr ""
 "沒有可用的簽名憑證。<br/>更多資訊請參考說明文件中關於 <a href=\"%1\">加入數位"
 "簽名</a> 的段落。"
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "您有尚未儲存的變更。請在簽名前先儲存文件。"
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "繪製插入簽名欄位用的矩形"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "在您想要保持可見的頁面區域畫一矩形"
@@ -5929,6 +5928,13 @@ msgstr "忘記全部"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隱藏歡迎畫面"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "您所有的簽名憑證都尚未生效或是已經過期。"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "未署名的簽名 %1"

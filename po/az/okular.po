@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -3973,29 +3973,26 @@ msgstr ""
 "Cədvəlin ətrafını kvadrata alın və, bölmək üçün kənarlarına vurun, silmək "
 "üçün Esc vurun."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Bütün imza sertifikatlarınız ya hələlik qüvvədə deyil və ya etibarlılıq "
-"tarixi bitmişdir."
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "Setifikatlar"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "Sertifikat menecerində göstərmək"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4009,13 +4006,13 @@ msgstr ""
 "Mövcud İmzalama sertifikatları yoxdur.<br/> Daha çox məlumat üçün təlimatda "
 "<a href=\"%1\">Elektron imza əlavə etmək</a> bölməsinə baxın."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "Setifikatlar"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4025,17 +4022,17 @@ msgstr ""
 "Mövcud İmzalama sertifikatları yoxdur.<br/> Daha çox məlumat üçün təlimatda "
 "<a href=\"%1\">Elektron imza əlavə etmək</a> bölməsinə baxın."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Saxlanılmamış dəyişiklikləriniz var. İmzalamadan öncə sənədi saxlayın."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Düzbucaqlı çəkərək imzalama sahəsi əlavə edin"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"
@@ -6033,6 +6030,15 @@ msgstr "Hamısını unudun"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Salamlama səhifəsini gizlətmək"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "Bütün imza sertifikatlarınız ya hələlik qüvvədə deyil və ya etibarlılıq "
+#~ "tarixi bitmişdir."
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "%1 İmzalanmamış"

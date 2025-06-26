@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2025-04-20 18:12+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3955,27 +3955,26 @@ msgstr ""
 "அட்டவணையைச் சுற்றி ஒரு செவ்வகத்தை வரைந்து, அதை பிரிக்க ஓரங்களில் க்ளிக் செய்யுங்கள்; "
 "நிராகரிக்க Esc விசையை அழுத்துங்கள்."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
-msgstr "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகவில்லை அல்லது காலாவதியாகிவிட்டன."
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
+msgstr ""
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Only QES certificates"
 msgid "No valid certificates"
 msgstr "QES சான்றிதழ்கள் மட்டும்"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "சான்றிதழ் மேலாளியில் காட்டு"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -3989,13 +3988,13 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "சான்றிதழ்கள்"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4005,17 +4004,17 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "சேமிக்கப்படாத மாற்றங்கள் உள்ளன. கையொப்பம் இடுவதற்கு முன் ஆவணத்தை சேமியுங்கள்."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "கையொப்பப் புலத்தை நுழைக்க ஒரு செவ்வகத்தை வரையுங்கள்"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6018,6 +6017,14 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகவில்லை அல்லது காலாவதியாகிவிட்டன."
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "எண்மக்கையொப்பமிடா கையொப்பம் %1"

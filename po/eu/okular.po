@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-20 22:37+0200\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-25 20:34+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3954,49 +3954,41 @@ msgstr ""
 "Marraztu laukizuzen bat taularen inguruan, ondoren klik egin ertzen ondoan "
 "erdibitzeko; sakatu «Ihes» garbitzeko."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Zure sinatzeko ziurtagiri guztiak, edo oraindik ez dira baliozkoak edo "
-"baliozkotasun data gainditu dute."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "QES ziurtagiriak bakarrik"
+msgstr "Ez dago baliodun ziurtagiririk"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Ikusi ziurtagiri kudeatzailean"
+msgstr "Ireki ziurtagiri kudeatzailea"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Informazio gehiagorako, "
-"begiratu eskuliburuko <a href=\"%1\">Sinadura digitala gehitzea</a> atala."
+"Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Ziurtagiri-kudeatzailea "
+"abiarazi ziurtagiriak inportatzeko eta kudeatzeko<br/>Informazio "
+"gehiagorako, mesedez, begiratu eskuliburuko <a href=\"%1\">Sinadura digitala "
+"gehitzea</a> atala."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Ziurtagiriak"
+msgstr "Ez da ziurtagiririk aurkitu"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4006,18 +3998,18 @@ msgstr ""
 "Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Informazio gehiagorako, "
 "begiratu eskuliburuko <a href=\"%1\">Sinadura digitala gehitzea</a> atala."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Gorde gabeko aldaketak dituzu. Gorde ezazu dokumentua hura sinatu aurretik."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Marraztu laukizuzen bat sinaduraren eremua txertatzeko"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6031,6 +6023,12 @@ msgstr "Ahaztu denak"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ezkutatu ongietorri pantaila"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Sinatzeko zure ziurtagiri guztiak baliogabeak dira."
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Sinatu gabeko %1 sinadura"

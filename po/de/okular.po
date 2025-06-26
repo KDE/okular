@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2024-10-07 18:04+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3995,28 +3995,26 @@ msgstr ""
 "Ziehen Sie mit der Maus ein Rechteck um die Tabelle, klicken Sie dann zur "
 "Aufteilung auf die nächsten Kanten, drücken Sie die Taste ESC zum Löschen."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Alle Ihre Signaturzertifikate sind entweder ungültig oder bereits abgelaufen."
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "Zertifikate"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "In Zertifikatsverwaltung anzeigen"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4031,13 +4029,13 @@ msgstr ""
 "Informationen finden Sie im Handbuch im Abschnitt <a href=\"%1\">Digitale "
 "Signaturen hinzufügen</a>."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "Zertifikate"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4048,19 +4046,19 @@ msgstr ""
 "Informationen finden Sie im Handbuch im Abschnitt <a href=\"%1\">Digitale "
 "Signaturen hinzufügen</a>."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Sie haben noch nicht gespeicherte Änderungen. Bitte speichern Sie das "
 "Dokument vor dem Signieren."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Zeichnen Sie ein Rechteck, um ein Signaturfeld einzufügen."
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6110,6 +6108,15 @@ msgstr "Alles vergessen"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Willkommensbildschirm ausblenden"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "Alle Ihre Signaturzertifikate sind entweder ungültig oder bereits "
+#~ "abgelaufen."
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Unsignierte Signatur %1"

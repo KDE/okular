@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 18:20+0300\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-25 09:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3976,49 +3976,41 @@ msgstr ""
 "Намалюйте прямокутник навколо таблиці, потім клацніть поряд з краєм, щоб "
 "поділити текст. Натисніть Esc, щоб скасувати позначення."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Усі ваші сертифікати для підпису або ще не є чинними або вже є простроченими."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "Лише сертифікати QES"
+msgstr "Немає чинний сертифікатів"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Переглянути у засобі керування сертифікатами"
+msgstr "Відкрити керування сертифікатами"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Немає доступних сертифікатів для підписування.<br/>Щоб дізнатися більше, "
-"будь ласка, ознайомтеся із розділом <a href=\"%1\">Додавання цифрових "
-"підписів</a> у підручнику."
+"Немає доступних сертифікатів для підписування.<br/>Запустіть засіб керування "
+"сертифікатами для імпортування сертифікатів або керування ними.<br/>Щоб "
+"дізнатися більше, будь ласка, ознайомтеся із розділом <a href="
+"\"%1\">Додавання цифрових підписів</a> у підручнику."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Сертифікати"
+msgstr "Сертифікатів не знайдено"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4029,19 +4021,19 @@ msgstr ""
 "будь ласка, ознайомтеся із розділом <a href=\"%1\">Додавання цифрових "
 "підписів</a> у підручнику."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Деякі внесені вами зміни не збережено. Будь ласка, збережіть документ, перш "
 "ніж його підписувати."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Намалюйте прямокутник для вставлення поля підпису"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6073,6 +6065,12 @@ msgstr "Забути всі"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Приховати вікно вітання"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Усі ваші сертифікати для підписування не є чинними"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Непідписаний підпис %1"

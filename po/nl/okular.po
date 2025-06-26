@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 14:13+0200\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-25 11:34+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -3964,50 +3964,41 @@ msgstr ""
 "Teken een rechthoek rond de tabel, klik daarna bij de randen om ze op te "
 "delen; druk op Esc om te wissen."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Al uw certificaten voor ondertekenen zijn ofwel nog niet geldig of zijn over "
-"hun geldigheidsdatum."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "Alleen CES-certificaten"
+msgstr "Geen geldige certificaten"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "In certificatenbeheerder bekijken"
+msgstr "Certificaatbeheerder &openen"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Er zijn geen beschikbare certificaten voor ondertekenen.<br/>Voor meer "
-"informatie, bekijk de sectie over <a href=\"%1\">Digitale ondertekening "
+"Er zijn geen beschikbare certificaten voor ondertekenen.<br/>Start de "
+"Certificatenbeheerder om certificaten te importeren of certificaten<br/>Voor "
+"meer informatie, bekijk de sectie over <a href=\"%1\">Digitale ondertekening "
 "toevoegen</a> in de handleiding."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificaten"
+msgstr "Geen certificaten gevonden"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4018,19 +4009,19 @@ msgstr ""
 "informatie, bekijk de sectie over <a href=\"%1\">Digitale ondertekening "
 "toevoegen</a> in de handleiding."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "U hebt niet opgeslagen wijzigingen. Het document opslaan alvorens het te "
 "ondertekenen."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Een rechthoek tekenen voor het veld voor ondertekenen in te voegen"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Teken een rechthoek rond het paginagebied dat u zichtbaar wilt laten"
@@ -6050,6 +6041,12 @@ msgstr "Alles vergeten"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Welkomstscherm verbergen"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Al uw certificaten voor ondertekenen zijn niet geldig"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Niet ondertekende ondertekening %1"

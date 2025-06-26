@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 18:55+0100\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-26 00:40+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3958,49 +3958,41 @@ msgstr ""
 "Dibuje un rectángulo alrededor de la tabla y pulse cerca de sus bordes para "
 "dividirlo. Pulse Esc para borrarlo."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Todos sus certificados de firma han sobrepasado la fecha de validez o no son "
-"válidos."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "Solo certificados QES"
+msgstr "No hay certificados válidos"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Ver en el gestor de certificados"
+msgstr "Abrir el gestor de certificados"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"No hay certificados de firma disponibles.<br/>Para más información, consulte "
-"la sección sobre <a href=\"%1\">Añadir firmas digitales</a> en el manual."
+"No hay certificados de firma disponibles.<br/>Lance el gestor de "
+"certificados para importar o administrar certificados.<br/>Para más "
+"información, consulte la sección sobre <a href=\"%1\">Añadir firmas "
+"digitales</a> en el manual."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificados"
+msgstr "No se han encontrado certificados"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4010,17 +4002,17 @@ msgstr ""
 "No hay certificados de firma disponibles.<br/>Para más información, consulte "
 "la sección sobre <a href=\"%1\">Añadir firmas digitales</a> en el manual."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Hay cambios sin guardar. Guarde el documento antes de firmarlo."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Dibuje un rectángulo para insertar el campo de firma"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6039,3 +6031,9 @@ msgstr "Olvidar todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar la pantalla de bienvenida"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Ninguno de sus certificados de firma es válido."

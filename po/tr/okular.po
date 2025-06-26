@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 12:44+0300\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"PO-Revision-Date: 2025-06-25 09:03+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3955,49 +3955,40 @@ msgstr ""
 "Tablonun etrafına bir dikdörtgen çizin, kenarlıkların yanına tıklayarak "
 "ayırın, temizlemek için Esc düğmesine basın."
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"Tüm imza sertifikalarınız ya henüz geçerli değil ya da geçerlilik tarihleri "
-"geçmiş."
 
-#: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#: part/pageview.cpp:5168
+#, kde-format
 msgid "No valid certificates"
-msgstr "Yalnızca QES sertifikaları"
+msgstr "Geçerli sertifika yok"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Sertifika Yöneticisinde Görüntüle"
+msgstr "Sertifika Yöneticisini Aç"
 
-#: part/pageview.cpp:5176
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#: part/pageview.cpp:5180
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Kullanılabilir bir imza sertifikası yok.<br/>Ek bilgi için kullanım "
-"kılavuzundaki <a href=\"%1\">Sayısal İmza Ekleme</a> bölümüne bakın."
+"Kullanılabilir bir imza sertifikası yok.<br/>Sertifikalar içe aktarmak veya "
+"var olanları yönetmek için Sertifika Yöneticisi’ni açın.<br/>Ek bilgi için "
+"kullanım kılavuzundaki <a href=\"%1\">Sayısal İmza Ekleme</a> bölümüne bakın."
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#, kde-format
 msgid "No certificates found"
-msgstr "Sertifikalar"
+msgstr "Bulunan sertifika yok"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4007,18 +3998,18 @@ msgstr ""
 "Kullanılabilir bir imza sertifikası yok.<br/>Ek bilgi için kullanım "
 "kılavuzundaki <a href=\"%1\">Sayısal İmza Ekleme</a> bölümüne bakın."
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Kaydedilmemiş değişiklikleriniz var. Belgeyi imzalamadan önce kaydedin."
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "İmza alanını eklemek için bir dikdörtgen çizin"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -6026,6 +6017,12 @@ msgstr "Tümünü Unut"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Karşılama ekranını gizle"
+
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr "Tüm imza sertifikalarınız geçersiz"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "Bilinmeyen İmza %1"

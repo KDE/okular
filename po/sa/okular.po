@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-06-26 00:41+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3943,28 +3943,26 @@ msgstr ""
 "सारणीयाः परितः आयतं आकर्षयन्तु, ततः विभक्तुं किनारेषु समीपे क्लिक् कुर्वन्तु; स्वच्छं कर्तुं Esc "
 "नुदन्तु।"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5171
-#, fuzzy, kde-format
-#| msgid ""
-#| "All your signing certificates are either not valid yet or are past their "
-#| "validity date."
-msgid "All your signing certificates are invalid"
+#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#, kde-format
+msgid ""
+"All your signing certificates are invalid. In case signing worked before, "
+"please check their validity dates."
 msgstr ""
-"भवतः सर्वाणि हस्ताक्षरप्रमाणपत्राणि अद्यापि वैधं न सन्ति वा वैधतातिथिं व्यतीतानि वा।"
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5168
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5166 part/pageview.cpp:5180
+#: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "प्रमाणपत्रप्रबन्धके पश्यन्तु"
 
-#: part/pageview.cpp:5176
+#: part/pageview.cpp:5180
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -3978,13 +3976,13 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5179 part/pageview.cpp:5191
+#: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5189
+#: part/pageview.cpp:5193
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -3994,17 +3992,17 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5214
+#: part/pageview.cpp:5218
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "भवतः अरक्षिताः परिवर्तनाः सन्ति । कृपया दस्तावेजं हस्ताक्षरं कर्तुं पूर्वं रक्षन्तु।"
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5241
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "हस्ताक्षरक्षेत्रं सम्मिलितुं आयतं आकर्षयन्तु"
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
@@ -5992,6 +5990,14 @@ msgstr "सर्वं विस्मरतु"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "स्वागतपटलं गोपयन्तु"
+
+#, fuzzy
+#~| msgid ""
+#~| "All your signing certificates are either not valid yet or are past their "
+#~| "validity date."
+#~ msgid "All your signing certificates are invalid"
+#~ msgstr ""
+#~ "भवतः सर्वाणि हस्ताक्षरप्रमाणपत्राणि अद्यापि वैधं न सन्ति वा वैधतातिथिं व्यतीतानि वा।"
 
 #~ msgid "Unsigned Signature %1"
 #~ msgstr "अहस्ताक्षरितहस्ताक्षरम् %1"

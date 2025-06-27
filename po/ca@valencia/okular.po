@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 09:58+0200\n"
+"PO-Revision-Date: 2025-06-26 09:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -3972,39 +3972,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Cap dels vostres certificats de signatura no són vàlids. En cas que la "
+"signatura haja funcionat abans, consulteu les seues dates de validesa."
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Només els certificats QES"
+msgstr "No hi ha cap certificat vàlid"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Visualitza en el gestor de certificats"
+msgstr "Obri el gestor de certificats"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"No hi ha cap certificat disponible de signatura.<br/>Per a més informació, "
+"No hi ha cap certificat disponible de signatura.<br/>Llanceu el gestor de "
+"certificats per a importar o gestionar certificats<br/>Per a més informació, "
 "vegeu la secció quant a <a href=\"%1\">Afegir signatures digitals</a> en el "
 "manual."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificats"
+msgstr "No s'ha trobat cap certificat"
 
 #: part/pageview.cpp:5193
 #, kde-format
@@ -6057,12 +6053,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#, fuzzy
-#~| msgid ""
-#~| "All your signing certificates are either not valid yet or are past their "
-#~| "validity date."
-#~ msgid "All your signing certificates are invalid"
-#~ msgstr ""
-#~ "Tots els vostres certificats de signatura encara no són vàlids o ja ha "
-#~ "passat la seua data de validesa."

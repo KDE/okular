@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-25 16:58+0200\n"
+"PO-Revision-Date: 2025-06-26 09:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -3971,6 +3971,8 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Cap dels vostres certificats de signatura no són vàlids. En cas que la "
+"signatura hagi funcionat abans, consulteu les seves dates de validesa."
 
 #: part/pageview.cpp:5168
 #, kde-format
@@ -6035,20 +6037,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~| msgid ""
-#~| "All your signing certificates are either not valid yet or are past their "
-#~| "validity date."
-#~ msgid "All your signing certificates are invalid"
-#~ msgstr "Tots els vostres certificats de signatura no són vàlids"
-
-#~ msgid "Unsigned Signature %1"
-#~ msgstr "Signatura sense signar %1"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unknown"
-#~ msgstr "Desconeguda"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "Signatura sense signar"

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-14 17:17+0400\n"
+"PO-Revision-Date: 2025-06-26 10:16+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3961,36 +3961,30 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "شهادات QES فقط"
+msgstr "لا توجد شهادات صالحة"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "اعرض في مدير الشهادات"
+msgstr "افتح مدير الشهادات"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول "
-"<a href=\"%1\"> إضافة التوقيعات الرقمية </a> في الدليل."
+"لا توجد شهادات توقيع متوفرة.<br/>شغّل مدير الشهادات لاستيراد الشهادات أو "
+"إدارتها<br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول <a href=\"%1\"> "
+"إضافة التوقيعات الرقمية </a> في الدليل."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "الشّهادات"
+msgstr "لم يعثر على أي شهادات"
 
 #: part/pageview.cpp:5193
 #, kde-format

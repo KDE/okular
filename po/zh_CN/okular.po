@@ -3914,12 +3914,12 @@ msgstr ""
 #: part/pageview.cpp:5168
 #, kde-format
 msgid "No valid certificates"
-msgstr ""
+msgstr "没有有效的证书"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
 #, kde-format
 msgid "Open Certificate Manager"
-msgstr ""
+msgstr "打开证书管理器"
 
 #: part/pageview.cpp:5180
 #, kde-format
@@ -3928,11 +3928,13 @@ msgid ""
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
+"没有可用的签名证书。<br/>启动证书管理器以导入或管理证书<br/>更多信息请参阅使"
+"用手册中关于 <a href=\"%1\">添加数字签名</a> 的部分。"
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
 #, kde-format
 msgid "No certificates found"
-msgstr ""
+msgstr "没有找到证书"
 
 #: part/pageview.cpp:5193
 #, kde-format

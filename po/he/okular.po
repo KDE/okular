@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-12 06:57+0300\n"
+"PO-Revision-Date: 2025-06-26 09:36+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3945,38 +3945,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"כל אישורי החתימה שלך אינם תקפים. אם החתימה עבדה בעבר, נא לבדוק את תאריכי "
+"התפוגה שלהם."
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "אישורי QES (חתימה אלקטרונית מוסמכת) בלבד"
+msgstr "אין אישורים תקפים"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "הצגה במנהל האישורים"
+msgstr "פתיחת מנהל האישורים"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"אין אישורים זמינים לחתימה.<br/>למידע נוסף, נא לקרוא את הסעיף <a href="
-"\"%1\">הוספת חתימות דיגיטליות</a> במדריך."
+"אין אישורים זמינים לחתימה.<br/>יש להפעיל את מנהל האישורים כדי לייבא או לנהל "
+"אישורים<br/>למידע נוסף, נא לקרוא את הסעיף <a href=\"%1\">הוספת חתימות "
+"דיגיטליות</a> במדריך."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "אישורים"
+msgstr "לא נמצאו אישורים"
 
 #: part/pageview.cpp:5193
 #, kde-format

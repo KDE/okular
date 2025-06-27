@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-25 06:47+0200\n"
+"PO-Revision-Date: 2025-06-26 06:25+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -3965,6 +3965,8 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Vsa vaša potrdila za podpisovanje so neveljavna. Če je podpisovanje prej "
+"delovalo, preverite njihove datume veljavnosti."
 
 #: part/pageview.cpp:5168
 #, kde-format

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:41+0000\n"
-"PO-Revision-Date: 2025-06-25 09:55+0300\n"
+"PO-Revision-Date: 2025-06-26 08:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3982,6 +3982,8 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Усі ваші сертифікати для підписування є некоректними. Якщо раніше "
+"підписування працювало, будь ласка, перевірте їхні дати чинності."
 
 #: part/pageview.cpp:5168
 #, kde-format

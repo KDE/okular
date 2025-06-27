@@ -41,11 +41,8 @@ public:
 
     void loadEntries(const KConfigGroup &cg);
     void clearEntries();
-
-    int maxItems() const
-    {
-        return m_maxItems;
-    }
+    int maxItems();
+    void setMaxItems(const int maxItems);
 
     RecentItemsModel::RecentItem const *getItem(const QModelIndex &) const;
     RecentItemsModel::RecentItem const *getItem(int index) const;
@@ -56,7 +53,7 @@ public:
 
 private:
     QList<RecentItemsModel::RecentItem> m_recentItems;
-
+    // m_maxItems only affects the recentListsView on the welcome screen. The no. of recent files in the File menu are not affected.
     int m_maxItems = 20;
     QFileIconProvider m_iconProvider;
 };

@@ -218,6 +218,11 @@
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="MaxRecentItems" type="Int" >
+   <default>10</default>
+    <min>0</min>
+    <max>100</max>
+  </entry>
  </group>
  <group name="Dlg Presentation" >
   <entry key="SlidesBackgroundColor" type="Color" >

@@ -191,6 +191,12 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         dragBeyondScreenEdges->setObjectName(QStringLiteral("kcfg_DragBeyondScreenEdges"));
         layout->addRow(programFeaturesLabel(), dragBeyondScreenEdges);
     }
+
+    // Spinbox: Max recent items
+    QSpinBox *maxRecentItems = new QSpinBox(this);
+    maxRecentItems->setObjectName(QStringLiteral("kcfg_MaxRecentItems"));
+    layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Items in recent history:"), maxRecentItems);
+
     // END Program features section
 
     // If no Program features section, don’t add a second spacer:

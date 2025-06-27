@@ -163,6 +163,11 @@ void WelcomeScreen::loadRecents()
     m_recentsModel->loadEntries(KSharedConfig::openConfig()->group(QStringLiteral("Recent Files")));
 }
 
+void WelcomeScreen::setMaxRecentItems(const int maxItems)
+{
+    m_recentsModel->setMaxItems(maxItems);
+}
+
 int WelcomeScreen::recentsCount()
 {
     return m_recentsModel->rowCount();

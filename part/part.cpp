@@ -571,6 +571,8 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_dirtyHandler->setSingleShot(true);
     connect(m_dirtyHandler, &QTimer::timeout, this, [this] { slotAttemptReload(); });
 
+    m_maxRecentItems = Okular::Settings::maxRecentItems();
+
     slotNewConfig();
 
     // keep us informed when the user changes settings
@@ -3084,6 +3086,12 @@ void Part::slotNewConfig()
         if (factory()) {
             factory()->refreshActionProperties();
         }
+    }
+
+    // Trigger the shell to sync recent files in File->Open Recent and the RecentItemsModel
+    if (m_maxRecentItems != Okular::Settings::maxRecentItems()) {
+        m_maxRecentItems = Okular::Settings::maxRecentItems();
+        Q_EMIT maxRecentItemsChanged(m_maxRecentItems);
     }
 }
 

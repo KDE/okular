@@ -25,6 +25,7 @@ public:
     ~WelcomeScreen() override;
 
     void loadRecents();
+    void setMaxRecentItems(const int maxItems);
 
 Q_SIGNALS:
     void openClicked();

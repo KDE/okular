@@ -520,8 +520,7 @@ void Shell::closeUrl()
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
-    m_recent->setEnabled(true); // force enabling
+    readRecentFilesSettings();
 
     const KConfigGroup group = KSharedConfig::openConfig()->group(DesktopEntryGroupKey());
     bool fullScreen = group.readEntry("FullScreen", false);
@@ -1011,11 +1010,13 @@ void Shell::applyOptionsToPart(QObject *part, const QString &serializedOptions)
 void Shell::connectPart(const KParts::ReadWritePart *part)
 {
     // We're abusing the fact we know the part is our part here
-    connect(this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)));                     // clazy:exclude=old-style-connect
-    connect(part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));           // clazy:exclude=old-style-connect
-    connect(part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));           // clazy:exclude=old-style-connect
-    connect(part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));        // clazy:exclude=old-style-connect
-    connect(part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>))); // clazy:exclude=old-style-connect
+    connect(this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)));                      // clazy:exclude=old-style-connect
+    connect(part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));            // clazy:exclude=old-style-connect
+    connect(part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));            // clazy:exclude=old-style-connect
+    connect(part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));         // clazy:exclude=old-style-connect
+    connect(part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)));  // clazy:exclude=old-style-connect
+    connect(part, SIGNAL(maxRecentItemsChanged(int)), this, SLOT(triggerUpdateRecentItems(int))); // clazy:exclude=old-style-connect
+
     // clang-format off
     connect(part, SIGNAL(requestOpenNewlySignedFile(QString,int)), this, SLOT(openNewlySignedFile(QString,int))); // clazy:exclude=old-style-connect
     // Otherwise the QSize,QSize gets turned into QSize, QSize that is not normalized signals and is slightly slower
@@ -1163,6 +1164,28 @@ void Shell::forgetRecentItem(QUrl const &url)
         saveRecents();
         refreshRecentsOnWelcomeScreen();
     }
+}
+
+void Shell::triggerUpdateRecentItems(const int maxItems)
+{
+    m_recent->setMaxItems(maxItems);
+    m_welcomeScreen->setMaxRecentItems(m_recent->maxItems());
+    // saveRecents() dumps the recent files in correct order to KConfigGroup, respecting the allowed no. of recent items, discarding older items if needed
+    refreshRecentsOnWelcomeScreen();
+    m_recent->loadEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
+}
+
+void Shell::readRecentFilesSettings()
+{
+    // Read no. of max. recent items from okularpartrc, populate File->Open Recent menu-item as well as recentsListView on welcome screen
+    QString configFilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1Char('/') + QLatin1String("okularpartrc");
+    const KConfigGroup confgrp = KSharedConfig::openConfig(configFilePath).data()->group(QStringLiteral("General"));
+    const int defaultMaxRecentItems = 10;
+    int maxRecentItems = confgrp.readEntry<int>("MaxRecentItems", defaultMaxRecentItems);
+    m_recent->setMaxItems(maxRecentItems);
+    m_welcomeScreen->setMaxRecentItems(m_recent->maxItems());
+    m_welcomeScreen->loadRecents();
+    m_recent->loadEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
 }
 
 #include "shell.moc"

@@ -128,6 +128,8 @@ private Q_SLOTS:
     void setCloseEnabled(bool enabled);
     void setTabIcon(const QMimeType &mimeType);
     void handleDroppedUrls(const QList<QUrl> &urls);
+    void triggerUpdateRecentItems(const int maxItems);
+
     /**
      * Opens of a newly signed file
      *
@@ -169,6 +171,7 @@ private:
     void connectPart(const KParts::ReadWritePart *part);
     int findTabIndex(QObject *sender) const;
     int findTabIndex(const QUrl &url) const;
+    void readRecentFilesSettings();
 
 private:
     void reloadAllXML();

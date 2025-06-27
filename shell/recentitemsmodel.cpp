@@ -117,3 +117,13 @@ RecentItemsModel::RecentItem const *RecentItemsModel::getItem(const QModelIndex 
 {
     return getItem(index.row());
 }
+
+int RecentItemsModel::maxItems()
+{
+    return m_maxItems;
+}
+
+void RecentItemsModel::setMaxItems(const int maxItems)
+{
+    m_maxItems = maxItems;
+}

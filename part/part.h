@@ -193,6 +193,7 @@ Q_SIGNALS:
     void mimeTypeChanged(const QMimeType &mimeType);
     void urlsDropped(const QList<QUrl> &urls);
     void fitWindowToPage(const QSize pageViewPortSize, const QSize pageSize);
+    void maxRecentItemsChanged(const int);
     /**
      * Request to open a newly signed file
      * \param path file to open
@@ -472,6 +473,9 @@ private:
     // Set when opening an url that had fragment so that if it fails opening we try adding the fragment to the filename
     // if we're opening http://localhost/foo#bar.pdf and the filename contains an # we can open it after trying to open foo fails
     QUrl m_urlWithFragment;
+
+    // Current value of maxRecentItems to detect value change, and inform shell
+    int m_maxRecentItems;
 
 private Q_SLOTS:
     void slotAccessibilityPreferences();

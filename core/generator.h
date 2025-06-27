@@ -315,11 +315,13 @@ public:
     /**
      * @brief sets the active certificate backend
      * @param backend
+     * @since 25.08
      */
     void setActiveCertificateBackend(Okular::CertificateInfo::Backend backend);
     /**
      * @brief returns the active certificate backend, defaults to unknown
      * @param backend
+     * @since 25.08
      */
     Okular::CertificateInfo::Backend activeCertificateBackend() const;
 

@@ -519,7 +519,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             Okular::Annotation *a = *aIt;
 
             // honor opacity settings on supported types
-            const unsigned int opacity = (unsigned int)(a->style().color().alpha() * a->style().opacity());
+            const float opacity = a->style().color().alphaF() * a->style().opacity();
             // skip the annotation drawing if all the annotation is fully
             // transparent, but not with text annotations
             if (opacity <= 0 && a->subType() != Okular::Annotation::AText) {
@@ -530,7 +530,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             if (!acolor.isValid()) {
                 acolor = Qt::yellow;
             }
-            acolor.setAlpha(opacity);
+            acolor.setAlphaF(opacity);
 
             // Annotation boundary in destPainter coordinates:
             const QRect annotBoundary = a->transformedBoundingRectangle().geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());

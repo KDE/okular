@@ -3472,7 +3472,7 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
         }
 
         // get item and item's outline geometries
-        QRect itemGeometry = item->croppedGeometry();
+        const QRect itemGeometry = item->croppedGeometry();
 
         // move the painter to the top-left corner of the real page
         p->save();
@@ -3485,8 +3485,7 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
             if (Okular::Settings::showSourceLocationsGraphically() && item->pageNumber() == d->lastSourceLocationViewportPageNumber) {
                 viewPortPoint = &point;
             }
-            QRect pixmapRect = contentsRect.intersected(itemGeometry);
-            pixmapRect.translate(-item->croppedGeometry().topLeft());
+            const QRect pixmapRect = contentsRect.intersected(itemGeometry).translated(-item->croppedGeometry().topLeft());
             PagePainter::paintCroppedPageOnPainter(p, item->page(), this, pageflags, item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect, item->crop(), viewPortPoint);
         }
 
@@ -3501,9 +3500,8 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
     }
 
     // take outline and shadow into account when testing whether a repaint is necessary
-    auto dpr = devicePixelRatioF();
-    QRect checkRect = contentsRect;
-    checkRect.adjust(-3, -3, 1, 1);
+    const qreal dpr = devicePixelRatioF();
+    const QRect checkRect = contentsRect.adjusted(-3, -3, 1, 1);
 
     // Method to linearly interpolate between black (=(0,0,0), omitted) and the background color
     auto interpolateColor = [&backColor](double t) { return QColor(t * backColor.red(), t * backColor.green(), t * backColor.blue()); };
@@ -3519,7 +3517,7 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
         }
 
         // get item and item's outline geometries
-        QRect itemGeometry = item->croppedGeometry();
+        const QRect itemGeometry = item->croppedGeometry();
 
         // move the painter to the top-left corner of the real page
         p->save();
@@ -3527,23 +3525,23 @@ void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)
 
         // draw the page outline (black border and bottom-right shadow)
         if (!itemGeometry.contains(contentsRect)) {
-            int itemWidth = itemGeometry.width();
-            int itemHeight = itemGeometry.height();
+            const int itemWidth = itemGeometry.width();
+            const int itemHeight = itemGeometry.height();
             // draw simple outline
             QPen pen(Qt::black);
             pen.setWidth(0);
             p->setPen(pen);
 
-            QRectF outline(-1.0 / dpr, -1.0 / dpr, itemWidth + 1.0 / dpr, itemHeight + 1.0 / dpr);
+            const QRectF outline(-1.0 / dpr, -1.0 / dpr, itemWidth + 1.0 / dpr, itemHeight + 1.0 / dpr);
             p->drawRect(outline);
 
             // draw bottom/right gradient
             for (int i = 1; i <= shadowWidth; i++) {
                 pen.setColor(interpolateColor(double(i) / (shadowWidth + 1)));
                 p->setPen(pen);
-                QPointF left((i - 1) / dpr, itemHeight + i / dpr);
-                QPointF up(itemWidth + i / dpr, (i - 1) / dpr);
-                QPointF corner(itemWidth + i / dpr, itemHeight + i / dpr);
+                const QPointF left((i - 1) / dpr, itemHeight + i / dpr);
+                const QPointF up(itemWidth + i / dpr, (i - 1) / dpr);
+                const QPointF corner(itemWidth + i / dpr, itemHeight + i / dpr);
                 p->drawLine(left, corner);
                 p->drawLine(up, corner);
             }

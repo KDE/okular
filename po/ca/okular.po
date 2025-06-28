@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"POT-Creation-Date: 2025-06-28 00:40+0000\n"
 "PO-Revision-Date: 2025-06-26 09:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -385,7 +385,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "La mida d'impressió de la pàgina no és vàlida"
 
-#: core/document.cpp:5565 part/part.cpp:1144
+#: core/document.cpp:5565 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "No s'ha pogut obrir «%1». El fitxer no existeix"
@@ -1631,7 +1631,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Pàgina %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3160
+#: part/annotationmodel.cpp:322 part/part.cpp:3168
 #, kde-format
 msgid "Page %1"
 msgstr "Pàgina %1"
@@ -1671,7 +1671,7 @@ msgstr "La còpia està prohibida pel DRM"
 msgid "&Delete"
 msgstr "Su&primeix"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:771
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2262,13 +2262,13 @@ msgstr "Cerca..."
 msgid "Go to This Bookmark"
 msgstr "Ves a aquest punt"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:703
-#: part/part.cpp:2459
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/part.cpp:2461
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Reanomena un punt"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2264 part/part.cpp:3166
+#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3174
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Suprimeix el punt"
@@ -2900,20 +2900,26 @@ msgstr ""
 "En usar l'eina Navega, el cursor continua al final oposat en arribar a la "
 "vora de la pantalla"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Items in recent history:"
+msgstr ""
+
+#: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Columnes de visió general:"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:220
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
 # skip-rule: k-PageUp-1
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:221
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2924,49 +2930,49 @@ msgstr ""
 "tecles de retrocedir/avançar pàgina."
 
 # skip-rule: k-PageUp-1
-#: part/dlggeneral.cpp:217
+#: part/dlggeneral.cpp:223
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Superposició Re/Av Pàg:"
 
-#: part/dlggeneral.cpp:222
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:232
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:227
+#: part/dlggeneral.cpp:233
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Ajusta a l'amplada de pàgina"
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:234
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ajusta a la pàgina"
 
-#: part/dlggeneral.cpp:229
+#: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Encaixat automàtic"
 
-#: part/dlggeneral.cpp:230
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Personalitzat"
 
-#: part/dlggeneral.cpp:231
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2976,7 +2982,7 @@ msgstr ""
 "Defineix el mode predeterminat de zoom per als fitxers que mai s'han obert "
 "abans. Per als fitxers que s'han obert prèviament s'aplica el zoom anterior."
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:241
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3582,7 +3588,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expressió regular"
 
-#: part/layers.cpp:35 part/part.cpp:2307
+#: part/layers.cpp:35 part/part.cpp:2309
 #, kde-format
 msgid "Layers"
 msgstr "Capes"
@@ -3872,7 +3878,7 @@ msgstr "Copia el text"
 msgid "Go to '%1'"
 msgstr "Ves a «%1»"
 
-#: part/pageview.cpp:4064 part/part.cpp:3171
+#: part/pageview.cpp:4064 part/part.cpp:3179
 #, kde-format
 msgid "Fit Width"
 msgstr "Ajusta a l'amplada de pàgina"
@@ -4268,205 +4274,205 @@ msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Finalitza la signatura"
 
-#: part/part.cpp:660
+#: part/part.cpp:662
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Anterior"
 
-#: part/part.cpp:661
+#: part/part.cpp:663
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Ves a la pàgina anterior"
 
-#: part/part.cpp:662
+#: part/part.cpp:664
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Va a la pàgina anterior del document"
 
-#: part/part.cpp:672
+#: part/part.cpp:674
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Següent"
 
-#: part/part.cpp:673
+#: part/part.cpp:675
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Avança fins a la pàgina següent"
 
-#: part/part.cpp:674
+#: part/part.cpp:676
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Va a la pàgina següent del document"
 
-#: part/part.cpp:685
+#: part/part.cpp:687
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Començament del document"
 
-#: part/part.cpp:686
+#: part/part.cpp:688
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Va al començament del document"
 
-#: part/part.cpp:690
+#: part/part.cpp:692
 #, kde-format
 msgid "End of the document"
 msgstr "Final del document"
 
-#: part/part.cpp:691
+#: part/part.cpp:693
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Va al final del document"
 
-#: part/part.cpp:705
+#: part/part.cpp:707
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Reanomena el punt actual"
 
-#: part/part.cpp:709
+#: part/part.cpp:711
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Punt anterior"
 
-#: part/part.cpp:711
+#: part/part.cpp:713
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Va cap al punt anterior"
 
-#: part/part.cpp:715
+#: part/part.cpp:717
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Punt següent"
 
-#: part/part.cpp:717
+#: part/part.cpp:719
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Va cap al punt següent"
 
-#: part/part.cpp:746
+#: part/part.cpp:748
 #, kde-format
 msgid "Configure Okular..."
 msgstr "Configura l'Okular..."
 
-#: part/part.cpp:749
+#: part/part.cpp:751
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "Configura el visualitzador..."
 
-#: part/part.cpp:755
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "Configura els dorsals de visualització..."
 
-#: part/part.cpp:757
+#: part/part.cpp:759
 #, kde-format
 msgid "Configure Backends..."
 msgstr "Configura els dorsals..."
 
-#: part/part.cpp:793
+#: part/part.cpp:795
 #, kde-format
 msgid "About Backend"
 msgstr "Quant al dorsal"
 
-#: part/part.cpp:798
+#: part/part.cpp:800
 #, kde-format
 msgid "Reloa&d"
 msgstr "&Recarrega"
 
-#: part/part.cpp:800
+#: part/part.cpp:802
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Recarregant el document actual des del disc."
 
-#: part/part.cpp:806
+#: part/part.cpp:808
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Tanca la barra de &cerca"
 
-#: part/part.cpp:811
+#: part/part.cpp:813
 #, kde-format
 msgid "Page Number"
 msgstr "Número de pàgina"
 
-#: part/part.cpp:815
+#: part/part.cpp:817
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "Configura els modes de color..."
 
-#: part/part.cpp:856
+#: part/part.cpp:858
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Selecciona tot el text de la pàgina actual"
 
-#: part/part.cpp:870
+#: part/part.cpp:872
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Mostra la barra &lateral"
 
-#: part/part.cpp:879
+#: part/part.cpp:881
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Mostra la barra de &pàgines"
 
-#: part/part.cpp:885
+#: part/part.cpp:887
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Mostra el plafó de les &signatures"
 
-#: part/part.cpp:896
+#: part/part.cpp:898
 #, kde-format
 msgid "&Embedded Files"
 msgstr "Fitxers &incrustats"
 
-#: part/part.cpp:902
+#: part/part.cpp:904
 #, kde-format
 msgid "E&xport As"
 msgstr "E&xporta com a"
 
-#: part/part.cpp:914
+#: part/part.cpp:916
 #, kde-format
 msgid "S&hare"
 msgstr "Compartei&x"
 
-#: part/part.cpp:923
+#: part/part.cpp:925
 #, kde-format
 msgid "P&resentation"
 msgstr "P&resentació"
 
-#: part/part.cpp:930
+#: part/part.cpp:932
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Obre la carpeta con&tenidora"
 
-#: part/part.cpp:944
+#: part/part.cpp:946
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "&Importa un PostScript com a PDF..."
 
-#: part/part.cpp:948
+#: part/part.cpp:950
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Canvia al mode de pantalla negra"
 
-#: part/part.cpp:956
+#: part/part.cpp:958
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Esborra el dibuix"
 
-#: part/part.cpp:961
+#: part/part.cpp:963
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "Configura les anotacions..."
 
-#: part/part.cpp:966
+#: part/part.cpp:968
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Reprodueix/pausa la presentació"
 
-#: part/part.cpp:1121
+#: part/part.cpp:1123
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4477,37 +4483,37 @@ msgstr ""
 "desar.\n"
 "Qualsevol modificació es perdrà una vegada es tanqui l'Okular."
 
-#: part/part.cpp:1122
+#: part/part.cpp:1124
 #, kde-format
 msgid "Document can't be saved"
 msgstr "El document no s'ha pogut desar"
 
-#: part/part.cpp:1151
+#: part/part.cpp:1153
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "No s'ha pogut obrir «%1» (%2) "
 
-#: part/part.cpp:1204
+#: part/part.cpp:1206
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "S'ha cancel·lat la càrrega de %1."
 
-#: part/part.cpp:1220
+#: part/part.cpp:1222
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "No s'ha pogut obrir %1. Motiu: %2"
 
-#: part/part.cpp:1248
+#: part/part.cpp:1250
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Configura els dorsals de visualització"
 
-#: part/part.cpp:1250
+#: part/part.cpp:1252
 #, kde-format
 msgid "Configure Backends"
 msgstr "Configura els dorsals"
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4516,44 +4522,44 @@ msgstr ""
 "No s'ha trobat el programa «ps2pdf», per tant, l'Okular no pot importar "
 "fitxers PS usant-lo."
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "No s'ha trobat el ps2pdf"
 
-#: part/part.cpp:1340
+#: part/part.cpp:1342
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "Fitxers PostScript (%1)"
 
-#: part/part.cpp:1356
+#: part/part.cpp:1358
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "S'està important el fitxer PS com a PDF (pot trigar una estona)..."
 
-#: part/part.cpp:1488
+#: part/part.cpp:1490
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Introduïu la contrasenya per a llegir el document:"
 
-#: part/part.cpp:1490
+#: part/part.cpp:1492
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Contrasenya incorrecta. Torneu a provar-ho:"
 
-#: part/part.cpp:1501
+#: part/part.cpp:1503
 #, kde-format
 msgid "Document Password"
 msgstr "Contrasenya del document"
 
-#: part/part.cpp:1624
+#: part/part.cpp:1626
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Aquest document té formularis XFA, els quals actualment no estan <b>admesos</"
 "b>."
 
-#: part/part.cpp:1631
+#: part/part.cpp:1633
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4562,7 +4568,7 @@ msgstr ""
 "Aquest document té formularis. Cliqueu al botó per a interactuar-hi, o useu "
 "«Visualitza -> Mostra els formularis»."
 
-#: part/part.cpp:1647
+#: part/part.cpp:1649
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4573,7 +4579,7 @@ msgstr ""
 "document."
 
 # skip-rule: ff-enter
-#: part/part.cpp:1735
+#: part/part.cpp:1737
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4582,27 +4588,27 @@ msgstr ""
 "Aquest document requereix mostrar-se en pantalla completa.\n"
 "Cal deixar el mode normal i entrar en el mode de presentació?"
 
-#: part/part.cpp:1737
+#: part/part.cpp:1739
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Petició de canvi del mode de visualització"
 
-#: part/part.cpp:1738
+#: part/part.cpp:1740
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Entra en mode de presentació"
 
-#: part/part.cpp:1739
+#: part/part.cpp:1741
 #, kde-format
 msgid "Deny Request"
 msgstr "Denega la petició"
 
-#: part/part.cpp:1829
+#: part/part.cpp:1831
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "No s'ha pogut obrir %1. %2"
 
-#: part/part.cpp:1859
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4616,22 +4622,22 @@ msgstr ""
 "canvis fets en l'altre programa.<nl/><nl/>Voleu continuar recarregant el "
 "fitxer?"
 
-#: part/part.cpp:1863 part/part.cpp:1873
+#: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
 msgid "File Changed"
 msgstr "El fitxer ha canviat"
 
-#: part/part.cpp:1864
+#: part/part.cpp:1866
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Continua recarregant"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Interromp la recàrrega"
 
-#: part/part.cpp:1869
+#: part/part.cpp:1871
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4644,27 +4650,27 @@ msgstr ""
 "un altre programa. Tancar-lo substituirà els canvis sense desar pels canvis "
 "fets en l'altre programa.<nl/><nl/>Voleu continuar tancant el fitxer?"
 
-#: part/part.cpp:1874
+#: part/part.cpp:1876
 #, kde-format
 msgid "Continue Closing"
 msgstr "Continua tancant"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1877
 #, kde-format
 msgid "Abort Closing"
 msgstr "Interromp el tancament"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Voleu desar els canvis a «%1» o descartar-los?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, kde-format
 msgid "Close Document"
 msgstr "Tanca el document"
 
-#: part/part.cpp:2014
+#: part/part.cpp:2016
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4673,7 +4679,7 @@ msgstr ""
 "Aquest enllaç apunta a una acció sobre un document tancat que no funciona "
 "quan s'està emprant el visualitzador incrustat."
 
-#: part/part.cpp:2020
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4682,59 +4688,59 @@ msgstr ""
 "Aquest enllaç apunta a una acció sobre una acció de sortida d'aplicació que "
 "no funciona quan s'està emprant el visualitzador incrustat."
 
-#: part/part.cpp:2112 part/part.cpp:2130
+#: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
 msgstr "S'està recarregant el document..."
 
-#: part/part.cpp:2287 part/toc.cpp:38
+#: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Contingut"
 
-#: part/part.cpp:2316 part/signaturepanel.cpp:47
+#: part/part.cpp:2318 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Signatures"
 
-#: part/part.cpp:2343
+#: part/part.cpp:2345
 #, kde-format
 msgid "Go to Page"
 msgstr "Ves a la pàgina"
 
-#: part/part.cpp:2366
+#: part/part.cpp:2368
 #, kde-format
 msgid "&Page:"
 msgstr "&Pàgina:"
 
-#: part/part.cpp:2459
+#: part/part.cpp:2461
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Introduïu el nom nou del punt:"
 
-#: part/part.cpp:2505
+#: part/part.cpp:2507
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Reanomena aquest punt"
 
-#: part/part.cpp:2508
+#: part/part.cpp:2510
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Elimina aquest punt"
 
-#: part/part.cpp:2594 part/part.cpp:2595 part/part.cpp:3477
+#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3485
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2602 part/revisionviewer.cpp:44
+#: part/part.cpp:2604 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Desa com a"
 
-#: part/part.cpp:2619
+#: part/part.cpp:2621
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4743,18 +4749,18 @@ msgstr ""
 "Heu triat desar un arxiu de l'Okular sense que el nom de fitxer acabi amb "
 "l'extensió «%1». Això no és permès, voleu triar un nom nou?"
 
-#: part/part.cpp:2620
+#: part/part.cpp:2622
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Extensió no admesa"
 
-#: part/part.cpp:2621
+#: part/part.cpp:2623
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Trieu un nom nou"
 
-#: part/part.cpp:2664
+#: part/part.cpp:2666
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4766,17 +4772,17 @@ msgstr ""
 "deseu ara, es perdrà qualsevol canvi fet en l'altre programa. Segur que "
 "voleu continuar?"
 
-#: part/part.cpp:2667 part/part.cpp:2686 part/part.cpp:2738
+#: part/part.cpp:2669 part/part.cpp:2688 part/part.cpp:2740
 #, kde-format
 msgid "Save - Warning"
 msgstr "Desar - Avís"
 
-#: part/part.cpp:2669
+#: part/part.cpp:2671
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Desa una còpia en un altre lloc"
 
-#: part/part.cpp:2685
+#: part/part.cpp:2687
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4787,12 +4793,12 @@ msgstr ""
 "lo, cal recarregar el fitxer. Es tornarà a preguntar la contrasenya i es "
 "perdrà l'historial de desfer/refer.<br />Voleu continuar?"
 
-#: part/part.cpp:2712
+#: part/part.cpp:2714
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "No s'ha pogut obrir el fitxer temporal per a desar."
 
-#: part/part.cpp:2725
+#: part/part.cpp:2727
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4803,7 +4809,7 @@ msgstr ""
 "només és de lectura. Intenteu desar-lo a una altra ubicació o canvieu els "
 "seus permisos."
 
-#: part/part.cpp:2737
+#: part/part.cpp:2739
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4812,23 +4818,23 @@ msgstr ""
 "Després de desar, el format actual del document requereix recarregar el "
 "fitxer. Es perdrà l'historial de desfer/refer.<br />Voleu continuar?"
 
-#: part/part.cpp:2752 part/part.cpp:2821 part/part.cpp:2842 part/part.cpp:3492
+#: part/part.cpp:2754 part/part.cpp:2823 part/part.cpp:2844 part/part.cpp:3500
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "El fitxer no es pot desar a «%1». Intenteu desar-lo a una altra ubicació."
 
-#: part/part.cpp:2765
+#: part/part.cpp:2767
 #, kde-format
 msgid "Filled form contents"
 msgstr "Contingut dels formularis omplerts"
 
-#: part/part.cpp:2768
+#: part/part.cpp:2770
 #, kde-format
 msgid "User annotations"
 msgstr "Anotacions de l'usuari"
 
-#: part/part.cpp:2773
+#: part/part.cpp:2775
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4839,17 +4845,17 @@ msgstr ""
 "permet desar els elements següents. Useu el format <i>arxiu de document de "
 "l'Okular</i> per a conservar-los."
 
-#: part/part.cpp:2777 part/part.cpp:2799
+#: part/part.cpp:2779 part/part.cpp:2801
 #, kde-format
 msgid "Warning"
 msgstr "Avís"
 
-#: part/part.cpp:2778 part/part.cpp:2800
+#: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "Desa com a arxiu de document de l'Okular..."
 
-#: part/part.cpp:2790
+#: part/part.cpp:2792
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4862,7 +4868,7 @@ msgstr ""
 "l'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a desar el "
 "document i descartar aquests elements."
 
-#: part/part.cpp:2793
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4875,22 +4881,22 @@ msgstr ""
 "l'Okular</i> per a conservar-los. Feu clic a <i>Continua</i> per a desar, "
 "però es perdran aquests elements, així com l'historial de desfer/refer."
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "Continue"
 msgstr "Continua"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Continua, es perden els canvis"
 
-#: part/part.cpp:2823
+#: part/part.cpp:2825
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "El fitxer no s'ha pogut desar a «%1». %2"
 
-#: part/part.cpp:2862
+#: part/part.cpp:2864
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4901,7 +4907,7 @@ msgstr ""
 "\n"
 "El document ja no existeix."
 
-#: part/part.cpp:2898
+#: part/part.cpp:2900
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4910,59 +4916,59 @@ msgstr ""
 "El fitxer no es pot desar a «%1». Error: «%2». Intenteu desar-lo a una altra "
 "ubicació."
 
-#: part/part.cpp:3149
+#: part/part.cpp:3157
 #, kde-format
 msgid "Expand whole section"
 msgstr "Expandeix tota la secció"
 
-#: part/part.cpp:3150
+#: part/part.cpp:3158
 #, kde-format
 msgid "Collapse whole section"
 msgstr "Redueix tota la secció"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3159
 #, kde-format
 msgid "Expand all"
 msgstr "Expandeix-ho tot"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3160
 #, kde-format
 msgid "Collapse all"
 msgstr "Redueix-ho tot"
 
-#: part/part.cpp:3163
+#: part/part.cpp:3171
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sincronitza la miniatura amb la pàgina"
 
-#: part/part.cpp:3168
+#: part/part.cpp:3176
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Afegeix un punt"
 
-#: part/part.cpp:3190
+#: part/part.cpp:3198
 #, kde-format
 msgid "Tools"
 msgstr "Eines"
 
-#: part/part.cpp:3372
+#: part/part.cpp:3380
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Pronuncia"
 
-#: part/part.cpp:3530
+#: part/part.cpp:3538
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Impressió"
 
-#: part/part.cpp:3593
+#: part/part.cpp:3601
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "No es permet imprimir aquest document."
 
-#: part/part.cpp:3606
+#: part/part.cpp:3614
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4970,7 +4976,7 @@ msgstr ""
 "No s'ha pogut imprimir el document. Error desconegut. Si us plau, informeu a "
 "bugs.kde.org"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3616
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4979,17 +4985,17 @@ msgstr ""
 "No s'ha pogut imprimir el document. L'error detallat és: «%1». Si us plau, "
 "informeu a bugs.kde.org"
 
-#: part/part.cpp:3697
+#: part/part.cpp:3705
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Aneu al lloc a on estàveu abans"
 
-#: part/part.cpp:3701
+#: part/part.cpp:3709
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Aneu al lloc a on estàveu després"
 
-#: part/part.cpp:3726
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4998,7 +5004,7 @@ msgstr ""
 "<qt><strong>Error de fitxer!</strong> No s'ha pogut crear el fitxer temporal "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3738
+#: part/part.cpp:3746
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5008,7 +5014,7 @@ msgstr ""
 "<strong>%1</strong></nobr> per a descomprimir-lo. No es carregarà el fitxer."
 "</qt>"
 
-#: part/part.cpp:3742
+#: part/part.cpp:3750
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5021,7 +5027,7 @@ msgstr ""
 "clic dret al fitxer en el gestor de fitxers Dolphin, després trieu l'opció "
 "«Propietats». i seleccioneu la pestanya «Permisos» a la finestra oberta.</qt>"
 
-#: part/part.cpp:3764
+#: part/part.cpp:3772
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5030,7 +5036,7 @@ msgstr ""
 "<qt><strong>Error de fitxer!</strong> No s'ha pogut descomprimir el fitxer "
 "<nobr><strong>%1</strong></nobr>. No es carregarà el fitxer.</qt>"
 
-#: part/part.cpp:3768
+#: part/part.cpp:3776
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5040,27 +5046,27 @@ msgstr ""
 "estar segur, proveu de descomprimir a mà el fitxer amb les eines de la línia "
 "d'ordres.</qt>"
 
-#: part/part.cpp:3794
+#: part/part.cpp:3802
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Sense punts"
 
-#: part/part.cpp:3865
+#: part/part.cpp:3873
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "S'ha produït un problema en compartir el document: %1"
 
-#: part/part.cpp:3865 part/part.cpp:3871
+#: part/part.cpp:3873 part/part.cpp:3879
 #, kde-format
 msgid "Share"
 msgstr "Comparteix"
 
-#: part/part.cpp:3869
+#: part/part.cpp:3877
 #, kde-format
 msgid "Document shared successfully"
 msgstr "El document s'ha compartit correctament"
 
-#: part/part.cpp:3871
+#: part/part.cpp:3879
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Es pot trobar el document compartit a: <a href=\"%1\">%1</a>"
@@ -5911,7 +5917,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "No s'ha pogut trobar el component de l'Okular."
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:574
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5920,7 +5926,7 @@ msgstr ""
 "Feu un clic per a obrir un fitxer\n"
 "Feu un clic i manteniu-lo premut per a obrir un fitxer recent"
 
-#: shell/shell.cpp:576
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5928,57 +5934,57 @@ msgstr ""
 "<b>Feu un clic</b> per a obrir un fitxer o <b>feu un clic i manteniu-lo "
 "premut</b> per a seleccionar un fitxer recent"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Next Tab"
 msgstr "Pestanya següent"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Previous Tab"
 msgstr "Pestanya anterior"
 
-#: shell/shell.cpp:601
+#: shell/shell.cpp:600
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desfés el tancament de la pestanya"
 
-#: shell/shell.cpp:610
+#: shell/shell.cpp:609
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloca la barra lateral"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:709
 #, kde-format
 msgid "All files (*)"
 msgstr "Tots els fitxers (*)"
 
-#: shell/shell.cpp:711
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Tots els fitxers admesos (%1)"
 
-#: shell/shell.cpp:715
+#: shell/shell.cpp:714
 #, kde-format
 msgid "Open Document"
 msgstr "Obre document"
 
-#: shell/shell.cpp:829
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmació del tancament"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:832
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tanca les pestanyes"
 
-#: shell/shell.cpp:840
+#: shell/shell.cpp:839
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Esteu a punt de tancar %1 pestanyes. Esteu segur que voleu continuar?"
 
-#: shell/shell.cpp:842
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avisa quan s'intentin tancar múltiples pestanyes"

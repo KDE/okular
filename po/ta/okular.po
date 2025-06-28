@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"POT-Creation-Date: 2025-06-28 00:40+0000\n"
 "PO-Revision-Date: 2025-04-20 18:12+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -377,7 +377,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "அச்சிட வேண்டிய பக்க அளவு செல்லுபடியாகாதது"
 
-#: core/document.cpp:5565 part/part.cpp:1144
+#: core/document.cpp:5565 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'-ஐ திறக்க முடியவில்லை. அப்படி ஒரு கோப்பு இல்லை"
@@ -1625,7 +1625,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "பக்கம் %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3160
+#: part/annotationmodel.cpp:322 part/part.cpp:3168
 #, kde-format
 msgid "Page %1"
 msgstr "பக்கம் %1"
@@ -1665,7 +1665,7 @@ msgstr "DRM-ஆல் நகலெடுத்தல் தடைசெய்ய
 msgid "&Delete"
 msgstr "&நீக்கு"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:771
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2256,13 +2256,13 @@ msgstr "தேடு..."
 msgid "Go to This Bookmark"
 msgstr "இந்த புத்தகக்குறிக்கு செல்"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:703
-#: part/part.cpp:2459
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/part.cpp:2461
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "நினைவுக்குறியின் பெயரை மாற்று"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2264 part/part.cpp:3166
+#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3174
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "நினைவுக்குறியை நீக்கு"
@@ -2886,19 +2886,25 @@ msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "உலாவல் கருவி திரையின் ஓரத்தைத் தாண்டும்போது, மறு ஓரத்திற்கு கொண்டுசெல்"
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Items in recent history:"
+msgstr ""
+
+#: part/dlggeneral.cpp:213
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "மேலோட்ட நெடுவரிசைகள்:"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:220
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:221
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2908,49 +2914,49 @@ msgstr ""
 "Page Up/Down விசைகளை அழுத்துப் பிறகு தற்போதைய காட்சிப் பகுதியில் எவ்வளவு இன்னும் "
 "காணப்படும் என்பதைத் தீர்மானிக்கும்."
 
-#: part/dlggeneral.cpp:217
+#: part/dlggeneral.cpp:223
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "பக்கம் மேலே/கீழே நகரும்போது மேற்படிதல்:"
 
-#: part/dlggeneral.cpp:222
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:232
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:227
+#: part/dlggeneral.cpp:233
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "அகலம் படி"
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:234
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "பக்க அளவுபடி"
 
-#: part/dlggeneral.cpp:229
+#: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "தானியக்கம்"
 
-#: part/dlggeneral.cpp:230
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "தனிப்பயன்"
 
-#: part/dlggeneral.cpp:231
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -2960,7 +2966,7 @@ msgstr ""
 "இதற்கு முன்பு திறக்கப்படாத கோப்புகளுக்கான உருப்பெருக்க அளவை இது நிர்ணயிக்கும். இதற்கு "
 "முன்பு திறந்துள்ள கோப்புகளுக்கு முந்தைய உருப்பெருக்கம் இடப்படும்."
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:241
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3572,7 +3578,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "சுருங்குறித் தொடர்"
 
-#: part/layers.cpp:35 part/part.cpp:2307
+#: part/layers.cpp:35 part/part.cpp:2309
 #, kde-format
 msgid "Layers"
 msgstr "அடுக்குகள்"
@@ -3860,7 +3866,7 @@ msgstr "உரையை நகலெடு"
 msgid "Go to '%1'"
 msgstr "'%1' என்பதற்கு செல்"
 
-#: part/pageview.cpp:4064 part/part.cpp:3171
+#: part/pageview.cpp:4064 part/part.cpp:3179
 #, kde-format
 msgid "Fit Width"
 msgstr "அகலம் படி"
@@ -4259,205 +4265,205 @@ msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "கையொப்பமிடுவதை முடி"
 
-#: part/part.cpp:660
+#: part/part.cpp:662
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "முந்தையது"
 
-#: part/part.cpp:661
+#: part/part.cpp:663
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "முந்தைய பக்கத்துக்கு செல்"
 
-#: part/part.cpp:662
+#: part/part.cpp:664
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "ஆவணத்தின் முந்தைய பக்கத்திற்கு செல்லும்"
 
-#: part/part.cpp:672
+#: part/part.cpp:674
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "அடுத்தது"
 
-#: part/part.cpp:673
+#: part/part.cpp:675
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "அடுத்தப் பக்கத்திற்கு செல்"
 
-#: part/part.cpp:674
+#: part/part.cpp:676
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "ஆவணத்தின் அடுத்த பக்கத்திற்கு செல்லும்"
 
-#: part/part.cpp:685
+#: part/part.cpp:687
 #, kde-format
 msgid "Beginning of the document"
 msgstr "ஆவணத்தின் தொடக்கம்"
 
-#: part/part.cpp:686
+#: part/part.cpp:688
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "ஆவணத்தின் தொடக்கத்திற்கு செல்லும்"
 
-#: part/part.cpp:690
+#: part/part.cpp:692
 #, kde-format
 msgid "End of the document"
 msgstr "ஆவணத்தின் முடிவு"
 
-#: part/part.cpp:691
+#: part/part.cpp:693
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "ஆவணத்தின் முடிவிற்கு செல்லும்"
 
-#: part/part.cpp:705
+#: part/part.cpp:707
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "தற்போதைய நினைவுக்குறிக்கு மறுபெயரிடு"
 
-#: part/part.cpp:709
+#: part/part.cpp:711
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "முந்தைய நினைவுக்குறி"
 
-#: part/part.cpp:711
+#: part/part.cpp:713
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "முந்தைய நினைவுக்குறிக்கு செல்"
 
-#: part/part.cpp:715
+#: part/part.cpp:717
 #, kde-format
 msgid "Next Bookmark"
 msgstr "அடுத்த நினைவுக்குறி"
 
-#: part/part.cpp:717
+#: part/part.cpp:719
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "அடுத்த நினைவுக்குறிக்கு செல்"
 
-#: part/part.cpp:746
+#: part/part.cpp:748
 #, kde-format
 msgid "Configure Okular..."
 msgstr "ஆக்குலரை அமை..."
 
-#: part/part.cpp:749
+#: part/part.cpp:751
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "காட்டியை அமை..."
 
-#: part/part.cpp:755
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Viewer Backends..."
 msgstr "காட்டி பின்நிலைகளை அமை..."
 
-#: part/part.cpp:757
+#: part/part.cpp:759
 #, kde-format
 msgid "Configure Backends..."
 msgstr "பின்நிலைகளை அமை..."
 
-#: part/part.cpp:793
+#: part/part.cpp:795
 #, kde-format
 msgid "About Backend"
 msgstr "பின்நிலையைப் பற்றி"
 
-#: part/part.cpp:798
+#: part/part.cpp:800
 #, kde-format
 msgid "Reloa&d"
 msgstr "&மீளேற்று"
 
-#: part/part.cpp:800
+#: part/part.cpp:802
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "தற்போதைய ஆவணத்தை வட்டிலிருந்து மீளேற்று."
 
-#: part/part.cpp:806
+#: part/part.cpp:808
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "&தேடல் பட்டையை மூடு"
 
-#: part/part.cpp:811
+#: part/part.cpp:813
 #, kde-format
 msgid "Page Number"
 msgstr "பக்க எண்"
 
-#: part/part.cpp:815
+#: part/part.cpp:817
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "நிற பயன்முறைகளை அமை..."
 
-#: part/part.cpp:856
+#: part/part.cpp:858
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "இந்த பக்கத்தில் உள்ள அனைத்து சொற்களையும் தேர்ந்தெடு"
 
-#: part/part.cpp:870
+#: part/part.cpp:872
 #, kde-format
 msgid "Show S&idebar"
 msgstr "&ஓரப்பட்டையைக் காட்டு"
 
-#: part/part.cpp:879
+#: part/part.cpp:881
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "ப&க்கம் பட்டையைக் காட்டு"
 
-#: part/part.cpp:885
+#: part/part.cpp:887
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "கை&யொப்பங்கள் பலகையைக் காட்டு"
 
-#: part/part.cpp:896
+#: part/part.cpp:898
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&உட்பொதிந்த கோப்புகள்"
 
-#: part/part.cpp:902
+#: part/part.cpp:904
 #, kde-format
 msgid "E&xport As"
 msgstr "&இவ்வாறு ஏற்றுமதி செய்"
 
-#: part/part.cpp:914
+#: part/part.cpp:916
 #, kde-format
 msgid "S&hare"
 msgstr "பகி&ர்"
 
-#: part/part.cpp:923
+#: part/part.cpp:925
 #, kde-format
 msgid "P&resentation"
 msgstr "&வில்லைக்காட்சி"
 
-#: part/part.cpp:930
+#: part/part.cpp:932
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "கொ&ண்டுள்ள அடைவைத் திற"
 
-#: part/part.cpp:944
+#: part/part.cpp:946
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "PostScript-ஐ PDF-ஆக இ&றக்குமதி செய்..."
 
-#: part/part.cpp:948
+#: part/part.cpp:950
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr " "
 
-#: part/part.cpp:956
+#: part/part.cpp:958
 #, kde-format
 msgid "Erase Drawing"
 msgstr "வரைந்ததை அழி"
 
-#: part/part.cpp:961
+#: part/part.cpp:963
 #, kde-format
 msgid "Configure Annotations..."
 msgstr "குறிப்புகளை அமை..."
 
-#: part/part.cpp:966
+#: part/part.cpp:968
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "வில்லைக்காட்சியை இயக்கு/இடைநிறுத்து"
 
-#: part/part.cpp:1121
+#: part/part.cpp:1123
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4467,37 +4473,37 @@ msgstr ""
 "திறந்துள்ள ஆவணத்தை திருத்தியுள்ளீர்கள், ஆனால் இவ்வகையான ஆவணத்தை சேமிக்க முடியாது.\n"
 "ஆக்குலரை மூடும்போது உங்கள் மாற்றங்களை இழப்பீர்கள்."
 
-#: part/part.cpp:1122
+#: part/part.cpp:1124
 #, kde-format
 msgid "Document can't be saved"
 msgstr "ஆவணத்தை சேமிக்க முடியாது"
 
-#: part/part.cpp:1151
+#: part/part.cpp:1153
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1' (%2) என்பதை திறக்க முடியவில்லை"
 
-#: part/part.cpp:1204
+#: part/part.cpp:1206
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 என்பதை ஏற்றுதல் கைவிடப்பட்டது"
 
-#: part/part.cpp:1220
+#: part/part.cpp:1222
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1 என்பதை திறக்க முடியவில்லை. காரணம்: %2"
 
-#: part/part.cpp:1248
+#: part/part.cpp:1250
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "காட்டி பின்நிலைகளை அமை"
 
-#: part/part.cpp:1250
+#: part/part.cpp:1252
 #, kde-format
 msgid "Configure Backends"
 msgstr "பின்நிலைகளை அமை"
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4506,42 +4512,42 @@ msgstr ""
 "\"ps2pdf\" என்ற நிரல் கண்டுபிடிக்கப்படாததால், ஆக்குலரால் அதைக் கொண்டு PS கோப்புகளை "
 "இறக்குமதி செய்ய முடியாது."
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf கண்டுபிடிக்கப்படவில்லை"
 
-#: part/part.cpp:1340
+#: part/part.cpp:1342
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript கோப்புகள் (%1)"
 
-#: part/part.cpp:1356
+#: part/part.cpp:1358
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "PS கோப்பு PDF-ஆக இறக்குமதி செய்யப்படுகிறது (இதற்கு நேரம் ஆகலாம்)"
 
-#: part/part.cpp:1488
+#: part/part.cpp:1490
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "ஆவணத்தை படிக்க கடவுச்சொல்லை உள்ளிடுங்கள்:"
 
-#: part/part.cpp:1490
+#: part/part.cpp:1492
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "தவறான கடவுச்சொல். மறுபடியும் முயற்சியுங்கள்:"
 
-#: part/part.cpp:1501
+#: part/part.cpp:1503
 #, kde-format
 msgid "Document Password"
 msgstr "ஆவணத்திற்கான கடவுச்சொல்"
 
-#: part/part.cpp:1624
+#: part/part.cpp:1626
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "இந்த ஆவணத்தில் தற்போது <b>ஆதரிக்கப்படாத</b> XFA படிவங்கள் உள்ளன."
 
-#: part/part.cpp:1631
+#: part/part.cpp:1633
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4550,7 +4556,7 @@ msgstr ""
 "இந்த ஆவணத்தில் படிவங்கள் உள்ளன. அவற்றைப் பயன்படுத்த பட்டனை அழுத்துங்கள், அல்லது பார்வை -> "
 "படிவங்களைக் காட்டு என்பதை பயன்படுத்துங்கள்."
 
-#: part/part.cpp:1647
+#: part/part.cpp:1649
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4559,7 +4565,7 @@ msgstr ""
 "இந்த ஆவணத்தை மாற்றக்கூடிய அனைத்து அம்சங்களும் முடக்கபட்டுள்ளன. இந்த ஆவணத்தை திருத்த, "
 "தயவுசெய்து ஒரு நகலை சேமித்து அதைத் திறவுங்கள்."
 
-#: part/part.cpp:1735
+#: part/part.cpp:1737
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4568,27 +4574,27 @@ msgstr ""
 "இந்த ஆவணம் முழுத்திரையில் காண்பிக்குமாறு கோருகிறது.\n"
 "சாதாரண பயன்முறையை விட்டு வில்லைக்காட்சி பயன்முறையில் நுழைய வேண்டுமா?"
 
-#: part/part.cpp:1737
+#: part/part.cpp:1739
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "பார்வை பயன்முறையை மாற்ற கோரிக்கை"
 
-#: part/part.cpp:1738
+#: part/part.cpp:1740
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "வில்லைக்காட்சி பயன்முறையில் நுழை"
 
-#: part/part.cpp:1739
+#: part/part.cpp:1741
 #, kde-format
 msgid "Deny Request"
 msgstr "கோரிக்கையை மறு"
 
-#: part/part.cpp:1829
+#: part/part.cpp:1831
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1 என்பதை திறக்க முடியவில்லை. %2"
 
-#: part/part.cpp:1859
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4601,22 +4607,22 @@ msgstr ""
 "வேறொரு நிரல் மாற்றியுள்ளது. மீளேற்றினால், சேமிக்கப்படா மாற்றங்களை இழப்பீர். <nl/><nl/"
 ">கோப்பை மீளேற்றுவதை தொடர வேண்டுமா?"
 
-#: part/part.cpp:1863 part/part.cpp:1873
+#: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
 msgid "File Changed"
 msgstr "கோப்பு மாறிவிட்டது"
 
-#: part/part.cpp:1864
+#: part/part.cpp:1866
 #, kde-format
 msgid "Continue Reloading"
 msgstr "மீளெற்றுவதைத் தொடர்"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Reloading"
 msgstr "மீளேற்றுவதைக் கைவிடு"
 
-#: part/part.cpp:1869
+#: part/part.cpp:1871
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4629,29 +4635,29 @@ msgstr ""
 "வேறொரு நிரல் மாற்றியுள்ளது. மூடினால், சேமிக்கப்படா மாற்றங்களை இழப்பீர். <nl/><nl/>கோப்பை "
 "மூடுவதை தொடர வேண்டுமா?"
 
-#: part/part.cpp:1874
+#: part/part.cpp:1876
 #, kde-format
 msgid "Continue Closing"
 msgstr "மூடுவதைத் தொடர்"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1877
 #, kde-format
 msgid "Abort Closing"
 msgstr "மூடுவதைக் கைவிடு"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 "\"%1\" என்பதற்கு உங்கள் மாற்றங்களை சேமிக்க விரும்புகிறீர்களா, அல்லது அவற்றைக் கைவிட "
 "விரும்புகிறீர்களா?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, kde-format
 msgid "Close Document"
 msgstr "ஆவணத்தை மூடு"
 
-#: part/part.cpp:2014
+#: part/part.cpp:2016
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4660,7 +4666,7 @@ msgstr ""
 "உட்பொதிந்த காட்டியைப் பயன்படுத்தும்போது வேலை செய்யாத 'ஆவணத்தை மூடு' என்ற செயலை இந்த "
 "இணைப்பு இயக்க பார்க்கிறது."
 
-#: part/part.cpp:2020
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4669,59 +4675,59 @@ msgstr ""
 "உட்பொதிந்த காட்டியைப் பயன்படுத்தும்போது வேலை செய்யாத 'செயலியை மூடு' என்ற செயலை இந்த "
 "இணைப்பு இயக்க பார்க்கிறது."
 
-#: part/part.cpp:2112 part/part.cpp:2130
+#: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
 msgstr "ஆவணம் மீளேற்றப்படுகிறது..."
 
-#: part/part.cpp:2287 part/toc.cpp:38
+#: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "பொருளடக்கம்"
 
-#: part/part.cpp:2316 part/signaturepanel.cpp:47
+#: part/part.cpp:2318 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "கையொப்பங்கள்"
 
-#: part/part.cpp:2343
+#: part/part.cpp:2345
 #, kde-format
 msgid "Go to Page"
 msgstr "பக்கத்துக்கு செல் "
 
-#: part/part.cpp:2366
+#: part/part.cpp:2368
 #, kde-format
 msgid "&Page:"
 msgstr "&பக்கம்:"
 
-#: part/part.cpp:2459
+#: part/part.cpp:2461
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "நினைவுக்குறியின் புதிய பெயரை உள்ளிடுங்கள்:"
 
-#: part/part.cpp:2505
+#: part/part.cpp:2507
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "இந்த நினைவுக்குறிக்கு மறுபெயரிடு"
 
-#: part/part.cpp:2508
+#: part/part.cpp:2510
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "இந்த நினைவுக்குறியை நீக்கு"
 
-#: part/part.cpp:2594 part/part.cpp:2595 part/part.cpp:3477
+#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3485
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2602 part/revisionviewer.cpp:44
+#: part/part.cpp:2604 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "இவ்வாறு சேமி"
 
-#: part/part.cpp:2619
+#: part/part.cpp:2621
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4730,18 +4736,18 @@ msgstr ""
 "'%1'-இல் முடியாத பெயரில் ஆக்குலர் காப்பகத்தை சேமிக்க பார்க்கிறீர்கள். இது ஆதரிக்கப்படாத‍து. "
 "புதிய பெயரை தேர்ந்தெடுக்க விரும்புகிறீர்களா?"
 
-#: part/part.cpp:2620
+#: part/part.cpp:2622
 #, kde-format
 msgid "Unsupported extension"
 msgstr "ஆதரிக்கபடாத வகைப்பெயர்"
 
-#: part/part.cpp:2621
+#: part/part.cpp:2623
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "புதிய பெயரைத் தேர்ந்தெடு"
 
-#: part/part.cpp:2664
+#: part/part.cpp:2666
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4752,17 +4758,17 @@ msgstr ""
 "<filename>%1</filename> எனும் கோப்பு, வேறொரு நிரலால் மாற்றப்பட்டுள்ளது. சேமித்தால், "
 "அந்த நிரல் செய்த மாற்றங்களை இழப்பீர். உறுதியாக தொடர வேண்டுமா?"
 
-#: part/part.cpp:2667 part/part.cpp:2686 part/part.cpp:2738
+#: part/part.cpp:2669 part/part.cpp:2688 part/part.cpp:2740
 #, kde-format
 msgid "Save - Warning"
 msgstr "சேமிப்பு - எச்சரிக்கை"
 
-#: part/part.cpp:2669
+#: part/part.cpp:2671
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "வேறிடத்தில் நகலாக சேமி"
 
-#: part/part.cpp:2685
+#: part/part.cpp:2687
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4773,12 +4779,12 @@ msgstr ""
 "மறுபடியும் கடவுச்சொல் கேட்கப்படும், மேலும் உங்கள் செயல்நீக்கல்/மீளச்செயல் வரலாற்றை இழப்பீர்கள்."
 "<br />தொடர விரும்புகிறீர்களா?"
 
-#: part/part.cpp:2712
+#: part/part.cpp:2714
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "சேமிப்பதற்கு தற்காலிக கோப்பை திறக்க முடியவில்லை."
 
-#: part/part.cpp:2725
+#: part/part.cpp:2727
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4789,7 +4795,7 @@ msgstr ""
 "முடியவில்லை. வேறொரு இடத்தில் சேமிக்க முயற்சியுங்கள், அல்லது அக்கோப்பின் அனுமதிகளை "
 "மாற்றுங்கள்."
 
-#: part/part.cpp:2737
+#: part/part.cpp:2739
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4798,22 +4804,22 @@ msgstr ""
 "சேமித்த பிறகு, தற்போதைய ஆவணப் படிவம் மீளேற்றலைக் கட்டாயப்படுத்துகிறது. உங்கள் செயல்நீக்கல்/"
 "மீளச்செயல் வரலாறு இழக்கப்படும்.<br />தொடர விரும்புகிறீர்களா?"
 
-#: part/part.cpp:2752 part/part.cpp:2821 part/part.cpp:2842 part/part.cpp:3492
+#: part/part.cpp:2754 part/part.cpp:2823 part/part.cpp:2844 part/part.cpp:3500
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "கோப்பை '%1' என்பதில் சேமிக்க முடியவில்லை. வேறொரு இடத்தில் சேமிக்க முயற்சியுங்கள்."
 
-#: part/part.cpp:2765
+#: part/part.cpp:2767
 #, kde-format
 msgid "Filled form contents"
 msgstr "நிரப்பப்பட்ட படிவ உள்ளடக்கம்"
 
-#: part/part.cpp:2768
+#: part/part.cpp:2770
 #, kde-format
 msgid "User annotations"
 msgstr "பயனர் குறிப்புகள்"
 
-#: part/part.cpp:2773
+#: part/part.cpp:2775
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4824,17 +4830,17 @@ msgstr ""
 "சேமித்தலை ஆதரிக்காது. அவற்றை சேமிக்க <i>Okular document archive</i> என்ற கோப்பு "
 "வகையை பயன்படுத்துங்கள்."
 
-#: part/part.cpp:2777 part/part.cpp:2799
+#: part/part.cpp:2779 part/part.cpp:2801
 #, kde-format
 msgid "Warning"
 msgstr "எச்சரிக்கை"
 
-#: part/part.cpp:2778 part/part.cpp:2800
+#: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr "ஆக்குலர் ஆவணப் பெட்டகமாக சேமி..."
 
-#: part/part.cpp:2790
+#: part/part.cpp:2792
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4847,7 +4853,7 @@ msgstr ""
 "வகையை பயன்படுத்துங்கள். இந்த உருப்படிகளை கைவிட்டு ஆவணத்தை சேமிக்க <i>தொடர்</i> என்பதை "
 "அழுத்துங்கள்."
 
-#: part/part.cpp:2793
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4860,22 +4866,22 @@ msgstr ""
 "வகையை பயன்படுத்துங்கள். <i>தொடர்</i> என்பதை அழுத்தினால் ஆவணம் சேமிக்கப்படும், ஆனால் இந்த "
 "உருப்படிகளையும் செயல்நீக்க வரலாற்றையும் இழப்பீர்கள்."
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "Continue"
 msgstr "தொடர்"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "Continue losing changes"
 msgstr "மாற்றங்களைக் கைவிட்டுத் தொடர்"
 
-#: part/part.cpp:2823
+#: part/part.cpp:2825
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "கோப்பை '%1' என்பதில் சேமிக்க முடியவில்லை. %2"
 
-#: part/part.cpp:2862
+#: part/part.cpp:2864
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4886,7 +4892,7 @@ msgstr ""
 "\n"
 "அந்த ஆவணம் இப்போது இல்லை."
 
-#: part/part.cpp:2898
+#: part/part.cpp:2900
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4895,59 +4901,59 @@ msgstr ""
 "'%1' என்ற இடத்தில் கோப்பை சேமிக்க முடியவில்லை. சிக்கல்: '%2'. வேறு இடத்தில் சேமிக்க "
 "முயற்சியுங்கள்."
 
-#: part/part.cpp:3149
+#: part/part.cpp:3157
 #, kde-format
 msgid "Expand whole section"
 msgstr "முழுப் பிரிவை விரி"
 
-#: part/part.cpp:3150
+#: part/part.cpp:3158
 #, kde-format
 msgid "Collapse whole section"
 msgstr "முழுப் பிரிவை சுருக்கு"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3159
 #, kde-format
 msgid "Expand all"
 msgstr "அனைத்தையும் விரி"
 
-#: part/part.cpp:3152
+#: part/part.cpp:3160
 #, kde-format
 msgid "Collapse all"
 msgstr "அனைத்தையும் சுருக்கு"
 
-#: part/part.cpp:3163
+#: part/part.cpp:3171
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "சிறுபடத்தை பக்கத்துடன் ஒத்திசைய செய்"
 
-#: part/part.cpp:3168
+#: part/part.cpp:3176
 #, kde-format
 msgid "Add Bookmark"
 msgstr "நினைவுக்குறியை சேர்"
 
-#: part/part.cpp:3190
+#: part/part.cpp:3198
 #, kde-format
 msgid "Tools"
 msgstr "கருவிகள்"
 
-#: part/part.cpp:3372
+#: part/part.cpp:3380
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "உரையைப் பேச்சாக்குதல்"
 
-#: part/part.cpp:3530
+#: part/part.cpp:3538
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "அச்சிடு"
 
-#: part/part.cpp:3593
+#: part/part.cpp:3601
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "இந்த ஆவணத்தை அச்சிட அனுமதி இல்லை."
 
-#: part/part.cpp:3606
+#: part/part.cpp:3614
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4955,7 +4961,7 @@ msgstr ""
 "ஆவணத்தை அச்சிட முடியவில்லை. தெரியாத சிக்கல். bugs.kde.org என்ற இணையதளத்தில் "
 "தெரிவியுங்கள்."
 
-#: part/part.cpp:3608
+#: part/part.cpp:3616
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4964,17 +4970,17 @@ msgstr ""
 "ஆவணத்தை அச்சிட முடியவில்லை. விவரமான பிழை \"%1\" ஆகும். bugs.kde.org என்ற "
 "இணையதளத்தில் தெரிவியுங்கள்."
 
-#: part/part.cpp:3697
+#: part/part.cpp:3705
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "நீங்கள் முன்பிருந்த இடத்திற்கு செல்லும்"
 
-#: part/part.cpp:3701
+#: part/part.cpp:3709
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "நீங்கள் பிறகு இருந்த இடத்திற்கு செல்லும்"
 
-#: part/part.cpp:3726
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4983,7 +4989,7 @@ msgstr ""
 "<qt><strong>கோப்பு சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்ற "
 "தற்காலிக கோப்பை உருவாக்க முடியவில்லை.</qt>"
 
-#: part/part.cpp:3738
+#: part/part.cpp:3746
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4992,7 +4998,7 @@ msgstr ""
 "<qt><strong>கோப்பில் சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்கிற "
 "கோப்பை விரிவாக்கத்திற்கு திறக்க முடியவில்லை. அக்கோப்பு ஏற்றப்படாது.</qt>"
 
-#: part/part.cpp:3742
+#: part/part.cpp:3750
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5005,7 +5011,7 @@ msgstr ""
 "தேர்ந்தெடுத்து, திறக்கப்படும் சாளரத்தில் 'அனுமதிகள்' என்ற கீற்றுக்கு சென்றால், உரிமையாளர் "
 "மற்றும் அனுமதிகளை நீங்கள் பார்க்கலாம்.</qt>"
 
-#: part/part.cpp:3764
+#: part/part.cpp:3772
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5014,7 +5020,7 @@ msgstr ""
 "<qt><strong>கோப்பில் சிக்கல்!</strong><nobr><strong>%1</strong></nobr> என்கிற "
 "கோப்பை விரிவாக்க முடியவில்லை. அக்கோப்பு ஏற்றப்படாது.</qt>"
 
-#: part/part.cpp:3768
+#: part/part.cpp:3776
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5023,27 +5029,27 @@ msgstr ""
 "<qt>பெரும்பாலும், கோப்பில் உள்ள பிழையால் இச்சிக்கல் நேரும். அதை உறுதி செய்ய விரும்பினால், "
 "ஏதேனும் முனைய நிரலை கொண்டு கோப்பை விரிவாக்க முயற்சியுங்கள்.</qt>"
 
-#: part/part.cpp:3794
+#: part/part.cpp:3802
 #, kde-format
 msgid "No Bookmarks"
 msgstr "நினைவுக்குறிகள் இல்லை"
 
-#: part/part.cpp:3865
+#: part/part.cpp:3873
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "ஆவணத்தைப் பகிர்வதில் சிக்கல் ஏற்பட்டது: %1"
 
-#: part/part.cpp:3865 part/part.cpp:3871
+#: part/part.cpp:3873 part/part.cpp:3879
 #, kde-format
 msgid "Share"
 msgstr "பகிர்"
 
-#: part/part.cpp:3869
+#: part/part.cpp:3877
 #, kde-format
 msgid "Document shared successfully"
 msgstr "ஆவணம் வெற்றிகரமாக பகிரப்பட்டது"
 
-#: part/part.cpp:3871
+#: part/part.cpp:3879
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "பகிரப்பட்ட ஆவணத்தை நீங்கள் <a href=\"%1\">%1</a> என்ற இடத்தில் பார்க்கலாம்."
@@ -5891,7 +5897,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "ஆக்குலர் கூறை கண்டுபிடிக்க முடியவில்லை."
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:574
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5900,7 +5906,7 @@ msgstr ""
 "கோப்பைத் திறக்க க்ளிக் செய்யுங்கள்\n"
 "சமீப கோப்பைத் திறக்க க்ளிக் செய்து பிடித்திருங்கள்"
 
-#: shell/shell.cpp:576
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5908,57 +5914,57 @@ msgstr ""
 "கோப்பைத் திறக்க <b>க்ளிக்</b> செய்யுங்கள், அல்லது சமீப கோப்பைத் திறக்க <b>க்ளிக் செய்து "
 "பிடித்திருங்கள்</b>."
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Next Tab"
 msgstr "அடுத்த கீற்று"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Previous Tab"
 msgstr "முந்தைய கீற்று"
 
-#: shell/shell.cpp:601
+#: shell/shell.cpp:600
 #, kde-format
 msgid "Undo close tab"
 msgstr "கீற்றை மூடியதை செயல்நீக்கு"
 
-#: shell/shell.cpp:610
+#: shell/shell.cpp:609
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ஓரப்பட்டையைப் பூட்டு"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:709
 #, kde-format
 msgid "All files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: shell/shell.cpp:711
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ஆதரிக்கப்படும் அனைத்து கோப்புகள் (%1)"
 
-#: shell/shell.cpp:715
+#: shell/shell.cpp:714
 #, kde-format
 msgid "Open Document"
 msgstr "ஆவணத்தைத் திறத்தல்"
 
-#: shell/shell.cpp:829
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Confirm Close"
 msgstr "மூடுவதை உறுதிசெய்க"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:832
 #, kde-format
 msgid "Close Tabs"
 msgstr "கீற்றுகளை மூடு"
 
-#: shell/shell.cpp:840
+#: shell/shell.cpp:839
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 கீற்றுகளை மூடப் போகிறீர்கள். உறுதியாக தொடர வேண்டுமா?"
 
-#: shell/shell.cpp:842
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "பல கீற்றுகளை மூட முயற்சிக்கும்போது என்னை எச்சரி"

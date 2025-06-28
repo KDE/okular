@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:41+0000\n"
+"POT-Creation-Date: 2025-06-28 00:40+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -393,7 +393,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5565 part/part.cpp:1144
+#: core/document.cpp:5565 part/part.cpp:1146
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
@@ -1730,7 +1730,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "หน้า %1"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3160
+#: part/annotationmodel.cpp:322 part/part.cpp:3168
 #, kde-format
 msgid "Page %1"
 msgstr "หน้า %1"
@@ -1770,7 +1770,7 @@ msgstr "ถูกห้ามทำการคัดลอกโดย DRM"
 msgid "&Delete"
 msgstr "&ลบ"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:771
+#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2385,13 +2385,13 @@ msgstr "&ค้นหา:"
 msgid "Go to This Bookmark"
 msgstr "ไปยังคั่นหน้านี้"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:703
-#: part/part.cpp:2459
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/part.cpp:2461
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "เปลี่ยนชื่อคั่นหน้า"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2264 part/part.cpp:3166
+#: part/bookmarklist.cpp:259 part/part.cpp:2266 part/part.cpp:3174
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "เอาคั่นหน้าออก"
@@ -3079,21 +3079,27 @@ msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 
-#: part/dlggeneral.cpp:207
+#: part/dlggeneral.cpp:198
+#, kde-format
+msgctxt "@label:spinbox Config dialog, general page"
+msgid "Items in recent history:"
+msgstr ""
+
+#: part/dlggeneral.cpp:213
 #, fuzzy, kde-format
 #| msgid "Overview columns:"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "คอลัมน์มุมมองภาพรวม:"
 
-#: part/dlggeneral.cpp:214
+#: part/dlggeneral.cpp:220
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:215
+#: part/dlggeneral.cpp:221
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3101,52 +3107,52 @@ msgid ""
 "pressing the Page Up/Down keys."
 msgstr ""
 
-#: part/dlggeneral.cpp:217
+#: part/dlggeneral.cpp:223
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr ""
 
-#: part/dlggeneral.cpp:222
+#: part/dlggeneral.cpp:228
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:232
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr ""
 
-#: part/dlggeneral.cpp:227
+#: part/dlggeneral.cpp:233
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "พอดีกับความกว้าง"
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:234
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "พอดีกับหน้า"
 
-#: part/dlggeneral.cpp:229
+#: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr ""
 
-#: part/dlggeneral.cpp:230
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
-#: part/dlggeneral.cpp:231
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3154,7 +3160,7 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:241
 #, fuzzy, kde-format
 #| msgid "Default transition:"
 msgctxt "label:listbox Config dialog, general page, default zoom"
@@ -3823,7 +3829,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "รูปแบบเงื่อนไขการค้นหา"
 
-#: part/layers.cpp:35 part/part.cpp:2307
+#: part/layers.cpp:35 part/part.cpp:2309
 #, kde-format
 msgid "Layers"
 msgstr ""
@@ -4137,7 +4143,7 @@ msgstr "คัดลอกข้อความ"
 msgid "Go to '%1'"
 msgstr "ไปยังหน้าที่ %1"
 
-#: part/pageview.cpp:4064 part/part.cpp:3171
+#: part/pageview.cpp:4064 part/part.cpp:3179
 #, kde-format
 msgid "Fit Width"
 msgstr "พอดีกับความกว้าง"
@@ -4537,217 +4543,217 @@ msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr ""
 
-#: part/part.cpp:660
+#: part/part.cpp:662
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "หน้าก่อนหน้านี้"
 
-#: part/part.cpp:661
+#: part/part.cpp:663
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "กลับไปยังหน้าก่อนหน้านี้"
 
-#: part/part.cpp:662
+#: part/part.cpp:664
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "เลื่อนไปยังหน้าก่อนหน้านี้ของเอกสาร"
 
-#: part/part.cpp:672
+#: part/part.cpp:674
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "หน้าถัดไป"
 
-#: part/part.cpp:673
+#: part/part.cpp:675
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "เรียกหน้าถัดไป"
 
-#: part/part.cpp:674
+#: part/part.cpp:676
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "เลื่อนไปยังหน้าถัดไปของเอกสาร"
 
-#: part/part.cpp:685
+#: part/part.cpp:687
 #, kde-format
 msgid "Beginning of the document"
 msgstr "ส่วนเริ่มต้นของเอกสาร"
 
-#: part/part.cpp:686
+#: part/part.cpp:688
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "ย้ายไปยังส่วนเริ่มต้นของเอกสาร"
 
-#: part/part.cpp:690
+#: part/part.cpp:692
 #, kde-format
 msgid "End of the document"
 msgstr "ส่วนท้ายของเอกสาร"
 
-#: part/part.cpp:691
+#: part/part.cpp:693
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "ย้ายไปยังส่วนท้ายของเอกสาร"
 
-#: part/part.cpp:705
+#: part/part.cpp:707
 #, fuzzy, kde-format
 #| msgid "Reload the current document from disk."
 msgid "Rename the current bookmark"
 msgstr "เรียกเอกสารปัจจุบันจากดิสก์ขึ้นมาใหม่"
 
-#: part/part.cpp:709
+#: part/part.cpp:711
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "คั่นหน้าก่อนหน้านี้"
 
-#: part/part.cpp:711
+#: part/part.cpp:713
 #, fuzzy, kde-format
 #| msgid "Go to the previous bookmarked page"
 msgid "Go to the previous bookmark"
 msgstr "ไปยังหน้าที่ถูกคั่นไว้ก่อนหน้านี้"
 
-#: part/part.cpp:715
+#: part/part.cpp:717
 #, kde-format
 msgid "Next Bookmark"
 msgstr "คั่นหน้าถัดไป"
 
-#: part/part.cpp:717
+#: part/part.cpp:719
 #, fuzzy, kde-format
 #| msgid "Go to the next bookmarked page"
 msgid "Go to the next bookmark"
 msgstr "ไปยังหน้าที่ถูกคั่นไว้หน้าถัดไป"
 
-#: part/part.cpp:746
+#: part/part.cpp:748
 #, kde-format
 msgid "Configure Okular..."
 msgstr "ปรับแต่ง 'โอกูลาร์'..."
 
-#: part/part.cpp:749
+#: part/part.cpp:751
 #, kde-format
 msgid "Configure Viewer..."
 msgstr "ปรับแต่งเครื่องมือแสดง..."
 
-#: part/part.cpp:755
+#: part/part.cpp:757
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
 msgid "Configure Viewer Backends..."
 msgstr "ปรับแต่งแบ็กเอนด์..."
 
-#: part/part.cpp:757
+#: part/part.cpp:759
 #, kde-format
 msgid "Configure Backends..."
 msgstr "ปรับแต่งแบ็กเอนด์..."
 
-#: part/part.cpp:793
+#: part/part.cpp:795
 #, kde-format
 msgid "About Backend"
 msgstr "เกี่ยวกับแบ็กเอนด์"
 
-#: part/part.cpp:798
+#: part/part.cpp:800
 #, kde-format
 msgid "Reloa&d"
 msgstr "เ&รียกใหม่"
 
-#: part/part.cpp:800
+#: part/part.cpp:802
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "เรียกเอกสารปัจจุบันจากดิสก์ขึ้นมาใหม่"
 
-#: part/part.cpp:806
+#: part/part.cpp:808
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "ปิดแถบเครื่องมือ&ค้นหา"
 
-#: part/part.cpp:811
+#: part/part.cpp:813
 #, fuzzy, kde-format
 #| msgid "Page Size"
 msgid "Page Number"
 msgstr "ขนาดกระดาษ"
 
-#: part/part.cpp:815
+#: part/part.cpp:817
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgctxt "@action"
 msgid "Configure Color Modes..."
 msgstr "ปรับแต่ง 'โอกูลาร์'..."
 
-#: part/part.cpp:856
+#: part/part.cpp:858
 #, fuzzy, kde-format
 #| msgid "Speak Current Page"
 msgid "Select All Text on Current Page"
 msgstr "ออกเสียงอ่านหน้าปัจจุบัน"
 
-#: part/part.cpp:870
+#: part/part.cpp:872
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Show S&idebar"
 msgstr "แสดงแถบห&น้าเอกสาร"
 
-#: part/part.cpp:879
+#: part/part.cpp:881
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "แสดงแถบห&น้าเอกสาร"
 
-#: part/part.cpp:885
+#: part/part.cpp:887
 #, fuzzy, kde-format
 #| msgid "Show &Navigation Panel"
 msgid "Show &Signatures Panel"
 msgstr "แสดง&ถาดนำทาง"
 
-#: part/part.cpp:896
+#: part/part.cpp:898
 #, kde-format
 msgid "&Embedded Files"
 msgstr "แฟ้มที่แน&บมาด้วย"
 
-#: part/part.cpp:902
+#: part/part.cpp:904
 #, kde-format
 msgid "E&xport As"
 msgstr "ส่&งออกเป็น"
 
-#: part/part.cpp:914
+#: part/part.cpp:916
 #, kde-format
 msgid "S&hare"
 msgstr ""
 
-#: part/part.cpp:923
+#: part/part.cpp:925
 #, kde-format
 msgid "P&resentation"
 msgstr "&การนำเสนอ"
 
-#: part/part.cpp:930
+#: part/part.cpp:932
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr ""
 
-#: part/part.cpp:944
+#: part/part.cpp:946
 #, kde-format
 msgid "&Import PostScript as PDF..."
 msgstr "นำเ&ข้าเอกสารโพสต์สคริปต์เป็น PDF..."
 
-#: part/part.cpp:948
+#: part/part.cpp:950
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "สลับโหมดจอมืด"
 
-#: part/part.cpp:956
+#: part/part.cpp:958
 #, fuzzy, kde-format
 #| msgid "Erase Drawings"
 msgid "Erase Drawing"
 msgstr "ลบการวาด"
 
-#: part/part.cpp:961
+#: part/part.cpp:963
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
 msgid "Configure Annotations..."
 msgstr "ปรับแต่งแบ็กเอนด์..."
 
-#: part/part.cpp:966
+#: part/part.cpp:968
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Play/Pause Presentation"
 msgstr "การนำเสนอ"
 
-#: part/part.cpp:1121
+#: part/part.cpp:1123
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4755,40 +4761,40 @@ msgid ""
 "Any modification will be lost once Okular is closed."
 msgstr ""
 
-#: part/part.cpp:1122
+#: part/part.cpp:1124
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Document can't be saved"
 msgstr "เอกสารที่จะเปิด"
 
-#: part/part.cpp:1151
+#: part/part.cpp:1153
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open '%1' (%2) "
 msgstr "ไม่สามารถเปิด %1 ได้"
 
-#: part/part.cpp:1204
+#: part/part.cpp:1206
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "การโหลด %1 ได้ถูกยกเลิกแล้ว"
 
-#: part/part.cpp:1220
+#: part/part.cpp:1222
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "ไม่สามารถเปิด %1 ได้ เนื่องจาก: %2"
 
-#: part/part.cpp:1248
+#: part/part.cpp:1250
 #, fuzzy, kde-format
 #| msgid "Configure Backends"
 msgid "Configure Viewer Backends"
 msgstr "ปรับแต่งแบ็กเอนด์ต่าง ๆ"
 
-#: part/part.cpp:1250
+#: part/part.cpp:1252
 #, kde-format
 msgid "Configure Backends"
 msgstr "ปรับแต่งแบ็กเอนด์ต่าง ๆ"
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4796,87 +4802,87 @@ msgid ""
 msgstr ""
 "ไม่พบโปรแกรม \"ps2pdf\" ดังนั้น โอกูลาร์จะไม่สามารถนำเข้าแฟ้มเอกสาร PS เพื่อใช้งานได้"
 
-#: part/part.cpp:1335
+#: part/part.cpp:1337
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ไม่พบโปรแกรม ps2pdf"
 
-#: part/part.cpp:1340
+#: part/part.cpp:1342
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr ""
 
-#: part/part.cpp:1356
+#: part/part.cpp:1358
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)..."
 msgstr "กำลังนำเข้าแฟ้ม PS ในรูปแบบ PDF (อาจจะใช้เวลาสักครู่)..."
 
-#: part/part.cpp:1488
+#: part/part.cpp:1490
 #, fuzzy, kde-format
 #| msgid "Moves to the last page of the document"
 msgid "Please enter the password to read the document:"
 msgstr "เลื่อนยไปยังหน้าสุดท้ายของเอกสาร"
 
-#: part/part.cpp:1490
+#: part/part.cpp:1492
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr ""
 
-#: part/part.cpp:1501
+#: part/part.cpp:1503
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Document Password"
 msgstr "เอกสารที่จะเปิด"
 
-#: part/part.cpp:1624
+#: part/part.cpp:1626
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 
-#: part/part.cpp:1631
+#: part/part.cpp:1633
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr "เอกสารนี้เป็นแบบฟอร์ม คลิกบนปุ่มเพื่อใช้งานมัน หรือใช้เมนู มุมมอง -> แสดงแบบฟอร์ม"
 
-#: part/part.cpp:1647
+#: part/part.cpp:1649
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
 
-#: part/part.cpp:1735
+#: part/part.cpp:1737
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
 
-#: part/part.cpp:1737
+#: part/part.cpp:1739
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr ""
 
-#: part/part.cpp:1738
+#: part/part.cpp:1740
 #, fuzzy, kde-format
 #| msgid "Exit Presentation Mode"
 msgid "Enter Presentation Mode"
 msgstr "ออกจากการนำเสนอ"
 
-#: part/part.cpp:1739
+#: part/part.cpp:1741
 #, kde-format
 msgid "Deny Request"
 msgstr ""
 
-#: part/part.cpp:1829
+#: part/part.cpp:1831
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open %1. %2"
 msgstr "ไม่สามารถเปิด %1 ได้"
 
-#: part/part.cpp:1859
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4886,23 +4892,23 @@ msgid ""
 "reloading the file?"
 msgstr ""
 
-#: part/part.cpp:1863 part/part.cpp:1873
+#: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
 msgid "File Changed"
 msgstr ""
 
-#: part/part.cpp:1864
+#: part/part.cpp:1866
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Reloading"
 msgstr "ต่อเ&นื่อง"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Reloading"
 msgstr ""
 
-#: part/part.cpp:1869
+#: part/part.cpp:1871
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4912,29 +4918,29 @@ msgid ""
 "the file?"
 msgstr ""
 
-#: part/part.cpp:1874
+#: part/part.cpp:1876
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Closing"
 msgstr "ต่อเ&นื่อง"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1877
 #, kde-format
 msgid "Abort Closing"
 msgstr ""
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 
-#: part/part.cpp:1882
+#: part/part.cpp:1884
 #, fuzzy, kde-format
 #| msgid "Open Document"
 msgid "Close Document"
 msgstr "เปิดเอกสาร"
 
-#: part/part.cpp:2014
+#: part/part.cpp:2016
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4943,7 +4949,7 @@ msgstr ""
 "การเชื่อมโยงนี้ชี้ไปยังการเรียกส่วนปิดเอกสาร "
 "ซึ่งจะไม่ทำงานเมื่อใช้งานร่วมกับเครื่องมือแสดงผลแบบฝังตัว"
 
-#: part/part.cpp:2020
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4952,82 +4958,82 @@ msgstr ""
 "การเชื่อมโยงนี้ชี้ไปยังการเรียกส่วนจบโปรแกรม "
 "ซึ่งจะไม่ทำงานเมื่อใช้งานร่วมกับเครื่องมือแสดงผลแบบฝังตัว"
 
-#: part/part.cpp:2112 part/part.cpp:2130
+#: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document..."
 msgstr "กำลังเรียกเอกสารขึ้นมาใหม่..."
 
-#: part/part.cpp:2287 part/toc.cpp:38
+#: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "เนื้อหา"
 
-#: part/part.cpp:2316 part/signaturepanel.cpp:47
+#: part/part.cpp:2318 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr ""
 
-#: part/part.cpp:2343
+#: part/part.cpp:2345
 #, kde-format
 msgid "Go to Page"
 msgstr "ไปยังหน้าที่"
 
-#: part/part.cpp:2366
+#: part/part.cpp:2368
 #, kde-format
 msgid "&Page:"
 msgstr "หน้า&ที่:"
 
-#: part/part.cpp:2459
+#: part/part.cpp:2461
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr ""
 
-#: part/part.cpp:2505
+#: part/part.cpp:2507
 #, fuzzy, kde-format
 #| msgid "Rename Bookmark"
 msgid "Rename this Bookmark"
 msgstr "เปลี่ยนชื่อคั่นหน้า"
 
-#: part/part.cpp:2508
+#: part/part.cpp:2510
 #, fuzzy, kde-format
 #| msgid "Rename Bookmark"
 msgid "Remove this Bookmark"
 msgstr "เปลี่ยนชื่อคั่นหน้า"
 
-#: part/part.cpp:2594 part/part.cpp:2595 part/part.cpp:3477
+#: part/part.cpp:2596 part/part.cpp:2597 part/part.cpp:3485
 #: part/signaturepartutils.cpp:256
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr ""
 
-#: part/part.cpp:2602 part/revisionviewer.cpp:44
+#: part/part.cpp:2604 part/revisionviewer.cpp:44
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "&Save As..."
 msgid "Save As"
 msgstr "บัน&ทึกเป็น..."
 
-#: part/part.cpp:2619
+#: part/part.cpp:2621
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
 
-#: part/part.cpp:2620
+#: part/part.cpp:2622
 #, fuzzy, kde-format
 #| msgid "Line Extensions"
 msgid "Unsupported extension"
 msgstr "ส่วนขยายเส้น"
 
-#: part/part.cpp:2621
+#: part/part.cpp:2623
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2664
+#: part/part.cpp:2666
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -5036,17 +5042,17 @@ msgid ""
 "sure you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2667 part/part.cpp:2686 part/part.cpp:2738
+#: part/part.cpp:2669 part/part.cpp:2688 part/part.cpp:2740
 #, kde-format
 msgid "Save - Warning"
 msgstr ""
 
-#: part/part.cpp:2669
+#: part/part.cpp:2671
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr ""
 
-#: part/part.cpp:2685
+#: part/part.cpp:2687
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -5054,12 +5060,12 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2712
+#: part/part.cpp:2714
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "ไม่สามารถเปิดแฟ้มชั่วคราวเพื่อทำการบันทึกได้"
 
-#: part/part.cpp:2725
+#: part/part.cpp:2727
 #, fuzzy, kde-kuit-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgctxt "@info"
@@ -5068,31 +5074,31 @@ msgid ""
 "Try saving to another location or changing that file's permissions."
 msgstr "ไม่สามารถบันทึกแฟ้มไว้ใน '%1' ได้ ลองบันทึกมันไว้ในที่อื่น ๆ"
 
-#: part/part.cpp:2737
+#: part/part.cpp:2739
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2752 part/part.cpp:2821 part/part.cpp:2842 part/part.cpp:3492
+#: part/part.cpp:2754 part/part.cpp:2823 part/part.cpp:2844 part/part.cpp:3500
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "ไม่สามารถบันทึกแฟ้มไว้ใน '%1' ได้ ลองบันทึกมันไว้ในที่อื่น ๆ"
 
-#: part/part.cpp:2765
+#: part/part.cpp:2767
 #, fuzzy, kde-format
 #| msgid "Annotation Properties"
 msgid "Filled form contents"
 msgstr "คุณสมบัติหมายเหตุประกอบ"
 
-#: part/part.cpp:2768
+#: part/part.cpp:2770
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "User annotations"
 msgstr "การนำเสนอ"
 
-#: part/part.cpp:2773
+#: part/part.cpp:2775
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5100,17 +5106,17 @@ msgid ""
 "format to preserve them."
 msgstr ""
 
-#: part/part.cpp:2777 part/part.cpp:2799
+#: part/part.cpp:2779 part/part.cpp:2801
 #, kde-format
 msgid "Warning"
 msgstr ""
 
-#: part/part.cpp:2778 part/part.cpp:2800
+#: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
 msgid "Save as Okular document archive..."
 msgstr ""
 
-#: part/part.cpp:2790
+#: part/part.cpp:2792
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5119,7 +5125,7 @@ msgid ""
 "discard these elements."
 msgstr ""
 
-#: part/part.cpp:2793
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5128,23 +5134,23 @@ msgid ""
 "these elements as well as the undo/redo history."
 msgstr ""
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue"
 msgstr "ต่อเ&นื่อง"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid "Continue losing changes"
 msgstr ""
 
-#: part/part.cpp:2823
+#: part/part.cpp:2825
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "ไม่สามารถบันทึกแฟ้มไว้ใน '%1' ได้ %2"
 
-#: part/part.cpp:2862
+#: part/part.cpp:2864
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5155,7 +5161,7 @@ msgstr ""
 "\n"
 "จะไม่มีเอกสารอยู่"
 
-#: part/part.cpp:2898
+#: part/part.cpp:2900
 #, fuzzy, kde-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgid ""
@@ -5163,69 +5169,69 @@ msgid ""
 "location."
 msgstr "ไม่สามารถบันทึกแฟ้มไว้ใน '%1' ได้ ลองบันทึกมันไว้ในที่อื่น ๆ"
 
-#: part/part.cpp:3149
+#: part/part.cpp:3157
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Expand whole section"
 msgstr "จบการนำเสนอ"
 
-#: part/part.cpp:3150
+#: part/part.cpp:3158
 #, kde-format
 msgid "Collapse whole section"
 msgstr ""
 
-#: part/part.cpp:3151
+#: part/part.cpp:3159
 #, kde-format
 msgid "Expand all"
 msgstr ""
 
-#: part/part.cpp:3152
+#: part/part.cpp:3160
 #, kde-format
 msgid "Collapse all"
 msgstr ""
 
-#: part/part.cpp:3163
+#: part/part.cpp:3171
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "เชื่อมโยงภาพตั&วอย่างเข้ากับหน้ากระดาษ"
 
-#: part/part.cpp:3168
+#: part/part.cpp:3176
 #, kde-format
 msgid "Add Bookmark"
 msgstr "เพิ่มคั่นหน้า"
 
-#: part/part.cpp:3190
+#: part/part.cpp:3198
 #, kde-format
 msgid "Tools"
 msgstr "เครื่องมือ"
 
-#: part/part.cpp:3372
+#: part/part.cpp:3380
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "อ่านข้อความ"
 
-#: part/part.cpp:3530
+#: part/part.cpp:3538
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3593
+#: part/part.cpp:3601
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "ไม่ได้รับการอนุญาตให้ทำการพิมพ์เอกสารนี้"
 
-#: part/part.cpp:3606
+#: part/part.cpp:3614
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "ไม่สามารถพิมพ์เอกสารได้ โดยไม่ทราบข้อผิดพลาด โปรดรายงานข้อผิดพลาดไปยัง bugs.kde.org"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3616
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5234,17 +5240,17 @@ msgstr ""
 "ไม่สามารถพิมพ์เอกสารได้ รายละเอียดข้อผิดพลาดคือ \"%1\" โปรดรายงานข้อผิดพลาดไปยัง bugs."
 "kde.org"
 
-#: part/part.cpp:3697
+#: part/part.cpp:3705
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "ไปยังที่ที่คุณเคยไป ก่อน"
 
-#: part/part.cpp:3701
+#: part/part.cpp:3709
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "ไปยังที่ ที่คุณเคยไป หลังจาก"
 
-#: part/part.cpp:3726
+#: part/part.cpp:3734
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5253,7 +5259,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถสร้างแฟ้มชั่วคราว <nobr><strong>%1</"
 "strong></nobr> ได้</qt>"
 
-#: part/part.cpp:3738
+#: part/part.cpp:3746
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5262,7 +5268,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถเปิดแฟ้ม <nobr><strong>%1</strong></"
 "nobr> เพื่อทำการคลายแฟ้มได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3742
+#: part/part.cpp:3750
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5279,7 +5285,7 @@ msgstr ""
 "คุณสามารถตรวจสอบความเป็นเจ้าของแฟ้มและสิทธิ์ที่มีได้ง่าย ๆ "
 "โดยการคลิกเมาส์ปุ่มขวาบนแฟ้มในโปรแกรมจัดการแฟ้ม 'ดอลฟิน' จากนั้นเลือกแท็บ 'คุณสมบัติ'</qt>"
 
-#: part/part.cpp:3764
+#: part/part.cpp:3772
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5288,7 +5294,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถคลายแฟ้ม <nobr><strong>%1</strong></"
 "nobr> ได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3768
+#: part/part.cpp:3776
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5297,27 +5303,27 @@ msgstr ""
 "<qt>ข้อผิดพลาดนี้ จะเกิดขึ้นเมื่อแฟ้มมีส่วนผิดพลาดภายใน หากคุณต้องการความแน่ใจ "
 "โปรดทดลองคลายแฟ้มด้วยตัวเอง โดยใช้เครื่องมือคลายแฟ้มผ่านทางบรรทัดคำสั่ง</qt>"
 
-#: part/part.cpp:3794
+#: part/part.cpp:3802
 #, kde-format
 msgid "No Bookmarks"
 msgstr "ไม่มีที่คั่นหน้าใด ๆ"
 
-#: part/part.cpp:3865
+#: part/part.cpp:3873
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3865 part/part.cpp:3871
+#: part/part.cpp:3873 part/part.cpp:3879
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3869
+#: part/part.cpp:3877
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3871
+#: part/part.cpp:3879
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
@@ -6199,7 +6205,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "ไม่สามารถค้นพบส่วนประกอบของโอกูลาร์"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:574
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6208,70 +6214,70 @@ msgstr ""
 "คลิกเพื่อเปิดแฟ้ม\n"
 "คลิกค้างไว้เพื่อเลือกเอกสารที่เคยเรียกใช้"
 
-#: shell/shell.cpp:576
+#: shell/shell.cpp:575
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>คลิก</b>เพื่อเปิดแฟ้ม หรือ<b>คลิกค้างไว้</b> เพื่อเลือกเอกสารที่เคยเรียกใช้"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "หน้าถัดไป"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:594
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "หน้าก่อน"
 
-#: shell/shell.cpp:601
+#: shell/shell.cpp:600
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:610
+#: shell/shell.cpp:609
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "แสดงแถบห&น้าเอกสาร"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:709
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|แฟ้มทั้งหมด"
 
-#: shell/shell.cpp:711
+#: shell/shell.cpp:710
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:715
+#: shell/shell.cpp:714
 #, kde-format
 msgid "Open Document"
 msgstr "เปิดเอกสาร"
 
-#: shell/shell.cpp:829
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:832
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "ปิด"
 
-#: shell/shell.cpp:840
+#: shell/shell.cpp:839
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "มีแฟ้มชื่อ \"%1\" อยู่แล้ว คุณต้องการจะเขียนทับมันหรือไม่ ?"
 
-#: shell/shell.cpp:842
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

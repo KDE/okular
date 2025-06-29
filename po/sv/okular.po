@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-12 17:20+0200\n"
+"PO-Revision-Date: 2025-06-28 20:08+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -2889,7 +2889,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Objekt i senaste historik:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3954,39 +3954,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Alla signeringscertifikat är ogiltiga. Om signeringen fungerade tidigare, "
+"kontrollera deras giltighetsdatum."
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Bara QES-certifikat"
+msgstr "Inga giltiga certifikat"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Visa i certifikathanterare"
+msgstr "Öppna certifikathantering"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Det finns inga tillgängliga certifikat för signering.<br/>För mer "
+"Det finns inga tillgängliga certifikat för signering.<br/>Starta "
+"certifikathantering för att importera eller hantera certifikat<br/>För mer "
 "information, se avsnittet <a href=\"%1\">Lägga till digitala signaturer</a> "
 "i handboken."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certifikat"
+msgstr "Inga certifikat hittades"
 
 #: part/pageview.cpp:5193
 #, kde-format

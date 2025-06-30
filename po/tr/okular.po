@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-27 10:13+0300\n"
+"PO-Revision-Date: 2025-06-29 18:03+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -829,7 +829,7 @@ msgstr "Serbest Çizim Çizgisi"
 #: gui/guiutils.cpp:79
 #, kde-format
 msgid "Caret"
-msgstr "Düzeltme İmi"
+msgstr "Metin İmleci"
 
 #: gui/guiutils.cpp:82
 #, kde-format
@@ -1761,7 +1761,7 @@ msgstr "Serbest Çizim Çizgi Özellikleri"
 #: part/annotationpropertiesdialog.cpp:137
 #, kde-format
 msgid "Caret Properties"
-msgstr "Düzeltme Özellikleri"
+msgstr "Metin İmleci Özellikleri"
 
 #: part/annotationpropertiesdialog.cpp:140
 #, kde-format
@@ -2167,7 +2167,7 @@ msgstr "Açıklama:"
 #: part/annotationwidgets.cpp:843
 #, kde-format
 msgid "Caret symbol:"
-msgstr "Düzeltme sembolü:"
+msgstr "Metin imleci sembolü:"
 
 #: part/annotationwidgets.cpp:845
 #, kde-format
@@ -2902,7 +2902,7 @@ msgstr "Göz At aracını kullanırken, ekran kenarlarında imleci kaydır"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Geçmişteki ögeler:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format

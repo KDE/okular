@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-12 13:34+0200\n"
+"PO-Revision-Date: 2025-06-28 14:42+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2905,7 +2905,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Elementi nella cronologia recente:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3972,39 +3972,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Tutti i certificati di firma non sono validi. Se la firma funzionava in "
+"precedenza, verifica le date di validità dei certificati."
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Solo certificati QES"
+msgstr "Nessun certificato valido"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Visualizza nel gestore dei certificati"
+msgstr "Apri il gestore dei certificati"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Non ci sono certificati di firma disponibili.<br/>Per maggiori informazioni, "
-"consulta la sezione sull'<a href=\"%1\">Aggiunta di firme digitali</a> nel "
-"manuale."
+"Non ci sono certificati di firma disponibili.<br/>Avvia il gestore dei "
+"certificati per importare o gestire i certificati<br/>Per maggiori "
+"informazioni, consulta la sezione sull'<a href=\"%1\">Aggiunta di firme "
+"digitali</a> nel manuale."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificati"
+msgstr "Nessun certificato trovato"
 
 #: part/pageview.cpp:5193
 #, kde-format

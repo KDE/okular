@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-12 10:04+0200\n"
+"PO-Revision-Date: 2025-06-29 20:42+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -2891,7 +2891,7 @@ msgstr "Скриване на курсора при използване на и
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Елементи в скорошна история"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3958,39 +3958,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Всички ваши сертификати за подписване са невалидни. В случай, че "
+"подписването е работило преди, моля, проверете датите им на валидност."
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Само QES сертификати"
+msgstr "Няма валидни сертификати"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Преглед в мениджъра за сертификати"
+msgstr "Отваряне на мениджъра за сертификати"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Няма налични сертификати за подписване. <br/> За повече информация, моля "
-"вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</a> в "
-"ръководството."
+"Няма налични сертификати за подписване.<br/>Стартирайте „Мениджър на "
+"сертификати“, за да импортирате или управлявате сертификати<br/>За повече "
+"информация, моля вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</"
+"a> в ръководството."
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Сертификати"
+msgstr "Няма намерени сертификати"
 
 #: part/pageview.cpp:5193
 #, kde-format

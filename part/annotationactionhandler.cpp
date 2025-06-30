@@ -795,7 +795,7 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
         primaryAnnotationToolBar = mw->toolBar(QStringLiteral("quickAnnotationToolBar"));
     }
     d->aToolBarVisibility->setChecked(false);
-    d->aToolBarVisibility->disconnect();
+    d->aToolBarVisibility->disconnect(primaryAnnotationToolBar);
     d->aToolBarVisibility->setChecked(primaryAnnotationToolBar->isVisible());
     connect(primaryAnnotationToolBar, &QToolBar::visibilityChanged, d->aToolBarVisibility, &QAction::setChecked, Qt::UniqueConnection);
     connect(d->aToolBarVisibility, &QAction::toggled, primaryAnnotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);

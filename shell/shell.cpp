@@ -870,7 +870,7 @@ bool Shell::queryClose()
 void Shell::setActiveTab(int tab)
 {
     if (m_showSidebarAction) {
-        m_showSidebarAction->disconnect();
+        m_showSidebarAction->disconnect(m_sidebar);
     }
 
     m_tabWidget->setCurrentIndex(tab);
@@ -895,7 +895,7 @@ void Shell::setActiveTab(int tab)
 
     m_showSidebarAction = m_tabs[tab].part->actionCollection()->action(QStringLiteral("show_leftpanel"));
     Q_ASSERT(m_showSidebarAction);
-    m_showSidebarAction->disconnect();
+    m_showSidebarAction->disconnect(m_sidebar);
     m_showSidebarAction->setChecked(m_sidebar->isVisibleTo(this));
     connect(m_showSidebarAction, &QAction::triggered, m_sidebar, &Sidebar::setVisible);
 
@@ -912,7 +912,7 @@ void Shell::closeTab(int tab)
         if (part->factory()) {
             part->factory()->removeClient(part);
         }
-        part->disconnect();
+        part->disconnect(this);
 
         Okular::ViewerInterface *iPart = qobject_cast<Okular::ViewerInterface *>(m_tabs[tab].part);
         Q_ASSERT(iPart);

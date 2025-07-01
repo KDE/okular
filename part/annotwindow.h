@@ -33,7 +33,7 @@ class AnnotWindow : public QFrame
 {
     Q_OBJECT
 public:
-    AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Document *document, int page);
+    AnnotWindow(QWidget *parent, QRect initialViewportBounds, Okular::Annotation *annot, Okular::Document *document, int page);
     ~AnnotWindow() override;
 
     void reloadInfo();
@@ -42,8 +42,14 @@ public:
     int pageNumber() const;
 
     void updateAnnotation(Okular::Annotation *a);
+    void updateViewportBounds(QRect bounds);
 
 private:
+    void fixupGeometry();
+    static constexpr const QPoint defaultPosition {10, 10};
+    static constexpr const QSize defaultSize {300, 300};
+
+    QRect m_viewportBounds;
     MovableTitle *m_title;
     KTextEdit *textEdit;
     QColor m_color;
@@ -59,6 +65,8 @@ public Q_SLOTS:
 
 protected:
     void showEvent(QShowEvent *event) override;
+    void moveEvent(QMoveEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private Q_SLOTS:

@@ -146,13 +146,12 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         const double nXMax = ((double)limits.right() / scaledWidth) + crop.left;
         const double nYMin = ((double)limits.top() / scaledHeight) + crop.top;
         const double nYMax = ((double)limits.bottom() / scaledHeight) + crop.top;
+        const Okular::NormalizedRect limitRect(nXMin, nYMin, nXMax, nYMax);
         // append all highlights inside limits to their list
         if (canDrawHighlights) {
             bufferedHighlights = new QList<QPair<QColor, Okular::NormalizedRect>>();
             /*            else
                         {*/
-
-            Okular::NormalizedRect *limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax);
             for (const Okular::HighlightAreaRect *highlight : std::as_const(page->m_highlights)) {
                 for (const auto &rect : std::as_const(*highlight)) {
                     if (rect.intersects(limitRect)) {
@@ -160,7 +159,6 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     }
                 }
             }
-            delete limitRect;
             //}
         }
         if (canDrawTextSelection) {
@@ -169,14 +167,12 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             }
             /*            else
                         {*/
-            Okular::NormalizedRect *limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax);
             const Okular::RegularAreaRect *textSelection = page->textSelection();
             for (const auto &rect : std::as_const(*textSelection)) {
                 if (rect.intersects(limitRect)) {
                     bufferedHighlights->append(qMakePair(page->textSelectionColor(), rect));
                 }
             }
-            delete limitRect;
             //}
         }
         // append annotations inside limits to the un/buffered list
@@ -198,7 +194,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     continue;
                 }
 
-                bool intersects = boundary.intersects(nXMin, nYMin, nXMax, nYMax);
+                bool intersects = boundary.intersects(limitRect);
                 if (ann->subType() == Okular::Annotation::AText) {
                     Okular::TextAnnotation *ta = static_cast<Okular::TextAnnotation *>(ann);
                     if (ta->textType() == Okular::TextAnnotation::Linked) {
@@ -207,7 +203,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                             boundary.top,
                             boundary.left + TEXTANNOTATION_ICONSIZE / page->width(),
                             boundary.top + TEXTANNOTATION_ICONSIZE / page->height());
-                        intersects = iconrect.intersects(nXMin, nYMin, nXMax, nYMax);
+                        intersects = iconrect.intersects(limitRect);
                     }
                 }
                 if (intersects) {

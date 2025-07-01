@@ -261,14 +261,18 @@ public:
     /**
      * This is an overloaded member function, provided for convenience. It behaves essentially
      * like the above function.
+     *
+     * @deprecated use intersects(const NormalizedRect &other)
      */
-    bool intersects(const NormalizedRect *other) const;
+    OKULARCORE_DEPRECATED bool intersects(const NormalizedRect *other) const;
 
     /**
      * Returns whether the normalized rectangle intersects an other normalized
      * rectangle, which is defined by @p left, @p top, @p right and @p bottom.
+     *
+     * @deprecated use intersects(const NormalizedRect &other)
      */
-    bool intersects(double left, double top, double right, double bottom) const;
+    OKULARCORE_DEPRECATED bool intersects(double left, double top, double right, double bottom) const;
 
     /**
      * Returns the rectangle mapped to a reference area of @p xScale x @p yScale.

@@ -14,6 +14,7 @@
 #include <KLocalizedString>
 #include <KStandardAction>
 #include <KTextEdit>
+#include <QAbstractScrollArea>
 #include <QAction>
 #include <QApplication>
 #include <QDebug>
@@ -141,32 +142,12 @@ public:
             break;
         case QEvent::MouseMove: {
             me = static_cast<QMouseEvent *>(e);
+            const QPoint mouseMovePos = me->pos();
+            const QPoint mouseDelta = mouseMovePos - mousePressPos;
 
-            // viewport info
-            const QPoint topLeftPoint = parentWidget()->parentWidget()->pos();
-            const int viewportHeight = parentWidget()->parentWidget()->height();
-            const int viewportWidth = parentWidget()->parentWidget()->width();
-
-            // annotation's popup window info
-            QPoint newPositionPoint = me->pos() - mousePressPos + parentWidget()->pos();
-            const int annotHeight = parentWidget()->height();
-            const int annotWidth = parentWidget()->width();
-
-            // make sure x is in range
-            if (newPositionPoint.x() < topLeftPoint.x()) {
-                newPositionPoint.setX(topLeftPoint.x());
-            } else if (newPositionPoint.x() + annotWidth > topLeftPoint.x() + viewportWidth) {
-                newPositionPoint.setX(topLeftPoint.x() + viewportWidth - annotWidth);
-            }
-
-            // make sure y is in range
-            if (newPositionPoint.y() < topLeftPoint.y()) {
-                newPositionPoint.setY(topLeftPoint.y());
-            } else if (newPositionPoint.y() + annotHeight > topLeftPoint.y() + viewportHeight) {
-                newPositionPoint.setY(topLeftPoint.y() + viewportHeight - annotHeight);
-            }
-
-            parentWidget()->move(newPositionPoint);
+            const auto annotWidget = parentWidget();
+            QPoint newPositionPoint = annotWidget->pos() + mouseDelta;
+            annotWidget->move(newPositionPoint);
             break;
         }
         default:
@@ -221,6 +202,8 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
     setAttribute(Qt::WA_DeleteOnClose);
     setObjectName(QStringLiteral("AnnotWindow"));
 
+    parent->installEventFilter(this);
+
     const bool canEditAnnotation = m_document->canModifyPageAnnotation(annot);
 
     textEdit = new KTextEdit(this);
@@ -261,7 +244,10 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
     m_title->setTitle(m_annot->window().summary());
     m_title->connectOptionButton(this, SLOT(slotOptionBtn()));
 
-    setGeometry(10, 10, 300, 300);
+    const auto initialPosition = qApp->isRightToLeft() //
+        ? availableBounds().topRight() + QPoint(-defaultSize.width() - defaultPosition.x(), defaultPosition.y())
+        : availableBounds().topLeft() + defaultPosition;
+    setGeometry(QRect(initialPosition, defaultSize));
 
     reloadInfo();
 }
@@ -310,6 +296,35 @@ int AnnotWindow::pageNumber() const
     return m_page;
 }
 
+void AnnotWindow::fixupGeometry()
+{
+    // Try to maintain the default size, but squeeze if not does not fit.
+    const auto bounds = availableBounds();
+
+    const QSize size( //
+        std::min(bounds.width(), defaultSize.width()),
+        std::min(bounds.height(), defaultSize.height()));
+
+    const QPoint position( //
+        bounds.x() + std::max(0, std::min(bounds.width() - size.width(), x() - bounds.x())),
+        bounds.y() + std::max(0, std::min(bounds.height() - size.height(), y() - bounds.y())));
+
+    // hopefully no infinite event recursion, because we only need to fix up once, after which it should be idempotent
+    setGeometry(QRect(position, size));
+}
+
+QRect AnnotWindow::availableBounds() const
+{
+    if (const auto scrollArea = qobject_cast<QAbstractScrollArea *>(parentWidget())) {
+        // Use viewport bounds to exclude scrollbars
+        return scrollArea->viewport()->geometry();
+    } else if (const auto parent = parentWidget()) {
+        return QRect(QPoint(0, 0), parent->size());
+    } else {
+        return QRect();
+    }
+}
+
 void AnnotWindow::showEvent(QShowEvent *event)
 {
     QFrame::showEvent(event);
@@ -318,30 +333,48 @@ void AnnotWindow::showEvent(QShowEvent *event)
     textEdit->setFocus();
 }
 
-bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
+void AnnotWindow::moveEvent(QMoveEvent *event)
 {
-    if (e->type() == QEvent::ShortcutOverride) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
-        if (keyEvent->key() == Qt::Key_Escape) {
-            e->accept();
-            return true;
+    QFrame::moveEvent(event);
+    fixupGeometry();
+}
+
+void AnnotWindow::resizeEvent(QResizeEvent *event)
+{
+    QFrame::resizeEvent(event);
+    fixupGeometry();
+}
+
+bool AnnotWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == textEdit) {
+        if (event->type() == QEvent::ShortcutOverride) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent->key() == Qt::Key_Escape) {
+                event->accept();
+                return true;
+            }
+        } else if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent == QKeySequence::Undo) {
+                m_document->undo();
+                return true;
+            } else if (keyEvent == QKeySequence::Redo) {
+                m_document->redo();
+                return true;
+            } else if (keyEvent->key() == Qt::Key_Escape) {
+                close();
+                return true;
+            }
+        } else if (event->type() == QEvent::FocusIn) {
+            raise();
         }
-    } else if (e->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
-        if (keyEvent == QKeySequence::Undo) {
-            m_document->undo();
-            return true;
-        } else if (keyEvent == QKeySequence::Redo) {
-            m_document->redo();
-            return true;
-        } else if (keyEvent->key() == Qt::Key_Escape) {
-            close();
-            return true;
+    } else if (watched == parent()) {
+        if (event->type() == QEvent::Resize) {
+            fixupGeometry();
         }
-    } else if (e->type() == QEvent::FocusIn) {
-        raise();
     }
-    return QFrame::eventFilter(o, e);
+    return QFrame::eventFilter(watched, event);
 }
 
 void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu *menu)

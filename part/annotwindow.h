@@ -44,6 +44,11 @@ public:
     void updateAnnotation(Okular::Annotation *a);
 
 private:
+    void fixupGeometry();
+    QRect availableBounds() const;
+    static constexpr const QPoint defaultPosition {10, 10};
+    static constexpr const QSize defaultSize {300, 300};
+
     MovableTitle *m_title;
     KTextEdit *textEdit;
     QColor m_color;
@@ -59,7 +64,9 @@ public Q_SLOTS:
 
 protected:
     void showEvent(QShowEvent *event) override;
-    bool eventFilter(QObject *obj, QEvent *event) override;
+    void moveEvent(QMoveEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private Q_SLOTS:
     void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);

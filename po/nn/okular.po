@@ -6024,12 +6024,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#, fuzzy
-#~| msgid ""
-#~| "All your signing certificates are either not valid yet or are past their "
-#~| "validity date."
-#~ msgid "All your signing certificates are invalid"
-#~ msgstr ""
-#~ "Alle signerings­sertifikata dine er anten ikkje enno gyldige eller har "
-#~ "passert utløpsdatoen."

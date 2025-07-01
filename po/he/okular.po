@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-26 09:36+0300\n"
+"PO-Revision-Date: 2025-06-28 17:30+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2884,7 +2884,7 @@ msgstr "בעת שימוש בכלי העיון, לגרום לסמן לגלוש ב
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "פריטים בהיסטוריה האחרונה:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format

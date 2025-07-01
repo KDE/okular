@@ -493,6 +493,12 @@ PageView::~PageView()
     delete d;
 }
 
+void PageView::setupViewport(QWidget *viewport)
+{
+    notifyAnnotationWindowsAboutViewportBoundsChange();
+    QAbstractScrollArea::setupViewport(viewport);
+}
+
 void PageView::setupBaseActions(KActionCollection *ac)
 {
     d->actionCollection = ac;
@@ -851,7 +857,8 @@ void PageView::openAnnotationWindow(Okular::Annotation *annotation, int pageNumb
     }
 
     if (existWindow == nullptr) {
-        existWindow = new AnnotWindow(this, annotation, d->document, pageNumber);
+        const auto initialViewportBounds = viewportBoundsForAnnotationWindows();
+        existWindow = new AnnotWindow(this, initialViewportBounds, annotation, d->document, pageNumber);
         connect(existWindow, &QObject::destroyed, this, &PageView::slotAnnotationWindowDestroyed);
 
         d->m_annowindows << existWindow;
@@ -2036,6 +2043,8 @@ void PageView::resizeEvent(QResizeEvent *e)
 
     d->verticalScrollBarVisible = verticalScrollBar()->isVisible();
     d->horizontalScrollBarVisible = horizontalScrollBar()->isVisible();
+
+    notifyAnnotationWindowsAboutViewportBoundsChange();
 }
 
 void PageView::keyPressEvent(QKeyEvent *e)
@@ -3448,6 +3457,19 @@ std::vector<std::unique_ptr<Okular::RegularAreaRect>> PageView::textSelections(c
         }
     }
     return ret;
+}
+
+const QRect &PageView::viewportBoundsForAnnotationWindows()
+{
+    return viewport()->geometry();
+}
+
+void PageView::notifyAnnotationWindowsAboutViewportBoundsChange()
+{
+    const auto bounds = viewportBoundsForAnnotationWindows();
+    for (const auto &aw : std::as_const(d->m_annowindows)) {
+        aw->updateViewportBounds(bounds);
+    }
 }
 
 void PageView::drawDocumentOnPainter(const QRect contentsRect, QPainter *p)

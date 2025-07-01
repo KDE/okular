@@ -14,6 +14,7 @@
 #include <KLocalizedString>
 #include <KStandardAction>
 #include <KTextEdit>
+#include <QAbstractScrollArea>
 #include <QAction>
 #include <QApplication>
 #include <QDebug>
@@ -141,32 +142,12 @@ public:
             break;
         case QEvent::MouseMove: {
             me = static_cast<QMouseEvent *>(event);
+            const QPoint mouseMovePos = me->pos();
+            const QPoint mouseDelta = mouseMovePos - mousePressPos;
 
-            // viewport info
-            const QPoint topLeftPoint = parentWidget()->parentWidget()->pos();
-            const int viewportHeight = parentWidget()->parentWidget()->height();
-            const int viewportWidth = parentWidget()->parentWidget()->width();
-
-            // annotation's popup window info
-            QPoint newPositionPoint = me->pos() - mousePressPos + parentWidget()->pos();
-            const int annotHeight = parentWidget()->height();
-            const int annotWidth = parentWidget()->width();
-
-            // make sure x is in range
-            if (newPositionPoint.x() < topLeftPoint.x()) {
-                newPositionPoint.setX(topLeftPoint.x());
-            } else if (newPositionPoint.x() + annotWidth > topLeftPoint.x() + viewportWidth) {
-                newPositionPoint.setX(topLeftPoint.x() + viewportWidth - annotWidth);
-            }
-
-            // make sure y is in range
-            if (newPositionPoint.y() < topLeftPoint.y()) {
-                newPositionPoint.setY(topLeftPoint.y());
-            } else if (newPositionPoint.y() + annotHeight > topLeftPoint.y() + viewportHeight) {
-                newPositionPoint.setY(topLeftPoint.y() + viewportHeight - annotHeight);
-            }
-
-            parentWidget()->move(newPositionPoint);
+            const auto annotWidget = parentWidget();
+            QPoint newPositionPoint = annotWidget->pos() + mouseDelta;
+            annotWidget->move(newPositionPoint);
             break;
         }
         default:
@@ -210,8 +191,9 @@ private:
 };
 
 // Qt::SubWindow is needed to make QSizeGrip work
-AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Document *document, int page)
+AnnotWindow::AnnotWindow(QWidget *parent, QRect initialViewportBounds, Okular::Annotation *annot, Okular::Document *document, int page)
     : QFrame(parent, Qt::SubWindow)
+    , m_viewportBounds(initialViewportBounds)
     , m_annot(annot)
     , m_document(document)
     , m_page(page)
@@ -261,7 +243,10 @@ AnnotWindow::AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Doc
     m_title->setTitle(m_annot->window().summary());
     m_title->connectOptionButton(this, SLOT(slotOptionBtn()));
 
-    setGeometry(10, 10, 300, 300);
+    const auto initialPosition = qApp->isRightToLeft() //
+        ? initialViewportBounds.topRight() + QPoint(-defaultSize.width() - defaultPosition.x(), defaultPosition.y())
+        : initialViewportBounds.topLeft() + defaultPosition;
+    setGeometry(QRect(initialPosition, defaultSize));
 
     reloadInfo();
 }
@@ -310,12 +295,48 @@ int AnnotWindow::pageNumber() const
     return m_page;
 }
 
+void AnnotWindow::updateViewportBounds(QRect bounds)
+{
+    m_viewportBounds = bounds;
+    fixupGeometry();
+}
+
+void AnnotWindow::fixupGeometry()
+{
+    // Try to maintain the default size, but squeeze if not does not fit.
+    // Use viewport bounds to exclude scrollbars.
+    const auto bounds = m_viewportBounds;
+
+    const QSize size( //
+        std::min(bounds.width(), defaultSize.width()),
+        std::min(bounds.height(), defaultSize.height()));
+
+    const QPoint position( //
+        bounds.x() + std::max(0, std::min(bounds.width() - size.width(), x() - bounds.x())),
+        bounds.y() + std::max(0, std::min(bounds.height() - size.height(), y() - bounds.y())));
+
+    // hopefully no infinite event recursion, because we only need to fix up once, after which it should be idempotent
+    setGeometry(QRect(position, size));
+}
+
 void AnnotWindow::showEvent(QShowEvent *event)
 {
     QFrame::showEvent(event);
 
     // focus the content area by default
     textEdit->setFocus();
+}
+
+void AnnotWindow::moveEvent(QMoveEvent *event)
+{
+    QFrame::moveEvent(event);
+    fixupGeometry();
+}
+
+void AnnotWindow::resizeEvent(QResizeEvent *event)
+{
+    QFrame::resizeEvent(event);
+    fixupGeometry();
 }
 
 bool AnnotWindow::eventFilter(QObject *watched, QEvent *event)

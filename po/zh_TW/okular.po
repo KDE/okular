@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-28 00:40+0000\n"
-"PO-Revision-Date: 2025-06-15 18:16+0900\n"
+"PO-Revision-Date: 2025-07-01 19:51+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -2866,7 +2866,7 @@ msgstr "使用瀏覽工具時，讓游標抵達螢幕邊緣時從另一側出現
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "要記住幾個最近使用的項目："
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3921,38 +3921,32 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"您的所有簽名憑證都是無效的。如果之前是能成功簽署的，請檢查它們的有效日期。"
 
 #: part/pageview.cpp:5168
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "僅 QES 憑證"
+msgstr "沒有有效的憑證"
 
 #: part/pageview.cpp:5169 part/pageview.cpp:5184
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "在憑證管理員中檢視"
+msgstr "開啟憑證管理員"
 
 #: part/pageview.cpp:5180
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"沒有可用的簽名憑證。<br/>更多資訊請參考說明文件中關於 <a href=\"%1\">加入數位"
-"簽名</a> 的段落。"
+"沒有可用的簽名憑證。<br/>開啟憑證管理員來匯入或管理憑證。<br/>更多資訊請參考"
+"說明文件中關於 <a href=\"%1\">加入數位簽名</a> 的段落。"
 
 #: part/pageview.cpp:5183 part/pageview.cpp:5195
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "憑證"
+msgstr "找不到憑證"
 
 #: part/pageview.cpp:5193
 #, kde-format

@@ -3509,14 +3509,14 @@ Context menu actions like Rename Bookmarks etc.)
 			</itemizedlist>
 			<screenshot>
 				<screeninfo
->Het dialoogvenster voor configuratie</screeninfo>
+>De configuratiedialoog</screeninfo>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="configure.png" format="PNG"/>
 					</imageobject>
 					<textobject>
 						<phrase
->Het dialoogvenster voor configuratie</phrase>
+>De configuratiedialoog</phrase>
 					</textobject>
 				</mediaobject>
 			</screenshot>

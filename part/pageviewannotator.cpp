@@ -74,7 +74,7 @@ public:
 
         // create engine objects
         if (!hoverIconName.simplified().isEmpty()) {
-            pixmap = Okular::AnnotationUtils::loadStamp(hoverIconName, size);
+            pixmap = Okular::AnnotationUtils::loadStamp(hoverIconName, QSize(size, size));
         }
     }
 
@@ -1544,7 +1544,7 @@ QPixmap PageViewAnnotator::makeToolPixmap(const QDomElement &toolElement)
         p.drawLine(0, 20, 19, 20);
         p.drawLine(1, 21, 18, 21);
     } else if (annotType == QLatin1String("stamp")) {
-        QPixmap stamp = Okular::AnnotationUtils::loadStamp(icon, 16, false /* keepAspectRatio */);
+        QPixmap stamp = Okular::AnnotationUtils::loadStamp(icon, QSize(16, 16), Qt::IgnoreAspectRatio);
         p.setRenderHint(QPainter::Antialiasing);
         p.drawPixmap(16, 14, stamp);
     } else if (annotType == QLatin1String("straight-line")) {

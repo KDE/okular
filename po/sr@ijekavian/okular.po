@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-28 00:40+0000\n"
+"POT-Creation-Date: 2025-07-03 06:55+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -4192,22 +4192,22 @@ msgstr "Копирај текст"
 msgid "Go to '%1'"
 msgstr "Иди на „%1“"
 
-#: part/pageview.cpp:4064 part/part.cpp:3179
+#: part/pageview.cpp:4062 part/part.cpp:3179
 #, kde-format
 msgid "Fit Width"
 msgstr "уклопљена ширина"
 
-#: part/pageview.cpp:4064
+#: part/pageview.cpp:4062
 #, kde-format
 msgid "Fit Page"
 msgstr "уклопљена страница"
 
-#: part/pageview.cpp:4064
+#: part/pageview.cpp:4062
 #, kde-format
 msgid "Auto Fit"
 msgstr "уклопљено аутоматски"
 
-#: part/pageview.cpp:4087
+#: part/pageview.cpp:4085
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4217,68 +4217,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4370
+#: part/pageview.cpp:4368
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Потражи „%1“ помоћу"
 
-#: part/pageview.cpp:4384
+#: part/pageview.cpp:4382
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Подеси веб пречице..."
 
-#: part/pageview.cpp:4410
+#: part/pageview.cpp:4408
 #, kde-format
 msgid "Follow This Link"
 msgstr "Прати ову везу"
 
-#: part/pageview.cpp:4413
+#: part/pageview.cpp:4411
 #, kde-format
 msgid "Play this Sound"
 msgstr "Одсвирај овај звук"
 
-#: part/pageview.cpp:4415
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Stop Sound"
 msgstr "Угаси звук"
 
-#: part/pageview.cpp:4421
+#: part/pageview.cpp:4419
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Копирај адресу везе"
 
-#: part/pageview.cpp:4442
+#: part/pageview.cpp:4440
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Потражи „%1“ помоћу"
 
-#: part/pageview.cpp:4974
+#: part/pageview.cpp:4972
 #, kde-format
 msgid "Welcome"
 msgstr "Добро дошли"
 
-#: part/pageview.cpp:5096
+#: part/pageview.cpp:5094
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Изаберите област увеличања. Кликните десним за умањење."
 
-#: part/pageview.cpp:5109
+#: part/pageview.cpp:5107
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Кликните за увеличан приказ."
 
-#: part/pageview.cpp:5124
+#: part/pageview.cpp:5122
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Исцртајте правоугаоник око текста/графике за копирање."
 
-#: part/pageview.cpp:5138
+#: part/pageview.cpp:5136
 #, kde-format
 msgid "Select text"
 msgstr "Изабери текст"
 
-#: part/pageview.cpp:5152
+#: part/pageview.cpp:5150
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4287,7 +4287,7 @@ msgstr ""
 "Исцртајте правоугаоник око табеле, па кликћите близу ивица да је изделите; "
 "притисните Esc да очистите."
 
-#: part/pageview.cpp:5167 part/pageview.cpp:5175
+#: part/pageview.cpp:5165 part/pageview.cpp:5173
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4295,20 +4295,20 @@ msgid ""
 msgstr ""
 
 # >> @title:window
-#: part/pageview.cpp:5168
+#: part/pageview.cpp:5166
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "No valid certificates"
 msgstr "Подешавање приказивача"
 
 # >> @title:window
-#: part/pageview.cpp:5169 part/pageview.cpp:5184
+#: part/pageview.cpp:5167 part/pageview.cpp:5182
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "Open Certificate Manager"
 msgstr "Подешавање приказивача"
 
-#: part/pageview.cpp:5180
+#: part/pageview.cpp:5178
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4317,13 +4317,13 @@ msgid ""
 msgstr ""
 
 # >> @title:window
-#: part/pageview.cpp:5183 part/pageview.cpp:5195
+#: part/pageview.cpp:5181 part/pageview.cpp:5193
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "No certificates found"
 msgstr "Подешавање приказивача"
 
-#: part/pageview.cpp:5193
+#: part/pageview.cpp:5191
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4331,18 +4331,18 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5218
+#: part/pageview.cpp:5216
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5241
+#: part/pageview.cpp:5239
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
 # >> @info
-#: part/pageview.cpp:5385
+#: part/pageview.cpp:5383
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Исцртајте правоугаоник око дела странице који желите да буде видљив."

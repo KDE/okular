@@ -972,12 +972,12 @@ size_t qHash(const Okular::NormalizedRect &r, size_t seed = 0);
 /**
  * Debug operator for normalized @p point.
  */
-OKULARCORE_EXPORT QDebug operator<<(QDebug str, const Okular::NormalizedPoint &point);
+OKULARCORE_EXPORT QDebug operator<<(QDebug debug, const Okular::NormalizedPoint &point);
 
 /**
  * Debug operator for normalized @p rect.
  */
-OKULARCORE_EXPORT QDebug operator<<(QDebug str, const Okular::NormalizedRect &rect);
+OKULARCORE_EXPORT QDebug operator<<(QDebug debug, const Okular::NormalizedRect &rect);
 #endif
 
 #endif

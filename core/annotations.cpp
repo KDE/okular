@@ -2391,7 +2391,7 @@ public:
     double m_fontSize = 10;
     double m_leftFontSize = 20;
     int m_pageNumber;
-    std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> m_signFunction;
+    std::function<std::pair<SigningResult, QString>(const Okular::NewSignatureData &, const QString &)> m_signFunction;
 };
 
 SignatureAnnotation::SignatureAnnotation()
@@ -2479,13 +2479,13 @@ void SignatureAnnotation::setLeftFontSize(double fontSize)
     d->m_leftFontSize = fontSize;
 }
 
-void SignatureAnnotation::setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func)
+void SignatureAnnotation::setSignFunction(std::function<std::pair<SigningResult, QString>(const Okular::NewSignatureData &, const QString &)> func)
 {
     Q_D(SignatureAnnotation);
     d->m_signFunction = std::move(func);
 }
 
-SigningResult SignatureAnnotation::sign(const Okular::NewSignatureData &data, const QString &fileName)
+std::pair<SigningResult, QString> SignatureAnnotation::sign(const Okular::NewSignatureData &data, const QString &fileName)
 {
     Q_D(SignatureAnnotation);
     return d->m_signFunction(data, fileName);

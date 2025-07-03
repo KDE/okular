@@ -105,7 +105,7 @@ public:
     Okular::AnnotationProxy *annotationProxy() const override;
 
     bool canSign() const override;
-    bool sign(const Okular::NewSignatureData &oData, const QString &rFilename) override;
+    std::pair<Okular::SigningResult, QString> sign(const Okular::NewSignatureData &oData, const QString &rFilename) override;
 
     Okular::CertificateStore *certificateStore() const override;
 

@@ -1384,9 +1384,9 @@ public:
     int page() const;
     void setPage(int page);
 
-    void setSignFunction(std::function<SigningResult(const Okular::NewSignatureData &, const QString &)> func);
+    void setSignFunction(std::function<std::pair<SigningResult, QString>(const Okular::NewSignatureData &, const QString &)> func);
 
-    SigningResult sign(const Okular::NewSignatureData &data, const QString &fileName);
+    std::pair<SigningResult, QString> sign(const Okular::NewSignatureData &data, const QString &fileName);
 
     /**
      * Returns the sub type of the stamp annotation.

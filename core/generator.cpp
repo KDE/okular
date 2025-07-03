@@ -256,9 +256,9 @@ bool Generator::canSign() const
     return false;
 }
 
-bool Generator::sign(const NewSignatureData &, const QString &)
+std::pair<SigningResult, QString> Generator::sign(const NewSignatureData &, const QString &)
 {
-    return false;
+    return {};
 }
 
 CertificateStore *Generator::certificateStore() const

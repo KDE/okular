@@ -587,9 +587,9 @@ public:
     /**
       Signs a field of UnsignedSignature type.
 
-      @since 22.04
+      @since 25.04
      */
-    virtual bool sign(const NewSignatureData &data, const QString &newPath) const = 0;
+    virtual std::pair<SigningResult, QString> sign(const NewSignatureData &data, const QString &newPath) const = 0;
 
     using SubscriptionHandle = uint64_t;
     /**

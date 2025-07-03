@@ -523,10 +523,14 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
         oSignatureAnnotation->setNativeData(helper);
     }
 
-    oSignatureAnnotation->setSignFunction([signatureAnnotation = pSignatureAnnotation.get()](const Okular::NewSignatureData &oData, const QString &fileName) {
+    oSignatureAnnotation->setSignFunction([signatureAnnotation = pSignatureAnnotation.get()](const Okular::NewSignatureData &oData, const QString &fileName) -> std::pair<Okular::SigningResult, QString> {
         Poppler::PDFConverter::NewSignatureData pData;
         PDFGenerator::okularToPoppler(oData, &pData);
-        return popperToOkular(signatureAnnotation->sign(fileName, pData));
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
+        return std::pair<Okular::SigningResult, QString>(popperToOkular(signatureAnnotation->sign(fileName, pData)), signatureAnnotation->lastSigningErrorDetails().data.toString());
+#else
+        return std::pair<Okular::SigningResult, QString> {popperToOkular(signatureAnnotation->sign(fileName, pData)), QString {}};
+#endif
     });
 
     return pSignatureAnnotation;

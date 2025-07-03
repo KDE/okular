@@ -2169,20 +2169,45 @@ bool PDFGenerator::canSign() const
 #endif
 }
 
-bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
+static Okular::SigningResult fromPoppler(Poppler::PDFConverter::SigningResult result)
+{
+    switch (result) {
+    case Poppler::PDFConverter::GenericSigningError:
+        return Okular::GenericSigningError;
+    case Poppler::PDFConverter::FieldAlreadySigned:
+        return Okular::FieldAlreadySigned;
+    case Poppler::PDFConverter::BadPassphrase:
+        return Okular::BadPassphrase;
+    case Poppler::PDFConverter::KeyMissing:
+        return Okular::KeyMissing;
+    case Poppler::PDFConverter::InternalError:
+        return Okular::InternalSigningError;
+    case Poppler::PDFConverter::UserCancelled:
+        return Okular::UserCancelled;
+    case Poppler::PDFConverter::WriteFailed:
+        return Okular::SignatureWriteFailed;
+    case Poppler::PDFConverter::SigningSuccess:
+        return Okular::SigningSuccess;
+    }
+    return Okular::GenericSigningError;
+}
+#endif
+
+std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
     // We need a temporary file to pass a prepared image to poppler
     QTemporaryFile timg(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.png"));
     timg.setAutoRemove(true);
     if (!timg.open()) {
-        return false;
+        return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
     }
 
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
     if (!tf.open()) {
-        return false;
+        return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
     }
     std::unique_ptr<Poppler::PDFConverter> converter(pdfdoc->pdfConverter());
     converter->setOutputFileName(tf.fileName());
@@ -2213,18 +2238,23 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
             }
         }
     }
-    if (!converter->sign(pData)) {
+    bool result = converter->sign(pData);
+    if (!result) {
         tf.remove();
-        return false;
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
+        return {fromPoppler(converter->lastSigningResult()), converter->lastSigningErrorDetails().data.toString()};
+#else
+        return {Okular::GenericSigningError, QString {}};
+#endif
     }
 
     // now copy over old file
     QFile::remove(rFilename);
     if (!tf.rename(rFilename)) {
-        return false;
+        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file")};
     }
 
-    return true;
+    return {Okular::SigningSuccess, {}};
 }
 
 Okular::CertificateStore *PDFGenerator::certificateStore() const

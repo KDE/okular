@@ -19,6 +19,7 @@
 
 // system includes
 #include <math.h>
+#include <memory>
 
 // local includes
 #include "core/annotations.h"
@@ -212,8 +213,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
     const bool bufferAccessibility = (flags & Accessibility) && Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() != Okular::SettingsCore::EnumRenderMode::Paper);
     const bool useBackBuffer = bufferAccessibility || !bufferedHighlights.isEmpty() || !bufferedAnnotations.isEmpty() || viewPortPoint;
-    QPixmap *backPixmap = nullptr;
-    QPainter *mixedPainter = nullptr;
+    QPixmap backPixmap; // order of declarations is important: ownedPainter should be destroyed before its pixmap
+    std::unique_ptr<QPainter> ownedPainter;
+    QPainter *mixedPainter = nullptr; // Will point to either a provided destPainter or the ownedPainter
     const QRect limitsInPixmap = limits.translated(scaledCrop.topLeft());
     const QRect dLimitsInPixmap = dLimits.translated(dScaledCrop.topLeft());
 
@@ -469,11 +471,12 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         }
 
         // 4B.5. create the back pixmap converting from the local image
-        backPixmap = new QPixmap(QPixmap::fromImage(backImage));
-        backPixmap->setDevicePixelRatio(dpr);
+        backPixmap = QPixmap::fromImage(backImage);
+        backPixmap.setDevicePixelRatio(dpr);
 
         // 4B.6. create a painter over the pixmap and set it as the active one
-        mixedPainter = new QPainter(backPixmap);
+        ownedPainter = std::make_unique<QPainter>(&backPixmap);
+        mixedPainter = ownedPainter.get();
         mixedPainter->translate(-limits.left(), -limits.top());
     }
 
@@ -638,9 +641,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
     /** 7 -- BUFFERED FLOW. Copy BACKPIXMAP on DESTINATION PAINTER **/
     if (useBackBuffer) {
-        delete mixedPainter;
-        destPainter->drawPixmap(limits.left(), limits.top(), *backPixmap);
-        delete backPixmap;
+        destPainter->drawPixmap(limits.left(), limits.top(), backPixmap);
     }
 }
 

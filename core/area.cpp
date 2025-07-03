@@ -106,10 +106,11 @@ double NormalizedPoint::distanceSqr(double x, double y, double xScale, double yS
     return thisDistance;
 }
 
-QDebug operator<<(QDebug str, const Okular::NormalizedPoint &p)
+QDebug operator<<(QDebug debug, const Okular::NormalizedPoint &p)
 {
-    str.nospace() << "NormPt(" << p.x << "," << p.y << ")";
-    return str.space();
+    QDebugStateSaver saver(debug);
+    debug.nospace() << "NormPt(" << p.x << "," << p.y << ")";
+    return debug;
 }
 
 /** class NormalizedRect **/
@@ -222,13 +223,6 @@ NormalizedPoint NormalizedRect::center() const
     return NormalizedPoint((left + right) / 2.0, (top + bottom) / 2.0);
 }
 
-/*
-QDebug operator << (QDebug str , const NormalizedRect &r)
-{
-    str << "[" <<r.left() << "," << r.top() << "] x "<< "[" <<r.right() << "," << r.bottom() << "]";
-    return str;
-}*/
-
 QRect NormalizedRect::geometry(int xScale, int yScale) const
 {
     int l = (int)(left * xScale), t = (int)(top * yScale), r = (int)(right * xScale), b = (int)(bottom * yScale);
@@ -266,10 +260,11 @@ size_t Okular::qHash(const NormalizedRect &r, size_t seed)
     return ::qHashMulti(seed, r.bottom, r.right, r.top, r.left);
 }
 
-QDebug operator<<(QDebug str, const Okular::NormalizedRect &r)
+QDebug operator<<(QDebug debug, const Okular::NormalizedRect &r)
 {
-    str.nospace() << "NormRect(" << r.left << "," << r.top << " x " << (r.right - r.left) << "+" << (r.bottom - r.top) << ")";
-    return str.space();
+    QDebugStateSaver saver(debug);
+    debug.nospace() << "NormRect(" << r.left << "," << r.top << " x " << (r.right - r.left) << "+" << (r.bottom - r.top) << ")";
+    return debug;
 }
 
 RegularAreaRect::RegularAreaRect()

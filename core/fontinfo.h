@@ -24,7 +24,7 @@ class FontInfoPrivate;
 class OKULARCORE_EXPORT FontInfo
 {
 public:
-    typedef QVector<FontInfo> List;
+    typedef QList<FontInfo> List;
 
     /**
      * The possible kinds of fonts.

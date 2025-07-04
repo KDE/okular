@@ -20,7 +20,7 @@ public:
         : q(qq)
         , speech(new QTextToSpeech(Okular::Settings::ttsEngine()))
     {
-        const QVector<QVoice> voices = speech->availableVoices();
+        const QList<QVoice> voices = speech->availableVoices();
         QString voiceName = Okular::Settings::ttsVoice();
         for (const QVoice &voice : voices) {
             if (voice.name() == voiceName) {
@@ -116,7 +116,7 @@ void OkularTTS::slotConfigChanged()
         d->speechEngine = engine;
     }
 
-    const QVector<QVoice> voices = d->speech->availableVoices();
+    const QList<QVoice> voices = d->speech->availableVoices();
     for (const QVoice &voice : voices) {
         if (voice.name() == voiceName) {
             d->speech->setVoice(voice);

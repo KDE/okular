@@ -14,9 +14,9 @@
 #include "bigEndianByteReader.h"
 
 #include <QHash>
+#include <QList>
 #include <QMap>
 #include <QString>
-#include <QVector>
 
 class fontPool;
 class pageSize;
@@ -38,7 +38,7 @@ public:
     QString filename;
     QString generatorString;
     quint16 total_pages;
-    QVector<quint32> page_offset;
+    QList<quint32> page_offset;
 
     /** Saves the DVI file. Returns true on success. */
     bool saveAs(const QString &filename);
@@ -100,7 +100,7 @@ public:
 
     /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
         with care. */
-    void setNewData(const QVector<quint8> &newData)
+    void setNewData(const QList<quint8> &newData)
     {
         dviData = newData;
     }
@@ -149,7 +149,7 @@ private:
 
     double cmPerDVIunit;
 
-    QVector<quint8> dviData;
+    QList<quint8> dviData;
 
     /** Map of filenames for converted PDF files
 

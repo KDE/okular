@@ -69,7 +69,7 @@ public:
     ThumbnailWidget *m_selected;
     QTimer *m_delayTimer;
     QPixmap m_bookmarkOverlay;
-    QVector<ThumbnailWidget *> m_thumbnails;
+    QList<ThumbnailWidget *> m_thumbnails;
     QList<ThumbnailWidget *> m_visibleThumbnails;
     int m_vectorIndex;
     // Grabbing variables
@@ -207,7 +207,7 @@ ThumbnailListPrivate::ThumbnailListPrivate(ThumbnailList *qq, Okular::Document *
 
 ThumbnailWidget *ThumbnailListPrivate::getPageByNumber(int page) const
 {
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
         if ((*tIt)->pageNumber() == page) {
             return (*tIt);
@@ -222,7 +222,7 @@ ThumbnailListPrivate::~ThumbnailListPrivate()
 
 ThumbnailWidget *ThumbnailListPrivate::itemFor(const QPoint p) const
 {
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
         if ((*tIt)->rect().contains(p)) {
             return (*tIt);
@@ -234,7 +234,7 @@ ThumbnailWidget *ThumbnailListPrivate::itemFor(const QPoint p) const
 void ThumbnailListPrivate::paintEvent(QPaintEvent *e)
 {
     QPainter painter(this);
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
         QRect rect = e->rect().intersected((*tIt)->rect());
         if (!rect.isNull()) {
@@ -278,7 +278,7 @@ ThumbnailList::~ThumbnailList()
 }
 
 // BEGIN DocumentObserver inherited methods
-void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void ThumbnailList::notifySetup(const QList<Okular::Page *> &pages, int setupFlags)
 {
     // if there was a widget selected, save its pagenumber to restore
     // its selection (if available in the new set of pages)
@@ -290,7 +290,7 @@ void ThumbnailList::notifySetup(const QVector<Okular::Page *> &pages, int setupF
     }
 
     // delete all the Thumbnails
-    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
         delete *tIt;
     }
@@ -371,7 +371,7 @@ void ThumbnailList::notifyCurrentPageChanged(int previousPage, int currentPage)
 
     // select the page with viewport and ensure it's centered in the view
     d->m_vectorIndex = 0;
-    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     for (; tIt != tEnd; ++tIt) {
         if ((*tIt)->pageNumber() == currentPage) {
             d->m_selected = *tIt;
@@ -419,12 +419,12 @@ void ThumbnailList::notifyContentsCleared(int changedFlags)
 
 void ThumbnailList::notifyVisibleRectsChanged()
 {
-    const QVector<Okular::VisiblePageRect *> &visibleRects = d->m_document->visiblePageRects();
-    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
-    QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
+    const QList<Okular::VisiblePageRect *> &visibleRects = d->m_document->visiblePageRects();
+    QList<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
+    QList<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for (; tIt != tEnd; ++tIt) {
         bool found = false;
-        QVector<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
+        QList<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
         for (; (vIt != vEnd) && !found; ++vIt) {
             if ((*tIt)->pageNumber() == (*vIt)->pageNumber) {
                 (*tIt)->setVisibleRect((*vIt)->rect);
@@ -493,8 +493,8 @@ int ThumbnailListPrivate::getNewPageOffset(int n, ThumbnailListPrivate::ChangePa
 
 ThumbnailWidget *ThumbnailListPrivate::getThumbnailbyOffset(int current, int offset) const
 {
-    QVector<ThumbnailWidget *>::const_iterator it = m_thumbnails.begin();
-    QVector<ThumbnailWidget *>::const_iterator itE = m_thumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator it = m_thumbnails.begin();
+    QList<ThumbnailWidget *>::const_iterator itE = m_thumbnails.end();
     int idx = 0;
     while (it != itE) {
         if ((*it)->pageNumber() == current) {
@@ -618,7 +618,7 @@ void ThumbnailListPrivate::viewportResizeEvent(QResizeEvent *e)
         // resize and reposition items
         const int newWidth = q->viewport()->width();
         int newHeight = 0;
-        QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+        QList<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
         for (; tIt != tEnd; ++tIt) {
             ThumbnailWidget *t = *tIt;
             t->move(0, newHeight);
@@ -660,7 +660,7 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
     QList<Okular::PixmapRequest *> requestedPixmaps;
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+    QList<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     const QRect viewportRect = q->viewport()->rect().translated(q->horizontalScrollBar()->value(), q->verticalScrollBar()->value());
     for (; tIt != tEnd; ++tIt) {
         ThumbnailWidget *t = *tIt;

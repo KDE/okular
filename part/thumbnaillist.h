@@ -32,7 +32,7 @@ public:
     ~ThumbnailList() override;
 
     // inherited: create thumbnails ( inherited as a DocumentObserver )
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
     void notifyCurrentPageChanged(int previous, int current) override;
     // inherited: redraw thumbnail ( inherited as DocumentObserver )

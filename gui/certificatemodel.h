@@ -8,7 +8,7 @@
 #define OKULAR_CERTIFICATEMODEL_H
 
 #include <QAbstractTableModel>
-#include <QVector>
+#include <QList>
 
 #include "core/signatureutils.h"
 
@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE bool exportCertificateTo(const QString &path);
 
 private:
-    QVector<Property> m_certificateProperties;
+    QList<Property> m_certificateProperties;
     const Okular::CertificateInfo m_certificateInfo;
 };
 

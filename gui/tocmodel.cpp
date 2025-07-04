@@ -53,7 +53,7 @@ public:
     QList<TOCItem *> itemsToOpen;
     QList<TOCItem *> currentPage;
     TOCModel *m_oldModel;
-    QVector<QModelIndex> m_oldTocExpandedIndexes;
+    QList<QModelIndex> m_oldTocExpandedIndexes;
     Q_DISABLE_COPY(TOCModelPrivate)
 };
 
@@ -423,7 +423,7 @@ bool TOCModel::equals(const TOCModel *model) const
     }
 }
 
-void TOCModel::setOldModelData(TOCModel *model, const QVector<QModelIndex> &list)
+void TOCModel::setOldModelData(TOCModel *model, const QList<QModelIndex> &list)
 {
     delete d->m_oldModel;
     d->m_oldModel = model;

@@ -66,7 +66,7 @@ class PageLabelEdit : public PagesEdit
 public:
     explicit PageLabelEdit(MiniBar *parent);
     void setText(const QString &newText) override;
-    void setPageLabels(const QVector<Okular::Page *> &pageVector);
+    void setPageLabels(const QList<Okular::Page *> &pageVector);
 
 Q_SIGNALS:
     void pageNumberChosen(int page);
@@ -97,7 +97,7 @@ public:
     int currentPage() const;
 
     // [INHERITED] from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pageVector, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pageVector, int setupFlags) override;
     void notifyCurrentPageChanged(int previous, int current) override;
 
 private:

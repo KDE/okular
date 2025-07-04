@@ -1261,7 +1261,7 @@ KConfigDialog *Part::slotGeneratorPreferences()
     return dialog;
 }
 
-void Part::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
+void Part::notifySetup(const QList<Okular::Page *> & /*pages*/, int setupFlags)
 {
     // Hide the migration message if the user has just migrated. Otherwise,
     // if m_migrationMessage is already hidden, this does nothing.

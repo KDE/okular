@@ -79,7 +79,7 @@ DjVuGenerator::~DjVuGenerator()
     delete m_djvu;
 }
 
-bool DjVuGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool DjVuGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     QMutexLocker locker(userMutex());
     if (!m_djvu->openFile(fileName)) {
@@ -213,9 +213,9 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
     return textpage;
 }
 
-void DjVuGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation)
+void DjVuGenerator::loadPages(QList<Okular::Page *> &pagesVector, int rotation)
 {
-    const QVector<KDjVu::Page> &djvu_pages = m_djvu->pages();
+    const QList<KDjVu::Page> &djvu_pages = m_djvu->pages();
     int numofpages = djvu_pages.count();
     pagesVector.resize(numofpages);
 

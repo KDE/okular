@@ -59,9 +59,9 @@ public:
     ~PDFGenerator() override;
 
     // [INHERITED] load a document and fill up the pagesVector
-    Okular::Document::OpenResult loadDocumentWithPassword(const QString &filePath, QVector<Okular::Page *> &pagesVector, const QString &password) override;
-    Okular::Document::OpenResult loadDocumentFromDataWithPassword(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector, const QString &password) override;
-    void loadPages(QVector<Okular::Page *> &pagesVector, int rotation = -1, bool clear = false);
+    Okular::Document::OpenResult loadDocumentWithPassword(const QString &filePath, QList<Okular::Page *> &pagesVector, const QString &password) override;
+    Okular::Document::OpenResult loadDocumentFromDataWithPassword(const QByteArray &fileData, QList<Okular::Page *> &pagesVector, const QString &password) override;
+    void loadPages(QList<Okular::Page *> &pagesVector, int rotation = -1, bool clear = false);
     // [INHERITED] document information
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
     const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
@@ -123,15 +123,15 @@ public:
     Okular::Action *additionalDocumentAction(Okular::Document::DocumentAdditionalActionType type) override;
 
 protected:
-    SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
+    SwapBackingFileResult swapBackingFile(QString const &newFileName, QList<Okular::Page *> &newPagesVector) override;
     bool doCloseDocument() override;
     Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
 private:
-    Okular::Document::OpenResult init(QVector<Okular::Page *> &pagesVector, const QString &password);
+    Okular::Document::OpenResult init(QList<Okular::Page *> &pagesVector, const QString &password);
 
     // create the document synopsis hierarchy
-    void addSynopsisChildren(const QVector<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination);
+    void addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination);
     // fetch annotations from the pdf file and add they to the page
     void addAnnotations(Poppler::Page *popplerPage, Okular::Page *page);
     // fetch the transition information and add it to the page

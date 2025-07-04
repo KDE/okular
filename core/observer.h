@@ -11,7 +11,7 @@
 #ifndef _OKULAR_DOCUMENTOBSERVER_H_
 #define _OKULAR_DOCUMENTOBSERVER_H_
 
-#include <QVector>
+#include <QList>
 
 #include "okularcore_export.h"
 
@@ -65,7 +65,7 @@ public:
      * @param pages The vector of pages of the document.
      * @param setupFlags the flags with the information about the setup
      */
-    virtual void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags);
+    virtual void notifySetup(const QList<Okular::Page *> &pages, int setupFlags);
 
     /**
      * This method is called whenever the viewport has been changed.

@@ -13,7 +13,6 @@
 #include <QPolygon>
 #include <QRect>
 #include <QVariant>
-#include <QVector>
 
 class QDomDocument;
 class QFile;
@@ -219,7 +218,7 @@ public:
      * The pages of the current document, or an empty vector otherwise.
      * \return a vector with the pages of the current document
      */
-    const QVector<KDjVu::Page> &pages() const;
+    const QList<KDjVu::Page> &pages() const;
 
     /**
      * Get the metadata for the specified \p key, or a null variant otherwise.

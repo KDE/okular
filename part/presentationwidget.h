@@ -50,7 +50,7 @@ public:
     ~PresentationWidget() override;
 
     // inherited from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyViewportChanged(bool smoothMove) override;
     void notifyPageChanged(int pageNumber, int changedFlags) override;
     bool canUnloadPixmap(int pageNumber) const override;
@@ -134,7 +134,7 @@ private:
     // misc stuff
     QWidget *m_parentWidget;
     Okular::Document *m_document;
-    QVector<PresentationFrame *> m_frames;
+    QList<PresentationFrame *> m_frames;
     int m_frameIndex;
     QStringList m_metaStrings;
     QToolBar *m_topBar;

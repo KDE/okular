@@ -242,7 +242,7 @@ QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(bool
     };
     Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
 
-    const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
+    const QList<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
     QList<Okular::CertificateInfo> vReturnCerts;
     for (const auto &cert : certs) {
         vReturnCerts.append(fromPoppler(cert));

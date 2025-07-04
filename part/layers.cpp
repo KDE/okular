@@ -55,7 +55,7 @@ Layers::~Layers()
     m_document->removeObserver(this);
 }
 
-void Layers::notifySetup(const QVector<Okular::Page *> & /*pages*/, int /*setupFlags*/)
+void Layers::notifySetup(const QList<Okular::Page *> & /*pages*/, int /*setupFlags*/)
 {
     QAbstractItemModel *layersModel = m_document->layersModel();
 

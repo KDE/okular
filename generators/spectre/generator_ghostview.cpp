@@ -128,7 +128,7 @@ Okular::Document::PrintError GSGenerator::print(QPrinter &printer)
     return Okular::Document::UnknownPrintError;
 }
 
-bool GSGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool GSGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     cache_AAtext = documentMetaData(TextAntialiasMetaData, true).toBool();
     cache_AAgfx = documentMetaData(GraphicsAntialiasMetaData, true).toBool();
@@ -174,7 +174,7 @@ void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request
     signalPixmapRequestDone(request);
 }
 
-bool GSGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
+bool GSGenerator::loadPages(QList<Okular::Page *> &pagesVector)
 {
     for (uint i = 0; i < spectre_document_get_n_pages(m_internalDocument); i++) {
         SpectrePage *page;

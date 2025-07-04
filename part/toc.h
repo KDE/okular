@@ -35,7 +35,7 @@ public:
     ~TOC() override;
 
     // inherited from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyCurrentPageChanged(int previous, int current) override;
 
     void reparseConfig();
@@ -62,7 +62,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
 
 private:
-    QVector<QModelIndex> expandedNodes(const QModelIndex &parent = QModelIndex()) const;
+    QList<QModelIndex> expandedNodes(const QModelIndex &parent = QModelIndex()) const;
 
     Okular::Document *m_document;
     QTreeView *m_treeView;

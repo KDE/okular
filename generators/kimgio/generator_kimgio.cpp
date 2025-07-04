@@ -48,7 +48,7 @@ KIMGIOGenerator::~KIMGIOGenerator()
 {
 }
 
-bool KIMGIOGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool KIMGIOGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     QFile f(fileName);
     if (!f.open(QFile::ReadOnly)) {
@@ -58,12 +58,12 @@ bool KIMGIOGenerator::loadDocument(const QString &fileName, QVector<Okular::Page
     return loadDocumentInternal(f.readAll(), fileName, pagesVector);
 }
 
-bool KIMGIOGenerator::loadDocumentFromData(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector)
+bool KIMGIOGenerator::loadDocumentFromData(const QByteArray &fileData, QList<Okular::Page *> &pagesVector)
 {
     return loadDocumentInternal(fileData, QString(), pagesVector);
 }
 
-bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     QBuffer buffer;
     buffer.setData(fileData);
@@ -99,7 +99,7 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QSt
     return true;
 }
 
-KIMGIOGenerator::SwapBackingFileResult KIMGIOGenerator::swapBackingFile(QString const & /*newFileName*/, QVector<Okular::Page *> & /*newPagesVector*/)
+KIMGIOGenerator::SwapBackingFileResult KIMGIOGenerator::swapBackingFile(QString const & /*newFileName*/, QList<Okular::Page *> & /*newPagesVector*/)
 {
     // NOP: We don't actually need to do anything because all data has already
     // been loaded in RAM

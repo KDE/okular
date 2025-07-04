@@ -21,7 +21,7 @@ public:
     ~ComicBookGenerator() override;
 
     // [INHERITED] load a document and fill up the pagesVector
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     // [INHERITED] print document using already configured kprinter
     Okular::Document::PrintError print(QPrinter &printer) override;

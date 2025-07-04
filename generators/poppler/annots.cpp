@@ -313,12 +313,12 @@ static void updatePopplerAnnotationFromOkularAnnotation(const Okular::TextAnnota
     pTextAnnotation->setTextColor(oTextAnnotation->textColor());
     pTextAnnotation->setInplaceAlign(static_cast<Poppler::TextAnnotation::InplaceAlignPosition>(oTextAnnotation->inplaceAlignment()));
     pTextAnnotation->setInplaceIntent(okularToPoppler(oTextAnnotation->inplaceIntent()));
-    pTextAnnotation->setCalloutPoints(QVector<QPointF>());
+    pTextAnnotation->setCalloutPoints(QList<QPointF>());
 }
 
 static void updatePopplerAnnotationFromOkularAnnotation(const Okular::LineAnnotation *oLineAnnotation, Poppler::LineAnnotation *pLineAnnotation)
 {
-    QVector<QPointF> points;
+    QList<QPointF> points;
     const QList<Okular::NormalizedPoint> annotPoints = oLineAnnotation->linePoints();
     for (const Okular::NormalizedPoint &p : annotPoints) {
         points.append(normPointToPointF(p));
@@ -367,10 +367,10 @@ static void updatePopplerAnnotationFromOkularAnnotation(const Okular::StampAnnot
 
 static void updatePopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation, Poppler::InkAnnotation *pInkAnnotation)
 {
-    QList<QVector<QPointF>> paths;
+    QList<QList<QPointF>> paths;
     const QList<QList<Okular::NormalizedPoint>> inkPathsList = oInkAnnotation->inkPaths();
     for (const QList<Okular::NormalizedPoint> &path : inkPathsList) {
-        QVector<QPointF> points;
+        QList<QPointF> points;
         for (const Okular::NormalizedPoint &p : path) {
             points.append(normPointToPointF(p));
         }
@@ -981,7 +981,7 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     oLineAnn->setLineIntent(popplerToOkular(popplerAnnotation->lineIntent()));
 
     QList<Okular::NormalizedPoint> points;
-    const QVector<QPointF> popplerPoints = popplerAnnotation->linePoints();
+    const QList<QPointF> popplerPoints = popplerAnnotation->linePoints();
     for (const QPointF &p : popplerPoints) {
         points << Okular::NormalizedPoint(p.x(), p.y());
     }
@@ -1031,9 +1031,9 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
 {
     Okular::InkAnnotation *oInkAnn = new Okular::InkAnnotation();
 
-    const QList<QVector<QPointF>> popplerInkPaths = popplerAnnotation->inkPaths();
+    const QList<QList<QPointF>> popplerInkPaths = popplerAnnotation->inkPaths();
     QList<QList<Okular::NormalizedPoint>> okularInkPaths;
-    for (const QVector<QPointF> &popplerInkPath : popplerInkPaths) {
+    for (const QList<QPointF> &popplerInkPath : popplerInkPaths) {
         QList<Okular::NormalizedPoint> okularInkPath;
         for (const QPointF &popplerPoint : popplerInkPath) {
             okularInkPath << Okular::NormalizedPoint(popplerPoint.x(), popplerPoint.y());
@@ -1219,7 +1219,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularStyle.setLineStyle(popplerToOkular(popplerStyle.lineStyle()));
         okularStyle.setXCorners(popplerStyle.xCorners());
         okularStyle.setYCorners(popplerStyle.yCorners());
-        const QVector<double> &dashArray = popplerStyle.dashArray();
+        const QList<double> &dashArray = popplerStyle.dashArray();
         if (dashArray.size() > 0) {
             okularStyle.setMarks(dashArray[0]);
         }

@@ -34,7 +34,7 @@ public:
 
     QVariant m_nativeId;
     std::shared_ptr<const void> m_nativeHandle;
-    QVector<Action *> m_nextActions;
+    QList<Action *> m_nextActions;
 };
 
 Action::Action(ActionPrivate &dd)
@@ -64,7 +64,7 @@ QVariant Action::nativeId() const
     return d->m_nativeId;
 }
 
-QVector<Action *> Action::nextActions() const
+QList<Action *> Action::nextActions() const
 {
     Q_D(const Action);
     return d->m_nextActions;
@@ -81,7 +81,7 @@ const void *Action::nativeHandle() const
     return d->m_nativeHandle.get();
 }
 
-void Action::setNextActions(const QVector<Action *> &actions)
+void Action::setNextActions(const QList<Action *> &actions)
 {
     Q_D(Action);
     qDeleteAll(d->m_nextActions);

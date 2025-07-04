@@ -1537,7 +1537,7 @@ QPixmap PageViewAnnotator::makeToolPixmap(const QDomElement &toolElement)
         p.drawRect(2, 7, 21, 14);
     } else if (annotType == QLatin1String("squiggly")) {
         QPen pen(engineColor, 1);
-        pen.setDashPattern(QVector<qreal>() << 1 << 1);
+        pen.setDashPattern(QList<qreal>() << 1 << 1);
         p.setPen(pen);
         p.drawLine(1, 13, 16, 13);
         p.drawLine(2, 14, 15, 14);

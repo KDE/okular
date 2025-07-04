@@ -22,12 +22,12 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QList>
 #include <QMutex>
 #include <QStack>
 #include <QString>
 #include <QTemporaryFile>
 #include <QUrl>
-#include <QVector>
 
 #include <KAboutData>
 #include <KLocalizedString>
@@ -55,7 +55,7 @@ DviGenerator::DviGenerator(QObject *parent, const QVariantList &args)
     }
 }
 
-bool DviGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool DviGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     // qCDebug(OkularDviDebug) << "file:" << fileName;
     QUrl base(QUrl::fromLocalFile(fileName));
@@ -304,7 +304,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 
     userMutex()->lock();
 
-    QVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
+    QList<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
 
     userMutex()->unlock();
 
@@ -314,8 +314,8 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 
     QStack<QDomElement> stack;
 
-    QVector<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
-    QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
+    QList<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
+    QList<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
     for (; it != itEnd; ++it) {
         QDomElement domel = m_docSynopsis->createElement((*it).title);
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
@@ -417,7 +417,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage(int page)
     return list;
 }
 
-void DviGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
+void DviGenerator::loadPages(QList<Okular::Page *> &pagesVector)
 {
     QSize pageRequiredSize;
 
@@ -450,8 +450,8 @@ void DviGenerator::loadPages(QVector<Okular::Page *> &pagesVector)
     qCDebug(OkularDviDebug) << "pagesVector successfully inizialized!";
 
     // filling the pages with the source references rects
-    const QVector<DVI_SourceFileAnchor> &sourceAnchors = m_dviRenderer->sourceAnchors();
-    QVector<QList<Okular::SourceRefObjectRect *>> refRects(numofpages);
+    const QList<DVI_SourceFileAnchor> &sourceAnchors = m_dviRenderer->sourceAnchors();
+    QList<QList<Okular::SourceRefObjectRect *>> refRects(numofpages);
     for (const DVI_SourceFileAnchor &sfa : sourceAnchors) {
         if (sfa.page < 1 || (int)sfa.page > numofpages) {
             continue;

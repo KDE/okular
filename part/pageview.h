@@ -26,7 +26,6 @@
 #include "pageviewutils.h"
 #include <QAbstractScrollArea>
 #include <QList>
-#include <QVector>
 
 #include "signaturepartutils.h"
 
@@ -89,7 +88,7 @@ public:
     void displayMessage(const QString &message, const QString &details = QString(), PageViewMessage::Icon icon = PageViewMessage::Info, int duration = -1);
 
     // inherited from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyViewportChanged(bool smoothMove) override;
     void notifyPageChanged(int pageNumber, int changedFlags) override;
     void notifyContentsCleared(int changedFlags) override;

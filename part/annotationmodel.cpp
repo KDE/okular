@@ -58,11 +58,11 @@ public:
     explicit AnnotationModelPrivate(AnnotationModel *qq);
     ~AnnotationModelPrivate() override;
 
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyPageChanged(int page, int flags) override;
 
     QModelIndex indexForItem(AnnItem *item) const;
-    void rebuildTree(const QVector<Okular::Page *> &pages);
+    void rebuildTree(const QList<Okular::Page *> &pages);
     AnnItem *findItem(int page, int *index) const;
 
     AnnotationModel *q;
@@ -111,7 +111,7 @@ AnnotationModelPrivate::~AnnotationModelPrivate()
     delete root;
 }
 
-static void updateAnnotationPointer(AnnItem *item, const QVector<Okular::Page *> &pages)
+static void updateAnnotationPointer(AnnItem *item, const QList<Okular::Page *> &pages)
 {
     if (item->annotation) {
         item->annotation = pages[item->page]->annotation(item->annotation->uniqueName());
@@ -125,7 +125,7 @@ static void updateAnnotationPointer(AnnItem *item, const QVector<Okular::Page *>
     }
 }
 
-void AnnotationModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void AnnotationModelPrivate::notifySetup(const QList<Okular::Page *> &pages, int setupFlags)
 {
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         if (setupFlags & Okular::DocumentObserver::UrlChanged) {
@@ -246,7 +246,7 @@ QModelIndex AnnotationModelPrivate::indexForItem(AnnItem *item) const
     return QModelIndex();
 }
 
-void AnnotationModelPrivate::rebuildTree(const QVector<Okular::Page *> &pages)
+void AnnotationModelPrivate::rebuildTree(const QList<Okular::Page *> &pages)
 {
     if (pages.isEmpty()) {
         return;

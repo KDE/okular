@@ -21,7 +21,7 @@ public:
     FaxGenerator(QObject *parent, const QVariantList &args);
     ~FaxGenerator() override;
 
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
 

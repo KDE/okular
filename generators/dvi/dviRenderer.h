@@ -23,6 +23,7 @@
 
 #include <QExplicitlySharedDataPointer>
 #include <QHash>
+#include <QList>
 #include <QMutex>
 #include <QPolygon>
 #include <QPrinter>
@@ -30,7 +31,6 @@
 #include <QStack>
 #include <QTimer>
 #include <QUrl>
-#include <QVector>
 
 class Anchor;
 class DocumentWidget;
@@ -150,12 +150,12 @@ public:
     void export_finished(const DVIExport *);
     // void          editor_finished(const DVISourceEditor*);
 
-    QVector<PreBookmark> getPrebookmarks() const
+    QList<PreBookmark> getPrebookmarks() const
     {
         return prebookmarks;
     }
 
-    const QVector<DVI_SourceFileAnchor> &sourceAnchors()
+    const QList<DVI_SourceFileAnchor> &sourceAnchors()
     {
         return sourceHyperLinkAnchors;
     }
@@ -236,7 +236,7 @@ private:
     void prescan_setChar(unsigned int ch);
 
     /* */
-    QVector<PreBookmark> prebookmarks;
+    QList<PreBookmark> prebookmarks;
 
     /** Utility fields used by the embedPostScript method*/
     QProgressDialog *embedPS_progress;
@@ -259,7 +259,7 @@ private:
     // List of source-hyperlinks on all pages. This vector is generated
     // when the DVI-file is first loaded, i.e. when draw_part is called
     // with PostScriptOutPutString != NULL
-    QVector<DVI_SourceFileAnchor> sourceHyperLinkAnchors;
+    QList<DVI_SourceFileAnchor> sourceHyperLinkAnchors;
 
     // If not NULL, the text currently drawn represents a source
     // hyperlink to the (relative) URL given in the string;
@@ -326,7 +326,7 @@ private:
     quint16 numPages;
 
     // TODO: merge into dviPageInfo
-    QVector<SimplePageSize> pageSizes;
+    QList<SimplePageSize> pageSizes;
 
     QMap<QString, Anchor> anchorList;
 

@@ -177,7 +177,7 @@ bool Document::processArchive()
     return true;
 }
 
-void Document::pages(QVector<Okular::Page *> *pagesVector)
+void Document::pages(QList<Okular::Page *> *pagesVector)
 {
     std::sort(mEntries.begin(), mEntries.end(), caseSensitiveNaturalOrderLessThen);
     QScopedPointer<QIODevice> dev;

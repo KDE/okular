@@ -28,7 +28,7 @@ FaxGenerator::~FaxGenerator()
 {
 }
 
-bool FaxGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool FaxGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     if (fileName.endsWith(QLatin1String(".g3"), Qt::CaseInsensitive)) {
         m_type = FaxDocument::G3;

@@ -119,14 +119,14 @@ void SignaturePanel::signUnsignedSignature()
     SignaturePartUtils::signUnsignedSignature(d->m_currentForm, d->m_pageView, d->m_document);
 }
 
-void SignaturePanel::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
+void SignaturePanel::notifySetup(const QList<Okular::Page *> & /*pages*/, int setupFlags)
 {
     if (!(setupFlags & Okular::DocumentObserver::UrlChanged)) {
         return;
     }
 
     Q_D(SignaturePanel);
-    const QVector<const Okular::FormFieldSignature *> signatureForms = SignatureGuiUtils::getSignatureFormFields(d->m_document);
+    const QList<const Okular::FormFieldSignature *> signatureForms = SignatureGuiUtils::getSignatureFormFields(d->m_document);
     Q_EMIT documentHasSignatures(!signatureForms.isEmpty());
 }
 

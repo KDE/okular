@@ -128,7 +128,7 @@ void Converter::_insert_local_links(const QString &key, const QPair<int, int> va
     if (mLocalLinks.contains(key)) {
         mLocalLinks[key].append(value);
     } else {
-        QVector<QPair<int, int>> vec;
+        QList<QPair<int, int>> vec;
         vec.append(value);
         mLocalLinks.insert(key, vec);
     }
@@ -191,8 +191,8 @@ QTextDocument *Converter::convert(const QString &fileName)
 
     // if the background color of the document is non-white it will be handled by QTextDocument::setHtml()
     bool firstPage = true;
-    QVector<Okular::MovieAnnotation *> movieAnnots;
-    QVector<Okular::SoundAction *> soundActions;
+    QList<Okular::MovieAnnotation *> movieAnnots;
+    QList<Okular::SoundAction *> soundActions;
 
     const QSize videoSize(320, 240);
     do {
@@ -427,7 +427,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     }
 
     // adding link actions
-    QHashIterator<QString, QVector<QPair<int, int>>> hit(mLocalLinks);
+    QHashIterator<QString, QList<QPair<int, int>>> hit(mLocalLinks);
     while (hit.hasNext()) {
         hit.next();
 

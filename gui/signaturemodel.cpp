@@ -13,8 +13,8 @@
 
 #include <QFile>
 #include <QIcon>
+#include <QList>
 #include <QPointer>
-#include <QVector>
 
 #include "core/document.h"
 #include "core/form.h"
@@ -32,7 +32,7 @@ struct SignatureItem {
     SignatureItem(const SignatureItem &) = delete;
     SignatureItem &operator=(const SignatureItem &) = delete;
 
-    QVector<SignatureItem *> children;
+    QList<SignatureItem *> children;
     SignatureItem *parent;
     const Okular::FormFieldSignature *form;
     QString displayString;
@@ -69,7 +69,7 @@ public:
     explicit SignatureModelPrivate(SignatureModel *qq);
     ~SignatureModelPrivate() override;
 
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
 
     QModelIndex indexForItem(SignatureItem *item) const;
 
@@ -91,7 +91,7 @@ SignatureModelPrivate::~SignatureModelPrivate()
     delete root;
 }
 
-static void updateFormFieldSignaturePointer(SignatureItem *item, const QVector<Okular::Page *> &pages)
+static void updateFormFieldSignaturePointer(SignatureItem *item, const QList<Okular::Page *> &pages)
 {
     if (item->form) {
         const QList<Okular::FormField *> formFields = pages[item->page]->formFields();
@@ -111,7 +111,7 @@ static void updateFormFieldSignaturePointer(SignatureItem *item, const QVector<O
     }
 }
 
-void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void SignatureModelPrivate::notifySetup(const QList<Okular::Page *> &pages, int setupFlags)
 {
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         if (setupFlags & Okular::DocumentObserver::UrlChanged) {
@@ -132,7 +132,7 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
 
     int revNumber = 1;
     int unsignedSignatureNumber = 1;
-    const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(document);
+    const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(document);
     for (const Okular::FormFieldSignature *sf : signatureFormFields) {
         const int pageNumber = sf->page()->number();
 
@@ -301,7 +301,7 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
         const Okular::SignatureInfo &signatureInfo = form->signatureInfo();
         const Okular::SignatureInfo::SignatureStatus signatureStatus = signatureInfo.signatureStatus();
         if (signatureStatus != Okular::SignatureInfo::SignatureStatusUnknown && !signatureInfo.signsTotalDocument()) {
-            const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
+            const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
             return signatureFormFields.indexOf(form);
         }
         return -1;
@@ -384,7 +384,7 @@ QHash<int, QByteArray> SignatureModel::roleNames() const
 bool SignatureModel::saveSignedVersion(int signatureRevisionIndex, const QUrl &filePath) const
 {
     Q_D(const SignatureModel);
-    const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
+    const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(d->document);
     if (signatureRevisionIndex < 0 || signatureRevisionIndex >= signatureFormFields.count()) {
         qWarning() << "Invalid signatureRevisionIndex given to saveSignedVersion";
         return false;

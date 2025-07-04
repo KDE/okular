@@ -8,7 +8,7 @@
 #define TOCMODEL_H
 
 #include <QAbstractItemModel>
-#include <QVector>
+#include <QList>
 
 namespace Okular
 {
@@ -49,7 +49,7 @@ public:
 
     bool isEmpty() const;
     bool equals(const TOCModel *model) const;
-    void setOldModelData(TOCModel *model, const QVector<QModelIndex> &list);
+    void setOldModelData(TOCModel *model, const QList<QModelIndex> &list);
     bool hasOldModelData() const;
     TOCModel *clearOldModelData() const;
 

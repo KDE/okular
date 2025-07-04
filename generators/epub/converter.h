@@ -33,7 +33,7 @@ private:
     QFont mFont;
 
     QHash<QString, QTextBlock> mSectionMap;
-    QHash<QString, QVector<QPair<int, int>>> mLocalLinks;
+    QHash<QString, QList<QPair<int, int>>> mLocalLinks;
 };
 }
 

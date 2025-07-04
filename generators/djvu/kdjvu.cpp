@@ -443,8 +443,8 @@ public:
     ddjvu_document_t *m_djvu_document;
     ddjvu_format_t *m_format;
 
-    QVector<KDjVu::Page> m_pages;
-    QVector<ddjvu_page_t *> m_pages_cache;
+    QList<KDjVu::Page> m_pages;
+    QList<ddjvu_page_t *> m_pages_cache;
 
     QList<ImageCacheItem *> mImgCache;
 
@@ -729,7 +729,7 @@ void KDjVu::closeFile()
     // deleting the pages
     d->m_pages.clear();
     // releasing the djvu pages
-    QVector<ddjvu_page_t *>::Iterator it = d->m_pages_cache.begin(), itEnd = d->m_pages_cache.end();
+    QList<ddjvu_page_t *>::Iterator it = d->m_pages_cache.begin(), itEnd = d->m_pages_cache.end();
     for (; it != itEnd; ++it) {
         ddjvu_page_release(*it);
     }
@@ -854,7 +854,7 @@ void KDjVu::linksAndAnnotationsForPage(int pageNum, QList<KDjVu::Link *> *links,
     }
 }
 
-const QVector<KDjVu::Page> &KDjVu::pages() const
+const QList<KDjVu::Page> &KDjVu::pages() const
 {
     return d->m_pages;
 }

@@ -133,7 +133,7 @@ public:
     ~Part() override;
 
     // inherited from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyViewportChanged(bool smoothMove) override;
     void notifyPageChanged(int page, int flags) override;
 

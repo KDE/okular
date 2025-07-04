@@ -27,7 +27,7 @@ class DviGenerator : public Okular::Generator
     Q_INTERFACES(Okular::Generator)
 public:
     DviGenerator(QObject *parent, const QVariantList &args);
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     // document information
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
@@ -56,7 +56,7 @@ private:
     dviRenderer *m_dviRenderer;
     QBitArray m_linkGenerated;
 
-    void loadPages(QVector<Okular::Page *> &pagesVector);
+    void loadPages(QList<Okular::Page *> &pagesVector);
     Okular::TextPage *extractTextFromPage(const dviPageInfo &pageInfo);
     void fillViewportFromAnchor(Okular::DocumentViewport &vp, const Anchor anch, int pW, int pH) const;
     void fillViewportFromAnchor(Okular::DocumentViewport &vp, const Anchor anch, const Okular::Page *page) const;

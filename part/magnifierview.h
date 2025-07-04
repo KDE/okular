@@ -18,7 +18,7 @@ public:
     explicit MagnifierView(Okular::Document *document, QWidget *parent = nullptr);
     ~MagnifierView() override;
 
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
     void notifyPageChanged(int page, int flags) override;
     void notifyCurrentPageChanged(int previous, int current) override;
     bool canUnloadPixmap(int page) const override;
@@ -39,7 +39,7 @@ private:
     Okular::NormalizedPoint m_viewpoint;
     const Okular::Page *m_page;
     int m_current;
-    QVector<Okular::Page *> m_pages;
+    QList<Okular::Page *> m_pages;
 };
 
 #endif // MAGNIFIERVIEW_H

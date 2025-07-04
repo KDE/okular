@@ -122,7 +122,7 @@ public:
      *
      * @since 1.5
      */
-    QVector<Action *> nextActions() const;
+    QList<Action *> nextActions() const;
 
     /**
      * Sets the next actions.
@@ -130,7 +130,7 @@ public:
      * Takes ownership of the objects in the actions vector.
      * @since 1.5
      */
-    void setNextActions(const QVector<Action *> &actions);
+    void setNextActions(const QList<Action *> &actions);
 
 protected:
     /// @cond PRIVATE

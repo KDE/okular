@@ -157,7 +157,7 @@ public:
     // the document, pageviewItems and the 'visible cache'
     PageView *q;
     Okular::Document *document = nullptr;
-    QVector<PageViewItem *> items;
+    QList<PageViewItem *> items;
     QList<PageViewItem *> visibleItems;
     MagnifierView *magnifierView = nullptr;
 
@@ -1139,7 +1139,7 @@ void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QList<Oku
 }
 
 // BEGIN DocumentObserver inherited methods
-void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlags)
+void PageView::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
 {
     bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
     const bool allowfillforms = d->document->isAllowed(Okular::AllowFillForms);
@@ -3936,14 +3936,14 @@ void PageView::updateZoom(ZoomMode newZoomMode)
         const float zoomFactorFitWidth = zoomFactorFitMode(ZoomFitWidth);
         const float zoomFactorFitPage = zoomFactorFitMode(ZoomFitPage);
 
-        QVector<float> zoomValue(kZoomValues.size());
+        QList<float> zoomValue(kZoomValues.size());
 
         std::copy(kZoomValues.begin(), kZoomValues.end(), zoomValue.begin());
         zoomValue.append(zoomFactorFitWidth);
         zoomValue.append(zoomFactorFitPage);
         std::sort(zoomValue.begin(), zoomValue.end());
 
-        QVector<float>::iterator i;
+        QList<float>::iterator i;
         if (newZoomMode == ZoomOut) {
             if (newFactor <= zoomValue.first()) {
                 return;
@@ -4791,7 +4791,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
     // iterate over all items
     d->visibleItems.clear();
     QList<Okular::PixmapRequest *> requestedPixmaps;
-    QVector<Okular::VisiblePageRect *> visibleRects;
+    QList<Okular::VisiblePageRect *> visibleRects;
     for (PageViewItem *i : std::as_const(d->items)) {
         const QSet<FormWidgetIface *> formWidgetsList = i->formWidgets();
         for (FormWidgetIface *fwi : formWidgetsList) {
@@ -5452,7 +5452,7 @@ void PageView::slotSpeakFromCurrentPage()
     const int currentPage = d->document->viewport().pageNumber;
 
     QString text;
-    QVector<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+    QList<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
 
     for (dIt += currentPage; dIt != dEnd; ++dIt) {
         std::unique_ptr<Okular::RegularAreaRect> area = textSelectionForItem(*dIt);
@@ -5688,7 +5688,7 @@ void PageView::slotSelectPage()
 
 void PageView::highlightSignatureFormWidget(const Okular::FormFieldSignature *form)
 {
-    QVector<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+    QList<PageViewItem *>::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
     for (; dIt != dEnd; ++dIt) {
         const QSet<FormWidgetIface *> fwi = (*dIt)->formWidgets();
         for (FormWidgetIface *fw : fwi) {

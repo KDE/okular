@@ -67,7 +67,7 @@ int MiniBarLogic::currentPage() const
     return m_document->currentPage();
 }
 
-void MiniBarLogic::notifySetup(const QVector<Okular::Page *> &pageVector, int setupFlags)
+void MiniBarLogic::notifySetup(const QList<Okular::Page *> &pageVector, int setupFlags)
 {
     // only process data when document changes
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
@@ -427,7 +427,7 @@ void PageLabelEdit::setText(const QString &newText)
     PagesEdit::setText(newText);
 }
 
-void PageLabelEdit::setPageLabels(const QVector<Okular::Page *> &pageVector)
+void PageLabelEdit::setPageLabels(const QList<Okular::Page *> &pageVector)
 {
     m_labelPageMap.clear();
     completionObject()->clear();

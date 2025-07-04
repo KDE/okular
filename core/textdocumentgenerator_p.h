@@ -61,9 +61,9 @@ static void calculateBoundingRect(QTextDocument *document, int startPosition, in
     rect = QRectF(x / pageSize.width(), offset / pageSize.height(), (r - x) / pageSize.width(), (b - y) / pageSize.height());
 }
 
-static QVector<QRectF> calculateBoundingRects(QTextDocument *document, int startPosition, int endPosition)
+static QList<QRectF> calculateBoundingRects(QTextDocument *document, int startPosition, int endPosition)
 {
-    QVector<QRectF> result;
+    QList<QRectF> result;
 
     const QSizeF pageSize = document->pageSize();
 

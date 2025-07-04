@@ -27,7 +27,7 @@ MagnifierView::~MagnifierView()
     m_document->removeObserver(this);
 }
 
-void MagnifierView::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void MagnifierView::notifySetup(const QList<Okular::Page *> &pages, int setupFlags)
 {
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         return;

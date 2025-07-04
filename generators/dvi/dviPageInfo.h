@@ -10,8 +10,8 @@
 #include "hyperlink.h"
 #include "pageNumber.h"
 #include "textBox.h"
+#include <QList>
 #include <QPixmap>
-#include <QVector>
 
 class dviPageInfo
 {
@@ -33,12 +33,12 @@ public:
 
     /** \brief List of source hyperlinks
      */
-    QVector<Hyperlink> sourceHyperLinkList;
+    QList<Hyperlink> sourceHyperLinkList;
 
     /** \brief Hyperlinks on the document page
      */
-    QVector<Hyperlink> hyperLinkList;
-    QVector<TextBox> textBoxList;
+    QList<Hyperlink> hyperLinkList;
+    QList<TextBox> textBoxList;
 };
 
 /* quick&dirty hack to cheat the dviRenderer class... */

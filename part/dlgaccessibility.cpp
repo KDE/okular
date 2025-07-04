@@ -174,7 +174,7 @@ void DlgAccessibility::slotTTSEngineChanged()
 {
     QString engine = m_ttsEngineBox->currentText();
     QTextToSpeech *ttsEngine = new QTextToSpeech(engine);
-    const QVector<QVoice> voices = ttsEngine->availableVoices();
+    const QList<QVoice> voices = ttsEngine->availableVoices();
     m_ttsVoiceBox->clear();
     for (const QVoice &voice : voices) {
         m_ttsVoiceBox->addItem(voice.name());

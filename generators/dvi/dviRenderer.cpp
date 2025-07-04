@@ -163,8 +163,8 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
     // Postprocess hyperlinks
     // Without that, based on the way TeX draws certain characters like german "Umlaute",
     // some hyperlinks would be broken into two overlapping parts, in the middle of a word.
-    QVector<Hyperlink>::iterator i = page->hyperLinkList.begin();
-    QVector<Hyperlink>::iterator j;
+    QList<Hyperlink>::iterator i = page->hyperLinkList.begin();
+    QList<Hyperlink>::iterator j;
     while (i != page->hyperLinkList.end()) {
         // Iterator j always points to the element after i.
         j = i;
@@ -586,8 +586,8 @@ Anchor dviRenderer::parseReference(const QString &reference)
         // document.
         bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
 
-        QVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
-        QVector<DVI_SourceFileAnchor>::iterator it;
+        QList<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
+        QList<DVI_SourceFileAnchor>::iterator it;
         for (it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it) {
             if (refFileName.trimmed() == it->fileName.trimmed() || refFileName.trimmed() == it->fileName.trimmed() + QStringLiteral(".tex")) {
                 anchorForRefFileFound = true;

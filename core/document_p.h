@@ -160,7 +160,7 @@ public:
     bool openRelativeFile(const QString &fileName);
     Generator *loadGeneratorLibrary(const KPluginMetaData &service);
     void loadAllGeneratorLibraries();
-    void loadServiceList(const QVector<KPluginMetaData> &offers);
+    void loadServiceList(const QList<KPluginMetaData> &offers);
     void unloadGenerator(const GeneratorInfo &info);
     void cacheExportFormats();
     void setRotationInternal(int r, bool notify);
@@ -310,8 +310,8 @@ public:
     QString m_generatorName;
     Generator *m_walletGenerator;
     bool m_generatorsLoaded;
-    QVector<Page *> m_pagesVector;
-    QVector<VisiblePageRect *> m_pageRects;
+    QList<Page *> m_pagesVector;
+    QList<VisiblePageRect *> m_pageRects;
 
     // cache of the mimetype we support
     QStringList m_supportedMimeTypes;
@@ -350,9 +350,9 @@ public:
     QString m_openError;
 
     // generator selection
-    static QVector<KPluginMetaData> availableGenerators();
-    static QVector<KPluginMetaData> configurableGenerators();
-    static KPluginMetaData generatorForMimeType(const QMimeType &type, QWidget *widget, const QVector<KPluginMetaData> &triedOffers = QVector<KPluginMetaData>());
+    static QList<KPluginMetaData> availableGenerators();
+    static QList<KPluginMetaData> configurableGenerators();
+    static KPluginMetaData generatorForMimeType(const QMimeType &type, QWidget *widget, const QList<KPluginMetaData> &triedOffers = QList<KPluginMetaData>());
 
     // overrides the editor command (for example with a command from the command line)
     QString editorCommandOverride;

@@ -83,7 +83,7 @@ void AddAnnotationCommand::redo()
     m_done = true;
 }
 
-bool AddAnnotationCommand::refreshInternalPageReferences(const QVector<Okular::Page *> &newPagesVector)
+bool AddAnnotationCommand::refreshInternalPageReferences(const QList<Okular::Page *> &newPagesVector)
 {
     if (m_done) {
         // We don't always update m_annotation because even if the annotation has been added to the document
@@ -129,7 +129,7 @@ void RemoveAnnotationCommand::redo()
     m_done = true;
 }
 
-bool RemoveAnnotationCommand::refreshInternalPageReferences(const QVector<Okular::Page *> &newPagesVector)
+bool RemoveAnnotationCommand::refreshInternalPageReferences(const QList<Okular::Page *> &newPagesVector)
 {
     if (!m_done) {
         // We don't always update m_annotation because it can happen that the annotation remove has been undo
@@ -169,7 +169,7 @@ void ModifyAnnotationPropertiesCommand::redo()
     m_docPriv->performModifyPageAnnotation(m_pageNumber, m_annotation, true);
 }
 
-bool ModifyAnnotationPropertiesCommand::refreshInternalPageReferences(const QVector<Okular::Page *> &newPagesVector)
+bool ModifyAnnotationPropertiesCommand::refreshInternalPageReferences(const QList<Okular::Page *> &newPagesVector)
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
@@ -241,7 +241,7 @@ Okular::NormalizedRect TranslateAnnotationCommand::translateBoundingRectangle(co
     return annotBoundingRect;
 }
 
-bool TranslateAnnotationCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool TranslateAnnotationCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
@@ -312,7 +312,7 @@ Okular::NormalizedRect AdjustAnnotationCommand::adjustBoundingRectangle(const Ok
     return annotBoundingRect;
 }
 
-bool AdjustAnnotationCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool AdjustAnnotationCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     // Same reason for not unconditionally updating m_annotation, the annotation pointer can be stored in an add/Remove command
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
@@ -428,7 +428,7 @@ bool EditAnnotationContentsCommand::mergeWith(const QUndoCommand *uc)
     }
 }
 
-bool EditAnnotationContentsCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool EditAnnotationContentsCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     auto a = newPagesVector[m_pageNumber]->annotation(m_annotation->uniqueName());
     if (a) {
@@ -477,7 +477,7 @@ bool EditFormTextCommand::mergeWith(const QUndoCommand *uc)
     }
 }
 
-bool EditFormTextCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool EditFormTextCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     m_form = dynamic_cast<FormFieldText *>(Okular::PagePrivate::findEquivalentForm(newPagesVector[m_pageNumber], m_form));
 
@@ -510,7 +510,7 @@ void EditFormListCommand::redo()
     m_docPriv->notifyFormChanges(m_pageNumber);
 }
 
-bool EditFormListCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool EditFormListCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     m_form = dynamic_cast<FormFieldChoice *>(Okular::PagePrivate::findEquivalentForm(newPagesVector[m_pageNumber], m_form));
 
@@ -581,7 +581,7 @@ bool EditFormComboCommand::mergeWith(const QUndoCommand *uc)
     }
 }
 
-bool EditFormComboCommand::refreshInternalPageReferences(const QVector<Page *> &newPagesVector)
+bool EditFormComboCommand::refreshInternalPageReferences(const QList<Page *> &newPagesVector)
 {
     m_form = dynamic_cast<FormFieldChoice *>(Okular::PagePrivate::findEquivalentForm(newPagesVector[m_pageNumber], m_form));
 
@@ -648,7 +648,7 @@ void EditFormButtonsCommand::redo()
     }
 }
 
-bool EditFormButtonsCommand::refreshInternalPageReferences(const QVector<Okular::Page *> &newPagesVector)
+bool EditFormButtonsCommand::refreshInternalPageReferences(const QList<Okular::Page *> &newPagesVector)
 {
     const QList<FormFieldButton *> oldFormButtons = m_formButtons;
     m_formButtons.clear();

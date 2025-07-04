@@ -14,11 +14,11 @@
 
 namespace SignatureGuiUtils
 {
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc)
+QList<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc)
 {
     uint curPage = 0;
     const uint numPages = doc->pages();
-    QVector<const Okular::FormFieldSignature *> signatureFormFields;
+    QList<const Okular::FormFieldSignature *> signatureFormFields;
     while (curPage < numPages) {
         const QList<Okular::FormField *> formFields = doc->page(curPage++)->formFields();
         for (Okular::FormField *f : formFields) {
@@ -190,7 +190,7 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
     }
 
     if (isDigitallySigned) {
-        const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(doc);
+        const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(doc);
         bool allSignaturesValid = true;
         bool anySignatureUnsigned = false;
         for (const Okular::FormFieldSignature *signature : signatureFormFields) {

@@ -7,8 +7,8 @@
 #ifndef _OKULAR_SIDE_REVIEWS_H_
 #define _OKULAR_SIDE_REVIEWS_H_
 
+#include <QList>
 #include <QModelIndexList>
-#include <QVector>
 #include <QWidget>
 
 #include "core/observer.h"

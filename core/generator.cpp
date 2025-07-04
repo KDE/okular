@@ -190,7 +190,7 @@ Generator::~Generator()
     delete d_ptr;
 }
 
-bool Generator::loadDocument(const QString &fileName, QVector<Page *> &pagesVector)
+bool Generator::loadDocument(const QString &fileName, QList<Page *> &pagesVector)
 {
     Q_UNUSED(fileName);
     Q_UNUSED(pagesVector);
@@ -198,22 +198,22 @@ bool Generator::loadDocument(const QString &fileName, QVector<Page *> &pagesVect
     return false;
 }
 
-bool Generator::loadDocumentFromData(const QByteArray &, QVector<Page *> &)
+bool Generator::loadDocumentFromData(const QByteArray &, QList<Page *> &)
 {
     return false;
 }
 
-Document::OpenResult Generator::loadDocumentWithPassword(const QString &fileName, QVector<Page *> &pagesVector, const QString &)
+Document::OpenResult Generator::loadDocumentWithPassword(const QString &fileName, QList<Page *> &pagesVector, const QString &)
 {
     return loadDocument(fileName, pagesVector) ? Document::OpenSuccess : Document::OpenError;
 }
 
-Document::OpenResult Generator::loadDocumentFromDataWithPassword(const QByteArray &fileData, QVector<Page *> &pagesVector, const QString &)
+Document::OpenResult Generator::loadDocumentFromDataWithPassword(const QByteArray &fileData, QList<Page *> &pagesVector, const QString &)
 {
     return loadDocumentFromData(fileData, pagesVector) ? Document::OpenSuccess : Document::OpenError;
 }
 
-Generator::SwapBackingFileResult Generator::swapBackingFile(QString const & /*newFileName */, QVector<Okular::Page *> & /*newPagesVector*/)
+Generator::SwapBackingFileResult Generator::swapBackingFile(QString const & /*newFileName */, QList<Okular::Page *> & /*newPagesVector*/)
 {
     return SwapBackingFileError;
 }

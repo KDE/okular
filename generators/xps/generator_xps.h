@@ -41,7 +41,7 @@ class XpsRenderNode
 {
 public:
     QString name;
-    QVector<XpsRenderNode> children;
+    QList<XpsRenderNode> children;
     QXmlStreamAttributes attributes;
     QVariant data;
 
@@ -279,7 +279,7 @@ public:
     XpsGenerator(QObject *parent, const QVariantList &args);
     ~XpsGenerator() override;
 
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
     const Okular::DocumentSynopsis *generateDocumentSynopsis() override;

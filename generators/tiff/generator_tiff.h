@@ -20,8 +20,8 @@ public:
     TIFFGenerator(QObject *parent, const QVariantList &args);
     ~TIFFGenerator() override;
 
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
-    bool loadDocumentFromData(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
+    bool loadDocumentFromData(const QByteArray &fileData, QList<Okular::Page *> &pagesVector) override;
 
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
 
@@ -35,8 +35,8 @@ private:
     class Private;
     Private *const d;
 
-    bool loadTiff(QVector<Okular::Page *> &pagesVector, const char *name);
-    void loadPages(QVector<Okular::Page *> &pagesVector);
+    bool loadTiff(QList<Okular::Page *> &pagesVector, const char *name);
+    void loadPages(QList<Okular::Page *> &pagesVector);
     int mapPage(int page) const;
 
     QHash<int, int> m_pageMapping;

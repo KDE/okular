@@ -40,7 +40,7 @@ void ComicBookGeneratorTest::testRotatedImage()
     const QString testFile = QStringLiteral(KDESRCDIR "autotests/data/rotated_cb.cbz");
     QVERIFY(document.open(testFile));
 
-    QVector<Okular::Page *> pagesVector;
+    QList<Okular::Page *> pagesVector;
     document.pages(&pagesVector);
 
     const Okular::Page *p = pagesVector[0];

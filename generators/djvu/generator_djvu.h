@@ -9,7 +9,7 @@
 
 #include <core/generator.h>
 
-#include <QVector>
+#include <QList>
 
 #include "kdjvu.h"
 
@@ -26,7 +26,7 @@ class DjVuGenerator : public Okular::Generator
 public:
     DjVuGenerator(QObject *parent, const QVariantList &args);
     ~DjVuGenerator() override;
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     // document information
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
@@ -44,7 +44,7 @@ protected:
     Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
 private:
-    void loadPages(QVector<Okular::Page *> &pagesVector, int rotation);
+    void loadPages(QList<Okular::Page *> &pagesVector, int rotation);
     Okular::ObjectRect *convertKDjVuLink(int page, KDjVu::Link *link) const;
     Okular::Annotation *convertKDjVuAnnotation(int w, int h, KDjVu::Annotation *ann) const;
 

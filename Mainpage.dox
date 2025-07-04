@@ -177,7 +177,7 @@ class MagicGenerator : public Okular::Generator
         MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
-        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool loadDocument( const QString &fileName, QList<Okular::Page*> &pages );
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
@@ -208,7 +208,7 @@ MagicGenerator::~MagicGenerator()
 {
 }
 
-bool MagicGenerator::loadDocument( const QString &fileName, QVector<Okular::Page*> &pages )
+bool MagicGenerator::loadDocument( const QString &fileName, QList<Okular::Page*> &pages )
 {
     if ( !mMagicDocument.loadDocument( fileName ) ) {
         emit error( i18n( "Unable to load document" ), -1 );
@@ -496,7 +496,7 @@ class MagicGenerator : public Okular::Generator
         MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
-        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool loadDocument( const QString &fileName, QList<Okular::Page*> &pages );
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
@@ -612,7 +612,7 @@ class MagicGenerator : public Okular::Generator
         MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
-        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool loadDocument( const QString &fileName, QList<Okular::Page*> &pages );
 
     protected:
         bool doCloseDocument();
@@ -700,7 +700,7 @@ class HTMLGenerator : public Okular::Generator
         HTMLGenerator( QObject *parent, const QVariantList &args );
         ~HTMLGenerator();
 
-        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool loadDocument( const QString &fileName, QList<Okular::Page*> &pages );
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
@@ -765,7 +765,7 @@ HTMLGenerator::~HTMLGenerator()
     delete mTextDocument;
 }
 
-bool HTMLGenerator::loadDocument( const QString &fileName, QVector<Okular::Page*> &pages )
+bool HTMLGenerator::loadDocument( const QString &fileName, QList<Okular::Page*> &pages )
 {
     QFile file( fileName );
     if ( !file.open( QIODevice::ReadOnly ) ) {

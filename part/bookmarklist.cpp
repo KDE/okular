@@ -173,7 +173,7 @@ BookmarkList::~BookmarkList()
     m_document->removeObserver(this);
 }
 
-void BookmarkList::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void BookmarkList::notifySetup(const QList<Okular::Page *> &pages, int setupFlags)
 {
     Q_UNUSED(pages);
     if (!(setupFlags & Okular::DocumentObserver::UrlChanged)) {

@@ -953,7 +953,7 @@ void XpsPage::processPath(QPainter *painter, const XpsRenderNode &node)
     att = node.attributes.value(QStringLiteral("StrokeDashArray")).toString();
     if (!att.isEmpty()) {
         const QStringList pieces = att.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-        QVector<qreal> dashPattern(pieces.count());
+        QList<qreal> dashPattern(pieces.count());
         bool ok = false;
         for (int i = 0; i < pieces.count(); ++i) {
             qreal value = pieces.at(i).toInt(&ok);
@@ -1968,7 +1968,7 @@ XpsGenerator::~XpsGenerator()
 {
 }
 
-bool XpsGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool XpsGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     m_xpsFile = std::make_unique<XpsFile>();
 

@@ -21,7 +21,7 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 public:
     /** virtual methods to reimplement **/
     // load a document and fill up the pagesVector
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
 
     // Document description and Table of contents
     Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
@@ -58,7 +58,7 @@ protected:
     bool doCloseDocument() override;
 
 private:
-    bool loadPages(QVector<Okular::Page *> &pagesVector);
+    bool loadPages(QList<Okular::Page *> &pagesVector);
     Okular::Rotation orientation(SpectreOrientation orientation) const;
 
     // backendish stuff

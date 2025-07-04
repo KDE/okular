@@ -10,13 +10,13 @@
 #include <QFile>
 #include <QFontDatabase>
 #include <QImage>
+#include <QList>
 #include <QMutex>
 #include <QPainter>
 #include <QPrinter>
 #include <QStack>
 #include <QTextDocumentWriter>
 #include <QTextStream>
-#include <QVector>
 
 #include "action.h"
 #include "annotations.h"
@@ -167,7 +167,7 @@ QList<TextDocumentGeneratorPrivate::LinkInfo> TextDocumentGeneratorPrivate::gene
     QList<LinkInfo> result;
 
     for (const LinkPosition &linkPosition : mLinkPositions) {
-        const QVector<QRectF> rects = TextDocumentUtils::calculateBoundingRects(mDocument, linkPosition.startPosition, linkPosition.endPosition);
+        const QList<QRectF> rects = TextDocumentUtils::calculateBoundingRects(mDocument, linkPosition.startPosition, linkPosition.endPosition);
 
         for (int i = 0; i < rects.count(); ++i) {
             const QRectF &rect = rects[i];
@@ -280,7 +280,7 @@ TextDocumentGenerator::~TextDocumentGenerator()
 {
 }
 
-Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QString &fileName, QVector<Okular::Page *> &pagesVector, const QString &password)
+Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QString &fileName, QList<Okular::Page *> &pagesVector, const QString &password)
 {
     Q_D(TextDocumentGenerator);
     const Document::OpenResult openResult = d->mConverter->convertWithPassword(fileName, password);
@@ -311,7 +311,7 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QStri
 
     const QSize size = d->mDocument->pageSize().toSize();
 
-    QVector<QList<Okular::ObjectRect *>> objects(d->mDocument->pageCount());
+    QList<QList<Okular::ObjectRect *>> objects(d->mDocument->pageCount());
     for (const TextDocumentGeneratorPrivate::LinkInfo &info : linkInfos) {
         // in case that the converter report bogus link info data, do not assert here
         if (info.page < 0 || info.page >= objects.count()) {
@@ -326,7 +326,7 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QStri
         }
     }
 
-    QVector<QList<Okular::Annotation *>> annots(d->mDocument->pageCount());
+    QList<QList<Okular::Annotation *>> annots(d->mDocument->pageCount());
     for (const TextDocumentGeneratorPrivate::AnnotationInfo &info : annotationInfos) {
         annots[info.page].append(info.annotation);
     }

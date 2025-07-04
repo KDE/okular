@@ -24,7 +24,7 @@ namespace SignatureGuiUtils
 /**
  * Returns a vector containing signature form fields sorted by date (last is newer).
  */
-QVector<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc);
+QList<const Okular::FormFieldSignature *> getSignatureFormFields(const Okular::Document *doc);
 QString getReadableSignatureStatus(Okular::SignatureInfo::SignatureStatus sigStatus);
 QString getReadableCertStatus(Okular::SignatureInfo::CertificateStatus certStatus);
 QString getReadableHashAlgorithm(Okular::SignatureInfo::HashAlgorithm hashAlg);

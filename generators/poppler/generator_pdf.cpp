@@ -573,7 +573,7 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
     case Poppler::Link::Hide: {
         const Poppler::LinkHide *l = static_cast<const Poppler::LinkHide *>(rawPopplerLink);
         QStringList scripts;
-        const QVector<QString> targets = l->targets();
+        const QList<QString> targets = l->targets();
         for (const QString &target : targets) {
             scripts << QStringLiteral("getField(\"%1\").hidden = %2;").arg(target).arg(l->isShowAction() ? QLatin1String("false") : QLatin1String("true"));
         }
@@ -613,8 +613,8 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
     }
 
     if (link) {
-        QVector<Okular::Action *> nextActions;
-        const QVector<Poppler::Link *> nextLinks = rawPopplerLink->nextLinks();
+        QList<Okular::Action *> nextActions;
+        const QList<Poppler::Link *> nextLinks = rawPopplerLink->nextLinks();
         for (const Poppler::Link *nl : nextLinks) {
             nextActions << createLinkFromPopplerLink(nl);
         }
@@ -721,7 +721,7 @@ PDFGenerator::~PDFGenerator()
 }
 
 // BEGIN Generator inherited functions
-Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword(const QString &filePath, QVector<Okular::Page *> &pagesVector, const QString &password)
+Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword(const QString &filePath, QList<Okular::Page *> &pagesVector, const QString &password)
 {
 #ifndef NDEBUG
     if (pdfdoc) {
@@ -735,7 +735,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword(const QStrin
     return init(pagesVector, password);
 }
 
-Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector, const QString &password)
+Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword(const QByteArray &fileData, QList<Okular::Page *> &pagesVector, const QString &password)
 {
 #ifndef NDEBUG
     if (pdfdoc) {
@@ -749,7 +749,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword(cons
     return init(pagesVector, password);
 }
 
-Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVector, const QString &password)
+Okular::Document::OpenResult PDFGenerator::init(QList<Okular::Page *> &pagesVector, const QString &password)
 {
     if (!pdfdoc) {
         return Okular::Document::OpenError;
@@ -835,7 +835,7 @@ Okular::Action *PDFGenerator::additionalDocumentAction(Okular::Document::Documen
     return nullptr;
 }
 
-PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector)
+PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile(QString const &newFileName, QList<Okular::Page *> &newPagesVector)
 {
     const QBitArray oldRectsGenerated = rectsGenerated;
 
@@ -883,7 +883,7 @@ bool PDFGenerator::doCloseDocument()
     return true;
 }
 
-void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation, bool clear)
+void PDFGenerator::loadPages(QList<Okular::Page *> &pagesVector, int rotation, bool clear)
 {
     // TODO XPDF 3.01 check
     const int count = pagesVector.count();
@@ -1051,7 +1051,7 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
     }
 
     userMutex()->lock();
-    const QVector<Poppler::OutlineItem> outline = pdfdoc->outline();
+    const QList<Poppler::OutlineItem> outline = pdfdoc->outline();
     userMutex()->unlock();
 
     if (outline.isEmpty()) {
@@ -1715,7 +1715,7 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
         return pdfdoc->formType() == Poppler::Document::XfaForm;
     } else if (key == QLatin1String("FormCalculateOrder")) {
         QMutexLocker ml(userMutex());
-        return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
+        return QVariant::fromValue<QList<int>>(pdfdoc->formCalculateOrder());
     } else if (key == QLatin1String("GeneratorExtraDescription")) {
         if (Poppler::Version::string() == QStringLiteral(POPPLER_VERSION)) {
             return i18n("Using Poppler %1", Poppler::Version::string());
@@ -1899,7 +1899,7 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_p
     return ktp;
 }
 
-void PDFGenerator::addSynopsisChildren(const QVector<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
+void PDFGenerator::addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
 {
     for (const Poppler::OutlineItem &outlineItem : outlineItems) {
         QDomElement item = docSyn.createElement(outlineItem.name());

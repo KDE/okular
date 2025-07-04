@@ -29,8 +29,8 @@ private Q_SLOTS:
     void testHtmlTagFixup();
 
 private:
-    void findImages(QTextFrame *parent, QVector<QTextImageFormat> &images);
-    void findImages(const QTextBlock &parent, QVector<QTextImageFormat> &images);
+    void findImages(QTextFrame *parent, QList<QTextImageFormat> &images);
+    void findImages(const QTextBlock &parent, QList<QTextImageFormat> &images);
 };
 
 void MarkdownTest::initTestCase()
@@ -65,7 +65,7 @@ void MarkdownTest::testImageSizes()
 
     QTextFrame *parent = document->rootFrame();
 
-    QVector<QTextImageFormat> images;
+    QList<QTextImageFormat> images;
     findImages(parent, images);
 
     QCOMPARE(images.size(), 17);
@@ -98,7 +98,7 @@ void MarkdownTest::testImageSizes()
     }
 }
 
-void MarkdownTest::findImages(QTextFrame *parent, QVector<QTextImageFormat> &images)
+void MarkdownTest::findImages(QTextFrame *parent, QList<QTextImageFormat> &images)
 {
     for (QTextFrame::iterator it = parent->begin(); !it.atEnd(); ++it) {
         QTextFrame *textFrame = it.currentFrame();
@@ -112,7 +112,7 @@ void MarkdownTest::findImages(QTextFrame *parent, QVector<QTextImageFormat> &ima
     }
 }
 
-void MarkdownTest::findImages(const QTextBlock &parent, QVector<QTextImageFormat> &images)
+void MarkdownTest::findImages(const QTextBlock &parent, QList<QTextImageFormat> &images)
 {
     for (QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it) {
         const QTextFragment textFragment = it.fragment();
@@ -132,7 +132,7 @@ void MarkdownTest::testSpecialCharsInImageFileName()
 
     QTextFrame *parent = document->rootFrame();
 
-    QVector<QTextImageFormat> images;
+    QList<QTextImageFormat> images;
     findImages(parent, images);
 
     QCOMPARE(images.size(), 1);

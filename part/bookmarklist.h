@@ -35,7 +35,7 @@ public:
     ~BookmarkList() override;
 
     // inherited from DocumentObserver
-    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifySetup(const QList<Okular::Page *> &pages, int setupFlags) override;
 
     void setAddBookmarkAction(QAction *addBookmarkAction);
 

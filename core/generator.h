@@ -26,7 +26,6 @@
 #include <QSizeF>
 #include <QString>
 #include <QVariant>
-#include <QVector>
 
 #include <KPluginFactory>
 #include <QMimeType>
@@ -231,7 +230,7 @@ public:
      *
      * @returns true on success, false otherwise.
      */
-    virtual bool loadDocument(const QString &fileName, QVector<Page *> &pagesVector);
+    virtual bool loadDocument(const QString &fileName, QList<Page *> &pagesVector);
 
     /**
      * Loads the document from the raw data @p fileData and fills the
@@ -243,7 +242,7 @@ public:
      *
      * @returns true on success, false otherwise.
      */
-    virtual bool loadDocumentFromData(const QByteArray &fileData, QVector<Page *> &pagesVector);
+    virtual bool loadDocumentFromData(const QByteArray &fileData, QList<Page *> &pagesVector);
 
     /**
      * Loads the document with the given @p fileName and @p password and fills the
@@ -255,7 +254,7 @@ public:
      *
      * @returns a LoadResult defining the result of the operation
      */
-    virtual Document::OpenResult loadDocumentWithPassword(const QString &fileName, QVector<Page *> &pagesVector, const QString &password);
+    virtual Document::OpenResult loadDocumentWithPassword(const QString &fileName, QList<Page *> &pagesVector, const QString &password);
 
     /**
      * Loads the document from the raw data @p fileData and @p password and fills the
@@ -269,7 +268,7 @@ public:
      *
      * @returns a LoadResult defining the result of the operation
      */
-    virtual Document::OpenResult loadDocumentFromDataWithPassword(const QByteArray &fileData, QVector<Page *> &pagesVector, const QString &password);
+    virtual Document::OpenResult loadDocumentFromDataWithPassword(const QByteArray &fileData, QList<Page *> &pagesVector, const QString &password);
 
     /**
      * Describes the result of an swap file operation.
@@ -290,7 +289,7 @@ public:
      *
      * @since 1.3
      */
-    virtual SwapBackingFileResult swapBackingFile(const QString &newFileName, QVector<Okular::Page *> &newPagesVector);
+    virtual SwapBackingFileResult swapBackingFile(const QString &newFileName, QList<Okular::Page *> &newPagesVector);
 
     /**
      * This method is called when the document is closed and not used

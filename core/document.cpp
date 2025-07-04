@@ -314,7 +314,7 @@ void DocumentPrivate::cleanupPixmapMemory(qulonglong memoryToFree)
 
     // Create a QMap of visible rects, indexed by page number
     QMap<int, VisiblePageRect *> visibleRects;
-    QVector<Okular::VisiblePageRect *>::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+    QList<Okular::VisiblePageRect *>::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
     for (; vIt != vEnd; ++vIt) {
         visibleRects.insert((*vIt)->pageNumber, (*vIt));
     }
@@ -859,7 +859,7 @@ void DocumentPrivate::loadAllGeneratorLibraries()
     m_generatorsLoaded = true;
 }
 
-void DocumentPrivate::loadServiceList(const QVector<KPluginMetaData> &offers)
+void DocumentPrivate::loadServiceList(const QList<KPluginMetaData> &offers)
 {
     int count = offers.count();
     if (count <= 0) {
@@ -1025,7 +1025,7 @@ bool DocumentPrivate::savePageDocumentInfo(QTemporaryFile *infoFile, int what) c
         QDomElement pageList = doc.createElement(QStringLiteral("pageList"));
         root.appendChild(pageList);
         // <page list><page number='x'>.... </page> save pages that hold data
-        QVector<Page *>::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
+        QList<Page *>::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for (; pIt != pEnd; ++pIt) {
             (*pIt)->d->saveLocalContents(pageList, doc, PageItems(what));
         }
@@ -1196,7 +1196,7 @@ void DocumentPrivate::performSetAnnotationContents(const QString &newContents, A
 void DocumentPrivate::recalculateForms()
 {
     const QVariant fco = m_parent->metaData(QStringLiteral("FormCalculateOrder"));
-    const QVector<int> formCalculateOrder = fco.value<QVector<int>>();
+    const QList<int> formCalculateOrder = fco.value<QList<int>>();
     for (int formId : formCalculateOrder) {
         for (uint pageIdx = 0; pageIdx < m_parent->pages(); pageIdx++) {
             const Page *p = m_parent->page(pageIdx);
@@ -1293,7 +1293,7 @@ void DocumentPrivate::saveDocumentInfo() const
         // had stored there.
         const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems | OriginalFormFieldPageItems;
         // <page list><page number='x'>.... </page> save pages that hold data
-        QVector<Page *>::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
+        QList<Page *>::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for (; pIt != pEnd; ++pIt) {
             (*pIt)->d->saveLocalContents(pageList, doc, saveWhat);
         }
@@ -1627,7 +1627,7 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
     }
 
     QMap<DocumentObserver *, PagePrivate::PixmapObject>::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
-    QVector<Okular::PixmapRequest *> pixmapsToRequest;
+    QList<Okular::PixmapRequest *> pixmapsToRequest;
     for (; it != itEnd; ++it) {
         const QSize size = (*it).m_pixmap->size();
         PixmapRequest *p = new PixmapRequest(it.key(), pageNumber, size.width(), size.height(), 1 /* dpr */, 1, PixmapRequest::Asynchronous);
@@ -1654,7 +1654,7 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
 
             // Get the visible page rect
             NormalizedRect visibleRect;
-            QVector<Okular::VisiblePageRect *>::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+            QList<Okular::VisiblePageRect *>::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
             for (; vIt != vEnd; ++vIt) {
                 if ((*vIt)->pageNumber == pageNumber) {
                     visibleRect = (*vIt)->rect;
@@ -1807,12 +1807,12 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
 
 void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID)
 {
-    QMap<Page *, QVector<RegularAreaRect *>> *pageMatches = static_cast<QMap<Page *, QVector<RegularAreaRect *>> *>(pageMatchesMap);
+    QMap<Page *, QList<RegularAreaRect *>> *pageMatches = static_cast<QMap<Page *, QList<RegularAreaRect *>> *>(pageMatchesMap);
     QSet<int> *pagesToNotify = static_cast<QSet<int> *>(pagesToNotifySet);
     RunningSearch *search = m_searches.value(searchID);
 
     if (m_searchCancelled || !search) {
-        typedef QVector<RegularAreaRect *> MatchesVector;
+        typedef QList<RegularAreaRect *> MatchesVector;
 
         QApplication::restoreOverrideCursor();
 
@@ -1864,7 +1864,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
 
         search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
-        QMap<Page *, QVector<RegularAreaRect *>>::const_iterator it, itEnd;
+        QMap<Page *, QList<RegularAreaRect *>>::const_iterator it, itEnd;
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
@@ -1901,12 +1901,12 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
 void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList &words)
 {
     typedef QPair<RegularAreaRect *, QColor> MatchColor;
-    QMap<Page *, QVector<MatchColor>> *pageMatches = static_cast<QMap<Page *, QVector<MatchColor>> *>(pageMatchesMap);
+    QMap<Page *, QList<MatchColor>> *pageMatches = static_cast<QMap<Page *, QList<MatchColor>> *>(pageMatchesMap);
     QSet<int> *pagesToNotify = static_cast<QSet<int> *>(pagesToNotifySet);
     RunningSearch *search = m_searches.value(searchID);
 
     if (m_searchCancelled || !search) {
-        typedef QVector<MatchColor> MatchesVector;
+        typedef QList<MatchColor> MatchesVector;
 
         QApplication::restoreOverrideCursor();
 
@@ -1975,7 +1975,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         // if not all words are present in page, remove partial highlights
         const bool matchAll = search->cachedType == Document::GoogleAll;
         if (!allMatched && matchAll) {
-            const QVector<MatchColor> &matches = (*pageMatches)[page];
+            const QList<MatchColor> &matches = (*pageMatches)[page];
             for (const MatchColor &mc : matches) {
                 delete mc.first;
             }
@@ -1989,7 +1989,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
 
         search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
-        QMap<Page *, QVector<MatchColor>>::const_iterator it, itEnd;
+        QMap<Page *, QList<MatchColor>>::const_iterator it, itEnd;
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
@@ -2071,9 +2071,9 @@ QVariant DocumentPrivate::documentMetaData(const Generator::DocumentMetaDataKey 
 bool DocumentPrivate::isNormalizedRectangleFullyVisible(const Okular::NormalizedRect &rectOfInterest, int rectPage)
 {
     bool rectFullyVisible = false;
-    const QVector<Okular::VisiblePageRect *> &visibleRects = m_parent->visiblePageRects();
-    QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
-    QVector<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
+    const QList<Okular::VisiblePageRect *> &visibleRects = m_parent->visiblePageRects();
+    QList<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
+    QList<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
 
     for (; (vIt != vEnd) && !rectFullyVisible; ++vIt) {
         if ((*vIt)->pageNumber == rectPage && (*vIt)->rect.contains(rectOfInterest.left, rectOfInterest.top) && (*vIt)->rect.contains(rectOfInterest.right, rectOfInterest.bottom)) {
@@ -2175,7 +2175,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
         }
     }
 
-    QVector<QList<Okular::SourceRefObjectRect *>> refRects(m_pagesVector.size());
+    QList<QList<Okular::SourceRefObjectRect *>> refRects(m_pagesVector.size());
     for (const pdfsyncpoint &pt : std::as_const(points)) {
         // drop pdfsync points not completely valid
         if (pt.page < 0 || pt.page >= m_pagesVector.size()) {
@@ -2314,23 +2314,23 @@ QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
     return newokularfile;
 }
 
-QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
+QList<KPluginMetaData> DocumentPrivate::availableGenerators()
 {
-    static QVector<KPluginMetaData> result;
+    static QList<KPluginMetaData> result;
     if (result.isEmpty()) {
         result = KPluginMetaData::findPlugins(QStringLiteral("okular_generators"));
     }
     return result;
 }
 
-KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType &type, QWidget *widget, const QVector<KPluginMetaData> &triedOffers)
+KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType &type, QWidget *widget, const QList<KPluginMetaData> &triedOffers)
 {
     // First try to find an exact match, and then look for more general ones (e. g. the plain text one)
     // Ideally we would rank these by "closeness", but that might be overdoing it
 
-    const QVector<KPluginMetaData> available = availableGenerators();
-    QVector<KPluginMetaData> offers;
-    QVector<KPluginMetaData> exactMatches;
+    const QList<KPluginMetaData> available = availableGenerators();
+    QList<KPluginMetaData> offers;
+    QList<KPluginMetaData> exactMatches;
 
     QMimeDatabase mimeDatabase;
 
@@ -2466,7 +2466,7 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     // 1. load Document
     OpenResult openResult = d->openDocumentInternal(offer, fromFileDescriptor, docFile, filedata, password);
     if (openResult == OpenError) {
-        QVector<KPluginMetaData> triedOffers;
+        QList<KPluginMetaData> triedOffers;
         triedOffers << offer;
         offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
 
@@ -2739,11 +2739,11 @@ void Document::closeDocument()
     d->m_rotation = Rotation0;
 
     // send an empty list to observers (to free their data)
-    foreachObserver(notifySetup(QVector<Page *>(), DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged));
+    foreachObserver(notifySetup(QList<Page *>(), DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged));
 
     // delete pages and clear 'd->m_pagesVector' container
-    QVector<Page *>::const_iterator pIt = d->m_pagesVector.constBegin();
-    QVector<Page *>::const_iterator pEnd = d->m_pagesVector.constEnd();
+    QList<Page *>::const_iterator pIt = d->m_pagesVector.constBegin();
+    QList<Page *>::const_iterator pEnd = d->m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
         delete *pIt;
     }
@@ -2762,8 +2762,8 @@ void Document::closeDocument()
     d->m_searches.clear();
 
     // clear the visible areas and notify the observers
-    QVector<VisiblePageRect *>::const_iterator vIt = d->m_pageRects.constBegin();
-    QVector<VisiblePageRect *>::const_iterator vEnd = d->m_pageRects.constEnd();
+    QList<VisiblePageRect *>::const_iterator vIt = d->m_pageRects.constBegin();
+    QList<VisiblePageRect *>::const_iterator vEnd = d->m_pageRects.constEnd();
     for (; vIt != vEnd; ++vIt) {
         delete *vIt;
     }
@@ -2813,7 +2813,7 @@ void Document::removeObserver(DocumentObserver *pObserver)
     // remove observer from the set. it won't receive notifications anymore
     if (d->m_observers.contains(pObserver)) {
         // free observer's pixmap data
-        QVector<Page *>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
+        QList<Page *>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
         for (; it != end; ++it) {
             (*it)->deletePixmap(pObserver);
         }
@@ -2854,7 +2854,7 @@ void Document::reparseConfig()
     }
     if (configchanged) {
         // invalidate pixmaps
-        QVector<Page *>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
+        QList<Page *>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
         for (; it != end; ++it) {
             (*it)->deletePixmaps();
         }
@@ -3027,15 +3027,15 @@ const DocumentViewport &Document::viewport() const
     return (*d->m_viewportIterator);
 }
 
-const QVector<VisiblePageRect *> &Document::visiblePageRects() const
+const QList<VisiblePageRect *> &Document::visiblePageRects() const
 {
     return d->m_pageRects;
 }
 
-void Document::setVisiblePageRects(const QVector<VisiblePageRect *> &visiblePageRects, DocumentObserver *excludeObserver)
+void Document::setVisiblePageRects(const QList<VisiblePageRect *> &visiblePageRects, DocumentObserver *excludeObserver)
 {
-    QVector<VisiblePageRect *>::const_iterator vIt = d->m_pageRects.constBegin();
-    QVector<VisiblePageRect *>::const_iterator vEnd = d->m_pageRects.constEnd();
+    QList<VisiblePageRect *>::const_iterator vIt = d->m_pageRects.constBegin();
+    QList<VisiblePageRect *>::const_iterator vEnd = d->m_pageRects.constEnd();
     for (; vIt != vEnd; ++vIt) {
         delete *vIt;
     }
@@ -3868,7 +3868,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
 
     // 1. ALLDOC - process all document marking pages
     if (type == AllDocument) {
-        QMap<Page *, QVector<RegularAreaRect *>> *pageMatches = new QMap<Page *, QVector<RegularAreaRect *>>;
+        QMap<Page *, QList<RegularAreaRect *>> *pageMatches = new QMap<Page *, QList<RegularAreaRect *>>;
 
         // search and highlight 'text' (as a solid phrase) on all pages
         QTimer::singleShot(0, this, [this, pagesToNotify, pageMatches, searchID] { d->doContinueAllDocumentSearch(pagesToNotify, pageMatches, 0, searchID); });
@@ -3914,7 +3914,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
     }
     // 4. GOOGLE* - process all document marking pages
     else if (type == GoogleAll || type == GoogleAny) {
-        QMap<Page *, QVector<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QMap<Page *, QVector<QPair<RegularAreaRect *, QColor>>>;
+        QMap<Page *, QList<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QMap<Page *, QList<QPair<RegularAreaRect *, QColor>>>;
         const QStringList words = text.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         // search and highlight every word in 'text' on all pages
@@ -4129,7 +4129,7 @@ public:
         m_doc->removeObserver(this);
     }
 
-    void notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags) override
+    void notifySetup(const QList<Okular::Page *> & /*pages*/, int setupFlags) override
     {
         if (setupFlags == DocumentChanged || setupFlags == UrlChanged) {
             b = false;
@@ -4361,7 +4361,7 @@ void Document::processAction(const Action *action)
     }
 
     if (executeNextActionsHelper.shouldExecuteNextAction()) {
-        const QVector<Action *> nextActions = action->nextActions();
+        const QList<Action *> nextActions = action->nextActions();
         for (const Action *a : nextActions) {
             processAction(a);
         }
@@ -4917,7 +4917,7 @@ void Document::fillConfigDialog(KConfigDialog *dialog)
     }
 
     // ensure that we have all the generators with settings loaded
-    QVector<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
+    QList<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
     d->loadServiceList(offers);
 
     // We want the generators to be sorted by name so let's fill in a QMap
@@ -4951,10 +4951,10 @@ void Document::fillConfigDialog(KConfigDialog *dialog)
     }
 }
 
-QVector<KPluginMetaData> DocumentPrivate::configurableGenerators()
+QList<KPluginMetaData> DocumentPrivate::configurableGenerators()
 {
-    const QVector<KPluginMetaData> available = availableGenerators();
-    QVector<KPluginMetaData> result;
+    const QList<KPluginMetaData> available = availableGenerators();
+    QList<KPluginMetaData> result;
     for (const KPluginMetaData &md : available) {
         if (md.rawData().value(QStringLiteral("X-KDE-okularHasInternalSettings")).toBool()) {
             result << md;
@@ -4984,7 +4984,7 @@ QStringList Document::supportedMimeTypes() const
     // TODO: make it a static member of DocumentPrivate?
     QStringList result = d->m_supportedMimeTypes;
     if (result.isEmpty()) {
-        const QVector<KPluginMetaData> available = DocumentPrivate::availableGenerators();
+        const QList<KPluginMetaData> available = DocumentPrivate::availableGenerators();
         for (const KPluginMetaData &md : available) {
             result << md.mimeTypes();
         }
@@ -5037,7 +5037,7 @@ bool Document::swapBackingFile(const QString &newFileName, const QUrl &url)
     d->clearAndWaitForRequests();
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << newFileName;
-    QVector<Page *> newPagesVector;
+    QList<Page *> newPagesVector;
     Generator::SwapBackingFileResult result = d->m_generator->swapBackingFile(newFileName, newPagesVector);
     if (result != Generator::SwapBackingFileError) {
         QList<ObjectRect *> rectsToDelete;
@@ -5739,8 +5739,8 @@ void DocumentPrivate::setRotationInternal(int r, bool notify)
     }
 
     // tell the pages to rotate
-    QVector<Okular::Page *>::const_iterator pIt = m_pagesVector.constBegin();
-    QVector<Okular::Page *>::const_iterator pEnd = m_pagesVector.constEnd();
+    QList<Okular::Page *>::const_iterator pIt = m_pagesVector.constBegin();
+    QList<Okular::Page *>::const_iterator pEnd = m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
         (*pIt)->d->rotateAt(rotation);
     }
@@ -5773,8 +5773,8 @@ void Document::setPageSize(const PageSize &size)
     }
 
     // tell the pages to change size
-    QVector<Okular::Page *>::const_iterator pIt = d->m_pagesVector.constBegin();
-    QVector<Okular::Page *>::const_iterator pEnd = d->m_pagesVector.constEnd();
+    QList<Okular::Page *>::const_iterator pIt = d->m_pagesVector.constBegin();
+    QList<Okular::Page *>::const_iterator pEnd = d->m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
         (*pIt)->d->changeSize(size);
     }

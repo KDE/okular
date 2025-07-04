@@ -25,9 +25,9 @@ public:
     ~KIMGIOGenerator() override;
 
     // [INHERITED] load a document and fill up the pagesVector
-    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
-    bool loadDocumentFromData(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector) override;
-    SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
+    bool loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector) override;
+    bool loadDocumentFromData(const QByteArray &fileData, QList<Okular::Page *> &pagesVector) override;
+    SwapBackingFileResult swapBackingFile(QString const &newFileName, QList<Okular::Page *> &newPagesVector) override;
 
     // [INHERITED] print document using already configured kprinter
     Okular::Document::PrintError print(QPrinter &printer) override;
@@ -40,7 +40,7 @@ protected:
     QImage image(Okular::PixmapRequest *request) override;
 
 private:
-    bool loadDocumentInternal(const QByteArray &fileData, const QString &fileName, QVector<Okular::Page *> &pagesVector);
+    bool loadDocumentInternal(const QByteArray &fileData, const QString &fileName, QList<Okular::Page *> &pagesVector);
 
 private:
     QImage m_img;

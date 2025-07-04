@@ -65,7 +65,7 @@ TOC::~TOC()
     m_document->removeObserver(this);
 }
 
-void TOC::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
+void TOC::notifySetup(const QList<Okular::Page *> & /*pages*/, int setupFlags)
 {
     if (!(setupFlags & Okular::DocumentObserver::DocumentChanged)) {
         return;
@@ -79,7 +79,7 @@ void TOC::notifySetup(const QVector<Okular::Page *> & /*pages*/, int setupFlags)
     if (!syn) {
         if (m_document->isOpened()) {
             // Make sure we clear the reload old model data
-            m_model->setOldModelData(nullptr, QVector<QModelIndex>());
+            m_model->setOldModelData(nullptr, QList<QModelIndex>());
         }
         Q_EMIT hasTOC(false);
         return;
@@ -100,7 +100,7 @@ void TOC::prepareForReload()
         return;
     }
 
-    const QVector<QModelIndex> list = expandedNodes();
+    const QList<QModelIndex> list = expandedNodes();
     TOCModel *m = m_model;
     m_model = new TOCModel(m_document, m_treeView);
     m_model->setOldModelData(m, list);
@@ -125,9 +125,9 @@ void TOC::finishReload()
     m_model->setParent(m_treeView);
 }
 
-QVector<QModelIndex> TOC::expandedNodes(const QModelIndex &parent) const
+QList<QModelIndex> TOC::expandedNodes(const QModelIndex &parent) const
 {
-    QVector<QModelIndex> list;
+    QList<QModelIndex> list;
     for (int i = 0; i < m_model->rowCount(parent); i++) {
         const QModelIndex index = m_model->index(i, 0, parent);
         if (m_treeView->isExpanded(index)) {

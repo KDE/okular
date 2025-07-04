@@ -32,7 +32,7 @@ ComicBookGenerator::~ComicBookGenerator()
 {
 }
 
-bool ComicBookGenerator::loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector)
+bool ComicBookGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     if (!mDocument.open(fileName)) {
         const QString errString = mDocument.lastErrorString();

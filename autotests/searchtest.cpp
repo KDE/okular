@@ -58,7 +58,7 @@ void SearchTest::initTestCase()
     Okular::SettingsCore::instance(QStringLiteral("searchtest"));
 }
 
-static void createTextPage(const QVector<QString> &text, const QVector<Okular::NormalizedRect> &rect, Okular::TextPage *&tp, Okular::Page *&page)
+static void createTextPage(const QList<QString> &text, const QList<Okular::NormalizedRect> &rect, Okular::TextPage *&tp, Okular::Page *&page)
 {
     tp = new Okular::TextPage();
     for (int i = 0; i < text.size(); i++) {
@@ -120,19 +120,18 @@ void SearchTest::testNextAndPrevious()
 {
 #define TEST_NEXT_PREV_SITUATION_COUNT 4
 
-    QVector<QString> texts[TEST_NEXT_PREV_SITUATION_COUNT] = {QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a"),
-                                                              QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b"),
-                                                              QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b")
-                                                                                 << QStringLiteral("a"),
-                                                              QVector<QString>() << QStringLiteral("a") << QStringLiteral(" ") << QStringLiteral("ba") << QStringLiteral(" ") << QStringLiteral("b")};
+    QList<QString> texts[TEST_NEXT_PREV_SITUATION_COUNT] = {QList<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a"),
+                                                            QList<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b"),
+                                                            QList<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a"),
+                                                            QList<QString>() << QStringLiteral("a") << QStringLiteral(" ") << QStringLiteral("ba") << QStringLiteral(" ") << QStringLiteral("b")};
 
     QString searchStrings[TEST_NEXT_PREV_SITUATION_COUNT] = {QStringLiteral("b"), QStringLiteral("ab"), QStringLiteral("aba"), QStringLiteral("a b")};
 
     for (int i = 0; i < TEST_NEXT_PREV_SITUATION_COUNT; i++) {
-        const QVector<QString> &text = texts[i];
+        const QList<QString> &text = texts[i];
         const QString &searchString = searchStrings[i];
 
-        QVector<Okular::NormalizedRect> rect;
+        QList<Okular::NormalizedRect> rect;
 
         for (int i = 0; i < text.size(); i++) {
             rect << Okular::NormalizedRect(0.1 * i, 0.0, 0.1 * (i + 1), 0.1);
@@ -185,10 +184,10 @@ void SearchTest::test311232()
 
 void SearchTest::test323262()
 {
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("a\n");
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(1, 2, 3, 4);
 
     CREATE_PAGE;
@@ -202,10 +201,10 @@ void SearchTest::test323262()
 
 void SearchTest::test323263()
 {
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("a") << QStringLiteral("a") << QStringLiteral("b");
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0, 0, 1, 1) << Okular::NormalizedRect(1, 0, 2, 1) << Okular::NormalizedRect(2, 0, 3, 1);
 
     CREATE_PAGE;
@@ -226,10 +225,10 @@ void SearchTest::test430243()
 {
     // 778 is COMBINING RING ABOVE
     // 197 is LATIN CAPITAL LETTER A WITH RING ABOVE
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("A") << QString(QChar(778));
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0, 0, 1, 1) << Okular::NormalizedRect(1, 0, 2, 1);
 
     CREATE_PAGE;
@@ -255,10 +254,10 @@ void SearchTest::testDottedI()
     // mode as well (QString::compare does not match them, at least in non-Turkish locales, since it follows
     // the Unicode case-folding rules https://www.unicode.org/Public/6.2.0/ucd/CaseFolding.txt).
 
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("İ");
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(1, 2, 3, 4);
 
     CREATE_PAGE;
@@ -272,10 +271,10 @@ void SearchTest::testDottedI()
 
 void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 {
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("super-") << QStringLiteral("cali-\n") << QStringLiteral("fragilistic") << QStringLiteral("-") << QStringLiteral("expiali") << QStringLiteral("-\n") << QStringLiteral("docious");
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0.4, 0.0, 0.9, 0.1) << Okular::NormalizedRect(0.0, 0.1, 0.6, 0.2) << Okular::NormalizedRect(0.0, 0.2, 0.8, 0.3) << Okular::NormalizedRect(0.8, 0.2, 0.9, 0.3) << Okular::NormalizedRect(0.0, 0.3, 0.8, 0.4)
          << Okular::NormalizedRect(0.8, 0.3, 0.9, 0.4) << Okular::NormalizedRect(0.0, 0.4, 0.7, 0.5);
 
@@ -323,10 +322,10 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 
 void SearchTest::testHyphenWithYOverlap()
 {
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("a-") << QStringLiteral("b");
 
-    QVector<Okular::NormalizedRect> rect(2);
+    QList<Okular::NormalizedRect> rect(2);
 
     // different lines (50% y-coordinate overlap), first rectangle has larger height
     rect[0] = Okular::NormalizedRect(0.0, 0.0, 0.9, 0.35);
@@ -357,10 +356,10 @@ void SearchTest::testHyphenAtEndOfPage()
     // we tried look ahead (for determining whether the
     // next character is at the same line) at the end of the page.
 
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("a-");
 
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0, 0, 1, 1);
 
     CREATE_PAGE;
@@ -390,11 +389,11 @@ void SearchTest::testOneColumn()
     // The resolution used by the XY Cut algorithm with a square page is 1000 x 1000,
     // and the horizontal spaces in the example are 0.1, so they are indeed both exactly 100 pixels.)
 
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("Only") << QStringLiteral("one") << QStringLiteral("column") << QStringLiteral("here");
 
     // characters and line breaks have length 0.05, word breaks 0.1
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0.0, 0.0, 0.2, 0.1) << Okular::NormalizedRect(0.3, 0.0, 0.5, 0.1) << Okular::NormalizedRect(0.6, 0.0, 0.9, 0.1) << Okular::NormalizedRect(0.0, 0.15, 0.2, 0.25);
 
     CREATE_PAGE;
@@ -410,11 +409,11 @@ void SearchTest::testTwoColumns()
 {
     // Tests that the layout analysis algorithm can detect two columns.
 
-    QVector<QString> text;
+    QList<QString> text;
     text << QStringLiteral("This") << QStringLiteral("text") << QStringLiteral("in") << QStringLiteral("two") << QStringLiteral("is") << QStringLiteral("set") << QStringLiteral("columns.");
 
     // characters, word breaks and line breaks have length 0.05
-    QVector<Okular::NormalizedRect> rect;
+    QList<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0.0, 0.0, 0.20, 0.1) << Okular::NormalizedRect(0.25, 0.0, 0.45, 0.1) << Okular::NormalizedRect(0.6, 0.0, 0.7, 0.1) << Okular::NormalizedRect(0.75, 0.0, 0.9, 0.1)
          << Okular::NormalizedRect(0.0, 0.15, 0.1, 0.25) << Okular::NormalizedRect(0.15, 0.15, 0.3, 0.25) << Okular::NormalizedRect(0.6, 0.15, 1.0, 0.25);
 

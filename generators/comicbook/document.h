@@ -31,7 +31,7 @@ public:
     bool open(const QString &fileName);
     void close();
 
-    void pages(QVector<Okular::Page *> *pagesVector);
+    void pages(QList<Okular::Page *> *pagesVector);
     QStringList pageTitles() const;
 
     QImage pageImage(int page) const;

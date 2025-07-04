@@ -154,7 +154,7 @@ DOCINFO_GET_METHOD(DocumentInfo::Subject, subject)
 // Document.getField()
 QJSValue JSDocument::getField(const QString &cName) const
 {
-    QVector<Page *>::const_iterator pIt = m_doc->m_pagesVector.constBegin(), pEnd = m_doc->m_pagesVector.constEnd();
+    QList<Page *>::const_iterator pIt = m_doc->m_pagesVector.constBegin(), pEnd = m_doc->m_pagesVector.constEnd();
     for (; pIt != pEnd; ++pIt) {
         const QList<Okular::FormField *> pageFields = (*pIt)->formFields();
         for (FormField *form : pageFields) {

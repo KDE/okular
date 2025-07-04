@@ -17,10 +17,10 @@
 #include "pagesize.h"
 
 #include <QDomDocument>
+#include <QList>
 #include <QObject>
 #include <QPrinter>
 #include <QStringList>
-#include <QVector>
 
 #include <QMimeType>
 #include <QUrl>
@@ -308,12 +308,12 @@ public:
      * Sets the list of visible page rectangles.
      * @see VisiblePageRect
      */
-    void setVisiblePageRects(const QVector<VisiblePageRect *> &visiblePageRects, DocumentObserver *excludeObserver = nullptr);
+    void setVisiblePageRects(const QList<VisiblePageRect *> &visiblePageRects, DocumentObserver *excludeObserver = nullptr);
 
     /**
      * Returns the list of visible page rectangles.
      */
-    const QVector<VisiblePageRect *> &visiblePageRects() const;
+    const QList<VisiblePageRect *> &visiblePageRects() const;
 
     /**
      * Returns the number of the current page.

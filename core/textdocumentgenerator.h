@@ -169,7 +169,7 @@ public:
     ~TextDocumentGenerator() override;
 
     // [INHERITED] load a document and fill up the pagesVector
-    Document::OpenResult loadDocumentWithPassword(const QString &fileName, QVector<Okular::Page *> &pagesVector, const QString &password) override;
+    Document::OpenResult loadDocumentWithPassword(const QString &fileName, QList<Okular::Page *> &pagesVector, const QString &password) override;
 
     // [INHERITED] perform actions on document / pages
     bool canGeneratePixmap() const override;

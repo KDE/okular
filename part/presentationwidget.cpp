@@ -318,7 +318,7 @@ PresentationWidget::~PresentationWidget()
     qApp->removeEventFilter(this);
 }
 
-void PresentationWidget::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlags)
+void PresentationWidget::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
 {
     // same document, nothing to change - here we assume the document sets up
     // us with the whole document set as first notifySetup()

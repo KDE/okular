@@ -165,7 +165,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     quint32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
     quint32 lengthOfNewSpecial = PS.length() + 5;
 
-    QVector<quint8> newDVI(dviFile->size_of_file + lengthOfNewSpecial - lengthOfOldSpecial);
+    QList<quint8> newDVI(dviFile->size_of_file + lengthOfNewSpecial - lengthOfOldSpecial);
 
     quint8 *commandPtrSav = command_pointer;
     quint8 *endPtrSav = end_pointer;

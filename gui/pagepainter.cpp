@@ -103,9 +103,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
     if (!hasTilesManager) {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-        const QPixmap *p = page->_o_nearestPixmap(observer, dScaledWidth, dScaledHeight);
-
-        if (p != nullptr) {
+        if (const auto *p = page->_o_nearestPixmap(observer, dScaledWidth, dScaledHeight)) {
             pixmap = *p;
         }
 
@@ -125,6 +123,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             return;
         }
     }
+
+    // tiles manages and this pixmap are mutually exclusive (!= is the same as XOR)
+    Q_ASSERT(hasTilesManager != !pixmap.isNull());
 
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     const bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();

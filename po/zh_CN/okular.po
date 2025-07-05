@@ -2862,7 +2862,7 @@ msgstr "使用浏览工具时，光标可在屏幕边缘无限拖动翻页"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "最近历史中的项目："
 
 #: part/dlggeneral.cpp:213
 #, kde-format

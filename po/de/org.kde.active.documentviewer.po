@@ -2,21 +2,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Frederik Schwarzer <schwarzer@kde.org>, 2012, 2022, 2023.
 # Burkhard Lück <lueck@hube-lueck.de>, 2013, 2017, 2018, 2019, 2021.
+# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n@prly.mozmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-19 00:39+0000\n"
-"PO-Revision-Date: 2023-04-26 19:48+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2025-07-02 09:20+0200\n"
+"Last-Translator: Philipp Kiemle <l10n@prly.mozmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.07.70\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -98,7 +99,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open..."
-msgstr "Öffnen ..."
+msgstr "Öffnen …"
 
 #: ui/Main.qml:49
 msgid "About"
@@ -178,16 +179,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumentversion %1 von %2"
 
 #: ui/SignaturePropertiesPage.qml:108
-#, fuzzy
-#| msgid "Save Signed Version..."
 msgid "Save Signed Version…"
-msgstr "Signierte Version speichern ..."
+msgstr "Signierte Version speichern …"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
-#, fuzzy
-#| msgid "View Certificate..."
 msgid "View Certificate…"
-msgstr "Zertifikat ansehen ..."
+msgstr "Zertifikat anzeigen …"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

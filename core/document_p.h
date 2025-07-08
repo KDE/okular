@@ -161,7 +161,7 @@ public:
     Generator *loadGeneratorLibrary(const KPluginMetaData &service);
     void loadAllGeneratorLibraries();
     void loadServiceList(const QList<KPluginMetaData> &offers);
-    void unloadGenerator(const GeneratorInfo &info);
+    void unloadGenerator(GeneratorInfo &info);
     void cacheExportFormats();
     void setRotationInternal(int r, bool notify);
     ConfigInterface *generatorConfig(GeneratorInfo &info);
@@ -278,6 +278,7 @@ public:
 
     // observers / requests / allocator stuff
     QSet<DocumentObserver *> m_observers;
+    // sorted by priority from lowest priority (highest number) at the head of the list to the highest priority (zero number) toward the end
     std::list<PixmapRequest *> m_pixmapRequestsStack;
     std::list<PixmapRequest *> m_executingPixmapRequests;
     QMutex m_pixmapRequestsMutex;

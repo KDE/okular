@@ -17,11 +17,13 @@ target_sources(okularplugin PRIVATE
     ${CMAKE_SOURCE_DIR}/gui/certificatemodel.cpp
     ${CMAKE_SOURCE_DIR}/gui/pagepainter.cpp
     ${CMAKE_SOURCE_DIR}/gui/debug_ui.cpp
+    ${CMAKE_SOURCE_DIR}/shell/recentitemsmodel.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
     okularsingleton.cpp
     types.cpp
+    welcomeitem.cpp
 )
 
 kconfig_add_kcfg_files(okularplugin GENERATE_MOC ${CMAKE_SOURCE_DIR}/conf/settings_mobile.kcfgc)

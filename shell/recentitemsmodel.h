@@ -24,6 +24,7 @@ class RecentItemsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+    enum Roles { IconNameRole = Qt::UserRole + 1, UrlRole = Qt::UserRole + 2 };
     struct RecentItem {
         QString name;
         QUrl url;
@@ -48,6 +49,7 @@ public:
     RecentItemsModel::RecentItem const *getItem(int index) const;
 
     // Model implementation:
+    QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::ItemDataRole::DisplayRole) const override;
 

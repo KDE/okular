@@ -436,7 +436,7 @@ static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Ok
 }
 
 #if HAVE_NEW_SIGNATURE_API
-static Okular::SigningResult popperToOkular(Poppler::SignatureAnnotation::SigningResult pResult)
+static Okular::SigningResult popplerToOkular(Poppler::SignatureAnnotation::SigningResult pResult)
 {
     switch (pResult) {
     case Poppler::SignatureAnnotation::SigningSuccess:
@@ -527,9 +527,9 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
         Poppler::PDFConverter::NewSignatureData pData;
         PDFGenerator::okularToPoppler(oData, &pData);
 #if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
-        return std::pair<Okular::SigningResult, QString>(popperToOkular(signatureAnnotation->sign(fileName, pData)), signatureAnnotation->lastSigningErrorDetails().data.toString());
+        return std::pair<Okular::SigningResult, QString>(popplerToOkular(signatureAnnotation->sign(fileName, pData)), signatureAnnotation->lastSigningErrorDetails().data.toString());
 #else
-        return std::pair<Okular::SigningResult, QString> {popperToOkular(signatureAnnotation->sign(fileName, pData)), QString {}};
+        return std::pair<Okular::SigningResult, QString> {popplerToOkular(signatureAnnotation->sign(fileName, pData)), QString {}};
 #endif
     });
 

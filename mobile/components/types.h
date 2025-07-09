@@ -7,6 +7,7 @@
 #include <qqml.h>
 
 #include "gui/certificatemodel.h"
+#include "shell/recentitemsmodel.h"
 
 class CertificateModelForeign : public QObject
 {
@@ -14,4 +15,11 @@ class CertificateModelForeign : public QObject
     QML_FOREIGN(CertificateModel)
     QML_NAMED_ELEMENT(CertificateModel)
     QML_UNCREATABLE("")
+};
+
+class RecentItemsModelForeign : public QObject
+{
+    Q_OBJECT
+    QML_FOREIGN(RecentItemsModel)
+    QML_NAMED_ELEMENT(RecentItemsModel)
 };

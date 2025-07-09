@@ -21,6 +21,8 @@ QQC2.ScrollView {
     property PageItem page: mouseArea.currPageDelegate.pageItem
     signal clicked
 
+    signal urlOpened
+
     clip: true
     
     //NOTE: on some themes it tries to set the flickable to interactive
@@ -41,6 +43,7 @@ QQC2.ScrollView {
             target: root.document
             function onUrlChanged() {
                 resizeTimer.restart()
+                root.urlOpened()
             }
         }
         Timer {

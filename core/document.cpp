@@ -1686,9 +1686,8 @@ void DocumentPrivate::_o_configChanged()
     }
 }
 
-void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct)
+void DocumentPrivate::doContinueDirectionMatchSearch(DoContinueDirectionMatchSearchStruct *searchStruct)
 {
-    DoContinueDirectionMatchSearchStruct *searchStruct = static_cast<DoContinueDirectionMatchSearchStruct *>(doContinueDirectionMatchSearchStruct);
     RunningSearch *search = m_searches.value(searchStruct->searchID);
 
     if ((m_searchCancelled && !searchStruct->match) || !search) {
@@ -1805,10 +1804,8 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
     delete pagesToNotify;
 }
 
-void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID)
+void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID)
 {
-    QMap<Page *, QList<RegularAreaRect *>> *pageMatches = static_cast<QMap<Page *, QList<RegularAreaRect *>> *>(pageMatchesMap);
-    QSet<int> *pagesToNotify = static_cast<QSet<int> *>(pagesToNotifySet);
     RunningSearch *search = m_searches.value(searchID);
 
     if (m_searchCancelled || !search) {
@@ -1857,7 +1854,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
         delete lastMatch;
 
-        QTimer::singleShot(0, m_parent, [this, pagesToNotifySet, pageMatches, currentPage, searchID] { doContinueAllDocumentSearch(pagesToNotifySet, pageMatches, currentPage + 1, searchID); });
+        QTimer::singleShot(0, m_parent, [this, pagesToNotify, pageMatches, currentPage, searchID] { doContinueAllDocumentSearch(pagesToNotify, pageMatches, currentPage + 1, searchID); });
     } else {
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
@@ -1898,11 +1895,8 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     }
 }
 
-void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList &words)
+void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words)
 {
-    typedef QPair<RegularAreaRect *, QColor> MatchColor;
-    QMap<Page *, QList<MatchColor>> *pageMatches = static_cast<QMap<Page *, QList<MatchColor>> *>(pageMatchesMap);
-    QSet<int> *pagesToNotify = static_cast<QSet<int> *>(pagesToNotifySet);
     RunningSearch *search = m_searches.value(searchID);
 
     if (m_searchCancelled || !search) {
@@ -1982,7 +1976,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             pageMatches->remove(page);
         }
 
-        QTimer::singleShot(0, m_parent, [this, pagesToNotifySet, pageMatches, currentPage, searchID, words] { doContinueGooglesDocumentSearch(pagesToNotifySet, pageMatches, currentPage + 1, searchID, words); });
+        QTimer::singleShot(0, m_parent, [this, pagesToNotify, pageMatches, currentPage, searchID, words] { doContinueGooglesDocumentSearch(pagesToNotify, pageMatches, currentPage + 1, searchID, words); });
     } else {
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();

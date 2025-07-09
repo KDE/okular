@@ -196,9 +196,11 @@ public:
     void slotGeneratorConfigChanged();
     void refreshPixmaps(int);
     void _o_configChanged();
-    void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);
-    void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID);
-    void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList &words);
+
+    typedef std::pair<RegularAreaRect *, QColor> MatchColor;
+    void doContinueDirectionMatchSearch(DoContinueDirectionMatchSearchStruct *searchStruct);
+    void doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID);
+    void doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words);
 
     void doProcessSearchMatch(RegularAreaRect *match, RunningSearch *search, QSet<int> *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor &color);
 

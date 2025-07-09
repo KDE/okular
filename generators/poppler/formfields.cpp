@@ -503,7 +503,34 @@ Okular::SignatureInfo PopplerFormFieldSignature::signatureInfo() const
     return m_info;
 }
 
-bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
+Okular::SigningResult fromPoppler(Poppler::FormFieldSignature::SigningResult r)
+{
+    switch (r) {
+    case Poppler::FormFieldSignature::SigningResult::FieldAlreadySigned:
+        return Okular::SigningResult::FieldAlreadySigned;
+    case Poppler::FormFieldSignature::SigningResult::GenericSigningError:
+        return Okular::SigningResult::GenericSigningError;
+    case Poppler::FormFieldSignature::SigningSuccess:
+        return Okular::SigningResult::SigningSuccess;
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
+    case Poppler::FormFieldSignature::InternalError:
+        return Okular::SigningResult::InternalSigningError;
+    case Poppler::FormFieldSignature::KeyMissing:
+        return Okular::SigningResult::KeyMissing;
+    case Poppler::FormFieldSignature::UserCancelled:
+        return Okular::SigningResult::UserCancelled;
+    case Poppler::FormFieldSignature::WriteFailed:
+        return Okular::SigningResult::SignatureWriteFailed;
+#endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 03, 12)
+    case Poppler::FormFieldSignature::BadPassphrase:
+        return Okular::SigningResult::BadPassphrase;
+#endif
+    }
+    return Okular::SigningResult::GenericSigningError;
+}
+
+std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
 {
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
@@ -512,5 +539,11 @@ bool PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, cons
     pData.setFontSize(0);
     pData.setLeftFontSize(0);
 #endif
-    return m_field->sign(newPath, pData) == Poppler::FormFieldSignature::SigningSuccess;
+    auto result = fromPoppler(m_field->sign(newPath, pData));
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
+    QString errorDetails = m_field->lastSigningErrorDetails().data.toString();
+#else
+    QString errorDetails;
+#endif
+    return {result, errorDetails};
 }

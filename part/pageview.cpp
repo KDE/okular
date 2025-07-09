@@ -5532,8 +5532,8 @@ PageView::FinishSigningResult PageView::finishSigning()
     data.setLeftFontSize(d->signatureAnnotation->leftFontSize());
     data.setFontSize(d->signatureAnnotation->fontSize());
 
-    Okular::SigningResult result = d->signatureAnnotation->sign(data, newFilePath);
-    switch (result) {
+    std::pair<Okular::SigningResult, QString> result = d->signatureAnnotation->sign(data, newFilePath);
+    switch (result.first) {
     case Okular::SigningSuccess: {
         Q_EMIT requestOpenNewlySignedFile(newFilePath, d->signatureAnnotation->page() + 1);
         return Success;
@@ -5541,18 +5541,18 @@ PageView::FinishSigningResult PageView::finishSigning()
     case Okular::FieldAlreadySigned: // We should not end up here
     case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
     case Okular::InternalSigningError:
-        KMessageBox::error(this, errorString(result, static_cast<int>(result)));
+        KMessageBox::detailedError(this, errorString(result.first, static_cast<int>(result.first)), result.second);
         return Failed;
     case Okular::GenericSigningError:
-        KMessageBox::error(this, errorString(result, newFilePath));
+        KMessageBox::detailedError(this, errorString(result.first, newFilePath), result.second);
         return Failed;
     case Okular::UserCancelled:
         return Cancelled;
     case Okular::BadPassphrase:
-        KMessageBox::error(this, errorString(result, {}));
+        KMessageBox::detailedError(this, errorString(result.first, {}), result.second);
         return Cancelled;
     case Okular::SignatureWriteFailed:
-        KMessageBox::error(this, errorString(result, newFilePath));
+        KMessageBox::detailedError(this, errorString(result.first, newFilePath), result.second);
         return Failed;
     }
     // We should not end here

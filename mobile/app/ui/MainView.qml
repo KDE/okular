@@ -4,10 +4,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.15
-import QtQuick.Controls 2.15 as QQC2
-import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 2.17 as Kirigami
+import QtQuick
+import QtQuick.Controls as QQC2
+import QtQuick.Layouts
+
+import org.kde.okular as Okular
+import org.kde.kirigami as Kirigami
 
 Kirigami.Page {
     id: root
@@ -22,6 +24,7 @@ Kirigami.Page {
     actions: Kirigami.Action {
         icon.name: pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize"
         checkable: true
+        visible: document.opened
         onCheckedChanged: (checked) => pageArea.page.bookmarked = checked
         text: pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")
         checked: pageArea.page.bookmarked
@@ -32,6 +35,7 @@ Kirigami.Page {
         anchors.fill: parent
 
         onClicked: fileBrowserRoot.controlsVisible = !fileBrowserRoot.controlsVisible
+        onUrlOpened: welcomeView.saveRecentDocument(document.url)
     }
 
     Connections {
@@ -77,12 +81,8 @@ Kirigami.Page {
         }
     }
 
-    Kirigami.PlaceholderMessage {
-        visible: !document.opened
-        text: i18n("No document open")
-        helpfulAction: openDocumentAction
-        width: parent.width - (Kirigami.Units.largeSpacing * 4)
-        anchors.centerIn: parent
+    WelcomeView {
+        id: welcomeView
     }
 
     QQC2.ProgressBar {
@@ -95,6 +95,6 @@ Kirigami.Page {
             right: parent.right
             bottom: parent.bottom
         }
-        value: documentItem.pageCount !== 0 ? ((documentItem.currentPage+1) / documentItem.pageCount) : 0
+        value: documentItem.pageCount !== 0 ? ((documentItem.currentPage + 1) / documentItem.pageCount) : 0
     }
 }

@@ -81,7 +81,7 @@ Kirigami.ApplicationWindow {
         Kirigami.ColumnView.preventStealing: true
     }
 
-    //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing
+    //FIXME: this is due to global vars being bound after the parse is done, do the 2 steps parsing
     Timer {
         interval: 100
         running: true

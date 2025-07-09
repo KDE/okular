@@ -474,7 +474,7 @@ public:
         return m_aborted;
     }
 
-    bool sign(const QString &newFilePath)
+    std::pair<Okular::SigningResult, QString> sign(const QString &newFilePath)
     {
         Okular::NewSignatureData data;
         data.setCertNickname(m_signingInformation->certificate->nickName());
@@ -1128,11 +1128,28 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                 const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(m_pageView, m_document);
 
                 if (!newFilePath.isEmpty()) {
-                    const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
-                    if (success) {
-                        Q_EMIT requestOpenNewlySignedFile(newFilePath, m_lockedItem->pageNumber() + 1);
-                    } else {
-                        KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
+                    const std::pair<Okular::SigningResult, QString> result = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
+                    switch (result.first) {
+                    case Okular::SigningSuccess: {
+                        Q_EMIT m_pageView->requestOpenNewlySignedFile(newFilePath, m_lockedItem->pageNumber() + 1);
+                        break;
+                    }
+                    case Okular::FieldAlreadySigned: // We should not end up here
+                    case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+                    case Okular::InternalSigningError:
+                        KMessageBox::detailedError(m_pageView, errorString(result.first, static_cast<int>(result.first)), result.second);
+                        break;
+                    case Okular::GenericSigningError:
+                        KMessageBox::detailedError(m_pageView, errorString(result.first, newFilePath), result.second);
+                        break;
+                    case Okular::UserCancelled:
+                        break;
+                    case Okular::BadPassphrase:
+                        KMessageBox::detailedError(m_pageView, errorString(result.first, {}), result.second);
+                        break;
+                    case Okular::SignatureWriteFailed:
+                        KMessageBox::detailedError(m_pageView, errorString(result.first, newFilePath), result.second);
+                        break;
                     }
                 }
                 // Exit the signature mode.

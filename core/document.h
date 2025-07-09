@@ -15,6 +15,7 @@
 #include "global.h"
 #include "okularcore_export.h"
 #include "pagesize.h"
+#include "signatureutils.h"
 
 #include <QDomDocument>
 #include <QList>
@@ -1102,9 +1103,10 @@ public:
     /**
      * Digitally sign document
      *
-     * @since 21.04
+     * @return pair of signing result and a detailed/advanced error message/code in case of errors
+     * @since 25.08
      */
-    bool sign(const NewSignatureData &data, const QString &newPath);
+    std::pair<SigningResult, QString> sign(const NewSignatureData &data, const QString &newPath);
 
     /**
      * Returns the generator's certificate store (if any)

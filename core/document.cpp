@@ -2889,12 +2889,12 @@ bool Document::canConfigurePrinter() const
     }
 }
 
-bool Document::sign(const NewSignatureData &data, const QString &newPath)
+std::pair<SigningResult, QString> Document::sign(const NewSignatureData &data, const QString &newPath)
 {
     if (d->m_generator->canSign()) {
         return d->m_generator->sign(data, newPath);
     } else {
-        return false;
+        return {GenericSigningError, i18nc("Unsupported action", "Signing not implemented for this document type")};
     }
 }
 

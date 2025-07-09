@@ -281,11 +281,28 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
     const QString newFilePath = getFileNameForNewSignedFile(pageView, doc);
 
     if (!newFilePath.isEmpty()) {
-        const bool success = form->sign(data, newFilePath);
-        if (success) {
+        const std::pair<Okular::SigningResult, QString> success = form->sign(data, newFilePath);
+        switch (success.first) {
+        case Okular::SigningSuccess: {
             Q_EMIT pageView->requestOpenNewlySignedFile(newFilePath, form->page()->number() + 1);
-        } else {
-            KMessageBox::error(pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
+            break;
+        }
+        case Okular::FieldAlreadySigned: // We should not end up here
+        case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+        case Okular::InternalSigningError:
+            KMessageBox::detailedError(pageView, errorString(success.first, static_cast<int>(success.first)), success.second);
+            break;
+        case Okular::GenericSigningError:
+            KMessageBox::detailedError(pageView, errorString(success.first, newFilePath), success.second);
+            break;
+        case Okular::UserCancelled:
+            break;
+        case Okular::BadPassphrase:
+            KMessageBox::detailedError(pageView, errorString(success.first, {}), success.second);
+            break;
+        case Okular::SignatureWriteFailed:
+            KMessageBox::detailedError(pageView, errorString(success.first, newFilePath), success.second);
+            break;
         }
     }
 }

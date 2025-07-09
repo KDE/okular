@@ -25,6 +25,7 @@ ecm_target_qml_sources(okularkirigami SOURCES
     ui/TreeViewDecoration.qml
     ui/Signatures.qml
     ui/SignaturePropertiesPage.qml
+    ui/WelcomeView.qml
 )
 
 if (ANDROID)

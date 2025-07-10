@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-07-10 02:33+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -294,7 +294,17 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF 后端程序配置"
 
-#: generator_pdf.cpp:2244
+#: generator_pdf.cpp:2203 generator_pdf.cpp:2210
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr ""
+
+#: generator_pdf.cpp:2254
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr ""
+
+#: generator_pdf.cpp:2274
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

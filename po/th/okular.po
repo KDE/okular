@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-03 06:55+0000\n"
+"POT-Creation-Date: 2025-07-10 02:33+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -317,6 +317,12 @@ msgstr ""
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "ไม่พบส่วนเสริมที่จะใช้ในการจัดการกับเอกสารที่ส่งผ่านมาให้"
+
+#: core/document.cpp:2897
+#, kde-format
+msgctxt "Unsupported action"
+msgid "Signing not implemented for this document type"
+msgstr ""
 
 #: core/document.cpp:3624
 #, fuzzy, kde-format
@@ -734,21 +740,21 @@ msgid "Value"
 msgstr ""
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
 #, fuzzy, kde-format
 #| msgid "&Open Pop-up Note"
 msgid "Pop-up Note"
 msgstr "เ&ปิดบันทึกย่อแบบผุด"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgid "Typewriter"
 msgstr "เขียนทับ"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
 #, kde-format
 msgid "Inline Note"
 msgstr "บันทึกย่อในบรรทัด"
@@ -760,7 +766,7 @@ msgid "Straight Line with Comment"
 msgstr "คุณสมบัติบรรทัด"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1446
 #, fuzzy, kde-format
 #| msgid "Straight Yellow Line"
 msgid "Straight Line"
@@ -773,7 +779,7 @@ msgid "Polygon with Comment"
 msgstr "สำหรับให้วิจารณ์"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1438
 #, fuzzy, kde-format
 #| msgid "Blue Polygon"
 msgid "Polygon"
@@ -808,7 +814,7 @@ msgid "Squiggle with Comment"
 msgstr "ตัวหวัด"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1442
 #, fuzzy, kde-format
 #| msgid "Squiggly"
 msgid "Squiggle"
@@ -821,7 +827,7 @@ msgid "Underline with Comment"
 msgstr "ขีดเส้นใต้"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1433
+#: part/pageviewannotator.cpp:1450
 #, kde-format
 msgid "Underline"
 msgstr "ขีดเส้นใต้"
@@ -845,7 +851,7 @@ msgid "Stamp with Comment"
 msgstr "ขีดฆ่า"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1444
 #, kde-format
 msgid "Stamp"
 msgstr "ตราประทับ"
@@ -857,7 +863,7 @@ msgid "Freehand Line with Comment"
 msgstr "คุณสมบัติบรรทัด"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1432
 #, fuzzy, kde-format
 #| msgid "Green Freehand Line"
 msgid "Freehand Line"
@@ -2212,17 +2218,17 @@ msgstr "บันทึกเป็นแฟ้ม..."
 msgid "Type:"
 msgstr "ประเภท:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
 #, kde-format
 msgid "Strike out"
 msgstr "ขีดฆ่า"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
 #, kde-format
 msgid "Rectangle"
 msgstr "สี่เหลี่ยม"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
 #, kde-format
 msgid "Ellipse"
 msgstr "วงมน"
@@ -4335,26 +4341,20 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
-msgstr ""
-
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author name"
 msgstr "ผู้เขียน"
 
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
 msgid "Author name for the annotation:"
 msgstr "หมายเหตุประกอบ %1 แห่ง"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1347
 #, fuzzy, kde-format
 #| msgctxt "Annotation tool"
 #| msgid "Inline Text Annotation (drag to select a zone)"
@@ -4362,80 +4362,80 @@ msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "ข้อความหมายเหตุประกอบฝังเข้าในบรรทัด (ลากเพื่อเลือกพื้นที่)"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1349
 #, fuzzy, kde-format
 #| msgid "Highlight"
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "เน้น"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1351
 #, fuzzy, kde-format
 #| msgid "Green Freehand Line"
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "เส้นวาดอิสระสีเขียว"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1353
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "ข้อความหมายเหตุประกอบฝังเข้าในบรรทัด (ลากเพื่อเลือกพื้นที่)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1355
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1357
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "วาดภาพหลายเหลี่ยม (คลิกบนจุดเริ่มแรกเพื่อจบการวาด)"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1359
 #, fuzzy, kde-format
 #| msgid "Rectangle"
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "สี่เหลี่ยม"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1361
 #, fuzzy, kde-format
 #| msgid "Squiggly"
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "ตัวหวัด"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1363
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "ใส่สัญลักษณ์ตราประทับ"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1365
 #, fuzzy, kde-format
 #| msgid "Straight Yellow Line"
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "เส้นตรงสีเหลือง"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1367
 #, fuzzy, kde-format
 #| msgid "Strike out"
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "ขีดฆ่า"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1369
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "ขีดเส้นใต้"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1371
 #, fuzzy, kde-format
 #| msgctxt "Annotation tool"
 #| msgid "Inline Text Annotation (drag to select a zone)"
@@ -4443,20 +4443,20 @@ msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "ข้อความหมายเหตุประกอบฝังเข้าในบรรทัด (ลากเพื่อเลือกพื้นที่)"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1430
 #, fuzzy, kde-format
 #| msgid "Highlight"
 msgid "Highlighter"
 msgstr "เน้น"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
 msgid "Add favorite annotation"
 msgstr "หมายเหตุประกอบ %1 แห่ง"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"

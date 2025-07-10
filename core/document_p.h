@@ -199,8 +199,8 @@ public:
 
     typedef std::pair<RegularAreaRect *, QColor> MatchColor;
     void doContinueDirectionMatchSearch(DoContinueDirectionMatchSearchStruct *searchStruct);
-    void doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID);
-    void doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words);
+    void doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> pageMatches, int currentPage, int searchID);
+    void doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<MatchColor>> pageMatches, int currentPage, int searchID, const QStringList &words);
 
     void doProcessSearchMatch(RegularAreaRect *match, RunningSearch *search, QSet<int> pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor &color);
 

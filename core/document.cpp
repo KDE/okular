@@ -1788,7 +1788,7 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
     }
 }
 
-void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID)
+void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> pageMatches, int currentPage, int searchID)
 {
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1802,10 +1802,9 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash
         }
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
-        for (const Matches &mv : std::as_const(*pageMatches)) {
+        for (const Matches &mv : std::as_const(pageMatches)) {
             qDeleteAll(mv);
         }
-        delete pageMatches;
         return;
     }
 
@@ -1833,20 +1832,20 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash
             }
 
             // add highlight rect to the matches map
-            (*pageMatches)[page].append(lastMatch);
+            pageMatches[page].append(lastMatch);
         }
         delete lastMatch;
 
-        QTimer::singleShot(0, m_parent, [this, pagesToNotify = std::move(pagesToNotify), pageMatches, currentPage, searchID]() mutable { //
-            doContinueAllDocumentSearch(std::move(pagesToNotify), pageMatches, currentPage + 1, searchID);
+        QTimer::singleShot(0, m_parent, [this, pagesToNotify = std::move(pagesToNotify), pageMatches = std::move(pageMatches), currentPage, searchID]() mutable { //
+            doContinueAllDocumentSearch(std::move(pagesToNotify), std::move(pageMatches), currentPage + 1, searchID);
         });
     } else {
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
 
         search->isCurrentlySearching = false;
-        bool foundAMatch = pageMatches->count() != 0;
-        for (auto [key, value] : pageMatches->asKeyValueRange()) {
+        bool foundAMatch = pageMatches.count() != 0;
+        for (auto [key, value] : pageMatches.asKeyValueRange()) {
             for (RegularAreaRect *&match : value) {
                 key->d->setHighlight(searchID, match, search->cachedColor);
                 delete match;
@@ -1872,12 +1871,10 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash
         } else {
             Q_EMIT m_parent->searchFinished(searchID, Document::NoMatchFound);
         }
-
-        delete pageMatches;
     }
 }
 
-void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words)
+void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<MatchColor>> pageMatches, int currentPage, int searchID, const QStringList &words)
 {
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1892,13 +1889,12 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, Q
 
         Q_EMIT m_parent->searchFinished(searchID, Document::SearchCancelled);
 
-        for (Matches &mv : *pageMatches) {
+        for (Matches &mv : pageMatches) {
             for (auto &[area, color] : mv) {
                 delete area;
                 area = nullptr;
             }
         }
-        delete pageMatches;
         return;
     }
 
@@ -1941,7 +1937,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, Q
                 }
 
                 // add highligh rect to the matches map
-                (*pageMatches)[page].append(MatchColor(lastMatch, wordColor));
+                pageMatches[page].append(MatchColor(lastMatch, wordColor));
                 wordMatched = true;
             }
             allMatched = allMatched && wordMatched;
@@ -1951,24 +1947,24 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, Q
         // if not all words are present in page, remove partial highlights
         const bool matchAll = search->cachedType == Document::GoogleAll;
         if (!allMatched && matchAll) {
-            auto &matches = (*pageMatches)[page];
+            auto &matches = pageMatches[page];
             for (auto &[area, color] : matches) {
                 delete area;
                 area = nullptr;
             }
-            pageMatches->remove(page);
+            pageMatches.remove(page);
         }
 
-        QTimer::singleShot(0, m_parent, [this, pagesToNotify = std::move(pagesToNotify), pageMatches, currentPage, searchID, words]() mutable { //
-            doContinueGooglesDocumentSearch(std::move(pagesToNotify), pageMatches, currentPage + 1, searchID, words);
+        QTimer::singleShot(0, m_parent, [this, pagesToNotify = std::move(pagesToNotify), pageMatches = std::move(pageMatches), currentPage, searchID, words]() mutable { //
+            doContinueGooglesDocumentSearch(std::move(pagesToNotify), std::move(pageMatches), currentPage + 1, searchID, words);
         });
     } else {
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
 
         search->isCurrentlySearching = false;
-        bool foundAMatch = pageMatches->count() != 0;
-        for (auto [page, matches] : pageMatches->asKeyValueRange()) {
+        bool foundAMatch = pageMatches.count() != 0;
+        for (auto [page, matches] : pageMatches.asKeyValueRange()) {
             for (auto &[area, color] : matches) {
                 page->d->setHighlight(searchID, area, color);
                 delete area;
@@ -1994,8 +1990,6 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, Q
         } else {
             Q_EMIT m_parent->searchFinished(searchID, Document::NoMatchFound);
         }
-
-        delete pageMatches;
     }
 }
 
@@ -3805,11 +3799,9 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
 
     // 1. ALLDOC - process all document marking pages
     if (type == AllDocument) {
-        QHash<Page *, QList<RegularAreaRect *>> *pageMatches = new QHash<Page *, QList<RegularAreaRect *>>;
-
         // search and highlight 'text' (as a solid phrase) on all pages
-        QTimer::singleShot(0, this, [this, pagesToNotify = std::move(pagesToNotify), pageMatches, searchID]() mutable { //
-            d->doContinueAllDocumentSearch(std::move(pagesToNotify), pageMatches, 0, searchID);
+        QTimer::singleShot(0, this, [this, pagesToNotify = std::move(pagesToNotify), searchID]() mutable { //
+            d->doContinueAllDocumentSearch(std::move(pagesToNotify), {}, 0, searchID);
         });
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
@@ -3853,12 +3845,11 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
     }
     // 4. GOOGLE* - process all document marking pages
     else if (type == GoogleAll || type == GoogleAny) {
-        QHash<Page *, QList<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QHash<Page *, QList<QPair<RegularAreaRect *, QColor>>>;
         const QStringList words = text.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         // search and highlight every word in 'text' on all pages
-        QTimer::singleShot(0, this, [this, pagesToNotify = std::move(pagesToNotify), pageMatches, searchID, words]() mutable { //
-            d->doContinueGooglesDocumentSearch(std::move(pagesToNotify), pageMatches, 0, searchID, words);
+        QTimer::singleShot(0, this, [this, pagesToNotify = std::move(pagesToNotify), searchID, words]() mutable { //
+            d->doContinueGooglesDocumentSearch(std::move(pagesToNotify), {}, 0, searchID, words);
         });
     }
 }

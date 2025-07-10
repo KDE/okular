@@ -87,7 +87,7 @@ public:
 class FontExtractionThread;
 
 struct DoContinueDirectionMatchSearchStruct {
-    QSet<int> *pagesToNotify;
+    QSet<int> pagesToNotify;
     RegularAreaRect *match;
     int currentPage;
     int searchID;
@@ -199,10 +199,10 @@ public:
 
     typedef std::pair<RegularAreaRect *, QColor> MatchColor;
     void doContinueDirectionMatchSearch(DoContinueDirectionMatchSearchStruct *searchStruct);
-    void doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID);
-    void doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, QHash<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words);
+    void doContinueAllDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID);
+    void doContinueGooglesDocumentSearch(QSet<int> pagesToNotify, QHash<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words);
 
-    void doProcessSearchMatch(RegularAreaRect *match, RunningSearch *search, QSet<int> *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor &color);
+    void doProcessSearchMatch(RegularAreaRect *match, RunningSearch *search, QSet<int> pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor &color);
 
     /**
      * Executes a JavaScript script from the setInterval function.

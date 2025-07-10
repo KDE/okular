@@ -110,7 +110,7 @@ void dvifile::process_preamble()
 
     cmPerDVIunit = (double(numerator) / double(denominator)) * (double(_magnification) / 1000.0) * (1.0 / 1e5);
 
-    // Read the generatorString (such as "TeX output ..." from the
+    // Read the generatorString (such as "TeX output …" from the
     // DVI-File). The variable "magic_number" holds the length of the
     // string.
     char job_id[300];

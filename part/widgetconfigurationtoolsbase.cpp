@@ -25,10 +25,10 @@ WidgetConfigurationToolsBase::WidgetConfigurationToolsBase(QWidget *parent)
     hBoxLayout->addWidget(m_list);
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    m_btnAdd = new QPushButton(i18n("&Add..."), this);
+    m_btnAdd = new QPushButton(i18n("&Add…"), this);
     m_btnAdd->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     vBoxLayout->addWidget(m_btnAdd);
-    m_btnEdit = new QPushButton(i18n("&Edit..."), this);
+    m_btnEdit = new QPushButton(i18n("&Edit…"), this);
     m_btnEdit->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
     m_btnEdit->setEnabled(false);
     vBoxLayout->addWidget(m_btnEdit);

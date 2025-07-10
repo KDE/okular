@@ -223,7 +223,7 @@ void dviRenderer::getText(RenderedDocumentPagePixmap *page)
 void dviRenderer::showThatSourceInformationIsPresent()
 {
   // In principle, we should use a KMessagebox here, but we want to
-  // add a button "Explain in more detail..." which opens the
+  // add a button "Explain in more detail…" which opens the
   // Helpcenter. Thus, we practically re-implement the KMessagebox
   // here. Most of the code is stolen from there.
 
@@ -261,7 +261,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
     topcontentsVBoxLayout->addWidget(checkbox);
     extraSize = QSize(50,0);
-    dialog.setHelpLinkText(i18n("Explain in more detail..."));
+    dialog.setHelpLinkText(i18n("Explain in more detail…"));
     dialog.setHelp("inverse-search", "kdvi");
     dialog.enableLinkedHelp(true);
     dialog.setMainWidget(topcontents);

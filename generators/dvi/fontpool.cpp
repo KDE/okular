@@ -479,7 +479,7 @@ void fontPool::mf_output_receiver()
             int secondblank = startLine.lastIndexOf(QLatin1Char(' '), lastblank - 1);
             QString dpi = startLine.mid(secondblank + 1, lastblank - secondblank - 1);
 
-            Q_EMIT warning(i18n("Currently generating %1 at %2 dpi...", fontName, dpi), -1);
+            Q_EMIT warning(i18n("Currently generating %1 at %2 dpi…", fontName, dpi), -1);
         }
         MetafontOutput = MetafontOutput.remove(0, numleft + 1);
     }

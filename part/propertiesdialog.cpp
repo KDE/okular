@@ -142,7 +142,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         view->sortByColumn(0, Qt::AscendingOrder);
         m_fontInfo = new QLabel(this);
         page2Layout->addWidget(m_fontInfo);
-        m_fontInfo->setText(i18n("Reading font information..."));
+        m_fontInfo->setText(i18n("Reading font information…"));
         m_fontInfo->hide();
         m_fontProgressBar = new QProgressBar(this);
         page2Layout->addWidget(m_fontProgressBar);

@@ -745,18 +745,18 @@ void Part::setupViewerActions()
 
     QAction *prefs = KStandardAction::preferences(this, SLOT(slotPreferences()), ac);
     if (m_embedMode == NativeShellMode) {
-        prefs->setText(i18n("Configure Okular..."));
+        prefs->setText(i18n("Configure Okular…"));
     } else {
         // TODO: improve this message
-        prefs->setText(i18n("Configure Viewer..."));
+        prefs->setText(i18n("Configure Viewer…"));
     }
 
     QAction *genPrefs = new QAction(ac);
     ac->addAction(QStringLiteral("options_configure_generators"), genPrefs);
     if (m_embedMode == ViewerWidgetMode) {
-        genPrefs->setText(i18n("Configure Viewer Backends..."));
+        genPrefs->setText(i18n("Configure Viewer Backends…"));
     } else {
-        genPrefs->setText(i18n("Configure Backends..."));
+        genPrefs->setText(i18n("Configure Backends…"));
     }
     genPrefs->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     genPrefs->setEnabled(m_document->configurableGenerators() > 0);
@@ -814,7 +814,7 @@ void Part::setupViewerActions()
     pageno->setDefaultWidget(m_pageNumberTool);
     ac->addAction(QStringLiteral("page_number"), pageno);
 
-    QAction *configureColorModes = new QAction(i18nc("@action", "Configure Color Modes..."), ac);
+    QAction *configureColorModes = new QAction(i18nc("@action", "Configure Color Modes…"), ac);
     ac->addAction(QStringLiteral("options_configure_color_modes"), configureColorModes);
     configureColorModes->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     connect(configureColorModes, &QAction::triggered, this, &Part::slotAccessibilityPreferences);
@@ -943,7 +943,7 @@ void Part::setupActions()
     }
 
     QAction *importPS = ac->addAction(QStringLiteral("import_ps"));
-    importPS->setText(i18n("&Import PostScript as PDF..."));
+    importPS->setText(i18n("&Import PostScript as PDF…"));
     importPS->setIcon(QIcon::fromTheme(QStringLiteral("document-import")));
     connect(importPS, &QAction::triggered, this, &Part::slotImportPSFile);
 
@@ -960,7 +960,7 @@ void Part::setupActions()
     eraseDrawingAction->setIcon(QIcon::fromTheme(QStringLiteral("draw-eraser-delete-objects")));
     eraseDrawingAction->setEnabled(false);
 
-    QAction *configureAnnotations = new QAction(i18n("Configure Annotations..."), ac);
+    QAction *configureAnnotations = new QAction(i18n("Configure Annotations…"), ac);
     ac->addAction(QStringLiteral("options_configure_annotations"), configureAnnotations);
     configureAnnotations->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     connect(configureAnnotations, &QAction::triggered, this, &Part::slotAnnotationPreferences);
@@ -1355,7 +1355,7 @@ bool Part::slotImportPSFile()
         QStringList args;
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;
-        m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
+        m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)…"));
         connect(p, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &Part::psTransformEnded);
         p->start(app, args);
         return true;
@@ -2111,7 +2111,7 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
 
         // inform the user about the operation in progress
         // TODO: Remove this line and integrate reload info in queryClose
-        m_pageView->displayMessage(i18n("Reloading the document..."));
+        m_pageView->displayMessage(i18n("Reloading the document…"));
     }
 
     // close and (try to) reopen the document
@@ -2129,7 +2129,7 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
     }
 
     // inform the user about the operation in progress
-    m_pageView->displayMessage(i18n("Reloading the document..."));
+    m_pageView->displayMessage(i18n("Reloading the document…"));
 
     bool reloadSucceeded = false;
 
@@ -2777,7 +2777,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                                                                           warningMessageString,
                                                                           listOfwontSaves,
                                                                           i18n("Warning"),
-                                                                          KGuiItem(i18n("Save as Okular document archive..."), QStringLiteral("document-save-as")), // <- KMessageBox::Continue
+                                                                          KGuiItem(i18n("Save as Okular document archive…"), QStringLiteral("document-save-as")), // <- KMessageBox::Continue
                                                                           KStandardGuiItem::cancel());
 
                 switch (result) {
@@ -2799,8 +2799,8 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
                                                                             warningMessageString,
                                                                             listOfwontSaves,
                                                                             i18n("Warning"),
-                                                                            KGuiItem(i18n("Save as Okular document archive..."), QStringLiteral("document-save-as")), // <- KMessageBox::PrimaryAction
-                                                                            KGuiItem(continueMessage, QStringLiteral("arrow-right")));                                // <- KMessageBox::SecondaryAction
+                                                                            KGuiItem(i18n("Save as Okular document archive…"), QStringLiteral("document-save-as")), // <- KMessageBox::PrimaryAction
+                                                                            KGuiItem(continueMessage, QStringLiteral("arrow-right")));                              // <- KMessageBox::SecondaryAction
 
                 switch (result) {
                 case KMessageBox::PrimaryAction: // -> Save as Okular document archive

@@ -117,7 +117,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
         if (onlyOne && annotationHasFileAttachment(pair.annotation)) {
             const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
             if (embeddedFile) {
-                const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name());
+                const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
 
                 menu->addSeparator();
                 action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
@@ -151,7 +151,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             if (annotationHasFileAttachment(pair.annotation)) {
                 const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
                 if (embeddedFile) {
-                    const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name());
+                    const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
 
                     menu->addSeparator();
                     action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);

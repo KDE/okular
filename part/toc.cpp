@@ -40,7 +40,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document)
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);
     m_searchLine = new KTreeViewSearchLine(this);
     mainlay->addWidget(m_searchLine);
-    m_searchLine->setPlaceholderText(i18n("Search..."));
+    m_searchLine->setPlaceholderText(i18n("Search…"));
     m_searchLine->setCaseSensitivity(Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive);
     m_searchLine->setRegularExpression(Okular::Settings::self()->contentsSearchRegularExpression());
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &TOC::saveSearchOptions);

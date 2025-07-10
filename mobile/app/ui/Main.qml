@@ -39,7 +39,7 @@ Kirigami.ApplicationWindow {
         actions: [
             Kirigami.Action {
                 id: openDocumentAction
-                text: i18n("Open...")
+                text: i18n("Open…")
                 icon.name: "document-open"
                 onTriggered: {
                     fileDialog.open()

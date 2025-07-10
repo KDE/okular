@@ -1343,7 +1343,7 @@ void SignatureEdit::contextMenuEvent(QContextMenuEvent *event)
     QMenu *menu = new QMenu(this);
     Okular::FormFieldSignature *formSignature = static_cast<Okular::FormFieldSignature *>(formField());
     if (formSignature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
-        QAction *signAction = new QAction(i18n("&Sign..."), menu);
+        QAction *signAction = new QAction(i18n("&Sign…"), menu);
         connect(signAction, &QAction::triggered, this, &SignatureEdit::signUnsignedSignature);
         menu->addAction(signAction);
     } else {

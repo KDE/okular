@@ -442,7 +442,7 @@ KSelectAction *AnnotationActionHandlerPrivate::colorPickerAction(AnnotationColor
         aColorPicker->addAction(colorAction);
         QObject::connect(colorAction, &QAction::triggered, q, [this, colorType, color]() { slotSetColor(colorType, color); });
     }
-    QAction *aCustomColor = new QAction(QIcon::fromTheme(QStringLiteral("color-picker")), i18nc("@item:inlistbox", "Custom Color..."), q);
+    QAction *aCustomColor = new QAction(QIcon::fromTheme(QStringLiteral("color-picker")), i18nc("@item:inlistbox", "Custom Color…"), q);
     aColorPicker->addAction(aCustomColor);
     QObject::connect(aCustomColor, &QAction::triggered, q, [this, colorType]() { slotSetColor(colorType); });
     return aColorPicker;

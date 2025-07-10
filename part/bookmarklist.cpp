@@ -139,7 +139,7 @@ BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
 
     m_searchLine = new KTreeWidgetSearchLine(this);
     mainlay->addWidget(m_searchLine);
-    m_searchLine->setPlaceholderText(i18n("Search..."));
+    m_searchLine->setPlaceholderText(i18n("Search…"));
 
     m_tree = new QTreeWidget(this);
     mainlay->addWidget(m_tree);

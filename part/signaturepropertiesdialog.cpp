@@ -85,14 +85,14 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
         const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_doc);
         revisionLayout->addWidget(new QLabel(i18nc("Document Revision <current> of <total>", "Document Revision %1 of %2", signatureFormFields.indexOf(m_signatureForm) + 1, signatureFormFields.size())));
         revisionLayout->addStretch();
-        auto revisionBtn = new QPushButton(i18n("View Signed Version..."));
+        auto revisionBtn = new QPushButton(i18n("View Signed Version…"));
         connect(revisionBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::viewSignedVersion);
         revisionLayout->addWidget(revisionBtn);
     }
 
     // button box
     auto btnBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    auto certPropBtn = new QPushButton(i18n("View Certificate..."));
+    auto certPropBtn = new QPushButton(i18n("View Certificate…"));
     certPropBtn->setEnabled(!signatureInfo.certificateInfo().isNull());
     auto certManagerBtn = new QPushButton(i18n("View in Certificate Manager"));
     certManagerBtn->setVisible(signatureInfo.certificateInfo().backend() == Okular::CertificateInfo::Backend::Gpg);

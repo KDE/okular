@@ -702,7 +702,7 @@ void PageView::setupActions(KActionCollection *ac)
     }
 
     // Create signature action
-    d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("document-edit-sign")), i18n("Digitally &Sign..."), this);
+    d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("document-edit-sign")), i18n("Digitally &Sign…"), this);
     ac->addAction(QStringLiteral("add_digital_signature"), d->aSignature);
     connect(d->aSignature, &QAction::triggered, this, &PageView::slotSignature);
 
@@ -4379,7 +4379,7 @@ void PageView::addWebShortcutsMenu(QMenu *menu, const QString &text)
 
             webShortcutsMenu->addSeparator();
 
-            action = new QAction(i18n("Configure Web Shortcuts..."), webShortcutsMenu);
+            action = new QAction(i18n("Configure Web Shortcuts…"), webShortcutsMenu);
             action->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
             connect(action, &QAction::triggered, this, &PageView::slotConfigureWebShortcuts);
             webShortcutsMenu->addAction(action);

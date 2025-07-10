@@ -47,7 +47,7 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     setWindowTitle(i18n("Certificate Viewer"));
     setStandardButtons(QDialogButtonBox::Close);
 
-    auto exportBtn = new QPushButton(i18n("Export..."));
+    auto exportBtn = new QPushButton(i18n("Export…"));
     connect(exportBtn, &QPushButton::clicked, this, &CertificateViewer::exportCertificate);
     addActionButton(exportBtn);
 

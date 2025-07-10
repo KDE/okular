@@ -194,7 +194,7 @@ Action::ActionType ExecuteAction::actionType() const
 QString ExecuteAction::actionTip() const
 {
     Q_D(const Okular::ExecuteAction);
-    return i18n("Execute '%1'...", d->m_fileName);
+    return i18n("Execute '%1'…", d->m_fileName);
 }
 
 QString ExecuteAction::fileName() const
@@ -311,9 +311,9 @@ QString DocumentAction::actionTip() const
     case EndPresentation:
         return i18n("End Presentation");
     case Find:
-        return i18n("Find...");
+        return i18n("Find…");
     case GoToPage:
-        return i18n("Go To Page...");
+        return i18n("Go To Page…");
     case Close:
     default:;
     }
@@ -364,7 +364,7 @@ Action::ActionType SoundAction::actionType() const
 
 QString SoundAction::actionTip() const
 {
-    return i18n("Play sound...");
+    return i18n("Play sound…");
 }
 
 double SoundAction::volume() const
@@ -482,7 +482,7 @@ Action::ActionType MovieAction::actionType() const
 
 QString MovieAction::actionTip() const
 {
-    return i18n("Play movie...");
+    return i18n("Play movie…");
 }
 
 MovieAction::OperationType MovieAction::operation() const

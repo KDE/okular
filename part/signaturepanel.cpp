@@ -94,7 +94,7 @@ void SignaturePanel::slotShowContextMenu()
 
     QMenu *menu = new QMenu(this);
     if (d->m_currentForm->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
-        QAction *signAction = new QAction(i18n("&Sign..."), menu);
+        QAction *signAction = new QAction(i18n("&Sign…"), menu);
         connect(signAction, &QAction::triggered, this, &SignaturePanel::signUnsignedSignature);
         menu->addAction(signAction);
     } else {

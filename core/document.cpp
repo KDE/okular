@@ -1804,7 +1804,7 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
     delete pagesToNotify;
 }
 
-void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID)
+void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QHash<Page *, QList<RegularAreaRect *>> *pageMatches, int currentPage, int searchID)
 {
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1861,7 +1861,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QMap
 
         search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
-        QMap<Page *, QList<RegularAreaRect *>>::const_iterator it, itEnd;
+        QHash<Page *, QList<RegularAreaRect *>>::const_iterator it, itEnd;
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
@@ -1895,7 +1895,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QMap
     }
 }
 
-void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, QMap<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words)
+void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, QHash<Page *, QList<MatchColor>> *pageMatches, int currentPage, int searchID, const QStringList &words)
 {
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1983,7 +1983,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, 
 
         search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
-        QMap<Page *, QList<MatchColor>>::const_iterator it, itEnd;
+        QHash<Page *, QList<MatchColor>>::const_iterator it, itEnd;
         it = pageMatches->constBegin();
         itEnd = pageMatches->constEnd();
         for (; it != itEnd; ++it) {
@@ -3862,7 +3862,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
 
     // 1. ALLDOC - process all document marking pages
     if (type == AllDocument) {
-        QMap<Page *, QList<RegularAreaRect *>> *pageMatches = new QMap<Page *, QList<RegularAreaRect *>>;
+        QHash<Page *, QList<RegularAreaRect *>> *pageMatches = new QHash<Page *, QList<RegularAreaRect *>>;
 
         // search and highlight 'text' (as a solid phrase) on all pages
         QTimer::singleShot(0, this, [this, pagesToNotify, pageMatches, searchID] { d->doContinueAllDocumentSearch(pagesToNotify, pageMatches, 0, searchID); });
@@ -3908,7 +3908,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
     }
     // 4. GOOGLE* - process all document marking pages
     else if (type == GoogleAll || type == GoogleAny) {
-        QMap<Page *, QList<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QMap<Page *, QList<QPair<RegularAreaRect *, QColor>>>;
+        QHash<Page *, QList<QPair<RegularAreaRect *, QColor>>> *pageMatches = new QHash<Page *, QList<QPair<RegularAreaRect *, QColor>>>;
         const QStringList words = text.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         // search and highlight every word in 'text' on all pages

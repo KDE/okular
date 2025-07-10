@@ -320,26 +320,28 @@ void AnnotWindow::showEvent(QShowEvent *event)
 
 bool AnnotWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::ShortcutOverride) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Escape) {
-            event->accept();
-            return true;
+    if (watched == textEdit) {
+        if (event->type() == QEvent::ShortcutOverride) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent->key() == Qt::Key_Escape) {
+                event->accept();
+                return true;
+            }
+        } else if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent == QKeySequence::Undo) {
+                m_document->undo();
+                return true;
+            } else if (keyEvent == QKeySequence::Redo) {
+                m_document->redo();
+                return true;
+            } else if (keyEvent->key() == Qt::Key_Escape) {
+                close();
+                return true;
+            }
+        } else if (event->type() == QEvent::FocusIn) {
+            raise();
         }
-    } else if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent == QKeySequence::Undo) {
-            m_document->undo();
-            return true;
-        } else if (keyEvent == QKeySequence::Redo) {
-            m_document->redo();
-            return true;
-        } else if (keyEvent->key() == Qt::Key_Escape) {
-            close();
-            return true;
-        }
-    } else if (event->type() == QEvent::FocusIn) {
-        raise();
     }
     return QFrame::eventFilter(watched, event);
 }

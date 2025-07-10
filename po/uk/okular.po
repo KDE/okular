@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-03 06:55+0000\n"
+"POT-Creation-Date: 2025-07-10 00:41+0000\n"
 "PO-Revision-Date: 2025-06-28 13:08+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -312,6 +312,12 @@ msgid ""
 msgstr ""
 "Не вдалося знайти додаток для обробки цього документа, який передано "
 "програмі."
+
+#: core/document.cpp:2897
+#, kde-format
+msgctxt "Unsupported action"
+msgid "Signing not implemented for this document type"
+msgstr ""
 
 #: core/document.cpp:3624
 #, kde-format
@@ -704,19 +710,19 @@ msgid "Value"
 msgstr "Значення"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Контекстна нотатка"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
 #, kde-format
 msgid "Typewriter"
 msgstr "Друкарська машинка"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
 #, kde-format
 msgid "Inline Note"
 msgstr "Рядкова примітка"
@@ -727,7 +733,7 @@ msgid "Straight Line with Comment"
 msgstr "Пряма лінія із коментарем"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1446
 #, kde-format
 msgid "Straight Line"
 msgstr "Пряма"
@@ -738,7 +744,7 @@ msgid "Polygon with Comment"
 msgstr "Багатокутник із коментарем"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1438
 #, kde-format
 msgid "Polygon"
 msgstr "Багатокутник"
@@ -769,7 +775,7 @@ msgid "Squiggle with Comment"
 msgstr "Хвилястий текст із коментарем"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1442
 #, kde-format
 msgid "Squiggle"
 msgstr "Підкреслення хвилястою"
@@ -780,7 +786,7 @@ msgid "Underline with Comment"
 msgstr "Підкреслений текст із коментарем"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1433
+#: part/pageviewannotator.cpp:1450
 #, kde-format
 msgid "Underline"
 msgstr "Підкреслення"
@@ -801,7 +807,7 @@ msgid "Stamp with Comment"
 msgstr "Штамп із коментарем"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1444
 #, kde-format
 msgid "Stamp"
 msgstr "Штамп"
@@ -812,7 +818,7 @@ msgid "Freehand Line with Comment"
 msgstr "Довільна лінія із коментарем"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1432
 #, kde-format
 msgid "Freehand Line"
 msgstr "Довільна лінія"
@@ -2094,17 +2100,17 @@ msgstr "Заповнення форми:"
 msgid "Type:"
 msgstr "Тип:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
 #, kde-format
 msgid "Strike out"
 msgstr "Перекреслення"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
 #, kde-format
 msgid "Rectangle"
 msgstr "Прямокутник"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
 #, kde-format
 msgid "Ellipse"
 msgstr "Еліпс"
@@ -4092,55 +4098,47 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Підписати"
 
-#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
-msgstr ""
-"Не вдалося підписати. Некоректний пароль до сертифіката або не вдалося "
-"виконати запис до «%1»"
-
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name"
 msgstr "Ім'я автора"
 
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Ім'я автора анотації:"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1347
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Намалювати еліпс (потягніть, щоб вибрати зону)"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1349
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Підсвітити текст"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1351
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Намалювати довільну лінію"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1353
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Рядкова текстова анотація (потягніть, щоб вибрати зону)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1355
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Вставити контекстну нотатку"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1357
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
@@ -4148,59 +4146,59 @@ msgstr ""
 "Намалюйте багатокутник (щоб завершити малювання, наведіть вказівник миші на "
 "першу точку і клацніть лівою кнопкою миші)"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1359
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Намалювати прямокутник"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1361
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Хвилястий текст"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1363
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Вставити символ штампа"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1365
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Намалювати пряму лінію"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1367
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Закреслити текст"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1369
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Підкреслити текст"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1371
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Вдрукована анотація (потягніть, щоб вибрати зону)"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1430
 #, kde-format
 msgid "Highlighter"
 msgstr "Підсвічування"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Додати анотацію до улюблених"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Назва нетипової анотації:"
@@ -6073,6 +6071,13 @@ msgstr "Забути всі"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Приховати вікно вітання"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid ""
+#~ "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgstr ""
+#~ "Не вдалося підписати. Некоректний пароль до сертифіката або не вдалося "
+#~ "виконати запис до «%1»"
 
 #~| msgid ""
 #~| "All your signing certificates are either not valid yet or are past their "

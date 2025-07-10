@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-25 00:41+0000\n"
+"POT-Creation-Date: 2025-07-10 00:41+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -284,7 +284,17 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr ""
 
-#: generator_pdf.cpp:2244
+#: generator_pdf.cpp:2203 generator_pdf.cpp:2210
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr ""
+
+#: generator_pdf.cpp:2254
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr ""
+
+#: generator_pdf.cpp:2274
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

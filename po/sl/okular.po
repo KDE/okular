@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-03 06:55+0000\n"
+"POT-Creation-Date: 2025-07-10 00:41+0000\n"
 "PO-Revision-Date: 2025-06-28 08:22+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -308,6 +308,12 @@ msgstr "Nadaljevanje iskanja z dna"
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ni bilo mogoče najti vstavka, ki bi znal prebrati dani dokument."
+
+#: core/document.cpp:2897
+#, kde-format
+msgctxt "Unsupported action"
+msgid "Signing not implemented for this document type"
+msgstr ""
 
 #: core/document.cpp:3624
 #, kde-format
@@ -700,19 +706,19 @@ msgid "Value"
 msgstr "Vrednost"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Pojavna opomba"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
 #, kde-format
 msgid "Typewriter"
 msgstr "Pisalni stroj"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
 #, kde-format
 msgid "Inline Note"
 msgstr "Znotrajvrstična opomba"
@@ -723,7 +729,7 @@ msgid "Straight Line with Comment"
 msgstr "Ravna črta s komentarjem"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1446
 #, kde-format
 msgid "Straight Line"
 msgstr "Ravna črta"
@@ -734,7 +740,7 @@ msgid "Polygon with Comment"
 msgstr "Poligon s komentarjem"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1438
 #, kde-format
 msgid "Polygon"
 msgstr "Mnogokotnik"
@@ -765,7 +771,7 @@ msgid "Squiggle with Comment"
 msgstr "Vijuga s komentarjem"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1442
 #, kde-format
 msgid "Squiggle"
 msgstr "Zavito"
@@ -776,7 +782,7 @@ msgid "Underline with Comment"
 msgstr "Podčrtava s komentarjem"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1433
+#: part/pageviewannotator.cpp:1450
 #, kde-format
 msgid "Underline"
 msgstr "Podčrtano"
@@ -797,7 +803,7 @@ msgid "Stamp with Comment"
 msgstr "Žig s komentarjem"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1444
 #, kde-format
 msgid "Stamp"
 msgstr "Žig"
@@ -808,7 +814,7 @@ msgid "Freehand Line with Comment"
 msgstr "Prosto-ročna črta s komentarjem"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1432
 #, kde-format
 msgid "Freehand Line"
 msgstr "Prosto-ročna črta"
@@ -2082,17 +2088,17 @@ msgstr "Polnilo lika:"
 msgid "Type:"
 msgstr "Vrsta:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
 #, kde-format
 msgid "Strike out"
 msgstr "Prečrtano"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
 #, kde-format
 msgid "Rectangle"
 msgstr "Pravokotnik"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipsa"
@@ -4071,113 +4077,105 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpiši"
 
-#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
-msgstr ""
-"Podpis ni bil mogoč. Neveljavno geslo za potrdilo ali ni bilo mogoče pisati "
-"v »%1«"
-
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name"
 msgstr "Ime avtorja"
 
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Ime avtorja zabeležke:"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1347
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Nariši elipso (povlecite, da izberete območje)"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1349
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Poudari besedilo"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1351
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Nariši prosto-ročno črto"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1353
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Znotrajvrstična besedilna zabeležka (povlecite, da izberete območje)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1355
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Postavi pojavno opombo"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1357
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Nariši mnogokotnik (za zaključitev kliknite na začetno točko)"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1359
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Nariši pravokotnik"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1361
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Vijugasto besedilo"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1363
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Postavi žig"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1365
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Nariši ravno črto"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1367
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Prečrtaj besedilo"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1369
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Podčrtaj besedilo"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1371
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Opomba s pisalnim strojem (povlecite, da izberete cono)"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1430
 #, kde-format
 msgid "Highlighter"
 msgstr "Poudarjalnik"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Dodaj priljubljeno zabeležko"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Ime zabeležke po meri:"
@@ -6028,6 +6026,13 @@ msgstr "Pozabi vse"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrij zaslon dobrodošlice"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid ""
+#~ "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgstr ""
+#~ "Podpis ni bil mogoč. Neveljavno geslo za potrdilo ali ni bilo mogoče "
+#~ "pisati v »%1«"
 
 #~ msgid "All your signing certificates are invalid"
 #~ msgstr "Vsa vaša potrdila za podpisovanje so neveljavna"

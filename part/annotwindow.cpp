@@ -123,16 +123,16 @@ public:
         authorLabel->installEventFilter(this);
     }
 
-    bool eventFilter(QObject *obj, QEvent *e) override
+    bool eventFilter(QObject *watched, QEvent *event) override
     {
-        if (obj != titleLabel && obj != authorLabel && obj != dateLabel) {
+        if (watched != titleLabel && watched != authorLabel && watched != dateLabel) {
             return false;
         }
 
         QMouseEvent *me = nullptr;
-        switch (e->type()) {
+        switch (event->type()) {
         case QEvent::MouseButtonPress:
-            me = static_cast<QMouseEvent *>(e);
+            me = static_cast<QMouseEvent *>(event);
             mousePressPos = me->pos();
             parentWidget()->raise();
             break;
@@ -140,7 +140,7 @@ public:
             mousePressPos = QPoint();
             break;
         case QEvent::MouseMove: {
-            me = static_cast<QMouseEvent *>(e);
+            me = static_cast<QMouseEvent *>(event);
 
             // viewport info
             const QPoint topLeftPoint = parentWidget()->parentWidget()->pos();
@@ -318,16 +318,16 @@ void AnnotWindow::showEvent(QShowEvent *event)
     textEdit->setFocus();
 }
 
-bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
+bool AnnotWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if (e->type() == QEvent::ShortcutOverride) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+    if (event->type() == QEvent::ShortcutOverride) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Escape) {
-            e->accept();
+            event->accept();
             return true;
         }
-    } else if (e->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+    } else if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent == QKeySequence::Undo) {
             m_document->undo();
             return true;
@@ -338,10 +338,10 @@ bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
             close();
             return true;
         }
-    } else if (e->type() == QEvent::FocusIn) {
+    } else if (event->type() == QEvent::FocusIn) {
         raise();
     }
-    return QFrame::eventFilter(o, e);
+    return QFrame::eventFilter(watched, event);
 }
 
 void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu *menu)

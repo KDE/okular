@@ -807,8 +807,17 @@ public:
 
     /**
      * Processes/Executes the given source @p reference.
+     *
+     * @deprecated since 25.12 use void processSourceReference(const SourceReference &reference)
      */
-    void processSourceReference(const SourceReference *reference);
+    OKULARCORE_DEPRECATED void processSourceReference(const SourceReference *reference);
+
+    /**
+     * Processes/Executes the given source @p reference.
+     *
+     * @since 25.12
+     */
+    void processSourceReference(const SourceReference &reference);
 
     /**
      * Returns whether the document can configure the printer itself.
@@ -1037,7 +1046,7 @@ public:
      * page number and absolute X and Y position on this page.
      *
      * @attention Ownership of the returned SourceReference is transferred to the caller.
-     * @note This method does not call processSourceReference( const SourceReference * )
+     * @note This method does not call processSourceReference(const SourceReference &)
      *
      * @since 0.10 (KDE 4.4)
      */

@@ -4226,7 +4226,7 @@ void Document::processAction(const Action *action)
         if (browse->url().scheme() == QLatin1String("mailto")) {
             QDesktopServices::openUrl(browse->url());
         } else if (auto ref = extractLilyPondSourceReference(browse->url())) {
-            processSourceReference(&*ref);
+            processSourceReference(*ref);
         } else {
             const QUrl url = browse->url();
 
@@ -4664,11 +4664,14 @@ void Document::processFormMouseUpScripAction(const Action *action, Okular::FormF
 
 void Document::processSourceReference(const SourceReference *ref)
 {
-    if (!ref) {
-        return;
+    if (ref) {
+        processSourceReference(*ref);
     }
+}
 
-    const QUrl url = d->giveAbsoluteUrl(ref->fileName());
+void Document::processSourceReference(const SourceReference &ref)
+{
+    const QUrl url = d->giveAbsoluteUrl(ref.fileName());
     if (!url.isLocalFile()) {
         qCDebug(OkularCoreDebug) << url.url() << "is not a local file.";
         return;
@@ -4681,7 +4684,7 @@ void Document::processSourceReference(const SourceReference *ref)
     }
 
     bool handled = false;
-    Q_EMIT sourceReferenceActivated(absFileName, ref->row(), ref->column(), &handled);
+    Q_EMIT sourceReferenceActivated(absFileName, ref.row(), ref.column(), &handled);
     if (handled) {
         return;
     }
@@ -4709,8 +4712,8 @@ void Document::processSourceReference(const SourceReference *ref)
     // replacing the placeholders
     QHash<QChar, QString> map;
     map.insert(QLatin1Char('f'), absFileName);
-    map.insert(QLatin1Char('c'), QString::number(ref->column()));
-    map.insert(QLatin1Char('l'), QString::number(ref->row()));
+    map.insert(QLatin1Char('c'), QString::number(ref.column()));
+    map.insert(QLatin1Char('l'), QString::number(ref.row()));
     const QString cmd = KMacroExpander::expandMacrosShellQuote(p, map);
     if (cmd.isEmpty()) {
         return;

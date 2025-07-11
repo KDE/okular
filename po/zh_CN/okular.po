@@ -5928,8 +5928,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgctxt "%1 is a file path"
-#~ msgid ""
-#~ "Could not sign. Invalid certificate password or could not write to '%1'"
-#~ msgstr "无法签名。无效的证书密码或者无法写入“%1”"

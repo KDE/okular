@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-03 06:55+0000\n"
+"POT-Creation-Date: 2025-07-10 02:33+0000\n"
 "PO-Revision-Date: 2025-06-28 12:36+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -306,6 +306,12 @@ msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "No se puede encontrar un complemento capaz de manejar el documento pasado."
+
+#: core/document.cpp:2897
+#, kde-format
+msgctxt "Unsupported action"
+msgid "Signing not implemented for this document type"
+msgstr ""
 
 #: core/document.cpp:3624
 #, kde-format
@@ -699,19 +705,19 @@ msgid "Value"
 msgstr "Valor"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1419
+#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Nota emergente"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1435
+#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
 #, kde-format
 msgid "Typewriter"
 msgstr "Máquina de escribir"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1417
+#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
 #, kde-format
 msgid "Inline Note"
 msgstr "Nota en línea"
@@ -722,7 +728,7 @@ msgid "Straight Line with Comment"
 msgstr "Línea recta con comentario"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1429
+#: part/pageviewannotator.cpp:1446
 #, kde-format
 msgid "Straight Line"
 msgstr "Línea recta"
@@ -733,7 +739,7 @@ msgid "Polygon with Comment"
 msgstr "Polígono con comentario"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1421
+#: part/pageviewannotator.cpp:1438
 #, kde-format
 msgid "Polygon"
 msgstr "Polígono"
@@ -764,7 +770,7 @@ msgid "Squiggle with Comment"
 msgstr "Texto garabateado con comentario"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1425
+#: part/pageviewannotator.cpp:1442
 #, kde-format
 msgid "Squiggle"
 msgstr "Garabato"
@@ -775,7 +781,7 @@ msgid "Underline with Comment"
 msgstr "Subrayado con comentario"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1433
+#: part/pageviewannotator.cpp:1450
 #, kde-format
 msgid "Underline"
 msgstr "Subrayado"
@@ -796,7 +802,7 @@ msgid "Stamp with Comment"
 msgstr "Sello con comentario"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1427
+#: part/pageviewannotator.cpp:1444
 #, kde-format
 msgid "Stamp"
 msgstr "Sello"
@@ -807,7 +813,7 @@ msgid "Freehand Line with Comment"
 msgstr "Línea a mano alzada con comentario"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1432
 #, kde-format
 msgid "Freehand Line"
 msgstr "Línea a mano alzada"
@@ -2090,17 +2096,17 @@ msgstr "Relleno de la forma:"
 msgid "Type:"
 msgstr "Tipo:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1431
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
 #, kde-format
 msgid "Strike out"
 msgstr "Tachado"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1423
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
 #, kde-format
 msgid "Rectangle"
 msgstr "Rectángulo"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1411
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipse"
@@ -4072,113 +4078,105 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Firmar"
 
-#: part/pageviewannotator.cpp:1135 part/signaturepartutils.cpp:288
-#, kde-format
-msgctxt "%1 is a file path"
-msgid "Could not sign. Invalid certificate password or could not write to '%1'"
-msgstr ""
-"No se puede firmar. La contraseña del certificado no es válida o no se puede "
-"escribir en «%1»."
-
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name"
 msgstr "Nombre del autor"
 
-#: part/pageviewannotator.cpp:1269
+#: part/pageviewannotator.cpp:1286
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Nombre del autor de la anotación:"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1347
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Dibujar una elipse (arrastre para seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1332
+#: part/pageviewannotator.cpp:1349
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Resaltar texto"
 
-#: part/pageviewannotator.cpp:1334
+#: part/pageviewannotator.cpp:1351
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Dibujar una línea a mano alzada"
 
-#: part/pageviewannotator.cpp:1336
+#: part/pageviewannotator.cpp:1353
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Anotación de texto en línea (arrastre para seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1338
+#: part/pageviewannotator.cpp:1355
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Colocar una nota emergente"
 
-#: part/pageviewannotator.cpp:1340
+#: part/pageviewannotator.cpp:1357
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Dibujar un polígono (haga clic en el primer punto para cerrarlo)"
 
-#: part/pageviewannotator.cpp:1342
+#: part/pageviewannotator.cpp:1359
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Dibujar un rectángulo"
 
-#: part/pageviewannotator.cpp:1344
+#: part/pageviewannotator.cpp:1361
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Texto garabateado"
 
-#: part/pageviewannotator.cpp:1346
+#: part/pageviewannotator.cpp:1363
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Poner un símbolo de sello"
 
-#: part/pageviewannotator.cpp:1348
+#: part/pageviewannotator.cpp:1365
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Dibujar una línea recta"
 
-#: part/pageviewannotator.cpp:1350
+#: part/pageviewannotator.cpp:1367
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Tachar texto"
 
-#: part/pageviewannotator.cpp:1352
+#: part/pageviewannotator.cpp:1369
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Subrayar texto"
 
-#: part/pageviewannotator.cpp:1354
+#: part/pageviewannotator.cpp:1371
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Anotación con máquina de escribir (arrastre para seleccionar una zona)"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1430
 #, kde-format
 msgid "Highlighter"
 msgstr "Resaltador"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Añadir anotación favorita"
 
-#: part/pageviewannotator.cpp:1710
+#: part/pageviewannotator.cpp:1727
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Nombre de anotación personalizado:"
@@ -6039,3 +6037,10 @@ msgstr "Olvidar todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar la pantalla de bienvenida"
+
+#~ msgctxt "%1 is a file path"
+#~ msgid ""
+#~ "Could not sign. Invalid certificate password or could not write to '%1'"
+#~ msgstr ""
+#~ "No se puede firmar. La contraseña del certificado no es válida o no se "
+#~ "puede escribir en «%1»."

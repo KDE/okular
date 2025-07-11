@@ -4744,21 +4744,15 @@ void Document::processSourceReference(const SourceReference *ref)
         return;
     }
 
-    static QHash<int, QString> editors;
-    // init the editors table if empty (on first run, usually)
-    if (editors.isEmpty()) {
-        editors = buildEditorsMap();
-    }
+    static const QHash<int, QString> editors = buildEditorsMap();
 
     // prefer the editor from the command line
     QString p = d->editorCommandOverride;
     if (p.isEmpty()) {
-        QHash<int, QString>::const_iterator it = editors.constFind(SettingsCore::externalEditor());
-        if (it != editors.constEnd()) {
-            p = *it;
-        } else {
-            p = SettingsCore::externalEditorCommand();
-        }
+        p = editors.value(SettingsCore::externalEditor());
+    }
+    if (p.isEmpty()) {
+        p = SettingsCore::externalEditorCommand();
     }
     // custom editor not yet configured
     if (p.isEmpty()) {
@@ -4766,7 +4760,7 @@ void Document::processSourceReference(const SourceReference *ref)
     }
 
     // manually append the %f placeholder if not specified
-    if (p.indexOf(QLatin1String("%f")) == -1) {
+    if (!p.contains(QLatin1String("%f"))) {
         p.append(QLatin1String(" %f"));
     }
 

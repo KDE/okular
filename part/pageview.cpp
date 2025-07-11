@@ -2621,12 +2621,12 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     }
                 }
                 if (rect) {
-                    const Okular::SourceReference *ref = static_cast<const Okular::SourceReference *>(rect->object());
-                    d->document->processSourceReference(ref);
+                    if (const Okular::SourceReference *ref = static_cast<const Okular::SourceReference *>(rect->object())) {
+                        d->document->processSourceReference(*ref);
+                    }
                 } else {
-                    const Okular::SourceReference *ref = d->document->dynamicSourceReference(pageItem->pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height());
-                    if (ref) {
-                        d->document->processSourceReference(ref);
+                    if (const Okular::SourceReference *ref = d->document->dynamicSourceReference(pageItem->pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height())) {
+                        d->document->processSourceReference(*ref);
                         delete ref;
                     }
                 }
